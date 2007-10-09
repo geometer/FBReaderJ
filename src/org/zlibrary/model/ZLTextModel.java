@@ -12,7 +12,8 @@ public interface ZLTextModel {
     Kind getKind();
     int getParagraphsNumber();
     ZLTextParagraph getParagraph(int index);
-    void selectParagraph(int index);
+
+    void addParagraphInternal(ZLTextParagraph paragraph);
 
     void addControl(byte textKind, boolean isStart);
     void addText(String text);
