@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="compile" name="fbreader">
-    <property name = "src.dir" value = "src" />
+    <property name = "src.dir" value = "org" />
     <property name = "bin.dir" value = "bin" />
     <property name = "test.dir" value="test" />
 
