@@ -12,13 +12,6 @@ import org.zlibrary.model.impl.entry.ZLTextControlEntryImpl;
 import java.util.List;
 import java.util.LinkedList;
 
-/**
- * Created by IntelliJ IDEA.
- * User: 465
- * Date: 08.10.2007
- * Time: 14:15:57
- * To change this template use File | Settings | File Templates.
- */
 public class TestZLTextModel extends TestCase {
      
     public void testAddParagraph() {
