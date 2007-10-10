@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="compile" name="fbreader">
-	<property name = "src.dir" value = "src" />
-	<property name = "bin.dir" value = "bin" />
-	<property name = "test.dir" value="test" />
+<project basedir = "." default = "compile" name = "fbreader">
+	<property name = "src.dir" value = "src"/>
+	<property name = "bin.dir" value = "bin"/>
+	<property name = "test.dir" value="test"/>
 
 	<target name = "prepare">
 		<mkdir dir = "${bin.dir}" />
 	</target>
 
 	<target name = "compile" depends = "prepare">
-		<javac srcdir = "${src.dir}" destdir = "${bin.dir}" />
+		<javac srcdir = "${src.dir}" destdir = "${bin.dir}"/>
 	</target>
 
 	<target name = "test" depends = "prepare">
@@ -18,6 +18,21 @@
 				<pathelement location = "lib/junit.jar"/>
 			</classpath>
 		</javac>
+	</target>
+
+	<target name = "runtests" depends = "test">
+		<junit printsummary = "yes">
+			<classpath>
+				<pathelement location = "${bin.dir}"/>
+			</classpath>
+			<test name = "org.test.zlibrary.model.TestAll"/>
+			<!-- test name = "org.test.zlibrary.model.TestTextEntry"/ -->
+			<!-- test name = "org.test.zlibrary.model.TestTextControlEntry"/ -->
+			<!-- test name = "org.test.zlibrary.model.TestTextControlEntryPool"/ -->
+			<!-- test name = "org.test.zlibrary.model.TestTextEntry"/ -->
+			<!-- test name = "org.test.zlibrary.model.TestTextParagraph"/ -->
+			<!-- test name = "org.test.zlibrary.model.TestZLTextModel"/ -->
+		</junit>
 	</target>
 
 	<target name = "clean">
