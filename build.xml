@@ -2,7 +2,7 @@
 <project basedir = "." default = "compile" name = "fbreader">
 	<property name = "src.dir" value = "src"/>
 	<property name = "bin.dir" value = "bin"/>
-	<property name = "test.dir" value="test"/>
+	<property name = "test.dir" value= "test"/>
 
 	<target name = "prepare">
 		<mkdir dir = "${bin.dir}" />
