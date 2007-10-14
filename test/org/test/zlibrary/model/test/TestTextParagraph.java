@@ -1,4 +1,4 @@
-package org.test.zlibrary.model;
+package org.test.zlibrary.model.test;
 
 import org.zlibrary.model.ZLTextParagraph;
 import org.zlibrary.model.impl.ZLModelFactory;

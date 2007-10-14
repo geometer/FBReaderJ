@@ -1,14 +1,15 @@
-package org.test.zlibrary.model;
+package org.test.zlibrary.model.test;
 
 import junit.framework.TestCase;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
-import org.zlibrary.model.entry.ZLTextControlEntry;
 import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.impl.entry.ZLTextControlEntryPoolImpl;
+import org.zlibrary.model.impl.ZLModelFactory;
 
 public class TestTextControlEntryPool extends TestCase {
-    public void test() {
-        ZLTextControlEntryPool zpool = new ZLTextControlEntryPoolImpl();
+	private ZLModelFactory factory = new ZLModelFactory(); 
+	
+	public void test() {
+        ZLTextControlEntryPool zpool = factory.createControlEntryPool();
         byte kind = 0;
         boolean start = true;
         ZLTextParagraphEntry entry = zpool.getControlEntry(kind, start);
