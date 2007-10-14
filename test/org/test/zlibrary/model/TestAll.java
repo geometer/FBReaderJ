@@ -1,4 +1,4 @@
-package org.test.zlibrary.model.test;
+package org.test.zlibrary.model;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
