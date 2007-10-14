@@ -1,7 +1,5 @@
 package org.zlibrary.model;
 
-import java.util.List;
-
 public interface ZLTextModel {
     public enum Kind {
         PLAIN_TEXT_MODEL,
@@ -17,7 +15,7 @@ public interface ZLTextModel {
 
     void addControl(byte textKind, boolean isStart);
     void addText(String text);
-    void addText(List<String> text);
+    void addText(StringBuffer text);
 
     String dump();    
 }

@@ -8,17 +8,11 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Collections;
 
-/**
- * Created by IntelliJ IDEA.
- * User: 465
- * Date: 06.10.2007
- * Time: 12:05:51
- * To change this template use File | Settings | File Templates.
- */
-public class ZLTextParagraphImpl implements ZLTextParagraph {
+
+class ZLTextParagraphImpl implements ZLTextParagraph {
     private List<ZLTextParagraphEntry> myEntries;
 
-    public ZLTextParagraphImpl() {
+    ZLTextParagraphImpl() {
         myEntries = new LinkedList<ZLTextParagraphEntry>();
     }
 

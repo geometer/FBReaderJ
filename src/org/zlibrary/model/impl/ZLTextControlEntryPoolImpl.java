@@ -1,4 +1,4 @@
-package org.zlibrary.model.impl.entry;
+package org.zlibrary.model.impl;
 
 import org.zlibrary.model.entry.ZLTextParagraphEntry;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
@@ -6,12 +6,12 @@ import org.zlibrary.model.entry.ZLTextControlEntryPool;
 import java.util.Map;
 import java.util.HashMap;
 
-public class ZLTextControlEntryPoolImpl implements ZLTextControlEntryPool {
+class ZLTextControlEntryPoolImpl implements ZLTextControlEntryPool {
     public static ZLTextControlEntryPoolImpl myPool;
     private Map<Byte, ZLTextParagraphEntry> myStartEntries;
     private Map<Byte, ZLTextParagraphEntry> myEndEntries;
 
-    public ZLTextControlEntryPoolImpl() {
+    ZLTextControlEntryPoolImpl() {
         myStartEntries = new HashMap<Byte, ZLTextParagraphEntry>();
         myEndEntries = new HashMap<Byte, ZLTextParagraphEntry>();
     }
@@ -25,6 +25,5 @@ public class ZLTextControlEntryPoolImpl implements ZLTextControlEntryPool {
         entry = new ZLTextControlEntryImpl(kind, isStart);
         entries.put(kind, entry);
         return entry;
-
     }
 }
