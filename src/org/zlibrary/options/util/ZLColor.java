@@ -1,14 +1,12 @@
 package org.zlibrary.options.util;
 
-import org.zlibrary.options.util.exceptions.*;
-
 import java.awt.Color;
 
 public class ZLColor {
 	
-	private byte myRed;
-	private byte myGreen;
-	private byte myBlue;
+	private int myRed;
+	private int myGreen;
+	private int myBlue;
 	
 	public int getBlue() {
 		return myBlue;
@@ -20,15 +18,15 @@ public class ZLColor {
 		return myRed;
 	}
 
-	public void setBlue(byte mask) throws InvalidValueException{
+	public void setBlue(int mask){
 		setColor(myRed, myGreen, mask);
 	}
     
-	public void setGreen(byte mask) throws InvalidValueException{
+	public void setGreen(int mask){
     	setColor(myRed, mask, myBlue);
 	}
     
-	public void setRed(byte mask) throws InvalidValueException{
+	public void setRed(int mask){
 		setColor(mask, myGreen, myBlue);
 	}
 	
@@ -67,28 +65,15 @@ public class ZLColor {
 	 * @param green
 	 * @param blue
 	 */
-	public void setColor (byte red, byte green, byte blue) throws InvalidValueException{
-		if (! ((red >= -1) && (red < 256)) ){
-			throw new InvalidValueException
-					  (" Red Mask Value must stay between 0 and 255");
-		}
-		if (! ((green >= 0) && (green < 256)) ){
-			throw new InvalidValueException
-					  (" Green Mask Value must stay between 0 and 255");
-		}
-		if (! ((blue >= 0) && (blue < 256)) ){
-			throw new InvalidValueException
-					  (" Blue Mask Value must stay between 0 and 255");
-		}
+	public void setColor (int red, int green, int blue){
 		myRed = red;
 		myGreen = green;
 		myBlue = blue;
-		
 	}
 	/**
 	 * конструктор с параметрами
 	 */
-	public ZLColor (byte red, byte green, byte blue) throws InvalidValueException{
+	public ZLColor (int red, int green, int blue){
 		setColor(red, green, blue);
 	}
 	
@@ -99,9 +84,9 @@ public class ZLColor {
 	 * @param color
 	 */
 	public void convertFromColor(Color color){
-		myRed = (byte)color.getRed();
-		myGreen = (byte)color.getGreen();
-		myBlue = (byte)color.getBlue();
+		myRed = (int)color.getRed();
+		myGreen = (int)color.getGreen();
+		myBlue = (int)color.getBlue();
 	}
 	
 	/**
@@ -109,8 +94,8 @@ public class ZLColor {
 	 * @param color
 	 * @throws InvalidValueException
 	 */
-	public ZLColor (Color color) throws InvalidValueException{
-		setColor((byte)color.getRed(), (byte)color.getGreen(), (byte)color.getBlue());
+	public ZLColor (Color color){
+		setColor((int)color.getRed(), (int)color.getGreen(), (int)color.getBlue());
 	}
 	
 	/**

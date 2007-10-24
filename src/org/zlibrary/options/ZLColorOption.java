@@ -1,8 +1,8 @@
-package org.zlibrary.options.impl;
+package org.zlibrary.options;
 
 import org.zlibrary.options.util.*;
 
-public final class ZLColorOption extends ZLOptionImpl{
+public final class ZLColorOption extends ZLOption{
 	
 	private long myIntValue;
 	private long myDefaultIntValue;

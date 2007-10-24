@@ -1,6 +1,6 @@
-package org.zlibrary.options.impl;
+package org.zlibrary.options;
 
-public final class ZLIntegerOption extends ZLOptionImpl{
+public final class ZLIntegerOption extends ZLOption{
 	private long myValue;
 	private long myDefaultValue;
 	

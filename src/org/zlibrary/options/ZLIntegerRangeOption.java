@@ -1,6 +1,6 @@
-package org.zlibrary.options.impl;
+package org.zlibrary.options;
 
-public final class ZLIntegerRangeOption extends ZLOptionImpl{
+public final class ZLIntegerRangeOption extends ZLOption{
 	private long myValue;
 	private long myDefaultValue;
 	private long myMinValue;

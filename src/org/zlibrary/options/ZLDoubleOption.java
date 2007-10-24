@@ -1,6 +1,6 @@
-package org.zlibrary.options.impl;
+package org.zlibrary.options;
 
-public final class ZLDoubleOption extends ZLOptionImpl{
+public final class ZLDoubleOption extends ZLOption{
 	
 	private double myValue;
 	private double myDefaultValue;

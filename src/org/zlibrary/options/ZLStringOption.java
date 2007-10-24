@@ -1,8 +1,7 @@
-package org.zlibrary.options.impl;
+package org.zlibrary.options;
 
-import org.zlibrary.options.OptionType;
 
-public final class ZLStringOption extends ZLSimpleOptionImpl {
+public final class ZLStringOption extends ZLSimpleOption {
 	
 	
 	private String myValue;
