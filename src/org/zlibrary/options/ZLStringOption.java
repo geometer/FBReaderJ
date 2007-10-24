@@ -16,12 +16,13 @@ public final class ZLStringOption extends ZLSimpleOption {
 	}
 	
 	public void setValue(String value){
-		
+//		TODO установка значения
 	}
 	
 	public ZLStringOption (String category, String group, String optionName, String defaultValue){
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
+		myValue = myDefaultValue;
 	}
 	
 }

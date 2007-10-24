@@ -1,6 +1,5 @@
 package org.zlibrary.options;
 
-import org.zlibrary.options.*;
 import org.zlibrary.options.util.*;
 
 public final class ZLBoolean3Option extends ZLSimpleOption{
@@ -17,11 +16,12 @@ public final class ZLBoolean3Option extends ZLSimpleOption{
 	}
 	
 	public void setValue(ZLBoolean3 value){
-		
+		//TODO установка значения
 	}
 	
 	public ZLBoolean3Option(String category, String group, String optionName, ZLBoolean3 defaultValue){		
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
+		myValue = myDefaultValue;
 	}
 }

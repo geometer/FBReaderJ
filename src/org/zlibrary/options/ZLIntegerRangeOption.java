@@ -7,19 +7,19 @@ public final class ZLIntegerRangeOption extends ZLOption{
 	private long myMaxValue;
 	
 	public long getValue(){
-		return 0;
+		return myValue;
 	}
 	
 	public long getMinValue(){
-		return 0;
+		return myMinValue;
 	}
 	
 	public long getMaxValue(){
-		return 0;
+		return myMaxValue;
 	}
 	
 	public void setValue(long value){
-		
+//		TODO установка значения
 	}
 	
 	public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue){
@@ -27,6 +27,7 @@ public final class ZLIntegerRangeOption extends ZLOption{
 		myDefaultValue = defaultValue;
 		myMinValue = minValue;
 		myMaxValue = maxValue;
+		myValue = myDefaultValue;
 	}
 	
 }

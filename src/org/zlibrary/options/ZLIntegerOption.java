@@ -5,16 +5,17 @@ public final class ZLIntegerOption extends ZLOption{
 	private long myDefaultValue;
 	
 	public long getValue(){
-		return 0;
+		return myValue;
 	}
 	
 	public void setValue(long value){
-		
+//		TODO установка значения
 	}
 	
 	public ZLIntegerOption (String category, String group, String optionName, int defaultValue){
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
+		myValue = myDefaultValue;
 	}
 	
 }

@@ -10,16 +10,17 @@ public final class ZLBooleanOption extends ZLSimpleOption{
 	}
 
 	public boolean getValue(){
-		return true;
+		return myValue;
 	}
 	
 	public void setValue(boolean value){
-		
+		//TODO установка значения
 	}
 	
 	public ZLBooleanOption (String category, String group, String optionName, boolean defaultValue){
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
+		myValue = myDefaultValue;
 	}
 
 }

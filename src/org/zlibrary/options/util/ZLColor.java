@@ -105,4 +105,8 @@ public class ZLColor {
 		return new Color(myRed, myGreen, myBlue);
 	}
 	
+	public int getIntValue(){
+		//TODO возвращение цвета одним числом
+		return 0;
+	}
 }
