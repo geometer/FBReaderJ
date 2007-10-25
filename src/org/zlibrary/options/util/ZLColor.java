@@ -2,91 +2,57 @@ package org.zlibrary.options.util;
 
 import java.awt.Color;
 
+/**
+ * сущность "цвет". представление здесь - стандартные RGB компоненты
+ * @author јдминистратор
+ *
+ */
 public class ZLColor {
 	
-	private int myRed;
-	private int myGreen;
-	private int myBlue;
+	private int myRed = 0;
+	private int myGreen = 0;
+	private int myBlue = 0;
 	
-	public int getBlue() {
-		return myBlue;
-	}
-	public int getGreen() {
-		return myGreen;
-	}
-	public int getRed() {
-		return myRed;
-	}
-
-	public void setBlue(int mask){
-		setColor(myRed, myGreen, mask);
-	}
-    
-	public void setGreen(int mask){
-    	setColor(myRed, mask, myBlue);
-	}
-    
-	public void setRed(int mask){
-		setColor(mask, myGreen, myBlue);
-	}
-	
-	public boolean isInitialized(){
-		return (myRed != -1);
-	}
 	/**
 	 * перекрываем метод toString,
 	 * по сути - кодировка в дес€тичную запись
 	 */
 	public String toString(){
-		if (!isInitialized()){
-			return "not initialized";
-		} else {
-			return "" + myRed + ", " + myGreen + ", " + myBlue;
-		}
+		return "" + myRed + ", " + myGreen + ", " + myBlue;
 	}
 	
 	/**
-	 * конструктор по умолчанию делает цвет черным
+	 * €вл€етс€ ли число корректным значением компоненты ргб цвета.
 	 */
-	public ZLColor (){
-		myRed = 0;
-		myGreen = 0;
-		myBlue = 0;
+	private boolean isCorrectComponent(int value){
+		return (value >=0 && value <= 255);
 	}
-	
 	/**
-	 * с инициализацией сразу трех компонент цвета есть одна проблема
-	 * она состоит в том что если мы сначала удачно прочли красный
-	 * а потом неудачно прочли синий, то красный то мы уже успели
-	 * помен€ть а вот на синем вылетели с иксепшоном и таким образом
-	 * получили полуторный непон€тный цвет, €вно не то чего хотели
-	 * поэтому приходитс€ определ€ть такой метод, а остальные через него
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * устанавливаем только те компоненты, которые заданы корректно,
+	 * то есть €вл€ютс€ неотрицательным числом < 256
 	 */
 	public void setColor (int red, int green, int blue){
-		myRed = red;
-		myGreen = green;
-		myBlue = blue;
-	}
-	/**
-	 * конструктор с параметрами
-	 */
-	public ZLColor (int red, int green, int blue){
-		setColor(red, green, blue);
+		if (isCorrectComponent(red))
+			myRed = red;
+	    if (isCorrectComponent(green))
+			myGreen = green;
+		if (isCorrectComponent(blue))	
+			myBlue = blue;
 	}
 	
 	/**
-	 * этот метод отлично отражает бессмысленность
-	 * данной структуры. когда вы€снилось что RGBColor надо рисовать
-	 * пришлось научитьс€ приводить мой цвет в авт-шный
+	 * конвертирование в ј¬“шный цвет.
 	 * @param color
 	 */
+	//TODO решить нужно ли это вообще
 	public void convertFromColor(Color color){
 		myRed = (int)color.getRed();
 		myGreen = (int)color.getGreen();
 		myBlue = (int)color.getBlue();
+	}
+	
+	public Color convertToColor(){
+		return new Color(myRed, myGreen, myBlue);
 	}
 	
 	/**
@@ -97,16 +63,26 @@ public class ZLColor {
 	public ZLColor (Color color){
 		setColor((int)color.getRed(), (int)color.getGreen(), (int)color.getBlue());
 	}
+
+	/**
+	 * @return цвет одним числом, чтобы хранить в пам€ти меньше =)
+	 */	
+	public int getIntValue(){
+		return myRed*1000000 + myGreen*1000 + myBlue;
+	}
 	
 	/**
-	 * @return наш цвет как человеческий цвет из awt
+	 * конструктор по умолчанию делает цвет черным
 	 */
-	public Color convertToColor(){
-		return new Color(myRed, myGreen, myBlue);
+	public ZLColor (){
 	}
 	
-	public int getIntValue(){
-		//TODO возвращение цвета одним числом
-		return 0;
+	/**
+	 * конструктор с параметрами
+	 */
+	public ZLColor (int red, int green, int blue){
+		setColor(red, green, blue);
 	}
+	
+	
 }

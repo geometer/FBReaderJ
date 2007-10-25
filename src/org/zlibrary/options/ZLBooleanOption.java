@@ -1,5 +1,10 @@
 package org.zlibrary.options;
 
+/**
+ * класс логическая опция.
+ * @author Администратор
+ *
+ */
 public final class ZLBooleanOption extends ZLSimpleOption{
 	
 	private boolean myValue;
@@ -14,7 +19,11 @@ public final class ZLBooleanOption extends ZLSimpleOption{
 	}
 	
 	public void setValue(boolean value){
-		//TODO установка значения
+		myValue = value;
+	}
+
+	public void setValueToDefault(){
+		myValue = myDefaultValue;
 	}
 	
 	public ZLBooleanOption (String category, String group, String optionName, boolean defaultValue){

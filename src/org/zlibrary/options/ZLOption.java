@@ -5,25 +5,35 @@ public abstract class ZLOption {
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 	
-	public String myCategory;
-	public String myGroup;
-	public String myOptionName;
-	public boolean myIsSynchronized;
-
-	public void clearGroup(String group){
-		
-	}
+	protected String myCategory;
+	protected String myGroup;
+	protected String myOptionName;
+	//protected boolean myIsSynchronized;
 	
-	//private final ZLOption& operator = (final ZLOptions options);
+	/**
+	 * чтобы не забыть определить этот метод во всех final наследниках. 
+	 * установка значения в дефолт. полезный метод.
+	 */
+	public abstract void setValueToDefault();
 	
+	/**
+	 * конструктор.
+	 * @param category
+	 * @param group
+	 * @param optionName
+	 */
+	//TODO когда разберусь написать сюда джавадок
 	public ZLOption (String category, String group, String optionName){
-		
+		myCategory = category;
+		myGroup = group;
+		myOptionName = optionName;
 	}
+	
+	//public void clearGroup(String group){}
+	//private final ZLOption& operator = (final ZLOptions options);
 	//public boolean isAutoSavingSupported();
     //public void startAutoSave(int seconds);
-		
 	//protected ZLOption(String category, String group, String optionName);
-
-	/*private ZLOption(const ZLOption&);	
-	 *private final ZLOption& operator = (const ZLOption&);*/
+	//private ZLOption(const ZLOption&);	
+	//private final ZLOption& operator = (const ZLOption&);
 }

@@ -1,8 +1,10 @@
 package org.zlibrary.options;
 
-
+/**
+ * класс строковая опция.
+ * @author Администратор
+ */
 public final class ZLStringOption extends ZLSimpleOption {
-	
 	
 	private String myValue;
 	private String myDefaultValue;
@@ -16,7 +18,11 @@ public final class ZLStringOption extends ZLSimpleOption {
 	}
 	
 	public void setValue(String value){
-//		TODO установка значения
+		myValue = value;
+	}
+	
+	public void setValueToDefault(){
+		myValue = myDefaultValue;
 	}
 	
 	public ZLStringOption (String category, String group, String optionName, String defaultValue){

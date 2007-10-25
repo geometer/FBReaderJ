@@ -1,5 +1,11 @@
 package org.zlibrary.options;
 
+/**
+ * класс ранжированная целочисленная опция. есть верхний и нижний
+ * пределы, которые тут же и указываются.
+ * @author Администратор
+ *
+ */
 public final class ZLIntegerRangeOption extends ZLOption{
 	private long myValue;
 	private long myDefaultValue;
@@ -19,14 +25,23 @@ public final class ZLIntegerRangeOption extends ZLOption{
 	}
 	
 	public void setValue(long value){
-//		TODO установка значения
+		if ((myMinValue <= value) && (myMaxValue >= value))
+			myValue = value;
+	}
+	
+	public void setValueToDefault(){
+		myValue = myDefaultValue;
 	}
 	
 	public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue){
 		super(category, group, optionName);
-		myDefaultValue = defaultValue;
 		myMinValue = minValue;
 		myMaxValue = maxValue;
+		//страхуемся от ошибки программиста =)
+		if ((myMinValue <= defaultValue) && (myMaxValue >= defaultValue))
+			myDefaultValue = defaultValue;
+		else
+			myDefaultValue = myMinValue;
 		myValue = myDefaultValue;
 	}
 	

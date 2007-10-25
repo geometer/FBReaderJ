@@ -1,5 +1,10 @@
 package org.zlibrary.options;
 
+/**
+ * класс дробная опция.
+ * @author Администратор
+ *
+ */
 public final class ZLDoubleOption extends ZLOption{
 	
 	private double myValue;
@@ -10,7 +15,11 @@ public final class ZLDoubleOption extends ZLOption{
 	}
 	
 	public void setValue(double value){
-		//TODO установка значения
+		myValue = value;
+	}
+
+	public void setValueToDefault(){
+		myValue = myDefaultValue;
 	}
 	
 	public ZLDoubleOption (String category, String group, String optionName, double defaultValue){

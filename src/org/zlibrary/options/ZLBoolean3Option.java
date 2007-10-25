@@ -2,6 +2,12 @@ package org.zlibrary.options;
 
 import org.zlibrary.options.util.*;
 
+/**
+ * класс опция со значением из трехзначной логики
+ * значения бывают "истина", "ложь" и "не знаю".
+ * @author Администратор
+ *
+ */
 public final class ZLBoolean3Option extends ZLSimpleOption{
 	
 	private	ZLBoolean3 myValue;
@@ -16,7 +22,11 @@ public final class ZLBoolean3Option extends ZLSimpleOption{
 	}
 	
 	public void setValue(ZLBoolean3 value){
-		//TODO установка значения
+		myValue = value;
+	}
+	
+	public void setValueToDefault(){
+		myValue = myDefaultValue;
 	}
 	
 	public ZLBoolean3Option(String category, String group, String optionName, ZLBoolean3 defaultValue){		
