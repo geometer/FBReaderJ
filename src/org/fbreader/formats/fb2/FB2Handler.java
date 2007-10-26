@@ -9,7 +9,21 @@ import org.zlibrary.model.impl.ZLModelFactory;
 class FB2Handler extends DefaultHandler {
 	private ZLTextModel myModel;
 	private boolean myParagraphExists = false;
-	private String myBuffer;
+	private String myBuffer = "";
+	
+	private void flushTextBufferToParagraph() {
+		if (myBuffer != "") {
+			myModel.addText(myBuffer);
+			myBuffer = "";
+		}		
+	}
+	
+	private void addControl(Byte tag, boolean start) {
+		if (myParagraphExists) {
+			flushTextBufferToParagraph();
+			myModel.addControl((byte) tag, start);
+		}	
+	}
 	
 	public FB2Handler(ZLTextModel model) {
 		myModel = model;
@@ -27,9 +41,18 @@ class FB2Handler extends DefaultHandler {
 		switch (tag) {
 		case P:
 			if (myParagraphExists) {
-				myModel.addText(myBuffer);
+				flushTextBufferToParagraph();
 				myParagraphExists = false;
 			}			
+			break;
+			
+		case SUB:
+		case SUP:
+		case CODE:
+		case EMPHASIS:
+		case STRONG:
+		case STRIKETHROUGH:
+			addControl((byte) tag.ordinal(), false);
 			break;
 			
 		default:
@@ -51,6 +74,15 @@ class FB2Handler extends DefaultHandler {
 			myModel.addParagraphInternal((new ZLModelFactory()).createParagraph());
 			myParagraphExists = true;
 			break;
+		
+		case SUB:
+		case SUP:
+		case CODE:
+		case EMPHASIS:
+		case STRONG:
+		case STRIKETHROUGH:
+			addControl((byte) tag.ordinal(), true);		
+			break;
 			
 		default:
 			break;
@@ -61,7 +93,9 @@ class FB2Handler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		// TODO Auto-generated method stub
-		myBuffer = String.valueOf(ch, start, length);
+		if (myParagraphExists) {
+			myBuffer = String.valueOf(ch, start, length);
+		}		
 	}
 
 }
