@@ -27,6 +27,7 @@ public class ZLColor {
 	private boolean isCorrectComponent(int value){
 		return (value >=0 && value <= 255);
 	}
+	
 	/**
 	 * устанавливаем только те компоненты, которые заданы корректно,
 	 * то есть €вл€ютс€ неотрицательным числом < 256
@@ -84,5 +85,21 @@ public class ZLColor {
 		setColor(red, green, blue);
 	}
 	
+	/**
+	 * перекрываем метод equals. цвета считаем равными при равенстве всех компонент
+	 */
+	public boolean equals (Object o){
+		if (o == this) 
+			return true;
+		
+		if (! (o.getClass() == this.getClass()))
+			return false;
+		
+		ZLColor zlc = (ZLColor) o;
+		
+		return ((zlc.myRed == this.myRed) &&
+				(zlc.myGreen == this.myGreen) &&
+				(zlc.myBlue == this.myBlue));
+	}
 	
 }

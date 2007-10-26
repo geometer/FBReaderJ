@@ -23,17 +23,54 @@ public abstract class ZLOption {
 	 * @param optionName
 	 */
 	//TODO когда разберусь написать сюда джавадок
-	public ZLOption (String category, String group, String optionName){
+	protected ZLOption (String category, String group, String optionName){
 		myCategory = category;
 		myGroup = group;
 		myOptionName = optionName;
 	}
 	
+	/**
+	 * @return имя опции. вероятно нужно будет во view
+	 */
+	public String getName(){
+		return myOptionName;
+	}
+	
+	/**
+	 * @return "группу" опции. вероятно нужно будет во view
+	 */
+	public String getGroup(){
+		return myGroup;
+	}
+	
+	/**
+	 * @return "категорию" опции. вероятно нужно будет во view
+	 */
+	public String getCategory(){
+		return myCategory;
+	}
+	
+	/**
+	 * проверяем две опции на равенство
+	 */
+	public boolean equals(Object o){
+		if (o == this) 
+			return true;
+		
+		if (! (o.getClass() == this.getClass()))
+			return false;
+		
+		ZLOption op = (ZLOption) o;
+			
+		return ((op.myOptionName == this.myOptionName) && 
+				(op.myCategory == this.myCategory) &&
+				(op.myGroup == this.myGroup));
+			
+	}
 	//public void clearGroup(String group){}
 	//private final ZLOption& operator = (final ZLOptions options);
 	//public boolean isAutoSavingSupported();
     //public void startAutoSave(int seconds);
-	//protected ZLOption(String category, String group, String optionName);
 	//private ZLOption(const ZLOption&);	
 	//private final ZLOption& operator = (const ZLOption&);
 }

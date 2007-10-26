@@ -7,7 +7,6 @@ package org.zlibrary.options;
  *
  */
 abstract class ZLSimpleOption extends ZLOption {
-	
 	/**
 	 * во всех final наследниках должен быть метод,
 	 * отдающий тип этого наследника.
