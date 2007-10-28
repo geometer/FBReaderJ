@@ -11,6 +11,8 @@ public class TestAll {
         suite.addTestSuite(TestTextEntry.class);
         suite.addTestSuite(TestTextParagraph.class);
         suite.addTestSuite(TestZLTextModel.class);       
+        suite.addTestSuite(TestTreeParagraph.class); 
+        suite.addTestSuite(TestTreeModel.class); 
         return suite;
     }
 }

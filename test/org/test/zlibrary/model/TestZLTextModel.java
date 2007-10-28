@@ -1,6 +1,8 @@
 package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
+
+import org.zlibrary.model.ZLTextForcedControlEntry;
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
 import org.zlibrary.model.impl.ZLModelFactory;
@@ -49,8 +51,15 @@ public class TestZLTextModel extends TestCase {
         model.addControl((byte)1, true);
         model.addControl((byte)1, false);
         model.addControl((byte)0, true);
-        model.addControl((byte)0, false);
-        
+        model.addControl((byte)0, false);   
     }
-
+    
+    public void testAddForcedControl() {
+        ZLTextModel model = factory.createModel();
+        ZLTextParagraph paragraph = factory.createParagraph();
+        model.addParagraphInternal(factory.createParagraph());
+        ZLTextForcedControlEntry control = factory.createForcedControlEntry();
+        model.addControl(control);
+        assertEquals(model.getParagraph(0).getEntryNumber(), 1);       
+    }
 }
