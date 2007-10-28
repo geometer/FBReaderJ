@@ -1,5 +1,6 @@
 package org.zlibrary.model.impl;
 
+import org.zlibrary.model.ZLTextForcedControlEntry;
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
 import org.zlibrary.model.ZLTextParagraphEntry;
@@ -39,7 +40,10 @@ class ZLTextModelImpl implements ZLTextModel {
         paragraph.addEntry(new ZLTextEntryImpl(text.toString()));
     }
     
-	//void addControl(ZLTextForcedControlEntryImpl entry);
+    public void addControl(ZLTextForcedControlEntry entry) {
+    	myParagraphs.getLast().addEntry(entry);
+    }
+    
 	public void addHyperlinkControl(byte textKind, String label) {
 		myParagraphs.getLast().addEntry(new ZLTextHyperlinkControlEntryImpl(textKind, label));
 	}

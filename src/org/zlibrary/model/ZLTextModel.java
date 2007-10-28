@@ -13,7 +13,7 @@ public interface ZLTextModel {
     void addText(StringBuffer text);
 
 
-	//void addControl(ZLTextForcedControlEntryImpl entry);
+	void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, String label);
 	//void addImage(String id, ZLImageMap imageMap, short vOffset);
 	void addFixedHSpace(byte length);

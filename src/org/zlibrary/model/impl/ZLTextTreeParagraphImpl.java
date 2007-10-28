@@ -1,6 +1,7 @@
 package org.zlibrary.model.impl;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.zlibrary.model.ZLTextTreeParagraph;
@@ -9,7 +10,7 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 	private boolean myIsOpen;
 	private	int myDepth;
 	private	ZLTextTreeParagraph myParent;
-	private	List<ZLTextTreeParagraph> myChildren;
+	private	List<ZLTextTreeParagraph> myChildren = new LinkedList<ZLTextTreeParagraph>();
 	
 	ZLTextTreeParagraphImpl() {}
 	
