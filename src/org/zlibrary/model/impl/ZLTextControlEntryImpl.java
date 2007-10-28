@@ -3,7 +3,7 @@ package org.zlibrary.model.impl;
 import org.zlibrary.model.ZLTextParagraphEntry;
 
 
-class ZLTextControlEntryImpl implements ZLTextParagraphEntry {
+public class ZLTextControlEntryImpl implements ZLTextParagraphEntry {
     private byte myKind;
     private boolean myStart;
 
