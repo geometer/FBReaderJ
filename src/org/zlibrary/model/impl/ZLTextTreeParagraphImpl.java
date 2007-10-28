@@ -11,9 +11,9 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 	private	ZLTextTreeParagraph myParent;
 	private	List<ZLTextTreeParagraph> myChildren;
 	
-	public ZLTextTreeParagraphImpl() {}
+	ZLTextTreeParagraphImpl() {}
 	
-	public ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent) {
+	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent) {
 		myIsOpen = false;
 		myParent = parent;
 		if (parent != null) {
