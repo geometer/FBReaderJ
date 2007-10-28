@@ -2,9 +2,8 @@ package org.zlibrary.model.impl;
 
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.entry.ZLTextControlEntry;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
-import org.zlibrary.model.entry.ZLTextEntry;
+
 
 public class ZLModelFactory {
     public ZLTextModel createModel() {
@@ -15,11 +14,11 @@ public class ZLModelFactory {
         return new ZLTextParagraphImpl();
     }
     
-    public ZLTextControlEntry createControlEntry(byte kind, boolean isStart) {
+    public ZLTextControlEntryImpl createControlEntry(byte kind, boolean isStart) {
     	return new ZLTextControlEntryImpl(kind, isStart);
     }
     
-    public ZLTextEntry createTextEntry(String text) {
+    public ZLTextEntryImpl createTextEntry(String text) {
     	return new ZLTextEntryImpl(text);
     }
     

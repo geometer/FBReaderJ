@@ -1,8 +1,8 @@
 package org.zlibrary.model.impl;
 
 import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.entry.ZLTextEntry;
+import org.zlibrary.model.ZLTextParagraphEntry;
+import org.zlibrary.model.impl.ZLTextEntryImpl;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -31,8 +31,8 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
     public int getTextLength() {
         int size = 0;
         for (ZLTextParagraphEntry entry: myEntries) {
-            if (entry instanceof ZLTextEntry) {
-                size += ((ZLTextEntry)entry).getDataLength();
+            if (entry instanceof ZLTextEntryImpl) {
+                size += ((ZLTextEntryImpl)entry).getDataLength();
             }
         }
         return size;

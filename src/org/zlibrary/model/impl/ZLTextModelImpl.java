@@ -2,19 +2,13 @@ package org.zlibrary.model.impl;
 
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.entry.ZLTextEntry;
-import org.zlibrary.model.entry.ZLTextControlEntry;
+import org.zlibrary.model.ZLTextParagraphEntry;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
 import java.util.LinkedList;
 
 class ZLTextModelImpl implements ZLTextModel {
     private LinkedList<ZLTextParagraph> myParagraphs = new LinkedList<ZLTextParagraph>();
     private ZLTextControlEntryPool myEntryPool = new ZLTextControlEntryPoolImpl();
-
-    public Kind getKind() {
-        return Kind.PLAIN_TEXT_MODEL;
-    }
 
     public int getParagraphsNumber() {
         return myParagraphs.size();
@@ -26,6 +20,10 @@ class ZLTextModelImpl implements ZLTextModel {
 
     public void addParagraphInternal(ZLTextParagraph paragraph) {
         this.myParagraphs.add(paragraph);
+    }
+    
+    public void removeParagraphInternal(int index) {
+    	this.myParagraphs.remove(index);
     }
 
     public void addControl(byte textKind, boolean isStart) {
@@ -40,18 +38,27 @@ class ZLTextModelImpl implements ZLTextModel {
         ZLTextParagraph paragraph = myParagraphs.getLast();
         paragraph.addEntry(new ZLTextEntryImpl(text.toString()));
     }
+    
+	//void addControl(ZLTextForcedControlEntryImpl entry);
+	public void addHyperlinkControl(byte textKind, String label) {
+		myParagraphs.getLast().addEntry(new ZLTextHyperlinkControlEntryImpl(textKind, label));
+	}
+	//void addImage(String id, ZLImageMap imageMap, short vOffset);
+	public void addFixedHSpace(byte length) {
+		myParagraphs.getLast().addEntry(new ZLTextFixedHSpaceEntryImpl(length));
+	}	
 
     public String dump() {
         StringBuilder sb = new StringBuilder();
         for (ZLTextParagraph paragraph: myParagraphs) {
             sb.append("[PARAGRAPH]\n");
             for (ZLTextParagraphEntry entry: paragraph.getEntries()) {
-                if (entry instanceof ZLTextEntry) {
+                if (entry instanceof ZLTextEntryImpl) {
                     sb.append("[TEXT]");
-                    sb.append(((ZLTextEntry)entry).getData());
+                    sb.append(((ZLTextEntryImpl)entry).getData());
                     sb.append("[/TEXT]");
-                } else if (entry instanceof ZLTextControlEntry) {
-                    ZLTextControlEntry entryControl = (ZLTextControlEntry)entry;
+                } else if (entry instanceof ZLTextControlEntryImpl) {
+                    ZLTextControlEntryImpl entryControl = (ZLTextControlEntryImpl)entry;
                     if (entryControl.isStart())
                         sb.append("[CONTROL "+entryControl.getKind()+"]");
                     else

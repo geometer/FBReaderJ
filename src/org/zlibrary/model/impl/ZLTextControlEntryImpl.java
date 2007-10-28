@@ -1,8 +1,9 @@
 package org.zlibrary.model.impl;
 
-import org.zlibrary.model.entry.ZLTextControlEntry;
+import org.zlibrary.model.ZLTextParagraphEntry;
 
-class ZLTextControlEntryImpl implements ZLTextControlEntry {
+
+class ZLTextControlEntryImpl implements ZLTextParagraphEntry {
     private byte myKind;
     private boolean myStart;
 
@@ -17,5 +18,9 @@ class ZLTextControlEntryImpl implements ZLTextControlEntry {
 
     public boolean isStart() {
         return myStart;
+    }
+    
+    public  boolean isHyperlink() {
+    	return false;
     }
 }
