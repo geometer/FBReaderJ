@@ -2,7 +2,7 @@ package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.model.ZLTextParagraphEntry;
 import org.zlibrary.model.impl.ZLModelFactory;
 
 public class TestTextControlEntryPool extends TestCase {
