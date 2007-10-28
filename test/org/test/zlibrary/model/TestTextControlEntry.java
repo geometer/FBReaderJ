@@ -13,6 +13,7 @@ public class TestTextControlEntry extends TestCase {
         boolean start = true;
         byte kind = (byte)0;
         ZLTextControlEntryImpl entry = factory.createControlEntry(kind, start);
+        assertEquals(entry.isHyperlink(), false);
         assertEquals(entry.getKind(), kind);
         assertEquals(entry.isStart(), start);
     }
