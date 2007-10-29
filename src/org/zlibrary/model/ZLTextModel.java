@@ -1,5 +1,7 @@
 package org.zlibrary.model;
 
+import org.zlibrary.model.entry.ZLTextForcedControlEntry;
+
 public interface ZLTextModel {
     
     int getParagraphsNumber();

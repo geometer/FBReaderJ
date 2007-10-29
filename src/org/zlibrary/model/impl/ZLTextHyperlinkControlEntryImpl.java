@@ -1,6 +1,8 @@
 package org.zlibrary.model.impl;
 
-class ZLTextHyperlinkControlEntryImpl extends ZLTextControlEntryImpl {
+import org.zlibrary.model.entry.ZLTextHyperlinkControlEntry;
+
+class ZLTextHyperlinkControlEntryImpl extends ZLTextControlEntryImpl implements ZLTextHyperlinkControlEntry {
 	private String myLabel;
 
 	ZLTextHyperlinkControlEntryImpl(byte kind, String label) {
@@ -8,7 +10,7 @@ class ZLTextHyperlinkControlEntryImpl extends ZLTextControlEntryImpl {
 		myLabel = label;
 	}
 	
-	public String label() {
+	public String getLabel() {
 		return myLabel;
 	}
 	 

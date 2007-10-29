@@ -1,9 +1,9 @@
 package org.zlibrary.model.impl;
 
-import org.zlibrary.model.ZLTextForcedControlEntry;
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
+import org.zlibrary.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.model.entry.ZLTextParagraphEntry;
 
 import java.util.LinkedList;
