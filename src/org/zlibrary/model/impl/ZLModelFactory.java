@@ -6,7 +6,9 @@ import org.zlibrary.model.ZLTextParagraph;
 import org.zlibrary.model.ZLTextPlainModel;
 import org.zlibrary.model.ZLTextTreeModel;
 import org.zlibrary.model.ZLTextTreeParagraph;
+import org.zlibrary.model.entry.ZLTextControlEntry;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
+import org.zlibrary.model.entry.ZLTextEntry;
 import org.zlibrary.model.entry.ZLTextParagraphEntry;
 
 
@@ -41,11 +43,11 @@ public class ZLModelFactory {
     }
 
     //entries
-    public ZLTextControlEntryImpl createControlEntry(byte kind, boolean isStart) {
+    public ZLTextControlEntry createControlEntry(byte kind, boolean isStart) {
     	return new ZLTextControlEntryImpl(kind, isStart);
     }
     
-    public ZLTextEntryImpl createTextEntry(String text) {
+    public ZLTextEntry createTextEntry(String text) {
     	return new ZLTextEntryImpl(text);
     }
     

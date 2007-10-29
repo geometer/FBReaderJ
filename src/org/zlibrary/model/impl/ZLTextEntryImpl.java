@@ -2,7 +2,7 @@ package org.zlibrary.model.impl;
 
 import org.zlibrary.model.entry.ZLTextEntry;
 
-public class ZLTextEntryImpl implements ZLTextEntry {
+class ZLTextEntryImpl implements ZLTextEntry {
     private String myData;
 
     ZLTextEntryImpl(String data) {

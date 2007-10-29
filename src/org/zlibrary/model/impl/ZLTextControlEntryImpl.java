@@ -2,7 +2,7 @@ package org.zlibrary.model.impl;
 
 import org.zlibrary.model.entry.ZLTextControlEntry;
 
-public class ZLTextControlEntryImpl implements ZLTextControlEntry {
+class ZLTextControlEntryImpl implements ZLTextControlEntry {
     private byte myKind;
     private boolean myStart;
 
