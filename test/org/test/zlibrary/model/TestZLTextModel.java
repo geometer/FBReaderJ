@@ -2,10 +2,10 @@ package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.model.ZLTextForcedControlEntry;
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
 import org.zlibrary.model.entry.ZLTextEntry;
+import org.zlibrary.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.model.impl.ZLModelFactory;
 
 public class TestZLTextModel extends TestCase {
