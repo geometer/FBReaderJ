@@ -1,4 +1,4 @@
-package org.zlibrary.model;
+package org.zlibrary.model.entry;
 
 public interface ZLTextParagraphEntry {
     enum Kind {

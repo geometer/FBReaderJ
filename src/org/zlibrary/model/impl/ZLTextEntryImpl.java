@@ -1,8 +1,8 @@
 package org.zlibrary.model.impl;
 
-import org.zlibrary.model.ZLTextParagraphEntry;
+import org.zlibrary.model.entry.ZLTextEntry;
 
-public class ZLTextEntryImpl implements ZLTextParagraphEntry {
+public class ZLTextEntryImpl implements ZLTextEntry {
     private String myData;
 
     ZLTextEntryImpl(String data) {

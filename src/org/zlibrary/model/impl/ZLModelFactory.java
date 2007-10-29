@@ -3,11 +3,11 @@ package org.zlibrary.model.impl;
 import org.zlibrary.model.ZLTextForcedControlEntry;
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.ZLTextParagraphEntry;
 import org.zlibrary.model.ZLTextPlainModel;
 import org.zlibrary.model.ZLTextTreeModel;
 import org.zlibrary.model.ZLTextTreeParagraph;
 import org.zlibrary.model.entry.ZLTextControlEntryPool;
+import org.zlibrary.model.entry.ZLTextParagraphEntry;
 
 
 public class ZLModelFactory {

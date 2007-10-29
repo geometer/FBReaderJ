@@ -32,7 +32,6 @@ class ZLTextForcedControlEntryImpl implements  ZLTextForcedControlEntry {
 		//myAlignmentType = (ZLTextAlignmentType)(address[3]);		
 	}
     
-	//todo - question!!!!  
 	public boolean leftIndentSupported() {
 		int a = myMask & SUPPORT_LEFT_INDENT;
 		return (a != 0);

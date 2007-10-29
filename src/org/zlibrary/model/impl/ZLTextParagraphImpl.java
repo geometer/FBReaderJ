@@ -1,7 +1,7 @@
 package org.zlibrary.model.impl;
 
 import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.ZLTextParagraphEntry;
+import org.zlibrary.model.entry.ZLTextParagraphEntry;
 import org.zlibrary.model.impl.ZLTextEntryImpl;
 
 import java.util.List;
