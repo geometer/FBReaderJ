@@ -1,7 +1,8 @@
 package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
-import org.zlibrary.model.impl.ZLTextEntryImpl;
+
+import org.zlibrary.model.entry.ZLTextEntry;
 import org.zlibrary.model.impl.ZLModelFactory;
 
 public class TestTextEntry extends TestCase {
@@ -9,7 +10,7 @@ public class TestTextEntry extends TestCase {
 
     public void test() {
         String str = "marina";
-        ZLTextEntryImpl entry = factory.createTextEntry(str);
+        ZLTextEntry entry = factory.createTextEntry(str);
         assertEquals(entry.getData(), str);
         assertEquals(entry.getDataLength(), str.length());
     }

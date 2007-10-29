@@ -1,8 +1,8 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.model.ZLTextParagraphEntry;
+import org.zlibrary.model.entry.ZLTextControlEntry;
+import org.zlibrary.model.entry.ZLTextParagraphEntry;
 import org.zlibrary.model.impl.ZLModelFactory;
-import org.zlibrary.model.impl.ZLTextControlEntryImpl;
 
 import junit.framework.TestCase;
 
@@ -12,7 +12,7 @@ public class TestTextControlEntry extends TestCase {
 	public void test() {
         boolean start = true;
         byte kind = (byte)0;
-        ZLTextControlEntryImpl entry = factory.createControlEntry(kind, start);
+        ZLTextControlEntry entry = factory.createControlEntry(kind, start);
         assertEquals(entry.isHyperlink(), false);
         assertEquals(entry.getKind(), kind);
         assertEquals(entry.isStart(), start);

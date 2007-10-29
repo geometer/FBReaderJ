@@ -5,8 +5,8 @@ import junit.framework.TestCase;
 import org.zlibrary.model.ZLTextForcedControlEntry;
 import org.zlibrary.model.ZLTextModel;
 import org.zlibrary.model.ZLTextParagraph;
+import org.zlibrary.model.entry.ZLTextEntry;
 import org.zlibrary.model.impl.ZLModelFactory;
-import org.zlibrary.model.impl.ZLTextEntryImpl;
 
 public class TestZLTextModel extends TestCase {
     private ZLModelFactory factory = new ZLModelFactory(); 
@@ -30,12 +30,12 @@ public class TestZLTextModel extends TestCase {
         assertEquals(model.getParagraphsNumber(), 2);
         assertEquals(model.getParagraph(0), paragraph);
         model.addText("addText");
-        assertEquals(((ZLTextEntryImpl)model.getParagraph(1).getEntries().get(0)).getData(), "addText");
+        assertEquals(((ZLTextEntry)(model.getParagraph(1).getEntries().get(0))).getData(), "addText");
         StringBuffer sb = new StringBuffer();
         sb.append("1");
         sb.append("2");
         model.addText(sb);
-        assertEquals(((ZLTextEntryImpl)model.getParagraph(1).getEntries().get(1)).getData(), "12");
+        assertEquals(((ZLTextEntry)model.getParagraph(1).getEntries().get(1)).getData(), "12");
     }
 
     public void testAddControl() {
