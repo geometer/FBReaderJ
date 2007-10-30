@@ -11,7 +11,6 @@ import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.text.model.entry.ZLTextFixedHSpaceEntry;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.entry.ZLTextHyperlinkControlEntry;
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 
 public class ZLModelFactory {
