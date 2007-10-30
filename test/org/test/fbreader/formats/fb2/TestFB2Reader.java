@@ -2,7 +2,7 @@ package org.test.fbreader.formats.fb2;
 
 import org.fbreader.formats.fb2.FB2Reader;
 import org.fbreader.formats.fb2.FB2Tag;
-import org.zlibrary.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextModel;
 
 import junit.framework.TestCase;
 

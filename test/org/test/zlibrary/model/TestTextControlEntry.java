@@ -1,8 +1,8 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.model.entry.ZLTextControlEntry;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.entry.ZLTextControlEntry;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 
 import junit.framework.TestCase;
 

@@ -1,7 +1,7 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.model.ZLTextTreeModel;
-import org.zlibrary.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.ZLTextTreeModel;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 
 import junit.framework.TestCase;
 

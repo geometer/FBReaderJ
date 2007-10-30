@@ -1,9 +1,10 @@
 package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
-import org.zlibrary.model.entry.ZLTextControlEntryPool;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.impl.ZLModelFactory;
+
+import org.zlibrary.text.model.entry.ZLTextControlEntryPool;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class TestTextControlEntryPool extends TestCase {
 	private ZLModelFactory factory = new ZLModelFactory(); 

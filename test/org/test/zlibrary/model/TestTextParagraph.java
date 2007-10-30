@@ -1,7 +1,8 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.impl.ZLModelFactory;
+
 import junit.framework.TestCase;
 
 public class TestTextParagraph extends TestCase {
