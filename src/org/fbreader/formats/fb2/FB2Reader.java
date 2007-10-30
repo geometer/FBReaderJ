@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.xml.parsers.*;
 
 import org.xml.sax.SAXException;
-import org.zlibrary.model.ZLTextModel;
-import org.zlibrary.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class FB2Reader {
 	private String myFileName;

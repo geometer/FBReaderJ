@@ -1,8 +1,8 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.impl.ZLTextEntryImpl;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.impl.ZLTextEntryImpl;
 
 import java.util.List;
 import java.util.LinkedList;

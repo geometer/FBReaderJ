@@ -1,6 +1,6 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.entry.ZLTextControlEntry;
+import org.zlibrary.text.model.entry.ZLTextControlEntry;
 
 class ZLTextControlEntryImpl implements ZLTextControlEntry {
     private byte myKind;

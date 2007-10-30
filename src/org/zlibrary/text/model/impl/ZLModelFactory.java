@@ -1,17 +1,17 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.ZLTextModel;
-import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.ZLTextPlainModel;
-import org.zlibrary.model.ZLTextTreeModel;
-import org.zlibrary.model.ZLTextTreeParagraph;
-import org.zlibrary.model.entry.ZLTextControlEntry;
-import org.zlibrary.model.entry.ZLTextControlEntryPool;
-import org.zlibrary.model.entry.ZLTextEntry;
-import org.zlibrary.model.entry.ZLTextFixedHSpaceEntry;
-import org.zlibrary.model.entry.ZLTextForcedControlEntry;
-import org.zlibrary.model.entry.ZLTextHyperlinkControlEntry;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextPlainModel;
+import org.zlibrary.text.model.ZLTextTreeModel;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.entry.ZLTextControlEntry;
+import org.zlibrary.text.model.entry.ZLTextControlEntryPool;
+import org.zlibrary.text.model.entry.ZLTextEntry;
+import org.zlibrary.text.model.entry.ZLTextFixedHSpaceEntry;
+import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
+import org.zlibrary.text.model.entry.ZLTextHyperlinkControlEntry;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 
 public class ZLModelFactory {

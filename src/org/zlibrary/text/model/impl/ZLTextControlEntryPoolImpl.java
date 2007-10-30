@@ -1,7 +1,7 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.entry.ZLTextControlEntryPool;
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.entry.ZLTextControlEntryPool;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 import java.util.Map;
 import java.util.HashMap;

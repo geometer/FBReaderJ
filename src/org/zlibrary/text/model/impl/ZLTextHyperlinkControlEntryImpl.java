@@ -1,6 +1,6 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.entry.ZLTextHyperlinkControlEntry;
+import org.zlibrary.text.model.entry.ZLTextHyperlinkControlEntry;
 
 class ZLTextHyperlinkControlEntryImpl extends ZLTextControlEntryImpl implements ZLTextHyperlinkControlEntry {
 	private String myLabel;

@@ -1,8 +1,8 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
 import java.util.Map;
 
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 class ImageEntryImpl implements ZLTextParagraphEntry {
 	private String myId;

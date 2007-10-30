@@ -1,4 +1,4 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 //todo
 public interface ZLImage {
 

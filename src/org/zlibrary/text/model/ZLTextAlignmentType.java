@@ -1,4 +1,4 @@
-package org.zlibrary.model;
+package org.zlibrary.text.model;
 
 public enum ZLTextAlignmentType {
     ALIGN_UNDEFINED,

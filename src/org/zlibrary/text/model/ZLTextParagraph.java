@@ -1,8 +1,8 @@
-package org.zlibrary.model;
+package org.zlibrary.text.model;
 
 import java.util.List;
 
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 public interface ZLTextParagraph {
     enum Kind {

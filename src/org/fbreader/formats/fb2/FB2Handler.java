@@ -3,8 +3,8 @@ package org.fbreader.formats.fb2;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import org.zlibrary.model.ZLTextModel;
-import org.zlibrary.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 
 class FB2Handler extends DefaultHandler {
 	private ZLTextModel myModel;

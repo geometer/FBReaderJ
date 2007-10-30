@@ -1,6 +1,6 @@
-package org.zlibrary.model;
+package org.zlibrary.text.model;
 
-import org.zlibrary.model.entry.ZLTextForcedControlEntry;
+import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 
 public interface ZLTextModel {
     

@@ -1,7 +1,7 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.ZLTextTreeModel;
-import org.zlibrary.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.ZLTextTreeModel;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
 	private ZLTextTreeParagraph myRoot;

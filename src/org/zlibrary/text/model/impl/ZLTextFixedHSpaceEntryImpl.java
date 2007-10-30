@@ -1,6 +1,6 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.entry.ZLTextFixedHSpaceEntry;
+import org.zlibrary.text.model.entry.ZLTextFixedHSpaceEntry;
 
 class ZLTextFixedHSpaceEntryImpl implements ZLTextFixedHSpaceEntry {
 	private byte myLength;

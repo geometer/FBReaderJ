@@ -1,7 +1,7 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
-import org.zlibrary.model.ZLTextParagraph;
-import org.zlibrary.model.ZLTextPlainModel;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextPlainModel;
 
 class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainModel {
 	

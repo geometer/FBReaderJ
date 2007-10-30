@@ -1,7 +1,7 @@
 package org.zlibrary.view.impl;
 
-import org.zlibrary.model.ZLTextModel;
-import org.zlibrary.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextParagraph;
 
 import java.util.*;
 

@@ -1,10 +1,10 @@
-package org.zlibrary.model.impl;
+package org.zlibrary.text.model.impl;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.zlibrary.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeParagraph {
 	private boolean myIsOpen;

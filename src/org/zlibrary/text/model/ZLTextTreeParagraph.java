@@ -1,4 +1,4 @@
-package org.zlibrary.model;
+package org.zlibrary.text.model;
 
 import java.util.List;
 

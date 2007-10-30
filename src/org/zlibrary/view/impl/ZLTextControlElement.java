@@ -1,7 +1,7 @@
 package org.zlibrary.view.impl;
 
-import org.zlibrary.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.model.entry.ZLTextControlEntry;
+import org.zlibrary.text.model.entry.ZLTextControlEntry;
+import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 class ZLTextControlElement extends ZLTextElement {
 	private ZLTextParagraphEntry myEntry;
