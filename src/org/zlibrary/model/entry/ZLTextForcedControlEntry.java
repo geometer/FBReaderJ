@@ -1,6 +1,6 @@
 package org.zlibrary.model.entry;
 
-import org.zlibrary.model.ZLTextAlignmentType;
+import org.zlibrary.text.model.ZLTextAlignmentType;
 
 public interface ZLTextForcedControlEntry extends ZLTextParagraphEntry{
     boolean leftIndentSupported();
