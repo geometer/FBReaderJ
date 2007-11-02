@@ -3,6 +3,7 @@ package org.test.fbreader.formats.fb2;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.fbreader.formats.fb2.FB2Tag;
 import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextParagraph;
 
 import junit.framework.TestCase;
 
@@ -66,5 +67,55 @@ public class TestFB2Reader extends TestCase {
 		int code = FB2Tag.CODE.ordinal();
 		assertEquals(model.dump(), "[PARAGRAPH]\n[TEXT]Тест 8. [/TEXT][CONTROL " + code +
 				"][TEXT]Оформление кода[/TEXT][/CONTROL " + code + "][/PARAGRAPH]\n");
+	}
+	
+	public void testControlVerse() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/verse.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + FB2Tag.V.ordinal() +
+				"][TEXT]Verse[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testControlDate() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/date.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + FB2Tag.DATE.ordinal() +
+				"][TEXT]Date[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testControlSubtitle() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/subtitle.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + FB2Tag.SUBTITLE.ordinal() +
+				"][TEXT]Subtitle[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testControlTextAuthor() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/text_author.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + FB2Tag.TEXT_AUTHOR.ordinal() +
+				"][TEXT]Text author[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testEmptyLine() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/empty_line.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[/PARAGRAPH]\n");
+		assertEquals(model.getParagraph(0).getKind(),
+				ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
+	}
+	
+	public void testControlCite() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/cite.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + FB2Tag.CITE.ordinal() +
+				"][TEXT]Cite[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testControlEpigraph() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/epigraph.fb2");
+		ZLTextModel model = reader.read();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + FB2Tag.EPIGRAPH.ordinal() +
+				"][TEXT]Epigraph[/TEXT][/PARAGRAPH]\n");
 	}
 }
