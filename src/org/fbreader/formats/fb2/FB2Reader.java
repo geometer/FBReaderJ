@@ -4,22 +4,21 @@ import java.io.IOException;
 
 import javax.xml.parsers.*;
 
+import org.fbreader.bookmodel.BookModel;
 import org.xml.sax.SAXException;
-import org.zlibrary.text.model.ZLTextPlainModel;
-import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class FB2Reader {
 	private String myFileName;
-	private ZLTextPlainModel myModel = (new ZLModelFactory()).createPlainModel();
+	private BookModel myBookModel = new BookModel();
 	
 	public FB2Reader(String fileName) {
 		myFileName = fileName;
 	}
 	
-	public ZLTextPlainModel read() {
+	public BookModel read() {
 		try {
 			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			parser.parse(myFileName, new FB2Handler(myModel));
+			parser.parse(myFileName, new FB2Handler(myBookModel));
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -30,7 +29,7 @@ public class FB2Reader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return myModel;
+		return myBookModel;
 	}
 
 }
