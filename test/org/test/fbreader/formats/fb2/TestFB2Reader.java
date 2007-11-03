@@ -1,9 +1,11 @@
 package org.test.fbreader.formats.fb2;
 
+import org.fbreader.bookmodel.BookModel;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.fbreader.formats.fb2.FB2Tag;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.entry.ZLTextEntry;
 
 import junit.framework.TestCase;
 
@@ -188,5 +190,28 @@ public class TestFB2Reader extends TestCase {
 		ZLTextModel model = reader.read().getBookModel();
 		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + 
 				FB2Tag.SECTION.ordinal() + "][TEXT]Title[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testFootnote() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/footnote.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		int footnote = FB2Tag.FOOTNOTE.ordinal();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + footnote +
+				"][TEXT][1][/TEXT][/CONTROL " + footnote + "][/PARAGRAPH]\n");
+	}
+	
+	public void testFootnote1() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/footnote1.fb2");
+		BookModel model = reader.read();
+		assertEquals("footnote", 
+				((ZLTextEntry)model.getParagraphByLink("note1").getEntries().get(0)).getData());
+	}
+	
+	public void testExternalHyperlink() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/ext_hyperlink.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		int hyperlink = FB2Tag.A.ordinal();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + hyperlink +
+				"][TEXT][1][/TEXT][/CONTROL " + hyperlink + "][/PARAGRAPH]\n");
 	}
 }

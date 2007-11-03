@@ -113,4 +113,24 @@ public class BookReader {
 			}
 		}	
 	}
+	
+	public void addHyperlinkControl(Byte kind, String label) {
+		if (myTextParagraphExists) {
+			flushTextBufferToParagraph();
+			myCurrentTextModel.addHyperlinkControl(kind, label);
+		}
+		myHyperlinkKind = kind;
+		myHyperlinkReference = label;
+	}
+	
+	public void addHyperlinkLabel(String label) {
+		if (myCurrentTextModel != null) {
+			int paragraphNumber = myCurrentTextModel.getParagraphsNumber();
+			if (myTextParagraphExists) {
+				--paragraphNumber;
+			}
+			myBookModel.addHyperlinkLabel(label, myCurrentTextModel, paragraphNumber);
+		}
+	}
+	
 }

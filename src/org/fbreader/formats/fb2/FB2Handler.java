@@ -7,7 +7,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.zlibrary.text.model.ZLTextParagraph;
 
-class FB2Handler extends DefaultHandler {
+class FB2Handler extends DefaultHandler {	
 	private BookReader myBookReader;
 	
 	private boolean myInsidePoem = false;
@@ -17,6 +17,8 @@ class FB2Handler extends DefaultHandler {
 	private int mySectionDepth = 0;
 	private boolean mySectionStarted = false;
 	
+	private byte myHyperlinkType;
+	
 	private FB2Tag getTag(String s) {
 		if (s.contains("-")) {
 			s = s.replace('-', '_');
@@ -24,6 +26,15 @@ class FB2Handler extends DefaultHandler {
 		return FB2Tag.valueOf(s.toUpperCase());
 	}
 	
+	private String reference(Attributes attributes) {
+		int length = attributes.getLength();
+		for (int i = 0; i < length; i++) {
+			if (attributes.getQName(i).endsWith(":href")) {
+				return attributes.getValue(i);
+			}
+		}
+		return "";
+	}
 	
 	public FB2Handler(BookModel model) {
 		myBookReader = new BookReader(model);
@@ -102,6 +113,10 @@ class FB2Handler extends DefaultHandler {
 			myReadMainText = false;
 			myBookReader.unsetCurrentTextModel();
 			break;
+		
+		case A:
+			myBookReader.addControl(myHyperlinkType, false);
+			break;
 			
 		default:
 			break;
@@ -116,7 +131,7 @@ class FB2Handler extends DefaultHandler {
 			if (!myReadMainText) {
 				myBookReader.setFootnoteTextModel(id);
 			}
-	//		myModelReader.addHyperlinkLabel(id);
+			myBookReader.addHyperlinkLabel(id);
 		}
 		FB2Tag tag;
 		try {
@@ -204,6 +219,22 @@ class FB2Handler extends DefaultHandler {
 			if ((myBodyCounter == 1) || (attributes.getValue("name") == null)) {
 				myBookReader.setMainTextModel();
 				myReadMainText = true;
+			}
+			break;
+		
+		case A:
+			String ref = reference(attributes);
+			if (ref != "") {
+				if (ref.charAt(0) == '#') {
+					myHyperlinkType = (byte) FB2Tag.FOOTNOTE.ordinal();
+					ref = ref.substring(1);
+				} else {
+					myHyperlinkType = (byte) FB2Tag.A.ordinal();
+				}
+				myBookReader.addHyperlinkControl(myHyperlinkType, ref);
+			} else {
+				myHyperlinkType = (byte) FB2Tag.FOOTNOTE.ordinal();
+				myBookReader.addControl(myHyperlinkType, true);
 			}
 			break;
 			
