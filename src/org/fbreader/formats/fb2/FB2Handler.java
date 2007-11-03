@@ -1,27 +1,19 @@
 package org.fbreader.formats.fb2;
 
-import java.util.Stack;
-
 import org.fbreader.bookmodel.BookModel;
+import org.fbreader.bookmodel.BookReader;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextPlainModel;
 
 class FB2Handler extends DefaultHandler {
-	private BookModel myBookModel;
-	private ZLTextPlainModel myCurrentTextModel = null;
-	private boolean myTextParagraphExists = false;
-	private StringBuffer myBuffer = new StringBuffer();
-	private Stack<Byte> myKindStack = new Stack<Byte>();
-	private byte myHyperlinkKind;
-	private String myHyperlinkReference = "";
+	private BookReader myBookReader;
+	
 	private boolean myInsidePoem = false;
+	private boolean myInsideTitle = false;
 	private int myBodyCounter = 0;
 	private boolean myReadMainText = false;
-	private boolean myInsideTitle = false;
-	private boolean mySectionContainsRegularContents = false;
 	private int mySectionDepth = 0;
 	private boolean mySectionStarted = false;
 	
@@ -32,69 +24,9 @@ class FB2Handler extends DefaultHandler {
 		return FB2Tag.valueOf(s.toUpperCase());
 	}
 	
-	private void flushTextBufferToParagraph() {
-		if (myBuffer.length() != 0) {
-			myCurrentTextModel.addText(myBuffer);
-			myBuffer.delete(0, myBuffer.length());
-		}		
-	}
-	
-	private void addControl(Byte kind, boolean start) {
-		if (myTextParagraphExists) {
-			flushTextBufferToParagraph();
-			myCurrentTextModel.addControl((byte) kind, start);
-		}
-		if (!start && myHyperlinkReference != "" && (kind == myHyperlinkKind)) {
-			myHyperlinkReference = "";
-		}
-	}
-	
-	private void pushKind(byte kind) {
-		myKindStack.push(kind);
-	}
-	
-	private boolean popKind() {
-		if (!myKindStack.empty()) {
-			myKindStack.pop();
-			return true;
-		}
-		return false;
-	}
-	
-	private void beginParagraph(ZLTextParagraph.Kind kind) {
-		myCurrentTextModel.createParagraph(kind);
-		for (Byte b : myKindStack) {
-			myCurrentTextModel.addControl(b, true);
-		}
-		if (myHyperlinkReference != "") {
-			myCurrentTextModel.addHyperlinkControl(myHyperlinkKind, myHyperlinkReference);
-		}
-		myTextParagraphExists = true;
-	}
-	
-	private void endParagraph() {
-		if (myTextParagraphExists) {
-			flushTextBufferToParagraph();
-			myTextParagraphExists = false;
-		}
-	}
-	
-	private void insertEndParagraph(ZLTextParagraph.Kind kind) {
-		if ((myCurrentTextModel != null) && mySectionContainsRegularContents) {
-			int size = myCurrentTextModel.getParagraphsNumber();
-			if ((size > 0) && (myCurrentTextModel.getParagraph(size-1).getKind() != kind)) {
-				myCurrentTextModel.createParagraph(kind);
-				mySectionContainsRegularContents = false;
-			}
-		}
-	}
-	
-	private void insertEndOfSectionParagraph() {
-		insertEndParagraph(ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
-	}
 	
 	public FB2Handler(BookModel model) {
-		myBookModel = model;
+		myBookReader = new BookReader(model);
 	}
 
 	@Override
@@ -108,7 +40,7 @@ class FB2Handler extends DefaultHandler {
 		}		
 		switch (tag) {
 		case P:
-			endParagraph();		
+			myBookReader.endParagraph();		
 			break;
 			
 		case SUB:
@@ -117,20 +49,20 @@ class FB2Handler extends DefaultHandler {
 		case EMPHASIS:
 		case STRONG:
 		case STRIKETHROUGH:
-			addControl((byte) tag.ordinal(), false);
+			myBookReader.addControl((byte) tag.ordinal(), false);
 			break;
 		
 		case V:
 		case SUBTITLE:
 		case TEXT_AUTHOR:
 		case DATE:
-			popKind();
-			endParagraph();
+			myBookReader.popKind();
+			myBookReader.endParagraph();
 			break;	
 		
 		case CITE:
 		case EPIGRAPH:
-			popKind();
+			myBookReader.popKind();
 			break;	
 		
 		case POEM:
@@ -138,9 +70,9 @@ class FB2Handler extends DefaultHandler {
 			break;
 		
 		case STANZA:
-			beginParagraph(ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
-			endParagraph();
-			popKind();
+			myBookReader.beginParagraph(ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
+			myBookReader.endParagraph();
+			myBookReader.popKind();
 			break;
 			
 		case SECTION:
@@ -148,26 +80,27 @@ class FB2Handler extends DefaultHandler {
 				--mySectionDepth;
 				mySectionStarted = false;
 			} else {
-				myCurrentTextModel = null;
+				myBookReader.unsetCurrentTextModel();
 			}
 			break;
 		
 		case ANNOTATION:
-			popKind();
+			myBookReader.popKind();
 			if (myBodyCounter == 0) {
-				insertEndOfSectionParagraph();
-				myCurrentTextModel = null;
+				myBookReader.insertEndOfSectionParagraph();
+				myBookReader.unsetCurrentTextModel();
 			}
 			break;
 		
 		case TITLE:
-			popKind();
+			myBookReader.popKind();
+			myBookReader.exitTitle();
 			myInsideTitle = false;
 			break;
 			
 		case BODY:
 			myReadMainText = false;
-			myCurrentTextModel = null;
+			myBookReader.unsetCurrentTextModel();
 			break;
 			
 		default:
@@ -181,7 +114,7 @@ class FB2Handler extends DefaultHandler {
 		String id = attributes.getValue("id");
 		if (id != null) {
 			if (!myReadMainText) {
-				myCurrentTextModel = myBookModel.getFootnoteModel(id);
+				myBookReader.setFootnoteTextModel(id);
 			}
 	//		myModelReader.addHyperlinkLabel(id);
 		}
@@ -198,7 +131,7 @@ class FB2Handler extends DefaultHandler {
 			} else if (myInsideTitle) {
 				//
 			}
-			beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+			myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 			break;
 		
 		case SUB:
@@ -207,25 +140,25 @@ class FB2Handler extends DefaultHandler {
 		case EMPHASIS:
 		case STRONG:
 		case STRIKETHROUGH:
-			addControl((byte) tag.ordinal(), true);		
+			myBookReader.addControl((byte) tag.ordinal(), true);		
 			break;
 		
 		case V:
 		case SUBTITLE:
 		case TEXT_AUTHOR:
 		case DATE:
-			pushKind((byte) tag.ordinal());
-			beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+			myBookReader.pushKind((byte) tag.ordinal());
+			myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 			break;
 		
 		case EMPTY_LINE:
-			beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
-			endParagraph();
+			myBookReader.beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
+			myBookReader.endParagraph();
 			break;
 		
 		case CITE:
 		case EPIGRAPH:
-			pushKind((byte) tag.ordinal());
+			myBookReader.pushKind((byte) tag.ordinal());
 			break;
 		
 		case POEM:
@@ -233,14 +166,14 @@ class FB2Handler extends DefaultHandler {
 			break;	
 		
 		case STANZA:
-			pushKind((byte) tag.ordinal());
-			beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
-			endParagraph();
+			myBookReader.pushKind((byte) tag.ordinal());
+			myBookReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
+			myBookReader.endParagraph();
 			break;
 			
 		case SECTION:
 			if (myReadMainText) {
-				insertEndOfSectionParagraph();
+				myBookReader.insertEndOfSectionParagraph();
 				++mySectionDepth;
 				mySectionStarted  = true;
 			}
@@ -248,27 +181,28 @@ class FB2Handler extends DefaultHandler {
 		
 		case ANNOTATION:
 			if (myBodyCounter == 0) {
-				myCurrentTextModel = myBookModel.getBookModel();
+				myBookReader.setMainTextModel();
 			}
-			pushKind((byte) tag.ordinal());
+			myBookReader.pushKind((byte) tag.ordinal());
 			break;
 		
 		case TITLE:
 			if (myInsidePoem) {
-				pushKind((byte) FB2Tag.POEM.ordinal()); //плохо
+				myBookReader.pushKind((byte) FB2Tag.POEM.ordinal()); //плохо
 			} else if (mySectionDepth == 0) {
-				insertEndOfSectionParagraph();
-				pushKind((byte) tag.ordinal());
+				myBookReader.insertEndOfSectionParagraph();
+				myBookReader.pushKind((byte) tag.ordinal());
 			} else {
-				pushKind((byte) FB2Tag.SECTION.ordinal()); //плохо
+				myBookReader.pushKind((byte) FB2Tag.SECTION.ordinal()); //плохо
 				myInsideTitle = true;
+				myBookReader.enterTitle();
 			}
 			break;
 			
 		case BODY:
 			++myBodyCounter;
 			if ((myBodyCounter == 1) || (attributes.getValue("name") == null)) {
-				myCurrentTextModel = myBookModel.getBookModel();
+				myBookReader.setMainTextModel();
 				myReadMainText = true;
 			}
 			break;
@@ -282,12 +216,7 @@ class FB2Handler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		// TODO Auto-generated method stub
-		if (myTextParagraphExists) {
-			myBuffer.append(String.valueOf(ch, start, length));
-			if (!myInsideTitle) {
-				mySectionContainsRegularContents = true;
-			}
-		}		
+		myBookReader.addData(String.valueOf(ch, start, length));	
 	}
 
 }
