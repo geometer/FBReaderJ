@@ -131,4 +131,62 @@ public class TestFB2Reader extends TestCase {
 		assertEquals(model.dump(), "[PARAGRAPH]\n[TEXT]Note[/TEXT][/PARAGRAPH]\n");
 	}
 	
+	public void testStanza() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/stanza.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.getParagraph(0).getKind(), ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
+		assertEquals(model.getParagraph(2).getKind(), ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
+		assertEquals(model.getParagraph(1).getKind(), ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+		int stanza = FB2Tag.STANZA.ordinal();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + stanza +
+				"][/PARAGRAPH]\n[PARAGRAPH]\n[CONTROL " + stanza + "][CONTROL " +
+				FB2Tag.V.ordinal() + "][TEXT]Stanza[/TEXT][/PARAGRAPH]\n[PARAGRAPH]\n[CONTROL " + 
+				stanza + "][/PARAGRAPH]\n");
+	}
+	
+	public void testAnnotation() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/annotation.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + 
+				FB2Tag.ANNOTATION.ordinal() + "][TEXT]annotation[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testAnnotationBeforeBody() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/annotation_before.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.getParagraph(1).getKind(),
+				ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + 
+				FB2Tag.ANNOTATION.ordinal() +
+				"][TEXT]annotation[/TEXT][/PARAGRAPH]\n[PARAGRAPH]\n[/PARAGRAPH]\n");
+	}
+	
+	public void testEndOfSection() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/section.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.getParagraph(1).getKind(),
+				ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
+		assertEquals(model.dump(), "[PARAGRAPH]\n[TEXT]section[/TEXT][/PARAGRAPH]\n[PARAGRAPH]\n[/PARAGRAPH]\n");
+	}
+	
+	public void testTitle() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/title.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + 
+				FB2Tag.TITLE.ordinal() + "][TEXT]Title[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testPoemTitle() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/poem_title.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + 
+				FB2Tag.POEM.ordinal() + "][TEXT]Title[/TEXT][/PARAGRAPH]\n");
+	}
+	
+	public void testSectionTitle() {
+		FB2Reader reader = new FB2Reader("FB2ReaderTests/section_title.fb2");
+		ZLTextModel model = reader.read().getBookModel();
+		assertEquals(model.dump(), "[PARAGRAPH]\n[CONTROL " + 
+				FB2Tag.SECTION.ordinal() + "][TEXT]Title[/TEXT][/PARAGRAPH]\n");
+	}
 }

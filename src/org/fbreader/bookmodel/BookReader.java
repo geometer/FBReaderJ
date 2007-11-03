@@ -24,7 +24,7 @@ public class BookReader {
 		myBookModel = model;
 	}
 	
-	public void flushTextBufferToParagraph() {
+	private void flushTextBufferToParagraph() {
 		if (myBuffer.length() != 0) {
 			myCurrentTextModel.addText(myBuffer);
 			myBuffer.delete(0, myBuffer.length());
