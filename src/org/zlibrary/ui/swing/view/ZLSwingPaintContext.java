@@ -32,24 +32,23 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 		return myComponent.getSize().height;
 	}
 	
-	public int stringWidth(String string, int len) {
-		// TODO: implement
-		return 0;
+	public int stringWidth(String string) {
+		return myGraphics.getFontMetrics().stringWidth(string);
 	}
+
 	public int spaceWidth() {
-		// TODO: implement
-		return 0;
+		// TODO: optimize (?)
+		return myGraphics.getFontMetrics().charWidth(' ');
 	}
 	public int stringHeight() {
-		// TODO: implement
-		return 0;
+		return myGraphics.getFontMetrics().getHeight();
 	}
 	public int descent() {
 		// TODO: implement
 		return 0;
 	}
-	public void drawString(int x, int y, String string, int len) {
-		// TODO: implement
+	public void drawString(int x, int y, String string) {
+		myGraphics.drawString(string, x, y);
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
@@ -57,7 +56,17 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 	}
 
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
-		// TODO: implement
+		if (x0 > x1) {
+			int swap = x0;
+			x0 = x1;
+			x1 = swap;
+		}
+		if (y0 > y1) {
+			int swap = y0;
+			y0 = y1;
+			y1 = swap;
+		}
+		myGraphics.fillRect(x0, y0, x1 - x0 + 1, y1 - y0 + 1);
 	}
 
 	public void drawFilledCircle(int x, int y, int r) {

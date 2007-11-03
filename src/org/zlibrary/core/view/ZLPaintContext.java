@@ -57,11 +57,11 @@ abstract public class ZLPaintContext {
 	abstract public int getWidth();
 	abstract public int getHeight();
 	
-	abstract public int stringWidth(String string, int len);
+	abstract public int stringWidth(String string/*, int len*/);
 	abstract public int spaceWidth();
 	abstract public int stringHeight();
 	abstract public int descent();
-	abstract public void drawString(int x, int y, String string, int len);
+	abstract public void drawString(int x, int y, String string/*, int len*/);
 
 	//int imageWidth(ZLImageData &image);
 	//int imageHeight(ZLImageData &image);
