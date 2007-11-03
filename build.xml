@@ -23,7 +23,6 @@
 	<target name = "runtests" depends = "test">
 		<junit printsummary = "yes">
 			<classpath>
-				<pathelement location = "lib/junit.jar"/>
 				<pathelement location = "${bin.dir}"/>
 			</classpath>
 			<test name = "org.test.zlibrary.model.TestAll"/>
