@@ -1,7 +1,7 @@
 package org.zlibrary.options;
 
 public abstract class ZLOption {
-	public static final String LOOK_AND_FEEL_CATEGORY = "UI";
+	public static final String LOOK_AND_FEEL_CATEGORY = "ui";
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 	

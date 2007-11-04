@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="/home/geometer/2/VisualTourOfFBReader.oebzip">
+    <option name="Paragraph" value="87"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="59"/>
+    <option name="PositionInBuffer" value="2"/>
+    <option name="UndoBufferSize" value="2"/>
+    <option name="Word" value="5"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="5"/>
+  </group>
+  <group name="/home/geometer/Books/Shareware.chm">
+    <option name="Paragraph" value="1805"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="1428"/>
+    <option name="PositionInBuffer" value="2"/>
+    <option name="UndoBufferSize" value="2"/>
+    <option name="Word" value="73"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+  </group>
+  <group name="/home/geometer/Books/chm/python.chm">
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="25"/>
+    <option name="Paragraph_10" value="433"/>
+    <option name="Paragraph_2" value="20073"/>
+    <option name="Paragraph_3" value="20830"/>
+    <option name="Paragraph_4" value="9783"/>
+    <option name="Paragraph_5" value="7884"/>
+    <option name="Paragraph_6" value="6891"/>
+    <option name="Paragraph_7" value="21622"/>
+    <option name="Paragraph_8" value="0"/>
+    <option name="Paragraph_9" value="35"/>
+    <option name="PositionInBuffer" value="9"/>
+    <option name="UndoBufferSize" value="11"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/Books/chm/stiven_king--siyanie.chm">
+    <option name="Paragraph" value="6"/>
+  </group>
+  <group name="/home/geometer/Books/epub/Holmes.epub">
+    <option name="Paragraph" value="2122"/>
+    <option name="Paragraph_0" value="1539"/>
+    <option name="Paragraph_1" value="1539"/>
+    <option name="Paragraph_10" value="1800"/>
+    <option name="Paragraph_11" value="1824"/>
+    <option name="Paragraph_12" value="597"/>
+    <option name="Paragraph_13" value="213"/>
+    <option name="Paragraph_14" value="1123"/>
+    <option name="Paragraph_15" value="1123"/>
+    <option name="Paragraph_16" value="2231"/>
+    <option name="Paragraph_17" value="2231"/>
+    <option name="Paragraph_18" value="2237"/>
+    <option name="Paragraph_19" value="95"/>
+    <option name="Paragraph_2" value="1539"/>
+    <option name="Paragraph_3" value="1539"/>
+    <option name="Paragraph_4" value="1539"/>
+    <option name="Paragraph_5" value="1634"/>
+    <option name="Paragraph_6" value="1816"/>
+    <option name="Paragraph_7" value="1800"/>
+    <option name="Paragraph_8" value="1800"/>
+    <option name="Paragraph_9" value="1800"/>
+    <option name="PositionInBuffer" value="14"/>
+    <option name="UndoBufferSize" value="14"/>
+    <option name="Word_0" value="290"/>
+    <option name="Word_1" value="290"/>
+    <option name="Word_10" value="22"/>
+    <option name="Word_11" value="99"/>
+    <option name="Word_12" value="78"/>
+    <option name="Word_13" value="30"/>
+    <option name="Word_14" value="203"/>
+    <option name="Word_15" value="203"/>
+    <option name="Word_16" value="44"/>
+    <option name="Word_17" value="44"/>
+    <option name="Word_18" value="28"/>
+    <option name="Word_19" value="126"/>
+    <option name="Word_2" value="290"/>
+    <option name="Word_3" value="290"/>
+    <option name="Word_4" value="290"/>
+    <option name="Word_5" value="116"/>
+    <option name="Word_6" value="176"/>
+    <option name="Word_7" value="22"/>
+    <option name="Word_8" value="22"/>
+    <option name="Word_9" value="22"/>
+  </group>
+  <group name="/home/geometer/Books/oeb/graphtheorydemo.oebzip">
+    <option name="Paragraph" value="1018"/>
+    <option name="Paragraph_0" value="3"/>
+    <option name="PositionInBuffer" value="1"/>
+    <option name="UndoBufferSize" value="1"/>
+    <option name="Word_0" value="0"/>
+  </group>
+  <group name="/home/geometer/Books/oeb/graphtheorydemo.opf">
+    <option name="Paragraph" value="152"/>
+    <option name="Paragraph_0" value="2"/>
+    <option name="Paragraph_1" value="8"/>
+    <option name="Paragraph_2" value="152"/>
+    <option name="Paragraph_3" value="106"/>
+    <option name="PositionInBuffer" value="4"/>
+    <option name="UndoBufferSize" value="4"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/1kdeath.prc">
+    <option name="Paragraph" value="25"/>
+    <option name="Paragraph_0" value="27"/>
+    <option name="Paragraph_1" value="0"/>
+    <option name="PositionInBuffer" value="2"/>
+    <option name="UndoBufferSize" value="2"/>
+    <option name="Word" value="39"/>
+    <option name="Word_0" value="301"/>
+    <option name="Word_1" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/Alice_In_Wonderland_gif.mobi">
+    <option name="Paragraph" value="651"/>
+  </group>
+  <group name="/home/geometer/Desktop/Alice_In_Wonderland_jpg.mobi">
+    <option name="Paragraph" value="48"/>
+    <option name="Paragraph_0" value="651"/>
+    <option name="Paragraph_1" value="401"/>
+    <option name="Paragraph_2" value="399"/>
+    <option name="Paragraph_3" value="101"/>
+    <option name="Paragraph_4" value="53"/>
+    <option name="Paragraph_5" value="39"/>
+    <option name="Paragraph_6" value="35"/>
+    <option name="Paragraph_7" value="41"/>
+    <option name="Paragraph_8" value="49"/>
+    <option name="Paragraph_9" value="41"/>
+    <option name="PositionInBuffer" value="10"/>
+    <option name="UndoBufferSize" value="10"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="75"/>
+    <option name="Word_2" value="34"/>
+    <option name="Word_3" value="30"/>
+    <option name="Word_4" value="72"/>
+    <option name="Word_5" value="74"/>
+    <option name="Word_6" value="168"/>
+    <option name="Word_7" value="27"/>
+    <option name="Word_8" value="13"/>
+    <option name="Word_9" value="63"/>
+  </group>
+  <group name="/home/geometer/Desktop/Holmes.epub">
+    <option name="Paragraph" value="3"/>
+  </group>
+  <group name="/home/geometer/Desktop/Magic__The_Gath-Plucker.pdb">
+    <option name="Paragraph" value="57776"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="29075"/>
+    <option name="Paragraph_2" value="0"/>
+    <option name="PositionInBuffer" value="3"/>
+    <option name="UndoBufferSize" value="3"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/P_freehold.zip:Freehold.prc">
+    <option name="Paragraph" value="141"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="147"/>
+    <option name="Paragraph_2" value="181"/>
+    <option name="Paragraph_3" value="1825"/>
+    <option name="PositionInBuffer" value="2"/>
+    <option name="UndoBufferSize" value="2"/>
+    <option name="Word" value="239"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="278"/>
+    <option name="Word_3" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/Resnick-RRobin1-mo.prc">
+    <option name="Paragraph" value="25"/>
+    <option name="Paragraph_0" value="3"/>
+    <option name="PositionInBuffer" value="1"/>
+    <option name="UndoBufferSize" value="1"/>
+    <option name="Word" value="118"/>
+    <option name="Word_0" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/Ring_of_Fire.prc">
+    <option name="Paragraph" value="3035"/>
+    <option name="Paragraph_0" value="10780"/>
+    <option name="Paragraph_1" value="9013"/>
+    <option name="Paragraph_10" value="0"/>
+    <option name="Paragraph_11" value="13"/>
+    <option name="Paragraph_12" value="119"/>
+    <option name="Paragraph_13" value="240"/>
+    <option name="Paragraph_14" value="2383"/>
+    <option name="Paragraph_15" value="3036"/>
+    <option name="Paragraph_16" value="11223"/>
+    <option name="Paragraph_17" value="600"/>
+    <option name="Paragraph_18" value="0"/>
+    <option name="Paragraph_19" value="240"/>
+    <option name="Paragraph_2" value="8106"/>
+    <option name="Paragraph_3" value="6825"/>
+    <option name="Paragraph_4" value="4561"/>
+    <option name="Paragraph_5" value="3036"/>
+    <option name="Paragraph_6" value="2383"/>
+    <option name="Paragraph_7" value="240"/>
+    <option name="Paragraph_8" value="119"/>
+    <option name="Paragraph_9" value="13"/>
+    <option name="PositionInBuffer" value="20"/>
+    <option name="UndoBufferSize" value="20"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_16" value="32"/>
+    <option name="Word_17" value="88"/>
+    <option name="Word_18" value="0"/>
+    <option name="Word_19" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/Ring_of_Fire1.prc">
+    <option name="Paragraph" value="2383"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="25765"/>
+    <option name="Paragraph_10" value="180"/>
+    <option name="Paragraph_11" value="0"/>
+    <option name="Paragraph_12" value="25765"/>
+    <option name="Paragraph_13" value="20207"/>
+    <option name="Paragraph_14" value="0"/>
+    <option name="Paragraph_15" value="25765"/>
+    <option name="Paragraph_16" value="20207"/>
+    <option name="Paragraph_17" value="690"/>
+    <option name="Paragraph_18" value="0"/>
+    <option name="Paragraph_19" value="25765"/>
+    <option name="Paragraph_2" value="3036"/>
+    <option name="Paragraph_3" value="1"/>
+    <option name="Paragraph_4" value="13"/>
+    <option name="Paragraph_5" value="119"/>
+    <option name="Paragraph_6" value="25765"/>
+    <option name="Paragraph_7" value="13"/>
+    <option name="Paragraph_8" value="119"/>
+    <option name="Paragraph_9" value="25765"/>
+    <option name="PositionInBuffer" value="20"/>
+    <option name="UndoBufferSize" value="20"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="127"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_16" value="0"/>
+    <option name="Word_17" value="0"/>
+    <option name="Word_18" value="0"/>
+    <option name="Word_19" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/The_Divine_Comedy_by_Dante,_Illustrated,_Hell,_Vol.mobi">
+    <option name="Paragraph" value="74"/>
+    <option name="Paragraph_0" value="84"/>
+    <option name="Paragraph_1" value="6"/>
+    <option name="Paragraph_10" value="300"/>
+    <option name="Paragraph_11" value="260"/>
+    <option name="Paragraph_12" value="255"/>
+    <option name="Paragraph_13" value="68"/>
+    <option name="Paragraph_14" value="62"/>
+    <option name="Paragraph_15" value="0"/>
+    <option name="Paragraph_16" value="79"/>
+    <option name="Paragraph_17" value="0"/>
+    <option name="Paragraph_18" value="74"/>
+    <option name="Paragraph_19" value="90"/>
+    <option name="Paragraph_2" value="18"/>
+    <option name="Paragraph_3" value="21"/>
+    <option name="Paragraph_4" value="114"/>
+    <option name="Paragraph_5" value="55"/>
+    <option name="Paragraph_6" value="68"/>
+    <option name="Paragraph_7" value="5"/>
+    <option name="Paragraph_8" value="68"/>
+    <option name="Paragraph_9" value="255"/>
+    <option name="PositionInBuffer" value="18"/>
+    <option name="UndoBufferSize" value="20"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_16" value="0"/>
+    <option name="Word_17" value="0"/>
+    <option name="Word_18" value="0"/>
+    <option name="Word_19" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/clit/oeb/Ring_of_Fire.opf">
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="0"/>
+    <option name="Paragraph_10" value="3673"/>
+    <option name="Paragraph_11" value="6641"/>
+    <option name="Paragraph_12" value="8230"/>
+    <option name="Paragraph_13" value="8215"/>
+    <option name="Paragraph_2" value="70"/>
+    <option name="Paragraph_3" value="0"/>
+    <option name="Paragraph_4" value="120"/>
+    <option name="Paragraph_5" value="7254"/>
+    <option name="Paragraph_6" value="8219"/>
+    <option name="Paragraph_7" value="0"/>
+    <option name="Paragraph_8" value="120"/>
+    <option name="Paragraph_9" value="1247"/>
+    <option name="PositionInBuffer" value="14"/>
+    <option name="UndoBufferSize" value="14"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="36"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/greek_nt2.chm">
+    <option name="Paragraph" value="74"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="36"/>
+    <option name="Paragraph_2" value="0"/>
+    <option name="PositionInBuffer" value="3"/>
+    <option name="UndoBufferSize" value="3"/>
+    <option name="Word" value="566"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/leblanc_aventure_arsene_lupin_theatre.prc">
+    <option name="Paragraph" value="1225"/>
+    <option name="Paragraph_0" value="471"/>
+    <option name="Paragraph_1" value="1255"/>
+    <option name="Paragraph_10" value="1259"/>
+    <option name="Paragraph_11" value="1259"/>
+    <option name="Paragraph_12" value="1259"/>
+    <option name="Paragraph_13" value="1259"/>
+    <option name="Paragraph_14" value="0"/>
+    <option name="Paragraph_15" value="0"/>
+    <option name="Paragraph_2" value="1259"/>
+    <option name="Paragraph_3" value="1259"/>
+    <option name="Paragraph_4" value="841"/>
+    <option name="Paragraph_5" value="1253"/>
+    <option name="Paragraph_6" value="1259"/>
+    <option name="Paragraph_7" value="1259"/>
+    <option name="Paragraph_8" value="1259"/>
+    <option name="Paragraph_9" value="1259"/>
+    <option name="PositionInBuffer" value="16"/>
+    <option name="UndoBufferSize" value="16"/>
+    <option name="Word" value="189"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="33"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/Desktop/stoppard_rozenkranc_i_gildenstern_mertviy.fb2.zip:stoppard_rozenkranc_i_gildenstern_mertviy.fb2">
+    <option name="Paragraph" value="152"/>
+  </group>
+  <group name="/home/geometer/Desktop/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip:strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2">
+    <option name="Paragraph" value="1923"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="342"/>
+    <option name="Paragraph_2" value="811"/>
+    <option name="Paragraph_3" value="1004"/>
+    <option name="Paragraph_4" value="1177"/>
+    <option name="Paragraph_5" value="1004"/>
+    <option name="Paragraph_6" value="1177"/>
+    <option name="Paragraph_7" value="1367"/>
+    <option name="Paragraph_8" value="1639"/>
+    <option name="Paragraph_9" value="1913"/>
+    <option name="PositionInBuffer" value="10"/>
+    <option name="UndoBufferSize" value="10"/>
+    <option name="Word" value="62"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/FBooks/dyuma_dvadcat_let_spustya.fb2">
+    <option name="Paragraph" value="124"/>
+    <option name="Paragraph_0" value="234"/>
+    <option name="Paragraph_1" value="107"/>
+    <option name="Paragraph_10" value="234"/>
+    <option name="Paragraph_11" value="472"/>
+    <option name="Paragraph_12" value="624"/>
+    <option name="Paragraph_13" value="737"/>
+    <option name="Paragraph_14" value="812"/>
+    <option name="Paragraph_15" value="932"/>
+    <option name="Paragraph_16" value="1178"/>
+    <option name="Paragraph_17" value="844"/>
+    <option name="Paragraph_18" value="739"/>
+    <option name="Paragraph_19" value="180"/>
+    <option name="Paragraph_2" value="233"/>
+    <option name="Paragraph_3" value="107"/>
+    <option name="Paragraph_4" value="233"/>
+    <option name="Paragraph_5" value="472"/>
+    <option name="Paragraph_6" value="234"/>
+    <option name="Paragraph_7" value="107"/>
+    <option name="Paragraph_8" value="8"/>
+    <option name="Paragraph_9" value="107"/>
+    <option name="PositionInBuffer" value="20"/>
+    <option name="UndoBufferSize" value="20"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_16" value="0"/>
+    <option name="Word_17" value="0"/>
+    <option name="Word_18" value="0"/>
+    <option name="Word_19" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip:hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2">
+    <option name="Paragraph" value="2760"/>
+    <option name="Paragraph_0" value="30"/>
+    <option name="Paragraph_1" value="476"/>
+    <option name="Paragraph_10" value="2773"/>
+    <option name="Paragraph_2" value="231"/>
+    <option name="Paragraph_3" value="508"/>
+    <option name="Paragraph_4" value="5677"/>
+    <option name="Paragraph_5" value="2917"/>
+    <option name="Paragraph_6" value="1780"/>
+    <option name="Paragraph_7" value="4"/>
+    <option name="Paragraph_8" value="12"/>
+    <option name="Paragraph_9" value="2464"/>
+    <option name="PositionInBuffer" value="11"/>
+    <option name="UndoBufferSize" value="11"/>
+    <option name="Word_0" value="23"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_2" value="23"/>
+    <option name="Word_3" value="52"/>
+    <option name="Word_4" value="52"/>
+    <option name="Word_5" value="67"/>
+    <option name="Word_6" value="27"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="75"/>
+    <option name="Word_9" value="18"/>
+  </group>
+  <group name="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip:hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2">
+    <option name="Char" value="4"/>
+    <option name="Paragraph" value="27"/>
+    <option name="Word" value="29"/>
+  </group>
+  <group name="/home/geometer/Shareware.chm">
+    <option name="Paragraph" value="434"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="387"/>
+    <option name="Paragraph_10" value="472"/>
+    <option name="Paragraph_11" value="387"/>
+    <option name="Paragraph_12" value="834"/>
+    <option name="Paragraph_13" value="345"/>
+    <option name="Paragraph_2" value="472"/>
+    <option name="Paragraph_3" value="6494"/>
+    <option name="Paragraph_4" value="6944"/>
+    <option name="Paragraph_5" value="6118"/>
+    <option name="Paragraph_6" value="472"/>
+    <option name="Paragraph_7" value="387"/>
+    <option name="Paragraph_8" value="472"/>
+    <option name="Paragraph_9" value="747"/>
+    <option name="PositionInBuffer" value="14"/>
+    <option name="UndoBufferSize" value="14"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="136"/>
+    <option name="Word_13" value="43"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="27"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/chm/xxx.chm">
+    <option name="Paragraph" value="270"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="26"/>
+    <option name="Paragraph_2" value="0"/>
+    <option name="Paragraph_3" value="26"/>
+    <option name="Paragraph_4" value="26"/>
+    <option name="Paragraph_5" value="26"/>
+    <option name="Paragraph_6" value="281"/>
+    <option name="PositionInBuffer" value="7"/>
+    <option name="UndoBufferSize" value="7"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+  </group>
+  <group name="/home/geometer/file.chm">
+    <option name="Paragraph" value="448"/>
+    <option name="Paragraph_0" value="5346"/>
+    <option name="Paragraph_1" value="5346"/>
+    <option name="Paragraph_10" value="159"/>
+    <option name="Paragraph_11" value="4824"/>
+    <option name="Paragraph_12" value="0"/>
+    <option name="Paragraph_13" value="37"/>
+    <option name="Paragraph_14" value="0"/>
+    <option name="Paragraph_15" value="37"/>
+    <option name="Paragraph_16" value="269"/>
+    <option name="Paragraph_17" value="335"/>
+    <option name="Paragraph_18" value="351"/>
+    <option name="Paragraph_19" value="411"/>
+    <option name="Paragraph_2" value="5326"/>
+    <option name="Paragraph_3" value="4824"/>
+    <option name="Paragraph_4" value="4790"/>
+    <option name="Paragraph_5" value="4774"/>
+    <option name="Paragraph_6" value="4742"/>
+    <option name="Paragraph_7" value="4774"/>
+    <option name="Paragraph_8" value="4526"/>
+    <option name="Paragraph_9" value="0"/>
+    <option name="PositionInBuffer" value="20"/>
+    <option name="UndoBufferSize" value="20"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_16" value="0"/>
+    <option name="Word_17" value="0"/>
+    <option name="Word_18" value="0"/>
+    <option name="Word_19" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip:gashek_pohojdeniya_bravogo_soldata_shveyika.fb2">
+    <option name="Paragraph" value="3982"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="3758"/>
+    <option name="PositionInBuffer" value="2"/>
+    <option name="UndoBufferSize" value="2"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="37"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/0671876627.prc">
+    <option name="Paragraph" value="1096"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="11"/>
+    <option name="Paragraph_10" value="6473"/>
+    <option name="Paragraph_11" value="7826"/>
+    <option name="Paragraph_12" value="1094"/>
+    <option name="Paragraph_13" value="726"/>
+    <option name="Paragraph_2" value="135"/>
+    <option name="Paragraph_3" value="7824"/>
+    <option name="Paragraph_4" value="0"/>
+    <option name="Paragraph_5" value="7790"/>
+    <option name="Paragraph_6" value="0"/>
+    <option name="Paragraph_7" value="7741"/>
+    <option name="Paragraph_8" value="7743"/>
+    <option name="Paragraph_9" value="7193"/>
+    <option name="PositionInBuffer" value="14"/>
+    <option name="UndoBufferSize" value="14"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/ArtofWar.prc">
+    <option name="Paragraph" value="337"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="0"/>
+    <option name="Paragraph_2" value="0"/>
+    <option name="Paragraph_3" value="6"/>
+    <option name="Paragraph_4" value="24"/>
+    <option name="Paragraph_5" value="164"/>
+    <option name="Paragraph_6" value="170"/>
+    <option name="Paragraph_7" value="215"/>
+    <option name="Paragraph_8" value="266"/>
+    <option name="PositionInBuffer" value="9"/>
+    <option name="UndoBufferSize" value="9"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="148"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/MiltonJohn-ParadiseLost.prc">
+    <option name="Paragraph" value="810"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="3"/>
+    <option name="Paragraph_2" value="1"/>
+    <option name="Paragraph_3" value="5"/>
+    <option name="Paragraph_4" value="805"/>
+    <option name="Paragraph_5" value="7930"/>
+    <option name="Paragraph_6" value="78"/>
+    <option name="PositionInBuffer" value="7"/>
+    <option name="UndoBufferSize" value="7"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/alice30.prc">
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="3"/>
+    <option name="PositionInBuffer" value="2"/>
+    <option name="UndoBufferSize" value="2"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.maemo.uk.fb2">
+    <option name="Paragraph" value="1"/>
+    <option name="Word" value="24"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.win32.en.fb2">
+    <option name="Paragraph" value="12"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/xa.chm">
+    <option name="Paragraph" value="779"/>
+    <option name="Paragraph_0" value="0"/>
+    <option name="Paragraph_1" value="25"/>
+    <option name="Paragraph_10" value="451"/>
+    <option name="Paragraph_11" value="537"/>
+    <option name="Paragraph_12" value="557"/>
+    <option name="Paragraph_13" value="613"/>
+    <option name="Paragraph_14" value="623"/>
+    <option name="Paragraph_15" value="635"/>
+    <option name="Paragraph_16" value="653"/>
+    <option name="Paragraph_17" value="699"/>
+    <option name="Paragraph_18" value="707"/>
+    <option name="Paragraph_19" value="715"/>
+    <option name="Paragraph_2" value="20073"/>
+    <option name="Paragraph_3" value="20702"/>
+    <option name="Paragraph_4" value="0"/>
+    <option name="Paragraph_5" value="333"/>
+    <option name="Paragraph_6" value="341"/>
+    <option name="Paragraph_7" value="351"/>
+    <option name="Paragraph_8" value="419"/>
+    <option name="Paragraph_9" value="433"/>
+    <option name="PositionInBuffer" value="20"/>
+    <option name="UndoBufferSize" value="20"/>
+    <option name="Word_0" value="0"/>
+    <option name="Word_1" value="0"/>
+    <option name="Word_10" value="0"/>
+    <option name="Word_11" value="0"/>
+    <option name="Word_12" value="0"/>
+    <option name="Word_13" value="0"/>
+    <option name="Word_14" value="0"/>
+    <option name="Word_15" value="0"/>
+    <option name="Word_16" value="0"/>
+    <option name="Word_17" value="0"/>
+    <option name="Word_18" value="0"/>
+    <option name="Word_19" value="0"/>
+    <option name="Word_2" value="0"/>
+    <option name="Word_3" value="0"/>
+    <option name="Word_4" value="0"/>
+    <option name="Word_5" value="0"/>
+    <option name="Word_6" value="0"/>
+    <option name="Word_7" value="0"/>
+    <option name="Word_8" value="0"/>
+    <option name="Word_9" value="0"/>
+  </group>
+  <group name="/usr/share/FBReader/help/MiniHelp.fr.fb2">
+    <option name="Paragraph" value="1"/>
+    <option name="Word" value="32"/>
+  </group>
+  <group name="BookList">
+    <option name="Book0" value="/home/geometer/Books/Thoughts.epub"/>
+    <option name="Book1" value="/home/geometer/Books/epub/Holmes.epub"/>
+    <option name="Book2" value="/home/geometer/Desktop/Thoughts.epub"/>
+    <option name="Book3" value="/home/geometer/prc/Diario de abordo de una punto com.prc"/>
+    <option name="Book4" value="/home/geometer/prc/XXXX/MiltonJohn-ParadiseLost.prc"/>
+    <option name="Book5" value="/home/geometer/src/zaurus/xa.chm"/>
+    <option name="Size" value="6"/>
+  </group>
+  <group name="LastOpenedBooks">
+    <option name="Book0" value="/home/geometer/Books/chm/Razumno0foto.chm"/>
+    <option name="Book1" value="/home/geometer/Books/chm/python.chm"/>
+    <option name="Book2" value="/home/geometer/Books/chm/stiven_king--siyanie.chm"/>
+    <option name="Book3" value="/home/geometer/Books/chm/xxx.chm"/>
+    <option name="Book4" value="/home/geometer/Books/chm/UML.chm"/>
+    <option name="Book5" value="/home/geometer/joseph/Test1.html"/>
+    <option name="Book6" value="/home/geometer/joseph/Test3.html"/>
+    <option name="Book7" value="/home/geometer/joseph/Test2.html"/>
+    <option name="Book8" value="/home/geometer/joseph/An Intimate Study Of Sherlock Holmes.html"/>
+    <option name="Book9" value="/home/geometer/src/projects/fbreader/test.html"/>
+  </group>
+  <group name="State">
+    <option name="Book" value="/home/geometer/Books/chm/Razumno0foto.chm"/>
+  </group>
+</config>

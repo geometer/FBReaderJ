@@ -167,15 +167,15 @@ public class ModelTests extends TestCase{
 	}
 	
 	public void test04_boolean3(){
-		assertEquals(myBoolean3Option.getType(), OptionType.TYPE_BOOLEAN3);
+		assertEquals(myBoolean3Option.getType(), ZLOptionType.TYPE_BOOLEAN3);
 	}
 	
 	public void test04_boolean(){
-		assertEquals(myBooleanOption.getType(), OptionType.TYPE_BOOLEAN);
+		assertEquals(myBooleanOption.getType(), ZLOptionType.TYPE_BOOLEAN);
 	}
 	
 	public void test04_string(){
-		assertEquals(myStringOption.getType(), OptionType.TYPE_STRING);
+		assertEquals(myStringOption.getType(), ZLOptionType.TYPE_STRING);
 	}
 	
 }

@@ -9,8 +9,8 @@ public final class ZLStringOption extends ZLSimpleOption {
 	private String myValue;
 	private String myDefaultValue;
 	
-	public OptionType getType(){
-		return OptionType.TYPE_STRING;
+	public ZLOptionType getType(){
+		return ZLOptionType.TYPE_STRING;
 	}
 
 	public String getValue(){

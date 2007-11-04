@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="/home/geometer/Books/1.pdb">
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="625527"/>
+  </group>
+  <group name="/home/geometer/Books/2.pdb">
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="531963"/>
+  </group>
+  <group name="/home/geometer/Books/D.pdb">
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="344055"/>
+  </group>
+  <group name="/home/geometer/Books/D_ring_of_fire.zip">
+    <option name="EntriesNumber" value="0"/>
+    <option name="Size" value="633148"/>
+  </group>
+  <group name="/home/geometer/Books/EpubGuide-hxa7241.epub">
+    <option name="AuthorDisplayName" value="Harrison Ainsworth / HXA7241"/>
+    <option name="AuthorSortKey" value="hxa7241"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="16854"/>
+    <option name="Title" value="Epub Format Construction Guide"/>
+  </group>
+  <group name="/home/geometer/Books/Ring_of_Fire.prc">
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="922046"/>
+  </group>
+  <group name="/home/geometer/Books/Ring_of_Fire1.prc">
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="922046"/>
+  </group>
+  <group name="/home/geometer/Books/Shareware.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1251"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="1652817"/>
+    <option name="Title" value="Shareware"/>
+  </group>
+  <group name="/home/geometer/Books/Test.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="550"/>
+    <option name="Title" value="Test"/>
+  </group>
+  <group name="/home/geometer/Books/The_Divine_Comedy_by_Dante,_Illustrated,_Hell,_Vol.mobi">
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="1210108"/>
+  </group>
+  <group name="/home/geometer/Books/chm/Razumno0foto.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1251"/>
+    <option name="Language" value="ru"/>
+    <option name="Size" value="483222"/>
+    <option name="Title" value="Razumno0foto"/>
+  </group>
+  <group name="/home/geometer/Books/chm/UML.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="2953135"/>
+    <option name="Title" value="UML"/>
+  </group>
+  <group name="/home/geometer/Books/chm/python.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="1301410"/>
+    <option name="Title" value="python"/>
+  </group>
+  <group name="/home/geometer/Books/chm/stiven_king--siyanie.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1251"/>
+    <option name="Language" value="ru"/>
+    <option name="Size" value="515528"/>
+    <option name="Title" value="stiven_king--siyanie"/>
+  </group>
+  <group name="/home/geometer/Books/chm/xxx.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="6962635"/>
+    <option name="Title" value="xxx"/>
+  </group>
+  <group name="/home/geometer/Books/epub/Holmes.epub">
+    <option name="AuthorDisplayName" value="Sir Conan Doyle"/>
+    <option name="AuthorSortKey" value="doyle"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="629269"/>
+    <option name="Title" value="The Adventures of Sherlock Holmes"/>
+  </group>
+  <group name="/home/geometer/Books/epub/Holmes.epub:OEBPS/chapter01.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="UTF-8"/>
+    <option name="IgnoredIndent" value="5"/>
+    <option name="Initialized" value="true"/>
+    <option name="Title" value="The Project Gutenberg eBook of The Adventures of Sherlock Holmes, by Sir Arthur Conan Doyle"/>
+  </group>
+  <group name="/home/geometer/Books/leblanc_aventure_arsene_lupin_theatre.prc">
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="92032"/>
+  </group>
+  <group name="/home/geometer/Books/oeb/graphtheorydemo.oebzip">
+    <option name="AuthorDisplayName" value="Sandra Lach Arlinghaus, William C. Arlinghaus, Frank Harary"/>
+    <option name="AuthorSortKey" value="arlinghaus"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="1659602"/>
+    <option name="Title" value="Geography and Graph Theory Demo Version"/>
+  </group>
+  <group name="/home/geometer/Books/semenova_mariya_konstantinov_andrey_mech_mertvikh_win.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="ISO-8859-1"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="456892"/>
+    <option name="Title" value="semenova_mariya_konstantinov_andrey_mech_mertvikh_win"/>
+  </group>
+  <group name="/home/geometer/D.pdb">
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="344055"/>
+  </group>
+  <group name="/home/geometer/Desktop/1kdeath.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="IgnoredIndent" value="2"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="24721"/>
+    <option name="Title" value="A Thousand Deaths"/>
+  </group>
+  <group name="/home/geometer/Desktop/3190.pdb">
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="38729"/>
+  </group>
+  <group name="/home/geometer/Desktop/Alice_In_Wonderland.oebzip">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="215324"/>
+    <option name="Title" value="Alice_In_Wonderland"/>
+  </group>
+  <group name="/home/geometer/Desktop/Alice_In_Wonderland_gif.mobi">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="IgnoredIndent" value="11"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="392872"/>
+    <option name="Title" value="Alice_In_Wonderland_gif"/>
+  </group>
+  <group name="/home/geometer/Desktop/Alice_In_Wonderland_jpg.mobi">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="IgnoredIndent" value="11"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="237568"/>
+    <option name="Title" value="Alice_In_Wonderland_jpg"/>
+  </group>
+  <group name="/home/geometer/Desktop/Magic__The_Gath-MobiPocket.pdb">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="ISO-8859-1"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="797816"/>
+    <option name="Title" value="Magic__The_Gath-MobiPocket"/>
+  </group>
+  <group name="/home/geometer/Desktop/Magic__The_Gath-Plucker.pdb">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Language" value=""/>
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="1365654"/>
+    <option name="Title" value="Magic__The_Gath-Plucker"/>
+  </group>
+  <group name="/home/geometer/Desktop/P_freehold.zip">
+    <option name="EntriesNumber" value="0"/>
+    <option name="Size" value="632484"/>
+  </group>
+  <group name="/home/geometer/Desktop/P_freehold.zip:Freehold.prc">
+    <option name="AuthorDisplayName" value="Michael Z. Williamson"/>
+    <option name="AuthorSortKey" value="williamson"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="IgnoredIndent" value="2"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Title" value="Freehold"/>
+  </group>
+  <group name="/home/geometer/Desktop/Resnick-RRobin1-mo.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="IgnoredIndent" value="11"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="11251"/>
+    <option name="Title" value="Round Robin Chapter 1: Conversation with an Admiral"/>
+  </group>
+  <group name="/home/geometer/Desktop/Ring_of_Fire.prc">
+    <option name="AuthorDisplayName" value="Eric Flint"/>
+    <option name="AuthorSortKey" value="flint"/>
+    <option name="BreakType" value="3"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="IgnoredIndent" value="2"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="922046"/>
+    <option name="Title" value="Ring of Fire"/>
+  </group>
+  <group name="/home/geometer/Desktop/Ring_of_Fire1.prc">
+    <option name="AuthorDisplayName" value="Eric Flint"/>
+    <option name="AuthorSortKey" value="flint"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="922046"/>
+    <option name="Title" value="Ring of Fire"/>
+  </group>
+  <group name="/home/geometer/Desktop/aofen.pdb">
+    <option name="PalmType" value="VOLcCTx1"/>
+    <option name="Size" value="1785"/>
+  </group>
+  <group name="/home/geometer/Desktop/greek_nt2.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="UTF-8"/>
+    <option name="Size" value="439570"/>
+    <option name="Title" value="greek_nt2"/>
+  </group>
+  <group name="/home/geometer/Desktop/leblanc_aventure_arsene_lupin_theatre.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="IgnoredIndent" value="11"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="fr"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="92032"/>
+    <option name="Title" value="leblanc_aventure_arsene_lupin_theatre"/>
+  </group>
+  <group name="/home/geometer/Desktop/ot.pdb">
+    <option name="PalmType" value="VOLcCTx1"/>
+    <option name="Size" value="1299115"/>
+  </group>
+  <group name="/home/geometer/Desktop/stoppard_rozenkranc_i_gildenstern_mertviy.fb2.zip">
+    <option name="Size" value="89713"/>
+  </group>
+  <group name="/home/geometer/Desktop/stoppard_rozenkranc_i_gildenstern_mertviy.fb2.zip:stoppard_rozenkranc_i_gildenstern_mertviy.fb2">
+    <option name="AuthorDisplayName" value="Том Стоппард"/>
+    <option name="AuthorSortKey" value="стоппард"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Розенкранц и Гильденстерн мертвы"/>
+  </group>
+  <group name="/home/geometer/Desktop/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/Desktop/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip:strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2"/>
+    <option name="Size" value="173198"/>
+  </group>
+  <group name="/home/geometer/Desktop/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip:strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2">
+    <option name="AuthorDisplayName" value="Аркадий Натанович Стругацкий, Борис Натанович Стругацкий"/>
+    <option name="AuthorSortKey" value="стругацкий"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="1"/>
+    <option name="Sequence" value="НИИЧАВО"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Понедельник начинается в субботу"/>
+  </group>
+  <group name="/home/geometer/FBooks/Glushkov_Severnyj_shtorm(Epoha_stalnogo_kresta-3).fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/Glushkov_Severnyj_shtorm(Epoha_stalnogo_kresta-3).fb2.zip:Glushkov_Severnyj_shtorm(Epoha_stalnogo_kresta-3).fb2"/>
+    <option name="Size" value="401611"/>
+  </group>
+  <group name="/home/geometer/FBooks/Glushkov_Severnyj_shtorm(Epoha_stalnogo_kresta-3).fb2.zip:Glushkov_Severnyj_shtorm(Epoha_stalnogo_kresta-3).fb2">
+    <option name="AuthorDisplayName" value="Роман Глушков"/>
+    <option name="AuthorSortKey" value="глушков"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="3"/>
+    <option name="Sequence" value="Эпоха стального креста"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Северный шторм"/>
+  </group>
+  <group name="/home/geometer/FBooks/ahundova_m_istoriya_freddi_merkyuri.fb2">
+    <option name="AuthorDisplayName" value="М. В. Ахундова"/>
+    <option name="AuthorSortKey" value="ахундова"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="3193391"/>
+    <option name="Title" value="История Фредди Меркьюри"/>
+  </group>
+  <group name="/home/geometer/FBooks/ahundova_m_istoriya_freddi_merkyuri.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/ahundova_m_istoriya_freddi_merkyuri.fb2.zip:ahundova_m_istoriya_freddi_merkyuri.fb2"/>
+    <option name="Size" value="1994633"/>
+  </group>
+  <group name="/home/geometer/FBooks/ahundova_m_istoriya_freddi_merkyuri.fb2.zip:ahundova_m_istoriya_freddi_merkyuri.fb2">
+    <option name="AuthorDisplayName" value="М. В. Ахундова"/>
+    <option name="AuthorSortKey" value="ахундова"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="История Фредди Меркьюри"/>
+  </group>
+  <group name="/home/geometer/FBooks/azimov_osnovanie_6_krizis_osnovaniya.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/azimov_osnovanie_6_krizis_osnovaniya.fb2.zip:azimov_osnovanie_6_krizis_osnovaniya.fb2"/>
+    <option name="Size" value="358582"/>
+  </group>
+  <group name="/home/geometer/FBooks/azimov_osnovanie_6_krizis_osnovaniya.fb2.zip:azimov_osnovanie_6_krizis_osnovaniya.fb2">
+    <option name="AuthorDisplayName" value="Айзек Азимов"/>
+    <option name="AuthorSortKey" value="азимов"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="6"/>
+    <option name="Sequence" value="Основание"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Кризис Основания"/>
+  </group>
+  <group name="/home/geometer/FBooks/azimov_osnovanie_7_osnovanie_i_zemlya.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/azimov_osnovanie_7_osnovanie_i_zemlya.fb2.zip:azimov_osnovanie_7_osnovanie_i_zemlya.fb2"/>
+    <option name="Size" value="380694"/>
+  </group>
+  <group name="/home/geometer/FBooks/azimov_osnovanie_7_osnovanie_i_zemlya.fb2.zip:azimov_osnovanie_7_osnovanie_i_zemlya.fb2">
+    <option name="AuthorDisplayName" value="Айзек Азимов"/>
+    <option name="AuthorSortKey" value="азимов"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="7"/>
+    <option name="Sequence" value="Основание"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Основание и Земля"/>
+  </group>
+  <group name="/home/geometer/FBooks/betankur_dzhon_prav_amberom.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/betankur_dzhon_prav_amberom.fb2.zip:betankur_dzhon_prav_amberom.fb2"/>
+    <option name="Size" value="193718"/>
+  </group>
+  <group name="/home/geometer/FBooks/betankur_dzhon_prav_amberom.fb2.zip:betankur_dzhon_prav_amberom.fb2">
+    <option name="AuthorDisplayName" value="Джон Грегори Бетанкур, John Gregory Betancourt"/>
+    <option name="AuthorSortKey" value="betancourt"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="3"/>
+    <option name="Sequence" value="Хроники Амбера"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Правь Амбером!"/>
+  </group>
+  <group name="/home/geometer/FBooks/darrell_poyimayite_mne_kolobusa_s_illyustraciyami.fb2">
+    <option name="AuthorDisplayName" value="Джеральд Даррелл"/>
+    <option name="AuthorSortKey" value="даррелл"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="1053529"/>
+    <option name="Title" value="Поймайте мне колобуса (с иллюстрациями)"/>
+  </group>
+  <group name="/home/geometer/FBooks/dyuma_dvadcat_let_spustya.fb2">
+    <option name="AuthorDisplayName" value="Александр Дюма"/>
+    <option name="AuthorSortKey" value="дюма"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="1604376"/>
+    <option name="Title" value="Двадцать лет спустя"/>
+  </group>
+  <group name="/home/geometer/FBooks/dyuma_dvadcat_let_spustya.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/dyuma_dvadcat_let_spustya.fb2.zip:dyuma_dvadcat_let_spustya.fb2"/>
+    <option name="Size" value="620667"/>
+  </group>
+  <group name="/home/geometer/FBooks/dyuma_dvadcat_let_spustya.fb2.zip:dyuma_dvadcat_let_spustya.fb2">
+    <option name="AuthorDisplayName" value="Александр Дюма"/>
+    <option name="AuthorSortKey" value="дюма"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Двадцать лет спустя"/>
+  </group>
+  <group name="/home/geometer/FBooks/dyuma_vikont_de_brajelon_ili_desyat_let_spustya.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/dyuma_vikont_de_brajelon_ili_desyat_let_spustya.fb2.zip:dyuma_vikont_de_brajelon_ili_desyat_let_spustya.fb2"/>
+    <option name="Size" value="1412927"/>
+  </group>
+  <group name="/home/geometer/FBooks/dyuma_vikont_de_brajelon_ili_desyat_let_spustya.fb2.zip:dyuma_vikont_de_brajelon_ili_desyat_let_spustya.fb2">
+    <option name="AuthorDisplayName" value="Александр Дюма"/>
+    <option name="AuthorSortKey" value="дюма"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Виконт де Бражелон или десять лет спустя"/>
+  </group>
+  <group name="/home/geometer/FBooks/exupery_malenkiyi_princ.fb2">
+    <option name="AuthorDisplayName" value="Antuan de Sent Exupery"/>
+    <option name="AuthorSortKey" value="exupery"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="1311057"/>
+    <option name="Title" value="Маленький принц"/>
+  </group>
+  <group name="/home/geometer/FBooks/exupery_malenkiyi_princ.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/exupery_malenkiyi_princ.fb2.zip:exupery_malenkiyi_princ.fb2"/>
+    <option name="Size" value="869246"/>
+  </group>
+  <group name="/home/geometer/FBooks/exupery_malenkiyi_princ.fb2.zip:exupery_malenkiyi_princ.fb2">
+    <option name="AuthorDisplayName" value="Antuan de Sent Exupery"/>
+    <option name="AuthorSortKey" value="exupery"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Маленький принц"/>
+  </group>
+  <group name="/home/geometer/FBooks/frayi_labirintiy_eho_02_volonteriy_vechnosti.fb2">
+    <option name="AuthorDisplayName" value="Макс Фрай"/>
+    <option name="AuthorSortKey" value="фрай"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="2"/>
+    <option name="Sequence" value="Лабиринты Ехо"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="1163834"/>
+    <option name="Title" value="Волонтеры Вечности"/>
+  </group>
+  <group name="/home/geometer/FBooks/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip:gashek_pohojdeniya_bravogo_soldata_shveyika.fb2"/>
+    <option name="Size" value="574462"/>
+  </group>
+  <group name="/home/geometer/FBooks/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip:gashek_pohojdeniya_bravogo_soldata_shveyika.fb2">
+    <option name="AuthorDisplayName" value="Ярослав Гашек"/>
+    <option name="AuthorSortKey" value="гашек"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Похождения бравого солдата Швейка"/>
+  </group>
+  <group name="/home/geometer/FBooks/glushkov_roman_yepoha_stalnogo_kresta.fb2">
+    <option name="AuthorDisplayName" value="Роман Глушков"/>
+    <option name="AuthorSortKey" value="глушков"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="1"/>
+    <option name="Sequence" value="Эпоха стального креста"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="969201"/>
+    <option name="Title" value="Эпоха стального креста"/>
+  </group>
+  <group name="/home/geometer/FBooks/glushkov_roman_yepoha_stalnogo_kresta.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/glushkov_roman_yepoha_stalnogo_kresta.fb2.zip:glushkov_roman_yepoha_stalnogo_kresta.fb2"/>
+    <option name="Size" value="433192"/>
+  </group>
+  <group name="/home/geometer/FBooks/glushkov_roman_yepoha_stalnogo_kresta.fb2.zip:glushkov_roman_yepoha_stalnogo_kresta.fb2">
+    <option name="AuthorDisplayName" value="Роман Глушков"/>
+    <option name="AuthorSortKey" value="глушков"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="1"/>
+    <option name="Sequence" value="Эпоха стального креста"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Эпоха стального креста"/>
+  </group>
+  <group name="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip:hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2"/>
+    <option name="Size" value="380993"/>
+  </group>
+  <group name="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip:hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2">
+    <option name="AuthorDisplayName" value="Джеймс Хэрриот"/>
+    <option name="AuthorSortKey" value="хэрриот"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="1"/>
+    <option name="Sequence" value="Записки ветеринара"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="О всех созданиях – больших и малых"/>
+  </group>
+  <group name="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip:hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2"/>
+    <option name="Size" value="380993"/>
+  </group>
+  <group name="/home/geometer/FBooks/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh/hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2.zip:hyerriot_zapiski_ve_1_o_vseh_sozdaniyah_bolshih_i_maliyh.fb2">
+    <option name="AuthorDisplayName" value="Джеймс Хэрриот"/>
+    <option name="AuthorSortKey" value="хэрриот"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="1"/>
+    <option name="Sequence" value="Записки ветеринара"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="О всех созданиях – больших и малых"/>
+  </group>
+  <group name="/home/geometer/FBooks/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/FBooks/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip:strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2"/>
+    <option name="Size" value="173198"/>
+  </group>
+  <group name="/home/geometer/FBooks/strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2.zip:strugackiyi_niichavo_1_ponedelnik_nachinaetsya_v_subbotu.fb2">
+    <option name="AuthorDisplayName" value="Аркадий Натанович Стругацкий, Борис Натанович Стругацкий"/>
+    <option name="AuthorSortKey" value="стругацкий"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="Number in seq" value="1"/>
+    <option name="Sequence" value="НИИЧАВО"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Понедельник начинается в субботу"/>
+  </group>
+  <group name="/home/geometer/Ring_of_Fire.rtf">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="1725474"/>
+    <option name="Title" value="Ring_of_Fire"/>
+  </group>
+  <group name="/home/geometer/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip">
+    <option name="EntriesNumber" value="1"/>
+    <option name="Entry0" value="/home/geometer/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip:gashek_pohojdeniya_bravogo_soldata_shveyika.fb2"/>
+    <option name="Size" value="574462"/>
+  </group>
+  <group name="/home/geometer/gashek_pohojdeniya_bravogo_soldata_shveyika.fb2.zip:gashek_pohojdeniya_bravogo_soldata_shveyika.fb2">
+    <option name="AuthorDisplayName" value="Ярослав Гашек"/>
+    <option name="AuthorSortKey" value="гашек"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Title" value="Похождения бравого солдата Швейка"/>
+  </group>
+  <group name="/home/geometer/joseph/An Intimate Study Of Sherlock Holmes.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="ru"/>
+    <option name="Size" value="22718"/>
+    <option name="Title" value="An Intimate Study Of Sherlock Holmes"/>
+  </group>
+  <group name="/home/geometer/joseph/An Intimate Study Of Sherlock Holmes.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="IgnoredIndent" value="2"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="ru"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="175233"/>
+    <option name="Title" value="An Intimate Study Of Sherlock Holmes"/>
+  </group>
+  <group name="/home/geometer/joseph/Test.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="550"/>
+    <option name="Title" value="Test"/>
+  </group>
+  <group name="/home/geometer/joseph/Test1.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="550"/>
+    <option name="Title" value="Test1"/>
+  </group>
+  <group name="/home/geometer/joseph/Test2.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="ISO-8859-1"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="550"/>
+    <option name="Title" value="Test2"/>
+  </group>
+  <group name="/home/geometer/joseph/Test3.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="IBM850"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="550"/>
+    <option name="Title" value="Test3"/>
+  </group>
+  <group name="/home/geometer/phonetic.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="1906"/>
+    <option name="Title" value="phonetic"/>
+  </group>
+  <group name="/home/geometer/prc/DavisDemo.prc">
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="686388"/>
+  </group>
+  <group name="/home/geometer/prc/Diario de abordo de una punto com.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="IgnoredIndent" value="11"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="none"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="446896"/>
+    <option name="Title" value="Diario de abordo de una punto com"/>
+  </group>
+  <group name="/home/geometer/prc/Dick_Philip_K- Blade_Runner.pdb">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1251"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="ru"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="344055"/>
+    <option name="Title" value="Dick_Philip_K- Blade_Runner"/>
+  </group>
+  <group name="/home/geometer/prc/Diplomatic.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="398994"/>
+    <option name="Title" value="Diplomatic"/>
+  </group>
+  <group name="/home/geometer/prc/Glance-HolyProphet.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="170076"/>
+    <option name="Title" value="Glance-HolyProphet"/>
+  </group>
+  <group name="/home/geometer/prc/King_Solomon&apos;s_Mines_.pdb">
+    <option name="PalmType" value="zTXTGPlm"/>
+    <option name="Size" value="210996"/>
+  </group>
+  <group name="/home/geometer/prc/King_Solomons_Mines_-doc.pdb">
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="265896"/>
+  </group>
+  <group name="/home/geometer/prc/LearningXML2.pdb">
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="3228195"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/0671876627.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="IgnoredIndent" value="2"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="354634"/>
+    <option name="Title" value="Doc Sidhe"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/ArtofWar.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="IgnoredIndent" value="2"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="86902"/>
+    <option name="Title" value="The Art of War"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/La caza de hackers - Bruce Sterling.pdb">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1251"/>
+    <option name="Language" value="ru"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="422358"/>
+    <option name="Title" value="La caza de hackers - Bruce Sterling"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/Magic__The_Gath-Doc.pdb">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="1428166"/>
+    <option name="Title" value="Magic__The_Gath-Doc"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/MiltonJohn-ParadiseLost.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="US-ASCII"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="293621"/>
+    <option name="Title" value="MiltonJohn-ParadiseLost"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/alice30.prc">
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="87827"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/alice31.prc">
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="87827"/>
+  </group>
+  <group name="/home/geometer/prc/XXXX/chan_eng.pdb">
+    <option name="PalmType" value="TEXtREAd"/>
+    <option name="Size" value="81669"/>
+  </group>
+  <group name="/home/geometer/prc/cambridgeklett-ef-demo.prc">
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="812072"/>
+  </group>
+  <group name="/home/geometer/prc/obobEBook21v3.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="132484"/>
+    <option name="Title" value="One Bread, One Body - Vol 21, Num 3"/>
+  </group>
+  <group name="/home/geometer/prc/test.pdb">
+    <option name="PalmType" value="DataPlkr"/>
+    <option name="Size" value="5909"/>
+  </group>
+  <group name="/home/geometer/prc/ukmdsdirectory.prc">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="IBM866"/>
+    <option name="PalmType" value="BOOKMOBI"/>
+    <option name="Size" value="4864"/>
+    <option name="Title" value="ukmdsdirectory"/>
+  </group>
+  <group name="/home/geometer/src/projects/fbreader/test.html">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="BreakType" value="6"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Initialized" value="true"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="69"/>
+    <option name="Title" value="test"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/1/Anderson, Kevin J. - [Seven Suns 02] - A Forest Of Stars.opf">
+    <option name="AuthorDisplayName" value="Kevin J. Anderson"/>
+    <option name="AuthorSortKey" value="anderson"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value=""/>
+    <option name="Size" value="4006"/>
+    <option name="Title" value="A Forest of Stars"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.240x320.en.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="en"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="3563"/>
+    <option name="Title" value="About FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.240x320.fr.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="fr"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="4011"/>
+    <option name="Title" value="À propos de FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.240x320.uk.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="uk"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="4795"/>
+    <option name="Title" value="Про програму FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.640x480.fr.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="fr"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="4438"/>
+    <option name="Title" value="À propos de FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.640x480.uk.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="uk"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="5222"/>
+    <option name="Title" value="Про програму FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.desktop.fr.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="fr"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9477"/>
+    <option name="Title" value="À propos de FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.desktop.ru.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9295"/>
+    <option name="Title" value="О программе FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.desktop.uk.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="uk"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="10261"/>
+    <option name="Title" value="Про програму FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.maemo.fr.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="fr"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="6278"/>
+    <option name="Title" value="À propos de FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.maemo.ru.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9295"/>
+    <option name="Title" value="О программе FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.maemo.uk.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="uk"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="10261"/>
+    <option name="Title" value="Про програму FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.win32.en.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="en"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="12150"/>
+    <option name="Title" value="About FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.win32.fr.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="fr"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="12648"/>
+    <option name="Title" value="À propos de FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.win32.ru.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="12622"/>
+    <option name="Title" value="О программе FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/fbreader/data/help/MiniHelp.win32.uk.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="uk"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="13901"/>
+    <option name="Title" value="Про програму FBReader"/>
+  </group>
+  <group name="/home/geometer/src/zaurus/xa.chm">
+    <option name="AuthorDisplayName" value="Unknown Author"/>
+    <option name="AuthorSortKey" value="___"/>
+    <option name="Encoding" value="windows-1252"/>
+    <option name="Language" value="en"/>
+    <option name="Size" value="1301410"/>
+    <option name="Title" value="xa"/>
+  </group>
+  <group name="/usr/share/FBReader/help/MiniHelp.en.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="en"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9043"/>
+    <option name="Title" value="About FBReader"/>
+  </group>
+  <group name="/usr/share/FBReader/help/MiniHelp.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="en"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9072"/>
+    <option name="Title" value="About FBReader"/>
+  </group>
+  <group name="/usr/share/FBReader/help/MiniHelp.fr.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="fr"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9477"/>
+    <option name="Title" value="À propos de FBReader"/>
+  </group>
+  <group name="/usr/share/FBReader/help/MiniHelp.ru.fb2">
+    <option name="AuthorDisplayName" value="FBReader"/>
+    <option name="AuthorSortKey" value="fbreader"/>
+    <option name="Encoding" value="auto"/>
+    <option name="Language" value="ru"/>
+    <option name="SequenceDefined" value="true"/>
+    <option name="Size" value="9295"/>
+    <option name="Title" value="О программе FBReader"/>
+  </group>
+</config>

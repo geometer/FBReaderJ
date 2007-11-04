@@ -10,8 +10,8 @@ public final class ZLBooleanOption extends ZLSimpleOption{
 	private boolean myValue;
 	private boolean myDefaultValue;
 	
-	public OptionType getType(){
-		return OptionType.TYPE_BOOLEAN;
+	public ZLOptionType getType(){
+		return ZLOptionType.TYPE_BOOLEAN;
 	}
 
 	public boolean getValue(){

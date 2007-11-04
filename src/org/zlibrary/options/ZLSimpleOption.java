@@ -12,7 +12,7 @@ abstract class ZLSimpleOption extends ZLOption {
 	 * отдающий тип этого наследника.
 	 * @return
 	 */
-	public abstract OptionType getType();
+	public abstract ZLOptionType getType();
 	
 	/**
 	 * конструктор. создается так же как и любая опция

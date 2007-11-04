@@ -13,8 +13,8 @@ public final class ZLBoolean3Option extends ZLSimpleOption{
 	private	ZLBoolean3 myValue;
 	private	ZLBoolean3 myDefaultValue;
 	
-	public OptionType getType(){
-		return OptionType.TYPE_BOOLEAN3;
+	public ZLOptionType getType(){
+		return ZLOptionType.TYPE_BOOLEAN3;
 	}
 
 	public ZLBoolean3 getValue(){
