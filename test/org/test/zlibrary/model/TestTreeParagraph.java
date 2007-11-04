@@ -1,5 +1,7 @@
 package org.test.zlibrary.model;
 
+import java.util.List;
+
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 
@@ -15,5 +17,88 @@ public class TestTreeParagraph extends TestCase {
 		 assertTrue(paragraph.getDepth() == 0);
 		 assertTrue(paragraph2.getDepth() == 1);
 		 assertTrue(paragraph2.getParent() == paragraph);
+	}
+
+	public void testIsOpen() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		assertTrue(!paragraph.isOpen());
+		paragraph.open(true);
+		assertTrue(paragraph.isOpen());
+		paragraph.open(false);
+		assertTrue(!paragraph.isOpen());		
+	}
+	
+	public void testOpenTree() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
+	    paragraph4.openTree();
+	    assertTrue(paragraph2.isOpen());
+	    assertTrue(paragraph.isOpen());
+	}
+	
+	public void testGetDepth() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
+	    assertTrue(paragraph.getDepth() == 0);
+	    assertTrue(paragraph2.getDepth() == 1);
+	    assertTrue(paragraph3.getDepth() == 1);
+	    assertTrue(paragraph4.getDepth() == 2);
+	}
+	
+	public void testGetParent() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
+		assertTrue(paragraph.getParent() == null);
+		assertTrue(paragraph2.getParent() == paragraph);
+		assertTrue(paragraph3.getParent() == paragraph);
+		assertTrue(paragraph4.getParent() == paragraph2);	
+	}
+	
+	public void testGetChildren() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
+		assertTrue(paragraph.getChildren().size() == 2);
+		assertTrue(paragraph.getChildren().contains(paragraph2));
+		assertTrue(paragraph.getChildren().contains(paragraph3));
+		assertTrue(paragraph2.getChildren().contains(paragraph4));
+		assertTrue(paragraph2.getChildren().size() == 1);
+		assertTrue(paragraph3.getChildren().size() == 0);		
+	}
+	/*
+	 *	
+	void removeFromParent();
+	 * 
+	 * */
+
+	public void testGetFullSize() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
+
+		assertTrue(paragraph.getFullSize() == 4);
+		assertTrue(paragraph2.getFullSize() == 2);
+		assertTrue(paragraph3.getFullSize() == 1);
+		assertTrue(paragraph4.getFullSize() == 1);
+	}
+	
+	public void testRemoveFromParent() {
+		ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
+		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
+		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
+		paragraph4.removeFromParent();
+		assertTrue(paragraph4.getChildren().size() == 0);
+		paragraph2.removeFromParent();
+		assertTrue(paragraph2.getChildren().size() == 0);
+		paragraph.removeFromParent();
+		assertTrue(paragraph.getChildren().size() == 2);
 	}
 }
