@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<FictionBook>
+<body>
+  <section>
+    <annotation>
+	<p>annotation</p>
+    </annotation>
+  </section>
+</body>
+</FictionBook>
+
