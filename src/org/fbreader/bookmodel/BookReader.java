@@ -2,8 +2,10 @@ package org.fbreader.bookmodel;
 
 import java.util.Stack;
 
+import org.fbreader.formats.fb2.FB2Tag;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 public class BookReader {
 	private BookModel myBookModel;
@@ -19,6 +21,11 @@ public class BookReader {
 	
 	private boolean myInsideTitle = false;
 	private boolean mySectionContainsRegularContents = false;
+	
+	private boolean myContentsParagraphExists = false;
+	private Stack<ZLTextTreeParagraph> myTOCStack = new Stack<ZLTextTreeParagraph>();
+	private boolean myLastTOCParagraphIsEmpty = false;
+	private StringBuffer myContentsBuffer = new StringBuffer();
 	
 	public BookReader(BookModel model) {
 		myBookModel = model;
@@ -110,6 +117,8 @@ public class BookReader {
 			myBuffer.append(data);
 			if (!myInsideTitle) {
 				mySectionContainsRegularContents = true;
+			} else {
+				addContentsData(data);
 			}
 		}	
 	}
@@ -131,6 +140,70 @@ public class BookReader {
 			}
 			myBookModel.addHyperlinkLabel(label, myCurrentTextModel, paragraphNumber);
 		}
+	}
+	
+	public void addContentsData(String data) {
+		if (data != "" && !myTOCStack.empty()) {
+			myContentsBuffer.append(data);
+		}
+	}
+	
+	public void beginContentsParagraph(int referenceNumber) {
+		if (myCurrentTextModel == myBookModel.getBookModel()) {
+			ContentsModel contentsModel = myBookModel.getContentsModel();
+			if (referenceNumber == -1) {
+				referenceNumber = myCurrentTextModel.getParagraphsNumber();
+			}
+			ZLTextTreeParagraph peek = myTOCStack.empty() ? null : myTOCStack.peek();
+			if (myContentsBuffer.length() != 0) {
+				contentsModel.addText(myContentsBuffer);
+				myContentsBuffer.delete(0, myContentsBuffer.length());
+				myLastTOCParagraphIsEmpty = false;
+			}
+			if (myLastTOCParagraphIsEmpty) {
+				contentsModel.addText("...");
+			}
+			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
+			contentsModel.addControl((byte)FB2Tag.CONTENTS_TABLE_ENTRY.ordinal(), true);
+			contentsModel.setReference(para, referenceNumber);
+			myTOCStack.push(para);
+			myLastTOCParagraphIsEmpty = true;
+			myContentsParagraphExists = true;
+		}
+	}
+
+	public void endContentsParagraph() {
+		if (!myTOCStack.empty()) {
+			ContentsModel contentsModel = myBookModel.getContentsModel();
+			if (myContentsBuffer.length() != 0) {
+				contentsModel.addText(myContentsBuffer);
+				myContentsBuffer.delete(0, myContentsBuffer.length());
+				myLastTOCParagraphIsEmpty = false;
+			}
+			if (myLastTOCParagraphIsEmpty) {
+				contentsModel.addText("...");
+				myLastTOCParagraphIsEmpty = false;
+			}
+			myTOCStack.pop();
+		}
+		myContentsParagraphExists = false;
+	}
+
+	public void setReference(int contentsParagraphNumber, int referenceNumber) {
+		ContentsModel contentsModel = myBookModel.getContentsModel();
+		if (contentsParagraphNumber >= contentsModel.getParagraphsNumber()) {
+			return;
+		}
+		contentsModel.setReference((ZLTextTreeParagraph) 
+				contentsModel.getParagraph(contentsParagraphNumber), referenceNumber);
+	}
+	
+	public boolean contentsParagraphIsOpen() {
+		return myContentsParagraphExists;
+	}
+
+	public void beginContentsParagraph() {
+		beginContentsParagraph(-1);
 	}
 	
 }

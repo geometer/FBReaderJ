@@ -1,9 +1,11 @@
 package org.test.fbreader.formats.fb2;
 
 import org.fbreader.bookmodel.BookModel;
+import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.entry.ZLTextEntry;
 
 import junit.framework.TestCase;
@@ -41,9 +43,7 @@ public class TestFB2Reader extends TestCase {
 		return i1 == i2;
 	}
 	
-	private void writeDumpToFile(String inputFile, String outputFile) {
-		FB2Reader reader = new FB2Reader(inputFile);
-		ZLTextModel model = reader.read().getBookModel();
+	private void writeDumpToFile(ZLTextModel model, String outputFile) {
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(outputFile);
@@ -54,9 +54,28 @@ public class TestFB2Reader extends TestCase {
 		}		
 	}
 	
+	private void writeTextModelDumpToFile(String inputFile, String outputFile) {
+		FB2Reader reader = new FB2Reader(inputFile);
+		ZLTextModel model = reader.read().getBookModel();
+		writeDumpToFile(model, outputFile);
+	}
+	
+	private void writeTreeModelDumpToFile(String inputFile, String outputFile) {
+		FB2Reader reader = new FB2Reader(inputFile);
+		ZLTextModel model = reader.read().getContentsModel();
+		writeDumpToFile(model, outputFile);
+	}
+	
+	private void doTreeModelTest(String test) {
+		String test_result = "test/Data/" + test + "_act.txt";
+		writeTreeModelDumpToFile("test/Data/" + test + ".fb2", test_result);
+		assertTrue(compareFiles("test/Data/" + test + "_exp.txt", test_result));
+		(new File(test_result)).delete();
+	}
+	
 	private void doTest(String test) {
 		String test_result = "test/Data/" + test + "_act.txt";
-		writeDumpToFile("test/Data/" + test + ".fb2", test_result);
+		writeTextModelDumpToFile("test/Data/" + test + ".fb2", test_result);
 		assertTrue(compareFiles("test/Data/" + test + "_exp.txt", test_result));
 		(new File(test_result)).delete();
 	}
@@ -213,4 +232,23 @@ public class TestFB2Reader extends TestCase {
 	public void testExternalHyperlink() {
 		doTest("ext_hyperlink");
 	}
+	
+	public void testTreeParagraph() {
+		doTreeModelTest("tree1");
+	}
+	
+	public void testTreeParagraphRef() {
+		FB2Reader reader = new FB2Reader("test/Data/tree1.fb2");
+		ContentsModel model = reader.read().getContentsModel();
+		assertTrue(model.getReference((ZLTextTreeParagraph) model.getParagraph(0)) == 0);
+	}
+	
+	public void testTreeParagraphTitle() {
+		doTreeModelTest("tree2");
+	}
+	
+	public void test2TreeParagraphs() {
+		doTreeModelTest("tree2sections");
+	}
 }
+	

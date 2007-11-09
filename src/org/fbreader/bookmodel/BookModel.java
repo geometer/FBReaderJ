@@ -10,6 +10,7 @@ import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class BookModel {
 	private ZLTextPlainModel myBookModel = (new ZLModelFactory()).createPlainModel();
+	private ContentsModel myContentsModel = new ContentsModel();
 	private Map<String, ZLTextPlainModel> myFootnotes = 
 		new HashMap<String, ZLTextPlainModel>();
 	private Map<String, Label> myInternalHyperlinks =
@@ -27,6 +28,10 @@ public class BookModel {
 	
 	public ZLTextPlainModel getBookModel() {
 		return myBookModel;
+	}
+	
+	public ContentsModel getContentsModel() {
+		return myContentsModel;
 	}
 	
 	public ZLTextPlainModel getFootnoteModel(String id) {
