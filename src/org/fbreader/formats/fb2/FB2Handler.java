@@ -110,6 +110,7 @@ class FB2Handler extends DefaultHandler {
 			break;
 			
 		case BODY:
+			myBookReader.popKind();
 			myReadMainText = false;
 			myBookReader.unsetCurrentTextModel();
 			break;
@@ -220,6 +221,7 @@ class FB2Handler extends DefaultHandler {
 				myBookReader.setMainTextModel();
 				myReadMainText = true;
 			}
+			myBookReader.pushKind((byte) FB2Tag.BODY.ordinal());
 			break;
 		
 		case A:
