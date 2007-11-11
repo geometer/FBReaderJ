@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<FictionBook>
+<body>
+  <p><a l:href="#note1" type="note">[1]</a></p>
+</body>
+<body name="notes">
+  <section id="note1">
+    <p>footnote</p>
+  </section>
+</body>
+</FictionBook>
+

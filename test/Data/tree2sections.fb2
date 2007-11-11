@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+<body>
+<section>
+<title><p>1</p></title>
+</section>
+<section>
+<title><p>2</p></title>
+</section>
+</body>
+</FictionBook>
