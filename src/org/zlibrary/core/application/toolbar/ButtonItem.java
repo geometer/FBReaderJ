@@ -1,16 +1,18 @@
 package org.zlibrary.core.application.toolbar;
 
+import org.zlibrary.core.resources.ZLResource;
+
 public class ButtonItem extends Item {
 	private int myActionId;
 	private String myIconName;
-	//private ZLResource myTooltip;
+	private ZLResource myTooltip;
 	private	ButtonGroup myButtonGroup;
 	
-	/*public ButtonItem(int actionId, String iconName, ZLResource tooltip) {
+	public ButtonItem(int actionId, String iconName, ZLResource tooltip) {
 		myActionId = actionId;
 		myIconName = iconName;
-		//myTooltip = tooltip;
-	}*/
+		myTooltip = tooltip;
+	}
 
 	public Type type() {
 		return Type.BUTTON;
@@ -25,11 +27,10 @@ public class ButtonItem extends Item {
 	}
 	
 	public String tooltip() {
-		//if (!myTooltip.hasValue()) {
-			//static const String EMPTY;
-			//return EMPTY;
-		//}
-		return null;//myTooltip.value();
+		if (!myTooltip.hasValue()) {
+			return "";
+		}
+		return myTooltip.value();
 	}
 
 	public ButtonGroup buttonGroup() {
@@ -52,13 +53,13 @@ public class ButtonItem extends Item {
 
 	public void setButtonGroup(ButtonGroup bg) {
 		if (myButtonGroup != null) {
-			//myButtonGroup.Items.erase(this);
+			myButtonGroup.Items.remove(this);
 		}
 		
 		myButtonGroup = bg;
 		
 		if (myButtonGroup != null) {
-			//myButtonGroup.Items.insert(this);
+			myButtonGroup.Items.add(this);
 		}
 	}	
 }

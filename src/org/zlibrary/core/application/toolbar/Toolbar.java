@@ -3,19 +3,22 @@ package org.zlibrary.core.application.toolbar;
 import java.util.Collections;
 import java.util.List;
 
+import org.zlibrary.core.resources.ZLResource;
+import org.zlibrary.core.resources.ZLResourceKey;
+
 public class Toolbar {
     private List<Item> myItems;
-    //private ZLResource myResource;
+    private ZLResource myResource;
 
 	public Toolbar() {
-		//myResource(ZLResource::resource("toolbar"))
+		myResource = ZLResource.resource("toolbar");
 	}
 	
-	/*public void addButton(int actionId, ZLResourceKey key, ButtonGroup group) {
-		ButtonItem button = new ButtonItem(actionId, key.Name, myResource[key]);
+	public void addButton(int actionId, ZLResourceKey key, ButtonGroup group) {
+		ButtonItem button = new ButtonItem(actionId, key.Name, myResource.getResource(key));
 		myItems.add(button);
 		button.setButtonGroup(group);
-	}*/
+	}
 	
 	public ButtonGroup createButtonGroup(int unselectAllButtonsActionId) {
 		return new ButtonGroup(unselectAllButtonsActionId);
