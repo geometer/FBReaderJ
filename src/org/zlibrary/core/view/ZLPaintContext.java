@@ -1,8 +1,22 @@
 package org.zlibrary.core.view;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.zlibrary.options.util.ZLColor;
 
 abstract public class ZLPaintContext {
+
+	private int myX;
+	private int myY;
+	
+	private int myLeftMargin;
+	private int myRightMargin;
+	private int myTopMargin;
+	private int myBottomMargin;
+	
+	private List<String> myFamilies = new LinkedList<String>();
+
 	public enum LineStyle {
 		SOLID_LINE,
 		DASH_LINE,
@@ -71,12 +85,55 @@ abstract public class ZLPaintContext {
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 	abstract public void drawFilledCircle(int x, int y, int r);
 
-	//std::vector<std::string> &fontFamilies();
-	//abstract public std::string realFontFamilyName(std::string &fontFamily);
-	//abstract protected void fillFamiliesList(std::vector<std::string> &families);
+	public void setMyLeftMargin(int margin) {
+		if (getWidth() + myLeftMargin - margin > 0) {
+			myLeftMargin = margin;
+		}
+	}
 
-	//mutable std::vector<std::string> myFamilies;
+	public int getMyLeftMargin() {
+		return myLeftMargin;
+	}
 
-	private int myX;
-	private int myY;
+	public void setMyRightMargin(int margin) {
+		if (getWidth() + myRightMargin - margin > 0) {
+			myRightMargin = margin;
+		}
+	}
+
+	public int getMyRightMargin() {
+		return myRightMargin;
+	}
+
+	public void setMyTopMargin(int margin) {
+		if (getHeight() + myTopMargin - margin > 0) {
+			myTopMargin = margin;
+		}
+	}
+
+	public int getMyTopMargin() {
+		return myTopMargin;
+	}
+
+	public void setMyBottomMargin(int margin) {
+		if (getHeight() + myBottomMargin - margin > 0) {
+			myBottomMargin = margin;
+		}
+	}
+
+	public int getMyBottomMargin() {
+		return myBottomMargin;
+	}
+
+	public List<String> fontFamilies() {
+		if (myFamilies.isEmpty()) {
+			fillFamiliesList(myFamilies);
+		}
+		return myFamilies;
+	}
+	
+	abstract public String realFontFamilyName(String fontFamily);
+	abstract protected void fillFamiliesList(List<String> families);
 }
+
+
