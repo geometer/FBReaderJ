@@ -3,6 +3,9 @@ package org.zlibrary.core.view;
 import org.zlibrary.core.application.ZLApplication;
 
 abstract public class ZLView {
+	private ZLApplication myApplication;
+	private ZLPaintContext myContext;
+
 	public ZLView(ZLApplication application, ZLPaintContext context) {
 		myApplication = application;
 		myContext = context;
@@ -43,7 +46,8 @@ abstract public class ZLView {
 	protected ZLApplication application() {
 		return myApplication;
 	}
-
-	private ZLApplication myApplication;
-	private ZLPaintContext myContext;
+	
+	public void repaintView() {
+		myApplication.refreshWindow();
+	}
 }
