@@ -1,6 +1,10 @@
 package org.zlibrary.text.view.impl;
 
 class ZLTextLineInfo {
+
+	/*This class has public fields like struct in C++. 
+	 Should I remove prefix "my", or should I make "getters" and "setters" for all the fields, making them private?*/
+
 	public ZLTextWordCursor myStart;
 	public ZLTextWordCursor myRealStart;
 	public ZLTextWordCursor myEnd;
