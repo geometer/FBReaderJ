@@ -1,6 +1,10 @@
 package org.zlibrary.core.view;
 
 abstract public class ZLViewWidget {
+
+	private ZLView myView;
+	private Angle myRotation;
+
 	public enum Angle {
 		DEGREES0,
 		DEGREES90,
@@ -31,7 +35,4 @@ abstract public class ZLViewWidget {
 	}
 
 	abstract protected void repaint();
-
-	private ZLView myView;
-	private Angle myRotation;
 }
