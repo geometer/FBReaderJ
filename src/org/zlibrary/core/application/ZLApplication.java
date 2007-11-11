@@ -6,6 +6,12 @@ import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.library.ZLibrary;
 
 public class ZLApplication {
+	private String myName;
+	private ZLViewWidget myViewWidget;
+	private ZLApplicationWindow myWindow;
+	private ZLPaintContext myContext;
+	private ZLView myInitialView;
+
 	protected ZLApplication(String name) {
 		myName = name;
 		myContext = ZLibrary.getContext();
@@ -60,10 +66,4 @@ public class ZLApplication {
 			}
 		}
 	}
-
-	private String myName;
-	private ZLViewWidget myViewWidget;
-	private ZLApplicationWindow myWindow;
-	private ZLPaintContext myContext;
-	private ZLView myInitialView;
 }
