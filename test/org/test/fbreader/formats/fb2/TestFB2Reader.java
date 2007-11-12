@@ -250,5 +250,18 @@ public class TestFB2Reader extends TestCase {
 	public void test2TreeParagraphs() {
 		doTreeModelTest("tree2sections");
 	}
+	
+	// big tests
+	public void testPoem() {
+		doTest("poem");
+	}
+	
+	public void testText1() {
+		doTest("karenina");
+	}
+	
+	public void testTextWithNotes() {
+		doTest("whiteguard");
+	}
 }
 	
