@@ -20,24 +20,12 @@ class SampleView extends ZLView {
 		ZLTextModel model = modelFactory.createPlainModel();
 		ZLTextParagraph paragraph = modelFactory.createParagraph();
 		ZLTextEntry entry;
-		entry = modelFactory.createTextEntry("griffon");
-		paragraph.addEntry(entry);
-		entry = modelFactory.createTextEntry("griffon");
-		paragraph.addEntry(entry);
-		entry = modelFactory.createTextEntry("griffon");
-		paragraph.addEntry(entry);
-		entry = modelFactory.createTextEntry("griffon");
+		entry = modelFactory.createTextEntry("First paragraph:  Some text here ");
 		paragraph.addEntry(entry);
 		model.addParagraphInternal(paragraph);
 
 		paragraph = modelFactory.createParagraph();
-		entry = modelFactory.createTextEntry("42");
-		paragraph.addEntry(entry);
-		entry = modelFactory.createTextEntry("22");
-		paragraph.addEntry(entry);
-		entry = modelFactory.createTextEntry("42");
-		paragraph.addEntry(entry);
-		entry = modelFactory.createTextEntry("22");
+		entry = modelFactory.createTextEntry("  Second paragraph: ");
 		paragraph.addEntry(entry);
 		model.addParagraphInternal(paragraph);
 

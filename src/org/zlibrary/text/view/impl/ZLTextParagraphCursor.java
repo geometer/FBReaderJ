@@ -61,7 +61,7 @@ public abstract class ZLTextParagraphCursor {
 								charPos - firstNonSpace);
 							myElements.add(new ZLTextHSpaceElement());
 							spaceInserted = true;
-							firstNonSpace = 0;					
+							firstNonSpace = -1;					
 						} else if (!spaceInserted) {
 							myElements.add(new ZLTextHSpaceElement());
 							spaceInserted = true;	
