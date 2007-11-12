@@ -22,8 +22,28 @@ class SampleView extends ZLView {
 		ZLTextEntry entry;
 		entry = modelFactory.createTextEntry("griffon");
 		paragraph.addEntry(entry);
+		entry = modelFactory.createTextEntry("griffon");
+		paragraph.addEntry(entry);
+		entry = modelFactory.createTextEntry("griffon");
+		paragraph.addEntry(entry);
+		entry = modelFactory.createTextEntry("griffon");
+		paragraph.addEntry(entry);
 		model.addParagraphInternal(paragraph);
+
+		paragraph = modelFactory.createParagraph();
+		entry = modelFactory.createTextEntry("42");
+		paragraph.addEntry(entry);
+		entry = modelFactory.createTextEntry("22");
+		paragraph.addEntry(entry);
+		entry = modelFactory.createTextEntry("42");
+		paragraph.addEntry(entry);
+		entry = modelFactory.createTextEntry("22");
+		paragraph.addEntry(entry);
+		model.addParagraphInternal(paragraph);
+
 		int paragraphs = model.getParagraphsNumber();
+		int h = 0;
+		int dh = context.stringHeight();
 		for (int i = 0; i < paragraphs; i++) {
 			ZLTextParagraphCursor cursor = ZLTextParagraphCursor.getCursor(model, i);
 			for (int j = 0; j < cursor.getParagraphLength(); j++) {
@@ -31,9 +51,11 @@ class SampleView extends ZLView {
 				if (element instanceof ZLTextWord) {
 					String text = ((ZLTextWord) element).myData;
 					final int w = context.stringWidth(text);
-					context.drawString((context.getWidth() - w) / 2, context.stringHeight(), text);
+					h += dh;
+					context.drawString((context.getWidth() - w) / 2, h, text);
 				}	
-			}	
+			}
+			h += dh;	
 		}
 
 /*		String text = "42";
