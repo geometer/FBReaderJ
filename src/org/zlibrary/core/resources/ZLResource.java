@@ -28,10 +28,7 @@ abstract public class ZLResource {
 	
 	abstract public ZLResource getResource(String key);
 }
-/*const ZLResource &ZLResource::operator [] (const ZLResourceKey &key) const {
-	return (*this)[key.Name];
-}
-
+/*
 const ZLResource &ZLResource::resource(const std::string &key) {
 	ZLTreeResource::buildTree();
 	if (ZLTreeResource::ourRoot.isNull()) {
@@ -39,5 +36,4 @@ const ZLResource &ZLResource::resource(const std::string &key) {
 	}
 	return (*ZLTreeResource::ourRoot)[key];
 }
-
 */

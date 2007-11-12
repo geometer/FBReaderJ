@@ -6,10 +6,21 @@ abstract public class ZLViewWidget {
 	private Angle myRotation;
 
 	public enum Angle {
-		DEGREES0,
-		DEGREES90,
-		DEGREES180,
-		DEGREES270
+		DEGREES0(0),
+		DEGREES90(90),
+		DEGREES180(180),
+		DEGREES270(270);
+		
+		private Angle(int angle) {
+			this.angle = angle;
+		}
+		
+		private int angle;
+		
+		public int getAngle() {
+			return angle;
+		}
+		
 	};
 
 	protected ZLViewWidget(Angle initialAngle) {

@@ -3,6 +3,8 @@ package org.zlibrary.core.application;
 import org.zlibrary.core.view.ZLViewWidget;
 
 abstract public class ZLApplicationWindow {
+	private ZLApplication myApplication;
+
 	protected ZLApplicationWindow(ZLApplication application) {
 		myApplication = application;
 		myApplication.setWindow(this);
@@ -60,5 +62,4 @@ private:
 
 friend class ZLApplication;
 */
-	private ZLApplication myApplication;
 }
