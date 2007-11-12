@@ -1,13 +1,14 @@
 package org.zlibrary.text.view.impl;
 
-class ZLTextElement {
+public class ZLTextElement {
 	
-	enum Kind {
+/*	enum Kind {
 		WORD_ELEMENT,
 		CONTROL_ELEMENT,
+		HSPACE_ELEMENT;
 	};
 	
 	public Kind getKind() {
 		return Kind.WORD_ELEMENT;
-	}
+	}*/
 }

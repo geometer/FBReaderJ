@@ -10,17 +10,17 @@ class ZLTextControlElement extends ZLTextElement {
 		myEntry = entry;
 	}
 
-	public Kind getKind() {
+/*	public Kind getKind() {
 		return Kind.CONTROL_ELEMENT;
-	}
+	}*/
 
 	public ZLTextControlEntry getEntry() {
 		return (ZLTextControlEntry)myEntry;
 	}
 
-	public byte getTextKind() {
+/*	public byte getTextKind() {
 		return getEntry().getKind();
-	}
+	}*/
 
 	public boolean isStart() {
 		return getEntry().isStart();

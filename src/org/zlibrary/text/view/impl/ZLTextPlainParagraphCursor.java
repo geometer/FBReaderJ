@@ -2,7 +2,7 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.text.model.ZLTextModel;
 
-class ZLTextPlainParagraphCursor extends ZLTextParagraphCursor {
+public class ZLTextPlainParagraphCursor extends ZLTextParagraphCursor {
 	/*package*/ ZLTextPlainParagraphCursor(ZLTextModel model, int index) {
 		super(model, index);	
 	}	

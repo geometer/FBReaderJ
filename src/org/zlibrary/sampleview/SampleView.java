@@ -3,6 +3,12 @@ package org.zlibrary.sampleview;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLPaintContext;
 
+import org.zlibrary.text.model.*;
+import org.zlibrary.text.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.entry.*;
+
+import org.zlibrary.text.view.impl.*;
+
 class SampleView extends ZLView {
 	SampleView(SampleApplication application, ZLPaintContext context) {
 		super(application, context);
@@ -10,12 +16,30 @@ class SampleView extends ZLView {
 
 	public void paint() {
 		ZLPaintContext context = getContext();
-		context.drawLine(0, 0, context.getWidth() - 1, context.getHeight() - 1);
-		context.fillRectangle(context.getWidth() / 2, context.getHeight() / 2, context.getWidth() - 2, context.getHeight() - 2);
+		ZLModelFactory modelFactory = new ZLModelFactory();
+		ZLTextModel model = modelFactory.createPlainModel();
+		ZLTextParagraph paragraph = modelFactory.createParagraph();
+		ZLTextEntry entry;
+		entry = modelFactory.createTextEntry("griffon");
+		paragraph.addEntry(entry);
+		model.addParagraphInternal(paragraph);
+		int paragraphs = model.getParagraphsNumber();
+		for (int i = 0; i < paragraphs; i++) {
+			ZLTextParagraphCursor cursor = ZLTextParagraphCursor.getCursor(model, i);
+			for (int j = 0; j < cursor.getParagraphLength(); j++) {
+				ZLTextElement element = cursor.getElement(j);
+				if (element instanceof ZLTextWord) {
+					String text = ((ZLTextWord) element).myData;
+					final int w = context.stringWidth(text);
+					context.drawString((context.getWidth() - w) / 2, context.stringHeight(), text);
+				}	
+			}	
+		}
 
-		String text = "Hello, World!";
+/*		String text = "42";
 		final int w = context.stringWidth(text);
 		context.drawString((context.getWidth() - w) / 2, context.stringHeight(), text);
+*/	
 	}
 
 	public String caption() {

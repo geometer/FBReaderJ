@@ -7,7 +7,7 @@ import org.zlibrary.text.model.entry.ZLTextEntry;
 
 import java.util.*;
 
-abstract class ZLTextParagraphCursor {
+public abstract class ZLTextParagraphCursor {
 
 	private static abstract class Processor {
 		protected ZLTextParagraph myParagraph;
@@ -51,12 +51,12 @@ abstract class ZLTextParagraphCursor {
 			if (dataLength != 0) {
 				String data = textEntry.getData();
 				char ch;
-				int firstNonSpace = 0;
+				int firstNonSpace = -1;
 				boolean spaceInserted = false;
 				for (int charPos = 0; charPos < data.length(); charPos++) {
 					char current = data.charAt(charPos);
 					if (current == ' ') {
-						if (firstNonSpace != 0) {
+						if (firstNonSpace != -1) {
 							addWord(data.substring(firstNonSpace, charPos), myOffset + (firstNonSpace - data.length()), 
 								charPos - firstNonSpace);
 							myElements.add(new ZLTextHSpaceElement());
@@ -66,11 +66,11 @@ abstract class ZLTextParagraphCursor {
 							myElements.add(new ZLTextHSpaceElement());
 							spaceInserted = true;	
 						}	
-					} else if (firstNonSpace == 0) {
+					} else if (firstNonSpace == -1) {
 						firstNonSpace = charPos;
 					}
 				} 
-				if (firstNonSpace != 0) {
+				if (firstNonSpace != -1) {
 					addWord(data.substring(firstNonSpace, data.length()), myOffset + (firstNonSpace - data.length()), 
 							data.length() - firstNonSpace);
 				}
@@ -86,6 +86,7 @@ abstract class ZLTextParagraphCursor {
 	protected ZLTextParagraphCursor(ZLTextModel model, int index) {
 		myModel = model;
 		myIndex = Math.min(index, myModel.getParagraphsNumber() - 1);
+		myElements = new ArrayList <ZLTextElement> ();
 		fill();
 	}
 	
@@ -95,8 +96,13 @@ abstract class ZLTextParagraphCursor {
 		return result;
 	}
 
+	/*Is it ok to create new instance of Processor here?*/
+
 	protected void fill() {
 		ZLTextParagraph	paragraph = myModel.getParagraph(myIndex);
+		if (paragraph.getKind() == ZLTextParagraph.Kind.TEXT_PARAGRAPH) {
+			(new StandardProcessor(paragraph, myIndex, myElements)).fill();
+		}
 	}
 	
 	protected void clear() {

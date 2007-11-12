@@ -1,6 +1,8 @@
 package org.zlibrary.text.view.impl;
 
-/*package*/ class ZLTextWord extends ZLTextElement { 
+/*Should we use this special comment for package local things?*/
+
+public class ZLTextWord extends ZLTextElement { 
 	public String myData;
 	public short mySize;
 	public short myLength;
@@ -15,7 +17,7 @@ package org.zlibrary.text.view.impl;
 		myParagraphOffset = paragraphOffset;
 	}
 
-	public Kind getKind() {
+/*	public Kind getKind() {
 		return Kind.WORD_ELEMENT;
-	}
+	}*/
 }
