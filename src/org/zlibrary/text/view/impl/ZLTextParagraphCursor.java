@@ -21,15 +21,14 @@ abstract class ZLTextParagraphCursor {
 			myOffset = 0;
 		}
 
+		/*Why do we need ZLTextParagraphEntry interface?*/
+
 		public void fill() {
 			List <ZLTextParagraphEntry> entries = myParagraph.getEntries();
 			for (ZLTextParagraphEntry entry : entries) {
-	//			switch (entry.Kind) {
-	//				case ZLTextParagraphEntry.Kind.TEXT_ENTRY: {
-						processTextEntry((ZLTextEntry) entry);
-	//					break;
-	//				}
-	//			}
+				if (entry instanceof ZLTextEntry) {
+					processTextEntry((ZLTextEntry) entry);
+				}
 			}
 		}
 		
@@ -39,7 +38,48 @@ abstract class ZLTextParagraphCursor {
 			myElements.add(new ZLTextWord(s, (short) len, offset));
 		}
 	}
+
+	private static class StandardProcessor extends Processor {
+		public StandardProcessor(ZLTextParagraph paragraph, int index, List <ZLTextElement> elements) {
+			super(paragraph, index, elements);
+		}		
 	
+		/*Some useless code in C++ version here.
+		  Is spaceInserted variable used for inserting one separator for multiple spaces?*/
+
+		public void processTextEntry(ZLTextEntry textEntry) {
+			int dataLength = textEntry.getDataLength();
+			if (dataLength != 0) {
+				String data = textEntry.getData();
+				char ch;
+				int firstNonSpace = 0;
+				boolean spaceInserted = false;
+				for (int charPos = 0; charPos < data.length(); charPos++) {
+					char current = data.charAt(charPos);
+					if (current == ' ') {
+						if (firstNonSpace != 0) {
+							addWord(data.substring(firstNonSpace, charPos), myOffset + (firstNonSpace - data.length()), 
+								charPos - firstNonSpace);
+							myElements.add(new ZLTextHSpaceElement());
+							spaceInserted = true;
+							firstNonSpace = 0;					
+						} else if (!spaceInserted) {
+							myElements.add(new ZLTextHSpaceElement());
+							spaceInserted = true;	
+						}	
+					} else if (firstNonSpace == 0) {
+						firstNonSpace = charPos;
+					}
+				} 
+				if (firstNonSpace != 0) {
+					addWord(data.substring(firstNonSpace, data.length()), myOffset + (firstNonSpace - data.length()), 
+							data.length() - firstNonSpace);
+				}
+				myOffset += data.length();
+			}
+		}
+	}
+
 	protected ZLTextModel myModel;
 	protected int myIndex;
 	protected List <ZLTextElement> myElements;
