@@ -8,7 +8,6 @@ import org.zlibrary.text.model.entry.ZLTextEntry;
 import java.util.*;
 
 abstract class ZLTextParagraphCursor {
-	
 
 	private static abstract class Processor {
 		protected ZLTextParagraph myParagraph;
@@ -45,7 +44,7 @@ abstract class ZLTextParagraphCursor {
 		}		
 	
 		/*Some useless code in C++ version here.
-		  Is spaceInserted variable used for inserting one separator for multiple spaces?*/
+		  Is spaceInserted variable used for inserting one separator instead of multiple spaces?*/
 
 		public void processTextEntry(ZLTextEntry textEntry) {
 			int dataLength = textEntry.getDataLength();

@@ -125,7 +125,7 @@ abstract public class ZLPaintContext {
 		return myBottomMargin;
 	}
 
-	public List<String> fontFamilies() {
+/*	public List<String> fontFamilies() {
 		if (myFamilies.isEmpty()) {
 			fillFamiliesList(myFamilies);
 		}
@@ -134,6 +134,7 @@ abstract public class ZLPaintContext {
 	
 	abstract public String realFontFamilyName(String fontFamily);
 	abstract protected void fillFamiliesList(List<String> families);
+*/
 }
 
 
