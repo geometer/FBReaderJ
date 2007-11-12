@@ -156,16 +156,10 @@ public class TestFB2Reader extends TestCase {
 	public void testOneNote() {
 		FB2Reader reader = new FB2Reader("test/Data/one_note.fb2");
 		ZLTextModel model = reader.read().getFootnoteModel("1");
-		FileOutputStream fos;
-		try {
-			fos = new FileOutputStream("test/Data/one_note_act.txt");
-			fos.write(model.dump().getBytes());
-			fos.close();			
-		} catch (Exception e) {
-			fail();
-		}	
-		assertTrue(compareFiles("test/Data/one_note_exp.txt", "test/Data/one_note_act.txt"));
-		(new File("test/Data/one_note_act.txt")).delete();
+		String output = "test/Data/one_note_act.txt";
+		writeDumpToFile(model, output);
+		assertTrue(compareFiles("test/Data/one_note_exp.txt", output));
+		(new File(output)).delete();
 	}
 	
 	public void testStanza() {
@@ -263,5 +257,6 @@ public class TestFB2Reader extends TestCase {
 	public void testTextWithNotes() {
 		doTest("whiteguard");
 	}
+	
 }
 	
