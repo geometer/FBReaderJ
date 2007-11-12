@@ -63,7 +63,7 @@ public abstract class ZLApplication extends ZLApplicationBase {
 		ConfigAutoSavingOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, CONFIG, AUTO_SAVE, true);
 		ConfigAutoSaveTimeoutOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30);
 		KeyDelayOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
-		myViewWidget = null;
+		setMyViewWidget(null);
 		myWindow = null;
 		if (ConfigAutoSavingOption.getValue()) {
 			//ZLOption.startAutoSave((int)(ConfigAutoSaveTimeoutOption.getValue()));
@@ -73,11 +73,11 @@ public abstract class ZLApplication extends ZLApplicationBase {
 		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
 	}
 	
-	public Toolbar toolbar() {
+	public Toolbar getToolbar() {
 		return this.myToolbar;
 	}
 
-	public Menubar menubar() {
+	public Menubar getMenubar() {
 		return this.myMenubar;
 	}
 
@@ -87,8 +87,8 @@ public abstract class ZLApplication extends ZLApplicationBase {
 			return;
 		}
 
-		if (myViewWidget != null) {
-			myViewWidget.setView(view);
+		if (getMyViewWidget() != null) {
+			getMyViewWidget().setView(view);
 			resetWindowCaption();
 			refreshWindow();
 		} else {
@@ -97,7 +97,7 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	}
 
 	protected ZLView getCurrentView() {
-		return (myViewWidget != null) ? myViewWidget.getView() : null;
+		return (getMyViewWidget() != null) ? getMyViewWidget().getView() : null;
 	}
 
 	protected void quit() {
@@ -111,7 +111,7 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	}
 
 	public void initWindow() {
-		myViewWidget = myWindow.createViewWidget();
+		setMyViewWidget(myWindow.createViewWidget());
 		myWindow.init();
 		setView(myInitialView);
 		
@@ -129,7 +129,7 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	}
 
 	public void refreshWindow() {
-		if (myViewWidget != null) {
+		if (getMyViewWidget() != null) {
 			//myViewWidget.repaint();
 		}
 		if (myWindow != null) {
@@ -184,8 +184,8 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	}
 	
 	public void trackStylus(boolean track) {
-		if (myViewWidget != null) {
-			myViewWidget.trackStylus(track);
+		if (getMyViewWidget() != null) {
+			getMyViewWidget().trackStylus(track);
 		}
 	}
 
@@ -195,23 +195,23 @@ public abstract class ZLApplication extends ZLApplicationBase {
 		}
 	}
 
-	public Action action(int actionId) {
+	public Action getAction(int actionId) {
 		return myActionMap.get(actionId);
 	}
 	
 	public boolean isActionVisible(int actionId) {
-		Action a = action(actionId);
+		Action a = getAction(actionId);
 		return ((a != null) && a.isVisible());
 
 	}
 	
 	public boolean isActionEnabled(int actionId) {
-		Action action = action(actionId);
+		Action action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}
 	
 	public void doAction(int actionId) {
-		Action action = action(actionId);
+		Action action = getAction(actionId);
 		if (action != null) {
 			action.checkAndRun();
 		}
@@ -220,7 +220,7 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	abstract public ZLKeyBindings keyBindings();
 	
 	public void doActionByKey(String key) {
-		Action a = action(keyBindings().getBinding(key));
+		Action a = getAction(keyBindings().getBinding(key));
 		if ((a != null) &&
 				(!a.useKeyDelay() /*||
 				 (myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
@@ -249,6 +249,14 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	
 	public void resetLastCaller() {
 		//((PresentWindowHandler)myPresentWindowHandler).resetLastCaller();
+	}
+
+	public void setMyViewWidget(ZLViewWidget myViewWidget) {
+		this.myViewWidget = myViewWidget;
+	}
+
+	public ZLViewWidget getMyViewWidget() {
+		return myViewWidget;
 	}
 }
 
