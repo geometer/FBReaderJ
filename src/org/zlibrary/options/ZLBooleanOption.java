@@ -42,8 +42,8 @@ public final class ZLBooleanOption extends ZLSimpleOption {
         }
 	}
 
-	public ZLBooleanOption (ZLConfig config, String category, String group, String optionName, boolean defaultValue){
-		super(config, category, group, optionName);
+	public ZLBooleanOption (String category, String group, String optionName, boolean defaultValue){
+		super(category, group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
 	}

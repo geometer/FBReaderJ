@@ -38,8 +38,8 @@ public final class ZLDoubleOption extends ZLOption{
         }
     }
 
-	public ZLDoubleOption (ZLConfig config, String category, String group, String optionName, double defaultValue){
-		super(config, category, group, optionName);
+	public ZLDoubleOption (String category, String group, String optionName, double defaultValue){
+		super(category, group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
 	}

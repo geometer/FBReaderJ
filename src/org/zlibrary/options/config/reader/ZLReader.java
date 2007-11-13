@@ -4,6 +4,6 @@ import java.io.File;
 
 import org.zlibrary.options.ZLConfig;
 
-public interface ZLReadable {
+public interface ZLReader {
 	public ZLConfig readFile(File file);
 }

@@ -1,11 +1,13 @@
 package org.zlibrary.options;
 
+import org.zlibrary.options.config.ZLConfigInstance;
+
 public abstract class ZLOption {
 	public static final String LOOK_AND_FEEL_CATEGORY = "ui";
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 	
-    protected ZLConfig myConfig;
+    protected ZLConfig myConfig = ZLConfigInstance.getInstance();
 	protected String myCategory;
 	protected String myGroup;
 	protected String myOptionName;
@@ -19,11 +21,10 @@ public abstract class ZLOption {
      * @param group
      * @param optionName
 	 */
-	protected ZLOption (ZLConfig config, String category, String group, String optionName){
+	protected ZLOption (String category, String group, String optionName){
 		myCategory = category;
 		myGroup = group;
 		myOptionName = optionName;
-        myConfig = config;
 	}
 	
 	/**

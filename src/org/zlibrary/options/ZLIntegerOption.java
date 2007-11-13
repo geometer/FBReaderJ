@@ -37,8 +37,8 @@ public final class ZLIntegerOption extends ZLOption{
         }
     }
 
-	public ZLIntegerOption (ZLConfig config, String category, String group, String optionName, long defaultValue){
-		super(config, category, group, optionName);
+	public ZLIntegerOption (String category, String group, String optionName, long defaultValue){
+		super(category, group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
 	}

@@ -8,11 +8,11 @@ import org.xml.sax.helpers.*;
 import org.zlibrary.options.ZLConfig;
 import org.zlibrary.options.config.*;
 
-/*package*/ class ZLConfigReader implements ZLReadable{
+/*package*/ class ZLConfigReader implements ZLReader{
 	
 	
 	private XMLReader myXMLReader;
-	private ZLConfig myConfig = ZLConfigFactory.createConfig();
+	private ZLConfig myConfig;
 	private String myCategory = "";
 	
 	private class ConfigContentHandler extends DefaultHandler{
@@ -59,15 +59,16 @@ import org.zlibrary.options.config.*;
 	}
 	
 	public ZLConfigReader () {
+        myConfig = ZLConfigInstance.getInstance();
 		try {
 			myXMLReader = XMLReaderFactory.createXMLReader();
 			myXMLReader.setContentHandler(new ConfigContentHandler());
 		} catch (SAXException e) {
-			System.err.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 	
-	/** Прочитать данные из потока в XML */
+	/** Прочитать данные из файла XML */
 	public ZLConfig readFile (File file) {
 		try {
             InputStream input = new FileInputStream(file);
