@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir = "." default = "compile" name = "fbreader">
+<project basedir = "." default = "build" name = "fbreader">
 	<property name = "src.dir" value = "src"/>
 	<property name = "bin.dir" value = "bin"/>
 	<property name = "icons.dir" value = "icons"/>
@@ -48,11 +48,6 @@
 
 	<target name = "clean">
 		<delete dir = "${bin.dir}"/>
-	</target>
-
-	<target name = "distclean" depends = "clean">
 		<delete file = "${main.jar}"/>
 	</target>
-
-	<target name = "all" depends = "clean"/>
 </project>
