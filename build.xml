@@ -3,6 +3,7 @@
 	<property name = "src.dir" value = "src"/>
 	<property name = "bin.dir" value = "bin"/>
 	<property name = "test.dir" value= "test"/>
+	<property name = "main.jar" value= "FBReader.jar"/>
 
 	<target name = "prepare">
 		<mkdir dir = "${bin.dir}" />
@@ -10,6 +11,10 @@
 
 	<target name = "compile" depends = "prepare">
 		<javac srcdir = "${src.dir}" destdir = "${bin.dir}"/>
+	</target>
+
+	<target name = "build" depends = "compile">
+		<jar destfile = "${main.jar}" manifest = "manifest.mf" basedir = "${bin.dir}"/>
 	</target>
 
 	<target name = "test" depends = "prepare">
@@ -37,6 +42,10 @@
 
 	<target name = "clean">
 		<delete dir = "${bin.dir}"/>
+	</target>
+
+	<target name = "distclean" depends = "clean">
+		<delete file = "${main.jar}"/>
 	</target>
 
 	<target name = "all" depends = "clean"/>
