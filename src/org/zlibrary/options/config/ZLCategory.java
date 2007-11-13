@@ -47,6 +47,7 @@ import java.util.Map;
         StringBuffer sb = new StringBuffer();
         for (String groupName : myData.keySet()){
             sb.append("    " + groupName + "\n" + myData.get(groupName) + "\n");
+            //System.out.println(myData.get(groupName));
         }
         return sb.toString();
     }

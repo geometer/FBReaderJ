@@ -37,13 +37,13 @@ import org.zlibrary.options.ZLConfig;
         }
     }
     
-    public void setValue(String Category, String group, String name, String value){
-        if (myData.get(Category) != null){
-            myData.get(Category).setValue(group, name, value);
+    public void setValue(String category, String group, String name, String value){
+        if (myData.get(category) != null){
+            myData.get(category).setValue(group, name, value);
         } else {
             ZLCategory newCategory = new ZLCategory();
             newCategory.setValue(group, name, value);
-            myData.put(Category, newCategory);
+            myData.put(category, newCategory);
         }
     }
     
@@ -53,8 +53,8 @@ import org.zlibrary.options.ZLConfig;
     
     public String toString(){
         StringBuffer sb = new StringBuffer();
-        for (String CategoryName : myData.keySet()){
-            sb.append("" + CategoryName + "\n\n" + myData.get(CategoryName) + "\n");
+        for (String categoryName : myData.keySet()){
+            sb.append("" + categoryName + "\n\n" + myData.get(categoryName) + "\n");
         }
         return sb.toString();
     }   

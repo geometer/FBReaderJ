@@ -18,17 +18,17 @@ import java.util.*;
         }
 	}
 	
-	public void setValue(String name, String data){
+	public void setValue(String name, String data) {
 		myData.put(name, data);
 	}
     
-    public void unsetValue(String name){
+    public void unsetValue(String name) {
         myData.remove(name);
     }
 	
-	public String toString(){
+	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		for (String name:myData.keySet()){
+		for (String name : myData.keySet()){
 			sb.append("        " + name + " : " + myData.get(name) + "\n");
 		}
 		return sb.toString();

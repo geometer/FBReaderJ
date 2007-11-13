@@ -49,9 +49,9 @@ import org.zlibrary.options.config.*;
 			}
 			myDepth++;
 		}
+        
 		public void endElement(String uri, String localName, String qName) {
 			myDepth--;
-            myCurrentGroup = "";
 		}
 		
 		public void endDocument() {
@@ -73,7 +73,6 @@ import org.zlibrary.options.config.*;
 		try {
             InputStream input = new FileInputStream(file);
             myCategory = file.getName().split(".xml")[0];
-            //System.out.println(myCategory);
 			myXMLReader.parse(new InputSource(input));
 			return myConfig;
 		} catch (FileNotFoundException fnfException) {

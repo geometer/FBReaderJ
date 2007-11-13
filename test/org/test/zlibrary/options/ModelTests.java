@@ -107,8 +107,9 @@ public class ModelTests extends TestCase{
 	}
 	
 	public void test02_integerRangeWrong(){
+        long expected = myIntegerRangeOption.getValue();
 		myIntegerRangeOption.setValue(10000000L);
-		assertEquals(myIntegerRangeOption.getValue(), -1L);
+		assertEquals(myIntegerRangeOption.getValue(), expected);
 	}
 	
 	public void test02_boolean3(){

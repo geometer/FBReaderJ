@@ -2,6 +2,7 @@ package org.test.zlibrary.options.example;
 
 import java.io.File;
 
+import org.zlibrary.options.config.ZLConfigInstance;
 import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
 
 //TODO щрн онйю врн йпхбни реяр. мсфмн сапюрэ MAIN, врнаш япюбмхрэ я напюгжнл
@@ -14,14 +15,15 @@ import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
  */
 public class Main {
 	
-	private static void testFileReading (File file){
+	private static void readConfigFile (File file){
 		ZLConfigReaderFactory myFactory = new ZLConfigReaderFactory();
-		System.out.println(myFactory.createConfigReader().readFile(file));
+		myFactory.createConfigReader().readFile(file);
 	}
 	
 	public static void main(String[] args){
-		testFileReading(new File("test/org/test/zlibrary/options/example/state.xml"));
-		testFileReading(new File("test/org/test/zlibrary/options/example/ui.xml"));
+		//readConfigFile(new File("test/org/test/zlibrary/options/example/state.xml"));
+		readConfigFile(new File("test/org/test/zlibrary/options/example/ui.xml"));
+        System.out.println(ZLConfigInstance.getInstance());
 	}
 	
 }
