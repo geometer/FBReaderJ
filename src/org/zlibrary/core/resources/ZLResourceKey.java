@@ -1,9 +1,7 @@
 package org.zlibrary.core.resources;
 
 public class ZLResourceKey {
-	public String Name;
-	
-	public ZLResourceKey() {}
+	public final String Name;
 	
 	public ZLResourceKey(String name) {
 		Name = name; 

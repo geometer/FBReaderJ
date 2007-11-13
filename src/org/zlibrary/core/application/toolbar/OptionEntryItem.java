@@ -6,7 +6,7 @@ public class OptionEntryItem extends Item {
 	//public OptionEntryItem(ZLOptionEntry entry) {
 		//myOptionEntry = entry;
 	//}
-	public Type type() {
+	public Type getType() {
 		return Type.OPTION_ENTRY;
 	}
 	

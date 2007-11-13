@@ -14,26 +14,26 @@ public class ButtonItem extends Item {
 		myTooltip = tooltip;
 	}
 
-	public Type type() {
+	public Type getType() {
 		return Type.BUTTON;
 	}
 
-	public int actionId() {
+	public int getActionId() {
 		return myActionId;
 	}
 	
-	public String iconName() {
+	public String getIconName() {
 		return myIconName;
 	}
 	
-	public String tooltip() {
+	public String getTooltip() {
 		if (!myTooltip.hasValue()) {
 			return "";
 		}
 		return myTooltip.value();
 	}
 
-	public ButtonGroup buttonGroup() {
+	public ButtonGroup getButtonGroup() {
 		return myButtonGroup;
 	}
 	

@@ -2,20 +2,26 @@ package org.zlibrary.core.application.toolbar;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.LinkedList;
 
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.resources.ZLResourceKey;
 
 public class Toolbar {
-    private List<Item> myItems;
-    private ZLResource myResource;
+	private List<Item> myItems;
+	private ZLResource myResource;
 
 	public Toolbar() {
+		myItems = new LinkedList<Item>();
 		myResource = ZLResource.resource("toolbar");
 	}
 	
+	public void addButton(int actionId, ZLResourceKey key) {
+		addButton(actionId, key, null);
+	}
+
 	public void addButton(int actionId, ZLResourceKey key, ButtonGroup group) {
-		ButtonItem button = new ButtonItem(actionId, key.Name, myResource.getResource(key));
+		ButtonItem button = new ButtonItem(actionId, key.Name, null/*myResource.getResource(key)*/);
 		myItems.add(button);
 		button.setButtonGroup(group);
 	}

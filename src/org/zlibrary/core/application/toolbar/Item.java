@@ -1,11 +1,13 @@
 package org.zlibrary.core.application.toolbar;
 
 abstract public class Item {
+	public enum Type {
+		BUTTON,
+		OPTION_ENTRY,
+		SEPARATOR
+	}
+
 	public Item() {}
 	
-    public abstract Type type();
-    
-	boolean isButton() { 
-		return type() == Type.BUTTON; 
-	}
+	public abstract Type getType();
 }
