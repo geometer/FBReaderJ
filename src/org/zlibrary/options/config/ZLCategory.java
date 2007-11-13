@@ -1,14 +1,13 @@
 package org.zlibrary.options.config;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-/*package*/ class ZLCategory {
+public class ZLCategory {
     
     private Map<String, ZLGroup> myData;
     
     public ZLCategory() {
-        myData = new HashMap<String, ZLGroup>();
+        myData = new LinkedHashMap<String, ZLGroup>();
     }
     
     public ZLCategory(Map<String, ZLGroup> map) {
@@ -44,11 +43,14 @@ import java.util.Map;
     }
     
     public String toString(){
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        sb.append("<config>\n");
         for (String groupName : myData.keySet()){
-            sb.append("    " + groupName + "\n" + myData.get(groupName) + "\n");
-            //System.out.println(myData.get(groupName));
+            sb.append("  <group name=\"" + groupName + "\">\n" 
+                       + myData.get(groupName)
+                       + "  </group>\n");
         }
+        sb.append("</config>");
         return sb.toString();
     }
 }

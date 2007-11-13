@@ -13,6 +13,12 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 	private	ZLBoolean3 myValue;
 	private	ZLBoolean3 myDefaultValue;
 	
+    public ZLBoolean3Option(String category, String group, String optionName, ZLBoolean3 defaultValue){     
+        super(category, group, optionName);
+        myDefaultValue = defaultValue;
+        myValue = myDefaultValue;
+    }
+    
 	public ZLOptionType getType(){
 		return ZLOptionType.TYPE_BOOLEAN3;
 	}
@@ -41,11 +47,5 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
             String stringValue = ZLToStringConverter.convert(myValue);
             myConfig.setValue(myCategory, myOptionName, myGroup, stringValue);
         }
-	}
-	
-	public ZLBoolean3Option(String category, String group, String optionName, ZLBoolean3 defaultValue){		
-		super(category, group, optionName);
-		myDefaultValue = defaultValue;
-		myValue = myDefaultValue;
 	}
 }

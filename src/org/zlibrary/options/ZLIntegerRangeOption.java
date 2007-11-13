@@ -16,6 +16,18 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	private long myMinValue;
 	private long myMaxValue;
 	
+    public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue){
+        super(category, group, optionName);
+        myMinValue = minValue;
+        myMaxValue = maxValue;
+        //страхуемся от ошибки программиста =)
+        if ((myMinValue <= defaultValue) && (myMaxValue >= defaultValue))
+            myDefaultValue = defaultValue;
+        else
+            myDefaultValue = myMinValue;
+        myValue = myDefaultValue;
+    }
+    
 	public long getMinValue(){
 		return myMinValue;
 	}
@@ -49,18 +61,5 @@ public final class ZLIntegerRangeOption extends ZLOption {
                 myConfig.setValue(myCategory, myGroup, myOptionName, stringValue);
             }
         }
-    }
-	
-	public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue){
-		super(category, group, optionName);
-		myMinValue = minValue;
-		myMaxValue = maxValue;
-		//страхуемся от ошибки программиста =)
-		if ((myMinValue <= defaultValue) && (myMaxValue >= defaultValue))
-			myDefaultValue = defaultValue;
-		else
-			myDefaultValue = myMinValue;
-		myValue = myDefaultValue;
-	}
-	
+    }	
 }

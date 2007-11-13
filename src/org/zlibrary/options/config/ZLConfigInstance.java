@@ -4,7 +4,7 @@ public class ZLConfigInstance {
     
     private static final ZLConfigImpl myConfig = new ZLConfigImpl();
     
-    public static ZLConfigImpl getInstance(){
+    public static ZLConfig getInstance(){
         return myConfig;
     }
 }

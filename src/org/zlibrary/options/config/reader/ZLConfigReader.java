@@ -5,7 +5,6 @@ import java.io.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
-import org.zlibrary.options.ZLConfig;
 import org.zlibrary.options.config.*;
 
 /*package*/ class ZLConfigReader implements ZLReader{
@@ -69,7 +68,7 @@ import org.zlibrary.options.config.*;
 	}
 	
 	/** Прочитать данные из файла XML */
-	public ZLConfig readFile (File file) {
+	public ZLConfig read (File file) {
 		try {
             InputStream input = new FileInputStream(file);
             myCategory = file.getName().split(".xml")[0];

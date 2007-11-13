@@ -13,6 +13,12 @@ public final class ZLDoubleOption extends ZLOption{
 	private double myValue;
 	private double myDefaultValue;
 	
+    public ZLDoubleOption (String category, String group, String optionName, double defaultValue){
+        super(category, group, optionName);
+        myDefaultValue = defaultValue;
+        myValue = myDefaultValue;
+    }
+    
     public double getValue(){
         if (!myIsSynchronized){
             String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
@@ -37,11 +43,4 @@ public final class ZLDoubleOption extends ZLOption{
             myConfig.setValue(myCategory, myGroup, myOptionName, stringValue);
         }
     }
-
-	public ZLDoubleOption (String category, String group, String optionName, double defaultValue){
-		super(category, group, optionName);
-		myDefaultValue = defaultValue;
-		myValue = myDefaultValue;
-	}
-	
 }

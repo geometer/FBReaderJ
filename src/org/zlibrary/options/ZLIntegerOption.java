@@ -12,6 +12,12 @@ public final class ZLIntegerOption extends ZLOption{
 	private long myValue;
 	private long myDefaultValue;
 	
+    public ZLIntegerOption (String category, String group, String optionName, long defaultValue){
+        super(category, group, optionName);
+        myDefaultValue = defaultValue;
+        myValue = myDefaultValue;
+    }
+    
     public long getValue(){
         if (!myIsSynchronized){
             String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
@@ -36,11 +42,4 @@ public final class ZLIntegerOption extends ZLOption{
             myConfig.setValue(myCategory, myGroup, myOptionName, stringValue);
         }
     }
-
-	public ZLIntegerOption (String category, String group, String optionName, long defaultValue){
-		super(category, group, optionName);
-		myDefaultValue = defaultValue;
-		myValue = myDefaultValue;
-	}
-	
 }

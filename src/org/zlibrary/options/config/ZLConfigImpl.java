@@ -1,7 +1,6 @@
 package org.zlibrary.options.config;
 
 import java.util.*;
-import org.zlibrary.options.ZLConfig;
 
 /**
  * класс Конфиг. это своеобразная структура опций.
@@ -18,7 +17,11 @@ import org.zlibrary.options.ZLConfig;
     private Map<String, ZLCategory> myData;
     
     public ZLConfigImpl (){
-        myData = new HashMap<String, ZLCategory>();
+        myData = new LinkedHashMap<String, ZLCategory>();
+    }
+    
+    public Map<String, ZLCategory> getCategories(){
+        return Collections.unmodifiableMap(myData);
     }
     
     public ZLConfigImpl (Map<String, ZLCategory> map){
@@ -51,6 +54,9 @@ import org.zlibrary.options.ZLConfig;
         myData.get(Category).unsetValue(group, name);
     }
     
+    /**
+     * метод вывода в строку
+     */
     public String toString(){
         StringBuffer sb = new StringBuffer();
         for (String categoryName : myData.keySet()){

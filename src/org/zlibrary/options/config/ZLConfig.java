@@ -1,4 +1,6 @@
-package org.zlibrary.options;
+package org.zlibrary.options.config;
+
+import java.util.Map;
 
 public interface ZLConfig {
     
@@ -11,4 +13,6 @@ public interface ZLConfig {
     public void unsetValue(String category, String group, String name);
     
     public String toString();
+    
+    public Map<String, ZLCategory> getCategories();
 }

@@ -6,7 +6,7 @@ import java.util.*;
 	private Map<String, String> myData;
 	
 	public ZLGroup (){
-		myData = new HashMap<String, String>();
+		myData = new LinkedHashMap<String, String>();
 	}
 	
 	public String getValue(String name, String defaultValue){
@@ -19,7 +19,11 @@ import java.util.*;
 	}
 	
 	public void setValue(String name, String data) {
-		myData.put(name, data);
+        if (myData.get(name) == null) { 
+            myData.put(name, new String(data));
+        } else {
+            myData.put(name, data);
+        }
 	}
     
     public void unsetValue(String name) {
@@ -29,7 +33,8 @@ import java.util.*;
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		for (String name : myData.keySet()){
-			sb.append("        " + name + " : " + myData.get(name) + "\n");
+			sb.append("    <option name=\"" + name 
+                       + "\" value=\"" + myData.get(name) + "\"/>\n");
 		}
 		return sb.toString();
 	}

@@ -15,6 +15,12 @@ public final class ZLColorOption extends ZLOption {
 	private long myIntValue;
 	private long myDefaultValue;
 	
+    public ZLColorOption (String category, String group, String optionName, ZLColor defaultValue){
+        super(category, group, optionName);
+        myDefaultValue = defaultValue.getIntValue();
+        myIntValue = myDefaultValue;
+    }
+    
     public long getValue(){
         if (!myIsSynchronized){
             String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
@@ -39,12 +45,5 @@ public final class ZLColorOption extends ZLOption {
             String stringValue = ZLToStringConverter.convert(myIntValue);
             myConfig.setValue(myCategory, myGroup, myOptionName, stringValue);
         }
-    }
-    
-	public ZLColorOption (String category, String group, String optionName, ZLColor defaultValue){
-        super(category, group, optionName);
-		myDefaultValue = defaultValue.getIntValue();
-		myIntValue = myDefaultValue;
-	}
-	
+    }	
 }

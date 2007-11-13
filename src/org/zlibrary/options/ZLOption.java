@@ -1,5 +1,6 @@
 package org.zlibrary.options;
 
+import org.zlibrary.options.config.ZLConfig;
 import org.zlibrary.options.config.ZLConfigInstance;
 
 public abstract class ZLOption {

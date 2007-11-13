@@ -7,18 +7,19 @@ package org.zlibrary.options;
  *
  */
 abstract class ZLSimpleOption extends ZLOption {
+    
+    /**
+     * конструктор. создается так же как и любая опция
+     * @see ZLOption
+     */
+    public ZLSimpleOption(String category, String group, String optionName){
+        super(category, group, optionName);
+    }
+    
 	/**
 	 * во всех final наследниках должен быть метод,
 	 * отдающий тип этого наследника.
 	 * @return
 	 */
 	public abstract ZLOptionType getType();
-	
-	/**
-	 * конструктор. создается так же как и любая опция
-	 * @see ZLOption
-	 */
-	public ZLSimpleOption(String category, String group, String optionName){
-		super(category, group, optionName);
-	}
 }
