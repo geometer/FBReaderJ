@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
+import org.zlibrary.core.application.toolbar.Item;
+import org.zlibrary.core.application.toolbar.ButtonItem;
 import org.zlibrary.core.view.ZLViewWidget;
 
 import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
@@ -35,6 +37,18 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(ZLSwingViewWidget.Angle.DEGREES0);
 		myFrame.add(viewWidget.getPanel());
 		return viewWidget;
+	}
+
+	public void addToolbarItem(Item item) {
+		// TODO: implement
+	}
+
+	public void setToolbarItemState(Item item, boolean visible, boolean enabled) {
+		// TODO: implement
+	}
+
+	public void setToggleButtonState(ButtonItem item) {
+		// TODO: implement
 	}
 
 	private JFrame myFrame;
