@@ -4,17 +4,17 @@ package org.zlibrary.text.view.impl;
 
 public class ZLTextWord extends ZLTextElement { 
 	public String myData;
-	public short mySize;
+	//public short mySize;
 	public short myLength;
-	public int myParagraphOffset;
+	//public int myParagraphOffset;
 
 	/*Temporarily made public to avoid implementing ZLTextElementPool with all its messy allocators, wtf is it?*/
 
 	public ZLTextWord(String data, short size, int paragraphOffset) {
 		myData = data;
-		mySize = size;
+		//mySize = size;
 		myLength = (short) data.length();
-		myParagraphOffset = paragraphOffset;
+		//myParagraphOffset = paragraphOffset;
 	}
 
 /*	public Kind getKind() {

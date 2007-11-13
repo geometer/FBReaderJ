@@ -9,26 +9,39 @@ import org.zlibrary.text.model.entry.*;
 
 import org.zlibrary.text.view.impl.*;
 
+import org.fbreader.bookmodel.*;
+import org.fbreader.formats.fb2.*;
+
 class SampleView extends ZLView {
-	SampleView(SampleApplication application, ZLPaintContext context) {
-		super(application, context);
+	private BookModel myModel;
+
+	void setModel(String fileName) {
+		myModel = new FB2Reader(fileName).read();
 	}
 
-	public void paint() {
-		ZLPaintContext context = getContext();
+	SampleView(SampleApplication application, ZLPaintContext context) {
+		super(application, context);
+
+		/*
 		ZLModelFactory modelFactory = new ZLModelFactory();
-		ZLTextModel model = modelFactory.createPlainModel();
+		myModel = modelFactory.createPlainModel();
 		ZLTextParagraph paragraph = modelFactory.createParagraph();
 		ZLTextEntry entry;
 		entry = modelFactory.createTextEntry("First paragraph:  Some text here ");
 		paragraph.addEntry(entry);
-		model.addParagraphInternal(paragraph);
+		myModel.addParagraphInternal(paragraph);
 
 		paragraph = modelFactory.createParagraph();
 		entry = modelFactory.createTextEntry("  Second paragraph: ");
 		paragraph.addEntry(entry);
-		model.addParagraphInternal(paragraph);
+		myModel.addParagraphInternal(paragraph);
+		*/
+	}
 
+	public void paint() {
+		ZLPaintContext context = getContext();
+
+		ZLTextModel model = myModel.getBookModel();
 		int paragraphs = model.getParagraphsNumber();
 		int h = 0;
 		int dh = context.stringHeight();

@@ -4,9 +4,11 @@ import org.zlibrary.core.application.*;
 
 
 public class SampleApplication extends ZLApplication {
-	public SampleApplication() {
+	public SampleApplication(String fileName) {
 		super("Sample");
-		setView(new SampleView(this, getContext()));
+		SampleView view = new SampleView(this, getContext());
+		view.setModel(fileName);
+		setView(view);
 	}
 
 	public ZLKeyBindings keyBindings() {
