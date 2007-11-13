@@ -13,12 +13,40 @@ public class ZLColor {
 	private int myGreen = 0;
 	private int myBlue = 0;
 	
-	/**
+    /**
+     * и конструктор соответственно для удобства
+     * @param color
+     */
+    public ZLColor(Color color){
+        setColor((int)color.getRed(), (int)color.getGreen(), (int)color.getBlue());
+    }
+
+    /**
+     * конструктор по умолчанию делает цвет черным
+     */
+    public ZLColor(){
+    }
+    
+    /**
+     * конструктор с параметрами
+     */
+    public ZLColor(int red, int green, int blue){
+        setColor(red, green, blue);
+    }
+    
+    public ZLColor(String color){
+        String[] components = color.split(",");
+        setColor(Integer.parseInt(components[0]), Integer.parseInt(components[1]),
+                 Integer.parseInt(components[2]));
+    }
+    
+    /**
 	 * перекрываем метод toString,
 	 * по сути - кодировка в десятичную запись
+     * результат должен наглядно совпадать с результатом getIntValue
 	 */
 	public String toString(){
-		return "" + myRed + ", " + myGreen + ", " + myBlue;
+		return "" + myRed + "," + myGreen + "," + myBlue;
 	}
 	
 	/**
@@ -33,12 +61,15 @@ public class ZLColor {
 	 * то есть являются неотрицательным числом < 256
 	 */
 	public void setColor (int red, int green, int blue){
-		if (isCorrectComponent(red))
+		if (isCorrectComponent(red)) {
 			myRed = red;
-	    if (isCorrectComponent(green))
+        }
+	    if (isCorrectComponent(green)) {
 			myGreen = green;
-		if (isCorrectComponent(blue))	
+        }
+		if (isCorrectComponent(blue)) {
 			myBlue = blue;
+        }
 	}
 	
 	/**
@@ -57,32 +88,10 @@ public class ZLColor {
 	}
 	
 	/**
-	 * и конструктор соответственно для удобства
-	 * @param color
-	 * @throws InvalidValueException
-	 */
-	public ZLColor (Color color){
-		setColor((int)color.getRed(), (int)color.getGreen(), (int)color.getBlue());
-	}
-
-	/**
 	 * @return цвет одним числом, чтобы хранить в памяти меньше =)
 	 */	
-	public int getIntValue(){
+	public long getIntValue(){
 		return myRed*1000000 + myGreen*1000 + myBlue;
-	}
-	
-	/**
-	 * конструктор по умолчанию делает цвет черным
-	 */
-	public ZLColor (){
-	}
-	
-	/**
-	 * конструктор с параметрами
-	 */
-	public ZLColor (int red, int green, int blue){
-		setColor(red, green, blue);
 	}
 	
 	/**

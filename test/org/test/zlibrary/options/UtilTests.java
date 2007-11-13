@@ -10,14 +10,15 @@ import org.zlibrary.options.util.*;
  *
  */
 public class UtilTests extends TestCase {
-	private ZLColor myColor;
+	
+    private ZLColor myColor;
 	
 	public void setUp(){
 		myColor = new ZLColor (176, 255, 0);
 	}
 	
 	public void test01_toString(){
-		assertEquals(myColor.toString(), "176, 255, 0");
+		assertEquals(myColor.toString(), "176,255,0");
 	}
 	
 	public void test01_equals(){
@@ -27,9 +28,14 @@ public class UtilTests extends TestCase {
 	
 	public void test01_setColor(){
 		myColor.setColor(0, 1, 0);
-		assertEquals(myColor.toString(), "0, 1, 0");
+		assertEquals(myColor.toString(), "0,1,0");
 	}
 	
+    public void test01_stringConstructor(){
+        myColor = new ZLColor("122,123,0");
+        assertEquals(myColor.toString(), "122,123,0");
+    }
+    
 	public void test01_getIntValue(){
 		assertEquals(myColor.getIntValue(), 176255000L);
 	}

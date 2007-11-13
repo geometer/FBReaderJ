@@ -2,6 +2,7 @@ package org.test.zlibrary.options;
 
 import junit.framework.*;
 import org.zlibrary.options.*;
+import org.zlibrary.options.config.*;
 import org.zlibrary.options.util.*;
 
 /**
@@ -30,19 +31,20 @@ public class ModelTests extends TestCase{
 	private final boolean myDefaultBoolean = true;
 	private final String myDefaultString = "Hello World";
 	private final double myDefaultDouble = 1.2;
-	
+	private final ZLConfig myConfig = ZLConfigFactory.createConfig(); 
+    
 	public void setUp(){
-		myColorOption = new ZLColorOption("","","my Color", new ZLColor (176, 255, 0)); 
-		myDoubleOption = new ZLDoubleOption("","","My Double", myDefaultDouble); 
-		myIntegerOption = new ZLIntegerOption("","","I", myDefaultInt); 
-		myIntegerRangeOption = new ZLIntegerRangeOption("","","IR", -90L, 90L, myDefaultIntRange); 
-		myBoolean3Option = new ZLBoolean3Option("","","my Boolean 3", myDefaultBoolean3); 
-		myBooleanOption = new ZLBooleanOption("","","my Boolean", myDefaultBoolean); 
-		myStringOption = new ZLStringOption("qw","qwe","my String", myDefaultString); 
+		myColorOption = new ZLColorOption(myConfig, "","","my Color", new ZLColor (176, 255, 0)); 
+		myDoubleOption = new ZLDoubleOption(myConfig, "","","My Double", myDefaultDouble); 
+		myIntegerOption = new ZLIntegerOption(myConfig, "","","I", myDefaultInt); 
+		myIntegerRangeOption = new ZLIntegerRangeOption(myConfig, "","","IR", -90L, 90L, myDefaultIntRange); 
+		myBoolean3Option = new ZLBoolean3Option(myConfig, "","","my Boolean 3", myDefaultBoolean3); 
+		myBooleanOption = new ZLBooleanOption(myConfig, "","","my Boolean", myDefaultBoolean); 
+		myStringOption = new ZLStringOption(myConfig, "qw","qwe","my String", myDefaultString); 
 	}
 	
 	public void test00_equals(){
-		ZLOption zlc = new ZLStringOption("qw", "qwe", "my String", "fire");
+		ZLOption zlc = new ZLStringOption(myConfig, "qw", "qwe", "my String", "fire");
 		assertTrue(zlc.equals(myStringOption));
 	}
 	
@@ -124,46 +126,6 @@ public class ModelTests extends TestCase{
 	public void test02_string(){
 		myColorOption.setValue(new ZLColor());
 		assertEquals(myStringOption.getValue(), "Hello World");
-	}
-	
-	public void test03_color(){
-		myColorOption.setValueToDefault();
-		assertEquals(myColorOption.getValue(), myDefaultColor);
-	}
-	
-	public void test03_double(){
-		myDoubleOption.setValueToDefault();
-		assertEquals(myDoubleOption.getValue(), myDefaultDouble);
-	}
-	
-	public void test03_integer(){
-		myIntegerOption.setValueToDefault();
-		assertEquals(myIntegerOption.getValue(), myDefaultInt);
-	}
-	
-	public void test03_integerRangeRight(){
-		myIntegerRangeOption.setValueToDefault();
-		assertEquals(myIntegerRangeOption.getValue(), myDefaultIntRange);
-	}
-	
-	public void test03_integerRangeWrong(){
-		myIntegerRangeOption.setValueToDefault();
-		assertEquals(myIntegerRangeOption.getValue(), 75L);
-	}
-	
-	public void test03_boolean3(){
-		myBoolean3Option.setValueToDefault();
-		assertEquals(myBoolean3Option.getValue(), myDefaultBoolean3);
-	}
-	
-	public void test03_boolean(){
-		myBooleanOption.setValueToDefault();
-		assertEquals(myBooleanOption.getValue(), myDefaultBoolean);
-	}
-	
-	public void test03_string(){
-		myColorOption.setValueToDefault();
-		assertEquals(myStringOption.getValue(), myDefaultString);
 	}
 	
 	public void test04_boolean3(){

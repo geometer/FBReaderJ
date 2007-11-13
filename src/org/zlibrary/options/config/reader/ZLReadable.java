@@ -1,9 +1,9 @@
 package org.zlibrary.options.config.reader;
 
-import java.io.*;
+import java.io.File;
 
-import org.zlibrary.options.config.*;
+import org.zlibrary.options.ZLConfig;
 
 public interface ZLReadable {
-	public ZLConfig read(InputStream input);
+	public ZLConfig readFile(File file);
 }

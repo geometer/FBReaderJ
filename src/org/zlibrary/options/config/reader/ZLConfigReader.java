@@ -2,70 +2,59 @@ package org.zlibrary.options.config.reader;
 
 
 import java.io.*;
-import java.util.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
+import org.zlibrary.options.ZLConfig;
 import org.zlibrary.options.config.*;
 
 /*package*/ class ZLConfigReader implements ZLReadable{
 	
 	
 	private XMLReader myXMLReader;
-	private ZLConfig myConfig = new ZLConfig();
-	
+	private ZLConfig myConfig = ZLConfigFactory.createConfig();
+	private String myCategory = "";
 	
 	private class ConfigContentHandler extends DefaultHandler{
-		private int myDepth;
-		private ZLGroup myCurrentGroup;
-		private Map<String, ZLGroup> myCurrentConfig;
+		private int myDepth = 0;
+		private String myCurrentGroup = "";
 		
 		public void startDocument() {
-			myDepth = 0;
-			myCurrentGroup = new ZLGroup();
-			myCurrentConfig = new HashMap<String, ZLGroup>();
 		}
 		
 		public void startElement(String uri, String localName, String qName, Attributes atts) {
 			switch (myDepth) {
 				case 0:
-					if (localName != "config") {
+					if (!localName.equals("config")) {
 						System.out.println("wrong tag : <config> expected!");
 					}
 				break;
 				case 1:
-					if (localName == "group") {
-						myCurrentGroup = new ZLGroup();
-						myCurrentConfig.put(atts.getValue("name"), myCurrentGroup);
+					if (localName.equals("group")) {
+						myCurrentGroup = atts.getValue("name");
 					} else {
 						System.out.println("wrong tag : <group> expected!");
 					}
 				break;
 				case 2:
-					if (localName == "option") { 
-						myCurrentGroup.setValue(atts.getValue("name"), atts.getValue("value"));
+					if (localName.equals("option")) { 
+						myConfig.setValue(myCategory, myCurrentGroup, 
+                                atts.getValue("name"), atts.getValue("value"));
 					} else{
 						System.out.println("wrong tag : <option> expected!");
 					}
 				break;
-				default: // big depth
-					System.out.println("Too many nesting elements!");
+				default: 
+					System.out.println("too many nesting elements!");
 			}
-			//System.out.println("New element started!");
 			myDepth++;
 		}
 		public void endElement(String uri, String localName, String qName) {
 			myDepth--;
-			/*if (myDepth == 1)
-				if (localName == "book") {
-					System.out.println(": " + currtitle);
-				}
-			}*/
-			// System.out.println("Element finished!");
+            myCurrentGroup = "";
 		}
 		
 		public void endDocument() {
-			myConfig = new ZLConfig(myCurrentConfig);
 		}
 	}
 	
@@ -79,15 +68,21 @@ import org.zlibrary.options.config.*;
 	}
 	
 	/** Прочитать данные из потока в XML */
-	public ZLConfig read (InputStream input) {
+	public ZLConfig readFile (File file) {
 		try {
+            InputStream input = new FileInputStream(file);
+            myCategory = file.getName().split(".xml")[0];
+            //System.out.println(myCategory);
 			myXMLReader.parse(new InputSource(input));
 			return myConfig;
-		} catch (IOException ioe) {
-			System.err.println(ioe.getMessage());
-			return null;
-		} catch (SAXException sae) {
-			System.err.println(sae.getMessage());
+		} catch (FileNotFoundException fnfException) {
+            System.err.println(fnfException.getMessage());
+            return null;
+        } catch (IOException ioException) {
+            System.err.println(ioException.getMessage());
+            return null;
+        } catch (SAXException saxException) {
+			System.err.println(saxException.getMessage());
 			return null;
 		}
 	}
