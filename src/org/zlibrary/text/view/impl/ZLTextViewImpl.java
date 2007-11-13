@@ -3,7 +3,7 @@ package org.zlibrary.text.view.impl;
 import org.zlibrary.text.model.*;
 import org.zlibrary.text.view.ZLTextView;
 
-class ZLTextViewImpl implements ZLTextView {
+class ZLTextViewImpl { //implements ZLTextView {
 
 	private ZLTextModel myModel;
 	
