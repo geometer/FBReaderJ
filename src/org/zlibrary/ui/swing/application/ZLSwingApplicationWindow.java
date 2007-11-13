@@ -52,7 +52,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		if (item.getType() == Item.Type.BUTTON) {
 			ButtonItem buttonItem = (ButtonItem)item;
 			String iconFileName = "icons/toolbar/" + buttonItem.getIconName() + ".png";
-			Action action = new AbstractAction("tooltip text", new ImageIcon(iconFileName)) {
+			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
+			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
+			Action action = new AbstractAction("tooltip text", icon) {
 				public void actionPerformed(ActionEvent event) {
 				}
 			};

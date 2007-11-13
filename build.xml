@@ -2,6 +2,8 @@
 <project basedir = "." default = "compile" name = "fbreader">
 	<property name = "src.dir" value = "src"/>
 	<property name = "bin.dir" value = "bin"/>
+	<property name = "icons.dir" value = "icons"/>
+	<property name = "data.dir" value = "data"/>
 	<property name = "test.dir" value= "test"/>
 	<property name = "main.jar" value= "FBReader.jar"/>
 
@@ -14,7 +16,11 @@
 	</target>
 
 	<target name = "build" depends = "compile">
-		<jar destfile = "${main.jar}" manifest = "manifest.mf" basedir = "${bin.dir}"/>
+		<jar destfile = "${main.jar}" manifest = "manifest.mf">
+			<fileset dir = "${bin.dir}" includes = "**/*.class"/>
+			<fileset dir = "." includes = "${icons.dir}/**/*.png"/>
+			<fileset dir = "." includes = "${data.dir}/**"/>
+		</jar>
 	</target>
 
 	<target name = "test" depends = "prepare">

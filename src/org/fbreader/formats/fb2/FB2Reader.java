@@ -1,6 +1,6 @@
 package org.fbreader.formats.fb2;
 
-import java.io.IOException;
+import java.io.*;
 
 import javax.xml.parsers.*;
 
@@ -17,8 +17,12 @@ public class FB2Reader {
 	
 	public BookModel read() {
 		try {
+			InputStream stream = getClass().getClassLoader().getResourceAsStream(myFileName);
+			if (stream == null) {
+				stream = new BufferedInputStream(new FileInputStream(myFileName));
+			}
 			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			parser.parse(myFileName, new FB2Handler(myBookModel));
+			parser.parse(stream, new FB2Handler(myBookModel));
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
