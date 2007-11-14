@@ -19,12 +19,13 @@ public class TestFB2Reader extends TestCase {
 	private boolean compareFiles(String f1, String f2) {
 		int i1;
 		int i2;
-		FileInputStream fis1 = null;
-		FileInputStream fis2 = null;
+		InputStreamReader fis1 = null;
+		InputStreamReader fis2 = null;
 		try {
-			fis1 = new FileInputStream(f1);
-			fis2 = new FileInputStream(f2);
+			fis1 = new InputStreamReader(new FileInputStream(f1), "utf8");
+			fis2 = new InputStreamReader(new FileInputStream(f2), "utf8");
 		} catch (FileNotFoundException e) {
+		} catch (UnsupportedEncodingException e) {
 			return false;
 		}
 		try{
@@ -46,11 +47,16 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	private void writeDumpToFile(ZLTextModel model, String outputFile) {
-		FileOutputStream fos;
+//		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream(outputFile);
+			OutputStreamWriter osw = new OutputStreamWriter(
+					new FileOutputStream(outputFile), "utf8");
+			osw.write(model.dump());
+			osw.close();
+			
+		/*	fos = new FileOutputStream(outputFile);
 			fos.write(model.dump().getBytes());
-			fos.close();			
+			fos.close();	*/		
 		} catch (Exception e) {
 			fail();
 		}		
@@ -260,5 +266,10 @@ public class TestFB2Reader extends TestCase {
 		doTest("whiteguard");
 	}
 	
+/*	public void testPnvs() {
+		FB2Reader reader = new FB2Reader("M:/Books/pnvs.fb2");
+		reader.read();
+	}
+*/	
 }
 	
