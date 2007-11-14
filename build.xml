@@ -16,7 +16,7 @@
 	</target>
 
 	<target name = "build" depends = "compile">
-		<jar destfile = "${main.jar}">
+		<jar destfile = "${main.jar}" manifest = "manifest.mf">
 			<fileset dir = "${bin.dir}" includes = "**/*.class"/>
 			<fileset dir = "." includes = "${icons.dir}/**/*.png"/>
 			<fileset dir = "." includes = "${data.dir}/**"/>
