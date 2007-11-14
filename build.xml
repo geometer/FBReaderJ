@@ -23,7 +23,7 @@
 		</jar>
 	</target>
 
-	<target name = "test" depends = "prepare">
+	<target name = "test" depends = "compile">
 		<javac srcdir = "${test.dir}" destdir = "${bin.dir}">
 			<classpath>
 				<pathelement location = "lib/junit.jar"/>
@@ -37,12 +37,8 @@
 				<pathelement location = "${bin.dir}"/>
 			</classpath>
 			<test name = "org.test.zlibrary.model.TestAll"/>
-			<!-- test name = "org.test.zlibrary.model.TestTextEntry"/ -->
-			<!-- test name = "org.test.zlibrary.model.TestTextControlEntry"/ -->
-			<!-- test name = "org.test.zlibrary.model.TestTextControlEntryPool"/ -->
-			<!-- test name = "org.test.zlibrary.model.TestTextEntry"/ -->
-			<!-- test name = "org.test.zlibrary.model.TestTextParagraph"/ -->
-			<!-- test name = "org.test.zlibrary.model.TestZLTextModel"/ -->
+			<test name = "org.test.zlibrary.options.TestAll"/>
+			<test name = "org.test.fbreader.formats.fb2.AllTests"/>
 		</junit>
 	</target>
 
