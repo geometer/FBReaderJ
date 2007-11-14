@@ -1,2 +1,2 @@
 [PARAGRAPH]
-[CONTROL 21][TEXT]Тест 8. [/TEXT][CONTROL 18][TEXT]Оформление кода[/TEXT][/CONTROL 18][/PARAGRAPH]
+[CONTROL 21][TEXT]РўРµСЃС‚ 8. [/TEXT][CONTROL 18][TEXT]РћС„РѕСЂРјР»РµРЅРёРµ РєРѕРґР°[/TEXT][/CONTROL 18][/PARAGRAPH]
