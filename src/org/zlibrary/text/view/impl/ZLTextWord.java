@@ -1,23 +1,27 @@
 package org.zlibrary.text.view.impl;
 
+import org.zlibrary.core.view.ZLPaintContext;
+
 /*Should we use this special comment for package local things?*/
 
 public class ZLTextWord extends ZLTextElement { 
-	public String myData;
+	public String Data;
 	//public short mySize;
-	public short myLength;
+	public short Length;
 	//public int myParagraphOffset;
 
-	/*Temporarily made public to avoid implementing ZLTextElementPool with all its messy allocators, wtf is it?*/
-
 	public ZLTextWord(String data, short size, int paragraphOffset) {
-		myData = data;
+		Data = data;
 		//mySize = size;
-		myLength = (short) data.length();
+		Length = (short) data.length();
 		//myParagraphOffset = paragraphOffset;
 	}
 
-/*	public Kind getKind() {
+	public int getWidth(ZLPaintContext context) {
+		return context.stringWidth(Data);	
+	}
+	
+	/*	public Kind getKind() {
 		return Kind.WORD_ELEMENT;
 	}*/
 }

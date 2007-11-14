@@ -152,7 +152,7 @@ class ZLTextWordCursor {
 		if (charNumber > 0) {
 			ZLTextElement element = myParagraphCursor.getElement(myWordNumber);
 			if (element instanceof ZLTextWord) {
-				if (charNumber <= ((ZLTextWord)element).myLength) {
+				if (charNumber <= ((ZLTextWord)element).Length) {
 					myCharNumber = charNumber;
 				}
 			}
