@@ -9,16 +9,12 @@ import org.zlibrary.options.config.*;
 
 /*package*/ class ZLConfigReader implements ZLReader{
 	
-	
-	private XMLReader myXMLReader;
-	private ZLConfig myConfig;
-	private String myCategory = "";
-	
 	private class ConfigContentHandler extends DefaultHandler{
 		private int myDepth = 0;
 		private String myCurrentGroup = "";
 		
 		public void startDocument() {
+            myDepth = 0;
 		}
 		
 		public void startElement(String uri, String localName, String qName, Attributes atts) {
@@ -41,6 +37,7 @@ import org.zlibrary.options.config.*;
                                 atts.getValue("name"), atts.getValue("value"));
 					} else{
 						System.out.println("wrong tag : <option> expected!");
+                        System.out.println(myCategory);
 					}
 				break;
 				default: 
@@ -57,32 +54,56 @@ import org.zlibrary.options.config.*;
 		}
 	}
 	
-	public ZLConfigReader () {
+    private XMLReader myXMLReader;
+    private ZLConfig myConfig;
+    private String myCategory = "";
+    private File myDestinationDirectory;
+    
+	public ZLConfigReader (String path) {
         myConfig = ZLConfigInstance.getInstance();
-		try {
-			myXMLReader = XMLReaderFactory.createXMLReader();
-			myXMLReader.setContentHandler(new ConfigContentHandler());
-		} catch (SAXException e) {
-			System.out.println(e.getMessage());
-		}
+        myDestinationDirectory = new File(path);
+        if (myDestinationDirectory.isDirectory()){
+            try {
+                myXMLReader = XMLReaderFactory.createXMLReader();
+			    myXMLReader.setContentHandler(new ConfigContentHandler());
+		    } catch (SAXException e) {
+		        System.out.println(e.getMessage());
+		    }
+	    } else {
+	        System.out.println("Wrong path - directory path expected");
+        }
 	}
 	
-	/** Прочитать данные из файла XML */
-	public ZLConfig read (File file) {
+	/**
+     *  
+     * Прочитать данные из файла XML 
+     * @param file - файл XML
+	 */
+	public void readFile(File file) {
 		try {
             InputStream input = new FileInputStream(file);
             myCategory = file.getName().split(".xml")[0];
 			myXMLReader.parse(new InputSource(input));
-			return myConfig;
 		} catch (FileNotFoundException fnfException) {
             System.err.println(fnfException.getMessage());
-            return null;
         } catch (IOException ioException) {
             System.err.println(ioException.getMessage());
-            return null;
         } catch (SAXException saxException) {
 			System.err.println(saxException.getMessage());
-			return null;
 		}
 	}
+    
+    private boolean isXMLFileName(String fileName){
+        String name = fileName.toLowerCase();
+        return name.endsWith(".xml");
+    }
+    
+    public void read(){
+        String[] fileList = myDestinationDirectory.list();
+        for (String fileName : fileList){
+            if (isXMLFileName(fileName)){
+                readFile(new File(myDestinationDirectory + "/" + fileName));
+            }
+        }
+    }
 }
