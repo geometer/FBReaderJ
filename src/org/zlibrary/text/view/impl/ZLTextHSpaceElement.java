@@ -1,6 +1,6 @@
 package org.zlibrary.text.view.impl;
 
-class ZLTextHSpaceElement extends ZLTextElement {
+public class ZLTextHSpaceElement extends ZLTextElement {
 }
 
 

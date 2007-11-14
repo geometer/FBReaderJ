@@ -4,6 +4,7 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.resources.ZLResourceKey;
 import org.zlibrary.text.view.ZLTextView;
+import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 public class FBReader extends ZLApplication {
 	public FBReader(String fileName) {
@@ -32,7 +33,7 @@ public class FBReader extends ZLApplication {
 			addToolbarButton(ActionCode.SHOW_HELP, "help");
 		//}
 
-		ZLTextView view = new ZLTextView(this, getContext());
+		ZLTextView view = new ZLTextViewImpl(this, getContext());
 		view.setModel(fileName);
 		setView(view);
 	}
