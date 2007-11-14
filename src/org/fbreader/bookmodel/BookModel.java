@@ -2,6 +2,7 @@ package org.fbreader.bookmodel;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
 
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
@@ -42,7 +43,7 @@ public class BookModel {
 	}
 	
 	public Map<String, ZLTextPlainModel> getFootnotes() {
-		return myFootnotes;
+		return Collections.unmodifiableMap(myFootnotes);
 	}
 	
 	public void addHyperlinkLabel(String label, ZLTextModel model, 

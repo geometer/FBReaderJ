@@ -61,14 +61,16 @@ public class BookReader {
 	}
 	
 	public void beginParagraph(ZLTextParagraph.Kind kind) {
-		myCurrentTextModel.createParagraph(kind);
-		for (Byte b : myKindStack) {
-			myCurrentTextModel.addControl(b, true);
-		}
-		if (myHyperlinkReference != "") {
-			myCurrentTextModel.addHyperlinkControl(myHyperlinkKind, myHyperlinkReference);
-		}
-		myTextParagraphExists = true;
+		if (myCurrentTextModel != null) {
+			myCurrentTextModel.createParagraph(kind);
+			for (Byte b : myKindStack) {
+				myCurrentTextModel.addControl(b, true);
+			}
+			if (myHyperlinkReference != "") {
+				myCurrentTextModel.addHyperlinkControl(myHyperlinkKind, myHyperlinkReference);
+			}
+			myTextParagraphExists = true;
+		}		
 	}
 	
 	public void endParagraph() {
