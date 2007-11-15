@@ -8,7 +8,7 @@ import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.resources.ZLResourceKey;
 
 public class Toolbar {
-	private List<Item> myItems;
+	private List<Item> myItems = new LinkedList<Item>();
 	private ZLResource myResource;
 
 	public Toolbar() {
