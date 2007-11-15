@@ -21,7 +21,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private class ZLFrame extends JFrame {
 		ZLFrame() {
 			setSize((int)myWidthOption.getValue(), (int)myHeightOption.getValue());
-			move((int)myXOption.getValue(), (int)myYOption.getValue());
+			setLocation((int)myXOption.getValue(), (int)myYOption.getValue());
 
 			addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent event) {
