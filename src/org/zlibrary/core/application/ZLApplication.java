@@ -116,16 +116,11 @@ public abstract class ZLApplication extends ZLApplicationBase {
 
 	public void initWindow() {
 		setMyViewWidget(myWindow.createViewWidget());
-		myWindow.init();
-		setView(myInitialView);
-		
-		
 		if (KeyboardControlOption.getValue()) {
 			grabAllKeys(true);
 		}
 		myWindow.init();
 		setView(myInitialView);
-
 	}
 
 	public ZLPaintContext getContext() {
