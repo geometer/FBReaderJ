@@ -3,12 +3,13 @@ package org.zlibrary.core.application.menu;
 import org.zlibrary.core.resources.ZLResource;
 
 public class Menubar extends Menu {
-	class PlainItem extends  Item {
+	public static class PlainItem implements  Item {
 	    private String myName;
 	    private int myActionId;
 
+	    public  PlainItem() {}
 	    public PlainItem(String name, int actionId) {
-	    	super(ItemType.ITEM);
+	    	//super(ItemType.ITEM);
 	    	myName = name;
 	    	myActionId = actionId;
 	    }
@@ -16,22 +17,41 @@ public class Menubar extends Menu {
 	    public String name() {
 	    	return myName;
 	    }
+	    
 	    public int actionId() {
 	    	return myActionId;
 	    }
+	    
+	    public ItemType type() {
+	    	return ItemType.ITEM;
+	    }
 	};
 	//muttiple enheritance!!!
-	/*class Submenu extends Item, Menu {
+	public static class Submenu extends Menu implements Item {
 
-			Submenu(const ZLResource &resource);
+			public Submenu(ZLResource resource) {
+				super(resource);
+			}
 
-			const std::string &menuName() const;
-	};*/
-	class Separator extends Item {
+			public String menuName() {
+				return myResource.value();
+			}
+			
+		    public ItemType type() {
+		    	return ItemType.SUBMENU;
+		    }
+	};
+	
+	public static class Separator implements Item {
 
 		public Separator() {
-			super(ItemType.SEPARATOR);
+			//super(ItemType.SEPARATOR);
 		}
+	    
+		public ItemType type() {
+	    	return ItemType.SEPARATOR;
+	    }
+
 	};
 		
 	public Menubar() {

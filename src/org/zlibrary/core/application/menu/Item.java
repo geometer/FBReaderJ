@@ -1,12 +1,15 @@
 package org.zlibrary.core.application.menu;
 
-public class Item {
+public interface Item {
 	public enum ItemType {
 			ITEM,
 			SUBMENU,
 			SEPARATOR
 	};
-	
+
+	public ItemType type();
+
+	/*
 	private ItemType myType;
 		
 	public ItemType type() {
@@ -15,7 +18,7 @@ public class Item {
 
 	protected Item(ItemType type) {
 		myType = type;
-	}
+	}*/
 }
 
 

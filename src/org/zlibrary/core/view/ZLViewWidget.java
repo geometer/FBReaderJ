@@ -44,6 +44,6 @@ abstract public class ZLViewWidget {
 	public Angle getRotation() {
 		return myRotation;
 	}
-
-	abstract protected void repaint();
+    //chabge to protected   
+	abstract public void repaint();
 }

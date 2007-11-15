@@ -2,7 +2,7 @@ package org.zlibrary.core.application.toolbar;
 
 import org.zlibrary.core.resources.ZLResource;
 
-public class ButtonItem extends Item {
+public class ButtonItem implements Item {
 	private int myActionId;
 	private String myIconName;
 	private ZLResource myTooltip;

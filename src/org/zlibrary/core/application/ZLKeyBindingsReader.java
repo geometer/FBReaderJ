@@ -1,14 +1,14 @@
 package org.zlibrary.core.application;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ZLKeyBindingsReader {//extends ZLXMLReader {
-	private Map<String,Integer> myKeymap;// = new HashMap<String,Integer>();
+	private Map<String,Integer> myKeymap = new HashMap<String,Integer>();
 
 	public ZLKeyBindingsReader(Map<String,Integer> keymap) {
 		myKeymap = keymap; 
 	}
-
 		
 	public void startElementHandler(String tag, String[] attributes) {
 		final String BINDING = "binding";

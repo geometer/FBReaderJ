@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.zlibrary.options.ZLIntegerOption;
+import org.zlibrary.options.ZLIntegerRangeOption;
 import org.zlibrary.options.ZLOption;
 import org.zlibrary.options.ZLStringOption;
 
@@ -29,22 +30,19 @@ public class ZLKeyBindings {
 	}
 	
 	public int getBinding(String key) {
-		return 0;
-		//Map<String,Integer>::const_iterator it = myBindingsMap.find(key);
-		//return (it != myBindingsMap.end()) ? it->second : 0;
-
+		return myBindingsMap.get(key);
 	}
 
 	private void loadDefaultBindings() {
 		Map<String,Integer> keymap = new HashMap<String,Integer>();
-		//ZLKeyBindingsReader(keymap).readBindings();
+		new ZLKeyBindingsReader(keymap).readBindings();
 		for (Map.Entry<String,Integer> entry: myBindingsMap.entrySet()) {
 			bindKey(entry.getKey(), entry.getValue());
 		}
 	}
 	
 	private	void loadCustomBindings() {
-		int size = 0;//ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).value();
+		long size = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
 		for (int i = 0; i < size; ++i) {
 			String key = BINDED_KEY;
 			//ZLStringUtil.appendNumber(key, i);
@@ -52,14 +50,13 @@ public class ZLKeyBindings {
 			//if (!keyValue.empty()) {
 			if (keyValue.length() != 0) {
 				String action = BINDED_ACTION;
-				//ZLStringUtil::appendNumber(action, i);
+				//ZLStringUtil.appendNumber(action, i);
 				int actionValue = (int)(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, action, -1).getValue());
 				if (actionValue != -1) {
 					bindKey(keyValue, actionValue);
 				}
 			}
 		}
-
 	}
 
 	public void saveCustomBindings() {
@@ -67,25 +64,24 @@ public class ZLKeyBindings {
 			return;
 		}
 		
-		/*Map<String,Integer> keymap = new HashMap<String,Integer>();
-		ZLKeyBindingsReader(keymap).readBindings();
+		Map<String,Integer> keymap = new HashMap<String,Integer>();
+		new ZLKeyBindingsReader(keymap).readBindings();
 		
-		ZLOption.clearGroup(myName);
+		//ZLOption.clearGroup(myName);
 		int counter = 0;
 		for (Map.Entry<String,Integer> entry: myBindingsMap.entrySet()) {
-			Map<String, Integer> original = keymap.find(entry.getKey());
-			int defaultAction = (original == keymap.end()) ? 0 : original.getValue();
+			Integer original = keymap.get(entry.getKey());
+			int defaultAction = original;//(original == keymap.end()) ? 0 : original.getValue();
 			if (defaultAction != entry.getValue()) {
 				String key = BINDED_KEY;
-				ZLStringUtil.appendNumber(key, counter);
+				//ZLStringUtil.appendNumber(key, counter);
 				String action = BINDED_ACTION;
-				ZLStringUtil.appendNumber(action, counter);
-				ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, key, "").setValue(entry.getKey());
-				ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, action, -1).setValue(entry.getValue());
+				//ZLStringUtil.appendNumber(action, counter);
+				new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, key, "").setValue(entry.getKey());
+				new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, action, -1).setValue(entry.getValue());
 				++counter;
 			}
 		}
-		ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
-        */	
+		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);        	
 	}
 }

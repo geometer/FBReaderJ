@@ -55,14 +55,14 @@ public abstract class ZLApplication extends ZLApplicationBase {
 		myName = name;
 		myContext = ZLibrary.getContext();
 		
-		RotationAngleOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getAngle());
+		setRotationAngleOption(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getAngle()));
 		
-		AngleStateOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getAngle());
+		setAngleStateOption(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getAngle()));
 		
-		KeyboardControlOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
+		setKeyboardControlOption(new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false));
 		ConfigAutoSavingOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, CONFIG, AUTO_SAVE, true);
-		ConfigAutoSaveTimeoutOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30);
-		KeyDelayOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
+		setConfigAutoSaveTimeoutOption(new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30));
+		setKeyDelayOption(new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250));
 		setMyViewWidget(null);
 		myWindow = null;
 		if (ConfigAutoSavingOption.getValue()) {
@@ -119,11 +119,11 @@ public abstract class ZLApplication extends ZLApplicationBase {
 		setView(myInitialView);
 		
 		
-		/*if (KeyboardControlOption.getValue()) {
+		if (KeyboardControlOption.getValue()) {
 			grabAllKeys(true);
 		}
 		myWindow.init();
-		setView(myInitialView);*/
+		setView(myInitialView);
 
 	}
 
@@ -133,10 +133,10 @@ public abstract class ZLApplication extends ZLApplicationBase {
 
 	public void refreshWindow() {
 		if (getMyViewWidget() != null) {
-			//myViewWidget.repaint();
+			myViewWidget.repaint();
 		}
 		if (myWindow != null) {
-			//myWindow.refresh();
+			myWindow.refresh();
 		}
 
 	}
@@ -260,6 +260,47 @@ public abstract class ZLApplication extends ZLApplicationBase {
 
 	public ZLViewWidget getMyViewWidget() {
 		return myViewWidget;
+	}
+
+	public void setRotationAngleOption(ZLIntegerOption rotationAngleOption) {
+		RotationAngleOption = rotationAngleOption;
+	}
+
+	public ZLIntegerOption getRotationAngleOption() {
+		return RotationAngleOption;
+	}
+
+	public void setAngleStateOption(ZLIntegerOption angleStateOption) {
+		AngleStateOption = angleStateOption;
+	}
+
+	public ZLIntegerOption getAngleStateOption() {
+		return AngleStateOption;
+	}
+
+	public void setKeyboardControlOption(ZLBooleanOption keyboardControlOption) {
+		KeyboardControlOption = keyboardControlOption;
+	}
+
+	public ZLBooleanOption getKeyboardControlOption() {
+		return KeyboardControlOption;
+	}
+
+	public void setConfigAutoSaveTimeoutOption(
+			ZLIntegerRangeOption configAutoSaveTimeoutOption) {
+		ConfigAutoSaveTimeoutOption = configAutoSaveTimeoutOption;
+	}
+
+	public ZLIntegerRangeOption getConfigAutoSaveTimeoutOption() {
+		return ConfigAutoSaveTimeoutOption;
+	}
+
+	public void setKeyDelayOption(ZLIntegerRangeOption keyDelayOption) {
+		KeyDelayOption = keyDelayOption;
+	}
+
+	public ZLIntegerRangeOption getKeyDelayOption() {
+		return KeyDelayOption;
 	}
 }
 
