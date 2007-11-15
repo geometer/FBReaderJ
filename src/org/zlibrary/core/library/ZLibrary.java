@@ -8,6 +8,7 @@ import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class ZLibrary {
 	public static void init() {
+		ZLSwingLibrary.init();
 	}
 
 	public static void shutdown() {

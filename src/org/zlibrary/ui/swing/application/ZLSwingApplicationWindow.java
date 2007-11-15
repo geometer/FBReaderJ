@@ -12,11 +12,43 @@ import org.zlibrary.core.view.ZLViewWidget;
 
 import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
+import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+
+import org.zlibrary.options.ZLOption;
+import org.zlibrary.options.ZLIntegerRangeOption;
 
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
+	private class ZLFrame extends JFrame {
+		ZLFrame() {
+			setSize((int)myWidthOption.getValue(), (int)myHeightOption.getValue());
+			move((int)myXOption.getValue(), (int)myYOption.getValue());
+
+			addComponentListener(new ComponentAdapter() {
+				public void componentResized(ComponentEvent event) {
+					Dimension size = getSize();
+					myWidthOption.setValue(size.width);
+					myHeightOption.setValue(size.height);
+				}
+
+				public void componentMoved(ComponentEvent event) {
+					Point point = getLocation();
+					myXOption.setValue(point.x);
+					myYOption.setValue(point.y);
+				}
+			});
+		}
+
+		protected void processWindowEvent(WindowEvent event) {
+			if (event.getID() == WindowEvent.WINDOW_CLOSING) {
+				ZLSwingLibrary.shutdown();
+			}
+			super.processWindowEvent(event);
+		}
+	}
+
 	public ZLSwingApplicationWindow(ZLApplication application) {
 		super(application);
-		myFrame = new JFrame();
+		myFrame = new ZLFrame();
 		myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		myToolbar = new JToolBar();
 		myToolbar.setFloatable(false);
@@ -25,7 +57,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void run() {
-		myFrame.setSize(800, 600);
 		myToolbar.setVisible(true);
 		myFrame.setVisible(true);
 	}
@@ -74,4 +105,13 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	private JFrame myFrame;
 	private JToolBar myToolbar;
+
+	final private ZLIntegerRangeOption myXOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
+	final private ZLIntegerRangeOption myYOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
+	final private ZLIntegerRangeOption myWidthOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "Width", 10, 2000, 800);
+	final private ZLIntegerRangeOption myHeightOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "Height", 10, 2000, 600);
 }

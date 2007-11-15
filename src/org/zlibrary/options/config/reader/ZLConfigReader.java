@@ -100,9 +100,11 @@ import org.zlibrary.options.config.*;
     
     public void read(){
         String[] fileList = myDestinationDirectory.list();
-        for (String fileName : fileList){
-            if (isXMLFileName(fileName)){
-                readFile(new File(myDestinationDirectory + "/" + fileName));
+				if (fileList != null) {
+            for (String fileName : fileList){
+                if (isXMLFileName(fileName)){
+                    readFile(new File(myDestinationDirectory + "/" + fileName));
+                }
             }
         }
     }
