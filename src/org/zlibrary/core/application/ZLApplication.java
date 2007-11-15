@@ -1,13 +1,14 @@
 package org.zlibrary.core.application;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import org.zlibrary.core.view.ZLView;
-import org.zlibrary.core.view.ZLViewWidget;
-import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.application.menu.Menubar;
 import org.zlibrary.core.application.toolbar.Toolbar;
 import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.core.view.ZLView;
+import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.options.ZLBooleanOption;
 import org.zlibrary.options.ZLIntegerOption;
 import org.zlibrary.options.ZLIntegerRangeOption;
@@ -44,7 +45,7 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	private ZLPaintContext myContext;
 	private ZLView myInitialView;
 
-	private Map<Integer,Action> myActionMap;
+	private Map<Integer,Action> myActionMap = new HashMap<Integer,Action>();
 	private Toolbar myToolbar;
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
