@@ -24,7 +24,7 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 	}
 	
 	public ZLBoolean3 getValue() {
-		if (!myIsSynchronized){
+		if (!myIsSynchronized) {
 			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
 			String value = myConfig.getValue(myCategory, myGroup, myOptionName, strDefaultValue);
 			myValue = ZLFromStringConverter.getBoolean3Value(value);

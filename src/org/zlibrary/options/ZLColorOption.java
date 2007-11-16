@@ -14,14 +14,14 @@ public final class ZLColorOption extends ZLOption {
 	private long myIntValue;
 	private final long myDefaultValue;
 	
-	public ZLColorOption (String category, String group, String optionName, ZLColor defaultValue){
+	public ZLColorOption (String category, String group, String optionName, ZLColor defaultValue) {
 		super(category, group, optionName);
 		myDefaultValue = defaultValue.getIntValue();
 		myIntValue = myDefaultValue;
 	}
 	
-	public long getValue(){
-		if (!myIsSynchronized){
+	public long getValue() {
+		if (!myIsSynchronized) {
 			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
 			String value = myConfig.getValue(myCategory, myGroup, myOptionName, strDefaultValue);
 			myIntValue = ZLFromStringConverter.getIntegerValue(value);
@@ -30,7 +30,7 @@ public final class ZLColorOption extends ZLOption {
 		return myIntValue;
 	}
 	
-	public void setValue(ZLColor colorValue){
+	public void setValue(ZLColor colorValue) {
 		long value = colorValue.getIntValue();
 		if (myIsSynchronized && (myIntValue == value)) {
 			return;

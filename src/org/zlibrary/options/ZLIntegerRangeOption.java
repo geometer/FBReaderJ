@@ -15,7 +15,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	private final long myMinValue;
 	private final long myMaxValue;
 	
-	public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue){
+	public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue) {
 		super(category, group, optionName);
 		myMinValue = minValue;
 		myMaxValue = maxValue;
@@ -23,16 +23,16 @@ public final class ZLIntegerRangeOption extends ZLOption {
 		myValue = myDefaultValue;
 	}
 	
-	public long getMinValue(){
+	public long getMinValue() {
 		return myMinValue;
 	}
 	
-	public long getMaxValue(){
+	public long getMaxValue() {
 		return myMaxValue;
 	}
 	
-	public long getValue(){
-		if (!myIsSynchronized){
+	public long getValue() {
+		if (!myIsSynchronized) {
 			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
 			String value = myConfig.getValue(myCategory, myGroup, 
 					myOptionName, strDefaultValue);
@@ -42,7 +42,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 		return myValue;
 	}
 	
-	public void setValue(long value){
+	public void setValue(long value) {
 		if ((value <= myMaxValue) && (value >= myMinValue)) {
 			if (myIsSynchronized && (myValue == value)) {
 				return;
@@ -50,7 +50,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 			myValue = value;
 			myIsSynchronized = true;
 			if (myValue == myDefaultValue) {
-			  myConfig.unsetValue(myCategory, myGroup, myOptionName);
+				myConfig.unsetValue(myCategory, myGroup, myOptionName);
 			} else {
 				String stringValue = ZLToStringConverter.convert(myValue);
 				myConfig.setValue(myCategory, myGroup, myOptionName, stringValue);

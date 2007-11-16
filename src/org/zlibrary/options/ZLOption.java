@@ -22,7 +22,7 @@ public abstract class ZLOption {
 	 * @param group
 	 * @param optionName
 	 */
-	protected ZLOption (String category, String group, String optionName){
+	protected ZLOption (String category, String group, String optionName) {
 		myCategory = category;
 		myGroup = group;
 		myOptionName = optionName;
@@ -31,28 +31,28 @@ public abstract class ZLOption {
 	/**
 	 * @return имя опции. вероятно нужно будет во view
 	 */
-	public String getName(){
+	public String getName() {
 		return myOptionName;
 	}
 	
 	/**
 	 * @return "группу" опции. вероятно нужно будет во view
 	 */
-	public String getGroup(){
+	public String getGroup() {
 		return myGroup;
 	}
 	
 	/**
 	 * @return "категорию" опции. вероятно нужно будет во view
 	 */
-	public String getCategory(){
+	public String getCategory() {
 		return myCategory;
 	}
 	
 	/**
 	 * проверяем две опции на равенство
 	 */
-	public boolean equals(Object o){
+	public boolean equals(Object o) {
 		if (o == this) 
 			return true;
 		
@@ -69,7 +69,7 @@ public abstract class ZLOption {
 	
   //  public abstract String getStringValue();
 	
-	//public void clearGroup(String group){}
+	//public void clearGroup(String group) {}
 	//private final ZLOption& operator = (final ZLOptions options);
 	//public boolean isAutoSavingSupported();
 	//public void startAutoSave(int seconds);
