@@ -43,4 +43,8 @@ public class ZLColor {
 		ZLColor color = (ZLColor)o;
 		return (color.Red == Red) && (color.Green == Green) && (color.Blue == Blue);
 	}
+
+	public int hashCode() {
+		return getIntValue();
+	}
 }

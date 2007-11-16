@@ -5,17 +5,17 @@ package org.zlibrary.options.util;
  * @author Администратор
  */
 public enum ZLBoolean3 {
-	B3_FALSE("FALSE"),
-	B3_TRUE("TRUE"),
-	B3_UNDEFINED("UNDEFINED");
-    
-    private String myStringValue;
-    
-    private ZLBoolean3(String stringValue){
-        myStringValue = stringValue;
-    }
-    
-    public String getStringValue(){
-        return myStringValue;
-    }
+	B3_FALSE("false"),
+	B3_TRUE("true"),
+	B3_UNDEFINED("undefined");
+	
+	private String myStringValue;
+	
+	private ZLBoolean3(String stringValue){
+		myStringValue = stringValue;
+	}
+	
+	public String getStringValue(){
+		return myStringValue;
+	}
 }
