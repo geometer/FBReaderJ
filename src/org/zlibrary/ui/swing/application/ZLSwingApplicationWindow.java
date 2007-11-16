@@ -109,7 +109,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	final private ZLIntegerRangeOption myXOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
 	final private ZLIntegerRangeOption myYOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "YPosition", 0, 2000, 10);
 	final private ZLIntegerRangeOption myWidthOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "Width", 10, 2000, 800);
 	final private ZLIntegerRangeOption myHeightOption =
