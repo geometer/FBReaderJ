@@ -1,114 +1,46 @@
 package org.zlibrary.options.util;
 
-import java.awt.Color;
-
 /**
- * сущность "цвет". представление здесь - стандартные RGB компоненты
- * @author јдминистратор
- *
+ * class Color. Color is presented as the triple of short's (Red, Green, Blue components)
+ * Each component should be in the range 0..255
  */
 public class ZLColor {
+	public final short Red;
+	public final short Green;
+	public final short Blue;
 	
-	private int myRed = 0;
-	private int myGreen = 0;
-	private int myBlue = 0;
-	
-    /**
-     * и конструктор соответственно дл€ удобства
-     * @param color
-     */
-    public ZLColor(Color color){
-        setColor((int)color.getRed(), (int)color.getGreen(), (int)color.getBlue());
-    }
+	public ZLColor() {
+		Red = 0;
+		Green = 0;
+		Blue = 0;
+	}
 
-    /**
-     * конструктор по умолчанию делает цвет черным
-     */
-    public ZLColor(){
-    }
-    
-    /**
-     * конструктор с параметрами
-     */
-    public ZLColor(int red, int green, int blue){
-        setColor(red, green, blue);
-    }
-    
-    public ZLColor(String color){
-        String[] components = color.split(",");
-        setColor(Integer.parseInt(components[0]), Integer.parseInt(components[1]),
-                 Integer.parseInt(components[2]));
-    }
-    
-    /**
-	 * перекрываем метод toString,
-	 * по сути - кодировка в дес€тичную запись
-     * результат должен нагл€дно совпадать с результатом getIntValue
-	 */
-	public String toString(){
-		return "" + myRed + "," + myGreen + "," + myBlue;
+	public ZLColor(short r, short g, short b) {
+		Red = (short)(r & 0xFF);
+		Green = (short)(g & 0xFF);
+		Blue = (short)(b & 0xFF);
 	}
 	
-	/**
-	 * €вл€етс€ ли число корректным значением компоненты ргб цвета.
-	 */
-	private boolean isCorrectComponent(int value){
-		return (value >=0 && value <= 255);
+	public ZLColor(int intValue) {
+		Red = (short)((intValue >> 16) & 0xFF);
+		Green = (short)((intValue >> 8) & 0xFF);
+		Blue = (short)(intValue & 0xFF);
 	}
 	
-	/**
-	 * устанавливаем только те компоненты, которые заданы корректно,
-	 * то есть €вл€ютс€ неотрицательным числом < 256
-	 */
-	public void setColor (int red, int green, int blue){
-		if (isCorrectComponent(red)) {
-			myRed = red;
-        }
-	    if (isCorrectComponent(green)) {
-			myGreen = green;
-        }
-		if (isCorrectComponent(blue)) {
-			myBlue = blue;
-        }
+	public int getIntValue() {
+		return (Red << 16) + (Green << 8) + Blue;
 	}
-	
-	/**
-	 * конвертирование в ј¬“шный цвет.
-	 * @param color
-	 */
-	//TODO решить нужно ли это вообще
-	public void convertFromColor(Color color){
-		myRed = (int)color.getRed();
-		myGreen = (int)color.getGreen();
-		myBlue = (int)color.getBlue();
-	}
-	
-	public Color convertToColor(){
-		return new Color(myRed, myGreen, myBlue);
-	}
-	
-	/**
-	 * @return цвет одним числом, чтобы хранить в пам€ти меньше =)
-	 */	
-	public long getIntValue(){
-		return myRed*1000000 + myGreen*1000 + myBlue;
-	}
-	
-	/**
-	 * перекрываем метод equals. цвета считаем равными при равенстве всех компонент
-	 */
-	public boolean equals (Object o){
-		if (o == this) 
+
+	public boolean equals(Object o) {
+		if (o == this) { 
 			return true;
-		
-		if (! (o.getClass() == this.getClass()))
+		}
+
+		if (!(o instanceof ZLColor)) {
 			return false;
-		
-		ZLColor zlc = (ZLColor) o;
-		
-		return ((zlc.myRed == this.myRed) &&
-				(zlc.myGreen == this.myGreen) &&
-				(zlc.myBlue == this.myBlue));
+		}
+
+		ZLColor color = (ZLColor)o;
+		return (color.Red == Red) && (color.Green == Green) && (color.Blue == Blue);
 	}
-	
 }
