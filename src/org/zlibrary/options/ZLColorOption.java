@@ -12,7 +12,7 @@ import org.zlibrary.options.util.*;
  */
 public final class ZLColorOption extends ZLOption {
 	private long myIntValue;
-	private long myDefaultValue;
+	private final long myDefaultValue;
 	
 	public ZLColorOption (String category, String group, String optionName, ZLColor defaultValue){
 		super(category, group, optionName);
