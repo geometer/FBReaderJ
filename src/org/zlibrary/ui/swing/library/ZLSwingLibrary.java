@@ -9,7 +9,7 @@ import org.zlibrary.options.config.writer.ZLConfigWriterFactory;
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 
-class ZLSwingLibrary extends ZLibrary {
+public class ZLSwingLibrary extends ZLibrary {
 	public ZLSwingPaintContext createPaintContext() {
 		return new ZLSwingPaintContext();
 	}
