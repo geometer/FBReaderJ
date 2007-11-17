@@ -7,9 +7,11 @@ import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 public class FBReader extends ZLApplication {
-	public FBReader(String fileName) {
-		super("Sample");
+	public FBReader() {
+		this(new String[0]);
+	}
 
+	public FBReader(String[] args) {
 		addToolbarButton(ActionCode.SHOW_COLLECTION, "books");
 		addToolbarButton(ActionCode.SHOW_LAST_BOOKS, "history");
 		addToolbarButton(ActionCode.ADD_BOOK, "addbook");
@@ -34,7 +36,7 @@ public class FBReader extends ZLApplication {
 		//}
 
 		ZLTextView view = new ZLTextViewImpl(this, getContext());
-		view.setModel(fileName);
+		view.setModel((args.length > 0) ? args[0] : "data/help/MiniHelp.ru.fb2");
 		setView(view);
 	}
 

@@ -51,10 +51,9 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	//private ZLTime myLastKeyActionTime;
 	//private ZLMessageHandler myPresentWindowHandler;
 
-	protected ZLApplication(String name) {
-		super(name);
-		myName = name;
-		myContext = ZLibrary.getContext();
+	protected ZLApplication() {
+		myName = ZLibrary.getInstance().getApplicationName();
+		myContext = ZLibrary.getInstance().createPaintContext();
 		
 		setRotationAngleOption(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getAngle()));
 		

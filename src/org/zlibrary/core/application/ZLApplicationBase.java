@@ -8,13 +8,11 @@ public class ZLApplicationBase {
 
 	private static String ourImageDirectory;
 	private static String ourApplicationImageDirectory;
-	private static String ourApplicationName;
 	private static String ourZLibraryDirectory;
 	private static String ourApplicationDirectory;
 	private static String ourDefaultFilesPathPrefix;
 
-	protected ZLApplicationBase(String name) {
-		ourApplicationName = name;
+	protected ZLApplicationBase() {
 		//ourImageDirectory = replaceRegExps(IMAGEDIR);
 		//ourApplicationImageDirectory = replaceRegExps(APPIMAGEDIR);
 		//ourZLibraryDirectory = BaseDirectory + ZLibrary.FileNameDelimiter + "zlibrary";
@@ -23,10 +21,6 @@ public class ZLApplicationBase {
 		//ZLOptions.createInstance();
 	}
 
-	
-	public static String getApplicationName() {
-		return ourApplicationName;
-	}
 	
 	public static String getImageDirectory() {
 		return ourImageDirectory;

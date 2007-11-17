@@ -1,26 +1,18 @@
 package org.zlibrary.core.library;
 
-import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLPaintContext;
 
-import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
-
-public class ZLibrary {
-	public static void init() {
-		ZLSwingLibrary.init();
+public abstract class ZLibrary {
+	public static ZLibrary getInstance() {
+		return ourImplementation;
 	}
 
-	public static void shutdown() {
+	private static ZLibrary ourImplementation;
+
+	protected ZLibrary() {
+		ourImplementation = this;
 	}
 
-	public static void run(ZLApplication application) {
-		ZLSwingApplicationWindow mainWindow = new ZLSwingApplicationWindow(application);
-		application.initWindow();
-		mainWindow.run();
-	}
-
-	public static ZLPaintContext getContext() {
-		return ZLSwingLibrary.CONTEXT;
-	}
+	abstract public ZLPaintContext createPaintContext();
+	abstract public String getApplicationName();
 }

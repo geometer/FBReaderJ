@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir = "." default = "build" name = "fbreader">
+<project basedir = "." default = "buildJar" name = "fbreader">
 	<property name = "src.dir" value = "src"/>
 	<property name = "bin.dir" value = "bin"/>
 	<property name = "icons.dir" value = "icons"/>
@@ -15,7 +15,7 @@
 		<javac srcdir = "${src.dir}" destdir = "${bin.dir}"/>
 	</target>
 
-	<target name = "build" depends = "compile">
+	<target name = "buildJar" depends = "compile">
 		<jar destfile = "${main.jar}" manifest = "manifest.mf">
 			<fileset dir = "${bin.dir}" includes = "**/*.class"/>
 			<fileset dir = "." includes = "${icons.dir}/**/*.png"/>
