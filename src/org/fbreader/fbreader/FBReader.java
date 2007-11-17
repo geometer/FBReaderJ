@@ -8,7 +8,7 @@ import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 public class FBReader extends ZLApplication {
 	public FBReader() {
-		this(new String[0]);
+		this(new String[] { "/sdcard/MiniHelp.ru.fb2" });
 	}
 
 	public FBReader(String[] args) {
