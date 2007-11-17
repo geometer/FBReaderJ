@@ -12,15 +12,14 @@ abstract public class ZLViewWidget {
 		DEGREES270(270);
 		
 		private Angle(int angle) {
-			this.angle = angle;
+			myAngle = angle;
 		}
-		
-		private int angle;
 		
 		public int getAngle() {
-			return angle;
+			return myAngle;
 		}
-		
+
+		private int myAngle;
 	};
 
 	protected ZLViewWidget(Angle initialAngle) {
