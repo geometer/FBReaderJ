@@ -72,7 +72,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		myFrame.setTitle(caption);
 	}
 
-	protected ZLViewWidget createViewWidget() {
+	protected ZLSwingViewWidget createViewWidget() {
 		ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(ZLSwingViewWidget.Angle.DEGREES0);
 		myFrame.getRootPane().add(viewWidget.getPanel(), BorderLayout.CENTER);
 		return viewWidget;

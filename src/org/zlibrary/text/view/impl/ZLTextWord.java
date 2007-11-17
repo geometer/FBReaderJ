@@ -18,7 +18,7 @@ public class ZLTextWord extends ZLTextElement {
 	}
 
 	public int getWidth(ZLPaintContext context) {
-		return context.stringWidth(Data);	
+		return context.getStringWidth(Data);	
 	}
 	
 	/*	public Kind getKind() {

@@ -7,7 +7,6 @@ import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.core.view.ZLView;
 
 public class ZLSwingViewWidget extends ZLViewWidget {
-
 	public ZLSwingViewWidget(Angle initialAngle) {
 		super(initialAngle);
 		myPanel = new ZLSwingPanel(this);

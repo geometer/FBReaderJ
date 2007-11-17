@@ -32,18 +32,18 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 		return myComponent.getSize().height;
 	}
 	
-	public int stringWidth(String string) {
+	public int getStringWidth(String string) {
 		return myGraphics.getFontMetrics().stringWidth(string);
 	}
 
-	public int spaceWidth() {
+	public int getSpaceWidth() {
 		// TODO: optimize (?)
 		return myGraphics.getFontMetrics().charWidth(' ');
 	}
-	public int stringHeight() {
+	public int getStringHeight() {
 		return myGraphics.getFontMetrics().getHeight();
 	}
-	public int descent() {
+	public int getDescent() {
 		// TODO: implement
 		return 0;
 	}

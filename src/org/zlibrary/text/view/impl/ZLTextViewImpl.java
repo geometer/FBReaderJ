@@ -82,14 +82,14 @@ public class ZLTextViewImpl extends ZLTextView {
 		ZLTextModel model = myModel.getBookModel();
 		int paragraphs = model.getParagraphsNumber();
 		int h = 0;
-		int dh = context.stringHeight();
+		int dh = context.getStringHeight();
 		for (int i = 0; i < paragraphs; i++) {
 			ZLTextParagraphCursor cursor = ZLTextParagraphCursor.getCursor(model, i);
 			for (int j = 0; j < cursor.getParagraphLength(); j++) {
 				ZLTextElement element = cursor.getElement(j);
 				if (element instanceof ZLTextWord) {
 					String text = ((ZLTextWord) element).Data;
-					final int w = context.stringWidth(text);
+					final int w = context.getStringWidth(text);
 					h += dh;
 					context.drawString((context.getWidth() - w) / 2, h, text);
 				}	
