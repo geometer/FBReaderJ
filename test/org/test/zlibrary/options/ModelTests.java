@@ -32,7 +32,7 @@ public class ModelTests extends TestCase{
 	private final double myDefaultDouble = 1.2;
     
 	public void setUp(){
-		myColorOption = new ZLColorOption("","","my Color", new ZLColor (176, 255, 0)); 
+		myColorOption = new ZLColorOption("","","my Color", new ZLColor ((short)176, (short)255, (short)0)); 
 		myDoubleOption = new ZLDoubleOption("","","My Double", myDefaultDouble); 
 		myIntegerOption = new ZLIntegerOption("","","I", myDefaultInt); 
 		myIntegerRangeOption = new ZLIntegerRangeOption("","","IR", -90L, 90L, myDefaultIntRange); 
