@@ -3,11 +3,12 @@ package org.fbreader.formats.fb2;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+import org.zlibrary.core.xml.ZLXMLReader;
 
-class FB2Handler extends DefaultHandler {	
-	private FB2Reader myFB2Reader;
+public class FB2Handler extends DefaultHandler {	
+	private ZLXMLReader myFB2Reader;
 	
-	public FB2Handler(FB2Reader reader) {
+	public FB2Handler(ZLXMLReader reader) {
 		myFB2Reader = reader;
 	}
 
