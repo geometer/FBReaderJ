@@ -1,8 +1,8 @@
 package org.zlibrary.core.xml;
 
 public abstract class ZLXMLReader {
-	public void read(String fileName) {
-		
+	protected void readFile(String fileName) {
+		ZLXMLProcessor.createXMLProcessor().read(this, fileName);
 	}
 	
 	public void startElementHandler(String tag, String [] attributes) {

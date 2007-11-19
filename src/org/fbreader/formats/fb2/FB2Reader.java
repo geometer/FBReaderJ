@@ -1,18 +1,14 @@
 package org.fbreader.formats.fb2;
 
-import java.io.*;
-
-import javax.xml.parsers.*;
-
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.BookReader;
-import org.xml.sax.SAXException;
+import org.fbreader.bookmodel.ZLTextKind;
 import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.text.model.ZLTextParagraph;
 
 public class FB2Reader extends ZLXMLReader {
 	private BookReader myModelReader = new BookReader(new BookModel());
-	private String myFileName;
+//	private String myFileName;
 	
 	private boolean myInsidePoem = false;
 	private boolean myInsideTitle = false;
@@ -30,6 +26,10 @@ public class FB2Reader extends ZLXMLReader {
 		return FB2Tag.valueOf(s.toUpperCase());
 	}
 	
+	private byte getKind(String s) {
+		return (byte) ZLTextKind.valueOf(s.toUpperCase()).ordinal();
+	}
+	
 	private String reference(String[] attributes) {
 		int length = attributes.length-1;
 		for (int i = 0; i < length; i+=2) {
@@ -42,31 +42,6 @@ public class FB2Reader extends ZLXMLReader {
 	
 //	private BookModel myBookModel = new BookModel();
 	
-	public FB2Reader(String fileName) {
-		myFileName = fileName;
-	}
-	
-	public BookModel read() {
-		try {
-			InputStream stream = getClass().getClassLoader().getResourceAsStream(myFileName);
-			if (stream == null) {
-				stream = new BufferedInputStream(new FileInputStream(myFileName));
-			}
-			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			parser.parse(stream, new FB2Handler(this));
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-	//		e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return myModelReader.getModel();
-	}
-
 	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		myModelReader.addData(String.valueOf(ch, start, length));
@@ -91,7 +66,7 @@ public class FB2Reader extends ZLXMLReader {
 		case EMPHASIS:
 		case STRONG:
 		case STRIKETHROUGH:
-			myModelReader.addControl((byte) tag.ordinal(), false);
+			myModelReader.addControl(getKind(tagName), false);
 			break;
 		
 		case V:
@@ -187,14 +162,22 @@ public class FB2Reader extends ZLXMLReader {
 		case EMPHASIS:
 		case STRONG:
 		case STRIKETHROUGH:
-			myModelReader.addControl((byte) tag.ordinal(), true);		
+			myModelReader.addControl(getKind(tagName), true);		
 			break;
 		
 		case V:
-		case SUBTITLE:
+			myModelReader.pushKind((byte) ZLTextKind.VERSE.ordinal());
+			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+			break;
+			
 		case TEXT_AUTHOR:
+			myModelReader.pushKind((byte) ZLTextKind.AUTHOR.ordinal());
+			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+			break;
+			
+		case SUBTITLE:
 		case DATE:
-			myModelReader.pushKind((byte) tag.ordinal());
+			myModelReader.pushKind(getKind(tagName));
 			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 			break;
 		
@@ -205,7 +188,7 @@ public class FB2Reader extends ZLXMLReader {
 		
 		case CITE:
 		case EPIGRAPH:
-			myModelReader.pushKind((byte) tag.ordinal());
+			myModelReader.pushKind(getKind(tagName));
 			break;
 		
 		case POEM:
@@ -213,7 +196,7 @@ public class FB2Reader extends ZLXMLReader {
 			break;	
 		
 		case STANZA:
-			myModelReader.pushKind((byte) tag.ordinal());
+			myModelReader.pushKind((byte) ZLTextKind.STANZA.ordinal());
 			myModelReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
 			myModelReader.endParagraph();
 			break;
@@ -231,17 +214,17 @@ public class FB2Reader extends ZLXMLReader {
 			if (myBodyCounter == 0) {
 				myModelReader.setMainTextModel();
 			}
-			myModelReader.pushKind((byte) tag.ordinal());
+			myModelReader.pushKind((byte) ZLTextKind.ANNOTATION.ordinal());
 			break;
 		
 		case TITLE:
 			if (myInsidePoem) {
-				myModelReader.pushKind((byte) FB2Tag.POEM.ordinal()); //плохо
+				myModelReader.pushKind((byte) ZLTextKind.POEM_TITLE.ordinal());
 			} else if (mySectionDepth == 0) {
 				myModelReader.insertEndOfSectionParagraph();
 				myModelReader.pushKind((byte) tag.ordinal());
 			} else {
-				myModelReader.pushKind((byte) FB2Tag.SECTION.ordinal()); //плохо
+				myModelReader.pushKind((byte) ZLTextKind.SECTION_TITLE.ordinal());
 				myInsideTitle = true;
 				myModelReader.enterTitle();
 			}
@@ -253,21 +236,21 @@ public class FB2Reader extends ZLXMLReader {
 				myModelReader.setMainTextModel();
 				myReadMainText = true;
 			}
-			myModelReader.pushKind((byte) FB2Tag.BODY.ordinal());
+			myModelReader.pushKind((byte) ZLTextKind.REGULAR.ordinal());
 			break;
 		
 		case A:
 			String ref = reference(attributes);
 			if (ref != "") {
 				if (ref.charAt(0) == '#') {
-					myHyperlinkType = (byte) FB2Tag.FOOTNOTE.ordinal();
+					myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
 					ref = ref.substring(1);
 				} else {
-					myHyperlinkType = (byte) FB2Tag.A.ordinal();
+					myHyperlinkType = (byte) ZLTextKind.EXTERNAL_HYPERLINK.ordinal();
 				}
 				myModelReader.addHyperlinkControl(myHyperlinkType, ref);
 			} else {
-				myHyperlinkType = (byte) FB2Tag.FOOTNOTE.ordinal();
+				myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
 				myModelReader.addControl(myHyperlinkType, true);
 			}
 			break;
@@ -276,5 +259,10 @@ public class FB2Reader extends ZLXMLReader {
 			break;
 		}
 	}
-
+	
+	public BookModel read(String fileName) {
+		readFile(fileName);
+		return myModelReader.getModel();
+	}
+	
 }

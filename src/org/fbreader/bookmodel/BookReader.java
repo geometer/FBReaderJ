@@ -2,7 +2,6 @@ package org.fbreader.bookmodel;
 
 import java.util.Stack;
 
-import org.fbreader.formats.fb2.FB2Tag;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
@@ -166,7 +165,7 @@ public class BookReader {
 				contentsModel.addText("...");
 			}
 			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
-			contentsModel.addControl((byte)FB2Tag.CONTENTS_TABLE_ENTRY.ordinal(), true);
+			contentsModel.addControl((byte)ZLTextKind.CONTENTS_TABLE_ENTRY.ordinal(), true);
 			contentsModel.setReference(para, referenceNumber);
 			myTOCStack.push(para);
 			myLastTOCParagraphIsEmpty = true;

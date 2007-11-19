@@ -100,7 +100,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void setModel(String fileName) {
-		myModel = new FB2Reader(fileName).read();
+		myModel = new FB2Reader().read(fileName);
 	}
 
 	public void paint() {

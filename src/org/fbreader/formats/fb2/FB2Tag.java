@@ -1,6 +1,6 @@
 package org.fbreader.formats.fb2;
 
-public enum FB2Tag {
+enum FB2Tag {
 	P,
 	V,
 	SUBTITLE,
@@ -22,7 +22,5 @@ public enum FB2Tag {
 	CODE,
 	STRIKETHROUGH,
 	TITLE,
-	BODY,
-	FOOTNOTE,
-	CONTENTS_TABLE_ENTRY;
+	BODY;
 }

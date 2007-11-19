@@ -1,17 +1,7 @@
 package org.zlibrary.core.resources.reader;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Stack;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.fbreader.formats.fb2.FB2Handler;
-import org.xml.sax.SAXException;
 import org.zlibrary.core.resources.ZLTreeResource;
 import org.zlibrary.core.xml.ZLXMLReader;
 
@@ -27,27 +17,6 @@ public class ZLResourceTreeReader extends ZLXMLReader {
 	public void endElementHandler(String tag) {
 		if (!myStack.empty() && (NODE.equals(tag))) {
 			myStack.pop();
-		}
-	}
-
-	@Override
-	public void read(String fileName) {
-		try {
-			InputStream stream = getClass().getClassLoader().getResourceAsStream(fileName);
-			if (stream == null) {
-				stream = new BufferedInputStream(new FileInputStream(fileName));
-			}
-			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			parser.parse(stream, new FB2Handler(this));
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-	//		e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
