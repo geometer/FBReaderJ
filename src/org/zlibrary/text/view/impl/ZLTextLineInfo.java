@@ -1,25 +1,33 @@
 package org.zlibrary.text.view.impl;
 
+import org.zlibrary.text.view.*;
+
 class ZLTextLineInfo {
 
 	/*This class has public fields like struct in C++. 
 	 Should I remove prefix "my", or should I make "getters" and "setters" for all the fields, making them private?*/
 
-	public ZLTextWordCursor myStart;
-	public ZLTextWordCursor myRealStart;
-	public ZLTextWordCursor myEnd;
-	public boolean myIsVisible;
-	public int myLeftIndent;
-	public int myWidth;
-	public int myHeight;
+	public ZLTextWordCursor Start;
+	public ZLTextWordCursor RealStart;
+	public ZLTextWordCursor End;
+	public boolean IsVisible;
+	public int LeftIndent;
+	public int Width;
+	public int Height;
+	public int Descent;
+	public int VSpaceAfter;
+	public ZLTextStyle StartStyle;
 
-	public ZLTextLineInfo(ZLTextWordCursor word) {
-		myStart = word;
-		myRealStart= word;
-		myEnd = word;
-		myIsVisible = false;
-		myLeftIndent = 0;
-		myWidth = 0;
-		myHeight = 0;
+	public ZLTextLineInfo(ZLTextWordCursor word, ZLTextStyle style) {
+		Start = word;
+		RealStart= word;
+		End = word;
+		IsVisible = false;
+		LeftIndent = 0;
+		Width = 0;
+		Height = 0;
+		Descent = 0;
+		VSpaceAfter = 0;
+		StartStyle = style;
 	}
 }

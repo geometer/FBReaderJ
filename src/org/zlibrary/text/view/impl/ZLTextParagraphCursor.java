@@ -121,6 +121,10 @@ public abstract class ZLTextParagraphCursor {
 
 	public abstract boolean isLast(); 
 	
+	public boolean isEndOfSection() {
+		return (myModel.getParagraph(myIndex).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
+	}
+	
 	public int getParagraphLength() {
 		return myElements.size();
 	}

@@ -1,5 +1,7 @@
 package org.zlibrary.text.view.impl;
 
+import java.util.*;
+
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLPaintContext;
@@ -66,10 +68,12 @@ public class ZLTextViewImpl extends ZLTextView {
 
 	private BookModel myModel;
 	private ViewStyle myStyle;
+	private List<ZLTextLineInfo> myLineInfos;
 
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
 		myStyle = new ViewStyle(context);
+		myLineInfos = new ArrayList<ZLTextLineInfo> ();
 	}
 
 	public void setModel(String fileName) {
@@ -96,6 +100,42 @@ public class ZLTextViewImpl extends ZLTextView {
 			}
 			h += dh;	
 		}
+	}
+
+	private ZLTextWordCursor buildInfos(ZLTextWordCursor start) {
+		myLineInfos.clear();
+		ZLTextWordCursor cursor = start;
+		int textAreaHeight = myStyle.textAreaHeight();
+		int counter = 0;
+		do {
+			ZLTextWordCursor paragraphEnd = cursor;
+		       	paragraphEnd.moveToParagraphEnd();
+			ZLTextWordCursor paragraphStart = cursor;
+		       	paragraphStart.moveToParagraphStart();
+		
+		//	myStyle.reset();
+		//	myStyle.applyControl(paragraphStart, cursor);	
+			ZLTextLineInfo info = new ZLTextLineInfo(cursor, myStyle.getTextStyle());
+			while (!info.End.isEndOfParagraph()) {
+				info = processTextLine(info.End, paragraphEnd);
+				textAreaHeight -= info.Height + info.Descent;
+				if ((textAreaHeight < 0) && (counter > 0)) {
+					break;
+				}
+				textAreaHeight -= info.VSpaceAfter;
+				cursor = info.End;
+				myLineInfos.add(info);
+				if (textAreaHeight < 0) {
+					break;
+				}
+				counter++;
+			}
+		} while (cursor.isEndOfParagraph() && cursor.nextParagraph() && !cursor.getParagraphCursor().isEndOfSection() && (textAreaHeight >= 0));
+		return cursor;
+	}
+
+	private ZLTextLineInfo processTextLine(ZLTextWordCursor start, ZLTextWordCursor end) {
+		return null;
 	}
 
 	public String caption() {
