@@ -1,6 +1,7 @@
 package org.zlibrary.core.application;
 
 abstract public class Action {
+	
 	public boolean isVisible() {
 		return true;
 	}

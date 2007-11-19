@@ -8,6 +8,7 @@ public class FullscreenAction extends Action {
 		this.myApplication = application;
 		this.myIsToggle = toggle;
 	}
+	
 	public boolean isVisible() {
 		return true;//myIsToggle || !myApplication.isFullscreen();
 	}

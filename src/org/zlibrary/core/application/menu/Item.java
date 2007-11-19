@@ -8,17 +8,6 @@ public interface Item {
 	};
 
 	public ItemType type();
-
-	/*
-	private ItemType myType;
-		
-	public ItemType type() {
-		return myType;
-	}
-
-	protected Item(ItemType type) {
-		myType = type;
-	}*/
 }
 
 
