@@ -208,4 +208,8 @@ public class BookReader {
 		beginContentsParagraph(-1);
 	}
 	
+	public BookModel getModel() {
+		return myBookModel;
+	}
+	
 }
