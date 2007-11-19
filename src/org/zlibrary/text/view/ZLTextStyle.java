@@ -5,4 +5,10 @@ public interface ZLTextStyle {
 	public int fontSize();
 	public boolean bold();
 	public boolean italic();
+	public int leftIndent();
+	public int rightIndent();
+	public int lineSpace();
+	public int verticalShift();
+	public int spaceBefore();
+	public int spaceAfter();
 }

@@ -17,6 +17,7 @@ class ZLTextLineInfo {
 	public int Descent;
 	public int VSpaceAfter;
 	public ZLTextStyle StartStyle;
+	public int SpaceCounter;
 
 	public ZLTextLineInfo(ZLTextWordCursor word, ZLTextStyle style) {
 		Start = word;
@@ -29,5 +30,6 @@ class ZLTextLineInfo {
 		Descent = 0;
 		VSpaceAfter = 0;
 		StartStyle = style;
+		SpaceCounter = 0;
 	}
 }

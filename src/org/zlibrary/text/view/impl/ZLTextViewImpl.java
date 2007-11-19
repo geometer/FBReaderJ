@@ -48,12 +48,30 @@ public class ZLTextViewImpl extends ZLTextView {
 			return myStyle;
 		}
 
-/*		public int elementWidth(ZLTextElement element, int charNumber) {
+		public int elementWidth(ZLTextElement element, int charNumber) {
+			if (element instanceof ZLTextWord) {
+				return wordWidth((ZLTextWord) element, charNumber, -1, false);
+			}
+			return 0;
 		}
 
 		public int elementHeight(ZLTextElement element) {
+			if (element instanceof ZLTextWord) {
+				if (myWordHeight == -1) {
+					myWordHeight = (int) (myContext.getStringHeight() * myStyle.lineSpace()) + myStyle.verticalShift();
+				}
+				return myWordHeight;
+			}
+			return 0;
 		}
-*/		
+		
+		public int elementDescent(ZLTextElement element) {
+			if (element instanceof ZLTextWord) {
+				return myContext.getDescent();
+			}
+			return 0;
+		}
+
 		public int textAreaHeight() {
 			return myContext.getHeight();
 		}
@@ -62,8 +80,13 @@ public class ZLTextViewImpl extends ZLTextView {
 			return word.getWidth(myContext);
 		}
 		
-/*		public int wordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
-		}*/
+		public int wordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
+			if (start == 0 && length == -1) {
+				return word.getWidth(myContext);
+			}	
+			assert(false);
+			return 0;
+		}
 	}
 
 	private BookModel myModel;
@@ -135,7 +158,93 @@ public class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private ZLTextLineInfo processTextLine(ZLTextWordCursor start, ZLTextWordCursor end) {
-		return null;
+		ZLTextLineInfo info = new ZLTextLineInfo(start, myStyle.getTextStyle());
+
+		ZLTextWordCursor current = new ZLTextWordCursor(start);
+		ZLTextParagraphCursor paragraphCursor = current.getParagraphCursor();
+		boolean isFirstLine = current.isStartOfParagraph();
+	
+		if (isFirstLine) {
+			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber());
+			while (element instanceof ZLTextControlElement) {
+				current.nextWord();
+				if (current.equalWordNumber(end)) {
+					break;
+				}
+				element = paragraphCursor.getElement(current.getWordNumber());
+			}
+			info.StartStyle = myStyle.getTextStyle();
+			info.RealStart = new ZLTextWordCursor(current);
+		}	
+
+		ZLTextStyle storedStyle = myStyle.getTextStyle();		
+		
+		info.LeftIndent = myStyle.getTextStyle().leftIndent();	
+		
+		info.Width = info.LeftIndent;
+		
+		if (info.RealStart.equalWordNumber(end)) {
+			info.End = info.RealStart;
+			return info;
+		}
+
+		int newWidth = info.Width;
+		int newHeight = info.Height;
+		int newDescent = info.Descent;
+		int maxWidth = myStyle.getPaintContext().getWidth() - myStyle.getTextStyle().rightIndent();
+		boolean wordOccurred = false;
+		boolean isVisible = false;
+		int lastSpaceWidth = 0;
+		int internalSpaceCounter = 0;
+		boolean removeLastSpace = false;
+
+		do {
+			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber()); 
+			newWidth += myStyle.elementWidth(element, current.getCharNumber());
+			newHeight = Math.max(newHeight, myStyle.elementHeight(element));
+			newDescent = Math.max(newDescent, myStyle.elementDescent(element));
+			if (element instanceof ZLTextWord) {
+				wordOccurred = true;
+				isVisible = true;
+			} 			
+			if ((newWidth > maxWidth) && !info.End.equalWordNumber(start)) {
+				break;
+			}
+			ZLTextElement previousElement = element;
+			current.nextWord();
+			boolean allowBreak = current.equalWordNumber(end);
+			if (!allowBreak) {
+				element = paragraphCursor.getElement(current.getWordNumber());
+				allowBreak = (((!(element instanceof ZLTextWord)) || (previousElement instanceof ZLTextWord)) && 
+						!(element instanceof ZLTextControlElement));
+			}
+			if (allowBreak) {
+				info.IsVisible = isVisible;
+				info.Width = newWidth;
+				info.Height = Math.max(info.Height, newHeight);
+				info.Descent = Math.max(info.Descent, newDescent);
+				info.End = current;
+				storedStyle = myStyle.getTextStyle();
+				info.SpaceCounter = internalSpaceCounter;
+				removeLastSpace = !wordOccurred && (info.SpaceCounter > 0);
+			}	
+		} while (!current.equalWordNumber(end));
+
+		if (removeLastSpace) {
+			info.Width -= lastSpaceWidth;
+			info.SpaceCounter--;
+		}
+
+		myStyle.setStyle(storedStyle);
+
+		if (isFirstLine) {
+			info.Height += info.StartStyle.spaceBefore();
+		}
+		if (info.End.isEndOfParagraph()) {
+			info.VSpaceAfter = myStyle.getTextStyle().spaceAfter();
+		}		
+
+		return info;	
 	}
 
 	public String caption() {

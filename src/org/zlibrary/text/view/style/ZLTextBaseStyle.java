@@ -18,4 +18,29 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	public boolean italic() {
 		return false;
 	}
+
+	public int leftIndent() {
+		return 0;
+	}
+
+	public int rightIndent() {
+		return 0;
+	}
+
+	public int lineSpace() {
+		return 10;
+	}
+
+	public int verticalShift() {
+		return 0;
+	}
+
+	public int spaceBefore() {
+		return 0;
+	}
+
+	public int spaceAfter() {
+		return 0;
+	}
+
 }
