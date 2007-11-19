@@ -85,8 +85,16 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			String iconFileName = "icons/toolbar/" + buttonItem.getIconName() + ".png";
 			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
 			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
+			
+			//MyAction action = application().getAction(buttonItem.getActionId())
+			
 			Action action = new AbstractAction("tooltip text", icon) {
 				public void actionPerformed(ActionEvent event) {
+					//ZLSwingApplicationWindow.onButtonPress(buttonItem);
+					//or
+					//buttonItem.getActionId();
+					//application
+				
 				}
 			};
 			myToolbar.add(action);
