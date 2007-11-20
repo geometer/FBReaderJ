@@ -1,7 +1,6 @@
 package org.zlibrary.ui.swing.view;
 
-import java.awt.Component;
-import java.awt.Graphics;
+import java.awt.*;
 
 import org.zlibrary.options.util.ZLColor;
 
@@ -14,6 +13,10 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 
 	public void setFont(String family, int size, boolean bold, boolean italic) {
 		// TODO: implement
+		if (myGraphics != null) {
+			final int style = (bold ? Font.BOLD : 0) | (italic ? Font.ITALIC : 0);
+			myGraphics.setFont(new Font("Default", style, size));
+		}
 	}
 
 	public void setColor(ZLColor color, LineStyle style) {
