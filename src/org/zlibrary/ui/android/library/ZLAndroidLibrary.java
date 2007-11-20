@@ -3,6 +3,7 @@ package org.zlibrary.ui.android.library;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
 
+import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 //import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
 //import org.zlibrary.options.config.writer.ZLConfigWriterFactory;
 
@@ -32,6 +33,8 @@ public class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	void run(ZLActivity activity) {
+		new ZLSaxXMLProcessorFactory();
+
 		myActivity = activity;
 		myActivity.setContentView(R.layout.main);
 		//ZLConfigReaderFactory.createConfigReader(configDirectory()).read();

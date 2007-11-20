@@ -6,15 +6,15 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.zlibrary.core.xml.ZLXMLReader;
 
 class SAXHandler extends DefaultHandler {	
-	private ZLXMLReader myFB2Reader;
+	private ZLXMLReader myXMLReader;
 	
-	public SAXHandler(ZLXMLReader reader) {
-		myFB2Reader = reader;
+	SAXHandler(ZLXMLReader reader) {
+		myXMLReader = reader;
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		myFB2Reader.endElementHandler(qName);
+		myXMLReader.endElementHandler(qName);
 	}
 
 	@Override
@@ -25,12 +25,11 @@ class SAXHandler extends DefaultHandler {
 			attrs[i] = attributes.getQName(i/2);
 			attrs[i+1] = attributes.getValue(i/2);
 		}
-		myFB2Reader.startElementHandler(qName, attrs);
+		myXMLReader.startElementHandler(qName, attrs);
 	}
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		myFB2Reader.characterDataHandler(ch, start, length);	
+		myXMLReader.characterDataHandler(ch, start, length);	
 	}
-
 }

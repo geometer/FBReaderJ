@@ -3,6 +3,7 @@ package org.zlibrary.ui.swing.library;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
 
+import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
 import org.zlibrary.options.config.writer.ZLConfigWriterFactory;
 
@@ -28,6 +29,7 @@ public class ZLSwingLibrary extends ZLibrary {
 	}
 
 	void run(String[] args) {
+		new ZLSaxXMLProcessorFactory();
 		ZLConfigReaderFactory.createConfigReader(configDirectory()).read();
 
 		// TODO: read from data/application.xml

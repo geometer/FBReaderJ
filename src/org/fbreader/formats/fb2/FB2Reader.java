@@ -260,9 +260,7 @@ public class FB2Reader extends ZLXMLReader {
 		}
 	}
 	
-	public BookModel read(String fileName) {
-		readFile(fileName);
-		return myModelReader.getModel();
+	public BookModel readBook(String fileName) {
+		return read(fileName) ? myModelReader.getModel() : null;
 	}
-	
 }

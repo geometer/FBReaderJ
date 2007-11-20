@@ -1,11 +1,7 @@
 package org.zlibrary.core.xml;
 
-import org.zlibrary.core.xml.sax.ZLSaxXMLProcessor;
+import java.io.InputStream;
 
-public abstract class ZLXMLProcessor {
-	public static ZLXMLProcessor createXMLProcessor() {
-		return new ZLSaxXMLProcessor();
-	}
-	
-	public abstract void read(ZLXMLReader reader, String fileName);
+public interface ZLXMLProcessor {
+	boolean read(ZLXMLReader reader, InputStream stream);
 }
