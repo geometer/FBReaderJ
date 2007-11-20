@@ -28,7 +28,7 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	}
 
 	public int lineSpace() {
-		return 10;
+		return 1;
 	}
 
 	public int verticalShift() {

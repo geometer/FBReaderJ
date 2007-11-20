@@ -108,7 +108,13 @@ public class ZLTextViewImpl extends ZLTextView {
 
 		ZLTextModel model = myModel.getBookModel();
 		int paragraphs = model.getParagraphsNumber();
-		int h = 0;
+		if (paragraphs > 0) {
+			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(model, 0);
+			ZLTextWordCursor start = new ZLTextWordCursor();
+			start.setCursor(firstParagraph);
+			buildInfos(start);
+		}
+/*		int h = 0;
 		int dh = context.getStringHeight();
 		for (int i = 0; i < paragraphs; i++) {
 			ZLTextParagraphCursor cursor = ZLTextParagraphCursor.getCursor(model, i);
@@ -122,7 +128,27 @@ public class ZLTextViewImpl extends ZLTextView {
 				}	
 			}
 			h += dh;	
-		}
+		}*/
+		int h = 0;
+
+		for (ZLTextLineInfo info : myLineInfos) {
+			int w = 0;
+			for (ZLTextWordCursor cursor = info.RealStart; !cursor.equalWordNumber(info.End) && !cursor.isEndOfParagraph(); cursor.nextWord()) {
+				ZLTextElement element = cursor.getElement();
+				if (element instanceof ZLTextWord) {
+					String text = ((ZLTextWord) element).Data;
+					int dw = context.getStringWidth(text);
+					context.drawString(w, h, text);
+					w += dw;
+				} else if (element instanceof ZLTextHSpaceElement) {
+					String text = " "; 
+					int dw = context.getStringWidth(text);
+					context.drawString(w, h, text);
+					w += dw;
+				}
+			}
+			h += info.Height;
+		}	
 	}
 
 	private ZLTextWordCursor buildInfos(ZLTextWordCursor start) {
@@ -131,9 +157,9 @@ public class ZLTextViewImpl extends ZLTextView {
 		int textAreaHeight = myStyle.textAreaHeight();
 		int counter = 0;
 		do {
-			ZLTextWordCursor paragraphEnd = cursor;
+			ZLTextWordCursor paragraphEnd = new ZLTextWordCursor(cursor);
 		       	paragraphEnd.moveToParagraphEnd();
-			ZLTextWordCursor paragraphStart = cursor;
+			ZLTextWordCursor paragraphStart = new ZLTextWordCursor(cursor);
 		       	paragraphStart.moveToParagraphStart();
 		
 		//	myStyle.reset();
@@ -206,7 +232,14 @@ public class ZLTextViewImpl extends ZLTextView {
 			if (element instanceof ZLTextWord) {
 				wordOccurred = true;
 				isVisible = true;
-			} 			
+			} else if (element instanceof ZLTextHSpaceElement) {
+				if (wordOccurred) {
+					wordOccurred = false;
+					internalSpaceCounter++;
+					lastSpaceWidth = myStyle.getPaintContext().getSpaceWidth();
+					newWidth += lastSpaceWidth;
+				}
+			}			
 			if ((newWidth > maxWidth) && !info.End.equalWordNumber(start)) {
 				break;
 			}
@@ -230,6 +263,13 @@ public class ZLTextViewImpl extends ZLTextView {
 			}	
 		} while (!current.equalWordNumber(end));
 
+		if (!current.equalWordNumber(end)) {
+			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber());
+			if (element instanceof ZLTextWord) { 
+				newWidth -= myStyle.elementWidth(element, current.getCharNumber());
+			}
+		}
+		
 		if (removeLastSpace) {
 			info.Width -= lastSpaceWidth;
 			info.SpaceCounter--;
