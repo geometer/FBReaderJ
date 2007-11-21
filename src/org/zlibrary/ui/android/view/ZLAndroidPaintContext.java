@@ -57,7 +57,7 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 	public int getStringWidth(String string/*, int len*/) {
 		float[] widths = new float[string.length()];
 		myPaint.getTextWidths(string, 0, string.length(), widths);
-		float sum = 0;
+		float sum = 0.5f;
 		for (int i = 0; i < widths.length; ++i) {
 			sum += widths[i];
 		}
@@ -67,12 +67,10 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 		return myPaint.getTextWidths(" ", 0, 1, new float[1]);
 	}
 	public int getStringHeight() {
-		// TODO: implement
-		return 20;
+		return (int)(myPaint.getTextSize() + 0.5f);
 	}
 	public int getDescent() {
-		// TODO: implement
-		return 0;
+		return (int)(myPaint.descent() + 0.5f);
 	}
 	public void drawString(int x, int y, String string/*, int len*/) {
 		myCanvas.drawText(string, 0, string.length(), x, y, myPaint);
