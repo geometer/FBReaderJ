@@ -36,10 +36,18 @@ public class ZLTextViewImpl extends ZLTextView {
 			myContext.setFont(myStyle.fontFamily(), myStyle.fontSize(), myStyle.bold(), myStyle.italic());
 		}
 
-/*		public void applyControl(ZLTextControlElement control) {
-		}
+		public void applyControl(ZLTextControlElement control) {
+/*			if (control.isStart()) {
+				ZLTextStyleDecoration decoration = new ZLTextStyleDecoration(control.getEntry());
+				setStyle(decoration.createDecoratedStyle(myStyle));
+			} else {
+				if (myStyle.isDecorated()) {
+					setStyle(((ZLTextDecoratedStyle) myStyle).base());
+				}
+			}
+*/		}
 
-*/
+
 		public ZLPaintContext getPaintContext() {
 			return myContext;
 		}
@@ -146,7 +154,7 @@ public class ZLTextViewImpl extends ZLTextView {
 					w += dw;
 				}
 			}
-			h += info.Height;
+			h += info.Height + info.Descent;
 		}	
 	}
 
