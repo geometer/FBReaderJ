@@ -47,8 +47,7 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 		return myGraphics.getFontMetrics().getHeight();
 	}
 	public int getDescent() {
-		// TODO: implement
-		return 0;
+		return myGraphics.getFontMetrics().getDescent();
 	}
 	public void drawString(int x, int y, String string) {
 		myGraphics.drawString(string, x, y);
