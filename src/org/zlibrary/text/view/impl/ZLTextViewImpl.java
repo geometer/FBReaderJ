@@ -130,7 +130,6 @@ public class ZLTextViewImpl extends ZLTextView {
 			h += dh;	
 		}*/
 		int h = 0;
-
 		for (ZLTextLineInfo info : myLineInfos) {
 			int w = 0;
 			for (ZLTextWordCursor cursor = info.RealStart; !cursor.equalWordNumber(info.End) && !cursor.isEndOfParagraph(); cursor.nextWord()) {

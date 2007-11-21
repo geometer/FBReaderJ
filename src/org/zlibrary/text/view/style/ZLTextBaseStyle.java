@@ -8,11 +8,11 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	}
 
 	public int fontSize() {
-		return 12;
+		return 20;
 	}
 	
 	public boolean bold() {
-		return false;
+		return true;
 	}
 
 	public boolean italic() {
