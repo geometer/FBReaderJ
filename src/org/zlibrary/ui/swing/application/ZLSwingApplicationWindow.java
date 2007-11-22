@@ -1,11 +1,15 @@
 package org.zlibrary.ui.swing.application;
 
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
+import org.zlibrary.core.application.menu.Menu;
+import org.zlibrary.core.application.menu.Menubar;
 import org.zlibrary.core.application.toolbar.Item;
 import org.zlibrary.core.application.toolbar.ButtonItem;
 import org.zlibrary.core.view.ZLViewWidget;
@@ -66,6 +70,17 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void initMenu() {
+		for (Menu.Item item : application().getMenubar().items()) {
+			switch (item.getType()) {
+				case ITEM:
+					//System.out.println(((Menubar.PlainItem)item).name());
+					break;
+				case SUBMENU:
+					break;
+				case SEPARATOR:
+					break;
+			}
+		}
 	}
 
 	public void setCaption(String caption) {

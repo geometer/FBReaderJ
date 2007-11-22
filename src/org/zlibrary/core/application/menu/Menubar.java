@@ -9,7 +9,7 @@ public class Menubar extends Menu {
 
 		public  PlainItem() {}
 		public PlainItem(String name, int actionId) {
-			//super(ItemType.ITEM);
+			//super(Type.ITEM);
 			myName = name;
 			myActionId = actionId;
 		}
@@ -22,8 +22,8 @@ public class Menubar extends Menu {
 			return myActionId;
 		}
 		
-		public ItemType type() {
-			return ItemType.ITEM;
+		public Type getType() {
+			return Type.ITEM;
 		}
 	};
 
@@ -37,19 +37,19 @@ public class Menubar extends Menu {
 			return getResource().value();
 		}
 		
-		public ItemType type() {
-			return ItemType.SUBMENU;
+		public Type getType() {
+			return Type.SUBMENU;
 		}
 	};
 	
 	public static class Separator implements Item {
 
 		public Separator() {
-			//super(ItemType.SEPARATOR);
+			//super(Type.SEPARATOR);
 		}
 		
-		public ItemType type() {
-			return ItemType.SEPARATOR;
+		public Type getType() {
+			return Type.SEPARATOR;
 		}
 
 	};

@@ -6,7 +6,18 @@ import java.util.List;
 
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.resources.ZLResourceKey;
+
 public class Menu {
+	public interface Item {
+		public enum Type {
+			ITEM,
+			SUBMENU,
+			SEPARATOR
+		};
+
+		public Type getType();
+	}
+
 	private final List<Item> myItems;
 	private final ZLResource myResource;
 
