@@ -6,6 +6,7 @@ import org.zlibrary.options.util.*;
 import org.zlibrary.text.view.ZLTextStyle;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
+import org.zlibrary.text.model.entry.*;
 
 public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 	public ZLIntegerRangeOption SpaceBeforeOption;	
@@ -18,15 +19,26 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 
 	public ZLDoubleOption LineSpaceOption;	
 
+	public ZLTextFullStyleDecoration(ZLTextControlEntry entry) {
+		super(entry);
+	}
+	
 	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineDelta, int verticalShift, ZLTextAlignmentType alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
+		SpaceBeforeOption = null;
+		SpaceAfterOption = null;
+		LeftIndentOption = null;
+		RightIndentOption = null;
+		FirstLineIndentDeltaOption = null;
+		AlignmentOption = null;
+		LineSpaceOption = null;
 	}
 
 	public boolean isFullDecoration() {
 		return true;
 	}
 
-//	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {
-//		
-//	}
+	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {
+		return new ZLTextFullDecoratedStyle(base, this);
+	}
 }

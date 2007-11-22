@@ -11,4 +11,5 @@ public interface ZLTextStyle {
 	public int verticalShift();
 	public int spaceBefore();
 	public int spaceAfter();
+	public boolean isDecorated();
 }

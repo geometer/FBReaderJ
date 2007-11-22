@@ -14,7 +14,7 @@ import org.fbreader.bookmodel.*;
 import org.fbreader.formats.fb2.*;
 
 import org.zlibrary.text.view.*;
-import org.zlibrary.text.view.style.ZLTextBaseStyle;
+import org.zlibrary.text.view.style.*;
 
 public class ZLTextViewImpl extends ZLTextView {
 	private static class ViewStyle {
@@ -37,15 +37,15 @@ public class ZLTextViewImpl extends ZLTextView {
 		}
 
 		public void applyControl(ZLTextControlElement control) {
-/*			if (control.isStart()) {
-				ZLTextStyleDecoration decoration = new ZLTextStyleDecoration(control.getEntry());
+			if (control.isStart()) {
+				ZLTextFullStyleDecoration decoration = new ZLTextFullStyleDecoration(control.getEntry());
 				setStyle(decoration.createDecoratedStyle(myStyle));
 			} else {
 				if (myStyle.isDecorated()) {
-					setStyle(((ZLTextDecoratedStyle) myStyle).base());
+					setStyle(((ZLTextDecoratedStyle) myStyle).getBase());
 				}
 			}
-*/		}
+		}
 
 
 		public ZLPaintContext getPaintContext() {

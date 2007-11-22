@@ -43,4 +43,7 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		return 0;
 	}
 
+	public boolean isDecorated() {
+		return false;
+	}
 }
