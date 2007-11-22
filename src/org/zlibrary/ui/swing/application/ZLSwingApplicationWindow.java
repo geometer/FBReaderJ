@@ -3,6 +3,7 @@ package org.zlibrary.ui.swing.application;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -146,13 +147,12 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void setFullscreen(boolean fullscreen) {
-		// TODO: implement
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.myFrame.setSize(screenSize);
 	}
 	
 	public boolean isFullscreen() {
-		// TODO: implement
-		return true;
-		
+		return (myFrame.getSize() == Toolkit.getDefaultToolkit().getScreenSize());		
 	}
 
 }
