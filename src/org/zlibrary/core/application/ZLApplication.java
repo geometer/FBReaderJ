@@ -81,7 +81,10 @@ public abstract class ZLApplication extends ZLApplicationBase {
 	}
 
 	public Menubar getMenubar() {
-		return this.myMenubar;
+		if (myMenubar == null) {
+			myMenubar = new Menubar();
+		}
+		return myMenubar;
 	}
 
 

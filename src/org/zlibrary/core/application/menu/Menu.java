@@ -7,15 +7,22 @@ import java.util.List;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.resources.ZLResourceKey;
 public class Menu {
-    protected ZLResource myResource;    
-    private List<Item> myItems = new LinkedList<Item>();
+	private final List<Item> myItems;
+	private final ZLResource myResource;
 
-    protected Menu(ZLResource resource) {
-    	this.myResource = resource;
-    }
+	protected Menu(ZLResource resource) {
+		myItems = new LinkedList<Item>();
+		myResource = resource;
+	}
+
+	protected ZLResource getResource() {
+		return myResource;
+	}
 
 	public void addItem(int actionId, ZLResourceKey key) {
-		myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
+		// commented while ZLResource is not implemented
+		//myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
+		myItems.add(new Menubar.PlainItem(key.Name, actionId));
 	}
 	
 	public void addSeparator() {
@@ -23,8 +30,10 @@ public class Menu {
 	}
 	
 	public Menu addSubmenu(ZLResourceKey key) {
-		Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
-	    myItems.add(submenu);
+		// commented while ZLResource is not implemented
+		//Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
+		Menubar.Submenu submenu = new Menubar.Submenu(null);
+		myItems.add(submenu);
 		return submenu;
 	}
 
@@ -32,5 +41,3 @@ public class Menu {
 		return Collections.unmodifiableList(myItems);
 	}
 }
-
-
