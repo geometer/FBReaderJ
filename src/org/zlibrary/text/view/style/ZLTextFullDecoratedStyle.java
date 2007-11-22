@@ -17,7 +17,10 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 	}
 
 	public int fontSize() {
-		return 20;
+//		if (myDecoration.FontSizeDeltaOption != null && getBase() != null) {
+//			return getBase().fontSize() + (int) myDecoration.FontSizeDeltaOption.getValue();
+//		} 
+		return 12;
 	}
 	
 	public boolean bold() {

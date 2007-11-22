@@ -6,7 +6,7 @@ import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 class ZLTextControlElement extends ZLTextElement {
 	private ZLTextParagraphEntry myEntry;
 
-	private ZLTextControlElement(ZLTextParagraphEntry entry) {
+	/*package*/ ZLTextControlElement(ZLTextParagraphEntry entry) {
 		myEntry = entry;
 	}
 

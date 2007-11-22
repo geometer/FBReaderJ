@@ -2,8 +2,7 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
-import org.zlibrary.text.model.entry.ZLTextEntry;
+import org.zlibrary.text.model.entry.*;
 
 import java.util.*;
 
@@ -27,6 +26,8 @@ public abstract class ZLTextParagraphCursor {
 			for (ZLTextParagraphEntry entry : entries) {
 				if (entry instanceof ZLTextEntry) {
 					processTextEntry((ZLTextEntry) entry);
+				} else if (entry instanceof ZLTextControlEntry) {
+					myElements.add(new ZLTextControlElement(entry));
 				}
 			}
 		}

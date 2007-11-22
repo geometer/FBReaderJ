@@ -98,6 +98,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private BookModel myModel;
+//	private ZLTextPlainModel myModel;
 	private ViewStyle myStyle;
 	private List<ZLTextLineInfo> myLineInfos;
 
@@ -108,13 +109,33 @@ public class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void setModel(String fileName) {
-		myModel = new FB2Reader().readBook(fileName);
+		myModel = new BookModel();
+		ZLModelFactory factory = new ZLModelFactory();
+		ZLTextPlainModel model = myModel.getBookModel();
+		ZLTextParagraph paragraph = factory.createParagraph();
+		paragraph.addEntry(factory.createTextEntry("default style"));
+		paragraph.addEntry(factory.createControlEntry((byte) 42, true));
+		paragraph.addEntry(factory.createTextEntry(" bold "));
+		paragraph.addEntry(factory.createControlEntry((byte) 42, false));
+		paragraph.addEntry(factory.createTextEntry("default style again"));
+		paragraph.addEntry(factory.createControlEntry((byte) 42, true));
+		paragraph.addEntry(factory.createTextEntry(" bold once more "));
+		paragraph.addEntry(factory.createControlEntry((byte) 42, false));
+		paragraph.addEntry(factory.createTextEntry("default style once more"));
+		model.addParagraphInternal(paragraph);
+/*		model.addText("default style");
+		model.addControl((byte) 42, true);
+		model.addText("bold");
+		model.addControl((byte) 42, false);
+		model.addText("default again");*/
+//		myModel = new FB2Reader().readBook(fileName);
 	}
 
 	public void paint() {
 		ZLPaintContext context = getContext();
 
 		ZLTextModel model = myModel.getBookModel();
+//		ZLTextModel model = myModel;
 		int paragraphs = model.getParagraphsNumber();
 		if (paragraphs > 0) {
 			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(model, 0);
@@ -137,7 +158,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			}
 			h += dh;	
 		}*/
-		int h = 0;
+		int h = 100;
 		for (ZLTextLineInfo info : myLineInfos) {
 			int w = 0;
 			for (ZLTextWordCursor cursor = info.RealStart; !cursor.equalWordNumber(info.End) && !cursor.isEndOfParagraph(); cursor.nextWord()) {
@@ -152,6 +173,8 @@ public class ZLTextViewImpl extends ZLTextView {
 					int dw = context.getStringWidth(text);
 					context.drawString(w, h, text);
 					w += dw;
+				} else if (element instanceof ZLTextControlElement) {
+					myStyle.applyControl((ZLTextControlElement) element);			
 				}
 			}
 			h += info.Height + info.Descent;
