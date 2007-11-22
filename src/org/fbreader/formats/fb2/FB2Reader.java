@@ -2,7 +2,7 @@ package org.fbreader.formats.fb2;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.BookReader;
-import org.fbreader.bookmodel.ZLTextKind;
+import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.text.model.ZLTextParagraph;
 
@@ -27,7 +27,7 @@ public class FB2Reader extends ZLXMLReader {
 	}
 	
 	private byte getKind(String s) {
-		return (byte) ZLTextKind.valueOf(s.toUpperCase()).ordinal();
+		return (byte) FBTextKind.valueOf(s.toUpperCase()).Index;
 	}
 	
 	private String reference(String[] attributes) {
@@ -166,12 +166,12 @@ public class FB2Reader extends ZLXMLReader {
 				break;
 			
 			case V:
-				myModelReader.pushKind((byte) ZLTextKind.VERSE.ordinal());
+				myModelReader.pushKind((byte) FBTextKind.VERSE.Index);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 				
 			case TEXT_AUTHOR:
-				myModelReader.pushKind((byte) ZLTextKind.AUTHOR.ordinal());
+				myModelReader.pushKind((byte) FBTextKind.AUTHOR.Index);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 				
@@ -196,7 +196,7 @@ public class FB2Reader extends ZLXMLReader {
 				break;	
 			
 			case STANZA:
-				myModelReader.pushKind((byte) ZLTextKind.STANZA.ordinal());
+				myModelReader.pushKind((byte) FBTextKind.STANZA.Index);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
 				myModelReader.endParagraph();
 				break;
@@ -214,17 +214,17 @@ public class FB2Reader extends ZLXMLReader {
 				if (myBodyCounter == 0) {
 					myModelReader.setMainTextModel();
 				}
-				myModelReader.pushKind((byte) ZLTextKind.ANNOTATION.ordinal());
+				myModelReader.pushKind((byte) FBTextKind.ANNOTATION.Index);
 				break;
 			
 			case TITLE:
 				if (myInsidePoem) {
-					myModelReader.pushKind((byte) ZLTextKind.POEM_TITLE.ordinal());
+					myModelReader.pushKind((byte) FBTextKind.POEM_TITLE.Index);
 				} else if (mySectionDepth == 0) {
 					myModelReader.insertEndOfSectionParagraph();
 					myModelReader.pushKind((byte) tag.ordinal());
 				} else {
-					myModelReader.pushKind((byte) ZLTextKind.SECTION_TITLE.ordinal());
+					myModelReader.pushKind((byte) FBTextKind.SECTION_TITLE.Index);
 					myInsideTitle = true;
 					myModelReader.enterTitle();
 				}
@@ -236,21 +236,21 @@ public class FB2Reader extends ZLXMLReader {
 					myModelReader.setMainTextModel();
 					myReadMainText = true;
 				}
-				myModelReader.pushKind((byte) ZLTextKind.REGULAR.ordinal());
+				myModelReader.pushKind((byte) FBTextKind.REGULAR.Index);
 				break;
 			
 			case A:
 				String ref = reference(attributes);
 				if (ref != "") {
 					if (ref.charAt(0) == '#') {
-						myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
+						myHyperlinkType = (byte) FBTextKind.FOOTNOTE.Index;
 						ref = ref.substring(1);
 					} else {
-						myHyperlinkType = (byte) ZLTextKind.EXTERNAL_HYPERLINK.ordinal();
+						myHyperlinkType = (byte) FBTextKind.EXTERNAL_HYPERLINK.Index;
 					}
 					myModelReader.addHyperlinkControl(myHyperlinkType, ref);
 				} else {
-					myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
+					myHyperlinkType = (byte) FBTextKind.FOOTNOTE.Index;
 					myModelReader.addControl(myHyperlinkType, true);
 				}
 				break;

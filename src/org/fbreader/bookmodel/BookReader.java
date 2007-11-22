@@ -165,7 +165,7 @@ public class BookReader {
 				contentsModel.addText("...");
 			}
 			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
-			contentsModel.addControl((byte)ZLTextKind.CONTENTS_TABLE_ENTRY.ordinal(), true);
+			contentsModel.addControl((byte)FBTextKind.CONTENTS_TABLE_ENTRY.Index, true);
 			contentsModel.setReference(para, referenceNumber);
 			myTOCStack.push(para);
 			myLastTOCParagraphIsEmpty = true;
