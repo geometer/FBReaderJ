@@ -27,7 +27,7 @@ public abstract class ZLTextParagraphCursor {
 				if (entry instanceof ZLTextEntry) {
 					processTextEntry((ZLTextEntry) entry);
 				} else if (entry instanceof ZLTextControlEntry) {
-					myElements.add(new ZLTextControlElement(entry));
+					myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
 				}
 			}
 		}

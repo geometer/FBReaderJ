@@ -1,12 +1,11 @@
 package org.zlibrary.text.view.impl;
 
 import org.zlibrary.text.model.entry.ZLTextControlEntry;
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 class ZLTextControlElement extends ZLTextElement {
-	private ZLTextParagraphEntry myEntry;
+	private final ZLTextControlEntry myEntry;
 
-	/*package*/ ZLTextControlElement(ZLTextParagraphEntry entry) {
+	/*package*/ ZLTextControlElement(ZLTextControlEntry entry) {
 		myEntry = entry;
 	}
 
@@ -15,7 +14,7 @@ class ZLTextControlElement extends ZLTextElement {
 	}*/
 
 	public ZLTextControlEntry getEntry() {
-		return (ZLTextControlEntry)myEntry;
+		return myEntry;
 	}
 
 /*	public byte getTextKind() {
@@ -23,6 +22,6 @@ class ZLTextControlElement extends ZLTextElement {
 	}*/
 
 	public boolean isStart() {
-		return getEntry().isStart();
+		return myEntry.isStart();
 	}
 }
