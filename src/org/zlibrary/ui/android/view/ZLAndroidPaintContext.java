@@ -2,6 +2,7 @@ package org.zlibrary.ui.android.view;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import org.zlibrary.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
@@ -15,6 +16,7 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 
 	ZLAndroidPaintContext() {
 		myPaint = new Paint();
+		myPaint.setLinearText(true);
 		myPaint.setAntiAlias(true);
 	}
 
@@ -36,7 +38,13 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void setFont(String family, int size, boolean bold, boolean italic) {
-		// TODO: implement
+		// TODO: optimize
+		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
+		if (family == null) {
+			family = "Georgia";
+		}
+		myPaint.setTypeface(Typeface.create(family, style));
+		myPaint.setTextSize(size * 0.7f);
 	}
 
 	public void setColor(ZLColor color, LineStyle style) {
