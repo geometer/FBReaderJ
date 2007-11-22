@@ -8,10 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
@@ -29,6 +32,7 @@ import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private JFrame myFrame;
 	private JToolBar myToolbar;
+	private Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
 
 	final private ZLIntegerRangeOption myXOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
@@ -112,7 +116,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void addToolbarItem(Item item) {
-		// TODO: implement
 		if (item.getType() == Item.Type.BUTTON) {
 			ButtonItem buttonItem = (ButtonItem)item;
 			String iconFileName = "icons/toolbar/" + buttonItem.getIconName() + ".png";
@@ -121,6 +124,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			Action action = new MyButtonAction(buttonItem);
 			action.putValue(Action.SMALL_ICON, icon); 
 			myToolbar.add(action);
+			myItemActionMap.put(item, action);
 		} else {
 			myToolbar.addSeparator();
 		}
@@ -139,10 +143,15 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void setToolbarItemState(Item item, boolean visible, boolean enabled) {
+		AbstractAction action = (AbstractAction)myItemActionMap.get(item);
+		action.setEnabled(enabled);
+		//setVisible()???		
 		// TODO: implement
+		
 	}
 
 	public void setToggleButtonState(ButtonItem item) {
+		
 		// TODO: implement
 	}
 
