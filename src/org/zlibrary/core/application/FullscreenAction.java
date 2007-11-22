@@ -10,10 +10,10 @@ public class FullscreenAction extends Action {
 	}
 	
 	public boolean isVisible() {
-		return true;//myIsToggle || !myApplication.isFullscreen();
+		return myIsToggle || !myApplication.isFullscreen();
 	}
 	
 	public void run() {
-		//myApplication.setFullscreen(!myApplication.isFullscreen());
+		myApplication.setFullscreen(!myApplication.isFullscreen());
 	}
 }
