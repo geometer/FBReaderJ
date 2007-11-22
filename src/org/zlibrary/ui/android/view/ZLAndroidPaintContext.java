@@ -44,7 +44,7 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 			family = "Georgia";
 		}
 		myPaint.setTypeface(Typeface.create(family, style));
-		myPaint.setTextSize(size * 0.7f);
+		myPaint.setTextSize(size);
 	}
 
 	public void setColor(ZLColor color, LineStyle style) {
