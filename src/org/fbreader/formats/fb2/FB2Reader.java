@@ -56,78 +56,78 @@ public class FB2Reader extends ZLXMLReader {
 			return;
 		}		
 		switch (tag) {
-		case P:
-			myModelReader.endParagraph();		
-			break;
+			case P:
+				myModelReader.endParagraph();		
+				break;
+				
+			case SUB:
+			case SUP:
+			case CODE:
+			case EMPHASIS:
+			case STRONG:
+			case STRIKETHROUGH:
+				myModelReader.addControl(getKind(tagName), false);
+				break;
 			
-		case SUB:
-		case SUP:
-		case CODE:
-		case EMPHASIS:
-		case STRONG:
-		case STRIKETHROUGH:
-			myModelReader.addControl(getKind(tagName), false);
-			break;
-		
-		case V:
-		case SUBTITLE:
-		case TEXT_AUTHOR:
-		case DATE:
-			myModelReader.popKind();
-			myModelReader.endParagraph();
-			break;	
-		
-		case CITE:
-		case EPIGRAPH:
-			myModelReader.popKind();
-			break;	
-		
-		case POEM:
-			myInsidePoem = false;
-			break;
-		
-		case STANZA:
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
-			myModelReader.endParagraph();
-			myModelReader.popKind();
-			break;
+			case V:
+			case SUBTITLE:
+			case TEXT_AUTHOR:
+			case DATE:
+				myModelReader.popKind();
+				myModelReader.endParagraph();
+				break;	
 			
-		case SECTION:
-			if (myReadMainText) {
-				myModelReader.endContentsParagraph();
-				--mySectionDepth;
-				mySectionStarted = false;
-			} else {
+			case CITE:
+			case EPIGRAPH:
+				myModelReader.popKind();
+				break;	
+			
+			case POEM:
+				myInsidePoem = false;
+				break;
+			
+			case STANZA:
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
+				myModelReader.endParagraph();
+				myModelReader.popKind();
+				break;
+				
+			case SECTION:
+				if (myReadMainText) {
+					myModelReader.endContentsParagraph();
+					--mySectionDepth;
+					mySectionStarted = false;
+				} else {
+					myModelReader.unsetCurrentTextModel();
+				}
+				break;
+			
+			case ANNOTATION:
+				myModelReader.popKind();
+				if (myBodyCounter == 0) {
+					myModelReader.insertEndOfSectionParagraph();
+					myModelReader.unsetCurrentTextModel();
+				}
+				break;
+			
+			case TITLE:
+				myModelReader.popKind();
+				myModelReader.exitTitle();
+				myInsideTitle = false;
+				break;
+				
+			case BODY:
+				myModelReader.popKind();
+				myReadMainText = false;
 				myModelReader.unsetCurrentTextModel();
-			}
-			break;
-		
-		case ANNOTATION:
-			myModelReader.popKind();
-			if (myBodyCounter == 0) {
-				myModelReader.insertEndOfSectionParagraph();
-				myModelReader.unsetCurrentTextModel();
-			}
-			break;
-		
-		case TITLE:
-			myModelReader.popKind();
-			myModelReader.exitTitle();
-			myInsideTitle = false;
-			break;
+				break;
 			
-		case BODY:
-			myModelReader.popKind();
-			myReadMainText = false;
-			myModelReader.unsetCurrentTextModel();
-			break;
-		
-		case A:
-			myModelReader.addControl(myHyperlinkType, false);
-			break;
-			
-		default:
-			break;
+			case A:
+				myModelReader.addControl(myHyperlinkType, false);
+				break;
+				
+			default:
+				break;
 		}		
 	}
 
@@ -147,116 +147,116 @@ public class FB2Reader extends ZLXMLReader {
 			return;
 		}
 		switch (tag) {
-		case P:
-			if (mySectionStarted) {
-				mySectionStarted = false;
-			} else if (myInsideTitle) {
-				myModelReader.addContentsData(" ");
-			}
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-			break;
-		
-		case SUB:
-		case SUP:
-		case CODE:
-		case EMPHASIS:
-		case STRONG:
-		case STRIKETHROUGH:
-			myModelReader.addControl(getKind(tagName), true);		
-			break;
-		
-		case V:
-			myModelReader.pushKind((byte) ZLTextKind.VERSE.ordinal());
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-			break;
-			
-		case TEXT_AUTHOR:
-			myModelReader.pushKind((byte) ZLTextKind.AUTHOR.ordinal());
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-			break;
-			
-		case SUBTITLE:
-		case DATE:
-			myModelReader.pushKind(getKind(tagName));
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-			break;
-		
-		case EMPTY_LINE:
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
-			myModelReader.endParagraph();
-			break;
-		
-		case CITE:
-		case EPIGRAPH:
-			myModelReader.pushKind(getKind(tagName));
-			break;
-		
-		case POEM:
-			myInsidePoem = true;
-			break;	
-		
-		case STANZA:
-			myModelReader.pushKind((byte) ZLTextKind.STANZA.ordinal());
-			myModelReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
-			myModelReader.endParagraph();
-			break;
-			
-		case SECTION:
-			if (myReadMainText) {
-				myModelReader.insertEndOfSectionParagraph();
-				++mySectionDepth;
-				myModelReader.beginContentsParagraph();
-				mySectionStarted  = true;
-			}
-			break;
-		
-		case ANNOTATION:
-			if (myBodyCounter == 0) {
-				myModelReader.setMainTextModel();
-			}
-			myModelReader.pushKind((byte) ZLTextKind.ANNOTATION.ordinal());
-			break;
-		
-		case TITLE:
-			if (myInsidePoem) {
-				myModelReader.pushKind((byte) ZLTextKind.POEM_TITLE.ordinal());
-			} else if (mySectionDepth == 0) {
-				myModelReader.insertEndOfSectionParagraph();
-				myModelReader.pushKind((byte) tag.ordinal());
-			} else {
-				myModelReader.pushKind((byte) ZLTextKind.SECTION_TITLE.ordinal());
-				myInsideTitle = true;
-				myModelReader.enterTitle();
-			}
-			break;
-			
-		case BODY:
-			++myBodyCounter;
-			if ((myBodyCounter == 1) || (ZLXMLReader.attributeValue(attributes, "name") == null)) {
-				myModelReader.setMainTextModel();
-				myReadMainText = true;
-			}
-			myModelReader.pushKind((byte) ZLTextKind.REGULAR.ordinal());
-			break;
-		
-		case A:
-			String ref = reference(attributes);
-			if (ref != "") {
-				if (ref.charAt(0) == '#') {
-					myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
-					ref = ref.substring(1);
-				} else {
-					myHyperlinkType = (byte) ZLTextKind.EXTERNAL_HYPERLINK.ordinal();
+			case P:
+				if (mySectionStarted) {
+					mySectionStarted = false;
+				} else if (myInsideTitle) {
+					myModelReader.addContentsData(" ");
 				}
-				myModelReader.addHyperlinkControl(myHyperlinkType, ref);
-			} else {
-				myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
-				myModelReader.addControl(myHyperlinkType, true);
-			}
-			break;
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				break;
 			
-		default:
-			break;
+			case SUB:
+			case SUP:
+			case CODE:
+			case EMPHASIS:
+			case STRONG:
+			case STRIKETHROUGH:
+				myModelReader.addControl(getKind(tagName), true);		
+				break;
+			
+			case V:
+				myModelReader.pushKind((byte) ZLTextKind.VERSE.ordinal());
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				break;
+				
+			case TEXT_AUTHOR:
+				myModelReader.pushKind((byte) ZLTextKind.AUTHOR.ordinal());
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				break;
+				
+			case SUBTITLE:
+			case DATE:
+				myModelReader.pushKind(getKind(tagName));
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				break;
+			
+			case EMPTY_LINE:
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
+				myModelReader.endParagraph();
+				break;
+			
+			case CITE:
+			case EPIGRAPH:
+				myModelReader.pushKind(getKind(tagName));
+				break;
+			
+			case POEM:
+				myInsidePoem = true;
+				break;	
+			
+			case STANZA:
+				myModelReader.pushKind((byte) ZLTextKind.STANZA.ordinal());
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
+				myModelReader.endParagraph();
+				break;
+				
+			case SECTION:
+				if (myReadMainText) {
+					myModelReader.insertEndOfSectionParagraph();
+					++mySectionDepth;
+					myModelReader.beginContentsParagraph();
+					mySectionStarted  = true;
+				}
+				break;
+			
+			case ANNOTATION:
+				if (myBodyCounter == 0) {
+					myModelReader.setMainTextModel();
+				}
+				myModelReader.pushKind((byte) ZLTextKind.ANNOTATION.ordinal());
+				break;
+			
+			case TITLE:
+				if (myInsidePoem) {
+					myModelReader.pushKind((byte) ZLTextKind.POEM_TITLE.ordinal());
+				} else if (mySectionDepth == 0) {
+					myModelReader.insertEndOfSectionParagraph();
+					myModelReader.pushKind((byte) tag.ordinal());
+				} else {
+					myModelReader.pushKind((byte) ZLTextKind.SECTION_TITLE.ordinal());
+					myInsideTitle = true;
+					myModelReader.enterTitle();
+				}
+				break;
+				
+			case BODY:
+				++myBodyCounter;
+				if ((myBodyCounter == 1) || (ZLXMLReader.attributeValue(attributes, "name") == null)) {
+					myModelReader.setMainTextModel();
+					myReadMainText = true;
+				}
+				myModelReader.pushKind((byte) ZLTextKind.REGULAR.ordinal());
+				break;
+			
+			case A:
+				String ref = reference(attributes);
+				if (ref != "") {
+					if (ref.charAt(0) == '#') {
+						myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
+						ref = ref.substring(1);
+					} else {
+						myHyperlinkType = (byte) ZLTextKind.EXTERNAL_HYPERLINK.ordinal();
+					}
+					myModelReader.addHyperlinkControl(myHyperlinkType, ref);
+				} else {
+					myHyperlinkType = (byte) ZLTextKind.FOOTNOTE.ordinal();
+					myModelReader.addControl(myHyperlinkType, true);
+				}
+				break;
+				
+			default:
+				break;
 		}
 	}
 	
