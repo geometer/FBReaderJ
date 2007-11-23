@@ -9,8 +9,8 @@ import org.zlibrary.text.model.entry.*;
 
 public class ZLTextStyleDecoration {
 	public static final String STYLE = "Style";
-	public static final byte BOLD = 42;
-	public static final byte LARGE_FONT_SIZE = 22;
+	public static final byte BOLD = 28;
+	public static final byte LARGE_FONT_SIZE = 31;
 
 	public ZLStringOption FontFamilyOption;
 	public ZLIntegerRangeOption FontSizeDeltaOption;

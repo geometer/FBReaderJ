@@ -114,13 +114,13 @@ public class ZLTextViewImpl extends ZLTextView {
 		ZLTextPlainModel model = myModel.getBookModel();
 		ZLTextParagraph paragraph = factory.createParagraph();
 		paragraph.addEntry(factory.createTextEntry("default style"));
-		paragraph.addEntry(factory.createControlEntry((byte) 42, true));
+		paragraph.addEntry(factory.createControlEntry((byte) 28, true));
 		paragraph.addEntry(factory.createTextEntry(" bold "));
-		paragraph.addEntry(factory.createControlEntry((byte) 42, false));
+		paragraph.addEntry(factory.createControlEntry((byte) 28, false));
 		paragraph.addEntry(factory.createTextEntry("default style again"));
-		paragraph.addEntry(factory.createControlEntry((byte) 22, true));
+		paragraph.addEntry(factory.createControlEntry((byte) 31, true));
 		paragraph.addEntry(factory.createTextEntry(" large font now "));
-		paragraph.addEntry(factory.createControlEntry((byte) 22, false));
+		paragraph.addEntry(factory.createControlEntry((byte) 31, false));
 		paragraph.addEntry(factory.createTextEntry("default style once more"));
 		model.addParagraphInternal(paragraph);
 /*		model.addText("default style");
@@ -303,6 +303,12 @@ public class ZLTextViewImpl extends ZLTextView {
 			if (element instanceof ZLTextWord) { 
 				newWidth -= myStyle.elementWidth(element, current.getCharNumber());
 			}
+			info.IsVisible = true;
+			info.Width = newWidth;
+			info.Height = Math.max(info.Height, newHeight);
+			info.Descent = Math.max(info.Descent, newDescent);
+			info.End = current;
+			info.SpaceCounter = internalSpaceCounter;
 		}
 		
 		if (removeLastSpace) {
