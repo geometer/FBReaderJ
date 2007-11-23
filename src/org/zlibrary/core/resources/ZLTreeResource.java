@@ -60,8 +60,7 @@ public class ZLTreeResource extends ZLResource {
 
 	@Override
 	public ZLResource getResource(String key) {
-		return myChildren.containsKey(key) ? myChildren.get(key) : 
-			ZLMissingResource.instance();
+		return ((myChildren != null) && myChildren.containsKey(key)) ? myChildren.get(key) : ZLMissingResource.instance();
 	}
 	
 	
