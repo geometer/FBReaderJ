@@ -1,11 +1,11 @@
 package org.zlibrary.core.resources;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 import java.io.File;
 
-import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.xml.ZLXMLReader;
 
@@ -14,14 +14,15 @@ class ZLTreeResource extends ZLResource {
 
 	private boolean myHasValue;
 	private	String myValue;
-	private	Map<String, ZLTreeResource> myChildren = new HashMap<String, ZLTreeResource>();
+	private	Map<String, ZLTreeResource> myChildren;
 	
 	public static void buildTree() {
 		if (ourRoot == null) {
 			ourRoot = new ZLTreeResource("");
 			loadData("en");
-			String language = ZLibrary.Language();
-			if (language != "en") {
+			Locale locale = Locale.getDefault();
+			String language = locale.getLanguage();
+			if (!language.equals("en")) {
 				loadData(language);
 			}
 		}
@@ -60,7 +61,8 @@ class ZLTreeResource extends ZLResource {
 
 	@Override
 	public ZLResource getResource(String key) {
-		return myChildren.containsKey(key) ? myChildren.get(key) : ZLMissingResource.instance();
+		return (myChildren != null && myChildren.containsKey(key)) ? 
+				myChildren.get(key) : ZLMissingResource.instance();
 	}
 		
 	private static class ZLResourceTreeReader extends ZLXMLReader {
@@ -88,14 +90,21 @@ class ZLTreeResource extends ZLResource {
 				String name = attributeValue(attributes, "name");
 				if (name != null) {
 					String value = attributeValue(attributes, "value");
-					ZLTreeResource node = myStack.peek().myChildren.get(name);
+					Map<String, ZLTreeResource> children = myStack.peek().myChildren;
+					ZLTreeResource node;
+					if (children == null) {
+						node = null;
+						children = new HashMap<String, ZLTreeResource>();
+					} else {
+						node = children.get(name);
+					}
 					if (node == null) {
 						if (value != null) {
 							node = new ZLTreeResource(name, value);
 						} else {
 							node = new ZLTreeResource(name);
 						}
-						myStack.peek().myChildren.put(name, node);
+						children.put(name, node);
 					} else {
 						if (value != null) {
 							node.setValue(value);

@@ -6,13 +6,6 @@ public abstract class ZLibrary {
 	public static ZLibrary getInstance() {
 		return ourImplementation;
 	}
-
-	public static String Language() {
-		//TODO
-		return ourLanguage;
-	}
-	
-	private static String ourLanguage;
 	
 	private static ZLibrary ourImplementation;
 
