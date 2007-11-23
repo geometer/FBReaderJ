@@ -222,7 +222,7 @@ public class FB2Reader extends ZLXMLReader {
 					myModelReader.pushKind((byte) FBTextKind.POEM_TITLE.Index);
 				} else if (mySectionDepth == 0) {
 					myModelReader.insertEndOfSectionParagraph();
-					myModelReader.pushKind((byte) tag.ordinal());
+					myModelReader.pushKind((byte) FBTextKind.TITLE.Index);
 				} else {
 					myModelReader.pushKind((byte) FBTextKind.SECTION_TITLE.Index);
 					myInsideTitle = true;
