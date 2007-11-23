@@ -4,7 +4,11 @@ abstract public class ZLResource {
 	private String myName;
 
 	public static ZLResource resource(String key) {
-        return null;//todo
+		ZLTreeResource.buildTree();
+		if (ZLTreeResource.ourRoot == null) {
+			return ZLMissingResource.instance();
+		}
+		return ZLTreeResource.ourRoot.getResource(key);
 	}
     
 	public static ZLResource resource(ZLResourceKey key) {
@@ -18,6 +22,7 @@ abstract public class ZLResource {
 	public String name() {
 		return myName;
 	}
+	
 	abstract public boolean hasValue();
 	
 	abstract public String value();
@@ -28,12 +33,3 @@ abstract public class ZLResource {
 	
 	abstract public ZLResource getResource(String key);
 }
-/*
-const ZLResource &ZLResource::resource(const std::string &key) {
-	ZLTreeResource::buildTree();
-	if (ZLTreeResource::ourRoot.isNull()) {
-		return ZLMissingResource::instance();
-	}
-	return (*ZLTreeResource::ourRoot)[key];
-}
-*/

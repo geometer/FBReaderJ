@@ -1,74 +1,113 @@
 package org.zlibrary.core.resources;
 
 import java.util.Map;
+import java.util.Stack;
+import java.io.File;
 
-public class ZLTreeResource {
+import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.application.ZLApplication;
+import org.zlibrary.core.xml.ZLXMLReader;
+
+public class ZLTreeResource extends ZLResource {
 	public static ZLTreeResource ourRoot;
-
-	/*public static void buildTree() {
-		
-	}
-	public static void loadData(String language) {
-		String filePath = ZLibrary.FileNameDelimiter + "resources" + ZLibrary.FileNameDelimiter + language + ".xml";
-		new ZLResourceTreeReader(ourRoot).readDocument(ZLApplication.ZLibraryDirectory() + filePath);
-		new ZLResourceTreeReader(ourRoot).readDocument(ZLApplication.ApplicationDirectory() + filePath);
-
-	}
-
-	private ZLTreeResource(String name);
-	private	ZLTreeResource(String name, String value);
-	private	void setValue(String value);
-	private	boolean hasValue();
-	private	String value();
-
-	public ZLResource &operator [] (String key);
 
 	private boolean myHasValue;
 	private	String myValue;
-	private	Map<String, ZLTreeResource> myChildren;*/
-}
-
-/*void ZLTreeResource::loadData(const std::string &language) {
-	std::string filePath = ZLibrary::FileNameDelimiter + "resources" + ZLibrary::FileNameDelimiter + language + ".xml";
-	ZLResourceTreeReader(ourRoot).readDocument(ZLApplication::ZLibraryDirectory() + filePath);
-	ZLResourceTreeReader(ourRoot).readDocument(ZLApplication::ApplicationDirectory() + filePath);
-}
-
-void ZLTreeResource::buildTree() {
-	if (ourRoot.isNull()) {
-		ourRoot = new ZLTreeResource(std::string());
-		loadData("en");
-		const std::string language = ZLibrary::Language();
-		if (language != "en") {
-			loadData(language);
+	private	Map<String, ZLTreeResource> myChildren;
+	
+	public static void buildTree() {
+		if (ourRoot == null) {
+			ourRoot = new ZLTreeResource("");
+			loadData("en");
+			String language = ZLibrary.Language();
+			if (language != "en") {
+				loadData(language);
+			}
 		}
 	}
-}
-
-ZLTreeResource::ZLTreeResource(const std::string &name) : ZLResource(name), myHasValue(false) {
-}
-
-ZLTreeResource::ZLTreeResource(const std::string &name, const std::string &value) : ZLResource(name), myHasValue(true), myValue(value) {
-}
-
-void ZLTreeResource::setValue(const std::string &value) {
-	myHasValue = true;
-	myValue = value;
-}
-
-bool ZLTreeResource::hasValue() const {
-	return myHasValue;
-}
-
-const std::string &ZLTreeResource::value() const {
-	return myHasValue ? myValue : ZLMissingResource::ourValue;
-}
-
-const ZLResource &ZLTreeResource::operator [] (const std::string &key) const {
-	std::map<std::string,shared_ptr<ZLTreeResource> >::const_iterator it = myChildren.find(key);
-	if (it != myChildren.end()) {
-		return *it->second;
-	} else {
-		return ZLMissingResource::instance();
+	
+	public static void loadData(String language) {
+		//?
+		String filePath = File.separatorChar + "resources" + File.separatorChar + language + ".xml";
+		new ZLResourceTreeReader(ourRoot).readDocument(ZLApplication.getZLibraryDirectory() + filePath);
+		new ZLResourceTreeReader(ourRoot).readDocument(ZLApplication.ApplicationDirectory() + filePath);
 	}
-}*/
+
+	private ZLTreeResource(String name) {
+		super(name);
+		myHasValue = false;
+	}
+	
+	private	ZLTreeResource(String name, String value) {
+		super(name);
+		myHasValue = true;
+		myValue = value;
+	}
+	
+	private void setValue(String value) {
+		myHasValue = true;
+		myValue = value;
+	}
+	
+//	was private
+	public boolean hasValue() {
+		return myHasValue;
+	}
+	
+	public String value() {
+		return myHasValue ? myValue : ZLMissingResource.ourValue;
+	}
+
+	@Override
+	public ZLResource getResource(String key) {
+		return myChildren.containsKey(key) ? myChildren.get(key) : 
+			ZLMissingResource.instance();
+	}
+	
+	
+	private static class ZLResourceTreeReader extends ZLXMLReader {
+		private static final String NODE = "node"; 
+		private Stack<ZLTreeResource> myStack = new Stack<ZLTreeResource>();
+		
+		public ZLResourceTreeReader(ZLTreeResource root) {
+			myStack.push(root);
+		}
+		
+		@Override
+		public void endElementHandler(String tag) {
+			if (!myStack.empty() && (NODE.equals(tag))) {
+				myStack.pop();
+			}
+		}
+
+		public void readDocument(String string) {
+			read(string);
+		}
+
+		@Override
+		public void startElementHandler(String tag, String[] attributes) {
+			if (!myStack.empty() && (NODE.equals(tag))) {
+				String name = attributeValue(attributes, "name");
+				if (name != null) {
+					String value = attributeValue(attributes, "value");
+					ZLTreeResource node = myStack.peek().myChildren.get(name);
+					if (node == null) {
+						if (value != null) {
+							node = new ZLTreeResource(name, value);
+						} else {
+							node = new ZLTreeResource(name);
+						}
+						myStack.peek().myChildren.put(name, node);
+					} else {
+						if (value != null) {
+							node.setValue(value);
+						}
+					}
+					myStack.push(node);
+				}
+			}
+		}
+
+	}
+	
+}

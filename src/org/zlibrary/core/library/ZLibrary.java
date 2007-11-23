@@ -7,6 +7,13 @@ public abstract class ZLibrary {
 		return ourImplementation;
 	}
 
+	public static String Language() {
+		//TODO
+		return ourLanguage;
+	}
+	
+	private static String ourLanguage;
+	
 	private static ZLibrary ourImplementation;
 
 	protected ZLibrary() {
