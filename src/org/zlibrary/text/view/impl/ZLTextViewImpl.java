@@ -118,9 +118,9 @@ public class ZLTextViewImpl extends ZLTextView {
 		paragraph.addEntry(factory.createTextEntry(" bold "));
 		paragraph.addEntry(factory.createControlEntry((byte) 42, false));
 		paragraph.addEntry(factory.createTextEntry("default style again"));
-		paragraph.addEntry(factory.createControlEntry((byte) 42, true));
-		paragraph.addEntry(factory.createTextEntry(" bold once more "));
-		paragraph.addEntry(factory.createControlEntry((byte) 42, false));
+		paragraph.addEntry(factory.createControlEntry((byte) 22, true));
+		paragraph.addEntry(factory.createTextEntry(" large font now "));
+		paragraph.addEntry(factory.createControlEntry((byte) 22, false));
 		paragraph.addEntry(factory.createTextEntry("default style once more"));
 		model.addParagraphInternal(paragraph);
 /*		model.addText("default style");
@@ -223,6 +223,9 @@ public class ZLTextViewImpl extends ZLTextView {
 		if (isFirstLine) {
 			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber());
 			while (element instanceof ZLTextControlElement) {
+				if (element instanceof ZLTextControlElement) {
+					myStyle.applyControl((ZLTextControlElement) element);
+				}
 				current.nextWord();
 				if (current.equalWordNumber(end)) {
 					break;
@@ -269,6 +272,8 @@ public class ZLTextViewImpl extends ZLTextView {
 					lastSpaceWidth = myStyle.getPaintContext().getSpaceWidth();
 					newWidth += lastSpaceWidth;
 				}
+			} else if (element instanceof ZLTextControlElement) {
+				myStyle.applyControl((ZLTextControlElement) element);
 			}			
 			if ((newWidth > maxWidth) && !info.End.equalWordNumber(start)) {
 				break;
@@ -287,7 +292,7 @@ public class ZLTextViewImpl extends ZLTextView {
 				info.Height = Math.max(info.Height, newHeight);
 				info.Descent = Math.max(info.Descent, newDescent);
 				info.End = current;
-				storedStyle = myStyle.getTextStyle();
+//				storedStyle = myStyle.getTextStyle();
 				info.SpaceCounter = internalSpaceCounter;
 				removeLastSpace = !wordOccurred && (info.SpaceCounter > 0);
 			}	

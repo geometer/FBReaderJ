@@ -26,7 +26,9 @@ public class ZLTextStyleDecoration {
 	public ZLTextStyleDecoration(ZLTextControlEntry entry) {
 		if (entry.getKind() == BOLD) {
 			BoldOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":bold", ZLBoolean3.B3_TRUE);
+			FontSizeDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":defaultFont", -10, 100, 0);
 		} else if (entry.getKind() == LARGE_FONT_SIZE) {
+			BoldOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":bold", ZLBoolean3.B3_FALSE);
 			FontSizeDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":largeFont", -10, 100, 22);
 		}	
 	}

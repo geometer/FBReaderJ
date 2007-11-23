@@ -18,14 +18,19 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 
 	public int fontSize() {
 //		if (myDecoration.FontSizeDeltaOption != null && getBase() != null) {
-//			return getBase().fontSize() + (int) myDecoration.FontSizeDeltaOption.getValue();
+		return getBase().fontSize() + (int) myDecoration.FontSizeDeltaOption.getValue();
 //		} 
-		return 12;
+//		return 12;
 	}
 	
 	public boolean bold() {
+//		if (myDecoration != null && myDecoration.BoldOption != null) {
 		ZLBoolean3 b = myDecoration.BoldOption.getValue();	
+//			if (b != null) {
 		return (b == ZLBoolean3.B3_UNDEFINED) ? getBase().bold() : (b == ZLBoolean3.B3_TRUE);
+//			}
+//		}
+//		return false;
 	}
 
 	public boolean italic() {
