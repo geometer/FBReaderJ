@@ -1,5 +1,6 @@
 package org.zlibrary.core.resources;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 import java.io.File;
@@ -8,12 +9,12 @@ import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.xml.ZLXMLReader;
 
-public class ZLTreeResource extends ZLResource {
+class ZLTreeResource extends ZLResource {
 	public static ZLTreeResource ourRoot;
 
 	private boolean myHasValue;
 	private	String myValue;
-	private	Map<String, ZLTreeResource> myChildren;
+	private	Map<String, ZLTreeResource> myChildren = new HashMap<String, ZLTreeResource>();
 	
 	public static void buildTree() {
 		if (ourRoot == null) {
@@ -49,7 +50,6 @@ public class ZLTreeResource extends ZLResource {
 		myValue = value;
 	}
 	
-//	was private
 	public boolean hasValue() {
 		return myHasValue;
 	}
@@ -60,10 +60,9 @@ public class ZLTreeResource extends ZLResource {
 
 	@Override
 	public ZLResource getResource(String key) {
-		return ((myChildren != null) && myChildren.containsKey(key)) ? myChildren.get(key) : ZLMissingResource.instance();
+		return myChildren.containsKey(key) ? myChildren.get(key) : ZLMissingResource.instance();
 	}
-	
-	
+		
 	private static class ZLResourceTreeReader extends ZLXMLReader {
 		private static final String NODE = "node"; 
 		private Stack<ZLTreeResource> myStack = new Stack<ZLTreeResource>();
