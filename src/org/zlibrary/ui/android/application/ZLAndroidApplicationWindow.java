@@ -45,4 +45,13 @@ public class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	public void setToggleButtonState(ButtonItem item) {
 		// TODO: implement
 	}
+
+	public void setFullscreen(boolean fullscreen) {
+		// TODO: implement
+	}
+
+	public boolean isFullscreen() {
+		// TODO: implement
+		return false;
+	}
 }
