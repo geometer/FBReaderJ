@@ -144,7 +144,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void setToolbarItemState(Item item, boolean visible, boolean enabled) {
 		AbstractAction action = (AbstractAction)myItemActionMap.get(item);
-		action.setEnabled(enabled);
+		if (action != null) {
+			action.setEnabled(enabled);
+		}
 		//setVisible()???		
 		// TODO: implement
 		
