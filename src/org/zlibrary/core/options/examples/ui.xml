@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="Colors">
+    <option name="Background" value="15982008"/>
+    <option name="SelectedText" value="592364"/>
+    <option name="Text" value="68"/>
+  </group>
+  <group name="Indicator">
+    <option name="ShowTOCMarks" value="true"/>
+  </group>
+  <group name="InfoDialog">
+    <option name="Height" value="322"/>
+    <option name="SelectedTab" value="Common"/>
+    <option name="Width" value="596"/>
+  </group>
+  <group name="OpenFileDialog">
+    <option name="Directory" value="/home/geometer/Books/epub"/>
+  </group>
+  <group name="Options">
+    <option name="Height" value="674"/>
+    <option name="Width" value="749"/>
+    <option name="XPosition" value="84"/>
+    <option name="YPosition" value="17"/>
+  </group>
+  <group name="OptionsDialog">
+    <option name="Height" value="445"/>
+    <option name="SelectedTab" value="Encoding"/>
+    <option name="Width" value="719"/>
+  </group>
+  <group name="Style">
+    <option name="Base:fontFamily" value="Arial"/>
+    <option name="Base:lineSpacing" value="1.300000"/>
+  </group>
+</config>

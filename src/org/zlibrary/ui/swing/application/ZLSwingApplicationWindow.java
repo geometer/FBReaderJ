@@ -18,8 +18,8 @@ import org.zlibrary.core.application.ZLApplicationWindow;
 import org.zlibrary.core.application.menu.Menu;
 import org.zlibrary.core.application.toolbar.ButtonItem;
 import org.zlibrary.core.application.toolbar.Item;
-import org.zlibrary.options.ZLIntegerRangeOption;
-import org.zlibrary.options.ZLOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 

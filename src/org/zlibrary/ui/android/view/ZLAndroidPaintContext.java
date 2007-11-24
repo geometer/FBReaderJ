@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-import org.zlibrary.options.util.ZLColor;
+import org.zlibrary.core.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public class ZLAndroidPaintContext extends ZLPaintContext {

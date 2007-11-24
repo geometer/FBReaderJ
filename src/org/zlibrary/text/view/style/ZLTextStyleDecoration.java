@@ -1,6 +1,11 @@
 package org.zlibrary.text.view.style;
 
-import org.zlibrary.options.util.*;
+import org.zlibrary.core.options.ZLBoolean3Option;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.options.util.*;
 import org.zlibrary.options.*;
 
 import org.zlibrary.text.view.ZLTextStyle;

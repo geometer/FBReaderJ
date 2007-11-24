@@ -1,11 +1,11 @@
 package org.zlibrary.ui.swing.library;
 
 import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
+import org.zlibrary.core.options.config.writer.ZLConfigWriterFactory;
 import org.zlibrary.core.application.ZLApplication;
 
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
-import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
-import org.zlibrary.options.config.writer.ZLConfigWriterFactory;
 
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;

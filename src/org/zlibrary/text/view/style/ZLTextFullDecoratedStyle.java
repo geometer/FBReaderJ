@@ -2,7 +2,7 @@ package org.zlibrary.text.view.style;
 
 import org.zlibrary.text.view.ZLTextStyle;
 
-import org.zlibrary.options.util.*;
+import org.zlibrary.core.options.util.*;
 
 public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
 	private final ZLTextFullStyleDecoration myDecoration;

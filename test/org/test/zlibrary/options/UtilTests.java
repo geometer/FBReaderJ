@@ -1,7 +1,8 @@
 package org.test.zlibrary.options;
 
 import junit.framework.TestCase;
-import org.zlibrary.options.util.*;
+
+import org.zlibrary.core.options.util.*;
 
 /**
  * тесты на Util часть, где лежат всякие вспомогательные сущности
@@ -11,7 +12,7 @@ import org.zlibrary.options.util.*;
  */
 public class UtilTests extends TestCase {
 	
-    private ZLColor myColor;
+	private ZLColor myColor;
 	
 	public void setUp(){
 		myColor = new ZLColor ((short)176, (short)255, (short)0);
@@ -31,11 +32,11 @@ public class UtilTests extends TestCase {
 		//assertEquals(myColor.toString(), "0,1,0");
 	}
 	
-    public void test01_stringConstructor(){
-        //myColor = new ZLColor("122,123,0");
-        //assertEquals(myColor.toString(), "122,123,0");
-    }
-    
+	public void test01_stringConstructor(){
+		//myColor = new ZLColor("122,123,0");
+		//assertEquals(myColor.toString(), "122,123,0");
+	}
+	
 	public void test01_getIntValue(){
 		assertEquals(myColor.getIntValue(), 176255000L);
 	}

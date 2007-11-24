@@ -1,8 +1,18 @@
 package org.test.zlibrary.options;
 
 import junit.framework.*;
+
+import org.zlibrary.core.options.ZLBoolean3Option;
+import org.zlibrary.core.options.ZLBooleanOption;
+import org.zlibrary.core.options.ZLColorOption;
+import org.zlibrary.core.options.ZLDoubleOption;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLOptionType;
+import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.options.util.*;
 import org.zlibrary.options.*;
-import org.zlibrary.options.util.*;
 
 /**
  * тесты на модель опций.
@@ -30,7 +40,7 @@ public class ModelTests extends TestCase{
 	private final boolean myDefaultBoolean = true;
 	private final String myDefaultString = "Hello World";
 	private final double myDefaultDouble = 1.2;
-    
+	
 	public void setUp(){
 		myColorOption = new ZLColorOption("","","my Color", new ZLColor ((short)176, (short)255, (short)0)); 
 		myDoubleOption = new ZLDoubleOption("","","My Double", myDefaultDouble); 
@@ -107,7 +117,7 @@ public class ModelTests extends TestCase{
 	}
 	
 	public void test02_integerRangeWrong(){
-        long expected = myIntegerRangeOption.getValue();
+		long expected = myIntegerRangeOption.getValue();
 		myIntegerRangeOption.setValue(10000000L);
 		assertEquals(myIntegerRangeOption.getValue(), expected);
 	}

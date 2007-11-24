@@ -2,8 +2,8 @@ package org.zlibrary.ui.swing.view;
 
 import java.awt.*;
 
-import org.zlibrary.options.util.ZLColor;
 
+import org.zlibrary.core.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public class ZLSwingPaintContext extends ZLPaintContext {

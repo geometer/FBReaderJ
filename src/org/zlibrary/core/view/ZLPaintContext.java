@@ -3,7 +3,7 @@ package org.zlibrary.core.view;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.zlibrary.options.util.ZLColor;
+import org.zlibrary.core.options.util.ZLColor;
 
 abstract public class ZLPaintContext {
 	private List<String> myFamilies = new LinkedList<String>();

@@ -1,7 +1,10 @@
 package org.zlibrary.text.view.style;
 
+import org.zlibrary.core.options.ZLDoubleOption;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.util.*;
 import org.zlibrary.options.*;
-import org.zlibrary.options.util.*;
 
 import org.zlibrary.text.view.ZLTextStyle;
 
