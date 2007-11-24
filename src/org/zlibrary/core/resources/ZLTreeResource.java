@@ -90,13 +90,13 @@ class ZLTreeResource extends ZLResource {
 				String name = attributeValue(attributes, "name");
 				if (name != null) {
 					String value = attributeValue(attributes, "value");
-					Map<String, ZLTreeResource> children = myStack.peek().myChildren;
+					ZLTreeResource peek = myStack.peek();
 					ZLTreeResource node;
-					if (children == null) {
+					if (peek.myChildren == null) {
 						node = null;
-						children = new HashMap<String, ZLTreeResource>();
 					} else {
-						node = children.get(name);
+						node = peek.myChildren.get(name);
+						peek.myChildren = new HashMap<String,ZLTreeResource>();
 					}
 					if (node == null) {
 						if (value != null) {
@@ -104,7 +104,7 @@ class ZLTreeResource extends ZLResource {
 						} else {
 							node = new ZLTreeResource(name);
 						}
-						children.put(name, node);
+						peek.myChildren.put(name, node);
 					} else {
 						if (value != null) {
 							node.setValue(value);

@@ -32,7 +32,7 @@ import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private JFrame myFrame;
 	private JToolBar myToolbar;
-	private Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
+	private final Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
 
 	final private ZLIntegerRangeOption myXOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
@@ -118,11 +118,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	public void addToolbarItem(Item item) {
 		if (item.getType() == Item.Type.BUTTON) {
 			ButtonItem buttonItem = (ButtonItem)item;
-			String iconFileName = "icons/toolbar/" + buttonItem.getIconName() + ".png";
-			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
-			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
 			Action action = new MyButtonAction(buttonItem);
-			action.putValue(Action.SMALL_ICON, icon); 
 			myToolbar.add(action);
 			myItemActionMap.put(item, action);
 		} else {
@@ -131,25 +127,29 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 	
 	private class MyButtonAction extends AbstractAction {
-		private ButtonItem item;
+		private ButtonItem myItem;
 		
 		MyButtonAction(ButtonItem item) {
-			this.item = item;
+			myItem = item;
+
+			String iconFileName = "icons/toolbar/" + myItem.getIconName() + ".png";
+			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
+			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
+			putValue(Action.SMALL_ICON, icon); 
 		}
 		
 		public void actionPerformed(ActionEvent event) {
-			onButtonPress(item);
+			onButtonPress(myItem);
 		}
 	}
 
 	public void setToolbarItemState(Item item, boolean visible, boolean enabled) {
-		AbstractAction action = (AbstractAction)myItemActionMap.get(item);
+		Action action = myItemActionMap.get(item);
 		if (action != null) {
 			action.setEnabled(enabled);
 		}
 		//setVisible()???		
 		// TODO: implement
-		
 	}
 
 	public void setToggleButtonState(ButtonItem item) {
