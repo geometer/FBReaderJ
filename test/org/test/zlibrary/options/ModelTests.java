@@ -12,7 +12,6 @@ import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLOptionType;
 import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.core.options.util.*;
-import org.zlibrary.options.*;
 
 /**
  * тесты на модель опций.
