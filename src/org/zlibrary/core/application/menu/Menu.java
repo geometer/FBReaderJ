@@ -31,9 +31,7 @@ public class Menu {
 	}
 
 	public void addItem(int actionId, ZLResourceKey key) {
-		// commented while ZLResource is not implemented
-		//myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
-		myItems.add(new Menubar.PlainItem(key.Name, actionId));
+		myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
 	}
 	
 	public void addSeparator() {
@@ -41,9 +39,7 @@ public class Menu {
 	}
 	
 	public Menu addSubmenu(ZLResourceKey key) {
-		// commented while ZLResource is not implemented
-		//Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
-		Menubar.Submenu submenu = new Menubar.Submenu(null);
+		Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
 		myItems.add(submenu);
 		return submenu;
 	}
