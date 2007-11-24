@@ -29,10 +29,9 @@ class ZLTreeResource extends ZLResource {
 	}
 	
 	public static void loadData(String language) {
-		//?
-		String filePath = File.separatorChar + "resources" + File.separatorChar + language + ".xml";
-		new ZLResourceTreeReader(ourRoot).readDocument(ZLApplication.getZLibraryDirectory() + filePath);
-		new ZLResourceTreeReader(ourRoot).readDocument(ZLApplication.ApplicationDirectory() + filePath);
+		final String fileName = language + ".xml";
+		new ZLResourceTreeReader(ourRoot).readDocument("data/resources/zlibrary/" + fileName);
+		new ZLResourceTreeReader(ourRoot).readDocument("data/resources/application/" + fileName);
 	}
 
 	private ZLTreeResource(String name) {
@@ -67,7 +66,7 @@ class ZLTreeResource extends ZLResource {
 		
 	private static class ZLResourceTreeReader extends ZLXMLReader {
 		private static final String NODE = "node"; 
-		private Stack<ZLTreeResource> myStack = new Stack<ZLTreeResource>();
+		private final Stack<ZLTreeResource> myStack = new Stack<ZLTreeResource>();
 		
 		public ZLResourceTreeReader(ZLTreeResource root) {
 			myStack.push(root);
@@ -94,9 +93,9 @@ class ZLTreeResource extends ZLResource {
 					ZLTreeResource node;
 					if (peek.myChildren == null) {
 						node = null;
+						peek.myChildren = new HashMap<String,ZLTreeResource>();
 					} else {
 						node = peek.myChildren.get(name);
-						peek.myChildren = new HashMap<String,ZLTreeResource>();
 					}
 					if (node == null) {
 						if (value != null) {

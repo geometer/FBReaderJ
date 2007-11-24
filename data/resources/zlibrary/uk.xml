@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;Гаразд"/>
+			<node name="cancel" value="С&amp;касувати"/>
+			<node name="yes" value="&amp;Так"/>
+			<node name="no" value="&amp;Ні"/>
+			<node name="apply" value="Заст&amp;осувати"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Збереження налаштувань..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Червоний"/>
+		<node name="green" value="Зелений"/>
+		<node name="blue" value="Синій"/>
+		<node name="black" value="Чорний"/>
+		<node name="white" value="Білий"/>
+		<node name="maroon" value="Брунатний"/>
+		<node name="olive" value="Оливковий"/>
+		<node name="navy" value="Темно-синій"/>
+		<node name="purple" value="Фіолетовий"/>
+		<node name="teal" value="Темно-блакитний"/>
+		<node name="silver" value="Сріблястий"/>
+		<node name="gray" value="Сірий"/>
+		<node name="lime" value="Світло-зелений"/>
+		<node name="yellow" value="Жовтий"/>
+		<node name="magenta" value="Пурпурний"/>
+		<node name="cyan" value="Блакитний"/>
+		<node name="custom..." value="Налаштувати..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Чешська"/>
+		<node name="de" value="German" toBeTranslated="true"/>
+		<node name="de-traditional" value="German (traditional orphography)" toBeTranslated="true"/>
+		<node name="en" value="English" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Spanish" toBeTranslated="true"/>
+		<node name="fi" value="Finnish" toBeTranslated="true"/>
+		<node name="fr" value="French" toBeTranslated="true"/>
+		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="ru" value="Російська"/>
+		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="zh" value="Китайська"/>
+		<node name="other" value="Інша"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="ввімкнути"/>
+		<node name="off" value="вимкнути"/>
+		<node name="unchanged" value="не змінювати"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Дія для"/>
+	</node>
+</resources>

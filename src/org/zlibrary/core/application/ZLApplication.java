@@ -14,7 +14,7 @@ import org.zlibrary.options.ZLIntegerOption;
 import org.zlibrary.options.ZLIntegerRangeOption;
 import org.zlibrary.options.ZLOption;
 
-public abstract class ZLApplication extends ZLApplicationBase {
+public abstract class ZLApplication {
 	static final String MouseScrollUpKey = "<MouseScrollDown>";
 	static final String MouseScrollDownKey = "<MouseScrollUp>";
 	
