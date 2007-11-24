@@ -21,7 +21,7 @@ public class Toolbar {
 	}
 
 	public void addButton(int actionId, ZLResourceKey key, ButtonGroup group) {
-		ButtonItem button = new ButtonItem(actionId, key.Name, null);//myResource.getResource(key));
+		ButtonItem button = new ButtonItem(actionId, key.Name, myResource.getResource(key));
 		myItems.add(button);
 		button.setButtonGroup(group);
 	}

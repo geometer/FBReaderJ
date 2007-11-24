@@ -37,7 +37,7 @@ abstract public class ZLApplicationWindow {
 
 	
 	public void onButtonPress(ButtonItem button) {
-		
+		/*
 		if (myToggleButtonLock) {
 			return;
 		}
@@ -57,6 +57,7 @@ abstract public class ZLApplicationWindow {
 			}
 			myToggleButtonLock = false;
 		}
+		*/
 		
 		application().doAction(button.getActionId());
 	}

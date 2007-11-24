@@ -11,13 +11,7 @@ import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JToolBar;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
@@ -136,6 +130,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
 			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
 			putValue(Action.SMALL_ICON, icon); 
+			putValue(Action.SHORT_DESCRIPTION, item.getTooltip()); 
 		}
 		
 		public void actionPerformed(ActionEvent event) {
