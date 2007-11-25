@@ -2,7 +2,7 @@ package org.zlibrary.core.options.config;
 
 import java.util.*;
 
-public class ZLGroup {
+public final class ZLGroup {
 	private Map<String, ZLOptionValue> myData;
 	
 	public ZLGroup (){
@@ -13,12 +13,12 @@ public class ZLGroup {
 		return Collections.unmodifiableCollection(myData.values());
 	}
 	
-	public String getValue(String name, String defaultValue){
+	public String getValue(String name){
 		ZLOptionValue temp = myData.get(name);
 		if (temp != null){
 			return temp.getValue();
 		} else {
-			return defaultValue;
+			return null;
 		}
 	}
 	

@@ -51,6 +51,7 @@ import org.zlibrary.core.options.config.*;
 		}
 		
 		public void endDocument() {
+			myConfig.applyDelta();
 		}
 	}
 	

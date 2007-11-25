@@ -7,7 +7,7 @@ import org.zlibrary.core.options.config.*;
 
 /*package*/ class ZLConfigWriter implements ZLWriter {
    
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+	private ZLSimpleConfig myConfig = ZLConfigInstance.getInstance();
 	private File myDestinationDirectory;
 	
 	public ZLConfigWriter(String path){
@@ -32,6 +32,10 @@ import org.zlibrary.core.options.config.*;
 		}  catch(UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public void writeDelta() {
+		//TODO днохяюрэ, хяонкэгсъ ярпнемхе тюикю декэрш хг яхьмнцн йндю
 	}
 	
 	public void write() {

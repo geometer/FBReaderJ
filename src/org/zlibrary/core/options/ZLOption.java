@@ -1,6 +1,6 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.config.ZLConfig;
+import org.zlibrary.core.options.config.ZLSimpleConfig;
 import org.zlibrary.core.options.config.ZLConfigInstance;
 
 public abstract class ZLOption {
@@ -8,7 +8,7 @@ public abstract class ZLOption {
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 	
-	protected ZLConfig myConfig = ZLConfigInstance.getInstance();
+	protected ZLSimpleConfig myConfig = ZLConfigInstance.getInstance();
 	protected String myCategory;
 	protected String myGroup;
 	protected String myOptionName;

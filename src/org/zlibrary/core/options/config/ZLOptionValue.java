@@ -19,6 +19,10 @@ public class ZLOptionValue {
 		return myValue;
 	}
 	
+	public String getName() {
+		return myName;
+	}
+	
 	public String getCategory() {
 		return myCategory;
 	}

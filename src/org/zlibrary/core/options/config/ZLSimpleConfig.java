@@ -2,7 +2,7 @@ package org.zlibrary.core.options.config;
 
 import java.util.Map;
 
-public interface ZLConfig {
+public interface ZLSimpleConfig {
 	
 	public void removeGroup(String name);
 
