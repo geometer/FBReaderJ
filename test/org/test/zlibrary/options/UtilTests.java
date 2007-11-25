@@ -18,10 +18,6 @@ public class UtilTests extends TestCase {
 		myColor = new ZLColor ((short)176, (short)255, (short)0);
 	}
 	
-	public void test01_toString(){
-		assertEquals(myColor.toString(), "176,255,0");
-	}
-	
 	public void test01_equals(){
 		ZLColor zlc = new ZLColor ((short)176, (short)255, (short)0);
 		assertTrue(zlc.equals(myColor));
@@ -38,6 +34,6 @@ public class UtilTests extends TestCase {
 	}
 	
 	public void test01_getIntValue(){
-		assertEquals(myColor.getIntValue(), 176255000L);
+		assertEquals(myColor.getIntValue(), 11599616);
 	}
 }

@@ -32,7 +32,7 @@ public class ModelTests extends TestCase{
 	private ZLBooleanOption myBooleanOption; 
 	private ZLStringOption myStringOption;
 
-	private final long myDefaultColor = 176255000L;
+	private final long myDefaultColor = 11599616;
 	private final long myDefaultIntRange = 75L;
 	private final long myDefaultInt = 15L;
 	private final ZLBoolean3 myDefaultBoolean3 = ZLBoolean3.B3_UNDEFINED;

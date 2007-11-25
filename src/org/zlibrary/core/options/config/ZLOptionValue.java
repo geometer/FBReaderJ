@@ -6,13 +6,13 @@ public class ZLOptionValue {
 	private String myName = "";
 	
 	public ZLOptionValue(String name, String value, String category) {
-		myValue = value;
-		myCategory = category;
-		myName = name;
+		myValue = value.intern();
+		myCategory = category.intern();
+		myName = name.intern();
 	}
 	
 	public void setValue(String value) {
-		myValue = value;
+		myValue = value.intern();
 	}
 	
 	public String getValue() {
