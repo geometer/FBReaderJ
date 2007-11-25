@@ -1,328 +1,328 @@
-<?xml version="1.0" encoding="koi8-r"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <node name="menu">
-	  <node name="bookInfo" value="Информация о книге..."/>
-	  <node name="toc" value="Содержание"/>
-		<node name="library" value="Библиотека">
-			<node name="open" value="Открыть библиотеку"/>
-			<node name="previous" value="Предыдущая книга"/>
-			<node name="recent" value="Прочитанные книги"/>
-			<node name="addBook" value="Добавить файл..."/>
-			<node name="about" value="О программе FBReader"/>
+	  <node name="bookInfo" value="п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬ п╨п╫п╦пЁп╣..."/>
+	  <node name="toc" value="п║п╬п╢п╣я─п╤п╟п╫п╦п╣"/>
+		<node name="library" value="п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟">
+			<node name="open" value="п·я┌п╨я─я▀я┌я▄ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐"/>
+			<node name="previous" value="п÷я─п╣п╢я▀п╢я┐я┴п╟я▐ п╨п╫п╦пЁп╟"/>
+			<node name="recent" value="п÷я─п╬я┤п╦я┌п╟п╫п╫я▀п╣ п╨п╫п╦пЁп╦"/>
+			<node name="addBook" value="п■п╬п╠п╟п╡п╦я┌я▄ я└п╟п╧п╩..."/>
+			<node name="about" value="п· п©я─п╬пЁя─п╟п╪п╪п╣ FBReader"/>
 		</node>
-		<node name="navigate" value="Переход">
-			<node name="gotoStartOfDocument" value="В начало книги"/>
-			<node name="gotoStartOfSection" value="В начало раздела"/>
-			<node name="gotoEndOfSection" value="В конец раздела"/>
-			<node name="gotoNextTOCItem" value="К следующей главе"/>
-			<node name="gotoPreviousTOCItem" value="К предыдущей главе"/>
-			<node name="goBack" value="Назад"/>
-			<node name="goForward" value="Вперед"/>
+		<node name="navigate" value="п÷п╣я─п╣я┘п╬п╢">
+			<node name="gotoStartOfDocument" value="п▓ п╫п╟я┤п╟п╩п╬ п╨п╫п╦пЁп╦"/>
+			<node name="gotoStartOfSection" value="п▓ п╫п╟я┤п╟п╩п╬ я─п╟п╥п╢п╣п╩п╟"/>
+			<node name="gotoEndOfSection" value="п▓ п╨п╬п╫п╣я├ я─п╟п╥п╢п╣п╩п╟"/>
+			<node name="gotoNextTOCItem" value="п  я│п╩п╣п╢я┐я▌я┴п╣п╧ пЁп╩п╟п╡п╣"/>
+			<node name="gotoPreviousTOCItem" value="п  п©я─п╣п╢я▀п╢я┐я┴п╣п╧ пЁп╩п╟п╡п╣"/>
+			<node name="goBack" value="п²п╟п╥п╟п╢"/>
+			<node name="goForward" value="п▓п©п╣я─п╣п╢"/>
 		</node>
-		<node name="selection" value="Пометка">
-			<node name="clipboard" value="Скопировать в буфер"/>
-			<node name="dictionary" value="Посмотреть в словаре"/>
-			<node name="clear" value="Убрать пометку"/>
+		<node name="selection" value="п÷п╬п╪п╣я┌п╨п╟">
+			<node name="clipboard" value="п║п╨п╬п©п╦я─п╬п╡п╟я┌я▄ п╡ п╠я┐я└п╣я─"/>
+			<node name="dictionary" value="п÷п╬я│п╪п╬я┌я─п╣я┌я▄ п╡ я│п╩п╬п╡п╟я─п╣"/>
+			<node name="clear" value="пёп╠я─п╟я┌я▄ п©п╬п╪п╣я┌п╨я┐"/>
 		</node>
-		<node name="search" value="Поиск">
-			<node name="find" value="Искать..."/>
-			<node name="next" value="Искать дальше"/>
-			<node name="previous" value="Искать раньше"/>
+		<node name="search" value="п÷п╬п╦я│п╨">
+			<node name="find" value="п≤я│п╨п╟я┌я▄..."/>
+			<node name="next" value="п≤я│п╨п╟я┌я▄ п╢п╟п╩я▄я┬п╣"/>
+			<node name="previous" value="п≤я│п╨п╟я┌я▄ я─п╟п╫я▄я┬п╣"/>
 		</node>
-		<node name="view" value="Изображение">
-			<node name="rotate" value="Повернуть"/>
-			<node name="fullScreen" value="На весь экран"/>
-			<node name="toggleIndicator" value="Индикатор позиции"/>
+		<node name="view" value="п≤п╥п╬п╠я─п╟п╤п╣п╫п╦п╣">
+			<node name="rotate" value="п÷п╬п╡п╣я─п╫я┐я┌я▄"/>
+			<node name="fullScreen" value="п²п╟ п╡п╣я│я▄ я█п╨я─п╟п╫"/>
+			<node name="toggleIndicator" value="п≤п╫п╢п╦п╨п╟я┌п╬я─ п©п╬п╥п╦я├п╦п╦"/>
 		</node>
-		<node name="settings" value="Настройки..."/>
-		<node name="close" value="Закрыть"/>
+		<node name="settings" value="п²п╟я│я┌я─п╬п╧п╨п╦..."/>
+		<node name="close" value="п≈п╟п╨я─я▀я┌я▄"/>
 	</node>
 	<node name="toolbar">
-		<node name="books" value="Библиотека"/>
-		<node name="history" value="Прочитанные книги"/>
-		<node name="addbook" value="Добавить файл в библиотеку"/>
-		<node name="home" value="В начало книги"/>
-		<node name="leftarrow" value="Назад"/>
-		<node name="rightarrow" value="Вперед"/>
-		<node name="contents" value="Оглавление"/>
-		<node name="find" value="Поиск"/>
-		<node name="findnext" value="Найти следующий"/>
-		<node name="findprev" value="Найти предыдущий"/>
-		<node name="bookinfo" value="Информация о книге"/>
-		<node name="settings" value="Настройки"/>
-		<node name="rotatescreen" value="Поворот текста"/>
-		<node name="help" value="О программе"/>
+		<node name="books" value="п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟"/>
+		<node name="history" value="п÷я─п╬я┤п╦я┌п╟п╫п╫я▀п╣ п╨п╫п╦пЁп╦"/>
+		<node name="addbook" value="п■п╬п╠п╟п╡п╦я┌я▄ я└п╟п╧п╩ п╡ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐"/>
+		<node name="home" value="п▓ п╫п╟я┤п╟п╩п╬ п╨п╫п╦пЁп╦"/>
+		<node name="leftarrow" value="п²п╟п╥п╟п╢"/>
+		<node name="rightarrow" value="п▓п©п╣я─п╣п╢"/>
+		<node name="contents" value="п·пЁп╩п╟п╡п╩п╣п╫п╦п╣"/>
+		<node name="find" value="п÷п╬п╦я│п╨"/>
+		<node name="findnext" value="п²п╟п╧я┌п╦ я│п╩п╣п╢я┐я▌я┴п╦п╧"/>
+		<node name="findprev" value="п²п╟п╧я┌п╦ п©я─п╣п╢я▀п╢я┐я┴п╦п╧"/>
+		<node name="bookinfo" value="п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬ п╨п╫п╦пЁп╣"/>
+		<node name="settings" value="п²п╟я│я┌я─п╬п╧п╨п╦"/>
+		<node name="rotatescreen" value="п÷п╬п╡п╬я─п╬я┌ я┌п╣п╨я│я┌п╟"/>
+		<node name="help" value="п· п©я─п╬пЁя─п╟п╪п╪п╣"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="go" value="&amp;Искать"/>
+			<node name="go" value="&amp;п≤я│п╨п╟я┌я▄"/>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Настройки"/>
+			<node name="title" value="FBReader - п²п╟я│я┌я─п╬п╧п╨п╦"/>
 			<node name="tab">
-				<node name="General" value="Общие настройки">
-					<node name="bookPath" value="Каталоги с книгами"/>
-					<node name="lookInSubdirectories" value="Искать книги в подкаталогах"/>
-					<node name="recentListSize" value="Размер списка прочитанных книг"/>
-					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
+				<node name="General" value="п·п╠я┴п╦п╣ п╫п╟я│я┌я─п╬п╧п╨п╦">
+					<node name="bookPath" value="п п╟я┌п╟п╩п╬пЁп╦ я│ п╨п╫п╦пЁп╟п╪п╦"/>
+					<node name="lookInSubdirectories" value="п≤я│п╨п╟я┌я▄ п╨п╫п╦пЁп╦ п╡ п©п╬п╢п╨п╟я┌п╟п╩п╬пЁп╟я┘"/>
+					<node name="recentListSize" value="п═п╟п╥п╪п╣я─ я│п©п╦я│п╨п╟ п©я─п╬я┤п╦я┌п╟п╫п╫я▀я┘ п╨п╫п╦пЁ"/>
+					<node name="keyDelay" value="п≈п╟п╢п╣я─п╤п╨п╟ п╪п╣п╤п╢я┐ п╫п╟п╤п╟я┌п╦я▐п╪п╦ п╫п╟ п╨п╩п╟п╡п╦я┬п╦"/>
 				</node>
-				<node name="Language" value="Язык">
-					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
-					<node name="defaultLanguage" value="Язык по умолчанию"/>
-					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
-					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
-					<node name="chineseBreakAtAnyPosition" value="В китайском языке разрыв строки в любом месте"/>
+				<node name="Language" value="п╞п╥я▀п╨">
+					<node name="autoDetect" value="п░п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ п╬п©я─п╣п╢п╣п╩я▐я┌я▄ я▐п╥я▀п╨ п╦ п╨п╬п╢п╦я─п╬п╡п╨я┐"/>
+					<node name="defaultLanguage" value="п╞п╥я▀п╨ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌"/>
+					<node name="defaultEncodingSet" value="п²п╟п╠п╬я─ п╨п╬п╢п╦я─п╬п╡п╬п╨ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌"/>
+					<node name="defaultEncoding" value="п п╬п╢п╦я─п╬п╡п╨п╟ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌"/>
+					<node name="chineseBreakAtAnyPosition" value="п▓ п╨п╦я┌п╟п╧я│п╨п╬п╪ я▐п╥я▀п╨п╣ я─п╟п╥я─я▀п╡ я│я┌я─п╬п╨п╦ п╡ п╩я▌п╠п╬п╪ п╪п╣я│я┌п╣"/>
 				</node>
-				<node name="Indicator" value="Индикатор">
-					<node name="show" value="Показывать индикатор"/>
-					<node name="height" value="Высота индикатора"/>
-					<node name="offset" value="Отступ от текста"/>
-					<node name="pageNumber" value="Показывать номера страниц"/>
-					<node name="time" value="Показывать текущее время"/>
-					<node name="fontSize" value="Размер шрифта"/>
-					<node name="tocMarks" value="Показывать пометки начала глав"/>
-					<node name="navigation" value="Реагировать на нажатия"/>
+				<node name="Indicator" value="п≤п╫п╢п╦п╨п╟я┌п╬я─">
+					<node name="show" value="п÷п╬п╨п╟п╥я▀п╡п╟я┌я▄ п╦п╫п╢п╦п╨п╟я┌п╬я─"/>
+					<node name="height" value="п▓я▀я│п╬я┌п╟ п╦п╫п╢п╦п╨п╟я┌п╬я─п╟"/>
+					<node name="offset" value="п·я┌я│я┌я┐п© п╬я┌ я┌п╣п╨я│я┌п╟"/>
+					<node name="pageNumber" value="п÷п╬п╨п╟п╥я▀п╡п╟я┌я▄ п╫п╬п╪п╣я─п╟ я│я┌я─п╟п╫п╦я├"/>
+					<node name="time" value="п÷п╬п╨п╟п╥я▀п╡п╟я┌я▄ я┌п╣п╨я┐я┴п╣п╣ п╡я─п╣п╪я▐"/>
+					<node name="fontSize" value="п═п╟п╥п╪п╣я─ я┬я─п╦я└я┌п╟"/>
+					<node name="tocMarks" value="п÷п╬п╨п╟п╥я▀п╡п╟я┌я▄ п©п╬п╪п╣я┌п╨п╦ п╫п╟я┤п╟п╩п╟ пЁп╩п╟п╡"/>
+					<node name="navigation" value="п═п╣п╟пЁп╦я─п╬п╡п╟я┌я▄ п╫п╟ п╫п╟п╤п╟я┌п╦я▐"/>
 				</node>
-				<node name="Scrolling" value="Перелистывание">
-					<node name="optionsFor" value="Настройки перелистывания">
-						<node name="large" value="на большое расстояние"/>
-						<node name="small" value="на небольшое расстояние"/>
-						<node name="mouse" value="колесом мышки"/>
-						<node name="finger" value="нажатием пальцем"/>
+				<node name="Scrolling" value="п÷п╣я─п╣п╩п╦я│я┌я▀п╡п╟п╫п╦п╣">
+					<node name="optionsFor" value="п²п╟я│я┌я─п╬п╧п╨п╦ п©п╣я─п╣п╩п╦я│я┌я▀п╡п╟п╫п╦я▐">
+						<node name="large" value="п╫п╟ п╠п╬п╩я▄я┬п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣"/>
+						<node name="small" value="п╫п╟ п╫п╣п╠п╬п╩я▄я┬п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣"/>
+						<node name="mouse" value="п╨п╬п╩п╣я│п╬п╪ п╪я▀я┬п╨п╦"/>
+						<node name="finger" value="п╫п╟п╤п╟я┌п╦п╣п╪ п©п╟п╩я▄я├п╣п╪"/>
 					</node>
-					<node name="delay" value="Задержка, миллисекунды"/>
-					<node name="mode" value="Перелистывание">
-						<node name="noOverlapping" value="без перекрытия"/>
-						<node name="keepLines" value="перекрывает несколько строк"/>
-						<node name="scrollLines" value="сдвигает несколько строк"/>
-						<node name="scrollPercentage" value="сдвигает часть текста"/>
-						<node name="disable" value="выключено"/>
+					<node name="delay" value="п≈п╟п╢п╣я─п╤п╨п╟, п╪п╦п╩п╩п╦я│п╣п╨я┐п╫п╢я▀"/>
+					<node name="mode" value="п÷п╣я─п╣п╩п╦я│я┌я▀п╡п╟п╫п╦п╣">
+						<node name="noOverlapping" value="п╠п╣п╥ п©п╣я─п╣п╨я─я▀я┌п╦я▐"/>
+						<node name="keepLines" value="п©п╣я─п╣п╨я─я▀п╡п╟п╣я┌ п╫п╣я│п╨п╬п╩я▄п╨п╬ я│я┌я─п╬п╨"/>
+						<node name="scrollLines" value="я│п╢п╡п╦пЁп╟п╣я┌ п╫п╣я│п╨п╬п╩я▄п╨п╬ я│я┌я─п╬п╨"/>
+						<node name="scrollPercentage" value="я│п╢п╡п╦пЁп╟п╣я┌ я┤п╟я│я┌я▄ я┌п╣п╨я│я┌п╟"/>
+						<node name="disable" value="п╡я▀п╨п╩я▌я┤п╣п╫п╬"/>
 					</node>
-					<node name="linesToKeep" value="Сколько строк перекрывать"/>
-					<node name="linesToScroll" value="Сколько строк сдвигать"/>
-					<node name="percentToScroll" value="Сколько процентов сдвигать"/>
+					<node name="linesToKeep" value="п║п╨п╬п╩я▄п╨п╬ я│я┌я─п╬п╨ п©п╣я─п╣п╨я─я▀п╡п╟я┌я▄"/>
+					<node name="linesToScroll" value="п║п╨п╬п╩я▄п╨п╬ я│я┌я─п╬п╨ я│п╢п╡п╦пЁп╟я┌я▄"/>
+					<node name="percentToScroll" value="п║п╨п╬п╩я▄п╨п╬ п©я─п╬я├п╣п╫я┌п╬п╡ я│п╢п╡п╦пЁп╟я┌я▄"/>
 				</node>
-				<node name="Margins" value="Отступы">
-					<node name="left" value="Отступ слева"/>
-					<node name="right" value="Отступ справа"/>
-					<node name="top" value="Отступ сверху"/>
-					<node name="bottom" value="Отступ снизу"/>
+				<node name="Margins" value="п·я┌я│я┌я┐п©я▀">
+					<node name="left" value="п·я┌я│я┌я┐п© я│п╩п╣п╡п╟"/>
+					<node name="right" value="п·я┌я│я┌я┐п© я│п©я─п╟п╡п╟"/>
+					<node name="top" value="п·я┌я│я┌я┐п© я│п╡п╣я─я┘я┐"/>
+					<node name="bottom" value="п·я┌я│я┌я┐п© я│п╫п╦п╥я┐"/>
 				</node>
-				<node name="Format" value="Форматирование">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="lineSpacing" value="Интервал">
-						<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="Format" value="п╓п╬я─п╪п╟я┌п╦я─п╬п╡п╟п╫п╦п╣">
+					<node name="optionsFor" value="п²п╟я│я┌я─п╬п╧п╨п╦ п╢п╩я▐"/>
+					<node name="lineSpacing" value="п≤п╫я┌п╣я─п╡п╟п╩">
+						<node name="unchanged" value="&lt;п╫п╣ п╪п╣п╫я▐я┌я▄&gt;"/>
 					</node>
-					<node name="firstLineIndent" value="Красная строка"/>
-					<node name="alignment" value="Выравнивание">
-						<node name="left" value="левое"/>
-						<node name="right" value="правое"/>
-						<node name="center" value="по центру"/>
-						<node name="justify" value="по краям"/>
-						<node name="unchanged" value="&lt;не менять&gt;"/>
+					<node name="firstLineIndent" value="п я─п╟я│п╫п╟я▐ я│я┌я─п╬п╨п╟"/>
+					<node name="alignment" value="п▓я▀я─п╟п╡п╫п╦п╡п╟п╫п╦п╣">
+						<node name="left" value="п╩п╣п╡п╬п╣"/>
+						<node name="right" value="п©я─п╟п╡п╬п╣"/>
+						<node name="center" value="п©п╬ я├п╣п╫я┌я─я┐"/>
+						<node name="justify" value="п©п╬ п╨я─п╟я▐п╪"/>
+						<node name="unchanged" value="&lt;п╫п╣ п╪п╣п╫я▐я┌я▄&gt;"/>
 					</node>
-					<node name="spaceBefore" value="Пропуск перед"/>
-					<node name="spaceAfter" value="Пропуск после"/>
-					<node name="leftIndent" value="Отступ слева"/>
-					<node name="rightIndent" value="Отступ справа"/>
+					<node name="spaceBefore" value="п÷я─п╬п©я┐я│п╨ п©п╣я─п╣п╢"/>
+					<node name="spaceAfter" value="п÷я─п╬п©я┐я│п╨ п©п╬я│п╩п╣"/>
+					<node name="leftIndent" value="п·я┌я│я┌я┐п© я│п╩п╣п╡п╟"/>
+					<node name="rightIndent" value="п·я┌я│я┌я┐п© я│п©я─п╟п╡п╟"/>
 				</node>
-				<node name="Styles" value="Стили">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="fontFamily" value="Шрифт">
-						<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="Styles" value="п║я┌п╦п╩п╦">
+					<node name="optionsFor" value="п²п╟я│я┌я─п╬п╧п╨п╦ п╢п╩я▐"/>
+					<node name="fontFamily" value="п╗я─п╦я└я┌">
+						<node name="unchanged" value="&lt;п╫п╣ п╪п╣п╫я▐я┌я▄&gt;"/>
 					</node>
-					<node name="fontSize" value="Размер"/>
-					<node name="fontSizeDifference" value="Размер"/>
-					<node name="bold" value="Жирный"/>
-					<node name="italic" value="Курсив"/>
-					<node name="allowHyphenations" value="Переносы"/>
-					<node name="autoHyphenations" value="Переносы"/>
+					<node name="fontSize" value="п═п╟п╥п╪п╣я─"/>
+					<node name="fontSizeDifference" value="п═п╟п╥п╪п╣я─"/>
+					<node name="bold" value="п√п╦я─п╫я▀п╧"/>
+					<node name="italic" value="п я┐я─я│п╦п╡"/>
+					<node name="allowHyphenations" value="п÷п╣я─п╣п╫п╬я│я▀"/>
+					<node name="autoHyphenations" value="п÷п╣я─п╣п╫п╬я│я▀"/>
 				</node>
-				<node name="Rotation" value="Поворот">
-					<node name="direction" value="Как поворачивать">
-						<node name="disabled" value="Не поворачивать вообще"/>
-						<node name="clockwise" value="На 90 градусов по часовой стрелке"/>
-						<node name="counterclockwise" value="На 90 градусов против часовой стрелки"/>
-						<node name="180" value="На 180 градусов"/>
-						<node name="cycle" value="Переключаться между 4 ориентациями"/>
-					</node>
-				</node>
-				<node name="Colors" value="Цвета">
-					<node name="colorFor" value="Цвет">
-						<node name="background" value="фона"/>
-						<node name="selectionBackground" value="фона пометки"/>
-						<node name="text" value="обычного текста"/>
-						<node name="internalLink" value="ссылки"/>
-						<node name="externalLink" value="внешней ссылки"/>
-						<node name="highlighted" value="подсвеченного текста"/>
-						<node name="treeLines" value="линий"/>
-						<node name="indicator" value="индикатора"/>
+				<node name="Rotation" value="п÷п╬п╡п╬я─п╬я┌">
+					<node name="direction" value="п п╟п╨ п©п╬п╡п╬я─п╟я┤п╦п╡п╟я┌я▄">
+						<node name="disabled" value="п²п╣ п©п╬п╡п╬я─п╟я┤п╦п╡п╟я┌я▄ п╡п╬п╬п╠я┴п╣"/>
+						<node name="clockwise" value="п²п╟ 90 пЁя─п╟п╢я┐я│п╬п╡ п©п╬ я┤п╟я│п╬п╡п╬п╧ я│я┌я─п╣п╩п╨п╣"/>
+						<node name="counterclockwise" value="п²п╟ 90 пЁя─п╟п╢я┐я│п╬п╡ п©я─п╬я┌п╦п╡ я┤п╟я│п╬п╡п╬п╧ я│я┌я─п╣п╩п╨п╦"/>
+						<node name="180" value="п²п╟ 180 пЁя─п╟п╢я┐я│п╬п╡"/>
+						<node name="cycle" value="п÷п╣я─п╣п╨п╩я▌я┤п╟я┌я▄я│я▐ п╪п╣п╤п╢я┐ 4 п╬я─п╦п╣п╫я┌п╟я├п╦я▐п╪п╦"/>
 					</node>
 				</node>
-				<node name="Keys" value="Клавиши">
-					<node name="grabSystemKeys" value="Перехватывать системные клавиши"/>
-					<node name="separate" value="Свои настройки для каждой ориентации текста"/>
-					<node name="orientation" value="Ориентация"/>
+				<node name="Colors" value="п╕п╡п╣я┌п╟">
+					<node name="colorFor" value="п╕п╡п╣я┌">
+						<node name="background" value="я└п╬п╫п╟"/>
+						<node name="selectionBackground" value="я└п╬п╫п╟ п©п╬п╪п╣я┌п╨п╦"/>
+						<node name="text" value="п╬п╠я▀я┤п╫п╬пЁп╬ я┌п╣п╨я│я┌п╟"/>
+						<node name="internalLink" value="я│я│я▀п╩п╨п╦"/>
+						<node name="externalLink" value="п╡п╫п╣я┬п╫п╣п╧ я│я│я▀п╩п╨п╦"/>
+						<node name="highlighted" value="п©п╬п╢я│п╡п╣я┤п╣п╫п╫п╬пЁп╬ я┌п╣п╨я│я┌п╟"/>
+						<node name="treeLines" value="п╩п╦п╫п╦п╧"/>
+						<node name="indicator" value="п╦п╫п╢п╦п╨п╟я┌п╬я─п╟"/>
+					</node>
+				</node>
+				<node name="Keys" value="п п╩п╟п╡п╦я┬п╦">
+					<node name="grabSystemKeys" value="п÷п╣я─п╣я┘п╡п╟я┌я▀п╡п╟я┌я▄ я│п╦я│я┌п╣п╪п╫я▀п╣ п╨п╩п╟п╡п╦я┬п╦"/>
+					<node name="separate" value="п║п╡п╬п╦ п╫п╟я│я┌я─п╬п╧п╨п╦ п╢п╩я▐ п╨п╟п╤п╢п╬п╧ п╬я─п╦п╣п╫я┌п╟я├п╦п╦ я┌п╣п╨я│я┌п╟"/>
+					<node name="orientation" value="п·я─п╦п╣п╫я┌п╟я├п╦я▐"/>
 					<node name="action">
-						<node name="none" value="Никакого действия"/>
-						<node name="showLibrary" value="Показать библиотеку"/>
-						<node name="showRecent" value="Показать прочитанные книги"/>
-						<node name="previousBook" value="Открыть предыдущую книгу"/>
-						<node name="toc" value="Показать оглавление"/>
-						<node name="gotoHome" value="Перейти в начало текста"/>
-						<node name="gotoSectionStart" value="Перейти в начало раздела"/>
-						<node name="gotoSectionEnd" value="Перейти в конец раздела"/>
-						<node name="nextTOCSection" value="Перейти к следующей главе"/>
-						<node name="previousTOCSection" value="Перейти к предыдущей главе"/>
-						<node name="largeScrollForward" value="Прокрутить вперед (на большое расстояние)"/>
-						<node name="largeScrollBackward" value="Прокрутить назад (на большое расстояние)"/>
-						<node name="smallScrollForward" value="Прокрутить вперед (на небольшое расстояние)"/>
-						<node name="smallScrollBackward" value="Прокрутить назад (на небольшое расстояние)"/>
-						<node name="undo" value="Отменить переход"/>
-						<node name="redo" value="Повторить переход"/>
-						<node name="copyToClipboard" value="Скопировать помеченный текст в буфер"/>
-						<node name="openInDictionary" value="Открыть помеченный текст в словаре"/>
-						<node name="clearSelection" value="Убрать пометку"/>
-						<node name="search" value="Показать диалог поиска"/>
-						<node name="findPrevious" value="Искать назад"/>
-						<node name="findNext" value="Искать вперед"/>
-						<node name="increaseFont" value="Увеличить размера шрифта"/>
-						<node name="decreaseFont" value="Уменьшить размера шрифта"/>
-						<node name="toggleIndicator" value="Показать/спрятать индикатор"/>
-						<node name="toggleFullscreen" value="Включить/выключить полноэкранный режим"/>
-						<node name="onFullscreen" value="Включить полноэкранный режим"/>
-						<node name="rotate" value="Повернуть текст"/>
-						<node name="preferences" value="Показать диалог настроек"/>
-						<node name="bookInfo" value="Показать информацию о книге"/>
-						<node name="addBook" value="Добавить файл в библиотеку"/>
-						<node name="cancel" value="Отменить текущий режим"/>
-						<node name="quit" value="Выйти из программы"/>
+						<node name="none" value="п²п╦п╨п╟п╨п╬пЁп╬ п╢п╣п╧я│я┌п╡п╦я▐"/>
+						<node name="showLibrary" value="п÷п╬п╨п╟п╥п╟я┌я▄ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐"/>
+						<node name="showRecent" value="п÷п╬п╨п╟п╥п╟я┌я▄ п©я─п╬я┤п╦я┌п╟п╫п╫я▀п╣ п╨п╫п╦пЁп╦"/>
+						<node name="previousBook" value="п·я┌п╨я─я▀я┌я▄ п©я─п╣п╢я▀п╢я┐я┴я┐я▌ п╨п╫п╦пЁя┐"/>
+						<node name="toc" value="п÷п╬п╨п╟п╥п╟я┌я▄ п╬пЁп╩п╟п╡п╩п╣п╫п╦п╣"/>
+						<node name="gotoHome" value="п÷п╣я─п╣п╧я┌п╦ п╡ п╫п╟я┤п╟п╩п╬ я┌п╣п╨я│я┌п╟"/>
+						<node name="gotoSectionStart" value="п÷п╣я─п╣п╧я┌п╦ п╡ п╫п╟я┤п╟п╩п╬ я─п╟п╥п╢п╣п╩п╟"/>
+						<node name="gotoSectionEnd" value="п÷п╣я─п╣п╧я┌п╦ п╡ п╨п╬п╫п╣я├ я─п╟п╥п╢п╣п╩п╟"/>
+						<node name="nextTOCSection" value="п÷п╣я─п╣п╧я┌п╦ п╨ я│п╩п╣п╢я┐я▌я┴п╣п╧ пЁп╩п╟п╡п╣"/>
+						<node name="previousTOCSection" value="п÷п╣я─п╣п╧я┌п╦ п╨ п©я─п╣п╢я▀п╢я┐я┴п╣п╧ пЁп╩п╟п╡п╣"/>
+						<node name="largeScrollForward" value="п÷я─п╬п╨я─я┐я┌п╦я┌я▄ п╡п©п╣я─п╣п╢ (п╫п╟ п╠п╬п╩я▄я┬п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣)"/>
+						<node name="largeScrollBackward" value="п÷я─п╬п╨я─я┐я┌п╦я┌я▄ п╫п╟п╥п╟п╢ (п╫п╟ п╠п╬п╩я▄я┬п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣)"/>
+						<node name="smallScrollForward" value="п÷я─п╬п╨я─я┐я┌п╦я┌я▄ п╡п©п╣я─п╣п╢ (п╫п╟ п╫п╣п╠п╬п╩я▄я┬п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣)"/>
+						<node name="smallScrollBackward" value="п÷я─п╬п╨я─я┐я┌п╦я┌я▄ п╫п╟п╥п╟п╢ (п╫п╟ п╫п╣п╠п╬п╩я▄я┬п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣)"/>
+						<node name="undo" value="п·я┌п╪п╣п╫п╦я┌я▄ п©п╣я─п╣я┘п╬п╢"/>
+						<node name="redo" value="п÷п╬п╡я┌п╬я─п╦я┌я▄ п©п╣я─п╣я┘п╬п╢"/>
+						<node name="copyToClipboard" value="п║п╨п╬п©п╦я─п╬п╡п╟я┌я▄ п©п╬п╪п╣я┤п╣п╫п╫я▀п╧ я┌п╣п╨я│я┌ п╡ п╠я┐я└п╣я─"/>
+						<node name="openInDictionary" value="п·я┌п╨я─я▀я┌я▄ п©п╬п╪п╣я┤п╣п╫п╫я▀п╧ я┌п╣п╨я│я┌ п╡ я│п╩п╬п╡п╟я─п╣"/>
+						<node name="clearSelection" value="пёп╠я─п╟я┌я▄ п©п╬п╪п╣я┌п╨я┐"/>
+						<node name="search" value="п÷п╬п╨п╟п╥п╟я┌я▄ п╢п╦п╟п╩п╬пЁ п©п╬п╦я│п╨п╟"/>
+						<node name="findPrevious" value="п≤я│п╨п╟я┌я▄ п╫п╟п╥п╟п╢"/>
+						<node name="findNext" value="п≤я│п╨п╟я┌я▄ п╡п©п╣я─п╣п╢"/>
+						<node name="increaseFont" value="пёп╡п╣п╩п╦я┤п╦я┌я▄ я─п╟п╥п╪п╣я─п╟ я┬я─п╦я└я┌п╟"/>
+						<node name="decreaseFont" value="пёп╪п╣п╫я▄я┬п╦я┌я▄ я─п╟п╥п╪п╣я─п╟ я┬я─п╦я└я┌п╟"/>
+						<node name="toggleIndicator" value="п÷п╬п╨п╟п╥п╟я┌я▄/я│п©я─я▐я┌п╟я┌я▄ п╦п╫п╢п╦п╨п╟я┌п╬я─"/>
+						<node name="toggleFullscreen" value="п▓п╨п╩я▌я┤п╦я┌я▄/п╡я▀п╨п╩я▌я┤п╦я┌я▄ п©п╬п╩п╫п╬я█п╨я─п╟п╫п╫я▀п╧ я─п╣п╤п╦п╪"/>
+						<node name="onFullscreen" value="п▓п╨п╩я▌я┤п╦я┌я▄ п©п╬п╩п╫п╬я█п╨я─п╟п╫п╫я▀п╧ я─п╣п╤п╦п╪"/>
+						<node name="rotate" value="п÷п╬п╡п╣я─п╫я┐я┌я▄ я┌п╣п╨я│я┌"/>
+						<node name="preferences" value="п÷п╬п╨п╟п╥п╟я┌я▄ п╢п╦п╟п╩п╬пЁ п╫п╟я│я┌я─п╬п╣п╨"/>
+						<node name="bookInfo" value="п÷п╬п╨п╟п╥п╟я┌я▄ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ п╨п╫п╦пЁп╣"/>
+						<node name="addBook" value="п■п╬п╠п╟п╡п╦я┌я▄ я└п╟п╧п╩ п╡ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐"/>
+						<node name="cancel" value="п·я┌п╪п╣п╫п╦я┌я▄ я┌п╣п╨я┐я┴п╦п╧ я─п╣п╤п╦п╪"/>
+						<node name="quit" value="п▓я▀п╧я┌п╦ п╦п╥ п©я─п╬пЁя─п╟п╪п╪я▀"/>
 					</node>
-					<node name="quitOnCancel" value="Выходить из программы"/>
+					<node name="quitOnCancel" value="п▓я▀я┘п╬п╢п╦я┌я▄ п╦п╥ п©я─п╬пЁя─п╟п╪п╪я▀"/>
 				</node>
-				<node name="Config" value="Настройки">
-					<node name="autoSave" value="Автоматически сохранять состояние"/>
-					<node name="timeout" value="Время между сохранениями, секунды"/>
+				<node name="Config" value="п²п╟я│я┌я─п╬п╧п╨п╦">
+					<node name="autoSave" value="п░п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ я│п╬я┘я─п╟п╫я▐я┌я▄ я│п╬я│я┌п╬я▐п╫п╦п╣"/>
+					<node name="timeout" value="п▓я─п╣п╪я▐ п╪п╣п╤п╢я┐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐п╪п╦, я│п╣п╨я┐п╫п╢я▀"/>
 				</node>
-				<node name="Dictionary" value="Словари">
-					<node name="enableIntegration" value="Включить интеграцию с %s"/>
-					<node name="defaultText" value="Включить интеграцию со словарем"/>
-					<node name="choice" value="Использовать"/>
-					<node name="singleClickOpen" value="Открывать словарь по нажатию на слово"/>
+				<node name="Dictionary" value="п║п╩п╬п╡п╟я─п╦">
+					<node name="enableIntegration" value="п▓п╨п╩я▌я┤п╦я┌я▄ п╦п╫я┌п╣пЁя─п╟я├п╦я▌ я│ %s"/>
+					<node name="defaultText" value="п▓п╨п╩я▌я┤п╦я┌я▄ п╦п╫я┌п╣пЁя─п╟я├п╦я▌ я│п╬ я│п╩п╬п╡п╟я─п╣п╪"/>
+					<node name="choice" value="п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄"/>
+					<node name="singleClickOpen" value="п·я┌п╨я─я▀п╡п╟я┌я▄ я│п╩п╬п╡п╟я─я▄ п©п╬ п╫п╟п╤п╟я┌п╦я▌ п╫п╟ я│п╩п╬п╡п╬"/>
 				</node>
 				<node name="Web" value="Web">
-					<node name="enableIntegration" value="Открывать внешние ссылки в %s"/>
-					<node name="defaultText" value="Окрывать внешние ссылки в браузере"/>
-					<node name="choice" value="Браузер"/>
-					<node name="command" value="Выполнять команду"/>
+					<node name="enableIntegration" value="п·я┌п╨я─я▀п╡п╟я┌я▄ п╡п╫п╣я┬п╫п╦п╣ я│я│я▀п╩п╨п╦ п╡ %s"/>
+					<node name="defaultText" value="п·п╨я─я▀п╡п╟я┌я▄ п╡п╫п╣я┬п╫п╦п╣ я│я│я▀п╩п╨п╦ п╡ п╠я─п╟я┐п╥п╣я─п╣"/>
+					<node name="choice" value="п▒я─п╟я┐п╥п╣я─"/>
+					<node name="command" value="п▓я▀п©п╬п╩п╫я▐я┌я▄ п╨п╬п╪п╟п╫п╢я┐"/>
 				</node>
 			</node>
 		</node>
 		<node name="InfoDialog">
-			<node name="title" value="FBReader - Информация о книге"/>
+			<node name="title" value="FBReader - п≤п╫я└п╬я─п╪п╟я├п╦я▐ п╬ п╨п╫п╦пЁп╣"/>
 			<node name="tab">
-				<node name="Common" value="Основная информация">
-					<node name="file" value="Файл"/>
-					<node name="title" value="Название"/>
-					<node name="authorDisplayName" value="Имя автора"/>
-					<node name="authorSortKey" value="Имя для сортировки"/>
-					<node name="language" value="Язык"/>
-					<node name="encodingSet" value="Набор кодировок"/>
-					<node name="encoding" value="Кодировка"/>
+				<node name="Common" value="п·я│п╫п╬п╡п╫п╟я▐ п╦п╫я└п╬я─п╪п╟я├п╦я▐">
+					<node name="file" value="п╓п╟п╧п╩"/>
+					<node name="title" value="п²п╟п╥п╡п╟п╫п╦п╣"/>
+					<node name="authorDisplayName" value="п≤п╪я▐ п╟п╡я┌п╬я─п╟"/>
+					<node name="authorSortKey" value="п≤п╪я▐ п╢п╩я▐ я│п╬я─я┌п╦я─п╬п╡п╨п╦"/>
+					<node name="language" value="п╞п╥я▀п╨"/>
+					<node name="encodingSet" value="п²п╟п╠п╬я─ п╨п╬п╢п╦я─п╬п╡п╬п╨"/>
+					<node name="encoding" value="п п╬п╢п╦я─п╬п╡п╨п╟"/>
 				</node>
-				<node name="Series" value="Серия">
-					<node name="seriesTitle" value="Название серии"/>
-					<node name="bookNumber" value="Номер книги в серии"/>
+				<node name="Series" value="п║п╣я─п╦я▐">
+					<node name="seriesTitle" value="п²п╟п╥п╡п╟п╫п╦п╣ я│п╣я─п╦п╦"/>
+					<node name="bookNumber" value="п²п╬п╪п╣я─ п╨п╫п╦пЁп╦ п╡ я│п╣я─п╦п╦"/>
 				</node>
-				<node name="Text" value="Текст">
-					<node name="breakType" value="Новый параграф по"/>
-					<node name="ignoreIndent" value="Игнорировать отступы меньше"/>
-					<node name="buildTOC" value="Строить оглавление"/>
-					<node name="emptyLines" value="Пустых строк между главами"/>
+				<node name="Text" value="п╒п╣п╨я│я┌">
+					<node name="breakType" value="п²п╬п╡я▀п╧ п©п╟я─п╟пЁя─п╟я└ п©п╬"/>
+					<node name="ignoreIndent" value="п≤пЁп╫п╬я─п╦я─п╬п╡п╟я┌я▄ п╬я┌я│я┌я┐п©я▀ п╪п╣п╫я▄я┬п╣"/>
+					<node name="buildTOC" value="п║я┌я─п╬п╦я┌я▄ п╬пЁп╩п╟п╡п╩п╣п╫п╦п╣"/>
+					<node name="emptyLines" value="п÷я┐я│я┌я▀я┘ я│я┌я─п╬п╨ п╪п╣п╤п╢я┐ пЁп╩п╟п╡п╟п╪п╦"/>
 				</node>
 				<node name="&lt;PRE&gt;" value="&lt;PRE&gt;">
-					<node name="breakType" value="Новый параграф по"/>
-					<node name="ignoreIndent" value="Игнорировать отступы меньше"/>
-					<node name="buildTOC" value="Строить оглавление"/>
-					<node name="emptyLines" value="Пустых строк между главами"/>
+					<node name="breakType" value="п²п╬п╡я▀п╧ п©п╟я─п╟пЁя─п╟я└ п©п╬"/>
+					<node name="ignoreIndent" value="п≤пЁп╫п╬я─п╦я─п╬п╡п╟я┌я▄ п╬я┌я│я┌я┐п©я▀ п╪п╣п╫я▄я┬п╣"/>
+					<node name="buildTOC" value="п║я┌я─п╬п╦я┌я▄ п╬пЁп╩п╟п╡п╩п╣п╫п╦п╣"/>
+					<node name="emptyLines" value="п÷я┐я│я┌я▀я┘ я│я┌я─п╬п╨ п╪п╣п╤п╢я┐ пЁп╩п╟п╡п╟п╪п╦"/>
 				</node>
 			</node>
 		</node>
 		<node name="addFileDialog">
-			<node name="title" value="FBReader - Добавление книги в библиотеку"/>
+			<node name="title" value="FBReader - п■п╬п╠п╟п╡п╩п╣п╫п╦п╣ п╨п╫п╦пЁп╦ п╡ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐"/>
 		</node>
 		<node name="textSearchDialog">
-			<node name="title" value="Поиск по тексту"/>
+			<node name="title" value="п÷п╬п╦я│п╨ п©п╬ я┌п╣п╨я│я┌я┐"/>
 			<node name="text" value=""/>
-			<node name="ignoreCase" value="Игнорировать регистр букв"/>
-			<node name="wholeText" value="По всему тексту"/>
-			<node name="backward" value="Назад"/>
-			<node name="currentSection" value="Только в этом разделе"/>
+			<node name="ignoreCase" value="п≤пЁп╫п╬я─п╦я─п╬п╡п╟я┌я▄ я─п╣пЁп╦я│я┌я─ п╠я┐п╨п╡"/>
+			<node name="wholeText" value="п÷п╬ п╡я│п╣п╪я┐ я┌п╣п╨я│я┌я┐"/>
+			<node name="backward" value="п²п╟п╥п╟п╢"/>
+			<node name="currentSection" value="п╒п╬п╩я▄п╨п╬ п╡ я█я┌п╬п╪ я─п╟п╥п╢п╣п╩п╣"/>
 		</node>
 		<node name="removeBookBox">
-			<node name="title" value="Удаление книги"/>
-			<node name="message" value="Удалить книгу &#10;&quot;%s&quot;&#10; из библиотки?"/>
+			<node name="title" value="пёп╢п╟п╩п╣п╫п╦п╣ п╨п╫п╦пЁп╦"/>
+			<node name="message" value="пёп╢п╟п╩п╦я┌я▄ п╨п╫п╦пЁя┐ &#10;&quot;%s&quot;&#10; п╦п╥ п╠п╦п╠п╩п╦п╬я┌п╨п╦?"/>
 		</node>
 		<node name="openBookErrorBox">
-			<node name="title" value="Ошибка"/>
-			<node name="message" value="Не могу открыть:&#10;%s"/>
+			<node name="title" value="п·я┬п╦п╠п╨п╟"/>
+			<node name="message" value="п²п╣ п╪п╬пЁя┐ п╬я┌п╨я─я▀я┌я▄:&#10;%s"/>
 		</node>
 		<node name="noHelpBox">
-			<node name="title" value="Ошибка"/>
-			<node name="message" value="Извините, нет файла с информацией"/>
+			<node name="title" value="п·я┬п╦п╠п╨п╟"/>
+			<node name="message" value="п≤п╥п╡п╦п╫п╦я┌п╣, п╫п╣я┌ я└п╟п╧п╩п╟ я│ п╦п╫я└п╬я─п╪п╟я├п╦п╣п╧"/>
 		</node>
 		<node name="waitMessage">
-			<node name="loadingBook" value="Загрузка книги. Подождите, пожалуйста..."/>
-			<node name="loadingBookList" value="Загрузка списка книг. Подождите, пожалуйста..."/>
+			<node name="loadingBook" value="п≈п╟пЁя─я┐п╥п╨п╟ п╨п╫п╦пЁп╦. п÷п╬п╢п╬п╤п╢п╦я┌п╣, п©п╬п╤п╟п╩я┐п╧я│я┌п╟..."/>
+			<node name="loadingBookList" value="п≈п╟пЁя─я┐п╥п╨п╟ я│п©п╦я│п╨п╟ п╨п╫п╦пЁ. п÷п╬п╢п╬п╤п╢п╦я┌п╣, п©п╬п╤п╟п╩я┐п╧я│я┌п╟..."/>
 		</node>
 	</node>
 	<node name="style">
-		<node name="Base" value="текста по умолчанию"/>
-		<node name="Regular Paragraph" value="обычного текста"/>
-		<node name="Title" value="заголовка"/>
-		<node name="Section Title" value="названия главы"/>
-		<node name="Poem Title" value="названия стихотворения"/>
-		<node name="Subtitle" value="подзаголовка"/>
-		<node name="Annotation" value="аннотации"/>
-		<node name="Epigraph" value="эпиграфа"/>
-		<node name="Stanza" value="строфы"/>
-		<node name="Verse" value="стихов"/>
-		<node name="Preformatted text" value="текста внутри &lt;pre&gt;"/>
-		<node name="Image" value="рисунка"/>
-		<node name="Cite" value="цитаты"/>
-		<node name="Author" value="имени автора"/>
-		<node name="Date" value="даты"/>
-		<node name="Internal Hyperlink" value="ссылки"/>
-		<node name="Footnote" value="сноски"/>
-		<node name="Emphasis" value="выделения (emphasis)"/>
-		<node name="Strong" value="выделения (strong)"/>
-		<node name="Subscript" value="нижнего индекса"/>
-		<node name="Superscript" value="верхнего индекса"/>
-		<node name="Code" value="текста программы"/>
-		<node name="StrikeThrough" value="зачеркнутого текста"/>
-		<node name="Contents Table" value="оглавления"/>
-		<node name="Author in Library" value="имени автора в библиотеке"/>
-		<node name="Book in Library" value="библиотеки"/>
-		<node name="Recent Book List" value="списка книг"/>
-		<node name="Italic" value="курсива"/>
-		<node name="Bold" value="жирного текста"/>
-		<node name="Definition" value="определения"/>
-		<node name="Definition Description" value="текста определения"/>
-		<node name="Header 1" value="текста внутри &lt;h1&gt;"/>
-		<node name="Header 2" value="текста внутри &lt;h2&gt;"/>
-		<node name="Header 3" value="текста внутри &lt;h3&gt;"/>
-		<node name="Header 4" value="текста внутри &lt;h4&gt;"/>
-		<node name="Header 5" value="текста внутри &lt;h5&gt;"/>
-		<node name="Header 6" value="текста внутри &lt;h6&gt;"/>
-		<node name="External Hyperlink" value="внешней ссылки"/>
+		<node name="Base" value="я┌п╣п╨я│я┌п╟ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌"/>
+		<node name="Regular Paragraph" value="п╬п╠я▀я┤п╫п╬пЁп╬ я┌п╣п╨я│я┌п╟"/>
+		<node name="Title" value="п╥п╟пЁп╬п╩п╬п╡п╨п╟"/>
+		<node name="Section Title" value="п╫п╟п╥п╡п╟п╫п╦я▐ пЁп╩п╟п╡я▀"/>
+		<node name="Poem Title" value="п╫п╟п╥п╡п╟п╫п╦я▐ я│я┌п╦я┘п╬я┌п╡п╬я─п╣п╫п╦я▐"/>
+		<node name="Subtitle" value="п©п╬п╢п╥п╟пЁп╬п╩п╬п╡п╨п╟"/>
+		<node name="Annotation" value="п╟п╫п╫п╬я┌п╟я├п╦п╦"/>
+		<node name="Epigraph" value="я█п©п╦пЁя─п╟я└п╟"/>
+		<node name="Stanza" value="я│я┌я─п╬я└я▀"/>
+		<node name="Verse" value="я│я┌п╦я┘п╬п╡"/>
+		<node name="Preformatted text" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;pre&gt;"/>
+		<node name="Image" value="я─п╦я│я┐п╫п╨п╟"/>
+		<node name="Cite" value="я├п╦я┌п╟я┌я▀"/>
+		<node name="Author" value="п╦п╪п╣п╫п╦ п╟п╡я┌п╬я─п╟"/>
+		<node name="Date" value="п╢п╟я┌я▀"/>
+		<node name="Internal Hyperlink" value="я│я│я▀п╩п╨п╦"/>
+		<node name="Footnote" value="я│п╫п╬я│п╨п╦"/>
+		<node name="Emphasis" value="п╡я▀п╢п╣п╩п╣п╫п╦я▐ (emphasis)"/>
+		<node name="Strong" value="п╡я▀п╢п╣п╩п╣п╫п╦я▐ (strong)"/>
+		<node name="Subscript" value="п╫п╦п╤п╫п╣пЁп╬ п╦п╫п╢п╣п╨я│п╟"/>
+		<node name="Superscript" value="п╡п╣я─я┘п╫п╣пЁп╬ п╦п╫п╢п╣п╨я│п╟"/>
+		<node name="Code" value="я┌п╣п╨я│я┌п╟ п©я─п╬пЁя─п╟п╪п╪я▀"/>
+		<node name="StrikeThrough" value="п╥п╟я┤п╣я─п╨п╫я┐я┌п╬пЁп╬ я┌п╣п╨я│я┌п╟"/>
+		<node name="Contents Table" value="п╬пЁп╩п╟п╡п╩п╣п╫п╦я▐"/>
+		<node name="Author in Library" value="п╦п╪п╣п╫п╦ п╟п╡я┌п╬я─п╟ п╡ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╣"/>
+		<node name="Book in Library" value="п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦"/>
+		<node name="Recent Book List" value="я│п©п╦я│п╨п╟ п╨п╫п╦пЁ"/>
+		<node name="Italic" value="п╨я┐я─я│п╦п╡п╟"/>
+		<node name="Bold" value="п╤п╦я─п╫п╬пЁп╬ я┌п╣п╨я│я┌п╟"/>
+		<node name="Definition" value="п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐"/>
+		<node name="Definition Description" value="я┌п╣п╨я│я┌п╟ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐"/>
+		<node name="Header 1" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;h1&gt;"/>
+		<node name="Header 2" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;h2&gt;"/>
+		<node name="Header 3" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;h3&gt;"/>
+		<node name="Header 4" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;h4&gt;"/>
+		<node name="Header 5" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;h5&gt;"/>
+		<node name="Header 6" value="я┌п╣п╨я│я┌п╟ п╡п╫я┐я┌я─п╦ &lt;h6&gt;"/>
+		<node name="External Hyperlink" value="п╡п╫п╣я┬п╫п╣п╧ я│я│я▀п╩п╨п╦"/>
 	</node>
 	<node name="external">
-		<node name="browser" value="браузере"/>
-		<node name="defaultBrowser" value="браузере"/>
+		<node name="browser" value="п╠я─п╟я┐п╥п╣я─п╣"/>
+		<node name="defaultBrowser" value="п╠я─п╟я┐п╥п╣я─п╣"/>
 	</node>
 	<node name="mobipocketPlugin">
-		<node name="unknown" value="неизвестная ошибка"/>
-		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
-		<node name="encriptedFile" value="файл защищен DRM"/>
+		<node name="unknown" value="п╫п╣п╦п╥п╡п╣я│я┌п╫п╟я▐ п╬я┬п╦п╠п╨п╟"/>
+		<node name="unsupportedCompressionMethod" value="п╫п╣п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣п╪я▀п╧ п╪п╣я┌п╬п╢ я│п╤п╟я┌п╦я▐"/>
+		<node name="encriptedFile" value="я└п╟п╧п╩ п╥п╟я┴п╦я┴п╣п╫ DRM"/>
 	</node>
 </resources>

@@ -1,5 +1,7 @@
 package org.zlibrary.ui.swing.library;
 
+import java.io.InputStream;
+
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
 import org.zlibrary.core.options.config.writer.ZLConfigWriterFactory;
@@ -15,9 +17,8 @@ public class ZLSwingLibrary extends ZLibrary {
 		return new ZLSwingPaintContext();
 	}
 
-	public String getApplicationName() {
-		// TODO: read from data/application.xml
-		return "FBReaderJ";
+	public InputStream getResourceInputStream(String fileName) {
+		return getClass().getClassLoader().getResourceAsStream(fileName);
 	}
 
 	private static String configDirectory() {
@@ -30,32 +31,21 @@ public class ZLSwingLibrary extends ZLibrary {
 
 	void run(String[] args) {
 		new ZLSaxXMLProcessorFactory();
+		loadProperties();
+
 		ZLConfigReaderFactory.createConfigReader(configDirectory()).read();
 
-		// TODO: read from data/application.xml
-		String applicationClassName = "org.fbreader.fbreader.FBReader";
-		Class applicationClass = null;
-		try {
-			applicationClass = Class.forName(applicationClassName);
-		} catch (ClassNotFoundException e) {
-			exitOnException(e);
-		}
 		ZLApplication application = null;
 		try {
-			java.lang.reflect.Constructor constructor = applicationClass.getConstructor(String[].class);
-			application = (ZLApplication)constructor.newInstance(new Object[] { args });
+			application = (ZLApplication)getApplicationClass().getConstructor(String[].class).newInstance(new Object[] { args });
 		} catch (Exception e) {
-			exitOnException(e);
+			e.printStackTrace();
+			shutdown();
+			System.exit(0);
 		}
 
 		ZLSwingApplicationWindow mainWindow = new ZLSwingApplicationWindow(application);
 		application.initWindow();
 		mainWindow.run();
-	}
-
-	private void exitOnException(Exception e) {
-		e.printStackTrace();
-		shutdown();
-		System.exit(0);
 	}
 }

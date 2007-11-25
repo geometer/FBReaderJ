@@ -3,10 +3,7 @@ package org.zlibrary.core.application;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.zlibrary.options.ZLIntegerOption;
-import org.zlibrary.options.ZLIntegerRangeOption;
-import org.zlibrary.options.ZLOption;
-import org.zlibrary.options.ZLStringOption;
+import org.zlibrary.core.options.*;
 
 public class ZLKeyBindings {
 	public static final String BINDINGS_NUMBER = "Number";

@@ -34,11 +34,6 @@ public class ZLAndroidWidget extends View {
 		ZLView view = ZLAndroidViewWidget.Instance.getView();
 		if (view != null) {
 			view.paint();
-		} else {
-			String s = "Hello, Android!";
-			int w = myPaintContext.getStringWidth(s);
-			int h = myPaintContext.getStringHeight();
-			myPaintContext.drawString((myPaintContext.getWidth() - w) / 2, h, s);
 		}
 		myPaintContext.endPaint();
 	}

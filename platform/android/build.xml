@@ -2,6 +2,7 @@
 <project name="FBReaderJ" default="package">
 	<property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc20a" />
 	<property name="android-tools" value="/home/geometer/src/android_sdk_linux_m3-rc20a/tools" />
+	<property name="project-dir" value="/home/geometer/src/projects/FBReaderJ" />
 
 	<!-- The intermediates directory -->
 	<!-- Eclipse uses "bin" for its own output, so we do the same. -->
@@ -42,8 +43,13 @@
 		<mkdir dir="${outdir-classes}" />
 	</target>
 
+	<target name="raw-resources">
+		<echo>Copying raw resources...</echo>
+		<exec executable="${project-dir}/platform/android/create_raw_resources.py" />
+	</target>
+
 	<!-- Generate the R.java file for this project's resources. -->
-	<target name="resource-src" depends="dirs">
+	<target name="resource-src" depends="dirs, raw-resources">
 		<echo>Generating R.java...</echo>
 		<exec executable="${aapt}" failonerror="true">
 			<arg value="compile" />

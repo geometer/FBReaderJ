@@ -9,13 +9,6 @@ import org.zlibrary.core.resources.ZLResourceKey;
 
 public class Menu {
 	public interface Item {
-		public enum Type {
-			ITEM,
-			SUBMENU,
-			SEPARATOR
-		};
-
-		public Type getType();
 	}
 
 	private final List<Item> myItems;
@@ -44,7 +37,7 @@ public class Menu {
 		return submenu;
 	}
 
-	public List<Item> items() {
+	List<Item> items() {
 		return Collections.unmodifiableList(myItems);
 	}
 }

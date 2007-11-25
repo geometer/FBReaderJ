@@ -9,10 +9,7 @@ import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLViewWidget;
-import org.zlibrary.options.ZLBooleanOption;
-import org.zlibrary.options.ZLIntegerOption;
-import org.zlibrary.options.ZLIntegerRangeOption;
-import org.zlibrary.options.ZLOption;
+import org.zlibrary.core.options.*;
 
 public abstract class ZLApplication {
 	static final String MouseScrollUpKey = "<MouseScrollDown>";

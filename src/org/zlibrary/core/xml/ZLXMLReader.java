@@ -2,9 +2,11 @@ package org.zlibrary.core.xml;
 
 import java.io.*;
 
+import org.zlibrary.core.library.ZLibrary;
+
 public abstract class ZLXMLReader {
 	public boolean read(String fileName) {
-		InputStream stream = getClass().getClassLoader().getResourceAsStream(fileName);
+		InputStream stream = ZLibrary.getInstance().getResourceInputStream(fileName);
 		if (stream == null) {
 			try {
 				stream = new BufferedInputStream(new FileInputStream(fileName));

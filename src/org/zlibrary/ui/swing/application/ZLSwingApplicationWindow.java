@@ -15,7 +15,6 @@ import javax.swing.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
-import org.zlibrary.core.application.menu.Menu;
 import org.zlibrary.core.application.toolbar.ButtonItem;
 import org.zlibrary.core.application.toolbar.Item;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
@@ -24,17 +23,17 @@ import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
-	private JFrame myFrame;
-	private JToolBar myToolbar;
+	private final JFrame myFrame;
+	private final JToolBar myToolbar;
 	private final Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
 
-	final private ZLIntegerRangeOption myXOption =
+	private final ZLIntegerRangeOption myXOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
-	final private ZLIntegerRangeOption myYOption =
+	private final ZLIntegerRangeOption myYOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "YPosition", 0, 2000, 10);
-	final private ZLIntegerRangeOption myWidthOption =
+	private final ZLIntegerRangeOption myWidthOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "Width", 10, 2000, 800);
-	final private ZLIntegerRangeOption myHeightOption =
+	private final ZLIntegerRangeOption myHeightOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "Height", 10, 2000, 600);
 
 	
@@ -86,17 +85,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void initMenu() {
-		for (Menu.Item item : application().getMenubar().items()) {
-			switch (item.getType()) {
-				case ITEM:
-					//System.out.println(((Menubar.PlainItem)item).name());
-					break;
-				case SUBMENU:
-					break;
-				case SEPARATOR:
-					break;
-			}
-		}
 	}
 
 	public void setCaption(String caption) {

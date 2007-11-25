@@ -1,58 +1,58 @@
-<?xml version="1.0" encoding="koi8-r"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<node name="dialog">
 		<node name="button">
-			<node name="ok" value="&amp;ОК"/>
-			<node name="cancel" value="О&amp;тменить"/>
-			<node name="yes" value="&amp;Да"/>
-			<node name="no" value="&amp;Нет"/>
-			<node name="apply" value="При&amp;менить"/>
+			<node name="ok" value="&amp;п·п "/>
+			<node name="cancel" value="п·&amp;я┌п╪п╣п╫п╦я┌я▄"/>
+			<node name="yes" value="&amp;п■п╟"/>
+			<node name="no" value="&amp;п²п╣я┌"/>
+			<node name="apply" value="п÷я─п╦&amp;п╪п╣п╫п╦я┌я▄"/>
 		</node>
 		<node name="waitMessage">
-			<node name="savingConfig" value="Сохранение настроек..."/>
+			<node name="savingConfig" value="п║п╬я┘я─п╟п╫п╣п╫п╦п╣ п╫п╟я│я┌я─п╬п╣п╨..."/>
 		</node>
 	</node>
 	<node name="color">
-		<node name="red" value="Красный"/>
-		<node name="green" value="Зеленый"/>
-		<node name="blue" value="Синий"/>
-		<node name="black" value="Черный"/>
-		<node name="white" value="Белый"/>
-		<node name="maroon" value="Бордовый"/>
-		<node name="olive" value="Оливковый"/>
-		<node name="navy" value="Темно-синий"/>
-		<node name="purple" value="Фиолетовый"/>
-		<node name="teal" value="Темно-голубой"/>
-		<node name="silver" value="Серебристый"/>
-		<node name="gray" value="Серый"/>
-		<node name="lime" value="Светло-зеленый"/>
-		<node name="yellow" value="Желтый"/>
-		<node name="magenta" value="Пурпурный"/>
-		<node name="cyan" value="Голубой"/>
-		<node name="custom..." value="Настроить..."/>
+		<node name="red" value="п я─п╟я│п╫я▀п╧"/>
+		<node name="green" value="п≈п╣п╩п╣п╫я▀п╧"/>
+		<node name="blue" value="п║п╦п╫п╦п╧"/>
+		<node name="black" value="п╖п╣я─п╫я▀п╧"/>
+		<node name="white" value="п▒п╣п╩я▀п╧"/>
+		<node name="maroon" value="п▒п╬я─п╢п╬п╡я▀п╧"/>
+		<node name="olive" value="п·п╩п╦п╡п╨п╬п╡я▀п╧"/>
+		<node name="navy" value="п╒п╣п╪п╫п╬-я│п╦п╫п╦п╧"/>
+		<node name="purple" value="п╓п╦п╬п╩п╣я┌п╬п╡я▀п╧"/>
+		<node name="teal" value="п╒п╣п╪п╫п╬-пЁп╬п╩я┐п╠п╬п╧"/>
+		<node name="silver" value="п║п╣я─п╣п╠я─п╦я│я┌я▀п╧"/>
+		<node name="gray" value="п║п╣я─я▀п╧"/>
+		<node name="lime" value="п║п╡п╣я┌п╩п╬-п╥п╣п╩п╣п╫я▀п╧"/>
+		<node name="yellow" value="п√п╣п╩я┌я▀п╧"/>
+		<node name="magenta" value="п÷я┐я─п©я┐я─п╫я▀п╧"/>
+		<node name="cyan" value="п⌠п╬п╩я┐п╠п╬п╧"/>
+		<node name="custom..." value="п²п╟я│я┌я─п╬п╦я┌я▄..."/>
 	</node>
 	<node name="language">
-		<node name="cs" value="чешский"/>
-		<node name="de" value="немецкий"/>
-		<node name="de-traditional" value="немецкий (старая орфография)"/>
-		<node name="en" value="английский"/>
-		<node name="eo" value="эсперанто"/>
-		<node name="es" value="испанский"/>
-		<node name="fi" value="финский"/>
-		<node name="fr" value="французский"/>
-		<node name="it" value="итальянский"/>
-		<node name="pt" value="португальский"/>
-		<node name="ru" value="русский"/>
-		<node name="uk" value="украинский"/>
-		<node name="zh" value="китайский"/>
-		<node name="other" value="другой"/>
+		<node name="cs" value="я┤п╣я┬я│п╨п╦п╧"/>
+		<node name="de" value="п╫п╣п╪п╣я├п╨п╦п╧"/>
+		<node name="de-traditional" value="п╫п╣п╪п╣я├п╨п╦п╧ (я│я┌п╟я─п╟я▐ п╬я─я└п╬пЁя─п╟я└п╦я▐)"/>
+		<node name="en" value="п╟п╫пЁп╩п╦п╧я│п╨п╦п╧"/>
+		<node name="eo" value="я█я│п©п╣я─п╟п╫я┌п╬"/>
+		<node name="es" value="п╦я│п©п╟п╫я│п╨п╦п╧"/>
+		<node name="fi" value="я└п╦п╫я│п╨п╦п╧"/>
+		<node name="fr" value="я└я─п╟п╫я├я┐п╥я│п╨п╦п╧"/>
+		<node name="it" value="п╦я┌п╟п╩я▄я▐п╫я│п╨п╦п╧"/>
+		<node name="pt" value="п©п╬я─я┌я┐пЁп╟п╩я▄я│п╨п╦п╧"/>
+		<node name="ru" value="я─я┐я│я│п╨п╦п╧"/>
+		<node name="uk" value="я┐п╨я─п╟п╦п╫я│п╨п╦п╧"/>
+		<node name="zh" value="п╨п╦я┌п╟п╧я│п╨п╦п╧"/>
+		<node name="other" value="п╢я─я┐пЁп╬п╧"/>
 	</node>
 	<node name="boolean3">
-		<node name="on" value="включить"/>
-		<node name="off" value="выключить"/>
-		<node name="unchanged" value="не менять"/>
+		<node name="on" value="п╡п╨п╩я▌я┤п╦я┌я▄"/>
+		<node name="off" value="п╡я▀п╨п╩я▌я┤п╦я┌я▄"/>
+		<node name="unchanged" value="п╫п╣ п╪п╣п╫я▐я┌я▄"/>
 	</node>
 	<node name="keyOptionView">
-		<node name="actionFor" value="Действие для"/>
+		<node name="actionFor" value="п■п╣п╧я│я┌п╡п╦п╣ п╢п╩я▐"/>
 	</node>
 </resources>
