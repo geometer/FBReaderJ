@@ -7,7 +7,7 @@ import org.zlibrary.core.options.config.*;
 
 /*package*/ class ZLConfigWriter implements ZLWriter {
    
-	private ZLSimpleConfig myConfig = ZLConfigInstance.getInstance();
+	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	private File myDestinationDirectory;
 	
 	public ZLConfigWriter(String path){
@@ -39,6 +39,7 @@ import org.zlibrary.core.options.config.*;
 	}
 	
 	public void write() {
+		myConfig.applyDelta();
 		Map<String, ZLGroup> data = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
 		Map<String, StringBuffer> configFilesContent = 
