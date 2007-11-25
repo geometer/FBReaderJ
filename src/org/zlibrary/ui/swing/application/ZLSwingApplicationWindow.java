@@ -101,9 +101,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		myMainPanel.add(myToolbar, BorderLayout.NORTH);
 		myFrame.add(myMainPanel);
 		
-		//myFrame.getRootPane().setLayout(new BorderLayout());
-		//myFrame.getRootPane().add(myToolbar, BorderLayout.NORTH);
-		//this.myMenuBar.add(new JMenu("marina"));
 		myFrame.setJMenuBar(myMenuBar);
 	}
 
@@ -118,27 +115,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void initMenu() {
-	   List<Menu.Item> menuitems =application().getMenubar().getItems();
-	   for (Menu.Item menuitem: menuitems) {
-		   if (menuitem instanceof PlainItem) {
-			   PlainItem item = (PlainItem)menuitem;
-			   final JMenuItem exit = new JMenuItem(item.getName());
-			   this.myMenu.add(exit);
-			   //Action action = myItemActionMap.get(item);
-			   //item.getActionId();
-		   } else {
-			   if (menuitem instanceof Submenu) {
-				   Submenu item = (Submenu)menuitem;
-				   final JMenuItem exit = new JMenuItem(item.getMenuName());
-				   this.myMenu.add(exit);
-				   for (Menu.Item i : item.getItems()) {
-					   exit.add(new JMenuItem());
-				   }
-				   
-			   }
-		   }
-		   
-	   }
+		MyMenuVisitor visitor = new MyMenuVisitor(myMenu);
+		visitor.processMenu(application().getMenubar());
 	}
 		
 	private class MyMenuVisitor extends MenuVisitor {
