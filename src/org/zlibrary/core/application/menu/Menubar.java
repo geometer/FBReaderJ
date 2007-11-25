@@ -22,7 +22,6 @@ public class Menubar extends Menu {
 		}
 	};
 
-	//muttiple inheritance!!!
 	public static class Submenu extends Menu implements Item {
 		public Submenu(ZLResource resource) {
 			super(resource);

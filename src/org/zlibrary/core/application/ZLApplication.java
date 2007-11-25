@@ -46,7 +46,7 @@ public abstract class ZLApplication {
 	private ZLPaintContext myContext;
 	private ZLView myInitialView;
 
-	private Map<Integer,Action> myActionMap = new HashMap<Integer,Action>();
+	private Map<Integer,ZLAction> myActionMap = new HashMap<Integer,ZLAction>();
 	private Toolbar myToolbar;
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
@@ -109,7 +109,7 @@ public abstract class ZLApplication {
 
 	protected void quit() {
 		if (myWindow != null) {
-			//myWindow.close();
+			myWindow.close();
 		}
 	}
 
@@ -151,15 +151,15 @@ public abstract class ZLApplication {
 	
 	protected void setFullscreen(boolean fullscreen) {
 		if (myWindow != null) {
-			//myWindow.setFullscreen(fullscreen);
+		    myWindow.setFullscreen(fullscreen);
 		}
 	}
 	
 	protected boolean isFullscreen() {
-		return true;//(myWindow != null) && myWindow.isFullscreen();
+		return (myWindow != null) && myWindow.isFullscreen();
 	}
 	
-	protected void addAction(int actionId, Action action) {
+	protected void addAction(int actionId, ZLAction action) {
 		myActionMap.put(actionId, action);
 	}
 
@@ -174,15 +174,15 @@ public abstract class ZLApplication {
 	}
 
 	public boolean isFingerTapEventSupported() {
-		return true;//(myWindow != null) && myWindow.isFingerTapEventSupported();
+		return (myWindow != null) && myWindow.isFingerTapEventSupported();
 	}
 	
 	public boolean isMousePresented() {
-		return true;//(myWindow != null) && myWindow.isMousePresented();
+		return (myWindow != null) && myWindow.isMousePresented();
 	}
 	
 	public boolean isKeyboardPresented() {
-		return true;//(myWindow != null) && myWindow.isKeyboardPresented();
+		return (myWindow != null) && myWindow.isKeyboardPresented();
 	}
 	
 	public void trackStylus(boolean track) {
@@ -197,23 +197,23 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public Action getAction(int actionId) {
+	public ZLAction getAction(int actionId) {
 		return myActionMap.get(actionId);
 	}
 	
 	public boolean isActionVisible(int actionId) {
-		Action a = getAction(actionId);
+		ZLAction a = getAction(actionId);
 		return ((a != null) && a.isVisible());
 
 	}
 	
 	public boolean isActionEnabled(int actionId) {
-		Action action = getAction(actionId);
+		ZLAction action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}
 	
 	public void doAction(int actionId) {
-		Action action = getAction(actionId);
+		ZLAction action = getAction(actionId);
 		if (action != null) {
 			action.checkAndRun();
 		}
@@ -222,7 +222,7 @@ public abstract class ZLApplication {
 	abstract public ZLKeyBindings keyBindings();
 	
 	public void doActionByKey(String key) {
-		Action a = getAction(keyBindings().getBinding(key));
+		ZLAction a = getAction(keyBindings().getBinding(key));
 		if ((a != null) &&
 				(!a.useKeyDelay() /*||
 				 (myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {

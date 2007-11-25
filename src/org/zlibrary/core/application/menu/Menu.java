@@ -37,7 +37,7 @@ public class Menu {
 		return submenu;
 	}
 
-	List<Item> items() {
+	public List<Item> getItems() {
 		return Collections.unmodifiableList(myItems);
 	}
 }

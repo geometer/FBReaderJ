@@ -9,12 +9,29 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.WindowConstants;
 
+import org.zlibrary.core.application.ZLAction;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
+import org.zlibrary.core.application.menu.Menu;
+import org.zlibrary.core.application.menu.MenuVisitor;
+import org.zlibrary.core.application.menu.Menubar;
+import org.zlibrary.core.application.menu.Menubar.PlainItem;
+import org.zlibrary.core.application.menu.Menubar.Submenu;
 import org.zlibrary.core.application.toolbar.ButtonItem;
 import org.zlibrary.core.application.toolbar.Item;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
@@ -24,9 +41,15 @@ import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
+	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
 	private final Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
+	private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
+	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
 
+	private final JMenuBar myMenuBar;
+	private final JMenu myMenu;
+	
 	private final ZLIntegerRangeOption myXOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
 	private final ZLIntegerRangeOption myYOption =
@@ -41,7 +64,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		ZLFrame() {
 			setSize((int)myWidthOption.getValue(), (int)myHeightOption.getValue());
 			setLocation((int)myXOption.getValue(), (int)myYOption.getValue());
-
 			addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent event) {
 					Dimension size = getSize();
@@ -71,12 +93,23 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		myToolbar = new JToolBar();
 		myToolbar.setFloatable(false);
-		myFrame.getRootPane().setLayout(new BorderLayout());
-		myFrame.getRootPane().add(myToolbar, BorderLayout.NORTH);
+		myMenuBar = new JMenuBar();
+		myMenu = new JMenu("File");
+		myMenuBar.add(myMenu);
+		myMainPanel = new JPanel();
+		myMainPanel.setLayout(new BorderLayout());
+		myMainPanel.add(myToolbar, BorderLayout.NORTH);
+		myFrame.add(myMainPanel);
+		
+		//myFrame.getRootPane().setLayout(new BorderLayout());
+		//myFrame.getRootPane().add(myToolbar, BorderLayout.NORTH);
+		//this.myMenuBar.add(new JMenu("marina"));
+		myFrame.setJMenuBar(myMenuBar);
 	}
 
 	public void run() {
 		myToolbar.setVisible(true);
+		myMenuBar.setVisible(true);
 		myFrame.setVisible(true);
 	}
 
@@ -85,7 +118,68 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void initMenu() {
+	   List<Menu.Item> menuitems =application().getMenubar().getItems();
+	   for (Menu.Item menuitem: menuitems) {
+		   if (menuitem instanceof PlainItem) {
+			   PlainItem item = (PlainItem)menuitem;
+			   final JMenuItem exit = new JMenuItem(item.getName());
+			   this.myMenu.add(exit);
+			   //Action action = myItemActionMap.get(item);
+			   //item.getActionId();
+		   } else {
+			   if (menuitem instanceof Submenu) {
+				   Submenu item = (Submenu)menuitem;
+				   final JMenuItem exit = new JMenuItem(item.getMenuName());
+				   this.myMenu.add(exit);
+				   for (Menu.Item i : item.getItems()) {
+					   exit.add(new JMenuItem());
+				   }
+				   
+			   }
+		   }
+		   
+	   }
 	}
+		
+	private class MyMenuVisitor extends MenuVisitor {
+		private final Stack<JMenuItem> myMenuStack = new Stack<JMenuItem>();
+
+		private MyMenuVisitor(JMenuItem menu) {
+			myMenuStack.push(menu);
+		}
+		protected void processSubmenuBeforeItems(Menubar.Submenu submenu) {
+			JMenu menu = new JMenu(submenu.getMenuName());
+			myMenuStack.peek().add(menu);
+			myMenuStack.push(menu);	
+		}
+		protected void processSubmenuAfterItems(Menubar.Submenu submenu) {
+			myMenuStack.pop();
+		}
+		protected void processItem(Menubar.PlainItem item) {
+			myMenuStack.peek().add(new JMenuItem(item.getName()));
+		}
+		protected void processSepartor(Menubar.Separator separator) {
+			((JMenu)myMenuStack.peek()).addSeparator();
+		}
+	}
+	
+	private class MyMenuItemAction extends AbstractAction {
+		private PlainItem myItem;
+		
+		MyMenuItemAction(PlainItem item) {
+			myItem = item;
+			//myItem.getActionId().
+			putValue(Action.SHORT_DESCRIPTION, item.getName()); 
+		    //????ZLAction zlaction = application().getAction(myItem.getActionId());
+		    //myActionMap.put(zlaction, this);
+		}
+		
+		public void actionPerformed(ActionEvent event) {
+			//onButtonPress(myItem);
+		}
+
+	}
+
 
 	public void setCaption(String caption) {
 		myFrame.setTitle(caption);
@@ -93,7 +187,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	protected ZLSwingViewWidget createViewWidget() {
 		ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(ZLSwingViewWidget.Angle.DEGREES0);
-		myFrame.getRootPane().add(viewWidget.getPanel(), BorderLayout.CENTER);
+		//myFrame.getRootPane()
+		myMainPanel.add(viewWidget.getPanel(), BorderLayout.CENTER);
 		return viewWidget;
 	}
 
@@ -102,6 +197,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			ButtonItem buttonItem = (ButtonItem)item;
 			Action action = new MyButtonAction(buttonItem);
 			myToolbar.add(action);
+			//myActionMap.put(item, action);
 			myItemActionMap.put(item, action);
 		} else {
 			myToolbar.addSeparator();
@@ -113,12 +209,14 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		
 		MyButtonAction(ButtonItem item) {
 			myItem = item;
-
+			//myItem.getActionId().
 			String iconFileName = "icons/toolbar/" + myItem.getIconName() + ".png";
 			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
 			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
 			putValue(Action.SMALL_ICON, icon); 
 			putValue(Action.SHORT_DESCRIPTION, item.getTooltip()); 
+		    ZLAction zlaction = application().getAction(myItem.getActionId());
+		    //myActionMap.put(zlaction, this);
 		}
 		
 		public void actionPerformed(ActionEvent event) {
@@ -128,8 +226,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void setToolbarItemState(Item item, boolean visible, boolean enabled) {
 		Action action = myItemActionMap.get(item);
+		
 		if (action != null) {
-			action.setEnabled(enabled);
+			//action.setEnabled(enabled);
 		}
 		//setVisible()???		
 		// TODO: implement
@@ -148,5 +247,25 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	public boolean isFullscreen() {
 		return (myFrame.getSize() == Toolkit.getDefaultToolkit().getScreenSize());		
 	}
-
+	
+	public boolean isFingerTapEventSupported() {
+		return false;
+	}
+	
+	public boolean isMousePresented() {
+		return true;
+	}
+	
+	public boolean isKeyboardPresented() {
+		return true;
+	}
+	
+	public boolean isFullKeyboardControlSupported() {
+		return true;
+	}
+	
+	public void close() {
+		System.exit(0);
+		// TODO: implement
+	}
 }

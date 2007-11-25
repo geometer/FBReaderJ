@@ -2,7 +2,7 @@ package org.zlibrary.core.application;
 
 import org.zlibrary.core.view.ZLViewWidget;
 
-public class RotationAction extends Action {
+public class RotationAction extends ZLAction {
 	private ZLApplication myApplication;
 
 	public RotationAction(ZLApplication application) {
@@ -36,12 +36,11 @@ public class RotationAction extends Action {
 					break;
 			}
 		} else {
-	//		newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
-	//		(ZLViewWidget.Angle)optionValue : ZLViewWidget.Angle.DEGREES0;
+			//newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
+			//(ZLViewWidget.Angle)optionValue : ZLViewWidget.Angle.DEGREES0;
 		}
 		myApplication.getMyViewWidget().rotate(newAngle);
 		myApplication.getAngleStateOption().setValue(newAngle.getAngle());
-		myApplication.refreshWindow();
-		
+		myApplication.refreshWindow();		
 	}
 }

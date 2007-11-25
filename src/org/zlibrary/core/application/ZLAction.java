@@ -1,6 +1,6 @@
 package org.zlibrary.core.application;
 
-abstract public class Action {
+abstract public class ZLAction {
 	
 	public boolean isVisible() {
 		return true;

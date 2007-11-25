@@ -1,6 +1,6 @@
 package org.zlibrary.core.application;
 
-public class FullscreenAction extends Action {
+public class FullscreenAction extends ZLAction {
 	private ZLApplication myApplication;
 	private	boolean myIsToggle;
 

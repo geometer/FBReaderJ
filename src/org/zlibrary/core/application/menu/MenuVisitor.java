@@ -2,7 +2,7 @@ package org.zlibrary.core.application.menu;
 
 public abstract class MenuVisitor {
 	public void processMenu(Menu menu) {
-		for (Menu.Item item : menu.items()) {
+		for (Menu.Item item : menu.getItems()) {
 			if (item instanceof Menubar.PlainItem) {
 				processItem((Menubar.PlainItem)item);
 			} else if (item instanceof Menubar.Submenu) {

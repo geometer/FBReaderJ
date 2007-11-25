@@ -12,7 +12,6 @@ abstract public class ZLApplicationWindow {
 	private ZLApplication myApplication;
 	private boolean myToggleButtonLock;
 
-
 	protected ZLApplicationWindow(ZLApplication application) {
 		myApplication = application;
 		myApplication.setWindow(this);
@@ -37,7 +36,7 @@ abstract public class ZLApplicationWindow {
 
 	
 	public void onButtonPress(ButtonItem button) {
-		/*
+		
 		if (myToggleButtonLock) {
 			return;
 		}
@@ -57,7 +56,7 @@ abstract public class ZLApplicationWindow {
 			}
 			myToggleButtonLock = false;
 		}
-		*/
+		
 		
 		application().doAction(button.getActionId());
 	}
@@ -133,24 +132,19 @@ abstract public class ZLApplicationWindow {
 	// TODO: change to pure virtual
 	//virtual void present() {}
 
-	//virtual void close() = 0;
 //*/
-
+	abstract public void close();
 	abstract public void setCaption(String caption);
 	abstract public void setFullscreen(boolean fullscreen);
 	abstract public boolean isFullscreen();
 
+	abstract public boolean isFingerTapEventSupported();
+	abstract public boolean isMousePresented();
+	abstract public boolean isKeyboardPresented();
+	abstract public boolean isFullKeyboardControlSupported();
+
 /*
-	virtual bool isFullKeyboardControlSupported() const = 0;
 	virtual void grabAllKeys(bool grab) = 0;
-
-	virtual bool isFingerTapEventSupported() const = 0;
-	virtual bool isMousePresented() const = 0;
-	virtual bool isKeyboardPresented() const = 0;
-
-
-	// TODO: change to pure virtual (?)
 	virtual void setHyperlinkCursor(bool) {}
-
 */
 }
