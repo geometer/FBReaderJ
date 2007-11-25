@@ -3,7 +3,11 @@ package org.zlibrary.core.application;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.zlibrary.core.options.*;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLStringOption;
+
 
 public class ZLKeyBindings {
 	public static final String BINDINGS_NUMBER = "Number";
@@ -84,3 +88,5 @@ public class ZLKeyBindings {
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);        	
 	}
 }
+
+

@@ -6,10 +6,14 @@ import java.util.Map;
 import org.zlibrary.core.application.menu.Menubar;
 import org.zlibrary.core.application.toolbar.Toolbar;
 import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.options.ZLBooleanOption;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLViewWidget;
-import org.zlibrary.core.options.*;
+
 
 public abstract class ZLApplication {
 	static final String MouseScrollUpKey = "<MouseScrollDown>";
@@ -281,8 +285,7 @@ public abstract class ZLApplication {
 		return KeyboardControlOption;
 	}
 
-	public void setConfigAutoSaveTimeoutOption(
-			ZLIntegerRangeOption configAutoSaveTimeoutOption) {
+	public void setConfigAutoSaveTimeoutOption(ZLIntegerRangeOption configAutoSaveTimeoutOption) {
 		ConfigAutoSaveTimeoutOption = configAutoSaveTimeoutOption;
 	}
 
