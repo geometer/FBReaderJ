@@ -3,9 +3,12 @@ package org.zlibrary.core.application;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ZLKeyBindingsReader {//extends ZLXMLReader {
-	private Map<String,Integer> myKeymap = new HashMap<String,Integer>();
+import org.zlibrary.core.xml.ZLXMLReader;
 
+public class ZLKeyBindingsReader extends ZLXMLReader {
+	private Map<String,Integer> myKeymap = new HashMap<String,Integer>();
+    private final static String KeymapFile = "keymap.xml";
+	
 	public ZLKeyBindingsReader(Map<String,Integer> keymap) {
 		myKeymap = keymap; 
 	}
@@ -14,15 +17,15 @@ public class ZLKeyBindingsReader {//extends ZLXMLReader {
 		final String BINDING = "binding";
 
 		if (BINDING == tag) {
-			//const char *key = attributeValue(attributes, "key");
-			//const char *action = attributeValue(attributes, "action");
-			//if ((key != 0) && (action != 0)) {
-			//	myKeymap[key] = atoi(action);
-			//}
+			String key = attributeValue(attributes, "key");
+			String action = attributeValue(attributes, "action");
+			if ((key != null) && (action != null)) {
+				myKeymap.put(key, Integer.parseInt(action));
+			}
 		}
 	}
 
 	public void readBindings() {
-		//readDocument(ZLApplication::DefaultFilesPathPrefix() + KeymapFile);
+		read(ZLApplication.getDefaultFilesPathPrefix() + KeymapFile);
 	}
 }

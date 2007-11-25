@@ -52,6 +52,10 @@ public abstract class ZLApplication {
 	//private ZLTime myLastKeyActionTime;
 	//private ZLMessageHandler myPresentWindowHandler;
 
+	
+	//from ZLBaseAplication
+	private static String ourDefaultFilesPathPrefix;
+	
 	protected ZLApplication() {
 		myName = ZLibrary.getInstance().getApplicationName();
 		myContext = ZLibrary.getInstance().createPaintContext();
@@ -299,6 +303,10 @@ public abstract class ZLApplication {
 
 	public ZLIntegerRangeOption getKeyDelayOption() {
 		return KeyDelayOption;
+	}
+	
+	public static String getDefaultFilesPathPrefix() {
+		return ourDefaultFilesPathPrefix;
 	}
 }
 
