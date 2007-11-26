@@ -39,7 +39,7 @@ public class TestFB2Reader extends TestCase {
 				while ((i1 == i2) && (i1 != -1)){
 					i1 = fis1.read();
 					i2 = fis2.read();
-				}	
+				}
 			} finally {
 				fis1.close();
 				fis2.close();
@@ -51,16 +51,11 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	private void writeDumpToFile(ZLTextModel model, String outputFile) {
-//		FileOutputStream fos;
 		try {
 			OutputStreamWriter osw = new OutputStreamWriter(
 					new FileOutputStream(outputFile), "utf8");
 			osw.write(model.dump());
 			osw.close();
-			
-		/*	fos = new FileOutputStream(outputFile);
-			fos.write(model.dump().getBytes());
-			fos.close();	*/		
 		} catch (Exception e) {
 			fail();
 		}		

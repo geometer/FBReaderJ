@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
-import java.io.File;
-
-import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.xml.ZLXMLReader;
 
 class ZLTreeResource extends ZLResource {
