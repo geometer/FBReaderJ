@@ -26,7 +26,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
 	private final Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
-	private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
+	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
 
 	private final JMenuBar myMenuBar;
@@ -135,7 +135,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		}
 		
 		public void actionPerformed(ActionEvent event) {
-			//onButtonPress(myItem);
+			application().doAction(myItem.getActionId());
 		}
 
 	}
@@ -175,7 +175,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
 			putValue(Action.SMALL_ICON, icon); 
 			putValue(Action.SHORT_DESCRIPTION, item.getTooltip()); 
-		    ZLAction zlaction = application().getAction(myItem.getActionId());
+		    //ZLAction zlaction = application().getAction(myItem.getActionId());
 		    //myActionMap.put(zlaction, this);
 		}
 		
