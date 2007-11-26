@@ -42,6 +42,10 @@ public class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
+	public void close() {
+		// TODO: implement
+	}
+
 	public void setToggleButtonState(ButtonItem item) {
 		// TODO: implement
 	}
@@ -53,5 +57,25 @@ public class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	public boolean isFullscreen() {
 		// TODO: implement
 		return false;
+	}
+
+	public boolean isFingerTapEventSupported() {
+		// TODO: implement
+		return false;
+	}
+
+	public boolean isMousePresented() {
+		// TODO: implement
+		return true;
+	}
+
+	public boolean isKeyboardPresented() {
+		// TODO: implement
+		return true;
+	}
+
+	public boolean isFullKeyboardControlSupported() {
+		// TODO: implement
+		return true;
 	}
 }
