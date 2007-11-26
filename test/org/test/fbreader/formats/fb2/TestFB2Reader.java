@@ -3,12 +3,12 @@ package org.test.fbreader.formats.fb2;
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
-import org.zlibrary.core.xml.ZLXMLProcessorFactory;
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.entry.ZLTextEntry;
+import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 import junit.framework.TestCase;
 
@@ -16,7 +16,10 @@ import java.io.*;
 
 public class TestFB2Reader extends TestCase {
 	
-	private ZLXMLProcessorFactory myFactory = new ZLSaxXMLProcessorFactory();
+	public void setUp() {
+		new ZLSwingLibrary();
+		new ZLSaxXMLProcessorFactory();
+	}
 	
 	private String myDirectory = "test/data/fb2/";
 	
@@ -260,6 +263,8 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testTextWithNotes() {
 		doTest("whiteguard");
+//		for (Object s : System.getProperties().keySet())
+//		System.out.println(s);
 	}
 	
 /*	public void testPnvs() {

@@ -13,12 +13,12 @@ public class ZLKeyBindingsReader extends ZLXMLReader {
 		myKeymap = keymap; 
 	}
 		
-	public void startElementHandler(String tag, String[] attributes) {
+	public void startElementHandler(String tag, Map<String, String> attributes) {
 		final String BINDING = "binding";
 
 		if (BINDING == tag) {
-			String key = attributeValue(attributes, "key");
-			String action = attributeValue(attributes, "action");
+			String key = attributes.get("key");
+			String action = attributes.get("action");
 			if ((key != null) && (action != null)) {
 				myKeymap.put(key, Integer.parseInt(action));
 			}

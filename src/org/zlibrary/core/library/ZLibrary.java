@@ -38,9 +38,9 @@ public abstract class ZLibrary {
 
 	protected final void loadProperties() {
 		new ZLXMLReader() {
-			public void startElementHandler(String tag, String [] attributes) {
+			public void startElementHandler(String tag, Map<String, String> attributes) {
 				if (tag.equals("property")) {
-					myProperties.put(attributeValue(attributes, "name"), attributeValue(attributes, "value"));
+					myProperties.put(attributes.get("name"), attributes.get("value"));
 				}
 			}
 		}.read("data/application.xml");

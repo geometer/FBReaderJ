@@ -1,5 +1,8 @@
 package org.fbreader.formats.fb2;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.BookReader;
 import org.fbreader.bookmodel.FBTextKind;
@@ -30,11 +33,11 @@ public class FB2Reader extends ZLXMLReader {
 		return (byte) FBTextKind.valueOf(s.toUpperCase()).Index;
 	}
 	
-	private String reference(String[] attributes) {
-		int length = attributes.length-1;
-		for (int i = 0; i < length; i+=2) {
-			if (attributes[i].endsWith(":href")) {
-				return attributes[i+1];
+	private String reference(Map<String, String> attributes) {
+		Set<String> keys = attributes.keySet();
+		for (String s : keys) {
+			if (s.endsWith(":href")) {
+				return attributes.get(s);
 			}
 		}
 		return "";
@@ -132,8 +135,8 @@ public class FB2Reader extends ZLXMLReader {
 	}
 
 	@Override
-	public void startElementHandler(String tagName, String[] attributes) {
-		String id = ZLXMLReader.attributeValue(attributes, "id");
+	public void startElementHandler(String tagName, Map<String, String> attributes) {
+		String id = attributes.get("id");
 		if (id != null) {
 			if (!myReadMainText) {
 				myModelReader.setFootnoteTextModel(id);
@@ -232,7 +235,7 @@ public class FB2Reader extends ZLXMLReader {
 				
 			case BODY:
 				++myBodyCounter;
-				if ((myBodyCounter == 1) || (ZLXMLReader.attributeValue(attributes, "name") == null)) {
+				if ((myBodyCounter == 1) || (attributes.get("name") == null)) {
 					myModelReader.setMainTextModel();
 					myReadMainText = true;
 				}
@@ -241,7 +244,7 @@ public class FB2Reader extends ZLXMLReader {
 			
 			case A:
 				String ref = reference(attributes);
-				if (ref != "") {
+				if (!ref.equals("")) {
 					if (ref.charAt(0) == '#') {
 						myHyperlinkType = (byte) FBTextKind.FOOTNOTE.Index;
 						ref = ref.substring(1);

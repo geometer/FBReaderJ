@@ -81,11 +81,11 @@ class ZLTreeResource extends ZLResource {
 		}
 
 		@Override
-		public void startElementHandler(String tag, String[] attributes) {
+		public void startElementHandler(String tag, Map<String, String> attributes) {
 			if (!myStack.empty() && (NODE.equals(tag))) {
-				String name = attributeValue(attributes, "name");
+				String name = attributes.get("name");
 				if (name != null) {
-					String value = attributeValue(attributes, "value");
+					String value = attributes.get("value");
 					ZLTreeResource peek = myStack.peek();
 					ZLTreeResource node;
 					if (peek.myChildren == null) {

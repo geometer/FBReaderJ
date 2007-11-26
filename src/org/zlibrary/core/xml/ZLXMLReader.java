@@ -1,6 +1,7 @@
 package org.zlibrary.core.xml;
 
 import java.io.*;
+import java.util.Map;
 
 import org.zlibrary.core.library.ZLibrary;
 
@@ -16,7 +17,7 @@ public abstract class ZLXMLReader {
 		return (stream != null) ? ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, stream) : false;
 	}
 	
-	public void startElementHandler(String tag, String [] attributes) {
+	public void startElementHandler(String tag, Map<String, String> attributes) {
 		
 	}
 	
@@ -37,14 +38,4 @@ public abstract class ZLXMLReader {
 		
 	}
 	
-	// attributes = (attributeName, attributeValue)*
-	protected static String attributeValue(String [] attributes, String name) {
-		int length = attributes.length - 1;
-		for (int i = 0; i < length; i+=2) {
-			if (attributes[i].equals(name)) {
-				return attributes[i+1];
-			} 
-		}
-		return null;
-	}
 }
