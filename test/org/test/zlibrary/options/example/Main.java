@@ -32,7 +32,7 @@ public class Main {
 		ZLStringOption myOption = new ZLStringOption("ui", "MYGROUP", 
 				"length", "12312");
 		myOption.setValue("I'M_CHANGED!");
-		ZLStringOption myChangeableOption = new ZLStringOption("ui", "MYGROUP", 
+		ZLStringOption myChangeableOption = new ZLStringOption("gruiu", "MYGROUP", 
 				"lengthChangeable", "12312");
 		myChangeableOption.setValue("I_COULD_CHANGE!");
 		ZLConfigInstance.getInstance().unsetValue("MYGROUP", 
@@ -40,7 +40,7 @@ public class Main {
 		
 		
 		
-		String output = "test/org/test/zlibrary/options/example/output/output/";
+		String output = "test/org/test/zlibrary/options/example/output/";
 		ZLConfigWriterFactory.createConfigWriter(output).write();
 	}
 	

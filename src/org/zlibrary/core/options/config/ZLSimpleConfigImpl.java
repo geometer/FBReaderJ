@@ -53,7 +53,10 @@ import java.util.*;
 	}
 	
 	public void unsetValue(String group, String name) {
-		myData.get(group).unsetValue(name);
+        ZLGroup gr = myData.get(group);
+        if (gr != null) {
+            gr.unsetValue(name);
+        }
 	}
 	
 	/**
