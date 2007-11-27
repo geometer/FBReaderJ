@@ -206,7 +206,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 	
 	public boolean isFullscreen() {
-		return (myFrame.getSize() == Toolkit.getDefaultToolkit().getScreenSize());		
+		return this.myFrame.isMaximumSizeSet();		
 	}
 	
 	public boolean isFingerTapEventSupported() {
