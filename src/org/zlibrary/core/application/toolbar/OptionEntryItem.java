@@ -6,11 +6,7 @@ public class OptionEntryItem implements Item {
 	//public OptionEntryItem(ZLOptionEntry entry) {
 		//myOptionEntry = entry;
 	//}
-	
-	public Type getType() {
-		return Type.OPTION_ENTRY;
-	}
-	
+		
 	//public ZLOptionEntry entry() {
 	//	return myOptionEntry;
 	//}

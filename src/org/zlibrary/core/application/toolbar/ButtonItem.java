@@ -14,10 +14,6 @@ public class ButtonItem implements Item {
 		myTooltip = tooltip;
 	}
 
-	public Type getType() {
-		return Type.BUTTON;
-	}
-
 	public int getActionId() {
 		return myActionId;
 	}

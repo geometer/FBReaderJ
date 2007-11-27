@@ -155,7 +155,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void addToolbarItem(Item item) {
-		if (item.getType() == Item.Type.BUTTON) {
+		if (item instanceof ButtonItem) {
 			ButtonItem buttonItem = (ButtonItem)item;
 			Action action = new MyButtonAction(buttonItem);
 			myToolbar.add(action);
