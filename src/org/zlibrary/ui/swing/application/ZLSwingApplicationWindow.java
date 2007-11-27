@@ -116,7 +116,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			myMenuStack.pop();
 		}
 		protected void processItem(Menubar.PlainItem item) {
-			myMenuStack.peek().add(new JMenuItem(item.getName()));
+			JMenuItem menu = new JMenuItem(item.getName());
+			menu.addActionListener(new MyMenuItemAction(item));
+			myMenuStack.peek().add(menu);
 		}
 		protected void processSepartor(Menubar.Separator separator) {
 			((JMenu)myMenuStack.peek()).addSeparator();
@@ -200,8 +202,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void setFullscreen(boolean fullscreen) {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.myFrame.setSize(screenSize);
+		this.myFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 	}
 	
 	public boolean isFullscreen() {
