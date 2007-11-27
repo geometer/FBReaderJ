@@ -14,8 +14,7 @@ import org.zlibrary.core.application.menu.MenuVisitor;
 import org.zlibrary.core.application.menu.Menubar;
 import org.zlibrary.core.application.menu.Menubar.PlainItem;
 import org.zlibrary.core.application.menu.Menubar.Submenu;
-import org.zlibrary.core.application.toolbar.ButtonItem;
-import org.zlibrary.core.application.toolbar.Item;
+import org.zlibrary.core.application.toolbar.Toolbar;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
@@ -25,7 +24,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
 	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
-	private final Map<Item, Action> myItemActionMap = new HashMap<Item, Action>();
+	private final Map<Toolbar.Item, Action> myItemActionMap = new HashMap<Toolbar.Item, Action>();
 	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
 
@@ -154,9 +153,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		return viewWidget;
 	}
 
-	public void addToolbarItem(Item item) {
-		if (item instanceof ButtonItem) {
-			ButtonItem buttonItem = (ButtonItem)item;
+	public void addToolbarItem(Toolbar.Item item) {
+		if (item instanceof Toolbar.ButtonItem) {
+			Toolbar.ButtonItem buttonItem = (Toolbar.ButtonItem)item;
 			Action action = new MyButtonAction(buttonItem);
 			myToolbar.add(action);
 			//myActionMap.put(item, action);
@@ -167,9 +166,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 	
 	private class MyButtonAction extends AbstractAction {
-		private ButtonItem myItem;
+		private Toolbar.ButtonItem myItem;
 		
-		MyButtonAction(ButtonItem item) {
+		MyButtonAction(Toolbar.ButtonItem item) {
 			myItem = item;
 			//myItem.getActionId().
 			String iconFileName = "icons/toolbar/" + myItem.getIconName() + ".png";
@@ -186,7 +185,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
-	public void setToolbarItemState(Item item, boolean visible, boolean enabled) {
+	public void setToolbarItemState(Toolbar.Item item, boolean visible, boolean enabled) {
 		Action action = myItemActionMap.get(item);
 		
 		if (action != null) {
@@ -196,7 +195,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
-	public void setToggleButtonState(ButtonItem item) {
+	public void setToggleButtonState(Toolbar.ButtonItem item) {
 		
 		// TODO: implement
 	}
