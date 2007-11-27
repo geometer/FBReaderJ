@@ -18,7 +18,8 @@ import java.util.Map;
 	public String getValue(String group, String name, String defaultValue) {
 		//String value = myDeltaConfig.getValue(group, name, defaultValue);
 		//if (value == null) {
-			return myMainConfig.getValue(group, name, defaultValue);
+		String value = myMainConfig.getValue(group, name, defaultValue);
+		return (value != null) ? value : defaultValue;
 		//} else {
 		//	return value;
 		//}
