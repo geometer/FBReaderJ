@@ -165,7 +165,6 @@ public abstract class ZLApplication {
 	
 	protected void addAction(int actionId, ZLAction action) {
 		myActionMap.put(actionId, action);
-		System.out.println("put" + actionId);
 	}
 
 	public boolean isFullKeyboardControlSupported() {
