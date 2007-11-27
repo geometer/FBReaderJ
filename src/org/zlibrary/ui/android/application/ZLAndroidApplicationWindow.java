@@ -2,7 +2,6 @@ package org.zlibrary.ui.android.application;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
-import org.zlibrary.core.application.toolbar.Toolbar;
 
 import org.zlibrary.ui.android.view.ZLAndroidViewWidget;
 
@@ -33,11 +32,11 @@ public class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		return ZLAndroidViewWidget.Instance;
 	}
 
-	public void addToolbarItem(Toolbar.Item item) {
+	public void addToolbarItem(ZLApplication.Toolbar.Item item) {
 		// TODO: implement
 	}
 
-	public void setToolbarItemState(Toolbar.Item item, boolean visible, boolean enabled) {
+	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
 		// TODO: implement
 	}
 
@@ -45,7 +44,7 @@ public class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
-	public void setToggleButtonState(Toolbar.ButtonItem item) {
+	public void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item) {
 		// TODO: implement
 	}
 
