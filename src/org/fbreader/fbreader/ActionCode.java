@@ -42,13 +42,13 @@ public enum ActionCode {
 	CLEAR_SELECTION(36),// = 36,
 	OPEN_SELECTED_TEXT_IN_DICTIONARY(37);// = 37,
 	
-	private int code;
+	private final int myCode;
 	
 	ActionCode(int code) {
-		this.code = code;
+		myCode = code;
 	}
 	
 	public int getCode() {
-		return code;
+		return myCode;
 	}
 };

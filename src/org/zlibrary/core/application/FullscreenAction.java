@@ -1,8 +1,8 @@
 package org.zlibrary.core.application;
 
 public class FullscreenAction extends ZLAction {
-	private ZLApplication myApplication;
-	private	boolean myIsToggle;
+	private final ZLApplication myApplication;
+	private	final boolean myIsToggle;
 
 	public FullscreenAction(ZLApplication application, boolean toggle) {
 		this.myApplication = application;

@@ -14,7 +14,7 @@ public class FBReader extends ZLApplication {
 	}
 
 	public FBReader(String[] args) {
-		addAction(ActionCode.TOGGLE_FULLSCREEN.getCode(), new FullscreenAction(this, false));
+		addAction(ActionCode.TOGGLE_FULLSCREEN.getCode(), new FullscreenAction(this, true));
 		addAction(ActionCode.QUIT.getCode(), new FBReaderActions.QuitAction(this));
 		addAction(ActionCode.SHOW_HELP.getCode(), new FBReaderActions.ShowHelpAction(this));
 		
