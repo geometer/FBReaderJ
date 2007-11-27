@@ -231,6 +231,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 	
 	public void close() {
+		ZLSwingLibrary.shutdown();
 		System.exit(0);
 		// TODO: implement
 	}
