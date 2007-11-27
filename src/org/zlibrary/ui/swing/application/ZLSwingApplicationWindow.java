@@ -9,11 +9,6 @@ import javax.swing.*;
 import org.zlibrary.core.application.ZLAction;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
-import org.zlibrary.core.application.menu.Menu;
-import org.zlibrary.core.application.menu.MenuVisitor;
-import org.zlibrary.core.application.menu.Menubar;
-import org.zlibrary.core.application.menu.Menubar.PlainItem;
-import org.zlibrary.core.application.menu.Menubar.Submenu;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
@@ -103,34 +98,37 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		visitor.processMenu(application().getMenubar());
 	}
 		
-	private class MyMenuVisitor extends MenuVisitor {
+	private class MyMenuVisitor extends ZLApplication.MenuVisitor {
 		private final Stack<JMenuItem> myMenuStack = new Stack<JMenuItem>();
 
 		private MyMenuVisitor(JMenuItem menu) {
 			myMenuStack.push(menu);
 		}
-		protected void processSubmenuBeforeItems(Menubar.Submenu submenu) {
+		
+		protected void processSubmenuBeforeItems(ZLApplication.Menubar.Submenu submenu) {
 			JMenu menu = new JMenu(submenu.getMenuName());
 			myMenuStack.peek().add(menu);
 			myMenuStack.push(menu);	
 		}
-		protected void processSubmenuAfterItems(Menubar.Submenu submenu) {
+		
+		protected void processSubmenuAfterItems(ZLApplication.Menubar.Submenu submenu) {
 			myMenuStack.pop();
 		}
-		protected void processItem(Menubar.PlainItem item) {
+		
+		protected void processItem(ZLApplication.Menubar.PlainItem item) {
 			JMenuItem menu = new JMenuItem(item.getName());
 			menu.addActionListener(new MyMenuItemAction(item));
 			myMenuStack.peek().add(menu);
 		}
-		protected void processSepartor(Menubar.Separator separator) {
+		protected void processSepartor(ZLApplication.Menubar.Separator separator) {
 			((JMenu)myMenuStack.peek()).addSeparator();
 		}
 	}
 	
 	private class MyMenuItemAction extends AbstractAction {
-		private PlainItem myItem;
+		private ZLApplication.Menubar.PlainItem myItem;
 		
-		MyMenuItemAction(PlainItem item) {
+		MyMenuItemAction(ZLApplication.Menubar.PlainItem item) {
 			myItem = item;
 			//myItem.getActionId().
 			putValue(Action.SHORT_DESCRIPTION, item.getName()); 

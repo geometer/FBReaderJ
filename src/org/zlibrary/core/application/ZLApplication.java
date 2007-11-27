@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.zlibrary.core.application.menu.Menubar;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.options.ZLIntegerOption;
@@ -442,5 +441,116 @@ public abstract class ZLApplication {
 			}
 		}
 	}
+	
+	
+	//Menu
+	static public class Menu {
+		public interface Item {
+		}
+
+		private final List<Item> myItems = new LinkedList<Item>();;
+		private final ZLResource myResource;
+
+		protected Menu(ZLResource resource) {
+			myResource = resource;
+		}
+
+		protected ZLResource getResource() {
+			return myResource;
+		}
+
+		public void addItem(int actionId, ZLResourceKey key) {
+			myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
+		}
+		
+		public void addSeparator() {
+			myItems.add(new Menubar.Separator());
+		}
+		
+		public Menu addSubmenu(ZLResourceKey key) {
+			Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
+			myItems.add(submenu);
+			return submenu;
+		}
+
+		List<Item> getItems() {
+			return Collections.unmodifiableList(myItems);
+		}
+	}
+	
+	//MenuBar
+	static public class Menubar extends Menu {
+		public static class PlainItem implements  Item {
+			private String myName;
+			private int myActionId;
+
+			public  PlainItem() {}
+			public PlainItem(String name, int actionId) {
+				myName = name;
+				myActionId = actionId;
+			}
+
+			public String getName() {
+				return myName;
+			}
+			
+			public int getActionId() {
+				return myActionId;
+			}
+		};
+
+		public static class Submenu extends Menu implements Item {
+			public Submenu(ZLResource resource) {
+				super(resource);
+			}
+
+			public String getMenuName() {
+				return getResource().value();
+			}
+		};
+		
+		public static class Separator implements Item {
+		};
+			
+		public Menubar() {
+			super(ZLResource.resource("menu"));
+		}
+	}
+
+    //MenuVisitor
+	static public abstract class MenuVisitor {
+		public void processMenu(Menu menu) {
+			for (Menu.Item item : menu.getItems()) {
+				if (item instanceof Menubar.PlainItem) {
+					processItem((Menubar.PlainItem)item);
+				} else if (item instanceof Menubar.Submenu) {
+					Menubar.Submenu submenu = (Menubar.Submenu)item;
+					processSubmenuBeforeItems(submenu);
+					processMenu(submenu);
+					processSubmenuAfterItems(submenu);
+				} else if (item instanceof Menubar.Separator) {
+					processSepartor((Menubar.Separator)item);
+				}
+			}
+		}
+
+		protected abstract void processSubmenuBeforeItems(Menubar.Submenu submenu);
+		protected abstract void processSubmenuAfterItems(Menubar.Submenu submenu);
+		protected abstract void processItem(Menubar.PlainItem item);
+		protected abstract void processSepartor(Menubar.Separator separator);
+	}
+	
+	static public class PresentWindowHandler {//extends ZLMessageHandler {
+		private ZLApplication myApplication;
+		private String myLastCaller;
+
+		//public PresentWindowHandler(ZLApplication application);
+		//public void onMessageReceived(List<String> arguments);
+		//public String lastCaller();
+		//public void resetLastCaller();
+
+	}
+
+
 }
 

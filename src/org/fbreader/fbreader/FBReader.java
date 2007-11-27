@@ -2,7 +2,6 @@ package org.fbreader.fbreader;
 
 import org.zlibrary.core.application.FullscreenAction;
 import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.application.menu.Menu;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.resources.ZLResourceKey;
 import org.zlibrary.text.view.ZLTextView;
