@@ -117,11 +117,11 @@ public class ZLTextViewImpl extends ZLTextView {
 		paragraph.addEntry(factory.createControlEntry((byte) 28, true));
 		paragraph.addEntry(factory.createTextEntry(" bold "));
 		paragraph.addEntry(factory.createControlEntry((byte) 28, false));
-		paragraph.addEntry(factory.createTextEntry("default style again"));
+		paragraph.addEntry(factory.createTextEntry("default style again "));
 		paragraph.addEntry(factory.createControlEntry((byte) 31, true));
-		paragraph.addEntry(factory.createTextEntry(" large font now "));
+		paragraph.addEntry(factory.createTextEntry("large font now"));
 		paragraph.addEntry(factory.createControlEntry((byte) 31, false));
-		paragraph.addEntry(factory.createTextEntry("default style once more"));
+		paragraph.addEntry(factory.createTextEntry(" default style once more"));
 		model.addParagraphInternal(paragraph);
 /*		model.addText("default style");
 		model.addControl((byte) 42, true);
@@ -158,7 +158,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			}
 			h += dh;	
 		}*/
-		int h = 100;
+		int h = 0;
 		for (ZLTextLineInfo info : myLineInfos) {
 			int w = 0;
 			for (ZLTextWordCursor cursor = info.RealStart; !cursor.equalWordNumber(info.End) && !cursor.isEndOfParagraph(); cursor.nextWord()) {
@@ -166,12 +166,12 @@ public class ZLTextViewImpl extends ZLTextView {
 				if (element instanceof ZLTextWord) {
 					String text = ((ZLTextWord) element).Data;
 					int dw = context.getStringWidth(text);
-					context.drawString(w, h, text);
+					context.drawString(w, h + info.Height, text);
 					w += dw;
 				} else if (element instanceof ZLTextHSpaceElement) {
 					String text = " "; 
 					int dw = context.getStringWidth(text);
-					context.drawString(w, h, text);
+					context.drawString(w, h + info.Height, text);
 					w += dw;
 				} else if (element instanceof ZLTextControlElement) {
 					myStyle.applyControl((ZLTextControlElement) element);			
@@ -316,7 +316,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			info.SpaceCounter--;
 		}
 
-		myStyle.setStyle(storedStyle);
+//		myStyle.setStyle(storedStyle);
 
 		if (isFirstLine) {
 			info.Height += info.StartStyle.spaceBefore();
