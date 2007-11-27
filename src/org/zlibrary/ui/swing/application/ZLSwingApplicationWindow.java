@@ -47,15 +47,19 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			setLocation((int)myXOption.getValue(), (int)myYOption.getValue());
 			addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent event) {
-					Dimension size = getSize();
-					myWidthOption.setValue(size.width);
-					myHeightOption.setValue(size.height);
+					if (!isFullscreen()) {
+						Dimension size = getSize();
+						myWidthOption.setValue(size.width);
+						myHeightOption.setValue(size.height);
+					}
 				}
 
 				public void componentMoved(ComponentEvent event) {
-					Point point = getLocation();
-					myXOption.setValue(point.x);
-					myYOption.setValue(point.y);
+					if (!isFullscreen()) {
+						Point point = getLocation();
+						myXOption.setValue(point.x);
+						myYOption.setValue(point.y);
+					}
 				}
 			});
 		}
@@ -201,11 +205,17 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void setFullscreen(boolean fullscreen) {
-		this.myFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+		if (fullscreen) {
+			myFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+			//myFrame.setResizable(false);
+		} else {
+			//myFrame.setResizable(true);
+			myFrame.setExtendedState(Frame.NORMAL);
+		}
 	}
 	
 	public boolean isFullscreen() {
-		return this.myFrame.isMaximumSizeSet();		
+		return myFrame.getExtendedState() == Frame.MAXIMIZED_BOTH;		
 	}
 	
 	public boolean isFingerTapEventSupported() {
