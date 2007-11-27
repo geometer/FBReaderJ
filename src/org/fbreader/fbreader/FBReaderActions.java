@@ -1,10 +1,10 @@
 package org.fbreader.fbreader;
 
-import org.zlibrary.core.application.ZLAction;
+import org.zlibrary.core.application.ZLApplication;
 
 public class FBReaderActions {
 	
-	private static class FBAction extends ZLAction {
+	private static class FBAction extends ZLApplication.ZLAction {
 		private FBReader myFBReader;
 
 		protected FBAction(FBReader fbreader) {

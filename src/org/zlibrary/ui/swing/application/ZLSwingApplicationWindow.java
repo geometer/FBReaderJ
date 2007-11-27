@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import org.zlibrary.core.application.ZLAction;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
 import org.zlibrary.core.options.ZLIntegerRangeOption;

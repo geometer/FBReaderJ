@@ -1,6 +1,5 @@
 package org.fbreader.fbreader;
 
-import org.zlibrary.core.application.FullscreenAction;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.resources.ZLResourceKey;
@@ -13,7 +12,7 @@ public class FBReader extends ZLApplication {
 	}
 
 	public FBReader(String[] args) {
-		addAction(ActionCode.TOGGLE_FULLSCREEN.getCode(), new FullscreenAction(this, true));
+		addAction(ActionCode.TOGGLE_FULLSCREEN.getCode(), new ZLApplication.FullscreenAction(this, true));
 		addAction(ActionCode.QUIT.getCode(), new FBReaderActions.QuitAction(this));
 		addAction(ActionCode.SHOW_HELP.getCode(), new FBReaderActions.ShowHelpAction(this));
 		
