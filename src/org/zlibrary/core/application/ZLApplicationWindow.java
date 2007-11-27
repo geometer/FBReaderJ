@@ -3,7 +3,6 @@ package org.zlibrary.core.application;
 import java.util.List;
 import java.util.Set;
 
-import org.zlibrary.core.application.toolbar.Toolbar;
 import org.zlibrary.core.view.ZLViewWidget;
 
 abstract public class ZLApplicationWindow {
@@ -23,8 +22,8 @@ abstract public class ZLApplicationWindow {
 	public void init() {
 		myApplication.setMyViewWidget(createViewWidget());
 
-		List<Toolbar.Item> toolbarItems = myApplication.getToolbar().items();
-		for (Toolbar.Item item: toolbarItems) {
+		List<ZLApplication.Toolbar.Item> toolbarItems = myApplication.getToolbar().items();
+		for (ZLApplication.Toolbar.Item item: toolbarItems) {
 			addToolbarItem(item);
 		}
 
@@ -33,7 +32,7 @@ abstract public class ZLApplicationWindow {
 	abstract public void initMenu();
 
 	
-	public void onButtonPress(Toolbar.ButtonItem button) {
+	public void onButtonPress(ZLApplication.Toolbar.ButtonItem button) {
 		
 		if (myToggleButtonLock) {
 			return;
@@ -46,9 +45,9 @@ abstract public class ZLApplicationWindow {
 				return;
 			} else {
 				button.press();
-				Toolbar.ButtonGroup group = button.getButtonGroup();
-				Set<Toolbar.ButtonItem> items = group.Items;
-				for (Toolbar.ButtonItem bitem: items) {
+				ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
+				Set<ZLApplication.Toolbar.ButtonItem> items = group.Items;
+				for (ZLApplication.Toolbar.ButtonItem bitem: items) {
 					setToggleButtonState(bitem);
 				}
 			}
@@ -59,20 +58,20 @@ abstract public class ZLApplicationWindow {
 		application().doAction(button.getActionId());
 	}
 	
-	public abstract void setToggleButtonState(Toolbar.ButtonItem item);
+	public abstract void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item);
 	
-	public abstract void setToolbarItemState(Toolbar.Item item, boolean visible, boolean enabled);
+	public abstract void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled);
 	
 	abstract protected ZLViewWidget createViewWidget();
 	
-	abstract public void addToolbarItem(Toolbar.Item item);
+	abstract public void addToolbarItem(ZLApplication.Toolbar.Item item);
 
 	public void refresh() {
-		List<Toolbar.Item> items = application().getToolbar().items();
+		List<ZLApplication.Toolbar.Item> items = application().getToolbar().items();
 		boolean enableToolbarSpace = false;
-		Toolbar.Item lastSeparator = null;
-		for (Toolbar.Item item: items) {
-			if (item instanceof Toolbar.OptionEntryItem) {
+		ZLApplication.Toolbar.Item lastSeparator = null;
+		for (ZLApplication.Toolbar.Item item: items) {
+			if (item instanceof ZLApplication.Toolbar.OptionEntryItem) {
 			/*case OPTION_ENTRY:
 			{
 				boolean visible = ((OptionEntryItem)item.entry().isVisible())//((Toolbar.OptionEntryItem)**it).entry()->isVisible();
@@ -86,8 +85,8 @@ abstract public class ZLApplicationWindow {
 						setToolbarItemState(item, visible, true);
 					}
 					break;*/
-			} else if (item instanceof Toolbar.ButtonItem) {
-				Toolbar.ButtonItem button = (Toolbar.ButtonItem)item;
+			} else if (item instanceof ZLApplication.Toolbar.ButtonItem) {
+				ZLApplication.Toolbar.ButtonItem button = (ZLApplication.Toolbar.ButtonItem)item;
 				int id = button.getActionId();
 	        
 				boolean visible = application().isActionVisible(id);
@@ -101,7 +100,7 @@ abstract public class ZLApplicationWindow {
 					enableToolbarSpace = true;
 				}
 				if (!enabled && button.isPressed()) {
-					Toolbar.ButtonGroup group = button.getButtonGroup();
+					ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
 					group.press(null);
 					application().doAction(group.UnselectAllButtonsActionId);
 					myToggleButtonLock = true;
@@ -109,7 +108,7 @@ abstract public class ZLApplicationWindow {
 					myToggleButtonLock = false;
 				}
 				setToolbarItemState(item, visible, enabled);
-			} else if (item instanceof Toolbar.SeparatorItem) {
+			} else if (item instanceof ZLApplication.Toolbar.SeparatorItem) {
 				if (enableToolbarSpace) {
 					lastSeparator = item;
 					enableToolbarSpace = false;

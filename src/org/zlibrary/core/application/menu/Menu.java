@@ -11,11 +11,10 @@ public class Menu {
 	public interface Item {
 	}
 
-	private final List<Item> myItems;
+	private final List<Item> myItems = new LinkedList<Item>();;
 	private final ZLResource myResource;
 
 	protected Menu(ZLResource resource) {
-		myItems = new LinkedList<Item>();
 		myResource = resource;
 	}
 
