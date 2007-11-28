@@ -10,7 +10,6 @@ import org.zlibrary.text.model.*;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 import org.zlibrary.text.model.entry.*;
 
-import org.fbreader.bookmodel.*;
 import org.fbreader.formats.fb2.*;
 
 import org.zlibrary.text.view.*;
@@ -24,7 +23,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		
 		public ViewStyle(ZLPaintContext context) {
 			myContext = context;
-			setStyle(new ZLTextBaseStyle());
+			setStyle(ZLTextStyleCollection.instance().getBaseStyle());
 			myWordHeight = -1;
 		}
 
@@ -38,8 +37,10 @@ public class ZLTextViewImpl extends ZLTextView {
 
 		public void applyControl(ZLTextControlElement control) {
 			if (control.isStart()) {
-				ZLTextFullStyleDecoration decoration = new ZLTextFullStyleDecoration(control.getEntry());
-				setStyle(decoration.createDecoratedStyle(myStyle));
+				ZLTextStyleDecoration decoration = ZLTextStyleCollection.instance().getDecoration(control.getEntry().getKind());
+				if (decoration instanceof ZLTextFullStyleDecoration) {
+					setStyle(((ZLTextFullStyleDecoration)decoration).createDecoratedStyle(myStyle));
+				}
 			} else {
 				if (myStyle.isDecorated()) {
 					setStyle(((ZLTextDecoratedStyle) myStyle).getBase());
@@ -97,8 +98,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
-	private BookModel myModel;
-//	private ZLTextPlainModel myModel;
+	private ZLTextModel myModel;
 	private ViewStyle myStyle;
 	private List<ZLTextLineInfo> myLineInfos;
 
@@ -108,7 +108,8 @@ public class ZLTextViewImpl extends ZLTextView {
 		myLineInfos = new ArrayList<ZLTextLineInfo> ();
 	}
 
-	public void setModel(String fileName) {
+	public void setModel(ZLTextModel model) {
+		/*
 		myModel = new BookModel();
 		ZLModelFactory factory = new ZLModelFactory();
 		ZLTextPlainModel model = myModel.getBookModel();
@@ -123,22 +124,25 @@ public class ZLTextViewImpl extends ZLTextView {
 		paragraph.addEntry(factory.createControlEntry((byte) 31, false));
 		paragraph.addEntry(factory.createTextEntry(" default style once more"));
 		model.addParagraphInternal(paragraph);
+		*/
 /*		model.addText("default style");
 		model.addControl((byte) 42, true);
 		model.addText("bold");
 		model.addControl((byte) 42, false);
 		model.addText("default again");*/
-//		myModel = new FB2Reader().readBook(fileName);
+		myModel = model;
+	}
+
+	public void setModel(String fileName) {
+		setModel(new FB2Reader().readBook(fileName).getBookModel());
 	}
 
 	public void paint() {
 		ZLPaintContext context = getContext();
 
-		ZLTextModel model = myModel.getBookModel();
-//		ZLTextModel model = myModel;
-		int paragraphs = model.getParagraphsNumber();
+		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
-			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(model, 0);
+			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(myModel, 0);
 			ZLTextWordCursor start = new ZLTextWordCursor();
 			start.setCursor(firstParagraph);
 			buildInfos(start);

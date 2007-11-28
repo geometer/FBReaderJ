@@ -18,6 +18,7 @@ public class ZLTextStyleDecoration {
 	public ZLBoolean3Option ItalicOption;
 
 	private String myName;
+	private HyperlinkStyle myHyperlinkStyle;
 
 	public ZLIntegerOption VerticalShiftOption;
 
@@ -48,5 +49,13 @@ public class ZLTextStyleDecoration {
 
 	public String getName() {
 		return myName;
+	}
+
+	public HyperlinkStyle getHyperlinkStyle() {
+		return myHyperlinkStyle;
+	}
+
+	public void setHyperlinkStyle(HyperlinkStyle hyperlinkStyle) {
+		myHyperlinkStyle = hyperlinkStyle;
 	}
 }
