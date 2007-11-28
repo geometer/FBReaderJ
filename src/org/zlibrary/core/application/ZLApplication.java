@@ -33,15 +33,15 @@ public abstract class ZLApplication {
 	static final String TIMEOUT = "Timeout";
 
 
-	private ZLIntegerOption RotationAngleOption;
-	private ZLIntegerOption AngleStateOption;
+	public final ZLIntegerOption RotationAngleOption;
+	public final ZLIntegerOption AngleStateOption;
 
-	private ZLBooleanOption KeyboardControlOption;
+	public final ZLBooleanOption KeyboardControlOption;
 
-	private ZLBooleanOption ConfigAutoSavingOption;
-	private ZLIntegerRangeOption ConfigAutoSaveTimeoutOption;
+	public final ZLBooleanOption ConfigAutoSavingOption;
+	public final ZLIntegerRangeOption ConfigAutoSaveTimeoutOption;
 
-	private ZLIntegerRangeOption KeyDelayOption;
+	public final ZLIntegerRangeOption KeyDelayOption;
 	
 	private String myName;
 	private ZLViewWidget myViewWidget;
@@ -63,14 +63,14 @@ public abstract class ZLApplication {
 		myName = ZLibrary.getInstance().getApplicationName();
 		myContext = ZLibrary.getInstance().createPaintContext();
 		
-		setRotationAngleOption(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getAngle()));
+		RotationAngleOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
 		
-		setAngleStateOption(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getAngle()));
+		AngleStateOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());
 		
-		setKeyboardControlOption(new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false));
+		KeyboardControlOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
 		ConfigAutoSavingOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, CONFIG, AUTO_SAVE, true);
-		setConfigAutoSaveTimeoutOption(new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30));
-		setKeyDelayOption(new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250));
+		ConfigAutoSaveTimeoutOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30);
+		KeyDelayOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
 		setMyViewWidget(null);
 		myWindow = null;
 		if (ConfigAutoSavingOption.getValue()) {
@@ -268,45 +268,7 @@ public abstract class ZLApplication {
 		return myViewWidget;
 	}
 
-	public void setRotationAngleOption(ZLIntegerOption rotationAngleOption) {
-		RotationAngleOption = rotationAngleOption;
-	}
 
-	public ZLIntegerOption getRotationAngleOption() {
-		return RotationAngleOption;
-	}
-
-	public void setAngleStateOption(ZLIntegerOption angleStateOption) {
-		AngleStateOption = angleStateOption;
-	}
-
-	public ZLIntegerOption getAngleStateOption() {
-		return AngleStateOption;
-	}
-
-	public void setKeyboardControlOption(ZLBooleanOption keyboardControlOption) {
-		KeyboardControlOption = keyboardControlOption;
-	}
-
-	public ZLBooleanOption getKeyboardControlOption() {
-		return KeyboardControlOption;
-	}
-
-	public void setConfigAutoSaveTimeoutOption(ZLIntegerRangeOption configAutoSaveTimeoutOption) {
-		ConfigAutoSaveTimeoutOption = configAutoSaveTimeoutOption;
-	}
-
-	public ZLIntegerRangeOption getConfigAutoSaveTimeoutOption() {
-		return ConfigAutoSaveTimeoutOption;
-	}
-
-	public void setKeyDelayOption(ZLIntegerRangeOption keyDelayOption) {
-		KeyDelayOption = keyDelayOption;
-	}
-
-	public ZLIntegerRangeOption getKeyDelayOption() {
-		return KeyDelayOption;
-	}
 	
 	public static String getDefaultFilesPathPrefix() {
 		return ourDefaultFilesPathPrefix;
@@ -365,13 +327,13 @@ public abstract class ZLApplication {
 		
 		public boolean isVisible() {
 			return (myApplication.getMyViewWidget() != null) &&
-			 ((myApplication.getRotationAngleOption().getValue() != ZLViewWidget.Angle.DEGREES0.getAngle()) ||
+			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
 				(myApplication.getMyViewWidget().getRotation() != ZLViewWidget.Angle.DEGREES0));
 
 		}
 		
 		public void run() {
-			int optionValue = (int)myApplication.getRotationAngleOption().getValue();
+			int optionValue = (int)myApplication.RotationAngleOption.getValue();
 			ZLViewWidget.Angle oldAngle = myApplication.getMyViewWidget().getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
@@ -391,15 +353,13 @@ public abstract class ZLApplication {
 				}
 			} else {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
-					myApplication.getMyViewWidget().helperFunctionGetAngle(optionValue) : ZLViewWidget.Angle.DEGREES0;
+						ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
 			}
 			myApplication.getMyViewWidget().rotate(newAngle);
-			myApplication.getAngleStateOption().setValue(newAngle.getAngle());
+			myApplication.AngleStateOption.setValue(newAngle.getDegrees());
 			myApplication.refreshWindow();		
 		}
 	}
-
-	
 	
 	//toolbar
 	static public class Toolbar {

@@ -11,31 +11,31 @@ abstract public class ZLViewWidget {
 		DEGREES180(180),
 		DEGREES270(270);
 		
-		private Angle(int angle) {
-			myAngle = angle;
+		private Angle(int degrees) {
+			myDegrees = degrees;
 		}
 		
-		public int getAngle() {
-			return myAngle;
+		public int getDegrees() {
+			return myDegrees;
+		}
+		
+		static public Angle getByDegrees(int degrees) {
+			switch(degrees) {
+			case 0: 
+				return Angle.DEGREES0;
+			case 90:
+				return Angle.DEGREES90;
+			case 180:
+				return Angle.DEGREES180;
+			case 270:
+				return Angle.DEGREES270;
+			default: 
+				return null;
+			}
 		}
 
-		private int myAngle;
+		private int myDegrees;
 	};
-	
-	public Angle helperFunctionGetAngle(int myAngle) {
-		switch(myAngle) {
-		case 0: 
-			return Angle.DEGREES0;
-		case 90:
-			return Angle.DEGREES90;
-		case 180:
-			return Angle.DEGREES180;
-		case 270:
-			return Angle.DEGREES270;
-		default: 
-			return null;
-		}
-	}
 
 	protected ZLViewWidget(Angle initialAngle) {
 		myRotation = initialAngle;
