@@ -10,12 +10,12 @@ import org.zlibrary.core.options.util.ZLToStringConverter;
  *
  */
 public final class ZLIntegerRangeOption extends ZLOption {
-	private long myValue;
-	private final long myDefaultValue;
-	private final long myMinValue;
-	private final long myMaxValue;
+	private int myValue;
+	private final int myDefaultValue;
+	private final int myMinValue;
+	private final int myMaxValue;
 	
-	public ZLIntegerRangeOption (String category, String group, String optionName, long minValue, long maxValue, long defaultValue) {
+	public ZLIntegerRangeOption (String category, String group, String optionName, int minValue, int maxValue, int defaultValue) {
 		super(category, group, optionName);
 		myMinValue = minValue;
 		myMaxValue = maxValue;
@@ -23,26 +23,26 @@ public final class ZLIntegerRangeOption extends ZLOption {
 		myValue = myDefaultValue;
 	}
 	
-	public long getMinValue() {
+	public int getMinValue() {
 		return myMinValue;
 	}
 	
-	public long getMaxValue() {
+	public int getMaxValue() {
 		return myMaxValue;
 	}
 	
-	public long getValue() {
+	public int getValue() {
 		if (!myIsSynchronized) {
 			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
 			String value = myConfig.getValue(myGroup, 
 					myOptionName, strDefaultValue);
-			myValue = ZLFromStringConverter.getLongValue(value);
+			myValue = ZLFromStringConverter.getIntegerValue(value);
 			myIsSynchronized = true;
 		}
 		return myValue;
 	}
 	
-	public void setValue(long value) {
+	public void setValue(int value) {
 		if ((value <= myMaxValue) && (value >= myMinValue)) {
 			if (myIsSynchronized && (myValue == value)) {
 				return;

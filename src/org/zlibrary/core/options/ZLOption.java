@@ -26,6 +26,7 @@ public abstract class ZLOption {
 		myCategory = category;
 		myGroup = group;
 		myOptionName = optionName;
+        myIsSynchronized = false;
 	}
 	
 	/**

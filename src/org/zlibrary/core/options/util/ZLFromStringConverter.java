@@ -12,12 +12,17 @@ public class ZLFromStringConverter {
 	}
 	
 	public static boolean getBooleanValue(String input){
-		return input.equals("true");
+		return input.toLowerCase().equals("true");
 	}
 
 	public static long getLongValue(String input){
-		Long value = Long.parseLong(input);
-		return value;
+        try {
+            Long value = Long.parseLong(input);
+            return value;
+        } catch (NumberFormatException e) {
+            System.err.println("wrong format : " + input);
+            return 0;
+        }
 	}
 	
 	public static ZLColor getColorValue(String input){
@@ -25,12 +30,22 @@ public class ZLFromStringConverter {
 	}
 
 	public static double getDoubleValue(String input){
-		double value = Double.parseDouble(input);
-		return value;
+        try {
+            double value = Double.parseDouble(input);
+            return value;
+        } catch (NumberFormatException e) {
+            System.err.println("wrong format : " + input);
+            return 0;
+        }
 	}
 
 	public static int getIntegerValue(String input){
-		int value = Integer.parseInt(input);
-		return value;
+        try {
+            int value = Integer.parseInt(input);
+            return value;
+        } catch (NumberFormatException e) {
+            System.err.println("wrong format : " + input);
+            return 0;
+        }
 	}
 }

@@ -1,6 +1,6 @@
 package org.test.zlibrary.options.example;
 
-import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.options.*;
 import org.zlibrary.core.options.config.ZLConfigInstance;
 import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
 import org.zlibrary.core.options.config.writer.*;
@@ -29,9 +29,9 @@ public class Main {
 		
 		
 		
-		ZLStringOption myOption = new ZLStringOption("ui", "MYGROUP", 
-				"length", "12312");
-		myOption.setValue("I'M_CHANGED!");
+		ZLIntegerOption myOption = new ZLIntegerOption("ui", "MYGROUP", 
+				"length", 12);
+		myOption.setValue(156);
 		ZLStringOption myChangeableOption = new ZLStringOption("gruiu", "MYGROUP", 
 				"lengthChangeable", "12312");
 		myChangeableOption.setValue("I_COULD_CHANGE!");

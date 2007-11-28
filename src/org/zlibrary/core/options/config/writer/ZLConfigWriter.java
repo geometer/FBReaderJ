@@ -43,7 +43,7 @@ import org.zlibrary.core.options.config.*;
 		Map<String, ZLGroup> data = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
 		Map<String, StringBuffer> configFilesContent = 
-			new HashMap<String, StringBuffer>();
+			new LinkedHashMap<String, StringBuffer>();
 		StringBuffer sb;
 		Map<String, Boolean> currentGroupOpenedIn;
 		

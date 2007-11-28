@@ -16,13 +16,11 @@ import java.util.Map;
 	}
 
 	public String getValue(String group, String name, String defaultValue) {
-		//String value = myDeltaConfig.getValue(group, name, defaultValue);
-		//if (value == null) {
-		String value = myMainConfig.getValue(group, name, defaultValue);
-		return (value != null) ? value : defaultValue;
-		//} else {
-		//	return value;
-		//}
+		String value = myDeltaConfig.getValue(group, name, defaultValue);
+		if (value == defaultValue) {
+		    value = myMainConfig.getValue(group, name, defaultValue);
+		}
+        return value;
 	}
 
 	public void removeGroup(String name) {
