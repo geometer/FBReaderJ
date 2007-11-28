@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<delta>
+  <delete>
+    <group name="MYGROUP">
+      <option name="lengthChangeable"/>
+    </group>
+  </delete>
+  <group name="MYGROUP">
+    <option name="length" value="0987" category="ui"/>
+  </group>
+</delta>

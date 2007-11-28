@@ -32,9 +32,9 @@ public class ModelTests extends TestCase{
 	private ZLBooleanOption myBooleanOption; 
 	private ZLStringOption myStringOption;
 
-	private final long myDefaultColor = 11599616;
-	private final long myDefaultIntRange = 75L;
-	private final long myDefaultInt = 15L;
+	private final int myDefaultColor = 11599616;
+	private final int myDefaultIntRange = 75;
+	private final int myDefaultInt = 15;
 	private final ZLBoolean3 myDefaultBoolean3 = ZLBoolean3.B3_UNDEFINED;
 	private final boolean myDefaultBoolean = true;
 	private final String myDefaultString = "Hello World";
@@ -44,7 +44,7 @@ public class ModelTests extends TestCase{
 		myColorOption = new ZLColorOption("","","my Color", new ZLColor ((short)176, (short)255, (short)0)); 
 		myDoubleOption = new ZLDoubleOption("","","My Double", myDefaultDouble); 
 		myIntegerOption = new ZLIntegerOption("","","I", myDefaultInt); 
-		myIntegerRangeOption = new ZLIntegerRangeOption("","","IR", -90L, 90L, myDefaultIntRange); 
+		myIntegerRangeOption = new ZLIntegerRangeOption("","","IR", -90, 90, myDefaultIntRange); 
 		myBoolean3Option = new ZLBoolean3Option("","","my Boolean 3", myDefaultBoolean3); 
 		myBooleanOption = new ZLBooleanOption("","","my Boolean", myDefaultBoolean); 
 		myStringOption = new ZLStringOption("qw","qwe","my String", myDefaultString); 
@@ -111,13 +111,13 @@ public class ModelTests extends TestCase{
 	}
 	
 	public void test02_integerRangeRight(){
-		myIntegerRangeOption.setValue(-1L);
-		assertEquals(myIntegerRangeOption.getValue(), -1L);
+		myIntegerRangeOption.setValue(-1);
+		assertEquals(myIntegerRangeOption.getValue(), -1);
 	}
 	
 	public void test02_integerRangeWrong(){
-		long expected = myIntegerRangeOption.getValue();
-		myIntegerRangeOption.setValue(10000000L);
+		int expected = myIntegerRangeOption.getValue();
+		myIntegerRangeOption.setValue(10000000);
 		assertEquals(myIntegerRangeOption.getValue(), expected);
 	}
 	

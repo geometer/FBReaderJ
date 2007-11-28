@@ -1,8 +1,5 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.util.ZLFromStringConverter;
-import org.zlibrary.core.options.util.ZLToStringConverter;
-
 /**
  * класс ранжированная целочисленная опция. есть верхний и нижний
  * пределы, которые тут же и указываются.
@@ -33,7 +30,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	
 	public int getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
+			String strDefaultValue = ((Integer)myDefaultValue).toString();
 			String value = myConfig.getValue(myGroup, 
 					myOptionName, strDefaultValue);
 			myValue = ZLFromStringConverter.getIntegerValue(value);
@@ -52,7 +49,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 			if (myValue == myDefaultValue) {
 				myConfig.unsetValue(myGroup, myOptionName);
 			} else {
-				String stringValue = ZLToStringConverter.convert(myValue);
+				String stringValue = ((Integer)myValue).toString();
 				myConfig.setValue(myGroup, myOptionName, stringValue, myCategory);
 			}
 		}

@@ -1,8 +1,5 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.util.ZLFromStringConverter;
-import org.zlibrary.core.options.util.ZLToStringConverter;
-
 public final class ZLBooleanOption extends ZLSimpleOption {
 	private boolean myValue;
 	private final boolean myDefaultValue;
@@ -19,8 +16,12 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 
 	public boolean getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
-			String value = myConfig.getValue(myGroup, myOptionName, strDefaultValue);
+			String value;
+            if (myDefaultValue) {
+                value = myConfig.getValue(myGroup, myOptionName, "true");
+            } else {
+                value = myConfig.getValue(myGroup, myOptionName, "false");
+            }
 			myValue = ZLFromStringConverter.getBooleanValue(value);
 			myIsSynchronized = true;
 		}
@@ -36,8 +37,11 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 		if (myValue == myDefaultValue) {
 			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
-			String stringValue = ZLToStringConverter.convert(myValue);
-			myConfig.setValue(myGroup, myOptionName, stringValue, myCategory);
+            if (myValue) {
+                myConfig.setValue(myGroup, myOptionName, "true", myCategory);
+            } else {
+                myConfig.setValue(myGroup, myOptionName, "false", myCategory);
+            }
 		}
 	}
 }

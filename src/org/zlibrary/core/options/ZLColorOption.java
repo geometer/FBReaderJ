@@ -11,8 +11,8 @@ import org.zlibrary.core.options.util.*;
  *
  */
 public final class ZLColorOption extends ZLOption {
-	private long myIntValue;
-	private final long myDefaultValue;
+	private int myIntValue;
+	private final int myDefaultValue;
 	
 	public ZLColorOption (String category, String group, String optionName, ZLColor defaultValue) {
 		super(category, group, optionName);
@@ -20,9 +20,9 @@ public final class ZLColorOption extends ZLOption {
 		myIntValue = myDefaultValue;
 	}
 	
-	public long getValue() {
+	public int getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
+			String strDefaultValue = ((Integer)myDefaultValue).toString();
 			String value = myConfig.getValue(myGroup, myOptionName, strDefaultValue);
 			myIntValue = ZLFromStringConverter.getIntegerValue(value);
 			myIsSynchronized = true;
@@ -31,7 +31,7 @@ public final class ZLColorOption extends ZLOption {
 	}
 	
 	public void setValue(ZLColor colorValue) {
-		long value = colorValue.getIntValue();
+		int value = colorValue.getIntValue();
 		if (myIsSynchronized && (myIntValue == value)) {
 			return;
 		}
@@ -40,7 +40,7 @@ public final class ZLColorOption extends ZLOption {
 		if (myIntValue == myDefaultValue) {
 			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
-			String stringValue = ZLToStringConverter.convert(myIntValue);
+			String stringValue = ((Integer)myIntValue).toString();
 			myConfig.setValue(myGroup, myOptionName, stringValue, myCategory);
 		}
 	}	

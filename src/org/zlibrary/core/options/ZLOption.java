@@ -1,6 +1,6 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.config.ZLSimpleConfig;
+import org.zlibrary.core.options.config.ZLConfig;
 import org.zlibrary.core.options.config.ZLConfigInstance;
 
 public abstract class ZLOption {
@@ -8,7 +8,7 @@ public abstract class ZLOption {
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 	
-	protected ZLSimpleConfig myConfig = ZLConfigInstance.getInstance();
+	protected ZLConfig myConfig = ZLConfigInstance.getInstance();
 	protected String myCategory;
 	protected String myGroup;
 	protected String myOptionName;
@@ -22,11 +22,12 @@ public abstract class ZLOption {
 	 * @param group
 	 * @param optionName
 	 */
-	protected ZLOption (String category, String group, String optionName) {
+	protected ZLOption (String category, String group, String name) {
 		myCategory = category;
 		myGroup = group;
-		myOptionName = optionName;
+		myOptionName = name;
         myIsSynchronized = false;
+        myConfig.setCategory(group, name, category);
 	}
 	
 	/**

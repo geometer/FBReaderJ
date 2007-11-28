@@ -1,7 +1,5 @@
 package org.test.zlibrary.options.example;
 
-import org.zlibrary.core.options.*;
-import org.zlibrary.core.options.config.ZLConfigInstance;
 import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
 import org.zlibrary.core.options.config.writer.*;
 
@@ -29,19 +27,19 @@ public class Main {
 		
 		
 		
-		ZLIntegerOption myOption = new ZLIntegerOption("ui", "MYGROUP", 
+		/*ZLIntegerOption myOption = new ZLIntegerOption("ui", "MYGROUP", 
 				"length", 12);
 		myOption.setValue(156);
 		ZLStringOption myChangeableOption = new ZLStringOption("gruiu", "MYGROUP", 
 				"lengthChangeable", "12312");
 		myChangeableOption.setValue("I_COULD_CHANGE!");
 		ZLConfigInstance.getInstance().unsetValue("MYGROUP", 
-		"lengthChangeable");
+		"lengthChangeable");*/
 		
-		
-		
-		String output = "test/org/test/zlibrary/options/example/output/";
+        String output = "test/org/test/zlibrary/options/example/output/";
+        //ZLConfigWriterFactory.createConfigWriter(output).writeDelta();
 		ZLConfigWriterFactory.createConfigWriter(output).write();
+        //ZLConfigWriterFactory.createConfigWriter(output + "cleared-").writeDelta();
 	}
 	
 }

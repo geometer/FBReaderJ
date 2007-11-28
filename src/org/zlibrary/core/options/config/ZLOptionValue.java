@@ -2,13 +2,19 @@ package org.zlibrary.core.options.config;
 
 public class ZLOptionValue {
 	private String myValue = "";
-	private String myCategory;
+	private String myCategory = "";
 	private String myName = "";
 	
 	public ZLOptionValue(String name, String value, String category) {
-		myValue = value.intern();
-		myCategory = category.intern();
-		myName = name.intern();
+        if (value != null) {
+            myValue = value.intern();
+        }
+        if (category != null) {
+            myCategory = category.intern();
+        }
+        if (name != null) {
+            myName = name.intern();
+        }
 	}
 	
 	public void setValue(String value) {
@@ -26,6 +32,10 @@ public class ZLOptionValue {
 	public String getCategory() {
 		return myCategory;
 	}
+    
+    public void setCategory(String cat) {
+        myCategory = cat;
+    }
 	
 	public String toString() {
 		return "    <option name=\"" + myName 

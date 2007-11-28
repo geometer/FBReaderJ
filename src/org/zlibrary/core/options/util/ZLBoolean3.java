@@ -15,7 +15,7 @@ public enum ZLBoolean3 {
 		myStringValue = stringValue;
 	}
 	
-	public String getStringValue(){
+	public String toString(){
 		return myStringValue;
 	}
 }

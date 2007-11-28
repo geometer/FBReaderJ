@@ -9,6 +9,9 @@
   <group name="Options">
     <option name="KeyDelay" value="0"/>
   </group>
+  <group name="MYGROUP">
+      <option name="lengthChangeable"/>
+  </group>
   <group name="Rotation">
     <option name="Angle" value="-1"/>
   </group>

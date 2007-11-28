@@ -1,8 +1,5 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.util.ZLFromStringConverter;
-import org.zlibrary.core.options.util.ZLToStringConverter;
-
 /**
  * класс дробная опция.
  * @author Администратор
@@ -20,7 +17,7 @@ public final class ZLDoubleOption extends ZLOption{
 	
 	public double getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ZLToStringConverter.convert(myDefaultValue);
+			String strDefaultValue = ((Double)myDefaultValue).toString();
 			String value = myConfig.getValue(myGroup, myOptionName, strDefaultValue);
 			myValue = ZLFromStringConverter.getDoubleValue(value);
 			myIsSynchronized = true;
@@ -37,7 +34,7 @@ public final class ZLDoubleOption extends ZLOption{
 		if (myValue == myDefaultValue) {
 			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
-			String stringValue = ZLToStringConverter.convert(myValue);
+			String stringValue = ((Double)myValue).toString();
 			myConfig.setValue(myGroup, myOptionName, stringValue, myCategory);
 		}
 	}

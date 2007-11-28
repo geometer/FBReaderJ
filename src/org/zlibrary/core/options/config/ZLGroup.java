@@ -13,6 +13,10 @@ public final class ZLGroup {
 		return Collections.unmodifiableCollection(myData.values());
 	}
 	
+    protected ZLOptionValue getOption(String name) {
+        return myData.get(name);
+    }
+    
 	public String getValue(String name){
 		ZLOptionValue temp = myData.get(name);
 		if (temp != null){
