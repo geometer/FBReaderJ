@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keymap>
+	<binding key="&lt;L&gt;" action="1"/>
+	<binding key="&lt;O&gt;" action="2"/>
+	<binding key="&lt;LeftArrow&gt;" action="3"/>
+	<binding key="&lt;RightArrow&gt;" action="4"/>
+	<binding key="&lt;C&gt;" action="5"/>
+	<binding key="&lt;F&gt;" action="6"/>
+	<binding key="&lt;P&gt;" action="7"/>
+	<binding key="&lt;N&gt;" action="8"/>
+	<binding key="&lt;PageDown&gt;" action="9"/>
+	<binding key="&lt;PageUp&gt;" action="10"/>
+	<binding key="&lt;DownArrow&gt;" action="11"/>
+	<binding key="&lt;UpArrow&gt;" action="12"/>
+	<binding key="&lt;MouseScrollDown&gt;" action="13"/>
+	<binding key="&lt;MouseScrollUp&gt;" action="14"/>
+	<binding key="&lt;Ctrl&gt;+&lt;Home&gt;" action="15"/>
+	<binding key="&lt;Home&gt;" action="16"/>
+	<binding key="&lt;End&gt;" action="17"/>
+	<binding key="&lt;Esc&gt;" action="18"/>
+	<binding key="&lt;=&gt;" action="19"/>
+	<binding key="&lt;-&gt;" action="20"/>
+	<binding key="&lt;D&gt;" action="21"/>
+	<binding key="&lt;Return&gt;" action="22"/>
+	<binding key="&lt;A&gt;" action="24"/>
+	<binding key="&lt;I&gt;" action="25"/>
+	<binding key="&lt;R&gt;" action="27"/>
+	<binding key="&lt;Z&gt;" action="28"/>
+	<binding key="&lt;Ctrl&gt;+&lt;DownArrow&gt;" action="33"/>
+	<binding key="&lt;Ctrl&gt;+&lt;UpArrow&gt;" action="34"/>
+	<binding key="&lt;Ctrl&gt;+&lt;C&gt;" action="35"/>
+</keymap>
