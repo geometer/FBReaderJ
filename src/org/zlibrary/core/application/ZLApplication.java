@@ -390,8 +390,8 @@ public abstract class ZLApplication {
 						break;
 				}
 			} else {
-				//newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
-				//(ZLViewWidget.Angle)optionValue : ZLViewWidget.Angle.DEGREES0;
+				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
+					myApplication.getMyViewWidget().helperFunctionGetAngle(optionValue) : ZLViewWidget.Angle.DEGREES0;
 			}
 			myApplication.getMyViewWidget().rotate(newAngle);
 			myApplication.getAngleStateOption().setValue(newAngle.getAngle());

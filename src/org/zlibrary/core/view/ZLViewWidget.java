@@ -21,6 +21,21 @@ abstract public class ZLViewWidget {
 
 		private int myAngle;
 	};
+	
+	public Angle helperFunctionGetAngle(int myAngle) {
+		switch(myAngle) {
+		case 0: 
+			return Angle.DEGREES0;
+		case 90:
+			return Angle.DEGREES90;
+		case 180:
+			return Angle.DEGREES180;
+		case 270:
+			return Angle.DEGREES270;
+		default: 
+			return null;
+		}
+	}
 
 	protected ZLViewWidget(Angle initialAngle) {
 		myRotation = initialAngle;

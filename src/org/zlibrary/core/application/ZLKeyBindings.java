@@ -37,7 +37,7 @@ public class ZLKeyBindings {
 	private void loadDefaultBindings() {
 		Map<String,Integer> keymap = new HashMap<String,Integer>();
 		new ZLKeyBindingsReader(keymap).readBindings();
-		for (Map.Entry<String,Integer> entry: myBindingsMap.entrySet()) {
+		for (Map.Entry<String,Integer> entry: keymap.entrySet()) {
 			bindKey(entry.getKey(), entry.getValue());
 		}
 	}
@@ -45,15 +45,13 @@ public class ZLKeyBindings {
 	private	void loadCustomBindings() {
 		long size = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
 		for (int i = 0; i < size; ++i) {
-			String key = BINDED_KEY;
+			String key = BINDED_KEY + i;
 			//ZLStringUtil.appendNumber(key, i);			
-			key = key + i;
 			String keyValue = new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, key, "").getValue();
 			//if (!keyValue.empty()) {
 			if (keyValue.length() != 0) {
-				String action = BINDED_ACTION;
+				String action = BINDED_ACTION + i;
 				//ZLStringUtil.appendNumber(action, i);
-				action = action + i;
 				int actionValue = (int)(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, action, -1).getValue());
 				if (actionValue != -1) {
 					bindKey(keyValue, actionValue);
