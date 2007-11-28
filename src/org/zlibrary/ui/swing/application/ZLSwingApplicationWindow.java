@@ -94,7 +94,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void initMenu() {
 		MyMenuVisitor visitor = new MyMenuVisitor(myMenu);
-		visitor.processMenu(application().getMenubar());
+		visitor.processMenu(getApplication().getMenubar());
 	}
 		
 	private class MyMenuVisitor extends ZLApplication.MenuVisitor {
@@ -136,7 +136,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		}
 		
 		public void actionPerformed(ActionEvent event) {
-			application().doAction(myItem.getActionId());
+			getApplication().doAction(myItem.getActionId());
 		}
 
 	}
