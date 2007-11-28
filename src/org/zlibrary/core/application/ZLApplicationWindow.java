@@ -15,21 +15,22 @@ abstract public class ZLApplicationWindow {
 		myToggleButtonLock = false;
 	}
 
-	public ZLApplication application() {
+	public ZLApplication getApplication() {
 		return myApplication;
 	}
 
-	public void init() {
-		myApplication.setMyViewWidget(createViewWidget());
+	protected void init() {
+		myApplication.setViewWidget(createViewWidget());
 
-		List<ZLApplication.Toolbar.Item> toolbarItems = myApplication.getToolbar().items();
+		List<ZLApplication.Toolbar.Item> toolbarItems = myApplication.getToolbar().getItems();
 		for (ZLApplication.Toolbar.Item item: toolbarItems) {
 			addToolbarItem(item);
 		}
 
 		initMenu();
 	}
-	abstract public void initMenu();
+	
+	abstract protected void initMenu();
 
 	
 	public void onButtonPress(ZLApplication.Toolbar.ButtonItem button) {
@@ -55,7 +56,7 @@ abstract public class ZLApplicationWindow {
 		}
 		
 		
-		application().doAction(button.getActionId());
+		getApplication().doAction(button.getActionId());
 	}
 	
 	public abstract void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item);
@@ -67,7 +68,7 @@ abstract public class ZLApplicationWindow {
 	abstract public void addToolbarItem(ZLApplication.Toolbar.Item item);
 
 	public void refresh() {
-		List<ZLApplication.Toolbar.Item> items = application().getToolbar().items();
+		List<ZLApplication.Toolbar.Item> items = getApplication().getToolbar().getItems();
 		boolean enableToolbarSpace = false;
 		ZLApplication.Toolbar.Item lastSeparator = null;
 		for (ZLApplication.Toolbar.Item item: items) {
@@ -89,8 +90,8 @@ abstract public class ZLApplicationWindow {
 				ZLApplication.Toolbar.ButtonItem button = (ZLApplication.Toolbar.ButtonItem)item;
 				int id = button.getActionId();
 	        
-				boolean visible = application().isActionVisible(id);
-				boolean enabled = application().isActionEnabled(id);
+				boolean visible = getApplication().isActionVisible(id);
+				boolean enabled = getApplication().isActionEnabled(id);
 	        
 				if (visible) {
 					if (lastSeparator != null) {
@@ -102,7 +103,7 @@ abstract public class ZLApplicationWindow {
 				if (!enabled && button.isPressed()) {
 					ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
 					group.press(null);
-					application().doAction(group.UnselectAllButtonsActionId);
+					getApplication().doAction(group.UnselectAllButtonsActionId);
 					myToggleButtonLock = true;
 					setToggleButtonState(button);
 					myToggleButtonLock = false;
