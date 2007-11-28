@@ -83,7 +83,7 @@ public abstract class ZLApplication {
 		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
 	}
 	
-	public Toolbar getToolbar() {
+	protected Toolbar getToolbar() {
 		if (myToolbar == null) {
 			myToolbar = new Toolbar();
 		}
@@ -103,8 +103,8 @@ public abstract class ZLApplication {
 			return;
 		}
 
-		if (getMyViewWidget() != null) {
-			getMyViewWidget().setView(view);
+		if (getViewWidget() != null) {
+			getViewWidget().setView(view);
 			resetWindowCaption();
 			refreshWindow();
 		} else {
@@ -113,7 +113,7 @@ public abstract class ZLApplication {
 	}
 
 	protected ZLView getCurrentView() {
-		return (getMyViewWidget() != null) ? getMyViewWidget().getView() : null;
+		return (getViewWidget() != null) ? getViewWidget().getView() : null;
 	}
 
 	private void quit() {
@@ -135,12 +135,12 @@ public abstract class ZLApplication {
 		setView(myInitialView);
 	}
 
-	public ZLPaintContext getContext() {
+	protected ZLPaintContext getContext() {
 		return myContext;
 	}
 
 	public void refreshWindow() {
-		if (getMyViewWidget() != null) {
+		if (getViewWidget() != null) {
 			myViewWidget.repaint();
 		}
 		if (myWindow != null) {
@@ -176,7 +176,7 @@ public abstract class ZLApplication {
 		return true;//(myWindow != null) && myWindow.isFullKeyboardControlSupported();
 	}
 	
-	public void grabAllKeys(boolean grab) {
+	private void grabAllKeys(boolean grab) {
 		if (myWindow != null) {
 			//myWindow.grabAllKeys(grab);
 		}
@@ -195,8 +195,8 @@ public abstract class ZLApplication {
 	}
 	
 	public void trackStylus(boolean track) {
-		if (getMyViewWidget() != null) {
-			getMyViewWidget().trackStylus(track);
+		if (getViewWidget() != null) {
+			getViewWidget().trackStylus(track);
 		}
 	}
 
@@ -210,13 +210,13 @@ public abstract class ZLApplication {
 		return myActionMap.get(actionId);
 	}
 	
-	public boolean isActionVisible(int actionId) {
+	boolean isActionVisible(int actionId) {
 		ZLAction a = getAction(actionId);
 		return ((a != null) && a.isVisible());
 
 	}
 	
-	public boolean isActionEnabled(int actionId) {
+	boolean isActionEnabled(int actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}
@@ -228,7 +228,7 @@ public abstract class ZLApplication {
 		}
 	}
 
-	abstract public ZLKeyBindings keyBindings();
+	abstract protected ZLKeyBindings keyBindings();
 	
 	public void doActionByKey(String key) {
 		ZLAction a = getAction(keyBindings().getBinding(key));
@@ -266,11 +266,9 @@ public abstract class ZLApplication {
 		this.myViewWidget = myViewWidget;
 	}
 
-	public ZLViewWidget getMyViewWidget() {
+	private ZLViewWidget getViewWidget() {
 		return myViewWidget;
 	}
-
-
 	
 	public static String getDefaultFilesPathPrefix() {
 		return ourDefaultFilesPathPrefix;
@@ -328,15 +326,15 @@ public abstract class ZLApplication {
 		}
 		
 		public boolean isVisible() {
-			return (myApplication.getMyViewWidget() != null) &&
+			return (myApplication.getViewWidget() != null) &&
 			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
-				(myApplication.getMyViewWidget().getRotation() != ZLViewWidget.Angle.DEGREES0));
+				(myApplication.getViewWidget().getRotation() != ZLViewWidget.Angle.DEGREES0));
 
 		}
 		
 		public void run() {
 			int optionValue = (int)myApplication.RotationAngleOption.getValue();
-			ZLViewWidget.Angle oldAngle = myApplication.getMyViewWidget().getRotation();
+			ZLViewWidget.Angle oldAngle = myApplication.getViewWidget().getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
 				switch (oldAngle) {
@@ -357,7 +355,7 @@ public abstract class ZLApplication {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
 						ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
 			}
-			myApplication.getMyViewWidget().rotate(newAngle);
+			myApplication.getViewWidget().rotate(newAngle);
 			myApplication.AngleStateOption.setValue(newAngle.getDegrees());
 			myApplication.refreshWindow();		
 		}
