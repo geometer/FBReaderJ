@@ -16,7 +16,7 @@ public class ZLTextStyleCollection {
 	private final Map<Byte, ZLTextStyleDecoration> myDecorationMap = new HashMap<Byte,ZLTextStyleDecoration>();
 	
 	private ZLTextStyleCollection() {
-		new ZLTextStyleReader(this).read("data/default/styles.xml");
+		new TextStyleReader(this).read("data/default/styles.xml");
 		if (myBaseStyle == null) {
 			myBaseStyle = new ZLTextBaseStyle("", 20);
 		}
@@ -48,7 +48,7 @@ public class ZLTextStyleCollection {
 //?		ZLTextBaseStyle &baseStyle() const;
 		
 
-	private static class ZLTextStyleReader extends ZLXMLReader {
+	private static class TextStyleReader extends ZLXMLReader {
 //		static final String TRUE_STRING = "true";
 		private ZLTextStyleCollection myCollection;
 
@@ -86,7 +86,7 @@ public class ZLTextStyleCollection {
 				((stringValue.equals("true")) ? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE);
 		}
 			
-		public ZLTextStyleReader(ZLTextStyleCollection collection) {
+		public TextStyleReader(ZLTextStyleCollection collection) {
 			myCollection = collection;
 		}
 

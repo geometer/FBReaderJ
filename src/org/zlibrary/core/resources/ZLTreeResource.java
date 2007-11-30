@@ -27,8 +27,8 @@ class ZLTreeResource extends ZLResource {
 	
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
-		new ZLResourceTreeReader(ourRoot).readDocument("data/resources/zlibrary/" + fileName);
-		new ZLResourceTreeReader(ourRoot).readDocument("data/resources/application/" + fileName);
+		new ResourceTreeReader(ourRoot).readDocument("data/resources/zlibrary/" + fileName);
+		new ResourceTreeReader(ourRoot).readDocument("data/resources/application/" + fileName);
 	}
 
 	private ZLTreeResource(String name) {
@@ -61,11 +61,11 @@ class ZLTreeResource extends ZLResource {
 				myChildren.get(key) : ZLMissingResource.instance();
 	}
 		
-	private static class ZLResourceTreeReader extends ZLXMLReader {
+	private static class ResourceTreeReader extends ZLXMLReader {
 		private static final String NODE = "node"; 
 		private final Stack<ZLTreeResource> myStack = new Stack<ZLTreeResource>();
 		
-		public ZLResourceTreeReader(ZLTreeResource root) {
+		public ResourceTreeReader(ZLTreeResource root) {
 			myStack.push(root);
 		}
 		

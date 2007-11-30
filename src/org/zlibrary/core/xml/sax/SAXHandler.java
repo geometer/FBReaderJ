@@ -10,7 +10,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 
 class SAXHandler extends DefaultHandler {	
 	private ZLXMLReader myXMLReader;
-	private Map<String, String> myAttributes = new HashMap<String, String>();
+	private final Map<String, String> myAttributes = new HashMap<String, String>();
 	
 	SAXHandler(ZLXMLReader reader) {
 		myXMLReader = reader;
