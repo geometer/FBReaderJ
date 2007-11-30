@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
 
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
@@ -12,10 +13,12 @@ import org.zlibrary.text.model.impl.ZLModelFactory;
 public class BookModel {
 	private ZLTextPlainModel myBookModel = (new ZLModelFactory()).createPlainModel();
 	private ContentsModel myContentsModel = new ContentsModel();
-	private Map<String, ZLTextPlainModel> myFootnotes = 
+	private final Map<String, ZLTextPlainModel> myFootnotes = 
 		new HashMap<String, ZLTextPlainModel>();
-	private Map<String, Label> myInternalHyperlinks =
+	private final Map<String, Label> myInternalHyperlinks =
 		new HashMap<String, Label>();
+	private final Map<String, ZLImage> myImageMap = 
+		new HashMap<String, ZLImage>(); 
 	
 	private class Label {
 		final int paragraphNumber;
@@ -58,4 +61,13 @@ public class BookModel {
 		}
 		return null;
 	}
+
+	public Map<String, ZLImage> getImageMap() {
+		return myImageMap;
+	}
+
+	public void addImage(String id, ZLImage image) {
+		myImageMap.put(id, image);
+	}
+	
 }

@@ -22,5 +22,7 @@ enum FB2Tag {
 	CODE,
 	STRIKETHROUGH,
 	TITLE,
-	BODY;
+	BODY,
+	IMAGE,
+	BINARY;
 }

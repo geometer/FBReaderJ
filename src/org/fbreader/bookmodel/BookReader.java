@@ -2,6 +2,8 @@ package org.fbreader.bookmodel;
 
 import java.util.Stack;
 
+import org.fbreader.formats.fb2.Base64EncodedImage;
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
@@ -209,6 +211,28 @@ public class BookReader {
 	
 	public BookModel getModel() {
 		return myBookModel;
+	}
+
+	public void addImageReference(String ref, int offset) {
+//		 TODO 
+		if (myCurrentTextModel != null) {
+			mySectionContainsRegularContents = true;
+			if (myTextParagraphExists) {
+				flushTextBufferToParagraph();
+//				myCurrentTextModel.addImage(id, myModel.imageMap(), vOffset);
+			} else {
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				myCurrentTextModel.addControl((byte) FBTextKind.IMAGE.Index, true);
+		//		myCurrentTextModel.addImage(id, myModel.imageMap(), vOffset);
+				myCurrentTextModel.addControl((byte) FBTextKind.IMAGE.Index, false);
+				endParagraph();
+			}
+		}
+		
+	}
+
+	public void addImage(String id, ZLImage image) {
+		myBookModel.addImage(id, image);
 	}
 	
 }

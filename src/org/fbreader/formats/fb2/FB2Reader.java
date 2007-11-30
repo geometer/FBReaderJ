@@ -22,6 +22,13 @@ public class FB2Reader extends ZLXMLReader {
 	
 	private byte myHyperlinkType;
 	
+	private Base64EncodedImage myCurrentImage;
+	private boolean myInsideCoverpage = false;
+	private boolean myProcessingImage = false;
+	private StringBuffer myImageBuffer = new StringBuffer();
+	private String myCoverImageReference;
+	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
+	
 	private FB2Tag getTag(String s) {
 		if (s.contains("-")) {
 			s = s.replace('-', '_');
@@ -47,7 +54,11 @@ public class FB2Reader extends ZLXMLReader {
 	
 	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
-		myModelReader.addData(String.valueOf(ch, start, length));
+		if (length > 0 && myProcessingImage) {
+			myImageBuffer.append(String.valueOf(ch, start, length));
+		} else {
+			myModelReader.addData(String.valueOf(ch, start, length));
+		}		
 	}
 		
 	@Override
@@ -128,6 +139,23 @@ public class FB2Reader extends ZLXMLReader {
 			case A:
 				myModelReader.addControl(myHyperlinkType, false);
 				break;
+			
+			case COVERPAGE:
+				if (myBodyCounter == 0) {
+					myInsideCoverpage = false;
+					myModelReader.insertEndOfSectionParagraph();
+					myModelReader.unsetCurrentTextModel();
+				}
+				break;	
+			
+			case BINARY:
+				if ((myImageBuffer.length() != 0) && (myCurrentImage != null)) {
+					myCurrentImage.addData(myImageBuffer);
+					myImageBuffer.delete(0, myImageBuffer.length());
+					myCurrentImage = null;
+				}
+				myProcessingImage = false;
+				break;	
 				
 			default:
 				break;
@@ -235,6 +263,7 @@ public class FB2Reader extends ZLXMLReader {
 				
 			case BODY:
 				++myBodyCounter;
+				myParagraphsBeforeBodyNumber = myModelReader.getModel().getBookModel().getParagraphsNumber();
 				if ((myBodyCounter == 1) || (attributes.get("name") == null)) {
 					myModelReader.setMainTextModel();
 					myReadMainText = true;
@@ -257,6 +286,43 @@ public class FB2Reader extends ZLXMLReader {
 					myModelReader.addControl(myHyperlinkType, true);
 				}
 				break;
+			
+			case COVERPAGE:
+				if (myBodyCounter == 0) {
+					myInsideCoverpage = true;
+					myModelReader.setMainTextModel();
+				}
+				break;	
+			
+			case IMAGE:
+				String imgRef = reference(attributes);
+				String vOffset = attributes.get("voffset");
+				int offset = 0;
+				try {
+					offset = Integer.valueOf(vOffset);
+				} catch (NumberFormatException e) {
+				}
+				if ((imgRef != null) && (imgRef.charAt(0) == '#')) {
+					imgRef = imgRef.substring(1);
+					if (!imgRef.equals(myCoverImageReference) ||
+							myParagraphsBeforeBodyNumber != myModelReader.getModel().getBookModel().getParagraphsNumber()) {
+						myModelReader.addImageReference(imgRef, offset);
+					}
+					if (myInsideCoverpage) {
+						myCoverImageReference = imgRef;
+					}
+				}
+				break;
+			
+			case BINARY:			
+				String contentType = attributes.get("content-type");
+				String imgId = attributes.get("id");
+				if ((contentType != null) && (id != null)) {
+					myCurrentImage = new Base64EncodedImage(contentType);
+					myModelReader.addImage(imgId, myCurrentImage);
+					myProcessingImage = true;
+				}
+				break;	
 				
 			default:
 				break;

@@ -2,6 +2,7 @@ package org.zlibrary.text.model.impl;
 
 import java.util.Map;
 
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 class ImageEntryImpl implements ZLTextParagraphEntry {

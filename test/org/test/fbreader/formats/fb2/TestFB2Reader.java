@@ -2,6 +2,7 @@ package org.test.fbreader.formats.fb2;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
+import org.fbreader.formats.fb2.Base64EncodedImage;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
@@ -12,7 +13,10 @@ import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 import junit.framework.TestCase;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
+
+import javax.imageio.ImageIO;
 
 public class TestFB2Reader extends TestCase {
 	
@@ -272,5 +276,17 @@ public class TestFB2Reader extends TestCase {
 		reader.read();
 	}
 */	
+	
+	public void testImage() {
+		FB2Reader reader = new FB2Reader();
+		BookModel model = reader.readBook(myDirectory + "image.fb2");
+		byte [] image = ((Base64EncodedImage)(model.getImageMap().get("cover.jpg"))).byteData();
+		try {
+			BufferedImage img = ImageIO.read (new ByteArrayInputStream(image));
+			ImageIO.write(img, "jpg", new File(myDirectory + "img.jpg"));
+		} catch (IOException e) {
+			fail();
+		} 
+	}
 }
 	
