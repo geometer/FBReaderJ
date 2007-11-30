@@ -36,11 +36,15 @@ public class ZLTextStyleDecoration {
 	
 	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int verticalShift, ZLBoolean3 allowHyphenations) {
 		FontFamilyOption = null;
-		FontSizeDeltaOption = null;
+		FontSizeDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
 		BoldOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":bold", bold);
-		ItalicOption = null;
+		ItalicOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":italic", italic);
 		VerticalShiftOption = null;
 		AllowHyphenationsOption = null;
+	}
+	
+	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {
+		return new ZLTextPartialDecoratedStyle(base, this);
 	}
 	
 	public boolean isFullDecoration() {

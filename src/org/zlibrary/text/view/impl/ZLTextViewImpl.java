@@ -27,6 +27,10 @@ public class ZLTextViewImpl extends ZLTextView {
 			myWordHeight = -1;
 		}
 
+		public void reset() {
+			setStyle(ZLTextStyleCollection.instance().getBaseStyle());
+		}
+		
 		public void setStyle(ZLTextStyle style) {
 			if (myStyle != style) {
 				myStyle = style;
@@ -38,9 +42,10 @@ public class ZLTextViewImpl extends ZLTextView {
 		public void applyControl(ZLTextControlElement control) {
 			if (control.isStart()) {
 				ZLTextStyleDecoration decoration = ZLTextStyleCollection.instance().getDecoration(control.getEntry().getKind());
-				if (decoration instanceof ZLTextFullStyleDecoration) {
-					setStyle(((ZLTextFullStyleDecoration)decoration).createDecoratedStyle(myStyle));
-				}
+				setStyle(decoration.createDecoratedStyle(myStyle));
+	//			if (decoration instanceof ZLTextFullStyleDecoration) {
+	//				setStyle(((ZLTextFullStyleDecoration)decoration).createDecoratedStyle(myStyle));
+	//			}
 			} else {
 				if (myStyle.isDecorated()) {
 					setStyle(((ZLTextDecoratedStyle) myStyle).getBase());
@@ -48,6 +53,14 @@ public class ZLTextViewImpl extends ZLTextView {
 			}
 		}
 
+		public void applyControls(ZLTextWordCursor begin, ZLTextWordCursor end) {
+			for (ZLTextWordCursor cursor = begin; !cursor.equalWordNumber(end); cursor.nextWord()) {
+				final ZLTextElement element = cursor.getElement();
+				if (element instanceof ZLTextControlElement) {
+					applyControl((ZLTextControlElement) element);
+				}	
+			}
+		}
 
 		public ZLPaintContext getPaintContext() {
 			return myContext;
@@ -141,12 +154,15 @@ public class ZLTextViewImpl extends ZLTextView {
 		ZLPaintContext context = getContext();
 
 		int paragraphs = myModel.getParagraphsNumber();
+//		System.out.println("BOLD = " + myStyle.getTextStyle().bold());		
 		if (paragraphs > 0) {
 			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(myModel, 0);
 			ZLTextWordCursor start = new ZLTextWordCursor();
 			start.setCursor(firstParagraph);
 			buildInfos(start);
 		}
+//		System.out.println("BOLD = " + myStyle.getTextStyle().bold());		
+
 /*		int h = 0;
 		int dh = context.getStringHeight();
 		for (int i = 0; i < paragraphs; i++) {
@@ -170,6 +186,7 @@ public class ZLTextViewImpl extends ZLTextView {
 				if (element instanceof ZLTextWord) {
 					String text = ((ZLTextWord) element).Data;
 					int dw = context.getStringWidth(text);
+//					System.out.println(text);
 					context.drawString(w, h + info.Height, text);
 					w += dw;
 				} else if (element instanceof ZLTextHSpaceElement) {
@@ -178,6 +195,8 @@ public class ZLTextViewImpl extends ZLTextView {
 					context.drawString(w, h + info.Height, text);
 					w += dw;
 				} else if (element instanceof ZLTextControlElement) {
+//					System.out.println(((ZLTextControlElement) element).getEntry().getKind());
+//					System.out.println(((ZLTextControlElement) element).getEntry().isStart());
 					myStyle.applyControl((ZLTextControlElement) element);			
 				}
 			}
@@ -196,8 +215,8 @@ public class ZLTextViewImpl extends ZLTextView {
 			ZLTextWordCursor paragraphStart = new ZLTextWordCursor(cursor);
 		       	paragraphStart.moveToParagraphStart();
 		
-		//	myStyle.reset();
-		//	myStyle.applyControl(paragraphStart, cursor);	
+			myStyle.reset();
+			myStyle.applyControls(paragraphStart, cursor);	
 			ZLTextLineInfo info = new ZLTextLineInfo(cursor, myStyle.getTextStyle());
 			while (!info.End.isEndOfParagraph()) {
 				info = processTextLine(info.End, paragraphEnd);
@@ -214,6 +233,7 @@ public class ZLTextViewImpl extends ZLTextView {
 				counter++;
 			}
 		} while (cursor.isEndOfParagraph() && cursor.nextParagraph() && !cursor.getParagraphCursor().isEndOfSection() && (textAreaHeight >= 0));
+		myStyle.reset();
 		return cursor;
 	}
 

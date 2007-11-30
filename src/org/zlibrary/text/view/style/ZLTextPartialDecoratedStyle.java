@@ -4,14 +4,13 @@ import org.zlibrary.text.view.ZLTextStyle;
 
 import org.zlibrary.core.options.util.*;
 
-public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
-	private final ZLTextFullStyleDecoration myDecoration;
-	
-	/*package*/ ZLTextFullDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration) {
-		super(base);
-		myDecoration = decoration;	
-	}
+/*package*/ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
+	private final ZLTextStyleDecoration myDecoration;
 
+	/*package*/ ZLTextPartialDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration) {
+		super(base);
+		myDecoration = decoration;		
+	}
 	public String fontFamily() {
 		return "default";
 	}
