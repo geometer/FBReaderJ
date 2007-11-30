@@ -2,7 +2,6 @@ package org.fbreader.bookmodel;
 
 import java.util.Stack;
 
-import org.fbreader.formats.fb2.Base64EncodedImage;
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
