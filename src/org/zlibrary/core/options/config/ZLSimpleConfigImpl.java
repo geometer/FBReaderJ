@@ -58,7 +58,7 @@ import java.util.*;
 		} else {
 			ZLGroup newGroup = new ZLGroup();
 			newGroup.setValue(name, value, category);
-							myData.put(group, newGroup);
+			myData.put(group, newGroup);
 		}
 	}
 	

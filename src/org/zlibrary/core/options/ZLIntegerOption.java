@@ -32,11 +32,7 @@ public final class ZLIntegerOption extends ZLOption{
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myGroup, myOptionName);
-		} else {
-			String stringValue = ((Integer)myValue).toString();
-			myConfig.setValue(myGroup, myOptionName, stringValue, myCategory);
-		}
+		String stringValue = ((Integer)myValue).toString();
+		myConfig.setValue(myGroup, myOptionName, stringValue, myCategory);
 	}
 }

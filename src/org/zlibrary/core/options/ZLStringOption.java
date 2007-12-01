@@ -30,15 +30,11 @@ public final class ZLStringOption extends ZLSimpleOption {
 	}
 	
 	public void setValue(String value) {
-		if (myIsSynchronized && (myValue == value)) {
+		if (myIsSynchronized && (myValue.equals(value))) {
 			return;
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myGroup, myOptionName);
-		} else {
-			myConfig.setValue(myGroup, myOptionName, myValue, myCategory);
-		}
+		myConfig.setValue(myGroup, myOptionName, myValue, myCategory);
 	}
 }
