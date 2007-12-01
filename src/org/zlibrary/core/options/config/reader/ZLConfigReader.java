@@ -139,15 +139,17 @@ import org.zlibrary.core.options.config.*;
 	public ZLConfigReader(String path) {
 		myConfig = ZLConfigInstance.getInstance();
 		myDestinationDirectory = new File(path);
-		if (myDestinationDirectory.isDirectory()) {
-			try {
-				myXMLReader = XMLReaderFactory.createXMLReader();
-				myXMLReader.setContentHandler(new ConfigContentHandler());
-			} catch (SAXException e) {
-				System.out.println(e.getMessage());
+		if (myDestinationDirectory.exists()) {
+			if (myDestinationDirectory.isDirectory()) {
+				try {
+					myXMLReader = XMLReaderFactory.createXMLReader();
+					myXMLReader.setContentHandler(new ConfigContentHandler());
+				} catch (SAXException e) {
+					System.out.println(e.getMessage());
+				}
+			} else {
+				System.out.println("Wrong path - directory path expected");
 			}
-		} else {
-			System.out.println("Wrong path - directory path expected");
 		}
 	}
 
@@ -188,6 +190,7 @@ import org.zlibrary.core.options.config.*;
 
 	public void read() {
 		String[] fileList = myDestinationDirectory.list();
+		myDestinationDirectory.mkdir();
 		if (fileList != null) {
 			for (String fileName : fileList) {
 				if (isXMLFileName(fileName)

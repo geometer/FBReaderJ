@@ -95,11 +95,6 @@ public class ModelTests extends TestCase{
 		assertEquals(myStringOption.getValue(), myDefaultString);
 	}
 	
-	public void test02_color(){
-		myColorOption.setValue(new ZLColor());
-		assertEquals(myColorOption.getValue(), 0L);
-	}
-	
 	public void test02_double(){
 		myDoubleOption.setValue(0.1);
 		assertEquals(myDoubleOption.getValue(), 0.1);
@@ -129,11 +124,6 @@ public class ModelTests extends TestCase{
 	public void test02_boolean(){
 		myBooleanOption.setValue(false);
 		assertEquals(myBooleanOption.getValue(), false);
-	}
-	
-	public void test02_string(){
-		myColorOption.setValue(new ZLColor());
-		assertEquals(myStringOption.getValue(), "Hello World");
 	}
 	
 	public void test04_boolean3(){
