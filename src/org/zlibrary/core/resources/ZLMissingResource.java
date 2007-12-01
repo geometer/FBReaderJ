@@ -1,7 +1,7 @@
 package org.zlibrary.core.resources;
 
-class ZLMissingResource extends ZLResource {
-	public static final String ourValue = "????????";
+final class ZLMissingResource extends ZLResource {
+	static final String ourValue = "????????";
 	private static ZLMissingResource ourInstance;
 
 	private ZLMissingResource() {
@@ -29,5 +29,4 @@ class ZLMissingResource extends ZLResource {
 		}
 		return ourInstance;
 	}
-
 }

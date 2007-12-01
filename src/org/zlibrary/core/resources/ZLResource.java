@@ -12,14 +12,14 @@ abstract public class ZLResource {
 	}
     
 	public static ZLResource resource(ZLResourceKey key) {
-    	return resource(key.Name);
-    }
-
-	protected ZLResource(String name) {
-		this.myName = name;
+		return resource(key.Name);
 	}
 
-	public String name() {
+	protected ZLResource(String name) {
+		myName = name;
+	}
+
+	public final String getName() {
 		return myName;
 	}
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Stack;
 import org.zlibrary.core.xml.ZLXMLReader;
 
-class ZLTreeResource extends ZLResource {
+final class ZLTreeResource extends ZLResource {
 	public static ZLTreeResource ourRoot;
 
 	private boolean myHasValue;
