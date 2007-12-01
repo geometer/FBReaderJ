@@ -8,21 +8,16 @@ import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 public class FBReader extends ZLApplication {
-	private ZLKeyBindings myBindings0;
-	private ZLKeyBindings myBindings90;
-	private ZLKeyBindings myBindings180;
-	private ZLKeyBindings myBindings270;
+	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
+	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
+	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
+	private final ZLKeyBindings myBindings270 = new ZLKeyBindings("Keys270");
 
 	public FBReader() {
 		this(new String[0]);
 	}
 
 	public FBReader(String[] args) {
-		myBindings0 = new ZLKeyBindings("Keys");
-		myBindings90 = new ZLKeyBindings("Keys90");
-		myBindings180 = new ZLKeyBindings("Keys180");
-		myBindings270 = new ZLKeyBindings("Keys270");
-		
 		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(this, true));
 		addAction(ActionCode.QUIT, new FBReaderActions.QuitAction(this));
 		addAction(ActionCode.SHOW_HELP, new FBReaderActions.ShowHelpAction(this));
@@ -103,7 +98,7 @@ public class FBReader extends ZLApplication {
 		return myBindings0;
 	}
 	
-	ZLKeyBindings keyBindings(ZLViewWidget.Angle angle) {
+	private ZLKeyBindings keyBindings(ZLViewWidget.Angle angle) {
 		switch (angle) {
 			case DEGREES0:
 			default:
@@ -116,5 +111,4 @@ public class FBReader extends ZLApplication {
 				return myBindings270;
 		}
 	}
-
 }
