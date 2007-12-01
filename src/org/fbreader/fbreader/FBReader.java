@@ -7,7 +7,7 @@ import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
-public class FBReader extends ZLApplication {
+public final class FBReader extends ZLApplication {
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
 	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
@@ -19,8 +19,8 @@ public class FBReader extends ZLApplication {
 
 	public FBReader(String[] args) {
 		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(this, true));
-		addAction(ActionCode.QUIT, new FBReaderActions.QuitAction(this));
-		addAction(ActionCode.SHOW_HELP, new FBReaderActions.ShowHelpAction(this));
+		addAction(ActionCode.QUIT, new QuitAction(this));
+		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction(this));
 		
 		addToolbarButton(ActionCode.SHOW_COLLECTION, "books");
