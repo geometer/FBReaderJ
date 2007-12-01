@@ -1,23 +1,11 @@
 package org.zlibrary.core.application;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.options.ZLIntegerRangeOption;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.resources.ZLResourceKey;
-import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.core.view.ZLView;
-import org.zlibrary.core.view.ZLViewWidget;
+import org.zlibrary.core.options.*;
+import org.zlibrary.core.resources.*;
+import org.zlibrary.core.view.*;
 
 public abstract class ZLApplication {
 	private static final String MouseScrollUpKey = "<MouseScrollDown>";
@@ -70,46 +58,43 @@ public abstract class ZLApplication {
 		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
 	}
 	
-	protected Toolbar getToolbar() {
+	protected final Toolbar getToolbar() {
 		if (myToolbar == null) {
 			myToolbar = new Toolbar();
 		}
 		return myToolbar;
 	}
 
-	public Menubar getMenubar() {
+	protected final Menubar getMenubar() {
 		if (myMenubar == null) {
 			myMenubar = new Menubar();
 		}
 		return myMenubar;
 	}
 
-
-	protected void setView(ZLView view) {
-		if (view == null) {
-			return;
-		}
-
-		if (myViewWidget != null) {
-			myViewWidget.setView(view);
-			resetWindowCaption();
-			refreshWindow();
-		} else {
-			myInitialView = view;
+	protected final void setView(ZLView view) {
+		if (view != null) {
+			if (myViewWidget != null) {
+				myViewWidget.setView(view);
+				resetWindowCaption();
+				refreshWindow();
+			} else {
+				myInitialView = view;
+			}
 		}
 	}
 
-	protected ZLView getCurrentView() {
+	protected final ZLView getCurrentView() {
 		return (myViewWidget != null) ? myViewWidget.getView() : null;
 	}
 
-	private void quit() {
+	private final void quit() {
 		if (myWindow != null) {
 			myWindow.close();
 		}
 	}
 
-	void setWindow(ZLApplicationWindow window) {
+	final void setWindow(ZLApplicationWindow window) {
 		myWindow = window;
 	}
 
@@ -122,21 +107,20 @@ public abstract class ZLApplication {
 		setView(myInitialView);
 	}
 
-	protected ZLPaintContext getContext() {
+	protected final ZLPaintContext getContext() {
 		return myContext;
 	}
 
-	public void refreshWindow() {
+	public final void refreshWindow() {
 		if (myViewWidget != null) {
 			myViewWidget.repaint();
 		}
 		if (myWindow != null) {
 			myWindow.refresh();
 		}
-
 	}
 
-	private void resetWindowCaption() {
+	private final void resetWindowCaption() {
 		if (myWindow != null) {
 			ZLView view = getCurrentView();
 			if (view != null) {
@@ -145,70 +129,69 @@ public abstract class ZLApplication {
 		}
 	}
 	
-	private void setFullscreen(boolean fullscreen) {
+	private final void setFullscreen(boolean fullscreen) {
 		if (myWindow != null) {
 			myWindow.setFullscreen(fullscreen);
 		}
 	}
 	
-	protected boolean isFullscreen() {
+	protected final boolean isFullscreen() {
 		return (myWindow != null) && myWindow.isFullscreen();
 	}
 	
-	protected void addAction(int actionId, ZLAction action) {
+	protected final void addAction(int actionId, ZLAction action) {
 		myActionMap.put(actionId, action);
 	}
 
-	public boolean isFullKeyboardControlSupported() {
+	public final boolean isFullKeyboardControlSupported() {
 		return true;//(myWindow != null) && myWindow.isFullKeyboardControlSupported();
 	}
 	
-	private void grabAllKeys(boolean grab) {
+	private final void grabAllKeys(boolean grab) {
 		if (myWindow != null) {
 			//myWindow.grabAllKeys(grab);
 		}
 	}
 
-	public boolean isFingerTapEventSupported() {
+	public final boolean isFingerTapEventSupported() {
 		return (myWindow != null) && myWindow.isFingerTapEventSupported();
 	}
 	
-	public boolean isMousePresented() {
+	public final boolean isMousePresented() {
 		return (myWindow != null) && myWindow.isMousePresented();
 	}
 	
-	public boolean isKeyboardPresented() {
+	public final boolean isKeyboardPresented() {
 		return (myWindow != null) && myWindow.isKeyboardPresented();
 	}
 	
-	public void trackStylus(boolean track) {
+	public final void trackStylus(boolean track) {
 		if (myViewWidget != null) {
 			myViewWidget.trackStylus(track);
 		}
 	}
 
-	public void setHyperlinkCursor(boolean hyperlink) {
+	public final void setHyperlinkCursor(boolean hyperlink) {
 		if (myWindow != null) {
 			//myWindow.setHyperlinkCursor(hyperlink);
 		}
 	}
 
-	private ZLAction getAction(int actionId) {
+	private final ZLAction getAction(int actionId) {
 		return myActionMap.get(actionId);
 	}
 	
-	boolean isActionVisible(int actionId) {
-		ZLAction a = getAction(actionId);
-		return ((a != null) && a.isVisible());
-
+	boolean final isActionVisible(int actionId) {
+		ZLAction action = getAction(actionId);
+		return (action != null) && action.isVisible();
 	}
 	
-	boolean isActionEnabled(int actionId) {
+	boolean final isActionEnabled(int actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}
 	
-	public void doAction(int actionId) {
+	public final void doAction(int actionId) {
 		ZLAction action = getAction(actionId);
 		if (action != null) {
 			action.checkAndRun();
@@ -217,7 +200,7 @@ public abstract class ZLApplication {
 
 	abstract protected ZLKeyBindings keyBindings();
 	
-	public void doActionByKey(String key) {
+	public final void doActionByKey(String key) {
 		ZLAction a = getAction(keyBindings().getBinding(key));
 		if ((a != null) &&
 				(!a.useKeyDelay() /*||
@@ -225,7 +208,6 @@ public abstract class ZLApplication {
 			a.checkAndRun();
 			//myLastKeyActionTime = ZLTime();
 		}
-
 	}
 
 	public boolean closeView() {
@@ -237,27 +219,26 @@ public abstract class ZLApplication {
 		// TODO: implement or change to abstract
 	}
 
-	public void presentWindow() {
+	public final void presentWindow() {
 		if (myWindow != null) {
 			//myWindow.present();
 		}
 	}
 
-	public String lastCaller() {
-		return null;//((PresentWindowHandler)myPresentWindowHandler).lastCaller();
-	}
+	//public String lastCaller() {
+		//return null;//((PresentWindowHandler)myPresentWindowHandler).lastCaller();
+	//}
 	
 	//public void resetLastCaller() {
 		//((PresentWindowHandler)myPresentWindowHandler).resetLastCaller();
 	//}
 
-	void setViewWidget(ZLViewWidget myViewWidget) {
+	void final setViewWidget(ZLViewWidget myViewWidget) {
 		myViewWidget = myViewWidget;
 	}
 
 	//Action
 	static abstract public class ZLAction {
-		
 		public boolean isVisible() {
 			return true;
 		}
@@ -266,7 +247,7 @@ public abstract class ZLApplication {
 			return isVisible();
 		}
 		
-		public void checkAndRun() {
+		public final void checkAndRun() {
 			if (isEnabled()) {
 				run();
 			}
@@ -285,8 +266,8 @@ public abstract class ZLApplication {
 		private	final boolean myIsToggle;
 
 		public FullscreenAction(ZLApplication application, boolean toggle) {
-			this.myApplication = application;
-			this.myIsToggle = toggle;
+			myApplication = application;
+			myIsToggle = toggle;
 		}
 		
 		public boolean isVisible() {
@@ -334,7 +315,7 @@ public abstract class ZLApplication {
 				}
 			} else {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
-						ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
+					ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
 			}
 			myApplication.myViewWidget.rotate(newAngle);
 			myApplication.AngleStateOption.setValue(newAngle.getDegrees());
@@ -343,15 +324,10 @@ public abstract class ZLApplication {
 	}
 	
 	//toolbar
-	static public class Toolbar {
-		private final List<Item> myItems;
-		private final ZLResource myResource;
+	static public final class Toolbar {
+		private final List<Item> myItems = new LinkedList<Item>();
+		private final ZLResource myResource = ZLResource.resource("toolbar");
 
-		Toolbar() {
-			myItems = new LinkedList<Item>();
-			myResource = ZLResource.resource("toolbar");
-		}
-		
 		public void addButton(int actionId, ZLResourceKey key) {
 			addButton(actionId, key, null);
 		}
@@ -383,10 +359,10 @@ public abstract class ZLApplication {
 		public interface Item {
 		}
 		
-		public class ButtonItem implements Item {
-			private int myActionId;
-			private String myIconName;
-			private ZLResource myTooltip;
+		public final class ButtonItem implements Item {
+			private final int myActionId;
+			private final String myIconName;
+			private final ZLResource myTooltip;
 			private	ButtonGroup myButtonGroup;
 			
 			public ButtonItem(int actionId, String iconName, ZLResource tooltip) {
@@ -404,10 +380,7 @@ public abstract class ZLApplication {
 			}
 			
 			public String getTooltip() {
-				if (!myTooltip.hasValue()) {
-					return "";
-				}
-				return myTooltip.value();
+				return myTooltip.hasValue() : myTooltip.value() : "";
 			}
 
 			ButtonGroup getButtonGroup() {
@@ -456,10 +429,10 @@ public abstract class ZLApplication {
 			//}
 		}
 
-		public class ButtonGroup {
-			public int UnselectAllButtonsActionId;
-			public	Set<ButtonItem> Items = new HashSet<ButtonItem>();
-			public	ButtonItem PressedItem;
+		public final class ButtonGroup {
+			public final int UnselectAllButtonsActionId;
+			public final Set<ButtonItem> Items = new HashSet<ButtonItem>();
+			public ButtonItem PressedItem;
 
 			ButtonGroup(int unselectAllButtonsActionId) {
 				UnselectAllButtonsActionId = unselectAllButtonsActionId;
@@ -471,7 +444,6 @@ public abstract class ZLApplication {
 			}
 		}
 	}
-	
 	
 	//Menu
 	static public class Menu {
@@ -579,4 +551,3 @@ public abstract class ZLApplication {
 		//public void resetLastCaller();
 	}
 }
-
