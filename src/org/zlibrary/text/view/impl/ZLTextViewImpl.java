@@ -175,10 +175,9 @@ public class ZLTextViewImpl extends ZLTextView {
 				ZLTextElement element = cursor.getElement();
 				if (element instanceof ZLTextWord) {
 					wordOccurred = true;
-					String text = ((ZLTextWord) element).Data;
-					int dw = context.getStringWidth(text);
-					context.drawString(w, h + info.Height, text);
-					w += dw;
+					ZLTextWord word = (ZLTextWord)element;
+					context.drawString(w, h + info.Height, word.Data, word.Offset, word.Length);
+					w += word.getWidth(context);
 				} else if (element instanceof ZLTextHSpaceElement) {
 					if (wordOccurred) {
 						w += context.getSpaceWidth();

@@ -31,13 +31,13 @@ public class ZLAndroidWidget extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		myPaintContext.beginPaint(canvas);
-		//long start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		ZLView view = ZLAndroidViewWidget.Instance.getView();
 		if (view != null) {
 			view.paint();
 		}
-		//long time = System.currentTimeMillis() - start;
-		//myPaintContext.drawString(240, 115, "" + time);
+		long time = System.currentTimeMillis() - start;
+		myPaintContext.drawString(240, 115, "" + time, 0, 3);
 		myPaintContext.endPaint();
 	}
 }

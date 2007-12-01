@@ -35,8 +35,8 @@ public abstract class ZLTextParagraphCursor {
 		
 		public abstract void processTextEntry(ZLTextEntry textEntry);
 
-		protected void addWord(String s, int offset, int len) {
-			myElements.add(new ZLTextWord(s, (short) len, offset));
+		protected final void addWord(String data, int from, int to) {
+			myElements.add(new ZLTextWord(data, from, to - from));
 		}
 	}
 
@@ -51,7 +51,7 @@ public abstract class ZLTextParagraphCursor {
 		public void processTextEntry(ZLTextEntry textEntry) {
 			int dataLength = textEntry.getDataLength();
 			if (dataLength != 0) {
-				String data = textEntry.getData();
+				final String data = textEntry.getData();
 				char ch;
 				int firstNonSpace = -1;
 				boolean spaceInserted = false;
@@ -59,8 +59,7 @@ public abstract class ZLTextParagraphCursor {
 					char current = data.charAt(charPos);
 					if (current == ' ') {
 						if (firstNonSpace != -1) {
-							addWord(data.substring(firstNonSpace, charPos), myOffset + (firstNonSpace - data.length()), 
-								charPos - firstNonSpace);
+							addWord(data, firstNonSpace, charPos);
 							myElements.add(new ZLTextHSpaceElement());
 							spaceInserted = true;
 							firstNonSpace = -1;					
@@ -73,8 +72,7 @@ public abstract class ZLTextParagraphCursor {
 					}
 				} 
 				if (firstNonSpace != -1) {
-					addWord(data.substring(firstNonSpace, data.length()), myOffset + (firstNonSpace - data.length()), 
-							data.length() - firstNonSpace);
+					addWord(data, firstNonSpace, data.length());
 				}
 				myOffset += data.length();
 			}

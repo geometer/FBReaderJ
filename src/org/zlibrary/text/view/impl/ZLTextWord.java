@@ -2,26 +2,24 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.core.view.ZLPaintContext;
 
-/*Should we use this special comment for package local things?*/
+final class ZLTextWord extends ZLTextElement { 
+	public final String Data;
+	public final int Offset;
+	public final int Length;
+	private int myWidth = -1;
 
-public class ZLTextWord extends ZLTextElement { 
-	public String Data;
-	//public short mySize;
-	public short Length;
-	//public int myParagraphOffset;
-
-	public ZLTextWord(String data, short size, int paragraphOffset) {
+	public ZLTextWord(String data, int offset, int length) {
 		Data = data;
-		//mySize = size;
-		Length = (short) data.length();
-		//myParagraphOffset = paragraphOffset;
+		Offset = offset;
+		Length = length;
 	}
 
 	public int getWidth(ZLPaintContext context) {
-		return context.getStringWidth(Data);	
+		int width = myWidth;
+		if (width == -1) {
+			width = context.getStringWidth(Data, Offset, Length);	
+			myWidth = width;
+		}
+		return width;
 	}
-	
-	/*	public Kind getKind() {
-		return Kind.WORD_ELEMENT;
-	}*/
 }
