@@ -65,7 +65,7 @@ public abstract class ZLApplication {
 		return myToolbar;
 	}
 
-	protected final Menubar getMenubar() {
+	public final Menubar getMenubar() {
 		if (myMenubar == null) {
 			myMenubar = new Menubar();
 		}
@@ -181,12 +181,12 @@ public abstract class ZLApplication {
 		return myActionMap.get(actionId);
 	}
 	
-	boolean final isActionVisible(int actionId) {
+	final boolean isActionVisible(int actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isVisible();
 	}
 	
-	boolean final isActionEnabled(int actionId) {
+	final boolean isActionEnabled(int actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}
@@ -233,7 +233,7 @@ public abstract class ZLApplication {
 		//((PresentWindowHandler)myPresentWindowHandler).resetLastCaller();
 	//}
 
-	void final setViewWidget(ZLViewWidget myViewWidget) {
+	final void setViewWidget(ZLViewWidget myViewWidget) {
 		myViewWidget = myViewWidget;
 	}
 
@@ -380,7 +380,7 @@ public abstract class ZLApplication {
 			}
 			
 			public String getTooltip() {
-				return myTooltip.hasValue() : myTooltip.value() : "";
+				return myTooltip.hasValue() ? myTooltip.value() : "";
 			}
 
 			ButtonGroup getButtonGroup() {
