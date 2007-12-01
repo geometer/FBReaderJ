@@ -75,6 +75,8 @@ public class ZLTextViewImpl extends ZLTextView {
 		public int elementWidth(ZLTextElement element, int charNumber) {
 			if (element instanceof ZLTextWord) {
 				return wordWidth((ZLTextWord) element, charNumber, -1, false);
+			} else if (element instanceof ZLTextHSpaceElement) {
+				return 0;//myContext.getSpaceWidth();
 			}
 			return 0;
 		}
@@ -179,10 +181,7 @@ public class ZLTextViewImpl extends ZLTextView {
 					w += dw;
 				} else if (element instanceof ZLTextHSpaceElement) {
 					if (wordOccurred) {
-						String text = " "; 
-						int dw = context.getStringWidth(text);
-						context.drawString(w, h + info.Height, text);
-						w += dw;
+						w += context.getSpaceWidth();
 						spaces++;
 						wordOccurred = false;
 					}

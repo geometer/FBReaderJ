@@ -72,7 +72,9 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 		return (int)sum;
 	}
 	public int getSpaceWidth() {
-		return myPaint.getTextWidths(" ", 0, 1, new float[1]);
+		float[] widths = new float[1];
+		myPaint.getTextWidths(" ", 0, 1, widths);
+		return (int)(widths[0] + 0.5f);
 	}
 	public int getStringHeight() {
 		return (int)(myPaint.getTextSize() + 0.5f);
