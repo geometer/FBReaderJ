@@ -21,20 +21,19 @@ abstract public class ZLViewWidget {
 		
 		static public Angle getByDegrees(int degrees) {
 			switch(degrees) {
-			case 0: 
-				return Angle.DEGREES0;
-			case 90:
-				return Angle.DEGREES90;
-			case 180:
-				return Angle.DEGREES180;
-			case 270:
-				return Angle.DEGREES270;
-			default: 
-				return null;
+				default:
+				case 0: 
+					return Angle.DEGREES0;
+				case 90:
+					return Angle.DEGREES90;
+				case 180:
+					return Angle.DEGREES180;
+				case 270:
+					return Angle.DEGREES270;
 			}
 		}
 
-		private int myDegrees;
+		private final int myDegrees;
 	};
 
 	protected ZLViewWidget(Angle initialAngle) {

@@ -280,7 +280,7 @@ public abstract class ZLApplication {
 	}
 
 	//rotation action
-	protected static class RotationAction extends ZLAction {
+	protected static final class RotationAction extends ZLAction {
 		private ZLApplication myApplication;
 
 		public RotationAction(ZLApplication application) {
@@ -299,20 +299,7 @@ public abstract class ZLApplication {
 			ZLViewWidget.Angle oldAngle = myApplication.myViewWidget.getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
-				switch (oldAngle) {
-					case DEGREES0:
-						newAngle = ZLViewWidget.Angle.DEGREES90;
-						break;
-					case DEGREES90:
-						newAngle = ZLViewWidget.Angle.DEGREES180;
-						break;
-					case DEGREES180:
-						newAngle = ZLViewWidget.Angle.DEGREES270;
-						break;
-					case DEGREES270:
-						newAngle = ZLViewWidget.Angle.DEGREES0;
-						break;
-				}
+				newAngle = ZLViewWidget.Angle.getByDegrees((oldAngle.getDegrees() + 90) % 360);
 			} else {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
 					ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
