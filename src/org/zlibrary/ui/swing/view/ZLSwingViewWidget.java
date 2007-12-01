@@ -1,6 +1,6 @@
 package org.zlibrary.ui.swing.view;
 
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.JPanel;
 
 import org.zlibrary.core.view.ZLViewWidget;
@@ -39,6 +39,7 @@ class ZLSwingPanel extends JPanel {
 
 	public void paint(Graphics g) {
 		super.paint(g);
+    ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		ZLView view = myViewWidget.getView();
 		ZLSwingPaintContext context = (ZLSwingPaintContext)view.getContext();
 		context.setGraphics(g);
