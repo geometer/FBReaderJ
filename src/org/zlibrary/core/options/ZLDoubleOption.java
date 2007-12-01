@@ -17,9 +17,11 @@ public final class ZLDoubleOption extends ZLOption{
 	
 	public double getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ((Double)myDefaultValue).toString();
-			String value = myConfig.getValue(myGroup, myOptionName, strDefaultValue);
-			myValue = ZLFromStringConverter.getDoubleValue(value);
+			String value = myConfig.getValue(myGroup, myOptionName, 
+							null);
+			if (value != null) {
+				myValue = ZLFromStringConverter.getDoubleValue(value);
+			}
 			myIsSynchronized = true;
 		}
 		return myValue;

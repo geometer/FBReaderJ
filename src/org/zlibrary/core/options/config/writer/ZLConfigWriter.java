@@ -38,8 +38,8 @@ import org.zlibrary.core.options.config.*;
 	
 	public void writeDelta() {
 		//TODO днохяюрэ, хяонкэгсъ ярпнемхе тюикю декэрш хг яхьмнцн йндю
-            this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                    + myConfig.getDelta(), myDestinationDirectory + "/delta.xml");
+		this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ myConfig.getDelta(), myDestinationDirectory + "/delta.xml");
 	}
 	
 	public void write() {

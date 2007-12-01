@@ -22,9 +22,10 @@ public final class ZLColorOption extends ZLOption {
 	
 	public int getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ((Integer)myDefaultValue).toString();
-			String value = myConfig.getValue(myGroup, myOptionName, strDefaultValue);
-			myIntValue = ZLFromStringConverter.getIntegerValue(value);
+			String value = myConfig.getValue(myGroup, myOptionName, null);
+			if (value != null) {
+				myIntValue = ZLFromStringConverter.getIntegerValue(value);
+			}
 			myIsSynchronized = true;
 		}
 		return myIntValue;

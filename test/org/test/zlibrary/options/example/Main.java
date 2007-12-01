@@ -36,10 +36,10 @@ public class Main {
 		ZLConfigInstance.getInstance().unsetValue("MYGROUP", 
 		"lengthChangeable");*/
 		
-        String output = "test/org/test/zlibrary/options/example/output/";
-        //ZLConfigWriterFactory.createConfigWriter(output).writeDelta();
+		String output = "test/org/test/zlibrary/options/example/output/";
+		//ZLConfigWriterFactory.createConfigWriter(output).writeDelta();
 		ZLConfigWriterFactory.createConfigWriter(output).write();
-        //ZLConfigWriterFactory.createConfigWriter(output + "cleared-").writeDelta();
+		//ZLConfigWriterFactory.createConfigWriter(output + "cleared-").writeDelta();
 	}
 	
 }

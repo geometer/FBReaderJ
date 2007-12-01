@@ -11,10 +11,10 @@ import java.util.Map;
 		myDeltaConfig = new ZLDeltaConfig();
 	}
 
-    public ZLDeltaConfig getDelta() {
-        return myDeltaConfig;
-    }
-    
+	public ZLDeltaConfig getDelta() {
+		return myDeltaConfig;
+	}
+	
 	public Map<String, ZLGroup> getGroups() {
 		return myMainConfig.getGroups();
 	}
@@ -22,9 +22,9 @@ import java.util.Map;
 	public String getValue(String group, String name, String defaultValue) {
 		String value = myDeltaConfig.getValue(group, name, defaultValue);
 		if (value == defaultValue) {
-		    value = myMainConfig.getValue(group, name, defaultValue);
+			value = myMainConfig.getValue(group, name, defaultValue);
 		}
-        return value;
+		return value;
 	}
 	
 	public void setCategory(String group, String name, String cat) {
@@ -55,9 +55,9 @@ import java.util.Map;
 		
 		Map<String, ZLGroup> deletedValues = myDeltaConfig.getDeletedValues().getGroups();
 		for (String group : deletedValues.keySet()) {
-            for (ZLOptionValue option : deletedValues.get(group).getValues()) {
-                myMainConfig.unsetValue(group, option.getName());
-            }
+			for (ZLOptionValue option : deletedValues.get(group).getValues()) {
+				myMainConfig.unsetValue(group, option.getName());
+			}
 		}
 		
 		ZLSimpleConfigImpl setValues = myDeltaConfig.getSetValues();

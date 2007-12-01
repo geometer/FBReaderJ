@@ -6,15 +6,15 @@ public class ZLOptionValue {
 	private String myName = "";
 	
 	public ZLOptionValue(String name, String value, String category) {
-        if (value != null) {
-            myValue = value.intern();
-        }
-        if (category != null) {
-            myCategory = category.intern();
-        }
-        if (name != null) {
-            myName = name.intern();
-        }
+		if (value != null) {
+			myValue = value.intern();
+		}
+		if (category != null) {
+			myCategory = category.intern();
+		}
+		if (name != null) {
+			myName = name.intern();
+		}
 	}
 	
 	public void setValue(String value) {
@@ -34,10 +34,10 @@ public class ZLOptionValue {
 	public String getCategory() {
 		return myCategory;
 	}
-    
-    public void setCategory(String cat) {
-        myCategory = cat;
-    }
+	
+	public void setCategory(String cat) {
+		myCategory = cat;
+	}
 	
 	public String toString() {
 		return "    <option name=\"" + myName 

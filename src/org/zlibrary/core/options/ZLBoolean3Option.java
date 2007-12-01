@@ -10,7 +10,7 @@ import org.zlibrary.core.options.util.*;
  */
 public final class ZLBoolean3Option extends ZLSimpleOption {
 
-    private	ZLBoolean3 myValue;
+	private	ZLBoolean3 myValue;
 	private	final ZLBoolean3 myDefaultValue;
 	
 	public ZLBoolean3Option(String category, String group, String optionName, ZLBoolean3 defaultValue) {	 
@@ -26,8 +26,10 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 	public ZLBoolean3 getValue() {
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, myOptionName, 
-                    myDefaultValue.toString());
-			myValue = ZLFromStringConverter.getBoolean3Value(value);
+							null);
+			if (value != null) {
+				myValue = ZLFromStringConverter.getBoolean3Value(value);
+			}
 			myIsSynchronized = true;
 		}
 		return myValue;

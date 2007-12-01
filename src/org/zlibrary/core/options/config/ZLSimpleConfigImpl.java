@@ -42,16 +42,16 @@ import java.util.*;
 		}
 	}
 	
-    public void setCategory(String group, String name, String cat) {
-        ZLGroup gr = myData.get(group);
-        if (gr != null){
-            ZLOptionValue option = gr.getOption(name);
-            if (option != null) {
-                option.setCategory(cat);
-            }
-        } 
-    }
-    
+	public void setCategory(String group, String name, String cat) {
+		ZLGroup gr = myData.get(group);
+		if (gr != null){
+			ZLOptionValue option = gr.getOption(name);
+			if (option != null) {
+				option.setCategory(cat);
+			}
+		} 
+	}
+	
 	public void setValue(String group, String name, String value, String category) {
 		if (myData.get(group) != null){
 			myData.get(group).setValue(name, value, category);
@@ -63,10 +63,10 @@ import java.util.*;
 	}
 	
 	public void unsetValue(String group, String name) {
-        ZLGroup gr = myData.get(group);
-        if (gr != null) {
-            gr.unsetValue(name);
-        }
+		ZLGroup gr = myData.get(group);
+		if (gr != null) {
+			gr.unsetValue(name);
+		}
 	}
 	
 	/**

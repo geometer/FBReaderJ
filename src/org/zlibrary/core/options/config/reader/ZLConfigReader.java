@@ -162,8 +162,7 @@ import org.zlibrary.core.options.config.*;
 	 * 
 	 * Прочитать данные из файла XML
 	 * 
-	 * @param file -
-	 *            файл XML
+	 * @param file файл XML
 	 */
 	public void readFile(File file) {
 		try {

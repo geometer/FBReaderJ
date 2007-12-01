@@ -16,13 +16,11 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 
 	public boolean getValue() {
 		if (!myIsSynchronized) {
-			String value;
-            if (myDefaultValue) {
-                value = myConfig.getValue(myGroup, myOptionName, "true");
-            } else {
-                value = myConfig.getValue(myGroup, myOptionName, "false");
-            }
-			myValue = ZLFromStringConverter.getBooleanValue(value);
+			
+			String value = myConfig.getValue(myGroup, myOptionName, null);
+			if (value != null) {
+				myValue = ZLFromStringConverter.getBooleanValue(value);
+			}
 			myIsSynchronized = true;
 		}
 		return myValue;
@@ -37,11 +35,11 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 		if (myValue == myDefaultValue) {
 			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
-            if (myValue) {
-                myConfig.setValue(myGroup, myOptionName, "true", myCategory);
-            } else {
-                myConfig.setValue(myGroup, myOptionName, "false", myCategory);
-            }
+			if (myValue) {
+				myConfig.setValue(myGroup, myOptionName, "true", myCategory);
+			} else {
+				myConfig.setValue(myGroup, myOptionName, "false", myCategory);
+			}
 		}
 	}
 }

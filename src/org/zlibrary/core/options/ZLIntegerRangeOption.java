@@ -30,10 +30,10 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	
 	public int getValue() {
 		if (!myIsSynchronized) {
-			String strDefaultValue = ((Integer)myDefaultValue).toString();
-			String value = myConfig.getValue(myGroup, 
-					myOptionName, strDefaultValue);
-			myValue = ZLFromStringConverter.getIntegerValue(value);
+			String value = myConfig.getValue(myGroup, myOptionName, null);
+			if (value != null) {
+				myValue = ZLFromStringConverter.getIntegerValue(value);
+			}
 			myIsSynchronized = true;
 		}
 		return myValue;
