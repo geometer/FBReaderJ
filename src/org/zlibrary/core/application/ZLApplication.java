@@ -20,61 +20,48 @@ import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLViewWidget;
 
 public abstract class ZLApplication {
-	static final String MouseScrollUpKey = "<MouseScrollDown>";
-	static final String MouseScrollDownKey = "<MouseScrollUp>";
+	private static final String MouseScrollUpKey = "<MouseScrollDown>";
+	private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	
-	static final String ROTATION = "Rotation";
-	static final String ANGLE = "Angle";
-	static final String STATE = "State";
-	static final String KEYBOARD = "Keyboard";
-	static final String FULL_CONTROL = "FullControl";
-	static final String CONFIG = "Config";
-	static final String AUTO_SAVE = "AutoSave";
-	static final String TIMEOUT = "Timeout";
+	private static final String ROTATION = "Rotation";
+	private static final String ANGLE = "Angle";
+	private static final String STATE = "State";
+	private static final String KEYBOARD = "Keyboard";
+	private static final String FULL_CONTROL = "FullControl";
+	private static final String CONFIG = "Config";
+	private static final String AUTO_SAVE = "AutoSave";
+	private static final String TIMEOUT = "Timeout";
 
+	public final ZLIntegerOption RotationAngleOption =
+		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
+	public final ZLIntegerOption AngleStateOption =
+		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
 
-	public final ZLIntegerOption RotationAngleOption;
-	public final ZLIntegerOption AngleStateOption;
+	public final ZLBooleanOption KeyboardControlOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
 
-	public final ZLBooleanOption KeyboardControlOption;
+	public final ZLBooleanOption ConfigAutoSavingOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, CONFIG, AUTO_SAVE, true);
+	public final ZLIntegerRangeOption ConfigAutoSaveTimeoutOption =
+		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30);
 
-	public final ZLBooleanOption ConfigAutoSavingOption;
-	public final ZLIntegerRangeOption ConfigAutoSaveTimeoutOption;
-
-	public final ZLIntegerRangeOption KeyDelayOption;
+	public final ZLIntegerRangeOption KeyDelayOption =
+		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
 	
-	private String myName;
+	private final ZLPaintContext myContext;
 	private ZLViewWidget myViewWidget;
 	private ZLApplicationWindow myWindow;
-	private ZLPaintContext myContext;
 	private ZLView myInitialView;
 
-	private Map<Integer,ZLAction> myActionMap = new HashMap<Integer,ZLAction>();
+	private final Map<Integer,ZLAction> myActionMap = new HashMap<Integer,ZLAction>();
 	private Toolbar myToolbar;
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
 	//private ZLMessageHandler myPresentWindowHandler;
 
-	
-	//from ZLBaseAplication
-	private static String ourDefaultFilesPathPrefix;
-	
-	{
-		RotationAngleOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
-		AngleStateOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
-		KeyboardControlOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
-		ConfigAutoSavingOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, CONFIG, AUTO_SAVE, true);
-		ConfigAutoSaveTimeoutOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30);
-		KeyDelayOption = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
-		
-	}
-	
 	protected ZLApplication() {
-		myName = ZLibrary.getInstance().getApplicationName();
 		myContext = ZLibrary.getInstance().createPaintContext();
 		
-		setViewWidget(null);
-		myWindow = null;
 		if (ConfigAutoSavingOption.getValue()) {
 			//ZLOption.startAutoSave((int)(ConfigAutoSaveTimeoutOption.getValue()));
 		}
@@ -103,8 +90,8 @@ public abstract class ZLApplication {
 			return;
 		}
 
-		if (getViewWidget() != null) {
-			getViewWidget().setView(view);
+		if (myViewWidget != null) {
+			myViewWidget.setView(view);
 			resetWindowCaption();
 			refreshWindow();
 		} else {
@@ -113,7 +100,7 @@ public abstract class ZLApplication {
 	}
 
 	protected ZLView getCurrentView() {
-		return (getViewWidget() != null) ? getViewWidget().getView() : null;
+		return (myViewWidget != null) ? myViewWidget.getView() : null;
 	}
 
 	private void quit() {
@@ -140,7 +127,7 @@ public abstract class ZLApplication {
 	}
 
 	public void refreshWindow() {
-		if (getViewWidget() != null) {
+		if (myViewWidget != null) {
 			myViewWidget.repaint();
 		}
 		if (myWindow != null) {
@@ -160,7 +147,7 @@ public abstract class ZLApplication {
 	
 	private void setFullscreen(boolean fullscreen) {
 		if (myWindow != null) {
-		    myWindow.setFullscreen(fullscreen);
+			myWindow.setFullscreen(fullscreen);
 		}
 	}
 	
@@ -195,8 +182,8 @@ public abstract class ZLApplication {
 	}
 	
 	public void trackStylus(boolean track) {
-		if (getViewWidget() != null) {
-			getViewWidget().trackStylus(track);
+		if (myViewWidget != null) {
+			myViewWidget.trackStylus(track);
 		}
 	}
 
@@ -246,7 +233,9 @@ public abstract class ZLApplication {
 		return true;
 	}
 	
-	public void openFile(String fileName) {}
+	public void openFile(String fileName) {
+		// TODO: implement or change to abstract
+	}
 
 	public void presentWindow() {
 		if (myWindow != null) {
@@ -258,22 +247,14 @@ public abstract class ZLApplication {
 		return null;//((PresentWindowHandler)myPresentWindowHandler).lastCaller();
 	}
 	
-	public void resetLastCaller() {
+	//public void resetLastCaller() {
 		//((PresentWindowHandler)myPresentWindowHandler).resetLastCaller();
-	}
+	//}
 
 	void setViewWidget(ZLViewWidget myViewWidget) {
-		this.myViewWidget = myViewWidget;
+		myViewWidget = myViewWidget;
 	}
 
-	private ZLViewWidget getViewWidget() {
-		return myViewWidget;
-	}
-	
-	public static String getDefaultFilesPathPrefix() {
-		return ourDefaultFilesPathPrefix;
-	}
-	
 	//Action
 	static abstract public class ZLAction {
 		
@@ -316,7 +297,7 @@ public abstract class ZLApplication {
 			myApplication.setFullscreen(!myApplication.isFullscreen());
 		}
 	}
-    
+
 	//rotation action
 	protected static class RotationAction extends ZLAction {
 		private ZLApplication myApplication;
@@ -326,15 +307,15 @@ public abstract class ZLApplication {
 		}
 		
 		public boolean isVisible() {
-			return (myApplication.getViewWidget() != null) &&
+			return (myApplication.myViewWidget != null) &&
 			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
-				(myApplication.getViewWidget().getRotation() != ZLViewWidget.Angle.DEGREES0));
+				(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
 
 		}
 		
 		public void run() {
 			int optionValue = (int)myApplication.RotationAngleOption.getValue();
-			ZLViewWidget.Angle oldAngle = myApplication.getViewWidget().getRotation();
+			ZLViewWidget.Angle oldAngle = myApplication.myViewWidget.getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
 				switch (oldAngle) {
@@ -355,7 +336,7 @@ public abstract class ZLApplication {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
 						ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
 			}
-			myApplication.getViewWidget().rotate(newAngle);
+			myApplication.myViewWidget.rotate(newAngle);
 			myApplication.AngleStateOption.setValue(newAngle.getDegrees());
 			myApplication.refreshWindow();		
 		}
@@ -497,7 +478,7 @@ public abstract class ZLApplication {
 		public interface Item {
 		}
 
-		private final List<Item> myItems = new LinkedList<Item>();;
+		private final List<Item> myItems = new LinkedList<Item>();
 		private final ZLResource myResource;
 
 		Menu(ZLResource resource) {
@@ -528,12 +509,11 @@ public abstract class ZLApplication {
 	}
 	
 	//MenuBar
-	static public class Menubar extends Menu {
-		public static class PlainItem implements  Item {
-			private String myName;
-			private int myActionId;
+	public static final class Menubar extends Menu {
+		public static final class PlainItem implements Item {
+			private final String myName;
+			private final int myActionId;
 
-			public  PlainItem() {}
 			public PlainItem(String name, int actionId) {
 				myName = name;
 				myActionId = actionId;
@@ -548,7 +528,7 @@ public abstract class ZLApplication {
 			}
 		};
 
-		public static class Submenu extends Menu implements Item {
+		public static final class Submenu extends Menu implements Item {
 			public Submenu(ZLResource resource) {
 				super(resource);
 			}
@@ -558,7 +538,7 @@ public abstract class ZLApplication {
 			}
 		};
 		
-		public static class Separator implements Item {
+		public static final class Separator implements Item {
 		};
 			
 		public Menubar() {
@@ -566,9 +546,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-    //MenuVisitor
+	//MenuVisitor
 	static public abstract class MenuVisitor {
-		public void processMenu(Menu menu) {
+		public final void processMenu(Menu menu) {
 			for (Menu.Item item : menu.getItems()) {
 				if (item instanceof Menubar.PlainItem) {
 					processItem((Menubar.PlainItem)item);

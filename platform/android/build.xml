@@ -1,14 +1,15 @@
 <?xml version="1.0" ?>
 <project name="FBReaderJ" default="package">
 	
-<!--	<property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc20a" />
+	<property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc20a" />
 	<property name="android-tools" value="/home/geometer/src/android_sdk_linux_m3-rc20a/tools" />
 	<property name="project-dir" value="/home/geometer/src/projects/FBReaderJ" />
-	-->
 
+<!--
 	<property name="sdk-folder" value="/home/grigory/distrib/android_sdk_linux_m3-rc20a" />
 	<property name="android-tools" value="/home/grigory/distrib/android_sdk_linux_m3-rc20a/tools" />
 	<property name="project-dir" value="/home/grigory/programming/amse/fbreader/java/trunk" />
+-->
 
 	<!-- The intermediates directory -->
 	<!-- Eclipse uses "bin" for its own output, so we do the same. -->
