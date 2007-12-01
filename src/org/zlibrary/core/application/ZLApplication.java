@@ -25,9 +25,7 @@ public abstract class ZLApplication {
 		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
 		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, -1);
 	public final ZLIntegerOption AngleStateOption =
-		// TODO: uncomment, this is temporary fix for bug in options :(
-		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
-		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, -1);	
+		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
 
 	public final ZLBooleanOption KeyboardControlOption =
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
