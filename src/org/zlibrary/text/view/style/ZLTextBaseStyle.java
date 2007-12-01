@@ -62,7 +62,7 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	}
 	
 	public String fontFamily() {
-		return "SomeFamily";
+		return "default";
 	}
 
 	public int fontSize() {

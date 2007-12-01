@@ -11,11 +11,10 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
-	public void setFont(String family, int size, boolean bold, boolean italic) {
-		// TODO: implement
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
 		if (myGraphics != null) {
 			final int style = (bold ? Font.BOLD : 0) | (italic ? Font.ITALIC : 0);
-			myGraphics.setFont(new Font("Default", style, size));
+			myGraphics.setFont(new Font(family, style, size));
 		}
 	}
 
@@ -44,14 +43,13 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		return myGraphics.getFontMetrics().stringWidth(string);
 	}
 
-	public int getSpaceWidth() {
-		// TODO: optimize (?)
+	protected int getSpaceWidthInternal() {
 		return myGraphics.getFontMetrics().charWidth(' ');
 	}
-	public int getStringHeight() {
+	protected int getStringHeightInternal() {
 		return myGraphics.getFontMetrics().getHeight();
 	}
-	public int getDescent() {
+	protected int getDescentInternal() {
 		return myGraphics.getFontMetrics().getDescent();
 	}
 	public void drawString(int x, int y, String string) {
@@ -82,6 +80,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 
 	void setGraphics(Graphics2D g) {
 		myGraphics = g;
+		resetFont();
 	}
 
 	private Graphics2D myGraphics;

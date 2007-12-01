@@ -15,11 +15,6 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 		// TODO: implement
 	}
 
-	public void setView(ZLView view) {
-		// TODO: implement
-		super.setView(view);
-	}
-
 	public void trackStylus(boolean track) {
 		// TODO: implement
 	}

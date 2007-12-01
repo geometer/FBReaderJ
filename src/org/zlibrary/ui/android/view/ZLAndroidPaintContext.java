@@ -7,12 +7,14 @@ import android.graphics.Typeface;
 import org.zlibrary.core.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
-public class ZLAndroidPaintContext extends ZLPaintContext {
+public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private Canvas myCanvas;
 	private final Paint myPaint;
 
 	private int myWidth;
 	private int myHeight;
+
+	private float[] myWidthsArray = new float[10];
 
 	ZLAndroidPaintContext() {
 		myPaint = new Paint();
@@ -27,6 +29,7 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 
 	void beginPaint(Canvas canvas) {
 		myCanvas = canvas;
+		resetFont();
 	}
 
 	void endPaint() {
@@ -37,7 +40,7 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
-	public void setFont(String family, int size, boolean bold, boolean italic) {
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
 		// TODO: optimize
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		//if (family == null) {
@@ -63,23 +66,26 @@ public class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 	
 	public int getStringWidth(String string/*, int len*/) {
-		float[] widths = new float[string.length()];
-		myPaint.getTextWidths(string, 0, string.length(), widths);
+		final int length = string.length();
+		if (myWidthsArray.length < length) {
+			myWidthsArray = new float[length];
+		}
+		float[] widths = myWidthsArray;
+		myPaint.getTextWidths(string, 0, length, widths);
 		float sum = 0.5f;
-		for (int i = 0; i < widths.length; ++i) {
+		for (int i = 0; i < length; ++i) {
 			sum += widths[i];
 		}
 		return (int)sum;
 	}
-	public int getSpaceWidth() {
-		float[] widths = new float[1];
-		myPaint.getTextWidths(" ", 0, 1, widths);
-		return (int)(widths[0] + 0.5f);
+	protected int getSpaceWidthInternal() {
+		myPaint.getTextWidths(" ", 0, 1, myWidthsArray);
+		return (int)(myWidthsArray[0] + 0.5f);
 	}
-	public int getStringHeight() {
+	protected int getStringHeightInternal() {
 		return (int)(myPaint.getTextSize() + 0.5f);
 	}
-	public int getDescent() {
+	protected int getDescentInternal() {
 		return (int)(myPaint.descent() + 0.5f);
 	}
 	public void drawString(int x, int y, String string/*, int len*/) {
