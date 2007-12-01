@@ -6,19 +6,47 @@ import javax.swing.JPanel;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.core.view.ZLView;
 
-public class ZLSwingViewWidget extends ZLViewWidget {
+public final class ZLSwingViewWidget extends ZLViewWidget {
+	private class Panel extends JPanel {
+		public void paint(Graphics g) {
+			super.paint(g);
+			Graphics2D g2d = (Graphics2D)g;
+      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+			final ZLView view = getView();
+			final ZLSwingPaintContext context = (ZLSwingPaintContext)view.getContext();
+			final Dimension size = getSize();
+			switch (getRotation()) {
+				case DEGREES0:
+					context.setSize(size.width, size.height);
+					break;
+				case DEGREES90:
+					g2d.rotate(-Math.PI / 2);
+					g2d.translate(-size.height, 0);
+					context.setSize(size.height, size.width);
+					break;
+				case DEGREES180:
+					g2d.rotate(Math.PI);
+					g2d.translate(-size.width, -size.height);
+					context.setSize(size.width, size.height);
+					break;
+				case DEGREES270:
+					g2d.rotate(Math.PI / 2);
+					g2d.translate(0, -size.width);
+					context.setSize(size.height, size.width);
+					break;
+			}
+			context.setGraphics(g2d);
+			view.paint();
+		}
+	}
+
 	public ZLSwingViewWidget(Angle initialAngle) {
 		super(initialAngle);
-		myPanel = new ZLSwingPanel(this);
 	}
 
 	public void repaint() {
 		myPanel.repaint();
-	}
-
-	public void setView(ZLView view) {
-		super.setView(view);
-		((ZLSwingPaintContext)view.getContext()).setComponent(myPanel);
 	}
 
 	public void trackStylus(boolean track) {
@@ -29,22 +57,5 @@ public class ZLSwingViewWidget extends ZLViewWidget {
 		return myPanel;
 	}
 
-	private JPanel myPanel;
-}
-
-class ZLSwingPanel extends JPanel {
-	ZLSwingPanel(ZLSwingViewWidget viewWidget) {
-		myViewWidget = viewWidget;
-	}
-
-	public void paint(Graphics g) {
-		super.paint(g);
-    ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		ZLView view = myViewWidget.getView();
-		ZLSwingPaintContext context = (ZLSwingPaintContext)view.getContext();
-		context.setGraphics(g);
-		view.paint();
-	}
-
-	private ZLSwingViewWidget myViewWidget;
+	private final Panel myPanel = new Panel();
 }

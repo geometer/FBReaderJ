@@ -147,7 +147,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	protected ZLSwingViewWidget createViewWidget() {
-		ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(ZLSwingViewWidget.Angle.DEGREES0);
+		ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(
+			ZLSwingViewWidget.Angle.getByDegrees(getApplication().AngleStateOption.getValue()));
 		//myFrame.getRootPane()
 		myMainPanel.add(viewWidget.getPanel(), BorderLayout.CENTER);
 		return viewWidget;

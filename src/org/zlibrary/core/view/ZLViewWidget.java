@@ -39,7 +39,7 @@ abstract public class ZLViewWidget {
 		myRotation = initialAngle;
 	}
 
-	public void setView(ZLView view) {
+	public final void setView(ZLView view) {
 		myView = view;
 	}
 

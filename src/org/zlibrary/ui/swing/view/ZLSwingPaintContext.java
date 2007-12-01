@@ -6,7 +6,7 @@ import java.awt.*;
 import org.zlibrary.core.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
-public class ZLSwingPaintContext extends ZLPaintContext {
+public final class ZLSwingPaintContext extends ZLPaintContext {
 	public void clear(ZLColor color) {
 		// TODO: implement
 	}
@@ -27,12 +27,17 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
+	void setSize(int w, int h) {
+		myWidth = w;
+		myHeight = h;
+	}
+
 	public int getWidth() {
-		return myComponent.getSize().width;
+		return myWidth;
 	}
 
 	public int getHeight() {
-		return myComponent.getSize().height;
+		return myHeight;
 	}
 	
 	public int getStringWidth(String string) {
@@ -75,14 +80,11 @@ public class ZLSwingPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
-	void setComponent(Component component) {
-		myComponent = component;
-	}
-
-	void setGraphics(Graphics g) {
+	void setGraphics(Graphics2D g) {
 		myGraphics = g;
 	}
 
-	private Component myComponent;
-	private Graphics myGraphics;
+	private Graphics2D myGraphics;
+	private int myWidth;
+	private int myHeight;
 }

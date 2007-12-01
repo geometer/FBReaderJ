@@ -32,9 +32,7 @@ abstract public class ZLApplicationWindow {
 	
 	abstract protected void initMenu();
 
-	
 	public void onButtonPress(ZLApplication.Toolbar.ButtonItem button) {
-		
 		if (myToggleButtonLock) {
 			return;
 		}
