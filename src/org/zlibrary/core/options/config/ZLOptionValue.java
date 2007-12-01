@@ -18,7 +18,9 @@ public class ZLOptionValue {
 	}
 	
 	public void setValue(String value) {
-		myValue = value.intern();
+		if (value != null) {
+			myValue = value.intern();
+		}
 	}
 	
 	public String getValue() {
