@@ -1,7 +1,6 @@
 package org.zlibrary.core.view;
 
 abstract public class ZLViewWidget {
-
 	private ZLView myView;
 	private Angle myRotation;
 
@@ -44,19 +43,20 @@ abstract public class ZLViewWidget {
 		myView = view;
 	}
 
-	public ZLView getView() {
+	public final ZLView getView() {
 		return myView;
 	}
 
 	abstract public void trackStylus(boolean track);
 
-	public void rotate(Angle rotation) {
+	public final void rotate(Angle rotation) {
 		myRotation = rotation;
 	}
 
-	public Angle getRotation() {
+	public final Angle getRotation() {
 		return myRotation;
 	}
-    //chabge to protected   
+
+	// TODO: change to protected   
 	abstract public void repaint();
 }
