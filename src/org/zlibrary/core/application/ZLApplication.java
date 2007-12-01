@@ -233,8 +233,8 @@ public abstract class ZLApplication {
 		//((PresentWindowHandler)myPresentWindowHandler).resetLastCaller();
 	//}
 
-	final void setViewWidget(ZLViewWidget myViewWidget) {
-		myViewWidget = myViewWidget;
+	final void setViewWidget(ZLViewWidget viewWidget) {
+		myViewWidget = viewWidget;
 	}
 
 	//Action
