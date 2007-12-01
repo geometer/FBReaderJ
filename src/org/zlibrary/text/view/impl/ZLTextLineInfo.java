@@ -21,7 +21,7 @@ class ZLTextLineInfo {
 
 	public ZLTextLineInfo(ZLTextWordCursor word, ZLTextStyle style) {
 		Start = word;
-		RealStart= word;
+		RealStart = word;
 		End = word;
 		IsVisible = false;
 		LeftIndent = 0;

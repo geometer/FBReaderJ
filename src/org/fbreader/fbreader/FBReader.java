@@ -90,6 +90,7 @@ public class FBReader extends ZLApplication {
 
 		ZLTextView view = new ZLTextViewImpl(this, getContext());
 		view.setModel((args.length > 0) ? args[0] : "data/help/MiniHelp.ru.fb2");
+//		view.setModel((args.length > 0) ? args[0] : "test/data/fb2/subtitle.fb2");
 		setView(view);
 	}
 

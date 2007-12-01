@@ -18,6 +18,7 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 
 	public int fontSize() {
 //		if (myDecoration.FontSizeDeltaOption != null && getBase() != null) {
+//			System.out.println("Delta = " + myDecoration.FontSizeDeltaOption.getValue());
 			return getBase().fontSize() + (int) myDecoration.FontSizeDeltaOption.getValue();
 //		} 
 //		return 12;

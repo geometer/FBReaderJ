@@ -25,6 +25,7 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 	
 	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineDelta, int verticalShift, ZLTextAlignmentType alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
+//		System.out.println("Constructed, fonSizeDelta = " + fontSizeDelta);
 		SpaceBeforeOption = null;
 		SpaceAfterOption = null;
 		LeftIndentOption = null;

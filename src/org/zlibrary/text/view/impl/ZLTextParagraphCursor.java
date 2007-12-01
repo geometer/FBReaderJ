@@ -27,6 +27,7 @@ public abstract class ZLTextParagraphCursor {
 				if (entry instanceof ZLTextEntry) {
 					processTextEntry((ZLTextEntry) entry);
 				} else if (entry instanceof ZLTextControlEntry) {
+//					System.out.println("Tag = " + ((ZLTextControlEntry) entry).getKind());
 					myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
 				}
 			}

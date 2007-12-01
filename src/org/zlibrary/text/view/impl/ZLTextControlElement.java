@@ -6,6 +6,7 @@ class ZLTextControlElement extends ZLTextElement {
 	private final ZLTextControlEntry myEntry;
 
 	/*package*/ ZLTextControlElement(ZLTextControlEntry entry) {
+//		System.out.println(entry.getKind() + " " + entry.isStart());
 		myEntry = entry;
 	}
 
@@ -17,9 +18,9 @@ class ZLTextControlElement extends ZLTextElement {
 		return myEntry;
 	}
 
-/*	public byte getTextKind() {
+	public byte getTextKind() {
 		return getEntry().getKind();
-	}*/
+	}
 
 	public boolean isStart() {
 		return myEntry.isStart();

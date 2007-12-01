@@ -57,10 +57,11 @@ public class ZLTextStyleCollection {
 			String value = attributes.get(name);
 			if (value != null) {
 				try {
-					Integer.parseInt(attributes.get(name));
+					i = Integer.parseInt(value);
 				} catch (NumberFormatException e) {
+					e.printStackTrace();
 				}
-			}
+			} 
 			return i;
 		}
 
@@ -69,8 +70,9 @@ public class ZLTextStyleCollection {
 			String value = attributes.get(name);
 			if (value != null) {
 				try {
-					Double.parseDouble(value);
+					d = Double.parseDouble(value);
 				} catch (NumberFormatException e) {
+					e.printStackTrace();
 				}
 			}
 			return d;
