@@ -196,8 +196,10 @@ import org.zlibrary.core.options.config.*;
 				}
 			}
 		}
-		myXMLReader.setContentHandler(new DeltaConfigContentHandler());
-		readFile(new File(myDestinationDirectory + "/delta.xml"));
-		myConfig.clearDelta();
+		if (myXMLReader != null) {
+			myXMLReader.setContentHandler(new DeltaConfigContentHandler());
+			readFile(new File(myDestinationDirectory + "/delta.xml"));
+			myConfig.clearDelta();
+		}
 	}
 }
