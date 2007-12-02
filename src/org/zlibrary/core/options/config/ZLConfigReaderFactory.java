@@ -1,6 +1,6 @@
-package org.zlibrary.core.options.config.reader;
+package org.zlibrary.core.options.config;
 
-public class ZLConfigReaderFactory {
+public final class ZLConfigReaderFactory {
 	public static ZLReader createConfigReader(String path){
 		return new ZLConfigReader(path);
 	}

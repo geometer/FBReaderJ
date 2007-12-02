@@ -2,7 +2,7 @@ package org.zlibrary.core.options.config;
 
 import java.util.*;
 
-/*package*/ class ZLDeletedOptionsTree {
+/*package*/ class ZLDeletedValuesTree {
 	private Map<String, List<String>> myData = new TreeMap<String, List<String>>();
 	
 	public void add(String group, String name) {

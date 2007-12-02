@@ -1,12 +1,11 @@
-package org.zlibrary.core.options.config.reader;
+package org.zlibrary.core.options.config;
 
 import java.io.*;
 import java.util.Map;
 
-import org.zlibrary.core.options.config.*;
 import org.zlibrary.core.xml.ZLXMLReader;
 
-/*package*/class ZLConfigReader implements ZLReader {
+/*package*/ class ZLConfigReader implements ZLReader {
 	
 	private class ConfigReader extends ZLXMLReader  {
 		private int myDepth = 0;
@@ -128,7 +127,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	
 	private ZLXMLReader myXMLReader = new ConfigReader();
 
-	private ZLConfig myConfig;
+	private ZLConfigImpl myConfig;
 
 	private String myCategory = "";
 
@@ -137,7 +136,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	private String myFile = "";
 	
 	public ZLConfigReader(String path) {
-		myConfig = ZLConfigInstance.getInstance();
+		myConfig = ZLConfigInstance.getExtendedInstance();
 		myDestinationDirectory = new File(path);
 		if (myDestinationDirectory.exists()) {
 			if (!myDestinationDirectory.isDirectory()) {

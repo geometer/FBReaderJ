@@ -4,9 +4,9 @@ import java.util.*;
 
 /*package*/ final class ZLDeltaConfig {
 	
-	private ZLDeletedOptionsTree myDeletedValues = new ZLDeletedOptionsTree();
+	private ZLDeletedValuesTree myDeletedValues = new ZLDeletedValuesTree();
 	private Set<String> myDeletedGroups = new HashSet<String>();
-	private ZLSimpleConfigImpl mySetValues = new ZLSimpleConfigImpl();
+	private ZLSimpleConfig mySetValues = new ZLSimpleConfig();
 	
 	public ZLDeltaConfig() {
 	}
@@ -15,11 +15,11 @@ import java.util.*;
 		return Collections.unmodifiableSet(myDeletedGroups);
 	}
 	
-	public ZLDeletedOptionsTree getDeletedValues() {
+	public ZLDeletedValuesTree getDeletedValues() {
 		return myDeletedValues;
 	}
 	
-	public ZLSimpleConfigImpl getSetValues() {
+	public ZLSimpleConfig getSetValues() {
 		return mySetValues;
 	}
 	

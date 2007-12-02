@@ -28,7 +28,7 @@ import org.zlibrary.core.options.util.ZLColor;
 			double value = Double.parseDouble(input);
 			return value;
 		} catch (NumberFormatException e) {
-			System.err.println("wrong format : " + input);
+			System.err.println(e);
 			return 0;
 		}
 	}
@@ -38,8 +38,7 @@ import org.zlibrary.core.options.util.ZLColor;
 			int value = Integer.parseInt(input);
 			return value;
 		} catch (NumberFormatException e) {
-			//e.printStackTrace();
-			System.err.println("wrong format : " + input);
+			System.err.println(e);
 			return 0;
 		}
 	}

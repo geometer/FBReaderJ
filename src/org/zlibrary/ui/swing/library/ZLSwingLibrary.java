@@ -3,8 +3,8 @@ package org.zlibrary.ui.swing.library;
 import java.io.InputStream;
 
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
-import org.zlibrary.core.options.config.writer.ZLConfigWriterFactory;
+import org.zlibrary.core.options.config.ZLConfigReaderFactory;
+import org.zlibrary.core.options.config.ZLConfigWriterFactory;
 import org.zlibrary.core.application.ZLApplication;
 
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;

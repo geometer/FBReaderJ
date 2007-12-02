@@ -1,6 +1,6 @@
-package org.zlibrary.core.options.config.writer;
+package org.zlibrary.core.options.config;
 
-public class ZLConfigWriterFactory {
+public final class ZLConfigWriterFactory {
 	public static ZLWriter createConfigWriter(String path){
 		return new ZLConfigWriter(path);
 	}

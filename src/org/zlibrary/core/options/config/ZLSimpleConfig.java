@@ -1,18 +1,94 @@
 package org.zlibrary.core.options.config;
 
-import java.util.Map;
+import java.util.*;
 
-/*package*/ interface ZLSimpleConfig {
-	
-	public void removeGroup(String name);
+/**
+ * класс Конфиг. это своеобразная структура опций.
+ * основное поле myData содержит список групп, которым
+ * в качестве ключей сопоставляются их имена.
+ * @author Администратор
+ *
+ */
+/*package*/ class ZLSimpleConfig implements ZLConfig {
+	// public abstract void unsetValue(String group, String name);
 
-	public String getValue(String group, String name, String defaultValue);
+	// public abstract  boolean isAutoSavingSupported() const = 0;
+	// public abstract  void startAutoSave(int seconds) = 0;
+	private Map<String, ZLGroup> myData;
 	
-	public void setValue(String group, String name, String value, String category);
+	public ZLSimpleConfig() {
+		myData = new TreeMap<String, ZLGroup>();
+	}
 	
-	public void unsetValue(String group, String name);
+	protected void clear() {
+		myData.clear();
+	}
 	
-	public String toString();
+	protected Map<String, ZLGroup> getGroups() {
+		return Collections.unmodifiableMap(myData);
+	}
 	
-	public Map<String, ZLGroup> getGroups();
+	public void removeGroup(String group) {
+		if (myData.get(group) != null){
+			myData.remove(group);
+		}
+	}
+
+	public String getValue(String group, String name, String defaultValue) {
+		if (myData.get(group) != null){
+			if (myData.get(group).getValue(name) != null){
+				return myData.get(group).getValue(name);
+			}
+		} 
+		return defaultValue;
+	}
+	
+	protected void setCategory(String group, String name, String cat) {
+		ZLGroup gr = myData.get(group);
+		if (gr != null){
+			ZLOptionValue option = gr.getOption(name);
+			if (option != null) {
+				option.setCategory(cat);
+			}
+		} 
+	}
+	
+    protected String getCategory(String group, String name) {
+        ZLGroup gr = myData.get(group);
+        if (gr != null){
+            ZLOptionValue option = gr.getOption(name);
+            if (option != null) {
+                return option.getCategory();
+            }
+        } 
+        return null;
+    }
+    
+	public void setValue(String group, String name, String value, String category) {
+		if (myData.get(group) != null){
+			myData.get(group).setValue(name, value, category);
+		} else {
+			ZLGroup newGroup = new ZLGroup();
+			newGroup.setValue(name, value, category);
+			myData.put(group, newGroup);
+		}
+	}
+	
+	public void unsetValue(String group, String name) {
+		ZLGroup gr = myData.get(group);
+		if (gr != null) {
+			gr.unsetValue(name);
+		}
+	}
+	
+	/**
+	 * метод вывода в строку
+	 */
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for (String categoryName : myData.keySet()){
+			sb.append("" + categoryName + "\n\n" + myData.get(categoryName) + "\n");
+		}
+		return sb.toString();
+	}   
 }

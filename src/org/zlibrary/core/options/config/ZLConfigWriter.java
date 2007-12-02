@@ -1,13 +1,11 @@
-package org.zlibrary.core.options.config.writer;
+package org.zlibrary.core.options.config;
 
 import java.io.*;
 import java.util.*;
 
-import org.zlibrary.core.options.config.*;
-
 /*package*/ class ZLConfigWriter implements ZLWriter {
    
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+	private ZLConfigImpl myConfig = ZLConfigInstance.getExtendedInstance();
 	private File myDestinationDirectory;
 	
 	public ZLConfigWriter(String path){
@@ -52,14 +50,13 @@ import org.zlibrary.core.options.config.*;
 	}
 	
 	public void write() {
-		myConfig.applyDelta();
+		Set<String> usedCategories = myConfig.applyDelta();
 		Map<String, ZLGroup> data = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
 		Map<String, StringBuffer> configFilesContent = 
 			new LinkedHashMap<String, StringBuffer>();
 		StringBuffer sb;
 		Map<String, Boolean> currentGroupOpenedIn;
-		Set<String> notEmptyCategories = new HashSet<String>();
 		
 		for (String group : data.keySet()) {
 			
@@ -83,8 +80,6 @@ import org.zlibrary.core.options.config.*;
 					sb.append("  <group name=\"" + group + "\">\n");
 					currentGroupOpenedIn.put(value.getCategory(), true);
 				}
-				//if (!value.getCategory().equals("books"))
-				//System.out.println(value.getCategory());
 				sb.append(value);
 			}
 			
@@ -93,17 +88,20 @@ import org.zlibrary.core.options.config.*;
 			}
 			}
 		
-		for (String category : configFilesContent.keySet()){
-			notEmptyCategories.add(category.intern());
+		for (String category : usedCategories){
 			this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 					+ "<config>\n" + configFilesContent.get(category) + "</config>", 
 					configFilePath(category));
 		}
 		
-		/*for (String category : myConfig.getCategories()) {
-			if (!notEmptyCategories.contains(category.intern())) {
+        /**
+         * если в категориях, которые мы изменили, существуют те, в которых после изменений
+         * ничего не лежит, то мы удаляем соответствующие файлы
+         */
+		for (String category : usedCategories) {
+			if (!configFilesContent.keySet().contains(category.intern())) {
 				deleteConfigFile(configFilePath(category));
 			}
-		}*/
+		}
 	}
 }

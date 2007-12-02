@@ -1,11 +1,9 @@
 package org.test.zlibrary.options.example;
 
-import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
-import org.zlibrary.core.options.config.writer.*;
+import org.zlibrary.core.options.config.ZLConfigReaderFactory;
+import org.zlibrary.core.options.config.ZLConfigWriterFactory;
 import org.zlibrary.core.options.*;
 
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 //TODO щрн онйю врн йпхбни реяр.
 
 /**

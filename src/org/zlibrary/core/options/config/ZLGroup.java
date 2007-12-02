@@ -2,7 +2,7 @@ package org.zlibrary.core.options.config;
 
 import java.util.*;
 
-public final class ZLGroup {
+/*package*/ final class ZLGroup {
 	private Map<String, ZLOptionValue> myData;
 	
 	public ZLGroup (){

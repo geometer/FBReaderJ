@@ -1,11 +1,12 @@
 package org.zlibrary.core.options.config;
 
-import java.util.Set;
+public interface ZLConfig {
+	
+	public void removeGroup(String name);
 
-public interface ZLConfig extends ZLSimpleConfig {
-	public void applyDelta();
-	public void clearDelta();
-	public ZLDeltaConfig getDelta();
-	//public Set<String> getCategories();
-	public void setCategory(String group, String name, String category);
+	public String getValue(String group, String name, String defaultValue);
+	
+	public void setValue(String group, String name, String value, String category);
+	
+	public void unsetValue(String group, String name);
 }
