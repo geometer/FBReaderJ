@@ -35,4 +35,14 @@ class SAXHandler extends DefaultHandler {
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		myXMLReader.characterDataHandler(ch, start, length);	
 	}
+
+	@Override
+	public void endDocument() throws SAXException {
+		myXMLReader.endDocumentHandler();
+	}
+
+	@Override
+	public void startDocument() throws SAXException {
+		myXMLReader.startDocumentHandler();
+	}
 }
