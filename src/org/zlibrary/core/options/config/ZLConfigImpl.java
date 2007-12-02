@@ -1,18 +1,24 @@
 package org.zlibrary.core.options.config;
 
-import java.util.Map;
+import java.util.*;
 
 /*package*/ class ZLConfigImpl implements ZLConfig {
 	private final ZLSimpleConfigImpl myMainConfig;
 	private final ZLDeltaConfig myDeltaConfig;
-
+	private final Set<String> myCategories;
+	
 	public ZLConfigImpl() {
 		myMainConfig = new ZLSimpleConfigImpl();
 		myDeltaConfig = new ZLDeltaConfig();
+		myCategories = new HashSet<String>();
 	}
 
 	public ZLDeltaConfig getDelta() {
 		return myDeltaConfig;
+	}
+	
+	public Set<String> getCategories() {
+		return Collections.unmodifiableSet(myCategories);
 	}
 	
 	public Map<String, ZLGroup> getGroups() {
@@ -20,16 +26,18 @@ import java.util.Map;
 	}
 
 	public String getValue(String group, String name, String defaultValue) {
-		String value = myDeltaConfig.getValue(group, name, defaultValue);
-		if (value == defaultValue) {
-			value = myMainConfig.getValue(group, name, defaultValue);
+		String value = myDeltaConfig.getValue(group.intern(), name.intern(),
+				defaultValue.intern());
+		if (value.intern() == defaultValue.intern()) {
+			value = myMainConfig.getValue(group.intern(), name.intern(), 
+					defaultValue.intern());
 		}
-		return value;
+		return value.intern();
 	}
 	
 	public void setCategory(String group, String name, String cat) {
-		myDeltaConfig.setCategory(group, name, cat);
-		myMainConfig.setCategory(group, name, cat);
+		myDeltaConfig.setCategory(group.intern(), name.intern(), cat.intern());
+		myMainConfig.setCategory(group.intern(), name.intern(), cat.intern());
 	}
 	
 	public void removeGroup(String name) {
@@ -38,6 +46,7 @@ import java.util.Map;
 
 	public void setValue(String group, String name, String value, String category) {
 		myDeltaConfig.setValue(group, name, value, category);
+		myCategories.add(category.intern());
 	}
 
 	public void unsetValue(String group, String name) {
@@ -53,10 +62,12 @@ import java.util.Map;
 			myMainConfig.removeGroup(deletedGroup);
 		}
 		
-		Map<String, ZLGroup> deletedValues = myDeltaConfig.getDeletedValues().getGroups();
-		for (String group : deletedValues.keySet()) {
-			for (ZLOptionValue option : deletedValues.get(group).getValues()) {
-				myMainConfig.unsetValue(group, option.getName());
+		ZLDeletedOptionsTree deletedValues = myDeltaConfig.getDeletedValues();
+		for (String group : deletedValues.getGroups()) {
+			for (String option : deletedValues.getOptions(group)) {
+				myMainConfig.unsetValue(group, option);
+				System.out.println(option);
+				System.out.println(myMainConfig.getValue(group, option, ""));
 			}
 		}
 		

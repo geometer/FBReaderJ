@@ -18,7 +18,7 @@ import org.zlibrary.core.options.config.*;
 		myDestinationDirectory = file;
 	}
 	
-	public void writeConfigFile(String configFileContent, String filePath) {
+	private void writeConfigFile(String configFileContent, String filePath) {
 		File file = new File(filePath);
 		try {
 			PrintWriter pw = new PrintWriter(file, "UTF-8");
@@ -36,10 +36,19 @@ import org.zlibrary.core.options.config.*;
 		}
 	}
 	
+	private void deleteConfigFile(String filePath) {
+		File file = new File(filePath);
+		file.delete();
+	}
+	
 	public void writeDelta() {
 		//TODO ƒŒœ»—¿“‹, »—œŒÀ‹«”ﬂ —“–Œ≈Õ»≈ ‘¿…À¿ ƒ≈À‹“€ »« —»ÿÕŒ√Œ  Œƒ¿
 		this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 				+ myConfig.getDelta(), myDestinationDirectory + "/delta.xml");
+	}
+	
+	private String configFilePath(String category) {
+		return myDestinationDirectory + "/" + category + ".xml";
 	}
 	
 	public void write() {
@@ -50,6 +59,7 @@ import org.zlibrary.core.options.config.*;
 			new LinkedHashMap<String, StringBuffer>();
 		StringBuffer sb;
 		Map<String, Boolean> currentGroupOpenedIn;
+		Set<String> notEmptyCategories = new HashSet<String>();
 		
 		for (String group : data.keySet()) {
 			
@@ -73,7 +83,8 @@ import org.zlibrary.core.options.config.*;
 					sb.append("  <group name=\"" + group + "\">\n");
 					currentGroupOpenedIn.put(value.getCategory(), true);
 				}
-				
+				//if (!value.getCategory().equals("books"))
+				//System.out.println(value.getCategory());
 				sb.append(value);
 			}
 			
@@ -83,9 +94,16 @@ import org.zlibrary.core.options.config.*;
 			}
 		
 		for (String category : configFilesContent.keySet()){
+			notEmptyCategories.add(category.intern());
 			this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 					+ "<config>\n" + configFilesContent.get(category) + "</config>", 
-					myDestinationDirectory + "/" + category + ".xml");
+					configFilePath(category));
+		}
+		
+		for (String category : myConfig.getCategories()) {
+			if (!notEmptyCategories.contains(category.intern())) {
+				deleteConfigFile(configFilePath(category));
+			}
 		}
 	}
 }

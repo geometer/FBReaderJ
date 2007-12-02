@@ -36,10 +36,11 @@ import java.util.*;
 
 	public String getValue(String group, String name, String defaultValue) {
 		if (myData.get(group) != null){
-			return myData.get(group).getValue(name);
-		} else{
-			return defaultValue;
-		}
+			if (myData.get(group).getValue(name) != null){
+				return myData.get(group).getValue(name);
+			}
+		} 
+		return defaultValue;
 	}
 	
 	public void setCategory(String group, String name, String cat) {

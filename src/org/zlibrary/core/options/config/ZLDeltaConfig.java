@@ -4,7 +4,7 @@ import java.util.*;
 
 /*package*/ final class ZLDeltaConfig {
 	
-	private ZLSimpleConfigImpl myDeletedValues = new ZLSimpleConfigImpl();
+	private ZLDeletedOptionsTree myDeletedValues = new ZLDeletedOptionsTree();
 	private Set<String> myDeletedGroups = new HashSet<String>();
 	private ZLSimpleConfigImpl mySetValues = new ZLSimpleConfigImpl();
 	
@@ -15,7 +15,7 @@ import java.util.*;
 		return Collections.unmodifiableSet(myDeletedGroups);
 	}
 	
-	public ZLSimpleConfig getDeletedValues() {
+	public ZLDeletedOptionsTree getDeletedValues() {
 		return myDeletedValues;
 	}
 	
@@ -37,7 +37,7 @@ import java.util.*;
 	
 	public void unsetValue(String group, String name) {
 		//TODO щрн окнун??
-		myDeletedValues.setValue(group, name, null, null);
+		myDeletedValues.add(group, name);
 		mySetValues.unsetValue(group, name);
 	}
 	
@@ -58,17 +58,20 @@ import java.util.*;
 			sb.append("    <group name=\"" + group + "\"/>\n");
 		}
 
-		Map<String, ZLGroup> values = myDeletedValues.getGroups();
-		for (String group : values.keySet()) {
+		{
+		Set<String> values = myDeletedValues.getGroups();
+		for (String group : values) {
 			sb.append("    <group name=\"" + group + "\">\n");
-			for (ZLOptionValue option : values.get(group).getValues()) {
-				sb.append("      <option name=\"" + option.getName() + "\"/>\n");
+			for (String option : myDeletedValues.getOptions(group)) {
+				sb.append("      <option name=\"" + option + "\"/>\n");
 			}
 			sb.append("    </group>\n");
 		}
 		sb.append("  </delete>\n");
+		}
 		
-		values = mySetValues.getGroups();
+		{
+		Map<String, ZLGroup> values = mySetValues.getGroups();
 		for (String group : values.keySet()) {
 			sb.append("  <group name=\"" + group + "\">\n");
 			for (ZLOptionValue option : values.get(group).getValues()) {
@@ -79,6 +82,7 @@ import java.util.*;
 			sb.append("  </group>\n");
 		}
 		sb.append("</delta>");
+		}
 		return sb.toString();
 	}
 }

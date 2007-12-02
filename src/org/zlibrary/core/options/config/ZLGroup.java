@@ -37,6 +37,7 @@ public final class ZLGroup {
 	
 	public void unsetValue(String name) {
 		myData.remove(name);
+		//System.out.println("sdfvs - " + myData.get(name));
 	}
 	
 	public String toString() {

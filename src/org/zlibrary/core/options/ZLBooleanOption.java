@@ -32,10 +32,16 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue) {
-			myConfig.setValue(myGroup, myOptionName, "true", myCategory);
+		if (myValue == myDefaultValue) {
+			myConfig.unsetValue(myGroup, myOptionName);
+			//System.out.println("unsett" + myValue);
+			
 		} else {
-			myConfig.setValue(myGroup, myOptionName, "false", myCategory);
+			if (myValue) {
+				myConfig.setValue(myGroup, myOptionName, "true", myCategory);
+			} else {
+				myConfig.setValue(myGroup, myOptionName, "false", myCategory);
+			}
 		}
 	}
 }
