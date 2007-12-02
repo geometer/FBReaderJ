@@ -100,10 +100,10 @@ import org.zlibrary.core.options.config.*;
 					configFilePath(category));
 		}
 		
-		for (String category : myConfig.getCategories()) {
+		/*for (String category : myConfig.getCategories()) {
 			if (!notEmptyCategories.contains(category.intern())) {
 				deleteConfigFile(configFilePath(category));
 			}
-		}
+		}*/
 	}
 }

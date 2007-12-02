@@ -1,8 +1,11 @@
 package org.test.zlibrary.options.example;
 
+import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.config.reader.ZLConfigReaderFactory;
 import org.zlibrary.core.options.config.writer.*;
 import org.zlibrary.core.options.*;
+
+import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 //TODO ›“Œ œŒ ¿ ◊“Œ  –»¬Œ… “≈—“.
 
 /**
@@ -20,6 +23,7 @@ public class Main {
 		//readConfigFile(new File("test/org/test/zlibrary/options/example/state.xml"));
 		//readConfigFile(new File("test/org/test/zlibrary/options/example/ui.xml"));
 		//readConfigFile(new File("test/org/test/zlibrary/options/example/output/ui.xml"));
+		//(new ZLSwingLibrary()).run(args);
 		
 		String input = "test/org/test/zlibrary/options/example/";
 		//String input = "test/org/test/zlibrary/options/example/";

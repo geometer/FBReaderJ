@@ -26,18 +26,17 @@ import java.util.*;
 	}
 
 	public String getValue(String group, String name, String defaultValue) {
-		String value = myDeltaConfig.getValue(group.intern(), name.intern(),
-				defaultValue.intern());
-		if (value.intern() == defaultValue.intern()) {
-			value = myMainConfig.getValue(group.intern(), name.intern(), 
-					defaultValue.intern());
+		String value = myDeltaConfig.getValue(group, name, defaultValue);
+		if (value == defaultValue) {
+			value = myMainConfig.getValue(group, name, 
+					defaultValue);
 		}
-		return value.intern();
+		return value;
 	}
 	
 	public void setCategory(String group, String name, String cat) {
-		myDeltaConfig.setCategory(group.intern(), name.intern(), cat.intern());
-		myMainConfig.setCategory(group.intern(), name.intern(), cat.intern());
+		myDeltaConfig.setCategory(group, name, cat);
+		myMainConfig.setCategory(group, name, cat);
 	}
 	
 	public void removeGroup(String name) {

@@ -1,45 +1,45 @@
 package org.zlibrary.core.options.config.reader;
 
 import java.io.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import java.util.Map;
 
 import org.zlibrary.core.options.config.*;
+import org.zlibrary.core.xml.ZLXMLReader;
 
 /*package*/class ZLConfigReader implements ZLReader {
 	
-	private class ConfigContentHandler extends DefaultHandler {
+	private class ConfigReader extends ZLXMLReader  {
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
 
-		public void startDocument() {
+		public void startDocumentHandler() {
 			myDepth = 0;
 		}
-
-		public void startElement(String uri, String localName, 
-				String qName, Attributes atts) {
+		
+		public void startElementHandler(String tag, 
+				Map<String, String> attributes) {
 			
-			localName = localName.toLowerCase();
+			tag = tag.toLowerCase();
 			switch (myDepth) {
 				case 0:
-					if (!localName.equals("config")) {
-						printError(localName);
+					if (!tag.equals("config")) {
+						printError(tag);
 					}
 					break;
 				case 1:
-					if (localName.equals("group")) {
-						myCurrentGroup = atts.getValue("name");
+					if (tag.equals("group")) {
+						myCurrentGroup = attributes.get("name");
 					} else {
-						printError(localName);
+						printError(tag);
 					}
 					break;
 				case 2:
-					if (localName.equals("option")) {
-						myConfig.setValue(myCurrentGroup, atts.getValue("name"), 
-								atts.getValue("value"), myCategory);
+					if (tag.equals("option")) {
+						myConfig.setValue(myCurrentGroup, attributes.get("name"), 
+								attributes.get("value"), myCategory);
 					} else {
-						printError(localName);
+						printError(tag);
 					}
 					break;
 				default:
@@ -48,64 +48,66 @@ import org.zlibrary.core.options.config.*;
 			myDepth++;
 		}
 
-		public void endElement(String uri, String localName, String qName) {
+		public void endElementHandler(String tag) {
 			myDepth--;
+			//System.out.println("kgf");
 		}
 
-		public void endDocument() {
+		public void endDocumentHandler() {
+			System.out.println("kgf");
 			myConfig.applyDelta();
 		}
 	}
 	
-	private class DeltaConfigContentHandler extends DefaultHandler {
+	private class DeltaConfigReader extends ZLXMLReader {
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
 
 		//private boolean myIsDeleting = false;
 		
-		public void startDocument() {
+		public void startDocumentHandler() {
 			myDepth = 0;
 		}
 
-		public void startElement(String uri, String localName, 
-				String qName, Attributes atts) {
+		public void startElementHandler(String tag, 
+				Map<String, String> attributes) {
 			
-			localName = localName.toLowerCase();
+			tag = tag.toLowerCase();
 			switch (myDepth) {
 				case 0:
-					if (!localName.equals("delta")) {
-						printError(localName);
+					if (!tag.equals("delta")) {
+						printError(tag);
 					}
 					break;
 				case 1:
-					if (localName.equals("group")) {
-						myCurrentGroup = atts.getValue("name");
+					if (tag.equals("group")) {
+						myCurrentGroup = attributes.get("name");
 					} else {
-						if (localName.equals("delete")) {
+						if (tag.equals("delete")) {
 							//myIsDeleting = true;
 						} else {
-							printError(localName);
+							printError(tag);
 						}
 					}
 					break;
 				case 2:
-					if (localName.equals("option")) {
-						myConfig.setValue(myCurrentGroup, atts.getValue("name"), 
-								atts.getValue("value"), atts.getValue("category"));
+					if (tag.equals("option")) {
+						myConfig.setValue(myCurrentGroup, attributes.get("name"), 
+								attributes.get("value"), attributes.get("category"));
 					} else {
-						if (localName.equals("group")) {
-							myCurrentGroup = atts.getValue("name");
+						if (tag.equals("group")) {
+							myCurrentGroup = attributes.get("name");
 						} else {
-							printError(localName);
+							printError(tag);
 						}
 					}
 					break;
 				case 3:
-					if (localName.equals("option")) {
-						myConfig.unsetValue(myCurrentGroup, atts.getValue("name"));
+					if (tag.equals("option")) {
+						myConfig.unsetValue(myCurrentGroup, attributes.get("name"));
 					} else {
-						printError(localName);
+						printError(tag);
 					}
 					break;
 				default:
@@ -114,19 +116,19 @@ import org.zlibrary.core.options.config.*;
 			myDepth++;
 		}
 
-		public void endElement(String uri, String localName, String qName) {
-			if ((myDepth == 1) && (localName.equals("delete"))) {
+		public void endElementHandler(String tag) {
+			if ((myDepth == 1) && (tag.equals("delete"))) {
 				//myIsDeleting = false;
 			}
 			myDepth--;
 		}
 
-		public void endDocument() {
+		public void endDocumentHandler() {
 			myConfig.applyDelta();
 		}
 	}
 	
-	private XMLReader myXMLReader;
+	private ZLXMLReader myXMLReader = new ConfigReader();
 
 	private ZLConfig myConfig;
 
@@ -140,14 +142,7 @@ import org.zlibrary.core.options.config.*;
 		myConfig = ZLConfigInstance.getInstance();
 		myDestinationDirectory = new File(path);
 		if (myDestinationDirectory.exists()) {
-			if (myDestinationDirectory.isDirectory()) {
-				try {
-					myXMLReader = XMLReaderFactory.createXMLReader();
-					myXMLReader.setContentHandler(new ConfigContentHandler());
-				} catch (SAXException e) {
-					System.out.println(e.getMessage());
-				}
-			} else {
+			if (!myDestinationDirectory.isDirectory()) {
 				System.out.println("Wrong path - directory path expected");
 			}
 		}
@@ -165,20 +160,11 @@ import org.zlibrary.core.options.config.*;
 	 * @param file פאיכ XML
 	 */
 	public void readFile(File file) {
-		try {
-			myFile = file.getName().toLowerCase();
-			InputStream input = new FileInputStream(file);
-			myCategory = file.getName().split(".xml")[0];
-			myXMLReader.parse(new InputSource(input));
-		} catch (FileNotFoundException fnfException) {
-			if (!myFile.equals("delta.xml")) {
-				System.err.println(fnfException.getMessage());
-			}
-		} catch (IOException ioException) {
-			System.err.println(ioException.getMessage());
-		} catch (SAXException saxException) {
-			System.err.println(saxException.getMessage());
-		}
+		myFile = file.getName().toLowerCase();
+		myCategory = file.getName().split(".xml")[0];
+		//if (file.exists()) {
+			//System.out.println(file.toString());
+		myXMLReader.read(file.toString());
 	}
 
 	private boolean isXMLFileName(String fileName) {
@@ -198,10 +184,8 @@ import org.zlibrary.core.options.config.*;
 				}
 			}
 		}
-		if (myXMLReader != null) {
-			myXMLReader.setContentHandler(new DeltaConfigContentHandler());
-			readFile(new File(myDestinationDirectory + "/delta.xml"));
-			myConfig.clearDelta();
-		}
+		myXMLReader = new DeltaConfigReader();
+		myXMLReader.read(myDestinationDirectory + "/delta.xml");
+		myConfig.clearDelta();
 	}
 }

@@ -29,7 +29,7 @@ public class ZLSwingLibrary extends ZLibrary {
 		ZLConfigWriterFactory.createConfigWriter(configDirectory()).write();
 	}
 
-	void run(String[] args) {
+	public void run(String[] args) {
 		new ZLSaxXMLProcessorFactory();
 		loadProperties();
 
