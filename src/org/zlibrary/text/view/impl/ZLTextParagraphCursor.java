@@ -49,6 +49,7 @@ public abstract class ZLTextParagraphCursor {
 		  Is spaceInserted variable used for inserting one separator instead of multiple spaces?*/
 
 		public void processTextEntry(ZLTextEntry textEntry) {
+			final ZLTextElement hSpace = ZLTextElement.HSpace;
 			int dataLength = textEntry.getDataLength();
 			if (dataLength != 0) {
 				final String data = textEntry.getData();
@@ -60,11 +61,11 @@ public abstract class ZLTextParagraphCursor {
 					if (current == ' ') {
 						if (firstNonSpace != -1) {
 							addWord(data, firstNonSpace, charPos);
-							myElements.add(new ZLTextHSpaceElement());
+							myElements.add(hSpace);
 							spaceInserted = true;
 							firstNonSpace = -1;					
 						} else if (!spaceInserted) {
-							myElements.add(new ZLTextHSpaceElement());
+							myElements.add(hSpace);
 							spaceInserted = true;	
 						}	
 					} else if (firstNonSpace == -1) {

@@ -75,8 +75,6 @@ public class ZLTextViewImpl extends ZLTextView {
 		public int elementWidth(ZLTextElement element, int charNumber) {
 			if (element instanceof ZLTextWord) {
 				return wordWidth((ZLTextWord) element, charNumber, -1, false);
-			} else if (element instanceof ZLTextHSpaceElement) {
-				return 0;//myContext.getSpaceWidth();
 			}
 			return 0;
 		}
@@ -173,17 +171,17 @@ public class ZLTextViewImpl extends ZLTextView {
 			ZLTextWordCursor cursor;
 			for (cursor = info.Start; !cursor.equalWordNumber(info.End) && !cursor.isEndOfParagraph(); cursor.nextWord()) {
 				ZLTextElement element = cursor.getElement();
-				if (element instanceof ZLTextWord) {
-					wordOccurred = true;
-					ZLTextWord word = (ZLTextWord)element;
-					context.drawString(w, h + info.Height, word.Data, word.Offset, word.Length);
-					w += word.getWidth(context);
-				} else if (element instanceof ZLTextHSpaceElement) {
+				if (element == ZLTextElement.HSpace) {
 					if (wordOccurred) {
 						w += context.getSpaceWidth();
 						spaces++;
 						wordOccurred = false;
 					}
+				} else if (element instanceof ZLTextWord) {
+					wordOccurred = true;
+					ZLTextWord word = (ZLTextWord)element;
+					context.drawString(w, h + info.Height, word.Data, word.Offset, word.Length);
+					w += word.getWidth(context);
 				} else if (element instanceof ZLTextControlElement) {
 					myStyle.applyControl((ZLTextControlElement) element);			
 				}
@@ -278,17 +276,17 @@ public class ZLTextViewImpl extends ZLTextView {
 			newWidth += myStyle.elementWidth(element, current.getCharNumber());
 			newHeight = Math.max(newHeight, myStyle.elementHeight(element));
 			newDescent = Math.max(newDescent, myStyle.elementDescent(element));
-			if (element instanceof ZLTextWord) {
-				wordOccurred = true;
-				isVisible = true;
-				//System.out.println("Word = " + ((ZLTextWord) element).Data + " FontSize = " + myStyle.getTextStyle().fontSize());
-			} else if (element instanceof ZLTextHSpaceElement) {
+			if (element == ZLTextElement.HSpace) {
 				if (wordOccurred) {
 					wordOccurred = false;
 					internalSpaceCounter++;
 					lastSpaceWidth = myStyle.getPaintContext().getSpaceWidth();
 					newWidth += lastSpaceWidth;
 				}
+			} else if (element instanceof ZLTextWord) {
+				wordOccurred = true;
+				isVisible = true;
+				//System.out.println("Word = " + ((ZLTextWord) element).Data + " FontSize = " + myStyle.getTextStyle().fontSize());
 			} else if (element instanceof ZLTextControlElement) {
 				myStyle.applyControl((ZLTextControlElement) element);
 			}			

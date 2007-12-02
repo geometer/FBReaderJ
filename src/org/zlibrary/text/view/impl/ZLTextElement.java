@@ -1,6 +1,7 @@
 package org.zlibrary.text.view.impl;
 
-public class ZLTextElement {
+class ZLTextElement {
+	final static ZLTextElement HSpace = new ZLTextElement();
 	
 /*	enum Kind {
 		WORD_ELEMENT,
