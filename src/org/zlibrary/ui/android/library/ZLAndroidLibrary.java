@@ -15,17 +15,17 @@ import org.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
-public class ZLAndroidLibrary extends ZLibrary {
+public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
-	private ZLApplication myApplication;
+	private ZLAndroidApplicationWindow myMainWindow;
 
 	public ZLAndroidPaintContext createPaintContext() {
 		ZLAndroidWidget widget = (ZLAndroidWidget)myActivity.findViewById(R.id.zlandroidactivity);
 		return widget.getPaintContext();
 	}
 
-	ZLApplication application() {
-		return myApplication;
+	ZLAndroidApplicationWindow getMainWindow() {
+		return myMainWindow;
 	}
 
 	public InputStream getResourceInputStream(String fileName) {
@@ -61,13 +61,12 @@ public class ZLAndroidLibrary extends ZLibrary {
 		//ZLConfigReaderFactory.createConfigReader(configDirectory()).read();
 
 		try {
-			myApplication = (ZLApplication)getApplicationClass().newInstance();
+			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
+			myMainWindow = new ZLAndroidApplicationWindow(application);
+			application.initWindow();
 		} catch (Exception e) {
 			shutdown();
 			System.exit(0);
 		}
-
-		ZLAndroidApplicationWindow mainWindow = new ZLAndroidApplicationWindow(myApplication);
-		myApplication.initWindow();
 	}
 }

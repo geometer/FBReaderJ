@@ -1,13 +1,42 @@
 package org.zlibrary.ui.android.application;
 
+import java.util.Stack;
+
+import android.view.Menu;
+
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
 
 import org.zlibrary.ui.android.view.ZLAndroidViewWidget;
 
-public class ZLAndroidApplicationWindow extends ZLApplicationWindow {
+public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
+	private class MenuBuilder extends ZLApplication.MenuVisitor {
+		private int myItemCount = Menu.FIRST;
+		private final Stack<Menu> myMenuStack = new Stack<Menu>();
+
+		private MenuBuilder(Menu menu) {
+			myMenuStack.push(menu);
+		}
+		protected void processSubmenuBeforeItems(ZLApplication.Menubar.Submenu submenu) {
+			myMenuStack.push(myMenuStack.peek().addSubMenu(0, myItemCount++, submenu.getMenuName()));	
+		}
+		protected void processSubmenuAfterItems(ZLApplication.Menubar.Submenu submenu) {
+			myMenuStack.pop();
+		}
+		protected void processItem(ZLApplication.Menubar.PlainItem item) {
+			myMenuStack.peek().add(0, myItemCount++, item.getName());
+		}
+		protected void processSepartor(ZLApplication.Menubar.Separator separator) {
+			myMenuStack.peek().addSeparator(0, myItemCount++);
+		}
+	}
+
 	public ZLAndroidApplicationWindow(ZLApplication application) {
 		super(application);
+	}
+
+	public void buildMenu(Menu menu) {
+		new MenuBuilder(menu).processMenu(getApplication().getMenubar());
 	}
 
 	public void init() {
