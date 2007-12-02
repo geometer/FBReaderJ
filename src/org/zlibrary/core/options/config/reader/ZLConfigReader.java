@@ -50,11 +50,9 @@ import org.zlibrary.core.xml.ZLXMLReader;
 
 		public void endElementHandler(String tag) {
 			myDepth--;
-			//System.out.println("kgf");
 		}
 
 		public void endDocumentHandler() {
-			System.out.println("kgf");
 			myConfig.applyDelta();
 		}
 	}
