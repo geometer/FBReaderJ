@@ -1,6 +1,6 @@
 package org.zlibrary.ui.android.application;
 
-import java.util.Stack;
+import java.util.*;
 
 import android.view.Menu;
 
@@ -8,8 +8,12 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
 
 import org.zlibrary.ui.android.view.ZLAndroidViewWidget;
+import org.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
+	private final HashMap<Menu.Item,ZLApplication.Menubar.PlainItem> myMenuItemMap =
+		new HashMap<Menu.Item,ZLApplication.Menubar.PlainItem>();
+
 	private class MenuBuilder extends ZLApplication.MenuVisitor {
 		private int myItemCount = Menu.FIRST;
 		private final Stack<Menu> myMenuStack = new Stack<Menu>();
@@ -24,12 +28,22 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			myMenuStack.pop();
 		}
 		protected void processItem(ZLApplication.Menubar.PlainItem item) {
-			myMenuStack.peek().add(0, myItemCount++, item.getName());
+			Menu.Item menuItem = myMenuStack.peek().add(0, myItemCount++, item.getName());
+			menuItem.setClickListener(myMenuListener);
+			myMenuItemMap.put(menuItem, item);
 		}
 		protected void processSepartor(ZLApplication.Menubar.Separator separator) {
 			myMenuStack.peek().addSeparator(0, myItemCount++);
 		}
 	}
+
+	private final Menu.OnClickListener myMenuListener =
+		new Menu.OnClickListener() {
+			public boolean onClick(Menu.Item item) {
+				getApplication().doAction(myMenuItemMap.get(item).getActionId());
+				return true;
+			}
+		};
 
 	public ZLAndroidApplicationWindow(ZLApplication application) {
 		super(application);
@@ -70,7 +84,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void close() {
-		// TODO: implement
+		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).finish();
 	}
 
 	public void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item) {

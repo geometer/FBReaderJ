@@ -51,6 +51,13 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		//ZLConfigWriterFactory.createConfigWriter(configDirectory()).write();
 	}
 
+	public void finish() {
+		shutdown();
+		if (myActivity != null) {
+			myActivity.finish();
+		}
+	}
+
 	void run(ZLAndroidActivity activity) {
 		myActivity = activity;
 
@@ -65,8 +72,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} catch (Exception e) {
-			shutdown();
-			System.exit(0);
+			finish();
 		}
 	}
 }
