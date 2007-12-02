@@ -2,7 +2,7 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.text.model.entry.ZLTextControlEntry;
 
-class ZLTextControlElement extends ZLTextElement {
+final class ZLTextControlElement extends ZLTextElement {
 	private final ZLTextControlEntry myEntry;
 
 	/*package*/ ZLTextControlElement(ZLTextControlEntry entry) {
