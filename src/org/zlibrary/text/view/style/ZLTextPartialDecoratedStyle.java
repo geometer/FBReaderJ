@@ -4,6 +4,8 @@ import org.zlibrary.text.view.ZLTextStyle;
 
 import org.zlibrary.core.options.util.*;
 
+import org.zlibrary.text.model.ZLTextAlignmentType;
+
 /*package*/ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
 	private final ZLTextStyleDecoration myDecoration;
 
@@ -60,4 +62,8 @@ import org.zlibrary.core.options.util.*;
 	public int spaceAfter() {
 		return 0;
 	}		
+
+	public int alignment() {
+		return getBase().alignment();
+	}
 }

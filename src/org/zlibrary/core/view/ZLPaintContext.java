@@ -6,6 +6,9 @@ import java.util.List;
 import org.zlibrary.core.options.util.ZLColor;
 
 abstract public class ZLPaintContext {
+	private int myX = 0;
+	private int myY = 0;
+
 	private List<String> myFamilies = new LinkedList<String>();
 
 	public enum LineStyle {
@@ -28,6 +31,30 @@ abstract public class ZLPaintContext {
 	private int myFontSize;
 	private boolean myFontIsBold;
 	private boolean myFontIsItalic;
+
+	public final int getX() {
+		return myX;
+	}
+	
+	public final int getY() {
+		return myY;
+	}
+
+	public final void moveXTo(int x) {
+		myX = x;
+	}
+	
+	public final void moveX(int deltaX) {
+		myX += deltaX;
+	}
+
+	public final void moveYTo(int y) {
+		myY = y;
+	}
+	
+	public final void moveY(int deltaY) {
+		myY += deltaY;
+	}
 
 	public final void resetFont() {
 		myResetFont = true;

@@ -23,7 +23,7 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		super(entry);
 	}
 	
-	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineDelta, int verticalShift, ZLTextAlignmentType alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
+	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineDelta, int verticalShift, int alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
 //		System.out.println("Constructed, fonSizeDelta = " + fontSizeDelta);
 		SpaceBeforeOption = null;
@@ -31,7 +31,7 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		LeftIndentOption = null;
 		RightIndentOption = null;
 		FirstLineIndentDeltaOption = null;
-		AlignmentOption = null;
+		AlignmentOption = new ZLIntegerOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":alignment", alignment);
 		LineSpaceOption = null;
 	}
 

@@ -72,14 +72,14 @@ public class ZLTextViewImpl extends ZLTextView {
 			return myStyle;
 		}
 
-		public int elementWidth(ZLTextElement element, int charNumber) {
+		public int getElementWidth(ZLTextElement element, int charNumber) {
 			if (element instanceof ZLTextWord) {
-				return wordWidth((ZLTextWord) element, charNumber, -1, false);
+				return getWordWidth((ZLTextWord) element, charNumber, -1, false);
 			}
 			return 0;
 		}
 
-		public int elementHeight(ZLTextElement element) {
+		public int getElementHeight(ZLTextElement element) {
 			if (element instanceof ZLTextWord) {
 				if (myWordHeight == -1) {
 					myWordHeight = (int) (myContext.getStringHeight() * myStyle.lineSpace()) + myStyle.verticalShift();
@@ -89,22 +89,22 @@ public class ZLTextViewImpl extends ZLTextView {
 			return 0;
 		}
 		
-		public int elementDescent(ZLTextElement element) {
+		public int getElementDescent(ZLTextElement element) {
 			if (element instanceof ZLTextWord) {
 				return myContext.getDescent();
 			}
 			return 0;
 		}
 
-		public int textAreaHeight() {
+		public int getTextAreaHeight() {
 			return myContext.getHeight();
 		}
 
-		public int wordWidth(ZLTextWord word) {
+		public int getWordWidth(ZLTextWord word) {
 			return word.getWidth(myContext);
 		}
 		
-		public int wordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
+		public int getWordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 			if (start == 0 && length == -1) {
 				return word.getWidth(myContext);
 			}	
@@ -116,6 +116,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
 	private ViewStyle myStyle;
 	private List<ZLTextLineInfo> myLineInfos;
+	private List<ZLTextElementArea> myTextElementMap;
 
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
@@ -196,7 +197,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	private ZLTextWordCursor buildInfos(ZLTextWordCursor start) {
 		myLineInfos.clear();
 		ZLTextWordCursor cursor = start;
-		int textAreaHeight = myStyle.textAreaHeight();
+		int textAreaHeight = myStyle.getTextAreaHeight();
 		int counter = 0;
 		do {
 			ZLTextWordCursor paragraphEnd = new ZLTextWordCursor(cursor);
@@ -273,9 +274,9 @@ public class ZLTextViewImpl extends ZLTextView {
 
 		do {
 			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber()); 
-			newWidth += myStyle.elementWidth(element, current.getCharNumber());
-			newHeight = Math.max(newHeight, myStyle.elementHeight(element));
-			newDescent = Math.max(newDescent, myStyle.elementDescent(element));
+			newWidth += myStyle.getElementWidth(element, current.getCharNumber());
+			newHeight = Math.max(newHeight, myStyle.getElementHeight(element));
+			newDescent = Math.max(newDescent, myStyle.getElementDescent(element));
 			if (element == ZLTextElement.HSpace) {
 				if (wordOccurred) {
 					wordOccurred = false;
@@ -316,7 +317,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		if (!current.equalWordNumber(end)) {
 			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber());
 			if (element instanceof ZLTextWord) { 
-				newWidth -= myStyle.elementWidth(element, current.getCharNumber());
+				newWidth -= myStyle.getElementWidth(element, current.getCharNumber());
 			}
 			info.IsVisible = true;
 			info.Width = newWidth;
@@ -346,6 +347,69 @@ public class ZLTextViewImpl extends ZLTextView {
 		return info;	
 	}
 
+	private void prepareTextLine(ZLTextLineInfo info) {
+		myStyle.setStyle(info.StartStyle);
+		final int y = Math.min(getContext().getY() + info.Height, myStyle.getTextAreaHeight());
+		int spaceCounter = info.SpaceCounter;
+		int fullCorrection = 0;
+		final boolean endOfParagraph = info.End.isEndOfParagraph();
+		boolean wordOccurred = false;
+		boolean changeStyle = true;
+
+		getContext().moveXTo(info.LeftIndent);
+		switch (myStyle.getTextStyle().alignment()) {
+			case ZLTextAlignmentType.ALIGN_RIGHT: {
+				getContext().moveX(getContext().getWidth() - myStyle.getTextStyle().rightIndent() - info.Width);
+				break;
+			} 
+			case ZLTextAlignmentType.ALIGN_CENTER: {
+				getContext().moveX((getContext().getWidth() - myStyle.getTextStyle().rightIndent() - info.Width) / 2);
+				break;
+			} 
+			case ZLTextAlignmentType.ALIGN_JUSTIFY: {
+				if (!endOfParagraph && !(info.End.getElement() == ZLTextElement.AfterParagraph)) {
+					fullCorrection = getContext().getWidth() - myStyle.getTextStyle().rightIndent() - info.Width;
+				}
+				break;
+			}
+			case ZLTextAlignmentType.ALIGN_LEFT: 
+			case ZLTextAlignmentType.ALIGN_UNDEFINED: {
+				break;
+			}
+				
+		}
+	
+		final ZLTextParagraphCursor paragraph = info.RealStart.getParagraphCursor();
+		int paragraphNumber = paragraph.getIndex();
+		for (ZLTextWordCursor pos = info.RealStart; !pos.equalWordNumber(info.End); pos.nextWord()) {
+			final ZLTextElement element = paragraph.getElement(pos.getWordNumber());
+			final int x = getContext().getX();
+			final int width = myStyle.getElementWidth(element, pos.getCharNumber());
+			if (element instanceof ZLTextWord) {
+				final int height = myStyle.getElementHeight(element);
+				final int descent= myStyle.getElementDescent(element);
+				final int length = ((ZLTextWord) element).Length;
+				myTextElementMap.add(new ZLTextElementArea(paragraphNumber, pos.getWordNumber(), pos.getCharNumber(), 
+					length, false, changeStyle, myStyle.getTextStyle(), element, x, x + width - 1, y - height + 1, y + descent));
+				changeStyle = false;
+				wordOccurred = true;
+			} else if (element instanceof ZLTextControlElement) {
+				myStyle.applyControl((ZLTextControlElement) element);
+				changeStyle = true;
+			} else if (element == ZLTextElement.HSpace) {
+				if (wordOccurred && (spaceCounter > 0)) {
+					int correction = fullCorrection / spaceCounter;
+					getContext().moveX(getContext().getWidth() + correction);
+					fullCorrection -= correction;
+					wordOccurred = false;
+					--spaceCounter;
+				}	
+			}
+			getContext().moveX(width);
+		}
+		getContext().moveY(info.Height + info.Descent + info.VSpaceAfter);
+	}
+	
 	public String caption() {
 		return "SampleView";
 	}

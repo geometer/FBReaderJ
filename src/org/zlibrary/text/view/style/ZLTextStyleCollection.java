@@ -133,7 +133,7 @@ public class ZLTextStyleCollection {
 						int rightIndent = intValue(attributes, "rightIndent");
 						int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta");
 
-						ZLTextAlignmentType alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
+						int alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
 						String alignmentString = attributes.get("alignment");
 						if (alignmentString != null) {
 							if (alignmentString.equals("left")) {

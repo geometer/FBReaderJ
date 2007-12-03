@@ -9,6 +9,8 @@ import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.text.view.ZLTextStyle;
 
+import org.zlibrary.text.model.ZLTextAlignmentType;
+
 public class ZLTextBaseStyle implements ZLTextStyle {
 	public ZLIntegerRangeOption LeftMarginOption;
 	public ZLIntegerRangeOption RightMarginOption;
@@ -103,5 +105,9 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 
 	public boolean isDecorated() {
 		return false;
+	}
+
+	public int alignment() {
+		return ZLTextAlignmentType.ALIGN_UNDEFINED;
 	}
 }

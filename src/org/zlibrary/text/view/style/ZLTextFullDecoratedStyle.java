@@ -1,6 +1,7 @@
 package org.zlibrary.text.view.style;
 
 import org.zlibrary.text.view.ZLTextStyle;
+import org.zlibrary.text.model.ZLTextAlignmentType;
 
 import org.zlibrary.core.options.util.*;
 
@@ -26,17 +27,17 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 	
 	public boolean bold() {
 //		if (myDecoration != null && myDecoration.BoldOption != null) {
-		ZLBoolean3 b = myDecoration.BoldOption.getValue();	
-//			if (b != null) {
-		return (b == ZLBoolean3.B3_UNDEFINED) ? getBase().bold() : (b == ZLBoolean3.B3_TRUE);
+		ZLBoolean3 value  = myDecoration.BoldOption.getValue();	
+//			if (value != null) {
+		return (value  == ZLBoolean3.B3_UNDEFINED) ? getBase().bold() : (value == ZLBoolean3.B3_TRUE);
 //			}
 //		}
 //		return false;
 	}
 
 	public boolean italic() {
-		ZLBoolean3 b = myDecoration.ItalicOption.getValue();
-		return (b == ZLBoolean3.B3_UNDEFINED) ? getBase().italic() : (b == ZLBoolean3.B3_TRUE);
+		ZLBoolean3 value = myDecoration.ItalicOption.getValue();
+		return (value  == ZLBoolean3.B3_UNDEFINED) ? getBase().italic() : (value == ZLBoolean3.B3_TRUE);
 	}
 
 	public int leftIndent() {
@@ -62,4 +63,9 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 	public int spaceAfter() {
 		return 0;
 	}		
+
+	public int alignment() {
+		int value = (int) myDecoration.AlignmentOption.getValue();
+		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? getBase().alignment() : value;
+	}
 }
