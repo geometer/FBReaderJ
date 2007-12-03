@@ -36,8 +36,11 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	
 	private class ZLFrame extends JFrame {
 		ZLFrame() {
-			setSize((int)myWidthOption.getValue(), (int)myHeightOption.getValue());
-			setLocation((int)myXOption.getValue(), (int)myYOption.getValue());
+			// temporary commented while any option return 0 :(((((
+			//setSize((int)myWidthOption.getValue(), (int)myHeightOption.getValue());
+			//setLocation((int)myXOption.getValue(), (int)myYOption.getValue());
+			setSize(800, 600);
+			setLocation(100, 100);
 			addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent event) {
 					if (!isFullscreen()) {

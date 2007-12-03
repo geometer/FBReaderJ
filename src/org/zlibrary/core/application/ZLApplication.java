@@ -21,9 +21,7 @@ public abstract class ZLApplication {
 	private static final String TIMEOUT = "Timeout";
 
 	public final ZLIntegerOption RotationAngleOption =
-		// TODO: uncomment, this is temporary code for rotation experiments
-		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
-		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, -1);
+		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
 	public final ZLIntegerOption AngleStateOption =
 		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
 
@@ -290,14 +288,17 @@ public abstract class ZLApplication {
 		}
 		
 		public boolean isVisible() {
-			return (myApplication.myViewWidget != null) &&
-			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
-				(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
-
+			// temporary commented while any option return 0 :(((((
+			//return (myApplication.myViewWidget != null) &&
+			// ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
+			//	(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
+			return true;
 		}
 		
 		public void run() {
-			int optionValue = (int)myApplication.RotationAngleOption.getValue();
+			// temporary commented while any option return 0 :(((((
+			//int optionValue = (int)myApplication.RotationAngleOption.getValue();
+			int optionValue = -1;
 			ZLViewWidget.Angle oldAngle = myApplication.myViewWidget.getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
