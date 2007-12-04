@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
@@ -92,9 +93,19 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawText(string, offset, offset + length, x, y, myPaint);
 	}
 
-	//int imageWidth(ZLImageData &image);
-	//int imageHeight(ZLImageData &image);
-	//public void drawImage(int x, int y, ZLImageData &image);
+	public int imageWidth(ZLImage image) {
+		// TODO: implement
+		return 20;
+	}
+
+	public int imageHeight(ZLImage image) {
+		// TODO: implement
+		return 20;
+	}
+
+	public void drawImage(int x, int y, ZLImage image) {
+		// TODO: implement
+	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
 		myCanvas.drawLine(x0, y0, x1, y1, myPaint);
