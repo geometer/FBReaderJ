@@ -1,11 +1,13 @@
 package org.zlibrary.text.model.impl;
 
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 class ZLTextModelImpl implements ZLTextModel {
     private LinkedList<ZLTextParagraph> myParagraphs = new LinkedList<ZLTextParagraph>();
@@ -47,7 +49,11 @@ class ZLTextModelImpl implements ZLTextModel {
 	public void addHyperlinkControl(byte textKind, String label) {
 		myParagraphs.getLast().addEntry(new ZLTextHyperlinkControlEntryImpl(textKind, label));
 	}
-	//void addImage(String id, ZLImageMap imageMap, short vOffset);
+	
+	public void addImage(String id, Map<String, ZLImage> imageMap, short vOffset) {
+		myParagraphs.getLast().addEntry(new ZLImageEntryImpl(id, imageMap, vOffset));
+	}
+	
 	public void addFixedHSpace(byte length) {
 		myParagraphs.getLast().addEntry(new ZLTextFixedHSpaceEntryImpl(length));
 	}	

@@ -25,7 +25,7 @@ public class FB2Reader extends ZLXMLReader {
 	private Base64EncodedImage myCurrentImage;
 	private boolean myInsideCoverpage = false;
 	private boolean myProcessingImage = false;
-	private StringBuffer myImageBuffer = new StringBuffer();
+	private final StringBuffer myImageBuffer = new StringBuffer();
 	private String myCoverImageReference;
 	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 	
@@ -297,9 +297,9 @@ public class FB2Reader extends ZLXMLReader {
 			case IMAGE:
 				String imgRef = reference(attributes);
 				String vOffset = attributes.get("voffset");
-				int offset = 0;
+				short offset = 0;
 				try {
-					offset = Integer.valueOf(vOffset);
+					offset = Short.valueOf(vOffset);
 				} catch (NumberFormatException e) {
 				}
 				if ((imgRef != null) && (imgRef.charAt(0) == '#')) {

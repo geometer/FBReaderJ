@@ -212,17 +212,16 @@ public class BookReader {
 		return myBookModel;
 	}
 
-	public void addImageReference(String ref, int offset) {
-//		 TODO 
+	public void addImageReference(String ref, short offset) {
 		if (myCurrentTextModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {
 				flushTextBufferToParagraph();
-//				myCurrentTextModel.addImage(id, myModel.imageMap(), vOffset);
+				myCurrentTextModel.addImage(ref, myBookModel.getImageMap(), offset);
 			} else {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				myCurrentTextModel.addControl((byte) FBTextKind.IMAGE.Index, true);
-		//		myCurrentTextModel.addImage(id, myModel.imageMap(), vOffset);
+				myCurrentTextModel.addImage(ref, myBookModel.getImageMap(), offset);
 				myCurrentTextModel.addControl((byte) FBTextKind.IMAGE.Index, false);
 				endParagraph();
 			}

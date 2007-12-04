@@ -55,7 +55,7 @@ public class Base64EncodedImage implements ZLImage {
 			myData = tmp;
 		}
 			
-*/				
+*/			
 		myEncodedData = null;
 	}
 	

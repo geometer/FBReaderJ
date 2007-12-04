@@ -3,14 +3,14 @@ package org.zlibrary.text.model.impl;
 import java.util.Map;
 
 import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
+import org.zlibrary.text.model.entry.ZLImageEntry;
 
-class ImageEntryImpl implements ZLTextParagraphEntry {
+class ZLImageEntryImpl implements ZLImageEntry {
 	private String myId;
 	private Map<String, ZLImage> myMap;
 	private short myVOffset;
 
-	ImageEntryImpl(String id, Map<String, ZLImage> imageMap, short vOffset) {
+	ZLImageEntryImpl(String id, Map<String, ZLImage> imageMap, short vOffset) {
 		this.myId = id;
 		this.myMap = imageMap;
 		this.myVOffset = vOffset;

@@ -1,5 +1,8 @@
 package org.zlibrary.text.model;
 
+import java.util.Map;
+
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 
 public interface ZLTextModel {
@@ -17,7 +20,7 @@ public interface ZLTextModel {
 
 	void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, String label);
-	//void addImage(String id, ZLImageMap imageMap, short vOffset);
+	void addImage(String id, Map<String, ZLImage> imageMap, short vOffset);
 	void addFixedHSpace(byte length);
 
     String dump();    

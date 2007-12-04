@@ -8,6 +8,7 @@ import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.entry.ZLImageEntry;
 import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
@@ -36,6 +37,7 @@ public class TestFB2Reader extends TestCase {
 			fis1 = new InputStreamReader(new FileInputStream(f1), "utf8");
 			fis2 = new InputStreamReader(new FileInputStream(f2), "utf8");
 		} catch (FileNotFoundException e) {
+			return false;
 		} catch (UnsupportedEncodingException e) {
 			return false;
 		}
@@ -287,6 +289,19 @@ public class TestFB2Reader extends TestCase {
 		} catch (IOException e) {
 			fail();
 		} 
+	}
+	
+	public void testImageKind() {
+		doTest("image");
+	}
+	
+	public void testImageModel() {
+		FB2Reader reader = new FB2Reader();
+		BookModel bModel = reader.readBook(myDirectory + "image.fb2");
+		ZLTextModel model = bModel.getBookModel();
+		ZLImageEntry entry = (ZLImageEntry) model.getParagraph(0).getEntries().get(1);
+		assertTrue(entry.getId().equals("cover.jpg") && entry.getVOffset() == 0);
+		assertEquals(entry.image(), bModel.getImageMap().get("cover.jpg"));
 	}
 }
 	
