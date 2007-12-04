@@ -9,10 +9,13 @@ import java.util.*;
  * @author Администратор
  * 
  */
-/* package */ final class ZLSimpleConfig implements ZLConfig {
-	
+/* package */final class ZLSimpleConfig implements ZLConfig {
+
 	private Set<ZLGroup> myData;
 
+	public ZLDeltaConfig getDelta() {
+		return null;
+	}
 	public ZLSimpleConfig() {
 		myData = new LinkedHashSet<ZLGroup>();
 	}
@@ -32,7 +35,7 @@ import java.util.*;
 			}
 		}
 	}
-	
+
 	protected ZLGroup getGroup(String name) {
 		for (ZLGroup group : myData) {
 			if (group.getName().equals(name)) {
@@ -41,7 +44,7 @@ import java.util.*;
 		}
 		return null;
 	}
-	
+
 	public String getValue(String group, String name, String defaultValue) {
 		ZLGroup gr = getGroup(group);
 		if (gr != null) {
@@ -94,13 +97,9 @@ import java.util.*;
 
 	/**
 	 * метод вывода в строку
-	 *
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (String categoryName : myData.keySet()) {
-			sb.append("" + categoryName + "\n\n" + myData.get(categoryName)
-					+ "\n");
-		}
-		return sb.toString();
-	}*/
+	 * 
+	 * public String toString() { StringBuffer sb = new StringBuffer(); for
+	 * (String categoryName : myData.keySet()) { sb.append("" + categoryName +
+	 * "\n\n" + myData.get(categoryName) + "\n"); } return sb.toString(); }
+	 */
 }
