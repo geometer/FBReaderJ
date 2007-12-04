@@ -23,7 +23,9 @@ public final class ZLStringOption extends ZLSimpleOption {
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, 
 					myOptionName, myDefaultValue);
-			myValue = value;
+			if (value != null) {
+				myValue = value;
+			}
 			myIsSynchronized = true;
 		}
 		return myValue;

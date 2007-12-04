@@ -25,10 +25,15 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 	
 	public ZLBoolean3 getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName, 
-							null);
+			String value = myConfig.getValue(myGroup, myOptionName,	null);
 			if (value != null) {
-				myValue = ZLFromStringConverter.getBoolean3Value(value);
+				if (value.toLowerCase().equals("true")) {
+					myValue = ZLBoolean3.B3_TRUE;
+				} else if (value.toLowerCase().equals("false")) {
+					myValue = ZLBoolean3.B3_FALSE;
+				} else if (value.toLowerCase().equals("undefined")) {
+					myValue = ZLBoolean3.B3_UNDEFINED;
+				}
 			}
 			myIsSynchronized = true;
 		}

@@ -38,7 +38,7 @@ public class ModelTests extends TestCase{
 	private final ZLBoolean3 myDefaultBoolean3 = ZLBoolean3.B3_UNDEFINED;
 	private final boolean myDefaultBoolean = true;
 	private final String myDefaultString = "Hello World";
-	private final double myDefaultDouble = 1.2;
+	private final double myDefaultDouble = 1.02;
 	
 	public void setUp(){
 		myColorOption = new ZLColorOption("","","my Color", new ZLColor ((short)176, (short)255, (short)0)); 

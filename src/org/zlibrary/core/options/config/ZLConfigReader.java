@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.zlibrary.core.xml.ZLXMLReader;
 
-/*package*/ class ZLConfigReader implements ZLReader {
-	
-	private class ConfigReader extends ZLXMLReader  {
+/*package*/ final class ZLConfigReader implements ZLReader {
+
+	private class ConfigReader extends ZLXMLReader {
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
@@ -15,10 +15,10 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		public void startDocumentHandler() {
 			myDepth = 0;
 		}
-		
-		public void startElementHandler(String tag, 
+
+		public void startElementHandler(String tag,
 				Map<String, String> attributes) {
-			
+
 			tag = tag.toLowerCase();
 			switch (myDepth) {
 				case 0:
@@ -35,8 +35,9 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 2:
 					if (tag.equals("option")) {
-						myConfig.setValue(myCurrentGroup, attributes.get("name"), 
-								attributes.get("value"), myCategory);
+						myConfig.setValue(myCurrentGroup, attributes
+								.get("name"), attributes.get("value"),
+								myCategory);
 					} else {
 						printError(tag);
 					}
@@ -55,21 +56,21 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			myConfig.applyDelta();
 		}
 	}
-	
+
 	private class DeltaConfigReader extends ZLXMLReader {
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
 
-		//private boolean myIsDeleting = false;
-		
+		// private boolean myIsDeleting = false;
+
 		public void startDocumentHandler() {
 			myDepth = 0;
 		}
 
-		public void startElementHandler(String tag, 
+		public void startElementHandler(String tag,
 				Map<String, String> attributes) {
-			
+
 			tag = tag.toLowerCase();
 			switch (myDepth) {
 				case 0:
@@ -82,7 +83,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 						myCurrentGroup = attributes.get("name");
 					} else {
 						if (tag.equals("delete")) {
-							//myIsDeleting = true;
+							// myIsDeleting = true;
 						} else {
 							printError(tag);
 						}
@@ -90,8 +91,9 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 2:
 					if (tag.equals("option")) {
-						myConfig.setValue(myCurrentGroup, attributes.get("name"), 
-								attributes.get("value"), attributes.get("category"));
+						myConfig.setValue(myCurrentGroup, attributes
+								.get("name"), attributes.get("value"),
+								attributes.get("category"));
 					} else {
 						if (tag.equals("group")) {
 							myCurrentGroup = attributes.get("name");
@@ -102,7 +104,8 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 3:
 					if (tag.equals("option")) {
-						myConfig.unsetValue(myCurrentGroup, attributes.get("name"));
+						myConfig.unsetValue(myCurrentGroup, attributes
+								.get("name"));
 					} else {
 						printError(tag);
 					}
@@ -115,7 +118,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 
 		public void endElementHandler(String tag) {
 			if ((myDepth == 1) && (tag.equals("delete"))) {
-				//myIsDeleting = false;
+				// myIsDeleting = false;
 			}
 			myDepth--;
 		}
@@ -124,18 +127,18 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			myConfig.applyDelta();
 		}
 	}
-	
+
 	private ZLXMLReader myXMLReader = new ConfigReader();
 
-	private ZLConfigImpl myConfig;
+	private final ZLConfigImpl myConfig;
 
 	private String myCategory = "";
 
-	private File myDestinationDirectory;
+	private final File myDestinationDirectory;
 
 	private String myFile = "";
-	
-	public ZLConfigReader(String path) {
+
+	protected ZLConfigReader(String path) {
 		myConfig = ZLConfigInstance.getExtendedInstance();
 		myDestinationDirectory = new File(path);
 		if (myDestinationDirectory.exists()) {
@@ -146,27 +149,28 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	}
 
 	private void printError(String localName) {
-		System.out.println("wrong tag in " + myFile + ", tag \"" 
-				+ localName + "\" is unexpected!");
+		System.out.println("wrong tag in " + myFile + ", tag \"" + localName
+				+ "\" is unexpected!");
 	}
-	
+
 	/**
 	 * 
 	 * Прочитать данные из файла XML
 	 * 
-	 * @param file файл XML
+	 * @param file
+	 *            файл XML
 	 */
-	public void readFile(File file) {
+	private void readFile(File file) {
 		myFile = file.getName().toLowerCase();
 		myCategory = file.getName().split(".xml")[0];
-		//if (file.exists()) {
-			//System.out.println(file.toString());
+		// if (file.exists()) {
+		// System.out.println(file.toString());
 		myXMLReader.read(file.toString());
 	}
 
 	private boolean isXMLFileName(String fileName) {
 		String name = fileName.toLowerCase();
-		//System.out.println(fileName);
+		// System.out.println(fileName);
 		return name.endsWith(".xml");
 	}
 

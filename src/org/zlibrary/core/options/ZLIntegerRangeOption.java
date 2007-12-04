@@ -32,7 +32,12 @@ public final class ZLIntegerRangeOption extends ZLOption {
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, myOptionName, null);
 			if (value != null) {
-				myValue = ZLFromStringConverter.getIntegerValue(value);
+				try {
+					Integer intValue = Integer.parseInt(value);
+					myValue = intValue;
+				} catch (NumberFormatException e) {
+					//System.err.println(e);
+				}
 			}
 			myIsSynchronized = true;
 		}

@@ -19,7 +19,11 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 			
 			String value = myConfig.getValue(myGroup, myOptionName, null);
 			if (value != null) {
-				myValue = ZLFromStringConverter.getBooleanValue(value);
+				if (value.toLowerCase().equals("true")) {
+					myValue = true;
+				} else if (value.toLowerCase().equals("false")) {
+					myValue = false;
+				}
 			}
 			myIsSynchronized = true;
 		}

@@ -47,7 +47,7 @@ public class Main {
 		//ZLConfigInstance.getInstance().unsetValue("MYGROUP", 
 		//"lengthChangeable");
 		
-		ZLConfigWriterFactory.createConfigWriter(output).writeDelta();
+		//ZLConfigWriterFactory.createConfigWriter(output).writeDelta();
 		ZLConfigWriterFactory.createConfigWriter(output).write();
 		//ZLConfigWriterFactory.createConfigWriter(output + "cleared-").writeDelta();
 	}

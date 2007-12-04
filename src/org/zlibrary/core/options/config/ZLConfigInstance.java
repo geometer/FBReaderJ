@@ -1,14 +1,14 @@
 package org.zlibrary.core.options.config;
 
 public final class ZLConfigInstance {
-	
+
 	private static final ZLConfigImpl myConfig = new ZLConfigImpl();
-	
-	public static ZLConfig getInstance(){
+
+	public static ZLConfig getInstance() {
 		return myConfig;
 	}
-    
-    public static ZLConfigImpl getExtendedInstance(){
-        return myConfig;
-    }
+
+	public static ZLConfigImpl getExtendedInstance() {
+		return myConfig;
+	}
 }

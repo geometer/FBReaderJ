@@ -27,10 +27,10 @@ public abstract class ZLOption {
 		myGroup = group;
 		myOptionName = name;
 		myIsSynchronized = false;
-		//TODO myConfig.setCategory(group, name, category);
-        //myConfig.getValue(group, name, "");
-        myConfig.setValue(group, name, 
-              myConfig.getValue(group, name, null), category);
+		String value = myConfig.getValue(group, name, null);
+		if (value != null) {
+			myConfig.setValue(group, name, value, category);
+		}
 	}
 	
 	/**

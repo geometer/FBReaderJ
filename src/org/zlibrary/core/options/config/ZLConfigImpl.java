@@ -2,89 +2,98 @@ package org.zlibrary.core.options.config;
 
 import java.util.*;
 
-/*package*/ class ZLConfigImpl implements ZLConfig {
+/*package*/ final class ZLConfigImpl implements ZLConfig {
+	
+	// public abstract boolean isAutoSavingSupported() const = 0;
+	// public abstract void startAutoSave(int seconds) = 0;
+	
 	private final ZLSimpleConfig myMainConfig;
+
 	private final ZLDeltaConfig myDeltaConfig;
-    
-	public ZLConfigImpl() {
+
+	protected ZLConfigImpl() {
 		myMainConfig = new ZLSimpleConfig();
 		myDeltaConfig = new ZLDeltaConfig();
 	}
 
-    public ZLDeltaConfig getDelta() {
-        return myDeltaConfig;
-    }
-    
-	public Map<String, ZLGroup> getGroups() {
+	protected ZLDeltaConfig getDelta() {
+		return myDeltaConfig;
+	}
+
+	protected Set<ZLGroup> getGroups() {
 		return myMainConfig.getGroups();
 	}
 
 	public String getValue(String group, String name, String defaultValue) {
 		String value = myDeltaConfig.getValue(group, name, defaultValue);
 		if (value == defaultValue) {
-		    value = myMainConfig.getValue(group, name, defaultValue);
+			value = myMainConfig.getValue(group, name, defaultValue);
 		}
-        return value;
+		return value;
 	}
-	
-	public void setCategory(String group, String name, String cat) {
+
+	/*protected void setCategory(String group, String name, String cat) {
 		myDeltaConfig.setCategory(group, name, cat);
 		myMainConfig.setCategory(group, name, cat);
-	}
-	
+	}*/
+
 	public void removeGroup(String name) {
 		myDeltaConfig.removeGroup(name);
 	}
 
-	public void setValue(String group, String name, String value, String category) {
+	public void setValue(String group, String name, String value,
+			String category) {
 		myDeltaConfig.setValue(group, name, value, category);
 	}
 
 	public void unsetValue(String group, String name) {
 		myDeltaConfig.unsetValue(group, name);
 	}
-	
-	public void clearDelta() {
+
+	protected void clearDelta() {
 		myDeltaConfig.clear();
 	}
-	
-	public Set<String> applyDelta() {
-        Set<String> usedCategories = new HashSet<String>();
+
+	protected Set<String> applyDelta() {
+		Set<String> usedCategories = new HashSet<String>();
 		for (String deletedGroup : myDeltaConfig.getDeletedGroups()) {
-            if (myMainConfig.getGroups().keySet().contains(deletedGroup)) {
-                for (ZLOptionValue option : 
-                    myMainConfig.getGroups().get(deletedGroup).getValues()) {
-                    if (option.getCategory() != null) {
-                        usedCategories.add(option.getCategory());
-                    }
-                }
-                myMainConfig.removeGroup(deletedGroup);
-            }
+			ZLGroup gr = myMainConfig.getGroup(deletedGroup);
+			if (gr != null) {
+				for (ZLOptionInfo option : gr.getOptions()) {
+					if (option.getCategory() != null) {
+						usedCategories.add(option.getCategory());
+					}
+				}
+				myMainConfig.removeGroup(deletedGroup);
+			}
 		}
-		
-		Set<String> deletedValues = myDeltaConfig.getDeletedValues().getGroups();
+
+		Set<String> deletedValues = myDeltaConfig.getDeletedValues()
+				.getGroups();
 		for (String group : deletedValues) {
-            for (String option : myDeltaConfig.getDeletedValues().getOptions(group)) {
-                ZLGroup zlgroup = myMainConfig.getGroups().get(group);
-                if (zlgroup != null) {
-                    if (zlgroup.getValues().contains(option)) {
-                        usedCategories.add(myMainConfig.getCategory(group, option));
-                        myMainConfig.unsetValue(group, option);
-                    }
-                }
-            }
+			for (String option : myDeltaConfig.getDeletedValues().getOptions(
+					group)) {
+				ZLGroup gr = myMainConfig.getGroup(group);
+				if (gr != null) {
+					if (gr.getOptions().contains(option)) {
+						usedCategories.add(myMainConfig.getCategory(group,
+								option));
+						myMainConfig.unsetValue(group, option);
+					}
+				}
+			}
 		}
-		
+
 		ZLSimpleConfig setValues = myDeltaConfig.getSetValues();
-		Map<String, ZLGroup> groups = setValues.getGroups();
-		for (String group : groups.keySet()) {
-			for (ZLOptionValue value : groups.get(group).getValues()) {
-                usedCategories.add(value.getCategory());
-				myMainConfig.setValue(group, value.getName(), 
-						value.getValue(), value.getCategory());
+		Set<ZLGroup> groups = setValues.getGroups();
+		for (ZLGroup group : groups) {
+			for (ZLOptionInfo value : group.getOptions()) {
+				usedCategories.add(value.getCategory());
+				myMainConfig.setValue(group.getName(), value.getName(), value.getValue(),
+						value.getCategory());
 			}
 		}
 		myDeltaConfig.clear();
-        return usedCategories;
+		return usedCategories;
 	}
 }

@@ -3,92 +3,104 @@ package org.zlibrary.core.options.config;
 import java.util.*;
 
 /**
- * класс Конфиг. это своеобразная структура опций.
- * основное поле myData содержит список групп, которым
- * в качестве ключей сопоставляются их имена.
+ * класс Конфиг. это своеобразная структура опций. основное поле myData содержит
+ * список групп, которым в качестве ключей сопоставляются их имена.
+ * 
  * @author Администратор
- *
+ * 
  */
-/*package*/ class ZLSimpleConfig implements ZLConfig {
-	// public abstract void unsetValue(String group, String name);
+/* package */ final class ZLSimpleConfig implements ZLConfig {
+	
+	private Set<ZLGroup> myData;
 
-	// public abstract  boolean isAutoSavingSupported() const = 0;
-	// public abstract  void startAutoSave(int seconds) = 0;
-	private Map<String, ZLGroup> myData;
-	
 	public ZLSimpleConfig() {
-		myData = new TreeMap<String, ZLGroup>();
+		myData = new LinkedHashSet<ZLGroup>();
 	}
-	
+
 	protected void clear() {
 		myData.clear();
 	}
-	
-	protected Map<String, ZLGroup> getGroups() {
-		return Collections.unmodifiableMap(myData);
-	}
-	
-	public void removeGroup(String group) {
-		if (myData.get(group) != null){
-			myData.remove(group);
-		}
+
+	protected Set<ZLGroup> getGroups() {
+		return Collections.unmodifiableSet(myData);
 	}
 
-	public String getValue(String group, String name, String defaultValue) {
-		if (myData.get(group) != null){
-			if (myData.get(group).getValue(name) != null){
-				return myData.get(group).getValue(name);
+	public void removeGroup(String name) {
+		for (ZLGroup group : myData) {
+			if (group.getName().equals(name)) {
+				myData.remove(group);
 			}
-		} 
-		return defaultValue;
+		}
 	}
 	
+	protected ZLGroup getGroup(String name) {
+		for (ZLGroup group : myData) {
+			if (group.getName().equals(name)) {
+				return group;
+			}
+		}
+		return null;
+	}
+	
+	public String getValue(String group, String name, String defaultValue) {
+		ZLGroup gr = getGroup(group);
+		if (gr != null) {
+			if (gr.getValue(name) != null) {
+				return gr.getValue(name);
+			}
+		}
+		return defaultValue;
+	}
+
 	protected void setCategory(String group, String name, String cat) {
-		ZLGroup gr = myData.get(group);
-		if (gr != null){
-			ZLOptionValue option = gr.getOption(name);
+		ZLGroup gr = getGroup(group);
+		if (gr != null) {
+			ZLOptionInfo option = gr.getOption(name);
 			if (option != null) {
 				option.setCategory(cat);
 			}
-		} 
-	}
-	
-    protected String getCategory(String group, String name) {
-        ZLGroup gr = myData.get(group);
-        if (gr != null){
-            ZLOptionValue option = gr.getOption(name);
-            if (option != null) {
-                return option.getCategory();
-            }
-        } 
-        return null;
-    }
-    
-	public void setValue(String group, String name, String value, String category) {
-		if (myData.get(group) != null){
-			myData.get(group).setValue(name, value, category);
-		} else {
-			ZLGroup newGroup = new ZLGroup();
-			newGroup.setValue(name, value, category);
-			myData.put(group, newGroup);
 		}
 	}
-	
+
+	protected String getCategory(String group, String name) {
+		ZLGroup gr = getGroup(group);
+		if (gr != null) {
+			ZLOptionInfo option = gr.getOption(name);
+			if (option != null) {
+				return option.getCategory();
+			}
+		}
+		return null;
+	}
+
+	public void setValue(String group, String name, String value,
+			String category) {
+		ZLGroup gr = getGroup(group);
+		if (gr != null) {
+			gr.setValue(name, value, category);
+		} else {
+			ZLGroup newGroup = new ZLGroup(group);
+			newGroup.setValue(name, value, category);
+			myData.add(newGroup);
+		}
+	}
+
 	public void unsetValue(String group, String name) {
-		ZLGroup gr = myData.get(group);
+		ZLGroup gr = getGroup(group);
 		if (gr != null) {
 			gr.unsetValue(name);
 		}
 	}
-	
+
 	/**
 	 * метод вывода в строку
-	 */
+	 *
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		for (String categoryName : myData.keySet()){
-			sb.append("" + categoryName + "\n\n" + myData.get(categoryName) + "\n");
+		for (String categoryName : myData.keySet()) {
+			sb.append("" + categoryName + "\n\n" + myData.get(categoryName)
+					+ "\n");
 		}
 		return sb.toString();
-	}   
+	}*/
 }

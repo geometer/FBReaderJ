@@ -5,7 +5,7 @@ package org.zlibrary.core.options;
  * @author Администратор
  *
  */
-public final class ZLIntegerOption extends ZLOption{
+public final class ZLIntegerOption extends ZLOption {
 	private int myValue;
 	private final int myDefaultValue;
 	
@@ -19,7 +19,12 @@ public final class ZLIntegerOption extends ZLOption{
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, myOptionName, null);
 			if (value != null) {
-				myValue = ZLFromStringConverter.getIntegerValue(value);
+				try {
+					Integer intValue = Integer.parseInt(value);
+					myValue = intValue;
+				} catch (NumberFormatException e) {
+					//System.err.println(e);
+				}
 			}
 			myIsSynchronized = true;
 		}

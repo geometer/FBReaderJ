@@ -1,11 +1,13 @@
 package org.zlibrary.core.options.config;
 
-/*package*/ class ZLOptionValue {
+/*package*/final class ZLOptionInfo {
 	private String myValue = "";
+
 	private String myCategory = "";
+
 	private String myName = "";
-	
-	public ZLOptionValue(String name, String value, String category) {
+
+	public ZLOptionInfo(String name, String value, String category) {
 		if (value != null) {
 			myValue = value.intern();
 		}
@@ -16,31 +18,54 @@ package org.zlibrary.core.options.config;
 			myName = name.intern();
 		}
 	}
-	
+
 	public void setValue(String value) {
 		if (value != null) {
 			myValue = value.intern();
 		}
 	}
-	
+
 	public String getValue() {
 		return myValue;
 	}
-	
+
 	public String getName() {
 		return myName;
 	}
-	
+
 	public String getCategory() {
 		return myCategory;
 	}
-	
+
 	public void setCategory(String cat) {
 		myCategory = cat;
 	}
-	
+
+	public int hashCode() {
+		return myName.length();
+	}
+
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+
+		if (!(o instanceof ZLOptionInfo)) {
+			return false;
+		}
+
+		ZLOptionInfo arg = (ZLOptionInfo) o;
+
+		if (arg.hashCode() != this.hashCode()) {
+			return false;
+		}
+
+		return arg.myName.equals(myName);
+
+	}
+
 	public String toString() {
-		return "    <option name=\"" + myName 
-		+ "\" value=\"" + myValue + "\"/>\n";
+		return "    <option name=\"" + myName + "\" value=\"" + myValue
+				+ "\"/>\n";
 	}
 }

@@ -3,48 +3,63 @@ package org.zlibrary.core.options.config;
 import java.util.*;
 
 /*package*/ final class ZLGroup {
-	private Map<String, ZLOptionValue> myData;
-	
-	public ZLGroup (){
-		myData = new LinkedHashMap<String, ZLOptionValue>();
+	private final Set<ZLOptionInfo> myData;
+
+	private final String myName;
+
+	public ZLGroup(String name) {
+		myData = new LinkedHashSet<ZLOptionInfo>();
+		myName = name;
 	}
-	
-	public Collection<ZLOptionValue> getValues() {
-		return Collections.unmodifiableCollection(myData.values());
+
+	public String getName() {
+		return myName;
 	}
-	
-	protected ZLOptionValue getOption(String name) {
-		return myData.get(name);
+
+	public Set<ZLOptionInfo> getOptions() {
+		return Collections.unmodifiableSet(myData);
 	}
-	
-	public String getValue(String name){
-		ZLOptionValue temp = myData.get(name);
-		if (temp != null){
+
+	protected ZLOptionInfo getOption(String name) {
+		for (ZLOptionInfo option : myData) {
+			if (option.getName().equals(name)) {
+				return option;
+			}
+		}
+		return null;
+	}
+
+	public String getValue(String name) {
+		ZLOptionInfo temp = getOption(name);
+		if (temp != null) {
 			return temp.getValue();
 		} else {
 			return null;
 		}
 	}
-	
+
 	public void setValue(String name, String value, String category) {
-		ZLOptionValue temp = myData.get(name);
-		if (temp == null) { 
-			myData.put(name, new ZLOptionValue(name, value, category));
+		ZLOptionInfo temp = getOption(name);
+		if (temp == null) {
+			myData.add(new ZLOptionInfo(name, value, category));
 		} else {
 			temp.setValue(value);
 		}
 	}
-	
+
 	public void unsetValue(String name) {
-		myData.remove(name);
-		//System.out.println("sdfvs - " + myData.get(name));
+		for (ZLOptionInfo option : myData) {
+			if (option.getName().equals(name)) {
+				myData.remove(name);
+			}
+		}
 	}
-	
+
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		for (String name : myData.keySet()){
-			sb.append("    <option name=\"" + name 
-					+ "\" value=\"" + myData.get(name) + "\"/>\n");
+		for (ZLOptionInfo option : myData) {
+			sb.append("    <option name=\"" + option.getName() + "\" value=\""
+					+ option + "\"/>\n");
 		}
 		return sb.toString();
 	}
