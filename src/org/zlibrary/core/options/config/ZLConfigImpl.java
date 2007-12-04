@@ -16,6 +16,7 @@ import java.util.*;
 		myDeltaConfig = new ZLDeltaConfig();
 	}
 
+	//temporary
 	public ZLDeltaConfig getDelta() {
 		return myDeltaConfig;
 	}
@@ -75,14 +76,14 @@ import java.util.*;
 					group)) {
 				ZLGroup gr = myMainConfig.getGroup(group);
 				if (gr != null) {
-                    for (ZLOptionInfo option : gr.getOptions()) {
-                        if (option.getName().equals(optionName)) {
-                            usedCategories.add(myMainConfig.getCategory(group,
-                                    optionName));
-                            //System.out.println("unset");
-                            myMainConfig.unsetValue(group, optionName);
-                        }
-                    }
+					for (ZLOptionInfo option : gr.getOptions()) {
+						if (option.getName().equals(optionName)) {
+							usedCategories.add(myMainConfig.getCategory(group,
+									optionName));
+							//System.out.println("unset");
+							myMainConfig.unsetValue(group, optionName);
+						}
+					}
 				}
 			}
 		}

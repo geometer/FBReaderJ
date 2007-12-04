@@ -19,11 +19,11 @@ import java.util.*;
 	}
 
 	public List<String> getOptions(String group) {
-        if (myData.get(group) != null) {
-            return Collections.unmodifiableList(myData.get(group));
-        } else {
-            return null;
-        }
+		if (myData.get(group) != null) {
+			return Collections.unmodifiableList(myData.get(group));
+		} else {
+			return null;
+		}
 	}
 
 	public void clear() {

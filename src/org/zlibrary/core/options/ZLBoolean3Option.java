@@ -48,7 +48,7 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 		myIsSynchronized = true;
 		
 		if (myValue == myDefaultValue) {
-            myConfig.unsetValue(myGroup, myOptionName);
+		myConfig.unsetValue(myGroup, myOptionName);
 		} else {
 			myConfig.setValue(myOptionName, myGroup, myValue.toString(), myCategory);
 		}

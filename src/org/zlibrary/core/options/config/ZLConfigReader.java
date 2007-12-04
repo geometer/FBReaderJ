@@ -158,7 +158,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	 * Прочитать данные из файла XML
 	 * 
 	 * @param file
-	 *            файл XML
+	 *             файл XML
 	 */
 	private void readFile(File file) {
 		myFile = file.getName().toLowerCase();
