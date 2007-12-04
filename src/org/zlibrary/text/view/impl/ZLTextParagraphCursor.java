@@ -29,6 +29,9 @@ public abstract class ZLTextParagraphCursor {
 				} else if (entry instanceof ZLTextControlEntry) {
 //					System.out.println("Tag = " + ((ZLTextControlEntry) entry).getKind());
 					myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
+				} else if (entry instanceof ZLImageEntry) {
+					ZLImageEntry imageEntry = (ZLImageEntry)entry;
+					System.out.println("Hello, I'm ZLImageEntry " + imageEntry.getId());
 				}
 			}
 		}

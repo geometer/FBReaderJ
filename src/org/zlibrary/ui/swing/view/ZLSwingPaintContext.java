@@ -2,7 +2,7 @@ package org.zlibrary.ui.swing.view;
 
 import java.awt.*;
 
-
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.options.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
@@ -56,6 +56,20 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	}
 	public void drawString(int x, int y, String string, int offset, int length) {
 		myGraphics.drawString(string.substring(offset, offset + length), x, y);
+	}
+
+	public int imageWidth(ZLImage image) {
+		// TODO: implement
+		return 0;
+	}
+
+	public int imageHeight(ZLImage image) {
+		// TODO: implement
+		return 0;
+	}
+
+	public void drawImage(int x, int y, ZLImage image) {
+		// TODO: implement
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {

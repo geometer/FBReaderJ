@@ -456,7 +456,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			} else if (element == ZLTextElement.HSpace) {
 				if (wordOccurred && (spaceCounter > 0)) {
 					int correction = fullCorrection / spaceCounter;
-					getContext().moveX(getContext().getWidth() + correction);
+					getContext().moveX(getContext().getSpaceWidth() + correction);
 					fullCorrection -= correction;
 					wordOccurred = false;
 					--spaceCounter;

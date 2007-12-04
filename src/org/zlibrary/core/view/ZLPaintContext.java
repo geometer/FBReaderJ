@@ -3,6 +3,7 @@ package org.zlibrary.core.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.options.util.ZLColor;
 
 abstract public class ZLPaintContext {
@@ -138,9 +139,9 @@ abstract public class ZLPaintContext {
 
 	abstract public void drawString(int x, int y, String string, int offset, int length);
 
-	//int imageWidth(ZLImageData &image);
-	//int imageHeight(ZLImageData &image);
-	//abstract public void drawImage(int x, int y, ZLImageData &image);
+	abstract public int imageWidth(ZLImage image);
+	abstract public int imageHeight(ZLImage image);
+	abstract public void drawImage(int x, int y, ZLImage image);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
