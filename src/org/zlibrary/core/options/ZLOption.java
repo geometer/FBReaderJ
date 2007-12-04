@@ -33,12 +33,17 @@ public abstract class ZLOption {
 		myGroup = group;
 		myOptionName = name;
 		myIsSynchronized = false;
-		String value = myConfig.getValue(group, name, null);
-		//System.out.println(value);
-		if ((value != null)/* && ( ¿“≈√Œ–»» Õ≈ –¿¬Õ€)*/) {
-			//System.out.println(myConfig.getDelta());
+		
+		/*
+		 * String value = myConfig.getValue(group, name, null);
+		 * 
+		 * 
+		 * 
+		 
+		if ((value != null)) {             && ( ¿“≈√Œ–»» Õ≈ –¿¬Õ€)
 			myConfig.setValue(group, name, value, category);
 		}
+		*/
 	}
 
 	/**
