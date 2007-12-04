@@ -116,7 +116,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
 	private ViewStyle myStyle;
 	private List<ZLTextLineInfo> myLineInfos;
-	private List<ZLTextElementArea> myTextElementMap;
+	private List<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea> ();
 
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
@@ -155,7 +155,7 @@ public class ZLTextViewImpl extends ZLTextView {
 
 	public void paint() {
 		ZLPaintContext context = getContext();
-
+		myTextElementMap.clear();
 		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
 			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(myModel, 0);
@@ -164,7 +164,22 @@ public class ZLTextViewImpl extends ZLTextView {
 			buildInfos(start);
 		}
 
-		int h = 0;
+		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
+		labels.add(0);
+		getContext().moveYTo(0);
+		for (ZLTextLineInfo info : myLineInfos) {
+			prepareTextLine(info);
+			labels.add(myTextElementMap.size());
+		}
+
+		getContext().moveYTo(0);
+		int index = 0;
+		for (ZLTextLineInfo info : myLineInfos) {
+			drawTextLine(info, labels.get(index), labels.get(index + 1));
+			index++;
+		}
+
+/*		int h = 0;
 		for (ZLTextLineInfo info : myLineInfos) {
 			int w = 0;
 			int spaces = 0;
@@ -191,7 +206,49 @@ public class ZLTextViewImpl extends ZLTextView {
 				myStyle.reset();
 			}
 			h += info.Height + info.Descent;
-		}	
+		}	*/
+	}
+
+	private void drawTextLine(ZLTextLineInfo info, int from, int to) {
+		final ZLTextParagraphCursor paragraph = info.RealStart.getParagraphCursor();
+	
+		ListIterator<ZLTextElementArea> fromIt = myTextElementMap.listIterator(from);
+		ListIterator<ZLTextElementArea> toIt = myTextElementMap.listIterator(to);
+		
+		getContext().moveY(info.Height);
+		int maxY = myStyle.getTextAreaHeight();
+		if (getContext().getY() > maxY) {
+			getContext().moveYTo(maxY);
+		}
+		getContext().moveXTo(0);	
+		
+		ListIterator<ZLTextElementArea> it = myTextElementMap.listIterator(from);
+		for (ZLTextWordCursor pos = info.RealStart; !pos.equalWordNumber(info.End); pos.nextWord()) {
+			final ZLTextElement element = paragraph.getElement(pos.getWordNumber());
+			if (element instanceof ZLTextWord) {
+				ZLTextElementArea area = it.next();
+				if (area.ChangeStyle) {
+					myStyle.setStyle(area.Style);
+				}
+				final int x = area.XStart;
+				final int y = area.YEnd - myStyle.getElementDescent(element) - myStyle.getTextStyle().verticalShift();
+				if (element instanceof ZLTextWord) {
+					drawWord(x, y, (ZLTextWord) element, pos.getCharNumber(), -1, false);
+				}
+			}
+		}
+		if (it != toIt) {
+			System.out.println("Didn't come to the end of the infos.");
+		}
+		getContext().moveY(info.Descent + info.VSpaceAfter);
+	}
+
+	private void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
+		if ((start == 0) && (length == -1)) {
+			getContext().drawString(x, y, word.Data, word.Offset, word.Length);
+		} else {
+			System.out.println("Shouldn't be here - no hyphenations supported yet.");
+		}
 	}
 
 	private ZLTextWordCursor buildInfos(ZLTextWordCursor start) {
