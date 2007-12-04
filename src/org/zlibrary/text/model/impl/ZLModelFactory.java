@@ -6,7 +6,6 @@ import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.entry.ZLTextControlEntry;
-import org.zlibrary.text.model.entry.ZLTextControlEntryPool;
 import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.text.model.entry.ZLTextFixedHSpaceEntry;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
@@ -62,11 +61,5 @@ public class ZLModelFactory {
     
     public ZLTextForcedControlEntry createForcedControlEntry() {
     	return new ZLTextForcedControlEntryImpl();
-    }
-    
-
-    //pool
-    public ZLTextControlEntryPool createControlEntryPool() {
-    	return new ZLTextControlEntryPoolImpl();
     }
 }

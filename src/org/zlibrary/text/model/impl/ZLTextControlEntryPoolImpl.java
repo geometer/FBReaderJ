@@ -1,12 +1,11 @@
 package org.zlibrary.text.model.impl;
 
-import org.zlibrary.text.model.entry.ZLTextControlEntryPool;
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 import java.util.Map;
 import java.util.HashMap;
 
-class ZLTextControlEntryPoolImpl implements ZLTextControlEntryPool {
+class ZLTextControlEntryPoolImpl {
     public static ZLTextControlEntryPoolImpl myPool;
     private Map<Byte, ZLTextParagraphEntry> myStartEntries;
     private Map<Byte, ZLTextParagraphEntry> myEndEntries;

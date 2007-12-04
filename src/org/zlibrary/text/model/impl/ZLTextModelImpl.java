@@ -2,7 +2,6 @@ package org.zlibrary.text.model.impl;
 
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.entry.ZLTextControlEntryPool;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
@@ -10,7 +9,7 @@ import java.util.LinkedList;
 
 class ZLTextModelImpl implements ZLTextModel {
     private LinkedList<ZLTextParagraph> myParagraphs = new LinkedList<ZLTextParagraph>();
-    private ZLTextControlEntryPool myEntryPool = new ZLTextControlEntryPoolImpl();
+    private ZLTextControlEntryPoolImpl myEntryPool = new ZLTextControlEntryPoolImpl();
 
     public int getParagraphsNumber() {
         return myParagraphs.size();
