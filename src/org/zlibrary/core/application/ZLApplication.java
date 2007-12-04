@@ -197,10 +197,12 @@ public abstract class ZLApplication {
 			action.checkAndRun();
 		}
 	}
-
-	abstract protected ZLKeyBindings keyBindings();
+    //may be protected
+	abstract public ZLKeyBindings keyBindings();
 	
 	public final void doActionByKey(String key) {
+		
+		System.out.println("key in application->"+ key);
 		ZLAction a = getAction(keyBindings().getBinding(key));
 		if ((a != null) &&
 				(!a.useKeyDelay() /*||

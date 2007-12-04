@@ -1,7 +1,9 @@
 package org.zlibrary.core.application;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
@@ -26,12 +28,17 @@ public class ZLKeyBindings {
     }
 	
 	public void bindKey(String key, int code) {
+		//System.out.println("key-->"+key);
 		myBindingsMap.put(key, code);
 		myIsChanged = true;
 	}
 	
 	public int getBinding(String key) {
 		return myBindingsMap.get(key);
+	}
+	
+	public Set<Map.Entry<String, Integer>> getKeys() {
+		return Collections.unmodifiableSet(myBindingsMap.entrySet());
 	}
 
 	private void loadDefaultBindings() {
