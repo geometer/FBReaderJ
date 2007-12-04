@@ -108,7 +108,6 @@ public class ZLTextViewImpl extends ZLTextView {
 			if (start == 0 && length == -1) {
 				return word.getWidth(myContext);
 			}	
-			assert(false);
 			return 0;
 		}
 	}
@@ -164,7 +163,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			buildInfos(start);
 		}
 
-		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
+/*		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
 		labels.add(0);
 		getContext().moveYTo(0);
 		for (ZLTextLineInfo info : myLineInfos) {
@@ -177,9 +176,14 @@ public class ZLTextViewImpl extends ZLTextView {
 		for (ZLTextLineInfo info : myLineInfos) {
 			drawTextLine(info, labels.get(index), labels.get(index + 1));
 			index++;
+			if (index == 2) {
+				break;
+			}
 		}
-
-/*		int h = 0;
+		for (ZLTextElementArea area : myTextElementMap) {
+			System.out.println(area.XStart + " " + area.XEnd + " " + area.YStart + " " + area.YEnd);
+		}*/
+		int h = 0;
 		for (ZLTextLineInfo info : myLineInfos) {
 			int w = 0;
 			int spaces = 0;
@@ -206,7 +210,7 @@ public class ZLTextViewImpl extends ZLTextView {
 				myStyle.reset();
 			}
 			h += info.Height + info.Descent;
-		}	*/
+		}	
 	}
 
 	private void drawTextLine(ZLTextLineInfo info, int from, int to) {
@@ -232,7 +236,9 @@ public class ZLTextViewImpl extends ZLTextView {
 				}
 				final int x = area.XStart;
 				final int y = area.YEnd - myStyle.getElementDescent(element) - myStyle.getTextStyle().verticalShift();
+				getContext().moveXTo(x);
 				if (element instanceof ZLTextWord) {
+					System.out.println("Draw " + x + " " + y);
 					drawWord(x, y, (ZLTextWord) element, pos.getCharNumber(), -1, false);
 				}
 			}
@@ -433,18 +439,27 @@ public class ZLTextViewImpl extends ZLTextView {
 			case ZLTextAlignmentType.ALIGN_UNDEFINED: {
 				break;
 			}
-				
 		}
 	
 		final ZLTextParagraphCursor paragraph = info.RealStart.getParagraphCursor();
 		int paragraphNumber = paragraph.getIndex();
+		System.out.println();
 		for (ZLTextWordCursor pos = info.RealStart; !pos.equalWordNumber(info.End); pos.nextWord()) {
 			final ZLTextElement element = paragraph.getElement(pos.getWordNumber());
 			final int x = getContext().getX();
 			final int width = myStyle.getElementWidth(element, pos.getCharNumber());
-			if (element instanceof ZLTextWord) {
+			if (element == ZLTextElement.HSpace) {
+				if (wordOccurred && (spaceCounter > 0)) {
+					int correction = fullCorrection / spaceCounter;
+					getContext().moveX(getContext().getSpaceWidth() + correction);
+					fullCorrection -= correction;
+					wordOccurred = false;
+					--spaceCounter;
+				}	
+			} else 	if (element instanceof ZLTextWord) {
+				System.out.print(((ZLTextWord) element).Data + " " + x + " ");
 				final int height = myStyle.getElementHeight(element);
-				final int descent= myStyle.getElementDescent(element);
+				final int descent = myStyle.getElementDescent(element);
 				final int length = ((ZLTextWord) element).Length;
 				myTextElementMap.add(new ZLTextElementArea(paragraphNumber, pos.getWordNumber(), pos.getCharNumber(), 
 					length, false, changeStyle, myStyle.getTextStyle(), element, x, x + width - 1, y - height + 1, y + descent));
@@ -453,14 +468,6 @@ public class ZLTextViewImpl extends ZLTextView {
 			} else if (element instanceof ZLTextControlElement) {
 				myStyle.applyControl((ZLTextControlElement) element);
 				changeStyle = true;
-			} else if (element == ZLTextElement.HSpace) {
-				if (wordOccurred && (spaceCounter > 0)) {
-					int correction = fullCorrection / spaceCounter;
-					getContext().moveX(getContext().getSpaceWidth() + correction);
-					fullCorrection -= correction;
-					wordOccurred = false;
-					--spaceCounter;
-				}	
 			}
 			getContext().moveX(width);
 		}
