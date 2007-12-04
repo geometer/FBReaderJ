@@ -17,7 +17,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
 	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
-	private final Map<ZLApplication.Toolbar.Item, Action> myItemActionMap = new HashMap<ZLApplication.Toolbar.Item, Action>();
+	//private final Map<ZLApplication.Toolbar.Item, Action> myItemActionMap = new HashMap<ZLApplication.Toolbar.Item, Action>();
+	//private final Map<Integer, Action> myIntegerActionMap = new HashMap<Integer, Action>();
 	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
 
@@ -93,6 +94,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void init() {
 		super.init();
+		this.addKeyAction();
 	}
 
 	public void initMenu() {
@@ -163,7 +165,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			Action action = new MyButtonAction(buttonItem);
 			myToolbar.add(action);
 			//myActionMap.put(item, action);
-			myItemActionMap.put(item, action);
+			//myItemActionMap.put(item, action);
 		} else {
 			myToolbar.addSeparator();
 		}
@@ -180,7 +182,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
 			putValue(Action.SMALL_ICON, icon); 
 			putValue(Action.SHORT_DESCRIPTION, item.getTooltip()); 
-		    //ZLAction zlaction = application().getAction(myItem.getActionId());
+			//ZLApplication.ZLAction zlaction = getApplication().getAction(myItem.getActionId());
 		    //myActionMap.put(zlaction, this);
 		}
 		
@@ -188,15 +190,37 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			onButtonPress(myItem);
 		}
 	}
+	
+	private void addKeyAction() {
+		InputMap inputmap = myFrame.getRootPane().getInputMap();
+		ActionMap actionmap = myFrame.getRootPane().getActionMap();
+		Set<Map.Entry<String, Integer>> setEntries =  getApplication().keyBindings().getKeys();
+		for (Map.Entry<String, Integer> entry : setEntries) {
+			String key = entry.getKey();
+			String changeKey = key.substring(1, key.length()-1);
+
+			inputmap.put(KeyStroke.getKeyStroke(changeKey), entry.getValue());
+			actionmap.put(entry.getValue(), new MyKeyAction(entry.getKey()));
+			System.out.println("key addKeyAction-->"+key+"   AFTER " + changeKey);
+			System.out.println(KeyEvent.getKeyText(38));
+			
+		}
+	}
+	
+	private class MyKeyAction extends AbstractAction {
+		String myKey;
+		
+		MyKeyAction(String keyString) {
+			myKey = keyString;
+		}
+		
+		public void actionPerformed(ActionEvent event) {
+			getApplication().doActionByKey(myKey);
+		}
+	}
+
 
 	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
-		Action action = myItemActionMap.get(item);
-		
-		if (action != null) {
-			//action.setEnabled(enabled);
-		}
-		//setVisible()???		
-		// TODO: implement
 	}
 
 	public void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item) {
@@ -213,6 +237,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			myFrame.setExtendedState(Frame.NORMAL);
 		}
 	}
+	
 	
 	public boolean isFullscreen() {
 		return myFrame.getExtendedState() == Frame.MAXIMIZED_BOTH;		
