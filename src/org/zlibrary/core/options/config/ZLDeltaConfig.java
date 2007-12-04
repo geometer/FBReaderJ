@@ -72,7 +72,7 @@ import java.util.*;
 			for (ZLOptionInfo option : group.getOptions()) {
 				sb.append("    <option name=\"" + option.getName() + "\" ");
 				sb.append("value=\"" + option.getValue() + "\" ");
-				sb.append("category=\"" + option.getCategory() + "\">\n");
+				sb.append("category=\"" + option.getCategory() + "\"/>\n");
 			}
 			if (myDeletedValues.getOptions(group.getName()) != null) {
 				for (String option : myDeletedValues

@@ -51,6 +51,7 @@ import java.util.*;
 	}
 
 	public void write() {
+		writeDelta();
 		Set<String> usedCategories = myConfig.applyDelta();
 		Set<ZLGroup> groups = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла

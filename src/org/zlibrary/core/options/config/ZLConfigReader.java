@@ -43,7 +43,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					}
 					break;
 				default:
-					System.out.println("too many nesting elements!");
+					System.out.println("too many nesting elements! in main");
 			}
 			myDepth++;
 		}
@@ -66,6 +66,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 
 		public void startDocumentHandler() {
 			myDepth = 0;
+			myFile = "delta.xml";
 		}
 
 		public void startElementHandler(String tag,
@@ -74,7 +75,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			tag = tag.toLowerCase();
 			switch (myDepth) {
 				case 0:
-					if (!tag.equals("delta")) {
+					if (!tag.equals("config")) {
 						printError(tag);
 					}
 					break;
@@ -91,21 +92,16 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 2:
 					if (tag.equals("option")) {
-						myConfig.setValue(myCurrentGroup, attributes
-								.get("name"), attributes.get("value"),
+						if ((attributes.get("value") != null)
+								 && (attributes.get("category") != null)) {
+						myConfig.setValue(myCurrentGroup, 
+								attributes.get("name"), 
+								attributes.get("value"),
 								attributes.get("category"));
-					} else {
-						if (tag.equals("group")) {
-							myCurrentGroup = attributes.get("name");
 						} else {
-							printError(tag);
+							myConfig.unsetValue(myCurrentGroup, 
+									attributes.get("name"));
 						}
-					}
-					break;
-				case 3:
-					if (tag.equals("option")) {
-						myConfig.unsetValue(myCurrentGroup, attributes
-								.get("name"));
 					} else {
 						printError(tag);
 					}
