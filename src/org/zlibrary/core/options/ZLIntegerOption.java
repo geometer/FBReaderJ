@@ -38,7 +38,8 @@ public final class ZLIntegerOption extends ZLOption {
 		myValue = value;
 		myIsSynchronized = true;
 		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myOptionName, myGroup);
+			//System.out.println(myOptionName + " is unset");
+			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
 			myConfig.setValue(myGroup, myOptionName, "" + myValue, myCategory);
 		}

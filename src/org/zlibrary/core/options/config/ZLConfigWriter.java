@@ -3,6 +3,8 @@ package org.zlibrary.core.options.config;
 import java.io.*;
 import java.util.*;
 
+import org.zlibrary.core.options.*;
+
 /*package*/ final class ZLConfigWriter implements ZLWriter {
 
 	private final ZLConfigImpl myConfig = ZLConfigInstance.getExtendedInstance();
@@ -52,7 +54,20 @@ import java.util.*;
 
 	public void write() {
 		//writeDelta();
+		
+		
+		//testtesttest
+		myConfig.setValueDirectly("gr", "nm", "5", "cat");
+		System.out.println(myConfig.getValue("gr", "nm", "xfiles5"));
+		ZLIntegerOption option = new ZLIntegerOption("cat", "gr", "nm", 2);
+		option.setValue(1);
+		System.out.println(myConfig.getValue("gr", "nm", "xfiles1"));
+		option.setValue(2);
 		Set<String> usedCategories = myConfig.applyDelta();
+		System.out.println(myConfig.getValue("gr", "nm", "xfiles2"));
+		
+		
+		//System.out.println(usedCategories);
 		//writeDelta();
 		Set<ZLGroup> groups = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
@@ -102,6 +117,7 @@ import java.util.*;
 		 */
 		for (String category : usedCategories) {
 			if (!configFilesContent.keySet().contains(category.intern())) {
+				//System.out.println("fe");
 				deleteConfigFile(configFilePath(category));
 			}
 		}

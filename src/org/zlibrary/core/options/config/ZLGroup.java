@@ -54,13 +54,4 @@ import java.util.*;
 			}
 		}
 	}
-
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (ZLOptionInfo option : myData) {
-			sb.append("    <option name=\"" + option.getName() + "\" value=\""
-					+ option + "\"/>\n");
-		}
-		return sb.toString();
-	}
 }

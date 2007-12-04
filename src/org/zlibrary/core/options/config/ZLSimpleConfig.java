@@ -79,6 +79,7 @@ import java.util.*;
 	public void setValue(String group, String name, String value,
 			String category) {
 		ZLGroup gr = getGroup(group);
+		//System.out.println(group + ", " + name + ", " + gr);
 		if (gr != null) {
 			gr.setValue(name, value, category);
 		} else {

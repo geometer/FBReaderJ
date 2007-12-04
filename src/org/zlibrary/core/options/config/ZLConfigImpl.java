@@ -93,7 +93,6 @@ import java.util.*;
 						if (option.getName().equals(optionName)) {
 							usedCategories.add(myMainConfig.getCategory(group,
 									optionName));
-							//System.out.println("unset");
 							myMainConfig.unsetValue(group, optionName);
 						}
 					}

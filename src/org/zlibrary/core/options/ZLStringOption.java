@@ -39,6 +39,15 @@ public final class ZLStringOption extends ZLSimpleOption {
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		myConfig.setValue(myGroup, myOptionName, myValue, myCategory);
+		if (myIsSynchronized && (myValue == value)) {
+			return;
+		}
+		myValue = value;
+		myIsSynchronized = true;
+		if (myValue.equals(myDefaultValue)) {
+			myConfig.unsetValue(myGroup, myOptionName);
+		} else {
+			myConfig.setValue(myGroup, myOptionName, myValue, myCategory);
+		}
 	}
 }
