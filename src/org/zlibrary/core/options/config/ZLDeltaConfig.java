@@ -33,10 +33,10 @@ import java.util.*;
 			String category) {
 		mySetValues.setValue(group, name, value, category);
 	}
-
+/*
 	public void setCategory(String group, String name, String cat) {
 		mySetValues.setCategory(group, name, cat);
-	}
+	}*/
 
 	public void unsetValue(String group, String name) {
 		// TODO щрн окнун??

@@ -55,7 +55,7 @@ import java.util.*;
 		return defaultValue;
 	}
 
-	protected void setCategory(String group, String name, String cat) {
+	/*protected void setCategory(String group, String name, String cat) {
 		ZLGroup gr = getGroup(group);
 		if (gr != null) {
 			ZLOptionInfo option = gr.getOption(name);
@@ -63,7 +63,7 @@ import java.util.*;
 				option.setCategory(cat);
 			}
 		}
-	}
+	}*/
 
 	protected String getCategory(String group, String name) {
 		ZLGroup gr = getGroup(group);

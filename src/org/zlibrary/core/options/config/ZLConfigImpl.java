@@ -7,9 +7,9 @@ import java.util.*;
 	// public abstract boolean isAutoSavingSupported() const = 0;
 	// public abstract void startAutoSave(int seconds) = 0;
 	
-	private final ZLSimpleConfig myMainConfig;
+	private ZLSimpleConfig myMainConfig;
 
-	private final ZLDeltaConfig myDeltaConfig;
+	private ZLDeltaConfig myDeltaConfig;
 
 	protected ZLConfigImpl() {
 		myMainConfig = new ZLSimpleConfig();
@@ -41,14 +41,27 @@ import java.util.*;
 	public void removeGroup(String name) {
 		myDeltaConfig.removeGroup(name);
 	}
+	
+	protected void removeGroupDirectly(String name) {
+		myMainConfig.removeGroup(name);
+	}
 
 	public void setValue(String group, String name, String value,
 			String category) {
 		myDeltaConfig.setValue(group, name, value, category);
 	}
+	
+	protected void setValueDirectly(String group, String name, String value,
+			String category) {
+		myMainConfig.setValue(group, name, value, category);
+	}
 
 	public void unsetValue(String group, String name) {
 		myDeltaConfig.unsetValue(group, name);
+	}
+	
+	protected void unsetValueDirectly(String group, String name) {
+		myMainConfig.unsetValue(group, name);
 	}
 
 	protected void clearDelta() {
@@ -98,6 +111,7 @@ import java.util.*;
 			}
 		}
 		myDeltaConfig.clear();
+		//System.out.println(myDeltaConfig);
 		return usedCategories;
 	}
 }

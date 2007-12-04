@@ -51,8 +51,9 @@ import java.util.*;
 	}
 
 	public void write() {
-		writeDelta();
+		//writeDelta();
 		Set<String> usedCategories = myConfig.applyDelta();
+		//writeDelta();
 		Set<ZLGroup> groups = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
 		Map<String, StringBuffer> configFilesContent = new LinkedHashMap<String, StringBuffer>();

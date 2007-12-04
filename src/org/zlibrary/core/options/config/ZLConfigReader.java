@@ -6,7 +6,7 @@ import java.util.Map;
 import org.zlibrary.core.xml.ZLXMLReader;
 
 /*package*/ final class ZLConfigReader implements ZLReader {
-
+	
 	private class ConfigReader extends ZLXMLReader {
 		private int myDepth = 0;
 
@@ -35,7 +35,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 2:
 					if (tag.equals("option")) {
-						myConfig.setValue(myCurrentGroup, attributes
+						myConfig.setValueDirectly(myCurrentGroup, attributes
 								.get("name"), attributes.get("value"),
 								myCategory);
 					} else {
@@ -53,7 +53,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		}
 
 		public void endDocumentHandler() {
-			myConfig.applyDelta();
+			
 		}
 	}
 
@@ -61,7 +61,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
-
+		private boolean myCurrentGroupIsEmpty = false;
 		// private boolean myIsDeleting = false;
 
 		public void startDocumentHandler() {
@@ -73,6 +73,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 				Map<String, String> attributes) {
 
 			tag = tag.toLowerCase();
+			
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -82,24 +83,22 @@ import org.zlibrary.core.xml.ZLXMLReader;
 				case 1:
 					if (tag.equals("group")) {
 						myCurrentGroup = attributes.get("name");
+						myCurrentGroupIsEmpty = true;
 					} else {
-						if (tag.equals("delete")) {
-							// myIsDeleting = true;
-						} else {
-							printError(tag);
-						}
+						printError(tag);
 					}
 					break;
 				case 2:
 					if (tag.equals("option")) {
+						myCurrentGroupIsEmpty = false;
 						if ((attributes.get("value") != null)
 								 && (attributes.get("category") != null)) {
-						myConfig.setValue(myCurrentGroup, 
+							myConfig.setValueDirectly(myCurrentGroup, 
 								attributes.get("name"), 
 								attributes.get("value"),
 								attributes.get("category"));
 						} else {
-							myConfig.unsetValue(myCurrentGroup, 
+							myConfig.unsetValueDirectly(myCurrentGroup, 
 									attributes.get("name"));
 						}
 					} else {
@@ -113,14 +112,15 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		}
 
 		public void endElementHandler(String tag) {
-			if ((myDepth == 1) && (tag.equals("delete"))) {
-				// myIsDeleting = false;
+			if ((myDepth == 1) && (myCurrentGroupIsEmpty) 
+					&& (tag.equals("group"))) {
+				myConfig.removeGroupDirectly(myCurrentGroup);
 			}
 			myDepth--;
 		}
 
 		public void endDocumentHandler() {
-			myConfig.applyDelta();
+			
 		}
 	}
 
@@ -132,11 +132,14 @@ import org.zlibrary.core.xml.ZLXMLReader;
 
 	private final File myDestinationDirectory;
 
+	private final String myDeltaFilePath;
+	
 	private String myFile = "";
 
 	protected ZLConfigReader(String path) {
 		myConfig = ZLConfigInstance.getExtendedInstance();
 		myDestinationDirectory = new File(path);
+		myDeltaFilePath = myDestinationDirectory + "/delta.xml";
 		if (myDestinationDirectory.exists()) {
 			if (!myDestinationDirectory.isDirectory()) {
 				System.out.println("Wrong path - directory path expected");
@@ -182,7 +185,10 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			}
 		}
 		myXMLReader = new DeltaConfigReader();
-		myXMLReader.read(myDestinationDirectory + "/delta.xml");
-		myConfig.clearDelta();
+		myXMLReader.read(myDeltaFilePath);
+		//myConfig.clearDelta();
+		//myConfig.applyDelta();
+		//System.out.println(myConfig.getDelta());
+		new File(myDeltaFilePath).delete();
 	}
 }
