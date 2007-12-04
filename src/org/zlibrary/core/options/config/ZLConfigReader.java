@@ -93,12 +93,12 @@ import org.zlibrary.core.xml.ZLXMLReader;
 						myCurrentGroupIsEmpty = false;
 						if ((attributes.get("value") != null)
 								 && (attributes.get("category") != null)) {
-							myConfig.setValueDirectly(myCurrentGroup, 
+							myConfig.setValue(myCurrentGroup, 
 								attributes.get("name"), 
 								attributes.get("value"),
 								attributes.get("category"));
 						} else {
-							myConfig.unsetValueDirectly(myCurrentGroup, 
+							myConfig.unsetValue(myCurrentGroup, 
 									attributes.get("name"));
 						}
 					} else {
@@ -114,7 +114,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		public void endElementHandler(String tag) {
 			if ((myDepth == 1) && (myCurrentGroupIsEmpty) 
 					&& (tag.equals("group"))) {
-				myConfig.removeGroupDirectly(myCurrentGroup);
+				myConfig.removeGroup(myCurrentGroup);
 			}
 			myDepth--;
 		}
@@ -187,7 +187,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		myXMLReader = new DeltaConfigReader();
 		myXMLReader.read(myDeltaFilePath);
 		//myConfig.clearDelta();
-		//myConfig.applyDelta();
+		myConfig.applyDelta();
 		//System.out.println(myConfig.getDelta());
 		new File(myDeltaFilePath).delete();
 	}
