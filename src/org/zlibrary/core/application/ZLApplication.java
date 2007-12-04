@@ -290,17 +290,13 @@ public abstract class ZLApplication {
 		}
 		
 		public boolean isVisible() {
-			// temporary commented while any option return 0 :(((((
-			//return (myApplication.myViewWidget != null) &&
-			// ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
-			//	(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
-			return true;
+			return (myApplication.myViewWidget != null) &&
+			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
+				(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
 		}
 		
 		public void run() {
-			// temporary commented while any option return 0 :(((((
-			//int optionValue = (int)myApplication.RotationAngleOption.getValue();
-			int optionValue = -1;
+			int optionValue = (int)myApplication.RotationAngleOption.getValue();
 			ZLViewWidget.Angle oldAngle = myApplication.myViewWidget.getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
