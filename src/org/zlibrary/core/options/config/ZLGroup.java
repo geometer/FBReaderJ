@@ -3,12 +3,12 @@ package org.zlibrary.core.options.config;
 import java.util.*;
 
 /*package*/ final class ZLGroup {
-	private final Set<ZLOptionInfo> myData;
+	private Set<ZLOptionInfo> myData;
 
 	private final String myName;
 
 	public ZLGroup(String name) {
-		myData = new LinkedHashSet<ZLOptionInfo>();
+		myData = new HashSet<ZLOptionInfo>();
 		myName = name;
 	}
 
@@ -50,7 +50,7 @@ import java.util.*;
 	public void unsetValue(String name) {
 		for (ZLOptionInfo option : myData) {
 			if (option.getName().equals(name)) {
-				myData.remove(name);
+				myData.remove(option);
 			}
 		}
 	}

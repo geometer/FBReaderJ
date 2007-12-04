@@ -16,7 +16,7 @@ import java.util.*;
 		myDeltaConfig = new ZLDeltaConfig();
 	}
 
-	protected ZLDeltaConfig getDelta() {
+	public ZLDeltaConfig getDelta() {
 		return myDeltaConfig;
 	}
 
@@ -71,15 +71,18 @@ import java.util.*;
 		Set<String> deletedValues = myDeltaConfig.getDeletedValues()
 				.getGroups();
 		for (String group : deletedValues) {
-			for (String option : myDeltaConfig.getDeletedValues().getOptions(
+			for (String optionName : myDeltaConfig.getDeletedValues().getOptions(
 					group)) {
 				ZLGroup gr = myMainConfig.getGroup(group);
 				if (gr != null) {
-					if (gr.getOptions().contains(option)) {
-						usedCategories.add(myMainConfig.getCategory(group,
-								option));
-						myMainConfig.unsetValue(group, option);
-					}
+                    for (ZLOptionInfo option : gr.getOptions()) {
+                        if (option.getName().equals(optionName)) {
+                            usedCategories.add(myMainConfig.getCategory(group,
+                                    optionName));
+                            //System.out.println("unset");
+                            myMainConfig.unsetValue(group, optionName);
+                        }
+                    }
 				}
 			}
 		}

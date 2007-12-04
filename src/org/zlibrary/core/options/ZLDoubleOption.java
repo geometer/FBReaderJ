@@ -38,7 +38,7 @@ public final class ZLDoubleOption extends ZLOption{
 		myValue = value;
 		myIsSynchronized = true;
 		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myOptionName, myGroup);
+			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
 			myConfig.setValue(myGroup, myOptionName, "" + myValue, myCategory);
 		}

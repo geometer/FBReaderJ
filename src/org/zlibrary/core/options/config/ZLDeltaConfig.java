@@ -41,7 +41,9 @@ import java.util.*;
 	public void unsetValue(String group, String name) {
 		// TODO щрн окнун??
 		myDeletedValues.add(group, name);
+        //System.out.println(group + " - - - -" + name);
 		mySetValues.unsetValue(group, name);
+        //System.out.println(mySetValues.getValue(group, name, "NOVALUE"));
 	}
 
 	public void removeGroup(String group) {
@@ -56,36 +58,44 @@ import java.util.*;
 	}
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer("<delta>\n  <delete>\n");
-		for (String group : myDeletedGroups) {
-			sb.append("    <group name=\"" + group + "\"/>\n");
-		}
+        StringBuffer sb = new StringBuffer("<config>\n");
+        for (String group : myDeletedGroups) {
+            sb.append("    <group name=\"" + group + "\"/>\n");
+        }
 
-		{
-			Set<String> values = myDeletedValues.getGroups();
-			for (String group : values) {
-				sb.append("    <group name=\"" + group + "\">\n");
-				for (String option : myDeletedValues.getOptions(group)) {
-					sb.append("      <option name=\"" + option + "\"/>\n");
-				}
-				sb.append("    </group>\n");
-			}
-			sb.append("  </delete>\n");
-		}
+        Set<ZLGroup> setGroups = mySetValues.getGroups();
+        Set<String> writtenGroups = new HashSet<String>();
 
-		{
-			Set<ZLGroup> groups = mySetValues.getGroups();
-			for (ZLGroup group : groups) {
-				sb.append("  <group name=\"" + group.getName() + "\">\n");
-				for (ZLOptionInfo option : group.getOptions()) {
-					sb.append("    <option name=\"" + option.getName() + "\" ");
-					sb.append("value=\"" + option.getValue() + "\" ");
-					sb.append("category=\"" + option.getCategory() + "\">\n");
-				}
-				sb.append("  </group>\n");
-			}
-			sb.append("</delta>");
-		}
-		return sb.toString();
+        for (ZLGroup group : setGroups) {
+            sb.append("  <group name=\"" + group.getName() + "\">\n");
+            writtenGroups.add(group.getName());
+            for (ZLOptionInfo option : group.getOptions()) {
+                sb.append("    <option name=\"" + option.getName() + "\" ");
+                sb.append("value=\"" + option.getValue() + "\" ");
+                sb.append("category=\"" + option.getCategory() + "\">\n");
+            }
+            if (myDeletedValues.getOptions(group.getName()) != null) {
+                for (String option : myDeletedValues
+                        .getOptions(group.getName())) {
+                    sb.append("    <option name=\"" + option + "\"/>\n");
+                }
+            }
+            sb.append("  </group>\n");
+        }
+
+        Set<String> values = myDeletedValues.getGroups();
+        Set<String> otherGroups = new HashSet<String>(values);
+        otherGroups.removeAll(writtenGroups);
+        for (String group : otherGroups) {
+            sb.append("  <group name=\"" + group + "\">\n");
+            for (String option : myDeletedValues.getOptions(group)) {
+                sb.append("      <option name=\"" + option + "\"/>\n");
+            }
+            sb.append("  </group>\n");
+        }
+
+        sb.append("</config>");
+
+        return sb.toString();
 	}
 }

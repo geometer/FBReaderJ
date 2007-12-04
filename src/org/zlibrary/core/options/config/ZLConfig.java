@@ -10,4 +10,7 @@ public interface ZLConfig {
 			String category);
 
 	public void unsetValue(String group, String name);
+    
+    //temporary
+    public ZLDeltaConfig getDelta();
 }

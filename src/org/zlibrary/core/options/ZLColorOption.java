@@ -44,7 +44,7 @@ public final class ZLColorOption extends ZLOption {
 		myIntValue = value;
 		myIsSynchronized = true;
 		if (myIntValue == myDefaultValue) {
-			myConfig.unsetValue(myOptionName, myGroup);
+            myConfig.unsetValue(myGroup, myOptionName);
 		} else {
 			myConfig.setValue(myGroup, myOptionName, "" + myIntValue, myCategory);
 		}
