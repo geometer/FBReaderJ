@@ -66,7 +66,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 
 	public int imageWidth(ZLImage image) {
 		try {
-			return ImageIO.read (new ByteArrayInputStream(image.byteData())).getWidth();
+			return ImageIO.read(new ByteArrayInputStream(image.byteData())).getWidth();
 		} catch (IOException e) {
 		} 
 		return 0;
@@ -74,7 +74,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 
 	public int imageHeight(ZLImage image) {
 		try {
-			return ImageIO.read (new ByteArrayInputStream(image.byteData())).getHeight();
+			return ImageIO.read(new ByteArrayInputStream(image.byteData())).getHeight();
 		} catch (IOException e) {
 		} 
 		return 0;
@@ -82,7 +82,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 
 	public void drawImage(int x, int y, ZLImage image) {
 		try {
-			BufferedImage img = ImageIO.read (new ByteArrayInputStream(image.byteData()));
+			BufferedImage img = ImageIO.read(new ByteArrayInputStream(image.byteData()));
 			myGraphics.drawImage(img, x, y - img.getHeight(), null);
 		} catch (IOException e) {
 		} 
