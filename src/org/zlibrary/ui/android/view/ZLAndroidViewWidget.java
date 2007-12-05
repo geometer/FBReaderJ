@@ -15,7 +15,8 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 	}
 
 	public void repaint() {
-		myWidget.invalidate();
+		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
+		myWidget.postInvalidate();
 	}
 
 	public void trackStylus(boolean track) {
