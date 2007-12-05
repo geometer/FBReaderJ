@@ -18,14 +18,21 @@ import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
 	private ZLAndroidApplicationWindow myMainWindow;
+	private ZLAndroidWidget myWidget;
 
 	public ZLAndroidPaintContext createPaintContext() {
-		ZLAndroidWidget widget = (ZLAndroidWidget)myActivity.findViewById(R.id.zlandroidactivity);
-		return widget.getPaintContext();
+		return getWidget().getPaintContext();
 	}
 
 	ZLAndroidApplicationWindow getMainWindow() {
 		return myMainWindow;
+	}
+
+	public ZLAndroidWidget getWidget() {
+		if (myWidget == null) {
+			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.zlandroidactivity);
+		}
+		return myWidget;
 	}
 
 	public InputStream getResourceInputStream(String fileName) {

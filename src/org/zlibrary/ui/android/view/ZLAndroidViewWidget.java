@@ -3,16 +3,19 @@ package org.zlibrary.ui.android.view;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLViewWidget;
 
-public class ZLAndroidViewWidget extends ZLViewWidget {
-	public static final ZLAndroidViewWidget Instance = new ZLAndroidViewWidget(Angle.DEGREES0);
+import org.zlibrary.ui.android.library.ZLAndroidLibrary;
 
-	private ZLAndroidViewWidget(Angle initialAngle) {
+public class ZLAndroidViewWidget extends ZLViewWidget {
+	private final ZLAndroidWidget myWidget = 
+		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget();
+
+	public ZLAndroidViewWidget(Angle initialAngle) {
 		super(initialAngle);
-		// TODO: implement
+		myWidget.setViewWidget(this);
 	}
 
 	public void repaint() {
-		// TODO: implement
+		myWidget.invalidate();
 	}
 
 	public void trackStylus(boolean track) {

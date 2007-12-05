@@ -69,10 +69,9 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	protected ZLAndroidViewWidget createViewWidget() {
 		// TODO: implement
-		//ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(ZLSwingViewWidget.Angle.DEGREES0);
-		//myFrame.getRootPane().add(viewWidget.getPanel(), BorderLayout.CENTER);
-		//return viewWidget;
-		return ZLAndroidViewWidget.Instance;
+		ZLAndroidViewWidget viewWidget = new ZLAndroidViewWidget(
+			ZLAndroidViewWidget.Angle.getByDegrees(getApplication().AngleStateOption.getValue()));
+		return viewWidget;
 	}
 
 	public void addToolbarItem(ZLApplication.Toolbar.Item item) {

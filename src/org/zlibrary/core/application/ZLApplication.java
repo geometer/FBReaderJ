@@ -21,7 +21,9 @@ public abstract class ZLApplication {
 	private static final String TIMEOUT = "Timeout";
 
 	public final ZLIntegerOption RotationAngleOption =
-		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
+		// temporary commented while we have no options dialog
+		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
+		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, -1);
 	public final ZLIntegerOption AngleStateOption =
 		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
 
