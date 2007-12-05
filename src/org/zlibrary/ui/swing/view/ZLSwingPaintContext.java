@@ -83,7 +83,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	public void drawImage(int x, int y, ZLImage image) {
 		try {
 			BufferedImage img = ImageIO.read (new ByteArrayInputStream(image.byteData()));
-			myGraphics.drawImage(img, x, y - imageHeight(image), null);
+			myGraphics.drawImage(img, x, y - img.getHeight(), null);
 		} catch (IOException e) {
 		} 
 	}
