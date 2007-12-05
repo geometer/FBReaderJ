@@ -24,10 +24,16 @@ import java.util.*;
 	protected Set<ZLGroup> getGroups() {
 		return myMainConfig.getGroups();
 	}
-
+	
+	/**@return defaultValue - when this value is not set or deleted
+	 * new value (from setValues) - when it was set
+	 * null - when it was deleted
+	 */
 	public String getValue(String group, String name, String defaultValue) {
 		String value = myDeltaConfig.getValue(group, name, defaultValue);
-		if (value == defaultValue) {
+		if (value == null) {
+			return defaultValue;
+		} else if (value.equals(defaultValue)) {
 			value = myMainConfig.getValue(group, name, defaultValue);
 		}
 		return value;

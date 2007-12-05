@@ -25,8 +25,27 @@ import java.util.*;
 		return mySetValues;
 	}
 
+	/**
+	 * 
+	 * @param group
+	 * @param name
+	 * @param defaultValue
+	 * @return defaultValue - when this value is not set or deleted
+	 * new value (from setValues) - when it was set
+	 * null - when it was deleted
+	 */
 	public String getValue(String group, String name, String defaultValue) {
-		return mySetValues.getValue(group, name, defaultValue);
+		String value = mySetValues.getValue(group, name, defaultValue);
+		System.out.println("config data - " + value);
+		if ((value == null) || (value.equals(defaultValue))) {
+			if (myDeletedValues.contains(group, name)) {
+				return null;
+			} else {
+				return defaultValue;
+			}
+		} else {
+			return value;
+		}
 	}
 
 	public void setValue(String group, String name, String value,

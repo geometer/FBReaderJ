@@ -62,13 +62,13 @@ import org.zlibrary.core.options.*;
 		ZLIntegerOption option = new ZLIntegerOption("cat", "gr", "nm", 2);
 		option.setValue(1);
 		System.out.println("get - " +option.getValue());
-		System.out.println(myConfig.getValue("gr", "nm", "xfiles1"));
+		System.out.println(myConfig.getValue("gr", "nm", ""));
 		option.setValue(2);
 		System.out.println("get - " +option.getValue());
-		System.out.println(myConfig.getValue("gr", "nm", "xfiles1"));
+		System.out.println(myConfig.getValue("gr", "nm", ""));
 		Set<String> usedCategories = myConfig.applyDelta();
 		System.out.println("get - " +option.getValue());
-		System.out.println(myConfig.getValue("gr", "nm", "xfiles2"));
+		System.out.println(myConfig.getValue("gr", "nm", ""));
 		
 		
 		//System.out.println(usedCategories);

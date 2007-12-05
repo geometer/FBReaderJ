@@ -4,7 +4,7 @@ import java.util.*;
 
 /*package*/ final class ZLDeletedValuesTree {
 	
-	private final Map<String, List<String>> myData = 
+	private Map<String, List<String>> myData = 
 		new TreeMap<String, List<String>>();
 
 	public void add(String group, String name) {
@@ -14,6 +14,14 @@ import java.util.*;
 		myData.get(group).add(name);
 	}
 
+	public boolean contains(String group, String name) {
+		if (myData.get(group) != null) {
+			return myData.get(group).contains(name.intern());
+		} else {
+			return false;
+		}
+	}
+	
 	public Set<String> getGroups() {
 		return Collections.unmodifiableSet(myData.keySet());
 	}
