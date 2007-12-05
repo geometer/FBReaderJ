@@ -2,8 +2,9 @@ package org.test.fbreader.formats.fb2;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
-import org.fbreader.formats.fb2.Base64EncodedImage;
 import org.fbreader.formats.fb2.FB2Reader;
+import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
@@ -11,13 +12,20 @@ import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.entry.ZLImageEntry;
 import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
+
+import android.pim.ContactPickerActivity.MyContentObserver;
 
 import junit.framework.TestCase;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class TestFB2Reader extends TestCase {
 	
@@ -282,7 +290,7 @@ public class TestFB2Reader extends TestCase {
 	public void testImage() {
 		FB2Reader reader = new FB2Reader();
 		BookModel model = reader.readBook(myDirectory + "image.fb2");
-		byte [] image = ((Base64EncodedImage)(model.getImageMap().get("cover.jpg"))).byteData();
+		byte [] image = (model.getImageMap().get("cover.jpg")).byteData();
 		try {
 			BufferedImage img = ImageIO.read (new ByteArrayInputStream(image));
 			ImageIO.write(img, "jpg", new File(myDirectory + "img.jpg"));
@@ -303,5 +311,15 @@ public class TestFB2Reader extends TestCase {
 		assertTrue(entry.getId().equals("cover.jpg") && entry.getVOffset() == 0);
 		assertEquals(entry.image(), bModel.getImageMap().get("cover.jpg"));
 	}
+	
+	public void testImageSize() {
+		FB2Reader reader = new FB2Reader();
+		BookModel model = reader.readBook(myDirectory + "image.fb2");
+		ZLImage image = model.getImageMap().get("cover.jpg");
+		ZLSwingPaintContext paint = new ZLSwingPaintContext();
+		assertTrue(paint.imageHeight(image) == 277);
+		assertTrue(paint.imageWidth(image) == 200);
+	}
+	
 }
 	

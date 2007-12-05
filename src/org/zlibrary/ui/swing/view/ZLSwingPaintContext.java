@@ -1,6 +1,12 @@
 package org.zlibrary.ui.swing.view;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.options.util.ZLColor;
@@ -59,17 +65,27 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	}
 
 	public int imageWidth(ZLImage image) {
-		// TODO: implement
+		try {
+			return ImageIO.read (new ByteArrayInputStream(image.byteData())).getWidth();
+		} catch (IOException e) {
+		} 
 		return 0;
 	}
 
 	public int imageHeight(ZLImage image) {
-		// TODO: implement
+		try {
+			return ImageIO.read (new ByteArrayInputStream(image.byteData())).getHeight();
+		} catch (IOException e) {
+		} 
 		return 0;
 	}
 
 	public void drawImage(int x, int y, ZLImage image) {
-		// TODO: implement
+		try {
+			BufferedImage img = ImageIO.read (new ByteArrayInputStream(image.byteData()));
+			myGraphics.drawImage(img, x, y - imageHeight(image), null);
+		} catch (IOException e) {
+		} 
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
