@@ -176,7 +176,7 @@ public class ModelTests extends TestCase {
 		myIntegerRangeOption.setValue(-1);
 		myIntegerRangeOption.setValue(123);
 		ZLIntegerRangeOption newOption = new ZLIntegerRangeOption("", "", 
-				"IR", 189, 12, myDefaultInt2);
+				"IR", 189, 12, myDefaultIntRange2);
 		assertEquals(newOption.getValue(), -1);
 	}
 

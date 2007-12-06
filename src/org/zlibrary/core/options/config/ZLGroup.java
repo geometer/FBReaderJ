@@ -48,6 +48,8 @@ import java.util.*;
 		}
 	}
 
+	
+	//TODO cuncurrent modification
 	public void unsetValue(String name) {
 		for (ZLOptionInfo option : myData) {
 			if (option.getName().equals(name)) {

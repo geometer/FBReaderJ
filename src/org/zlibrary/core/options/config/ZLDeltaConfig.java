@@ -38,7 +38,6 @@ import java.util.*;
 		String value = mySetValues.getValue(group, name, defaultValue);
 		if ((value == null) || (value.equals(defaultValue))) {
 			if (myDeletedValues.contains(group, name)) {
-				System.out.println("contains");
 				return null;
 			} else {
 				return defaultValue;

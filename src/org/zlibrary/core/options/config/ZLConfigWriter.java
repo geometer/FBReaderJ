@@ -3,8 +3,6 @@ package org.zlibrary.core.options.config;
 import java.io.*;
 import java.util.*;
 
-import org.zlibrary.core.options.*;
-
 /*package*/ final class ZLConfigWriter implements ZLWriter {
 
 	private final ZLConfigImpl myConfig = ZLConfigInstance.getExtendedInstance();
@@ -118,7 +116,6 @@ import org.zlibrary.core.options.*;
 		 */
 		for (String category : usedCategories) {
 			if (!configFilesContent.keySet().contains(category.intern())) {
-				//System.out.println("fe");
 				deleteConfigFile(configFilePath(category));
 			}
 		}

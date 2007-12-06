@@ -31,10 +31,21 @@ import java.util.*;
 	 */
 	public String getValue(String group, String name, String defaultValue) {
 		String value = myDeltaConfig.getValue(group, name, defaultValue);
-		if (value == null) {
-			return defaultValue;
+		if ((value == null)) {
+			//System.out.println(name);
+			/**
+			 * если значение было нулем, то либо опция удалена, либо
+			 * нам вернули дефолт
+			 * если дефолт не ноль, то опция удалена и возвращаем дефолт
+			 * а если ноль, то лезем в основной конфиг и смотрим там
+			 */
+			if (defaultValue != null) {
+				return defaultValue;
+			} else {
+				return myMainConfig.getValue(group, name, defaultValue);
+			}
 		} else if (value.equals(defaultValue)) {
-			value = myMainConfig.getValue(group, name, defaultValue);
+			return myMainConfig.getValue(group, name, defaultValue);
 		}
 		return value;
 	}
