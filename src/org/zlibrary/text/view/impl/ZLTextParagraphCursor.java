@@ -4,6 +4,8 @@ import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.entry.*;
 
+import org.zlibrary.core.image.ZLImage;
+
 import java.util.*;
 
 public abstract class ZLTextParagraphCursor {
@@ -31,7 +33,10 @@ public abstract class ZLTextParagraphCursor {
 					myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
 				} else if (entry instanceof ZLImageEntry) {
 					ZLImageEntry imageEntry = (ZLImageEntry)entry;
-					System.out.println("Hello, I'm ZLImageEntry " + imageEntry.getId());
+					ZLImage image = imageEntry.getImage();
+					if (image != null) {
+						myElements.add(new ZLTextImageElement(imageEntry.getId(), image));
+					}
 				}
 			}
 		}

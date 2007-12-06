@@ -24,7 +24,7 @@ class ZLImageEntryImpl implements ZLImageEntry {
 		return myVOffset;
 	}
 	
-	public ZLImage image() {
+	public ZLImage getImage() {
 		return myMap.get(myId);
 	}
 }
