@@ -18,6 +18,7 @@ public final class ZLIntegerOption extends ZLOption {
 	public int getValue() {
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, myOptionName, null);
+			System.out.println(value);
 			if (value != null) {
 				try {
 					Integer intValue = Integer.parseInt(value);

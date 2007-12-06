@@ -88,19 +88,15 @@ import java.util.*;
 			}
 		}
 
-		Set<String> deletedValues = myDeltaConfig.getDeletedValues()
-				.getGroups();
-		for (String group : deletedValues) {
-			for (String optionName : myDeltaConfig.getDeletedValues().getOptions(
-					group)) {
-				ZLGroup gr = myMainConfig.getGroup(group);
-				if (gr != null) {
-					for (ZLOptionInfo option : gr.getOptions()) {
-						if (option.getName().equals(optionName)) {
-							usedCategories.add(myMainConfig.getCategory(group,
-									optionName));
-							myMainConfig.unsetValue(group, optionName);
-						}
+		for (ZLOptionID option : myDeltaConfig.getDeletedValues().getAll()) {
+			ZLGroup gr = myMainConfig.getGroup(option.getGroup());
+			if (gr != null) {
+				for (ZLOptionInfo opt : gr.getOptions()) {
+					if (opt.getName().equals(option.getName())) {
+						usedCategories.add(myMainConfig.getCategory(
+								option.getGroup(), option.getName()));
+						myMainConfig.unsetValue(option.getGroup(), 
+								option.getName());
 					}
 				}
 			}
@@ -111,6 +107,7 @@ import java.util.*;
 		for (ZLGroup group : groups) {
 			for (ZLOptionInfo value : group.getOptions()) {
 				usedCategories.add(value.getCategory());
+				usedCategories.add(myMainConfig.getCategory(group.getName(), value.getName()));
 				myMainConfig.setValue(group.getName(), value.getName(), value.getValue(),
 						value.getCategory());
 			}

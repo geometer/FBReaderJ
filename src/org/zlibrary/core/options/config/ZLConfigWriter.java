@@ -57,7 +57,7 @@ import org.zlibrary.core.options.*;
 		
 		
 		//testtesttest
-		myConfig.setValueDirectly("gr", "nm", "5", "cat");
+		/*myConfig.setValueDirectly("gr", "nm", "5", "cat");
 		System.out.println(myConfig.getValue("gr", "nm", "xfiles1"));
 		ZLIntegerOption option = new ZLIntegerOption("cat", "gr", "nm", 2);
 		option.setValue(1);
@@ -66,13 +66,10 @@ import org.zlibrary.core.options.*;
 		option.setValue(2);
 		System.out.println("get - " +option.getValue());
 		System.out.println(myConfig.getValue("gr", "nm", ""));
+		*/
+		
+		
 		Set<String> usedCategories = myConfig.applyDelta();
-		System.out.println("get - " +option.getValue());
-		System.out.println(myConfig.getValue("gr", "nm", ""));
-		
-		
-		//System.out.println(usedCategories);
-		//writeDelta();
 		Set<ZLGroup> groups = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
 		Map<String, StringBuffer> configFilesContent = new LinkedHashMap<String, StringBuffer>();

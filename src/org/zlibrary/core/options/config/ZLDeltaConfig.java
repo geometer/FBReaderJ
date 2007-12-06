@@ -4,7 +4,7 @@ import java.util.*;
 
 /*package*/final class ZLDeltaConfig {
 
-	private final ZLDeletedValuesTree myDeletedValues = new ZLDeletedValuesTree();
+	private final ZLDeletedValuesSet myDeletedValues = new ZLDeletedValuesSet();
 
 	private final Set<String> myDeletedGroups = new HashSet<String>();
 
@@ -17,7 +17,7 @@ import java.util.*;
 		return Collections.unmodifiableSet(myDeletedGroups);
 	}
 
-	public ZLDeletedValuesTree getDeletedValues() {
+	public ZLDeletedValuesSet getDeletedValues() {
 		return myDeletedValues;
 	}
 
@@ -36,9 +36,9 @@ import java.util.*;
 	 */
 	public String getValue(String group, String name, String defaultValue) {
 		String value = mySetValues.getValue(group, name, defaultValue);
-		System.out.println("config data - " + value);
 		if ((value == null) || (value.equals(defaultValue))) {
 			if (myDeletedValues.contains(group, name)) {
+				System.out.println("contains");
 				return null;
 			} else {
 				return defaultValue;
@@ -61,6 +61,7 @@ import java.util.*;
 		// TODO щрн окнун??
 		myDeletedValues.add(group, name);
 		//System.out.println(group + " - - - -" + name);
+		//System.out.println(myDeletedValues.getAll());
 		mySetValues.unsetValue(group, name);
 		//System.out.println(mySetValues.getValue(group, name, "NOVALUE"));
 	}
@@ -93,22 +94,20 @@ import java.util.*;
 				sb.append("value=\"" + option.getValue() + "\" ");
 				sb.append("category=\"" + option.getCategory() + "\"/>\n");
 			}
-			if (myDeletedValues.getOptions(group.getName()) != null) {
-				for (String option : myDeletedValues
-						.getOptions(group.getName())) {
-					sb.append("    <option name=\"" + option + "\"/>\n");
+			for (ZLOptionID option : myDeletedValues.getAll()) {
+				if (option.getGroup().equals(group)) {
+					sb.append("    <option name=\"" + option.getName() + "\"/>\n");
 				}
 			}
 			sb.append("  </group>\n");
 		}
 
-		Set<String> values = myDeletedValues.getGroups();
-		Set<String> otherGroups = new HashSet<String>(values);
-		otherGroups.removeAll(writtenGroups);
-		for (String group : otherGroups) {
+		for (String group : myDeletedValues.getGroups()) {
 			sb.append("  <group name=\"" + group + "\">\n");
-			for (String option : myDeletedValues.getOptions(group)) {
-				sb.append("      <option name=\"" + option + "\"/>\n");
+			for (ZLOptionID option : myDeletedValues.getAll()) {
+				if (option.getGroup().equals(group)) {
+					sb.append("      <option name=\"" + option.getName() + "\"/>\n");
+				}
 			}
 			sb.append("  </group>\n");
 		}

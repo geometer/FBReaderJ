@@ -44,6 +44,7 @@ import java.util.*;
 			myData.add(new ZLOptionInfo(name, value, category));
 		} else {
 			temp.setValue(value);
+			temp.setCategory(category);
 		}
 	}
 

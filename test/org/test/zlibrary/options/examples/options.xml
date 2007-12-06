@@ -2,6 +2,7 @@
 <config>
   <group name="Dictionary">
     <option name="Name" value="Browser"/>
+    <option name="Author" value="Bart Simpson"/>
   </group>
   <group name="Format">
     <option name="DefaultEncoding" value="IBM850"/>
@@ -9,13 +10,8 @@
   <group name="Options">
     <option name="KeyDelay" value="0"/>
   </group>
-  <group name="MYGROUP">
-      <option name="lengthChangeable"/>
-  </group>
   <group name="Rotation">
     <option name="Angle" value="-1"/>
-  </group>
-  <group name="Web Browser">
-    <option name="Name" value="браузере"/>
+    <option name="Name" value="Mozilla"/>
   </group>
 </config>

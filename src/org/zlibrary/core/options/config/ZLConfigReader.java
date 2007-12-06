@@ -176,6 +176,13 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	public void read() {
 		String[] fileList = myDestinationDirectory.list();
 		myDestinationDirectory.mkdir();
+		
+		/**
+		 * это важно, так как если дельта сейчас будет непустой, то
+		 * то что там было тоже применится к конфигу! (см тест 03 в конфигтестах)
+		 */
+		myConfig.clearDelta();
+		
 		if (fileList != null) {
 			for (String fileName : fileList) {
 				if (isXMLFileName(fileName)
