@@ -23,14 +23,14 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		super(entry);
 	}
 	
-	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineDelta, int verticalShift, int alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
+	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, int alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
 //		System.out.println("Constructed, fonSizeDelta = " + fontSizeDelta);
 		SpaceBeforeOption = null;
 		SpaceAfterOption = null;
-		LeftIndentOption = null;
-		RightIndentOption = null;
-		FirstLineIndentDeltaOption = null;
+		LeftIndentOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":leftIndent", -300, 300, leftIndent);
+		RightIndentOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":rightIndent", -300, 300, rightIndent);
+		FirstLineIndentDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":firstLineIndentDelta", -300, 300, firstLineIndentDelta);
 		AlignmentOption = new ZLIntegerOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":alignment", alignment);
 		LineSpaceOption = null;
 	}

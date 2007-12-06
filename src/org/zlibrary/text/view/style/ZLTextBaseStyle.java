@@ -87,6 +87,10 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		return 0;
 	}
 
+	public int firstLineIndentDelta() {
+		return 0;
+	}
+	
 	public int lineSpace() {
 		return 1;
 	}

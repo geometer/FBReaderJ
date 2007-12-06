@@ -77,8 +77,10 @@ public class ZLTextViewImpl extends ZLTextView {
 				return getWordWidth((ZLTextWord) element, charNumber, -1, false);
 			} else if (element instanceof ZLTextImageElement) {
 				return myContext.imageWidth(((ZLTextImageElement) element).getImage());
+			} else if (element == ZLTextElement.IndentElement) {
+				return myStyle.firstLineIndentDelta();
 			}
-			return 0;
+			return 0; 
 		}
 
 		public int getElementHeight(ZLTextElement element) {
@@ -327,6 +329,9 @@ public class ZLTextViewImpl extends ZLTextView {
 		ZLTextStyle storedStyle = myStyle.getTextStyle();		
 		
 		info.LeftIndent = myStyle.getTextStyle().leftIndent();	
+		if (isFirstLine) {
+			info.LeftIndent += myStyle.getTextStyle().firstLineIndentDelta();
+		}		
 		
 		info.Width = info.LeftIndent;
 		

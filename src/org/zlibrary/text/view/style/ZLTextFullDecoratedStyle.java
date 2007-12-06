@@ -48,6 +48,10 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		return 0;
 	}
 
+	public int firstLineIndentDelta() {
+		return (alignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : getBase().firstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
+	}
+	
 	public int lineSpace() {
 		return 1;
 	}

@@ -7,6 +7,7 @@ public interface ZLTextStyle {
 	public boolean italic();
 	public int leftIndent();
 	public int rightIndent();
+	public int firstLineIndentDelta();
 	public int lineSpace();
 	public int verticalShift();
 	public int spaceBefore();

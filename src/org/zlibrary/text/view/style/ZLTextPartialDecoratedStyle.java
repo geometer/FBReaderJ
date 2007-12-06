@@ -47,6 +47,10 @@ import org.zlibrary.text.model.ZLTextAlignmentType;
 		return 0;
 	}
 
+	public int firstLineIndentDelta() {
+		return getBase().firstLineIndentDelta();
+	}	
+	
 	public int lineSpace() {
 		return 1;
 	}
