@@ -102,14 +102,12 @@ import java.util.*;
 		for (ZLOptionID option : myDeltaConfig.getDeletedValues().getAll()) {
 			ZLGroup gr = myMainConfig.getGroup(option.getGroup());
 			if (gr != null) {
-				for (ZLOptionInfo opt : gr.getOptions()) {
-					if (opt.getName().equals(option.getName())) {
-						usedCategories.add(myMainConfig.getCategory(
-								option.getGroup(), option.getName()));
-						myMainConfig.unsetValue(option.getGroup(), 
-								option.getName());
-					}
+				String cat = myMainConfig.getCategory(
+						option.getGroup(), option.getName());
+				if (cat != null) {
+					usedCategories.add(cat);
 				}
+				gr.unsetValue(option.getName());
 			}
 		}
 
@@ -118,7 +116,11 @@ import java.util.*;
 		for (ZLGroup group : groups) {
 			for (ZLOptionInfo value : group.getOptions()) {
 				usedCategories.add(value.getCategory());
-				usedCategories.add(myMainConfig.getCategory(group.getName(), value.getName()));
+				String cat = myMainConfig.getCategory(group.getName(), value.getName());
+				if (cat != null) {
+					usedCategories.add(cat);
+					
+				}
 				myMainConfig.setValue(group.getName(), value.getName(), value.getValue(),
 						value.getCategory());
 			}
