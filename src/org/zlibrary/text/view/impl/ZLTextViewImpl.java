@@ -163,7 +163,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			buildInfos(start);
 		}
 
-/*		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
+		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
 		labels.add(0);
 		getContext().moveYTo(0);
 		for (ZLTextLineInfo info : myLineInfos) {
@@ -176,20 +176,20 @@ public class ZLTextViewImpl extends ZLTextView {
 		for (ZLTextLineInfo info : myLineInfos) {
 			drawTextLine(info, labels.get(index), labels.get(index + 1));
 			index++;
-			if (index == 2) {
-				break;
-			}
+			//System.out.println("Line " + index + " Y = " + getContext().getY());
 		}
-		for (ZLTextElementArea area : myTextElementMap) {
-			System.out.println(area.XStart + " " + area.XEnd + " " + area.YStart + " " + area.YEnd);
-		}*/
-		int h = 0;
+
+//		for (ZLTextElementArea area : myTextElementMap) {
+//			System.out.println(area.XStart + " " + area.XEnd + " " + area.YStart + " " + area.YEnd);
+//		}
+		
+/*		int h = 0;
 		for (ZLTextLineInfo info : myLineInfos) {
 			int w = 0;
 			int spaces = 0;
 			boolean wordOccurred = false;
 			ZLTextWordCursor cursor;
-			for (cursor = info.Start; !cursor.equalWordNumber(info.End) && !cursor.isEndOfParagraph(); cursor.nextWord()) {
+			for (cursor = info.Start; !cursor.equalWordNumber(info.End); cursor.nextWord()) {
 				ZLTextElement element = cursor.getElement();
 				if (element == ZLTextElement.HSpace) {
 					if (wordOccurred) {
@@ -198,6 +198,7 @@ public class ZLTextViewImpl extends ZLTextView {
 						wordOccurred = false;
 					}
 				} else if (element instanceof ZLTextWord) {
+					System.out.println("Word");
 					wordOccurred = true;
 					ZLTextWord word = (ZLTextWord)element;
 					context.drawString(w, h + info.Height, word.Data, word.Offset, word.Length);
@@ -209,8 +210,9 @@ public class ZLTextViewImpl extends ZLTextView {
 			if (cursor.isEndOfParagraph()) {
 				myStyle.reset();
 			}
+			System.out.println("Line over");
 			h += info.Height + info.Descent;
-		}	
+		}	*/
 	}
 
 	private void drawTextLine(ZLTextLineInfo info, int from, int to) {
@@ -227,9 +229,10 @@ public class ZLTextViewImpl extends ZLTextView {
 		getContext().moveXTo(0);	
 		
 		ListIterator<ZLTextElementArea> it = myTextElementMap.listIterator(from);
-		for (ZLTextWordCursor pos = info.RealStart; !pos.equalWordNumber(info.End); pos.nextWord()) {
-			final ZLTextElement element = paragraph.getElement(pos.getWordNumber());
+		for (ZLTextWordCursor pos = new ZLTextWordCursor(info.Start); !pos.equalWordNumber(info.End); pos.nextWord()) {
+			final ZLTextElement element = pos.getElement();//paragraph.getElement(pos.getWordNumber());
 			if (element instanceof ZLTextWord) {
+				//System.out.println("Word = " + ((ZLTextWord) element).getWord());
 				ZLTextElementArea area = it.next();
 				if (area.ChangeStyle) {
 					myStyle.setStyle(area.Style);
@@ -238,13 +241,13 @@ public class ZLTextViewImpl extends ZLTextView {
 				final int y = area.YEnd - myStyle.getElementDescent(element) - myStyle.getTextStyle().verticalShift();
 				getContext().moveXTo(x);
 				if (element instanceof ZLTextWord) {
-					System.out.println("Draw " + x + " " + y);
+					//System.out.println("Draw " + x + " " + y + " " + area.YEnd);
 					drawWord(x, y, (ZLTextWord) element, pos.getCharNumber(), -1, false);
 				}
 			}
 		}
 		if (it != toIt) {
-			System.out.println("Didn't come to the end of the infos.");
+//			System.out.println("Didn't come to the end of the infos.");
 		}
 		getContext().moveY(info.Descent + info.VSpaceAfter);
 	}
@@ -443,8 +446,8 @@ public class ZLTextViewImpl extends ZLTextView {
 	
 		final ZLTextParagraphCursor paragraph = info.RealStart.getParagraphCursor();
 		int paragraphNumber = paragraph.getIndex();
-		System.out.println();
-		for (ZLTextWordCursor pos = info.RealStart; !pos.equalWordNumber(info.End); pos.nextWord()) {
+//		System.out.println();
+		for (ZLTextWordCursor pos = new ZLTextWordCursor(info.RealStart); !pos.equalWordNumber(info.End); pos.nextWord()) {
 			final ZLTextElement element = paragraph.getElement(pos.getWordNumber());
 			final int x = getContext().getX();
 			final int width = myStyle.getElementWidth(element, pos.getCharNumber());
@@ -457,7 +460,7 @@ public class ZLTextViewImpl extends ZLTextView {
 					--spaceCounter;
 				}	
 			} else 	if (element instanceof ZLTextWord) {
-				System.out.print(((ZLTextWord) element).Data + " " + x + " ");
+				//System.out.print(((ZLTextWord) element).Data + " " + x + " ");
 				final int height = myStyle.getElementHeight(element);
 				final int descent = myStyle.getElementDescent(element);
 				final int length = ((ZLTextWord) element).Length;
