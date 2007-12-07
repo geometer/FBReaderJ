@@ -303,7 +303,7 @@ public class TestFB2Reader extends TestCase {
 		ZLTextModel model = bModel.getBookModel();
 		ZLImageEntry entry = (ZLImageEntry) model.getParagraph(0).getEntries().get(1);
 		assertTrue(entry.getId().equals("cover.jpg") && entry.getVOffset() == 0);
-		assertEquals(entry.image(), bModel.getImageMap().get("cover.jpg"));
+		assertEquals(entry.getImage(), bModel.getImageMap().get("cover.jpg"));
 	}
 	
 	public void testImageSize() {
