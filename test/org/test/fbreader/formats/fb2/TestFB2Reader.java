@@ -4,7 +4,7 @@ import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.core.view.ZLPaintContext;
+
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
@@ -14,18 +14,12 @@ import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
 
-import android.pim.ContactPickerActivity.MyContentObserver;
-
 import junit.framework.TestCase;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class TestFB2Reader extends TestCase {
 	
