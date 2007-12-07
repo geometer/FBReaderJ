@@ -12,10 +12,17 @@ import org.zlibrary.text.view.ZLTextStyle;
 import org.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextBaseStyle implements ZLTextStyle {
-	public ZLIntegerRangeOption LeftMarginOption;
-	public ZLIntegerRangeOption RightMarginOption;
-	public ZLIntegerRangeOption TopMarginOption;
-	public ZLIntegerRangeOption BottomMarginOption;
+	private final String GROUP = "Style";
+	private final String OPTIONS = "Options";
+
+	public final ZLIntegerRangeOption LeftMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "LeftMargin", 0, 1000, 4);
+	public final ZLIntegerRangeOption RightMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "RightMargin", 0, 1000, 4);
+	public final ZLIntegerRangeOption TopMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "TopMargin", 0, 1000, 0);
+	public final ZLIntegerRangeOption BottomMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "BottomMargin", 0, 1000, 4);
 
 	public ZLColorOption BackgroundColorOption;
 	public ZLColorOption SelectionBackgroundColorOption;
@@ -31,18 +38,14 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	public ZLIntegerRangeOption FontSizeOption;
 	public ZLBooleanOption BoldOption;
 	public ZLBooleanOption ItalicOption;
-	public ZLIntegerOption AlignmentOption;
-	public ZLDoubleOption LineSpaceOption;
+	public final ZLIntegerOption AlignmentOption =
+		new ZLIntegerOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
+	public final ZLDoubleOption LineSpaceOption =
+		new ZLDoubleOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:lineSpacing", 1.2);
 	
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
 		//TODO
 		final String COLORS = "Colors";
-		final String OPTIONS = "Options";
-		final String GROUP = "Style";
-		LeftMarginOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "LeftMargin", 0, 1000, 4);
-		RightMarginOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "RightMargin", 0, 1000, 4);
-		TopMarginOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "TopMargin", 0, 1000, 0);
-		BottomMarginOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "BottomMargin", 0, 1000, 4);
 /*		
 		BackgroundColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "Background", new ZLColor(255, 255, 255));
 		SelectionBackgroundColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
@@ -58,8 +61,6 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		FontSizeOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:fontSize", 0, 72, fontSize);
 		BoldOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:bold", false);
 		ItalicOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:italic", false);
-		AlignmentOption = new ZLIntegerOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
-		LineSpaceOption = new ZLDoubleOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:lineSpacing", 1.2);
 	*/
 	}
 	
@@ -112,6 +113,6 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	}
 
 	public int alignment() {
-		return ZLTextAlignmentType.ALIGN_UNDEFINED;
+		return AlignmentOption.getValue();
 	}
 }
