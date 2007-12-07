@@ -4,6 +4,9 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.resources.ZLResourceKey;
 import org.zlibrary.core.view.ZLViewWidget;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLStringOption;
+
 import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
@@ -22,6 +25,9 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.QUIT, new QuitAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction(this));
+
+		addAction(ActionCode.UNDO, new ScrollAction(this, -1));
+		addAction(ActionCode.REDO, new ScrollAction(this, 1));
 		
 		addToolbarButton(ActionCode.SHOW_COLLECTION, "books");
 		addToolbarButton(ActionCode.SHOW_LAST_BOOKS, "history");
@@ -85,7 +91,11 @@ public final class FBReader extends ZLApplication {
 		getMenubar().addItem(ActionCode.QUIT, new ZLResourceKey("close"));
 
 		ZLTextView view = new ZLTextViewImpl(this, getContext());
-		view.setModel((args.length > 0) ? args[0] : "data/help/MiniHelp.ru.fb2");
+		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "Book", "Current", "data/help/MiniHelp.ru.fb2");
+		if (args.length > 0) {
+			bookNameOption.setValue(args[0]);
+		}
+		view.setModel(bookNameOption.getValue());
 //		view.setModel((args.length > 0) ? args[0] : "test/data/fb2/subtitle.fb2");
 		setView(view);
 	}
@@ -110,5 +120,9 @@ public final class FBReader extends ZLApplication {
 			case DEGREES270:
 				return myBindings270;
 		}
+	}
+
+	ZLTextView getTextView() {
+		return (ZLTextView)getCurrentView();
 	}
 }

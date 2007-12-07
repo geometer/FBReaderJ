@@ -361,7 +361,7 @@ public abstract class ZLApplication {
 				myTooltip = tooltip;
 			}
 
-			int getActionId() {
+			public int getActionId() {
 				return myActionId;
 			}
 			

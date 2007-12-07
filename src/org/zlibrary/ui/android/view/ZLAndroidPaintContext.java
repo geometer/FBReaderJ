@@ -1,8 +1,6 @@
 package org.zlibrary.ui.android.view;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Typeface;
+import android.graphics.*;
 
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.options.util.ZLColor;
@@ -94,17 +92,24 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public int imageWidth(ZLImage image) {
-		// TODO: implement
-		return 20;
+		// TODO: optimize
+		byte[] array = image.byteData();
+		Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
+		return bitmap.width();
 	}
 
 	public int imageHeight(ZLImage image) {
-		// TODO: implement
-		return 20;
+		// TODO: optimize
+		byte[] array = image.byteData();
+		Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
+		return bitmap.height();
 	}
 
 	public void drawImage(int x, int y, ZLImage image) {
-		// TODO: implement
+		// TODO: optimize
+		byte[] array = image.byteData();
+		Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
+		myCanvas.drawBitmap(bitmap, x, y - bitmap.height(), myPaint);
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {

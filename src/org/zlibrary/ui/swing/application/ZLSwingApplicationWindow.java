@@ -17,7 +17,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
 	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
-	//private final Map<ZLApplication.Toolbar.Item, Action> myItemActionMap = new HashMap<ZLApplication.Toolbar.Item, Action>();
+	private final HashMap<ZLApplication.Toolbar.ButtonItem, Action> myButtonItemToActionMap = new HashMap<ZLApplication.Toolbar.ButtonItem, Action>();
 	//private final Map<Integer, Action> myIntegerActionMap = new HashMap<Integer, Action>();
 	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
@@ -160,8 +160,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		if (item instanceof ZLApplication.Toolbar.ButtonItem) {
 			ZLApplication.Toolbar.ButtonItem buttonItem = (ZLApplication.Toolbar.ButtonItem)item;
 			Action action = new MyButtonAction(buttonItem);
-			myToolbar.add(action);
-			//myActionMap.put(item, action);
+			AbstractButton button = myToolbar.add(action);
+			button.setFocusable(false);
+			myButtonItemToActionMap.put(buttonItem, action);
 			//myItemActionMap.put(item, action);
 		} else {
 			myToolbar.addSeparator();
@@ -218,10 +219,14 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 
 	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
+		// TODO: implement
+		if (item instanceof ZLApplication.Toolbar.ButtonItem) {
+			Action action = myButtonItemToActionMap.get((ZLApplication.Toolbar.ButtonItem)item);
+			action.setEnabled(enabled);
+		}
 	}
 
 	public void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item) {
-		
 		// TODO: implement
 	}
 

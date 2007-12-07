@@ -5,6 +5,8 @@ import java.util.*;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLIntegerOption;
 
 import org.zlibrary.text.model.*;
 import org.zlibrary.text.model.impl.ZLModelFactory;
@@ -124,6 +126,10 @@ public class ZLTextViewImpl extends ZLTextView {
 	private List<ZLTextLineInfo> myLineInfos;
 	private List<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea> ();
 
+	// TO BE DELETED
+	private ZLIntegerOption StartParagraphNumberOption =
+		new ZLIntegerOption(ZLOption.STATE_CATEGORY, "DummyScrolling", "Paragraph", 0);
+
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
 		myStyle = new ViewStyle(context);
@@ -164,7 +170,10 @@ public class ZLTextViewImpl extends ZLTextView {
 		myTextElementMap.clear();
 		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
-			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(myModel, 0);
+			int pn = StartParagraphNumberOption.getValue();
+			pn = Math.max(0, Math.min(pn, paragraphs - 2));
+			StartParagraphNumberOption.setValue(pn);
+			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.getCursor(myModel, pn);
 			ZLTextWordCursor start = new ZLTextWordCursor();
 			start.setCursor(firstParagraph);
 			buildInfos(start);
@@ -497,5 +506,10 @@ public class ZLTextViewImpl extends ZLTextView {
 	
 	public String caption() {
 		return "SampleView";
+	}
+
+	// TO BE DELETED
+	public void scroll(int numberOfParagraphs) {
+		StartParagraphNumberOption.setValue(StartParagraphNumberOption.getValue() + numberOfParagraphs);
 	}
 }

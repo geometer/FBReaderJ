@@ -12,5 +12,8 @@ public abstract class ZLTextView extends ZLView {
 	public abstract void setModel(String fileName);
 	public abstract void paint();
 	public abstract String caption();
-}
 
+	// TO BE DELETED;
+	// this is temporary method for dummy scrolling
+	public abstract void scroll(int numberOfParagraphs);
+}

@@ -69,7 +69,7 @@ abstract public class ZLApplicationWindow {
 		List<ZLApplication.Toolbar.Item> items = getApplication().getToolbar().getItems();
 		boolean enableToolbarSpace = false;
 		ZLApplication.Toolbar.Item lastSeparator = null;
-		for (ZLApplication.Toolbar.Item item: items) {
+		for (ZLApplication.Toolbar.Item item : items) {
 			if (item instanceof ZLApplication.Toolbar.OptionEntryItem) {
 			/*case OPTION_ENTRY:
 			{
@@ -114,7 +114,7 @@ abstract public class ZLApplicationWindow {
 				} else {
 					setToolbarItemState(item, false, true);
 				}
-				break;
+				//break;
 			}
 		}
 		
