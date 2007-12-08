@@ -209,7 +209,7 @@ public abstract class ZLApplication {
 				 //(myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
 			a.checkAndRun();
 			//myLastKeyActionTime = ZLTime();
-		}	
+		}
 	}
 
 	public boolean closeView() {

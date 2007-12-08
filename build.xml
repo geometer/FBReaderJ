@@ -22,6 +22,7 @@
 			<fileset dir = "${bin.dir}" includes = "**/*.class"/>
 			<fileset dir = "." includes = "${icons.dir}/**/*.png"/>
 			<fileset dir = "." includes = "${data.dir}/**"/>
+			<fileset dir = "platform/swing" includes = "${data.dir}/**"/>
 		</jar>
 	</target>
 

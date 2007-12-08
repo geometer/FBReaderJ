@@ -11,10 +11,10 @@ import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 
 
-public class ZLKeyBindings {
-	public static final String BINDINGS_NUMBER = "Number";
-	public static final String BINDED_KEY = "Key";
-	public static final String BINDED_ACTION = "Action";
+public final class ZLKeyBindings {
+	private static final String BINDINGS_NUMBER = "Number";
+	private static final String BINDED_KEY = "Key";
+	private static final String BINDED_ACTION = "Action";
 
 	private final String myName;
 	private final Map<String, Integer> myBindingsMap = new HashMap<String, Integer>();
@@ -32,8 +32,9 @@ public class ZLKeyBindings {
 		myIsChanged = true;
 	}
 	
-	public Integer getBinding(String key) {
-		return myBindingsMap.get(key);
+	public int getBinding(String key) {
+		Integer num = myBindingsMap.get(key);
+		return (num == null) ? 0 : num;
 	}
 	
 	public Set<Map.Entry<String, Integer>> getKeys() {

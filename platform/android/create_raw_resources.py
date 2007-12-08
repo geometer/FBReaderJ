@@ -5,7 +5,8 @@ import shutil;
 
 raw_res_dir = "res/raw"
 xml_res_dir = "res/xml"
-data_dir = "../../data"
+data_dir_common = "../../data"
+data_dir_android = "data"
 
 print os.getcwd()
 
@@ -28,4 +29,5 @@ def process_data_dir(prefix, dir):
 
 clean_res_dir(raw_res_dir)
 #clean_res_dir(xml_res_dir)
-process_data_dir("data__", data_dir)
+process_data_dir("data__", data_dir_common)
+process_data_dir("data__", data_dir_android)
