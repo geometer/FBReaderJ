@@ -79,15 +79,25 @@ import java.util.*;
 	public String toString() {
 		StringBuffer sb = new StringBuffer("<config>\n");
 		for (String group : myDeletedGroups) {
-			sb.append("    <group name=\"" + group + "\"/>\n");
+			sb.append("  <group name=\"" + group + "\"/>\n");
+		}
+
+		for (String group : myDeletedValues.getGroups()) {
+			sb.append("  <group name=\"" + group + "\">\n");
+			for (ZLOptionID option : myDeletedValues.getAll()) {
+				if (option.getGroup().equals(group)) {
+					sb.append("    <option name=\"" + option.getName() + "\"/>\n");
+				}
+			}
+			sb.append("  </group>\n");
 		}
 
 		Set<ZLGroup> setGroups = mySetValues.getGroups();
-		Set<String> writtenGroups = new HashSet<String>();
+		//Set<String> writtenGroups = new HashSet<String>();
 
 		for (ZLGroup group : setGroups) {
 			sb.append("  <group name=\"" + group.getName() + "\">\n");
-			writtenGroups.add(group.getName());
+			//writtenGroups.add(group.getName());
 			for (ZLOptionInfo option : group.getOptions()) {
 				sb.append("    <option name=\"" + option.getName() + "\" ");
 				sb.append("value=\"" + option.getValue() + "\" ");
@@ -100,17 +110,7 @@ import java.util.*;
 			}
 			sb.append("  </group>\n");
 		}
-
-		for (String group : myDeletedValues.getGroups()) {
-			sb.append("  <group name=\"" + group + "\">\n");
-			for (ZLOptionID option : myDeletedValues.getAll()) {
-				if (option.getGroup().equals(group)) {
-					sb.append("      <option name=\"" + option.getName() + "\"/>\n");
-				}
-			}
-			sb.append("  </group>\n");
-		}
-
+		
 		sb.append("</config>");
 
 		return sb.toString();

@@ -13,9 +13,6 @@ import java.util.*;
 
 	private Set<ZLGroup> myData;
 
-	public ZLDeltaConfig getDelta() {
-		return null;
-	}
 	public ZLSimpleConfig() {
 		myData = new LinkedHashSet<ZLGroup>();
 	}

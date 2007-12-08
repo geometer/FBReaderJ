@@ -9,7 +9,12 @@ import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 import junit.framework.TestCase;
 
-public class ConfigTests extends TestCase {
+
+/**
+ * содержит тесты на ZLConfigReader
+ * @author Администратор
+ */
+public class ConfigIOTests extends TestCase {
 	
 	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	

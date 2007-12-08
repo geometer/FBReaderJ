@@ -40,8 +40,8 @@ import java.util.*;
 		file.delete();
 	}
 
-	protected void writeDelta() {
-		// TODO ДОПИСАТЬ, ИСПОЛЬЗУЯ СТРОЕНИЕ ФАЙЛА ДЕЛЬТЫ ИЗ СИШНОГО КОДА
+	//TODO пока public в целях отладки
+	public void writeDelta() {
 		this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 				+ myConfig.getDelta(), myDestinationDirectory + "/delta.xml");
 	}
@@ -51,22 +51,6 @@ import java.util.*;
 	}
 
 	public void write() {
-		//writeDelta();
-		
-		
-		//testtesttest
-		/*myConfig.setValueDirectly("gr", "nm", "5", "cat");
-		System.out.println(myConfig.getValue("gr", "nm", "xfiles1"));
-		ZLIntegerOption option = new ZLIntegerOption("cat", "gr", "nm", 2);
-		option.setValue(1);
-		System.out.println("get - " +option.getValue());
-		System.out.println(myConfig.getValue("gr", "nm", ""));
-		option.setValue(2);
-		System.out.println("get - " +option.getValue());
-		System.out.println(myConfig.getValue("gr", "nm", ""));
-		*/
-		
-		
 		Set<String> usedCategories = myConfig.applyDelta();
 		Set<ZLGroup> groups = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла

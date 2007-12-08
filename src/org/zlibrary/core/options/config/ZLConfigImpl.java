@@ -17,7 +17,7 @@ import java.util.*;
 	}
 
 	//temporary
-	public ZLDeltaConfig getDelta() {
+	protected ZLDeltaConfig getDelta() {
 		return myDeltaConfig;
 	}
 
