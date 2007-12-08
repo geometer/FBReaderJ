@@ -22,12 +22,45 @@ public final class FBReader extends ZLApplication {
 
 	public FBReader(String[] args) {
 		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(this, true));
+		addAction(ActionCode.FULLSCREEN_ON, new ZLApplication.FullscreenAction(this, false));
 		addAction(ActionCode.QUIT, new QuitAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction(this));
 
 		addAction(ActionCode.UNDO, new ScrollAction(this, -1));
 		addAction(ActionCode.REDO, new ScrollAction(this, 1));
+
+		addAction(ActionCode.SHOW_COLLECTION, new DummyAction(this));
+		addAction(ActionCode.SHOW_LAST_BOOKS, new DummyAction(this));
+		addAction(ActionCode.SHOW_OPTIONS, new DummyAction(this));
+		addAction(ActionCode.SHOW_CONTENTS, new DummyAction(this));
+		addAction(ActionCode.SHOW_BOOK_INFO, new DummyAction(this));
+		addAction(ActionCode.ADD_BOOK, new DummyAction(this));
+		addAction(ActionCode.SEARCH, new DummyAction(this));
+		addAction(ActionCode.FIND_NEXT, new DummyAction(this));
+		addAction(ActionCode.FIND_PREVIOUS, new DummyAction(this));
+		addAction(ActionCode.SCROLL_TO_HOME, new DummyAction(this));
+		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
+		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
+		addAction(ActionCode.LARGE_SCROLL_FORWARD, new DummyAction(this));
+		addAction(ActionCode.LARGE_SCROLL_BACKWARD, new DummyAction(this));
+		addAction(ActionCode.SMALL_SCROLL_FORWARD, new DummyAction(this));
+		addAction(ActionCode.SMALL_SCROLL_BACKWARD, new DummyAction(this));
+		addAction(ActionCode.MOUSE_SCROLL_FORWARD, new DummyAction(this));
+		addAction(ActionCode.MOUSE_SCROLL_BACKWARD, new DummyAction(this));
+		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new DummyAction(this));
+		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new DummyAction(this));
+		addAction(ActionCode.INCREASE_FONT, new DummyAction(this));
+		addAction(ActionCode.DECREASE_FONT, new DummyAction(this));
+		addAction(ActionCode.CANCEL, new DummyAction(this));
+		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new DummyAction(this));
+		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new DummyAction(this));
+		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
+		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
+		addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new DummyAction(this));
+		addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
+		addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
+		addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 		
 		addToolbarButton(ActionCode.SHOW_COLLECTION, "books");
 		addToolbarButton(ActionCode.SHOW_LAST_BOOKS, "history");
