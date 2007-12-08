@@ -10,35 +10,35 @@ import java.util.Collections;
 
 
 class ZLTextParagraphImpl implements ZLTextParagraph {
-    private List<ZLTextParagraphEntry> myEntries;
+	private final List<ZLTextParagraphEntry> myEntries;
 
-    ZLTextParagraphImpl() {
-        myEntries = new LinkedList<ZLTextParagraphEntry>();
-    }
+	ZLTextParagraphImpl() {
+		myEntries = new LinkedList<ZLTextParagraphEntry>();
+	}
 
-    public List<ZLTextParagraphEntry> getEntries() {
-        return Collections.unmodifiableList(myEntries);
-    }
+	public List<ZLTextParagraphEntry> getEntries() {
+		return Collections.unmodifiableList(myEntries);
+	}
 
-    public Kind getKind() {
-        return Kind.TEXT_PARAGRAPH;
-    }
+	public Kind getKind() {
+		return Kind.TEXT_PARAGRAPH;
+	}
 
-    public int getEntryNumber() {
-        return myEntries.size();
-    }
+	public int getEntryNumber() {
+		return myEntries.size();
+	}
 
-    public int getTextLength() {
-        int size = 0;
-        for (ZLTextParagraphEntry entry: myEntries) {
-            if (entry instanceof ZLTextEntryImpl) {
-                size += ((ZLTextEntryImpl)entry).getDataLength();
-            }
-        }
-        return size;
-    }
+	public int getTextLength() {
+		int size = 0;
+		for (ZLTextParagraphEntry entry: myEntries) {
+			if (entry instanceof ZLTextEntryImpl) {
+				size += ((ZLTextEntryImpl)entry).getDataLength();
+			}
+		}
+		return size;
+	}
 
-    public void addEntry(ZLTextParagraphEntry entry) {
-        myEntries.add(entry);
-    }
+	public void addEntry(ZLTextParagraphEntry entry) {
+		myEntries.add(entry);
+	}
 }
