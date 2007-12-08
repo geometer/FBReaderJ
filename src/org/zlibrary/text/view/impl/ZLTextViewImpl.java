@@ -5,8 +5,7 @@ import java.util.*;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.*;
 
 import org.zlibrary.text.model.*;
 import org.zlibrary.text.model.impl.ZLModelFactory;
@@ -18,7 +17,17 @@ import org.zlibrary.text.view.*;
 import org.zlibrary.text.view.style.*;
 
 public class ZLTextViewImpl extends ZLTextView {
-	private static class ViewStyle {
+	private final static String OPTIONS = "Options";
+	public final ZLIntegerRangeOption LeftMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "LeftMargin", 0, 1000, 4);
+	public final ZLIntegerRangeOption RightMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "RightMargin", 0, 1000, 4);
+	public final ZLIntegerRangeOption TopMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "TopMargin", 0, 1000, 0);
+	public final ZLIntegerRangeOption BottomMarginOption =
+		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "BottomMargin", 0, 1000, 4);
+
+	private class ViewStyle {
 		private ZLTextStyle myStyle;
 		private ZLPaintContext myContext;
 		private int myWordHeight;
@@ -106,7 +115,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		}
 
 		public int getTextAreaHeight() {
-			return myContext.getHeight();
+			return myContext.getHeight() - topMargin() - bottomMargin();
 		}
 
 		public int getWordWidth(ZLTextWord word) {
@@ -181,13 +190,13 @@ public class ZLTextViewImpl extends ZLTextView {
 
 		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
 		labels.add(0);
-		getContext().moveYTo(0);
+		getContext().moveYTo(topMargin());
 		for (ZLTextLineInfo info : myLineInfos) {
 			prepareTextLine(info);
 			labels.add(myTextElementMap.size());
 		}
 
-		getContext().moveYTo(0);
+		getContext().moveYTo(topMargin());
 		int index = 0;
 		for (ZLTextLineInfo info : myLineInfos) {
 			drawTextLine(info, labels.get(index), labels.get(index + 1));
@@ -238,11 +247,11 @@ public class ZLTextViewImpl extends ZLTextView {
 		ListIterator<ZLTextElementArea> toIt = myTextElementMap.listIterator(to);
 		
 		getContext().moveY(info.Height);
-		int maxY = myStyle.getTextAreaHeight();
+		int maxY = topMargin() + myStyle.getTextAreaHeight();
 		if (getContext().getY() > maxY) {
 			getContext().moveYTo(maxY);
 		}
-		getContext().moveXTo(0);	
+		getContext().moveXTo(leftMargin());	
 		
 		ListIterator<ZLTextElementArea> it = myTextElementMap.listIterator(from);
 		for (ZLTextWordCursor pos = new ZLTextWordCursor(info.RealStart); !pos.equalWordNumber(info.End); pos.nextWord()) {
@@ -352,7 +361,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		int newWidth = info.Width;
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
-		int maxWidth = myStyle.getPaintContext().getWidth() - myStyle.getTextStyle().rightIndent();
+		int maxWidth = myStyle.getPaintContext().getWidth() - leftMargin() - rightMargin() - myStyle.getTextStyle().rightIndent();
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;
@@ -441,27 +450,28 @@ public class ZLTextViewImpl extends ZLTextView {
 
 	private void prepareTextLine(ZLTextLineInfo info) {
 		myStyle.setStyle(info.StartStyle);
-		final int y = Math.min(getContext().getY() + info.Height, myStyle.getTextAreaHeight());
+		final int y = Math.min(getContext().getY() + info.Height, topMargin() + myStyle.getTextAreaHeight());
 		int spaceCounter = info.SpaceCounter;
 		int fullCorrection = 0;
 		final boolean endOfParagraph = info.End.isEndOfParagraph();
 		boolean wordOccurred = false;
 		boolean changeStyle = true;
 
-		getContext().moveXTo(info.LeftIndent);
+		getContext().moveXTo(leftMargin() + info.LeftIndent);
 		//System.out.println(getContext().getWidth() + " " + info.Width);
+		final int maxWidth = getContext().getWidth() - leftMargin() - rightMargin();
 		switch (myStyle.getTextStyle().alignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT: {
-				getContext().moveX(getContext().getWidth() - myStyle.getTextStyle().rightIndent() - info.Width);
+				getContext().moveX(maxWidth - myStyle.getTextStyle().rightIndent() - info.Width);
 				break;
 			} 
 			case ZLTextAlignmentType.ALIGN_CENTER: {
-				getContext().moveX((getContext().getWidth() - myStyle.getTextStyle().rightIndent() - info.Width) / 2);
+				getContext().moveX((maxWidth - myStyle.getTextStyle().rightIndent() - info.Width) / 2);
 				break;
 			} 
 			case ZLTextAlignmentType.ALIGN_JUSTIFY: {
 				if (!endOfParagraph && !(info.End.getElement() == ZLTextElement.AfterParagraph)) {
-					fullCorrection = getContext().getWidth() - myStyle.getTextStyle().rightIndent() - info.Width;
+					fullCorrection = maxWidth - myStyle.getTextStyle().rightIndent() - info.Width;
 				}
 				break;
 			}
@@ -511,5 +521,21 @@ public class ZLTextViewImpl extends ZLTextView {
 	// TO BE DELETED
 	public void scroll(int numberOfParagraphs) {
 		StartParagraphNumberOption.setValue(StartParagraphNumberOption.getValue() + numberOfParagraphs);
+	}
+
+	public int leftMargin() {
+		return LeftMarginOption.getValue();
+	}
+
+	public int rightMargin() {
+		return LeftMarginOption.getValue();
+	}
+
+	public int topMargin() {
+		return LeftMarginOption.getValue();
+	}
+
+	public int bottomMargin() {
+		return LeftMarginOption.getValue();
 	}
 }

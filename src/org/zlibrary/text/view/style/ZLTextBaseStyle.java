@@ -15,15 +15,6 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	private final String GROUP = "Style";
 	private final String OPTIONS = "Options";
 
-	public final ZLIntegerRangeOption LeftMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "LeftMargin", 0, 1000, 4);
-	public final ZLIntegerRangeOption RightMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "RightMargin", 0, 1000, 4);
-	public final ZLIntegerRangeOption TopMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "TopMargin", 0, 1000, 0);
-	public final ZLIntegerRangeOption BottomMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "BottomMargin", 0, 1000, 4);
-
 	public ZLColorOption BackgroundColorOption;
 	public ZLColorOption SelectionBackgroundColorOption;
 	public ZLColorOption SelectedTextColorOption;
