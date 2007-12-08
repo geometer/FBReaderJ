@@ -52,6 +52,6 @@ import java.util.*;
 	//TODO cuncurrent modification
 	public void unsetValue(String name) {
 		myData.remove(new ZLOptionInfo(name, "", ""));
-		System.out.println(myData);
+		//System.out.println(myData);
 	}
 }

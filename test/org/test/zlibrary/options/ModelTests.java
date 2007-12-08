@@ -14,13 +14,7 @@ import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.core.options.util.*;
 
 /**
- * тесты на модель опций.
- * 
- * @author Администратор тесты 00 - это тесты на соотвествующие методы класса
- *         ZLOption 
- *         тесты 01 - это тесты на геттеры значений 
- *         тесты 02 - это тесты на сеттеры при условии корректости геттеров 
- *         тесты 04 - это тесты на getType
+ * устаревшие тесты. когда нормальные закончу, эти выкину
  */
 public class ModelTests extends TestCase {
 
@@ -52,8 +46,6 @@ public class ModelTests extends TestCase {
 
 	private final double myDefaultDouble2 = 1.03;
 
-	private final int myDefaultColor2 = 1159126;
-
 	private final int myDefaultIntRange2 = 78;
 
 	private final int myDefaultInt2 = 10;
@@ -61,8 +53,6 @@ public class ModelTests extends TestCase {
 	private final ZLBoolean3 myDefaultBoolean32 = ZLBoolean3.B3_TRUE;
 
 	private final boolean myDefaultBoolean2 = false;
-
-	private final String myDefaultString2 = " World";
 
 	private final double myDefaultDouble = 1.02;
 	
