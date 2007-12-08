@@ -11,23 +11,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.Stack;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
-import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import org.zlibrary.core.application.ZLApplication;
@@ -41,7 +36,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
 	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
-	private final HashMap<ZLApplication.Toolbar.ButtonItem, Action> myButtonItemToActionMap = new HashMap<ZLApplication.Toolbar.ButtonItem, Action>();
+	private final HashMap<ZLApplication.Toolbar.ButtonItem, AbstractButton> myButtonItemToActionMap = new HashMap<ZLApplication.Toolbar.ButtonItem, AbstractButton>();
 	//private final Map<Integer, Action> myIntegerActionMap = new HashMap<Integer, Action>();
 	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
@@ -184,10 +179,11 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	public void addToolbarItem(ZLApplication.Toolbar.Item item) {
 		if (item instanceof ZLApplication.Toolbar.ButtonItem) {
 			ZLApplication.Toolbar.ButtonItem buttonItem = (ZLApplication.Toolbar.ButtonItem)item;
-			Action action = new MyButtonAction(buttonItem);
+			MyButtonAction action = new MyButtonAction(buttonItem);
 			AbstractButton button = myToolbar.add(action);
 			button.setFocusable(false);
-			myButtonItemToActionMap.put(buttonItem, action);
+			myButtonItemToActionMap.put(buttonItem, button);
+			
 			//myItemActionMap.put(item, action);
 		} else {
 			myToolbar.addSeparator();
@@ -214,8 +210,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
 		// TODO: implement
 		if (item instanceof ZLApplication.Toolbar.ButtonItem) {
-			Action action = myButtonItemToActionMap.get((ZLApplication.Toolbar.ButtonItem)item);
-			action.setEnabled(enabled);
+			AbstractButton button = myButtonItemToActionMap.get((ZLApplication.Toolbar.ButtonItem)item);
+			button.setEnabled(enabled);
+			button.setVisible(visible);
 		}
 	}
 
@@ -265,7 +262,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		public void keyPressed(KeyEvent e) {			
 		    String keyCode = keyTextModifiersParse(e.getModifiersExText(e.getModifiersEx()))  
 		     + keyTextParse(e.getKeyText(e.getKeyCode()));
-		    System.out.println(keyCode);
+		    //System.out.println(keyCode);
 		    getApplication().doActionByKey(keyCode);
 		}
 		
