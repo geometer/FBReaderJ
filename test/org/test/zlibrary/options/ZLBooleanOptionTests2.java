@@ -96,6 +96,22 @@ public class ZLBooleanOptionTests2 extends TestCase {
 		runTask2a("ерунда", false, false, false);
 	}
 	
+	public void test2a_5_01() {
+		runTask2a("false", true, true, true);
+	}
+	
+	public void test2a_5_02() {
+		runTask2a("false", true, false, false);
+	}
+	
+	public void test2a_5_03() {
+		runTask2a("false", false, true, true);
+	}
+	
+	public void test2a_5_04() {
+		runTask2a("false", false, false, false);
+	}
+	
 	public void test2b_1_01() {
 		runTask2b(null, true, true, "def");
 	}
@@ -158,5 +174,21 @@ public class ZLBooleanOptionTests2 extends TestCase {
 	
 	public void test2b_4_04() {
 		runTask2b("ерунда", false, false, "def");
+	}
+	
+	public void test2b_5_01() {
+		runTask2b("false", true, true, "def");
+	}
+	
+	public void test2b_5_02() {
+		runTask2b("false", true, false, "false");
+	}
+	
+	public void test2b_5_03() {
+		runTask2b("false", false, true, "true");
+	}
+	
+	public void test2b_5_04() {
+		runTask2b("false", false, false, "def");
 	}
 }

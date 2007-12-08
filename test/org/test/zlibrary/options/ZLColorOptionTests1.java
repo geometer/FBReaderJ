@@ -71,14 +71,14 @@ public class ZLColorOptionTests1 extends TestCase {
 	}
 	
 	public void test1_13() {
-		runTask1("999999999999", null, 0);
+		runTask1("0", null, 0);
 	}
 	
 	public void test1_14() {
-		runTask1("9999999999999", new ZLColor(0), 0);
+		runTask1("0", new ZLColor(0), 0);
 	}
 	
 	public void test1_15() {
-		runTask1("9999999999999", new ZLColor(12225226), 12225226);
+		runTask1("0", new ZLColor(12225226), 0);
 	}
 }

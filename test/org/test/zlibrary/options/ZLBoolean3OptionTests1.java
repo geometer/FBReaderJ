@@ -32,26 +32,54 @@ public class ZLBoolean3OptionTests1 extends TestCase {
 	}
 	
 	public void test1_03() {
-		runTask1(null, null, ZLBoolean3.B3_UNDEFINED);
+		runTask1("", ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED);
 	}
 	
 	public void test1_04() {
-		runTask1(null, ZLBoolean3.B3_FALSE, ZLBoolean3.B3_FALSE);
+		runTask1(null, null, ZLBoolean3.B3_UNDEFINED);
 	}
 	
 	public void test1_05() {
-		runTask1("false", null, ZLBoolean3.B3_FALSE);
+		runTask1(null, ZLBoolean3.B3_FALSE, ZLBoolean3.B3_FALSE);
 	}
 	
 	public void test1_06() {
-		runTask1("true", ZLBoolean3.B3_FALSE, ZLBoolean3.B3_TRUE);
+		runTask1(null, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED);
 	}
 	
 	public void test1_07() {
-		runTask1("ерунда", null, ZLBoolean3.B3_UNDEFINED);
+		runTask1("false", null, ZLBoolean3.B3_FALSE);
 	}
 	
 	public void test1_08() {
+		runTask1("true", ZLBoolean3.B3_FALSE, ZLBoolean3.B3_TRUE);
+	}
+	
+	public void test1_09() {
+		runTask1("true", ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_TRUE);
+	}
+	
+	public void test1_10() {
+		runTask1("ерунда", null, ZLBoolean3.B3_UNDEFINED);
+	}
+	
+	public void test1_11() {
 		runTask1("ерунда", ZLBoolean3.B3_TRUE, ZLBoolean3.B3_UNDEFINED);
+	}
+	
+	public void test1_12() {
+		runTask1("ерунда", ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED);
+	}
+	
+	public void test1_13() {
+		runTask1("undefined", null, ZLBoolean3.B3_UNDEFINED);
+	}
+	
+	public void test1_14() {
+		runTask1("undefined", ZLBoolean3.B3_TRUE, ZLBoolean3.B3_UNDEFINED);
+	}
+	
+	public void test1_15() {
+		runTask1("undefined", ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED);
 	}
 }
