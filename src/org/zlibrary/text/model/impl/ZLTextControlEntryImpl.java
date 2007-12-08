@@ -3,23 +3,23 @@ package org.zlibrary.text.model.impl;
 import org.zlibrary.text.model.entry.ZLTextControlEntry;
 
 class ZLTextControlEntryImpl implements ZLTextControlEntry {
-    private byte myKind;
-    private boolean myStart;
+	private final byte myKind;
+	private final boolean myIsStart;
 
-    ZLTextControlEntryImpl(byte kind, boolean isStart) {
-        myKind = kind;
-        myStart = isStart;
-    }
+	ZLTextControlEntryImpl(byte kind, boolean isStart) {
+		myKind = kind;
+		myIsStart = isStart;
+	}
 
-    public byte getKind() {
-        return myKind;
-    }
+	public final byte getKind() {
+		return myKind;
+	}
 
-    public boolean isStart() {
-        return myStart;
-    }
-    
-    public  boolean isHyperlink() {
-    	return false;
-    }
+	public final boolean isStart() {
+		return myIsStart;
+	}
+	
+	public boolean isHyperlink() {
+		return false;
+	}
 }

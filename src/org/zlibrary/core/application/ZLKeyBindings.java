@@ -16,16 +16,16 @@ public class ZLKeyBindings {
 	public static final String BINDED_KEY = "Key";
 	public static final String BINDED_ACTION = "Action";
 
-	private String myName;
-	private Map<String, Integer> myBindingsMap = new HashMap<String, Integer>();
+	private final String myName;
+	private final Map<String, Integer> myBindingsMap = new HashMap<String, Integer>();
 	private	boolean myIsChanged;
 
-    public ZLKeyBindings(String name) {
-    	this.myName = name;
-    	loadDefaultBindings();
-    	loadCustomBindings();
-    	myIsChanged = false;
-    }
+	public ZLKeyBindings(String name) {
+		myName = name;
+		loadDefaultBindings();
+		loadCustomBindings();
+		myIsChanged = false;
+	}
 	
 	public void bindKey(String key, int code) {
 		myBindingsMap.put(key, code);
@@ -83,8 +83,6 @@ public class ZLKeyBindings {
 				++counter;
 			}
 		}
-		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);        	
+		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
 	}
 }
-
-
