@@ -28,12 +28,11 @@ public class ZLKeyBindings {
     }
 	
 	public void bindKey(String key, int code) {
-		//System.out.println("key-->"+key);
 		myBindingsMap.put(key, code);
 		myIsChanged = true;
 	}
 	
-	public int getBinding(String key) {
+	public Integer getBinding(String key) {
 		return myBindingsMap.get(key);
 	}
 	
@@ -53,12 +52,9 @@ public class ZLKeyBindings {
 		long size = new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
 		for (int i = 0; i < size; ++i) {
 			String key = BINDED_KEY + i;
-			//ZLStringUtil.appendNumber(key, i);			
 			String keyValue = new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, key, "").getValue();
-			//if (!keyValue.empty()) {
 			if (keyValue.length() != 0) {
 				String action = BINDED_ACTION + i;
-				//ZLStringUtil.appendNumber(action, i);
 				int actionValue = (int)(new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, action, -1).getValue());
 				if (actionValue != -1) {
 					bindKey(keyValue, actionValue);
@@ -75,16 +71,13 @@ public class ZLKeyBindings {
 		Map<String,Integer> keymap = new HashMap<String,Integer>();
 		new ZLKeyBindingsReader(keymap).readBindings();
 		
-		//ZLOption.clearGroup(myName);
 		int counter = 0;
 		for (Map.Entry<String,Integer> entry: myBindingsMap.entrySet()) {
 			Integer original = keymap.get(entry.getKey());
 			int defaultAction = original;
 			if (defaultAction != entry.getValue()) {
 				String key = BINDED_KEY + counter;
-				//ZLStringUtil.appendNumber(key, counter);
 				String action = BINDED_ACTION + counter;
-				//ZLStringUtil.appendNumber(action, counter);
 				new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, key, "").setValue(entry.getKey());
 				new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, action, -1).setValue(entry.getValue());
 				++counter;

@@ -1,10 +1,34 @@
 package org.zlibrary.ui.swing.application;
 
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
@@ -81,6 +105,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		myFrame.add(myMainPanel);
 		
 		myFrame.setJMenuBar(myMenuBar);
+		myFrame.addKeyListener(new MyKeyListener());
+		myFrame.setFocusable(true);   
+
 	}
 
 	public void run() {
@@ -91,7 +118,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void init() {
 		super.init();
-		this.addKeyAction();
 	}
 
 	public void initMenu() {
@@ -151,7 +177,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	protected ZLSwingViewWidget createViewWidget() {
 		ZLSwingViewWidget viewWidget = new ZLSwingViewWidget(
 			ZLSwingViewWidget.Angle.getByDegrees(getApplication().AngleStateOption.getValue()));
-		//myFrame.getRootPane()
 		myMainPanel.add(viewWidget.getPanel(), BorderLayout.CENTER);
 		return viewWidget;
 	}
@@ -174,49 +199,17 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		
 		MyButtonAction(ZLApplication.Toolbar.ButtonItem item) {
 			myItem = item;
-			//myItem.getActionId().
 			String iconFileName = "icons/toolbar/" + myItem.getIconName() + ".png";
 			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
 			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
 			putValue(Action.SMALL_ICON, icon); 
 			putValue(Action.SHORT_DESCRIPTION, item.getTooltip()); 
-			//ZLApplication.ZLAction zlaction = getApplication().getAction(myItem.getActionId());
-		    //myActionMap.put(zlaction, this);
 		}
 		
 		public void actionPerformed(ActionEvent event) {
 			onButtonPress(myItem);
 		}
 	}
-	
-	private void addKeyAction() {
-		InputMap inputmap = myFrame.getRootPane().getInputMap();
-		ActionMap actionmap = myFrame.getRootPane().getActionMap();
-		Set<Map.Entry<String, Integer>> setEntries =  getApplication().keyBindings().getKeys();
-		for (Map.Entry<String, Integer> entry : setEntries) {
-			String key = entry.getKey();
-			String changeKey = key.substring(1, key.length()-1);
-
-			inputmap.put(KeyStroke.getKeyStroke(changeKey), entry.getValue());
-			actionmap.put(entry.getValue(), new MyKeyAction(entry.getKey()));
-			System.out.println("key addKeyAction-->"+key+"   AFTER " + changeKey);
-			System.out.println(KeyEvent.getKeyText(38));
-			
-		}
-	}
-	
-	private class MyKeyAction extends AbstractAction {
-		String myKey;
-		
-		MyKeyAction(String keyString) {
-			myKey = keyString;
-		}
-		
-		public void actionPerformed(ActionEvent event) {
-			getApplication().doActionByKey(myKey);
-		}
-	}
-
 
 	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
 		// TODO: implement
@@ -265,5 +258,41 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		ZLSwingLibrary.shutdown();
 		System.exit(0);
 		// TODO: implement
+	}
+	
+	private class MyKeyListener extends KeyAdapter {
+		 
+		public void keyPressed(KeyEvent e) {			
+		    String keyCode = keyTextModifiersParse(e.getModifiersExText(e.getModifiersEx()))  
+		     + keyTextParse(e.getKeyText(e.getKeyCode()));
+		    System.out.println(keyCode);
+		    getApplication().doActionByKey(keyCode);
+		}
+		
+		private String keyTextParse(String str) {
+			if (str.equals("Left") || str.equals("Down") || 
+					str.equals("Right") || str.equals("Up")) {
+				str = str + "Arrow";
+			} else if (str.equals("Escape")) {
+				str = "Esc";
+			} else if (str.equals("Equals")) {
+				str = "=";
+			} else if (str.equals("Minus")) {
+				str = "-";
+			} else if (str.startsWith("Page")) {
+				str = "Page" + str.substring("Page".length() + 1, str.length());
+			} else if (str.equals("Enter")) {
+				str = "Return";
+			}
+			
+			return "<" + str + ">";
+		}
+		
+		private String keyTextModifiersParse(String str) {
+			if (str.equals("")) {
+				return "";
+			}
+			return "<" + str + ">+";
+		}
 	}
 }

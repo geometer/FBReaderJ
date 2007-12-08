@@ -179,7 +179,7 @@ public abstract class ZLApplication {
 		}
 	}
 
-	private final ZLAction getAction(int actionId) {
+	private final ZLAction getAction(Integer actionId) {
 		return myActionMap.get(actionId);
 	}
 	
@@ -202,16 +202,14 @@ public abstract class ZLApplication {
     //may be protected
 	abstract public ZLKeyBindings keyBindings();
 	
-	public final void doActionByKey(String key) {
-		
-		System.out.println("key in application->"+ key);
+	public final void doActionByKey(String key) {		
 		ZLAction a = getAction(keyBindings().getBinding(key));
-		if ((a != null) &&
-				(!a.useKeyDelay() /*||
-				 (myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
+		if ((a != null)){// &&
+				//(!a.useKeyDelay() /*||
+				 //(myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
 			a.checkAndRun();
 			//myLastKeyActionTime = ZLTime();
-		}
+		}	
 	}
 
 	public boolean closeView() {
