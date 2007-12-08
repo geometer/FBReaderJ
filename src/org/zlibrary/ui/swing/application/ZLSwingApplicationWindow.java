@@ -1,29 +1,11 @@
 package org.zlibrary.ui.swing.application;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Stack;
 
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.WindowConstants;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
@@ -101,7 +83,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		
 		myFrame.setJMenuBar(myMenuBar);
 		myFrame.addKeyListener(new MyKeyListener());
-		myFrame.setFocusable(true);   
+		myFrame.setFocusable(true);
 
 	}
 
@@ -154,8 +136,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			myItem = item;
 			//myItem.getActionId().
 			putValue(Action.SHORT_DESCRIPTION, item.getName()); 
-		    //????ZLAction zlaction = application().getAction(myItem.getActionId());
-		    //myActionMap.put(zlaction, this);
+			//????ZLAction zlaction = application().getAction(myItem.getActionId());
+			//myActionMap.put(zlaction, this);
 		}
 		
 		public void actionPerformed(ActionEvent event) {
@@ -260,10 +242,10 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private class MyKeyListener extends KeyAdapter {
 		 
 		public void keyPressed(KeyEvent e) {			
-		    String keyCode = keyTextModifiersParse(e.getModifiersExText(e.getModifiersEx()))  
-		     + keyTextParse(e.getKeyText(e.getKeyCode()));
-		    //System.out.println(keyCode);
-		    getApplication().doActionByKey(keyCode);
+			String keyCode = keyTextModifiersParse(e.getModifiersExText(e.getModifiersEx()))
+										 + keyTextParse(e.getKeyText(e.getKeyCode()));
+			//System.out.println(keyCode);
+			getApplication().doActionByKey(keyCode);
 		}
 		
 		private String keyTextParse(String str) {
