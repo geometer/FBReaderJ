@@ -31,13 +31,7 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, myOptionName,	null);
 			if (value != null) {
-				if (value.toLowerCase().equals("true")) {
-					myValue = ZLBoolean3.B3_TRUE;
-				} else if (value.toLowerCase().equals("false")) {
-					myValue = ZLBoolean3.B3_FALSE;
-				} else if (value.toLowerCase().equals("undefined")) {
-					myValue = ZLBoolean3.B3_UNDEFINED;
-				}
+				myValue = ZLBoolean3.getByString(value);
 			}
 			myIsSynchronized = true;
 		}

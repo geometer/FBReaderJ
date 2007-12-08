@@ -30,6 +30,9 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.UNDO, new ScrollAction(this, -1));
 		addAction(ActionCode.REDO, new ScrollAction(this, 1));
 
+		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
+		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
+
 		addAction(ActionCode.SHOW_COLLECTION, new DummyAction(this));
 		addAction(ActionCode.SHOW_LAST_BOOKS, new DummyAction(this));
 		addAction(ActionCode.SHOW_OPTIONS, new DummyAction(this));
@@ -50,8 +53,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.MOUSE_SCROLL_BACKWARD, new DummyAction(this));
 		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new DummyAction(this));
 		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new DummyAction(this));
-		addAction(ActionCode.INCREASE_FONT, new DummyAction(this));
-		addAction(ActionCode.DECREASE_FONT, new DummyAction(this));
 		addAction(ActionCode.CANCEL, new DummyAction(this));
 		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new DummyAction(this));
 		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new DummyAction(this));

@@ -12,35 +12,25 @@ public class ZLTextStyleDecoration {
 	public static final byte BOLD = 28;
 	public static final byte LARGE_FONT_SIZE = 31;
 
-	public ZLStringOption FontFamilyOption;
-	public ZLIntegerRangeOption FontSizeDeltaOption;
-	public ZLBoolean3Option BoldOption;
-	public ZLBoolean3Option ItalicOption;
+	public final ZLStringOption FontFamilyOption;
+	public final ZLIntegerRangeOption FontSizeDeltaOption;
+	public final ZLBoolean3Option BoldOption;
+	public final ZLBoolean3Option ItalicOption;
+	public final ZLIntegerOption VerticalShiftOption;
+	public final ZLBoolean3Option AllowHyphenationsOption;
 
-	private String myName;
+	private final String myName;
 	private HyperlinkStyle myHyperlinkStyle;
 
-	public ZLIntegerOption VerticalShiftOption;
-
-	public ZLBoolean3Option AllowHyphenationsOption;
-
-	public ZLTextStyleDecoration(ZLTextControlEntry entry) {
-		if (entry.getKind() == BOLD) {
-			BoldOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":bold", ZLBoolean3.B3_TRUE);
-			FontSizeDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":defaultFont", -10, 100, 0);
-		} else if (entry.getKind() == LARGE_FONT_SIZE) {
-			BoldOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":bold", ZLBoolean3.B3_FALSE);
-			FontSizeDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, ":largeFont", -10, 100, 22);
-		}	
-	}
-	
 	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int verticalShift, ZLBoolean3 allowHyphenations) {
-		FontFamilyOption = null;
-		FontSizeDeltaOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
-		BoldOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":bold", bold);
-		ItalicOption = new ZLBoolean3Option(ZLOption.LOOK_AND_FEEL_CATEGORY, STYLE, name + ":italic", italic);
-		VerticalShiftOption = null;
-		AllowHyphenationsOption = null;
+		myName = name;
+		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
+		FontFamilyOption = new ZLStringOption(category, STYLE, name + ":fontFamily", "");
+		FontSizeDeltaOption = new ZLIntegerRangeOption(category, STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
+		BoldOption = new ZLBoolean3Option(category, STYLE, name + ":bold", bold);
+		ItalicOption = new ZLBoolean3Option(category, STYLE, name + ":italic", italic);
+		VerticalShiftOption = new ZLIntegerOption(category, STYLE, name + ":vShift", verticalShift);
+		AllowHyphenationsOption = new ZLBoolean3Option(category, STYLE, name + ":allowHyphenations", allowHyphenations);
 	}
 	
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {

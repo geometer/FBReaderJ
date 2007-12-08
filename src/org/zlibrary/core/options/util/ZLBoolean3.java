@@ -14,6 +14,16 @@ public enum ZLBoolean3 {
 	private ZLBoolean3(String stringValue){
 		myStringValue = stringValue;
 	}
+
+	public static ZLBoolean3 getByString(String name) {
+		if (B3_TRUE.myStringValue.equals(name)) {
+			return B3_TRUE;
+		}
+		if (B3_FALSE.myStringValue.equals(name)) {
+			return B3_FALSE;
+		}
+		return B3_UNDEFINED;
+	}
 	
 	public String toString(){
 		return myStringValue;

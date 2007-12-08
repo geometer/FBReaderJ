@@ -20,7 +20,6 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
 		if (myGraphics != null) {
 			final int style = (bold ? Font.BOLD : 0) | (italic ? Font.ITALIC : 0);
-			family = "Georgia";
 			myGraphics.setFont(new Font(family, style, size));
 		}
 	}

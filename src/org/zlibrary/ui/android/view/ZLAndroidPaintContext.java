@@ -42,9 +42,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
 		// TODO: optimize
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
-		//if (family == null) {
-			family = "DroidSerif";
-		//}
 		myPaint.setTypeface(Typeface.create(family, style));
 		myPaint.setTextSize(size);
 	}

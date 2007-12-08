@@ -19,10 +19,6 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 
 	public ZLDoubleOption LineSpaceOption;	
 
-	public ZLTextFullStyleDecoration(ZLTextControlEntry entry) {
-		super(entry);
-	}
-	
 	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, int alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
 //		System.out.println("Constructed, fonSizeDelta = " + fontSizeDelta);

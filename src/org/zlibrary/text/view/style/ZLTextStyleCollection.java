@@ -11,7 +11,7 @@ import org.zlibrary.text.view.ZLTextStyle;
 public class ZLTextStyleCollection {
 	private static ZLTextStyleCollection ourInstance = null;
 	
-	private ZLTextStyle myBaseStyle;
+	private ZLTextBaseStyle myBaseStyle;
 	private ZLTextPositionIndicatorStyle myIndicatorStyle;
 	private final Map<Byte, ZLTextStyleDecoration> myDecorationMap = new HashMap<Byte,ZLTextStyleDecoration>();
 	
@@ -22,7 +22,7 @@ public class ZLTextStyleCollection {
 		}
 	}
 	
-	public static ZLTextStyleCollection instance() {
+	public static ZLTextStyleCollection getInstance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLTextStyleCollection();
 		}
@@ -33,7 +33,7 @@ public class ZLTextStyleCollection {
 		ourInstance = null;
 	}
 	
-	public ZLTextStyle getBaseStyle() {
+	public ZLTextBaseStyle getBaseStyle() {
 		return myBaseStyle;
 	}
 	
@@ -45,11 +45,11 @@ public class ZLTextStyleCollection {
 		return myDecorationMap.get(kind);
 	}
 		
-//?		ZLTextBaseStyle &baseStyle() const;
-		
+	public ZLTextBaseStyle baseStyle() {
+		return myBaseStyle;
+	}
 
 	private static class TextStyleReader extends ZLXMLReader {
-//		static final String TRUE_STRING = "true";
 		private ZLTextStyleCollection myCollection;
 
 		private static int intValue(Map<String, String> attributes, String name) {
@@ -83,9 +83,7 @@ public class ZLTextStyleCollection {
 		}
 
 		private static ZLBoolean3 b3Value(Map<String, String> attributes, String name) {
-			String stringValue = attributes.get(name);
-			return (stringValue == null) ? ZLBoolean3.B3_UNDEFINED : 
-				((stringValue.equals("true")) ? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE);
+			return ZLBoolean3.getByString(attributes.get(name));
 		}
 			
 		public TextStyleReader(ZLTextStyleCollection collection) {

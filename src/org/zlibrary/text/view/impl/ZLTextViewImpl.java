@@ -34,12 +34,12 @@ public class ZLTextViewImpl extends ZLTextView {
 		
 		public ViewStyle(ZLPaintContext context) {
 			myContext = context;
-			setStyle(ZLTextStyleCollection.instance().getBaseStyle());
+			setStyle(ZLTextStyleCollection.getInstance().getBaseStyle());
 			myWordHeight = -1;
 		}
 
 		public void reset() {
-			setStyle(ZLTextStyleCollection.instance().getBaseStyle());
+			setStyle(ZLTextStyleCollection.getInstance().getBaseStyle());
 		}
 		
 		public void setStyle(ZLTextStyle style) {
@@ -47,16 +47,16 @@ public class ZLTextViewImpl extends ZLTextView {
 				myStyle = style;
 				myWordHeight = -1;
 			}
-			myContext.setFont(myStyle.fontFamily(), myStyle.fontSize(), myStyle.bold(), myStyle.italic());
+			myContext.setFont(myStyle.getFontFamily(), myStyle.getFontSize(), myStyle.bold(), myStyle.italic());
 		}
 
 		public void applyControl(ZLTextControlElement control) {
 			if (control.isStart()) {
 //				System.out.println("Apply Start " + control.getTextKind());
-				ZLTextStyleDecoration decoration = ZLTextStyleCollection.instance().getDecoration(control.getTextKind());
+				ZLTextStyleDecoration decoration = ZLTextStyleCollection.getInstance().getDecoration(control.getTextKind());
 				setStyle(decoration.createDecoratedStyle(myStyle));
 //				if (decoration instanceof ZLTextFullStyleDecoration) {
-//					System.out.println("FontSize = " + myStyle.fontSize());
+//					System.out.println("FontSize = " + myStyle.getFontSize());
 //				}
 			} else {
 //				System.out.println("Apply End " + control.getTextKind());
@@ -383,7 +383,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			} else if (element instanceof ZLTextWord) {
 				wordOccurred = true;
 				isVisible = true;
-				//System.out.println("Word = " + ((ZLTextWord) element).Data + " FontSize = " + myStyle.getTextStyle().fontSize());
+				//System.out.println("Word = " + ((ZLTextWord) element).Data + " FontSize = " + myStyle.getTextStyle().getFontSize());
 			} else if (element instanceof ZLTextControlElement) {
 				myStyle.applyControl((ZLTextControlElement) element);
 			} else if (element instanceof ZLTextImageElement) {

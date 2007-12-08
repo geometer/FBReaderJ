@@ -8,21 +8,18 @@ import org.zlibrary.core.options.util.*;
 public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
 	private final ZLTextFullStyleDecoration myDecoration;
 	
-	/*package*/ ZLTextFullDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration) {
+	ZLTextFullDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration) {
 		super(base);
 		myDecoration = decoration;	
 	}
 
-	public String fontFamily() {
-		return "default";
+	public String getFontFamily() {
+		String decoratedValue = myDecoration.FontFamilyOption.getValue();
+		return (decoratedValue.length() != 0) ? decoratedValue : getBase().getFontFamily();
 	}
 
-	public int fontSize() {
-//		if (myDecoration.FontSizeDeltaOption != null && getBase() != null) {
-//			System.out.println("Delta = " + myDecoration.FontSizeDeltaOption.getValue());
-			return getBase().fontSize() + (int) myDecoration.FontSizeDeltaOption.getValue();
-//		} 
-//		return 12;
+	public int getFontSize() {
+		return getBase().getFontSize() + (int)myDecoration.FontSizeDeltaOption.getValue();
 	}
 	
 	public boolean bold() {

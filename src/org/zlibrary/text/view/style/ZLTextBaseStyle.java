@@ -25,14 +25,12 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 
 	public ZLBooleanOption AutoHyphenationOption;
 
-	public ZLStringOption FontFamilyOption;
-	public ZLIntegerRangeOption FontSizeOption;
+	public final ZLStringOption FontFamilyOption;
+	public final ZLIntegerRangeOption FontSizeOption;
 	public ZLBooleanOption BoldOption;
 	public ZLBooleanOption ItalicOption;
-	public final ZLIntegerOption AlignmentOption =
-		new ZLIntegerOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
-	public final ZLDoubleOption LineSpaceOption =
-		new ZLDoubleOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:lineSpacing", 1.2);
+	public final ZLIntegerOption AlignmentOption;
+	public final ZLDoubleOption LineSpaceOption;
 	
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
 		//TODO
@@ -48,19 +46,22 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		
 		AutoHyphenationOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "AutoHyphenation", true);
 		
-		FontFamilyOption = new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:fontFamily", fontFamily);
-		FontSizeOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:fontSize", 0, 72, fontSize);
 		BoldOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:bold", false);
 		ItalicOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:italic", false);
 	*/
+		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
+		AlignmentOption = new ZLIntegerOption(category, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
+		LineSpaceOption = new ZLDoubleOption(category, GROUP, "Base:lineSpacing", 1.2);
+		FontFamilyOption = new ZLStringOption(category, GROUP, "Base:fontFamily", fontFamily);
+		FontSizeOption = new ZLIntegerRangeOption(category, GROUP, "Base:fontSize", 0, 72, fontSize);
 	}
 	
-	public String fontFamily() {
-		return "default";
+	public String getFontFamily() {
+		return FontFamilyOption.getValue();
 	}
 
-	public int fontSize() {
-		return 12;
+	public int getFontSize() {
+		return FontSizeOption.getValue();
 	}
 	
 	public boolean bold() {

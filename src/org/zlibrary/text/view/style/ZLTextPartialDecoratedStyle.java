@@ -6,22 +6,21 @@ import org.zlibrary.core.options.util.*;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
 
-/*package*/ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
+class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
 	private final ZLTextStyleDecoration myDecoration;
 
-	/*package*/ ZLTextPartialDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration) {
+	ZLTextPartialDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration) {
 		super(base);
 		myDecoration = decoration;		
 	}
-	public String fontFamily() {
-		return "default";
+
+	public String getFontFamily() {
+		String decoratedValue = myDecoration.FontFamilyOption.getValue();
+		return (decoratedValue.length() != 0) ? decoratedValue : getBase().getFontFamily();
 	}
 
-	public int fontSize() {
-//		if (myDecoration.FontSizeDeltaOption != null && getBase() != null) {
-			return getBase().fontSize() + (int) myDecoration.FontSizeDeltaOption.getValue();
-//		} 
-//		return 12;
+	public int getFontSize() {
+		return getBase().getFontSize() + (int)myDecoration.FontSizeDeltaOption.getValue();
 	}
 	
 	public boolean bold() {
