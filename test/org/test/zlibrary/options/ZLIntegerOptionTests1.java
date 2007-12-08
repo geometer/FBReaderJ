@@ -6,7 +6,7 @@ import org.zlibrary.core.options.config.ZLConfigInstance;
 
 import junit.framework.TestCase;
 
-public class ZLIntegerOptionTests extends TestCase {
+public class ZLIntegerOptionTests1 extends TestCase {
 
 	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	
@@ -16,6 +16,10 @@ public class ZLIntegerOptionTests extends TestCase {
 		ZLIntegerOption option = new ZLIntegerOption("category", 
 				"integer_group", "name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
+	}
+	
+	public void tearDown() {
+		myConfig.unsetValue("integer_group", "name");
 	}
 	
 	public void test1_01() {

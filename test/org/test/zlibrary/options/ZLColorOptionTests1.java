@@ -7,7 +7,7 @@ import org.zlibrary.core.options.util.ZLColor;
 
 import junit.framework.TestCase;
 
-public class ZLColorOptionTests extends TestCase {
+public class ZLColorOptionTests1 extends TestCase {
 	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	
 	private void runTask1(String configValue, ZLColor defaultValue, 
@@ -15,7 +15,11 @@ public class ZLColorOptionTests extends TestCase {
 		myConfig.setValue("color_group", "name", configValue, "category");
 		ZLColorOption option = new ZLColorOption("category", 
 				"color_group", "name", defaultValue);
-		assertEquals(option.getValue(), expectedValue);
+		assertEquals(option.getValue().getIntValue(), expectedValue);
+	}
+	
+	public void tearDown() {
+		myConfig.unsetValue("color_group", "name");
 	}
 	
 	public void test1_01() {

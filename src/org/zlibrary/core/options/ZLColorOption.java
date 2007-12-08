@@ -27,7 +27,7 @@ public final class ZLColorOption extends ZLOption {
 		myIntValue = myDefaultValue;
 	}
 
-	public int getValue() {
+	public ZLColor getValue() {
 		if (!myIsSynchronized) {
 			String value = myConfig.getValue(myGroup, myOptionName, null);
 			if (value != null) {
@@ -40,21 +40,23 @@ public final class ZLColorOption extends ZLOption {
 			}
 			myIsSynchronized = true;
 		}
-		return myIntValue;
+		return new ZLColor(myIntValue);
 	}
 
 	public void setValue(ZLColor colorValue) {
-		int value = colorValue.getIntValue();
-		if (myIsSynchronized && (myIntValue == value)) {
-			return;
-		}
-		myIntValue = value;
-		myIsSynchronized = true;
-		if (myIntValue == myDefaultValue) {
-			myConfig.unsetValue(myGroup, myOptionName);
-		} else {
-			myConfig.setValue(myGroup, myOptionName, "" + myIntValue,
-					myCategory);
+		if (colorValue != null) {
+			int value = colorValue.getIntValue();
+			if (myIsSynchronized && (myIntValue == value)) {
+				return;
+			}
+			myIntValue = value;
+			myIsSynchronized = true;
+			if (myIntValue == myDefaultValue) {
+				myConfig.unsetValue(myGroup, myOptionName);
+			} else {
+				myConfig.setValue(myGroup, myOptionName, "" + myIntValue,
+						myCategory);
+			}
 		}
 	}
 }

@@ -44,8 +44,12 @@ public class ConfigTests extends TestCase {
 		
 		//myConfig.unsetValue("Options", "KeyDelay");
 		
-		ZLConfigReaderFactory.createConfigReader("test/org/test/" +
-				"zlibrary/options/examples/output/").read();
+		try {
+			ZLConfigReaderFactory.createConfigReader("test/org/test/" +
+					"zlibrary/options/examples/output/").read();
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
 		assertEquals(myConfig.getValue("Options", "KeyDelay", "100"), 123 + "");
 	}
 	

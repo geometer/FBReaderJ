@@ -52,18 +52,17 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	}
 
 	public void setValue(int value) {
-		if ((value <= myMaxValue) && (value >= myMinValue)) {
-			if (myIsSynchronized && (myValue == value)) {
-				return;
-			}
-			myValue = value;
-			myIsSynchronized = true;
-			if (myValue == myDefaultValue) {
-				myConfig.unsetValue(myGroup, myOptionName);
-			} else {
-				myConfig.setValue(myGroup, myOptionName, "" + myValue,
-						myCategory);
-			}
+		value = Math.max(myMinValue, Math.min(myMaxValue, value));
+		if (myIsSynchronized && (myValue == value)) {
+			return;
+		}
+		myValue = value;
+		myIsSynchronized = true;
+		if (myValue == myDefaultValue) {
+			myConfig.unsetValue(myGroup, myOptionName);
+		} else {
+			myConfig.setValue(myGroup, myOptionName, "" + myValue,
+					myCategory);
 		}
 	}
 }

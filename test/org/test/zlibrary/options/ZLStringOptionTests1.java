@@ -6,7 +6,7 @@ import org.zlibrary.core.options.config.ZLConfigInstance;
 
 import junit.framework.TestCase;
 
-public class ZLStringOptionTests extends TestCase {
+public class ZLStringOptionTests1 extends TestCase {
 	
 	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	
@@ -16,6 +16,10 @@ public class ZLStringOptionTests extends TestCase {
 		ZLStringOption option = new ZLStringOption("category", 
 				"string_group", "name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
+	}
+	
+	public void tearDown() {
+		myConfig.unsetValue("string_group", "name");
 	}
 	
 	public void test1_01() {

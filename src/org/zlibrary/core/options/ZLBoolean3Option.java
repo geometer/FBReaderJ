@@ -42,13 +42,15 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 		if (myIsSynchronized && (myValue == value)) {
 			return;
 		}
-		myValue = value;
-		myIsSynchronized = true;
+		if (value != null) {
+			myValue = value;
+			myIsSynchronized = true;
 		
-		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myGroup, myOptionName);
-		} else {
-			myConfig.setValue(myOptionName, myGroup, myValue.toString(), myCategory);
+			if (myValue == myDefaultValue) {
+				myConfig.unsetValue(myGroup, myOptionName);
+			} else {
+				myConfig.setValue(myGroup, myOptionName, myValue + "", myCategory);
+			}
 		}
 	}
 }

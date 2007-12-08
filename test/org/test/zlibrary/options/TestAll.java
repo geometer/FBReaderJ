@@ -7,15 +7,24 @@ public class TestAll {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(ConfigTests.class);
-		suite.addTestSuite(ModelTests.class);
 		suite.addTestSuite(UtilTests.class);
-		suite.addTestSuite(ZLBoolean3OptionTests.class);
-		suite.addTestSuite(ZLBooleanOptionTests.class);
-		suite.addTestSuite(ZLColorOptionTests.class);
-		suite.addTestSuite(ZLDoubleOptionTests.class);
-		suite.addTestSuite(ZLIntegerOptionTests.class);
-		suite.addTestSuite(ZLIntegerRangeOptionTests.class);
-		suite.addTestSuite(ZLStringOptionTests.class);
+		suite.addTestSuite(ZLConfigWriterTests.class);
+		
+		suite.addTestSuite(ZLBoolean3OptionTests1.class);
+		suite.addTestSuite(ZLBoolean3OptionTests2.class);
+		suite.addTestSuite(ZLBooleanOptionTests1.class);
+		suite.addTestSuite(ZLBooleanOptionTests2.class);
+		suite.addTestSuite(ZLColorOptionTests1.class);
+		suite.addTestSuite(ZLColorOptionTests2.class);
+		suite.addTestSuite(ZLDoubleOptionTests1.class);
+		suite.addTestSuite(ZLDoubleOptionTests2a.class);
+		suite.addTestSuite(ZLDoubleOptionTests2b.class);
+		suite.addTestSuite(ZLIntegerOptionTests1.class);
+		suite.addTestSuite(ZLIntegerOptionTests2.class);
+		suite.addTestSuite(ZLIntegerRangeOptionTests1.class);
+		suite.addTestSuite(ZLIntegerRangeOptionTests2.class);
+		suite.addTestSuite(ZLStringOptionTests1.class);
+		suite.addTestSuite(ZLStringOptionTests2.class);
 		return suite;
 	}
 }

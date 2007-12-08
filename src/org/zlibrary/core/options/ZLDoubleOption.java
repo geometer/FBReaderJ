@@ -40,7 +40,10 @@ public final class ZLDoubleOption extends ZLOption {
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue == myDefaultValue) {
+		if ((myValue == myDefaultValue)) {
+			myConfig.unsetValue(myGroup, myOptionName);
+		} else if (new Double(myValue).equals(Double.NaN) 
+				&& new Double(myDefaultValue).equals(Double.NaN)) {
 			myConfig.unsetValue(myGroup, myOptionName);
 		} else {
 			myConfig.setValue(myGroup, myOptionName, "" + myValue, myCategory);

@@ -6,7 +6,7 @@ import org.zlibrary.core.options.config.ZLConfigInstance;
 
 import junit.framework.TestCase;
 
-public class ZLDoubleOptionTests extends TestCase {
+public class ZLDoubleOptionTests1 extends TestCase {
 	
 	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	
@@ -18,44 +18,48 @@ public class ZLDoubleOptionTests extends TestCase {
 		assertEquals(option.getValue(), expectedValue);
 	}
 	
+	public void tearDown() {
+		myConfig.unsetValue("double_group", "name");
+	}
+	
 	public void test1_01() {
-		runTask1("", Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-	}
-	
-	public void test1_02() {
-		runTask1("", Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
-	}
-	
-	public void test1_03() {
-		runTask1("", Double.NaN, Double.NaN);
-	}
-	
-	public void test1_04() {
-		runTask1("", 1.0, 1.0);
-	}
-	
-	public void test1_05() {
-		runTask1("", 0.0, 0.0);
-	}
-	
-	public void test1_06() {
 		runTask1(null, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
 	}
 	
-	public void test1_07() {
+	public void test1_02() {
 		runTask1(null, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
 	}
 	
-	public void test1_08() {
+	public void test1_03() {
 		runTask1(null, Double.NaN, Double.NaN);
 	}
 	
-	public void test1_09() {
+	public void test1_04() {
 		runTask1(null, 1.0, 1.0);
 	}
 	
-	public void test1_10() {
+	public void test1_05() {
 		runTask1(null, 0.0, 0.0);
+	}
+	
+	public void test1_06() {
+		runTask1("", Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+	}
+	
+	public void test1_07() {
+		runTask1("", Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
+	}
+	
+	public void test1_08() {
+		runTask1("", Double.NaN, Double.NaN);
+	}
+	
+	public void test1_09() {
+		runTask1("", 1.0, 1.0);
+	}
+	
+	public void test1_10() {
+		runTask1("", 0.0, 0.0);
 	}
 	
 	public void test1_11() {
@@ -278,4 +282,63 @@ public class ZLDoubleOptionTests extends TestCase {
 		runTask1("ерунда", 0.0, 0.0);
 	}
 	
+	public void test1_66() {
+		runTask1("", +0.0, +0.0);
+	}
+	
+	public void test1_67() {
+		runTask1(null, +0.0, +0.0);
+	}
+	
+	public void test1_68() {
+		runTask1("Infinity", +0.0, Double.POSITIVE_INFINITY);
+	}
+	
+	public void test1_69() {
+		runTask1("-Infinity", +0.0, Double.NEGATIVE_INFINITY);
+	}
+	
+	public void test1_70() {
+		runTask1("NaN", +0.0, Double.NaN);
+	}
+	
+	public void test1_71a() {
+		runTask1("0", +0.0, 0);
+	}
+	
+	public void test1_71b() {
+		runTask1("-0.0", +0.0, -0.0);
+	}
+	
+	public void test1_72() {
+		runTask1("1.1", +0.0, 1.1);
+	}
+	
+	public void test1_73() {
+		runTask1("4", +0.0, 4);
+	}
+	
+	public void test1_74() {
+		runTask1("12E-78", +0.0, 12E-78);
+	}
+	
+	public void test1_75() {
+		runTask1("12E-9000", +0.0, +0.0);
+	}
+	
+	public void test1_76() {
+		runTask1("12E9000", +0.0, Double.POSITIVE_INFINITY);
+	}
+	
+	public void test1_77() {
+		runTask1("-12E9000", +0.0, Double.NEGATIVE_INFINITY);
+	}
+	
+	public void test1_78() {
+		runTask1("-12E9000", +0.0, Double.NEGATIVE_INFINITY);
+	}
+
+	public void test1_79() {
+		runTask1("ерунда", +0.0, +0.0);
+	}
 }

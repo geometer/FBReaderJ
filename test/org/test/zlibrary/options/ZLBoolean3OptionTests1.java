@@ -7,7 +7,7 @@ import org.zlibrary.core.options.config.ZLConfigInstance;
 
 import junit.framework.TestCase;
 
-public class ZLBoolean3OptionTests extends TestCase {
+public class ZLBoolean3OptionTests1 extends TestCase {
 	
 	private ZLConfig myConfig = ZLConfigInstance.getInstance();
 	
@@ -17,6 +17,10 @@ public class ZLBoolean3OptionTests extends TestCase {
 		ZLBoolean3Option option = new ZLBoolean3Option("category", 
 				"boolean3_group", "name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
+	}
+	
+	public void tearDown() {
+		myConfig.unsetValue("boolean3_group", "name");
 	}
 	
 	public void test1_01() {
