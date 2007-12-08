@@ -19,7 +19,11 @@ public final class ZLColorOption extends ZLOption {
 	public ZLColorOption(String category, String group, String optionName,
 			ZLColor defaultValue) {
 		super(category, group, optionName);
-		myDefaultValue = defaultValue.getIntValue();
+		if (defaultValue != null) {
+			myDefaultValue = defaultValue.getIntValue();
+		} else {
+			myDefaultValue = 0;
+		}
 		myIntValue = myDefaultValue;
 	}
 

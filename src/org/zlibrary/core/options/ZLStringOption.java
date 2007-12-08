@@ -13,7 +13,11 @@ public final class ZLStringOption extends ZLSimpleOption {
 	public ZLStringOption(String category, String group, String optionName,
 			String defaultValue) {
 		super(category, group, optionName);
-		myDefaultValue = defaultValue;
+		if (defaultValue != null) {
+			myDefaultValue = defaultValue;
+		} else {
+			myDefaultValue = "";
+		}
 		myValue = myDefaultValue;
 	}
 
@@ -37,13 +41,6 @@ public final class ZLStringOption extends ZLSimpleOption {
 		if (myIsSynchronized && (myValue.equals(value))) {
 			return;
 		}
-		/*
-		myValue = value;
-		myIsSynchronized = true;
-		if (myIsSynchronized && (myValue == value)) {
-			return;
-		}
-		*/
 		myValue = value;
 		myIsSynchronized = true;
 		if (myValue.equals(myDefaultValue)) {

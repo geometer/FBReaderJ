@@ -177,7 +177,7 @@ public class ModelTests extends TestCase {
 		myIntegerRangeOption.setValue(123);
 		ZLIntegerRangeOption newOption = new ZLIntegerRangeOption("", "", 
 				"IR", 189, 12, myDefaultIntRange2);
-		assertEquals(newOption.getValue(), -1);
+		assertEquals(newOption.getValue(), 189);
 	}
 
 	public void test03_boolean3() {

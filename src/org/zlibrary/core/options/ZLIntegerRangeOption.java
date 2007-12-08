@@ -45,6 +45,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 					// System.err.println(e);
 				}
 			}
+			myValue = Math.max(myMinValue, Math.min(myMaxValue, myValue));
 			myIsSynchronized = true;
 		}
 		return myValue;

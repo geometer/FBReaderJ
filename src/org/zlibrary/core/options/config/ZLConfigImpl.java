@@ -65,7 +65,9 @@ import java.util.*;
 
 	public void setValue(String group, String name, String value,
 			String category) {
-		myDeltaConfig.setValue(group, name, value, category);
+		if (value != null) {
+			myDeltaConfig.setValue(group, name, value, category);
+		}
 	}
 	
 	protected void setValueDirectly(String group, String name, String value,

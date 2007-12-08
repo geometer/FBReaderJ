@@ -15,7 +15,11 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 	
 	public ZLBoolean3Option(String category, String group, String optionName, ZLBoolean3 defaultValue) {	 
 		super(category, group, optionName);
-		myDefaultValue = defaultValue;
+		if (defaultValue != null) {
+			myDefaultValue = defaultValue;
+		} else {
+			myDefaultValue = ZLBoolean3.B3_UNDEFINED;
+		}
 		myValue = myDefaultValue;
 	}
 	
