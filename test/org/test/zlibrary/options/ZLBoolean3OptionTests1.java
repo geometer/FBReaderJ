@@ -28,7 +28,7 @@ public class ZLBoolean3OptionTests1 extends TestCase {
 	}
 	
 	public void test1_02() {
-		runTask1("", ZLBoolean3.B3_TRUE, ZLBoolean3.B3_TRUE);
+		runTask1("", ZLBoolean3.B3_TRUE, ZLBoolean3.B3_UNDEFINED);
 	}
 	
 	public void test1_03() {
@@ -52,6 +52,6 @@ public class ZLBoolean3OptionTests1 extends TestCase {
 	}
 	
 	public void test1_08() {
-		runTask1("ерунда", ZLBoolean3.B3_TRUE, ZLBoolean3.B3_TRUE);
+		runTask1("ерунда", ZLBoolean3.B3_TRUE, ZLBoolean3.B3_UNDEFINED);
 	}
 }
