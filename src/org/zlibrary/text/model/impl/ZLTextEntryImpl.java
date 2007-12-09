@@ -4,31 +4,42 @@ import java.util.ArrayList;
 
 import org.zlibrary.text.model.entry.ZLTextEntry;
 
-class ZLTextEntryImpl implements ZLTextEntry {
+final class ZLTextEntryImpl implements ZLTextEntry {
 	private char[] myData;
+	private ArrayList<char[]> myDataArray;
+	private int myLength;
 
 	ZLTextEntryImpl(char[] data) {
 		myData = data;
+		myLength = data.length;
 	}
 
 	ZLTextEntryImpl(ArrayList<char[]> data) {
-		int length = 0;
+		myLength = 0;
 		for (char[] part : data) {
-			length += part.length;
+			myLength += part.length;
 		}
-		myData = new char[length];
-		int pos = 0;
-		for (char[] part : data) {
-			System.arraycopy(part, 0, myData, pos, part.length);
-			pos += part.length;
-		}
+		myDataArray = new ArrayList(data);
 	}
 
 	public int getDataLength() {
-		return myData.length;
+		return myLength;
 	}
 
 	public char[] getData() {
+		if (myDataArray != null) {
+			convert();
+		}
 		return myData;
+	}
+
+	private void convert() {
+		myData = new char[myLength];
+		int pos = 0;
+		for (char[] part : myDataArray) {
+			System.arraycopy(part, 0, myData, pos, part.length);
+			pos += part.length;
+		}
+		myDataArray = null;
 	}
 }

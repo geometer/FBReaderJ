@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.zlibrary.core.image.ZLImage;
 
 class Base64EncodedImage implements ZLImage {
-	private char[] myEncodedData;
+	private ArrayList<char[]> myEncodedData;
 	private byte [] myData;
 	
 	public Base64EncodedImage(String contentType) {
@@ -16,14 +16,27 @@ class Base64EncodedImage implements ZLImage {
 		if ((myEncodedData == null) || (myData != null)) {
 			return;
 		}
+
+		int dataLength = 0;
+		for (char[] part : myEncodedData) {
+			dataLength += part.length;
+		}
+		char[] encodedData = new char[dataLength];
+		{
+			int pos = 0;
+			for (char[] part : myEncodedData) {
+				System.arraycopy(part, 0, encodedData, pos, part.length);
+				pos += part.length;
+			}
+		}
+		myEncodedData = null;
 		
-		int dataLength = myEncodedData.length;
-		int newLength = dataLength/4*3;
+		int newLength = dataLength / 4 * 3;
 		myData = new byte[newLength];
 		byte [] number = new byte[4];
 		for (int pos = 0, dataPos = 0; pos < dataLength; dataPos += 3) {
 			for (int i = 0; (i < 4) && (pos < dataLength); ++pos) {
-				char encodedByte = myEncodedData[pos];
+				char encodedByte = encodedData[pos];
 				number[i] = 0;
 				if (('A' <= encodedByte) && (encodedByte <= 'Z')) {
 					number[i] = (byte) (encodedByte - 'A');
@@ -57,7 +70,6 @@ class Base64EncodedImage implements ZLImage {
 		}
 			
 */			
-		myEncodedData = null;
 	}
 	
 	public byte [] byteData() {
@@ -66,15 +78,6 @@ class Base64EncodedImage implements ZLImage {
 	}
 	
 	void addData(ArrayList<char[]> data) {
-		int length = 0;
-		for (char[] part : data) {
-			length += part.length;
-		}
-		myEncodedData = new char[length];
-		int pos = 0;
-		for (char[] part : data) {
-			System.arraycopy(part, 0, myEncodedData, pos, part.length);
-			pos += part.length;
-		}
+		myEncodedData = new ArrayList<char[]>(data);
 	}
 }
