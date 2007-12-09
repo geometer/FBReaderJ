@@ -47,10 +47,6 @@ public class ZLModelFactory {
     	return new ZLTextControlEntryImpl(kind, isStart);
     }
     
-    public ZLTextEntry createTextEntry(String text) {
-    	return new ZLTextEntryImpl(text);
-    }
-    
     public ZLTextHyperlinkControlEntry createHyperlinkControlEntry(byte kind, String label) {
     	return new ZLTextHyperlinkControlEntryImpl(kind, label);
     }

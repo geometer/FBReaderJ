@@ -13,7 +13,7 @@ public final class BookReader {
 	
 	private boolean myTextParagraphExists = false;
 	
-	private final StringBuffer myBuffer = new StringBuffer();
+	private final ArrayList<char[]> myBuffer = new ArrayList<char[]>();
 	private final ArrayList<Byte> myKindStack = new ArrayList<Byte>();
 	
 	private byte myHyperlinkKind;
@@ -25,16 +25,18 @@ public final class BookReader {
 	private boolean myContentsParagraphExists = false;
 	private final ArrayList<ZLTextTreeParagraph> myTOCStack = new ArrayList<ZLTextTreeParagraph>();
 	private boolean myLastTOCParagraphIsEmpty = false;
-	private final StringBuffer myContentsBuffer = new StringBuffer();
+	private final ArrayList<char[]> myContentsBuffer = new ArrayList<char[]>();
+
+	private final char[] PERIOD = "...".toCharArray();
 	
 	public BookReader(BookModel model) {
 		myBookModel = model;
 	}
 	
 	private void flushTextBufferToParagraph() {
-		if (myBuffer.length() != 0) {
+		if (!myBuffer.isEmpty()) {
 			myCurrentTextModel.addText(myBuffer);
-			myBuffer.delete(0, myBuffer.length());
+			myBuffer.clear();
 		}		
 	}
 	
@@ -43,7 +45,7 @@ public final class BookReader {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl((byte) kind, start);
 		}
-		if (!start && myHyperlinkReference != "" && (kind == myHyperlinkKind)) {
+		if (!start && (myHyperlinkReference.length() != 0) && (kind == myHyperlinkKind)) {
 			myHyperlinkReference = "";
 		}
 	}
@@ -66,7 +68,7 @@ public final class BookReader {
 			for (Byte b : myKindStack) {
 				myCurrentTextModel.addControl(b, true);
 			}
-			if (myHyperlinkReference != "") {
+			if (myHyperlinkReference.length() != 0) {
 				myCurrentTextModel.addHyperlinkControl(myHyperlinkKind, myHyperlinkReference);
 			}
 			myTextParagraphExists = true;
@@ -114,9 +116,9 @@ public final class BookReader {
 		myCurrentTextModel = myBookModel.getFootnoteModel(id);
 	}
 	
-	public void addData(String data) {
+	public void addData(char[] data) {
 		if (myTextParagraphExists) {
-			myBuffer.append(data);
+			myBuffer.add(data);
 			if (!myInsideTitle) {
 				mySectionContainsRegularContents = true;
 			} else {
@@ -144,9 +146,9 @@ public final class BookReader {
 		}
 	}
 	
-	public void addContentsData(String data) {
-		if (data != "" && !myTOCStack.isEmpty()) {
-			myContentsBuffer.append(data);
+	public void addContentsData(char[] data) {
+		if ((data.length != 0) && !myTOCStack.isEmpty()) {
+			myContentsBuffer.add(data);
 		}
 	}
 	
@@ -159,13 +161,13 @@ public final class BookReader {
 			}
 			int size = tocStack.size();
 			ZLTextTreeParagraph peek = (size == 0) ? null : tocStack.get(size - 1);
-			if (myContentsBuffer.length() != 0) {
+			if (!myContentsBuffer.isEmpty()) {
 				contentsModel.addText(myContentsBuffer);
-				myContentsBuffer.delete(0, myContentsBuffer.length());
+				myContentsBuffer.clear();
 				myLastTOCParagraphIsEmpty = false;
 			}
 			if (myLastTOCParagraphIsEmpty) {
-				contentsModel.addText("...");
+				contentsModel.addText(PERIOD);
 			}
 			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
 			contentsModel.addControl(FBTextKind.CONTENTS_TABLE_ENTRY, true);
@@ -179,13 +181,13 @@ public final class BookReader {
 	public void endContentsParagraph() {
 		if (!myTOCStack.isEmpty()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
-			if (myContentsBuffer.length() != 0) {
+			if (!myContentsBuffer.isEmpty()) {
 				contentsModel.addText(myContentsBuffer);
-				myContentsBuffer.delete(0, myContentsBuffer.length());
+				myContentsBuffer.clear();
 				myLastTOCParagraphIsEmpty = false;
 			}
 			if (myLastTOCParagraphIsEmpty) {
-				contentsModel.addText("...");
+				contentsModel.addText(PERIOD);
 				myLastTOCParagraphIsEmpty = false;
 			}
 			myTOCStack.remove(myTOCStack.size() - 1);

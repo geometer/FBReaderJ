@@ -61,13 +61,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return myHeight;
 	}
 	
-	public int getStringWidth(String string, int offset, int length) {
+	public int getStringWidth(char[] string, int offset, int length) {
 		float[] widths = myWidthsArray;
 		if (widths.length < length) {
 			widths = new float[length];
 			myWidthsArray = widths;
 		}
-		myPaint.getTextWidths(string, offset, offset + length, widths);
+		myPaint.getTextWidths(string, offset, length, widths);
 		float sum = 0.5f;
 		for (int i = 0; i < length; ++i) {
 			sum += widths[i];
@@ -84,8 +84,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	protected int getDescentInternal() {
 		return (int)(myPaint.descent() + 0.5f);
 	}
-	public void drawString(int x, int y, String string, int offset, int length) {
-		myCanvas.drawText(string, offset, offset + length, x, y, myPaint);
+	public void drawString(int x, int y, char[] string, int offset, int length) {
+		myCanvas.drawText(string, offset, length, x, y, myPaint);
 	}
 
 	public int imageWidth(ZLImage image) {

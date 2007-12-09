@@ -102,7 +102,7 @@ abstract public class ZLPaintContext {
 	abstract public int getWidth();
 	abstract public int getHeight();
 	
-	abstract public int getStringWidth(String string, int offset, int length);
+	abstract public int getStringWidth(char[] string, int offset, int length);
 
 	private int mySpaceWidth = -1;
 	public final int getSpaceWidth() {
@@ -137,7 +137,7 @@ abstract public class ZLPaintContext {
 	}
 	abstract protected int getDescentInternal();
 
-	abstract public void drawString(int x, int y, String string, int offset, int length);
+	abstract public void drawString(int x, int y, char[] string, int offset, int length);
 
 	abstract public int imageWidth(ZLImage image);
 	abstract public int imageHeight(ZLImage image);

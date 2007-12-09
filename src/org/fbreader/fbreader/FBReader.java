@@ -126,6 +126,7 @@ public final class FBReader extends ZLApplication {
 
 		ZLTextView view = new ZLTextViewImpl(this, getContext());
 		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "data/help/MiniHelp.ru.fb2");
+		//ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
 		if (args.length > 0) {
 			bookNameOption.setValue(args[0]);
 		}

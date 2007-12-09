@@ -1,5 +1,6 @@
 package org.zlibrary.text.model;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.zlibrary.core.image.ZLImage;
@@ -14,8 +15,8 @@ public interface ZLTextModel {
     void removeParagraphInternal(int index);
 
     void addControl(byte textKind, boolean isStart);
-    void addText(String text);
-    void addText(StringBuffer text);
+    void addText(char[] text);
+    void addText(ArrayList<char[]> text);
 
 
 	void addControl(ZLTextForcedControlEntry entry);

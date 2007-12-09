@@ -45,10 +45,8 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		return myHeight;
 	}
 	
-	public int getStringWidth(String string, int offset, int length) {
-		char data[] = new char[length];
-		string.getChars(offset, offset + length, data, 0);
-		return myGraphics.getFontMetrics().charsWidth(data, 0, length);
+	public int getStringWidth(char[] string, int offset, int length) {
+		return myGraphics.getFontMetrics().charsWidth(string, offset, length);
 	}
 
 	protected int getSpaceWidthInternal() {
@@ -60,8 +58,8 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	protected int getDescentInternal() {
 		return myGraphics.getFontMetrics().getDescent();
 	}
-	public void drawString(int x, int y, String string, int offset, int length) {
-		myGraphics.drawString(string.substring(offset, offset + length), x, y);
+	public void drawString(int x, int y, char[] string, int offset, int length) {
+		myGraphics.drawChars(string, offset, length, x, y);
 	}
 
 	public int imageWidth(ZLImage image) {

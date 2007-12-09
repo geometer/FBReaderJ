@@ -1,7 +1,7 @@
 package org.fbreader.formats.fb2;
 
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.BookReader;
@@ -25,9 +25,11 @@ public class FB2Reader extends ZLXMLReader {
 	private Base64EncodedImage myCurrentImage;
 	private boolean myInsideCoverpage = false;
 	private boolean myProcessingImage = false;
-	private final StringBuffer myImageBuffer = new StringBuffer();
+	private final ArrayList<char[]> myImageBuffer = new ArrayList<char[]>();
 	private String myCoverImageReference;
 	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
+
+	private final char[] SPACE = { ' ' }; 
 	
 	private FB2Tag getTag(String s) {
 		if (s.contains("-")) {
@@ -37,8 +39,7 @@ public class FB2Reader extends ZLXMLReader {
 	}
 	
 	private String reference(Map<String, String> attributes) {
-		Set<String> keys = attributes.keySet();
-		for (String s : keys) {
+		for (String s : attributes.keySet()) {
 			if (s.endsWith(":href")) {
 				return attributes.get(s);
 			}
@@ -50,10 +51,12 @@ public class FB2Reader extends ZLXMLReader {
 	
 	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
-		if (length > 0 && myProcessingImage) {
-			myImageBuffer.append(String.valueOf(ch, start, length));
+		char[] data = new char[length];
+		System.arraycopy(ch, start, data, 0, length);
+		if ((length > 0) && myProcessingImage) {
+			myImageBuffer.add(data);
 		} else {
-			myModelReader.addData(String.valueOf(ch, start, length));
+			myModelReader.addData(data);
 		}		
 	}
 		
@@ -155,9 +158,9 @@ public class FB2Reader extends ZLXMLReader {
 				break;	
 			
 			case BINARY:
-				if ((myImageBuffer.length() != 0) && (myCurrentImage != null)) {
+				if (!myImageBuffer.isEmpty() && (myCurrentImage != null)) {
 					myCurrentImage.addData(myImageBuffer);
-					myImageBuffer.delete(0, myImageBuffer.length());
+					myImageBuffer.clear();
 					myCurrentImage = null;
 				}
 				myProcessingImage = false;
@@ -188,7 +191,7 @@ public class FB2Reader extends ZLXMLReader {
 				if (mySectionStarted) {
 					mySectionStarted = false;
 				} else if (myInsideTitle) {
-					myModelReader.addContentsData(" ");
+					myModelReader.addContentsData(SPACE);
 				}
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
@@ -294,7 +297,7 @@ public class FB2Reader extends ZLXMLReader {
 			
 			case A:
 				String ref = reference(attributes);
-				if ((ref != null) && !ref.isEmpty()) {
+				if ((ref != null) && (ref.length() != 0)) {
 					if (ref.charAt(0) == '#') {
 						myHyperlinkType = FBTextKind.FOOTNOTE;
 						ref = ref.substring(1);
@@ -323,7 +326,7 @@ public class FB2Reader extends ZLXMLReader {
 					offset = Short.valueOf(vOffset);
 				} catch (NumberFormatException e) {
 				}
-				if ((imgRef != null) && !imgRef.isEmpty() && (imgRef.charAt(0) == '#')) {
+				if ((imgRef != null) && (imgRef.length() != 0) && (imgRef.charAt(0) == '#')) {
 					imgRef = imgRef.substring(1);
 					if (!imgRef.equals(myCoverImageReference) ||
 							myParagraphsBeforeBodyNumber != myModelReader.getModel().getBookModel().getParagraphsNumber()) {

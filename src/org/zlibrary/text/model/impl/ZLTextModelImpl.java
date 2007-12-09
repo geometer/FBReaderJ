@@ -6,6 +6,7 @@ import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -33,13 +34,12 @@ class ZLTextModelImpl implements ZLTextModel {
 		myParagraphs.getLast().addEntry(myEntryPool.getControlEntry(textKind, isStart));
 	}
 
-	public void addText(String text) {
+	public void addText(char[] text) {
 		myParagraphs.getLast().addEntry(new ZLTextEntryImpl(text));
 	}
 
-	public void addText(StringBuffer text) {
-		ZLTextParagraph paragraph = myParagraphs.getLast();
-		paragraph.addEntry(new ZLTextEntryImpl(text.toString()));
+	public void addText(ArrayList<char[]> text) {
+		myParagraphs.getLast().addEntry(new ZLTextEntryImpl(text));
 	}
 	
 	public void addControl(ZLTextForcedControlEntry entry) {

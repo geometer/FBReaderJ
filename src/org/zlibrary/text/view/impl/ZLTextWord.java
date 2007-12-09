@@ -3,12 +3,12 @@ package org.zlibrary.text.view.impl;
 import org.zlibrary.core.view.ZLPaintContext;
 
 final class ZLTextWord extends ZLTextElement { 
-	public final String Data;
+	public final char[] Data;
 	public final int Offset;
 	public final int Length;
 	private int myWidth = -1;
 
-	public ZLTextWord(String data, int offset, int length) {
+	public ZLTextWord(char[] data, int offset, int length) {
 		Data = data;
 		Offset = offset;
 		Length = length;
@@ -23,7 +23,9 @@ final class ZLTextWord extends ZLTextElement {
 		return width;
 	}
 
-	/*package*/ String getWord() {
+	/*
+	String getWord() {
 		return Data.substring(Offset, Offset + Length);	
 	}
+	*/
 }
