@@ -27,7 +27,7 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 					myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} else if (value.toLowerCase().equals("false")) {
 					myValue = false;
-					myConfig.setValue(myGroup, myOptionName, value, myCategory);
+					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				}
 			}
 			myIsSynchronized = true;

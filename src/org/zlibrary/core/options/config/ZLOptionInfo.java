@@ -19,11 +19,17 @@ package org.zlibrary.core.options.config;
 	}
 
 	public void setValue(String value) {
-		if (value != null) {
+		if ((value != null) && (!myValue.equals(value))) {
 			myValue = value.intern();
 		}
 	}
-
+	
+	public void setCategory(String cat) {
+		if ((cat != null) && (!myCategory.equals(cat))) {
+			myCategory = cat.intern();
+		}
+	}
+	
 	public String getValue() {
 		return myValue;
 	}
@@ -34,10 +40,6 @@ package org.zlibrary.core.options.config;
 
 	public String getCategory() {
 		return myCategory;
-	}
-
-	public void setCategory(String cat) {
-		myCategory = cat;
 	}
 
 	public int hashCode() {

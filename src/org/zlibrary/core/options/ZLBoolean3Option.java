@@ -35,7 +35,7 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 			String value = myConfig.getValue(myGroup, myOptionName, null);
 			if (value != null) {
 				myValue = ZLBoolean3.getByString(value);
-				myConfig.setValue(myGroup, myOptionName, value, myCategory);
+				//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 			}
 			myIsSynchronized = true;
 		}

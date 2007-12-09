@@ -42,7 +42,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 				try {
 					Integer intValue = Integer.parseInt(value);
 					myValue = intValue;
-					myConfig.setValue(myGroup, myOptionName, value, myCategory);
+					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
