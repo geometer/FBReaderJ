@@ -36,10 +36,6 @@ public class FB2Reader extends ZLXMLReader {
 		return FB2Tag.valueOf(s.toUpperCase());
 	}
 	
-	private byte getKind(String s) {
-		return (byte) FBTextKind.valueOf(s.toUpperCase()).Index;
-	}
-	
 	private String reference(Map<String, String> attributes) {
 		Set<String> keys = attributes.keySet();
 		for (String s : keys) {
@@ -75,12 +71,22 @@ public class FB2Reader extends ZLXMLReader {
 				break;
 				
 			case SUB:
+				myModelReader.addControl(FBTextKind.SUB, false);
+				break;
 			case SUP:
+				myModelReader.addControl(FBTextKind.SUP, false);
+				break;
 			case CODE:
+				myModelReader.addControl(FBTextKind.CODE, false);
+				break;
 			case EMPHASIS:
+				myModelReader.addControl(FBTextKind.EMPHASIS, false);
+				break;
 			case STRONG:
+				myModelReader.addControl(FBTextKind.STRONG, false);
+				break;
 			case STRIKETHROUGH:
-				myModelReader.addControl(getKind(tagName), false);
+				myModelReader.addControl(FBTextKind.STRIKETHROUGH, false);
 				break;
 			
 			case V:
@@ -188,27 +194,40 @@ public class FB2Reader extends ZLXMLReader {
 				break;
 			
 			case SUB:
+				myModelReader.addControl(FBTextKind.SUB, true);
+				break;
 			case SUP:
+				myModelReader.addControl(FBTextKind.SUP, true);
+				break;
 			case CODE:
+				myModelReader.addControl(FBTextKind.CODE, true);
+				break;
 			case EMPHASIS:
+				myModelReader.addControl(FBTextKind.EMPHASIS, true);
+				break;
 			case STRONG:
+				myModelReader.addControl(FBTextKind.STRONG, true);
+				break;
 			case STRIKETHROUGH:
-				myModelReader.addControl(getKind(tagName), true);		
+				myModelReader.addControl(FBTextKind.STRIKETHROUGH, true);
 				break;
 			
 			case V:
-				myModelReader.pushKind((byte) FBTextKind.VERSE.Index);
+				myModelReader.pushKind(FBTextKind.VERSE);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 				
 			case TEXT_AUTHOR:
-				myModelReader.pushKind((byte) FBTextKind.AUTHOR.Index);
+				myModelReader.pushKind(FBTextKind.AUTHOR);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 				
 			case SUBTITLE:
+				myModelReader.pushKind(FBTextKind.SUBTITLE);
+				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				break;
 			case DATE:
-				myModelReader.pushKind(getKind(tagName));
+				myModelReader.pushKind(FBTextKind.DATE);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 			
@@ -218,8 +237,10 @@ public class FB2Reader extends ZLXMLReader {
 				break;
 			
 			case CITE:
+				myModelReader.pushKind(FBTextKind.CITE);
+				break;
 			case EPIGRAPH:
-				myModelReader.pushKind(getKind(tagName));
+				myModelReader.pushKind(FBTextKind.EPIGRAPH);
 				break;
 			
 			case POEM:
@@ -227,7 +248,7 @@ public class FB2Reader extends ZLXMLReader {
 				break;	
 			
 			case STANZA:
-				myModelReader.pushKind((byte) FBTextKind.STANZA.Index);
+				myModelReader.pushKind(FBTextKind.STANZA);
 				myModelReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
 				myModelReader.endParagraph();
 				break;
@@ -245,17 +266,17 @@ public class FB2Reader extends ZLXMLReader {
 				if (myBodyCounter == 0) {
 					myModelReader.setMainTextModel();
 				}
-				myModelReader.pushKind((byte) FBTextKind.ANNOTATION.Index);
+				myModelReader.pushKind(FBTextKind.ANNOTATION);
 				break;
 			
 			case TITLE:
 				if (myInsidePoem) {
-					myModelReader.pushKind((byte) FBTextKind.POEM_TITLE.Index);
+					myModelReader.pushKind(FBTextKind.POEM_TITLE);
 				} else if (mySectionDepth == 0) {
 					myModelReader.insertEndOfSectionParagraph();
-					myModelReader.pushKind((byte) FBTextKind.TITLE.Index);
+					myModelReader.pushKind(FBTextKind.TITLE);
 				} else {
-					myModelReader.pushKind((byte) FBTextKind.SECTION_TITLE.Index);
+					myModelReader.pushKind(FBTextKind.SECTION_TITLE);
 					myInsideTitle = true;
 					myModelReader.enterTitle();
 				}
@@ -268,21 +289,21 @@ public class FB2Reader extends ZLXMLReader {
 					myModelReader.setMainTextModel();
 					myReadMainText = true;
 				}
-				myModelReader.pushKind((byte) FBTextKind.REGULAR.Index);
+				myModelReader.pushKind(FBTextKind.REGULAR);
 				break;
 			
 			case A:
 				String ref = reference(attributes);
 				if (!ref.equals("")) {
 					if (ref.charAt(0) == '#') {
-						myHyperlinkType = (byte) FBTextKind.FOOTNOTE.Index;
+						myHyperlinkType = FBTextKind.FOOTNOTE;
 						ref = ref.substring(1);
 					} else {
-						myHyperlinkType = (byte) FBTextKind.EXTERNAL_HYPERLINK.Index;
+						myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
 					}
 					myModelReader.addHyperlinkControl(myHyperlinkType, ref);
 				} else {
-					myHyperlinkType = (byte) FBTextKind.FOOTNOTE.Index;
+					myHyperlinkType = FBTextKind.FOOTNOTE;
 					myModelReader.addControl(myHyperlinkType, true);
 				}
 				break;

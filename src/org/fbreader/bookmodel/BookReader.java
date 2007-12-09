@@ -168,7 +168,7 @@ public final class BookReader {
 				contentsModel.addText("...");
 			}
 			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
-			contentsModel.addControl((byte)FBTextKind.CONTENTS_TABLE_ENTRY.Index, true);
+			contentsModel.addControl(FBTextKind.CONTENTS_TABLE_ENTRY, true);
 			contentsModel.setReference(para, referenceNumber);
 			tocStack.add(para);
 			myLastTOCParagraphIsEmpty = true;
@@ -222,9 +222,9 @@ public final class BookReader {
 				myCurrentTextModel.addImage(ref, myBookModel.getImageMap(), offset);
 			} else {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-				myCurrentTextModel.addControl((byte) FBTextKind.IMAGE.Index, true);
+				myCurrentTextModel.addControl(FBTextKind.IMAGE, true);
 				myCurrentTextModel.addImage(ref, myBookModel.getImageMap(), offset);
-				myCurrentTextModel.addControl((byte) FBTextKind.IMAGE.Index, false);
+				myCurrentTextModel.addControl(FBTextKind.IMAGE, false);
 				endParagraph();
 			}
 		}
