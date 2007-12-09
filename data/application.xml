@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application>
 	<property name="applicationClass" value="org.fbreader.fbreader.FBReader"/>
-	<property name="applicationName" value="FBReaderJ"/>
+	<property name="applicationName" value="FBReader"/>
 </application>
