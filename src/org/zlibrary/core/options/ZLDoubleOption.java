@@ -25,6 +25,7 @@ public final class ZLDoubleOption extends ZLOption {
 				try {
 					Double doubleValue = Double.parseDouble(value);
 					myValue = doubleValue;
+					myConfig.setValue(myGroup, myOptionName, value , myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
