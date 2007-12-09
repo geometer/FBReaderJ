@@ -1,20 +1,20 @@
 package org.fbreader.bookmodel;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
-public class BookReader {
-	private BookModel myBookModel;
+public final class BookReader {
+	private final BookModel myBookModel;
 	private ZLTextPlainModel myCurrentTextModel = null;
 	
 	private boolean myTextParagraphExists = false;
 	
-	private StringBuffer myBuffer = new StringBuffer();
-	private Stack<Byte> myKindStack = new Stack<Byte>();
+	private final StringBuffer myBuffer = new StringBuffer();
+	private final ArrayList<Byte> myKindStack = new ArrayList<Byte>();
 	
 	private byte myHyperlinkKind;
 	private String myHyperlinkReference = "";
@@ -23,9 +23,9 @@ public class BookReader {
 	private boolean mySectionContainsRegularContents = false;
 	
 	private boolean myContentsParagraphExists = false;
-	private Stack<ZLTextTreeParagraph> myTOCStack = new Stack<ZLTextTreeParagraph>();
+	private final ArrayList<ZLTextTreeParagraph> myTOCStack = new ArrayList<ZLTextTreeParagraph>();
 	private boolean myLastTOCParagraphIsEmpty = false;
-	private StringBuffer myContentsBuffer = new StringBuffer();
+	private final StringBuffer myContentsBuffer = new StringBuffer();
 	
 	public BookReader(BookModel model) {
 		myBookModel = model;
@@ -49,12 +49,12 @@ public class BookReader {
 	}
 	
 	public void pushKind(byte kind) {
-		myKindStack.push(kind);
+		myKindStack.add(kind);
 	}
 	
 	public boolean popKind() {
-		if (!myKindStack.empty()) {
-			myKindStack.pop();
+		if (!myKindStack.isEmpty()) {
+			myKindStack.remove(myKindStack.size() - 1);
 			return true;
 		}
 		return false;
@@ -145,18 +145,20 @@ public class BookReader {
 	}
 	
 	public void addContentsData(String data) {
-		if (data != "" && !myTOCStack.empty()) {
+		if (data != "" && !myTOCStack.isEmpty()) {
 			myContentsBuffer.append(data);
 		}
 	}
 	
 	public void beginContentsParagraph(int referenceNumber) {
+		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
 		if (myCurrentTextModel == myBookModel.getBookModel()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
 			if (referenceNumber == -1) {
 				referenceNumber = myCurrentTextModel.getParagraphsNumber();
 			}
-			ZLTextTreeParagraph peek = myTOCStack.empty() ? null : myTOCStack.peek();
+			int size = tocStack.size();
+			ZLTextTreeParagraph peek = (size == 0) ? null : tocStack.get(size - 1);
 			if (myContentsBuffer.length() != 0) {
 				contentsModel.addText(myContentsBuffer);
 				myContentsBuffer.delete(0, myContentsBuffer.length());
@@ -168,14 +170,14 @@ public class BookReader {
 			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
 			contentsModel.addControl((byte)FBTextKind.CONTENTS_TABLE_ENTRY.Index, true);
 			contentsModel.setReference(para, referenceNumber);
-			myTOCStack.push(para);
+			tocStack.add(para);
 			myLastTOCParagraphIsEmpty = true;
 			myContentsParagraphExists = true;
 		}
 	}
 
 	public void endContentsParagraph() {
-		if (!myTOCStack.empty()) {
+		if (!myTOCStack.isEmpty()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
 			if (myContentsBuffer.length() != 0) {
 				contentsModel.addText(myContentsBuffer);
@@ -186,7 +188,7 @@ public class BookReader {
 				contentsModel.addText("...");
 				myLastTOCParagraphIsEmpty = false;
 			}
-			myTOCStack.pop();
+			myTOCStack.remove(myTOCStack.size() - 1);
 		}
 		myContentsParagraphExists = false;
 	}

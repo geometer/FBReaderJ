@@ -330,6 +330,9 @@ public class FB2Reader extends ZLXMLReader {
 	}
 	
 	public BookModel readBook(String fileName) {
-		return read(fileName) ? myModelReader.getModel() : null;
+		long start = System.currentTimeMillis();
+		boolean success = read(fileName);
+		System.err.println("loading book time = " + (System.currentTimeMillis() - start));
+		return success ? myModelReader.getModel() : null;
 	}
 }
