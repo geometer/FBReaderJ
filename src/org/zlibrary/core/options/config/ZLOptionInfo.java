@@ -1,10 +1,9 @@
 package org.zlibrary.core.options.config;
 
 /*package*/final class ZLOptionInfo {
+	
 	private String myValue = "";
-
 	private String myCategory = "";
-
 	private String myName = "";
 
 	public ZLOptionInfo(String name, String value, String category) {

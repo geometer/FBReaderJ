@@ -7,6 +7,7 @@ package org.zlibrary.core.options;
  * 
  */
 public final class ZLDoubleOption extends ZLOption {
+
 	private double myValue;
 
 	private final double myDefaultValue;
@@ -25,7 +26,7 @@ public final class ZLDoubleOption extends ZLOption {
 				try {
 					Double doubleValue = Double.parseDouble(value);
 					myValue = doubleValue;
-					myConfig.setValue(myGroup, myOptionName, value , myCategory);
+					myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
@@ -43,7 +44,7 @@ public final class ZLDoubleOption extends ZLOption {
 		myIsSynchronized = true;
 		if ((myValue == myDefaultValue)) {
 			myConfig.unsetValue(myGroup, myOptionName);
-		} else if (new Double(myValue).equals(Double.NaN) 
+		} else if (new Double(myValue).equals(Double.NaN)
 				&& new Double(myDefaultValue).equals(Double.NaN)) {
 			myConfig.unsetValue(myGroup, myOptionName);
 		} else {

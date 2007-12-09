@@ -7,9 +7,9 @@ import java.util.*;
 	// public abstract boolean isAutoSavingSupported() const = 0;
 	// public abstract void startAutoSave(int seconds) = 0;
 	
-	private ZLSimpleConfig myMainConfig;
+	private final ZLSimpleConfig myMainConfig;
 
-	private ZLDeltaConfig myDeltaConfig;
+	private final ZLDeltaConfig myDeltaConfig;
 
 	protected ZLConfigImpl() {
 		myMainConfig = new ZLSimpleConfig();

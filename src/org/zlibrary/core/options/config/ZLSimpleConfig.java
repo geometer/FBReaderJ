@@ -11,7 +11,7 @@ import java.util.*;
  */
 /* package */final class ZLSimpleConfig implements ZLConfig {
 
-	private Set<ZLGroup> myData;
+	private final Set<ZLGroup> myData;
 
 	public ZLSimpleConfig() {
 		myData = new LinkedHashSet<ZLGroup>();

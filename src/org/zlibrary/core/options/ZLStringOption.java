@@ -6,6 +6,7 @@ package org.zlibrary.core.options;
  * @author Администратор
  */
 public final class ZLStringOption extends ZLSimpleOption {
+
 	private String myValue;
 
 	private final String myDefaultValue;
@@ -31,7 +32,7 @@ public final class ZLStringOption extends ZLSimpleOption {
 					myDefaultValue);
 			if (value != null) {
 				myValue = value;
-				myConfig.setValue(myGroup, myOptionName, value , myCategory);
+				myConfig.setValue(myGroup, myOptionName, value, myCategory);
 			}
 			myIsSynchronized = true;
 		}

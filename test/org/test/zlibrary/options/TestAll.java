@@ -4,12 +4,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 public class TestAll {
+
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(ConfigIOTests.class);
 		suite.addTestSuite(UtilTests.class);
 		suite.addTestSuite(ZLConfigWriterTests.class);
-		
+
 		suite.addTestSuite(ZLBoolean3OptionTests1.class);
 		suite.addTestSuite(ZLBoolean3OptionTests2.class);
 		suite.addTestSuite(ZLBooleanOptionTests1.class);

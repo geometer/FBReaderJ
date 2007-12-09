@@ -4,19 +4,20 @@ import org.zlibrary.core.options.config.ZLConfig;
 import org.zlibrary.core.options.config.ZLConfigInstance;
 
 public abstract class ZLOption {
+
 	public static final String LOOK_AND_FEEL_CATEGORY = "ui";
 
 	public static final String CONFIG_CATEGORY = "options";
 
 	public static final String STATE_CATEGORY = "state";
 
-	protected ZLConfig myConfig = ZLConfigInstance.getInstance();
+	protected final ZLConfig myConfig = ZLConfigInstance.getInstance();
 
-	protected String myCategory;
+	protected final String myCategory;
 
-	protected String myGroup;
+	protected final String myGroup;
 
-	protected String myOptionName;
+	protected final String myOptionName;
 
 	protected boolean myIsSynchronized;
 
@@ -33,17 +34,16 @@ public abstract class ZLOption {
 		myGroup = group;
 		myOptionName = name;
 		myIsSynchronized = false;
-		
+
 		/*
 		 * String value = myConfig.getValue(group, name, null);
 		 * 
 		 * 
 		 * 
-		 
-		if ((value != null)) {             && ( ¿“≈√Œ–»» Õ≈ –¿¬Õ€)
-			myConfig.setValue(group, name, value, category);
-		}
-		*/
+		 * 
+		 * if ((value != null)) { && ( ¿“≈√Œ–»» Õ≈ –¿¬Õ€)
+		 * myConfig.setValue(group, name, value, category); }
+		 */
 	}
 
 	/**
@@ -83,13 +83,4 @@ public abstract class ZLOption {
 				&& (op.myCategory == this.myCategory) && (op.myGroup == this.myGroup));
 
 	}
-
-	// public abstract String getStringValue();
-
-	// public void clearGroup(String group) {}
-	// private final ZLOption& operator = (final ZLOptions options);
-	// public boolean isAutoSavingSupported();
-	// public void startAutoSave(int seconds);
-	// private ZLOption(const ZLOption&);
-	// private final ZLOption& operator = (const ZLOption&);
 }

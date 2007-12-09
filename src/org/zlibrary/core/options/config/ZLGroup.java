@@ -3,8 +3,8 @@ package org.zlibrary.core.options.config;
 import java.util.*;
 
 /*package*/ final class ZLGroup {
+	
 	private final Set<ZLOptionInfo> myData;
-
 	private final String myName;
 
 	public ZLGroup(String name) {

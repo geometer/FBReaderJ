@@ -5,9 +5,7 @@ import java.util.*;
 /*package*/final class ZLDeltaConfig {
 
 	private final ZLDeletedValuesSet myDeletedValues = new ZLDeletedValuesSet();
-
 	private final Set<String> myDeletedGroups = new HashSet<String>();
-
 	private final ZLSimpleConfig mySetValues = new ZLSimpleConfig();
 
 	public ZLDeltaConfig() {

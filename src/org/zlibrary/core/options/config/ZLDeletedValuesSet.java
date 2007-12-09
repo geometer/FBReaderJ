@@ -4,7 +4,7 @@ import java.util.*;
 
 /*package*/ final class ZLDeletedValuesSet {
 	
-	private Set<ZLOptionID> myData = 
+	private final Set<ZLOptionID> myData = 
 		new LinkedHashSet<ZLOptionID>();
 
 	public void add(String group, String name) {

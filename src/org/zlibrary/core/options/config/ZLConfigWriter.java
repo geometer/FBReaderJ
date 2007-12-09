@@ -6,7 +6,6 @@ import java.util.*;
 /*package*/ final class ZLConfigWriter implements ZLWriter {
 
 	private final ZLConfigImpl myConfig = ZLConfigInstance.getExtendedInstance();
-
 	private final File myDestinationDirectory;
 
 	protected ZLConfigWriter(String path) {

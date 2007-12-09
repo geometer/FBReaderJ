@@ -12,6 +12,7 @@ import org.zlibrary.core.options.util.*;
  * 
  */
 public final class ZLColorOption extends ZLOption {
+
 	private int myIntValue;
 
 	private final int myDefaultValue;
@@ -34,7 +35,7 @@ public final class ZLColorOption extends ZLOption {
 				try {
 					Integer intValue = Integer.parseInt(value);
 					myIntValue = intValue;
-					myConfig.setValue(myGroup, myOptionName, value , myCategory);
+					myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}

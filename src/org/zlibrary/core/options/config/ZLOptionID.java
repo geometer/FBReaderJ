@@ -1,8 +1,8 @@
 package org.zlibrary.core.options.config;
 
 /*package*/ class ZLOptionID {
+	
 	private String myGroup = "";
-
 	private String myName = "";
 
 	public ZLOptionID(String group, String name) {
