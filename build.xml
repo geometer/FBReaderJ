@@ -5,7 +5,9 @@
 	<property name = "icons.dir" value = "icons"/>
 	<property name = "data.dir" value = "data"/>
 	<property name = "test.dir" value= "test"/>
+	<property name = "manifest.file" value= "manifest.mf"/>
 	<property name = "main.jar" value= "FBReaderJ.jar"/>
+	<property name = "sources.zip" value= "FBReaderJ-sources.zip"/>
 
 	<target name = "prepare">
 		<mkdir dir = "${bin.dir}" />
@@ -18,7 +20,7 @@
 	</target>
 
 	<target name = "buildJar" depends = "compile">
-		<jar destfile = "${main.jar}" manifest = "manifest.mf">
+		<jar destfile = "${main.jar}" manifest = "${manifest.file}">
 			<fileset dir = "${bin.dir}" includes = "**/*.class"/>
 			<fileset dir = "." includes = "${icons.dir}/**/*.png"/>
 			<fileset dir = "." includes = "${data.dir}/**"/>
@@ -48,5 +50,24 @@
 	<target name = "clean">
 		<delete dir = "${bin.dir}"/>
 		<delete file = "${main.jar}"/>
+		<delete file = "${sources.zip}"/>
+		<delete dir = "platform/android/res/raw"/>
+		<delete file = "src/org/zlibrary/ui/android/library/R.java"/>
+	</target>
+
+	<target name = "sources-archive" depends = "clean">
+		<echo>Packaging sources archive...</echo>
+		<exec executable = "zip" failonerror = "true">
+			<arg value = "-rq" />
+			<arg value = "${sources.zip}" />
+			<arg value = "${src.dir}" />
+			<arg value = "${data.dir}" />
+			<arg value = "${icons.dir}" />
+			<arg value = "${manifest.mf}" />
+			<arg value = "build.xml" />
+			<arg value = "platform" />
+			<arg value = "-x" />
+			<arg value = "*/.svn/*" />
+		</exec>
 	</target>
 </project>
