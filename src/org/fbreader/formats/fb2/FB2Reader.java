@@ -294,7 +294,7 @@ public class FB2Reader extends ZLXMLReader {
 			
 			case A:
 				String ref = reference(attributes);
-				if (!ref.equals("")) {
+				if ((ref != null) && !ref.isEmpty()) {
 					if (ref.charAt(0) == '#') {
 						myHyperlinkType = FBTextKind.FOOTNOTE;
 						ref = ref.substring(1);
@@ -323,7 +323,7 @@ public class FB2Reader extends ZLXMLReader {
 					offset = Short.valueOf(vOffset);
 				} catch (NumberFormatException e) {
 				}
-				if ((imgRef != null) && (imgRef.charAt(0) == '#')) {
+				if ((imgRef != null) && !imgRef.isEmpty() && (imgRef.charAt(0) == '#')) {
 					imgRef = imgRef.substring(1);
 					if (!imgRef.equals(myCoverImageReference) ||
 							myParagraphsBeforeBodyNumber != myModelReader.getModel().getBookModel().getParagraphsNumber()) {
