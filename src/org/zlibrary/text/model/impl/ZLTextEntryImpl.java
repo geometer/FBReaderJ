@@ -19,7 +19,7 @@ final class ZLTextEntryImpl implements ZLTextEntry {
 		for (char[] part : data) {
 			myLength += part.length;
 		}
-		myDataArray = new ArrayList(data);
+		myDataArray = new ArrayList<char[]>(data);
 	}
 
 	public int getDataLength() {
