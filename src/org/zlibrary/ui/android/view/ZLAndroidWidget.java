@@ -17,6 +17,8 @@ public class ZLAndroidWidget extends View {
 	private int myWidth;
 	private int myHeight;
 
+	//public static long Time;
+
 	public ZLAndroidWidget(Context context, AttributeSet attrs, Map inflateParams, int defStyle) {
 		super(context, attrs, inflateParams, defStyle);
 	}
@@ -68,8 +70,9 @@ public class ZLAndroidWidget extends View {
 				break;
 		}
 		view.paint();
-		//long time = System.currentTimeMillis() - start;
-		//myPaintContext.drawString(240, 115, "" + time, 0, 3);
+		//Time = System.currentTimeMillis() - start;
+		//String sTime = "" + Time;
+		//myPaintContext.drawString(240, 165, sTime.toCharArray(), 0, sTime.length());
 		myPaintContext.endPaint();
 	}
 }

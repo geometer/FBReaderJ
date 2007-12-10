@@ -31,14 +31,14 @@ public class FB2Reader extends ZLXMLReader {
 
 	private final char[] SPACE = { ' ' }; 
 	
-	private FB2Tag getTag(String s) {
+	private static FB2Tag getTag(String s) {
 		if (s.contains("-")) {
 			s = s.replace('-', '_');
 		}
 		return FB2Tag.valueOf(s.toUpperCase());
 	}
 	
-	private String reference(Map<String, String> attributes) {
+	private static String reference(Map<String, String> attributes) {
 		for (String s : attributes.keySet()) {
 			if (s.endsWith(":href")) {
 				return attributes.get(s);
@@ -354,9 +354,15 @@ public class FB2Reader extends ZLXMLReader {
 	}
 	
 	public BookModel readBook(String fileName) {
-		long start = System.currentTimeMillis();
+		//ZLXMLReader reader = new ZLXMLReader() {};
+		//long start = System.currentTimeMillis();
+		//reader.read(fileName);
+		//org.zlibrary.ui.android.view.ZLAndroidWidget.Time = System.currentTimeMillis() - start;
+		//System.err.println("empty loading book time = " + (System.currentTimeMillis() - start));
+		//start = System.currentTimeMillis();
 		boolean success = read(fileName);
-		System.err.println("loading book time = " + (System.currentTimeMillis() - start));
+		//org.zlibrary.ui.android.view.ZLAndroidWidget.Time = System.currentTimeMillis() - start;
+		//System.err.println("loading book time = " + (System.currentTimeMillis() - start));
 		return success ? myModelReader.getModel() : null;
 	}
 }

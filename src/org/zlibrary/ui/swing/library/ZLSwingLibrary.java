@@ -8,6 +8,7 @@ import org.zlibrary.core.options.config.ZLConfigWriterFactory;
 import org.zlibrary.core.application.ZLApplication;
 
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
+import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
@@ -30,7 +31,8 @@ public class ZLSwingLibrary extends ZLibrary {
 	}
 
 	public void run(String[] args) {
-		new ZLSaxXMLProcessorFactory();
+		//new ZLSaxXMLProcessorFactory();
+		new ZLOwnXMLProcessorFactory();
 		loadProperties();
 
 		ZLConfigReaderFactory.createConfigReader(configDirectory()).read();

@@ -7,6 +7,7 @@ import android.content.Resources;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
 
+import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 //import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
 //import org.zlibrary.options.config.writer.ZLConfigWriterFactory;
@@ -68,7 +69,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	void run(ZLAndroidActivity activity) {
 		myActivity = activity;
 
-		new ZLSaxXMLProcessorFactory();
+		new ZLOwnXMLProcessorFactory();
+		//new ZLSaxXMLProcessorFactory();
 		loadProperties();
 
 		myActivity.setContentView(R.layout.main);
