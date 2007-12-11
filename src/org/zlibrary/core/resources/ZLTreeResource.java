@@ -1,9 +1,6 @@
 package org.zlibrary.core.resources;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import org.zlibrary.core.xml.ZLXMLReader;
 
 final class ZLTreeResource extends ZLResource {
@@ -27,8 +24,9 @@ final class ZLTreeResource extends ZLResource {
 	
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
-		new ResourceTreeReader(ourRoot).readDocument("data/resources/zlibrary/" + fileName);
-		new ResourceTreeReader(ourRoot).readDocument("data/resources/application/" + fileName);
+		ResourceTreeReader reader = new ResourceTreeReader();
+		reader.readDocument(ourRoot, "data/resources/zlibrary/" + fileName);
+		reader.readDocument(ourRoot, "data/resources/application/" + fileName);
 	}
 
 	private ZLTreeResource(String name) {
@@ -63,30 +61,28 @@ final class ZLTreeResource extends ZLResource {
 		
 	private static class ResourceTreeReader extends ZLXMLReader {
 		private static final String NODE = "node"; 
-		private final Stack<ZLTreeResource> myStack = new Stack<ZLTreeResource>();
+		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 		
-		public ResourceTreeReader(ZLTreeResource root) {
-			myStack.push(root);
-		}
-		
-		@Override
-		public void endElementHandler(String tag) {
-			if (!myStack.empty() && (NODE.equals(tag))) {
-				myStack.pop();
-			}
-		}
-
-		public void readDocument(String string) {
+		public void readDocument(ZLTreeResource root, String string) {
+			myStack.clear();
+			myStack.add(root);
 			read(string);
 		}
 
 		@Override
+		public void endElementHandler(String tag) {
+			if (!myStack.isEmpty() && (NODE.equals(tag))) {
+				myStack.remove(myStack.size() - 1);
+			}
+		}
+
+		@Override
 		public void startElementHandler(String tag, Map<String, String> attributes) {
-			if (!myStack.empty() && (NODE.equals(tag))) {
+			if (!myStack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.get("name");
 				if (name != null) {
 					String value = attributes.get("value");
-					ZLTreeResource peek = myStack.peek();
+					ZLTreeResource peek = myStack.get(myStack.size() - 1);
 					ZLTreeResource node;
 					if (peek.myChildren == null) {
 						node = null;
@@ -106,11 +102,9 @@ final class ZLTreeResource extends ZLResource {
 							node.setValue(value);
 						}
 					}
-					myStack.push(node);
+					myStack.add(node);
 				}
 			}
 		}
-
 	}
-	
 }
