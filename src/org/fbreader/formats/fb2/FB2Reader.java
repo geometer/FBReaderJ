@@ -1,6 +1,5 @@
 package org.fbreader.formats.fb2;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.fbreader.bookmodel.BookModel;
@@ -25,7 +24,7 @@ public class FB2Reader extends ZLXMLReader {
 	private Base64EncodedImage myCurrentImage;
 	private boolean myInsideCoverpage = false;
 	private boolean myProcessingImage = false;
-	private final ArrayList<char[]> myImageBuffer = new ArrayList<char[]>();
+	private final StringBuilder myImageBuffer = new StringBuilder();
 	private String myCoverImageReference;
 	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 
@@ -54,7 +53,7 @@ public class FB2Reader extends ZLXMLReader {
 		char[] data = new char[length];
 		System.arraycopy(ch, start, data, 0, length);
 		if ((length > 0) && myProcessingImage) {
-			myImageBuffer.add(data);
+			myImageBuffer.append(data);
 		} else {
 			myModelReader.addData(data);
 		}		
@@ -158,9 +157,9 @@ public class FB2Reader extends ZLXMLReader {
 				break;	
 			
 			case BINARY:
-				if (!myImageBuffer.isEmpty() && (myCurrentImage != null)) {
+				if ((myImageBuffer.length() > 0) && (myCurrentImage != null)) {
 					myCurrentImage.addData(myImageBuffer);
-					myImageBuffer.clear();
+					myImageBuffer.delete(0, myImageBuffer.length());
 					myCurrentImage = null;
 				}
 				myProcessingImage = false;

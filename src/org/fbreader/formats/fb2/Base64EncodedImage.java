@@ -1,12 +1,10 @@
 package org.fbreader.formats.fb2;
 
-import java.util.ArrayList;
-
 import org.zlibrary.core.image.ZLImage;
 
 class Base64EncodedImage implements ZLImage {
-	private ArrayList<char[]> myEncodedData;
-	private byte [] myData;
+	private StringBuilder myEncodedData = new StringBuilder();
+	private byte[] myData;
 	
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
@@ -17,26 +15,15 @@ class Base64EncodedImage implements ZLImage {
 			return;
 		}
 
-		int dataLength = 0;
-		for (char[] part : myEncodedData) {
-			dataLength += part.length;
-		}
-		char[] encodedData = new char[dataLength];
-		{
-			int pos = 0;
-			for (char[] part : myEncodedData) {
-				System.arraycopy(part, 0, encodedData, pos, part.length);
-				pos += part.length;
-			}
-		}
-		myEncodedData = null;
+		final StringBuilder encodedData = myEncodedData;
+		final int dataLength = encodedData.length();
 		
-		int newLength = dataLength / 4 * 3;
+		final int newLength = dataLength / 4 * 3;
 		myData = new byte[newLength];
 		byte [] number = new byte[4];
 		for (int pos = 0, dataPos = 0; pos < dataLength; dataPos += 3) {
 			for (int i = 0; (i < 4) && (pos < dataLength); ++pos) {
-				char encodedByte = encodedData[pos];
+				char encodedByte = encodedData.charAt(pos);
 				number[i] = 0;
 				if (('A' <= encodedByte) && (encodedByte <= 'Z')) {
 					number[i] = (byte) (encodedByte - 'A');
@@ -70,6 +57,7 @@ class Base64EncodedImage implements ZLImage {
 		}
 			
 */			
+		myEncodedData = null;
 	}
 	
 	public byte [] byteData() {
@@ -77,7 +65,7 @@ class Base64EncodedImage implements ZLImage {
 		return myData;
 	}
 	
-	void addData(ArrayList<char[]> data) {
-		myEncodedData = new ArrayList<char[]>(data);
+	void addData(StringBuilder buffer) {
+		myEncodedData.append(buffer);
 	}
 }
