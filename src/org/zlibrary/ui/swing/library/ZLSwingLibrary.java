@@ -5,7 +5,6 @@ import java.io.InputStream;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.config.ZLConfigReaderFactory;
 import org.zlibrary.core.options.config.ZLConfigWriterFactory;
-import org.zlibrary.core.resources.ZLResourceKey;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 
@@ -55,6 +54,6 @@ public class ZLSwingLibrary extends ZLibrary {
 		application.initWindow();
 		mainWindow.run();
 		
-//		ZLDialogManager.getInstance().errorBox(new ZLResourceKey("noHelpBox"));
+//		ZLDialogManager.getInstance().errorBox(new "noHelpBox");
 	}
 }

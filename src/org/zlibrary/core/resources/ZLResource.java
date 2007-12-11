@@ -11,10 +11,6 @@ abstract public class ZLResource {
 		return ZLTreeResource.ourRoot.getResource(key);
 	}
     
-	public static ZLResource resource(ZLResourceKey key) {
-		return resource(key.Name);
-	}
-
 	protected ZLResource(String name) {
 		myName = name;
 	}
@@ -27,9 +23,5 @@ abstract public class ZLResource {
 	
 	abstract public String value();
 
-	public ZLResource getResource(ZLResourceKey key) {
-		return getResource(key.Name);
-	}
-	
 	abstract public ZLResource getResource(String key);
 }

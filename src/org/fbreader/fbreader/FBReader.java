@@ -2,7 +2,6 @@ package org.fbreader.fbreader;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
-import org.zlibrary.core.resources.ZLResourceKey;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
@@ -86,43 +85,43 @@ public final class FBReader extends ZLApplication {
 			addToolbarButton(ActionCode.SHOW_HELP, "help");
 		//}
 
-		getMenubar().addItem(ActionCode.SHOW_BOOK_INFO, new ZLResourceKey("bookInfo"));
-		getMenubar().addItem(ActionCode.SHOW_CONTENTS, new ZLResourceKey("toc"));
+		getMenubar().addItem(ActionCode.SHOW_BOOK_INFO, "bookInfo");
+		getMenubar().addItem(ActionCode.SHOW_CONTENTS, "toc");
 
-		Menu librarySubmenu = getMenubar().addSubmenu(new ZLResourceKey("library"));
-		librarySubmenu.addItem(ActionCode.SHOW_COLLECTION, new ZLResourceKey("open"));
-		librarySubmenu.addItem(ActionCode.OPEN_PREVIOUS_BOOK, new ZLResourceKey("previous"));
-		librarySubmenu.addItem(ActionCode.SHOW_LAST_BOOKS, new ZLResourceKey("recent"));
-		librarySubmenu.addItem(ActionCode.ADD_BOOK, new ZLResourceKey("addBook"));
-		librarySubmenu.addItem(ActionCode.SHOW_HELP, new ZLResourceKey("about"));
+		Menu librarySubmenu = getMenubar().addSubmenu("library");
+		librarySubmenu.addItem(ActionCode.SHOW_COLLECTION, "open");
+		librarySubmenu.addItem(ActionCode.OPEN_PREVIOUS_BOOK, "previous");
+		librarySubmenu.addItem(ActionCode.SHOW_LAST_BOOKS, "recent");
+		librarySubmenu.addItem(ActionCode.ADD_BOOK, "addBook");
+		librarySubmenu.addItem(ActionCode.SHOW_HELP, "about");
 
-		Menu navigationSubmenu = getMenubar().addSubmenu(new ZLResourceKey("navigate"));
-		navigationSubmenu.addItem(ActionCode.SCROLL_TO_HOME, new ZLResourceKey("gotoStartOfDocument"));
-		navigationSubmenu.addItem(ActionCode.SCROLL_TO_START_OF_TEXT, new ZLResourceKey("gotoStartOfSection"));
-		navigationSubmenu.addItem(ActionCode.SCROLL_TO_END_OF_TEXT, new ZLResourceKey("gotoEndOfSection"));
-		navigationSubmenu.addItem(ActionCode.GOTO_NEXT_TOC_SECTION, new ZLResourceKey("gotoNextTOCItem"));
-		navigationSubmenu.addItem(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new ZLResourceKey("gotoPreviousTOCItem"));
-		navigationSubmenu.addItem(ActionCode.UNDO, new ZLResourceKey("goBack"));
-		navigationSubmenu.addItem(ActionCode.REDO, new ZLResourceKey("goForward"));
+		Menu navigationSubmenu = getMenubar().addSubmenu("navigate");
+		navigationSubmenu.addItem(ActionCode.SCROLL_TO_HOME, "gotoStartOfDocument");
+		navigationSubmenu.addItem(ActionCode.SCROLL_TO_START_OF_TEXT, "gotoStartOfSection");
+		navigationSubmenu.addItem(ActionCode.SCROLL_TO_END_OF_TEXT, "gotoEndOfSection");
+		navigationSubmenu.addItem(ActionCode.GOTO_NEXT_TOC_SECTION, "gotoNextTOCItem");
+		navigationSubmenu.addItem(ActionCode.GOTO_PREVIOUS_TOC_SECTION, "gotoPreviousTOCItem");
+		navigationSubmenu.addItem(ActionCode.UNDO, "goBack");
+		navigationSubmenu.addItem(ActionCode.REDO, "goForward");
 
-		Menu selectionSubmenu = getMenubar().addSubmenu(new ZLResourceKey("selection"));
-		selectionSubmenu.addItem(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new ZLResourceKey("clipboard"));
-		selectionSubmenu.addItem(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new ZLResourceKey("dictionary"));
-		selectionSubmenu.addItem(ActionCode.CLEAR_SELECTION, new ZLResourceKey("clear"));
+		Menu selectionSubmenu = getMenubar().addSubmenu("selection");
+		selectionSubmenu.addItem(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, "clipboard");
+		selectionSubmenu.addItem(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, "dictionary");
+		selectionSubmenu.addItem(ActionCode.CLEAR_SELECTION, "clear");
 
-		Menu findSubmenu = getMenubar().addSubmenu(new ZLResourceKey("search"));
-		findSubmenu.addItem(ActionCode.SEARCH, new ZLResourceKey("find"));
-		findSubmenu.addItem(ActionCode.FIND_NEXT, new ZLResourceKey("next"));
-		findSubmenu.addItem(ActionCode.FIND_PREVIOUS, new ZLResourceKey("previous"));
+		Menu findSubmenu = getMenubar().addSubmenu("search");
+		findSubmenu.addItem(ActionCode.SEARCH, "find");
+		findSubmenu.addItem(ActionCode.FIND_NEXT, "next");
+		findSubmenu.addItem(ActionCode.FIND_PREVIOUS, "previous");
 
-		Menu viewSubmenu = getMenubar().addSubmenu(new ZLResourceKey("view"));
+		Menu viewSubmenu = getMenubar().addSubmenu("view");
 		// MSS: these three actions can have a checkbox next to them
-		viewSubmenu.addItem(ActionCode.ROTATE_SCREEN, new ZLResourceKey("rotate"));
-		viewSubmenu.addItem(ActionCode.TOGGLE_FULLSCREEN, new ZLResourceKey("fullScreen"));
-		viewSubmenu.addItem(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new ZLResourceKey("toggleIndicator"));
+		viewSubmenu.addItem(ActionCode.ROTATE_SCREEN, "rotate");
+		viewSubmenu.addItem(ActionCode.TOGGLE_FULLSCREEN, "fullScreen");
+		viewSubmenu.addItem(ActionCode.SHOW_HIDE_POSITION_INDICATOR, "toggleIndicator");
 
-		getMenubar().addItem(ActionCode.SHOW_OPTIONS, new ZLResourceKey("settings"));
-		getMenubar().addItem(ActionCode.QUIT, new ZLResourceKey("close"));
+		getMenubar().addItem(ActionCode.SHOW_OPTIONS, "settings");
+		getMenubar().addItem(ActionCode.QUIT, "close");
 
 		ZLTextView view = new ZLTextViewImpl(this, getContext());
 		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "data/help/MiniHelp.ru.fb2");
@@ -136,7 +135,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	private final void addToolbarButton(int code, String name) {
-		getToolbar().addButton(code, new ZLResourceKey(name));
+		getToolbar().addButton(code, name);
 	}
 
 	public ZLKeyBindings keyBindings() {

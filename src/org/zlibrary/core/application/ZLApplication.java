@@ -322,12 +322,12 @@ public abstract class ZLApplication {
 		private final ArrayList<Item> myItems = new ArrayList<Item>();
 		private final ZLResource myResource = ZLResource.resource("toolbar");
 
-		public void addButton(int actionId, ZLResourceKey key) {
+		public void addButton(int actionId, String key) {
 			addButton(actionId, key, null);
 		}
 
-		private void addButton(int actionId, ZLResourceKey key, ButtonGroup group) {
-			ButtonItem button = new ButtonItem(actionId, key.Name, myResource.getResource(key));
+		private void addButton(int actionId, String key, ButtonGroup group) {
+			ButtonItem button = new ButtonItem(actionId, key, myResource.getResource(key));
 			myItems.add(button);
 			button.setButtonGroup(group);
 		}
@@ -455,7 +455,7 @@ public abstract class ZLApplication {
 			return myResource;
 		}
 
-		public void addItem(int actionId, ZLResourceKey key) {
+		public void addItem(int actionId, String key) {
 			myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
 		}
 		
@@ -463,7 +463,7 @@ public abstract class ZLApplication {
 			myItems.add(new Menubar.Separator());
 		}
 		
-		public Menu addSubmenu(ZLResourceKey key) {
+		public Menu addSubmenu(String key) {
 			Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
 			myItems.add(submenu);
 			return submenu;

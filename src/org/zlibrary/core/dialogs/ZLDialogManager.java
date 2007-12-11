@@ -2,19 +2,18 @@ package org.zlibrary.core.dialogs;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.resources.ZLResourceKey;
 
 public abstract class ZLDialogManager {
 	protected static ZLDialogManager ourInstance;
 	
-	public static final ZLResourceKey OK_BUTTON = new ZLResourceKey("ok");
-	public static final ZLResourceKey CANCEL_BUTTON = new ZLResourceKey("cancel");
-	public static final ZLResourceKey YES_BUTTON = new ZLResourceKey("yes");
-	public static final ZLResourceKey NO_BUTTON = new ZLResourceKey("no");
-	public static final ZLResourceKey APPLY_BUTTON = new ZLResourceKey("apply");
+	public static final String OK_BUTTON = "ok";
+	public static final String CANCEL_BUTTON = "cancel";
+	public static final String YES_BUTTON = "yes";
+	public static final String NO_BUTTON = "no";
+	public static final String APPLY_BUTTON = "apply";
 	
-	public static final ZLResourceKey COLOR_KEY = new ZLResourceKey("color");
-	public static final ZLResourceKey DIALOG_TITLE = new ZLResourceKey("title");
+	public static final String COLOR_KEY = "color";
+	public static final String DIALOG_TITLE = "title";
 	
 	protected ZLDialogManager() {
 	}
@@ -31,25 +30,25 @@ public abstract class ZLDialogManager {
 		ourInstance = null;
 	}
 	
-	public void informationBox(ZLResourceKey key) {
+	public void informationBox(String key) {
 		informationBox(key, dialogMessage(key));
 	}
 	
-	public void errorBox(ZLResourceKey key) {
+	public void errorBox(String key) {
 		errorBox(key, dialogMessage(key));
 	}
 	
-	public abstract void errorBox(ZLResourceKey key, String message);
+	public abstract void errorBox(String key, String message);
 	
-	public abstract void informationBox(ZLResourceKey key, String message);
+	public abstract void informationBox(String key, String message);
 	
 	public abstract void createApplicationWindow(ZLApplication application);
 	
-	public static String dialogMessage(ZLResourceKey key) {
+	public static String dialogMessage(String key) {
 		return resource().getResource(key).getResource("message").value();
 	}
 	
-	public static String dialogTitle(ZLResourceKey key) {
+	public static String dialogTitle(String key) {
 		return resource().getResource(key).getResource(DIALOG_TITLE).value();
 	}
 	

@@ -3,7 +3,6 @@ package org.zlibrary.ui.swing.dialogs;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.resources.ZLResourceKey;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 
 import javax.swing.JOptionPane;
@@ -19,13 +18,13 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 	}
 	
 	@Override
-	public void errorBox(ZLResourceKey key, String message) {
+	public void errorBox(String key, String message) {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(null, message, dialogTitle(key), 1, null);
 	}
 
 	@Override
-	public void informationBox(ZLResourceKey key, String message) {
+	public void informationBox(String key, String message) {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(null, message, dialogTitle(key), 1, null);
 	}
