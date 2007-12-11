@@ -278,7 +278,12 @@ final class ZLOwnXMLParser {
 							if (value == null) {
 								if ((name.length() > 0) && (name.charAt(0) == '#')) {
 									try {
-										int number = Integer.parseInt(name.substring(1));
+										int number;
+										if (name.charAt(1) == 'x') {
+											number = Integer.parseInt(name.substring(2), 16);
+										} else {
+											number = Integer.parseInt(name.substring(1));
+										}
 										value = new char[] { (char)number };
 										entityMap.put(name, value);
 									} catch (NumberFormatException e) {
