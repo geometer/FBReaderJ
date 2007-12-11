@@ -12,7 +12,6 @@ import java.util.Map;
 
 class ZLTextModelImpl implements ZLTextModel {
 	private LinkedList<ZLTextParagraph> myParagraphs = new LinkedList<ZLTextParagraph>();
-	private ZLTextControlEntryPoolImpl myEntryPool = new ZLTextControlEntryPoolImpl();
 
 	public int getParagraphsNumber() {
 		return myParagraphs.size();
@@ -31,7 +30,7 @@ class ZLTextModelImpl implements ZLTextModel {
 	}
 
 	public void addControl(byte textKind, boolean isStart) {
-		myParagraphs.getLast().addEntry(myEntryPool.getControlEntry(textKind, isStart));
+		myParagraphs.getLast().addEntry(EntryPool.getControlEntry(textKind, isStart));
 	}
 
 	public void addText(char[] text) {

@@ -40,7 +40,7 @@ public final class BookReader {
 		}		
 	}
 	
-	public void addControl(Byte kind, boolean start) {
+	public void addControl(byte kind, boolean start) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl((byte) kind, start);
@@ -65,7 +65,7 @@ public final class BookReader {
 	public void beginParagraph(ZLTextParagraph.Kind kind) {
 		if (myCurrentTextModel != null) {
 			myCurrentTextModel.createParagraph(kind);
-			for (Byte b : myKindStack) {
+			for (byte b : myKindStack) {
 				myCurrentTextModel.addControl(b, true);
 			}
 			if (myHyperlinkReference.length() != 0) {
@@ -127,7 +127,7 @@ public final class BookReader {
 		}	
 	}
 	
-	public void addHyperlinkControl(Byte kind, String label) {
+	public void addHyperlinkControl(byte kind, String label) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addHyperlinkControl(kind, label);
