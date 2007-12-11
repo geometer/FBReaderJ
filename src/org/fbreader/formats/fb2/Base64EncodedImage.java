@@ -2,7 +2,7 @@ package org.fbreader.formats.fb2;
 
 import org.zlibrary.core.image.ZLImage;
 
-class Base64EncodedImage implements ZLImage {
+final class Base64EncodedImage implements ZLImage {
 	private StringBuilder myEncodedData = new StringBuilder();
 	private byte[] myData;
 	
