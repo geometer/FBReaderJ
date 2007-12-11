@@ -16,9 +16,9 @@ class ZLTextLineInfo {
 	public int SpaceCounter;
 
 	public ZLTextLineInfo(ZLTextWordCursor word, ZLTextStyle style) {
-		Start = word;
-		RealStart = word;
-		End = word;
+		Start = new ZLTextWordCursor(word);
+		RealStart = new ZLTextWordCursor(word);
+		End = new ZLTextWordCursor(word);
 		IsVisible = false;
 		LeftIndent = 0;
 		Width = 0;

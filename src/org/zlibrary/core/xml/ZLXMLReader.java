@@ -12,6 +12,7 @@ public abstract class ZLXMLReader {
 			try {
 				stream = new BufferedInputStream(new FileInputStream(fileName));
 			} catch (FileNotFoundException e) {
+//				System.out.println("File not found");
 			}
 		}
 		return (stream != null) ? ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, stream) : false;

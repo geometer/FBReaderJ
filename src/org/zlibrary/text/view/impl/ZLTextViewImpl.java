@@ -240,7 +240,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		}	*/
 	}
 
-	private void drawTextLine(ZLTextLineInfo info, int from, int to) {
+	private void drawTextLine(ZLTextLineInfo info, final int from, final int to) {
 		final ZLTextParagraphCursor paragraph = info.RealStart.getParagraphCursor();
 	
 		ListIterator<ZLTextElementArea> fromIt = myTextElementMap.listIterator(from);
@@ -273,8 +273,16 @@ public class ZLTextViewImpl extends ZLTextView {
 				}
 			}
 		}
-		if (it != toIt) {
-//			System.out.println("Didn't come to the end of the infos.");
+		if (!(it.nextIndex() == toIt.nextIndex())) {
+			ZLTextElementArea area = it.next();
+			if (area.ChangeStyle) {
+				myStyle.setStyle(area.Style);
+			}
+			int len = info.End.getCharNumber();
+			final ZLTextWord word = (ZLTextWord) info.End.getElement();
+			final int x = area.XStart;
+			final int y = area.YEnd - myStyle.getElementDescent(word) - myStyle.getTextStyle().verticalShift();
+			drawWord(x, y, word, 0, len, area.AddHyphenationSign);
 		}
 		getContext().moveY(info.Descent + info.VSpaceAfter);
 	}
@@ -354,7 +362,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		info.Width = info.LeftIndent;
 		
 		if (info.RealStart.equalWordNumber(end)) {
-			info.End = info.RealStart;
+			info.End = new ZLTextWordCursor(info.RealStart);
 			return info;
 		}
 
@@ -397,7 +405,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			current.nextWord();
 			boolean allowBreak = current.equalWordNumber(end);
 			if (!allowBreak) {
-				element = paragraphCursor.getElement(current.getWordNumber());
+				element = current.getElement(); 
 				allowBreak = (((!(element instanceof ZLTextWord)) || (previousElement instanceof ZLTextWord)) && 
 						!(element instanceof ZLTextImageElement) && !(element instanceof ZLTextControlElement));
 			}
@@ -407,7 +415,7 @@ public class ZLTextViewImpl extends ZLTextView {
 				info.Height = Math.max(info.Height, newHeight);
 				info.Descent = Math.max(info.Descent, newDescent);
 				info.End = new ZLTextWordCursor(current);
-//				storedStyle = myStyle.getTextStyle();
+				storedStyle = myStyle.getTextStyle();
 				info.SpaceCounter = internalSpaceCounter;
 				removeLastSpace = !wordOccurred && (info.SpaceCounter > 0);
 			}	
@@ -431,7 +439,7 @@ public class ZLTextViewImpl extends ZLTextView {
 			info.SpaceCounter--;
 		}
 
-//		myStyle.setStyle(storedStyle);
+		myStyle.setStyle(storedStyle);
 
 		if (isFirstLine) {
 			info.Height += info.StartStyle.spaceBefore();
@@ -443,7 +451,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		//System.out.println();
 		//System.out.println("Info widht = " + info.Width);
 
-//		System.out.println("WIDTH = " + info.Width);
+	//	System.out.println(info.End.getElement());
 
 		return info;	
 	}
