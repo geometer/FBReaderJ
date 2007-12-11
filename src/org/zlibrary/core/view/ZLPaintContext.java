@@ -1,7 +1,6 @@
 package org.zlibrary.core.view;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.options.util.ZLColor;
@@ -10,7 +9,7 @@ abstract public class ZLPaintContext {
 	private int myX = 0;
 	private int myY = 0;
 
-	private List<String> myFamilies = new LinkedList<String>();
+	private final ArrayList<String> myFamilies = new ArrayList<String>();
 
 	public enum LineStyle {
 		SOLID_LINE,

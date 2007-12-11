@@ -319,7 +319,7 @@ public abstract class ZLApplication {
 	
 	//toolbar
 	static public final class Toolbar {
-		private final List<Item> myItems = new LinkedList<Item>();
+		private final ArrayList<Item> myItems = new ArrayList<Item>();
 		private final ZLResource myResource = ZLResource.resource("toolbar");
 
 		public void addButton(int actionId, ZLResourceKey key) {
@@ -444,7 +444,7 @@ public abstract class ZLApplication {
 		public interface Item {
 		}
 
-		private final List<Item> myItems = new LinkedList<Item>();
+		private final ArrayList<Item> myItems = new ArrayList<Item>();
 		private final ZLResource myResource;
 
 		Menu(ZLResource resource) {

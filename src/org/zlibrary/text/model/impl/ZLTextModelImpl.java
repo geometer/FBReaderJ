@@ -7,11 +7,10 @@ import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Map;
 
 class ZLTextModelImpl implements ZLTextModel {
-	private LinkedList<ZLTextParagraph> myParagraphs = new LinkedList<ZLTextParagraph>();
+	private ArrayList<ZLTextParagraph> myParagraphs = new ArrayList<ZLTextParagraph>();
 
 	public int getParagraphsNumber() {
 		return myParagraphs.size();
@@ -29,32 +28,36 @@ class ZLTextModelImpl implements ZLTextModel {
 		myParagraphs.remove(index);
 	}
 
+	private ZLTextParagraph getLastParagraph() {
+		return myParagraphs.get(myParagraphs.size() - 1);
+	}
+
 	public void addControl(byte textKind, boolean isStart) {
-		myParagraphs.getLast().addEntry(EntryPool.getControlEntry(textKind, isStart));
+		getLastParagraph().addEntry(EntryPool.getControlEntry(textKind, isStart));
 	}
 
 	public void addText(char[] text) {
-		myParagraphs.getLast().addEntry(new ZLTextEntryImpl(text));
+		getLastParagraph().addEntry(new ZLTextEntryImpl(text));
 	}
 
 	public void addText(ArrayList<char[]> text) {
-		myParagraphs.getLast().addEntry(new ZLTextEntryImpl(text));
+		getLastParagraph().addEntry(new ZLTextEntryImpl(text));
 	}
 	
 	public void addControl(ZLTextForcedControlEntry entry) {
-		myParagraphs.getLast().addEntry(entry);
+		getLastParagraph().addEntry(entry);
 	}
 	
 	public void addHyperlinkControl(byte textKind, String label) {
-		myParagraphs.getLast().addEntry(new ZLTextHyperlinkControlEntryImpl(textKind, label));
+		getLastParagraph().addEntry(new ZLTextHyperlinkControlEntryImpl(textKind, label));
 	}
 	
 	public void addImage(String id, Map<String, ZLImage> imageMap, short vOffset) {
-		myParagraphs.getLast().addEntry(new ZLImageEntryImpl(id, imageMap, vOffset));
+		getLastParagraph().addEntry(new ZLImageEntryImpl(id, imageMap, vOffset));
 	}
 	
 	public void addFixedHSpace(byte length) {
-		myParagraphs.getLast().addEntry(new ZLTextFixedHSpaceEntryImpl(length));
+		getLastParagraph().addEntry(new ZLTextFixedHSpaceEntryImpl(length));
 	}	
 
 	public String dump() {

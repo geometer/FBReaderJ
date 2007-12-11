@@ -5,15 +5,13 @@ import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 import org.zlibrary.text.model.impl.ZLTextEntryImpl;
 
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Collections;
 
-
 class ZLTextParagraphImpl implements ZLTextParagraph {
-	private final List<ZLTextParagraphEntry> myEntries;
+	private final ArrayList<ZLTextParagraphEntry> myEntries = new ArrayList<ZLTextParagraphEntry>();
 
 	ZLTextParagraphImpl() {
-		myEntries = new LinkedList<ZLTextParagraphEntry>();
 	}
 
 	public List<ZLTextParagraphEntry> getEntries() {
