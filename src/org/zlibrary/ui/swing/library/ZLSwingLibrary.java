@@ -31,6 +31,7 @@ public class ZLSwingLibrary extends ZLibrary {
 
 	public static void shutdown() {
 		ZLConfigWriterFactory.createConfigWriter(configDirectory()).write();
+		System.exit(0);
 	}
 
 	public void run(String[] args) {
@@ -48,7 +49,6 @@ public class ZLSwingLibrary extends ZLibrary {
 		} catch (Exception e) {
 			e.printStackTrace();
 			shutdown();
-			System.exit(0);
 		}
 
 		ZLSwingApplicationWindow mainWindow = new ZLSwingApplicationWindow(application);
