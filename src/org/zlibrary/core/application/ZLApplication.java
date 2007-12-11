@@ -43,7 +43,8 @@ public abstract class ZLApplication {
 	private ZLApplicationWindow myWindow;
 	private ZLView myInitialView;
 
-	private final Map<Integer,ZLAction> myActionMap = new HashMap<Integer,ZLAction>();
+	// TODO: 256!!!
+	private final ZLAction[] myActionMap = new ZLAction[256];
 	private Toolbar myToolbar;
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
@@ -142,7 +143,9 @@ public abstract class ZLApplication {
 	}
 	
 	protected final void addAction(int actionId, ZLAction action) {
-		myActionMap.put(actionId, action);
+		if ((actionId >= 0) && (actionId < 256)) {
+			myActionMap[actionId] = action;
+		}
 	}
 
 	public final boolean isFullKeyboardControlSupported() {
@@ -180,7 +183,10 @@ public abstract class ZLApplication {
 	}
 
 	private final ZLAction getAction(Integer actionId) {
-		return myActionMap.get(actionId);
+		if ((actionId >= 0) && (actionId < 256)) {
+			return myActionMap[actionId];
+		}
+		return null;
 	}
 	
 	final boolean isActionVisible(int actionId) {
