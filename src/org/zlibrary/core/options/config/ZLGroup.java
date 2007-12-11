@@ -2,13 +2,11 @@ package org.zlibrary.core.options.config;
 
 import java.util.*;
 
-/*package*/ final class ZLGroup {
-	
-	private final Set<ZLOptionInfo> myData;
+final class ZLGroup {
+	private final Set<ZLOptionInfo> myData = new HashSet<ZLOptionInfo>();
 	private final String myName;
 
 	public ZLGroup(String name) {
-		myData = new HashSet<ZLOptionInfo>();
 		myName = name;
 	}
 
@@ -48,7 +46,6 @@ import java.util.*;
 		}
 	}
 
-	
 	//TODO cuncurrent modification
 	public void unsetValue(String name) {
 		myData.remove(new ZLOptionInfo(name, "", ""));

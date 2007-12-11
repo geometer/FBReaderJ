@@ -1,21 +1,15 @@
 package org.zlibrary.core.options.config;
 
-/*package*/final class ZLOptionInfo {
-	
-	private String myValue = "";
-	private String myCategory = "";
-	private String myName = "";
+final class ZLOptionInfo {
+	private static final String EMPTY_STRING = "";
+	private String myValue;
+	private String myCategory;
+	private String myName;
 
 	public ZLOptionInfo(String name, String value, String category) {
-		if (value != null) {
-			myValue = value.intern();
-		}
-		if (category != null) {
-			myCategory = category.intern();
-		}
-		if (name != null) {
-			myName = name.intern();
-		}
+		myValue = (value != null) ? value.intern() : EMPTY_STRING;
+		myCategory = (category != null) ? category.intern() : EMPTY_STRING;
+		myName = (name != null) ? name.intern() : EMPTY_STRING;
 	}
 
 	public void setValue(String value) {
@@ -43,7 +37,7 @@ package org.zlibrary.core.options.config;
 	}
 
 	public int hashCode() {
-		return myName.length();
+		return myName.hashCode();
 	}
 
 	public boolean equals(Object o) {
@@ -57,12 +51,11 @@ package org.zlibrary.core.options.config;
 
 		ZLOptionInfo arg = (ZLOptionInfo) o;
 
-		if (arg.hashCode() != this.hashCode()) {
+		if (arg.hashCode() != hashCode()) {
 			return false;
 		}
 
 		return arg.myName.equals(myName);
-
 	}
 
 	public String toString() {

@@ -1,6 +1,6 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.*;
+//import java.util.*;
 
 class ZLTextWordCursor {
 	private ZLTextParagraphCursor myParagraphCursor;

@@ -10,7 +10,6 @@ import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 
-
 public final class ZLKeyBindings {
 	private static final String BINDINGS_NUMBER = "Number";
 	private static final String BINDED_KEY = "Key";
