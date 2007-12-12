@@ -32,12 +32,12 @@ public class TestZLTextModel extends TestCase {
         assertEquals(model.getParagraphsNumber(), 2);
         assertEquals(model.getParagraph(0), paragraph);
         model.addText("addText".toCharArray());
-        assertEquals(((ZLTextEntry)(model.getParagraph(1).getEntries().get(0))).getData(), "addText");
+        assertEquals(new String(((ZLTextEntry)(model.getParagraph(1).getEntries().get(0))).getData()), "addText");
         ArrayList<char[]> sb = new ArrayList<char[]>();
         sb.add("1".toCharArray());
         sb.add("2".toCharArray());
         model.addText(sb);
-        assertEquals(((ZLTextEntry)model.getParagraph(1).getEntries().get(1)).getData(), "12");
+        assertEquals(new String(((ZLTextEntry)model.getParagraph(1).getEntries().get(1)).getData()), "12");
     }
 
     public void testAddControl() {

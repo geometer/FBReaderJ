@@ -11,7 +11,7 @@ public class TestTextEntry extends TestCase {
     public void test() {
         String str = "marina";
         ZLTextEntry entry = factory.createTextEntry(str);
-        assertEquals(entry.getData(), str);
+        assertEquals(new String(entry.getData()), str);
         assertEquals(entry.getDataLength(), str.length());
     }
 }
