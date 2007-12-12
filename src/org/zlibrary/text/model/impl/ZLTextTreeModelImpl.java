@@ -4,10 +4,10 @@ import org.zlibrary.text.model.ZLTextTreeModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
-	private ZLTextTreeParagraph myRoot;
+	private final ZLTextTreeParagraph myRoot;
 	
 	public ZLTextTreeModelImpl() {
-		myRoot = new ZLTextTreeParagraphImpl();
+		myRoot = new ZLTextTreeParagraphImpl(null);
 		myRoot.open(true);
 	}
 	

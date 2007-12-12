@@ -10,18 +10,13 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 	private boolean myIsOpen;
 	private	int myDepth;
 	private	ZLTextTreeParagraph myParent;
-	private	ArrayList<ZLTextTreeParagraph> myChildren = new ArrayList<ZLTextTreeParagraph>();
-	
-	ZLTextTreeParagraphImpl() {}
+	private	final ArrayList<ZLTextTreeParagraph> myChildren = new ArrayList<ZLTextTreeParagraph>();
 	
 	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent) {
-		myIsOpen = false;
 		myParent = parent;
 		if (parent != null) {
 			((ZLTextTreeParagraphImpl)parent).addChild(this);
 			myDepth = parent.getDepth() + 1;
-		} else {
-			myDepth = 0;
 		}
 	}
 	

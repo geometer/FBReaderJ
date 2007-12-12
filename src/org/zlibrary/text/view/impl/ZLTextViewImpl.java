@@ -131,9 +131,9 @@ public class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private ZLTextModel myModel;
-	private ViewStyle myStyle;
-	private List<ZLTextLineInfo> myLineInfos;
-	private List<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea>();
+	private final ViewStyle myStyle;
+	private final List<ZLTextLineInfo> myLineInfos;
+	private final ArrayList<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea>();
 	private final ZLTextWordCursor myIteratorCursor = new ZLTextWordCursor();
 
 	// TO BE DELETED

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 class ZLTextModelImpl implements ZLTextModel {
-	private ArrayList<ZLTextParagraph> myParagraphs = new ArrayList<ZLTextParagraph>();
+	private final ArrayList<ZLTextParagraph> myParagraphs = new ArrayList<ZLTextParagraph>();
 
 	public int getParagraphsNumber() {
 		return myParagraphs.size();
