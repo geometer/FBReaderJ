@@ -1,5 +1,7 @@
 package org.test.zlibrary.model;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
 
 import org.zlibrary.text.model.ZLTextModel;
@@ -29,11 +31,11 @@ public class TestZLTextModel extends TestCase {
         model.addParagraphInternal(factory.createParagraph());
         assertEquals(model.getParagraphsNumber(), 2);
         assertEquals(model.getParagraph(0), paragraph);
-        model.addText("addText");
+        model.addText("addText".toCharArray());
         assertEquals(((ZLTextEntry)(model.getParagraph(1).getEntries().get(0))).getData(), "addText");
-        StringBuffer sb = new StringBuffer();
-        sb.append("1");
-        sb.append("2");
+        ArrayList<char[]> sb = new ArrayList<char[]>();
+        sb.add("1".toCharArray());
+        sb.add("2".toCharArray());
         model.addText(sb);
         assertEquals(((ZLTextEntry)model.getParagraph(1).getEntries().get(1)).getData(), "12");
     }
