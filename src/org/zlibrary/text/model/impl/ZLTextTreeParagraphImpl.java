@@ -20,7 +20,7 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 		}
 	}
 	
-	public 	Kind kind() {
+	public 	Kind getKind() {
 		return Kind.TREE_PARAGRAPH;
 	}
 	
