@@ -66,7 +66,7 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 		return 0;
 	}		
 
-	public int alignment() {
+	public byte alignment() {
 		return getBase().alignment();
 	}
 }

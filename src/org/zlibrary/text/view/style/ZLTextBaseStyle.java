@@ -104,7 +104,7 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		return false;
 	}
 
-	public int alignment() {
-		return AlignmentOption.getValue();
+	public byte alignment() {
+		return (byte)AlignmentOption.getValue();
 	}
 }

@@ -3,73 +3,56 @@ package org.zlibrary.text.model.impl;
 import org.zlibrary.text.model.ZLTextAlignmentType;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 
-class ZLTextForcedControlEntryImpl implements  ZLTextForcedControlEntry {
-    private final static int SUPPORT_LEFT_INDENT = 1;
-    private final static int SUPPORT_RIGHT_INDENT = 2;
-    private final static int SUPPORT_ALIGNMENT_TYPE = 4;
+class ZLTextForcedControlEntryImpl implements ZLTextForcedControlEntry {
+	private final static int SUPPORTS_LEFT_INDENT = 1;
+	private final static int SUPPORTS_RIGHT_INDENT = 2;
+	private final static int SUPPORTS_ALIGNMENT_TYPE = 4;
 	
 	private int myMask;
-    private short myLeftIndent;
-    private short myRightIndent;   
-	private ZLTextAlignmentType myAlignmentType;
-    	
+	private short myLeftIndent;
+	private short myRightIndent;
+	private byte myAlignmentType;
+		
 	ZLTextForcedControlEntryImpl() {
 		myMask = 0;
 	}
 	
-    /*	ZLTextForcedControlEntry::ZLTextForcedControlEntry(char *address) {
-		myMask = *address;
-		memcpy(&myLeftIndent, address + 1, sizeof(short));
-		memcpy(&myRightIndent, address + 1 + sizeof(short), sizeof(short));
-		myAlignmentType = (ZLTextAlignmentType)*(address + 1 + 2 * sizeof(short));
-	}*/
-
-	
-	ZLTextForcedControlEntryImpl(short[] address) {
-		myMask = address[0];
-		myLeftIndent = (short)address[1];
-		myRightIndent = (short)address[2];
-		//myAlignmentType = (ZLTextAlignmentType)(address[3]);		
-	}
-    
-	public boolean leftIndentSupported() {
-		int a = myMask & SUPPORT_LEFT_INDENT;
-		return (a != 0);
+	public boolean isLeftIndentSupported() {
+		return (myMask & SUPPORTS_LEFT_INDENT) == SUPPORTS_LEFT_INDENT;
 	}
 	
-	public short leftIndent() {
+	public short getLeftIndent() {
 		return myLeftIndent;
 	};
 	
 	public void setLeftIndent(short leftIndent) {
-		myLeftIndent = leftIndent; myMask |= SUPPORT_LEFT_INDENT;
-	}
-    
-	//todo  
-	public boolean rightIndentSupported() {
-		int a = myMask & SUPPORT_RIGHT_INDENT; 
-		return (a != 0);	
+		myMask |= SUPPORTS_LEFT_INDENT;
+		myLeftIndent = leftIndent;
 	}
 	
-	public short rightIndent() {
+	public boolean isRightIndentSupported() {
+		return (myMask & SUPPORTS_RIGHT_INDENT) == SUPPORTS_RIGHT_INDENT;
+	}
+	
+	public short getRightIndent() {
 		return myRightIndent;
 	}
 	
 	public void setRightIndent(short rightIndent) {
-		myRightIndent = rightIndent; myMask |= SUPPORT_RIGHT_INDENT;
+		myMask |= SUPPORTS_RIGHT_INDENT;
+		myRightIndent = rightIndent;
 	}
 
-	//todo
-	public boolean alignmentTypeSupported() {
-		int a = myMask & SUPPORT_ALIGNMENT_TYPE;
-		return (a != 0);	
+	public boolean isAlignmentTypeSupported() {
+		return (myMask & SUPPORTS_ALIGNMENT_TYPE) == SUPPORTS_ALIGNMENT_TYPE;
 	}
 	
-	public ZLTextAlignmentType alignmentType() {
+	public byte getAlignmentType() {
 		return myAlignmentType;
 	}
 	
-	public void setAlignmentType(ZLTextAlignmentType alignmentType) {
-		myAlignmentType = alignmentType; myMask |= SUPPORT_ALIGNMENT_TYPE;
+	public void setAlignmentType(byte alignmentType) {
+		myMask |= SUPPORTS_ALIGNMENT_TYPE;
+		myAlignmentType = alignmentType;
 	}
 }

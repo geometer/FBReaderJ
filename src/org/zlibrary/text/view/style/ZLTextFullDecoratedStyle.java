@@ -65,8 +65,8 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		return 0;
 	}		
 
-	public int alignment() {
-		int value = (int) myDecoration.AlignmentOption.getValue();
+	public byte alignment() {
+		byte value = (byte)myDecoration.AlignmentOption.getValue();
 		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? getBase().alignment() : value;
 	}
 }

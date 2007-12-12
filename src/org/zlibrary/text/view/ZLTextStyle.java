@@ -14,5 +14,5 @@ public interface ZLTextStyle {
 	public int spaceBefore();
 	public int spaceAfter();
 	public boolean isDecorated();
-	public int alignment();
+	public byte alignment();
 }
