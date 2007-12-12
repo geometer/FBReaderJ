@@ -205,7 +205,7 @@ public abstract class ZLApplication {
 			action.checkAndRun();
 		}
 	}
-    //may be protected
+	//may be protected
 	abstract public ZLKeyBindings keyBindings();
 	
 	public final void doActionByKey(String key) {		
@@ -386,7 +386,7 @@ public abstract class ZLApplication {
 			}
 			
 			void press() {
-				if (isToggleButton()) { 
+				if (isToggleButton()) {
 					myButtonGroup.press(this);
 				}
 			}
