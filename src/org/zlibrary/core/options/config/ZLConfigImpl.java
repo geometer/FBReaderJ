@@ -77,7 +77,7 @@ import java.util.*;
 		for (String deletedGroup : myDeltaConfig.getDeletedGroups()) {
 			ZLGroup gr = myMainConfig.getGroup(deletedGroup);
 			if (gr != null) {
-				for (ZLOptionInfo option : gr.getOptions()) {
+				for (ZLOptionInfo option : gr.options()) {
 					if (option.getCategory() != null) {
 						usedCategories.add(option.getCategory());
 					}
@@ -100,7 +100,7 @@ import java.util.*;
 
 		ZLSimpleConfig setValues = myDeltaConfig.getSetValues();
 		for (ZLGroup group : setValues.groups()) {
-			for (ZLOptionInfo value : group.getOptions()) {
+			for (ZLOptionInfo value : group.options()) {
 				usedCategories.add(value.getCategory());
 				String cat = myMainConfig.getCategory(group.getName(), value.getName());
 				if (cat != null) {

@@ -95,7 +95,7 @@ import java.util.*;
 		for (ZLGroup group : mySetValues.groups()) {
 			sb.append("  <group name=\"" + group.getName() + "\">\n");
 			//writtenGroups.add(group.getName());
-			for (ZLOptionInfo option : group.getOptions()) {
+			for (ZLOptionInfo option : group.options()) {
 				sb.append("    <option name=\"" + option.getName() + "\" ");
 				sb.append("value=\"" + option.getValue() + "\" ");
 				sb.append("category=\"" + option.getCategory() + "\"/>\n");

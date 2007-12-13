@@ -3,52 +3,41 @@ package org.zlibrary.core.options.config;
 import java.util.*;
 
 final class ZLGroup {
-	private final Set<ZLOptionInfo> myData = new HashSet<ZLOptionInfo>();
+	private final HashMap<String,ZLOptionInfo> myData = new HashMap<String,ZLOptionInfo>();
 	private final String myName;
 
-	public ZLGroup(String name) {
+	ZLGroup(String name) {
 		myName = name;
 	}
 
-	public String getName() {
+	String getName() {
 		return myName;
 	}
 
-	public Set<ZLOptionInfo> getOptions() {
-		return Collections.unmodifiableSet(myData);
+	Collection<ZLOptionInfo> options() {
+		return myData.values();
 	}
 
-	protected ZLOptionInfo getOption(String name) {
-		for (ZLOptionInfo option : myData) {
-			if (option.getName().equals(name)) {
-				return option;
-			}
-		}
-		return null;
+	ZLOptionInfo getOption(String name) {
+		return myData.get(name);
 	}
 
-	public String getValue(String name) {
-		ZLOptionInfo temp = getOption(name);
-		if (temp != null) {
-			return temp.getValue();
+	String getValue(String name) {
+		ZLOptionInfo info = myData.get(name);
+		return (info != null) ? info.getValue() : null;
+	}
+
+	void setValue(String name, String value, String category) {
+		ZLOptionInfo info = myData.get(name);
+		if (info != null) {
+			info.setValue(value);
+			info.setCategory(category);
 		} else {
-			return null;
+			myData.put(name, new ZLOptionInfo(name, value, category));
 		}
 	}
 
-	public void setValue(String name, String value, String category) {
-		ZLOptionInfo temp = getOption(name);
-		if (temp == null) {
-			myData.add(new ZLOptionInfo(name, value, category));
-		} else {
-			temp.setValue(value);
-			temp.setCategory(category);
-		}
-	}
-
-	//TODO cuncurrent modification
 	public void unsetValue(String name) {
-		myData.remove(new ZLOptionInfo(name, "", ""));
-		//System.out.println(myData);
+		myData.remove(name);
 	}
 }

@@ -61,7 +61,7 @@ final class ZLConfigWriter implements ZLWriter {
 			// значение - записали ли мы уже это в файле
 			currentGroupOpenedIn = new HashMap<String, Boolean>();
 
-			for (ZLOptionInfo value : group.getOptions()) {
+			for (ZLOptionInfo value : group.options()) {
 				sb = configFilesContent.get(value.getCategory());
 
 				if (currentGroupOpenedIn.get(value.getCategory()) == null) {
