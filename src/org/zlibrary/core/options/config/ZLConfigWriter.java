@@ -55,29 +55,31 @@ final class ZLConfigWriter implements ZLWriter {
 		StringBuffer sb;
 		Map<String, Boolean> currentGroupOpenedIn;
 
-		for (ZLGroup group : myConfig.groups()) {
+		for (String groupName : myConfig.groupNames()) {
 
 			// ключ - имена категорий, о которых мы уже знаем, что она там есть
 			// значение - записали ли мы уже это в файле
 			currentGroupOpenedIn = new HashMap<String, Boolean>();
 
-			for (ZLOptionInfo value : group.options()) {
-				sb = configFilesContent.get(value.getCategory());
+			ZLGroup group = myConfig.getGroup(groupName);
+			for (String optionName : group.optionNames()) {
+				ZLOptionInfo option = group.getOption(optionName);
+				sb = configFilesContent.get(option.getCategory());
 
-				if (currentGroupOpenedIn.get(value.getCategory()) == null) {
-					currentGroupOpenedIn.put(value.getCategory(), false);
+				if (currentGroupOpenedIn.get(option.getCategory()) == null) {
+					currentGroupOpenedIn.put(option.getCategory(), false);
 				}
 
 				if (sb == null) {
 					sb = new StringBuffer();
-					configFilesContent.put(value.getCategory(), sb);
+					configFilesContent.put(option.getCategory(), sb);
 				}
 
-				if (!currentGroupOpenedIn.get(value.getCategory())) {
-					sb.append("  <group name=\"" + group.getName() + "\">\n");
-					currentGroupOpenedIn.put(value.getCategory(), true);
+				if (!currentGroupOpenedIn.get(option.getCategory())) {
+					sb.append("  <group name=\"" + groupName + "\">\n");
+					currentGroupOpenedIn.put(option.getCategory(), true);
 				}
-				sb.append(value);
+				sb.append(option);
 			}
 
 			for (String category : currentGroupOpenedIn.keySet()) {

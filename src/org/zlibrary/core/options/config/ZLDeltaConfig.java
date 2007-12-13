@@ -6,10 +6,7 @@ import java.util.*;
 
 	private final ZLDeletedValuesSet myDeletedValues = new ZLDeletedValuesSet();
 	private final Set<String> myDeletedGroups = new HashSet<String>();
-	private final ZLSimpleConfig mySetValues = new ZLSimpleConfig();
-
-	public ZLDeltaConfig() {
-	}
+	private final ZLSimpleConfig myChangedValues = new ZLSimpleConfig();
 
 	public Set<String> getDeletedGroups() {
 		return Collections.unmodifiableSet(myDeletedGroups);
@@ -19,8 +16,8 @@ import java.util.*;
 		return myDeletedValues;
 	}
 
-	public ZLSimpleConfig getSetValues() {
-		return mySetValues;
+	public ZLSimpleConfig changedValues() {
+		return myChangedValues;
 	}
 
 	/**
@@ -29,11 +26,11 @@ import java.util.*;
 	 * @param name
 	 * @param defaultValue
 	 * @return defaultValue - when this value is not set or deleted
-	 * new value (from setValues) - when it was set
+	 * new value (from changedValues) - when it was set
 	 * null - when it was deleted
 	 */
 	public String getValue(String group, String name, String defaultValue) {
-		String value = mySetValues.getValue(group, name, defaultValue);
+		String value = myChangedValues.getValue(group, name, defaultValue);
 		if ((value == null) || (value.equals(defaultValue))) {
 			if (myDeletedValues.contains(group, name)) {
 				return null;
@@ -47,11 +44,11 @@ import java.util.*;
 
 	public void setValue(String group, String name, String value,
 			String category) {
-		mySetValues.setValue(group, name, value, category);
+		myChangedValues.setValue(group, name, value, category);
 	}
 /*
 	public void setCategory(String group, String name, String cat) {
-		mySetValues.setCategory(group, name, cat);
+		myChangedValues.setCategory(group, name, cat);
 	}*/
 
 	public void unsetValue(String group, String name) {
@@ -59,19 +56,19 @@ import java.util.*;
 		myDeletedValues.add(group, name);
 		//System.out.println(group + " - - - -" + name);
 		//System.out.println(myDeletedValues.getAll());
-		mySetValues.unsetValue(group, name);
-		//System.out.println(mySetValues.getValue(group, name, "NOVALUE"));
+		myChangedValues.unsetValue(group, name);
+		//System.out.println(myChangedValues.getValue(group, name, "NOVALUE"));
 	}
 
 	public void removeGroup(String group) {
 		myDeletedGroups.add(group);
-		mySetValues.removeGroup(group);
+		myChangedValues.removeGroup(group);
 	}
 
 	public void clear() {
 		myDeletedValues.clear();
 		myDeletedGroups.clear();
-		mySetValues.clear();
+		myChangedValues.clear();
 	}
 
 	public String toString() {
@@ -92,11 +89,13 @@ import java.util.*;
 
 		//Set<String> writtenGroups = new HashSet<String>();
 
-		for (ZLGroup group : mySetValues.groups()) {
-			sb.append("  <group name=\"" + group.getName() + "\">\n");
+		for (String groupName : myChangedValues.groupNames()) {
+			sb.append("  <group name=\"" + groupName + "\">\n");
 			//writtenGroups.add(group.getName());
-			for (ZLOptionInfo option : group.options()) {
-				sb.append("    <option name=\"" + option.getName() + "\" ");
+			ZLGroup group = myChangedValues.getGroup(groupName);
+			for (String optionName : group.optionNames()) {
+				ZLOptionInfo option = group.getOption(optionName);
+				sb.append("    <option name=\"" + optionName + "\" ");
 				sb.append("value=\"" + option.getValue() + "\" ");
 				sb.append("category=\"" + option.getCategory() + "\"/>\n");
 			}

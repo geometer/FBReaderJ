@@ -1,21 +1,13 @@
 package org.zlibrary.core.options.config;
 
-import java.util.*;
+import java.util.Set;
+import java.util.HashMap;
 
 final class ZLGroup {
 	private final HashMap<String,ZLOptionInfo> myData = new HashMap<String,ZLOptionInfo>();
-	private final String myName;
 
-	ZLGroup(String name) {
-		myName = name;
-	}
-
-	String getName() {
-		return myName;
-	}
-
-	Collection<ZLOptionInfo> options() {
-		return myData.values();
+	Set<String> optionNames() {
+		return myData.keySet();
 	}
 
 	ZLOptionInfo getOption(String name) {

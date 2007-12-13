@@ -1,6 +1,6 @@
 package org.zlibrary.core.options.config;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.HashMap;
 
 /**
@@ -17,8 +17,8 @@ final class ZLSimpleConfig {
 		myData.clear();
 	}
 
-	Collection<ZLGroup> groups() {
-		return myData.values();
+	Set<String> groupNames() {
+		return myData.keySet();
 	}
 
 	void removeGroup(String name) {
@@ -54,7 +54,7 @@ final class ZLSimpleConfig {
 	void setValue(String groupName, String name, String value, String category) {
 		ZLGroup group = getGroup(groupName);
 		if (group == null) {
-			group = new ZLGroup(groupName);
+			group = new ZLGroup();
 			myData.put(groupName, group);
 		}
 		group.setValue(name, value, category);
