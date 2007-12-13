@@ -1,9 +1,10 @@
 package org.fbreader.formats.fb2;
 
+import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.core.image.ZLImage;
 
 final class Base64EncodedImage implements ZLImage {
-	private StringBuilder myEncodedData = new StringBuilder();
+	private ZLTextBuffer myEncodedData = new ZLTextBuffer();
 	private byte[] myData;
 	
 	public Base64EncodedImage(String contentType) {
@@ -15,15 +16,15 @@ final class Base64EncodedImage implements ZLImage {
 			return;
 		}
 
-		final StringBuilder encodedData = myEncodedData;
-		final int dataLength = encodedData.length();
+		final char[] encodedData = myEncodedData.getData();
+		final int dataLength = myEncodedData.getLength();
 		
 		final int newLength = dataLength / 4 * 3;
 		myData = new byte[newLength];
 		byte [] number = new byte[4];
 		for (int pos = 0, dataPos = 0; pos < dataLength; dataPos += 3) {
 			for (int i = 0; (i < 4) && (pos < dataLength); ++pos) {
-				char encodedByte = encodedData.charAt(pos);
+				char encodedByte = encodedData[pos];
 				number[i] = 0;
 				if (('A' <= encodedByte) && (encodedByte <= 'Z')) {
 					number[i] = (byte) (encodedByte - 'A');
@@ -65,7 +66,11 @@ final class Base64EncodedImage implements ZLImage {
 		return myData;
 	}
 	
-	void addData(StringBuilder buffer) {
-		myEncodedData.append(buffer);
+	void addData(char[] data, int offset, int length) {
+		myEncodedData.append(data, offset, length);
+	}
+
+	void trimToSize() {
+		myEncodedData.trimToSize();
 	}
 }

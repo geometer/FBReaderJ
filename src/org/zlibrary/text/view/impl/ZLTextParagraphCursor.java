@@ -13,12 +13,12 @@ public abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
 		protected ZLTextParagraph myParagraph;
 		protected List <ZLTextElement> myElements;
-		protected int myOffset;
+		//protected int myOffset;
 
 		protected Processor(ZLTextParagraph paragraph, int index, List <ZLTextElement> elements) {
 			myParagraph = paragraph;
 			myElements = elements;
-			myOffset = 0;
+			//myOffset = 0;
 		}
 
 		/*Why do we need ZLTextParagraphEntry interface?*/
@@ -58,14 +58,15 @@ public abstract class ZLTextParagraphCursor {
 
 		public void processTextEntry(ZLTextEntry textEntry) {
 			final ZLTextElement hSpace = ZLTextElement.HSpace;
-			int dataLength = textEntry.getDataLength();
-			if (dataLength != 0) {
+			final int length = textEntry.getDataLength();
+			if (length != 0) {
+				final int start = textEntry.getDataOffset();
+				final int end = start + length;
 				final char[] data = textEntry.getData();
-				final int length = data.length;
 				char ch;
 				int firstNonSpace = -1;
 				boolean spaceInserted = false;
-				for (int charPos = 0; charPos < length; ++charPos) {
+				for (int charPos = start; charPos < end; ++charPos) {
 					if (Character.isWhitespace(data[charPos])) {
 						if (firstNonSpace != -1) {
 							addWord(data, firstNonSpace, charPos);
@@ -81,9 +82,9 @@ public abstract class ZLTextParagraphCursor {
 					}
 				} 
 				if (firstNonSpace != -1) {
-					addWord(data, firstNonSpace, length);
+					addWord(data, firstNonSpace, end);
 				}
-				myOffset += length;
+				//myOffset += length;
 			}
 		}
 	}

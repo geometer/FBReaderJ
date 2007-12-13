@@ -17,6 +17,7 @@ public class TestTreeModel extends TestCase {
         assertTrue(model.getParagraphsNumber() == 1);
     }
     
+		/*
     public void testRemoveParagraph() {
     	ZLTextTreeModel model = factory.createZLTextTreeModel();
     	ZLTextTreeParagraph parant = factory.createTreeParagraph();
@@ -24,5 +25,6 @@ public class TestTreeModel extends TestCase {
     	model.removeParagraphInternal(0);
     	assertTrue(model.getParagraphsNumber() == 0);
     }
+		*/
     
 }

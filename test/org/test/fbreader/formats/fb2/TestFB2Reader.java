@@ -234,8 +234,8 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testFootnote1() {
 		BookModel model = (new FB2Reader()).readBook(myDirectory + "footnote1.fb2");
-		assertEquals("footnote", 
-				new String(((ZLTextEntry)model.getParagraphByLink("note1").getEntries().get(1)).getData()));
+		ZLTextEntry entry = (ZLTextEntry)model.getParagraphByLink("note1").getEntries().get(1);
+		assertEquals("footnote", new String(entry.getData(), entry.getDataOffset(), entry.getDataLength()));
 	}
 	
 	public void testExternalHyperlink() {

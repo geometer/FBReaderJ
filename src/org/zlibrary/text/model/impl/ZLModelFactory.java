@@ -14,10 +14,6 @@ import org.zlibrary.text.model.entry.ZLTextHyperlinkControlEntry;
 
 public class ZLModelFactory {
 	//models
-	public ZLTextModel createModel() {
-		return new ZLTextModelImpl();
-	}
-	
 	public ZLTextPlainModel createPlainModel() {
 		return new ZLTextPlainModelImpl();
 	} 
@@ -48,7 +44,8 @@ public class ZLModelFactory {
 	}
 	
 	public ZLTextEntry createTextEntry(String text) {
-		return new ZLTextEntryImpl(text.toCharArray());
+		char[] array = text.toCharArray();
+		return new ZLTextEntryImpl(array, 0, array.length);
 	}
 	
 	public ZLTextHyperlinkControlEntry createHyperlinkControlEntry(byte kind, String label) {

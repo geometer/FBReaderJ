@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
@@ -14,40 +14,45 @@ public class TestZLTextModel extends TestCase {
     private ZLModelFactory factory = new ZLModelFactory(); 
     
     public void testAddParagraph() {
-        ZLTextModel model = factory.createModel();
-        ZLTextParagraph paragraph = factory.createParagraph();
-        paragraph.addEntry(factory.createTextEntry("marina"));
-        model.addParagraphInternal(paragraph);
-        model.addParagraphInternal(factory.createParagraph());
+        ZLTextPlainModel model = factory.createPlainModel();
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+        model.addText("marina".toCharArray());
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
         assertEquals(model.getParagraphsNumber(), 2);
-        assertEquals(model.getParagraph(0), paragraph);
+        //assertEquals(model.getParagraph(0), paragraph);
     }
 
     public void testAddEntry() {
-        ZLTextModel model = factory.createModel();
-        ZLTextParagraph paragraph = factory.createParagraph();
-        paragraph.addEntry(factory.createTextEntry("marina"));
-        model.addParagraphInternal(paragraph);
-        model.addParagraphInternal(factory.createParagraph());
+        ZLTextPlainModel model = factory.createPlainModel();
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+        model.addText("marina".toCharArray());
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
         assertEquals(model.getParagraphsNumber(), 2);
-        assertEquals(model.getParagraph(0), paragraph);
         model.addText("addText".toCharArray());
-        assertEquals(new String(((ZLTextEntry)(model.getParagraph(1).getEntries().get(0))).getData()), "addText");
+				{
+					ZLTextEntry entry = (ZLTextEntry)model.getParagraph(1).getEntries().get(0);
+					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
+					System.err.println(s + " ?= addText");
+          assertEquals(s, "addText");
+				}
         ArrayList<char[]> sb = new ArrayList<char[]>();
         sb.add("1".toCharArray());
         sb.add("2".toCharArray());
         model.addText(sb);
-        assertEquals(new String(((ZLTextEntry)model.getParagraph(1).getEntries().get(1)).getData()), "12");
+				{
+					ZLTextEntry entry = (ZLTextEntry)model.getParagraph(1).getEntries().get(1);
+					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
+					System.err.println(s + " ?= 12");
+          assertEquals(s, "12");
+				}
     }
 
     public void testAddControl() {
-        ZLTextModel model = factory.createModel();
-        ZLTextParagraph paragraph = factory.createParagraph();
-        paragraph.addEntry(factory.createTextEntry("marina"));
-        model.addParagraphInternal(paragraph);
-        model.addParagraphInternal(factory.createParagraph());
+        ZLTextPlainModel model = factory.createPlainModel();
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+        model.addText("marina".toCharArray());
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
         assertEquals(model.getParagraphsNumber(), 2);
-        assertEquals(model.getParagraph(0), paragraph);
         model.addControl((byte)0, true);
         model.addControl((byte)0, false);
         model.addControl((byte)1, true);
@@ -57,9 +62,9 @@ public class TestZLTextModel extends TestCase {
     }
     
     public void testAddForcedControl() {
-        ZLTextModel model = factory.createModel();
+        ZLTextPlainModel model = factory.createPlainModel();
         ZLTextParagraph paragraph = factory.createParagraph();
-        model.addParagraphInternal(factory.createParagraph());
+        model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
         ZLTextForcedControlEntry control = factory.createForcedControlEntry();
         model.addControl(control);
         assertEquals(model.getParagraph(0).getEntryNumber(), 1);       

@@ -3,6 +3,7 @@ package org.fbreader.bookmodel;
 import java.util.ArrayList;
 
 import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
@@ -13,7 +14,9 @@ public final class BookReader {
 	
 	private boolean myTextParagraphExists = false;
 	
-	private final ArrayList<char[]> myBuffer = new ArrayList<char[]>();
+	ZLTextBuffer myBuffer = new ZLTextBuffer();
+	ZLTextBuffer myContentsBuffer = new ZLTextBuffer();
+
 	private final ArrayList<Byte> myKindStack = new ArrayList<Byte>();
 	
 	private byte myHyperlinkKind;
@@ -25,7 +28,6 @@ public final class BookReader {
 	private boolean myContentsParagraphExists = false;
 	private final ArrayList<ZLTextTreeParagraph> myTOCStack = new ArrayList<ZLTextTreeParagraph>();
 	private boolean myLastTOCParagraphIsEmpty = false;
-	private final ArrayList<char[]> myContentsBuffer = new ArrayList<char[]>();
 
 	private final char[] PERIOD = "...".toCharArray();
 	
@@ -117,8 +119,12 @@ public final class BookReader {
 	}
 	
 	public void addData(char[] data) {
+		addData(data, 0, data.length);
+	}
+
+	public void addData(char[] data, int offset, int length) {
 		if (myTextParagraphExists) {
-			myBuffer.add(data);
+			myBuffer.append(data, offset, length);
 			if (!myInsideTitle) {
 				mySectionContainsRegularContents = true;
 			} else {
@@ -147,8 +153,12 @@ public final class BookReader {
 	}
 	
 	public void addContentsData(char[] data) {
-		if ((data.length != 0) && !myTOCStack.isEmpty()) {
-			myContentsBuffer.add(data);
+		addContentsData(data, 0, data.length);
+	}
+
+	public void addContentsData(char[] data, int offset, int length) {
+		if ((length != 0) && !myTOCStack.isEmpty()) {
+			myContentsBuffer.append(data, offset, length);
 		}
 	}
 	

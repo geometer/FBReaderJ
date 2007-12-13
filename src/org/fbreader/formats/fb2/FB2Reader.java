@@ -23,8 +23,6 @@ public class FB2Reader extends ZLXMLReader {
 	
 	private Base64EncodedImage myCurrentImage;
 	private boolean myInsideCoverpage = false;
-	private boolean myProcessingImage = false;
-	private final StringBuilder myImageBuffer = new StringBuilder();
 	private String myCoverImageReference;
 	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 
@@ -50,12 +48,13 @@ public class FB2Reader extends ZLXMLReader {
 	
 	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
-		char[] data = new char[length];
-		System.arraycopy(ch, start, data, 0, length);
-		if ((length > 0) && myProcessingImage) {
-			myImageBuffer.append(data);
+		if (length == 0) {
+			return;
+		}
+		if (myCurrentImage != null) {
+			myCurrentImage.addData(ch, start, length);
 		} else {
-			myModelReader.addData(data);
+			myModelReader.addData(ch, start, length);
 		}		
 	}
 		
@@ -157,12 +156,10 @@ public class FB2Reader extends ZLXMLReader {
 				break;	
 			
 			case BINARY:
-				if ((myImageBuffer.length() > 0) && (myCurrentImage != null)) {
-					myCurrentImage.addData(myImageBuffer);
-					myImageBuffer.delete(0, myImageBuffer.length());
-					myCurrentImage = null;
-				}
-				myProcessingImage = false;
+				//if (myCurrentImage != null) {
+				//	myCurrentImage.trimToSize();
+				//}
+				myCurrentImage = null;
 				break;	
 				
 			default:
@@ -343,7 +340,6 @@ public class FB2Reader extends ZLXMLReader {
 				if ((contentType != null) && (id != null)) {
 					myCurrentImage = new Base64EncodedImage(contentType);
 					myModelReader.addImage(imgId, myCurrentImage);
-					myProcessingImage = true;
 				}
 				break;	
 				
@@ -354,14 +350,14 @@ public class FB2Reader extends ZLXMLReader {
 	
 	public BookModel readBook(String fileName) {
 		//ZLXMLReader reader = new ZLXMLReader() {};
-		//long start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		//reader.read(fileName);
 		//org.zlibrary.ui.android.view.ZLAndroidWidget.Time = System.currentTimeMillis() - start;
 		//System.err.println("empty loading book time = " + (System.currentTimeMillis() - start));
 		//start = System.currentTimeMillis();
 		boolean success = read(fileName);
 		//org.zlibrary.ui.android.view.ZLAndroidWidget.Time = System.currentTimeMillis() - start;
-		//System.err.println("loading book time = " + (System.currentTimeMillis() - start));
+		System.err.println("loading book time = " + (System.currentTimeMillis() - start));
 		return success ? myModelReader.getModel() : null;
 	}
 }
