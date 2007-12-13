@@ -4,7 +4,6 @@ import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -83,12 +82,12 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		getLastParagraph().addEntry(new ZLTextHyperlinkControlEntry(textKind, label));
 	}
 	
-	public void addImage(String id, Map<String, ZLImage> imageMap, short vOffset) {
-		getLastParagraph().addEntry(new ZLImageEntryImpl(id, imageMap, vOffset));
+	public void addImage(String id, Map<String,ZLImage> imageMap, short vOffset) {
+		getLastParagraph().addEntry(new ZLImageEntry(id, imageMap, vOffset));
 	}
 	
 	public void addFixedHSpace(byte length) {
-		getLastParagraph().addEntry(new ZLTextFixedHSpaceEntryImpl(length));
+		getLastParagraph().addEntry(new ZLTextFixedHSpaceEntry(length));
 	}	
 
 	public String dump() {

@@ -1,11 +1,11 @@
 package org.zlibrary.text.model;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
+
+import org.zlibrary.text.model.impl.ZLTextForcedControlEntry;
 
 public interface ZLTextModel {
 	int getParagraphsNumber();
@@ -17,7 +17,7 @@ public interface ZLTextModel {
 
 	void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, String label);
-	void addImage(String id, Map<String, ZLImage> imageMap, short vOffset);
+	void addImage(String id, Map<String,ZLImage> imageMap, short vOffset);
 	void addFixedHSpace(byte length);
 
 	String dump();

@@ -2,7 +2,7 @@ package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.text.model.entry.ZLTextEntry;
+import org.zlibrary.text.model.impl.ZLTextEntry;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class TestTextEntry extends TestCase {

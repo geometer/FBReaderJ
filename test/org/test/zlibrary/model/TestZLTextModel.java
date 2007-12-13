@@ -6,8 +6,8 @@ import org.zlibrary.core.util.ZLTextBuffer;
 
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.entry.ZLTextEntry;
-import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
+import org.zlibrary.text.model.impl.ZLTextEntry;
+import org.zlibrary.text.model.impl.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class TestZLTextModel extends TestCase {

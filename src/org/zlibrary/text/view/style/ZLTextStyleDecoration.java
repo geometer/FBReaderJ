@@ -5,8 +5,6 @@ import org.zlibrary.core.options.util.*;
 
 import org.zlibrary.text.view.ZLTextStyle;
 
-import org.zlibrary.text.model.entry.*;
-
 public class ZLTextStyleDecoration {
 	public static final String STYLE = "Style";
 	public static final byte BOLD = 28;

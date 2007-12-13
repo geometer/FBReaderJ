@@ -2,8 +2,6 @@ package org.zlibrary.text.model.impl;
 
 import java.util.ArrayList;
 
-import org.zlibrary.text.model.entry.ZLTextEntry;
-
 final class ZLTextEntryImpl implements ZLTextEntry {
 	private final char[] myData;
 	private final int myDataOffset;

@@ -2,7 +2,6 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.entry.*;
 import org.zlibrary.text.model.impl.*;
 
 import org.zlibrary.core.image.ZLImage;
@@ -36,7 +35,7 @@ public abstract class ZLTextParagraphCursor {
 					ZLImageEntry imageEntry = (ZLImageEntry)entry;
 					ZLImage image = imageEntry.getImage();
 					if (image != null) {
-						myElements.add(new ZLTextImageElement(imageEntry.getId(), image));
+						myElements.add(new ZLTextImageElement(image));
 					}
 				}
 			}

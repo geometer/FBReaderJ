@@ -1,7 +1,6 @@
 package org.zlibrary.text.model.impl;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
-import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
 
 class ZLTextForcedControlEntryImpl implements ZLTextForcedControlEntry {
 	private final static int SUPPORTS_LEFT_INDENT = 1;

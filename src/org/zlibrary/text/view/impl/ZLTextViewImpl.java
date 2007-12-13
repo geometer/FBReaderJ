@@ -8,8 +8,6 @@ import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.options.*;
 
 import org.zlibrary.text.model.*;
-import org.zlibrary.text.model.impl.ZLModelFactory;
-import org.zlibrary.text.model.entry.*;
 
 import org.fbreader.formats.fb2.*;
 

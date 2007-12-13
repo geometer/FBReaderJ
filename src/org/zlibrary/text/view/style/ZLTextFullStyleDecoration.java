@@ -6,7 +6,6 @@ import org.zlibrary.core.options.util.*;
 import org.zlibrary.text.view.ZLTextStyle;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
-import org.zlibrary.text.model.entry.*;
 
 public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 	public ZLIntegerRangeOption SpaceBeforeOption;	

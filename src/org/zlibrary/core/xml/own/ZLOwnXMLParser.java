@@ -69,7 +69,7 @@ final class ZLOwnXMLParser {
 		pattern.setSequence(builder);
 		String s = strings.get(pattern);
 		if (s == null) {
-			s = builder.toString();
+			s = builder.toString().intern();
 			strings.put(new ComparableString(s), s);
 		}
 		builder.delete(0, builder.length());
