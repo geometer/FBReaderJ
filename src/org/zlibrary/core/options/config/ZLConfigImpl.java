@@ -35,7 +35,7 @@ final class ZLConfigImpl implements ZLConfig {
 	 */
 	public String getValue(String group, String name, String defaultValue) {
 		String value = myDeltaConfig.getValue(group, name, defaultValue);
-		if ((value == null)) {
+		if (value == null) {
 			//System.out.println(name);
 			/**
 			 * если значение было нулем, то либо опция удалена, либо

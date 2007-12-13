@@ -33,15 +33,14 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	public int getValue() {
 		if (!myIsSynchronized) {
 			String value = getConfigValue(null);
-			if (value != null) {
+			if ((value != null) && (value.length() > 0)) {
 				try {
 					Integer intValue = Integer.parseInt(value);
-					myValue = intValue;
+					myValue = Math.max(myMinValue, Math.min(myMaxValue, intValue));
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
 			}
-			myValue = Math.max(myMinValue, Math.min(myMaxValue, myValue));
 			myIsSynchronized = true;
 		}
 		return myValue;
