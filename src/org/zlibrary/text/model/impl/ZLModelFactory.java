@@ -5,11 +5,9 @@ import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
-import org.zlibrary.text.model.entry.ZLTextControlEntry;
 import org.zlibrary.text.model.entry.ZLTextEntry;
 import org.zlibrary.text.model.entry.ZLTextFixedHSpaceEntry;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
-import org.zlibrary.text.model.entry.ZLTextHyperlinkControlEntry;
 
 
 public class ZLModelFactory {
@@ -40,7 +38,7 @@ public class ZLModelFactory {
 
 	//entries
 	public ZLTextControlEntry createControlEntry(byte kind, boolean isStart) {
-		return new ZLTextControlEntryImpl(kind, isStart);
+		return new ZLTextControlEntry(kind, isStart);
 	}
 	
 	public ZLTextEntry createTextEntry(String text) {
@@ -49,7 +47,7 @@ public class ZLModelFactory {
 	}
 	
 	public ZLTextHyperlinkControlEntry createHyperlinkControlEntry(byte kind, String label) {
-		return new ZLTextHyperlinkControlEntryImpl(kind, label);
+		return new ZLTextHyperlinkControlEntry(kind, label);
 	}
 
 	public ZLTextFixedHSpaceEntry createFixedHSpaceEntry(byte lenght) {

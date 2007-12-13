@@ -1,5 +1,7 @@
 package org.zlibrary.text.model.entry;
 
-public interface ZLTextFixedHSpaceEntry extends ZLTextParagraphEntry {
+import org.zlibrary.text.model.ZLTextParagraph;
+
+public interface ZLTextFixedHSpaceEntry extends ZLTextParagraph.Entry {
 	byte length();
 }

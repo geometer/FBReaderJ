@@ -3,6 +3,7 @@ package org.zlibrary.text.view.impl;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.entry.*;
+import org.zlibrary.text.model.impl.*;
 
 import org.zlibrary.core.image.ZLImage;
 
@@ -21,11 +22,11 @@ public abstract class ZLTextParagraphCursor {
 			//myOffset = 0;
 		}
 
-		/*Why do we need ZLTextParagraphEntry interface?*/
+		/*Why do we need ZLTextParagraph.Entry interface?*/
 
 		public void fill() {
-			List <ZLTextParagraphEntry> entries = myParagraph.getEntries();
-			for (ZLTextParagraphEntry entry : entries) {
+			List <ZLTextParagraph.Entry> entries = myParagraph.getEntries();
+			for (ZLTextParagraph.Entry entry : entries) {
 				if (entry instanceof ZLTextEntry) {
 					processTextEntry((ZLTextEntry) entry);
 				} else if (entry instanceof ZLTextControlEntry) {

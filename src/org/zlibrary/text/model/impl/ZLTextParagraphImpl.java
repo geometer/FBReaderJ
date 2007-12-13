@@ -1,7 +1,6 @@
 package org.zlibrary.text.model.impl;
 
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 import org.zlibrary.text.model.impl.ZLTextEntryImpl;
 
 import java.util.List;
@@ -9,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 class ZLTextParagraphImpl implements ZLTextParagraph {
-	private final ArrayList<ZLTextParagraphEntry> myEntries = new ArrayList<ZLTextParagraphEntry>();
+	private final ArrayList<ZLTextParagraph.Entry> myEntries = new ArrayList<ZLTextParagraph.Entry>();
 
 	ZLTextParagraphImpl() {
 	}
 
-	public List<ZLTextParagraphEntry> getEntries() {
+	public List<ZLTextParagraph.Entry> getEntries() {
 		return Collections.unmodifiableList(myEntries);
 	}
 
@@ -28,7 +27,7 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
 
 	public int getTextLength() {
 		int size = 0;
-		for (ZLTextParagraphEntry entry: myEntries) {
+		for (ZLTextParagraph.Entry entry: myEntries) {
 			if (entry instanceof ZLTextEntryImpl) {
 				size += ((ZLTextEntryImpl)entry).getDataLength();
 			}
@@ -36,7 +35,7 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
 		return size;
 	}
 
-	public void addEntry(ZLTextParagraphEntry entry) {
+	public void addEntry(ZLTextParagraph.Entry entry) {
 		myEntries.add(entry);
 	}
 }

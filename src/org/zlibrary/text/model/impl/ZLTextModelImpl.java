@@ -5,7 +5,6 @@ import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.entry.ZLTextForcedControlEntry;
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -81,7 +80,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}
 	
 	public void addHyperlinkControl(byte textKind, String label) {
-		getLastParagraph().addEntry(new ZLTextHyperlinkControlEntryImpl(textKind, label));
+		getLastParagraph().addEntry(new ZLTextHyperlinkControlEntry(textKind, label));
 	}
 	
 	public void addImage(String id, Map<String, ZLImage> imageMap, short vOffset) {
@@ -96,18 +95,18 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		StringBuilder sb = new StringBuilder();
 		for (ZLTextParagraph paragraph: myParagraphs) {
 			sb.append("[PARAGRAPH]\n");
-			for (ZLTextParagraphEntry entry: paragraph.getEntries()) {
+			for (ZLTextParagraph.Entry entry: paragraph.getEntries()) {
 				if (entry instanceof ZLTextEntryImpl) {
 					ZLTextEntryImpl textEntry = (ZLTextEntryImpl)entry;
 					sb.append("[TEXT]");
 					sb.append(textEntry.getData(), textEntry.getDataOffset(), textEntry.getDataLength());
 					sb.append("[/TEXT]");
-				} else if (entry instanceof ZLTextControlEntryImpl) {
-					ZLTextControlEntryImpl entryControl = (ZLTextControlEntryImpl)entry;
-					if (entryControl.isStart())
-						sb.append("[CONTROL "+entryControl.getKind()+"]");
+				} else if (entry instanceof ZLTextControlEntry) {
+					ZLTextControlEntry controlEntry = (ZLTextControlEntry)entry;
+					if (controlEntry.IsStart)
+						sb.append("[CONTROL "+controlEntry.Kind+"]");
 					else
-						sb.append("[/CONTROL "+entryControl.getKind()+"]");					
+						sb.append("[/CONTROL "+controlEntry.Kind+"]");					
 				}
 			}
 			sb.append("[/PARAGRAPH]\n");

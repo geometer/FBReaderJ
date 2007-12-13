@@ -1,6 +1,8 @@
 package org.zlibrary.text.model.entry;
 
-public interface ZLTextForcedControlEntry extends ZLTextParagraphEntry{
+import org.zlibrary.text.model.ZLTextParagraph;
+
+public interface ZLTextForcedControlEntry extends ZLTextParagraph.Entry {
 	boolean isLeftIndentSupported();
 	short getLeftIndent();
 	void setLeftIndent(short leftIndent);

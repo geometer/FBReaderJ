@@ -2,9 +2,10 @@ package org.zlibrary.text.model;
 
 import java.util.List;
 
-import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
-
 public interface ZLTextParagraph {
+	interface Entry {
+	}
+
 	enum Kind {
 		TEXT_PARAGRAPH,
 		TREE_PARAGRAPH,
@@ -18,6 +19,6 @@ public interface ZLTextParagraph {
 	Kind getKind();
 	int getEntryNumber();
 	int getTextLength();
-	List<ZLTextParagraphEntry> getEntries();
-	void addEntry(ZLTextParagraphEntry entry);
+	List<Entry> getEntries();
+	void addEntry(Entry entry);
 }
