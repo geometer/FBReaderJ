@@ -85,7 +85,7 @@ public class TestFB2Reader extends TestCase {
 	private void doTreeModelTest(String test) {
 		String test_result = myDirectory + test + "_act.txt";
 		writeTreeModelDumpToFile(myDirectory + test + ".fb2", test_result);
-		assertTrue(compareFiles(myDirectory + test + "_exp.txt", test_result));
+		assertTrue("File " + test, compareFiles(myDirectory + test + "_exp.txt", test_result));
 		(new File(test_result)).delete();
 	}
 	

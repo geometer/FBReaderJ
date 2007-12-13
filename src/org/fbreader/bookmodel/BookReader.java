@@ -128,7 +128,7 @@ public final class BookReader {
 			if (!myInsideTitle) {
 				mySectionContainsRegularContents = true;
 			} else {
-				addContentsData(data);
+				addContentsData(data, offset, length);
 			}
 		}	
 	}

@@ -1,8 +1,8 @@
 package org.test.zlibrary.model;
 
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
+
+import org.zlibrary.core.util.ZLTextBuffer;
 
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextParagraph;
@@ -35,10 +35,10 @@ public class TestZLTextModel extends TestCase {
 					System.err.println(s + " ?= addText");
           assertEquals(s, "addText");
 				}
-        ArrayList<char[]> sb = new ArrayList<char[]>();
-        sb.add("1".toCharArray());
-        sb.add("2".toCharArray());
-        model.addText(sb);
+				ZLTextBuffer buffer = new ZLTextBuffer();
+				buffer.append("1".toCharArray());
+				buffer.append("2".toCharArray());
+        model.addText(buffer);
 				{
 					ZLTextEntry entry = (ZLTextEntry)model.getParagraph(1).getEntries().get(1);
 					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
