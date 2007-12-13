@@ -8,7 +8,7 @@ final class ZLTreeResource extends ZLResource {
 
 	private boolean myHasValue;
 	private	String myValue;
-	private	Map<String, ZLTreeResource> myChildren;
+	private	TreeMap<String,ZLTreeResource> myChildren;
 	
 	public static void buildTree() {
 		if (ourRoot == null) {
@@ -55,8 +55,13 @@ final class ZLTreeResource extends ZLResource {
 
 	@Override
 	public ZLResource getResource(String key) {
-		return (myChildren != null && myChildren.containsKey(key)) ? 
-				myChildren.get(key) : ZLMissingResource.instance();
+		if (myChildren == null) {
+			ZLResource child = myChildren.get(key);
+			if (child != null) {
+				return child;
+			}
+		}
+		return ZLMissingResource.instance();
 	}
 		
 	private static class ResourceTreeReader extends ZLXMLReader {
@@ -86,7 +91,7 @@ final class ZLTreeResource extends ZLResource {
 					ZLTreeResource node;
 					if (peek.myChildren == null) {
 						node = null;
-						peek.myChildren = new HashMap<String,ZLTreeResource>();
+						peek.myChildren = new TreeMap<String,ZLTreeResource>();
 					} else {
 						node = peek.myChildren.get(name);
 					}

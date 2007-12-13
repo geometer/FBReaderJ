@@ -8,10 +8,10 @@ public abstract class ZLOption {
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 
-	protected final ZLConfig myConfig = ZLConfigInstance.getInstance();
-	protected final String myCategory;
-	protected final String myGroup;
-	protected final String myOptionName;
+	private final ZLConfig myConfig = ZLConfigInstance.getInstance();
+	private final String myCategory;
+	private final String myGroup;
+	private String myOptionName;
 	protected boolean myIsSynchronized;
 
 	/**
@@ -22,10 +22,10 @@ public abstract class ZLOption {
 	 * @param group
 	 * @param optionName
 	 */
-	protected ZLOption(String category, String group, String name) {
+	protected ZLOption(String category, String group, String optionName) {
 		myCategory = category.intern();
 		myGroup = group.intern();
-		myOptionName = name.intern();
+		myOptionName = optionName.intern();
 		myIsSynchronized = false;
 
 		/*
@@ -37,6 +37,11 @@ public abstract class ZLOption {
 		 * if ((value != null)) { && ( ¿“≈√Œ–»» Õ≈ –¿¬Õ€)
 		 * myConfig.setValue(group, name, value, category); }
 		 */
+	}
+
+	protected void changeName(String optionName) {
+		myOptionName = optionName.intern();
+		myIsSynchronized = false;
 	}
 
 	/**
@@ -58,5 +63,17 @@ public abstract class ZLOption {
 	 */
 	public String getCategory() {
 		return myCategory;
+	}
+
+	protected final String getConfigValue(String defaultValue) {
+		return myConfig.getValue(myGroup, myOptionName, defaultValue);
+	}
+
+	protected final void setConfigValue(String value) {
+		myConfig.setValue(myGroup, myOptionName, value, myCategory);
+	}
+
+	protected final void unsetConfigValue() {
+		myConfig.unsetValue(myGroup, myOptionName);
 	}
 }

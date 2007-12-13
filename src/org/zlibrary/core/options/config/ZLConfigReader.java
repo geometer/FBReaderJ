@@ -16,10 +16,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			myDepth = 0;
 		}
 
-		public void startElementHandler(String tag,
-				Map<String, String> attributes) {
-
-			tag = tag.toLowerCase();
+		public void startElementHandler(String tag, Map<String, String> attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -35,9 +32,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 2:
 					if (tag.equals("option")) {
-						myConfig.setValueDirectly(myCurrentGroup, attributes
-								.get("name"), attributes.get("value"),
-								myCategory);
+						myConfig.setValueDirectly(myCurrentGroup, attributes.get("name"), attributes.get("value"), myCategory);
 					} else {
 						printError(tag);
 					}
@@ -69,11 +64,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			myFile = "delta.xml";
 		}
 
-		public void startElementHandler(String tag,
-				Map<String, String> attributes) {
-
-			tag = tag.toLowerCase();
-			
+		public void startElementHandler(String tag, Map<String, String> attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -160,17 +151,16 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	 *             פאיכ XML
 	 */
 	private void readFile(File file) {
-		myFile = file.getName().toLowerCase();
-		myCategory = file.getName().split(".xml")[0];
+		myFile = file.getName();
+		myCategory = myFile.substring(0, myFile.length() - 4);
 		// if (file.exists()) {
 		// System.out.println(file.toString());
 		myXMLReader.read(file.toString());
 	}
 
-	private boolean isXMLFileName(String fileName) {
-		String name = fileName.toLowerCase();
+	private static boolean isXMLFileName(String fileName) {
 		// System.out.println(fileName);
-		return name.endsWith(".xml");
+		return fileName.endsWith(".xml");
 	}
 
 	public void read() {
@@ -185,8 +175,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 		
 		if (fileList != null) {
 			for (String fileName : fileList) {
-				if (isXMLFileName(fileName)
-						&& !(fileName.toLowerCase().equals("delta.xml"))) {
+				if (isXMLFileName(fileName) && !(fileName.equals("delta.xml"))) {
 					readFile(new File(myDestinationDirectory + "/" + fileName));
 				}
 			}

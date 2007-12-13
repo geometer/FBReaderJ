@@ -1,7 +1,7 @@
 package org.zlibrary.core.xml.sax;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -10,7 +10,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 
 class SAXHandler extends DefaultHandler {	
 	private ZLXMLReader myXMLReader;
-	private final Map<String, String> myAttributes = new HashMap<String, String>();
+	private final TreeMap<String, String> myAttributes = new TreeMap<String, String>();
 	
 	SAXHandler(ZLXMLReader reader) {
 		myXMLReader = reader;

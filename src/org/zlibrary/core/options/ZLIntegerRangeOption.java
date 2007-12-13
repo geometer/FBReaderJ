@@ -8,22 +8,17 @@ package org.zlibrary.core.options;
  * 
  */
 public final class ZLIntegerRangeOption extends ZLOption {
-
-	private int myValue;
-
-	private final int myDefaultValue;
-
 	private final int myMinValue;
-
 	private final int myMaxValue;
 
-	public ZLIntegerRangeOption(String category, String group,
-			String optionName, int minValue, int maxValue, int defaultValue) {
+	private final int myDefaultValue;
+	private int myValue;
+
+	public ZLIntegerRangeOption(String category, String group, String optionName, int minValue, int maxValue, int defaultValue) {
 		super(category, group, optionName);
 		myMinValue = minValue;
 		myMaxValue = maxValue;
-		myDefaultValue = Math.max(myMinValue, Math
-				.min(myMaxValue, defaultValue));
+		myDefaultValue = Math.max(myMinValue, Math.min(myMaxValue, defaultValue));
 		myValue = myDefaultValue;
 	}
 
@@ -37,12 +32,11 @@ public final class ZLIntegerRangeOption extends ZLOption {
 
 	public int getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName, null);
+			String value = getConfigValue(null);
 			if (value != null) {
 				try {
 					Integer intValue = Integer.parseInt(value);
 					myValue = intValue;
-					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
@@ -61,9 +55,9 @@ public final class ZLIntegerRangeOption extends ZLOption {
 		myValue = value;
 		myIsSynchronized = true;
 		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myGroup, myOptionName);
+			unsetConfigValue();
 		} else {
-			myConfig.setValue(myGroup, myOptionName, "" + myValue, myCategory);
+			setConfigValue("" + myValue);
 		}
 	}
 }

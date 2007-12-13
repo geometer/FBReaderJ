@@ -25,7 +25,7 @@ final class ZLConfigWriter implements ZLWriter {
 				pw.close();
 			}
 		} catch (FileNotFoundException fnfException) {
-			if (!file.getName().toLowerCase().equals("delta.xml")) {
+			if (!file.getName().equals("delta.xml")) {
 				System.err.println(fnfException.getMessage());
 			}
 		} catch (UnsupportedEncodingException e) {

@@ -17,7 +17,8 @@ public final class BookReader {
 	ZLTextBuffer myBuffer = new ZLTextBuffer();
 	ZLTextBuffer myContentsBuffer = new ZLTextBuffer();
 
-	private final ArrayList<Byte> myKindStack = new ArrayList<Byte>();
+	private byte[] myKindStack = new byte[10];
+	private int myKindStackSize = 0;
 	
 	private byte myHyperlinkKind;
 	private String myHyperlinkReference = "";
@@ -53,12 +54,16 @@ public final class BookReader {
 	}
 	
 	public void pushKind(byte kind) {
-		myKindStack.add(kind);
+		if (myKindStackSize == myKindStack.length) {
+			byte[] newStack = new byte[myKindStackSize + 10];
+			System.arraycopy(myKindStack, 0, newStack, 0, myKindStackSize);
+		}
+		myKindStack[myKindStackSize++] = kind;
 	}
 	
 	public boolean popKind() {
-		if (!myKindStack.isEmpty()) {
-			myKindStack.remove(myKindStack.size() - 1);
+		if (myKindStackSize > 0) {
+			--myKindStackSize;
 			return true;
 		}
 		return false;
@@ -67,8 +72,9 @@ public final class BookReader {
 	public void beginParagraph(ZLTextParagraph.Kind kind) {
 		if (myCurrentTextModel != null) {
 			myCurrentTextModel.createParagraph(kind);
-			for (byte b : myKindStack) {
-				myCurrentTextModel.addControl(b, true);
+			final int size = myKindStackSize;
+			for (int i = 0; i < size; ++i) {
+				myCurrentTextModel.addControl(myKindStack[i], true);
 			}
 			if (myHyperlinkReference.length() != 0) {
 				myCurrentTextModel.addHyperlinkControl(myHyperlinkKind, myHyperlinkReference);

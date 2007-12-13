@@ -1,7 +1,6 @@
 package org.zlibrary.core.xml.own;
 
 import java.util.TreeMap;
-import java.util.HashMap;
 import java.io.*;
 
 import org.zlibrary.core.xml.ZLXMLReader;
@@ -116,7 +115,7 @@ final class ZLOwnXMLParser {
 	}
 
 	public void doIt() throws IOException {
-		final HashMap<String,char[]> entityMap = new HashMap<String,char[]>();
+		final TreeMap<String,char[]> entityMap = new TreeMap<String,char[]>();
 		entityMap.put("amp", new char[] { '&' });
 		entityMap.put("apos", new char[] { '\'' });
 		entityMap.put("gt", new char[] { '>' });
@@ -130,7 +129,7 @@ final class ZLOwnXMLParser {
 		final StringBuilder attributeName = new StringBuilder();
 		final StringBuilder attributeValue = new StringBuilder();
 		final StringBuilder entityName = new StringBuilder();
-		final HashMap<String,String> attributes = new HashMap<String,String>();
+		final TreeMap<String,String> attributes = new TreeMap<String,String>();
 
 		int state = START_DOCUMENT;
 		int savedState = START_DOCUMENT;
@@ -364,14 +363,14 @@ final class ZLOwnXMLParser {
 		}
 	}
 
-	private static void processFullTag(ZLXMLReader xmlReader, StringBuilder tagName, HashMap<String,String> attributes) {
+	private static void processFullTag(ZLXMLReader xmlReader, StringBuilder tagName, TreeMap<String,String> attributes) {
 		final String s = convertToString(tagName);
 		xmlReader.startElementHandler(s, attributes);
 		xmlReader.endElementHandler(s);
 		attributes.clear();
 	}
 
-	private static void processStartTag(ZLXMLReader xmlReader, StringBuilder tagName, HashMap<String,String> attributes) {
+	private static void processStartTag(ZLXMLReader xmlReader, StringBuilder tagName, TreeMap<String,String> attributes) {
 		xmlReader.startElementHandler(convertToString(tagName), attributes);
 		attributes.clear();
 	}

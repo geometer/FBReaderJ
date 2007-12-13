@@ -2,9 +2,6 @@ package org.zlibrary.text.model.impl;
 
 import org.zlibrary.text.model.entry.ZLTextParagraphEntry;
 
-import java.util.Map;
-import java.util.HashMap;
-
 class EntryPool {
 	private static final ZLTextParagraphEntry[] ourStartEntries = new ZLTextParagraphEntry[256];
 	private static final ZLTextParagraphEntry[] ourEndEntries = new ZLTextParagraphEntry[256];

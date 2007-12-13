@@ -7,13 +7,10 @@ package org.zlibrary.core.options;
  * 
  */
 public final class ZLDoubleOption extends ZLOption {
-
+	private final double myDefaultValue;
 	private double myValue;
 
-	private final double myDefaultValue;
-
-	public ZLDoubleOption(String category, String group, String optionName,
-			double defaultValue) {
+	public ZLDoubleOption(String category, String group, String optionName, double defaultValue) {
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
@@ -21,12 +18,11 @@ public final class ZLDoubleOption extends ZLOption {
 
 	public double getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName, null);
+			String value = getConfigValue(null);
 			if (value != null) {
 				try {
 					Double doubleValue = Double.parseDouble(value);
 					myValue = doubleValue;
-					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
@@ -42,12 +38,12 @@ public final class ZLDoubleOption extends ZLOption {
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if ((myValue == myDefaultValue)) {
-			myConfig.unsetValue(myGroup, myOptionName);
+		if (myValue == myDefaultValue) {
+			unsetConfigValue();
 		} else if (Double.isNaN(myValue) && Double.isNaN(myDefaultValue)) {
-			myConfig.unsetValue(myGroup, myOptionName);
+			unsetConfigValue();
 		} else {
-			myConfig.setValue(myGroup, myOptionName, "" + myValue, myCategory);
+			setConfigValue("" + myValue);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package org.zlibrary.core.xml.own;
 
-import java.util.HashMap;
 import java.io.InputStream;
 import java.io.IOException;
 

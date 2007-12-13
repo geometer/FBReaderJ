@@ -13,7 +13,7 @@ import java.util.Map;
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList<ZLTextParagraph> myParagraphs = new ArrayList<ZLTextParagraph>();
 
-	private static final int DATA_BLOCK_SIZE = 102400;
+	private static final int DATA_BLOCK_SIZE = 51200;
 	private int myBlockOffset = 0;
 	private boolean myBlockOverflow = true;
 	private final ArrayList<char[]> myData = new ArrayList<char[]>();

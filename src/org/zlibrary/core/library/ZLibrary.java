@@ -3,13 +3,13 @@ package org.zlibrary.core.library;
 import java.io.InputStream;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLibrary {
-	private final Map<String,String> myProperties = new HashMap<String,String>();
+	private final Map<String,String> myProperties = new TreeMap<String,String>();
 
 	public static ZLibrary getInstance() {
 		return ourImplementation;

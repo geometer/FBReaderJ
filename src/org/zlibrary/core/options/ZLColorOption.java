@@ -30,12 +30,11 @@ public final class ZLColorOption extends ZLOption {
 
 	public ZLColor getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName, null);
+			String value = getConfigValue(null);
 			if (value != null) {
 				try {
 					Integer intValue = Integer.parseInt(value);
 					myIntValue = intValue;
-					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
@@ -54,10 +53,9 @@ public final class ZLColorOption extends ZLOption {
 			myIntValue = value;
 			myIsSynchronized = true;
 			if (myIntValue == myDefaultValue) {
-				myConfig.unsetValue(myGroup, myOptionName);
+				unsetConfigValue();
 			} else {
-				myConfig.setValue(myGroup, myOptionName, "" + myIntValue,
-						myCategory);
+				setConfigValue("" + myIntValue);
 			}
 		}
 	}

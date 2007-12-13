@@ -7,10 +7,8 @@ package org.zlibrary.core.options;
  * 
  */
 public final class ZLIntegerOption extends ZLOption {
-
-	private int myValue;
-
 	private final int myDefaultValue;
+	private int myValue;
 
 	public ZLIntegerOption(String category, String group, String optionName,
 			int defaultValue) {
@@ -19,14 +17,18 @@ public final class ZLIntegerOption extends ZLOption {
 		myValue = myDefaultValue;
 	}
 
+	public void changeName(String optionName) {
+		super.changeName(optionName);
+		myValue = myDefaultValue;
+	}
+
 	public int getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName, null);
+			String value = getConfigValue(null);
 			if (value != null) {
 				try {
 					Integer intValue = Integer.parseInt(value);
 					myValue = intValue;
-					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
@@ -43,10 +45,10 @@ public final class ZLIntegerOption extends ZLOption {
 		myValue = value;
 		myIsSynchronized = true;
 		if (myValue == myDefaultValue) {
-			// System.out.println(myOptionName + " is unset");
-			myConfig.unsetValue(myGroup, myOptionName);
+			// System.out.println(optionName() + " is unset");
+			unsetConfigValue();
 		} else {
-			myConfig.setValue(myGroup, myOptionName, "" + myValue, myCategory);
+			setConfigValue("" + myValue);
 		}
 	}
 }

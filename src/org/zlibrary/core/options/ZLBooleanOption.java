@@ -1,13 +1,10 @@
 package org.zlibrary.core.options;
 
 public final class ZLBooleanOption extends ZLSimpleOption {
-
+	private final boolean myDefaultValue;
 	private boolean myValue;
 
-	private final boolean myDefaultValue;
-
-	public ZLBooleanOption(String category, String group, String optionName,
-			boolean defaultValue) {
+	public ZLBooleanOption(String category, String group, String optionName, boolean defaultValue) {
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
@@ -19,15 +16,12 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 
 	public boolean getValue() {
 		if (!myIsSynchronized) {
-
-			String value = myConfig.getValue(myGroup, myOptionName, null);
+			String value = getConfigValue(null);
 			if (value != null) {
-				if (value.toLowerCase().equals("true")) {
+				if ("true".equals(value)) {
 					myValue = true;
-					myConfig.setValue(myGroup, myOptionName, value, myCategory);
-				} else if (value.toLowerCase().equals("false")) {
+				} else if ("false".equals(value)) {
 					myValue = false;
-					//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 				}
 			}
 			myIsSynchronized = true;
@@ -42,15 +36,10 @@ public final class ZLBooleanOption extends ZLSimpleOption {
 		myValue = value;
 		myIsSynchronized = true;
 		if (myValue == myDefaultValue) {
-			myConfig.unsetValue(myGroup, myOptionName);
+			unsetConfigValue();
 			// System.out.println("unsett" + myValue);
-
 		} else {
-			if (myValue) {
-				myConfig.setValue(myGroup, myOptionName, "true", myCategory);
-			} else {
-				myConfig.setValue(myGroup, myOptionName, "false", myCategory);
-			}
+			setConfigValue(myValue ? "true" : "false");
 		}
 	}
 }

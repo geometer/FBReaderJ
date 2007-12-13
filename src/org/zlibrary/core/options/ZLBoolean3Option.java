@@ -32,10 +32,9 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 
 	public ZLBoolean3 getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName, null);
+			String value = getConfigValue(null);
 			if (value != null) {
 				myValue = ZLBoolean3.getByString(value);
-				//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 			}
 			myIsSynchronized = true;
 		}
@@ -51,10 +50,9 @@ public final class ZLBoolean3Option extends ZLSimpleOption {
 			myIsSynchronized = true;
 
 			if (myValue == myDefaultValue) {
-				myConfig.unsetValue(myGroup, myOptionName);
+				unsetConfigValue();
 			} else {
-				myConfig.setValue(myGroup, myOptionName, myValue + "",
-						myCategory);
+				setConfigValue("" + myValue);
 			}
 		}
 	}

@@ -11,8 +11,8 @@ import org.zlibrary.ui.android.view.ZLAndroidViewWidget;
 import org.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
-	private final HashMap<Menu.Item,ZLApplication.Menubar.PlainItem> myMenuItemMap =
-		new HashMap<Menu.Item,ZLApplication.Menubar.PlainItem>();
+	private final TreeMap<Menu.Item,ZLApplication.Menubar.PlainItem> myMenuItemMap =
+		new TreeMap<Menu.Item,ZLApplication.Menubar.PlainItem>();
 
 	private class MenuBuilder extends ZLApplication.MenuVisitor {
 		private int myItemCount = Menu.FIRST;

@@ -1,7 +1,7 @@
 package org.fbreader.bookmodel;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Collections;
 
 import org.zlibrary.core.image.ZLImage;
@@ -14,9 +14,9 @@ public class BookModel {
 	private final ZLModelFactory myModelFactory = new ZLModelFactory();
 	private final ZLTextPlainModel myBookModel = myModelFactory.createPlainModel();
 	private final ContentsModel myContentsModel = new ContentsModel();
-	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
-	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
-	private final HashMap<String,ZLImage> myImageMap = new HashMap<String,ZLImage>(); 
+	private final TreeMap<String,ZLTextPlainModel> myFootnotes = new TreeMap<String,ZLTextPlainModel>();
+	private final TreeMap<String,Label> myInternalHyperlinks = new TreeMap<String,Label>();
+	private final TreeMap<String,ZLImage> myImageMap = new TreeMap<String,ZLImage>(); 
 	
 	private class Label {
 		final int ParagraphNumber;
