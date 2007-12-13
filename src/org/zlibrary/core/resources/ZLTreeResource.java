@@ -55,7 +55,7 @@ final class ZLTreeResource extends ZLResource {
 
 	@Override
 	public ZLResource getResource(String key) {
-		if (myChildren == null) {
+		if (myChildren != null) {
 			ZLResource child = myChildren.get(key);
 			if (child != null) {
 				return child;
