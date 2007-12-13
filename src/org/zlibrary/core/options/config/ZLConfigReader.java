@@ -137,7 +137,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	private String myFile = "";
 
 	protected ZLConfigReader(String path) {
-		myConfig = ZLConfigInstance.getExtendedInstance();
+		myConfig = (ZLConfigImpl)ZLConfigInstance.getInstance();
 		myDestinationDirectory = new File(path);
 		myDeltaFilePath = myDestinationDirectory + "/delta.xml";
 		if (myDestinationDirectory.exists()) {

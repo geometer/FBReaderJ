@@ -1,26 +1,25 @@
 package org.zlibrary.core.options.config;
 
 final class ZLOptionInfo {
-	private static final String EMPTY_STRING = "";
 	private String myValue;
 	private String myCategory;
 	private String myName;
 
 	public ZLOptionInfo(String name, String value, String category) {
-		myValue = (value != null) ? value.intern() : EMPTY_STRING;
-		myCategory = (category != null) ? category.intern() : EMPTY_STRING;
-		myName = (name != null) ? name.intern() : EMPTY_STRING;
+		myValue = (value != null) ? value : "";
+		myCategory = (category != null) ? category : "";
+		myName = (name != null) ? name : "";
 	}
 
 	public void setValue(String value) {
-		if ((value != null) && (!myValue.equals(value))) {
-			myValue = value.intern();
+		if (value != null) {
+			myValue = value;
 		}
 	}
 	
-	public void setCategory(String cat) {
-		if ((cat != null) && (!myCategory.equals(cat))) {
-			myCategory = cat.intern();
+	public void setCategory(String category) {
+		if (category != null) {
+			myCategory = category;
 		}
 	}
 	

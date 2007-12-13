@@ -11,14 +11,9 @@ public final class ZLStringOption extends ZLSimpleOption {
 
 	private final String myDefaultValue;
 
-	public ZLStringOption(String category, String group, String optionName,
-			String defaultValue) {
+	public ZLStringOption(String category, String group, String optionName, String defaultValue) {
 		super(category, group, optionName);
-		if (defaultValue != null) {
-			myDefaultValue = defaultValue;
-		} else {
-			myDefaultValue = "";
-		}
+		myDefaultValue = (defaultValue != null) ? defaultValue.intern() : "";
 		myValue = myDefaultValue;
 	}
 
@@ -28,11 +23,9 @@ public final class ZLStringOption extends ZLSimpleOption {
 
 	public String getValue() {
 		if (!myIsSynchronized) {
-			String value = myConfig.getValue(myGroup, myOptionName,
-					myDefaultValue);
+			String value = myConfig.getValue(myGroup, myOptionName, myDefaultValue);
 			if (value != null) {
 				myValue = value;
-				//myConfig.setValue(myGroup, myOptionName, value, myCategory);
 			}
 			myIsSynchronized = true;
 		}
@@ -40,17 +33,19 @@ public final class ZLStringOption extends ZLSimpleOption {
 	}
 
 	public void setValue(String value) {
-		if (myIsSynchronized && (myValue.equals(value))) {
+		if (value == null) {
 			return;
 		}
-		if (value != null) {
-			myValue = value;
-			myIsSynchronized = true;
-			if (myValue.equals(myDefaultValue)) {
-				myConfig.unsetValue(myGroup, myOptionName);
-			} else {
-				myConfig.setValue(myGroup, myOptionName, myValue, myCategory);
-			}
+		value = value.intern();
+		if (myIsSynchronized && (myValue == value)) {
+			return;
 		}
+		myValue = value;
+		if (value == myDefaultValue) {
+			myConfig.unsetValue(myGroup, myOptionName);
+		} else {
+			myConfig.setValue(myGroup, myOptionName, value, myCategory);
+		}
+		myIsSynchronized = true;
 	}
 }

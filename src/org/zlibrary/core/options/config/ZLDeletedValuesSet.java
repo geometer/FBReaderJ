@@ -14,7 +14,7 @@ import java.util.*;
 	public Set<String> getGroups() {
 		Set<String> temp = new HashSet<String>();
 		for (ZLOptionID option : myData) {
-			temp.add(option.getGroup().intern());
+			temp.add(option.getGroup());
 		}
 		return Collections.unmodifiableSet(temp);
 	}

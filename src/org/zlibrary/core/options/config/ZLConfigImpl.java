@@ -50,28 +50,17 @@ import java.util.*;
 		return value;
 	}
 
-	/*protected void setCategory(String group, String name, String cat) {
-		myDeltaConfig.setCategory(group, name, cat);
-		myMainConfig.setCategory(group, name, cat);
-	}*/
-
 	public void removeGroup(String name) {
 		myDeltaConfig.removeGroup(name);
 	}
 	
-	protected void removeGroupDirectly(String name) {
-		myMainConfig.removeGroup(name);
-	}
-
-	public void setValue(String group, String name, String value,
-			String category) {
+	public void setValue(String group, String name, String value, String category) {
 		if (value != null) {
 			myDeltaConfig.setValue(group, name, value, category);
 		}
 	}
 	
-	protected void setValueDirectly(String group, String name, String value,
-			String category) {
+	protected void setValueDirectly(String group, String name, String value, String category) {
 		myMainConfig.setValue(group, name, value, category);
 	}
 
@@ -79,10 +68,6 @@ import java.util.*;
 		myDeltaConfig.unsetValue(group, name);
 	}
 	
-	protected void unsetValueDirectly(String group, String name) {
-		myMainConfig.unsetValue(group, name);
-	}
-
 	protected void clearDelta() {
 		myDeltaConfig.clear();
 	}

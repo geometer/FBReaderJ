@@ -1,16 +1,15 @@
 package org.zlibrary.core.options.config;
 
-/*package*/ class ZLOptionID {
-	
+final class ZLOptionID {
 	private String myGroup = "";
 	private String myName = "";
 
 	public ZLOptionID(String group, String name) {
 		if (group != null) {
-			myGroup = group.intern();
+			myGroup = group;
 		}
 		if (name != null) {
-			myName = name.intern();
+			myName = name;
 		}
 	}
 

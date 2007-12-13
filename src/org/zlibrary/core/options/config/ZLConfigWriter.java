@@ -3,9 +3,8 @@ package org.zlibrary.core.options.config;
 import java.io.*;
 import java.util.*;
 
-/*package*/ final class ZLConfigWriter implements ZLWriter {
-
-	private final ZLConfigImpl myConfig = ZLConfigInstance.getExtendedInstance();
+final class ZLConfigWriter implements ZLWriter {
+	private final ZLConfigImpl myConfig = (ZLConfigImpl)ZLConfigInstance.getInstance();
 	private final File myDestinationDirectory;
 
 	protected ZLConfigWriter(String path) {
@@ -97,7 +96,7 @@ import java.util.*;
 		 * после изменений ничего не лежит, то мы удаляем соответствующие файлы
 		 */
 		for (String category : usedCategories) {
-			if (!configFilesContent.keySet().contains(category.intern())) {
+			if (!configFilesContent.keySet().contains(category)) {
 				deleteConfigFile(configFilePath(category));
 			}
 		}
