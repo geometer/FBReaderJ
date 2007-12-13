@@ -156,9 +156,9 @@ public class FB2Reader extends ZLXMLReader {
 				break;	
 			
 			case BINARY:
-				//if (myCurrentImage != null) {
-				//	myCurrentImage.trimToSize();
-				//}
+				if (myCurrentImage != null) {
+					myCurrentImage.trimToSize();
+				}
 				myCurrentImage = null;
 				break;	
 				

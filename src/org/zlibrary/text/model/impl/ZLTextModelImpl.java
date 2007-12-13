@@ -75,29 +75,6 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		getLastParagraph().addEntry(new ZLTextEntryImpl(block, blockOffset, length));
 		myBlockOffset += length;
 	}
-
-	/*
-	public void addText(ArrayList<char[]> text) {
-		int index = 0;
-		final int arraySize = text.size();
-		while (index < arraySize) {
-			final char[] block = getDataBlock();
-			int blockOffset = myBlockOffset;
-			for (; index < arraySize; ++index) {
-				final char[] part = text.get(index);
-				final int length = (part.length < DATA_BLOCK_SIZE) ? part.length : DATA_BLOCK_SIZE;
-				if (length > DATA_BLOCK_SIZE - blockOffset) {
-					myBlockOverflow = true;
-					break;
-				}
-				System.arraycopy(part, 0, block, blockOffset, length);
-				blockOffset += length;
-			}
-			getLastParagraph().addEntry(new ZLTextEntryImpl(block, myBlockOffset, blockOffset - myBlockOffset));
-			myBlockOffset = blockOffset;
-		}
-	}
-	*/
 	
 	public void addControl(ZLTextForcedControlEntry entry) {
 		getLastParagraph().addEntry(entry);
