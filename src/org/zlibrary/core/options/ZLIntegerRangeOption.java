@@ -33,7 +33,7 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	public int getValue() {
 		if (!myIsSynchronized) {
 			String value = getConfigValue(null);
-			if ((value != null) && (value.length() > 0)) {
+			if (value != null) {
 				try {
 					Integer intValue = Integer.parseInt(value);
 					myValue = Math.max(myMinValue, Math.min(myMaxValue, intValue));
