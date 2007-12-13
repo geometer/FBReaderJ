@@ -51,13 +51,12 @@ import java.util.*;
 
 	public void write() {
 		Set<String> usedCategories = myConfig.applyDelta();
-		Set<ZLGroup> groups = myConfig.getGroups();
 		// ключ - имя категории, значение - содержимое соответствующего файла
 		Map<String, StringBuffer> configFilesContent = new LinkedHashMap<String, StringBuffer>();
 		StringBuffer sb;
 		Map<String, Boolean> currentGroupOpenedIn;
 
-		for (ZLGroup group : groups) {
+		for (ZLGroup group : myConfig.groups()) {
 
 			// ключ - имена категорий, о которых мы уже знаем, что она там есть
 			// значение - записали ли мы уже это в файле

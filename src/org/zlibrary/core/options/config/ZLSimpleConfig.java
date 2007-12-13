@@ -1,6 +1,7 @@
 package org.zlibrary.core.options.config;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * класс Конфиг. это своеобразная структура опций. основное поле myData содержит
@@ -9,63 +10,40 @@ import java.util.*;
  * @author Администратор
  * 
  */
-/* package */final class ZLSimpleConfig implements ZLConfig {
+final class ZLSimpleConfig {
+	private final HashMap<String,ZLGroup> myData = new HashMap<String,ZLGroup>();
 
-	private final Set<ZLGroup> myData;
-
-	public ZLSimpleConfig() {
-		myData = new LinkedHashSet<ZLGroup>();
-	}
-
-	protected void clear() {
+	void clear() {
 		myData.clear();
 	}
 
-	protected Set<ZLGroup> getGroups() {
-		return Collections.unmodifiableSet(myData);
+	Collection<ZLGroup> groups() {
+		return myData.values();
 	}
 
-	public void removeGroup(String name) {
-		for (ZLGroup group : myData) {
-			if (group.getName().equals(name)) {
-				myData.remove(group);
-			}
-		}
+	void removeGroup(String name) {
+		myData.remove(name);
 	}
 
-	protected ZLGroup getGroup(String name) {
-		for (ZLGroup group : myData) {
-			if (group.getName().equals(name)) {
-				return group;
-			}
-		}
-		return null;
+	ZLGroup getGroup(String name) {
+		return myData.get(name);
 	}
 
-	public String getValue(String group, String name, String defaultValue) {
-		ZLGroup gr = getGroup(group);
-		if (gr != null) {
-			if (gr.getValue(name) != null) {
-				return gr.getValue(name);
+	String getValue(String groupName, String name, String defaultValue) {
+		ZLGroup group = getGroup(groupName);
+		if (group != null) {
+			String value = group.getValue(name);
+			if (value != null) {
+				return value;
 			}
 		}
 		return defaultValue;
 	}
 
-	/*protected void setCategory(String group, String name, String cat) {
-		ZLGroup gr = getGroup(group);
-		if (gr != null) {
-			ZLOptionInfo option = gr.getOption(name);
-			if (option != null) {
-				option.setCategory(cat);
-			}
-		}
-	}*/
-
-	protected String getCategory(String group, String name) {
-		ZLGroup gr = getGroup(group);
-		if (gr != null) {
-			ZLOptionInfo option = gr.getOption(name);
+	String getCategory(String groupName, String name) {
+		ZLGroup group = getGroup(groupName);
+		if (group != null) {
+			ZLOptionInfo option = group.getOption(name);
 			if (option != null) {
 				return option.getCategory();
 			}
@@ -73,25 +51,21 @@ import java.util.*;
 		return null;
 	}
 
-	public void setValue(String group, String name, String value,
-			String category) {
-		ZLGroup gr = getGroup(group);
-		//System.out.println(group + ", " + name + ", " + gr);
-		if (gr != null) {
-			gr.setValue(name, value, category);
-		} else {
-			ZLGroup newGroup = new ZLGroup(group);
-			newGroup.setValue(name, value, category);
-			myData.add(newGroup);
+	void setValue(String groupName, String name, String value, String category) {
+		ZLGroup group = getGroup(groupName);
+		if (group == null) {
+			group = new ZLGroup(groupName);
+			myData.put(groupName, group);
 		}
+		group.setValue(name, value, category);
 	}
 
-	public void unsetValue(String group, String name) {
+	void unsetValue(String groupName, String name) {
 		//System.out.println("run");
-		ZLGroup gr = getGroup(group);
-		if (gr != null) {
+		ZLGroup group = getGroup(groupName);
+		if (group != null) {
 			//System.out.println("case");
-			gr.unsetValue(name);
+			group.unsetValue(name);
 		}
 	}
 

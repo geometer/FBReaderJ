@@ -21,8 +21,8 @@ import java.util.*;
 		return myDeltaConfig;
 	}
 
-	protected Set<ZLGroup> getGroups() {
-		return myMainConfig.getGroups();
+	protected Collection<ZLGroup> groups() {
+		return myMainConfig.groups();
 	}
 	
 	/**@return defaultValue - when this value is not set or deleted
@@ -114,8 +114,7 @@ import java.util.*;
 		}
 
 		ZLSimpleConfig setValues = myDeltaConfig.getSetValues();
-		Set<ZLGroup> groups = setValues.getGroups();
-		for (ZLGroup group : groups) {
+		for (ZLGroup group : setValues.groups()) {
 			for (ZLOptionInfo value : group.getOptions()) {
 				usedCategories.add(value.getCategory());
 				String cat = myMainConfig.getCategory(group.getName(), value.getName());

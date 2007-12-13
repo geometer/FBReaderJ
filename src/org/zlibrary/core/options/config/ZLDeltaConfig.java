@@ -90,10 +90,9 @@ import java.util.*;
 			sb.append("  </group>\n");
 		}
 
-		Set<ZLGroup> setGroups = mySetValues.getGroups();
 		//Set<String> writtenGroups = new HashSet<String>();
 
-		for (ZLGroup group : setGroups) {
+		for (ZLGroup group : mySetValues.groups()) {
 			sb.append("  <group name=\"" + group.getName() + "\">\n");
 			//writtenGroups.add(group.getName());
 			for (ZLOptionInfo option : group.getOptions()) {
