@@ -7,6 +7,7 @@ import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.core.view.ZLView;
 
 public final class ZLSwingViewWidget extends ZLViewWidget {
+	@SuppressWarnings("serial")
 	private class Panel extends JPanel {
 		public void paint(Graphics g) {
 			super.paint(g);

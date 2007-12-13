@@ -14,6 +14,7 @@ import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
 
+@SuppressWarnings("serial")
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
 	private final JPanel myMainPanel;
