@@ -32,12 +32,13 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myParagraphs.remove(index);
 	}
 
-	private ZLTextParagraph getLastParagraph() {
-		return myParagraphs.get(myParagraphs.size() - 1);
+	private void addEntry(ZLTextParagraph.Entry entry) {
+		final ArrayList<ZLTextParagraph> paragraphs = myParagraphs;
+		paragraphs.get(paragraphs.size() - 1).addEntry(entry);
 	}
 
 	public void addControl(byte textKind, boolean isStart) {
-		getLastParagraph().addEntry(EntryPool.getControlEntry(textKind, isStart));
+		addEntry(EntryPool.getControlEntry(textKind, isStart));
 	}
 
 	private final char[] getDataBlock() {
@@ -70,24 +71,24 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		final char[] block = getDataBlock();
 		final int blockOffset = myBlockOffset;
 		System.arraycopy(text, 0, block, blockOffset, length);
-		getLastParagraph().addEntry(new ZLTextEntryImpl(block, blockOffset, length));
+		addEntry(new ZLTextEntryImpl(block, blockOffset, length));
 		myBlockOffset += length;
 	}
 	
 	public void addControl(ZLTextForcedControlEntry entry) {
-		getLastParagraph().addEntry(entry);
+		addEntry(entry);
 	}
 	
 	public void addHyperlinkControl(byte textKind, String label) {
-		getLastParagraph().addEntry(new ZLTextHyperlinkControlEntry(textKind, label));
+		addEntry(new ZLTextHyperlinkControlEntry(textKind, label));
 	}
 	
 	public void addImage(String id, Map<String,ZLImage> imageMap, short vOffset) {
-		getLastParagraph().addEntry(new ZLImageEntry(id, imageMap, vOffset));
+		addEntry(new ZLImageEntry(id, imageMap, vOffset));
 	}
 	
-	public void addFixedHSpace(byte length) {
-		getLastParagraph().addEntry(new ZLTextFixedHSpaceEntry(length));
+	public void addFixedHSpace(short length) {
+		addEntry(new ZLTextFixedHSpaceEntry(length));
 	}	
 
 	public String dump() {

@@ -18,7 +18,7 @@ public interface ZLTextModel {
 	void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, String label);
 	void addImage(String id, Map<String,ZLImage> imageMap, short vOffset);
-	void addFixedHSpace(byte length);
+	void addFixedHSpace(short length);
 
 	String dump();
 }
