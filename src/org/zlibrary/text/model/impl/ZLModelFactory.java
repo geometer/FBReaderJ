@@ -1,5 +1,7 @@
 package org.zlibrary.text.model.impl;
 
+import java.util.ArrayList;
+
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
@@ -16,24 +18,23 @@ public class ZLModelFactory {
 	public ZLTextTreeModel createZLTextTreeModel() {
 		return new ZLTextTreeModelImpl();
 	}
+
 	//paragraphs
-	/*
 	public ZLTextParagraph createParagraph() {
-		return new ZLTextParagraphImpl();
+		return new ZLTextParagraphImpl(new ArrayList<ZLTextParagraph.Entry>());
 	}
 	
 	public ZLTextParagraph createSpecialParagragraph(ZLTextParagraph.Kind kind) {
-		return new ZLTextSpecialParagraphImpl(kind);
+		return new ZLTextSpecialParagraphImpl(kind, new ArrayList<ZLTextParagraph.Entry>());
 	}
 	
 	public ZLTextTreeParagraph createTreeParagraph(ZLTextTreeParagraph parent) {
-		return new ZLTextTreeParagraphImpl(parent);
+		return new ZLTextTreeParagraphImpl(parent, new ArrayList<ZLTextParagraph.Entry>());
 	}
 	
 	public ZLTextTreeParagraph createTreeParagraph() {
-		return new ZLTextTreeParagraphImpl(null);
+		return new ZLTextTreeParagraphImpl(null, new ArrayList<ZLTextParagraph.Entry>());
 	}
-	*/
 
 	//entries
 	public ZLTextControlEntry createControlEntry(byte kind, boolean isStart) {

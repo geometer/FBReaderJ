@@ -1,5 +1,7 @@
 package org.test.zlibrary.model;
 
+import java.util.Iterator;
+
 import junit.framework.TestCase;
 
 import org.zlibrary.core.util.ZLTextBuffer;
@@ -30,7 +32,8 @@ public class TestZLTextModel extends TestCase {
         assertEquals(model.getParagraphsNumber(), 2);
         model.addText("addText".toCharArray());
 				{
-					ZLTextEntry entry = (ZLTextEntry)model.getParagraph(1).getEntries().get(0);
+					Iterator<ZLTextParagraph.Entry> it = model.getParagraph(1).iterator();
+					ZLTextEntry entry = (ZLTextEntry)it.next();
 					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
 					System.err.println(s + " ?= addText");
           assertEquals(s, "addText");
@@ -40,7 +43,9 @@ public class TestZLTextModel extends TestCase {
 				buffer.append("2".toCharArray());
         model.addText(buffer);
 				{
-					ZLTextEntry entry = (ZLTextEntry)model.getParagraph(1).getEntries().get(1);
+					Iterator<ZLTextParagraph.Entry> it = model.getParagraph(1).iterator();
+					it.next();
+					ZLTextEntry entry = (ZLTextEntry)it.next();
 					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
 					System.err.println(s + " ?= 12");
           assertEquals(s, "12");

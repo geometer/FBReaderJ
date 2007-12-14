@@ -1,5 +1,7 @@
 package org.test.fbreader.formats.fb2;
 
+import java.util.Iterator;
+
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
@@ -234,7 +236,11 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testFootnote1() {
 		BookModel model = (new FB2Reader()).readBook(myDirectory + "footnote1.fb2");
-		ZLTextEntry entry = (ZLTextEntry)model.getParagraphByLink("note1").getEntries().get(1);
+		ZLTextParagraph paragraph = model.getParagraphByLink("note1");
+		Iterator<ZLTextParagraph.Entry> it = paragraph.iterator();
+		it.next();
+		ZLTextEntry entry = (ZLTextEntry)it.next();
+		//ZLTextEntry entry = (ZLTextEntry)model.getParagraphByLink("note1").getEntries().get(1);
 		assertEquals("footnote", new String(entry.getData(), entry.getDataOffset(), entry.getDataLength()));
 	}
 	
@@ -301,7 +307,10 @@ public class TestFB2Reader extends TestCase {
 		FB2Reader reader = new FB2Reader();
 		BookModel bModel = reader.readBook(myDirectory + "image.fb2");
 		ZLTextModel model = bModel.getBookModel();
-		ZLImageEntry entry = (ZLImageEntry) model.getParagraph(0).getEntries().get(1);
+		ZLTextParagraph paragraph = model.getParagraph(0);
+		Iterator<ZLTextParagraph.Entry> it = paragraph.iterator();
+		it.next();
+		ZLImageEntry entry = (ZLImageEntry)it.next();
 		assertEquals(entry.VOffset, 0);
 		assertEquals(entry.getImage(), bModel.getImageMap().get("cover.jpg"));
 	}
