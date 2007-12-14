@@ -12,7 +12,8 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 	private	ZLTextTreeParagraph myParent;
 	private	final ArrayList<ZLTextTreeParagraph> myChildren = new ArrayList<ZLTextTreeParagraph>();
 	
-	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent) {
+	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent, ArrayList<Entry> entries) {
+		super(entries);
 		myParent = parent;
 		if (parent != null) {
 			((ZLTextTreeParagraphImpl)parent).addChild(this);

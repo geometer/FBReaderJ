@@ -7,7 +7,7 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 	private final ZLTextTreeParagraph myRoot;
 	
 	public ZLTextTreeModelImpl() {
-		myRoot = new ZLTextTreeParagraphImpl(null);
+		myRoot = new ZLTextTreeParagraphImpl(null, myEntries);
 		myRoot.open(true);
 	}
 	
@@ -15,7 +15,7 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 		if (parent == null) {
 			parent = myRoot;
 		}
-		ZLTextTreeParagraph tp = new ZLTextTreeParagraphImpl(parent);
+		ZLTextTreeParagraph tp = new ZLTextTreeParagraphImpl(parent, myEntries);
 		addParagraphInternal(tp);
 		return tp;
 	}

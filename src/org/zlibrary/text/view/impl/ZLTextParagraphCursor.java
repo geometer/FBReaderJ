@@ -24,8 +24,7 @@ public abstract class ZLTextParagraphCursor {
 		/*Why do we need ZLTextParagraph.Entry interface?*/
 
 		public void fill() {
-			List <ZLTextParagraph.Entry> entries = myParagraph.getEntries();
-			for (ZLTextParagraph.Entry entry : entries) {
+			for (ZLTextParagraph.Entry entry : myParagraph) {
 				if (entry instanceof ZLTextEntry) {
 					processTextEntry((ZLTextEntry) entry);
 				} else if (entry instanceof ZLTextControlEntry) {

@@ -3,31 +3,61 @@ package org.zlibrary.text.model.impl;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.impl.ZLTextEntryImpl;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 class ZLTextParagraphImpl implements ZLTextParagraph {
-	private final ArrayList<ZLTextParagraph.Entry> myEntries = new ArrayList<ZLTextParagraph.Entry>();
+	private final ArrayList<Entry> myEntries;
+	private final int myOffset;
+	private int myLength;
 
-	ZLTextParagraphImpl() {
+	ZLTextParagraphImpl(ArrayList<Entry> entries) {
+		myEntries = entries;
+		myOffset = entries.size();
+		myLength = 0;
 	}
 
-	public List<ZLTextParagraph.Entry> getEntries() {
-		return Collections.unmodifiableList(myEntries);
+	private class EntryIterator implements Iterator<Entry> {
+		private int myPosition;
+
+		EntryIterator() {
+			myPosition = myOffset;
+		}
+
+		public boolean hasNext() {
+			return myPosition < myOffset + myLength;
+		}
+
+		public Entry next() {
+			if (myPosition == myOffset + myLength) {
+				throw new NoSuchElementException();
+			}
+			return myEntries.get(myPosition++);
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	public Iterator<Entry> iterator() {
+		return new EntryIterator();
 	}
 
 	public Kind getKind() {
 		return Kind.TEXT_PARAGRAPH;
 	}
 
-	public int getEntryNumber() {
-		return myEntries.size();
+	public final int getEntryNumber() {
+		return myLength;
 	}
 
-	public int getTextLength() {
+	public final int getTextLength() {
 		int size = 0;
-		for (ZLTextParagraph.Entry entry: myEntries) {
+		final ArrayList<Entry> entries = myEntries;
+		final int from = myOffset;
+		final int to = from + myLength;
+		for (int i = from; i < to; ++i) {
+			Entry entry = entries.get(i);
 			if (entry instanceof ZLTextEntryImpl) {
 				size += ((ZLTextEntryImpl)entry).getDataLength();
 			}
@@ -35,7 +65,8 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
 		return size;
 	}
 
-	public void addEntry(ZLTextParagraph.Entry entry) {
+	final void addEntry(Entry entry) {
 		myEntries.add(entry);
+		++myLength;
 	}
 }

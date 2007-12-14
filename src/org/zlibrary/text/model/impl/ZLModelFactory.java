@@ -17,6 +17,7 @@ public class ZLModelFactory {
 		return new ZLTextTreeModelImpl();
 	}
 	//paragraphs
+	/*
 	public ZLTextParagraph createParagraph() {
 		return new ZLTextParagraphImpl();
 	}
@@ -32,6 +33,7 @@ public class ZLModelFactory {
 	public ZLTextTreeParagraph createTreeParagraph() {
 		return new ZLTextTreeParagraphImpl(null);
 	}
+	*/
 
 	//entries
 	public ZLTextControlEntry createControlEntry(byte kind, boolean isStart) {

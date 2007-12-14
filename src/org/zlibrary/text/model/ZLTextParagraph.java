@@ -2,7 +2,7 @@ package org.zlibrary.text.model;
 
 import java.util.List;
 
-public interface ZLTextParagraph {
+public interface ZLTextParagraph extends Iterable<ZLTextParagraph.Entry> {
 	interface Entry {
 	}
 
@@ -19,6 +19,4 @@ public interface ZLTextParagraph {
 	Kind getKind();
 	int getEntryNumber();
 	int getTextLength();
-	List<Entry> getEntries();
-	void addEntry(Entry entry);
 }

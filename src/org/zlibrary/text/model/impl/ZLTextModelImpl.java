@@ -10,6 +10,7 @@ import java.util.Map;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList<ZLTextParagraph> myParagraphs = new ArrayList<ZLTextParagraph>();
+	protected final ArrayList<ZLTextParagraph.Entry> myEntries = new ArrayList<ZLTextParagraph.Entry>();
 
 	private static final int DATA_BLOCK_SIZE = 51200;
 	private int myBlockOffset = 0;
@@ -34,7 +35,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 	private void addEntry(ZLTextParagraph.Entry entry) {
 		final ArrayList<ZLTextParagraph> paragraphs = myParagraphs;
-		paragraphs.get(paragraphs.size() - 1).addEntry(entry);
+		((ZLTextParagraphImpl)paragraphs.get(paragraphs.size() - 1)).addEntry(entry);
 	}
 
 	public void addControl(byte textKind, boolean isStart) {
@@ -95,7 +96,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		StringBuilder sb = new StringBuilder();
 		for (ZLTextParagraph paragraph: myParagraphs) {
 			sb.append("[PARAGRAPH]\n");
-			for (ZLTextParagraph.Entry entry: paragraph.getEntries()) {
+			for (ZLTextParagraph.Entry entry : paragraph) {
 				if (entry instanceof ZLTextEntryImpl) {
 					ZLTextEntryImpl textEntry = (ZLTextEntryImpl)entry;
 					sb.append("[TEXT]");
