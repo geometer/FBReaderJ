@@ -1,14 +1,11 @@
 package org.test.zlibrary.model;
 
-import java.util.Iterator;
-
 import junit.framework.TestCase;
 
 import org.zlibrary.core.util.ZLTextBuffer;
 
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.impl.ZLTextEntry;
 import org.zlibrary.text.model.impl.ZLTextForcedControlEntry;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 
@@ -32,10 +29,10 @@ public class TestZLTextModel extends TestCase {
         assertEquals(model.getParagraphsNumber(), 2);
         model.addText("addText".toCharArray());
 				{
-					Iterator<ZLTextParagraph.Entry> it = model.getParagraph(1).iterator();
-					ZLTextEntry entry = (ZLTextEntry)it.next();
-					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
-					System.err.println(s + " ?= addText");
+					ZLTextParagraph.EntryIterator it = model.getParagraph(1).iterator();
+					it.next();
+          assertEquals(it.getType(), ZLTextParagraph.Entry.TEXT);
+					String s = new String(it.getTextData(), it.getTextOffset(), it.getTextLength());
           assertEquals(s, "addText");
 				}
 				ZLTextBuffer buffer = new ZLTextBuffer();
@@ -43,11 +40,11 @@ public class TestZLTextModel extends TestCase {
 				buffer.append("2".toCharArray());
         model.addText(buffer);
 				{
-					Iterator<ZLTextParagraph.Entry> it = model.getParagraph(1).iterator();
+					ZLTextParagraph.EntryIterator it = model.getParagraph(1).iterator();
 					it.next();
-					ZLTextEntry entry = (ZLTextEntry)it.next();
-					String s = new String(entry.getData(), entry.getDataOffset(), entry.getDataLength());
-					System.err.println(s + " ?= 12");
+					it.next();
+          assertEquals(it.getType(), ZLTextParagraph.Entry.TEXT);
+					String s = new String(it.getTextData(), it.getTextOffset(), it.getTextLength());
           assertEquals(s, "12");
 				}
     }

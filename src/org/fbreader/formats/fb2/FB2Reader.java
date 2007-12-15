@@ -1,6 +1,7 @@
 package org.fbreader.formats.fb2;
 
 import java.util.Map;
+import java.util.HashMap;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.BookReader;
@@ -28,11 +29,21 @@ public class FB2Reader extends ZLXMLReader {
 
 	private final char[] SPACE = { ' ' }; 
 	
+	private static HashMap<String,FB2Tag> myTagsByName = new HashMap<String,FB2Tag>();
 	private static FB2Tag getTag(String s) {
-		if (s.contains("-")) {
-			s = s.replace('-', '_');
+		FB2Tag tag = myTagsByName.get(s);
+		if ((tag == null) && !myTagsByName.containsKey(s)) {
+			if (s.contains("-")) {
+				s = s.replace('-', '_');
+			}
+			s = s.toUpperCase();
+			try {
+				tag = FB2Tag.valueOf(s);
+			} catch (IllegalArgumentException e) {
+			}
+			myTagsByName.put(s, tag);
 		}
-		return FB2Tag.valueOf(s.toUpperCase());
+		return tag;
 	}
 	
 	private static String reference(Map<String, String> attributes) {
@@ -41,7 +52,7 @@ public class FB2Reader extends ZLXMLReader {
 				return attributes.get(s);
 			}
 		}
-		return "";
+		return null;
 	}
 	
 //	private BookModel myBookModel = new BookModel();
@@ -57,20 +68,30 @@ public class FB2Reader extends ZLXMLReader {
 			myModelReader.addData(ch, start, length);
 		}		
 	}
-		
+
+	@Override
+	public void characterDataHandlerFinal(char[] ch, int start, int length) {
+		if (length == 0) {
+			return;
+		}
+		if (myCurrentImage != null) {
+			myCurrentImage.addData(ch, start, length);
+		} else {
+			myModelReader.addDataFinal(ch, start, length);
+		}		
+	}
+
 	@Override
 	public void endElementHandler(String tagName) {
 		FB2Tag tag;
-		try {
-			tag = getTag(tagName);
-		} catch (IllegalArgumentException e) {
+		tag = getTag(tagName);
+		if (tag == null) {
 			return;
-		}		
+		}
 		switch (tag) {
 			case P:
 				myModelReader.endParagraph();		
 				break;
-				
 			case SUB:
 				myModelReader.addControl(FBTextKind.SUB, false);
 				break;
@@ -177,9 +198,8 @@ public class FB2Reader extends ZLXMLReader {
 			myModelReader.addHyperlinkLabel(id);
 		}
 		FB2Tag tag;
-		try {
-			tag = getTag(tagName);
-		} catch (IllegalArgumentException e) {
+		tag = getTag(tagName);
+		if (tag == null) {
 			return;
 		}
 		switch (tag) {
@@ -316,13 +336,13 @@ public class FB2Reader extends ZLXMLReader {
 			
 			case IMAGE:
 				String imgRef = reference(attributes);
-				String vOffset = attributes.get("voffset");
-				short offset = 0;
-				try {
-					offset = Short.valueOf(vOffset);
-				} catch (NumberFormatException e) {
-				}
 				if ((imgRef != null) && (imgRef.length() != 0) && (imgRef.charAt(0) == '#')) {
+					String vOffset = attributes.get("voffset");
+					short offset = 0;
+					try {
+						offset = Short.valueOf(vOffset);
+					} catch (NumberFormatException e) {
+					}
 					imgRef = imgRef.substring(1);
 					if (!imgRef.equals(myCoverImageReference) ||
 							myParagraphsBeforeBodyNumber != myModelReader.getModel().getBookModel().getParagraphsNumber()) {
@@ -348,6 +368,11 @@ public class FB2Reader extends ZLXMLReader {
 		}
 	}
 	
+	@Override
+	public void endDocumentHandler() {
+		myTagsByName.clear();
+	}
+
 	public BookModel readBook(String fileName) {
 		//ZLXMLReader reader = new ZLXMLReader() {};
 		long start = System.currentTimeMillis();

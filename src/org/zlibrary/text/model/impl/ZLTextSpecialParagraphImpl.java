@@ -3,14 +3,19 @@ package org.zlibrary.text.model.impl;
 import java.util.ArrayList;
 
 class ZLTextSpecialParagraphImpl extends ZLTextParagraphImpl {
-	private Kind myKind;
+	private byte myKind;
 
-	ZLTextSpecialParagraphImpl(Kind kind, ArrayList<Entry> entries) {
-		super(entries);
+	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model) {
+		super(model);
 		myKind = kind;
 	}
 
-	public Kind getKind() {
+	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model, int offset, int length) {
+		super(model, offset, length);
+		myKind = kind;
+	}
+
+	public byte getKind() {
 		return myKind;
 	}
 }

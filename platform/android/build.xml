@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <project name="FBReaderJ" default="package">
 	
-	<property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc22a" />
-	<property name="android-tools" value="/home/geometer/src/android_sdk_linux_m3-rc22a/tools" />
+	<property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc37a" />
+	<property name="android-tools" value="/home/geometer/src/android_sdk_linux_m3-rc37a/tools" />
 	<property name="project-dir" value="/home/geometer/src/projects/FBReaderJ" />
 
 <!--

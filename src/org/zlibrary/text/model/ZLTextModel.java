@@ -13,6 +13,7 @@ public interface ZLTextModel {
 
 	void addControl(byte textKind, boolean isStart);
 	void addText(char[] text);
+	void addText(char[] text, int offset, int length);
 	void addText(ZLTextBuffer buffer);
 
 	void addControl(ZLTextForcedControlEntry entry);

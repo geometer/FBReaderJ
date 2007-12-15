@@ -49,15 +49,15 @@ public class ZLTextViewImpl extends ZLTextView {
 		}
 
 		public void applyControl(ZLTextControlElement control) {
-			if (control.isStart()) {
-//				System.out.println("Apply Start " + control.getTextKind());
-				ZLTextStyleDecoration decoration = ZLTextStyleCollection.getInstance().getDecoration(control.getTextKind());
+			if (control.IsStart) {
+//				System.out.println("Apply Start " + control.Kind);
+				ZLTextStyleDecoration decoration = ZLTextStyleCollection.getInstance().getDecoration(control.Kind);
 				setStyle(decoration.createDecoratedStyle(myStyle));
 //				if (decoration instanceof ZLTextFullStyleDecoration) {
 //					System.out.println("FontSize = " + myStyle.getFontSize());
 //				}
 			} else {
-//				System.out.println("Apply End " + control.getTextKind());
+//				System.out.println("Apply End " + control.Kind);
 				if (myStyle.isDecorated()) {
 					setStyle(((ZLTextDecoratedStyle) myStyle).getBase());
 				}

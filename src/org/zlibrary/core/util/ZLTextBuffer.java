@@ -44,6 +44,14 @@ public final class ZLTextBuffer {
 			}
 			myData = newData;
 		}
+		/*
+		int srcpos = offset;
+		int dstpos = myDataLength;
+		char[] dst = myData;
+		for (int i = 0; i < length; ++i) {
+			dst[dstpos++] = data[srcpos++];	
+		}
+		*/
 		System.arraycopy(data, offset, myData, myDataLength, length);
 		myDataLength = newDataLength;
 	}

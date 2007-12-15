@@ -19,15 +19,16 @@ public abstract class ZLXMLReader {
 	}
 	
 	public void startElementHandler(String tag, Map<String, String> attributes) {
-		
 	}
 	
 	public void endElementHandler(String tag) {
-		
 	}
 	
 	public void characterDataHandler(char[] ch, int start, int length) {
-		
+	}
+
+	public void characterDataHandlerFinal(char[] ch, int start, int length) {
+		characterDataHandler(ch, start, length);	
 	}
 
 	//?

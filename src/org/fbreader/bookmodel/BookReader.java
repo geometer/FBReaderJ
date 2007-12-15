@@ -14,8 +14,8 @@ public final class BookReader {
 	
 	private boolean myTextParagraphExists = false;
 	
-	ZLTextBuffer myBuffer = new ZLTextBuffer();
-	ZLTextBuffer myContentsBuffer = new ZLTextBuffer();
+	private final ZLTextBuffer myBuffer = new ZLTextBuffer();
+	private final ZLTextBuffer myContentsBuffer = new ZLTextBuffer();
 
 	private byte[] myKindStack = new byte[10];
 	private int myKindStackSize = 0;
@@ -69,7 +69,7 @@ public final class BookReader {
 		return false;
 	}
 	
-	public void beginParagraph(ZLTextParagraph.Kind kind) {
+	public void beginParagraph(byte kind) {
 		if (myCurrentTextModel != null) {
 			myCurrentTextModel.createParagraph(kind);
 			final int size = myKindStackSize;
@@ -90,7 +90,7 @@ public final class BookReader {
 		}
 	}
 	
-	private void insertEndParagraph(ZLTextParagraph.Kind kind) {
+	private void insertEndParagraph(byte kind) {
 		if ((myCurrentTextModel != null) && mySectionContainsRegularContents) {
 			int size = myCurrentTextModel.getParagraphsNumber();
 			if ((size > 0) && (myCurrentTextModel.getParagraph(size-1).getKind() != kind)) {
@@ -136,6 +136,21 @@ public final class BookReader {
 			} else {
 				addContentsData(data, offset, length);
 			}
+		}	
+	}
+	
+	public void addDataFinal(char[] data, int offset, int length) {
+		if (!myBuffer.isEmpty()) {
+			addData(data, offset, length);
+		} else {
+			if (myTextParagraphExists) {
+				myCurrentTextModel.addText(data, offset, length);
+				if (!myInsideTitle) {
+					mySectionContainsRegularContents = true;
+				} else {
+					addContentsData(data, offset, length);
+				}
+			}	
 		}	
 	}
 	

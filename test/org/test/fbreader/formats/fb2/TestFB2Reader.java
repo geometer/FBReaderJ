@@ -1,7 +1,5 @@
 package org.test.fbreader.formats.fb2;
 
-import java.util.Iterator;
-
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
@@ -12,7 +10,6 @@ import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.impl.ZLImageEntry;
-import org.zlibrary.text.model.impl.ZLTextEntry;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
 
@@ -237,11 +234,11 @@ public class TestFB2Reader extends TestCase {
 	public void testFootnote1() {
 		BookModel model = (new FB2Reader()).readBook(myDirectory + "footnote1.fb2");
 		ZLTextParagraph paragraph = model.getParagraphByLink("note1");
-		Iterator<ZLTextParagraph.Entry> it = paragraph.iterator();
+		ZLTextParagraph.EntryIterator it = paragraph.iterator();
 		it.next();
-		ZLTextEntry entry = (ZLTextEntry)it.next();
-		//ZLTextEntry entry = (ZLTextEntry)model.getParagraphByLink("note1").getEntries().get(1);
-		assertEquals("footnote", new String(entry.getData(), entry.getDataOffset(), entry.getDataLength()));
+		it.next();
+		assertEquals(it.getType(), ZLTextParagraph.Entry.TEXT);
+		assertEquals("footnote", new String(it.getTextData(), it.getTextOffset(), it.getTextLength()));
 	}
 	
 	public void testExternalHyperlink() {
@@ -308,8 +305,9 @@ public class TestFB2Reader extends TestCase {
 		BookModel bModel = reader.readBook(myDirectory + "image.fb2");
 		ZLTextModel model = bModel.getBookModel();
 		ZLTextParagraph paragraph = model.getParagraph(0);
-		Iterator<ZLTextParagraph.Entry> it = paragraph.iterator();
+		ZLTextParagraph.EntryIterator it = paragraph.iterator();
 		it.next();
+		//it.next();
 		ZLImageEntry entry = (ZLImageEntry)it.next();
 		assertEquals(entry.VOffset, 0);
 		assertEquals(entry.getImage(), bModel.getImageMap().get("cover.jpg"));

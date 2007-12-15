@@ -24,23 +24,37 @@ public abstract class ZLTextParagraphCursor {
 		/*Why do we need ZLTextParagraph.Entry interface?*/
 
 		public void fill() {
-			for (ZLTextParagraph.Entry entry : myParagraph) {
-				if (entry instanceof ZLTextEntry) {
-					processTextEntry((ZLTextEntry) entry);
-				} else if (entry instanceof ZLTextControlEntry) {
+			//for (ZLTextParagraph.Entry entry : myParagraph) {
+			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
+				ZLTextParagraph.Entry entry = it.next();
+				switch (it.getType()) {
+					case ZLTextParagraph.Entry.TEXT:
+						//processTextEntry((ZLTextEntry)entry);
+						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength());
+						break;
+					case ZLTextParagraph.Entry.CONTROL:
 //					System.out.println("Tag = " + ((ZLTextControlEntry) entry).getKind());
-					myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
-				} else if (entry instanceof ZLImageEntry) {
-					ZLImageEntry imageEntry = (ZLImageEntry)entry;
-					ZLImage image = imageEntry.getImage();
-					if (image != null) {
-						myElements.add(new ZLTextImageElement(image));
-					}
+						//myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
+						myElements.add(new ZLTextControlElement(it.getControlKind(), it.getControlIsStart()));
+						break;
+					case ZLTextParagraph.Entry.IMAGE:
+						ZLImageEntry imageEntry = (ZLImageEntry)entry;
+						ZLImage image = imageEntry.getImage();
+						if (image != null) {
+							myElements.add(new ZLTextImageElement(image));
+						}
+						break;
+					case ZLTextParagraph.Entry.FORCED_CONTROL:
+						// TODO: implement
+						break;
+					case ZLTextParagraph.Entry.FIXED_HSPACE:
+						// TODO: implement
+						break;
 				}
 			}
 		}
 		
-		public abstract void processTextEntry(ZLTextEntry textEntry);
+		public abstract void processTextEntry(final char[] data, final int offset, final int length);
 
 		protected final void addWord(char[] data, int from, int to) {
 			myElements.add(new ZLTextWord(data, from, to - from));
@@ -55,17 +69,14 @@ public abstract class ZLTextParagraphCursor {
 		/*Some useless code in C++ version here.
 		  Is spaceInserted variable used for inserting one separator instead of multiple spaces?*/
 
-		public void processTextEntry(ZLTextEntry textEntry) {
-			final ZLTextElement hSpace = ZLTextElement.HSpace;
-			final int length = textEntry.getDataLength();
+		public void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
-				final int start = textEntry.getDataOffset();
-				final int end = start + length;
-				final char[] data = textEntry.getData();
+				final ZLTextElement hSpace = ZLTextElement.HSpace;
+				final int end = offset + length;
 				char ch;
 				int firstNonSpace = -1;
 				boolean spaceInserted = false;
-				for (int charPos = start; charPos < end; ++charPos) {
+				for (int charPos = offset; charPos < end; ++charPos) {
 					if (Character.isWhitespace(data[charPos])) {
 						if (firstNonSpace != -1) {
 							addWord(data, firstNonSpace, charPos);

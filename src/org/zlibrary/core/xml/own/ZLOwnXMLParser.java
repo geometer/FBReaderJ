@@ -302,7 +302,7 @@ final class ZLOwnXMLParser {
 										appendToName(tagName, value, 0, value.length);
 										break;
 									case TEXT:
-										processText(xmlReader, value, 0, value.length);
+										xmlReader.characterDataHandler(buffer, 0, value.length);
 										break;
 								}
 							}
@@ -349,7 +349,13 @@ final class ZLOwnXMLParser {
 						while ((c != '<') && (c != '&') && (++i < count)) {
 							c = buffer[i];
 						}
-						processText(xmlReader, buffer, startPosition, i);
+						if (i > startPosition) {
+							if (c == '<') {
+								xmlReader.characterDataHandlerFinal(buffer, startPosition, i - startPosition);
+							} else {
+								xmlReader.characterDataHandler(buffer, startPosition, i - startPosition);
+							}
+						}
 						if (c == '<') {
 							state = LANGLE;
 						} else if (c == '&') {
@@ -377,11 +383,5 @@ final class ZLOwnXMLParser {
 
 	private static void processEndTag(ZLXMLReader xmlReader, StringBuilder tagName) {
 		xmlReader.endElementHandler(convertToString(tagName));
-	}
-
-	private static void processText(ZLXMLReader xmlReader, char[] buffer, int startOffset, int endOffset) {
-		if (endOffset > startOffset) {
-			xmlReader.characterDataHandler(buffer, startOffset, endOffset - startOffset);
-		}
 	}
 }

@@ -5,109 +5,253 @@ import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
-	private final ArrayList<ZLTextParagraph> myParagraphs = new ArrayList<ZLTextParagraph>();
-	protected final ArrayList<ZLTextParagraph.Entry> myEntries = new ArrayList<ZLTextParagraph.Entry>();
+	private final ArrayList<ZLTextParagraph.Entry> myEntries = new ArrayList<ZLTextParagraph.Entry>();
+	private int[] myStartEntryInfos = new int[1024];
 
-	private static final int DATA_BLOCK_SIZE = 51200;
+	private static final int DATA_BLOCK_SIZE = 65536;
 	private int myBlockOffset = 0;
-	private boolean myBlockOverflow = true;
 	private final ArrayList<char[]> myData = new ArrayList<char[]>();
-
-	public int getParagraphsNumber() {
-		return myParagraphs.size();
+	{
+		myData.add(new char[DATA_BLOCK_SIZE]);
 	}
 
-	public ZLTextParagraph getParagraph(int index) {
-		return myParagraphs.get(index);
+	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
+		private int myCounter;
+		private final int myLength;
+		private byte myType;
+
+		int myDataIndex;
+		int myDataOffset;
+
+		private char[] myTextData;
+		private int myTextOffset;
+		private int myTextLength;
+
+		private byte myControlKind;
+		private boolean myControlIsStart;
+		private boolean myControlIsHyperlink;
+
+		EntryIteratorImpl(int index, int length) {
+			myLength = length;
+			final int address = myStartEntryInfos[index];
+			myDataIndex = address >> 16;
+			myDataOffset = address & 0xFFFF;
+		}
+
+		public byte getType() {
+			return myType;
+		}
+
+		public char[] getTextData() {
+			return myTextData;
+		}
+		public int getTextOffset() {
+			return myTextOffset;
+		}
+		public int getTextLength() {
+			return myTextLength;
+		}
+
+		public byte getControlKind() {
+			return myControlKind;
+		}
+		public boolean getControlIsStart() {
+			return myControlIsStart;
+		}
+		public boolean getControlIsHyperlink() {
+			return myControlIsHyperlink;
+		}
+
+		public boolean hasNext() {
+			return myCounter < myLength;
+		}	
+
+		public ZLTextParagraph.Entry next() {
+			if (myCounter == myLength) {
+				throw new NoSuchElementException();
+			}
+			ZLTextParagraph.Entry entry = null;
+			if (myDataOffset == DATA_BLOCK_SIZE) {
+				++myDataIndex;
+				myDataOffset = 0;
+			}
+			char[] data = myData.get(myDataIndex);
+			myType = (byte)data[myDataOffset];
+			if (myType == 0) {
+				data = myData.get(++myDataIndex);
+				myDataOffset = 0;
+				myType = (byte)data[0];
+			}
+			++myDataOffset;
+			switch (myType) {
+				case ZLTextParagraph.Entry.TEXT:
+					myTextLength = ((int)data[myDataOffset++] << 16) + (int)data[myDataOffset++];
+					if (myDataOffset + myTextLength <= DATA_BLOCK_SIZE) {
+						myTextData = data;
+						myTextOffset = myDataOffset;
+						myDataOffset += myTextLength;
+					} else {
+						myTextData = myData.get(++myDataIndex);
+						myTextOffset = 0;
+						myDataOffset = myTextLength;
+					}
+					break;
+				case ZLTextParagraph.Entry.CONTROL:
+				{
+					short kind = (short)data[myDataOffset++];
+					myControlKind = (byte)kind;
+					myControlIsStart = (kind & 0x0100) == 0x0100;
+					if ((kind & 0x0200) == 0x0200) {
+						myControlIsHyperlink = true;
+						short labelLength = (short)data[myDataOffset++];
+						myDataOffset += labelLength;
+					} else {
+						myControlIsHyperlink = false;
+					}
+					break;
+				}
+				case ZLTextParagraph.Entry.IMAGE:
+				{
+					int address = ((int)data[myDataOffset++] << 16) + (int)data[myDataOffset++];
+					entry = myEntries.get(address);
+					break;
+				}
+				case ZLTextParagraph.Entry.FIXED_HSPACE:
+				case ZLTextParagraph.Entry.FORCED_CONTROL:
+					//entry = myEntries.get((int)code);
+					break;
+			}
+			++myCounter;
+			return entry;
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
 	}
 
-	void addParagraphInternal(ZLTextParagraph paragraph) {
-		myParagraphs.add(paragraph);
-	}
-	
-	public void removeParagraphInternal(int index) {
-		myParagraphs.remove(index);
-	}
+	abstract void increaseLastParagraphSize();
 
-	private void addEntry(ZLTextParagraph.Entry entry) {
-		final ArrayList<ZLTextParagraph> paragraphs = myParagraphs;
-		((ZLTextParagraphImpl)paragraphs.get(paragraphs.size() - 1)).addEntry(entry);
+	void onParagraphCreation() {
+		final int index = getParagraphsNumber();
+		if (myStartEntryInfos.length == index) {
+			int entryInfos[] = new int[index * 2];
+			System.arraycopy(myStartEntryInfos, 0, entryInfos, 0, index);
+			myStartEntryInfos = entryInfos;
+		}
+		myStartEntryInfos[index] = (myData.size() - 1 << 16) + (myBlockOffset & 0xFFFF);
 	}
 
 	public void addControl(byte textKind, boolean isStart) {
-		addEntry(EntryPool.getControlEntry(textKind, isStart));
+		final char[] block = getDataBlock(2);
+		increaseLastParagraphSize();
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
+		short kind = textKind;
+		if (isStart) {
+			kind += 0x0100;
+		}
+		block[myBlockOffset++] = (char)kind;
 	}
 
-	private final char[] getDataBlock() {
+	private final char[] getDataBlock(int minimumLength) {
 		final ArrayList<char[]> data = myData;
-		if (!myBlockOverflow && (myBlockOffset < DATA_BLOCK_SIZE)) {
+		if (minimumLength <= DATA_BLOCK_SIZE - myBlockOffset) {
 			return data.get(data.size() - 1);
 		}
 		char[] block = new char[DATA_BLOCK_SIZE];
 		data.add(block);
 		myBlockOffset = 0;
-		myBlockOverflow = false;
 		return block;
 	}
 
 	public void addText(char[] text) {
-		addText(text, text.length);
+		addText(text, 0, text.length);
 	}
 
 	public void addText(ZLTextBuffer buffer) {
-		addText(buffer.getData(), buffer.getLength());
+		addText(buffer.getData(), 0, buffer.getLength());
 	}
 
-	private void addText(char[] text, int length) {
+	public void addText(char[] text, int offset, int length) {
 		if (length > DATA_BLOCK_SIZE) {
 			length = DATA_BLOCK_SIZE;
 		}
-		if (length > DATA_BLOCK_SIZE - myBlockOffset) {
-			myBlockOverflow = true;
-		}
-		final char[] block = getDataBlock();
-		final int blockOffset = myBlockOffset;
-		System.arraycopy(text, 0, block, blockOffset, length);
-		addEntry(new ZLTextEntryImpl(block, blockOffset, length));
+		char[] block = getDataBlock(3);
+		increaseLastParagraphSize();
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
+		block[myBlockOffset++] = (char)(length >> 16);
+		block[myBlockOffset++] = (char)length;
+		block = getDataBlock(length);
+		System.arraycopy(text, offset, block, myBlockOffset, length);
 		myBlockOffset += length;
 	}
 	
 	public void addControl(ZLTextForcedControlEntry entry) {
-		addEntry(entry);
+		final char[] block = getDataBlock(3);
+		increaseLastParagraphSize();
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FORCED_CONTROL;
+		final int entryAddress = myEntries.size();
+		block[myBlockOffset++] = (char)(entryAddress >> 16);
+		block[myBlockOffset++] = (char)entryAddress;
+		myEntries.add(entry);
 	}
 	
 	public void addHyperlinkControl(byte textKind, String label) {
-		addEntry(new ZLTextHyperlinkControlEntry(textKind, label));
+		final short labelLength = (short)label.length();
+		final char[] block = getDataBlock(3 + labelLength);
+		increaseLastParagraphSize();
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
+		block[myBlockOffset++] = (char)(0x0300 + textKind);
+		block[myBlockOffset++] = (char)labelLength;
+		label.getChars(0, labelLength, block, myBlockOffset);
+		myBlockOffset += labelLength;
+		//addEntry(code + myEntries.size());
+		//myEntries.add(new ZLTextHyperlinkControlEntry(textKind, label));
 	}
 	
 	public void addImage(String id, Map<String,ZLImage> imageMap, short vOffset) {
-		addEntry(new ZLImageEntry(id, imageMap, vOffset));
+		final char[] block = getDataBlock(3);
+		increaseLastParagraphSize();
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
+		final int entryAddress = myEntries.size();
+		block[myBlockOffset++] = (char)(entryAddress >> 16);
+		block[myBlockOffset++] = (char)entryAddress;
+		myEntries.add(new ZLImageEntry(id, imageMap, vOffset));
 	}
 	
 	public void addFixedHSpace(short length) {
-		addEntry(new ZLTextFixedHSpaceEntry(length));
+		final char[] block = getDataBlock(3);
+		increaseLastParagraphSize();
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
+		final int entryAddress = myEntries.size();
+		block[myBlockOffset++] = (char)(entryAddress >> 16);
+		block[myBlockOffset++] = (char)entryAddress;
+		myEntries.add(new ZLTextFixedHSpaceEntry(length));
 	}	
 
 	public String dump() {
 		StringBuilder sb = new StringBuilder();
-		for (ZLTextParagraph paragraph: myParagraphs) {
+		final int len = getParagraphsNumber();
+		for (int i = 0; i < len; ++i) {
+			ZLTextParagraph paragraph = getParagraph(i);
 			sb.append("[PARAGRAPH]\n");
-			for (ZLTextParagraph.Entry entry : paragraph) {
-				if (entry instanceof ZLTextEntryImpl) {
-					ZLTextEntryImpl textEntry = (ZLTextEntryImpl)entry;
-					sb.append("[TEXT]");
-					sb.append(textEntry.getData(), textEntry.getDataOffset(), textEntry.getDataLength());
-					sb.append("[/TEXT]");
-				} else if (entry instanceof ZLTextControlEntry) {
-					ZLTextControlEntry controlEntry = (ZLTextControlEntry)entry;
-					if (controlEntry.IsStart)
-						sb.append("[CONTROL "+controlEntry.Kind+"]");
-					else
-						sb.append("[/CONTROL "+controlEntry.Kind+"]");					
+			for (ZLTextParagraph.EntryIterator it = paragraph.iterator(); it.hasNext(); ) {
+				it.next();
+				switch (it.getType()) {
+					case ZLTextParagraph.Entry.TEXT:
+						sb.append("[TEXT]");
+						sb.append(it.getTextData(), it.getTextOffset(), it.getTextLength());
+						sb.append("[/TEXT]");
+						break;
+					case ZLTextParagraph.Entry.CONTROL:
+						if (it.getControlIsStart())
+							sb.append("[CONTROL "+it.getControlKind()+"]");
+						else
+							sb.append("[/CONTROL "+it.getControlKind()+"]");					
+						break;
 				}
 			}
 			sb.append("[/PARAGRAPH]\n");

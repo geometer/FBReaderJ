@@ -1,24 +1,18 @@
 package org.zlibrary.text.view.impl;
 
-import org.zlibrary.text.model.impl.ZLTextControlEntry;
-
 final class ZLTextControlElement extends ZLTextElement {
-	private final ZLTextControlEntry myEntry;
+	public final byte Kind;
+	public final boolean IsStart;
 
-	ZLTextControlElement(ZLTextControlEntry entry) {
+	ZLTextControlElement(byte kind, boolean isStart) {
 //		System.out.println(entry.getKind() + " " + entry.isStart());
-		myEntry = entry;
+		Kind = kind;
+		IsStart = isStart;
 	}
 
+	/*
 	public ZLTextControlEntry getEntry() {
 		return myEntry;
 	}
-
-	public byte getTextKind() {
-		return myEntry.Kind;
-	}
-
-	public boolean isStart() {
-		return myEntry.IsStart;
-	}
+	*/
 }

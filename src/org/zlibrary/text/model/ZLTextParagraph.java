@@ -1,22 +1,40 @@
 package org.zlibrary.text.model;
 
-import java.util.List;
+import java.util.Iterator;
 
 public interface ZLTextParagraph extends Iterable<ZLTextParagraph.Entry> {
 	interface Entry {
+		byte TEXT = 1;
+		byte IMAGE = 2;
+		byte CONTROL = 3;
+		byte FORCED_CONTROL = 4;
+		byte FIXED_HSPACE = 5;
 	}
 
-	enum Kind {
-		TEXT_PARAGRAPH,
-		TREE_PARAGRAPH,
-		EMPTY_LINE_PARAGRAPH,
-		BEFORE_SKIP_PARAGRAPH,
-		AFTER_SKIP_PARAGRAPH,
-		END_OF_SECTION_PARAGRAPH,
-		END_OF_TEXT_PARAGRAPH,
+	interface EntryIterator extends Iterator<Entry> {
+		byte getType();
+
+		char[] getTextData();
+		int getTextOffset();
+		int getTextLength();
+
+		byte getControlKind();
+		boolean getControlIsStart();
+	}
+
+	public EntryIterator iterator();
+
+	interface Kind {
+		byte TEXT_PARAGRAPH = 0;
+		byte TREE_PARAGRAPH = 1;
+		byte EMPTY_LINE_PARAGRAPH = 2;
+		byte BEFORE_SKIP_PARAGRAPH = 3;
+		byte AFTER_SKIP_PARAGRAPH = 4;
+		byte END_OF_SECTION_PARAGRAPH = 5;
+		byte END_OF_TEXT_PARAGRAPH = 6;
 	};
 
-	Kind getKind();
+	byte getKind();
 	int getEntryNumber();
 	int getTextLength();
 }
