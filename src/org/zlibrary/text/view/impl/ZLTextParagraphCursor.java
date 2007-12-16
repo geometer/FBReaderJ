@@ -35,7 +35,7 @@ public abstract class ZLTextParagraphCursor {
 					case ZLTextParagraph.Entry.CONTROL:
 //					System.out.println("Tag = " + ((ZLTextControlEntry) entry).getKind());
 						//myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
-						myElements.add(new ZLTextControlElement(it.getControlKind(), it.getControlIsStart()));
+						myElements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
 						break;
 					case ZLTextParagraph.Entry.IMAGE:
 						ZLImageEntry imageEntry = (ZLImageEntry)entry;
