@@ -1,12 +1,13 @@
 package org.zlibrary.ui.swing.view;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.JPanel;
 
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.core.view.ZLView;
 
-public final class ZLSwingViewWidget extends ZLViewWidget {
+public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListener, MouseMotionListener {
 	@SuppressWarnings("serial")
 	private class Panel extends JPanel {
 		public void paint(Graphics g) {
@@ -44,6 +45,8 @@ public final class ZLSwingViewWidget extends ZLViewWidget {
 
 	public ZLSwingViewWidget(Angle initialAngle) {
 		super(initialAngle);
+		myPanel.addMouseListener(this);
+		myPanel.addMouseMotionListener(this);
 	}
 
 	public void repaint() {
@@ -52,6 +55,57 @@ public final class ZLSwingViewWidget extends ZLViewWidget {
 
 	public void trackStylus(boolean track) {
 		// TODO: implement
+	}
+
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	public void mousePressed(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		switch (getRotation()) {
+			case DEGREES0:
+				break;
+			case DEGREES90:
+			{
+				final Dimension size = myPanel.getSize();
+				int swap = x;
+				x = size.height - y - 1;
+				y = swap;
+				break;
+			}
+			case DEGREES180:
+			{
+				final Dimension size = myPanel.getSize();
+				x = size.width - x - 1;
+				y = size.height - y - 1;
+				break;
+			}
+			case DEGREES270:
+			{
+				final Dimension size = myPanel.getSize();
+				int swap = size.width - x - 1;
+				x = y;
+				y = swap;
+				break;
+			}
+		}
+		getView().onStylusPress(x, y);
+	}
+
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	public void mouseExited(MouseEvent e) {
+	}
+
+	public void mouseDragged(MouseEvent e) {
+	}
+
+	public void mouseMoved(MouseEvent e) {
 	}
 
 	public JPanel getPanel() {

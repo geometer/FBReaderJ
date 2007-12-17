@@ -1,9 +1,9 @@
 package org.test.zlibrary.options;
 
+import org.zlibrary.core.util.ZLBoolean3;
 import org.zlibrary.core.options.ZLBoolean3Option;
 import org.zlibrary.core.options.config.ZLConfig;
 import org.zlibrary.core.options.config.ZLConfigInstance;
-import org.zlibrary.core.options.util.ZLBoolean3;
 
 import junit.framework.TestCase;
 

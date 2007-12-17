@@ -9,11 +9,31 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.core.options.util.ZLColor;
+import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public final class ZLSwingPaintContext extends ZLPaintContext {
+	private Graphics2D myGraphics;
+	private int myWidth;
+	private int myHeight;
+	private Color myBackgroundColor = new Color(255, 255, 255);
+	private Color myColor = new Color(0, 0, 0);
+	private Color myFillColor = new Color(255, 255, 255);
+
+	private static boolean areSameColors(Color awtColor, ZLColor zlColor) {
+		return
+			(awtColor.getRed() == zlColor.Red) &&
+			(awtColor.getGreen() == zlColor.Green) &&
+			(awtColor.getBlue() == zlColor.Blue);
+	}
+
 	public void clear(ZLColor color) {
+		if (!areSameColors(myBackgroundColor, color)) {
+			myBackgroundColor = new Color(color.Red, color.Green, color.Blue);
+		}
+		myGraphics.setColor(myBackgroundColor);
+		myGraphics.fillRect(0, 0, getWidth(), getHeight());
+		myGraphics.setColor(myColor);
 		// TODO: implement
 	}
 
@@ -25,11 +45,18 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	}
 
 	public void setColor(ZLColor color, LineStyle style) {
-		// TODO: implement
+		// TODO: use style
+		if (!areSameColors(myColor, color)) {
+			myColor = new Color(color.Red, color.Green, color.Blue);
+			myGraphics.setColor(myColor);
+		}
 	}
 
 	public void setFillColor(ZLColor color, FillStyle style) {
-		// TODO: implement
+		// TODO: use style
+		if (!areSameColors(myFillColor, color)) {
+			myFillColor = new Color(color.Red, color.Green, color.Blue);
+		}
 	}
 
 	void setSize(int w, int h) {
@@ -112,8 +139,4 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		myGraphics = g;
 		resetFont();
 	}
-
-	private Graphics2D myGraphics;
-	private int myWidth;
-	private int myHeight;
 }

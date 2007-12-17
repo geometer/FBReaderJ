@@ -10,7 +10,7 @@ abstract public class ZLResource {
 		}
 		return ZLTreeResource.ourRoot.getResource(key);
 	}
-    
+
 	protected ZLResource(String name) {
 		myName = name;
 	}

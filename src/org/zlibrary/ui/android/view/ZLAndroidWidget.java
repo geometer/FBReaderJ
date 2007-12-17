@@ -71,8 +71,8 @@ public class ZLAndroidWidget extends View {
 		}
 		view.paint();
 		//Time = System.currentTimeMillis() - start;
-		String sTime = "" + Time;
-		myPaintContext.drawString(240, 165, sTime.toCharArray(), 0, sTime.length());
+		//String sTime = "" + Time;
+		//myPaintContext.drawString(240, 165, sTime.toCharArray(), 0, sTime.length());
 		myPaintContext.endPaint();
 	}
 }

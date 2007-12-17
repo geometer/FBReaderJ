@@ -2,7 +2,7 @@ package org.test.zlibrary.options;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.core.options.util.*;
+import org.zlibrary.core.util.*;
 
 /**
  * тесты на Util часть, где лежат всякие вспомогательные сущности тесты 01 - это

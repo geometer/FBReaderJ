@@ -1,27 +1,31 @@
 package org.zlibrary.text.view.style;
 
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLColorOption;
-import org.zlibrary.core.options.ZLDoubleOption;
-import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.options.ZLIntegerRangeOption;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.options.*;
+import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.text.view.ZLTextStyle;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextBaseStyle implements ZLTextStyle {
+	private final String CATEGORY = ZLOption.LOOK_AND_FEEL_CATEGORY;
+	private final String COLORS = "Colors";
 	private final String GROUP = "Style";
 	private final String OPTIONS = "Options";
 
-	public ZLColorOption BackgroundColorOption;
-	public ZLColorOption SelectionBackgroundColorOption;
-	public ZLColorOption SelectedTextColorOption;
-	public ZLColorOption RegularTextColorOption;
-	public ZLColorOption InternalHyperlinkTextColorOption;
-	public ZLColorOption ExternalHyperlinkTextColorOption;
-	public ZLColorOption TreeLinesColorOption;
+	public final ZLColorOption BackgroundColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "Background", new ZLColor(255, 255, 255));
+	public final ZLColorOption SelectionBackgroundColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
+	public final ZLColorOption SelectedTextColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "SelectedText", new ZLColor(60, 139, 255));
+	public final ZLColorOption RegularTextColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "Text", new ZLColor(0, 0, 0));
+	public final ZLColorOption InternalHyperlinkTextColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "Hyperlink", new ZLColor(33, 96, 180));
+	public final ZLColorOption ExternalHyperlinkTextColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "ExternalHyperlink", new ZLColor(98, 174, 26));
+	public final ZLColorOption TreeLinesColorOption =
+		new ZLColorOption(CATEGORY, COLORS, "TreeLines", new ZLColor(127, 127, 127));
 
 	public ZLBooleanOption AutoHyphenationOption;
 
@@ -34,16 +38,7 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
 		//TODO
-		final String COLORS = "Colors";
-/*		
-		BackgroundColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "Background", new ZLColor(255, 255, 255));
-		SelectionBackgroundColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
-		SelectedTextColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "SelectedText", new ZLColor(60, 139, 255));
-		RegularTextColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "Text", new ZLColor(0, 0, 0));
-		InternalHyperlinkTextColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "Hyperlink", new ZLColor(33, 96, 180));
-		ExternalHyperlinkTextColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "ExternalHyperlink", new ZLColor(98, 174, 26));
-		TreeLinesColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, COLORS, "TreeLines", new ZLColor(127, 127, 127));
-		
+/*
 		AutoHyphenationOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "AutoHyphenation", true);
 		
 		BoldOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:bold", false);
@@ -62,6 +57,10 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 
 	public int getFontSize() {
 		return FontSizeOption.getValue();
+	}
+
+	public ZLColor getColor() {
+		return RegularTextColorOption.getValue();
 	}
 	
 	public boolean bold() {
@@ -84,8 +83,8 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		return 0;
 	}
 	
-	public int lineSpace() {
-		return 1;
+	public double lineSpace() {
+		return LineSpaceOption.getValue();
 	}
 
 	public int verticalShift() {

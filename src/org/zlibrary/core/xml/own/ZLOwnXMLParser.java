@@ -302,7 +302,7 @@ final class ZLOwnXMLParser {
 										appendToName(tagName, value, 0, value.length);
 										break;
 									case TEXT:
-										xmlReader.characterDataHandler(buffer, 0, value.length);
+										xmlReader.characterDataHandler(value, 0, value.length);
 										break;
 								}
 							}

@@ -19,8 +19,8 @@ public class ZLTextPositionIndicatorStyle {
 /*		final String INDICATOR = "indicator";
 		ShowOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "Show", true);
 		IsSensitiveOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "TouchSensitive", true);
-		ShowTextPositionOption =  new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "PositionText", true);
-		ShowTimeOption =  new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "Time", true);
+		ShowTextPositionOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "PositionText", true);
+		ShowTimeOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "Time", true);
 		ColorOption = new ZLColorOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "Color", ZLColor(127, 127, 127));
 		HeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "Height", 1, 100, 16);
 		OffsetOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, INDICATOR, "Offset", 0, 100, 3);

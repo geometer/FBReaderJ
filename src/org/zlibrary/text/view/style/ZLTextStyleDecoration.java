@@ -1,14 +1,14 @@
 package org.zlibrary.text.view.style;
 
 import org.zlibrary.core.options.*;
-import org.zlibrary.core.options.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.text.view.ZLTextStyle;
 
 public class ZLTextStyleDecoration {
-	public static final String STYLE = "Style";
-	public static final byte BOLD = 28;
-	public static final byte LARGE_FONT_SIZE = 31;
+	static final String STYLE = "Style";
+	static final byte BOLD = 28;
+	static final byte LARGE_FONT_SIZE = 31;
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeDeltaOption;

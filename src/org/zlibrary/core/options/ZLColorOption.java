@@ -1,6 +1,6 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.util.*;
+import org.zlibrary.core.util.ZLColor;
 
 /**
  * класс опция цвета. внутри опции цвет хранится одним числом, чтобы уменьшить
@@ -12,20 +12,13 @@ import org.zlibrary.core.options.util.*;
  * 
  */
 public final class ZLColorOption extends ZLOption {
+	private final ZLColor myDefaultValue;
+	private ZLColor myValue;
 
-	private int myIntValue;
-
-	private final int myDefaultValue;
-
-	public ZLColorOption(String category, String group, String optionName,
-			ZLColor defaultValue) {
+	public ZLColorOption(String category, String group, String optionName, ZLColor defaultValue) {
 		super(category, group, optionName);
-		if (defaultValue != null) {
-			myDefaultValue = defaultValue.getIntValue();
-		} else {
-			myDefaultValue = 0;
-		}
-		myIntValue = myDefaultValue;
+		myDefaultValue = (defaultValue != null) ? defaultValue : new ZLColor(0);
+		myValue = myDefaultValue;
 	}
 
 	public ZLColor getValue() {
@@ -33,29 +26,33 @@ public final class ZLColorOption extends ZLOption {
 			String value = getConfigValue(null);
 			if (value != null) {
 				try {
-					Integer intValue = Integer.parseInt(value);
-					myIntValue = intValue;
+					int intValue = Integer.parseInt(value);
+					if (myValue.getIntValue() != intValue) {
+						myValue = new ZLColor(intValue);
+					}
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}
 			}
 			myIsSynchronized = true;
 		}
-		return new ZLColor(myIntValue);
+		return myValue;
 	}
 
 	public void setValue(ZLColor colorValue) {
 		if (colorValue != null) {
-			int value = colorValue.getIntValue();
-			if (myIsSynchronized && (myIntValue == value)) {
+			final boolean sameValue = myValue.equals(colorValue);
+			if (myIsSynchronized && sameValue) {
 				return;
 			}
-			myIntValue = value;
+			if (!sameValue) {
+				myValue = colorValue;
+			}
 			myIsSynchronized = true;
-			if (myIntValue == myDefaultValue) {
+			if (myValue.equals(myDefaultValue)) {
 				unsetConfigValue();
 			} else {
-				setConfigValue("" + myIntValue);
+				setConfigValue("" + myValue.getIntValue());
 			}
 		}
 	}

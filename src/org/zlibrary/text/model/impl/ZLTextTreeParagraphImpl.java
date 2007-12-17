@@ -10,7 +10,7 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 	private boolean myIsOpen;
 	private	int myDepth;
 	private	ZLTextTreeParagraph myParent;
-	private	final ArrayList<ZLTextTreeParagraph> myChildren = new ArrayList<ZLTextTreeParagraph>();
+	private	ArrayList<ZLTextTreeParagraph> myChildren = null;
 	
 	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent, ZLTextModelImpl model) {
 		super(model);
@@ -50,25 +50,36 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 		return myParent;
 	}
 
-	public List<ZLTextTreeParagraph> getChildren() {
-		return Collections.unmodifiableList(myChildren);
+	public boolean hasChildren() {
+		return (myChildren != null) && !myChildren.isEmpty();
+	}
+
+	public List<ZLTextTreeParagraph> children() {
+		return (myChildren != null) ?
+			Collections.unmodifiableList(myChildren) :
+			Collections.<ZLTextTreeParagraph>emptyList();
 	}
 	
 	public int getFullSize() {
 		int size = 1;
-		for (ZLTextTreeParagraph  child: getChildren()) {
-			size += child.getFullSize();
+		if (myChildren != null) {
+			for (ZLTextTreeParagraph child : myChildren) {
+				size += child.getFullSize();
+			}
 		}
 		return size;
 	}
 
 	public void removeFromParent() {		
 		if (myParent != null) {
-			myChildren.clear();
+			((ZLTextTreeParagraphImpl)myParent).myChildren.remove(this);
 		}
 	}
 
 	private void addChild(ZLTextTreeParagraph child) {
-		this.myChildren.add(child);
+		if (myChildren == null) {
+			myChildren = new ArrayList<ZLTextTreeParagraph>();
+		}
+		myChildren.add(child);
 	}
 }

@@ -1,9 +1,9 @@
 package org.test.zlibrary.options;
 
+import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.options.ZLColorOption;
 import org.zlibrary.core.options.config.ZLConfig;
 import org.zlibrary.core.options.config.ZLConfigInstance;
-import org.zlibrary.core.options.util.ZLColor;
 
 import junit.framework.TestCase;
 

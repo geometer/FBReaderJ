@@ -3,12 +3,13 @@ package org.zlibrary.ui.android.view;
 import android.graphics.*;
 
 import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.core.options.util.ZLColor;
+import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private Canvas myCanvas;
 	private final Paint myPaint;
+	private ZLColor myColor = new ZLColor(0, 0, 0);
 
 	private int myWidth;
 	private int myHeight;
@@ -47,7 +48,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void setColor(ZLColor color, LineStyle style) {
-		// TODO: implement
+		// TODO: use style
+		if (!myColor.equals(color)) {
+			myColor = color;
+			myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		}
 	}
 
 	public void setFillColor(ZLColor color, FillStyle style) {
@@ -110,7 +115,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
+		myPaint.setAntiAlias(false);
 		myCanvas.drawLine(x0, y0, x1, y1, myPaint);
+		myCanvas.drawPoint(x0, y0, myPaint);
+		myCanvas.drawPoint(x1, y1, myPaint);
+		myPaint.setAntiAlias(true);
 	}
 
 	public void fillRectangle(int x0, int y0, int x1, int y1) {

@@ -132,13 +132,13 @@ public abstract class ZLApplication {
 		}
 	}
 	
-	private final void setFullscreen(boolean fullscreen) {
+	public final void setFullscreen(boolean fullscreen) {
 		if (myWindow != null) {
 			myWindow.setFullscreen(fullscreen);
 		}
 	}
 	
-	protected final boolean isFullscreen() {
+	public final boolean isFullscreen() {
 		return (myWindow != null) && myWindow.isFullscreen();
 	}
 	
@@ -189,12 +189,12 @@ public abstract class ZLApplication {
 		return null;
 	}
 	
-	final boolean isActionVisible(int actionId) {
+	public final boolean isActionVisible(int actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isVisible();
 	}
 	
-	final boolean isActionEnabled(int actionId) {
+	public final boolean isActionEnabled(int actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}

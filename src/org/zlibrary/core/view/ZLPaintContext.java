@@ -3,7 +3,7 @@ package org.zlibrary.core.view;
 import java.util.ArrayList;
 
 import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.core.options.util.ZLColor;
+import org.zlibrary.core.util.ZLColor;
 
 abstract public class ZLPaintContext {
 	private int myX = 0;

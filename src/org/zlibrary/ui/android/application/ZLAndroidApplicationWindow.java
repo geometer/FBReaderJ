@@ -51,11 +51,21 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	public void buildMenu(Menu menu) {
 		new MenuBuilder(menu).processMenu(getApplication().getMenubar());
+		refresh();
 	}
 
 	public void init() {
 		// TODO: implement
 		super.init();
+	}
+
+	protected void refresh() {
+		super.refresh();
+		for (Map.Entry<Menu.Item,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
+			final int actionId = entry.getValue().getActionId();
+			final ZLApplication application = getApplication();
+			entry.getKey().setShown(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+		}
 	}
 
 	public void initMenu() {

@@ -65,7 +65,7 @@ abstract public class ZLApplicationWindow {
 	
 	abstract public void addToolbarItem(ZLApplication.Toolbar.Item item);
 
-	public void refresh() {
+	protected void refresh() {
 		List<ZLApplication.Toolbar.Item> items = getApplication().getToolbar().getItems();
 		boolean enableToolbarSpace = false;
 		ZLApplication.Toolbar.Item lastSeparator = null;

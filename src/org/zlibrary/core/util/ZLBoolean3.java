@@ -1,9 +1,5 @@
-package org.zlibrary.core.options.util;
+package org.zlibrary.core.util;
 
-/**
- * сущность "значение трехзначной логики"
- * @author Администратор
- */
 public enum ZLBoolean3 {
 	B3_FALSE("false"),
 	B3_TRUE("true"),

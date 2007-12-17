@@ -23,23 +23,23 @@ abstract public class ZLView {
 		return myContext;
 	}
 
-	protected boolean onStylusPress(int x, int y) {
+	public boolean onStylusPress(int x, int y) {
 		return false;
 	}
 
-	protected boolean onStylusRelease(int x, int y) {
+	public boolean onStylusRelease(int x, int y) {
 		return false;
 	}
 
-	protected boolean onStylusMove(int x, int y) {
+	public boolean onStylusMove(int x, int y) {
 		return false;
 	}
 
-	protected boolean onStylusMovePressed(int x, int y) {
+	public boolean onStylusMovePressed(int x, int y) {
 		return false;
 	}
 
-	protected boolean onFingerTap(int x, int y) {
+	public boolean onFingerTap(int x, int y) {
 		return false;
 	}
 

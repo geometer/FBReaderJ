@@ -1,19 +1,42 @@
 package org.fbreader.fbreader;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 
+import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
+import org.fbreader.bookmodel.BookModel;
+import org.fbreader.formats.fb2.FB2Reader;
+
 public final class FBReader extends ZLApplication {
+	static enum ViewMode {
+		UNDEFINED,
+		BOOK_TEXT,
+		FOOTNOTE,
+		CONTENTS,
+		BOOKMARKS,
+		BOOK_COLLECTION,
+		RECENT_BOOKS,
+	};
+
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
 	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
 	private final ZLKeyBindings myBindings270 = new ZLKeyBindings("Keys270");
+
+	private ViewMode myMode = ViewMode.UNDEFINED;
+	private ViewMode myPreviousMode = ViewMode.BOOK_TEXT;
+
+	private ZLTextView myBookTextView;
+	private ZLTextView myContentsView;
 
 	public FBReader() {
 		this(new String[0]);
@@ -26,8 +49,8 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction(this));
 
-		addAction(ActionCode.UNDO, new ScrollAction(this, -1));
-		addAction(ActionCode.REDO, new ScrollAction(this, 1));
+		addAction(ActionCode.UNDO, new UndoAction(this));
+		addAction(ActionCode.REDO, new RedoAction(this));
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
@@ -35,24 +58,24 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_COLLECTION, new DummyAction(this));
 		addAction(ActionCode.SHOW_LAST_BOOKS, new DummyAction(this));
 		addAction(ActionCode.SHOW_OPTIONS, new DummyAction(this));
-		addAction(ActionCode.SHOW_CONTENTS, new DummyAction(this));
+		addAction(ActionCode.SHOW_CONTENTS, new ShowContentsAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new DummyAction(this));
 		addAction(ActionCode.ADD_BOOK, new DummyAction(this));
 		addAction(ActionCode.SEARCH, new DummyAction(this));
 		addAction(ActionCode.FIND_NEXT, new DummyAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new DummyAction(this));
-		addAction(ActionCode.SCROLL_TO_HOME, new DummyAction(this));
+		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.LARGE_SCROLL_FORWARD, new DummyAction(this));
 		addAction(ActionCode.LARGE_SCROLL_BACKWARD, new DummyAction(this));
-		addAction(ActionCode.SMALL_SCROLL_FORWARD, new DummyAction(this));
-		addAction(ActionCode.SMALL_SCROLL_BACKWARD, new DummyAction(this));
+		addAction(ActionCode.SMALL_SCROLL_FORWARD, new ScrollAction(this, 1));
+		addAction(ActionCode.SMALL_SCROLL_BACKWARD, new ScrollAction(this, -1));
 		addAction(ActionCode.MOUSE_SCROLL_FORWARD, new DummyAction(this));
 		addAction(ActionCode.MOUSE_SCROLL_BACKWARD, new DummyAction(this));
 		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new DummyAction(this));
 		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new DummyAction(this));
-		addAction(ActionCode.CANCEL, new DummyAction(this));
+		addAction(ActionCode.CANCEL, new CancelAction(this));
 		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new DummyAction(this));
 		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new DummyAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
@@ -123,15 +146,23 @@ public final class FBReader extends ZLApplication {
 		getMenubar().addItem(ActionCode.SHOW_OPTIONS, "settings");
 		getMenubar().addItem(ActionCode.QUIT, "close");
 
-		ZLTextView view = new ZLTextViewImpl(this, getContext());
+		myBookTextView = new ZLTextViewImpl(this, getContext());
+		myContentsView = new ZLTextViewImpl(this, getContext());
+
 		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "data/help/MiniHelp.ru.fb2");
 		//ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
 		if (args.length > 0) {
-			bookNameOption.setValue(args[0]);
+			try {
+				bookNameOption.setValue(new File(args[0]).getCanonicalPath());
+			} catch (IOException e) {
+			}
 		}
-		view.setModel(bookNameOption.getValue());
-//		view.setModel((args.length > 0) ? args[0] : "test/data/fb2/subtitle.fb2");
-		setView(view);
+		BookModel bookModel = new FB2Reader().readBook(bookNameOption.getValue());
+		if (bookModel != null) {
+			myBookTextView.setModel(bookModel.getBookModel());
+			myContentsView.setModel(bookModel.getContentsModel());
+		}
+		setMode(ViewMode.BOOK_TEXT);
 	}
 
 	private final void addToolbarButton(int code, String name) {
@@ -158,5 +189,34 @@ public final class FBReader extends ZLApplication {
 
 	ZLTextView getTextView() {
 		return (ZLTextView)getCurrentView();
+	}
+
+	ViewMode getMode() {
+		return myMode;
+	}
+
+	void setMode(ViewMode mode) {
+		if (mode == myMode) {
+			return;
+		}
+
+		myPreviousMode = myMode;
+		myMode = mode;
+
+		switch (mode) {
+			case BOOK_TEXT:
+				setView(myBookTextView);
+				break;
+			case CONTENTS:
+				setView(myContentsView);
+				break;
+			default:
+				break;
+		}
+	}
+
+	void restorePreviousMode() {
+		setMode(myPreviousMode);
+		myPreviousMode = ViewMode.BOOK_TEXT;
 	}
 }

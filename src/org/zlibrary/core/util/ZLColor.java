@@ -1,4 +1,4 @@
-package org.zlibrary.core.options.util;
+package org.zlibrary.core.util;
 
 /**
  * class Color. Color is presented as the triple of short's (Red, Green, Blue components)
@@ -9,7 +9,7 @@ public final class ZLColor {
 	public final short Green;
 	public final short Blue;
 	
-	public ZLColor(short r, short g, short b) {
+	public ZLColor(int r, int g, int b) {
 		Red = (short)(r & 0xFF);
 		Green = (short)(g & 0xFF);
 		Blue = (short)(b & 0xFF);

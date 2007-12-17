@@ -1,6 +1,6 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.util.*;
+import org.zlibrary.core.util.ZLBoolean3;
 
 /**
  * класс опция со значением из трехзначной логики значения бывают "истина",

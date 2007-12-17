@@ -3,7 +3,7 @@ package org.zlibrary.text.view.style;
 import org.zlibrary.text.view.ZLTextStyle;
 import org.zlibrary.text.model.ZLTextAlignmentType;
 
-import org.zlibrary.core.options.util.*;
+import org.zlibrary.core.util.*;
 
 public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
 	private final ZLTextFullStyleDecoration myDecoration;
@@ -18,43 +18,56 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		return (decoratedValue.length() != 0) ? decoratedValue : getBase().getFontFamily();
 	}
 
+	public ZLColor getColor() {
+		HyperlinkStyle hyperlinkStyle = myDecoration.getHyperlinkStyle();
+		if (hyperlinkStyle == HyperlinkStyle.NONE) {
+			return getBase().getColor();
+		}
+		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
+		if (hyperlinkStyle == HyperlinkStyle.INTERNAL) {
+			return baseStyle.InternalHyperlinkTextColorOption.getValue();
+		} else {
+			return baseStyle.ExternalHyperlinkTextColorOption.getValue();
+		}
+	}
+
 	public int getFontSize() {
 		return getBase().getFontSize() + (int)myDecoration.FontSizeDeltaOption.getValue();
 	}
 	
 	public boolean bold() {
-//		if (myDecoration != null && myDecoration.BoldOption != null) {
-		ZLBoolean3 value  = myDecoration.BoldOption.getValue();	
-//			if (value != null) {
-		return (value  == ZLBoolean3.B3_UNDEFINED) ? getBase().bold() : (value == ZLBoolean3.B3_TRUE);
-//			}
-//		}
-//		return false;
+		ZLBoolean3 value = myDecoration.BoldOption.getValue();	
+		return (value == ZLBoolean3.B3_UNDEFINED) ?
+			getBase().bold() :
+			(value == ZLBoolean3.B3_TRUE);
 	}
 
 	public boolean italic() {
 		ZLBoolean3 value = myDecoration.ItalicOption.getValue();
-		return (value  == ZLBoolean3.B3_UNDEFINED) ? getBase().italic() : (value == ZLBoolean3.B3_TRUE);
+		return (value == ZLBoolean3.B3_UNDEFINED) ?
+			getBase().italic() :
+			(value == ZLBoolean3.B3_TRUE);
 	}
 
 	public int leftIndent() {
-		return 0;
+		return getBase().leftIndent() + myDecoration.LeftIndentOption.getValue();
 	}
 
 	public int rightIndent() {
-		return 0;
+		return getBase().rightIndent() + myDecoration.RightIndentOption.getValue();
 	}
 
 	public int firstLineIndentDelta() {
 		return (alignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : getBase().firstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
 	}
 	
-	public int lineSpace() {
-		return 1;
+	public double lineSpace() {
+		double value = myDecoration.LineSpaceOption.getValue();
+		return (value != 0.0) ? value : getBase().lineSpace();
 	}
 
 	public int verticalShift() {
-		return 0;
+		return getBase().verticalShift() + myDecoration.VerticalShiftOption.getValue();
 	}
 
 	public int spaceBefore() {

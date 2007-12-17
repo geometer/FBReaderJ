@@ -19,7 +19,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private final JFrame myFrame;
 	private final JPanel myMainPanel;
 	private final JToolBar myToolbar;
-	private final HashMap<ZLApplication.Toolbar.ButtonItem, AbstractButton> myButtonItemToActionMap = new HashMap<ZLApplication.Toolbar.ButtonItem, AbstractButton>();
+	private final HashMap<ZLApplication.Toolbar.Item,JComponent> myToolbarMap =
+		new HashMap<ZLApplication.Toolbar.Item,JComponent>();
 	//private final Map<Integer, Action> myIntegerActionMap = new HashMap<Integer, Action>();
 	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
@@ -161,15 +162,16 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void addToolbarItem(ZLApplication.Toolbar.Item item) {
 		if (item instanceof ZLApplication.Toolbar.ButtonItem) {
-			ZLApplication.Toolbar.ButtonItem buttonItem = (ZLApplication.Toolbar.ButtonItem)item;
-			MyButtonAction action = new MyButtonAction(buttonItem);
+			MyButtonAction action = new MyButtonAction((ZLApplication.Toolbar.ButtonItem)item);
 			AbstractButton button = myToolbar.add(action);
 			button.setFocusable(false);
-			myButtonItemToActionMap.put(buttonItem, button);
-			
-			//myItemActionMap.put(item, action);
+			myToolbarMap.put(item, button);
+		} else if (item instanceof ZLApplication.Toolbar.SeparatorItem) {
+			JToolBar.Separator separator = new JToolBar.Separator(null);
+			myToolbar.add(separator);
+			myToolbarMap.put(item, separator);
 		} else {
-			myToolbar.addSeparator();
+			// TODO: implement
 		}
 	}
 	
@@ -191,11 +193,10 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
-		// TODO: implement
-		if (item instanceof ZLApplication.Toolbar.ButtonItem) {
-			AbstractButton button = myButtonItemToActionMap.get((ZLApplication.Toolbar.ButtonItem)item);
-			button.setEnabled(enabled);
-			button.setVisible(visible);
+		JComponent component = myToolbarMap.get(item);
+		if (component != null) {
+			component.setEnabled(enabled);
+			component.setVisible(visible);
 		}
 	}
 

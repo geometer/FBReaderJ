@@ -21,7 +21,7 @@ abstract public class ZLViewWidget {
 		static public Angle getByDegrees(int degrees) {
 			switch(degrees) {
 				default:
-				case 0: 
+				case 0:
 					return Angle.DEGREES0;
 				case 90:
 					return Angle.DEGREES90;
@@ -57,6 +57,6 @@ abstract public class ZLViewWidget {
 		return myRotation;
 	}
 
-	// TODO: change to protected   
+	// TODO: change to protected
 	abstract public void repaint();
 }

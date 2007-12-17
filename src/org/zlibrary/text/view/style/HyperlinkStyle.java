@@ -1,6 +1,6 @@
 package org.zlibrary.text.view.style;
 
-public enum HyperlinkStyle {
+enum HyperlinkStyle {
 	NONE,
 	INTERNAL,
 	EXTERNAL;

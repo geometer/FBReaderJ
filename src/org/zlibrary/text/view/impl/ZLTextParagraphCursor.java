@@ -1,15 +1,13 @@
 package org.zlibrary.text.view.impl;
 
-import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.impl.*;
+import org.zlibrary.text.model.*;
+import org.zlibrary.text.model.impl.ZLImageEntry;
 
 import org.zlibrary.core.image.ZLImage;
 
 import java.util.*;
 
-public abstract class ZLTextParagraphCursor {
-
+abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
 		protected ZLTextParagraph myParagraph;
 		protected List <ZLTextElement> myElements;
@@ -23,7 +21,7 @@ public abstract class ZLTextParagraphCursor {
 
 		/*Why do we need ZLTextParagraph.Entry interface?*/
 
-		public void fill() {
+		void fill() {
 			//for (ZLTextParagraph.Entry entry : myParagraph) {
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
 				ZLTextParagraph.Entry entry = it.next();
@@ -54,22 +52,22 @@ public abstract class ZLTextParagraphCursor {
 			}
 		}
 		
-		public abstract void processTextEntry(final char[] data, final int offset, final int length);
+		abstract void processTextEntry(final char[] data, final int offset, final int length);
 
 		protected final void addWord(char[] data, int from, int to) {
 			myElements.add(new ZLTextWord(data, from, to - from));
 		}
 	}
 
-	private static class StandardProcessor extends Processor {
-		public StandardProcessor(ZLTextParagraph paragraph, int index, List <ZLTextElement> elements) {
+	private static final class StandardProcessor extends Processor {
+		StandardProcessor(ZLTextParagraph paragraph, int index, List <ZLTextElement> elements) {
 			super(paragraph, index, elements);
 		}		
 	
 		/*Some useless code in C++ version here.
-		  Is spaceInserted variable used for inserting one separator instead of multiple spaces?*/
+			Is spaceInserted variable used for inserting one separator instead of multiple spaces?*/
 
-		public void processTextEntry(final char[] data, final int offset, final int length) {
+		void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
 				final int end = offset + length;
@@ -110,9 +108,13 @@ public abstract class ZLTextParagraphCursor {
 		fill();
 	}
 	
-	public static ZLTextParagraphCursor getCursor(ZLTextModel model, int index) {
+	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
 		ZLTextParagraphCursor result;
-		result = new ZLTextPlainParagraphCursor(model, index);
+		if (model instanceof ZLTextTreeModel) {
+			result = new ZLTextTreeParagraphCursor(model, index);
+		} else {
+			result = new ZLTextPlainParagraphCursor(model, index);
+		}
 		return result;
 	}
 
@@ -120,8 +122,13 @@ public abstract class ZLTextParagraphCursor {
 
 	protected void fill() {
 		ZLTextParagraph	paragraph = myModel.getParagraph(myIndex);
-		if (paragraph.getKind() == ZLTextParagraph.Kind.TEXT_PARAGRAPH) {
-			(new StandardProcessor(paragraph, myIndex, myElements)).fill();
+		switch (paragraph.getKind()) {
+			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
+			case ZLTextParagraph.Kind.TREE_PARAGRAPH:
+				new StandardProcessor(paragraph, myIndex, myElements).fill();
+				break;
+			default:
+				break;
 		}
 	}
 	
@@ -131,36 +138,36 @@ public abstract class ZLTextParagraphCursor {
 
 	/*Something strange here*/
 
-	public boolean isNull() {
+	boolean isNull() {
 		return myModel == null;
 	}
 	
-	public boolean isFirst() {
+	boolean isFirst() {
 		return myIndex == 0;
 	}
 
-	public abstract boolean isLast(); 
+	abstract boolean isLast(); 
 	
-	public boolean isEndOfSection() {
+	boolean isEndOfSection() {
 		return (myModel.getParagraph(myIndex).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
 	}
 	
-	public int getParagraphLength() {
+	int getParagraphLength() {
 		return myElements.size();
 	}
 
-	public int getIndex() {
+	int getIndex() {
 		return myIndex;
 	}
 
-	abstract public ZLTextParagraphCursor previous();
-	abstract public ZLTextParagraphCursor next();
+	abstract ZLTextParagraphCursor previous();
+	abstract ZLTextParagraphCursor next();
 	
-	public ZLTextElement getElement(int index) {
+	ZLTextElement getElement(int index) {
 		return myElements.get(index);
 	}
 
-	public ZLTextParagraph getParagraph() {
+	ZLTextParagraph getParagraph() {
 		return myModel.getParagraph(myIndex);	
 	}
 }

@@ -13,7 +13,7 @@ public class TestTreeParagraph extends TestCase {
 	public void testCreateParagraph() {
 		 ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
 		 ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
-		 assertTrue(paragraph.getChildren().contains(paragraph2));
+		 assertTrue(paragraph.children().contains(paragraph2));
 		 assertTrue(paragraph.getDepth() == 0);
 		 assertTrue(paragraph2.getDepth() == 1);
 		 assertTrue(paragraph2.getParent() == paragraph);
@@ -64,12 +64,12 @@ public class TestTreeParagraph extends TestCase {
 		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
 		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
 		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
-		assertTrue(paragraph.getChildren().size() == 2);
-		assertTrue(paragraph.getChildren().contains(paragraph2));
-		assertTrue(paragraph.getChildren().contains(paragraph3));
-		assertTrue(paragraph2.getChildren().contains(paragraph4));
-		assertTrue(paragraph2.getChildren().size() == 1);
-		assertTrue(paragraph3.getChildren().size() == 0);		
+		assertTrue(paragraph.children().size() == 2);
+		assertTrue(paragraph.children().contains(paragraph2));
+		assertTrue(paragraph.children().contains(paragraph3));
+		assertTrue(paragraph2.children().contains(paragraph4));
+		assertTrue(paragraph2.children().size() == 1);
+		assertTrue(paragraph3.children().size() == 0);		
 	}
 	/*
 	 *	
@@ -95,10 +95,8 @@ public class TestTreeParagraph extends TestCase {
 		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
 		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
 		paragraph4.removeFromParent();
-		assertTrue(paragraph4.getChildren().size() == 0);
+		assertTrue(paragraph3.children().size() == 0);
 		paragraph2.removeFromParent();
-		assertTrue(paragraph2.getChildren().size() == 0);
-		paragraph.removeFromParent();
-		assertTrue(paragraph.getChildren().size() == 2);
+		assertTrue(paragraph.children().size() == 1);
 	}
 }

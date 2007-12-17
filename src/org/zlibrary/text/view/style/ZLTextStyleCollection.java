@@ -2,7 +2,7 @@ package org.zlibrary.text.view.style;
 
 import java.util.Map;
 
-import org.zlibrary.core.options.util.ZLBoolean3;
+import org.zlibrary.core.util.ZLBoolean3;
 import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.text.model.ZLTextAlignmentType;
 import org.zlibrary.text.view.ZLTextStyle;

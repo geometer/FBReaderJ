@@ -2,7 +2,7 @@ package org.zlibrary.text.view.style;
 
 import org.zlibrary.text.view.ZLTextStyle;
 
-import org.zlibrary.core.options.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
 
@@ -22,6 +22,19 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 	public int getFontSize() {
 		return getBase().getFontSize() + (int)myDecoration.FontSizeDeltaOption.getValue();
 	}
+
+	public ZLColor getColor() {
+		HyperlinkStyle hyperlinkStyle = myDecoration.getHyperlinkStyle();
+		if (hyperlinkStyle == HyperlinkStyle.NONE) {
+			return getBase().getColor();
+		}
+		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
+		if (hyperlinkStyle == HyperlinkStyle.INTERNAL) {
+			return baseStyle.InternalHyperlinkTextColorOption.getValue();
+		} else {
+			return baseStyle.ExternalHyperlinkTextColorOption.getValue();
+		}
+	}
 	
 	public boolean bold() {
 //		if (myDecoration != null && myDecoration.BoldOption != null) {
@@ -39,23 +52,23 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 	}
 
 	public int leftIndent() {
-		return 0;
+		return getBase().leftIndent();
 	}
 
 	public int rightIndent() {
-		return 0;
+		return getBase().rightIndent();
 	}
 
 	public int firstLineIndentDelta() {
 		return getBase().firstLineIndentDelta();
 	}	
 	
-	public int lineSpace() {
-		return 1;
+	public double lineSpace() {
+		return getBase().lineSpace();
 	}
 
 	public int verticalShift() {
-		return 0;
+		return getBase().verticalShift() + myDecoration.VerticalShiftOption.getValue();
 	}
 
 	public int spaceBefore() {

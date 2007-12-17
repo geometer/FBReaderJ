@@ -122,7 +122,7 @@ class ZLTextWordCursor {
 
 	public void moveToParagraph(int paragraphNumber) {
 		if (!isNull() && (paragraphNumber != myParagraphCursor.getIndex())) {
-			myParagraphCursor = ZLTextParagraphCursor.getCursor(myParagraphCursor.myModel, paragraphNumber);
+			myParagraphCursor = ZLTextParagraphCursor.cursor(myParagraphCursor.myModel, paragraphNumber);
 			moveToParagraphStart();
 		}		
 	}
