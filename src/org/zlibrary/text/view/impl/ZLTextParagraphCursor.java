@@ -97,7 +97,7 @@ abstract class ZLTextParagraphCursor {
 		}
 	}
 
-	protected ZLTextModel myModel;
+	protected final ZLTextModel myModel;
 	protected int myIndex;
 	protected List <ZLTextElement> myElements;
 
@@ -111,7 +111,7 @@ abstract class ZLTextParagraphCursor {
 	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
 		ZLTextParagraphCursor result;
 		if (model instanceof ZLTextTreeModel) {
-			result = new ZLTextTreeParagraphCursor(model, index);
+			result = new ZLTextTreeParagraphCursor((ZLTextTreeModel)model, index);
 		} else {
 			result = new ZLTextPlainParagraphCursor(model, index);
 		}
@@ -141,7 +141,7 @@ abstract class ZLTextParagraphCursor {
 	boolean isNull() {
 		return myModel == null;
 	}
-	
+
 	boolean isFirst() {
 		return myIndex == 0;
 	}

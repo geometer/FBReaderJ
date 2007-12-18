@@ -12,7 +12,8 @@ public interface ZLTextTreeParagraph extends ZLTextParagraph {
 	ZLTextTreeParagraph getParent();
 
 	boolean hasChildren();
-	List<ZLTextTreeParagraph> children();
+	//List<ZLTextTreeParagraph> children();
+	ZLTextTreeParagraph getLastChild();
 	int getFullSize();	
 
 	void removeFromParent();

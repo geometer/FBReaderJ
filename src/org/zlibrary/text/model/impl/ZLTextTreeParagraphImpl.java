@@ -6,7 +6,7 @@ import java.util.Collections;
 
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
-class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeParagraph {
+final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeParagraph {
 	private boolean myIsOpen;
 	private	int myDepth;
 	private	ZLTextTreeParagraph myParent;
@@ -54,10 +54,19 @@ class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeP
 		return (myChildren != null) && !myChildren.isEmpty();
 	}
 
+	/*
 	public List<ZLTextTreeParagraph> children() {
 		return (myChildren != null) ?
 			Collections.unmodifiableList(myChildren) :
 			Collections.<ZLTextTreeParagraph>emptyList();
+	}
+	*/
+
+	public ZLTextTreeParagraph getLastChild() {
+		if (!hasChildren()) {
+			return null;
+		}
+		return myChildren.get(myChildren.size() - 1);
 	}
 	
 	public int getFullSize() {

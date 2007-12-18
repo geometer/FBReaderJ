@@ -31,6 +31,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		
 	private final List<ZLTextLineInfo> myLineInfos = new ArrayList<ZLTextLineInfo>();
 	private final ArrayList<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea>();
+	private final ArrayList<ZLTextTreeNodeArea> myTreeNodeMap = new ArrayList<ZLTextTreeNodeArea>();
 	private final ZLTextWordCursor myIteratorCursor = new ZLTextWordCursor();
 
 	// TO BE DELETED
@@ -138,6 +139,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		}
 
 		myTextElementMap.clear();
+		myTreeNodeMap.clear();
 		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
 			int pn = StartParagraphNumberOption.getValue();
@@ -247,7 +249,13 @@ public class ZLTextViewImpl extends ZLTextView {
 				} else {
 					context.drawLine(x + 2 * qstep, y0 - space, x + 2 * qstep, y1 + space);
 				}
-				//myTreeNodeMap.push_back(ZLTextTreeNodeArea(info.ParagraphNumber, x, x + 4 * qstep, y - height + 1, y));
+				myTreeNodeMap.add(
+					new ZLTextTreeNodeArea(
+						info.ParagraphNumber,
+						x, x + 4 * qstep,
+						y - height + 1, y
+					)
+				);
 			}
 		} else if (!info.IsLeaf && info.IsOpen) {
 			context.drawLine(x + 2 * qstep, y + vSpaceAfter, x + 2 * qstep, y - height + 1);
@@ -368,14 +376,13 @@ public class ZLTextViewImpl extends ZLTextView {
 				ZLTextTreeParagraph ctp = treeParagraph;
 				for (int index = 0; index < stack.length; ++index) {
 					ZLTextTreeParagraph parent = ctp.getParent();
-					List<ZLTextTreeParagraph> children = parent.children();
-					stack[index] = children.get(children.size() - 1) != ctp;
+					stack[index] = parent.getLastChild() != ctp;
 					ctp = parent;
 				}
 			}
 			info.NodeInfo = new ZLTextLineInfo.TreeNodeInfo(
 				!treeParagraph.hasChildren(),
-				treeParagraph.hasChildren(),//treeParagraph.isOpen(),
+				treeParagraph.isOpen(),
 				isFirstLine,
 				paragraphCursor.getIndex(),
 				stack
@@ -604,14 +611,12 @@ public class ZLTextViewImpl extends ZLTextView {
 
 	public boolean onStylusPress(int x, int y) {
 		if (myModel instanceof ZLTextTreeModel) {
-		/*
-			ZLTextTreeNodeMap::const_iterator it =
-				std::find_if(myTreeNodeMap.begin(), myTreeNodeMap.end(), ZLTextTreeNodeArea::RangeChecker(x, y));
-			if (it != myTreeNodeMap.end()) {
-				int paragraphNumber = it->ParagraphNumber;
-				ZLTextTreeParagraph *paragraph = (ZLTextTreeParagraph*)(*myModel)[paragraphNumber];
-
-				paragraph->open(!paragraph->isOpen());
+			ZLTextTreeNodeArea nodeArea = ZLTextRectangularArea.binarySearch(myTreeNodeMap, x, y);
+			if (nodeArea != null) {
+				final int index = nodeArea.ParagraphNumber;
+				final ZLTextTreeParagraph paragraph = ((ZLTextTreeModel)myModel).getParagraph(index);
+				paragraph.open(!paragraph.isOpen());
+				/*
 				rebuildPaintInfo(true);
 				preparePaintInfo();
 				if (paragraph->isOpen()) {
@@ -633,11 +638,10 @@ public class ZLTextViewImpl extends ZLTextView {
 					gotoParagraph(paragraphNumber);
 					preparePaintInfo();
 				}
+				*/
 				application().refreshWindow();
-
 				return true;
 			}
-		*/
 		}
 		return false;
 	}
