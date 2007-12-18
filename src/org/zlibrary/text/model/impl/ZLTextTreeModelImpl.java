@@ -7,7 +7,7 @@ import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
 	private final ArrayList<ZLTextTreeParagraph> myParagraphs = new ArrayList<ZLTextTreeParagraph>();
-	private final ZLTextTreeParagraph myRoot;
+	private final ZLTextTreeParagraphImpl myRoot;
 	
 	public ZLTextTreeModelImpl() {
 		myRoot = new ZLTextTreeParagraphImpl(null, this);

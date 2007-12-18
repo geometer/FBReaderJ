@@ -9,14 +9,14 @@ import org.zlibrary.text.model.ZLTextTreeParagraph;
 final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeParagraph {
 	private boolean myIsOpen;
 	private	int myDepth;
-	private	ZLTextTreeParagraph myParent;
+	private	ZLTextTreeParagraphImpl myParent;
 	private	ArrayList<ZLTextTreeParagraph> myChildren = null;
 	
 	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent, ZLTextModelImpl model) {
 		super(model);
-		myParent = parent;
+		myParent = (ZLTextTreeParagraphImpl)parent;
 		if (parent != null) {
-			((ZLTextTreeParagraphImpl)parent).addChild(this);
+			myParent.addChild(this);
 			myDepth = parent.getDepth() + 1;
 		}
 	}
@@ -54,19 +54,18 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 		return (myChildren != null) && !myChildren.isEmpty();
 	}
 
-	/*
 	public List<ZLTextTreeParagraph> children() {
 		return (myChildren != null) ?
 			Collections.unmodifiableList(myChildren) :
 			Collections.<ZLTextTreeParagraph>emptyList();
 	}
-	*/
 
-	public ZLTextTreeParagraph getLastChild() {
-		if (!hasChildren()) {
-			return null;
+	public boolean isLastChild() {
+		if (myParent == null) {
+			return false;
 		}
-		return myChildren.get(myChildren.size() - 1);
+		ArrayList<ZLTextTreeParagraph> siblings = myParent.myChildren;
+		return this == siblings.get(siblings.size() - 1);
 	}
 	
 	public int getFullSize() {

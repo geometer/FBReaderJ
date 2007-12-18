@@ -20,7 +20,7 @@ final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {
 		}
 		ZLTextTreeParagraph parent = current.getParent();
 		while (parent != null) {
-			if (current != parent.getLastChild()) {
+			if (!current.isLastChild()) {
 				return false;
 			}
 			current = parent;
@@ -64,7 +64,7 @@ final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {
 		}
 
 		ZLTextTreeParagraph parent = current.getParent();
-		while ((parent != null) && (current == parent.getLastChild())) {
+		while ((parent != null) && (current.isLastChild())) {
 			current = parent;
 			parent = current.getParent();
 		}

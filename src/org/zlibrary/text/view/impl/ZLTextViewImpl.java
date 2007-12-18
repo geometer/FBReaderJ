@@ -378,9 +378,8 @@ public class ZLTextViewImpl extends ZLTextView {
 			if (stack.length > 0) {
 				ZLTextTreeParagraph ctp = treeParagraph;
 				for (int index = 0; index < stack.length; ++index) {
-					ZLTextTreeParagraph parent = ctp.getParent();
-					stack[index] = parent.getLastChild() != ctp;
-					ctp = parent;
+					stack[index] = !ctp.isLastChild();
+					ctp = ctp.getParent();
 				}
 			}
 			info.NodeInfo = new ZLTextLineInfo.TreeNodeInfo(
