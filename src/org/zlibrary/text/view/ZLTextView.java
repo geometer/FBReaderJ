@@ -18,4 +18,6 @@ public abstract class ZLTextView extends ZLView {
 	// TO BE DELETED;
 	// this is temporary method for dummy scrolling
 	public abstract void scroll(int numberOfParagraphs);
+
+	public abstract void gotoParagraph(int index);
 }

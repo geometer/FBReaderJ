@@ -46,6 +46,9 @@ public class ZLTextViewImpl extends ZLTextView {
 	public void setModel(ZLTextModel model) {
 		myModel = model;
 	}
+	protected ZLTextModel getModel() {
+		return myModel;
+	}
 
 	private void setTextStyle(ZLTextStyle style) {
 		if (myTextStyle != style) {
@@ -593,6 +596,11 @@ public class ZLTextViewImpl extends ZLTextView {
 		StartParagraphNumberOption.setValue(StartParagraphNumberOption.getValue() + numberOfParagraphs);
 	}
 
+	public void gotoParagraph(int index) {
+		// TODO: implement
+		StartParagraphNumberOption.setValue(index);
+	}
+
 	public int leftMargin() {
 		return LeftMarginOption.getValue();
 	}
@@ -607,6 +615,11 @@ public class ZLTextViewImpl extends ZLTextView {
 
 	public int bottomMargin() {
 		return LeftMarginOption.getValue();
+	}
+
+	protected int paragraphIndexByCoordinate(int y) {
+		ZLTextElementArea area = ZLTextRectangularArea.binarySearch(myTextElementMap, y);
+		return (area != null) ? area.ParagraphNumber : -1;
 	}
 
 	public boolean onStylusPress(int x, int y) {
@@ -639,7 +652,7 @@ public class ZLTextViewImpl extends ZLTextView {
 					preparePaintInfo();
 				}
 				*/
-				application().refreshWindow();
+				getApplication().refreshWindow();
 				return true;
 			}
 		}

@@ -43,7 +43,7 @@ abstract public class ZLView {
 		return false;
 	}
 
-	protected ZLApplication application() {
+	protected ZLApplication getApplication() {
 		return myApplication;
 	}
 	

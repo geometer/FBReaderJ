@@ -35,8 +35,8 @@ public final class FBReader extends ZLApplication {
 	private ViewMode myMode = ViewMode.UNDEFINED;
 	private ViewMode myPreviousMode = ViewMode.BOOK_TEXT;
 
-	private ZLTextView myBookTextView;
-	private ZLTextView myContentsView;
+	private final ZLTextView myBookTextView;
+	private final ContentsView myContentsView;
 
 	public FBReader() {
 		this(new String[0]);
@@ -147,7 +147,7 @@ public final class FBReader extends ZLApplication {
 		getMenubar().addItem(ActionCode.QUIT, "close");
 
 		myBookTextView = new ZLTextViewImpl(this, getContext());
-		myContentsView = new ZLTextViewImpl(this, getContext());
+		myContentsView = new ContentsView(this, getContext());
 
 		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "data/help/MiniHelp.ru.fb2");
 		//ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
@@ -218,5 +218,9 @@ public final class FBReader extends ZLApplication {
 	void restorePreviousMode() {
 		setMode(myPreviousMode);
 		myPreviousMode = ViewMode.BOOK_TEXT;
+	}
+
+	ZLTextView getBookTextView() {
+		return myBookTextView;
 	}
 }
