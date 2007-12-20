@@ -11,7 +11,6 @@ import org.zlibrary.core.options.ZLStringOption;
 
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.ZLTextView;
-import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.formats.fb2.FB2Reader;
@@ -35,7 +34,7 @@ public final class FBReader extends ZLApplication {
 	private ViewMode myMode = ViewMode.UNDEFINED;
 	private ViewMode myPreviousMode = ViewMode.BOOK_TEXT;
 
-	private final ZLTextView myBookTextView;
+	private final BookTextView myBookTextView;
 	private final ContentsView myContentsView;
 
 	public FBReader() {
@@ -146,7 +145,7 @@ public final class FBReader extends ZLApplication {
 		getMenubar().addItem(ActionCode.SHOW_OPTIONS, "settings");
 		getMenubar().addItem(ActionCode.QUIT, "close");
 
-		myBookTextView = new ZLTextViewImpl(this, getContext());
+		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
 
 		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "data/help/MiniHelp.ru.fb2");
@@ -220,7 +219,7 @@ public final class FBReader extends ZLApplication {
 		myPreviousMode = ViewMode.BOOK_TEXT;
 	}
 
-	ZLTextView getBookTextView() {
+	BookTextView getBookTextView() {
 		return myBookTextView;
 	}
 }

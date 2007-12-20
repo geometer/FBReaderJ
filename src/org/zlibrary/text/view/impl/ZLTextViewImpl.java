@@ -35,8 +35,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	private final ZLTextWordCursor myIteratorCursor = new ZLTextWordCursor();
 
 	// TO BE DELETED
-	private ZLIntegerOption StartParagraphNumberOption =
-		new ZLIntegerOption(ZLOption.STATE_CATEGORY, "DummyScrolling", "Paragraph", 0);
+	private int myStartParagraphNumberOption;
 
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
@@ -145,9 +144,9 @@ public class ZLTextViewImpl extends ZLTextView {
 		myTreeNodeMap.clear();
 		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
-			int pn = StartParagraphNumberOption.getValue();
+			int pn = myStartParagraphNumberOption;
 			pn = Math.max(0, Math.min(pn, paragraphs - 2));
-			StartParagraphNumberOption.setValue(pn);
+			myStartParagraphNumberOption = pn;
 			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.cursor(myModel, pn);
 			ZLTextWordCursor start = new ZLTextWordCursor();
 			start.setCursor(firstParagraph);
@@ -592,12 +591,12 @@ public class ZLTextViewImpl extends ZLTextView {
 
 	// TO BE DELETED
 	public void scroll(int numberOfParagraphs) {
-		StartParagraphNumberOption.setValue(StartParagraphNumberOption.getValue() + numberOfParagraphs);
+		gotoParagraph(myStartParagraphNumberOption + numberOfParagraphs);
 	}
 
 	public void gotoParagraph(int index) {
 		// TODO: implement
-		StartParagraphNumberOption.setValue(index);
+		myStartParagraphNumberOption = index;
 	}
 
 	public int leftMargin() {
