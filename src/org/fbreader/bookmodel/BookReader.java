@@ -117,7 +117,7 @@ public final class BookReader {
 	}
 	
 	public void setMainTextModel() {
-		myCurrentTextModel = myBookModel.getBookModel();
+		myCurrentTextModel = myBookModel.getBookTextModel();
 	}
 	
 	public void setFootnoteTextModel(String id) {
@@ -185,7 +185,7 @@ public final class BookReader {
 	
 	public void beginContentsParagraph(int referenceNumber) {
 		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
-		if (myCurrentTextModel == myBookModel.getBookModel()) {
+		if (myCurrentTextModel == myBookModel.getBookTextModel()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
 			if (referenceNumber == -1) {
 				referenceNumber = myCurrentTextModel.getParagraphsNumber();

@@ -10,7 +10,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.text.model.ZLTextParagraph;
 
 public class FB2Reader extends ZLXMLReader {
-	private BookReader myModelReader = new BookReader(new BookModel());
+	private BookReader myModelReader;
 //	private String myFileName;
 	
 	private boolean myInsidePoem = false;
@@ -303,7 +303,7 @@ public class FB2Reader extends ZLXMLReader {
 				
 			case BODY:
 				++myBodyCounter;
-				myParagraphsBeforeBodyNumber = myModelReader.getModel().getBookModel().getParagraphsNumber();
+				myParagraphsBeforeBodyNumber = myModelReader.getModel().getBookTextModel().getParagraphsNumber();
 				if ((myBodyCounter == 1) || (attributes.get("name") == null)) {
 					myModelReader.setMainTextModel();
 					myReadMainText = true;
@@ -345,7 +345,7 @@ public class FB2Reader extends ZLXMLReader {
 					}
 					imgRef = imgRef.substring(1);
 					if (!imgRef.equals(myCoverImageReference) ||
-							myParagraphsBeforeBodyNumber != myModelReader.getModel().getBookModel().getParagraphsNumber()) {
+							myParagraphsBeforeBodyNumber != myModelReader.getModel().getBookTextModel().getParagraphsNumber()) {
 						myModelReader.addImageReference(imgRef, offset);
 					}
 					if (myInsideCoverpage) {
@@ -373,16 +373,17 @@ public class FB2Reader extends ZLXMLReader {
 		myTagsByName.clear();
 	}
 
-	public BookModel readBook(String fileName) {
-		//ZLXMLReader reader = new ZLXMLReader() {};
+	public boolean readBook(BookModel model) {
+ 		myModelReader = new BookReader(model);
+ 		//ZLXMLReader reader = new ZLXMLReader() {};
 		long start = System.currentTimeMillis();
 		//reader.read(fileName);
 		//org.zlibrary.ui.android.view.ZLAndroidWidget.Time = System.currentTimeMillis() - start;
 		//System.err.println("empty loading book time = " + (System.currentTimeMillis() - start));
 		//start = System.currentTimeMillis();
-		boolean success = read(fileName);
+		boolean success = read(model.getFileName());
 		//org.zlibrary.ui.android.view.ZLAndroidWidget.Time = System.currentTimeMillis() - start;
 		System.err.println("loading book time = " + (System.currentTimeMillis() - start));
-		return success ? myModelReader.getModel() : null;
+		return success;
 	}
 }

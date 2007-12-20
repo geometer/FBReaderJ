@@ -148,7 +148,8 @@ public final class FBReader extends ZLApplication {
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
 
-		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "data/help/MiniHelp.ru.fb2");
+		final String helpFileName = "data/help/MiniHelp.ru.fb2";
+		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", helpFileName);
 		//ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
 		if (args.length > 0) {
 			try {
@@ -156,10 +157,14 @@ public final class FBReader extends ZLApplication {
 			} catch (IOException e) {
 			}
 		}
-		BookModel bookModel = new FB2Reader().readBook(bookNameOption.getValue());
-		if (bookModel != null) {
-			myBookTextView.setModel(bookModel.getBookModel());
-			myContentsView.setModel(bookModel.getContentsModel());
+		BookModel model = new BookModel(bookNameOption.getValue());
+		if (!new FB2Reader().readBook(model)) {
+			model = new BookModel(helpFileName);
+			new FB2Reader().readBook(model);
+		}
+		if (model != null) {
+			myBookTextView.setModel(model.getBookTextModel(), model.getFileName());
+			myContentsView.setModel(model.getContentsModel());
 		}
 		setMode(ViewMode.BOOK_TEXT);
 	}

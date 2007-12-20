@@ -6,19 +6,19 @@ import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 class BookTextView extends ZLTextViewImpl {
-	private final ZLIntegerOption ParagraphPositionOption =
-		new ZLIntegerOption(ZLOption.STATE_CATEGORY, "DummyScrolling", "Paragraph", 0);
+	private ZLIntegerOption myParagraphPositionOption;
 	BookTextView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
 	}
 
-	public void setModel(ZLTextModel model) {
+	public void setModel(ZLTextModel model, String fileName) {
 		super.setModel(model);
-		gotoParagraph(ParagraphPositionOption.getValue());
+		myParagraphPositionOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Paragraph", 0);
+		gotoParagraph(myParagraphPositionOption.getValue());
 	}
 
 	public void gotoParagraph(int index) {
 		super.gotoParagraph(index);
-		ParagraphPositionOption.setValue(index);
+		myParagraphPositionOption.setValue(index);
 	}
 }

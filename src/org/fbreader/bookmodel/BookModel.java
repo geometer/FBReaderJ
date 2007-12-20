@@ -12,12 +12,14 @@ import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class BookModel {
 	private final ZLModelFactory myModelFactory = new ZLModelFactory();
-	private final ZLTextPlainModel myBookModel = myModelFactory.createPlainModel();
+	private final ZLTextPlainModel myBookTextModel = myModelFactory.createPlainModel();
 	private final ContentsModel myContentsModel = new ContentsModel();
 	private final TreeMap<String,ZLTextPlainModel> myFootnotes = new TreeMap<String,ZLTextPlainModel>();
 	private final TreeMap<String,Label> myInternalHyperlinks = new TreeMap<String,Label>();
 	private final TreeMap<String,ZLImage> myImageMap = new TreeMap<String,ZLImage>(); 
 	
+	private final String myFileName;
+
 	private class Label {
 		final int ParagraphNumber;
 		final ZLTextModel Model;
@@ -28,8 +30,16 @@ public class BookModel {
 		}
 	}
 	
-	public ZLTextPlainModel getBookModel() {
-		return myBookModel;
+	public BookModel(String fileName) {
+		myFileName = fileName;
+	}
+
+	public String getFileName() {
+		return myFileName;
+	}
+
+	public ZLTextPlainModel getBookTextModel() {
+		return myBookTextModel;
 	}
 	
 	public ContentsModel getContentsModel() {
@@ -47,7 +57,7 @@ public class BookModel {
 		return Collections.unmodifiableMap(myFootnotes);
 	}
 	
-	public void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
+	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
 		myInternalHyperlinks.put(label, new Label(model, paragraphNumber));
 	}
 	
@@ -60,11 +70,11 @@ public class BookModel {
 		return null;
 	}
 
-	public Map<String,ZLImage> getImageMap() {
+	Map<String,ZLImage> getImageMap() {
 		return myImageMap;
 	}
 
-	public void addImage(String id, ZLImage image) {
+	void addImage(String id, ZLImage image) {
 		myImageMap.put(id, image);
 	}
 }
