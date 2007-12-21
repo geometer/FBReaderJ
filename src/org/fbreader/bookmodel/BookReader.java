@@ -46,7 +46,7 @@ public final class BookReader {
 	public void addControl(byte kind, boolean start) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
-			myCurrentTextModel.addControl((byte) kind, start);
+			myCurrentTextModel.addControl(kind, start);
 		}
 		if (!start && (myHyperlinkReference.length() != 0) && (kind == myHyperlinkKind)) {
 			myHyperlinkReference = "";
@@ -228,11 +228,11 @@ public final class BookReader {
 
 	public void setReference(int contentsParagraphNumber, int referenceNumber) {
 		ContentsModel contentsModel = myBookModel.getContentsModel();
-		if (contentsParagraphNumber >= contentsModel.getParagraphsNumber()) {
-			return;
+		if (contentsParagraphNumber < contentsModel.getParagraphsNumber()) {
+			contentsModel.setReference(
+				contentsModel.getParagraph(contentsParagraphNumber), referenceNumber
+			);
 		}
-		contentsModel.setReference((ZLTextTreeParagraph) 
-				contentsModel.getParagraph(contentsParagraphNumber), referenceNumber);
 	}
 	
 	public boolean contentsParagraphIsOpen() {

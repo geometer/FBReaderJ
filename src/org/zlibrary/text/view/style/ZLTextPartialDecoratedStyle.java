@@ -20,7 +20,7 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 	}
 
 	public int getFontSize() {
-		return getBase().getFontSize() + (int)myDecoration.FontSizeDeltaOption.getValue();
+		return getBase().getFontSize() + myDecoration.FontSizeDeltaOption.getValue();
 	}
 
 	public ZLColor getColor() {

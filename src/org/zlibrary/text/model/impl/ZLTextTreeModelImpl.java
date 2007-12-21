@@ -37,7 +37,7 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 	}
 	
 	public void removeParagraph(int index) {
-		ZLTextTreeParagraph p = (ZLTextTreeParagraph)this.getParagraph(index);
+		ZLTextTreeParagraph p = getParagraph(index);
 		p.removeFromParent();
 		myParagraphs.remove(index);
 	}

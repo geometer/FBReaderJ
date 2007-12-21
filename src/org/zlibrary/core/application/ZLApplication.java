@@ -54,7 +54,7 @@ public abstract class ZLApplication {
 		myContext = ZLibrary.getInstance().createPaintContext();
 		
 		if (ConfigAutoSavingOption.getValue()) {
-			//ZLOption.startAutoSave((int)(ConfigAutoSaveTimeoutOption.getValue()));
+			//ZLOption.startAutoSave(ConfigAutoSaveTimeoutOption.getValue());
 		}
 
 		//myPresentWindowHandler = new PresentWindowHandler(this);
@@ -302,7 +302,7 @@ public abstract class ZLApplication {
 		}
 		
 		public void run() {
-			int optionValue = (int)myApplication.RotationAngleOption.getValue();
+			int optionValue = myApplication.RotationAngleOption.getValue();
 			ZLViewWidget.Angle oldAngle = myApplication.myViewWidget.getRotation();
 			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {

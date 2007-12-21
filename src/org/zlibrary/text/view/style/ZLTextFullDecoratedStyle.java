@@ -32,7 +32,7 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 	}
 
 	public int getFontSize() {
-		return getBase().getFontSize() + (int)myDecoration.FontSizeDeltaOption.getValue();
+		return getBase().getFontSize() + myDecoration.FontSizeDeltaOption.getValue();
 	}
 	
 	public boolean bold() {

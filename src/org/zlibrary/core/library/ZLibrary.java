@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.core.view.ZLPaintContext;
 
@@ -25,9 +26,14 @@ public abstract class ZLibrary {
 		return myProperties.get("applicationName");
 	}
 
-	protected final Class getApplicationClass() {
+	@SuppressWarnings("unchecked")
+	protected final Class<ZLApplication> getApplicationClass() {
 		try {
-			return Class.forName(myProperties.get("applicationClass"));
+			Class clazz = Class.forName(myProperties.get("applicationClass"));
+			if ((clazz != null) && ZLApplication.class.isAssignableFrom(clazz)) {
+				return (Class<ZLApplication>)clazz;
+			}
+			return null;
 		} catch (ClassNotFoundException e) {
 			return null;
 		}

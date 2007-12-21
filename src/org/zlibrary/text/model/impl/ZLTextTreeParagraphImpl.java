@@ -80,7 +80,7 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 
 	public void removeFromParent() {		
 		if (myParent != null) {
-			((ZLTextTreeParagraphImpl)myParent).myChildren.remove(this);
+			myParent.myChildren.remove(this);
 		}
 	}
 
