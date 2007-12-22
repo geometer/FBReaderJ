@@ -31,12 +31,11 @@ public abstract class ZLibrary {
 		try {
 			Class clazz = Class.forName(myProperties.get("applicationClass"));
 			if ((clazz != null) && ZLApplication.class.isAssignableFrom(clazz)) {
-				return (Class<ZLApplication>)clazz;
+				return clazz;
 			}
-			return null;
 		} catch (ClassNotFoundException e) {
-			return null;
 		}
+		return null;
 	}
 
 	abstract public ZLPaintContext createPaintContext();
