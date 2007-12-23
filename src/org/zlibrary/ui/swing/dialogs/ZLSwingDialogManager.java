@@ -1,11 +1,11 @@
 package org.zlibrary.ui.swing.dialogs;
 
+import javax.swing.*;
+
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
-
-import javax.swing.JOptionPane;
 
 public class ZLSwingDialogManager extends ZLDialogManager {
 	private ZLSwingApplicationWindow myApplicationWindow;
@@ -14,26 +14,31 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 	}
 	
 	public static void createInstance() {
-		ourInstance = new ZLSwingDialogManager();
+		new ZLSwingDialogManager();
 	}
 	
-	@Override
-	public void errorBox(String key, String message) {
-		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(null, message, dialogTitle(key), 1, null);
+	public boolean runSelectionDialog(String key, ZLTreeHandler handler) {
+		new ZLSwingSelectionDialog(myApplicationWindow.getFrame()).run();
+		return false;
 	}
 
-	@Override
-	public void informationBox(String key, String message) {
-		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(null, message, dialogTitle(key), 1, null);
+	public void showErrorBox(String key, String message) {
+		JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
 	}
 
-	@Override
-	public void createApplicationWindow(ZLApplication application) {
+	public void showInformationBox(String key, String message) {
+		JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
+	}
+
+	public ZLSwingApplicationWindow createApplicationWindow(ZLApplication application) {
 		myApplicationWindow = new ZLSwingApplicationWindow(application);
+		return myApplicationWindow;
 	}
 
+	static JButton createButton(String key) {
+		String text = getButtonText(key).replace("&", "");
+		return new JButton(text);
+	}
 }
 
 /*

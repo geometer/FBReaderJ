@@ -8,18 +8,15 @@ final class ZLMissingResource extends ZLResource {
 		super(ourValue);
 	}
 
-	@Override
 	public ZLResource getResource(String key) {
 		return this;
 	}
 
-	@Override
 	public boolean hasValue() {
 		return false;
 	}
 
-	@Override
-	public String value() {
+	public String getValue() {
 		return ourValue;
 	}
 	

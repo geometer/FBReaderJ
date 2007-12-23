@@ -70,9 +70,11 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 	
 	public int getFullSize() {
 		int size = 1;
-		if (myChildren != null) {
-			for (ZLTextTreeParagraph child : myChildren) {
-				size += child.getFullSize();
+		final ArrayList<ZLTextTreeParagraph> children = myChildren;
+		if (children != null) {
+			final int length = children.size();
+			for (int i = 0; i < length; ++i) {
+				size += children.get(i).getFullSize();
 			}
 		}
 		return size;

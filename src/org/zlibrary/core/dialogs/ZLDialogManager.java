@@ -13,46 +13,44 @@ public abstract class ZLDialogManager {
 	public static final String APPLY_BUTTON = "apply";
 	
 	public static final String COLOR_KEY = "color";
-	public static final String DIALOG_TITLE = "title";
 	
 	protected ZLDialogManager() {
+		ourInstance = this;
 	}
 	
 	public static ZLDialogManager getInstance() {
 		return ourInstance;
 	} 
+	
+	abstract public boolean runSelectionDialog(String key, ZLTreeHandler handler);
 
-	public static boolean isInitialized() {
-		return ourInstance != null;
+	abstract public void showInformationBox(String key, String message);
+
+	public void showInformationBox(String key) {
+		showInformationBox(key, getDialogMessage(key));
+	}
+	
+	public abstract void showErrorBox(String key, String message);
+	
+	public void showErrorBox(String key) {
+		showErrorBox(key, getDialogMessage(key));
+	}
+	
+	//public abstract void createApplicationWindow(ZLApplication application);
+	
+	public static String getButtonText(String key) {
+		return getResource().getResource("button").getResource(key).getValue();
 	}
 
-	public static void deleteInstance() {
-		ourInstance = null;
+	public static String getDialogMessage(String key) {
+		return getResource().getResource(key).getResource("message").getValue();
 	}
 	
-	public void informationBox(String key) {
-		informationBox(key, dialogMessage(key));
+	public static String getDialogTitle(String key) {
+		return getResource().getResource(key).getResource("title").getValue();
 	}
 	
-	public void errorBox(String key) {
-		errorBox(key, dialogMessage(key));
-	}
-	
-	public abstract void errorBox(String key, String message);
-	
-	public abstract void informationBox(String key, String message);
-	
-	public abstract void createApplicationWindow(ZLApplication application);
-	
-	public static String dialogMessage(String key) {
-		return resource().getResource(key).getResource("message").value();
-	}
-	
-	public static String dialogTitle(String key) {
-		return resource().getResource(key).getResource(DIALOG_TITLE).value();
-	}
-	
-	protected static ZLResource resource() {
+	protected static ZLResource getResource() {
 		return ZLResource.resource("dialog");
 	}
 }

@@ -1,8 +1,6 @@
 package org.zlibrary.text.model;
 
-import java.util.Iterator;
-
-public interface ZLTextParagraph extends Iterable<ZLTextParagraph.Entry> {
+public interface ZLTextParagraph {
 	interface Entry {
 		byte TEXT = 1;
 		byte IMAGE = 2;
@@ -11,7 +9,7 @@ public interface ZLTextParagraph extends Iterable<ZLTextParagraph.Entry> {
 		byte FIXED_HSPACE = 5;
 	}
 
-	interface EntryIterator extends Iterator<Entry> {
+	interface EntryIterator {
 		byte getType();
 
 		char[] getTextData();
@@ -20,6 +18,9 @@ public interface ZLTextParagraph extends Iterable<ZLTextParagraph.Entry> {
 
 		byte getControlKind();
 		boolean getControlIsStart();
+
+		boolean hasNext();
+		Entry next();
 	}
 
 	public EntryIterator iterator();

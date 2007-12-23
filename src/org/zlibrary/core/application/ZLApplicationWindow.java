@@ -22,7 +22,7 @@ abstract public class ZLApplicationWindow {
 	protected void init() {
 		myApplication.setViewWidget(createViewWidget());
 
-		List<ZLApplication.Toolbar.Item> toolbarItems = myApplication.getToolbar().getItems();
+		List<ZLApplication.Toolbar.Item> toolbarItems = myApplication.getToolbar().items();
 		for (ZLApplication.Toolbar.Item item: toolbarItems) {
 			addToolbarItem(item);
 		}
@@ -66,7 +66,7 @@ abstract public class ZLApplicationWindow {
 	abstract public void addToolbarItem(ZLApplication.Toolbar.Item item);
 
 	protected void refresh() {
-		List<ZLApplication.Toolbar.Item> items = getApplication().getToolbar().getItems();
+		List<ZLApplication.Toolbar.Item> items = getApplication().getToolbar().items();
 		boolean enableToolbarSpace = false;
 		ZLApplication.Toolbar.Item lastSeparator = null;
 		for (ZLApplication.Toolbar.Item item : items) {

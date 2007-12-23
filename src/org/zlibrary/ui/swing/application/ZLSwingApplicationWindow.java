@@ -13,6 +13,7 @@ import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingViewWidget;
+import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
 @SuppressWarnings("serial")
 public class ZLSwingApplicationWindow extends ZLApplicationWindow {
@@ -86,7 +87,10 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		myFrame.setJMenuBar(myMenuBar);
 		myFrame.addKeyListener(new MyKeyListener());
 		myFrame.setFocusable(true);
+	}
 
+	public JFrame getFrame() {
+		return myFrame;
 	}
 
 	public void run() {
@@ -148,7 +152,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	}
 
-
 	public void setCaption(String caption) {
 		myFrame.setTitle(caption);
 	}
@@ -180,10 +183,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		
 		MyButtonAction(ZLApplication.Toolbar.ButtonItem item) {
 			myItem = item;
-			String iconFileName = "icons/toolbar/" + myItem.getIconName() + ".png";
-			java.net.URL iconURL = getClass().getClassLoader().getResource(iconFileName);
-			ImageIcon icon = (iconURL != null) ? new ImageIcon(iconURL) : new ImageIcon(iconFileName);
-			putValue(Action.SMALL_ICON, icon); 
+			final String iconFileName = "icons/toolbar/" + myItem.getIconName() + ".png";
+			putValue(Action.SMALL_ICON, ZLSwingIconUtil.getIcon(iconFileName)); 
 			putValue(Action.SHORT_DESCRIPTION, item.getTooltip()); 
 		}
 		

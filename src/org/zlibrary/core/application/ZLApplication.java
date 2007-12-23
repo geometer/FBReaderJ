@@ -346,7 +346,7 @@ public abstract class ZLApplication {
 			myItems.add(new SeparatorItem());
 		}
 
-		List<Item> getItems() {
+		List<Item> items() {
 			return Collections.unmodifiableList(myItems);
 		}
 		
@@ -374,7 +374,7 @@ public abstract class ZLApplication {
 			}
 			
 			public String getTooltip() {
-				return myTooltip.hasValue() ? myTooltip.value() : "";
+				return myTooltip.hasValue() ? myTooltip.getValue() : null;
 			}
 
 			ButtonGroup getButtonGroup() {
@@ -425,7 +425,7 @@ public abstract class ZLApplication {
 
 		public final class ButtonGroup {
 			public final int UnselectAllButtonsActionId;
-			public final Set<ButtonItem> Items = new HashSet<ButtonItem>();
+			public final HashSet<ButtonItem> Items = new HashSet<ButtonItem>();
 			public ButtonItem PressedItem;
 
 			ButtonGroup(int unselectAllButtonsActionId) {
@@ -456,7 +456,7 @@ public abstract class ZLApplication {
 		}
 
 		public void addItem(int actionId, String key) {
-			myItems.add(new Menubar.PlainItem(myResource.getResource(key).value(), actionId));
+			myItems.add(new Menubar.PlainItem(myResource.getResource(key).getValue(), actionId));
 		}
 		
 		public void addSeparator() {
@@ -469,7 +469,7 @@ public abstract class ZLApplication {
 			return submenu;
 		}
 
-		List<Item> getItems() {
+		List<Item> items() {
 			return Collections.unmodifiableList(myItems);
 		}
 	}
@@ -500,7 +500,7 @@ public abstract class ZLApplication {
 			}
 
 			public String getMenuName() {
-				return getResource().value();
+				return getResource().getValue();
 			}
 		};
 		
@@ -515,7 +515,7 @@ public abstract class ZLApplication {
 	//MenuVisitor
 	static public abstract class MenuVisitor {
 		public final void processMenu(Menu menu) {
-			for (Menu.Item item : menu.getItems()) {
+			for (Menu.Item item : menu.items()) {
 				if (item instanceof Menubar.PlainItem) {
 					processItem((Menubar.PlainItem)item);
 				} else if (item instanceof Menubar.Submenu) {

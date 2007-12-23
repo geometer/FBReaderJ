@@ -49,11 +49,10 @@ final class ZLTreeResource extends ZLResource {
 		return myHasValue;
 	}
 	
-	public String value() {
+	public String getValue() {
 		return myHasValue ? myValue : ZLMissingResource.ourValue;
 	}
 
-	@Override
 	public ZLResource getResource(String key) {
 		if (myChildren != null) {
 			ZLResource child = myChildren.get(key);
@@ -74,14 +73,12 @@ final class ZLTreeResource extends ZLResource {
 			read(string);
 		}
 
-		@Override
 		public void endElementHandler(String tag) {
 			if (!myStack.isEmpty() && (NODE.equals(tag))) {
 				myStack.remove(myStack.size() - 1);
 			}
 		}
 
-		@Override
 		public void startElementHandler(String tag, Map<String, String> attributes) {
 			if (!myStack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.get("name");

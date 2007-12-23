@@ -70,9 +70,6 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		}	
 
 		public ZLTextParagraph.Entry next() {
-			if (myCounter == myLength) {
-				throw new NoSuchElementException();
-			}
 			ZLTextParagraph.Entry entry = null;
 			if (myDataOffset == DATA_BLOCK_SIZE) {
 				++myDataIndex;
@@ -126,10 +123,6 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 			}
 			++myCounter;
 			return entry;
-		}
-
-		public void remove() {
-			throw new UnsupportedOperationException();
 		}
 	}
 

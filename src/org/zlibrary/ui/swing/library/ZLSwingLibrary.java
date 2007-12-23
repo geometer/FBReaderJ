@@ -50,7 +50,8 @@ public class ZLSwingLibrary extends ZLibrary {
 			shutdown();
 		}
 
-		ZLSwingApplicationWindow mainWindow = new ZLSwingApplicationWindow(application);
+		ZLSwingApplicationWindow mainWindow =
+			((ZLSwingDialogManager)ZLSwingDialogManager.getInstance()).createApplicationWindow(application);
 		application.initWindow();
 		mainWindow.run();
 		

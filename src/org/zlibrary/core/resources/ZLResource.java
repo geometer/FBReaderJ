@@ -20,8 +20,6 @@ abstract public class ZLResource {
 	}
 	
 	abstract public boolean hasValue();
-	
-	abstract public String value();
-
+	abstract public String getValue();
 	abstract public ZLResource getResource(String key);
 }

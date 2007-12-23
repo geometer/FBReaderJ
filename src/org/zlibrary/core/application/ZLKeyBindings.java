@@ -16,7 +16,7 @@ public final class ZLKeyBindings {
 	private static final String BINDED_ACTION = "Action";
 
 	private final String myName;
-	private final Map<String, Integer> myBindingsMap = new TreeMap<String, Integer>();
+	private final TreeMap<String,Integer> myBindingsMap = new TreeMap<String, Integer>();
 	private	boolean myIsChanged;
 
 	public ZLKeyBindings(String name) {

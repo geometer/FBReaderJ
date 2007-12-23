@@ -89,7 +89,6 @@ public class ZLTextStyleCollection {
 			myCollection = collection;
 		}
 
-		@Override
 		public void startElementHandler(String tag, Map<String,String> attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";

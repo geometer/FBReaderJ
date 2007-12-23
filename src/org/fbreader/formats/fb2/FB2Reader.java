@@ -57,7 +57,6 @@ public class FB2Reader extends ZLXMLReader {
 	
 //	private BookModel myBookModel = new BookModel();
 	
-	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (length == 0) {
 			return;
@@ -69,7 +68,6 @@ public class FB2Reader extends ZLXMLReader {
 		}		
 	}
 
-	@Override
 	public void characterDataHandlerFinal(char[] ch, int start, int length) {
 		if (length == 0) {
 			return;
@@ -81,7 +79,6 @@ public class FB2Reader extends ZLXMLReader {
 		}		
 	}
 
-	@Override
 	public void endElementHandler(String tagName) {
 		FB2Tag tag;
 		tag = getTag(tagName);
@@ -188,7 +185,6 @@ public class FB2Reader extends ZLXMLReader {
 		}		
 	}
 
-	@Override
 	public void startElementHandler(String tagName, Map<String, String> attributes) {
 		String id = attributes.get("id");
 		if (id != null) {
@@ -368,7 +364,6 @@ public class FB2Reader extends ZLXMLReader {
 		}
 	}
 	
-	@Override
 	public void endDocumentHandler() {
 		myTagsByName.clear();
 	}
