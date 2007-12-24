@@ -20,4 +20,9 @@ public abstract class ZLTextView extends ZLView {
 	public abstract void scroll(int numberOfParagraphs);
 
 	public abstract void gotoParagraph(int index);
+
+	public abstract int getLeftMargin();
+	public abstract int getRightMargin();
+	public abstract int getTopMargin();
+	public abstract int getBottomMargin();
 }

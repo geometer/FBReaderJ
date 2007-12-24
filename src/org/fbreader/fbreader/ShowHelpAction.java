@@ -6,6 +6,7 @@ class ShowHelpAction extends FBAction {
 	}
 		
 	public void run() {
-		System.out.println("hello");
+		fbreader().openBook(FBReader.HELP_FILE_NAME);
+		fbreader().refreshWindow();
 	}
 }

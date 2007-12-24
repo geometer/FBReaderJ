@@ -63,7 +63,7 @@ class ZLSwingSelectionDialog {
 		buttonPanel.add(button2);
 		myJDialog.add(buttonPanel, BorderLayout.SOUTH);
 		myJDialog.pack();
-		myJDialog.setSize(400, 400);
+		myJDialog.setSize(600, 400);
 		myJDialog.setLocationRelativeTo(myJDialog.getParent());
 		myJDialog.show();
 	}

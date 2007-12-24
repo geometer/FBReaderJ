@@ -2,11 +2,10 @@ package org.fbreader.fbreader;
 
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
-import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
 import org.fbreader.bookmodel.ContentsModel;
 
-class ContentsView extends ZLTextViewImpl {
+class ContentsView extends FBView {
 	ContentsView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
 	}

@@ -12,18 +12,7 @@ import org.zlibrary.text.model.*;
 import org.zlibrary.text.view.*;
 import org.zlibrary.text.view.style.*;
 
-public class ZLTextViewImpl extends ZLTextView {
-	private final static String OPTIONS = "Options";
-	// TODO: move these options to the FBReader code
-	public final ZLIntegerRangeOption LeftMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "LeftMargin", 0, 1000, 4);
-	public final ZLIntegerRangeOption RightMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "RightMargin", 0, 1000, 4);
-	public final ZLIntegerRangeOption TopMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "TopMargin", 0, 1000, 0);
-	public final ZLIntegerRangeOption BottomMarginOption =
-		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "BottomMargin", 0, 1000, 4);
-
+public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
 
 	private ZLTextStyle myTextStyle;
@@ -118,7 +107,7 @@ public class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private int getTextAreaHeight() {
-		return getContext().getHeight() - topMargin() - bottomMargin();
+		return getContext().getHeight() - getTopMargin() - getBottomMargin();
 	}
 
 	private int getWordWidth(ZLTextWord word) {
@@ -155,13 +144,13 @@ public class ZLTextViewImpl extends ZLTextView {
 
 		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
 		labels.add(0);
-		context.moveYTo(topMargin());
+		context.moveYTo(getTopMargin());
 		for (ZLTextLineInfo info : myLineInfos) {
 			prepareTextLine(info);
 			labels.add(myTextElementMap.size());
 		}
 
-		context.moveYTo(topMargin());
+		context.moveYTo(getTopMargin());
 		int index = 0;
 		for (ZLTextLineInfo info : myLineInfos) {
 			drawTextLine(info, labels.get(index), labels.get(index + 1));
@@ -272,11 +261,11 @@ public class ZLTextViewImpl extends ZLTextView {
 		ListIterator<ZLTextElementArea> toIt = myTextElementMap.listIterator(to);
 		
 		context.moveY(info.Height);
-		int maxY = topMargin() + getTextAreaHeight();
+		int maxY = getTopMargin() + getTextAreaHeight();
 		if (context.getY() > maxY) {
 			context.moveYTo(maxY);
 		}
-		context.moveXTo(leftMargin());	
+		context.moveXTo(getLeftMargin());	
 		if (info.NodeInfo != null) {
 			drawTreeLines(info.NodeInfo, info.Height, info.Descent + info.VSpaceAfter);
 		}
@@ -429,7 +418,7 @@ public class ZLTextViewImpl extends ZLTextView {
 		int newWidth = info.Width;
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
-		int maxWidth = context.getWidth() - leftMargin() - rightMargin() - myTextStyle.rightIndent();
+		int maxWidth = context.getWidth() - getLeftMargin() - getRightMargin() - myTextStyle.rightIndent();
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;
@@ -520,16 +509,16 @@ public class ZLTextViewImpl extends ZLTextView {
 		final ZLPaintContext context = getContext();
 
 		setTextStyle(info.StartStyle);
-		final int y = Math.min(context.getY() + info.Height, topMargin() + getTextAreaHeight());
+		final int y = Math.min(context.getY() + info.Height, getTopMargin() + getTextAreaHeight());
 		int spaceCounter = info.SpaceCounter;
 		int fullCorrection = 0;
 		final boolean endOfParagraph = info.End.isEndOfParagraph();
 		boolean wordOccurred = false;
 		boolean changeStyle = true;
 
-		context.moveXTo(leftMargin() + info.LeftIndent);
+		context.moveXTo(getLeftMargin() + info.LeftIndent);
 		//System.out.println(context.getWidth() + " " + info.Width);
-		final int maxWidth = context.getWidth() - leftMargin() - rightMargin();
+		final int maxWidth = context.getWidth() - getLeftMargin() - getRightMargin();
 		switch (myTextStyle.alignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT: {
 				context.moveX(maxWidth - myTextStyle.rightIndent() - info.Width);
@@ -597,22 +586,6 @@ public class ZLTextViewImpl extends ZLTextView {
 	public void gotoParagraph(int index) {
 		// TODO: implement
 		myStartParagraphNumberOption = index;
-	}
-
-	public int leftMargin() {
-		return LeftMarginOption.getValue();
-	}
-
-	public int rightMargin() {
-		return LeftMarginOption.getValue();
-	}
-
-	public int topMargin() {
-		return LeftMarginOption.getValue();
-	}
-
-	public int bottomMargin() {
-		return LeftMarginOption.getValue();
 	}
 
 	protected int paragraphIndexByCoordinate(int y) {

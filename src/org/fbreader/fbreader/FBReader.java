@@ -26,6 +26,8 @@ public final class FBReader extends ZLApplication {
 		RECENT_BOOKS,
 	};
 
+	final static String HELP_FILE_NAME = "data/help/MiniHelp.ru.fb2";
+
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
 	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
@@ -148,8 +150,7 @@ public final class FBReader extends ZLApplication {
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
 
-		final String helpFileName = "data/help/MiniHelp.ru.fb2";
-		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", helpFileName);
+		ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", HELP_FILE_NAME);
 		//ZLStringOption bookNameOption = new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
 		if (args.length > 0) {
 			try {
@@ -157,16 +158,20 @@ public final class FBReader extends ZLApplication {
 			} catch (IOException e) {
 			}
 		}
-		BookModel model = new BookModel(bookNameOption.getValue());
+		if (!openBook(bookNameOption.getValue())) {
+			openBook(HELP_FILE_NAME);
+		}
+	}
+
+	boolean openBook(String fileName) {
+		BookModel model = new BookModel(fileName);
 		if (!new FB2Reader().readBook(model)) {
-			model = new BookModel(helpFileName);
-			new FB2Reader().readBook(model);
+			return false;
 		}
-		if (model != null) {
-			myBookTextView.setModel(model.getBookTextModel(), model.getFileName());
-			myContentsView.setModel(model.getContentsModel());
-		}
+		myBookTextView.setModel(model.getBookTextModel(), model.getFileName());
+		myContentsView.setModel(model.getContentsModel());
 		setMode(ViewMode.BOOK_TEXT);
+		return true;
 	}
 
 	private final void addToolbarButton(int code, String name) {

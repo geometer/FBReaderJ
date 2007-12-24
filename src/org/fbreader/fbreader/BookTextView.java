@@ -3,9 +3,8 @@ package org.fbreader.fbreader;
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
-class BookTextView extends ZLTextViewImpl {
+class BookTextView extends FBView {
 	private ZLIntegerOption myParagraphPositionOption;
 	BookTextView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
