@@ -124,13 +124,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public void paint() {
 		final ZLPaintContext context = getContext();
 		context.clear(ZLTextStyleCollection.getInstance().getBaseStyle().BackgroundColorOption.getValue());
+		myTextElementMap.clear();
+		myTreeNodeMap.clear();
 
-		if (myModel == null) {
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return;
 		}
 
-		myTextElementMap.clear();
-		myTreeNodeMap.clear();
 		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
 			int pn = myStartParagraphNumberOption;
@@ -257,9 +257,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.RealStart.getParagraphCursor();
 	
-		ListIterator<ZLTextElementArea> fromIt = myTextElementMap.listIterator(from);
-		ListIterator<ZLTextElementArea> toIt = myTextElementMap.listIterator(to);
-		
 		context.moveY(info.Height);
 		int maxY = getTopMargin() + getTextAreaHeight();
 		if (context.getY() > maxY) {
@@ -270,13 +267,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			drawTreeLines(info.NodeInfo, info.Height, info.Descent + info.VSpaceAfter);
 		}
 
-		ListIterator<ZLTextElementArea> it = myTextElementMap.listIterator(from);
+		int index = from;
 		final ZLTextWordCursor end = info.End;
 		for (myIteratorCursor.setCursor(info.RealStart); !myIteratorCursor.equalWordNumber(end); myIteratorCursor.nextWord()) {
 			final ZLTextElement element = myIteratorCursor.getElement();//paragraph.getElement(myIteratorCursor.getWordNumber());
 			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
 				//System.out.println("Word = " + ((ZLTextWord) element).getWord());
-				ZLTextElementArea area = it.next();
+				ZLTextElementArea area = myTextElementMap.get(index++);
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
 				}
@@ -291,8 +288,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				}
 			}
 		}
-		if (!(it.nextIndex() == toIt.nextIndex())) {
-			ZLTextElementArea area = it.next();
+		if (index != to) {
+			ZLTextElementArea area = myTextElementMap.get(index++);
 			if (area.ChangeStyle) {
 				setTextStyle(area.Style);
 			}
