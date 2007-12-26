@@ -1,6 +1,6 @@
 package org.zlibrary.core.options;
 
-public final class ZLBooleanOption extends ZLSimpleOption {
+public final class ZLBooleanOption extends ZLOption implements ZLSimpleOption {
 	private final boolean myDefaultValue;
 	private boolean myValue;
 

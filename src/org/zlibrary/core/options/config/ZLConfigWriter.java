@@ -49,22 +49,20 @@ final class ZLConfigWriter implements ZLWriter {
 	}
 
 	public void write() {
-		Set<String> usedCategories = myConfig.applyDelta();
+		final Set<String> usedCategories = myConfig.applyDelta();
 		// ключ - имя категории, значение - содержимое соответствующего файла
-		Map<String, StringBuffer> configFilesContent = new LinkedHashMap<String, StringBuffer>();
-		StringBuffer sb;
-		Map<String, Boolean> currentGroupOpenedIn;
+		final HashMap<String, StringBuffer> configFilesContent = new HashMap<String, StringBuffer>();
 
 		for (String groupName : myConfig.groupNames()) {
 
 			// ключ - имена категорий, о которых мы уже знаем, что она там есть
 			// значение - записали ли мы уже это в файле
-			currentGroupOpenedIn = new HashMap<String, Boolean>();
+			final HashMap<String,Boolean> currentGroupOpenedIn = new HashMap<String, Boolean>();
 
 			ZLGroup group = myConfig.getGroup(groupName);
 			for (String optionName : group.optionNames()) {
 				ZLOptionInfo option = group.getOption(optionName);
-				sb = configFilesContent.get(option.getCategory());
+				StringBuffer sb = configFilesContent.get(option.getCategory());
 
 				if (currentGroupOpenedIn.get(option.getCategory()) == null) {
 					currentGroupOpenedIn.put(option.getCategory(), false);

@@ -33,10 +33,7 @@ public class FB2Reader extends ZLXMLReader {
 	private static FB2Tag getTag(String s) {
 		FB2Tag tag = myTagsByName.get(s);
 		if ((tag == null) && !myTagsByName.containsKey(s)) {
-			if (s.contains("-")) {
-				s = s.replace('-', '_');
-			}
-			s = s.toUpperCase();
+			s = s.replace('-', '_').toUpperCase();
 			try {
 				tag = FB2Tag.valueOf(s);
 			} catch (IllegalArgumentException e) {
@@ -336,7 +333,7 @@ public class FB2Reader extends ZLXMLReader {
 					String vOffset = attributes.get("voffset");
 					short offset = 0;
 					try {
-						offset = Short.valueOf(vOffset);
+						offset = Short.parseShort(vOffset);
 					} catch (NumberFormatException e) {
 					}
 					imgRef = imgRef.substring(1);

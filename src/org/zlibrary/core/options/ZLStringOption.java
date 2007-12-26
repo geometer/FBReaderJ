@@ -5,7 +5,7 @@ package org.zlibrary.core.options;
  * 
  * @author Администратор
  */
-public final class ZLStringOption extends ZLSimpleOption {
+public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
 	private final String myDefaultValue;
 	private String myValue;
 

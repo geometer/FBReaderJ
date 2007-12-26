@@ -72,12 +72,16 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	private void writeTextModelDumpToFile(String inputFile, String outputFile) {
-		ZLTextModel model = (new FB2Reader()).readBook(inputFile).getBookModel();
+		BookModel bookModel = new BookModel(inputFile);
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getBookTextModel();
 		writeDumpToFile(model, outputFile);
 	}
 	
 	private void writeTreeModelDumpToFile(String inputFile, String outputFile) {
-		ZLTextModel model = (new FB2Reader()).readBook(inputFile).getContentsModel();
+		BookModel bookModel = new BookModel(inputFile);
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getContentsModel();
 		writeDumpToFile(model, outputFile);
 	}
 	
@@ -85,14 +89,14 @@ public class TestFB2Reader extends TestCase {
 		String test_result = myDirectory + test + "_act.txt";
 		writeTreeModelDumpToFile(myDirectory + test + ".fb2", test_result);
 		assertTrue("File " + test, compareFiles(myDirectory + test + "_exp.txt", test_result));
-		(new File(test_result)).delete();
+		new File(test_result).delete();
 	}
 	
 	private void doTest(String test) {
 		String test_result = myDirectory + test + "_act.txt";
 		writeTextModelDumpToFile(myDirectory + test + ".fb2", test_result);
 		assertTrue(compareFiles(myDirectory + test + "_exp.txt", test_result));
-		(new File(test_result)).delete();
+		new File(test_result).delete();
 	}
 	
 	public void testOneParagraph() {
@@ -148,8 +152,9 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testEmptyLineParagraphKind() {
-		FB2Reader reader = new FB2Reader();
-		ZLTextModel model = reader.readBook(myDirectory + "empty_line.fb2").getBookModel();
+		BookModel bookModel = new BookModel(myDirectory + "empty_line.fb2");
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(0).getKind(),
 				ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
 	}
@@ -163,18 +168,20 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testNotesSimple() {
-		BookModel model = (new FB2Reader()).readBook(myDirectory + "simple_notes.fb2");
+		BookModel model = new BookModel(myDirectory + "simple_notes.fb2");
+		new FB2Reader().readBook(model);
 		assertTrue(model.getFootnotes().containsKey("1"));
 		assertNotNull(model.getFootnotes().get("1"));
 	}
 	
 	public void testOneNote() {
-		FB2Reader reader = new FB2Reader();
-		ZLTextModel model = reader.readBook(myDirectory + "one_note.fb2").getFootnoteModel("1");
+		BookModel bookModel = new BookModel(myDirectory + "one_note.fb2");
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getFootnoteModel("1");
 		String output = myDirectory + "one_note_act.txt";
 		writeDumpToFile(model, output);
 		assertTrue(compareFiles(myDirectory + "one_note_exp.txt", output));
-		(new File(output)).delete();
+		new File(output).delete();
 	}
 	
 	public void testStanza() {
@@ -182,8 +189,9 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testStanzaParagraphKinds() {
-		FB2Reader reader = new FB2Reader();
-		ZLTextModel model = reader.readBook(myDirectory + "stanza.fb2").getBookModel();
+		BookModel bookModel = new BookModel(myDirectory + "stanza.fb2");
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(0).getKind(), ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
 		assertEquals(model.getParagraph(2).getKind(), ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
 		assertEquals(model.getParagraph(1).getKind(), ZLTextParagraph.Kind.TEXT_PARAGRAPH);
@@ -194,8 +202,9 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testAnnotationBeforeBodyParagraph() {
-		FB2Reader reader = new FB2Reader();
-		ZLTextModel model = reader.readBook(myDirectory + "annotation_before.fb2").getBookModel();
+		BookModel bookModel = new BookModel(myDirectory + "annotation_before.fb2");
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(1).getKind(),
 				ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
@@ -209,8 +218,9 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testEndOfSectionParagraph() {		
-		FB2Reader reader = new FB2Reader();
-		ZLTextModel model = reader.readBook(myDirectory + "section.fb2").getBookModel();
+		BookModel bookModel = new BookModel(myDirectory + "section.fb2");
+		new FB2Reader().readBook(bookModel);
+		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(1).getKind(),
 				ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
@@ -232,7 +242,8 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testFootnote1() {
-		BookModel model = (new FB2Reader()).readBook(myDirectory + "footnote1.fb2");
+		BookModel model = new BookModel(myDirectory + "footnote1.fb2");
+		new FB2Reader().readBook(model);
 		ZLTextParagraph paragraph = model.getParagraphByLink("note1");
 		ZLTextParagraph.EntryIterator it = paragraph.iterator();
 		it.next();
@@ -250,9 +261,10 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testTreeParagraphRef() {
-		FB2Reader reader = new FB2Reader();
-		ContentsModel model = reader.readBook(myDirectory + "tree1.fb2").getContentsModel();
-		assertTrue(model.getReference((ZLTextTreeParagraph) model.getParagraph(0)) == 0);
+		BookModel bookModel = new BookModel(myDirectory + "tree1.fb2");
+		new FB2Reader().readBook(bookModel);
+		ContentsModel model = bookModel.getContentsModel();
+		assertTrue(model.getReference((ZLTextTreeParagraph)model.getParagraph(0)) == 0);
 	}
 	
 	public void testTreeParagraphTitle() {
@@ -285,11 +297,11 @@ public class TestFB2Reader extends TestCase {
 */	
 	
 	public void testImage() {
-		FB2Reader reader = new FB2Reader();
-		BookModel model = reader.readBook(myDirectory + "image.fb2");
+		BookModel model = new BookModel(myDirectory + "image.fb2");
+		new FB2Reader().readBook(model);
 		byte [] image = (model.getImageMap().get("cover.jpg")).byteData();
 		try {
-			BufferedImage img = ImageIO.read (new ByteArrayInputStream(image));
+			BufferedImage img = ImageIO.read(new ByteArrayInputStream(image));
 			ImageIO.write(img, "jpg", new File(myDirectory + "img.jpg"));
 		} catch (IOException e) {
 			fail();
@@ -301,9 +313,9 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testImageModel() {
-		FB2Reader reader = new FB2Reader();
-		BookModel bModel = reader.readBook(myDirectory + "image.fb2");
-		ZLTextModel model = bModel.getBookModel();
+		BookModel bModel = new BookModel(myDirectory + "image.fb2");
+		new FB2Reader().readBook(bModel);
+		ZLTextModel model = bModel.getBookTextModel();
 		ZLTextParagraph paragraph = model.getParagraph(0);
 		ZLTextParagraph.EntryIterator it = paragraph.iterator();
 		it.next();
@@ -314,8 +326,8 @@ public class TestFB2Reader extends TestCase {
 	}
 	
 	public void testImageSize() {
-		FB2Reader reader = new FB2Reader();
-		BookModel model = reader.readBook(myDirectory + "image.fb2");
+		BookModel model = new BookModel(myDirectory + "image.fb2");
+		new FB2Reader().readBook(model);
 		ZLImage image = model.getImageMap().get("cover.jpg");
 		ZLSwingPaintContext paint = new ZLSwingPaintContext();
 		assertTrue(paint.imageHeight(image) == 277);

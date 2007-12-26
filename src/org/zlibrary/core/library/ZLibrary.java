@@ -10,7 +10,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLibrary {
-	private final Map<String,String> myProperties = new TreeMap<String,String>();
+	private final TreeMap<String,String> myProperties = new TreeMap<String,String>();
 
 	public static ZLibrary getInstance() {
 		return ourImplementation;
@@ -26,8 +26,7 @@ public abstract class ZLibrary {
 		return myProperties.get("applicationName");
 	}
 
-	@SuppressWarnings("unchecked")
-	protected final Class<ZLApplication> getApplicationClass() {
+	protected final Class getApplicationClass() {
 		try {
 			Class clazz = Class.forName(myProperties.get("applicationClass"));
 			if ((clazz != null) && ZLApplication.class.isAssignableFrom(clazz)) {

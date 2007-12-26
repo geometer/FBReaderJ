@@ -44,7 +44,7 @@ public class ZLSwingLibrary extends ZLibrary {
 
 		ZLApplication application = null;
 		try {
-			application = getApplicationClass().getConstructor(String[].class).newInstance(new Object[] { args });
+			application = (ZLApplication)getApplicationClass().getConstructor(String[].class).newInstance(new Object[] { args });
 		} catch (Exception e) {
 			e.printStackTrace();
 			shutdown();

@@ -1,14 +1,15 @@
 package org.zlibrary.core.application;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.zlibrary.core.xml.ZLXMLReader;
 
 class ZLKeyBindingsReader extends ZLXMLReader {
-	private Map<String,Integer> myKeymap;
+	private TreeMap<String,Integer> myKeymap;
 	private final static String myKeymapFileName = "data/default/keymap.xml";
 	
-	public ZLKeyBindingsReader(Map<String,Integer> keymap) {
+	public ZLKeyBindingsReader(TreeMap<String,Integer> keymap) {
 		myKeymap = keymap; 
 	}
 		

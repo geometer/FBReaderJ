@@ -18,7 +18,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 		
-	private final List<ZLTextLineInfo> myLineInfos = new ArrayList<ZLTextLineInfo>();
+	private final ArrayList<ZLTextLineInfo> myLineInfos = new ArrayList<ZLTextLineInfo>();
 	private final ArrayList<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea>();
 	private final ArrayList<ZLTextTreeNodeArea> myTreeNodeMap = new ArrayList<ZLTextTreeNodeArea>();
 	private final ZLTextWordCursor myIteratorCursor = new ZLTextWordCursor();
@@ -142,7 +142,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			buildInfos(start);
 		}
 
-		List<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
+		ArrayList<Integer> labels = new ArrayList<Integer>(myLineInfos.size() + 1);
 		labels.add(0);
 		context.moveYTo(getTopMargin());
 		for (ZLTextLineInfo info : myLineInfos) {

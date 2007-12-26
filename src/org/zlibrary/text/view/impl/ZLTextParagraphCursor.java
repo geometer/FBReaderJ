@@ -10,10 +10,10 @@ import java.util.*;
 abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
 		protected ZLTextParagraph myParagraph;
-		protected List <ZLTextElement> myElements;
+		protected ArrayList<ZLTextElement> myElements;
 		//protected int myOffset;
 
-		protected Processor(ZLTextParagraph paragraph, int index, List <ZLTextElement> elements) {
+		protected Processor(ZLTextParagraph paragraph, int index, ArrayList<ZLTextElement> elements) {
 			myParagraph = paragraph;
 			myElements = elements;
 			//myOffset = 0;
@@ -60,7 +60,7 @@ abstract class ZLTextParagraphCursor {
 	}
 
 	private static final class StandardProcessor extends Processor {
-		StandardProcessor(ZLTextParagraph paragraph, int index, List <ZLTextElement> elements) {
+		StandardProcessor(ZLTextParagraph paragraph, int index, ArrayList<ZLTextElement> elements) {
 			super(paragraph, index, elements);
 		}		
 	
@@ -99,12 +99,11 @@ abstract class ZLTextParagraphCursor {
 
 	protected final ZLTextModel myModel;
 	protected int myIndex;
-	protected List <ZLTextElement> myElements;
+	protected final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
 	protected ZLTextParagraphCursor(ZLTextModel model, int index) {
 		myModel = model;
 		myIndex = Math.min(index, myModel.getParagraphsNumber() - 1);
-		myElements = new ArrayList <ZLTextElement> ();
 		fill();
 	}
 	

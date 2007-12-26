@@ -70,7 +70,7 @@ public class BookModel {
 		return null;
 	}
 
-	Map<String,ZLImage> getImageMap() {
+	public Map<String,ZLImage> getImageMap() {
 		return myImageMap;
 	}
 

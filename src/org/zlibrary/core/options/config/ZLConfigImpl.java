@@ -77,7 +77,7 @@ final class ZLConfigImpl implements ZLConfig {
 	}
 
 	protected Set<String> applyDelta() {
-		Set<String> usedCategories = new HashSet<String>();
+		HashSet<String> usedCategories = new HashSet<String>();
 		for (String deletedGroupName : myDeltaConfig.getDeletedGroups()) {
 			ZLGroup group = myMainConfig.getGroup(deletedGroupName);
 			if (group!= null) {

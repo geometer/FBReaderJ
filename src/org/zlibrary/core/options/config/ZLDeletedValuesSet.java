@@ -2,21 +2,20 @@ package org.zlibrary.core.options.config;
 
 import java.util.*;
 
-/*package*/ final class ZLDeletedValuesSet {
+final class ZLDeletedValuesSet {
 	
-	private final Set<ZLOptionID> myData = 
-		new LinkedHashSet<ZLOptionID>();
+	private final HashSet<ZLOptionID> myData = new LinkedHashSet<ZLOptionID>();
 
 	public void add(String group, String name) {
 		myData.add(new ZLOptionID(group, name));
 	}
 
 	public Set<String> getGroups() {
-		Set<String> temp = new HashSet<String>();
+		HashSet<String> temp = new HashSet<String>();
 		for (ZLOptionID option : myData) {
 			temp.add(option.getGroup());
 		}
-		return Collections.unmodifiableSet(temp);
+		return temp;
 	}
 	
 	public boolean contains(String group, String name) {

@@ -60,6 +60,10 @@ final class ZLOwnXMLParser {
 		}
 	}
 
+	private static boolean isWhitespace(char ch) {
+		return (ch == ' ') || (ch <= 0x000D);
+	}
+
 	private static final TreeMap<ComparableString,String> ourStrings = new TreeMap<ComparableString,String>();
 	private static final ComparableString ourPattern = new ComparableString();
 
@@ -179,7 +183,7 @@ final class ZLOwnXMLParser {
 						break;
 					case START_TAG:
 						while (true) {
-							if (Character.isWhitespace(c)) {
+							if (isWhitespace(c)) {
 								state = WS_AFTER_START_TAG_NAME;
 								appendToName(tagName, buffer, startPosition, i);
 								break;
@@ -214,7 +218,7 @@ final class ZLOwnXMLParser {
 						} else if (c == '/') {
 							state = SLASH;
 							processFullTag(xmlReader, tagName, attributes);
-						} else if (!Character.isWhitespace(c)) {
+						} else if (!isWhitespace(c)) {
 							state = ATTRIBUTE_NAME;
 							startPosition = i;
 						}
@@ -229,7 +233,7 @@ final class ZLOwnXMLParser {
 								state = ENTITY_REF;
 								startPosition = i + 1;
 								break;
-							} else if (Character.isWhitespace(c)) {
+							} else if (isWhitespace(c)) {
 								state = WAIT_EQUALS;
 								break;
 							} else if (++i == count) {
@@ -327,7 +331,7 @@ final class ZLOwnXMLParser {
 								state = ENTITY_REF;
 								startPosition = i + 1;
 								break;
-							} else if (Character.isWhitespace(c)) {
+							} else if (isWhitespace(c)) {
 								appendToName(tagName, buffer, startPosition, i);
 								state = WS_AFTER_END_TAG_NAME;
 								break;

@@ -161,8 +161,9 @@ public final class FBReader extends ZLApplication {
 			}
 		}
 		if (!openBook(fileName)) {
-			openBook(null);
+			openBook(HELP_FILE_NAME);
 		}
+		refreshWindow();
 	}
 
 	boolean openBook(String fileName) {

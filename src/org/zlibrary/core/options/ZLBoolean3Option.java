@@ -9,7 +9,7 @@ import org.zlibrary.core.util.ZLBoolean3;
  * @author Администратор
  * 
  */
-public final class ZLBoolean3Option extends ZLSimpleOption {
+public final class ZLBoolean3Option extends ZLOption implements ZLSimpleOption {
 
 	private ZLBoolean3 myValue;
 
