@@ -2,7 +2,7 @@ package org.zlibrary.text.view.impl;
 
 //import java.util.*;
 
-class ZLTextWordCursor {
+final class ZLTextWordCursor {
 	private ZLTextParagraphCursor myParagraphCursor;
 	private int myWordNumber;
 	private int myCharNumber;
