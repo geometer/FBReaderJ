@@ -86,15 +86,9 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 			switch (myType) {
 				case ZLTextParagraph.Entry.TEXT:
 					myTextLength = ((int)data[myDataOffset++] << 16) + (int)data[myDataOffset++];
-					if (myDataOffset + myTextLength <= DATA_BLOCK_SIZE) {
-						myTextData = data;
-						myTextOffset = myDataOffset;
-						myDataOffset += myTextLength;
-					} else {
-						myTextData = myData.get(++myDataIndex);
-						myTextOffset = 0;
-						myDataOffset = myTextLength;
-					}
+					myTextData = data;
+					myTextOffset = myDataOffset;
+					myDataOffset += myTextLength;
 					break;
 				case ZLTextParagraph.Entry.CONTROL:
 				{
@@ -169,17 +163,17 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}
 
 	public void addText(char[] text, int offset, int length) {
-		if (length > DATA_BLOCK_SIZE) {
-			length = DATA_BLOCK_SIZE;
+		if (length > DATA_BLOCK_SIZE - 3) {
+			length = DATA_BLOCK_SIZE - 3;
 		}
-		char[] block = getDataBlock(3);
+		char[] block = getDataBlock(3 + length);
 		increaseLastParagraphSize();
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
-		block[myBlockOffset++] = (char)(length >> 16);
-		block[myBlockOffset++] = (char)length;
-		block = getDataBlock(length);
-		System.arraycopy(text, offset, block, myBlockOffset, length);
-		myBlockOffset += length;
+		int blockOffset = myBlockOffset;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
+		block[blockOffset++] = (char)(length >> 16);
+		block[blockOffset++] = (char)length;
+		System.arraycopy(text, offset, block, blockOffset, length);
+		myBlockOffset = blockOffset + length;
 	}
 	
 	public void addControl(ZLTextForcedControlEntry entry) {
