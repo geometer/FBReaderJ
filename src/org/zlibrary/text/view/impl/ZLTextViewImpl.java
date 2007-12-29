@@ -23,7 +23,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private final ArrayList<ZLTextTreeNodeArea> myTreeNodeMap = new ArrayList<ZLTextTreeNodeArea>();
 
 	// TO BE DELETED
-	private int myStartParagraphNumberOption;
+	private int myStartParagraphNumber;
 
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
@@ -132,9 +132,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 		int paragraphs = myModel.getParagraphsNumber();
 		if (paragraphs > 0) {
-			int pn = myStartParagraphNumberOption;
+			int pn = myStartParagraphNumber;
 			pn = Math.max(0, Math.min(pn, paragraphs - 2));
-			myStartParagraphNumberOption = pn;
+			myStartParagraphNumber = pn;
 			ZLTextParagraphCursor firstParagraph = ZLTextParagraphCursor.cursor(myModel, pn);
 			ZLTextWordCursor start = new ZLTextWordCursor();
 			start.setCursor(firstParagraph);
@@ -578,12 +578,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	// TO BE DELETED
 	public void scroll(int numberOfParagraphs) {
-		gotoParagraph(myStartParagraphNumberOption + numberOfParagraphs);
+		gotoParagraph(myStartParagraphNumber + numberOfParagraphs);
 	}
 
 	public void gotoParagraph(int index) {
 		// TODO: implement
-		myStartParagraphNumberOption = index;
+		myStartParagraphNumber = index;
 	}
 
 	protected int paragraphIndexByCoordinate(int y) {
