@@ -6,7 +6,7 @@ import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 
 final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainModel {
-	private ZLIntArray myParagraphInfos = new ZLIntArray();
+	private ZLIntArray myParagraphInfos = new ZLIntArray(1024);
 
 	public final int getParagraphsNumber() {
 		return myParagraphInfos.size();

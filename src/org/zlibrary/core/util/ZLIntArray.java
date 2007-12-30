@@ -3,8 +3,12 @@ package org.zlibrary.core.util;
 import java.util.ArrayList;
 
 public final class ZLIntArray {
-	private int[] myData = new int[1024];
+	private int[] myData;
 	private int mySize;
+
+	public ZLIntArray(int initialCapacity) {
+		myData = new int[initialCapacity];
+	}
 
 	public void add(int number) {
 		if (myData.length == mySize) {

@@ -10,8 +10,8 @@ import java.util.*;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList<ZLTextParagraph.Entry> myEntries = new ArrayList<ZLTextParagraph.Entry>();
-	private ZLIntArray myStartEntryIndices = new ZLIntArray();
-	private ZLIntArray myStartEntryOffsets = new ZLIntArray();
+	private ZLIntArray myStartEntryIndices = new ZLIntArray(1024);
+	private ZLIntArray myStartEntryOffsets = new ZLIntArray(1024);
 
 	private static final int DATA_BLOCK_SIZE = 65536;
 	private int myBlockOffset = 0;
