@@ -24,7 +24,7 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 	}
 
 	public ZLColor getColor() {
-		HyperlinkStyle hyperlinkStyle = myDecoration.getHyperlinkStyle();
+		byte hyperlinkStyle = myDecoration.getHyperlinkStyle();
 		if (hyperlinkStyle == HyperlinkStyle.NONE) {
 			return getBase().getColor();
 		}
@@ -37,18 +37,25 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 	}
 	
 	public boolean bold() {
-//		if (myDecoration != null && myDecoration.BoldOption != null) {
-		ZLBoolean3 b = myDecoration.BoldOption.getValue();	
-//			if (b != null) {
-		return (b == ZLBoolean3.B3_UNDEFINED) ? getBase().bold() : (b == ZLBoolean3.B3_TRUE);
-//			}
-//		}
-//		return false;
+		switch (myDecoration.BoldOption.getValue()) {
+			case ZLBoolean3.B3_TRUE:
+				return true;
+			case ZLBoolean3.B3_FALSE:
+				return false;
+			default:
+				return getBase().bold();
+		}
 	}
 
 	public boolean italic() {
-		ZLBoolean3 b = myDecoration.ItalicOption.getValue();
-		return (b == ZLBoolean3.B3_UNDEFINED) ? getBase().italic() : (b == ZLBoolean3.B3_TRUE);
+		switch (myDecoration.ItalicOption.getValue()) {
+			case ZLBoolean3.B3_TRUE:
+				return true;
+			case ZLBoolean3.B3_FALSE:
+				return false;
+			default:
+				return getBase().italic();
+		}
 	}
 
 	public int leftIndent() {

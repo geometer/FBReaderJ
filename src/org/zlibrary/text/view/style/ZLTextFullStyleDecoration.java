@@ -18,7 +18,7 @@ class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 
 	public final ZLDoubleOption LineSpaceOption;
 
-	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, double lineSpace, ZLBoolean3 allowHyphenations) {
+	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, double lineSpace, int allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
 		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
 		SpaceBeforeOption = new ZLIntegerRangeOption(category, STYLE, name + ":spaceBefore", -10, 100, spaceBefore);

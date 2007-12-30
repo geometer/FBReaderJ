@@ -79,8 +79,8 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	protected ZLAndroidViewWidget createViewWidget() {
 		// TODO: implement
-		ZLAndroidViewWidget viewWidget = new ZLAndroidViewWidget(
-			ZLAndroidViewWidget.Angle.getByDegrees(getApplication().AngleStateOption.getValue()));
+		ZLAndroidViewWidget viewWidget =
+			new ZLAndroidViewWidget(getApplication().AngleStateOption.getValue());
 		return viewWidget;
 	}
 

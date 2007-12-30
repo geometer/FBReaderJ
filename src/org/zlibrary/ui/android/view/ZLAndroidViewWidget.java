@@ -9,7 +9,7 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 	private final ZLAndroidWidget myWidget = 
 		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget();
 
-	public ZLAndroidViewWidget(Angle initialAngle) {
+	public ZLAndroidViewWidget(int initialAngle) {
 		super(initialAngle);
 		myWidget.setViewWidget(this);
 	}

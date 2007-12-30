@@ -7,8 +7,6 @@ import org.zlibrary.text.view.ZLTextStyle;
 
 public class ZLTextStyleDecoration {
 	static final String STYLE = "Style";
-	static final byte BOLD = 28;
-	static final byte LARGE_FONT_SIZE = 31;
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeDeltaOption;
@@ -18,9 +16,9 @@ public class ZLTextStyleDecoration {
 	public final ZLBoolean3Option AllowHyphenationsOption;
 
 	private final String myName;
-	private HyperlinkStyle myHyperlinkStyle;
+	private byte myHyperlinkStyle;
 
-	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, int verticalShift, ZLBoolean3 allowHyphenations) {
+	public ZLTextStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int verticalShift, int allowHyphenations) {
 		myName = name;
 		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
 		FontFamilyOption = new ZLStringOption(category, STYLE, name + ":fontFamily", "");
@@ -43,11 +41,11 @@ public class ZLTextStyleDecoration {
 		return myName;
 	}
 
-	public HyperlinkStyle getHyperlinkStyle() {
+	public byte getHyperlinkStyle() {
 		return myHyperlinkStyle;
 	}
 
-	public void setHyperlinkStyle(HyperlinkStyle hyperlinkStyle) {
+	public void setHyperlinkStyle(byte hyperlinkStyle) {
 		myHyperlinkStyle = hyperlinkStyle;
 	}
 }

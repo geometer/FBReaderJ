@@ -20,8 +20,8 @@ public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
 		myValue = myDefaultValue;
 	}
 
-	public ZLOptionType getType() {
-		return ZLOptionType.TYPE_STRING;
+	public int getType() {
+		return Type.STRING;
 	}
 
 	public String getValue() {

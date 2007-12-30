@@ -81,7 +81,7 @@ public class ZLTextStyleCollection {
 			return "true".equals(attributes.get(name));
 		}
 
-		private static ZLBoolean3 b3Value(Map<String,String> attributes, String name) {
+		private static int b3Value(Map<String,String> attributes, String name) {
 			return ZLBoolean3.getByString(attributes.get(name));
 		}
 			
@@ -103,11 +103,11 @@ public class ZLTextStyleCollection {
 					ZLTextStyleDecoration decoration;
 
 					int fontSizeDelta = intValue(attributes, "fontSizeDelta");
-					ZLBoolean3 bold = b3Value(attributes, "bold");
-					ZLBoolean3 italic = b3Value(attributes, "italic");
+					int bold = b3Value(attributes, "bold");
+					int italic = b3Value(attributes, "italic");
 					int verticalShift = intValue(attributes, "vShift");
-					ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
-					HyperlinkStyle hyperlinkStyle = HyperlinkStyle.NONE;
+					int allowHyphenations = b3Value(attributes, "allowHyphenations");
+					byte hyperlinkStyle = HyperlinkStyle.NONE;
 					String hyperlink = attributes.get("hyperlink");
 					if (hyperlink != null) {
 						if ("internal".equals(hyperlink)) {

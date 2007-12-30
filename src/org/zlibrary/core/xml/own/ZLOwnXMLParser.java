@@ -87,7 +87,7 @@ final class ZLOwnXMLParser {
 	private final InputStreamReader myStreamReader;
 	private final ZLXMLReader myXMLReader;
 
-	private final char[] myBuffer = new char[8192];
+	private final char[] myBuffer = new char[4096];
 
 	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream) throws IOException {
 		myXMLReader = xmlReader;

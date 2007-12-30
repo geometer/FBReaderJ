@@ -16,14 +16,14 @@ import org.fbreader.bookmodel.BookModel;
 import org.fbreader.formats.fb2.FB2Reader;
 
 public final class FBReader extends ZLApplication {
-	static enum ViewMode {
-		UNDEFINED,
-		BOOK_TEXT,
-		FOOTNOTE,
-		CONTENTS,
-		BOOKMARKS,
-		BOOK_COLLECTION,
-		RECENT_BOOKS,
+	static interface ViewMode {
+		int UNDEFINED = 0;
+		int BOOK_TEXT = 1 << 0;
+		int FOOTNOTE = 1 << 1;
+		int CONTENTS = 1 << 2;
+		int BOOKMARKS = 1 << 3;
+		int BOOK_COLLECTION = 1 << 4;
+		int RECENT_BOOKS = 1 << 5;
 	};
 
 	final static String HELP_FILE_NAME = "data/help/MiniHelp.ru.fb2";
@@ -36,8 +36,8 @@ public final class FBReader extends ZLApplication {
 	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
 	private final ZLKeyBindings myBindings270 = new ZLKeyBindings("Keys270");
 
-	private ViewMode myMode = ViewMode.UNDEFINED;
-	private ViewMode myPreviousMode = ViewMode.BOOK_TEXT;
+	private int myMode = ViewMode.UNDEFINED;
+	private int myPreviousMode = ViewMode.BOOK_TEXT;
 
 	private final BookTextView myBookTextView;
 	private final ContentsView myContentsView;
@@ -189,16 +189,16 @@ public final class FBReader extends ZLApplication {
 		return myBindings0;
 	}
 	
-	private ZLKeyBindings keyBindings(ZLViewWidget.Angle angle) {
+	private ZLKeyBindings keyBindings(int angle) {
 		switch (angle) {
-			case DEGREES0:
+			case ZLViewWidget.Angle.DEGREES0:
 			default:
 				return myBindings0;
-			case DEGREES90:
+			case ZLViewWidget.Angle.DEGREES90:
 				return myBindings90;
-			case DEGREES180:
+			case ZLViewWidget.Angle.DEGREES180:
 				return myBindings180;
-			case DEGREES270:
+			case ZLViewWidget.Angle.DEGREES270:
 				return myBindings270;
 		}
 	}
@@ -207,11 +207,11 @@ public final class FBReader extends ZLApplication {
 		return (ZLTextView)getCurrentView();
 	}
 
-	ViewMode getMode() {
+	int getMode() {
 		return myMode;
 	}
 
-	void setMode(ViewMode mode) {
+	void setMode(int mode) {
 		if (mode == myMode) {
 			return;
 		}
@@ -220,10 +220,10 @@ public final class FBReader extends ZLApplication {
 		myMode = mode;
 
 		switch (mode) {
-			case BOOK_TEXT:
+			case ViewMode.BOOK_TEXT:
 				setView(myBookTextView);
 				break;
-			case CONTENTS:
+			case ViewMode.CONTENTS:
 				setView(myContentsView);
 				break;
 			default:

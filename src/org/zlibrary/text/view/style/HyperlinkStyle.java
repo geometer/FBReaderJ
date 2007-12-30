@@ -1,7 +1,7 @@
 package org.zlibrary.text.view.style;
 
-enum HyperlinkStyle {
-	NONE,
-	INTERNAL,
-	EXTERNAL;
+interface HyperlinkStyle {
+	byte NONE = 0;
+	byte INTERNAL = 1;
+	byte EXTERNAL = 2;
 }

@@ -2,40 +2,16 @@ package org.zlibrary.core.view;
 
 abstract public class ZLViewWidget {
 	private ZLView myView;
-	private Angle myRotation;
+	private int myRotation;
 
-	public enum Angle {
-		DEGREES0(0),
-		DEGREES90(90),
-		DEGREES180(180),
-		DEGREES270(270);
-		
-		private Angle(int degrees) {
-			myDegrees = degrees;
-		}
-		
-		public int getDegrees() {
-			return myDegrees;
-		}
-		
-		static public Angle getByDegrees(int degrees) {
-			switch(degrees) {
-				default:
-				case 0:
-					return Angle.DEGREES0;
-				case 90:
-					return Angle.DEGREES90;
-				case 180:
-					return Angle.DEGREES180;
-				case 270:
-					return Angle.DEGREES270;
-			}
-		}
-
-		private final int myDegrees;
+	public interface Angle {
+		int DEGREES0 = 0;
+		int DEGREES90 = 90;
+		int DEGREES180 = 180;
+		int DEGREES270 = 270;
 	};
 
-	protected ZLViewWidget(Angle initialAngle) {
+	protected ZLViewWidget(int initialAngle) {
 		myRotation = initialAngle;
 	}
 
@@ -49,11 +25,11 @@ abstract public class ZLViewWidget {
 
 	abstract public void trackStylus(boolean track);
 
-	public final void rotate(Angle rotation) {
+	public final void rotate(int rotation) {
 		myRotation = rotation;
 	}
 
-	public final Angle getRotation() {
+	public final int getRotation() {
 		return myRotation;
 	}
 

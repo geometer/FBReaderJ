@@ -44,7 +44,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		}
 	}
 
-	public void setColor(ZLColor color, LineStyle style) {
+	public void setColor(ZLColor color, int style) {
 		// TODO: use style
 		if (!areSameColors(myColor, color)) {
 			myColor = new Color(color.Red, color.Green, color.Blue);
@@ -52,7 +52,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		}
 	}
 
-	public void setFillColor(ZLColor color, FillStyle style) {
+	public void setFillColor(ZLColor color, int style) {
 		// TODO: use style
 		if (!areSameColors(myFillColor, color)) {
 			myFillColor = new Color(color.Red, color.Green, color.Blue);

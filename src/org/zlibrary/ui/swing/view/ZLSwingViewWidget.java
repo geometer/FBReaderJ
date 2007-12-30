@@ -19,20 +19,20 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 			final ZLSwingPaintContext context = (ZLSwingPaintContext)view.getContext();
 			final Dimension size = getSize();
 			switch (getRotation()) {
-				case DEGREES0:
+				case Angle.DEGREES0:
 					context.setSize(size.width, size.height);
 					break;
-				case DEGREES90:
+				case Angle.DEGREES90:
 					g2d.rotate(-Math.PI / 2);
 					g2d.translate(-size.height, 0);
 					context.setSize(size.height, size.width);
 					break;
-				case DEGREES180:
+				case Angle.DEGREES180:
 					g2d.rotate(Math.PI);
 					g2d.translate(-size.width, -size.height);
 					context.setSize(size.width, size.height);
 					break;
-				case DEGREES270:
+				case Angle.DEGREES270:
 					g2d.rotate(Math.PI / 2);
 					g2d.translate(0, -size.width);
 					context.setSize(size.height, size.width);
@@ -43,7 +43,7 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 		}
 	}
 
-	public ZLSwingViewWidget(Angle initialAngle) {
+	public ZLSwingViewWidget(int initialAngle) {
 		super(initialAngle);
 		myPanel.addMouseListener(this);
 		myPanel.addMouseMotionListener(this);
@@ -64,9 +64,9 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 		int x = e.getX();
 		int y = e.getY();
 		switch (getRotation()) {
-			case DEGREES0:
+			case Angle.DEGREES0:
 				break;
-			case DEGREES90:
+			case Angle.DEGREES90:
 			{
 				final Dimension size = myPanel.getSize();
 				int swap = x;
@@ -74,14 +74,14 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 				y = swap;
 				break;
 			}
-			case DEGREES180:
+			case Angle.DEGREES180:
 			{
 				final Dimension size = myPanel.getSize();
 				x = size.width - x - 1;
 				y = size.height - y - 1;
 				break;
 			}
-			case DEGREES270:
+			case Angle.DEGREES270:
 			{
 				final Dimension size = myPanel.getSize();
 				int swap = size.width - x - 1;

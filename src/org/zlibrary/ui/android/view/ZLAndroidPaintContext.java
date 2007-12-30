@@ -47,7 +47,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myPaint.setTextSize(size);
 	}
 
-	public void setColor(ZLColor color, LineStyle style) {
+	public void setColor(ZLColor color, int style) {
 		// TODO: use style
 		if (!myColor.equals(color)) {
 			myColor = color;
@@ -55,7 +55,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 	}
 
-	public void setFillColor(ZLColor color, FillStyle style) {
+	public void setFillColor(ZLColor color, int style) {
 		// TODO: implement
 	}
 

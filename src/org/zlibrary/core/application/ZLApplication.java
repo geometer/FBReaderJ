@@ -22,10 +22,10 @@ public abstract class ZLApplication {
 
 	public final ZLIntegerOption RotationAngleOption =
 		// temporary commented while we have no options dialog
-		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90.getDegrees());
+		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90);
 		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, -1);
 	public final ZLIntegerOption AngleStateOption =
-		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0.getDegrees());	
+		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0);	
 
 	public final ZLBooleanOption KeyboardControlOption =
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
@@ -297,22 +297,22 @@ public abstract class ZLApplication {
 		
 		public boolean isVisible() {
 			return (myApplication.myViewWidget != null) &&
-			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0.getDegrees()) ||
+			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0) ||
 				(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
 		}
 		
 		public void run() {
 			int optionValue = myApplication.RotationAngleOption.getValue();
-			ZLViewWidget.Angle oldAngle = myApplication.myViewWidget.getRotation();
-			ZLViewWidget.Angle newAngle = ZLViewWidget.Angle.DEGREES0;
+			int oldAngle = myApplication.myViewWidget.getRotation();
+			int newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
-				newAngle = ZLViewWidget.Angle.getByDegrees((oldAngle.getDegrees() + 90) % 360);
+				newAngle = (oldAngle + 90) % 360;
 			} else {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
-					ZLViewWidget.Angle.getByDegrees(optionValue) : ZLViewWidget.Angle.DEGREES0;
+					optionValue : ZLViewWidget.Angle.DEGREES0;
 			}
 			myApplication.myViewWidget.rotate(newAngle);
-			myApplication.AngleStateOption.setValue(newAngle.getDegrees());
+			myApplication.AngleStateOption.setValue(newAngle);
 			myApplication.refreshWindow();		
 		}
 	}

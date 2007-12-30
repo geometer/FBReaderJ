@@ -7,8 +7,8 @@ class ShowContentsAction extends FBAction {
 
 	public boolean isVisible() {
 		switch (fbreader().getMode()) {
-			case BOOK_TEXT:
-			case FOOTNOTE:
+			case FBReader.ViewMode.BOOK_TEXT:
+			case FBReader.ViewMode.FOOTNOTE:
 				return true;
 			default:
 				return false;

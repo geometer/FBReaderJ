@@ -76,7 +76,7 @@ public:
 
 	virtual void wait(const ZLResourceKey &key, ZLRunnable &runnable) const = 0;
 
-	enum ClipboardType {
+	interface ClipboardType {
 		CLIPBOARD_MAIN,
 		CLIPBOARD_SELECTION
 	};

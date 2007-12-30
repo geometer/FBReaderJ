@@ -1,27 +1,35 @@
 package org.zlibrary.core.util;
 
-public enum ZLBoolean3 {
-	B3_FALSE("false"),
-	B3_TRUE("true"),
-	B3_UNDEFINED("undefined");
+public final class ZLBoolean3 {
+	public static final int B3_FALSE = 0;
+	public static final int B3_TRUE = 1;
+	public static final int B3_UNDEFINED = 2;
 	
-	private String myStringValue;
-	
-	private ZLBoolean3(String stringValue){
-		myStringValue = stringValue;
-	}
+	private static final String STRING_FALSE = "false";
+	private static final String STRING_TRUE = "true";
+	private static final String STRING_UNDEFINED = "undefined";
 
-	public static ZLBoolean3 getByString(String name) {
-		if (B3_TRUE.myStringValue.equals(name)) {
+	public static int getByString(String name) {
+		if (STRING_TRUE.equals(name)) {
 			return B3_TRUE;
 		}
-		if (B3_FALSE.myStringValue.equals(name)) {
+		if (STRING_FALSE.equals(name)) {
 			return B3_FALSE;
 		}
 		return B3_UNDEFINED;
 	}
 	
-	public String toString(){
-		return myStringValue;
+	public static String getName(int value) {
+		switch (value) {
+			case B3_FALSE:
+				return STRING_FALSE;
+			case B3_TRUE:
+				return STRING_TRUE;
+			default:
+				return STRING_UNDEFINED;
+		}
+	}
+
+	private ZLBoolean3() {
 	}
 }

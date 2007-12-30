@@ -11,14 +11,14 @@ abstract public class ZLPaintContext {
 
 	private final ArrayList<String> myFamilies = new ArrayList<String>();
 
-	public enum LineStyle {
-		SOLID_LINE,
-		DASH_LINE,
+	public interface LineStyle {
+		int SOLID_LINE = 0;
+		int DASH_LINE = 1;
 	};
 
-	public enum FillStyle {
-		SOLID_FILL,
-		HALF_FILL,
+	public interface FillStyle {
+		int SOLID_FILL = 0;
+		int HALF_FILL = 1;
 	};
 	
 	protected ZLPaintContext() {
@@ -91,12 +91,12 @@ abstract public class ZLPaintContext {
 	final public void setColor(ZLColor color) {
 		setColor(color, LineStyle.SOLID_LINE);
 	}
-	abstract public void setColor(ZLColor color, LineStyle style);
+	abstract public void setColor(ZLColor color, int style);
 
 	final public void setFillColor(ZLColor color) {
 		setFillColor(color, FillStyle.SOLID_FILL);
 	}
-	abstract public void setFillColor(ZLColor color, FillStyle style);
+	abstract public void setFillColor(ZLColor color, int style);
 
 	abstract public int getWidth();
 	abstract public int getHeight();
