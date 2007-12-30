@@ -65,6 +65,6 @@ class ZLSwingSelectionDialog {
 		myJDialog.pack();
 		myJDialog.setSize(600, 400);
 		myJDialog.setLocationRelativeTo(myJDialog.getParent());
-		myJDialog.show();
+		myJDialog.setVisible(true);
 	}
 }
