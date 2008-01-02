@@ -8,6 +8,7 @@ ZLTextView:
 	переносы
 	position indicator
 	обработка неразрывных пробелов
+	undo/redo position stack
 
 рисунки:
 	обработка palm'овых рисунков
@@ -66,3 +67,4 @@ ZLTextView:
 другое:
 	поиск
 	написать другой how-to-start (без иконок)
+	автоопределение языка/кодировки

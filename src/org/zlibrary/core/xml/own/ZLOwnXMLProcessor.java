@@ -13,7 +13,6 @@ public class ZLOwnXMLProcessor implements ZLXMLProcessor {
 			reader.startDocumentHandler();
 			parser.doIt();
 			reader.endDocumentHandler();
-			System.gc();
 		} catch (IOException e) {
 			return false;
 		}
