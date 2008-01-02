@@ -16,7 +16,7 @@ public final class BookModel {
 	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
 	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
 
-	private class ImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
+	private static final class ImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
 		public ZLImage getImage(String id) {
 			return get(id);
 		}
