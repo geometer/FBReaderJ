@@ -28,32 +28,24 @@ public final class ZLTextBuffer {
 		append(data, 0, data.length);
 	}
 
-	public void append(char[] data, int offset, int length) {
-		final int newDataLength = myDataLength + length;
-		if (newDataLength > myData.length) {
-			int newArrayLength = myData.length * 2;
-			if (newArrayLength < 64) {
-				newArrayLength = 64;
+	public void append(char[] buffer, int offset, int count) {
+		char[] data = myData;
+		final int oldLen = myDataLength;
+		final int newLen = oldLen + count;
+		if (newLen > data.length) {
+			int capacity = data.length << 1;
+			while (newLen > capacity) {
+				capacity <<= 1;
 			}
-			while (newDataLength > newArrayLength) {
-				newArrayLength = newArrayLength * 2;
+			char[] data1 = new char[capacity];
+			if (oldLen > 0) {
+				System.arraycopy(data, 0, data1, 0, oldLen);
 			}
-			char[] newData = new char[newArrayLength];
-			if (myDataLength > 0) {
-				System.arraycopy(myData, 0, newData, 0, myDataLength);
-			}
-			myData = newData;
+			data = data1;
+			myData = data;
 		}
-		/*
-		int srcpos = offset;
-		int dstpos = myDataLength;
-		char[] dst = myData;
-		for (int i = 0; i < length; ++i) {
-			dst[dstpos++] = data[srcpos++];	
-		}
-		*/
-		System.arraycopy(data, offset, myData, myDataLength, length);
-		myDataLength = newDataLength;
+		System.arraycopy(buffer, offset, data, oldLen, count);
+		myDataLength = newLen;
 	}
 
 	public void trimToSize() {

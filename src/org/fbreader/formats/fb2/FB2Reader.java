@@ -7,10 +7,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.text.model.ZLTextParagraph;
 
 public class FB2Reader extends ZLXMLReader {
-	public static long LoadingTime;
-
 	private BookReader myModelReader;
-//	private String myFileName;
 	
 	private boolean myInsidePoem = false;
 	private boolean myInsideTitle = false;
@@ -28,8 +25,6 @@ public class FB2Reader extends ZLXMLReader {
 
 	private final char[] SPACE = { ' ' }; 
 	private String myHrefAttribute = ":href";
-	
-//	private BookModel myBookModel = new BookModel();
 	
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (length == 0) {
@@ -347,10 +342,6 @@ public class FB2Reader extends ZLXMLReader {
 
 	public boolean readBook(BookModel model) {
  		myModelReader = new BookReader(model);
-		long start = System.currentTimeMillis();
-		boolean success = read(model.getFileName());
-		LoadingTime = System.currentTimeMillis() - start;
-		System.err.println("loading book time = " + LoadingTime);
-		return success;
+		return read(model.getFileName());
 	}
 }
