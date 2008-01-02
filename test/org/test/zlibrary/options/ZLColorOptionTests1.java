@@ -2,25 +2,20 @@ package org.test.zlibrary.options;
 
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.options.ZLColorOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLColorOptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLColorOptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, ZLColor defaultValue,
 			int expectedValue) {
-		myConfig.setValue("color_group", "name", configValue, "category");
+		getConfig().setValue("color_group", "name", configValue, "category");
 		ZLColorOption option = new ZLColorOption("category", "color_group",
 				"name", defaultValue);
 		assertEquals(option.getValue().getIntValue(), expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("color_group", "name");
+		getConfig().unsetValue("color_group", "name");
 	}
 
 	public void test1_01() {

@@ -66,12 +66,13 @@
 					<node name="recentListSize" value="Розмір списку прочитаних книг"/>
 					<node name="keyDelay" value="Затримка між натисканням на клавіші"/>
 				</node>
-				<node name="Language" value="Language" toBeTranslated="true">
-					<node name="autoDetect" value="Detect Language and Encoding Automatically" toBeTranslated="true"/>
+				<node name="Language" value="Мова">
+					<node name="autoDetect" value="Визначити мову та кодувати автоматично"/>
 					<node name="defaultLanguage" value="Типова мова"/>
-					<node name="defaultEncodingSet" value="Default Encoding Set" toBeTranslated="true"/>
+					<node name="defaultEncodingSet" value="Набiр символiв"/>
 					<node name="defaultEncoding" value="Типовий набiр символiв"/>
-					<node name="chineseBreakAtAnyPosition" value="In Chinese Break Line at Any Position" toBeTranslated="true"/>
+					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1" toBeTranslated="true"/>
+					<node name="chineseBreakAtAnyPosition" value="В китайскому розбивати строку у будь якому мiсцi"/>
 				</node>
 				<node name="Indicator" value="Індикатор">
 					<node name="show" value="Показувати індикатор"/>
@@ -101,6 +102,9 @@
 					<node name="linesToKeep" value="Скільки рядків перекривати"/>
 					<node name="linesToScroll" value="Скільки рядків зсувати"/>
 					<node name="percentToScroll" value="Скільки відсотків зсувати"/>
+				</node>
+				<node name="Selection" value="Помітка">
+					<node name="enableSelection" value="Enable Text Selection" toBeTranslated="true"/>
 				</node>
 				<node name="Margins" value="Відступи">
 					<node name="left" value="Відступ зліва"/>
@@ -216,6 +220,11 @@
 					<node name="choice" value="Переглядач"/>
 					<node name="command" value="Виконати команду"/>
 				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press" toBeTranslated="true"/>
+					<node name="minStylusPressure" value="Minimal Stylus Pressure" toBeTranslated="true"/>
+					<node name="maxStylusPressure" value="Maximal Stylus Pressure" toBeTranslated="true"/>
+				</node>
 			</node>
 		</node>
 		<node name="InfoDialog">
@@ -226,7 +235,7 @@
 					<node name="title" value="Назва"/>
 					<node name="authorDisplayName" value="Ім'я автора"/>
 					<node name="authorSortKey" value="Ім'я для сортування"/>
-					<node name="language" value="Language" toBeTranslated="true"/>
+					<node name="language" value="Мова"/>
 					<node name="encodingSet" value="Набір кодувань"/>
 					<node name="encoding" value="Кодування"/>
 				</node>

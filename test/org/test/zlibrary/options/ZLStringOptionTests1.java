@@ -1,25 +1,20 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLStringOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLStringOptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLStringOptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, String defaultValue,
 			String expectedValue) {
-		myConfig.setValue("string_group", "name", configValue, "category");
+		getConfig().setValue("string_group", "name", configValue, "category");
 		ZLStringOption option = new ZLStringOption("category", "string_group",
 				"name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("string_group", "name");
+		getConfig().unsetValue("string_group", "name");
 	}
 
 	public void test1_01() {

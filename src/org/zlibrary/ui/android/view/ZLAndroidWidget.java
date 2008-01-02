@@ -38,6 +38,8 @@ public class ZLAndroidWidget extends View {
 		myHeight = h;
 	}
 
+	private long myTime;
+
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		if (myViewWidget == null) {
@@ -49,7 +51,7 @@ public class ZLAndroidWidget extends View {
 		}
 
 		myPaintContext.beginPaint(canvas);
-		//long start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		switch (myViewWidget.getRotation()) {
 			case ZLViewWidget.Angle.DEGREES0:
 				myPaintContext.setSize(myWidth, myHeight);
@@ -68,9 +70,14 @@ public class ZLAndroidWidget extends View {
 				break;
 		}
 		view.paint();
-		//Time = System.currentTimeMillis() - start;
-		String sTime = "" + org.fbreader.formats.fb2.FB2Reader.LoadingTime;
-		myPaintContext.drawString(240, 165, sTime.toCharArray(), 0, sTime.length());
+		if (myTime == 0) {
+			//myTime = org.fbreader.formats.fb2.FB2Reader.LoadingTime;
+			myTime = System.currentTimeMillis() - org.zlibrary.ui.android.library.ZLAndroidActivity.StartTime;
+		} else {
+			myTime = System.currentTimeMillis() - start;
+		}
+		String sTime = "" + myTime;
+		myPaintContext.drawString(240, 140, sTime.toCharArray(), 0, sTime.length());
 		myPaintContext.endPaint();
 	}
 

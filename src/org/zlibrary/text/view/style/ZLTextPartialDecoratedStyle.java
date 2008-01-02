@@ -36,57 +36,57 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 		}
 	}
 	
-	public boolean bold() {
+	public boolean isBold() {
 		switch (myDecoration.BoldOption.getValue()) {
 			case ZLBoolean3.B3_TRUE:
 				return true;
 			case ZLBoolean3.B3_FALSE:
 				return false;
 			default:
-				return getBase().bold();
+				return getBase().isBold();
 		}
 	}
 
-	public boolean italic() {
+	public boolean isItalic() {
 		switch (myDecoration.ItalicOption.getValue()) {
 			case ZLBoolean3.B3_TRUE:
 				return true;
 			case ZLBoolean3.B3_FALSE:
 				return false;
 			default:
-				return getBase().italic();
+				return getBase().isItalic();
 		}
 	}
 
-	public int leftIndent() {
-		return getBase().leftIndent();
+	public int getLeftIndent() {
+		return getBase().getLeftIndent();
 	}
 
-	public int rightIndent() {
-		return getBase().rightIndent();
+	public int getRightIndent() {
+		return getBase().getRightIndent();
 	}
 
-	public int firstLineIndentDelta() {
-		return getBase().firstLineIndentDelta();
+	public int getFirstLineIndentDelta() {
+		return getBase().getFirstLineIndentDelta();
 	}	
 	
-	public double lineSpace() {
-		return getBase().lineSpace();
+	public double getLineSpace() {
+		return getBase().getLineSpace();
 	}
 
-	public int verticalShift() {
-		return getBase().verticalShift() + myDecoration.VerticalShiftOption.getValue();
+	public int getVerticalShift() {
+		return getBase().getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
 	}
 
-	public int spaceBefore() {
-		return 0;
+	public int getSpaceBefore() {
+		return getBase().getSpaceBefore();
 	}
 
-	public int spaceAfter() {
-		return 0;
+	public int getSpaceAfter() {
+		return getBase().getSpaceAfter();
 	}		
 
-	public byte alignment() {
-		return getBase().alignment();
+	public byte getAlignment() {
+		return getBase().getAlignment();
 	}
 }

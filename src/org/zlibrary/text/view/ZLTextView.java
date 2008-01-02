@@ -7,6 +7,13 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.text.model.ZLTextModel;
 
 public abstract class ZLTextView extends ZLView {
+	public interface ScrollingMode {
+		int NO_OVERLAPPING = 0;
+		int KEEP_LINES = 1;
+		int SCROLL_LINES = 2;
+		int SCROLL_PERCENTAGE = 3;
+	};
+
 	public ZLTextView(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
 	}
@@ -15,11 +22,9 @@ public abstract class ZLTextView extends ZLView {
 	public abstract void paint();
 	public abstract String caption();
 
-	// TO BE DELETED;
-	// this is temporary method for dummy scrolling
-	public abstract void scroll(int numberOfParagraphs);
+	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
 
-	public abstract void gotoParagraph(int index);
+	//public abstract void gotoParagraph(int index);
 
 	public abstract int getLeftMargin();
 	public abstract int getRightMargin();

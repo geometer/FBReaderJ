@@ -4,14 +4,17 @@ import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageMap;
 
-import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
+import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.impl.ZLImageEntry;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
+
+import org.test.zlibrary.model.ModelDumper;
 
 import junit.framework.TestCase;
 
@@ -24,7 +27,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void setUp() {
 		new ZLSwingLibrary();
-		new ZLSaxXMLProcessorFactory();
+		new ZLOwnXMLProcessorFactory();
 	}
 	
 	private String myDirectory = "test/data/fb2/";
@@ -64,7 +67,7 @@ public class TestFB2Reader extends TestCase {
 		try {
 			OutputStreamWriter osw = new OutputStreamWriter(
 					new FileOutputStream(outputFile), "utf8");
-			osw.write(model.dump());
+			osw.write(ModelDumper.dump(model));
 			osw.close();
 		} catch (Exception e) {
 			fail();
@@ -170,8 +173,7 @@ public class TestFB2Reader extends TestCase {
 	public void testNotesSimple() {
 		BookModel model = new BookModel(myDirectory + "simple_notes.fb2");
 		new FB2Reader().readBook(model);
-		assertTrue(model.getFootnotes().containsKey("1"));
-		assertNotNull(model.getFootnotes().get("1"));
+		assertNotNull(model.getFootnoteModel("1"));
 	}
 	
 	public void testOneNote() {
@@ -299,7 +301,7 @@ public class TestFB2Reader extends TestCase {
 	public void testImage() {
 		BookModel model = new BookModel(myDirectory + "image.fb2");
 		new FB2Reader().readBook(model);
-		byte [] image = (model.getImageMap().get("cover.jpg")).byteData();
+		byte [] image = (model.getImageMap().getImage("cover.jpg")).byteData();
 		try {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(image));
 			ImageIO.write(img, "jpg", new File(myDirectory + "img.jpg"));
@@ -319,16 +321,16 @@ public class TestFB2Reader extends TestCase {
 		ZLTextParagraph paragraph = model.getParagraph(0);
 		ZLTextParagraph.EntryIterator it = paragraph.iterator();
 		it.next();
-		//it.next();
-		ZLImageEntry entry = (ZLImageEntry)it.next();
+		it.next();
+		ZLImageEntry entry = it.getImageEntry();
 		assertEquals(entry.VOffset, 0);
-		assertEquals(entry.getImage(), bModel.getImageMap().get("cover.jpg"));
+		assertEquals(entry.getImage(), bModel.getImageMap().getImage("cover.jpg"));
 	}
 	
 	public void testImageSize() {
 		BookModel model = new BookModel(myDirectory + "image.fb2");
 		new FB2Reader().readBook(model);
-		ZLImage image = model.getImageMap().get("cover.jpg");
+		ZLImage image = model.getImageMap().getImage("cover.jpg");
 		ZLSwingPaintContext paint = new ZLSwingPaintContext();
 		assertTrue(paint.imageHeight(image) == 277);
 		assertTrue(paint.imageWidth(image) == 200);

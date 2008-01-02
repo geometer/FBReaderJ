@@ -1,11 +1,16 @@
 package org.zlibrary.core.xml;
 
 import java.io.*;
-import java.util.Map;
 
 import org.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLXMLReader {
+	public interface StringMap {
+		int getSize();
+		String getKey(int index);
+		String getValue(String key);
+	}
+
 	public boolean read(String fileName) {
 		InputStream stream = ZLibrary.getInstance().getResourceInputStream(fileName);
 		if (stream == null) {
@@ -18,7 +23,7 @@ public abstract class ZLXMLReader {
 		return (stream != null) ? ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, stream) : false;
 	}
 	
-	public void startElementHandler(String tag, Map<String, String> attributes) {
+	public void startElementHandler(String tag, StringMap attributes) {
 	}
 	
 	public void endElementHandler(String tag) {

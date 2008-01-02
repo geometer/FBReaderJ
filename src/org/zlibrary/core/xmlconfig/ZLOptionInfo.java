@@ -1,4 +1,4 @@
-package org.zlibrary.core.options.config;
+package org.zlibrary.core.xmlconfig;
 
 final class ZLOptionInfo {
 	private String myValue;

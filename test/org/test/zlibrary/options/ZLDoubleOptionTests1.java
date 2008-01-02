@@ -1,25 +1,20 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLDoubleOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLDoubleOptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLDoubleOptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, double defaultValue,
 			double expectedValue) {
-		myConfig.setValue("double_group", "name", configValue, "category");
+		getConfig().setValue("double_group", "name", configValue, "category");
 		ZLDoubleOption option = new ZLDoubleOption("category", "double_group",
 				"name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("double_group", "name");
+		getConfig().unsetValue("double_group", "name");
 	}
 
 	public void test1_01() {

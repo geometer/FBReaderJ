@@ -1,7 +1,7 @@
-package org.zlibrary.core.options.config;
+package org.zlibrary.core.xmlconfig;
 
 import java.util.Set;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 /**
  * класс Конфиг. это своеобразная структура опций. основное поле myData содержит
@@ -11,7 +11,7 @@ import java.util.TreeMap;
  * 
  */
 final class ZLSimpleConfig {
-	private final TreeMap<String,ZLGroup> myData = new TreeMap<String,ZLGroup>();
+	private final HashMap<String,ZLGroup> myData = new HashMap<String,ZLGroup>();
 
 	void clear() {
 		myData.clear();

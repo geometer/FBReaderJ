@@ -26,6 +26,15 @@ public final class FBReader extends ZLApplication {
 		int RECENT_BOOKS = 1 << 5;
 	};
 
+	public final ScrollingOptions LargeScrollingOptions =
+		new ScrollingOptions("LargeScrolling", 250, ZLTextView.ScrollingMode.NO_OVERLAPPING);
+	public final ScrollingOptions SmallScrollingOptions =
+		new ScrollingOptions("SmallScrolling", 50, ZLTextView.ScrollingMode.SCROLL_LINES);
+	public final ScrollingOptions MouseScrollingOptions =
+		new ScrollingOptions("MouseScrolling", 0, ZLTextView.ScrollingMode.SCROLL_LINES);
+	public final ScrollingOptions FingerTapScrollingOptions =
+		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
+
 	final static String HELP_FILE_NAME = "data/help/MiniHelp.ru.fb2";
 	private final ZLStringOption myBookNameOption =
 		//new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", HELP_FILE_NAME);
@@ -71,14 +80,14 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
-		addAction(ActionCode.LARGE_SCROLL_FORWARD, new DummyAction(this));
-		addAction(ActionCode.LARGE_SCROLL_BACKWARD, new DummyAction(this));
-		addAction(ActionCode.SMALL_SCROLL_FORWARD, new ScrollAction(this, 1));
-		addAction(ActionCode.SMALL_SCROLL_BACKWARD, new ScrollAction(this, -1));
-		addAction(ActionCode.MOUSE_SCROLL_FORWARD, new DummyAction(this));
-		addAction(ActionCode.MOUSE_SCROLL_BACKWARD, new DummyAction(this));
-		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new DummyAction(this));
-		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new DummyAction(this));
+		addAction(ActionCode.LARGE_SCROLL_FORWARD, new ScrollingAction(this, LargeScrollingOptions, true));
+		addAction(ActionCode.LARGE_SCROLL_BACKWARD, new ScrollingAction(this, LargeScrollingOptions, false));
+		addAction(ActionCode.SMALL_SCROLL_FORWARD, new ScrollingAction(this, SmallScrollingOptions, true));
+		addAction(ActionCode.SMALL_SCROLL_BACKWARD, new ScrollingAction(this, SmallScrollingOptions, false));
+		addAction(ActionCode.MOUSE_SCROLL_FORWARD, new ScrollingAction(this, MouseScrollingOptions, true));
+		addAction(ActionCode.MOUSE_SCROLL_BACKWARD, new ScrollingAction(this, MouseScrollingOptions, false));
+		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new ScrollingAction(this, FingerTapScrollingOptions, true));
+		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new ScrollingAction(this, FingerTapScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
 		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new DummyAction(this));
 		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new DummyAction(this));
@@ -88,67 +97,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
-		
-		addToolbarButton(ActionCode.SHOW_COLLECTION, "books");
-		addToolbarButton(ActionCode.SHOW_LAST_BOOKS, "history");
-		addToolbarButton(ActionCode.ADD_BOOK, "addbook");
-		getToolbar().addSeparator();
-		addToolbarButton(ActionCode.SCROLL_TO_HOME, "home");
-		addToolbarButton(ActionCode.UNDO, "leftarrow");
-		addToolbarButton(ActionCode.REDO, "rightarrow");
-		getToolbar().addSeparator();
-		addToolbarButton(ActionCode.SHOW_CONTENTS, "contents");
-		getToolbar().addSeparator();
-		addToolbarButton(ActionCode.SEARCH, "find");
-		addToolbarButton(ActionCode.FIND_NEXT, "findnext");
-		addToolbarButton(ActionCode.FIND_PREVIOUS, "findprev");
-		getToolbar().addSeparator();
-		addToolbarButton(ActionCode.SHOW_BOOK_INFO, "bookinfo");
-		addToolbarButton(ActionCode.SHOW_OPTIONS, "settings");
-		getToolbar().addSeparator();
-		addToolbarButton(ActionCode.ROTATE_SCREEN, "rotatescreen");
-		//if (ShowHelpIconOption.value()) {
-			getToolbar().addSeparator();
-			addToolbarButton(ActionCode.SHOW_HELP, "help");
-		//}
-
-		getMenubar().addItem(ActionCode.SHOW_BOOK_INFO, "bookInfo");
-		getMenubar().addItem(ActionCode.SHOW_CONTENTS, "toc");
-
-		Menu librarySubmenu = getMenubar().addSubmenu("library");
-		librarySubmenu.addItem(ActionCode.SHOW_COLLECTION, "open");
-		librarySubmenu.addItem(ActionCode.OPEN_PREVIOUS_BOOK, "previous");
-		librarySubmenu.addItem(ActionCode.SHOW_LAST_BOOKS, "recent");
-		librarySubmenu.addItem(ActionCode.ADD_BOOK, "addBook");
-		librarySubmenu.addItem(ActionCode.SHOW_HELP, "about");
-
-		Menu navigationSubmenu = getMenubar().addSubmenu("navigate");
-		navigationSubmenu.addItem(ActionCode.SCROLL_TO_HOME, "gotoStartOfDocument");
-		navigationSubmenu.addItem(ActionCode.SCROLL_TO_START_OF_TEXT, "gotoStartOfSection");
-		navigationSubmenu.addItem(ActionCode.SCROLL_TO_END_OF_TEXT, "gotoEndOfSection");
-		navigationSubmenu.addItem(ActionCode.GOTO_NEXT_TOC_SECTION, "gotoNextTOCItem");
-		navigationSubmenu.addItem(ActionCode.GOTO_PREVIOUS_TOC_SECTION, "gotoPreviousTOCItem");
-		navigationSubmenu.addItem(ActionCode.UNDO, "goBack");
-		navigationSubmenu.addItem(ActionCode.REDO, "goForward");
-
-		Menu selectionSubmenu = getMenubar().addSubmenu("selection");
-		selectionSubmenu.addItem(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, "clipboard");
-		selectionSubmenu.addItem(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, "dictionary");
-		selectionSubmenu.addItem(ActionCode.CLEAR_SELECTION, "clear");
-
-		Menu findSubmenu = getMenubar().addSubmenu("search");
-		findSubmenu.addItem(ActionCode.SEARCH, "find");
-		findSubmenu.addItem(ActionCode.FIND_NEXT, "next");
-		findSubmenu.addItem(ActionCode.FIND_PREVIOUS, "previous");
-
-		Menu viewSubmenu = getMenubar().addSubmenu("view");
-		// MSS: these three actions can have a checkbox next to them
-		viewSubmenu.addItem(ActionCode.ROTATE_SCREEN, "rotate");
-		viewSubmenu.addItem(ActionCode.TOGGLE_FULLSCREEN, "fullScreen");
-		viewSubmenu.addItem(ActionCode.SHOW_HIDE_POSITION_INDICATOR, "toggleIndicator");
-
-		getMenubar().addItem(ActionCode.SHOW_OPTIONS, "settings");
-		getMenubar().addItem(ActionCode.QUIT, "close");
 
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
@@ -179,10 +127,6 @@ public final class FBReader extends ZLApplication {
 		myContentsView.setModel(model.getContentsModel());
 		setMode(ViewMode.BOOK_TEXT);
 		return true;
-	}
-
-	private final void addToolbarButton(int code, String name) {
-		getToolbar().addButton(code, name);
 	}
 
 	public ZLKeyBindings keyBindings() {
@@ -238,5 +182,10 @@ public final class FBReader extends ZLApplication {
 
 	BookTextView getBookTextView() {
 		return myBookTextView;
+	}
+
+	void clearTextCaches() {
+		myBookTextView.clearCaches();
+		myContentsView.clearCaches();
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1251"?>
-<FictionBook>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:xlink="http://www.w3.org/1999/xlink">
 <body><title><p>Лев Николаевич Толстой</p>
 <p>АННА КАРЕНИНА</p>
 </title><epigraph><p><emphasis>Мне отмщение, и аз воздам</emphasis></p>

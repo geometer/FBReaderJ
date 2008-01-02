@@ -2,7 +2,7 @@ package org.zlibrary.text.view.impl;
 
 //import java.util.*;
 
-final class ZLTextWordCursor {
+public final class ZLTextWordCursor {
 	private ZLTextParagraphCursor myParagraphCursor;
 	private int myWordNumber;
 	private int myCharNumber;
@@ -15,9 +15,7 @@ final class ZLTextWordCursor {
 	}
 
 	public ZLTextWordCursor(ZLTextWordCursor cursor) {
-		myParagraphCursor = cursor.myParagraphCursor;
-		myWordNumber = cursor.myWordNumber;
-		myCharNumber = cursor.myCharNumber;
+		setCursor(cursor);
 	}
 
 	public void setCursor(ZLTextWordCursor cursor) {
@@ -26,23 +24,22 @@ final class ZLTextWordCursor {
 		myCharNumber = cursor.myCharNumber;
 	}
 
+	public ZLTextWordCursor(ZLTextParagraphCursor paragraphCursor) {
+		setCursor(paragraphCursor);
+	}
+
 	public void setCursor(ZLTextParagraphCursor paragraphCursor) {
+		myParagraphCursor = paragraphCursor;
 		myWordNumber = 0;
 		myCharNumber = 0;
-		myParagraphCursor = paragraphCursor;
-		moveToParagraphStart();
-	}	
+	}
 
 	public boolean isNull() {
-		return myParagraphCursor.isNull();
+		return myParagraphCursor == null;
 	}
 
-	public boolean equalWordNumber(ZLTextWordCursor cursor) {
-		return myWordNumber == cursor.myWordNumber;
-	}
-
-	public boolean sameElementAs(ZLTextWordCursor cursor) {
-		return (myWordNumber == cursor.myWordNumber && myParagraphCursor.getIndex() == cursor.myParagraphCursor.getIndex());
+	public boolean equalsToCursor(ZLTextWordCursor cursor) {
+		return (myWordNumber == cursor.myWordNumber) && (myCharNumber == cursor.myCharNumber) && (myParagraphCursor.getIndex() == cursor.myParagraphCursor.getIndex());
 	}
 
 	public boolean isStartOfParagraph() {
@@ -97,6 +94,7 @@ final class ZLTextWordCursor {
 			if (!myParagraphCursor.isFirst()) {
 				myParagraphCursor = myParagraphCursor.previous();
 				moveToParagraphStart();
+				return true;
 			}
 		}
 		return false;
@@ -158,6 +156,12 @@ final class ZLTextWordCursor {
 			}
 		}
 	}	
+
+	public void reset() {
+		myParagraphCursor = null;
+		myWordNumber = 0;
+		myCharNumber = 0;
+	}
 
 	public void rebuild() {
 		if (!isNull()) {

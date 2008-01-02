@@ -13,7 +13,7 @@ public class TestTreeParagraph extends TestCase {
 	public void testCreateParagraph() {
 		 ZLTextTreeParagraph paragraph = factory.createTreeParagraph();
 		 ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
-		 assertTrue(paragraph.children().contains(paragraph2));
+		 //assertTrue(paragraph.children().contains(paragraph2));
 		 assertTrue(paragraph.getDepth() == 0);
 		 assertTrue(paragraph2.getDepth() == 1);
 		 assertTrue(paragraph2.getParent() == paragraph);
@@ -64,12 +64,15 @@ public class TestTreeParagraph extends TestCase {
 		ZLTextTreeParagraph paragraph2 = factory.createTreeParagraph(paragraph);
 		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
 		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
-		assertTrue(paragraph.children().size() == 2);
-		assertTrue(paragraph.children().contains(paragraph2));
-		assertTrue(paragraph.children().contains(paragraph3));
-		assertTrue(paragraph2.children().contains(paragraph4));
-		assertTrue(paragraph2.children().size() == 1);
-		assertTrue(paragraph3.children().size() == 0);		
+		assertTrue(paragraph.hasChildren());
+		assertTrue(paragraph2.getParent() == paragraph);
+		assertTrue(paragraph3.getParent() == paragraph);
+		assertTrue(paragraph4.getParent() == paragraph2);	
+		assertTrue(paragraph2.hasChildren());
+		assertFalse(paragraph3.hasChildren());		
+		assertFalse(paragraph2.isLastChild());		
+		assertTrue(paragraph3.isLastChild());		
+		assertTrue(paragraph4.isLastChild());		
 	}
 	/*
 	 *	
@@ -95,8 +98,8 @@ public class TestTreeParagraph extends TestCase {
 		ZLTextTreeParagraph paragraph3 = factory.createTreeParagraph(paragraph);
 		ZLTextTreeParagraph paragraph4 = factory.createTreeParagraph(paragraph2);
 		paragraph4.removeFromParent();
-		assertTrue(paragraph3.children().size() == 0);
+		assertFalse(paragraph3.hasChildren());
 		paragraph2.removeFromParent();
-		assertTrue(paragraph.children().size() == 1);
+		assertTrue(paragraph.hasChildren());
 	}
 }

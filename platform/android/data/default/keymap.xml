@@ -2,16 +2,14 @@
 <keymap>
 	<binding key="&lt;L&gt;" action="1"/>
 	<binding key="&lt;O&gt;" action="2"/>
-	<binding key="&lt;PadLeft&gt;" action="3"/>
-	<binding key="&lt;PadRight&gt;" action="4"/>
+	<binding key="&lt;PadLeft&gt;" action="12"/>
+	<binding key="&lt;PadRight&gt;" action="11"/>
 	<binding key="&lt;C&gt;" action="5"/>
 	<binding key="&lt;F&gt;" action="6"/>
 	<binding key="&lt;P&gt;" action="7"/>
 	<binding key="&lt;N&gt;" action="8"/>
-	<binding key="&lt;PageDown&gt;" action="9"/>
-	<binding key="&lt;PageUp&gt;" action="10"/>
-	<binding key="&lt;PadDown&gt;" action="11"/>
-	<binding key="&lt;PadUp&gt;" action="12"/>
+	<binding key="&lt;PadDown&gt;" action="9"/>
+	<binding key="&lt;PadUp&gt;" action="10"/>
 	<binding key="&lt;Ctrl&gt;+&lt;Home&gt;" action="15"/>
 	<binding key="&lt;Home&gt;" action="16"/>
 	<binding key="&lt;End&gt;" action="17"/>

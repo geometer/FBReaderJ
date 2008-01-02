@@ -50,7 +50,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void buildMenu(Menu menu) {
-		new MenuBuilder(menu).processMenu(getApplication().getMenubar());
+		new MenuBuilder(menu).processMenu(getApplication());
 		refresh();
 	}
 

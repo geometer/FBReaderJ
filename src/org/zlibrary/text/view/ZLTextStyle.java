@@ -8,15 +8,16 @@ public interface ZLTextStyle {
 
 	ZLColor getColor();
 
-	boolean bold();
-	boolean italic();
-	int leftIndent();
-	int rightIndent();
-	int firstLineIndentDelta();
-	double lineSpace();
-	int verticalShift();
-	int spaceBefore();
-	int spaceAfter();
-	boolean isDecorated();
-	byte alignment();
+	boolean isBold();
+	boolean isItalic();
+	int getLeftIndent();
+	int getRightIndent();
+	int getFirstLineIndentDelta();
+	double getLineSpace();
+	int getVerticalShift();
+	int getSpaceBefore();
+	int getSpaceAfter();
+	byte getAlignment();
+
+	ZLTextStyle getBase();
 }

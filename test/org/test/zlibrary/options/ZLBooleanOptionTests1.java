@@ -1,25 +1,20 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLBooleanOptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLBooleanOptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, boolean defaultValue,
 			boolean expectedValue) {
-		myConfig.setValue("boolean_group", "name", configValue, "category");
+		getConfig().setValue("boolean_group", "name", configValue, "category");
 		ZLBooleanOption option = new ZLBooleanOption("category",
 				"boolean_group", "name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("boolean_group", "name");
+		getConfig().unsetValue("boolean_group", "name");
 	}
 
 	public void test1_01() {

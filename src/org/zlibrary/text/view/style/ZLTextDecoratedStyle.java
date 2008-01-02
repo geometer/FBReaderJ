@@ -11,10 +11,6 @@ public class ZLTextDecoratedStyle {
 		myBase = base;
 	}
 
-	public boolean isDecorated() {
-		return true;
-	}
-
 	public ZLTextStyle getBase() {
 		return myBase;
 	}

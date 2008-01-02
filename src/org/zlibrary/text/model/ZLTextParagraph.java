@@ -1,5 +1,7 @@
 package org.zlibrary.text.model;
 
+import org.zlibrary.text.model.impl.ZLImageEntry;
+
 public interface ZLTextParagraph {
 	interface Entry {
 		byte TEXT = 1;
@@ -19,8 +21,10 @@ public interface ZLTextParagraph {
 		byte getControlKind();
 		boolean getControlIsStart();
 
+		ZLImageEntry getImageEntry();
+
 		boolean hasNext();
-		Entry next();
+		void next();
 	}
 
 	public EntryIterator iterator();

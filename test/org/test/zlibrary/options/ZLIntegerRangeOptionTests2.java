@@ -1,18 +1,13 @@
 package org.test.zlibrary.options;
 
-import junit.framework.TestCase;
-
 import org.zlibrary.core.options.ZLIntegerRangeOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-public class ZLIntegerRangeOptionTests2 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLIntegerRangeOptionTests2 extends ZLOptionTests {
 
 	private void runTask2a(String configValue, int value2, int value3,
 			int expectedValue) {
-		myConfig.setValue("integer_range_group_2", "name", configValue,
+		getConfig().setValue("integer_range_group_2", "name", configValue,
 				"integer_range_category");
 		ZLIntegerRangeOption option = new ZLIntegerRangeOption(
 				"integer_range_category", "integer_range_group_2", "name",
@@ -23,18 +18,18 @@ public class ZLIntegerRangeOptionTests2 extends TestCase {
 
 	private void runTask2b(String configValue, int value2, int value3,
 			String expectedValue) {
-		myConfig.setValue("integer_range_group_2", "name", configValue,
+		getConfig().setValue("integer_range_group_2", "name", configValue,
 				"integer_range_category");
 		ZLIntegerRangeOption option = new ZLIntegerRangeOption(
 				"integer_range_category", "integer_range_group_2", "name",
 				-100, 100, value2);
 		option.setValue(value3);
-		assertEquals(myConfig.getValue("integer_range_group_2", "name", "def"),
+		assertEquals(getConfig().getValue("integer_range_group_2", "name", "def"),
 				expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("integer_range_group_2", "name");
+		getConfig().unsetValue("integer_range_group_2", "name");
 	}
 
 	public void test2a_1_01() {

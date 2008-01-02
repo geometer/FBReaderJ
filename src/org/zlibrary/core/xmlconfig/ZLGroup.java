@@ -1,10 +1,10 @@
-package org.zlibrary.core.options.config;
+package org.zlibrary.core.xmlconfig;
 
 import java.util.Set;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 final class ZLGroup {
-	private final TreeMap<String,ZLOptionInfo> myData = new TreeMap<String,ZLOptionInfo>();
+	private final HashMap<String,ZLOptionInfo> myData = new HashMap<String,ZLOptionInfo>();
 
 	Set<String> optionNames() {
 		return myData.keySet();

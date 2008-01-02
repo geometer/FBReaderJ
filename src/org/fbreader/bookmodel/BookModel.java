@@ -1,22 +1,27 @@
 package org.fbreader.bookmodel;
 
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Collections;
+import java.util.HashMap;
 
 import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 
-public class BookModel {
+public final class BookModel {
 	private final ZLModelFactory myModelFactory = new ZLModelFactory();
-	private final ZLTextPlainModel myBookTextModel = myModelFactory.createPlainModel();
+	private final ZLTextPlainModel myBookTextModel = myModelFactory.createPlainModel(65536);
 	private final ContentsModel myContentsModel = new ContentsModel();
-	private final TreeMap<String,ZLTextPlainModel> myFootnotes = new TreeMap<String,ZLTextPlainModel>();
-	private final TreeMap<String,Label> myInternalHyperlinks = new TreeMap<String,Label>();
-	private final TreeMap<String,ZLImage> myImageMap = new TreeMap<String,ZLImage>(); 
+	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
+	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
+
+	private class ImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
+		public ZLImage getImage(String id) {
+			return get(id);
+		}
+	};
+	private final ImageMap myImageMap = new ImageMap(); 
 	
 	private final String myFileName;
 
@@ -47,14 +52,12 @@ public class BookModel {
 	}
 	
 	public ZLTextPlainModel getFootnoteModel(String id) {
-		if (!myFootnotes.containsKey(id)) {
-			myFootnotes.put(id, myModelFactory.createPlainModel()); 
+		ZLTextPlainModel model = myFootnotes.get(id);
+		if (model == null) {
+			model = myModelFactory.createPlainModel(4096); 
+			myFootnotes.put(id, model); 
 		}
-		return myFootnotes.get(id); 
-	}
-	
-	public Map<String, ZLTextPlainModel> getFootnotes() {
-		return Collections.unmodifiableMap(myFootnotes);
+		return model;
 	}
 	
 	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
@@ -70,7 +73,7 @@ public class BookModel {
 		return null;
 	}
 
-	public Map<String,ZLImage> getImageMap() {
+	public ZLImageMap getImageMap() {
 		return myImageMap;
 	}
 

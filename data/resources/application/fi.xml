@@ -71,6 +71,7 @@
 					<node name="defaultLanguage" value="Oletuskieli"/>
 					<node name="defaultEncodingSet" value="Oletusmerkistöalue"/>
 					<node name="defaultEncoding" value="Oletusmerkistö"/>
+					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1" toBeTranslated="true"/>
 					<node name="chineseBreakAtAnyPosition" value="Katkaise Kiinaksi oleva teksti mistä tahansa kohdasta"/>
 				</node>
 				<node name="Indicator" value="Ilmaisin">
@@ -101,6 +102,9 @@
 					<node name="linesToKeep" value="Rivien määrä"/>
 					<node name="linesToScroll" value="Rivien määrä"/>
 					<node name="percentToScroll" value="Vieritysprosentti"/>
+				</node>
+				<node name="Selection" value="Valinta">
+					<node name="enableSelection" value="Enable Text Selection" toBeTranslated="true"/>
 				</node>
 				<node name="Margins" value="Reunus">
 					<node name="left" value="Vasenreunus"/>
@@ -215,6 +219,11 @@
 					<node name="defaultText" value="Avaa ulkoiset linkit selaimessa"/>
 					<node name="choice" value="Käytä selainta"/>
 					<node name="command" value="Suorituskomento"/>
+				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press" toBeTranslated="true"/>
+					<node name="minStylusPressure" value="Minimal Stylus Pressure" toBeTranslated="true"/>
+					<node name="maxStylusPressure" value="Maximal Stylus Pressure" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

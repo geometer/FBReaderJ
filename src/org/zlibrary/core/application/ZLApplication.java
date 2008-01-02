@@ -3,6 +3,7 @@ package org.zlibrary.core.application;
 import java.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.resources.*;
 import org.zlibrary.core.view.*;
@@ -59,19 +60,16 @@ public abstract class ZLApplication {
 
 		//myPresentWindowHandler = new PresentWindowHandler(this);
 		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
+
+		new ToolbarCreator().read("data/default/toolbar.xml");
+		new MenubarCreator().read("data/default/menubar.xml");
 	}
 	
-	protected final Toolbar getToolbar() {
-		if (myToolbar == null) {
-			myToolbar = new Toolbar();
-		}
+	final Toolbar getToolbar() {
 		return myToolbar;
 	}
 
-	public final Menubar getMenubar() {
-		if (myMenubar == null) {
-			myMenubar = new Menubar();
-		}
+	final Menubar getMenubar() {
 		return myMenubar;
 	}
 
@@ -182,7 +180,7 @@ public abstract class ZLApplication {
 		}
 	}
 
-	private final ZLAction getAction(Integer actionId) {
+	private final ZLAction getAction(int actionId) {
 		if ((actionId >= 0) && (actionId < 256)) {
 			return myActionMap[actionId];
 		}
@@ -346,10 +344,14 @@ public abstract class ZLApplication {
 			myItems.add(new SeparatorItem());
 		}
 
-		List<Item> items() {
-			return Collections.unmodifiableList(myItems);
+		int size() {
+			return myItems.size();
 		}
-		
+
+		Item getItem(int index) {
+			return myItems.get(index);
+		}
+
 		public interface Item {
 		}
 		
@@ -425,7 +427,7 @@ public abstract class ZLApplication {
 
 		public final class ButtonGroup {
 			public final int UnselectAllButtonsActionId;
-			public final HashSet<ButtonItem> Items = new HashSet<ButtonItem>();
+			public final ArrayList<ButtonItem> Items = new ArrayList<ButtonItem>();
 			public ButtonItem PressedItem;
 
 			ButtonGroup(int unselectAllButtonsActionId) {
@@ -440,7 +442,7 @@ public abstract class ZLApplication {
 	}
 	
 	//Menu
-	static public class Menu {
+	static class Menu {
 		public interface Item {
 		}
 
@@ -455,22 +457,26 @@ public abstract class ZLApplication {
 			return myResource;
 		}
 
-		public void addItem(int actionId, String key) {
+		void addItem(int actionId, String key) {
 			myItems.add(new Menubar.PlainItem(myResource.getResource(key).getValue(), actionId));
 		}
 		
-		public void addSeparator() {
+		void addSeparator() {
 			myItems.add(new Menubar.Separator());
 		}
 		
-		public Menu addSubmenu(String key) {
+		Menubar.Submenu addSubmenu(String key) {
 			Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
 			myItems.add(submenu);
 			return submenu;
 		}
 
-		List<Item> items() {
-			return Collections.unmodifiableList(myItems);
+		int size() {
+			return myItems.size();
+		}
+
+		Item getItem(int index) {
+			return myItems.get(index);
 		}
 	}
 	
@@ -514,8 +520,16 @@ public abstract class ZLApplication {
 
 	//MenuVisitor
 	static public abstract class MenuVisitor {
-		public final void processMenu(Menu menu) {
-			for (Menu.Item item : menu.items()) {
+		public final void processMenu(ZLApplication application) {
+			if (application.myMenubar != null) {
+				processMenu(application.myMenubar);
+			}
+		}
+
+		private final void processMenu(Menu menu) {
+			final int size = menu.size();
+			for (int i = 0; i < size; ++i) {
+				final Menu.Item item = menu.getItem(i);
 				if (item instanceof Menubar.PlainItem) {
 					processItem((Menubar.PlainItem)item);
 				} else if (item instanceof Menubar.Submenu) {
@@ -543,5 +557,69 @@ public abstract class ZLApplication {
 		//public void onMessageReceived(List<String> arguments);
 		//public String lastCaller();
 		//public void resetLastCaller();
+	}
+
+	private class ToolbarCreator extends ZLXMLReader {
+		private static final String BUTTON = "button";
+		private static final String SEPARATOR = "separator";
+
+		public void startElementHandler(String tag, StringMap attributes) {
+			if (myToolbar == null) {
+				myToolbar = new Toolbar();
+			}
+			if (BUTTON == tag) {
+				String action = attributes.getValue("action");
+				String key = attributes.getValue("key");
+				if ((action != null) && (key != null)) {
+					try {
+						int actionId = Integer.parseInt(action);
+						myToolbar.addButton(actionId, key);
+					} catch (NumberFormatException exception) {
+					}
+				}
+			} else if (SEPARATOR == tag) {
+				myToolbar.addSeparator();
+			}
+		}
+	}
+
+	private class MenubarCreator extends ZLXMLReader {
+		private static final String ITEM = "item";
+		private static final String SUBMENU = "submenu";
+
+		private final ArrayList<Menubar.Submenu> mySubmenuStack = new ArrayList<Menubar.Submenu>();
+
+		public void startElementHandler(String tag, StringMap attributes) {
+			if (myMenubar == null) {
+				myMenubar = new Menubar();
+			}
+			final ArrayList<Menubar.Submenu> stack = mySubmenuStack;
+			Menu menu = stack.isEmpty() ? myMenubar : stack.get(stack.size() - 1);
+			if (ITEM == tag) {
+				String action = attributes.getValue("action");
+				String key = attributes.getValue("key");
+				if ((action != null) && (key != null)) {
+					try {
+						int actionId = Integer.parseInt(action);
+						menu.addItem(actionId, key);
+					} catch (NumberFormatException exception) {
+					}
+				}
+			} else if (SUBMENU == tag) {
+				String key = attributes.getValue("key");
+				if (key != null) {
+					stack.add(menu.addSubmenu(key));
+				}
+			}
+		}
+
+		public void endElementHandler(String tag) {
+			if (SUBMENU == tag) {
+				final ArrayList<Menubar.Submenu> stack = mySubmenuStack;
+				if (!stack.isEmpty()) {
+					stack.remove(stack.size() - 1);
+				}
+			}
+		}
 	}
 }

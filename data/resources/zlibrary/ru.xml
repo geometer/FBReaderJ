@@ -41,8 +41,10 @@
 		<node name="fi" value="финский"/>
 		<node name="fr" value="французский"/>
 		<node name="it" value="итальянский"/>
+		<node name="no" value="норвежский"/>
 		<node name="pt" value="португальский"/>
 		<node name="ru" value="русский"/>
+		<node name="sv" value="шведский"/>
 		<node name="uk" value="украинский"/>
 		<node name="zh" value="китайский"/>
 		<node name="other" value="другой"/>

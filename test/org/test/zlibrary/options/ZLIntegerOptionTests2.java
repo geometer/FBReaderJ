@@ -1,18 +1,13 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLIntegerOptionTests2 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLIntegerOptionTests2 extends ZLOptionTests {
 
 	private void runTask2a(String configValue, int value2, int value3,
 			int expectedValue) {
-		myConfig.setValue("integer_group_2", "name", configValue,
+		getConfig().setValue("integer_group_2", "name", configValue,
 				"integer_category");
 		ZLIntegerOption option = new ZLIntegerOption("integer_category",
 				"integer_group_2", "name", value2);
@@ -22,17 +17,17 @@ public class ZLIntegerOptionTests2 extends TestCase {
 
 	private void runTask2b(String configValue, int value2, int value3,
 			String expectedValue) {
-		myConfig.setValue("integer_group_2", "name", configValue,
+		getConfig().setValue("integer_group_2", "name", configValue,
 				"integer_category");
 		ZLIntegerOption option = new ZLIntegerOption("integer_category",
 				"integer_group_2", "name", value2);
 		option.setValue(value3);
-		assertEquals(myConfig.getValue("integer_group_2", "name", "def"),
+		assertEquals(getConfig().getValue("integer_group_2", "name", "def"),
 				expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("integer_group_2", "name");
+		getConfig().unsetValue("integer_group_2", "name");
 	}
 
 	public void test2a_1_01() {

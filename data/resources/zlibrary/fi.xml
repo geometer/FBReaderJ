@@ -41,8 +41,10 @@
 		<node name="fi" value="Suomi"/>
 		<node name="fr" value="Ranska"/>
 		<node name="it" value="Italia"/>
+		<node name="no" value="Norja"/>
 		<node name="pt" value="Portugali"/>
 		<node name="ru" value="Venäjä"/>
+		<node name="sv" value="Ruotsi"/>
 		<node name="uk" value="Ukraina"/>
 		<node name="zh" value="Kiina"/>
 		<node name="other" value="Muu"/>

@@ -2,24 +2,19 @@ package org.test.zlibrary.options;
 
 import org.zlibrary.core.util.ZLBoolean3;
 import org.zlibrary.core.options.ZLBoolean3Option;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLBoolean3OptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLBoolean3OptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, int defaultValue, int expectedValue) {
-		myConfig.setValue("boolean3_group", "name", configValue, "category");
+		getConfig().setValue("boolean3_group", "name", configValue, "category");
 		ZLBoolean3Option option = new ZLBoolean3Option("category",
 				"boolean3_group", "name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("boolean3_group", "name");
+		getConfig().unsetValue("boolean3_group", "name");
 	}
 
 	public void test1_02() {

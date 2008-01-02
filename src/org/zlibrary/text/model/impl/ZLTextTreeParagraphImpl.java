@@ -1,8 +1,6 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
@@ -52,12 +50,6 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 
 	public boolean hasChildren() {
 		return (myChildren != null) && !myChildren.isEmpty();
-	}
-
-	public List<ZLTextTreeParagraph> children() {
-		return (myChildren != null) ?
-			Collections.unmodifiableList(myChildren) :
-			Collections.<ZLTextTreeParagraph>emptyList();
 	}
 
 	public boolean isLastChild() {

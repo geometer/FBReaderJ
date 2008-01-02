@@ -1,6 +1,6 @@
 package org.zlibrary.core.xml.own;
 
-import java.util.TreeMap;
+import java.util.HashMap;
 import java.io.*;
 
 import org.zlibrary.core.xml.ZLXMLReader;
@@ -23,71 +23,99 @@ final class ZLOwnXMLParser {
 	private static final int ATTRIBUTE_VALUE = 14;
 	private static final int ENTITY_REF = 15;
 
-	private static final class ComparableString implements Comparable<ComparableString> {
-		private CharSequence mySequence;
+	private static final class StringContainer {
+		private char[] myData;
+		private int myLength;
 
-		ComparableString(CharSequence sequence) {
-			mySequence = sequence;
+		StringContainer(int len) {
+			myData = new char[len];
 		}
 
-		ComparableString() {
+		StringContainer() {
+			this(20);
 		}
 
-		void setSequence(CharSequence sequence) {
-			mySequence = sequence;
+		StringContainer(StringContainer container) {
+			final int len = container.myLength;
+			final char[] data = new char[len];
+			myData = data;
+			myLength = len;
+			System.arraycopy(container.myData, 0, data, 0, len);
+		}
+
+		public void append(char[] buffer, int offset, int count) {
+			final int len = myLength;
+			char[] data = myData;
+			final int newLength = len + count;
+			if (data.length < newLength) {
+				char[] data0 = new char[newLength];
+				if (len > 0) {
+					System.arraycopy(data, 0, data0, 0, len);
+				}
+				data = data0;
+				myData = data;
+			}
+			System.arraycopy(buffer, offset, data, len, count);
+			myLength = newLength;
+		}
+
+		public void clear() {
+			myLength = 0;
+		}
+
+		public boolean equals(Object o) {
+			final StringContainer container = (StringContainer)o;
+			final int len = myLength;
+			if (len != container.myLength) {
+				return false;
+			}
+			final char[] data0 = myData;
+			final char[] data1 = container.myData;
+			for (int i = 0; i < len; ++i) {
+				if (data0[i] != data1[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public int hashCode() {
+			final int len = myLength;
+			final char[] data = myData;
+			int code = len * 31;
+			if (len > 1) {
+				code += data[0];
+				code *= 31;
+				code += data[1];
+				if (len > 2) {
+					code *= 31;
+					code += data[2];
+				}
+			} else if (len > 0) {
+				code += data[0];
+			}
+			return code;
 		}
 
 		public String toString() {
-			return mySequence.toString();
-		}
-
-		public int compareTo(ComparableString string) {
-			CharSequence s = mySequence;
-			CharSequence s1 = string.mySequence;
-			int len = s.length();
-			int len1 = s1.length();
-			if (len != len1) {
-				return len - len1;
-			}
-			for (int i = 0; i < len; ++i) {
-				int c = s.charAt(i);
-				int c1 = s1.charAt(i);
-				if (c != c1) {
-					return c - c1;
-				}
-			}
-			return 0;
+			return new String(myData, 0, myLength).intern();
 		}
 	}
 
-	private static boolean isWhitespace(char ch) {
-		return (ch == ' ') || (ch <= 0x000D);
-	}
-
-	private static final TreeMap<ComparableString,String> ourStrings = new TreeMap<ComparableString,String>();
-	private static final ComparableString ourPattern = new ComparableString();
-
-	private static String convertToString(StringBuilder builder) {
-		final TreeMap<ComparableString,String> strings = ourStrings;
-		final ComparableString pattern = ourPattern;
-		pattern.setSequence(builder);
-		String s = strings.get(pattern);
+	private static String convertToString(HashMap<StringContainer,String> strings, StringContainer contatiner) {
+		String s = strings.get(contatiner);
 		if (s == null) {
-			s = builder.toString().intern();
-			strings.put(new ComparableString(s), s);
+			s = contatiner.toString();
+			strings.put(new StringContainer(contatiner), s);
 		}
-		builder.delete(0, builder.length());
+		contatiner.clear();
 		return s;
-	}
-
-	private static void appendToName(StringBuilder name, char[] buffer, int startOffset, int endOffset) {
-		name.append(buffer, startOffset, endOffset - startOffset);
 	}
 
 	private final InputStreamReader myStreamReader;
 	private final ZLXMLReader myXMLReader;
 
-	private final char[] myBuffer = new char[4096];
+	private final char[] myBuffer = new char[8192];
 
 	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream) throws IOException {
 		myXMLReader = xmlReader;
@@ -118,8 +146,55 @@ final class ZLOwnXMLParser {
 		myStreamReader = new InputStreamReader(stream, encoding);
 	}
 
+	private static final class StringMap implements ZLXMLReader.StringMap {
+		private int mySize;
+		private String[] myKeys = new String[10];
+		private String[] myValues = new String[10];
+
+		public int getSize() {
+			return mySize;
+		}
+
+		public String getKey(int index) {
+			return myKeys[index];
+		}
+
+		public String getValue(String key) {
+			final int size = mySize;
+			if (size > 0) {
+				key = key.intern();
+				final String[] keys = myKeys;
+				for (int i = 0; i < size; ++i) {
+					if (key == keys[i]) {
+						return myValues[i];
+					}
+				}
+			}
+			return null;
+		}
+
+		public void clear() {
+			mySize = 0;
+		}
+
+		public void put(String key, String value) {
+			final int size = mySize++;
+			String[] keys = myKeys;
+			if (keys.length == size) {
+				keys = new String[2 * size];
+				System.arraycopy(myKeys, 0, keys, 0, size);
+				myKeys = keys;
+				final String[] values = new String[2 * size];
+				System.arraycopy(myValues, 0, values, 0, size);
+				myValues = values;
+			}
+			keys[size] = key;
+			myValues[size] = value;
+		}
+	}
+
 	public void doIt() throws IOException {
-		final TreeMap<String,char[]> entityMap = new TreeMap<String,char[]>();
+		final HashMap<String,char[]> entityMap = new HashMap<String,char[]>();
 		entityMap.put("amp", new char[] { '&' });
 		entityMap.put("apos", new char[] { '\'' });
 		entityMap.put("gt", new char[] { '>' });
@@ -129,18 +204,18 @@ final class ZLOwnXMLParser {
 		final InputStreamReader streamReader = myStreamReader;
 		final ZLXMLReader xmlReader = myXMLReader;
 		final char[] buffer = myBuffer;
-		final StringBuilder tagName = new StringBuilder();
-		final StringBuilder attributeName = new StringBuilder();
-		final StringBuilder attributeValue = new StringBuilder();
-		final StringBuilder entityName = new StringBuilder();
-		final TreeMap<String,String> attributes = new TreeMap<String,String>();
+		final StringContainer tagName = new StringContainer();
+		final StringContainer attributeName = new StringContainer();
+		final StringContainer attributeValue = new StringContainer();
+		final StringContainer entityName = new StringContainer();
+		final HashMap<StringContainer,String> strings = new HashMap<StringContainer,String>();
+		final StringMap attributes = new StringMap();
 
 		int state = START_DOCUMENT;
 		int savedState = START_DOCUMENT;
 		while (true) {
 			int count = streamReader.read(buffer);
 			if (count <= 0) {
-				ourStrings.clear();
 				return;
 			}
 			int startPosition = 0;
@@ -182,66 +257,100 @@ final class ZLOwnXMLParser {
 						}
 						break;
 					case START_TAG:
+startTagLabel:
 						while (true) {
-							if (isWhitespace(c)) {
-								state = WS_AFTER_START_TAG_NAME;
-								appendToName(tagName, buffer, startPosition, i);
-								break;
-							} else if (c == '>') {
-								appendToName(tagName, buffer, startPosition, i);
-								processStartTag(xmlReader, tagName, attributes);
-								state = TEXT;
-								startPosition = i + 1;
-								break;
-							} else if (c == '/') {
-								state = SLASH;
-								appendToName(tagName, buffer, startPosition, i);
-								processFullTag(xmlReader, tagName, attributes);
-								break;
-							} else if (c == '&') {
-								savedState = START_TAG;
-								state = ENTITY_REF;
-								startPosition = i + 1;
-								break;
-							} else if (++i == count) {
-								appendToName(tagName, buffer, startPosition, i);
-								break;
+							switch (c) {
+								case 0x0008:
+								case 0x0009:
+								case 0x000A:
+								case 0x000B:
+								case 0x000C:
+								case 0x000D:
+								case ' ':
+									state = WS_AFTER_START_TAG_NAME;
+									tagName.append(buffer, startPosition, i - startPosition);
+									break startTagLabel;
+								case '>':
+									state = TEXT;
+									tagName.append(buffer, startPosition, i - startPosition);
+									processStartTag(xmlReader, convertToString(strings, tagName), attributes);
+									startPosition = i + 1;
+									break startTagLabel;
+								case '/':
+									state = SLASH;
+									tagName.append(buffer, startPosition, i - startPosition);
+									processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+									break startTagLabel;
+								case '&':
+									savedState = START_TAG;
+									state = ENTITY_REF;
+									startPosition = i + 1;
+									break startTagLabel;
+								default:
+									if (++i == count) {
+										tagName.append(buffer, startPosition, i - startPosition);
+										break startTagLabel;
+									}
+									break;
 							}
 							c = buffer[i];
 						}
 						break;
 					case WS_AFTER_START_TAG_NAME:
-						if (c == '>') {
-							processStartTag(xmlReader, tagName, attributes);
-							state = TEXT;
-							startPosition = i + 1;
-						} else if (c == '/') {
-							state = SLASH;
-							processFullTag(xmlReader, tagName, attributes);
-						} else if (!isWhitespace(c)) {
-							state = ATTRIBUTE_NAME;
-							startPosition = i;
+						switch (c) {
+							case '>':
+								processStartTag(xmlReader, convertToString(strings, tagName), attributes);
+								state = TEXT;
+								startPosition = i + 1;
+								break;
+							case '/':
+								state = SLASH;
+								processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+								break;
+							case 0x0008:
+							case 0x0009:
+							case 0x000A:
+							case 0x000B:
+							case 0x000C:
+							case 0x000D:
+							case ' ':
+								break;
+							default:
+								state = ATTRIBUTE_NAME;
+								startPosition = i;
+								break;
 						}
 						break;
 					case ATTRIBUTE_NAME:
+attributeNameLabel:
 						while (true) {
-							if (c == '=') {
-								state = WAIT_ATTRIBUTE_VALUE;
-								break;
-							} else if (c == '&') {
-								savedState = ATTRIBUTE_NAME;
-								state = ENTITY_REF;
-								startPosition = i + 1;
-								break;
-							} else if (isWhitespace(c)) {
-								state = WAIT_EQUALS;
-								break;
-							} else if (++i == count) {
-								break;
+							switch (c) {
+								case '=':
+									state = WAIT_ATTRIBUTE_VALUE;
+									break attributeNameLabel;
+								case '&':
+									savedState = ATTRIBUTE_NAME;
+									state = ENTITY_REF;
+									startPosition = i + 1;
+									break attributeNameLabel;
+								case 0x0008:
+								case 0x0009:
+								case 0x000A:
+								case 0x000B:
+								case 0x000C:
+								case 0x000D:
+								case ' ':
+									state = WAIT_EQUALS;
+									break attributeNameLabel;
+								default:
+									if (++i == count) {
+										break attributeNameLabel;
+									}
+									break;
 							}
 							c = buffer[i];
 						}
-						appendToName(attributeName, buffer, startPosition, i);
+						attributeName.append(buffer, startPosition, i - startPosition);
 						break;
 					case WAIT_EQUALS:
 						if (c == '=') {
@@ -258,10 +367,10 @@ final class ZLOwnXMLParser {
 						while ((c != '"') && (c != '&') && (++i < count)) {
 							c = buffer[i];
 						}
-						appendToName(attributeValue, buffer, startPosition, i);
+						attributeValue.append(buffer, startPosition, i - startPosition);
 						if (c == '"') {
 							state = WS_AFTER_START_TAG_NAME;
-							attributes.put(convertToString(attributeName), convertToString(attributeValue));
+							attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
 						} else if (c == '&') {
 							savedState = ATTRIBUTE_VALUE;
 							state = ENTITY_REF;
@@ -272,11 +381,11 @@ final class ZLOwnXMLParser {
 						while ((c != ';') && (++i < count)) {
 							c = buffer[i];
 						}
-						appendToName(entityName, buffer, startPosition, i);
+						entityName.append(buffer, startPosition, i - startPosition);
 						if (c == ';') {
 							state = savedState;
 							startPosition = i + 1;
-							final String name = convertToString(entityName);
+							final String name = convertToString(strings, entityName);
 							char[] value = entityMap.get(name);
 							if (value == null) {
 								if ((name.length() > 0) && (name.charAt(0) == '#')) {
@@ -296,14 +405,14 @@ final class ZLOwnXMLParser {
 							if (value != null) {
 								switch (state) {
 									case ATTRIBUTE_VALUE:
-										appendToName(attributeValue, value, 0, value.length);
+										attributeValue.append(value, 0, value.length);
 										break;
 									case ATTRIBUTE_NAME:
-										appendToName(attributeName, value, 0, value.length);
+										attributeName.append(value, 0, value.length);
 										break;
 									case START_TAG:
 									case END_TAG:
-										appendToName(tagName, value, 0, value.length);
+										tagName.append(value, 0, value.length);
 										break;
 									case TEXT:
 										xmlReader.characterDataHandler(value, 0, value.length);
@@ -319,25 +428,36 @@ final class ZLOwnXMLParser {
 						}
 						break;
 					case END_TAG:
+endTagLabel:
 						while (true) {
-							if (c == '>') {
-								appendToName(tagName, buffer, startPosition, i);
-								processEndTag(xmlReader, tagName);
-								state = TEXT;
-								startPosition = i + 1;
-								break;
-							} else if (c == '&') {
-								savedState = END_TAG;
-								state = ENTITY_REF;
-								startPosition = i + 1;
-								break;
-							} else if (isWhitespace(c)) {
-								appendToName(tagName, buffer, startPosition, i);
-								state = WS_AFTER_END_TAG_NAME;
-								break;
-							} else if (++i == count) {
-								appendToName(tagName, buffer, startPosition, i);
-								break;
+							switch (c) {
+								case '>':
+									tagName.append(buffer, startPosition, i - startPosition);
+									processEndTag(xmlReader, convertToString(strings, tagName));
+									state = TEXT;
+									startPosition = i + 1;
+									break endTagLabel;
+								case '&':
+									savedState = END_TAG;
+									state = ENTITY_REF;
+									startPosition = i + 1;
+									break endTagLabel;
+								case 0x0008:
+								case 0x0009:
+								case 0x000A:
+								case 0x000B:
+								case 0x000C:
+								case 0x000D:
+								case ' ':
+									tagName.append(buffer, startPosition, i - startPosition);
+									state = WS_AFTER_END_TAG_NAME;
+									break endTagLabel;
+								default:
+									if (++i == count) {
+										tagName.append(buffer, startPosition, i - startPosition);
+										break endTagLabel;
+									}
+									break;
 							}
 							c = buffer[i];
 						}
@@ -345,7 +465,7 @@ final class ZLOwnXMLParser {
 					case WS_AFTER_END_TAG_NAME:
 						if (c == '>') {
 							state = TEXT;
-							processEndTag(xmlReader, tagName);
+							processEndTag(xmlReader, convertToString(strings, tagName));
 							startPosition = i + 1;
 						}
 						break;
@@ -373,19 +493,18 @@ final class ZLOwnXMLParser {
 		}
 	}
 
-	private static void processFullTag(ZLXMLReader xmlReader, StringBuilder tagName, TreeMap<String,String> attributes) {
-		final String s = convertToString(tagName);
-		xmlReader.startElementHandler(s, attributes);
-		xmlReader.endElementHandler(s);
+	private static void processFullTag(ZLXMLReader xmlReader, String tagName, StringMap attributes) {
+		xmlReader.startElementHandler(tagName, attributes);
+		xmlReader.endElementHandler(tagName);
 		attributes.clear();
 	}
 
-	private static void processStartTag(ZLXMLReader xmlReader, StringBuilder tagName, TreeMap<String,String> attributes) {
-		xmlReader.startElementHandler(convertToString(tagName), attributes);
+	private static void processStartTag(ZLXMLReader xmlReader, String tagName, StringMap attributes) {
+		xmlReader.startElementHandler(tagName, attributes);
 		attributes.clear();
 	}
 
-	private static void processEndTag(ZLXMLReader xmlReader, StringBuilder tagName) {
-		xmlReader.endElementHandler(convertToString(tagName));
+	private static void processEndTag(ZLXMLReader xmlReader, String tagName) {
+		xmlReader.endElementHandler(tagName);
 	}
 }

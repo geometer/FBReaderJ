@@ -25,7 +25,7 @@ class ContentsView extends FBView {
 		final int reference = contentsModel.getReference(paragraph);
 
 		FBReader fbreader = (FBReader)getApplication();
-		fbreader.getBookTextView().gotoParagraph(reference);
+		fbreader.getBookTextView().gotoPosition(reference, 0, 0);
 		fbreader.setMode(FBReader.ViewMode.BOOK_TEXT);
 
 		return true;

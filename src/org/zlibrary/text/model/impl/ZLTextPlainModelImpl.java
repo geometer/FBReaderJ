@@ -6,7 +6,11 @@ import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 
 final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainModel {
-	private ZLIntArray myParagraphInfos = new ZLIntArray(1024);
+	private final ZLIntArray myParagraphInfos = new ZLIntArray(1024);
+
+	ZLTextPlainModelImpl(int dataBlockSize) {
+		super(dataBlockSize);
+	}
 
 	public final int getParagraphsNumber() {
 		return myParagraphInfos.size();
@@ -25,7 +29,7 @@ final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainM
 	}
 
 	public void createParagraph(byte kind) {
-		onParagraphCreation();
+		createParagraph();
 		myParagraphInfos.add(kind << 24);
 	}
 }

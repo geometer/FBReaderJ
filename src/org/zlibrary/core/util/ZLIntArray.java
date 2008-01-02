@@ -1,7 +1,5 @@
 package org.zlibrary.core.util;
 
-import java.util.ArrayList;
-
 public final class ZLIntArray {
 	private int[] myData;
 	private int mySize;

@@ -15,6 +15,7 @@
 	<!-- The intermediates directory -->
 	<!-- Eclipse uses "bin" for its own output, so we do the same. -->
 	<property name="outdir" value="../../bin" />
+	<property name="cachedir" value="../../depcache" />
 
 	<!-- No user servicable parts below. -->
 
@@ -82,14 +83,21 @@
 		</apply>
 	</target>
 
+	<target name="depend" depends="dirs, resource-src, aidl">
+		<depend srcdir="${srcdir}" destdir="${outdir-classes}" cache="${cachedir}" closure="yes">
+			<exclude name="org/zlibrary/core/xml/sax/**"/>
+			<exclude name="org/zlibrary/core/xmlconfig/**"/>
+			<exclude name="org/zlibrary/ui/swing/**"/>
+		</depend>
+	</target>
+
 	<!-- Compile this project's .java files into .class files. -->
-	<target name="compile" depends="dirs, resource-src, aidl">
-		<javac target="1.5" debug="true" extdirs=""
-				srcdir="${srcdir}"
-				destdir="${outdir-classes}"
-				bootclasspath="${android-jar}">
-					<exclude name = "org/zlibrary/ui/swing/**"/>
-				</javac>
+	<target name="compile" depends="depend">
+		<javac target="1.5" debug="true" extdirs="" srcdir="${srcdir}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
+			<exclude name = "org/zlibrary/core/xml/sax/**"/>
+			<exclude name="org/zlibrary/core/xmlconfig/**"/>
+			<exclude name = "org/zlibrary/ui/swing/**"/>
+		</javac>
 	</target>
 
 	<!-- Convert this project's .class files into .dex files. -->

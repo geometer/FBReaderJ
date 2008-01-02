@@ -1,25 +1,20 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLIntegerOptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLIntegerOptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, int defaultValue,
 			int expectedValue) {
-		myConfig.setValue("integer_group", "name", configValue, "category");
+		getConfig().setValue("integer_group", "name", configValue, "category");
 		ZLIntegerOption option = new ZLIntegerOption("category",
 				"integer_group", "name", defaultValue);
 		assertEquals(option.getValue(), expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("integer_group", "name");
+		getConfig().unsetValue("integer_group", "name");
 	}
 
 	public void test1_01() {

@@ -1,5 +1,7 @@
 package org.zlibrary.ui.android.view;
 
+import java.util.HashMap;
+
 import android.graphics.*;
 
 import org.zlibrary.core.image.ZLImage;
@@ -15,6 +17,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private int myHeight;
 
 	private float[] myWidthsArray = new float[10];
+	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
 	ZLAndroidPaintContext() {
 		myPaint = new Paint();
@@ -41,10 +44,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
-		// TODO: optimize
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
-		myPaint.setTypeface(Typeface.create(family, style));
-		myPaint.setTextSize(size);
+		final Paint paint = myPaint;
+		Typeface[] typefaces = myTypefaces.get(family);
+		if (typefaces == null) {
+			typefaces = new Typeface[4];
+			myTypefaces.put(family, typefaces);
+		}
+		Typeface typeface = typefaces[style];
+		if (typeface == null) {
+			typeface = Typeface.create(family, style);
+			typefaces[style] = typeface;
+		}
+		paint.setTypeface(typeface);
+		paint.setTextSize(size);
 	}
 
 	public void setColor(ZLColor color, int style) {
@@ -80,8 +93,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return (int)sum;
 	}
 	protected int getSpaceWidthInternal() {
-		myPaint.getTextWidths(" ", 0, 1, myWidthsArray);
-		return (int)(myWidthsArray[0] + 0.5f);
+		final float[] widths = myWidthsArray;
+		myPaint.getTextWidths(" ", 0, 1, widths);
+		return (int)(widths[0] + 0.5f);
 	}
 	protected int getStringHeightInternal() {
 		return (int)(myPaint.getTextSize() + 0.5f);
@@ -115,11 +129,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
-		myPaint.setAntiAlias(false);
-		myCanvas.drawLine(x0, y0, x1, y1, myPaint);
-		myCanvas.drawPoint(x0, y0, myPaint);
-		myCanvas.drawPoint(x1, y1, myPaint);
-		myPaint.setAntiAlias(true);
+		final Paint paint = myPaint;
+		final Canvas canvas = myCanvas;
+		paint.setAntiAlias(false);
+		canvas.drawLine(x0, y0, x1, y1, paint);
+		canvas.drawPoint(x0, y0, paint);
+		canvas.drawPoint(x1, y1, paint);
+		paint.setAntiAlias(true);
 	}
 
 	public void fillRectangle(int x0, int y0, int x1, int y1) {

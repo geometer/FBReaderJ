@@ -2,6 +2,7 @@
 <project basedir = "." default = "buildJar" name = "fbreader">
 	<property name = "src.dir" value = "src"/>
 	<property name = "bin.dir" value = "bin"/>
+	<property name = "cache.dir" value = "depcache"/>
 	<property name = "icons.dir" value = "icons"/>
 	<property name = "data.dir" value = "data"/>
 	<property name = "test.dir" value= "test"/>
@@ -13,9 +14,17 @@
 		<mkdir dir = "${bin.dir}" />
 	</target>
 
-	<target name = "compile" depends = "prepare">
+	<target name = "depend" depends = "prepare">
+		<depend srcdir = "${src.dir}" destdir = "${bin.dir}" cache = "${cache.dir}" closure = "yes">
+			<exclude name = "org/zlibrary/ui/android/**"/>
+			<exclude name = "org/zlibrary/core/xml/sax/**"/>
+		</depend>
+	</target>
+
+	<target name = "compile" depends = "depend">
 		<javac srcdir = "${src.dir}" destdir = "${bin.dir}">
 			<exclude name = "org/zlibrary/ui/android/**"/>
+			<exclude name = "org/zlibrary/core/xml/sax/**"/>
 		</javac>
 	</target>
 
@@ -49,6 +58,7 @@
 
 	<target name = "clean">
 		<delete dir = "${bin.dir}"/>
+		<delete dir = "${cache.dir}"/>
 		<delete file = "${main.jar}"/>
 		<delete file = "${sources.zip}"/>
 		<delete dir = "platform/android/res/raw"/>
@@ -63,7 +73,7 @@
 			<arg value = "${src.dir}" />
 			<arg value = "${data.dir}" />
 			<arg value = "${icons.dir}" />
-			<arg value = "${manifest.mf}" />
+			<arg value = "${manifest.file}" />
 			<arg value = "build.xml" />
 			<arg value = "platform" />
 			<arg value = "-x" />

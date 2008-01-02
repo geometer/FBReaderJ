@@ -6,10 +6,12 @@ import org.zlibrary.text.model.ZLTextTreeModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
-	private final ArrayList<ZLTextTreeParagraph> myParagraphs = new ArrayList<ZLTextTreeParagraph>();
+	private final ArrayList<ZLTextTreeParagraphImpl> myParagraphs =
+		new ArrayList<ZLTextTreeParagraphImpl>();
 	private final ZLTextTreeParagraphImpl myRoot;
 	
 	public ZLTextTreeModelImpl() {
+		super(4096);
 		myRoot = new ZLTextTreeParagraphImpl(null, this);
 		myRoot.open(true);
 	}
@@ -23,15 +25,16 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 	}
 
 	void increaseLastParagraphSize() {
-		((ZLTextTreeParagraphImpl)myParagraphs.get(myParagraphs.size() - 1)).addEntry();
+		final ArrayList<ZLTextTreeParagraphImpl> paragraphs = myParagraphs;
+		paragraphs.get(paragraphs.size() - 1).addEntry();
 	}
 
 	public ZLTextTreeParagraph createParagraph(ZLTextTreeParagraph parent) {
-		onParagraphCreation();
+		createParagraph();
 		if (parent == null) {
 			parent = myRoot;
 		}
-		ZLTextTreeParagraph tp = new ZLTextTreeParagraphImpl(parent, this);
+		ZLTextTreeParagraphImpl tp = new ZLTextTreeParagraphImpl(parent, this);
 		myParagraphs.add(tp);
 		return tp;
 	}

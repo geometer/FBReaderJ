@@ -3,12 +3,11 @@ package org.zlibrary.ui.swing.library;
 import java.io.InputStream;
 
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.config.ZLConfigReaderFactory;
-import org.zlibrary.core.options.config.ZLConfigWriterFactory;
+import org.zlibrary.core.xmlconfig.ZLXMLConfigManager;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 
-import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
+//import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
@@ -24,15 +23,12 @@ public class ZLSwingLibrary extends ZLibrary {
 		return getClass().getClassLoader().getResourceAsStream(fileName);
 	}
 
-	private static String configDirectory() {
-		return System.getProperty("user.home") + "/." + getInstance().getApplicationName();
-	}
-
 	public static void shutdown() {
-		ZLConfigWriterFactory.createConfigWriter(configDirectory()).write();
+		ZLXMLConfigManager.release();
 		System.exit(0);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void run(String[] args) {
 		ZLSwingDialogManager.createInstance();
 		
@@ -40,7 +36,7 @@ public class ZLSwingLibrary extends ZLibrary {
 		new ZLOwnXMLProcessorFactory();
 		loadProperties();
 
-		ZLConfigReaderFactory.createConfigReader(configDirectory()).read();
+		new ZLXMLConfigManager(System.getProperty("user.home") + "/." + getInstance().getApplicationName());
 
 		ZLApplication application = null;
 		try {

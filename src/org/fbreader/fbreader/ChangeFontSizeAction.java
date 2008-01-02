@@ -13,7 +13,7 @@ class ChangeFontSizeAction extends FBAction {
 		ZLIntegerRangeOption option =
 			ZLTextStyleCollection.getInstance().getBaseStyle().FontSizeOption;
 		option.setValue(option.getValue() + myDelta);
-		//fbreader().clearTextCaches();
+		fbreader().clearTextCaches();
 		fbreader().refreshWindow();
 	}
 

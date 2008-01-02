@@ -4,11 +4,11 @@ import org.zlibrary.text.view.*;
 
 final class ZLTextLineInfo {
 	static final class TreeNodeInfo {
-		public final boolean IsLeaf;
-		public final boolean IsOpen;
-		public final boolean IsFirstLine;
-		public final int ParagraphNumber;
-		public final boolean[] VerticalLinesStack;
+		final boolean IsLeaf;
+		final boolean IsOpen;
+		final boolean IsFirstLine;
+		final int ParagraphNumber;
+		final boolean[] VerticalLinesStack;
 
 		TreeNodeInfo(boolean isLeaf, boolean isOpen, boolean isFirstLine, int paragraphNumber, boolean[] stack) {
 			IsLeaf = isLeaf;
@@ -20,29 +20,52 @@ final class ZLTextLineInfo {
 	};
 	TreeNodeInfo NodeInfo;
 
-	public ZLTextWordCursor Start;
-	public ZLTextWordCursor RealStart;
-	public ZLTextWordCursor End;
-	public boolean IsVisible;
-	public int LeftIndent;
-	public int Width;
-	public int Height;
-	public int Descent;
-	public int VSpaceAfter;
-	public ZLTextStyle StartStyle;
-	public int SpaceCounter;
+	final ZLTextParagraphCursor ParagraphCursor;
+	final int ParagraphCursorLength;
 
-	public ZLTextLineInfo(ZLTextWordCursor word, ZLTextStyle style) {
-		Start = new ZLTextWordCursor(word);
-		RealStart = new ZLTextWordCursor(word);
-		End = new ZLTextWordCursor(word);
-		IsVisible = false;
-		LeftIndent = 0;
-		Width = 0;
-		Height = 0;
-		Descent = 0;
-		VSpaceAfter = 0;
+	final int StartWordNumber;
+	final int StartCharNumber;
+	int RealStartWordNumber;
+	int RealStartCharNumber;
+	int EndWordNumber;
+	int EndCharNumber;
+
+	boolean IsVisible;
+	int LeftIndent;
+	int Width;
+	int Height;
+	int Descent;
+	int VSpaceAfter;
+	int SpaceCounter;
+	ZLTextStyle StartStyle;
+
+	ZLTextLineInfo(ZLTextParagraphCursor paragraphCursor, int wordNumber, int charNumber, ZLTextStyle style) {
+		ParagraphCursor = paragraphCursor;
+		ParagraphCursorLength = paragraphCursor.getParagraphLength();
+
+		StartWordNumber = wordNumber;
+		StartCharNumber = charNumber;
+		RealStartWordNumber = wordNumber;
+		RealStartCharNumber = charNumber;
+		EndWordNumber = wordNumber;
+		EndCharNumber = charNumber;
+
 		StartStyle = style;
-		SpaceCounter = 0;
+	}
+
+	boolean isEndOfParagraph() {
+		return EndWordNumber == ParagraphCursorLength;
+	}
+
+	public boolean equals(Object o) {
+		ZLTextLineInfo info = (ZLTextLineInfo)o;
+		return
+			(ParagraphCursor == info.ParagraphCursor) &&
+			(StartWordNumber == info.StartWordNumber) &&
+			(StartCharNumber == info.StartCharNumber);
+	}
+
+	public int hashCode() {
+		return ParagraphCursor.hashCode() + StartWordNumber + 239 * StartCharNumber;
 	}
 }

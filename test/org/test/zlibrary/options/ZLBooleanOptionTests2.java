@@ -1,18 +1,13 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLBooleanOptionTests2 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLBooleanOptionTests2 extends ZLOptionTests {
 
 	private void runTask2a(String configValue, boolean value2, boolean value3,
 			boolean expectedValue) {
-		myConfig.setValue("boolean_group_2", "name", configValue,
+		getConfig().setValue("boolean_group_2", "name", configValue,
 				"boolean_category");
 		ZLBooleanOption option = new ZLBooleanOption("boolean_category",
 				"boolean_group_2", "name", value2);
@@ -22,17 +17,17 @@ public class ZLBooleanOptionTests2 extends TestCase {
 
 	private void runTask2b(String configValue, boolean value2, boolean value3,
 			String expectedValue) {
-		myConfig.setValue("boolean_group_2", "name", configValue,
+		getConfig().setValue("boolean_group_2", "name", configValue,
 				"boolean_category");
 		ZLBooleanOption option = new ZLBooleanOption("boolean_category",
 				"boolean_group_2", "name", value2);
 		option.setValue(value3);
-		assertEquals(myConfig.getValue("boolean_group_2", "name", "def"),
+		assertEquals(getConfig().getValue("boolean_group_2", "name", "def"),
 				expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("boolean_group_2", "name");
+		getConfig().unsetValue("boolean_group_2", "name");
 	}
 
 	public void test2a_1_01() {

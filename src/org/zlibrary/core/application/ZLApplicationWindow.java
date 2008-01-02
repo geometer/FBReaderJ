@@ -1,7 +1,6 @@
 package org.zlibrary.core.application;
 
-import java.util.List;
-import java.util.Set;
+import java.util.ArrayList;
 
 import org.zlibrary.core.view.ZLViewWidget;
 
@@ -22,9 +21,12 @@ abstract public class ZLApplicationWindow {
 	protected void init() {
 		myApplication.setViewWidget(createViewWidget());
 
-		List<ZLApplication.Toolbar.Item> toolbarItems = myApplication.getToolbar().items();
-		for (ZLApplication.Toolbar.Item item: toolbarItems) {
-			addToolbarItem(item);
+		final ZLApplication.Toolbar toolbar = myApplication.getToolbar();
+		if (toolbar != null) {
+			final int size = toolbar.size();
+			for (int i = 0; i < size; ++i) {
+				addToolbarItem(toolbar.getItem(i));
+			}
 		}
 
 		initMenu();
@@ -45,9 +47,10 @@ abstract public class ZLApplicationWindow {
 			} else {
 				button.press();
 				ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
-				Set<ZLApplication.Toolbar.ButtonItem> items = group.Items;
-				for (ZLApplication.Toolbar.ButtonItem bitem: items) {
-					setToggleButtonState(bitem);
+				final ArrayList<ZLApplication.Toolbar.ButtonItem> items = group.Items;
+				final int size = items.size();
+				for (int i = 0; i < size; ++i) {
+					setToggleButtonState(items.get(i));
 				}
 			}
 			myToggleButtonLock = false;
@@ -66,60 +69,64 @@ abstract public class ZLApplicationWindow {
 	abstract public void addToolbarItem(ZLApplication.Toolbar.Item item);
 
 	protected void refresh() {
-		List<ZLApplication.Toolbar.Item> items = getApplication().getToolbar().items();
-		boolean enableToolbarSpace = false;
-		ZLApplication.Toolbar.Item lastSeparator = null;
-		for (ZLApplication.Toolbar.Item item : items) {
-			if (item instanceof ZLApplication.Toolbar.OptionEntryItem) {
-			/*case OPTION_ENTRY:
-			{
-				boolean visible = ((OptionEntryItem)item.entry().isVisible())//((Toolbar.OptionEntryItem)**it).entry()->isVisible();
-						if (visible) {
-							if (lastSeparator != null) {
-								setToolbarItemState(lastSeparator, true, true);
-								lastSeparator = null;
+		final ZLApplication.Toolbar toolbar = myApplication.getToolbar();
+		if (toolbar != null) {
+			boolean enableToolbarSpace = false;
+			ZLApplication.Toolbar.Item lastSeparator = null;
+			final int size = toolbar.size();
+			for (int i = 0; i < size; ++i) {
+				final ZLApplication.Toolbar.Item item = toolbar.getItem(i);
+				if (item instanceof ZLApplication.Toolbar.OptionEntryItem) {
+				/*case OPTION_ENTRY:
+				{
+					boolean visible = ((OptionEntryItem)item.entry().isVisible())//((Toolbar.OptionEntryItem)**it).entry()->isVisible();
+							if (visible) {
+								if (lastSeparator != null) {
+									setToolbarItemState(lastSeparator, true, true);
+									lastSeparator = null;
+								}
+								enableToolbarSpace = true;
 							}
-							enableToolbarSpace = true;
+							setToolbarItemState(item, visible, true);
 						}
-						setToolbarItemState(item, visible, true);
-					}
-					break;*/
-			} else if (item instanceof ZLApplication.Toolbar.ButtonItem) {
-				ZLApplication.Toolbar.ButtonItem button = (ZLApplication.Toolbar.ButtonItem)item;
-				int id = button.getActionId();
+						break;*/
+				} else if (item instanceof ZLApplication.Toolbar.ButtonItem) {
+					ZLApplication.Toolbar.ButtonItem button = (ZLApplication.Toolbar.ButtonItem)item;
+					int id = button.getActionId();
 	
-				boolean visible = getApplication().isActionVisible(id);
-				boolean enabled = getApplication().isActionEnabled(id);
-
-				if (visible) {
-					if (lastSeparator != null) {
-						setToolbarItemState(lastSeparator, true, true);
-						lastSeparator = null;
+					boolean visible = getApplication().isActionVisible(id);
+					boolean enabled = getApplication().isActionEnabled(id);
+    
+					if (visible) {
+						if (lastSeparator != null) {
+							setToolbarItemState(lastSeparator, true, true);
+							lastSeparator = null;
+						}
+						enableToolbarSpace = true;
 					}
-					enableToolbarSpace = true;
+					if (!enabled && button.isPressed()) {
+						ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
+						group.press(null);
+						getApplication().doAction(group.UnselectAllButtonsActionId);
+						myToggleButtonLock = true;
+						setToggleButtonState(button);
+						myToggleButtonLock = false;
+					}
+					setToolbarItemState(item, visible, enabled);
+				} else if (item instanceof ZLApplication.Toolbar.SeparatorItem) {
+					if (enableToolbarSpace) {
+						lastSeparator = item;
+						enableToolbarSpace = false;
+					} else {
+						setToolbarItemState(item, false, true);
+					}
+					//break;
 				}
-				if (!enabled && button.isPressed()) {
-					ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
-					group.press(null);
-					getApplication().doAction(group.UnselectAllButtonsActionId);
-					myToggleButtonLock = true;
-					setToggleButtonState(button);
-					myToggleButtonLock = false;
-				}
-				setToolbarItemState(item, visible, enabled);
-			} else if (item instanceof ZLApplication.Toolbar.SeparatorItem) {
-				if (enableToolbarSpace) {
-					lastSeparator = item;
-					enableToolbarSpace = false;
-				} else {
-					setToolbarItemState(item, false, true);
-				}
-				//break;
 			}
-		}
-		
-		if (lastSeparator != null) {
-			setToolbarItemState(lastSeparator, false, true);
+			
+			if (lastSeparator != null) {
+				setToolbarItemState(lastSeparator, false, true);
+			}
 		}
 	}
 	// TODO: change to pure virtual

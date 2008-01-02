@@ -8,11 +8,11 @@ final class ZLTreeResource extends ZLResource {
 
 	private boolean myHasValue;
 	private	String myValue;
-	private	TreeMap<String,ZLTreeResource> myChildren;
+	private HashMap<String,ZLTreeResource> myChildren;
 	
 	public static void buildTree() {
 		if (ourRoot == null) {
-			ourRoot = new ZLTreeResource("");
+			ourRoot = new ZLTreeResource("", null);
 			loadData("en");
 			Locale locale = Locale.getDefault();
 			String language = locale.getLanguage();
@@ -29,19 +29,13 @@ final class ZLTreeResource extends ZLResource {
 		reader.readDocument(ourRoot, "data/resources/application/" + fileName);
 	}
 
-	private ZLTreeResource(String name) {
-		super(name);
-		myHasValue = false;
-	}
-	
 	private	ZLTreeResource(String name, String value) {
 		super(name);
-		myHasValue = true;
-		myValue = value;
+		setValue(value);
 	}
 	
 	private void setValue(String value) {
-		myHasValue = true;
+		myHasValue = value != null;
 		myValue = value;
 	}
 	
@@ -50,61 +44,62 @@ final class ZLTreeResource extends ZLResource {
 	}
 	
 	public String getValue() {
-		return myHasValue ? myValue : ZLMissingResource.ourValue;
+		return myHasValue ? myValue : ZLMissingResource.Value;
 	}
 
 	public ZLResource getResource(String key) {
-		if (myChildren != null) {
-			ZLResource child = myChildren.get(key);
+		final HashMap<String,ZLTreeResource> children = myChildren;
+		if (children != null) {
+			ZLResource child = children.get(key);
 			if (child != null) {
 				return child;
 			}
 		}
-		return ZLMissingResource.instance();
+		return ZLMissingResource.Instance;
 	}
 		
 	private static class ResourceTreeReader extends ZLXMLReader {
 		private static final String NODE = "node"; 
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 		
-		public void readDocument(ZLTreeResource root, String string) {
+		public void readDocument(ZLTreeResource root, String fileName) {
 			myStack.clear();
 			myStack.add(root);
-			read(string);
+			read(fileName);
 		}
 
 		public void endElementHandler(String tag) {
-			if (!myStack.isEmpty() && (NODE.equals(tag))) {
-				myStack.remove(myStack.size() - 1);
+			final ArrayList<ZLTreeResource> stack = myStack;
+			if (!stack.isEmpty() && (NODE.equals(tag))) {
+				stack.remove(stack.size() - 1);
 			}
 		}
 
-		public void startElementHandler(String tag, Map<String, String> attributes) {
-			if (!myStack.isEmpty() && (NODE.equals(tag))) {
-				String name = attributes.get("name");
+		public void startElementHandler(String tag, StringMap attributes) {
+			final ArrayList<ZLTreeResource> stack = myStack;
+			if (!stack.isEmpty() && (NODE.equals(tag))) {
+				String name = attributes.getValue("name");
 				if (name != null) {
-					String value = attributes.get("value");
-					ZLTreeResource peek = myStack.get(myStack.size() - 1);
+					String value = attributes.getValue("value");
+					ZLTreeResource peek = stack.get(stack.size() - 1);
 					ZLTreeResource node;
-					if (peek.myChildren == null) {
+					HashMap<String,ZLTreeResource> children = peek.myChildren;
+					if (children == null) {
 						node = null;
-						peek.myChildren = new TreeMap<String,ZLTreeResource>();
+						children = new HashMap<String,ZLTreeResource>();
+						peek.myChildren = children;
 					} else {
-						node = peek.myChildren.get(name);
+						node = children.get(name);
 					}
 					if (node == null) {
-						if (value != null) {
-							node = new ZLTreeResource(name, value);
-						} else {
-							node = new ZLTreeResource(name);
-						}
-						peek.myChildren.put(name, node);
+						node = new ZLTreeResource(name, value);
+						children.put(name, node);
 					} else {
 						if (value != null) {
 							node.setValue(value);
 						}
 					}
-					myStack.add(node);
+					stack.add(node);
 				}
 			}
 		}

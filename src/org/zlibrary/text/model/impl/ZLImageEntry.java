@@ -1,22 +1,21 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.Map;
-
 import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextParagraph;
 
-public class ZLImageEntry implements ZLTextParagraph.Entry {
+public final class ZLImageEntry {
+	private final ZLImageMap myImageMap;
 	private final String myId;
-	private final Map<String,ZLImage> myImageMap;
 	public final short VOffset;
 
-	ZLImageEntry(String id, Map<String,ZLImage> imageMap, short vOffset) {
-		myId = id;
+	ZLImageEntry(ZLImageMap imageMap, String id, short vOffset) {
 		myImageMap = imageMap;
+		myId = id;
 		VOffset = vOffset;
 	}
 	
 	public ZLImage getImage() {
-		return myImageMap.get(myId);
+		return myImageMap.getImage(myId);
 	}
 }

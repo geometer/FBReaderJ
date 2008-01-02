@@ -1,14 +1,13 @@
 package org.zlibrary.core.options;
 
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
+import org.zlibrary.core.config.ZLConfigManager;
 
 public abstract class ZLOption {
 	public static final String LOOK_AND_FEEL_CATEGORY = "ui";
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 
-	private final ZLConfig myConfig = ZLConfigInstance.getInstance();
 	private final String myCategory;
 	private final String myGroup;
 	private String myOptionName;
@@ -66,14 +65,22 @@ public abstract class ZLOption {
 	}
 
 	protected final String getConfigValue(String defaultValue) {
-		return myConfig.getValue(myGroup, myOptionName, defaultValue);
+		ZLConfig config = ZLConfigManager.getConfig();
+		return (config != null) ?
+			config.getValue(myGroup, myOptionName, defaultValue) : defaultValue;
 	}
 
 	protected final void setConfigValue(String value) {
-		myConfig.setValue(myGroup, myOptionName, value, myCategory);
+		ZLConfig config = ZLConfigManager.getConfig();
+		if (config != null) {
+			config.setValue(myGroup, myOptionName, value, myCategory);
+		}
 	}
 
 	protected final void unsetConfigValue() {
-		myConfig.unsetValue(myGroup, myOptionName);
+		ZLConfig config = ZLConfigManager.getConfig();
+		if (config != null) {
+			config.unsetValue(myGroup, myOptionName);
+		}
 	}
 }

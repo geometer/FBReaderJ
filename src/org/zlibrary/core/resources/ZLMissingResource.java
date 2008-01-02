@@ -1,11 +1,11 @@
 package org.zlibrary.core.resources;
 
 final class ZLMissingResource extends ZLResource {
-	static final String ourValue = "????????";
-	private static ZLMissingResource ourInstance;
+	static final String Value = "????????";
+	static final ZLMissingResource Instance = new ZLMissingResource();
 
 	private ZLMissingResource() {
-		super(ourValue);
+		super(Value);
 	}
 
 	public ZLResource getResource(String key) {
@@ -17,13 +17,6 @@ final class ZLMissingResource extends ZLResource {
 	}
 
 	public String getValue() {
-		return ourValue;
-	}
-	
-	public static ZLMissingResource instance() {
-		if (ourInstance == null) {
-			ourInstance = new ZLMissingResource();
-		}
-		return ourInstance;
+		return Value;
 	}
 }

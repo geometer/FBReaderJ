@@ -7,10 +7,9 @@ import android.content.Resources;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
 
+//import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
-//import org.zlibrary.options.config.reader.ZLConfigReaderFactory;
-//import org.zlibrary.options.config.writer.ZLConfigWriterFactory;
+import org.zlibrary.ui.android.sqliteconfig.ZLSQLiteConfigManager;
 
 import org.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.zlibrary.ui.android.view.ZLAndroidWidget;
@@ -49,14 +48,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myActivity.getResources().openRawResource(resourceId);
 	}
 
-	/*
-	private static String configDirectory() {
-		return System.getProperty("user.home") + "/." + getInstance().getApplicationName();
-	}
-	*/
-
 	public static void shutdown() {
-		//ZLConfigWriterFactory.createConfigWriter(configDirectory()).write();
+		ZLSQLiteConfigManager.release();
 	}
 
 	public void finish() {
@@ -69,12 +62,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	void run(ZLAndroidActivity activity) {
 		myActivity = activity;
 
-		new ZLOwnXMLProcessorFactory();
 		//new ZLSaxXMLProcessorFactory();
+		new ZLOwnXMLProcessorFactory();
+		new ZLSQLiteConfigManager();
 		loadProperties();
 
-		myActivity.setContentView(R.layout.main);
-		//ZLConfigReaderFactory.createConfigReader(configDirectory()).read();
+		activity.setContentView(R.layout.main);
 
 		try {
 			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();

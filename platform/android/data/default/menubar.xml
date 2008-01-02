@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menubar>
+	<item action="25" key="bookInfo"/>
+	<item action="5" key="toc"/>
+	<submenu key="library">
+		<item action="1" key="open"/>
+		<item action="7" key="previous"/>
+		<item action="28" key="recent"/>
+		<item action="24" key="addBook"/>
+		<item action="26" key="about"/>
+	</submenu>
+	<submenu key="navigate">
+		<item action="15" key="gotoStartOfDocument"/>
+		<item action="16" key="gotoStartOfSection"/>
+		<item action="17" key="gotoEndOfSection"/>
+		<item action="33" key="gotoNextTOCItem"/>
+		<item action="34" key="gotoPreviousTOCItem"/>
+		<item action="3" key="goBack"/>
+		<item action="4" key="goForward"/>
+	</submenu>
+	<submenu key="selection">
+		<item action="35" key="clipboard"/>
+		<item action="37" key="dictionary"/>
+		<item action="36" key="clear"/>
+	</submenu>
+	<submenu key="search">
+		<item action="6" key="find"/>
+		<item action="7" key="next"/>
+		<item action="8" key="previous"/>
+	</submenu>
+	<submenu key="view">
+		<item action="27" key="rotate"/>
+		<item action="22" key="fullScreen"/>
+		<item action="21" key="toggleIndicator"/>
+	</submenu>
+	<item action="2" key="settings"/>
+	<item action="29" key="close"/>
+</menubar>

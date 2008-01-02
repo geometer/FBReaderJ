@@ -1,7 +1,5 @@
 package org.zlibrary.text.view.style;
 
-import java.util.Map;
-
 import org.zlibrary.core.util.ZLBoolean3;
 import org.zlibrary.core.xml.ZLXMLReader;
 import org.zlibrary.text.model.ZLTextAlignmentType;
@@ -51,9 +49,9 @@ public class ZLTextStyleCollection {
 	private static class TextStyleReader extends ZLXMLReader {
 		private ZLTextStyleCollection myCollection;
 
-		private static int intValue(Map<String,String> attributes, String name) {
+		private static int intValue(StringMap attributes, String name) {
 			int i = 0;
-			String value = attributes.get(name);
+			String value = attributes.getValue(name);
 			if (value != null) {
 				try {
 					i = Integer.parseInt(value);
@@ -64,9 +62,9 @@ public class ZLTextStyleCollection {
 			return i;
 		}
 
-		private static double doubleValue(Map<String,String> attributes, String name) {
+		private static double doubleValue(StringMap attributes, String name) {
 			double d = 0;
-			String value = attributes.get(name);
+			String value = attributes.getValue(name);
 			if (value != null) {
 				try {
 					d = Double.parseDouble(value);
@@ -77,27 +75,27 @@ public class ZLTextStyleCollection {
 			return d;
 		}
 
-		private static boolean booleanValue(Map<String,String> attributes, String name) {
-			return "true".equals(attributes.get(name));
+		private static boolean booleanValue(StringMap attributes, String name) {
+			return "true".equals(attributes.getValue(name));
 		}
 
-		private static int b3Value(Map<String,String> attributes, String name) {
-			return ZLBoolean3.getByString(attributes.get(name));
+		private static int b3Value(StringMap attributes, String name) {
+			return ZLBoolean3.getByString(attributes.getValue(name));
 		}
 			
 		public TextStyleReader(ZLTextStyleCollection collection) {
 			myCollection = collection;
 		}
 
-		public void startElementHandler(String tag, Map<String,String> attributes) {
+		public void startElementHandler(String tag, StringMap attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";
 
 			if (BASE.equals(tag)) {
-				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.get("family"), intValue(attributes, "fontSize"));
+				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.getValue("family"), intValue(attributes, "fontSize"));
 			} else if (STYLE.equals(tag)) {
-				String idString = attributes.get("id");
-				String name = attributes.get("name");
+				String idString = attributes.getValue("id");
+				String name = attributes.getValue("name");
 				if ((idString != null) && (name != null)) {
 					byte id = Byte.parseByte(idString);
 					ZLTextStyleDecoration decoration;
@@ -108,7 +106,7 @@ public class ZLTextStyleCollection {
 					int verticalShift = intValue(attributes, "vShift");
 					int allowHyphenations = b3Value(attributes, "allowHyphenations");
 					byte hyperlinkStyle = HyperlinkStyle.NONE;
-					String hyperlink = attributes.get("hyperlink");
+					String hyperlink = attributes.getValue("hyperlink");
 					if (hyperlink != null) {
 						if ("internal".equals(hyperlink)) {
 							hyperlinkStyle = HyperlinkStyle.INTERNAL;
@@ -128,7 +126,7 @@ public class ZLTextStyleCollection {
 						int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta");
 
 						byte alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
-						String alignmentString = attributes.get("alignment");
+						String alignmentString = attributes.getValue("alignment");
 						if (alignmentString != null) {
 							if (alignmentString.equals("left")) {
 								alignment = ZLTextAlignmentType.ALIGN_LEFT;
@@ -146,7 +144,7 @@ public class ZLTextStyleCollection {
 					}
 					decoration.setHyperlinkStyle(hyperlinkStyle);
 
-					String fontFamily = attributes.get("family");
+					String fontFamily = attributes.getValue("family");
 					if (fontFamily != null) {
 						decoration.FontFamilyOption.setValue(fontFamily);
 					}

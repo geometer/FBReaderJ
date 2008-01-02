@@ -71,6 +71,7 @@
 					<node name="defaultLanguage" value="Язык по умолчанию"/>
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
+					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1" toBeTranslated="true"/>
 					<node name="chineseBreakAtAnyPosition" value="В китайском языке разрыв строки в любом месте"/>
 				</node>
 				<node name="Indicator" value="Индикатор">
@@ -101,6 +102,9 @@
 					<node name="linesToKeep" value="Сколько строк перекрывать"/>
 					<node name="linesToScroll" value="Сколько строк сдвигать"/>
 					<node name="percentToScroll" value="Сколько процентов сдвигать"/>
+				</node>
+				<node name="Selection" value="Пометка">
+					<node name="enableSelection" value="Разрешить помечать текст"/>
 				</node>
 				<node name="Margins" value="Отступы">
 					<node name="left" value="Отступ слева"/>
@@ -215,6 +219,11 @@
 					<node name="defaultText" value="Окрывать внешние ссылки в браузере"/>
 					<node name="choice" value="Браузер"/>
 					<node name="command" value="Выполнять команду"/>
+				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press" toBeTranslated="true"/>
+					<node name="minStylusPressure" value="Минимальное давление стилуса"/>
+					<node name="maxStylusPressure" value="Максимальное давление стилуса"/>
 				</node>
 			</node>
 		</node>

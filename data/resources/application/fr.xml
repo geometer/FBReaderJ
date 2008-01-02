@@ -68,11 +68,12 @@
 					<node name="keyDelay" value="Délai entre appui sur les touches"/>
 				</node>
 				<node name="Language" value="Langue">
-					<node name="autoDetect" value="Detect Language and Encoding Automatically" toBeTranslated="true"/>
+					<node name="autoDetect" value="Detecter la langue et l'encodage automatiquement"/>
 					<node name="defaultLanguage" value="Langue par défaut "/>
 					<node name="defaultEncodingSet" value="Ensemble d'encodages par défaut"/>
 					<node name="defaultEncoding" value="Encodage par défaut"/>
-					<node name="chineseBreakAtAnyPosition" value="In Chinese Break Line at Any Position" toBeTranslated="true"/>
+					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1" toBeTranslated="true"/>
+					<node name="chineseBreakAtAnyPosition" value="En chinois, passer à la ligne n'importe où"/>
 				</node>
 				<node name="Indicator" value="Indicateur">
 					<node name="show" value="Montrer l'indicateur de position"/>
@@ -102,6 +103,9 @@
 					<node name="linesToKeep" value="Lignes à conserver"/>
 					<node name="linesToScroll" value="Lignes à défiler"/>
 					<node name="percentToScroll" value="Pourcentage à défiler"/>
+				</node>
+				<node name="Selection" value="Sélection">
+					<node name="enableSelection" value="Enable Text Selection" toBeTranslated="true"/>
 				</node>
 				<node name="Margins" value="Marges">
 					<node name="left" value="Marge gauche"/>
@@ -217,6 +221,11 @@
 					<node name="choice" value="Utiliser le navigateur"/>
 					<node name="command" value="Commande à exécuter"/>
 				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press" toBeTranslated="true"/>
+					<node name="minStylusPressure" value="Minimal Stylus Pressure" toBeTranslated="true"/>
+					<node name="maxStylusPressure" value="Maximal Stylus Pressure" toBeTranslated="true"/>
+				</node>
 			</node>
 		</node>
 		<node name="InfoDialog">
@@ -227,7 +236,7 @@
 					<node name="title" value="Titre"/>
 					<node name="authorDisplayName" value="Auteur (nom affiché)"/>
 					<node name="authorSortKey" value="Auteur (clef de tri)"/>
-					<node name="language" value="Language" toBeTranslated="true"/>
+					<node name="language" value="Langue"/>
 					<node name="encodingSet" value="Ensemble d'encodages"/>
 					<node name="encoding" value="Encodage"/>
 				</node>
@@ -274,7 +283,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Chargement du livre. Veuillez patienter..."/>
-			<node name="loadingBookList" value="Chargement de la liste des livres. Veuillez patitenter..."/>
+			<node name="loadingBookList" value="Chargement de la liste des livres. Veuillez patienter..."/>
 		</node>
 	</node>
 	<node name="style">

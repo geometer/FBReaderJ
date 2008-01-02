@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;Ok"/>
+			<node name="cancel" value="&amp;Annulla"/>
+			<node name="yes" value="&amp;S&igrave;"/>
+			<node name="no" value="&amp;No"/>
+			<node name="apply" value="&amp;Applica"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Salvataggio configurazione..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rosso"/>
+		<node name="green" value="Verde"/>
+		<node name="blue" value="Blu"/>
+		<node name="black" value="Nero"/>
+		<node name="white" value="Bianco"/>
+		<node name="maroon" value="Marrone"/>
+		<node name="olive" value="Oliva"/>
+		<node name="navy" value="Blu scuro"/>
+		<node name="purple" value="Viola"/>
+		<node name="teal" value="Verde-azzurro"/>
+		<node name="silver" value="Argento"/>
+		<node name="gray" value="Grigio"/>
+		<node name="lime" value="Verde-giallo"/>
+		<node name="yellow" value="Giallo"/>
+		<node name="magenta" value="Magenta"/>
+		<node name="cyan" value="Ciano"/>
+		<node name="custom..." value="Personalizzato..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Ceco"/>
+		<node name="de" value="Tedesco"/>
+		<node name="de-traditional" value="Tedesco (ortografia tradizionale)"/>
+		<node name="en" value="Inglese"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spagnolo"/>
+		<node name="fi" value="Finlandese"/>
+		<node name="fr" value="Francese"/>
+		<node name="it" value="Italiano"/>
+		<node name="no" value="Norvegese"/>
+		<node name="pt" value="Portoghese"/>
+		<node name="ru" value="Russo"/>
+		<node name="sv" value="Svedese"/>
+		<node name="uk" value="Ucraino"/>
+		<node name="zh" value="Cinese"/>
+		<node name="other" value="Altra"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on"/>
+		<node name="off" value="off"/>
+		<node name="unchanged" value="invariato"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Azione del Tasto"/>
+	</node>
+</resources>

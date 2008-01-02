@@ -22,10 +22,4 @@ final class ZLTextWord extends ZLTextElement {
 		}
 		return width;
 	}
-
-	/*	
-	String getWord() {
-		return Data.substring(Offset, Offset + Length);	
-	}
-	*/
 }

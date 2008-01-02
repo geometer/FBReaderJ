@@ -10,11 +10,10 @@ class ScrollToHomeAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		return false;
-		//return isVisible();
+		return isVisible();
 	}
 
 	public void run() {
-		//
+		fbreader().getBookTextView().scrollToHome();
 	}
 }

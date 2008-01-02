@@ -32,18 +32,20 @@
 		<node name="custom..." value="Налаштувати..."/>
 	</node>
 	<node name="language">
-		<node name="cs" value="Чешська"/>
-		<node name="de" value="German" toBeTranslated="true"/>
-		<node name="de-traditional" value="German (traditional orphography)" toBeTranslated="true"/>
-		<node name="en" value="English" toBeTranslated="true"/>
-		<node name="eo" value="Esperanto" toBeTranslated="true"/>
-		<node name="es" value="Spanish" toBeTranslated="true"/>
-		<node name="fi" value="Finnish" toBeTranslated="true"/>
-		<node name="fr" value="French" toBeTranslated="true"/>
-		<node name="it" value="Italian" toBeTranslated="true"/>
-		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="cs" value="Чеська"/>
+		<node name="de" value="Німецька"/>
+		<node name="de-traditional" value="Німецька (традiцiйна орфографiя)"/>
+		<node name="en" value="Англійська"/>
+		<node name="eo" value="Есперанто"/>
+		<node name="es" value="Іспанська"/>
+		<node name="fi" value="Фінська"/>
+		<node name="fr" value="Французька"/>
+		<node name="it" value="Італійська"/>
+		<node name="no" value="Норвезька"/>
+		<node name="pt" value="Португальська"/>
 		<node name="ru" value="Російська"/>
-		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="sv" value="Шведська"/>
+		<node name="uk" value="Українська"/>
 		<node name="zh" value="Китайська"/>
 		<node name="other" value="Інша"/>
 	</node>

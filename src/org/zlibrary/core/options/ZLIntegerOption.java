@@ -27,8 +27,7 @@ public final class ZLIntegerOption extends ZLOption {
 			String value = getConfigValue(null);
 			if (value != null) {
 				try {
-					Integer intValue = Integer.parseInt(value);
-					myValue = intValue;
+					myValue = Integer.parseInt(value);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}

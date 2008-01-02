@@ -26,8 +26,8 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	//private final Map<Menu.Item, Action> myMenuActionMap = new HashMap<Menu.Item, Action>();
 	//private final Map<ZLAction, Action> myActionMap = new HashMap<ZLAction, Action>();
 
-	private final JMenuBar myMenuBar;
-	private final JMenu myMenu;
+	//private final JMenuBar myMenuBar;
+	//private final JMenu myMenu;
 	
 	private final ZLIntegerRangeOption myXOption =
 		new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "XPosition", 0, 2000, 10);
@@ -76,15 +76,15 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		myToolbar = new JToolBar();
 		myToolbar.setFloatable(false);
-		myMenuBar = new JMenuBar();
-		myMenu = new JMenu("File");
-		myMenuBar.add(myMenu);
+		//myMenuBar = new JMenuBar();
+		//myMenu = new JMenu("File");
+		//myMenuBar.add(myMenu);
 		myMainPanel = new JPanel();
 		myMainPanel.setLayout(new BorderLayout());
 		myMainPanel.add(myToolbar, BorderLayout.NORTH);
 		myFrame.add(myMainPanel);
 		
-		myFrame.setJMenuBar(myMenuBar);
+		//myFrame.setJMenuBar(myMenuBar);
 		myFrame.addKeyListener(new MyKeyListener());
 		myFrame.setFocusable(true);
 	}
@@ -95,7 +95,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 	public void run() {
 		myToolbar.setVisible(true);
-		myMenuBar.setVisible(true);
+		//myMenuBar.setVisible(true);
 		myFrame.setVisible(true);
 	}
 
@@ -104,10 +104,11 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void initMenu() {
-		MyMenuVisitor visitor = new MyMenuVisitor(myMenu);
-		visitor.processMenu(getApplication().getMenubar());
+		//MyMenuVisitor visitor = new MyMenuVisitor(myMenu);
+		//visitor.processMenu(getApplication());
 	}
 		
+	/*
 	private class MyMenuVisitor extends ZLApplication.MenuVisitor {
 		private final Stack<JMenuItem> myMenuStack = new Stack<JMenuItem>();
 
@@ -151,6 +152,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		}
 
 	}
+	*/
 
 	public void setCaption(String caption) {
 		myFrame.setTitle(caption);

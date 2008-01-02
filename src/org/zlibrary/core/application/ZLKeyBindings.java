@@ -1,8 +1,6 @@
 package org.zlibrary.core.application;
 
-import java.util.Collections;
-import java.util.TreeMap;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 
 import org.zlibrary.core.options.ZLIntegerOption;
@@ -16,12 +14,12 @@ public final class ZLKeyBindings {
 	private static final String BINDED_ACTION = "Action";
 
 	private final String myName;
-	private final TreeMap<String,Integer> myBindingsMap = new TreeMap<String, Integer>();
+	private final HashMap<String,Integer> myBindingsMap = new HashMap<String,Integer>();
 	private	boolean myIsChanged;
 
 	public ZLKeyBindings(String name) {
 		myName = name;
-		loadDefaultBindings();
+		new ZLKeyBindingsReader(myBindingsMap).readBindings();
 		loadCustomBindings();
 		myIsChanged = false;
 	}
@@ -38,14 +36,6 @@ public final class ZLKeyBindings {
 	
 	public Set<String> getKeys() {
 		return myBindingsMap.keySet();
-	}
-
-	private void loadDefaultBindings() {
-		TreeMap<String,Integer> keymap = new TreeMap<String,Integer>();
-		new ZLKeyBindingsReader(keymap).readBindings();
-		for (Map.Entry<String,Integer> entry: keymap.entrySet()) {
-			bindKey(entry.getKey(), entry.getValue());
-		}
 	}
 	
 	private	void loadCustomBindings() {
@@ -73,7 +63,7 @@ public final class ZLKeyBindings {
 			return;
 		}
 		
-		TreeMap<String,Integer> keymap = new TreeMap<String,Integer>();
+		final HashMap<String,Integer> keymap = new HashMap<String,Integer>();
 		new ZLKeyBindingsReader(keymap).readBindings();
 		
 		int counter = 0;
@@ -81,14 +71,14 @@ public final class ZLKeyBindings {
 			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
 		final ZLIntegerOption actionOption =
 			new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, "", -1);
-		for (Map.Entry<String,Integer> entry : myBindingsMap.entrySet()) {
-			Integer original = keymap.get(entry.getKey());
-			int defaultAction = original;
-			if (defaultAction != entry.getValue()) {
+		for (String key : myBindingsMap.keySet()) {
+			Integer originalValue = keymap.get(key);
+			Integer value = myBindingsMap.get(key);
+			if (!originalValue.equals(value)) {
 				keyOption.changeName(BINDED_KEY + counter);
 				actionOption.changeName(BINDED_ACTION + counter);
-				keyOption.setValue(entry.getKey());
-				actionOption.setValue(entry.getValue());
+				keyOption.setValue(key);
+				actionOption.setValue(value);
 				++counter;
 			}
 		}

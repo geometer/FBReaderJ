@@ -1,6 +1,8 @@
-package org.zlibrary.core.options.config;
+package org.zlibrary.core.xmlconfig;
 
 import java.util.*;
+
+import org.zlibrary.core.config.ZLConfig;
 
 final class ZLConfigImpl implements ZLConfig {
 	

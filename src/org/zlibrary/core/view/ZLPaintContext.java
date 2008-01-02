@@ -9,7 +9,7 @@ abstract public class ZLPaintContext {
 	private int myX = 0;
 	private int myY = 0;
 
-	private final ArrayList<String> myFamilies = new ArrayList<String>();
+	//private final ArrayList<String> myFamilies = new ArrayList<String>();
 
 	public interface LineStyle {
 		int SOLID_LINE = 0;

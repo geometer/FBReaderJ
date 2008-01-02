@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Informazioni su FBReader</book-title> <lang>it</lang></title-info></description>
+<body>
+<title><p>Informazioni su FBReader</p></title>
+<p>FBReader è un lettore di e-book per PDA/UMPC/computer Linux/Windows. FBReader supporta diversi formati di e-book: <code>fb2</code>, <code>html</code>, <code>chm</code>, <code>rtf</code>, <code>plucker</code>, etc. E' anche supportata la lettura diretta da archivi <code>zip</code>, <code>tar</code>, <code>gzip</code> e <code>bzip2</code>.</p>
+<p>FBReader è distribuito nei termini is della licenza <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<empty-line/>
+<subtitle><p>Come Iniziare</p></subtitle>
+<p>FBReader cerca i libri <code>fb2</code>, <code>oeb</code> e <code>OpenReader</code> nelle cartelle elencate nell'opzione <code>Percorso Libri</code>. Prima di tutto occorre impostare questo percorso. Apri la finestra Opzioni (basta fare clic su <image l:href="#settings.png" voffset="-6"/> nella barra degli strumenti) and cambiare il valore dell'opzione <code>Percorso Libri</code> nella scheda <code>Generale</code>. Questa opzione contiene l'elenco delle cartelle contenenti file <code>*.fb2</code>, <code>*.oebzip</code>, <code>*.orb</code> o archivi. Le cartelle dell'elenco sono separate da due punti.</p>
+<p>Apri <code>biblioteca</code> (fare clic su <image l:href="#books.png" voffset="-6"/>), seleziona un libro dall'elenco e leggi.</p>
+<p>Per leggere un file in un altro formato, devi aggiungerlo alla biblioteca. Apri la <code>finestra aggiungi alla biblioteca</code> (<image l:href="#addbook.png"/>), seleziona un file e modifica le informazioni sul file. La prossima volta puoi aprire questo file usando la <code>biblioteca</code> (<image l:href="#books.png" voffset="-6"/>).</p>
+<empty-line/>
+<subtitle><p>Siti correlati</p></subtitle>
+<p>Ulteriori informazioni su questo programma possono essere trovate alla <a l:href="http://www.fbreader.org">homepage di FBReader</a>.</p>
+<p>Se vuoi essere informato sull'uscita di nuove versioni, per favore iscriviti al <a l:href="http://freshmeat.net/projects/fbreader">progetto FBReader su freshmeat</a>.</p>
+<p>Se hai domande o suggerimenti, per favore usa il <a l:href="http://groups.google.com/group/fbreader">gruppo di FBReader su google gruppi</a>.</p>
+</body>
+<binary content-type="image/png" id="settings.png">
+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
+L6EAAAAASUVORK5CYII=
+====
+</binary>
+<binary content-type="image/png" id="books.png">
+iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/
+AP+gvaeTAAAACXBIWXMAAA9rAAAPawHzS2yFAAAAB3RJTUUH1wIFECMDtXeg
+zgAABUNJREFUWMPVVmtsU2UYfr5zabt2W3e6nXYr3aVjY2zDbtxHwGG4GI3B
+amJi9A8STfSX0fhT/Gc0Uf/AfxMkMcSoQMVIgAUwoKJmsBUBGSuMyVjXrlvv
+PT23zx+udB0bO7olxDc5Oed833vyPO/zXr4DGDTR528Sff6qedbNC6zXiD7/
+gXnWiejzv114ZwyCr7ay0iUHN7V7LrjJbDkO4NU563aeKCcFU+p534ZNZPae
+yWz5TBBd+wvvnAFwbxmbP7O22ebSNPMhwda7I5uTbjAMa0/y1j2dW55Zf+n0
+0ROz/G08Ub7vWMFsqK4SEYmyP2/cuu08ADqZr9pUv27HzlR0NGqIgOjzr7Aw
++b5ub5nHXmkDAKtDsL9FKcWfYcC76mnkVE6f5W/hiHqsrRbbVrgEAECDp7YH
+QM+diAKPuxdZ3VaCwT0C3Glm5DO+JkuzYC8v2bsZpqho3Y1EjgGRJsiMP88S
+7atWp76rwV1T4j86qYDWbYVE7AClixMQfX7BRORTa+r59hqhomRvKKyhvGUX
+EhIHKRlBdvg0MTOUUyl/eGWNusfrEUtyPhZToIibIbMOUJ0+hMXNA17BE+WH
+Tg/X7aqxl+yFJlSUNe9AUjYjn45BGjmL9a2VCN5JfypYFdPKerHEPzytICes
+h2pyQdf0eZVm5oCXcUT9rt1NeuqcpZ11J6KAb9yOlGJFPhNH9nYf1nrLcHdS
+h92imVY1iiCkGHwkoSJV0QXN6oG2AHgJAdHnN3FE/batlj7lqXU8lEPG8yQy
+eiXkXBLp4T50N5pwbwrQ8km0NdWUgMdSKqYtHaAVXqiq9sguY4oP+qEWUX+2
+0V2NuTnUXT3IEQFyLo3kUB+6GhhIGo9YPIN2rwiGKQqZyGgYUz1ghVYoirro
+jCkq4GneBktp5OG4Cs21GaTcA1nKIj7UB5+HorLcClWjcHdsRSiiQ5sprkhC
+xX29HozZjrysGpqwD4pwVVsbnljzIvpOBkDT98GUCajyboacikNTZEzfPIs1
+dQqqKostubO3BwzXi3PnL0DKZWCvb0STUIfQjUGjE75IgBCCHl8zdbveIGOx
+LKaSWYSjCSSnJzEx3IcOZxbVVaUtSQCs9rphr3wO45NphKcyiKcl/Bub04YE
+PMdQCwcQXQdAoKkqcfIxiI7KEs9UTp/1FaGFIizcjBJY+DAi/1wmiwW8eyPG
+YgooAJ0CoQkFcvlKzB0rszvhPyowD0OGxb69r+C3/iAGBwZAwcDV1YZsNg1Q
+LNkWJQAC8ByDLes60dTYiHAsg/FYGplsBsthzFI+po+bAB4/Afr/SwHHsVDk
+nLw8ClAAIIZ5cCwDLR7KT4yG9i0PAUIoIcbGDssyQPovZeTa7y9Hg4EzSyZA
+AJ0AuqE8MwSsNK6Frv6yNxoMBJZcAzMTj1KDviZlkg4PXHwzOnj8yBKLkBTk
+pkaJltE4vXXlx3ciA8c+X3IXkJmDp1iEC4tACGAlKdy6fG7/xJWjB5ehDQlA
+jEYO2NgcbvWf/Xi8/5uPlnYWFCKfB3whNnJmCsO3rx1U5Pz7hgcRpXTesqK6
+TnN59WFwqpPRe+OMNudfX5WzdPxu6HBeyr4bDQYWVYwtPOg2D08t9p3VDoHk
+JAXpnIJsJoXr/Rc/Gbx6Q6xx1zt4nicZSUE8kcDVX88d+WPwypeRhLTd4XQj
+rwGjI7eVyxdOfa0q8uvRYEA1qu4Dc3a9sLuls/tDp6tubVaSrg8F+z8Y+enw
+CdHnLzeZLe81tLS/xDCMPjJ07Qs5Lx2IBgOa6PN3EkJeY1jOpqnKaQABI5EX
+7G/d4Snob6JgdQAAAABJRU5ErkJggg==
+====
+</binary>
+<binary content-type="image/png" id="addbook.png">
+iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/
+AP+gvaeTAAAACXBIWXMAAA+XAAAPlwEpEhtWAAAAB3RJTUUH1wIFEDYsKRN7
+gwAABC5JREFUWMO1V11IW2cYfr6Tk5MTE40ajkm0xVbbatkaFUY7xoadbWGF
+UZlMZOxijIErbHRXg93uYtdju2yvynq1tWyR4XBjjMFaxsQiapuqtNRqJelJ
+NMbEnJyf791FjtmqVZMYHzgf5IHzvs/3fu/3nDcOlAkl3H/FE+ikjfjs0y38
+K55A55GN+OxiOfGEMpN/Uu/MfC0LWmgLf9IfbBkF0FHuhsQykn/QVJP7NnxM
+EVZW09eavW/05XUjZsJ1CErbYLC9R0nGbuFABCjh/nf9cu5auL1RkJxOBJv8
+SrDJf0UzOOZSjfAcOQ1N11AJhBKSX2xw5W50HWtwSpKzyOsmYW7VB++R16Dl
+LVQKYY/kvT4p90N3e71LdklF3rAIs0kP6tpeR24fyXcVoIT7T9c6tUh3e53H
+7XYVeYsTHqgy6tp7kdU49gthh+SnPKI22t3m9Xlq3EWecyAad8J3/E1kqpD8
+hQKUcP9xtyM/1n3U46/11hR5IiAaF+A7cQ7rOUK1IGwn+M/hVjnkq/M8x88s
+6vCdOI90DlXFNgFNh9qCMa0BeYOKZx5d5nAFXobBZFQb23wgGApg8J2PcCsy
+irS6BCbXo7nnFOJP5nbehZiFt/U7dLXe/7jmU+mCTY+NDOvXKzKiw4F6Ghq4
+xJaTGcSTGcSSWex26kzQ0XEyi/Ndn58h0Jl0dhXf3/4mAeB6hdeQgTFGAmME
+xggMxPYIJIkyLGcWCXoAr9tXeQ8QbZXy37o3mB2DV8+KSwIVl4JfkFWyarHi
+jIyDgQBGYIKxmdpeLQAQL12V3FvfHBnWc/sS4A2NorXzT7js2Mxe6r0dILsK
+gsAQaGy5TKDLm5UhEFLpJACd7SqgFI87Fx6C4lfAwQuhiYPAkTGTBVGSgYuv
+DoGDg2DBIhMCEzF25yaA7H6PgLBuPMPTtTuwyLD3xsHJAocFTiYsMsFhwiID
+nAoia0UFGk+X0AO0twCDNITkTlhkwIIJToUnqS8gZSbQLL9kizJh2aJedMMq
+qgA3vfjt9u/Fa0cEiA5CsIWjtVMBAGhZA+N3x1cAxOwSEQFEfLuEsntgQz2L
+DfVs8bfsciAT+0MNvP+Lsnn/LTLBLboxMqx/VoEPlP6plV0i1hYmli3X+ECh
+E6yigAM3IpckYn1pMhFbmL9wtPfeQyJedEC+LwElFECSRORiM2vLj6JvqVOR
++wDItEwIphu11IJ8GRNy2T0gOUXoidns4vz02+pUZMKmtdXV1M3xvyeZ7U0M
+wHTVrdgpOpBX57SF6N0BdSry1//sNQVgsFpD6Y5FsNYeG49m/nlPnYr8emAT
+kWGY4Px5DYLAkNc2rIf3Jj5UpyI/VXMkc2wl8mKjvpLjfc0thwVdN5HVLSw9
+ntPnp8e/eDb549Vqz4Rsh/8FfY1NoS/9gVBPKpmIqstPvqr2zjfxL9Ru5qeZ
+IAUkAAAAAElFTkSuQmCC
+====
+</binary>
+</FictionBook>

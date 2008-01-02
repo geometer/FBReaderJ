@@ -10,7 +10,10 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidActivity extends Activity {
+	public static long StartTime;
+
 	public void onCreate(Bundle icicle) {
+		StartTime = System.currentTimeMillis();
 		super.onCreate(icicle);
 		new ZLAndroidLibrary().run(this);
 	}

@@ -1,13 +1,14 @@
-package org.zlibrary.core.options.config;
+package org.zlibrary.core.xmlconfig;
 
 import java.io.*;
 import java.util.*;
 
 final class ZLConfigWriter implements ZLWriter {
-	private final ZLConfigImpl myConfig = (ZLConfigImpl)ZLConfigInstance.getInstance();
+	private final ZLConfigImpl myConfig;
 	private final File myDestinationDirectory;
 
-	protected ZLConfigWriter(String path) {
+	protected ZLConfigWriter(ZLConfigImpl config, String path) {
+		myConfig = config;
 		File file = new File(path);
 		if (!file.exists()) {
 			file.mkdir();

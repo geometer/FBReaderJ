@@ -34,15 +34,17 @@
 	<node name="language">
 		<node name="cs" value="Czech"/>
 		<node name="de" value="German"/>
-		<node name="de-traditional" value="German (traditional orphography)"/>
+		<node name="de-traditional" value="German (traditional orthography)"/>
 		<node name="en" value="English"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spanish"/>
 		<node name="fi" value="Finnish"/>
 		<node name="fr" value="French"/>
 		<node name="it" value="Italian"/>
+		<node name="no" value="Norwegian"/>
 		<node name="pt" value="Portuguese"/>
 		<node name="ru" value="Russian"/>
+		<node name="sv" value="Swedish"/>
 		<node name="uk" value="Ukrainian"/>
 		<node name="zh" value="Chinese"/>
 		<node name="other" value="Other"/>

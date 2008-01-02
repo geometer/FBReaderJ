@@ -11,7 +11,7 @@ import org.zlibrary.core.util.*;
  * @author Администратор
  * 
  */
-public class UtilTests extends TestCase {
+public class UtilTests extends ZLOptionTests {
 
 	private ZLColor myColor;
 

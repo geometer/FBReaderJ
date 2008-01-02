@@ -5,6 +5,7 @@ import org.zlibrary.text.model.ZLTextModel;
 class ZLTextPlainParagraphCursor extends ZLTextParagraphCursor {
 	ZLTextPlainParagraphCursor(ZLTextModel model, int index) {
 		super(model, index);	
+		//System.err.println("ZLTextPlainParagraphCursor " + index);
 	}	
 
 	public boolean isLast() {

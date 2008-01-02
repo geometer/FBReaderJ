@@ -1,18 +1,13 @@
 package org.test.zlibrary.options;
 
-import junit.framework.TestCase;
-
 import org.zlibrary.core.options.ZLStringOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-public class ZLStringOptionTests2 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLStringOptionTests2 extends ZLOptionTests {
 
 	private void runTask2a(String configValue, String value2, String value3,
 			String expectedValue) {
-		myConfig.setValue("string_group_2", "name", configValue,
+		getConfig().setValue("string_group_2", "name", configValue,
 				"string_category");
 		ZLStringOption option = new ZLStringOption("string_category",
 				"string_group_2", "name", value2);
@@ -22,17 +17,17 @@ public class ZLStringOptionTests2 extends TestCase {
 
 	private void runTask2b(String configValue, String value2, String value3,
 			String expectedValue) {
-		myConfig.setValue("string_group_2", "name", configValue,
+		getConfig().setValue("string_group_2", "name", configValue,
 				"string_category");
 		ZLStringOption option = new ZLStringOption("string_category",
 				"string_group_2", "name", value2);
 		option.setValue(value3);
-		assertEquals(myConfig.getValue("string_group_2", "name", "def"),
+		assertEquals(getConfig().getValue("string_group_2", "name", "def"),
 				expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("string_group_2", "name");
+		getConfig().unsetValue("string_group_2", "name");
 	}
 
 	public void test2a_1_01() {

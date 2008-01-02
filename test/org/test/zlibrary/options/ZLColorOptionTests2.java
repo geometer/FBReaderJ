@@ -2,17 +2,13 @@ package org.test.zlibrary.options;
 
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.options.ZLColorOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
-import junit.framework.TestCase;
+import org.zlibrary.core.config.ZLConfig;
 
-public class ZLColorOptionTests2 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLColorOptionTests2 extends ZLOptionTests {
 
 	private void runTask2a(String configValue, ZLColor value2, ZLColor value3,
 			int expectedValue) {
-		myConfig.setValue("color_group_2", "name", configValue,
+		getConfig().setValue("color_group_2", "name", configValue,
 				"color_category");
 		ZLColorOption option = new ZLColorOption("color_category",
 				"color_group_2", "name", value2);
@@ -22,17 +18,17 @@ public class ZLColorOptionTests2 extends TestCase {
 
 	private void runTask2b(String configValue, ZLColor value2, ZLColor value3,
 			String expectedValue) {
-		myConfig.setValue("color_group_2", "name", configValue,
+		getConfig().setValue("color_group_2", "name", configValue,
 				"color_category");
 		ZLColorOption option = new ZLColorOption("color_category",
 				"color_group_2", "name", value2);
 		option.setValue(value3);
-		assertEquals(myConfig.getValue("color_group_2", "name", "def"),
+		assertEquals(getConfig().getValue("color_group_2", "name", "def"),
 				expectedValue);
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("color_group_2", "name");
+		getConfig().unsetValue("color_group_2", "name");
 	}
 
 	public void test2a_1_01() {

@@ -28,6 +28,7 @@ final class FB2Tag {
 	public static final byte BODY = 22;
 	public static final byte IMAGE = 23;
 	public static final byte BINARY = 24;
+	public static final byte FICTIONBOOK = 25;
 
 	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>();
 
@@ -57,6 +58,7 @@ final class FB2Tag {
 		ourTagByName.put("BODY", BODY);
 		ourTagByName.put("IMAGE", IMAGE);
 		ourTagByName.put("BINARY", BINARY);
+		ourTagByName.put("FICTIONBOOK", FICTIONBOOK);
 	}
 
 	public static byte getTagByName(String name) {

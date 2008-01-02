@@ -67,11 +67,12 @@
 					<node name="keyDelay" value="Delay Between Accepted Key Pressings"/>
 				</node>
 				<node name="Language" value="Language">
-					<node name="autoDetect" value="Detect Language and Encoding Automatically"/>
+					<node name="autoDetect" value="Automatically Detect Language and Encoding"/>
 					<node name="defaultLanguage" value="Default Language"/>
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
-					<node name="chineseBreakAtAnyPosition" value="In Chinese Break Line at Any Position"/>
+					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1"/>
+					<node name="chineseBreakAtAnyPosition" value="For Chinese Break Line at Any Position"/>
 				</node>
 				<node name="Indicator" value="Indicator">
 					<node name="show" value="Show Position Indicator"/>
@@ -101,6 +102,9 @@
 					<node name="linesToKeep" value="Lines to Keep"/>
 					<node name="linesToScroll" value="Lines to Scroll"/>
 					<node name="percentToScroll" value="Percent to Scroll"/>
+				</node>
+				<node name="Selection" value="Selection">
+					<node name="enableSelection" value="Enable Text Selection"/>
 				</node>
 				<node name="Margins" value="Margins">
 					<node name="left" value="Left Margin"/>
@@ -215,6 +219,11 @@
 					<node name="defaultText" value="Open External Links in Browser"/>
 					<node name="choice" value="Use Browser"/>
 					<node name="command" value="Command to Execute"/>
+				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press"/>
+					<node name="minStylusPressure" value="Minimal Stylus Pressure"/>
+					<node name="maxStylusPressure" value="Maximal Stylus Pressure"/>
 				</node>
 			</node>
 		</node>

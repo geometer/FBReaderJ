@@ -1,7 +1,5 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.List;
-
 import org.zlibrary.text.model.*;
 
 final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {

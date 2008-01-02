@@ -1,18 +1,13 @@
 package org.test.zlibrary.options;
 
 import org.zlibrary.core.options.ZLIntegerRangeOption;
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
+import org.zlibrary.core.config.ZLConfig;
 
-import junit.framework.TestCase;
-
-public class ZLIntegerRangeOptionTests1 extends TestCase {
-
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+public class ZLIntegerRangeOptionTests1 extends ZLOptionTests {
 
 	private void runTask1(String configValue, int defaultValue,
 			int expectedValue) {
-		myConfig.setValue("integer_range_group", "name", configValue,
+		getConfig().setValue("integer_range_group", "name", configValue,
 				"category");
 		ZLIntegerRangeOption option = new ZLIntegerRangeOption("category",
 				"integer_range_group", "name", -100, 100, defaultValue);
@@ -20,7 +15,7 @@ public class ZLIntegerRangeOptionTests1 extends TestCase {
 	}
 
 	public void tearDown() {
-		myConfig.unsetValue("integer_range_group", "name");
+		getConfig().unsetValue("integer_range_group", "name");
 	}
 
 	public void test1_01() {

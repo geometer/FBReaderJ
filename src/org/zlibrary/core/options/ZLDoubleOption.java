@@ -21,8 +21,7 @@ public final class ZLDoubleOption extends ZLOption {
 			String value = getConfigValue(null);
 			if (value != null) {
 				try {
-					Double doubleValue = Double.parseDouble(value);
-					myValue = doubleValue;
+					myValue = Double.parseDouble(value);
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}

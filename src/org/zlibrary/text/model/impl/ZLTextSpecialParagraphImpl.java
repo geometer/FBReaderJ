@@ -1,9 +1,7 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.ArrayList;
-
 class ZLTextSpecialParagraphImpl extends ZLTextParagraphImpl {
-	private byte myKind;
+	private final byte myKind;
 
 	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model) {
 		super(model);

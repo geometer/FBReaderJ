@@ -35,59 +35,59 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		return getBase().getFontSize() + myDecoration.FontSizeDeltaOption.getValue();
 	}
 	
-	public boolean bold() {
+	public boolean isBold() {
 		switch (myDecoration.BoldOption.getValue()) {
 			case ZLBoolean3.B3_TRUE:
 				return true;
 			case ZLBoolean3.B3_FALSE:
 				return false;
 			default:
-				return getBase().bold();
+				return getBase().isBold();
 		}
 	}
 
-	public boolean italic() {
+	public boolean isItalic() {
 		switch (myDecoration.ItalicOption.getValue()) {
 			case ZLBoolean3.B3_TRUE:
 				return true;
 			case ZLBoolean3.B3_FALSE:
 				return false;
 			default:
-				return getBase().italic();
+				return getBase().isItalic();
 		}
 	}
 
-	public int leftIndent() {
-		return getBase().leftIndent() + myDecoration.LeftIndentOption.getValue();
+	public int getLeftIndent() {
+		return getBase().getLeftIndent() + myDecoration.LeftIndentOption.getValue();
 	}
 
-	public int rightIndent() {
-		return getBase().rightIndent() + myDecoration.RightIndentOption.getValue();
+	public int getRightIndent() {
+		return getBase().getRightIndent() + myDecoration.RightIndentOption.getValue();
 	}
 
-	public int firstLineIndentDelta() {
-		return (alignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : getBase().firstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
+	public int getFirstLineIndentDelta() {
+		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : getBase().getFirstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
 	}
 	
-	public double lineSpace() {
+	public double getLineSpace() {
 		double value = myDecoration.LineSpaceOption.getValue();
-		return (value != 0.0) ? value : getBase().lineSpace();
+		return (value != 0.0) ? value : getBase().getLineSpace();
 	}
 
-	public int verticalShift() {
-		return getBase().verticalShift() + myDecoration.VerticalShiftOption.getValue();
+	public int getVerticalShift() {
+		return getBase().getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
 	}
 
-	public int spaceBefore() {
-		return 0;
+	public int getSpaceBefore() {
+		return myDecoration.SpaceBeforeOption.getValue();
 	}
 
-	public int spaceAfter() {
-		return 0;
+	public int getSpaceAfter() {
+		return myDecoration.SpaceAfterOption.getValue();
 	}		
 
-	public byte alignment() {
+	public byte getAlignment() {
 		byte value = (byte)myDecoration.AlignmentOption.getValue();
-		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? getBase().alignment() : value;
+		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? getBase().getAlignment() : value;
 	}
 }

@@ -7,7 +7,7 @@ import org.zlibrary.core.image.ZLImage;
 
 import java.util.*;
 
-abstract class ZLTextParagraphCursor {
+public abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
 		protected ZLTextParagraph myParagraph;
 		protected ArrayList<ZLTextElement> myElements;
@@ -19,25 +19,18 @@ abstract class ZLTextParagraphCursor {
 			//myOffset = 0;
 		}
 
-		/*Why do we need ZLTextParagraph.Entry interface?*/
-
 		void fill() {
-			//for (ZLTextParagraph.Entry entry : myParagraph) {
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
-				ZLTextParagraph.Entry entry = it.next();
+				it.next();
 				switch (it.getType()) {
 					case ZLTextParagraph.Entry.TEXT:
-						//processTextEntry((ZLTextEntry)entry);
 						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength());
 						break;
 					case ZLTextParagraph.Entry.CONTROL:
-//					System.out.println("Tag = " + ((ZLTextControlEntry) entry).getKind());
-						//myElements.add(new ZLTextControlElement((ZLTextControlEntry)entry));
 						myElements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
 						break;
 					case ZLTextParagraph.Entry.IMAGE:
-						ZLImageEntry imageEntry = (ZLImageEntry)entry;
-						ZLImage image = imageEntry.getImage();
+						ZLImage image = it.getImageEntry().getImage();
 						if (image != null) {
 							myElements.add(new ZLTextImageElement(image));
 						}
@@ -108,11 +101,14 @@ abstract class ZLTextParagraphCursor {
 	}
 	
 	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
-		ZLTextParagraphCursor result;
-		if (model instanceof ZLTextTreeModel) {
-			result = new ZLTextTreeParagraphCursor((ZLTextTreeModel)model, index);
-		} else {
-			result = new ZLTextPlainParagraphCursor(model, index);
+		ZLTextParagraphCursor result = ZLTextParagraphCursorCache.get(model, index);
+		if (result == null) {
+			if (model instanceof ZLTextTreeModel) {
+				result = new ZLTextTreeParagraphCursor((ZLTextTreeModel)model, index);
+			} else {
+				result = new ZLTextPlainParagraphCursor(model, index);
+			}
+			ZLTextParagraphCursorCache.put(model, index, result);
 		}
 		return result;
 	}
@@ -135,12 +131,6 @@ abstract class ZLTextParagraphCursor {
 		myElements.clear();
 	}
 
-	/*Something strange here*/
-
-	boolean isNull() {
-		return myModel == null;
-	}
-
 	boolean isFirst() {
 		return myIndex == 0;
 	}
@@ -151,11 +141,11 @@ abstract class ZLTextParagraphCursor {
 		return (myModel.getParagraph(myIndex).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
 	}
 	
-	int getParagraphLength() {
+	final int getParagraphLength() {
 		return myElements.size();
 	}
 
-	int getIndex() {
+	public final int getIndex() {
 		return myIndex;
 	}
 
@@ -170,5 +160,3 @@ abstract class ZLTextParagraphCursor {
 		return myModel.getParagraph(myIndex);	
 	}
 }
-
-

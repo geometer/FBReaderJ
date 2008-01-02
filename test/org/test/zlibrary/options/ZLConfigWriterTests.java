@@ -7,9 +7,8 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.core.options.config.ZLConfig;
-import org.zlibrary.core.options.config.ZLConfigInstance;
-import org.zlibrary.core.options.config.ZLConfigWriterFactory;
+import org.zlibrary.core.config.ZLConfig;
+import org.zlibrary.core.config.ZLConfigManager;
 
 /**
  * тесты после 3-го - на запись дельты
@@ -17,23 +16,23 @@ import org.zlibrary.core.options.config.ZLConfigWriterFactory;
  * @author Администратор
  * 
  */
-public class ZLConfigWriterTests extends TestCase {
+public class ZLConfigWriterTests extends ZLOptionTests {
+	final static String outputPath = "test/org/test/zlibrary/options/examples/output/";
 
-	private ZLConfig myConfig = ZLConfigInstance.getInstance();
+	ZLConfigWriterTests() {
+		super(outputPath);
+	}
 
 	private void writeConfigAndCheck(String fileName, String expectedContent)
 			throws FileNotFoundException {
 
-		String outputPath = "test/org/test/"
-				+ "zlibrary/options/examples/output/";
 		if (fileName.equals("delta")) {
-			ZLConfigWriterFactory.createConfigWriter(outputPath).writeDelta();
+			ZLConfigManager.getInstance().saveDelta();
 		} else {
-			ZLConfigWriterFactory.createConfigWriter(outputPath).write();
+			ZLConfigManager.getInstance().saveAll();
 		}
 		try {
-			FileReader fr = new FileReader(new File("test/org/test/"
-					+ "zlibrary/options/examples/output/" + fileName + ".xml"));
+			FileReader fr = new FileReader(new File("test/org/test/zlibrary/options/examples/output/" + fileName + ".xml"));
 			try {
 				int expectedContentSize = expectedContent.length();
 				char[] buf = new char[expectedContentSize];
@@ -56,14 +55,12 @@ public class ZLConfigWriterTests extends TestCase {
 	}
 
 	public void tearDown() {
-		new File("test/org/test/zlibrary/options/examples/output/delta.xml")
-				.delete();
-		new File("test/org/test/zlibrary/options/examples/output/category.xml")
-				.delete();
+		new File("test/org/test/zlibrary/options/examples/output/delta.xml").delete();
+		new File("test/org/test/zlibrary/options/examples/output/category.xml").delete();
 	}
 
 	public void test01() {
-		myConfig.setValue("group", "name", "VALUE", "category");
+		getConfig().setValue("group", "name", "VALUE", "category");
 		try {
 			writeConfigAndCheck("category", ""
 					+ "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -73,12 +70,12 @@ public class ZLConfigWriterTests extends TestCase {
 		} catch (FileNotFoundException e) {
 			fail(e.getMessage());
 		}
-		myConfig.unsetValue("group", "name");
+		getConfig().unsetValue("group", "name");
 	}
 
 	public void test02() {
-		myConfig.setValue("group", "name1", "VALUE1", "category");
-		myConfig.setValue("group", "name2", "VALUE2", "category");
+		getConfig().setValue("group", "name1", "VALUE1", "category");
+		getConfig().setValue("group", "name2", "VALUE2", "category");
 		try {
 			writeConfigAndCheck("category", ""
 					+ "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -89,15 +86,15 @@ public class ZLConfigWriterTests extends TestCase {
 		} catch (FileNotFoundException e) {
 			fail(e.getMessage());
 		}
-		myConfig.unsetValue("group", "name1");
-		myConfig.unsetValue("group", "name2");
+		getConfig().unsetValue("group", "name1");
+		getConfig().unsetValue("group", "name2");
 
 	}
 
 	public void test03() {
-		myConfig.setValue("group1", "name1", "VALUE1", "category");
-		myConfig.setValue("group1", "name2", "VALUE2", "category");
-		myConfig.setValue("group2", "name3", "VALUE3", "category");
+		getConfig().setValue("group1", "name1", "VALUE1", "category");
+		getConfig().setValue("group1", "name2", "VALUE2", "category");
+		getConfig().setValue("group2", "name3", "VALUE3", "category");
 		try {
 			writeConfigAndCheck("category", ""
 					+ "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -110,13 +107,13 @@ public class ZLConfigWriterTests extends TestCase {
 		} catch (FileNotFoundException e) {
 			fail(e.getMessage());
 		}
-		myConfig.unsetValue("group1", "name1");
-		myConfig.unsetValue("group1", "name2");
-		myConfig.unsetValue("group2", "name3");
+		getConfig().unsetValue("group1", "name1");
+		getConfig().unsetValue("group1", "name2");
+		getConfig().unsetValue("group2", "name3");
 	}
 
 	public void test04() {
-		myConfig.setValue("group1", "name1", "VALUE1", "category");
+		getConfig().setValue("group1", "name1", "VALUE1", "category");
 		try {
 			writeConfigAndCheck(
 					"delta",
@@ -136,13 +133,13 @@ public class ZLConfigWriterTests extends TestCase {
 		} catch (FileNotFoundException e) {
 			fail(e.getMessage());
 		}
-		myConfig.unsetValue("group1", "name1");
+		getConfig().unsetValue("group1", "name1");
 	}
 
 	// тест на НЕзапись пустой категории
 	public void test05() {
-		myConfig.setValue("group", "name", "VALUE", "category");
-		myConfig.unsetValue("group", "name");
+		getConfig().setValue("group", "name", "VALUE", "category");
+		getConfig().unsetValue("group", "name");
 		try {
 			writeConfigAndCheck("category", "");
 		} catch (FileNotFoundException e) {
@@ -153,39 +150,35 @@ public class ZLConfigWriterTests extends TestCase {
 
 	// тест на НЕзапись не измененной категории
 	public void test06() {
-		String outputPath = "test/org/test/zlibrary/options/examples/output/";
+		getConfig().setValue("group1", "name1", "VALUE1", "category");
+		getConfig().setValue("group1", "name2", "VALUE2", "category");
+		getConfig().setValue("group2", "name3", "VALUE3", "category");
 
-		myConfig.setValue("group1", "name1", "VALUE1", "category");
-		myConfig.setValue("group1", "name2", "VALUE2", "category");
-		myConfig.setValue("group2", "name3", "VALUE3", "category");
-
-		ZLConfigWriterFactory.createConfigWriter(outputPath).write();
+		ZLConfigManager.getInstance().saveAll();
 		long modified = new File(outputPath + "category.xml").lastModified();
 
-		myConfig.setValue("group", "name", "VALUE", "other_category");
-		// myConfig.setValue("group", "name2", "VALUE", "category");
+		getConfig().setValue("group", "name", "VALUE", "other_category");
+		// getConfig().setValue("group", "name2", "VALUE", "category");
 
-		ZLConfigWriterFactory.createConfigWriter(outputPath).write();
+		ZLConfigManager.getInstance().saveAll();
 		long thenModified = new File(outputPath + "category.xml")
 				.lastModified();
 		assertTrue(modified == thenModified);
 
-		myConfig.unsetValue("group", "name");
-		myConfig.unsetValue("group1", "name1");
-		myConfig.unsetValue("group1", "name2");
-		myConfig.unsetValue("group2", "name3");
+		getConfig().unsetValue("group", "name");
+		getConfig().unsetValue("group1", "name1");
+		getConfig().unsetValue("group1", "name2");
+		getConfig().unsetValue("group2", "name3");
 		new File(outputPath + "other_category.xml").delete();
 	}
 
 	// тест на СТИРАНИЕ пустой категории
 	public void test07() {
-		String outputPath = "test/org/test/zlibrary/options/examples/output/";
+		getConfig().setValue("group1", "name1", "VALUE1", "category");
+		ZLConfigManager.getInstance().saveAll();
 
-		myConfig.setValue("group1", "name1", "VALUE1", "category");
-		ZLConfigWriterFactory.createConfigWriter(outputPath).write();
-
-		myConfig.unsetValue("group1", "name1");
-		ZLConfigWriterFactory.createConfigWriter(outputPath).write();
+		getConfig().unsetValue("group1", "name1");
+		ZLConfigManager.getInstance().saveAll();
 
 		try {
 			writeConfigAndCheck("category", "");

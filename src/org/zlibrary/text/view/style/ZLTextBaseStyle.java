@@ -27,28 +27,24 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	public final ZLColorOption TreeLinesColorOption =
 		new ZLColorOption(CATEGORY, COLORS, "TreeLines", new ZLColor(127, 127, 127));
 
-	public ZLBooleanOption AutoHyphenationOption;
+	public final ZLBooleanOption AutoHyphenationOption =
+		new ZLBooleanOption(CATEGORY, OPTIONS, "AutoHyphenation", true);
+
+	public final ZLBooleanOption BoldOption =
+		new ZLBooleanOption(CATEGORY, GROUP, "Base:bold", false);
+	public final ZLBooleanOption ItalicOption =
+		new ZLBooleanOption(CATEGORY, GROUP, "Base:italic", false);
+	public final ZLIntegerOption AlignmentOption =
+		new ZLIntegerOption(CATEGORY, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
+	public final ZLDoubleOption LineSpaceOption =
+		new ZLDoubleOption(CATEGORY, GROUP, "Base:lineSpacing", 1.2);
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
-	public ZLBooleanOption BoldOption;
-	public ZLBooleanOption ItalicOption;
-	public final ZLIntegerOption AlignmentOption;
-	public final ZLDoubleOption LineSpaceOption;
 	
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
-		//TODO
-/*
-		AutoHyphenationOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTIONS, "AutoHyphenation", true);
-		
-		BoldOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:bold", false);
-		ItalicOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, GROUP, "Base:italic", false);
-	*/
-		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
-		AlignmentOption = new ZLIntegerOption(category, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
-		LineSpaceOption = new ZLDoubleOption(category, GROUP, "Base:lineSpacing", 1.2);
-		FontFamilyOption = new ZLStringOption(category, GROUP, "Base:fontFamily", fontFamily);
-		FontSizeOption = new ZLIntegerRangeOption(category, GROUP, "Base:fontSize", 0, 72, fontSize);
+		FontFamilyOption = new ZLStringOption(CATEGORY, GROUP, "Base:fontFamily", fontFamily);
+		FontSizeOption = new ZLIntegerRangeOption(CATEGORY, GROUP, "Base:fontSize", 0, 72, fontSize);
 	}
 	
 	public String getFontFamily() {
@@ -63,47 +59,47 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		return RegularTextColorOption.getValue();
 	}
 	
-	public boolean bold() {
-		return false;
+	public boolean isBold() {
+		return BoldOption.getValue();
 	}
 
-	public boolean italic() {
-		return false;
+	public boolean isItalic() {
+		return ItalicOption.getValue();
 	}
 
-	public int leftIndent() {
+	public int getLeftIndent() {
 		return 0;
 	}
 
-	public int rightIndent() {
+	public int getRightIndent() {
 		return 0;
 	}
 
-	public int firstLineIndentDelta() {
+	public int getFirstLineIndentDelta() {
 		return 0;
 	}
 	
-	public double lineSpace() {
+	public double getLineSpace() {
 		return LineSpaceOption.getValue();
 	}
 
-	public int verticalShift() {
+	public int getVerticalShift() {
 		return 0;
 	}
 
-	public int spaceBefore() {
+	public int getSpaceBefore() {
 		return 0;
 	}
 
-	public int spaceAfter() {
+	public int getSpaceAfter() {
 		return 0;
 	}
 
-	public boolean isDecorated() {
-		return false;
-	}
-
-	public byte alignment() {
+	public byte getAlignment() {
 		return (byte)AlignmentOption.getValue();
+	}
+
+	public ZLTextStyle getBase() {
+		return this;
 	}
 }

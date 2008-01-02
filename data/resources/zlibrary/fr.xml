@@ -34,17 +34,19 @@
 	</node>
 	<node name="language">
 		<node name="cs" value="Tchèque"/>
-		<node name="de" value="German" toBeTranslated="true"/>
-		<node name="de-traditional" value="German (traditional orphography)" toBeTranslated="true"/>
-		<node name="en" value="English" toBeTranslated="true"/>
-		<node name="eo" value="Esperanto" toBeTranslated="true"/>
-		<node name="es" value="Spanish" toBeTranslated="true"/>
-		<node name="fi" value="Finnish" toBeTranslated="true"/>
-		<node name="fr" value="French" toBeTranslated="true"/>
-		<node name="it" value="Italian" toBeTranslated="true"/>
-		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="de" value="Allemand"/>
+		<node name="de-traditional" value="Allemand (l'orthographie traditionelle)"/>
+		<node name="en" value="Anglais"/>
+		<node name="eo" value="Espéranto"/>
+		<node name="es" value="Espagnol"/>
+		<node name="fi" value="Finnois"/>
+		<node name="fr" value="Français"/>
+		<node name="it" value="Italien"/>
+		<node name="no" value="Norvégien"/>
+		<node name="pt" value="Portugais"/>
 		<node name="ru" value="Russe"/>
-		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="sv" value="Suédois"/>
+		<node name="uk" value="Ukrainien"/>
 		<node name="zh" value="Chinois"/>
 		<node name="other" value="Autre"/>
 	</node>

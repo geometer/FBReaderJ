@@ -1,12 +1,11 @@
-package org.zlibrary.core.options.config;
+package org.zlibrary.core.xmlconfig;
 
 import java.io.*;
 import java.util.Map;
 
 import org.zlibrary.core.xml.ZLXMLReader;
 
-/*package*/ final class ZLConfigReader implements ZLReader {
-	
+final class ZLConfigReader implements ZLReader {
 	private class ConfigReader extends ZLXMLReader {
 		private int myDepth = 0;
 
@@ -16,7 +15,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			myDepth = 0;
 		}
 
-		public void startElementHandler(String tag, Map<String, String> attributes) {
+		public void startElementHandler(String tag, StringMap attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -25,14 +24,14 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 1:
 					if (tag.equals("group")) {
-						myCurrentGroup = attributes.get("name");
+						myCurrentGroup = attributes.getValue("name");
 					} else {
 						printError(tag);
 					}
 					break;
 				case 2:
 					if (tag.equals("option")) {
-						myConfig.setValueDirectly(myCurrentGroup, attributes.get("name"), attributes.get("value"), myCategory);
+						myConfig.setValueDirectly(myCurrentGroup, attributes.getValue("name"), attributes.getValue("value"), myCategory);
 					} else {
 						printError(tag);
 					}
@@ -64,7 +63,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 			myFile = "delta.xml";
 		}
 
-		public void startElementHandler(String tag, Map<String, String> attributes) {
+		public void startElementHandler(String tag, StringMap attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -73,7 +72,7 @@ import org.zlibrary.core.xml.ZLXMLReader;
 					break;
 				case 1:
 					if (tag.equals("group")) {
-						myCurrentGroup = attributes.get("name");
+						myCurrentGroup = attributes.getValue("name");
 						myCurrentGroupIsEmpty = true;
 					} else {
 						printError(tag);
@@ -82,15 +81,13 @@ import org.zlibrary.core.xml.ZLXMLReader;
 				case 2:
 					if (tag.equals("option")) {
 						myCurrentGroupIsEmpty = false;
-						if ((attributes.get("value") != null)
-								 && (attributes.get("category") != null)) {
-							myConfig.setValue(myCurrentGroup, 
-								attributes.get("name"), 
-								attributes.get("value"),
-								attributes.get("category"));
+						String value = attributes.getValue("value");
+						String category = attributes.getValue("category");
+						String name = attributes.getValue("name");
+						if ((value != null) && (category != null)) {
+							myConfig.setValue(myCurrentGroup, name, value, category);
 						} else {
-							myConfig.unsetValue(myCurrentGroup, 
-									attributes.get("name"));
+							myConfig.unsetValue(myCurrentGroup, name);
 						}
 					} else {
 						printError(tag);
@@ -127,8 +124,8 @@ import org.zlibrary.core.xml.ZLXMLReader;
 	
 	private String myFile = "";
 
-	protected ZLConfigReader(String path) {
-		myConfig = (ZLConfigImpl)ZLConfigInstance.getInstance();
+	protected ZLConfigReader(ZLConfigImpl config, String path) {
+		myConfig = config;
 		myDestinationDirectory = new File(path);
 		myDeltaFilePath = myDestinationDirectory + "/delta.xml";
 		if (myDestinationDirectory.exists()) {

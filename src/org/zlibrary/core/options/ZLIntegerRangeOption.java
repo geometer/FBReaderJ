@@ -35,8 +35,13 @@ public final class ZLIntegerRangeOption extends ZLOption {
 			String value = getConfigValue(null);
 			if (value != null) {
 				try {
-					Integer intValue = Integer.parseInt(value);
-					myValue = Math.max(myMinValue, Math.min(myMaxValue, intValue));
+					int intValue = Integer.parseInt(value);
+					if (intValue < myMinValue) {
+						intValue = myMinValue;
+					} else if (intValue > myMaxValue) {
+						intValue = myMaxValue;
+					}
+					myValue = intValue;
 				} catch (NumberFormatException e) {
 					// System.err.println(e);
 				}

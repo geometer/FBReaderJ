@@ -1,29 +1,31 @@
 package org.zlibrary.core.application;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 import org.zlibrary.core.xml.ZLXMLReader;
 
 class ZLKeyBindingsReader extends ZLXMLReader {
-	private TreeMap<String,Integer> myKeymap;
-	private final static String myKeymapFileName = "data/default/keymap.xml";
+	private HashMap<String,Integer> myKeymap;
 	
-	public ZLKeyBindingsReader(TreeMap<String,Integer> keymap) {
+	public ZLKeyBindingsReader(HashMap<String,Integer> keymap) {
 		myKeymap = keymap; 
 	}
 		
-	public void startElementHandler(String tag, Map<String,String> attributes) {
+	public void startElementHandler(String tag, StringMap attributes) {
 		if ("binding".equals(tag)) {
-			String key = attributes.get("key");
-			String action = attributes.get("action");
+			String key = attributes.getValue("key");
+			String action = attributes.getValue("action");
 			if ((key != null) && (action != null)) {
-				myKeymap.put(key, Integer.parseInt(action));
+				try {
+					int actionId = Integer.parseInt(action);
+					myKeymap.put(key, actionId);
+				} catch (NumberFormatException e) {
+				}
 			}
 		}
 	}
 
 	public void readBindings() {
-		read(myKeymapFileName);
+		read("data/default/keymap.xml");
 	}
 }
