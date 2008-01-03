@@ -58,6 +58,7 @@ ZLTextView:
 	CollectionView
 	RecentBooksView
 	FootnoteView
+	не показывать ContentsView, если оглавление пустое
 
 конфиг:
 	нормальная запись в десктопном варианте (без длинной-длинной строки)
