@@ -1,15 +1,15 @@
 package org.zlibrary.text.view.impl;
 
-import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageData;
 
 class ZLTextImageElement extends ZLTextElement {
-	private ZLImage myImage;
+	private ZLImageData myImageData;
 
-	ZLTextImageElement(ZLImage image) {
-		myImage = image;
+	ZLTextImageElement(ZLImageData imageData) {
+		myImageData = imageData;
 	}
 
-	public ZLImage getImage() {
-		return myImage;
+	public ZLImageData getImageData() {
+		return myImageData;
 	}	
 }

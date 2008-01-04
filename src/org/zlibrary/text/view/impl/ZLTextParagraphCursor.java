@@ -1,9 +1,8 @@
 package org.zlibrary.text.view.impl;
 
 import org.zlibrary.text.model.*;
-import org.zlibrary.text.model.impl.ZLImageEntry;
 
-import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.*;
 
 import java.util.*;
 
@@ -32,7 +31,10 @@ public abstract class ZLTextParagraphCursor {
 					case ZLTextParagraph.Entry.IMAGE:
 						ZLImage image = it.getImageEntry().getImage();
 						if (image != null) {
-							myElements.add(new ZLTextImageElement(image));
+							ZLImageData data = ZLImageManager.getInstance().getImageData(image);
+							if (data != null) {
+								myElements.add(new ZLTextImageElement(data));
+							}
 						}
 						break;
 					case ZLTextParagraph.Entry.FORCED_CONTROL:

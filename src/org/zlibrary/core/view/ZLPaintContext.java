@@ -2,7 +2,7 @@ package org.zlibrary.core.view;
 
 import java.util.ArrayList;
 
-import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
 
 abstract public class ZLPaintContext {
@@ -138,9 +138,9 @@ abstract public class ZLPaintContext {
 
 	abstract public void drawString(int x, int y, char[] string, int offset, int length);
 
-	abstract public int imageWidth(ZLImage image);
-	abstract public int imageHeight(ZLImage image);
-	abstract public void drawImage(int x, int y, ZLImage image);
+	abstract public int imageWidth(ZLImageData image);
+	abstract public int imageHeight(ZLImageData image);
+	abstract public void drawImage(int x, int y, ZLImageData image);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);

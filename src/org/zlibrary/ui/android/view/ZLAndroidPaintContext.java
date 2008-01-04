@@ -4,9 +4,11 @@ import java.util.HashMap;
 
 import android.graphics.*;
 
-import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
+
+import org.zlibrary.ui.android.image.ZLAndroidImageData;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private Canvas myCanvas;
@@ -107,25 +109,21 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawText(string, offset, length, x, y, myPaint);
 	}
 
-	public int imageWidth(ZLImage image) {
-		// TODO: optimize
-		byte[] array = image.byteData();
-		Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
-		return bitmap.width();
+	public int imageWidth(ZLImageData imageData) {
+		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
+		return (bitmap != null) ? bitmap.width() : 0;
 	}
 
-	public int imageHeight(ZLImage image) {
-		// TODO: optimize
-		byte[] array = image.byteData();
-		Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
-		return bitmap.height();
+	public int imageHeight(ZLImageData imageData) {
+		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
+		return (bitmap != null) ? bitmap.height() : 0;
 	}
 
-	public void drawImage(int x, int y, ZLImage image) {
-		// TODO: optimize
-		byte[] array = image.byteData();
-		Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
-		myCanvas.drawBitmap(bitmap, x, y - bitmap.height(), myPaint);
+	public void drawImage(int x, int y, ZLImageData imageData) {
+		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
+		if (bitmap != null) {
+			myCanvas.drawBitmap(bitmap, x, y - bitmap.height(), myPaint);
+		}
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {

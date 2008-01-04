@@ -108,7 +108,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (element instanceof ZLTextWord) {
 			return getWordWidth((ZLTextWord)element, charNumber, -1, false);
 		} else if (element instanceof ZLTextImageElement) {
-			return getContext().imageWidth(((ZLTextImageElement)element).getImage());
+			return getContext().imageWidth(((ZLTextImageElement)element).getImageData());
 		} else if (element == ZLTextElement.IndentElement) {
 			return myTextStyle.getFirstLineIndentDelta();
 		}
@@ -126,7 +126,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			return wordHeight;
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLPaintContext context = getContext();
-			return context.imageHeight(((ZLTextImageElement)element).getImage()) + 
+			return context.imageHeight(((ZLTextImageElement)element).getImageData()) + 
 				Math.max((int)(context.getStringHeight() * (myTextStyle.getLineSpace() - 1)), 3);
 		}
 		return 0;
@@ -277,7 +277,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					//System.out.println("Draw " + x + " " + y + " " + area.YEnd);
 					drawWord(x, y, (ZLTextWord) element, charNumber, -1, false);
 				} else {
-					context.drawImage(x, y, ((ZLTextImageElement) element).getImage());
+					context.drawImage(x, y, ((ZLTextImageElement) element).getImageData());
 				}
 			}
 		}

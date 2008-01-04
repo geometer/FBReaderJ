@@ -2,15 +2,12 @@ package org.zlibrary.ui.swing.view;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
+
+import org.zlibrary.ui.swing.image.ZLSwingImageData;
 
 public final class ZLSwingPaintContext extends ZLPaintContext {
 	private Graphics2D myGraphics;
@@ -89,27 +86,20 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		myGraphics.drawChars(string, offset, length, x, y);
 	}
 
-	public int imageWidth(ZLImage image) {
-		try {
-			return ImageIO.read(new ByteArrayInputStream(image.byteData())).getWidth();
-		} catch (IOException e) {
-		} 
-		return 0;
+	public int imageWidth(ZLImageData imageData) {
+		BufferedImage awtImage = ((ZLSwingImageData)imageData).getAwtImage();
+		return (awtImage != null) ? awtImage.getWidth() : 0;
 	}
 
-	public int imageHeight(ZLImage image) {
-		try {
-			return ImageIO.read(new ByteArrayInputStream(image.byteData())).getHeight();
-		} catch (IOException e) {
-		} 
-		return 0;
+	public int imageHeight(ZLImageData imageData) {
+		BufferedImage awtImage = ((ZLSwingImageData)imageData).getAwtImage();
+		return (awtImage != null) ? awtImage.getHeight() : 0;
 	}
 
-	public void drawImage(int x, int y, ZLImage image) {
-		try {
-			BufferedImage img = ImageIO.read(new ByteArrayInputStream(image.byteData()));
-			myGraphics.drawImage(img, x, y - img.getHeight(), null);
-		} catch (IOException e) {
+	public void drawImage(int x, int y, ZLImageData imageData) {
+		BufferedImage awtImage = ((ZLSwingImageData)imageData).getAwtImage();
+		if (awtImage != null) {
+			myGraphics.drawImage(awtImage, x, y - awtImage.getHeight(), null);
 		} 
 	}
 

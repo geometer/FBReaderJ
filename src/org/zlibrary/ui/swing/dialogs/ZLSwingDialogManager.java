@@ -10,11 +10,7 @@ import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 public class ZLSwingDialogManager extends ZLDialogManager {
 	private ZLSwingApplicationWindow myApplicationWindow;
 	
-	private ZLSwingDialogManager() {
-	}
-	
-	public static void createInstance() {
-		new ZLSwingDialogManager();
+	public ZLSwingDialogManager() {
 	}
 	
 	public boolean runSelectionDialog(String key, ZLTreeHandler handler) {

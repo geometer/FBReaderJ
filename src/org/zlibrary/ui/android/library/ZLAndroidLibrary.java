@@ -14,6 +14,7 @@ import org.zlibrary.ui.android.sqliteconfig.ZLSQLiteConfigManager;
 import org.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
+import org.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
@@ -66,6 +67,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		new ZLOwnXMLProcessorFactory();
 		new ZLSQLiteConfigManager();
 		loadProperties();
+		new ZLAndroidImageManager();
 
 		activity.setContentView(R.layout.main);
 

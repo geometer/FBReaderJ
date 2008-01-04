@@ -13,6 +13,7 @@ import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 import org.zlibrary.ui.swing.dialogs.ZLSwingDialogManager;
+import org.zlibrary.ui.swing.image.ZLSwingImageManager;
 
 public class ZLSwingLibrary extends ZLibrary {
 	public ZLSwingPaintContext createPaintContext() {
@@ -30,13 +31,13 @@ public class ZLSwingLibrary extends ZLibrary {
 
 	@SuppressWarnings("unchecked")
 	public void run(String[] args) {
-		ZLSwingDialogManager.createInstance();
-		
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
 		loadProperties();
 
 		new ZLXMLConfigManager(System.getProperty("user.home") + "/." + getInstance().getApplicationName());
+		new ZLSwingImageManager();
+		new ZLSwingDialogManager();
 
 		ZLApplication application = null;
 		try {
