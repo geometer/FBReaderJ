@@ -23,6 +23,10 @@ public abstract class ZLXMLReader {
 		return (stream != null) ? ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, stream) : false;
 	}
 	
+	public boolean dontCacheAttributeValues() {
+		return false;
+	}
+
 	public void startElementHandler(String tag, StringMap attributes) {
 	}
 	
@@ -38,11 +42,8 @@ public abstract class ZLXMLReader {
 
 	//?
 	public void startDocumentHandler() {
-		
 	}
 	
 	public void endDocumentHandler() {
-		
 	}
-	
 }

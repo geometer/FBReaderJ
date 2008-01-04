@@ -68,11 +68,8 @@ final class ZLTreeResource extends ZLResource {
 			read(fileName);
 		}
 
-		public void endElementHandler(String tag) {
-			final ArrayList<ZLTreeResource> stack = myStack;
-			if (!stack.isEmpty() && (NODE.equals(tag))) {
-				stack.remove(stack.size() - 1);
-			}
+		public boolean dontCacheAttributeValues() {
+			return true;
 		}
 
 		public void startElementHandler(String tag, StringMap attributes) {
@@ -101,6 +98,13 @@ final class ZLTreeResource extends ZLResource {
 					}
 					stack.add(node);
 				}
+			}
+		}
+
+		public void endElementHandler(String tag) {
+			final ArrayList<ZLTreeResource> stack = myStack;
+			if (!stack.isEmpty() && (NODE.equals(tag))) {
+				stack.remove(stack.size() - 1);
 			}
 		}
 	}

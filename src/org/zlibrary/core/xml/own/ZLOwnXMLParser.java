@@ -207,6 +207,7 @@ final class ZLOwnXMLParser {
 		final StringContainer tagName = new StringContainer();
 		final StringContainer attributeName = new StringContainer();
 		final StringContainer attributeValue = new StringContainer();
+		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final StringContainer entityName = new StringContainer();
 		final HashMap<StringContainer,String> strings = new HashMap<StringContainer,String>();
 		final StringMap attributes = new StringMap();
@@ -370,7 +371,12 @@ attributeNameLabel:
 						attributeValue.append(buffer, startPosition, i - startPosition);
 						if (c == '"') {
 							state = WS_AFTER_START_TAG_NAME;
-							attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
+							if (dontCacheAttributeValues) {
+								attributes.put(convertToString(strings, attributeName), attributeValue.toString());
+								attributeValue.clear();
+							} else {
+								attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
+							}
 						} else if (c == '&') {
 							savedState = ATTRIBUTE_VALUE;
 							state = ENTITY_REF;
