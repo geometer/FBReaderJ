@@ -3,10 +3,10 @@ package org.zlibrary.core.xmlconfig;
 import java.io.*;
 import java.util.Map;
 
-import org.zlibrary.core.xml.ZLXMLReader;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 final class ZLConfigReader implements ZLReader {
-	private class ConfigReader extends ZLXMLReader {
+	private class ConfigReader extends ZLXMLReaderAdapter {
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
@@ -51,7 +51,7 @@ final class ZLConfigReader implements ZLReader {
 		}
 	}
 
-	private class DeltaConfigReader extends ZLXMLReader {
+	private class DeltaConfigReader extends ZLXMLReaderAdapter {
 		private int myDepth = 0;
 
 		private String myCurrentGroup = "";
@@ -112,7 +112,7 @@ final class ZLConfigReader implements ZLReader {
 		}
 	}
 
-	private ZLXMLReader myXMLReader = new ConfigReader();
+	private ZLXMLReaderAdapter myXMLReader = new ConfigReader();
 
 	private final ZLConfigImpl myConfig;
 

@@ -11,7 +11,7 @@ import org.xml.sax.SAXException;
 import org.zlibrary.core.xml.ZLXMLProcessor;
 import org.zlibrary.core.xml.ZLXMLReader;
 
-public class ZLSaxXMLProcessor implements ZLXMLProcessor{
+public class ZLSaxXMLProcessor extends ZLXMLProcessor {
 	public boolean read(ZLXMLReader reader, InputStream stream) {
 		try {
 			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();

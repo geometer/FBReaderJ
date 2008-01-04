@@ -3,7 +3,7 @@ package org.zlibrary.core.xml;
 public abstract class ZLXMLProcessorFactory {
 	private static ZLXMLProcessorFactory ourInstance;
 
-	static ZLXMLProcessorFactory getInstance() {
+	public static ZLXMLProcessorFactory getInstance() {
 		return ourInstance;
 	}
 
@@ -11,5 +11,5 @@ public abstract class ZLXMLProcessorFactory {
 		ourInstance = this;
 	}
 
-	protected abstract ZLXMLProcessor createXMLProcessor();
+	public abstract ZLXMLProcessor createXMLProcessor();
 }

@@ -8,7 +8,7 @@ import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
-public final class BookReader {
+public class BookReader {
 	private final BookModel myBookModel;
 	private ZLTextPlainModel myCurrentTextModel = null;
 	
@@ -36,7 +36,7 @@ public final class BookReader {
 		myBookModel = model;
 	}
 	
-	private void flushTextBufferToParagraph() {
+	private final void flushTextBufferToParagraph() {
 		final ZLTextBuffer buffer = myBuffer;
 		if (!buffer.isEmpty()) {
 			myCurrentTextModel.addText(buffer);
@@ -44,7 +44,7 @@ public final class BookReader {
 		}		
 	}
 	
-	public void addControl(byte kind, boolean start) {
+	public final void addControl(byte kind, boolean start) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl(kind, start);
@@ -54,7 +54,7 @@ public final class BookReader {
 		}
 	}
 	
-	public void pushKind(byte kind) {
+	public final void pushKind(byte kind) {
 		byte[] stack = myKindStack;
 		if (stack.length == myKindStackSize) {
 			stack = new byte[myKindStackSize * 2];
@@ -64,13 +64,13 @@ public final class BookReader {
 		stack[myKindStackSize++] = kind;
 	}
 	
-	public void popKind() {
+	public final void popKind() {
 		if (myKindStackSize != 0) {
 			--myKindStackSize;
 		}
 	}
 	
-	public void beginParagraph(byte kind) {
+	public final void beginParagraph(byte kind) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			textModel.createParagraph(kind);
@@ -86,14 +86,14 @@ public final class BookReader {
 		}		
 	}
 	
-	public void endParagraph() {
+	public final void endParagraph() {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myTextParagraphExists = false;
 		}
 	}
 	
-	private void insertEndParagraph(byte kind) {
+	private final void insertEndParagraph(byte kind) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
 		if ((textModel != null) && mySectionContainsRegularContents) {
 			int size = textModel.getParagraphsNumber();
@@ -104,35 +104,35 @@ public final class BookReader {
 		}
 	}
 	
-	public void insertEndOfSectionParagraph() {
+	public final void insertEndOfSectionParagraph() {
 		insertEndParagraph(ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
 	
-	public void unsetCurrentTextModel() {
+	public final void unsetCurrentTextModel() {
 		myCurrentTextModel = null;
 	}
 	
-	public void enterTitle() {
+	public final void enterTitle() {
 		myInsideTitle = true;
 	}
 	
-	public void exitTitle() {
+	public final void exitTitle() {
 		myInsideTitle = false;
 	}
 	
-	public void setMainTextModel() {
+	public final void setMainTextModel() {
 		myCurrentTextModel = myBookModel.getBookTextModel();
 	}
 	
-	public void setFootnoteTextModel(String id) {
+	public final void setFootnoteTextModel(String id) {
 		myCurrentTextModel = myBookModel.getFootnoteModel(id);
 	}
 	
-	public void addData(char[] data) {
+	public final void addData(char[] data) {
 		addData(data, 0, data.length);
 	}
 
-	public void addData(char[] data, int offset, int length) {
+	public final void addData(char[] data, int offset, int length) {
 		if (myTextParagraphExists) {
 			myBuffer.append(data, offset, length);
 			if (!myInsideTitle) {
@@ -143,7 +143,7 @@ public final class BookReader {
 		}	
 	}
 	
-	public void addDataFinal(char[] data, int offset, int length) {
+	public final void addDataFinal(char[] data, int offset, int length) {
 		if (!myBuffer.isEmpty()) {
 			addData(data, offset, length);
 		} else {
@@ -158,7 +158,7 @@ public final class BookReader {
 		}	
 	}
 	
-	public void addHyperlinkControl(byte kind, String label) {
+	public final void addHyperlinkControl(byte kind, String label) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addHyperlinkControl(kind, label);
@@ -167,7 +167,7 @@ public final class BookReader {
 		myHyperlinkReference = label;
 	}
 	
-	public void addHyperlinkLabel(String label) {
+	public final void addHyperlinkLabel(String label) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			int paragraphNumber = textModel.getParagraphsNumber();
@@ -178,17 +178,17 @@ public final class BookReader {
 		}
 	}
 	
-	public void addContentsData(char[] data) {
+	public final void addContentsData(char[] data) {
 		addContentsData(data, 0, data.length);
 	}
 
-	public void addContentsData(char[] data, int offset, int length) {
+	public final void addContentsData(char[] data, int offset, int length) {
 		if ((length != 0) && !myTOCStack.isEmpty()) {
 			myContentsBuffer.append(data, offset, length);
 		}
 	}
 	
-	public void beginContentsParagraph(int referenceNumber) {
+	public final void beginContentsParagraph(int referenceNumber) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
 		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
 		if (textModel == myBookModel.getBookTextModel()) {
@@ -215,7 +215,7 @@ public final class BookReader {
 		}
 	}
 
-	public void endContentsParagraph() {
+	public final void endContentsParagraph() {
 		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
 		if (!tocStack.isEmpty()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
@@ -233,7 +233,7 @@ public final class BookReader {
 		myContentsParagraphExists = false;
 	}
 
-	public void setReference(int contentsParagraphNumber, int referenceNumber) {
+	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
 		ContentsModel contentsModel = myBookModel.getContentsModel();
 		if (contentsParagraphNumber < contentsModel.getParagraphsNumber()) {
 			contentsModel.setReference(
@@ -242,19 +242,19 @@ public final class BookReader {
 		}
 	}
 	
-	public boolean contentsParagraphIsOpen() {
+	public final boolean contentsParagraphIsOpen() {
 		return myContentsParagraphExists;
 	}
 
-	public void beginContentsParagraph() {
+	public final void beginContentsParagraph() {
 		beginContentsParagraph(-1);
 	}
 	
-	public BookModel getModel() {
+	public final BookModel getModel() {
 		return myBookModel;
 	}
 
-	public void addImageReference(String ref, short offset) {
+	public final void addImageReference(String ref, short offset) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
@@ -272,7 +272,7 @@ public final class BookReader {
 		
 	}
 
-	public void addImage(String id, ZLImage image) {
+	public final void addImage(String id, ZLImage image) {
 		myBookModel.addImage(id, image);
 	}
 }

@@ -1,7 +1,7 @@
 package org.zlibrary.text.view.style;
 
 import org.zlibrary.core.util.ZLBoolean3;
-import org.zlibrary.core.xml.ZLXMLReader;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.zlibrary.text.model.ZLTextAlignmentType;
 import org.zlibrary.text.view.ZLTextStyle;
 
@@ -46,7 +46,7 @@ public class ZLTextStyleCollection {
 		return myBaseStyle;
 	}
 
-	private static class TextStyleReader extends ZLXMLReader {
+	private static class TextStyleReader extends ZLXMLReaderAdapter {
 		private ZLTextStyleCollection myCollection;
 
 		private static int intValue(StringMap attributes, String name) {

@@ -2,9 +2,9 @@ package org.zlibrary.core.application;
 
 import java.util.HashMap;
 
-import org.zlibrary.core.xml.ZLXMLReader;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-class ZLKeyBindingsReader extends ZLXMLReader {
+class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	private HashMap<String,Integer> myKeymap;
 	
 	public ZLKeyBindingsReader(HashMap<String,Integer> keymap) {

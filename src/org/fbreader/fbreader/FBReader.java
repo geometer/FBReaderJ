@@ -119,7 +119,7 @@ public final class FBReader extends ZLApplication {
 			fileName = myBookNameOption.getValue();
 		}
 		BookModel model = new BookModel(fileName);
-		if (!new FB2Reader().readBook(model)) {
+		if (!new FB2Reader(model).read()) {
 			return false;
 		}
 		myBookNameOption.setValue(fileName);

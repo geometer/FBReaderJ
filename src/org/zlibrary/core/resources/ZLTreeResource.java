@@ -1,7 +1,7 @@
 package org.zlibrary.core.resources;
 
 import java.util.*;
-import org.zlibrary.core.xml.ZLXMLReader;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 final class ZLTreeResource extends ZLResource {
 	public static ZLTreeResource ourRoot;
@@ -58,7 +58,7 @@ final class ZLTreeResource extends ZLResource {
 		return ZLMissingResource.Instance;
 	}
 		
-	private static class ResourceTreeReader extends ZLXMLReader {
+	private static class ResourceTreeReader extends ZLXMLReaderAdapter {
 		private static final String NODE = "node"; 
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 		

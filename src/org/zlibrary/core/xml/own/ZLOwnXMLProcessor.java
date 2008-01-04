@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.zlibrary.core.xml.ZLXMLProcessor;
 import org.zlibrary.core.xml.ZLXMLReader;
 
-public class ZLOwnXMLProcessor implements ZLXMLProcessor {
+public class ZLOwnXMLProcessor extends ZLXMLProcessor {
 	public boolean read(ZLXMLReader reader, InputStream stream) {
 		try {
 			ZLOwnXMLParser parser = new ZLOwnXMLParser(reader, stream);
