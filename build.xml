@@ -52,6 +52,7 @@
 			</classpath>
 			<test name = "org.test.zlibrary.model.TestAll"/>
 			<test name = "org.test.zlibrary.options.TestAll"/>
+			<test name = "org.test.zlibrary.core.resources.AllTests"/>
 			<test name = "org.test.fbreader.formats.fb2.AllTests"/>
 		</junit>
 	</target>
