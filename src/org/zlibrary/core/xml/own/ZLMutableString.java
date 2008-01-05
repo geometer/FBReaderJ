@@ -1,6 +1,6 @@
 package org.zlibrary.core.xml.own;
 
-public class ZLMutableString {
+final class ZLMutableString {
 	private char[] myData;
 	private int myLength;
 
