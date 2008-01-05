@@ -6,22 +6,22 @@ import java.io.*;
 import org.zlibrary.core.xml.ZLXMLReader;
 
 final class ZLOwnXMLParser {
-	private static final int START_DOCUMENT = 0;
-	private static final int START_TAG = 1;
-	private static final int END_TAG = 2;
-	private static final int TEXT = 3;
-	private static final int IGNORABLE_WHITESPACE = 4;
-	private static final int PROCESSING_INSTRUCTION = 5;
-	private static final int COMMENT = 6;
-	private static final int LANGLE = 7;
-	private static final int WS_AFTER_START_TAG_NAME = 8;
-	private static final int WS_AFTER_END_TAG_NAME = 9;
-	private static final int WAIT_EQUALS = 10;
-	private static final int WAIT_ATTRIBUTE_VALUE = 11;
-	private static final int SLASH = 12;
-	private static final int ATTRIBUTE_NAME = 13;
-	private static final int ATTRIBUTE_VALUE = 14;
-	private static final int ENTITY_REF = 15;
+	private static final byte START_DOCUMENT = 0;
+	private static final byte START_TAG = 1;
+	private static final byte END_TAG = 2;
+	private static final byte TEXT = 3;
+	private static final byte IGNORABLE_WHITESPACE = 4;
+	private static final byte PROCESSING_INSTRUCTION = 5;
+	private static final byte COMMENT = 6;
+	private static final byte LANGLE = 7;
+	private static final byte WS_AFTER_START_TAG_NAME = 8;
+	private static final byte WS_AFTER_END_TAG_NAME = 9;
+	private static final byte WAIT_EQUALS = 10;
+	private static final byte WAIT_ATTRIBUTE_VALUE = 11;
+	private static final byte SLASH = 12;
+	private static final byte ATTRIBUTE_NAME = 13;
+	private static final byte ATTRIBUTE_VALUE = 14;
+	private static final byte ENTITY_REF = 15;
 
 	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString contatiner) {
 		String s = strings.get(contatiner);
@@ -134,8 +134,8 @@ final class ZLOwnXMLParser {
 		final HashMap<ZLMutableString,String> strings = new HashMap<ZLMutableString,String>();
 		final StringMap attributes = new StringMap();
 
-		int state = START_DOCUMENT;
-		int savedState = START_DOCUMENT;
+		byte state = START_DOCUMENT;
+		byte savedState = START_DOCUMENT;
 		while (true) {
 			int count = streamReader.read(buffer);
 			if (count <= 0) {
