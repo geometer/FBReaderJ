@@ -124,10 +124,11 @@ final class ZLOwnXMLParser {
 		final char[] buffer = myBuffer;
 		int len;
 		for (len = 0; len < 256; ++len) {
-			buffer[len] = (char)stream.read();
-			if (buffer[len] == '>') {
+			char c = (char)stream.read();
+			if (c == '>') {
 				break;
 			}
+			buffer[len] = c;
 		}
 		if (len < 256) {
 			String xmlDescription = new String(buffer, 0, len + 1);
