@@ -168,19 +168,16 @@ final class ZLOwnXMLParser {
 			}
 			int startPosition = 0;
 			try {
-				for (int i = 0; ; ++i) {
-					char c = buffer[i];
+				for (int i = -1;;) {
 mainSwitchLabel:
 					switch (state) {
 						case START_DOCUMENT:
-							while (c != '<') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != '<');
 							state = LANGLE;
 							startPosition = i + 1;
 							break;
 						case LANGLE:
-							switch (c) {
+							switch (buffer[++i]) {
 								case '/':
 									state = END_TAG;
 									startPosition = i + 1;
@@ -196,15 +193,13 @@ mainSwitchLabel:
 							}
 							break;
 						case COMMENT:
-							while (c != '>') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != '>');
 							state = TEXT;
 							startPosition = i + 1;
 							break;
 						case START_TAG:
 							while (true) {
-								switch (c) {
+								switch (buffer[++i]) {
 									case 0x0008:
 									case 0x0009:
 									case 0x000A:
@@ -233,10 +228,9 @@ mainSwitchLabel:
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
-								c = buffer[++i];
 							}
 						case WS_AFTER_START_TAG_NAME:
-							switch (c) {
+							switch (buffer[++i]) {
 								case '>':
 									processStartTag(xmlReader, convertToString(strings, tagName), attributes);
 									state = TEXT;
@@ -262,7 +256,7 @@ mainSwitchLabel:
 							break;
 						case ATTRIBUTE_NAME:
 							while (true) {
-								switch (c) {
+								switch (buffer[++i]) {
 									case '=':
 										attributeName.append(buffer, startPosition, i - startPosition);
 										state = WAIT_ATTRIBUTE_VALUE;
@@ -284,24 +278,19 @@ mainSwitchLabel:
 										state = WAIT_EQUALS;
 										break mainSwitchLabel;
 								}
-								c = buffer[++i];
 							}
 						case WAIT_EQUALS:
-							while (c != '=') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != '=');
 							state = WAIT_ATTRIBUTE_VALUE;
 							break;
 						case WAIT_ATTRIBUTE_VALUE:
-							while (c != '"') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != '"');
 							state = ATTRIBUTE_VALUE;
 							startPosition = i + 1;
 							break;
 						case ATTRIBUTE_VALUE:
 							while (true) {
-								switch (c) {
+								switch (buffer[++i]) {
 									case '"':
 										attributeValue.append(buffer, startPosition, i - startPosition);
 										state = WS_AFTER_START_TAG_NAME;
@@ -319,12 +308,9 @@ mainSwitchLabel:
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
-								c = buffer[++i];
 							}
 						case ENTITY_REF:
-							while (c != ';') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != ';');
 							entityName.append(buffer, startPosition, i - startPosition);
 							state = savedState;
 							startPosition = i + 1;
@@ -348,15 +334,13 @@ mainSwitchLabel:
 							}
 							break;
 						case SLASH:
-							while (c != '>') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != '>');
 							state = TEXT;
 							startPosition = i + 1;
 							break;
 						case END_TAG:
 							while (true) {
-								switch (c) {
+								switch (buffer[++i]) {
 									case '>':
 										tagName.append(buffer, startPosition, i - startPosition);
 										processEndTag(xmlReader, convertToString(strings, tagName));
@@ -380,19 +364,16 @@ mainSwitchLabel:
 										state = WS_AFTER_END_TAG_NAME;
 										break mainSwitchLabel;
 								}
-								c = buffer[++i];
 							}
 						case WS_AFTER_END_TAG_NAME:
-							while (c != '>') {
-								c = buffer[++i];
-							}
+							while (buffer[++i] != '>');
 							state = TEXT;
 							processEndTag(xmlReader, convertToString(strings, tagName));
 							startPosition = i + 1;
 							break;
 						case TEXT:
 							while (true) {
-								switch (c) {
+								switch (buffer[++i]) {
 									case '<':
 										if (i > startPosition) {
 											xmlReader.characterDataHandlerFinal(buffer, startPosition, i - startPosition);
@@ -408,7 +389,6 @@ mainSwitchLabel:
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
-								c = buffer[++i];
 							}
 					}
 				}
