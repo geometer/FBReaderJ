@@ -23,90 +23,11 @@ final class ZLOwnXMLParser {
 	private static final int ATTRIBUTE_VALUE = 14;
 	private static final int ENTITY_REF = 15;
 
-	private static final class StringContainer {
-		private char[] myData;
-		private int myLength;
-
-		StringContainer(int len) {
-			myData = new char[len];
-		}
-
-		StringContainer() {
-			this(20);
-		}
-
-		StringContainer(StringContainer container) {
-			final int len = container.myLength;
-			final char[] data = new char[len];
-			myData = data;
-			myLength = len;
-			System.arraycopy(container.myData, 0, data, 0, len);
-		}
-
-		public void append(char[] buffer, int offset, int count) {
-			final int len = myLength;
-			char[] data = myData;
-			final int newLength = len + count;
-			if (data.length < newLength) {
-				char[] data0 = new char[newLength];
-				if (len > 0) {
-					System.arraycopy(data, 0, data0, 0, len);
-				}
-				data = data0;
-				myData = data;
-			}
-			System.arraycopy(buffer, offset, data, len, count);
-			myLength = newLength;
-		}
-
-		public void clear() {
-			myLength = 0;
-		}
-
-		public boolean equals(Object o) {
-			final StringContainer container = (StringContainer)o;
-			final int len = myLength;
-			if (len != container.myLength) {
-				return false;
-			}
-			final char[] data0 = myData;
-			final char[] data1 = container.myData;
-			for (int i = len; --i >= 0; ) {
-				if (data0[i] != data1[i]) {
-					return false;
-				}
-			}
-			return true;
-		}
-
-		public int hashCode() {
-			final int len = myLength;
-			final char[] data = myData;
-			int code = len * 31;
-			if (len > 1) {
-				code += data[0];
-				code *= 31;
-				code += data[1];
-				if (len > 2) {
-					code *= 31;
-					code += data[2];
-				}
-			} else if (len > 0) {
-				code += data[0];
-			}
-			return code;
-		}
-
-		public String toString() {
-			return new String(myData, 0, myLength).intern();
-		}
-	}
-
-	private static String convertToString(HashMap<StringContainer,String> strings, StringContainer contatiner) {
+	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString contatiner) {
 		String s = strings.get(contatiner);
 		if (s == null) {
 			s = contatiner.toString();
-			strings.put(new StringContainer(contatiner), s);
+			strings.put(new ZLMutableString(contatiner), s);
 		}
 		contatiner.clear();
 		return s;
@@ -205,12 +126,12 @@ final class ZLOwnXMLParser {
 		final InputStreamReader streamReader = myStreamReader;
 		final ZLXMLReader xmlReader = myXMLReader;
 		char[] buffer = myBuffer;
-		final StringContainer tagName = new StringContainer();
-		final StringContainer attributeName = new StringContainer();
-		final StringContainer attributeValue = new StringContainer();
+		final ZLMutableString tagName = new ZLMutableString();
+		final ZLMutableString attributeName = new ZLMutableString();
+		final ZLMutableString attributeValue = new ZLMutableString();
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
-		final StringContainer entityName = new StringContainer();
-		final HashMap<StringContainer,String> strings = new HashMap<StringContainer,String>();
+		final ZLMutableString entityName = new ZLMutableString();
+		final HashMap<ZLMutableString,String> strings = new HashMap<ZLMutableString,String>();
 		final StringMap attributes = new StringMap();
 
 		int state = START_DOCUMENT;
