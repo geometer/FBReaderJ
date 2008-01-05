@@ -228,6 +228,7 @@ final class ZLOwnXMLParser {
 			try {
 				for (int i = 0; ; ++i) {
 					char c = buffer[i];
+mainSwitchLabel:
 					switch (state) {
 						case START_DOCUMENT:
 							while (c != '<') {
@@ -260,7 +261,6 @@ final class ZLOwnXMLParser {
 							startPosition = i + 1;
 							break;
 						case START_TAG:
-startTagLabel:
 							while (true) {
 								switch (c) {
 									case 0x0008:
@@ -272,28 +272,27 @@ startTagLabel:
 									case ' ':
 										state = WS_AFTER_START_TAG_NAME;
 										tagName.append(buffer, startPosition, i - startPosition);
-										break startTagLabel;
+										break mainSwitchLabel;
 									case '>':
 										state = TEXT;
 										tagName.append(buffer, startPosition, i - startPosition);
 										processStartTag(xmlReader, convertToString(strings, tagName), attributes);
 										startPosition = i + 1;
-										break startTagLabel;
+										break mainSwitchLabel;
 									case '/':
 										state = SLASH;
 										tagName.append(buffer, startPosition, i - startPosition);
 										processFullTag(xmlReader, convertToString(strings, tagName), attributes);
-										break startTagLabel;
+										break mainSwitchLabel;
 									case '&':
 										savedState = START_TAG;
 										tagName.append(buffer, startPosition, i - startPosition);
 										state = ENTITY_REF;
 										startPosition = i + 1;
-										break startTagLabel;
+										break mainSwitchLabel;
 								}
 								c = buffer[++i];
 							}
-							break;
 						case WS_AFTER_START_TAG_NAME:
 							switch (c) {
 								case '>':
@@ -320,17 +319,18 @@ startTagLabel:
 							}
 							break;
 						case ATTRIBUTE_NAME:
-attributeNameLabel:
 							while (true) {
 								switch (c) {
 									case '=':
+										attributeName.append(buffer, startPosition, i - startPosition);
 										state = WAIT_ATTRIBUTE_VALUE;
-										break attributeNameLabel;
+										break mainSwitchLabel;
 									case '&':
+										attributeName.append(buffer, startPosition, i - startPosition);
 										savedState = ATTRIBUTE_NAME;
 										state = ENTITY_REF;
 										startPosition = i + 1;
-										break attributeNameLabel;
+										break mainSwitchLabel;
 									case 0x0008:
 									case 0x0009:
 									case 0x000A:
@@ -338,95 +338,97 @@ attributeNameLabel:
 									case 0x000C:
 									case 0x000D:
 									case ' ':
+										attributeName.append(buffer, startPosition, i - startPosition);
 										state = WAIT_EQUALS;
-										break attributeNameLabel;
+										break mainSwitchLabel;
 								}
 								c = buffer[++i];
 							}
-							attributeName.append(buffer, startPosition, i - startPosition);
-							break;
 						case WAIT_EQUALS:
-							if (c == '=') {
-								state = WAIT_ATTRIBUTE_VALUE;
+							while (c != '=') {
+								c = buffer[++i];
 							}
+							state = WAIT_ATTRIBUTE_VALUE;
 							break;
 						case WAIT_ATTRIBUTE_VALUE:
-							if (c == '"') {
-								state = ATTRIBUTE_VALUE;
-								startPosition = i + 1;
-							}
-							break;
-						case ATTRIBUTE_VALUE:
-							while ((c != '"') && (c != '&')) {
+							while (c != '"') {
 								c = buffer[++i];
 							}
-							attributeValue.append(buffer, startPosition, i - startPosition);
-							if (c == '"') {
-								state = WS_AFTER_START_TAG_NAME;
-								if (dontCacheAttributeValues) {
-									attributes.put(convertToString(strings, attributeName), attributeValue.toString());
-									attributeValue.clear();
-								} else {
-									attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
-								}
-							} else {
-								savedState = ATTRIBUTE_VALUE;
-								state = ENTITY_REF;
-								startPosition = i + 1;
-							}
+							state = ATTRIBUTE_VALUE;
+							startPosition = i + 1;
 							break;
+						case ATTRIBUTE_VALUE:
+							while (true) {
+								switch (c) {
+									case '"':
+										attributeValue.append(buffer, startPosition, i - startPosition);
+										state = WS_AFTER_START_TAG_NAME;
+										if (dontCacheAttributeValues) {
+											attributes.put(convertToString(strings, attributeName), attributeValue.toString());
+											attributeValue.clear();
+										} else {
+											attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
+										}
+										break mainSwitchLabel;
+									case '&':
+										attributeValue.append(buffer, startPosition, i - startPosition);
+										savedState = ATTRIBUTE_VALUE;
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+								c = buffer[++i];
+							}
 						case ENTITY_REF:
 							while (c != ';') {
 								c = buffer[++i];
 							}
 							entityName.append(buffer, startPosition, i - startPosition);
-							if (c == ';') {
-								state = savedState;
-								startPosition = i + 1;
-								final String name = convertToString(strings, entityName);
-								char[] value = entityMap.get(name);
-								if (value == null) {
-									if ((name.length() > 0) && (name.charAt(0) == '#')) {
-										try {
-											int number;
-											if (name.charAt(1) == 'x') {
-												number = Integer.parseInt(name.substring(2), 16);
-											} else {
-												number = Integer.parseInt(name.substring(1));
-											}
-											value = new char[] { (char)number };
-											entityMap.put(name, value);
-										} catch (NumberFormatException e) {
+							state = savedState;
+							startPosition = i + 1;
+							final String name = convertToString(strings, entityName);
+							char[] value = entityMap.get(name);
+							if (value == null) {
+								if ((name.length() > 0) && (name.charAt(0) == '#')) {
+									try {
+										int number;
+										if (name.charAt(1) == 'x') {
+											number = Integer.parseInt(name.substring(2), 16);
+										} else {
+											number = Integer.parseInt(name.substring(1));
 										}
+										value = new char[] { (char)number };
+										entityMap.put(name, value);
+									} catch (NumberFormatException e) {
 									}
 								}
-								if (value != null) {
-									switch (state) {
-										case ATTRIBUTE_VALUE:
-											attributeValue.append(value, 0, value.length);
-											break;
-										case ATTRIBUTE_NAME:
-											attributeName.append(value, 0, value.length);
-											break;
-										case START_TAG:
-										case END_TAG:
-											tagName.append(value, 0, value.length);
-											break;
-										case TEXT:
-											xmlReader.characterDataHandler(value, 0, value.length);
-											break;
-									}
+							}
+							if (value != null) {
+								switch (state) {
+									case ATTRIBUTE_VALUE:
+										attributeValue.append(value, 0, value.length);
+										break;
+									case ATTRIBUTE_NAME:
+										attributeName.append(value, 0, value.length);
+										break;
+									case START_TAG:
+									case END_TAG:
+										tagName.append(value, 0, value.length);
+										break;
+									case TEXT:
+										xmlReader.characterDataHandler(value, 0, value.length);
+										break;
 								}
 							}
 							break;
 						case SLASH:
-							if (c == '>') {
-								state = TEXT;
-								startPosition = i + 1;
+							while (c != '>') {
+								c = buffer[++i];
 							}
+							state = TEXT;
+							startPosition = i + 1;
 							break;
 						case END_TAG:
-endTagLabel:
 							while (true) {
 								switch (c) {
 									case '>':
@@ -434,13 +436,13 @@ endTagLabel:
 										processEndTag(xmlReader, convertToString(strings, tagName));
 										state = TEXT;
 										startPosition = i + 1;
-										break endTagLabel;
+										break mainSwitchLabel;
 									case '&':
 										tagName.append(buffer, startPosition, i - startPosition);
 										savedState = END_TAG;
 										state = ENTITY_REF;
 										startPosition = i + 1;
-										break endTagLabel;
+										break mainSwitchLabel;
 									case 0x0008:
 									case 0x0009:
 									case 0x000A:
@@ -450,36 +452,38 @@ endTagLabel:
 									case ' ':
 										tagName.append(buffer, startPosition, i - startPosition);
 										state = WS_AFTER_END_TAG_NAME;
-										break endTagLabel;
+										break mainSwitchLabel;
 								}
 								c = buffer[++i];
 							}
-							break;
 						case WS_AFTER_END_TAG_NAME:
-							if (c == '>') {
-								state = TEXT;
-								processEndTag(xmlReader, convertToString(strings, tagName));
-								startPosition = i + 1;
+							while (c != '>') {
+								c = buffer[++i];
 							}
+							state = TEXT;
+							processEndTag(xmlReader, convertToString(strings, tagName));
+							startPosition = i + 1;
 							break;
 						case TEXT:
-							while ((c != '<') && (c != '&')) {
+							while (true) {
+								switch (c) {
+									case '<':
+										if (i > startPosition) {
+											xmlReader.characterDataHandlerFinal(buffer, startPosition, i - startPosition);
+										}
+										state = LANGLE;
+										break mainSwitchLabel;
+									case '&':
+										if (i > startPosition) {
+											xmlReader.characterDataHandler(buffer, startPosition, i - startPosition);
+										}
+										savedState = TEXT;
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
 								c = buffer[++i];
 							}
-							if (c == '<') {
-								if (i > startPosition) {
-									xmlReader.characterDataHandlerFinal(buffer, startPosition, i - startPosition);
-								}
-								state = LANGLE;
-							} else {
-								if (i > startPosition) {
-									xmlReader.characterDataHandler(buffer, startPosition, i - startPosition);
-								}
-								savedState = TEXT;
-								state = ENTITY_REF;
-								startPosition = i + 1;
-							}
-							break;
 					}
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -499,6 +503,7 @@ endTagLabel:
 						break;
 					case TEXT:
 						xmlReader.characterDataHandler(buffer, startPosition, count - startPosition);
+						break;
 				}
 			}
 		}
