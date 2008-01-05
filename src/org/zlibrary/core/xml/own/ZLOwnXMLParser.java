@@ -115,6 +115,26 @@ final class ZLOwnXMLParser {
 		}
 	}
 
+	private static char[] getEntityValue(HashMap<String,char[]> entityMap, String name) {
+		char[] value = entityMap.get(name);
+		if (value == null) {
+			if ((name.length() > 0) && (name.charAt(0) == '#')) {
+				try {
+					int number;
+					if (name.charAt(1) == 'x') {
+						number = Integer.parseInt(name.substring(2), 16);
+					} else {
+						number = Integer.parseInt(name.substring(1));
+					}
+					value = new char[] { (char)number };
+					entityMap.put(name, value);
+				} catch (NumberFormatException e) {
+				}
+			}
+		}
+		return value;
+	}
+
 	public void doIt() throws IOException {
 		final HashMap<String,char[]> entityMap = new HashMap<String,char[]>();
 		entityMap.put("amp", new char[] { '&' });
@@ -308,23 +328,7 @@ mainSwitchLabel:
 							entityName.append(buffer, startPosition, i - startPosition);
 							state = savedState;
 							startPosition = i + 1;
-							final String name = convertToString(strings, entityName);
-							char[] value = entityMap.get(name);
-							if (value == null) {
-								if ((name.length() > 0) && (name.charAt(0) == '#')) {
-									try {
-										int number;
-										if (name.charAt(1) == 'x') {
-											number = Integer.parseInt(name.substring(2), 16);
-										} else {
-											number = Integer.parseInt(name.substring(1));
-										}
-										value = new char[] { (char)number };
-										entityMap.put(name, value);
-									} catch (NumberFormatException e) {
-									}
-								}
-							}
+							final char[] value = getEntityValue(entityMap, convertToString(strings, entityName));
 							if (value != null) {
 								switch (state) {
 									case ATTRIBUTE_VALUE:
