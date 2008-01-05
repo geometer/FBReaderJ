@@ -64,7 +64,7 @@ final class FB2Tag {
 	public static byte getTagByName(String name) {
 		Byte num = ourTagByName.get(name);
 		if (num == null) {
-			final String upperCaseName = name.toUpperCase();
+			final String upperCaseName = name.toUpperCase().intern();
 			num = ourTagByName.get(upperCaseName);
 			if (num == null) {
 				num = UNKNOWN;

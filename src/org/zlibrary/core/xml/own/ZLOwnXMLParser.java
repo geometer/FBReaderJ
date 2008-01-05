@@ -71,7 +71,7 @@ final class ZLOwnXMLParser {
 			}
 			final char[] data0 = myData;
 			final char[] data1 = container.myData;
-			for (int i = 0; i < len; ++i) {
+			for (int i = len; --i >= 0; ) {
 				if (data0[i] != data1[i]) {
 					return false;
 				}
@@ -203,7 +203,7 @@ final class ZLOwnXMLParser {
 
 		final InputStreamReader streamReader = myStreamReader;
 		final ZLXMLReader xmlReader = myXMLReader;
-		final char[] buffer = myBuffer;
+		char[] buffer = myBuffer;
 		final StringContainer tagName = new StringContainer();
 		final StringContainer attributeName = new StringContainer();
 		final StringContainer attributeValue = new StringContainer();
@@ -219,235 +219,92 @@ final class ZLOwnXMLParser {
 			if (count <= 0) {
 				return;
 			}
+			if (count < buffer.length) {
+				final char[] shortBuffer = new char[count];
+				System.arraycopy(buffer, 0, shortBuffer, 0, count);
+				buffer = shortBuffer;
+			}
 			int startPosition = 0;
-			for (int i = 0; i < count; ++i) {
-				char c = buffer[i];
-				switch (state) {
-					case START_DOCUMENT:
-						while ((c != '<') && (++i < count)) {
-							c = buffer[i];
-						}
-						if (c == '<') {
+			try {
+				for (int i = 0; ; ++i) {
+					char c = buffer[i];
+					switch (state) {
+						case START_DOCUMENT:
+							while (c != '<') {
+								c = buffer[++i];
+							}
 							state = LANGLE;
 							startPosition = i + 1;
-						}
-						break;
-					case LANGLE:
-						switch (c) {
-							case '/':
-								state = END_TAG;
-								startPosition = i + 1;
-								break;
-							case '!':
-							case '?':
-								state = COMMENT;
-								break;
-							default:
-								state = START_TAG;
-								startPosition = i;
-								break;
-						}
-						break;
-					case COMMENT:
-						while ((c != '>') && (++i < count)) {
-							c = buffer[i];
-						}
-						if (c == '>') {
+							break;
+						case LANGLE:
+							switch (c) {
+								case '/':
+									state = END_TAG;
+									startPosition = i + 1;
+									break;
+								case '!':
+								case '?':
+									state = COMMENT;
+									break;
+								default:
+									state = START_TAG;
+									startPosition = i;
+									break;
+							}
+							break;
+						case COMMENT:
+							while (c != '>') {
+								c = buffer[++i];
+							}
 							state = TEXT;
 							startPosition = i + 1;
-						}
-						break;
-					case START_TAG:
+							break;
+						case START_TAG:
 startTagLabel:
-						while (true) {
-							switch (c) {
-								case 0x0008:
-								case 0x0009:
-								case 0x000A:
-								case 0x000B:
-								case 0x000C:
-								case 0x000D:
-								case ' ':
-									state = WS_AFTER_START_TAG_NAME;
-									tagName.append(buffer, startPosition, i - startPosition);
-									break startTagLabel;
-								case '>':
-									state = TEXT;
-									tagName.append(buffer, startPosition, i - startPosition);
-									processStartTag(xmlReader, convertToString(strings, tagName), attributes);
-									startPosition = i + 1;
-									break startTagLabel;
-								case '/':
-									state = SLASH;
-									tagName.append(buffer, startPosition, i - startPosition);
-									processFullTag(xmlReader, convertToString(strings, tagName), attributes);
-									break startTagLabel;
-								case '&':
-									savedState = START_TAG;
-									state = ENTITY_REF;
-									startPosition = i + 1;
-									break startTagLabel;
-								default:
-									if (++i == count) {
+							while (true) {
+								switch (c) {
+									case 0x0008:
+									case 0x0009:
+									case 0x000A:
+									case 0x000B:
+									case 0x000C:
+									case 0x000D:
+									case ' ':
+										state = WS_AFTER_START_TAG_NAME;
 										tagName.append(buffer, startPosition, i - startPosition);
 										break startTagLabel;
-									}
-									break;
-							}
-							c = buffer[i];
-						}
-						break;
-					case WS_AFTER_START_TAG_NAME:
-						switch (c) {
-							case '>':
-								processStartTag(xmlReader, convertToString(strings, tagName), attributes);
-								state = TEXT;
-								startPosition = i + 1;
-								break;
-							case '/':
-								state = SLASH;
-								processFullTag(xmlReader, convertToString(strings, tagName), attributes);
-								break;
-							case 0x0008:
-							case 0x0009:
-							case 0x000A:
-							case 0x000B:
-							case 0x000C:
-							case 0x000D:
-							case ' ':
-								break;
-							default:
-								state = ATTRIBUTE_NAME;
-								startPosition = i;
-								break;
-						}
-						break;
-					case ATTRIBUTE_NAME:
-attributeNameLabel:
-						while (true) {
-							switch (c) {
-								case '=':
-									state = WAIT_ATTRIBUTE_VALUE;
-									break attributeNameLabel;
-								case '&':
-									savedState = ATTRIBUTE_NAME;
-									state = ENTITY_REF;
-									startPosition = i + 1;
-									break attributeNameLabel;
-								case 0x0008:
-								case 0x0009:
-								case 0x000A:
-								case 0x000B:
-								case 0x000C:
-								case 0x000D:
-								case ' ':
-									state = WAIT_EQUALS;
-									break attributeNameLabel;
-								default:
-									if (++i == count) {
-										break attributeNameLabel;
-									}
-									break;
-							}
-							c = buffer[i];
-						}
-						attributeName.append(buffer, startPosition, i - startPosition);
-						break;
-					case WAIT_EQUALS:
-						if (c == '=') {
-							state = WAIT_ATTRIBUTE_VALUE;
-						}
-						break;
-					case WAIT_ATTRIBUTE_VALUE:
-						if (c == '"') {
-							state = ATTRIBUTE_VALUE;
-							startPosition = i + 1;
-						}
-						break;
-					case ATTRIBUTE_VALUE:
-						while ((c != '"') && (c != '&') && (++i < count)) {
-							c = buffer[i];
-						}
-						attributeValue.append(buffer, startPosition, i - startPosition);
-						if (c == '"') {
-							state = WS_AFTER_START_TAG_NAME;
-							if (dontCacheAttributeValues) {
-								attributes.put(convertToString(strings, attributeName), attributeValue.toString());
-								attributeValue.clear();
-							} else {
-								attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
-							}
-						} else if (c == '&') {
-							savedState = ATTRIBUTE_VALUE;
-							state = ENTITY_REF;
-							startPosition = i + 1;
-						}
-						break;
-					case ENTITY_REF:
-						while ((c != ';') && (++i < count)) {
-							c = buffer[i];
-						}
-						entityName.append(buffer, startPosition, i - startPosition);
-						if (c == ';') {
-							state = savedState;
-							startPosition = i + 1;
-							final String name = convertToString(strings, entityName);
-							char[] value = entityMap.get(name);
-							if (value == null) {
-								if ((name.length() > 0) && (name.charAt(0) == '#')) {
-									try {
-										int number;
-										if (name.charAt(1) == 'x') {
-											number = Integer.parseInt(name.substring(2), 16);
-										} else {
-											number = Integer.parseInt(name.substring(1));
-										}
-										value = new char[] { (char)number };
-										entityMap.put(name, value);
-									} catch (NumberFormatException e) {
-									}
+									case '>':
+										state = TEXT;
+										tagName.append(buffer, startPosition, i - startPosition);
+										processStartTag(xmlReader, convertToString(strings, tagName), attributes);
+										startPosition = i + 1;
+										break startTagLabel;
+									case '/':
+										state = SLASH;
+										tagName.append(buffer, startPosition, i - startPosition);
+										processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+										break startTagLabel;
+									case '&':
+										savedState = START_TAG;
+										tagName.append(buffer, startPosition, i - startPosition);
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break startTagLabel;
 								}
+								c = buffer[++i];
 							}
-							if (value != null) {
-								switch (state) {
-									case ATTRIBUTE_VALUE:
-										attributeValue.append(value, 0, value.length);
-										break;
-									case ATTRIBUTE_NAME:
-										attributeName.append(value, 0, value.length);
-										break;
-									case START_TAG:
-									case END_TAG:
-										tagName.append(value, 0, value.length);
-										break;
-									case TEXT:
-										xmlReader.characterDataHandler(value, 0, value.length);
-										break;
-								}
-							}
-						}
-						break;
-					case SLASH:
-						if (c == '>') {
-							state = TEXT;
-							startPosition = i + 1;
-						}
-						break;
-					case END_TAG:
-endTagLabel:
-						while (true) {
+							break;
+						case WS_AFTER_START_TAG_NAME:
 							switch (c) {
 								case '>':
-									tagName.append(buffer, startPosition, i - startPosition);
-									processEndTag(xmlReader, convertToString(strings, tagName));
+									processStartTag(xmlReader, convertToString(strings, tagName), attributes);
 									state = TEXT;
 									startPosition = i + 1;
-									break endTagLabel;
-								case '&':
-									savedState = END_TAG;
-									state = ENTITY_REF;
-									startPosition = i + 1;
-									break endTagLabel;
+									break;
+								case '/':
+									state = SLASH;
+									processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+									break;
 								case 0x0008:
 								case 0x0009:
 								case 0x000A:
@@ -455,45 +312,193 @@ endTagLabel:
 								case 0x000C:
 								case 0x000D:
 								case ' ':
-									tagName.append(buffer, startPosition, i - startPosition);
-									state = WS_AFTER_END_TAG_NAME;
-									break endTagLabel;
+									break;
 								default:
-									if (++i == count) {
-										tagName.append(buffer, startPosition, i - startPosition);
-										break endTagLabel;
-									}
+									state = ATTRIBUTE_NAME;
+									startPosition = i;
 									break;
 							}
-							c = buffer[i];
-						}
+							break;
+						case ATTRIBUTE_NAME:
+attributeNameLabel:
+							while (true) {
+								switch (c) {
+									case '=':
+										state = WAIT_ATTRIBUTE_VALUE;
+										break attributeNameLabel;
+									case '&':
+										savedState = ATTRIBUTE_NAME;
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break attributeNameLabel;
+									case 0x0008:
+									case 0x0009:
+									case 0x000A:
+									case 0x000B:
+									case 0x000C:
+									case 0x000D:
+									case ' ':
+										state = WAIT_EQUALS;
+										break attributeNameLabel;
+								}
+								c = buffer[++i];
+							}
+							attributeName.append(buffer, startPosition, i - startPosition);
+							break;
+						case WAIT_EQUALS:
+							if (c == '=') {
+								state = WAIT_ATTRIBUTE_VALUE;
+							}
+							break;
+						case WAIT_ATTRIBUTE_VALUE:
+							if (c == '"') {
+								state = ATTRIBUTE_VALUE;
+								startPosition = i + 1;
+							}
+							break;
+						case ATTRIBUTE_VALUE:
+							while ((c != '"') && (c != '&')) {
+								c = buffer[++i];
+							}
+							attributeValue.append(buffer, startPosition, i - startPosition);
+							if (c == '"') {
+								state = WS_AFTER_START_TAG_NAME;
+								if (dontCacheAttributeValues) {
+									attributes.put(convertToString(strings, attributeName), attributeValue.toString());
+									attributeValue.clear();
+								} else {
+									attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
+								}
+							} else {
+								savedState = ATTRIBUTE_VALUE;
+								state = ENTITY_REF;
+								startPosition = i + 1;
+							}
+							break;
+						case ENTITY_REF:
+							while (c != ';') {
+								c = buffer[++i];
+							}
+							entityName.append(buffer, startPosition, i - startPosition);
+							if (c == ';') {
+								state = savedState;
+								startPosition = i + 1;
+								final String name = convertToString(strings, entityName);
+								char[] value = entityMap.get(name);
+								if (value == null) {
+									if ((name.length() > 0) && (name.charAt(0) == '#')) {
+										try {
+											int number;
+											if (name.charAt(1) == 'x') {
+												number = Integer.parseInt(name.substring(2), 16);
+											} else {
+												number = Integer.parseInt(name.substring(1));
+											}
+											value = new char[] { (char)number };
+											entityMap.put(name, value);
+										} catch (NumberFormatException e) {
+										}
+									}
+								}
+								if (value != null) {
+									switch (state) {
+										case ATTRIBUTE_VALUE:
+											attributeValue.append(value, 0, value.length);
+											break;
+										case ATTRIBUTE_NAME:
+											attributeName.append(value, 0, value.length);
+											break;
+										case START_TAG:
+										case END_TAG:
+											tagName.append(value, 0, value.length);
+											break;
+										case TEXT:
+											xmlReader.characterDataHandler(value, 0, value.length);
+											break;
+									}
+								}
+							}
+							break;
+						case SLASH:
+							if (c == '>') {
+								state = TEXT;
+								startPosition = i + 1;
+							}
+							break;
+						case END_TAG:
+endTagLabel:
+							while (true) {
+								switch (c) {
+									case '>':
+										tagName.append(buffer, startPosition, i - startPosition);
+										processEndTag(xmlReader, convertToString(strings, tagName));
+										state = TEXT;
+										startPosition = i + 1;
+										break endTagLabel;
+									case '&':
+										tagName.append(buffer, startPosition, i - startPosition);
+										savedState = END_TAG;
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break endTagLabel;
+									case 0x0008:
+									case 0x0009:
+									case 0x000A:
+									case 0x000B:
+									case 0x000C:
+									case 0x000D:
+									case ' ':
+										tagName.append(buffer, startPosition, i - startPosition);
+										state = WS_AFTER_END_TAG_NAME;
+										break endTagLabel;
+								}
+								c = buffer[++i];
+							}
+							break;
+						case WS_AFTER_END_TAG_NAME:
+							if (c == '>') {
+								state = TEXT;
+								processEndTag(xmlReader, convertToString(strings, tagName));
+								startPosition = i + 1;
+							}
+							break;
+						case TEXT:
+							while ((c != '<') && (c != '&')) {
+								c = buffer[++i];
+							}
+							if (c == '<') {
+								if (i > startPosition) {
+									xmlReader.characterDataHandlerFinal(buffer, startPosition, i - startPosition);
+								}
+								state = LANGLE;
+							} else {
+								if (i > startPosition) {
+									xmlReader.characterDataHandler(buffer, startPosition, i - startPosition);
+								}
+								savedState = TEXT;
+								state = ENTITY_REF;
+								startPosition = i + 1;
+							}
+							break;
+					}
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				switch (state) {
+					case START_TAG:
+					case END_TAG:
+						tagName.append(buffer, startPosition, count - startPosition);
 						break;
-					case WS_AFTER_END_TAG_NAME:
-						if (c == '>') {
-							state = TEXT;
-							processEndTag(xmlReader, convertToString(strings, tagName));
-							startPosition = i + 1;
-						}
+					case ATTRIBUTE_NAME:
+						attributeName.append(buffer, startPosition, count - startPosition);
+						break;
+					case ATTRIBUTE_VALUE:
+						attributeValue.append(buffer, startPosition, count - startPosition);
+						break;
+					case ENTITY_REF:
+						entityName.append(buffer, startPosition, count - startPosition);
 						break;
 					case TEXT:
-						while ((c != '<') && (c != '&') && (++i < count)) {
-							c = buffer[i];
-						}
-						if (i > startPosition) {
-							if (c == '<') {
-								xmlReader.characterDataHandlerFinal(buffer, startPosition, i - startPosition);
-							} else {
-								xmlReader.characterDataHandler(buffer, startPosition, i - startPosition);
-							}
-						}
-						if (c == '<') {
-							state = LANGLE;
-						} else if (c == '&') {
-							savedState = TEXT;
-							state = ENTITY_REF;
-							startPosition = i + 1;
-						}
-						break;
+						xmlReader.characterDataHandler(buffer, startPosition, count - startPosition);
 				}
 			}
 		}
