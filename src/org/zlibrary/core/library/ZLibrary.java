@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.zlibrary.core.xml.*;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLibrary {
@@ -41,7 +41,7 @@ public abstract class ZLibrary {
 
 	protected final void loadProperties() {
 		new ZLXMLReaderAdapter() {
-			public void startElementHandler(String tag, StringMap attributes) {
+			public void startElementHandler(String tag, ZLStringHashMap attributes) {
 				if (tag.equals("property")) {
 					myProperties.put(attributes.getValue("name"), attributes.getValue("value"));
 				}

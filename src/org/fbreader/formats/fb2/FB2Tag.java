@@ -30,47 +30,49 @@ final class FB2Tag {
 	public static final byte BINARY = 24;
 	public static final byte FICTIONBOOK = 25;
 
-	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>();
+	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(64);
 
 	static {
-		ourTagByName.put("UNKNOWN", UNKNOWN);
-		ourTagByName.put("P", P);
-		ourTagByName.put("V", V);
-		ourTagByName.put("SUBTITLE", SUBTITLE);
-		ourTagByName.put("TEXT-AUTHOR", TEXT_AUTHOR);
-		ourTagByName.put("DATE", DATE);
-		ourTagByName.put("CITE", CITE);
-		ourTagByName.put("SECTION", SECTION);
-		ourTagByName.put("POEM", POEM);
-		ourTagByName.put("STANZA", STANZA);
-		ourTagByName.put("EPIGRAPH", EPIGRAPH);
-		ourTagByName.put("ANNOTATION", ANNOTATION);
-		ourTagByName.put("COVERPAGE", COVERPAGE);
-		ourTagByName.put("A", A);
-		ourTagByName.put("EMPTY-LINE", EMPTY_LINE);
-		ourTagByName.put("SUP", SUP);
-		ourTagByName.put("SUB", SUB);
-		ourTagByName.put("EMPHASIS", EMPHASIS);
-		ourTagByName.put("STRONG", STRONG);
-		ourTagByName.put("CODE", CODE);
-		ourTagByName.put("STRIKETHROUGH", STRIKETHROUGH);
-		ourTagByName.put("TITLE", TITLE);
-		ourTagByName.put("BODY", BODY);
-		ourTagByName.put("IMAGE", IMAGE);
-		ourTagByName.put("BINARY", BINARY);
-		ourTagByName.put("FICTIONBOOK", FICTIONBOOK);
+		final HashMap<String,Byte> tagByName = ourTagByName;
+		tagByName.put("UNKNOWN", UNKNOWN);
+		tagByName.put("P", P);
+		tagByName.put("V", V);
+		tagByName.put("SUBTITLE", SUBTITLE);
+		tagByName.put("TEXT-AUTHOR", TEXT_AUTHOR);
+		tagByName.put("DATE", DATE);
+		tagByName.put("CITE", CITE);
+		tagByName.put("SECTION", SECTION);
+		tagByName.put("POEM", POEM);
+		tagByName.put("STANZA", STANZA);
+		tagByName.put("EPIGRAPH", EPIGRAPH);
+		tagByName.put("ANNOTATION", ANNOTATION);
+		tagByName.put("COVERPAGE", COVERPAGE);
+		tagByName.put("A", A);
+		tagByName.put("EMPTY-LINE", EMPTY_LINE);
+		tagByName.put("SUP", SUP);
+		tagByName.put("SUB", SUB);
+		tagByName.put("EMPHASIS", EMPHASIS);
+		tagByName.put("STRONG", STRONG);
+		tagByName.put("CODE", CODE);
+		tagByName.put("STRIKETHROUGH", STRIKETHROUGH);
+		tagByName.put("TITLE", TITLE);
+		tagByName.put("BODY", BODY);
+		tagByName.put("IMAGE", IMAGE);
+		tagByName.put("BINARY", BINARY);
+		tagByName.put("FICTIONBOOK", FICTIONBOOK);
 	}
 
 	public static byte getTagByName(String name) {
-		Byte num = ourTagByName.get(name);
+		final HashMap<String,Byte> tagByName = ourTagByName;
+		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String upperCaseName = name.toUpperCase().intern();
-			num = ourTagByName.get(upperCaseName);
+			num = tagByName.get(upperCaseName);
 			if (num == null) {
 				num = UNKNOWN;
-				ourTagByName.put(upperCaseName, num);
+				tagByName.put(upperCaseName, num);
 			}
-			ourTagByName.put(name, num);
+			tagByName.put(name, num);
 		}
 		return num;
 	}

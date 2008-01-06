@@ -3,7 +3,7 @@ package org.zlibrary.core.xml.own;
 import java.util.HashMap;
 import java.io.*;
 
-import org.zlibrary.core.xml.ZLXMLReader;
+import org.zlibrary.core.xml.*;
 
 final class ZLOwnXMLParser {
 	private static final byte START_DOCUMENT = 0;
@@ -68,53 +68,6 @@ final class ZLOwnXMLParser {
 		myStreamReader = new InputStreamReader(stream, encoding);
 	}
 
-	private static final class StringMap implements ZLXMLReader.StringMap {
-		private int mySize;
-		private String[] myKeys = new String[10];
-		private String[] myValues = new String[10];
-
-		public int getSize() {
-			return mySize;
-		}
-
-		public String getKey(int index) {
-			return myKeys[index];
-		}
-
-		public String getValue(String key) {
-			final int size = mySize;
-			if (size > 0) {
-				key = key.intern();
-				final String[] keys = myKeys;
-				for (int i = 0; i < size; ++i) {
-					if (key == keys[i]) {
-						return myValues[i];
-					}
-				}
-			}
-			return null;
-		}
-
-		public void clear() {
-			mySize = 0;
-		}
-
-		public void put(String key, String value) {
-			final int size = mySize++;
-			String[] keys = myKeys;
-			if (keys.length == size) {
-				keys = new String[2 * size];
-				System.arraycopy(myKeys, 0, keys, 0, size);
-				myKeys = keys;
-				final String[] values = new String[2 * size];
-				System.arraycopy(myValues, 0, values, 0, size);
-				myValues = values;
-			}
-			keys[size] = key;
-			myValues[size] = value;
-		}
-	}
-
 	private static char[] getEntityValue(HashMap<String,char[]> entityMap, String name) {
 		char[] value = entityMap.get(name);
 		if (value == null) {
@@ -152,7 +105,7 @@ final class ZLOwnXMLParser {
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final ZLMutableString entityName = new ZLMutableString();
 		final HashMap<ZLMutableString,String> strings = new HashMap<ZLMutableString,String>();
-		final StringMap attributes = new StringMap();
+		final ZLStringHashMap attributes = new ZLStringHashMap(8);
 
 		byte state = START_DOCUMENT;
 		byte savedState = START_DOCUMENT;
@@ -415,13 +368,13 @@ mainSwitchLabel:
 		}
 	}
 
-	private static void processFullTag(ZLXMLReader xmlReader, String tagName, StringMap attributes) {
+	private static void processFullTag(ZLXMLReader xmlReader, String tagName, ZLStringHashMap attributes) {
 		xmlReader.startElementHandler(tagName, attributes);
 		xmlReader.endElementHandler(tagName);
 		attributes.clear();
 	}
 
-	private static void processStartTag(ZLXMLReader xmlReader, String tagName, StringMap attributes) {
+	private static void processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringHashMap attributes) {
 		xmlReader.startElementHandler(tagName, attributes);
 		attributes.clear();
 	}

@@ -3,7 +3,7 @@ package org.zlibrary.core.application;
 import java.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.zlibrary.core.xml.*;
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.resources.*;
 import org.zlibrary.core.view.*;
@@ -563,7 +563,7 @@ public abstract class ZLApplication {
 		private static final String BUTTON = "button";
 		private static final String SEPARATOR = "separator";
 
-		public void startElementHandler(String tag, StringMap attributes) {
+		public void startElementHandler(String tag, ZLStringHashMap attributes) {
 			if (myToolbar == null) {
 				myToolbar = new Toolbar();
 			}
@@ -589,7 +589,7 @@ public abstract class ZLApplication {
 
 		private final ArrayList<Menubar.Submenu> mySubmenuStack = new ArrayList<Menubar.Submenu>();
 
-		public void startElementHandler(String tag, StringMap attributes) {
+		public void startElementHandler(String tag, ZLStringHashMap attributes) {
 			if (myMenubar == null) {
 				myMenubar = new Menubar();
 			}

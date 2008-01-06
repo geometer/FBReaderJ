@@ -1,7 +1,7 @@
 package org.zlibrary.core.resources;
 
 import java.util.*;
-import org.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.zlibrary.core.xml.*;
 
 final class ZLTreeResource extends ZLResource {
 	public static ZLTreeResource ourRoot;
@@ -72,7 +72,7 @@ final class ZLTreeResource extends ZLResource {
 			return true;
 		}
 
-		public void startElementHandler(String tag, StringMap attributes) {
+		public void startElementHandler(String tag, ZLStringHashMap attributes) {
 			final ArrayList<ZLTreeResource> stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.getValue("name");

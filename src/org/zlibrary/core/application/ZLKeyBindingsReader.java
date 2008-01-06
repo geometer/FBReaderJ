@@ -2,7 +2,7 @@ package org.zlibrary.core.application;
 
 import java.util.HashMap;
 
-import org.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.zlibrary.core.xml.*;
 
 class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	private HashMap<String,Integer> myKeymap;
@@ -11,7 +11,7 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 		myKeymap = keymap; 
 	}
 		
-	public void startElementHandler(String tag, StringMap attributes) {
+	public void startElementHandler(String tag, ZLStringHashMap attributes) {
 		if ("binding".equals(tag)) {
 			String key = attributes.getValue("key");
 			String action = attributes.getValue("action");

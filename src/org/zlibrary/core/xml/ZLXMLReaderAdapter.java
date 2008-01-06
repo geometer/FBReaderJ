@@ -9,7 +9,7 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void startElementHandler(String tag, StringMap attributes) {
+	public void startElementHandler(String tag, ZLStringHashMap attributes) {
 	}
 	
 	public void endElementHandler(String tag) {

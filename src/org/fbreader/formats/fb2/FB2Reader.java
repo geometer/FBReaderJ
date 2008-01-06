@@ -168,7 +168,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		}		
 	}
 
-	public void startElementHandler(String tagName, StringMap attributes) {
+	public void startElementHandler(String tagName, ZLStringHashMap attributes) {
 		String id = attributes.getValue("id");
 		if (id != null) {
 			if (!myReadMainText) {
