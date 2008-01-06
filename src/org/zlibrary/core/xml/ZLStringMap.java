@@ -15,17 +15,21 @@ public final class ZLStringMap {
 		myValues = new String[8];
 	}
 
+	private void extend() {
+		final int length = myKeys.length;
+		String[] tmp = new String[2 * length];
+		System.arraycopy(myKeys, 0, tmp, 0, length);
+		myKeys = tmp;
+		tmp = new String[2 * length];
+		System.arraycopy(myValues, 0, tmp, 0, length);
+		myValues = tmp;
+	}
+
 	public void put(String key, String value) {
 		final int size = mySize++;
 		String[] keys = myKeys;
 		if (keys.length == size) {
-			String[] tmp = new String[2 * size];
-			System.arraycopy(keys, 0, tmp, 0, size);
-			keys = tmp;
-			myKeys = keys;
-			tmp = new String[2 * size];
-			System.arraycopy(myValues, 0, tmp, 0, size);
-			myValues = tmp;
+			extend();
 		}
 		keys[size] = key;
 		myValues[size] = value;
