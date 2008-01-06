@@ -1,5 +1,6 @@
 package org.zlibrary.text.model.impl;
 
+import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextModel;
@@ -9,10 +10,11 @@ import java.util.*;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList<ZLImageEntry> myEntries = new ArrayList<ZLImageEntry>();
-	private int[] myStartEntryIndices = new int[1024];
-	private int[] myStartEntryOffsets = new int[1024];
-	private int[] myParagraphLengths = new int[1024];
-	protected int myParagraphsNumber;
+	final static int INITIAL_CAPACITY = 1024;
+	private int[] myStartEntryIndices = new int[INITIAL_CAPACITY];
+	private int[] myStartEntryOffsets = new int[INITIAL_CAPACITY];
+	private int[] myParagraphLengths = new int[INITIAL_CAPACITY];
+	int myParagraphsNumber;
 
 	private final ArrayList<char[]> myData = new ArrayList<char[]>(1024);
 	private final int myDataBlockSize;
@@ -130,20 +132,11 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myDataBlockSize = dataBlockSize;
 	}
 
-	private final void extend() {
+	void extend() {
 		final int size = myStartEntryIndices.length;
-
-		int[] tmp = new int[2 * size];
-		System.arraycopy(myStartEntryIndices, 0, tmp, 0, size);
-		myStartEntryIndices = tmp;
-
-		tmp = new int[2 * size];
-		System.arraycopy(myStartEntryOffsets, 0, tmp, 0, size);
-		myStartEntryOffsets = tmp;
-
-		tmp = new int[2 * size];
-		System.arraycopy(myParagraphLengths, 0, tmp, 0, size);
-		myParagraphLengths = tmp;
+		myStartEntryIndices = ZLArrayUtils.createCopy(myStartEntryIndices, size, size << 1);
+		myStartEntryOffsets = ZLArrayUtils.createCopy(myStartEntryOffsets, size, size << 1);
+		myParagraphLengths = ZLArrayUtils.createCopy(myParagraphLengths, size, size << 1);
 	}
 
 	final void createParagraph() {

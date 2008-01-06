@@ -1,6 +1,6 @@
 package org.fbreader.formats.fb2;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 
 final class FB2Tag {
 	public static final byte UNKNOWN = 0;
@@ -30,11 +30,12 @@ final class FB2Tag {
 	public static final byte BINARY = 24;
 	public static final byte FICTIONBOOK = 25;
 
-	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(64);
+	private static final StringToByteHashMap ourTagByName = new StringToByteHashMap(64);
+	private static final Byte ourUnknownTag = UNKNOWN;
 
 	static {
-		final HashMap<String,Byte> tagByName = ourTagByName;
-		tagByName.put("UNKNOWN", UNKNOWN);
+		final StringToByteHashMap tagByName = ourTagByName;
+		tagByName.put("UNKNOWN", ourUnknownTag);
 		tagByName.put("P", P);
 		tagByName.put("V", V);
 		tagByName.put("SUBTITLE", SUBTITLE);
@@ -63,13 +64,13 @@ final class FB2Tag {
 	}
 
 	public static byte getTagByName(String name) {
-		final HashMap<String,Byte> tagByName = ourTagByName;
+		final StringToByteHashMap tagByName = ourTagByName;
 		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String upperCaseName = name.toUpperCase().intern();
 			num = tagByName.get(upperCaseName);
 			if (num == null) {
-				num = UNKNOWN;
+				num = ourUnknownTag;
 				tagByName.put(upperCaseName, num);
 			}
 			tagByName.put(name, num);

@@ -1,5 +1,7 @@
 package org.zlibrary.core.xml;
 
+import org.zlibrary.core.util.ZLArrayUtils;
+
 // optimized partially implemented map String -> String
 // key must be interned
 // there is no remove() in this implementation
@@ -17,19 +19,15 @@ public final class ZLStringMap {
 
 	private void extend() {
 		final int length = myKeys.length;
-		String[] tmp = new String[2 * length];
-		System.arraycopy(myKeys, 0, tmp, 0, length);
-		myKeys = tmp;
-		tmp = new String[2 * length];
-		System.arraycopy(myValues, 0, tmp, 0, length);
-		myValues = tmp;
 	}
 
 	public void put(String key, String value) {
 		final int size = mySize++;
 		String[] keys = myKeys;
 		if (keys.length == size) {
-			extend();
+			keys = ZLArrayUtils.createCopy(keys, size, size << 1);
+			myKeys = keys;
+			myValues = ZLArrayUtils.createCopy(myValues, size, size << 1);
 		}
 		keys[size] = key;
 		myValues[size] = value;

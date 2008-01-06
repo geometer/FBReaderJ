@@ -1,5 +1,7 @@
 package org.zlibrary.core.xml.own;
 
+import org.zlibrary.core.util.ZLArrayUtils;
+
 final class ZLMutableString {
 	private char[] myData;
 	private int myLength;
@@ -14,10 +16,8 @@ final class ZLMutableString {
 
 	ZLMutableString(ZLMutableString container) {
 		final int len = container.myLength;
-		final char[] data = new char[len];
-		myData = data;
+		myData = ZLArrayUtils.createCopy(container.myData, len, len);
 		myLength = len;
-		System.arraycopy(container.myData, 0, data, 0, len);
 	}
 
 	public void append(char[] buffer, int offset, int count) {
@@ -25,11 +25,7 @@ final class ZLMutableString {
 		char[] data = myData;
 		final int newLength = len + count;
 		if (data.length < newLength) {
-			char[] data0 = new char[newLength];
-			if (len > 0) {
-				System.arraycopy(data, 0, data0, 0, len);
-			}
-			data = data0;
+			data = ZLArrayUtils.createCopy(data, len, newLength);
 			myData = data;
 		}
 		System.arraycopy(buffer, offset, data, len, count);

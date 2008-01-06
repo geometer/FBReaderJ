@@ -3,6 +3,7 @@ package org.fbreader.bookmodel;
 import java.util.ArrayList;
 
 import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
@@ -57,8 +58,7 @@ public class BookReader {
 	public final void pushKind(byte kind) {
 		byte[] stack = myKindStack;
 		if (stack.length == myKindStackSize) {
-			stack = new byte[myKindStackSize * 2];
-			System.arraycopy(myKindStack, 0, stack, 0, myKindStackSize);
+			stack = ZLArrayUtils.createCopy(stack, myKindStackSize, myKindStackSize << 1);
 			myKindStack = stack;
 		}
 		stack[myKindStackSize++] = kind;

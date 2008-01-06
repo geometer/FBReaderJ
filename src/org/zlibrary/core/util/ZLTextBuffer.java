@@ -37,11 +37,7 @@ public final class ZLTextBuffer {
 			while (newLen > capacity) {
 				capacity <<= 1;
 			}
-			char[] data1 = new char[capacity];
-			if (oldLen > 0) {
-				System.arraycopy(data, 0, data1, 0, oldLen);
-			}
-			data = data1;
+			data = ZLArrayUtils.createCopy(data, oldLen, capacity);
 			myData = data;
 		}
 		System.arraycopy(buffer, offset, data, oldLen, count);
@@ -49,12 +45,10 @@ public final class ZLTextBuffer {
 	}
 
 	public void trimToSize() {
-		if (myDataLength < myData.length) {
-			char[] newData = new char[myDataLength];
-			if (myDataLength > 0) {
-				System.arraycopy(myData, 0, newData, 0, myDataLength);
-			}
-			myData = newData;
+		final int len = myDataLength;
+		final char[] data = myData;
+		if (len < data.length) {
+			myData = ZLArrayUtils.createCopy(data, len, len);
 		}
 	}
 

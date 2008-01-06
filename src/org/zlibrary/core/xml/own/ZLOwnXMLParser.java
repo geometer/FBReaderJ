@@ -3,6 +3,7 @@ package org.zlibrary.core.xml.own;
 import java.util.HashMap;
 import java.io.*;
 
+import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.core.xml.*;
 
 final class ZLOwnXMLParser {
@@ -15,7 +16,7 @@ final class ZLOwnXMLParser {
 	private static final byte COMMENT = 6;
 	private static final byte LANGLE = 7;
 	private static final byte WS_AFTER_START_TAG_NAME = 8;
-	private static final byte WS_AFTER_END_TAG_NAME = 9;
+	//private static final byte WS_AFTER_END_TAG_NAME = 9;
 	private static final byte WAIT_EQUALS = 10;
 	private static final byte WAIT_ATTRIBUTE_VALUE = 11;
 	private static final byte SLASH = 12;
@@ -106,6 +107,8 @@ final class ZLOwnXMLParser {
 		final ZLMutableString entityName = new ZLMutableString();
 		final HashMap<ZLMutableString,String> strings = new HashMap<ZLMutableString,String>();
 		final ZLStringMap attributes = new ZLStringMap();
+		String[] tagStack = new String[10];
+		int tagStackSize = 0;
 
 		byte state = START_DOCUMENT;
 		byte savedState = START_DOCUMENT;
@@ -115,9 +118,7 @@ final class ZLOwnXMLParser {
 				return;
 			}
 			if (count < buffer.length) {
-				final char[] shortBuffer = new char[count];
-				System.arraycopy(buffer, 0, shortBuffer, 0, count);
-				buffer = shortBuffer;
+				buffer = ZLArrayUtils.createCopy(buffer, count, count);
 			}
 			int startPosition = 0;
 			try {
@@ -174,7 +175,14 @@ mainSwitchLabel:
 									case '>':
 										state = TEXT;
 										tagName.append(buffer, startPosition, i - startPosition);
-										processStartTag(xmlReader, convertToString(strings, tagName), attributes);
+										{
+											String stringTagName = convertToString(strings, tagName);
+											if (tagStackSize == tagStack.length) {
+												tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
+											}
+											tagStack[tagStackSize++] = stringTagName;
+											processStartTag(xmlReader, stringTagName, attributes);
+										}
 										startPosition = i + 1;
 										break mainSwitchLabel;
 									case '/':
@@ -193,7 +201,14 @@ mainSwitchLabel:
 						case WS_AFTER_START_TAG_NAME:
 							switch (buffer[++i]) {
 								case '>':
-									processStartTag(xmlReader, convertToString(strings, tagName), attributes);
+									{
+										String stringTagName = convertToString(strings, tagName);
+										if (tagStackSize == tagStack.length) {
+											tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
+										}
+										tagStack[tagStackSize++] = stringTagName;
+										processStartTag(xmlReader, stringTagName, attributes);
+									}
 									state = TEXT;
 									startPosition = i + 1;
 									break;
@@ -295,7 +310,7 @@ mainSwitchLabel:
 													attributeName.append(value, 0, value.length);
 													break;
 												case START_TAG:
-												case END_TAG:
+												//case END_TAG:
 													tagName.append(value, 0, value.length);
 													break;
 												case TEXT:
@@ -319,39 +334,47 @@ mainSwitchLabel:
 							while (true) {
 								switch (buffer[++i]) {
 									case '>':
-										tagName.append(buffer, startPosition, i - startPosition);
-										processEndTag(xmlReader, convertToString(strings, tagName));
+										//tagName.append(buffer, startPosition, i - startPosition);
+										if (tagStackSize > 0) {
+											processEndTag(xmlReader, tagStack[--tagStackSize]);
+										}
+										//processEndTag(xmlReader, convertToString(strings, tagName));
 										state = TEXT;
 										startPosition = i + 1;
 										break mainSwitchLabel;
-									case '&':
-										tagName.append(buffer, startPosition, i - startPosition);
-										savedState = END_TAG;
-										state = ENTITY_REF;
-										startPosition = i + 1;
-										break mainSwitchLabel;
-									case 0x0008:
-									case 0x0009:
-									case 0x000A:
-									case 0x000B:
-									case 0x000C:
-									case 0x000D:
-									case ' ':
-										tagName.append(buffer, startPosition, i - startPosition);
-										state = WS_AFTER_END_TAG_NAME;
-										break mainSwitchLabel;
+									//case '&':
+										//tagName.append(buffer, startPosition, i - startPosition);
+										//savedState = END_TAG;
+										//state = ENTITY_REF;
+										//startPosition = i + 1;
+										//break mainSwitchLabel;
+									//case 0x0008:
+									//case 0x0009:
+									//case 0x000A:
+									//case 0x000B:
+									//case 0x000C:
+									//case 0x000D:
+									//case ' ':
+										//tagName.append(buffer, startPosition, i - startPosition);
+										//state = WS_AFTER_END_TAG_NAME;
+										//break mainSwitchLabel;
 								}
 							}
+						/*
 						case WS_AFTER_END_TAG_NAME:
 							while (true) {
 								switch (buffer[++i]) {
 									case '>':
 										state = TEXT;
-										processEndTag(xmlReader, convertToString(strings, tagName));
+										if (tagStackSize > 0) {
+											processEndTag(xmlReader, tagStack[--tagStackSize]);
+										}
+										//processEndTag(xmlReader, convertToString(strings, tagName));
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
 							}
+						*/
 						case TEXT:
 							while (true) {
 								switch (buffer[++i]) {
@@ -376,7 +399,7 @@ mainSwitchLabel:
 			} catch (ArrayIndexOutOfBoundsException e) {
 				switch (state) {
 					case START_TAG:
-					case END_TAG:
+					//case END_TAG:
 						tagName.append(buffer, startPosition, count - startPosition);
 						break;
 					case ATTRIBUTE_NAME:

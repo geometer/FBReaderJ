@@ -1,10 +1,11 @@
 package org.zlibrary.text.model.impl;
 
+import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 
 public final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainModel {
-	private byte[] myParagraphKinds = new byte[1024];
+	private byte[] myParagraphKinds = new byte[INITIAL_CAPACITY];
 
 	public ZLTextPlainModelImpl(int dataBlockSize) {
 		super(dataBlockSize);
@@ -21,16 +22,15 @@ public final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTex
 			new ZLTextSpecialParagraphImpl(kind, this, index);
 	}
 
+	void extend() {
+		super.extend();
+		final int size = myParagraphKinds.length;
+		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size << 1);
+	}
+
 	public final void createParagraph(byte kind) {
 		final int index = myParagraphsNumber;
 		createParagraph();
-		byte[] paragraphKinds = myParagraphKinds;
-		if (index == paragraphKinds.length) {
-			byte[] tmp = new byte[2 * index];
-			System.arraycopy(paragraphKinds, 0, tmp, 0, index);
-			paragraphKinds = tmp;
-			myParagraphKinds = paragraphKinds;
-		}
-		paragraphKinds[index] = kind;
+		myParagraphKinds[index] = kind;
 	}
 }
