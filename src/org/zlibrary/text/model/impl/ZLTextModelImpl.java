@@ -137,7 +137,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 	private final char[] getDataBlock(int minimumLength) {
 		final ArrayList<char[]> data = myData;
-		int blockSize = (minimumLength <= myDataBlockSize) ? myDataBlockSize : minimumLength;
+		final int blockSize = (minimumLength <= myDataBlockSize) ? myDataBlockSize : minimumLength;
 		if (!data.isEmpty()) {
 			char[] block = data.get(data.size() - 1);
 			if (minimumLength <= block.length - myBlockOffset) {

@@ -269,7 +269,6 @@ public class BookReader {
 				endParagraph();
 			}
 		}
-		
 	}
 
 	public final void addImage(String id, ZLImage image) {
