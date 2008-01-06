@@ -49,7 +49,7 @@ public class ZLTextStyleCollection {
 	private static class TextStyleReader extends ZLXMLReaderAdapter {
 		private ZLTextStyleCollection myCollection;
 
-		private static int intValue(ZLStringHashMap attributes, String name) {
+		private static int intValue(ZLStringMap attributes, String name) {
 			int i = 0;
 			String value = attributes.getValue(name);
 			if (value != null) {
@@ -62,7 +62,7 @@ public class ZLTextStyleCollection {
 			return i;
 		}
 
-		private static double doubleValue(ZLStringHashMap attributes, String name) {
+		private static double doubleValue(ZLStringMap attributes, String name) {
 			double d = 0;
 			String value = attributes.getValue(name);
 			if (value != null) {
@@ -75,11 +75,11 @@ public class ZLTextStyleCollection {
 			return d;
 		}
 
-		private static boolean booleanValue(ZLStringHashMap attributes, String name) {
+		private static boolean booleanValue(ZLStringMap attributes, String name) {
 			return "true" == attributes.getValue(name);
 		}
 
-		private static int b3Value(ZLStringHashMap attributes, String name) {
+		private static int b3Value(ZLStringMap attributes, String name) {
 			return ZLBoolean3.getByString(attributes.getValue(name));
 		}
 			
@@ -87,7 +87,7 @@ public class ZLTextStyleCollection {
 			myCollection = collection;
 		}
 
-		public void startElementHandler(String tag, ZLStringHashMap attributes) {
+		public void startElementHandler(String tag, ZLStringMap attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";
 

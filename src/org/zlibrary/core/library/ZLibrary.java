@@ -41,7 +41,7 @@ public abstract class ZLibrary {
 
 	protected final void loadProperties() {
 		new ZLXMLReaderAdapter() {
-			public void startElementHandler(String tag, ZLStringHashMap attributes) {
+			public void startElementHandler(String tag, ZLStringMap attributes) {
 				if (tag.equals("property")) {
 					myProperties.put(attributes.getValue("name"), attributes.getValue("value"));
 				}

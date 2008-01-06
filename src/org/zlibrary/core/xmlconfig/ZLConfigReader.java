@@ -3,7 +3,7 @@ package org.zlibrary.core.xmlconfig;
 import java.io.*;
 import java.util.Map;
 
-import org.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.zlibrary.core.xml.*;
 
 final class ZLConfigReader implements ZLReader {
 	private class ConfigReader extends ZLXMLReaderAdapter {
@@ -15,7 +15,7 @@ final class ZLConfigReader implements ZLReader {
 			myDepth = 0;
 		}
 
-		public void startElementHandler(String tag, StringMap attributes) {
+		public void startElementHandler(String tag, ZLStringMap attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -63,7 +63,7 @@ final class ZLConfigReader implements ZLReader {
 			myFile = "delta.xml";
 		}
 
-		public void startElementHandler(String tag, StringMap attributes) {
+		public void startElementHandler(String tag, ZLStringMap attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {

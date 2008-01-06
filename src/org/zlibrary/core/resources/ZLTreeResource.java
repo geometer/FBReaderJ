@@ -72,7 +72,7 @@ final class ZLTreeResource extends ZLResource {
 			return true;
 		}
 
-		public void startElementHandler(String tag, ZLStringHashMap attributes) {
+		public void startElementHandler(String tag, ZLStringMap attributes) {
 			final ArrayList<ZLTreeResource> stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.getValue("name");

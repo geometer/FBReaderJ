@@ -563,7 +563,7 @@ public abstract class ZLApplication {
 		private static final String BUTTON = "button";
 		private static final String SEPARATOR = "separator";
 
-		public void startElementHandler(String tag, ZLStringHashMap attributes) {
+		public void startElementHandler(String tag, ZLStringMap attributes) {
 			if (myToolbar == null) {
 				myToolbar = new Toolbar();
 			}
@@ -589,7 +589,7 @@ public abstract class ZLApplication {
 
 		private final ArrayList<Menubar.Submenu> mySubmenuStack = new ArrayList<Menubar.Submenu>();
 
-		public void startElementHandler(String tag, ZLStringHashMap attributes) {
+		public void startElementHandler(String tag, ZLStringMap attributes) {
 			if (myMenubar == null) {
 				myMenubar = new Menubar();
 			}
