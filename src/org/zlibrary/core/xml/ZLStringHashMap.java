@@ -4,7 +4,7 @@ package org.zlibrary.core.xml;
 // key must be not-null
 // key must be interned
 // there is no remove() in this implementation
-// put with the same key does not remove previous entry
+// put with the same key does not remove old entryi with the same
 
 public final class ZLStringHashMap {
 	private final static class Entry {
@@ -56,15 +56,14 @@ public final class ZLStringHashMap {
 	}
 
 	public String getValue(String key) {
-		if (mySize == 0) {
-			return null;
-		}
-		final int hashCode = key.hashCode();
-		final Entry[] table = myTable;
-		final int index = hashCode & (table.length - 1);
-		for (Entry entry = table[index]; entry != null; entry = entry.Next) {
-			if (entry.Key == key) {
-				return entry.Value;
+		if (mySize != 0) {
+			final int hashCode = key.hashCode();
+			final Entry[] table = myTable;
+			final int index = hashCode & (table.length - 1);
+			for (Entry entry = table[index]; entry != null; entry = entry.Next) {
+				if (entry.Key == key) {
+					return entry.Value;
+				}
 			}
 		}
 		return null;
