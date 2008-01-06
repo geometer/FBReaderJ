@@ -125,10 +125,14 @@ final class ZLOwnXMLParser {
 mainSwitchLabel:
 					switch (state) {
 						case START_DOCUMENT:
-							while (buffer[++i] != '<');
-							state = LANGLE;
-							startPosition = i + 1;
-							break;
+							while (true) {
+								switch (buffer[++i]) {
+									case '<':
+										state = LANGLE;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
 						case LANGLE:
 							switch (buffer[++i]) {
 								case '/':
@@ -146,10 +150,14 @@ mainSwitchLabel:
 							}
 							break;
 						case COMMENT:
-							while (buffer[++i] != '>');
-							state = TEXT;
-							startPosition = i + 1;
-							break;
+							while (true) {
+								switch (buffer[++i]) {
+									case '>':
+										state = TEXT;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
 						case START_TAG:
 							while (true) {
 								switch (buffer[++i]) {
@@ -233,14 +241,22 @@ mainSwitchLabel:
 								}
 							}
 						case WAIT_EQUALS:
-							while (buffer[++i] != '=');
-							state = WAIT_ATTRIBUTE_VALUE;
-							break;
+							while (true) {
+								switch (buffer[++i]) {
+									case '=':
+										state = WAIT_ATTRIBUTE_VALUE;
+										break mainSwitchLabel;
+								}
+							}
 						case WAIT_ATTRIBUTE_VALUE:
-							while (buffer[++i] != '"');
-							state = ATTRIBUTE_VALUE;
-							startPosition = i + 1;
-							break;
+							while (true) {
+								switch (buffer[++i]) {
+									case '"':
+										state = ATTRIBUTE_VALUE;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
 						case ATTRIBUTE_VALUE:
 							while (true) {
 								switch (buffer[++i]) {
@@ -263,34 +279,42 @@ mainSwitchLabel:
 								}
 							}
 						case ENTITY_REF:
-							while (buffer[++i] != ';');
-							entityName.append(buffer, startPosition, i - startPosition);
-							state = savedState;
-							startPosition = i + 1;
-							final char[] value = getEntityValue(entityMap, convertToString(strings, entityName));
-							if (value != null) {
-								switch (state) {
-									case ATTRIBUTE_VALUE:
-										attributeValue.append(value, 0, value.length);
-										break;
-									case ATTRIBUTE_NAME:
-										attributeName.append(value, 0, value.length);
-										break;
-									case START_TAG:
-									case END_TAG:
-										tagName.append(value, 0, value.length);
-										break;
-									case TEXT:
-										xmlReader.characterDataHandler(value, 0, value.length);
-										break;
+							while (true) {
+								switch (buffer[++i]) {
+									case ';':
+										entityName.append(buffer, startPosition, i - startPosition);
+										state = savedState;
+										startPosition = i + 1;
+										final char[] value = getEntityValue(entityMap, convertToString(strings, entityName));
+										if (value != null) {
+											switch (state) {
+												case ATTRIBUTE_VALUE:
+													attributeValue.append(value, 0, value.length);
+													break;
+												case ATTRIBUTE_NAME:
+													attributeName.append(value, 0, value.length);
+													break;
+												case START_TAG:
+												case END_TAG:
+													tagName.append(value, 0, value.length);
+													break;
+												case TEXT:
+													xmlReader.characterDataHandler(value, 0, value.length);
+													break;
+											}
+										}
+										break mainSwitchLabel;
 								}
 							}
-							break;
 						case SLASH:
-							while (buffer[++i] != '>');
-							state = TEXT;
-							startPosition = i + 1;
-							break;
+							while (true) {
+								switch (buffer[++i]) {
+									case '>':
+										state = TEXT;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
 						case END_TAG:
 							while (true) {
 								switch (buffer[++i]) {
@@ -319,11 +343,15 @@ mainSwitchLabel:
 								}
 							}
 						case WS_AFTER_END_TAG_NAME:
-							while (buffer[++i] != '>');
-							state = TEXT;
-							processEndTag(xmlReader, convertToString(strings, tagName));
-							startPosition = i + 1;
-							break;
+							while (true) {
+								switch (buffer[++i]) {
+									case '>':
+										state = TEXT;
+										processEndTag(xmlReader, convertToString(strings, tagName));
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
 						case TEXT:
 							while (true) {
 								switch (buffer[++i]) {
