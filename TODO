@@ -9,6 +9,7 @@ ZLTextView:
 	position indicator
 	обработка неразрывных пробелов
 	undo/redo position stack
+	обработка китайских текстов
 
 рисунки:
 	обработка palm'овых рисунков
