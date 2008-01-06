@@ -25,7 +25,8 @@ final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainM
 	}
 
 	void increaseLastParagraphSize() {
-		myParagraphInfos.increment(myParagraphInfos.size() - 1);
+		final ZLIntArray infos = myParagraphInfos;
+		infos.increment(infos.size() - 1);
 	}
 
 	public void createParagraph(byte kind) {
