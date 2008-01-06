@@ -8,8 +8,8 @@ class ZLTextSpecialParagraphImpl extends ZLTextParagraphImpl {
 		myKind = kind;
 	}
 
-	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model, int offset, int length) {
-		super(model, offset, length);
+	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model, int offset) {
+		super(model, offset);
 		myKind = kind;
 	}
 

@@ -5,30 +5,22 @@ import org.zlibrary.text.model.ZLTextParagraph;
 class ZLTextParagraphImpl implements ZLTextParagraph {
 	private final ZLTextModelImpl myModel;
 	private final int myIndex;
-	private int myLength;
 	
-	public int INDEX;
-
-	ZLTextParagraphImpl(ZLTextModelImpl model, int index, int length) {
+	ZLTextParagraphImpl(ZLTextModelImpl model, int index) {
 		myModel = model;
 		myIndex = index;
-		myLength = length;
 	}
 
 	ZLTextParagraphImpl(ZLTextModelImpl model) {
-		this(model, model.getParagraphsNumber(), 0);
+		this(model, model.getParagraphsNumber());
 	}
 
 	public EntryIterator iterator() {
-		return myModel.new EntryIteratorImpl(myIndex, myLength);
+		return myModel.new EntryIteratorImpl(myIndex);
 	}
 
 	public byte getKind() {
 		return Kind.TEXT_PARAGRAPH;
-	}
-
-	public final int getEntryNumber() {
-		return myLength;
 	}
 
 	public final int getTextLength() {
@@ -39,9 +31,5 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
 			}
 		}
 		return size;
-	}
-
-	final void addEntry() {
-		++myLength;
 	}
 }

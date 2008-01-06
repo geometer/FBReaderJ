@@ -17,20 +17,14 @@ final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainM
 	}
 
 	public final ZLTextParagraph getParagraph(int index) {
-		final int info = myParagraphInfos.get(index);
-		final byte kind = (byte)(info >> 24);
+		final byte kind = (byte)myParagraphInfos.get(index);
 		return (kind == ZLTextParagraph.Kind.TEXT_PARAGRAPH) ?
-			new ZLTextParagraphImpl(this, index, info & 0x00FFFFFF) :
-			new ZLTextSpecialParagraphImpl(kind, this, index, info & 0x00FFFFFF);
+			new ZLTextParagraphImpl(this, index) :
+			new ZLTextSpecialParagraphImpl(kind, this, index);
 	}
 
-	void increaseLastParagraphSize() {
-		final ZLIntArray infos = myParagraphInfos;
-		infos.increment(infos.size() - 1);
-	}
-
-	public void createParagraph(byte kind) {
+	public final void createParagraph(byte kind) {
 		createParagraph();
-		myParagraphInfos.add(kind << 24);
+		myParagraphInfos.add(kind);
 	}
 }

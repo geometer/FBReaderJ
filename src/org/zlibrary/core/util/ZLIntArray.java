@@ -21,8 +21,8 @@ public final class ZLIntArray {
 		return myData[index];
 	}
 
-	public void increment(int index) {
-		++myData[index];
+	public void incrementLast() {
+		++myData[mySize - 1];
 	}
 
 	public int size() {

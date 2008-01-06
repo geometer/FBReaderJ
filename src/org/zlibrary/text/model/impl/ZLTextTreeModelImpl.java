@@ -24,12 +24,7 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 		return myParagraphs.get(index);
 	}
 
-	void increaseLastParagraphSize() {
-		final ArrayList<ZLTextTreeParagraphImpl> paragraphs = myParagraphs;
-		paragraphs.get(paragraphs.size() - 1).addEntry();
-	}
-
-	public ZLTextTreeParagraph createParagraph(ZLTextTreeParagraph parent) {
+	public final ZLTextTreeParagraph createParagraph(ZLTextTreeParagraph parent) {
 		createParagraph();
 		if (parent == null) {
 			parent = myRoot;
@@ -39,7 +34,7 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 		return tp;
 	}
 	
-	public void removeParagraph(int index) {
+	public final void removeParagraph(int index) {
 		ZLTextTreeParagraph p = getParagraph(index);
 		p.removeFromParent();
 		myParagraphs.remove(index);
