@@ -35,39 +35,39 @@ final class FB2Tag {
 
 	static {
 		final HashMap<String,Byte> tagByName = ourTagByName;
-		tagByName.put("UNKNOWN", ourUnknownTag);
-		tagByName.put("P", P);
-		tagByName.put("V", V);
-		tagByName.put("SUBTITLE", SUBTITLE);
-		tagByName.put("TEXT-AUTHOR", TEXT_AUTHOR);
-		tagByName.put("DATE", DATE);
-		tagByName.put("CITE", CITE);
-		tagByName.put("SECTION", SECTION);
-		tagByName.put("POEM", POEM);
-		tagByName.put("STANZA", STANZA);
-		tagByName.put("EPIGRAPH", EPIGRAPH);
-		tagByName.put("ANNOTATION", ANNOTATION);
-		tagByName.put("COVERPAGE", COVERPAGE);
-		tagByName.put("A", A);
-		tagByName.put("EMPTY-LINE", EMPTY_LINE);
-		tagByName.put("SUP", SUP);
-		tagByName.put("SUB", SUB);
-		tagByName.put("EMPHASIS", EMPHASIS);
-		tagByName.put("STRONG", STRONG);
-		tagByName.put("CODE", CODE);
-		tagByName.put("STRIKETHROUGH", STRIKETHROUGH);
-		tagByName.put("TITLE", TITLE);
-		tagByName.put("BODY", BODY);
-		tagByName.put("IMAGE", IMAGE);
-		tagByName.put("BINARY", BINARY);
-		tagByName.put("FICTIONBOOK", FICTIONBOOK);
+		tagByName.put("unknown", ourUnknownTag);
+		tagByName.put("p", P);
+		tagByName.put("v", V);
+		tagByName.put("subtitle", SUBTITLE);
+		tagByName.put("text-author", TEXT_AUTHOR);
+		tagByName.put("date", DATE);
+		tagByName.put("cite", CITE);
+		tagByName.put("section", SECTION);
+		tagByName.put("poem", POEM);
+		tagByName.put("stanza", STANZA);
+		tagByName.put("epigraph", EPIGRAPH);
+		tagByName.put("annotation", ANNOTATION);
+		tagByName.put("coverpage", COVERPAGE);
+		tagByName.put("a", A);
+		tagByName.put("empty-line", EMPTY_LINE);
+		tagByName.put("sup", SUP);
+		tagByName.put("sub", SUB);
+		tagByName.put("emphasis", EMPHASIS);
+		tagByName.put("strong", STRONG);
+		tagByName.put("code", CODE);
+		tagByName.put("strikethrough", STRIKETHROUGH);
+		tagByName.put("title", TITLE);
+		tagByName.put("body", BODY);
+		tagByName.put("image", IMAGE);
+		tagByName.put("binary", BINARY);
+		tagByName.put("fictionbook", FICTIONBOOK);
 	}
 
 	public static byte getTagByName(String name) {
 		final HashMap<String,Byte> tagByName = ourTagByName;
 		Byte num = tagByName.get(name);
 		if (num == null) {
-			final String upperCaseName = name.toUpperCase().intern();
+			final String upperCaseName = name.toLowerCase().intern();
 			num = tagByName.get(upperCaseName);
 			if (num == null) {
 				num = ourUnknownTag;
