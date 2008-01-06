@@ -130,7 +130,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myDataBlockSize = dataBlockSize;
 	}
 
-	void createParagraph() {
+	final void createParagraph() {
 		final int dataSize = myData.size();
 		myStartEntryIndices.add((dataSize == 0) ? 0 : (dataSize - 1));
 		myStartEntryOffsets.add(myBlockOffset);
