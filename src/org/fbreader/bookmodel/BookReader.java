@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextPlainModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 
 public class BookReader {
 	private final BookModel myBookModel;
-	private ZLTextPlainModel myCurrentTextModel = null;
+	private ZLTextPlainModelImpl myCurrentTextModel = null;
 	
 	private boolean myTextParagraphExists = false;
 	
@@ -71,7 +71,7 @@ public class BookReader {
 	}
 	
 	public final void beginParagraph(byte kind) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if (textModel != null) {
 			textModel.createParagraph(kind);
 			final byte[] stack = myKindStack;
@@ -94,7 +94,7 @@ public class BookReader {
 	}
 	
 	private final void insertEndParagraph(byte kind) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if ((textModel != null) && mySectionContainsRegularContents) {
 			int size = textModel.getParagraphsNumber();
 			if ((size > 0) && (textModel.getParagraph(size-1).getKind() != kind)) {
@@ -168,7 +168,7 @@ public class BookReader {
 	}
 	
 	public final void addHyperlinkLabel(String label) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if (textModel != null) {
 			int paragraphNumber = textModel.getParagraphsNumber();
 			if (myTextParagraphExists) {
@@ -189,7 +189,7 @@ public class BookReader {
 	}
 	
 	public final void beginContentsParagraph(int referenceNumber) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
 		if (textModel == myBookModel.getBookTextModel()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
@@ -255,7 +255,7 @@ public class BookReader {
 	}
 
 	public final void addImageReference(String ref, short offset) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {

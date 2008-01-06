@@ -6,14 +6,12 @@ import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextPlainModel;
-import org.zlibrary.text.model.impl.ZLModelFactory;
+import org.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 
 public final class BookModel {
-	private final ZLModelFactory myModelFactory = new ZLModelFactory();
-	private final ZLTextPlainModel myBookTextModel = myModelFactory.createPlainModel(65536);
+	private final ZLTextPlainModelImpl myBookTextModel = new ZLTextPlainModelImpl(65536);
 	private final ContentsModel myContentsModel = new ContentsModel();
-	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
+	private final HashMap<String,ZLTextPlainModelImpl> myFootnotes = new HashMap<String,ZLTextPlainModelImpl>();
 	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
 
 	private static final class ImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
@@ -43,7 +41,7 @@ public final class BookModel {
 		return myFileName;
 	}
 
-	public ZLTextPlainModel getBookTextModel() {
+	public ZLTextPlainModelImpl getBookTextModel() {
 		return myBookTextModel;
 	}
 	
@@ -51,11 +49,12 @@ public final class BookModel {
 		return myContentsModel;
 	}
 	
-	public ZLTextPlainModel getFootnoteModel(String id) {
-		ZLTextPlainModel model = myFootnotes.get(id);
+	public ZLTextPlainModelImpl getFootnoteModel(String id) {
+		final HashMap<String,ZLTextPlainModelImpl> footnotes = myFootnotes;
+		ZLTextPlainModelImpl model = footnotes.get(id);
 		if (model == null) {
-			model = myModelFactory.createPlainModel(4096); 
-			myFootnotes.put(id, model); 
+			model = new ZLTextPlainModelImpl(4096); 
+			footnotes.put(id, model); 
 		}
 		return model;
 	}

@@ -5,10 +5,10 @@ import org.zlibrary.core.util.ZLIntArray;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextPlainModel;
 
-final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainModel {
+public final class ZLTextPlainModelImpl extends ZLTextModelImpl implements ZLTextPlainModel {
 	private final ZLIntArray myParagraphInfos = new ZLIntArray(1024);
 
-	ZLTextPlainModelImpl(int dataBlockSize) {
+	public ZLTextPlainModelImpl(int dataBlockSize) {
 		super(dataBlockSize);
 	}
 
