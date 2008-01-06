@@ -69,6 +69,7 @@ public class TestZLTextModel extends TestCase {
         model.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
         //ZLTextForcedControlEntry control = factory.createForcedControlEntry();
         //model.addControl(control);
-        assertEquals(model.getParagraph(0).getEntryNumber(), 1);       
+        //assertEquals(model.getParagraph(0).getEntryNumber(), 1);       
+				assertFalse(true);
     }
 }

@@ -1,6 +1,5 @@
 package org.zlibrary.text.model.impl;
 
-import org.zlibrary.core.util.ZLIntArray;
 import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextModel;
@@ -10,9 +9,10 @@ import java.util.*;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList<ZLImageEntry> myEntries = new ArrayList<ZLImageEntry>();
-	private final ZLIntArray myStartEntryIndices = new ZLIntArray(1024);
-	private final ZLIntArray myStartEntryOffsets = new ZLIntArray(1024);
-	private final ZLIntArray myParagraphLengths = new ZLIntArray(1024);
+	private int[] myStartEntryIndices = new int[1024];
+	private int[] myStartEntryOffsets = new int[1024];
+	private int[] myParagraphLengths = new int[1024];
+	protected int myParagraphsNumber;
 
 	private final ArrayList<char[]> myData = new ArrayList<char[]>(1024);
 	private final int myDataBlockSize;
@@ -38,9 +38,9 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		private ZLImageEntry myImageEntry;
 
 		EntryIteratorImpl(int index) {
-			myLength = myParagraphLengths.get(index);
-			myDataIndex = myStartEntryIndices.get(index);
-			myDataOffset = myStartEntryOffsets.get(index);
+			myLength = myParagraphLengths[index];
+			myDataIndex = myStartEntryIndices[index];
+			myDataOffset = myStartEntryOffsets[index];
 		}
 
 		public byte getType() {
@@ -130,11 +130,33 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myDataBlockSize = dataBlockSize;
 	}
 
+	private final void extend() {
+		final int size = myStartEntryIndices.length;
+
+		int[] tmp = new int[2 * size];
+		System.arraycopy(myStartEntryIndices, 0, tmp, 0, size);
+		myStartEntryIndices = tmp;
+
+		tmp = new int[2 * size];
+		System.arraycopy(myStartEntryOffsets, 0, tmp, 0, size);
+		myStartEntryOffsets = tmp;
+
+		tmp = new int[2 * size];
+		System.arraycopy(myParagraphLengths, 0, tmp, 0, size);
+		myParagraphLengths = tmp;
+	}
+
 	final void createParagraph() {
+		final int index = myParagraphsNumber++;
+		int[] startEntryIndices = myStartEntryIndices;
+		if (index == startEntryIndices.length) {
+			extend();
+			startEntryIndices = myStartEntryIndices;
+		}
 		final int dataSize = myData.size();
-		myStartEntryIndices.add((dataSize == 0) ? 0 : (dataSize - 1));
-		myStartEntryOffsets.add(myBlockOffset);
-		myParagraphLengths.add(0);
+		startEntryIndices[index] = (dataSize == 0) ? 0 : (dataSize - 1);
+		myStartEntryOffsets[index] = myBlockOffset;
+		myParagraphLengths[index] = 0;
 	}
 
 	private final char[] getDataBlock(int minimumLength) {
@@ -154,7 +176,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 	public final void addControl(byte textKind, boolean isStart) {
 		final char[] block = getDataBlock(2);
-		myParagraphLengths.incrementLast();
+		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
 		short kind = textKind;
 		if (isStart) {
@@ -173,7 +195,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 	public final void addText(char[] text, int offset, int length) {
 		char[] block = getDataBlock(3 + length);
-		myParagraphLengths.incrementLast();
+		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
 		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
 		block[blockOffset++] = (char)(length >> 16);
@@ -185,7 +207,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	/*
 	public final void addControl(ZLTextForcedControlEntry entry) {
 		final char[] block = getDataBlock(3);
-		myParagraphLengths.incrementLast();
+		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FORCED_CONTROL;
 		final int entryAddress = myEntries.size();
 		block[myBlockOffset++] = (char)(entryAddress >> 16);
@@ -197,7 +219,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	public final void addHyperlinkControl(byte textKind, String label) {
 		final short labelLength = (short)label.length();
 		final char[] block = getDataBlock(3 + labelLength);
-		myParagraphLengths.incrementLast();
+		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
 		block[blockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
 		block[blockOffset++] = (char)(0x0300 + textKind);
@@ -210,7 +232,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	
 	public final void addImage(String id, ZLImageMap imageMap, short vOffset) {
 		final char[] block = getDataBlock(2);
-		myParagraphLengths.incrementLast();
+		++myParagraphLengths[myParagraphsNumber - 1];
 		final ArrayList<ZLImageEntry> entries = myEntries;
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
 		block[myBlockOffset++] = (char)entries.size();
@@ -220,7 +242,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	/*
 	public final void addFixedHSpace(short length) {
 		final char[] block = getDataBlock(3);
-		myParagraphLengths.incrementLast();
+		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
 		final int entryAddress = myEntries.size();
 		block[myBlockOffset++] = (char)(entryAddress >> 16);

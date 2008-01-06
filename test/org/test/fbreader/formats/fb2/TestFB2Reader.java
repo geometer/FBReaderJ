@@ -3,8 +3,7 @@ package org.test.fbreader.formats.fb2;
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.ContentsModel;
 import org.fbreader.formats.fb2.FB2Reader;
-import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.core.image.ZLImageMap;
+import org.zlibrary.core.image.*;
 
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 import org.zlibrary.text.model.ZLTextModel;
@@ -76,14 +75,14 @@ public class TestFB2Reader extends TestCase {
 	
 	private void writeTextModelDumpToFile(String inputFile, String outputFile) {
 		BookModel bookModel = new BookModel(inputFile);
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getBookTextModel();
 		writeDumpToFile(model, outputFile);
 	}
 	
 	private void writeTreeModelDumpToFile(String inputFile, String outputFile) {
 		BookModel bookModel = new BookModel(inputFile);
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getContentsModel();
 		writeDumpToFile(model, outputFile);
 	}
@@ -156,7 +155,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testEmptyLineParagraphKind() {
 		BookModel bookModel = new BookModel(myDirectory + "empty_line.fb2");
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(0).getKind(),
 				ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
@@ -172,13 +171,13 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testNotesSimple() {
 		BookModel model = new BookModel(myDirectory + "simple_notes.fb2");
-		new FB2Reader().readBook(model);
+		new FB2Reader(model).read();
 		assertNotNull(model.getFootnoteModel("1"));
 	}
 	
 	public void testOneNote() {
 		BookModel bookModel = new BookModel(myDirectory + "one_note.fb2");
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getFootnoteModel("1");
 		String output = myDirectory + "one_note_act.txt";
 		writeDumpToFile(model, output);
@@ -192,7 +191,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testStanzaParagraphKinds() {
 		BookModel bookModel = new BookModel(myDirectory + "stanza.fb2");
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(0).getKind(), ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
 		assertEquals(model.getParagraph(2).getKind(), ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
@@ -205,7 +204,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testAnnotationBeforeBodyParagraph() {
 		BookModel bookModel = new BookModel(myDirectory + "annotation_before.fb2");
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(1).getKind(),
 				ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
@@ -221,7 +220,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testEndOfSectionParagraph() {		
 		BookModel bookModel = new BookModel(myDirectory + "section.fb2");
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ZLTextModel model = bookModel.getBookTextModel();
 		assertEquals(model.getParagraph(1).getKind(),
 				ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
@@ -245,7 +244,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testFootnote1() {
 		BookModel model = new BookModel(myDirectory + "footnote1.fb2");
-		new FB2Reader().readBook(model);
+		new FB2Reader(model).read();
 		ZLTextParagraph paragraph = model.getParagraphByLink("note1");
 		ZLTextParagraph.EntryIterator it = paragraph.iterator();
 		it.next();
@@ -264,7 +263,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testTreeParagraphRef() {
 		BookModel bookModel = new BookModel(myDirectory + "tree1.fb2");
-		new FB2Reader().readBook(bookModel);
+		new FB2Reader(bookModel).read();
 		ContentsModel model = bookModel.getContentsModel();
 		assertTrue(model.getReference((ZLTextTreeParagraph)model.getParagraph(0)) == 0);
 	}
@@ -300,7 +299,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testImage() {
 		BookModel model = new BookModel(myDirectory + "image.fb2");
-		new FB2Reader().readBook(model);
+		new FB2Reader(model).read();
 		byte [] image = (model.getImageMap().getImage("cover.jpg")).byteData();
 		try {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(image));
@@ -316,7 +315,7 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testImageModel() {
 		BookModel bModel = new BookModel(myDirectory + "image.fb2");
-		new FB2Reader().readBook(bModel);
+		new FB2Reader(bModel).read();
 		ZLTextModel model = bModel.getBookTextModel();
 		ZLTextParagraph paragraph = model.getParagraph(0);
 		ZLTextParagraph.EntryIterator it = paragraph.iterator();
@@ -329,11 +328,12 @@ public class TestFB2Reader extends TestCase {
 	
 	public void testImageSize() {
 		BookModel model = new BookModel(myDirectory + "image.fb2");
-		new FB2Reader().readBook(model);
+		new FB2Reader(model).read();
 		ZLImage image = model.getImageMap().getImage("cover.jpg");
+		ZLImageData imageData = ZLImageManager.getInstance().getImageData(image);
 		ZLSwingPaintContext paint = new ZLSwingPaintContext();
-		assertTrue(paint.imageHeight(image) == 277);
-		assertTrue(paint.imageWidth(image) == 200);
+		assertTrue(paint.imageHeight(imageData) == 277);
+		assertTrue(paint.imageWidth(imageData) == 200);
 	}
 	
 }

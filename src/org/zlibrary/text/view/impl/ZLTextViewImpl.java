@@ -6,7 +6,6 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.options.*;
-import org.zlibrary.core.util.ZLIntArray;
 
 import org.zlibrary.text.model.*;
 
@@ -169,17 +168,16 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 		final ZLTextLineInfoVector lineInfos = myLineInfos;
 		final int lineInfosSize = lineInfos.size();
-		final ZLIntArray labels = new ZLIntArray(lineInfosSize + 1);
-		labels.add(0);
+		final int[] labels = new int[lineInfosSize + 1];
 		context.moveYTo(getTopMargin());
-		for (int i = 0; i < lineInfosSize; ++i) {
+		for (int i = 0; i < lineInfosSize; ) {
 			prepareTextLine(lineInfos.get(i));
-			labels.add(myTextElementMap.size());
+			labels[++i] = myTextElementMap.size();
 		}
 
 		context.moveYTo(getTopMargin());
 		for (int i = 0; i < lineInfosSize; ++i) {
-			drawTextLine(context, lineInfos.get(i), labels.get(i), labels.get(i + 1));
+			drawTextLine(context, lineInfos.get(i), labels[i], labels[i + 1]);
 			//System.out.println("Line " + index + " Y = " + context.getY());
 		}
 
