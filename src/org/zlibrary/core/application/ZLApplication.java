@@ -320,25 +320,23 @@ public abstract class ZLApplication {
 		private final ArrayList<Item> myItems = new ArrayList<Item>();
 		private final ZLResource myResource = ZLResource.resource("toolbar");
 
-		public void addButton(int actionId, String key) {
-			addButton(actionId, key, null);
-		}
-
-		private void addButton(int actionId, String key, ButtonGroup group) {
+		private void addButton(int actionId, String key/*, ButtonGroup group*/) {
 			ButtonItem button = new ButtonItem(actionId, key, myResource.getResource(key));
 			myItems.add(button);
-			button.setButtonGroup(group);
+			//button.setButtonGroup(group);
 		}
 		
+		/*
 		ButtonGroup createButtonGroup(int unselectAllButtonsActionId) {
 			return new ButtonGroup(unselectAllButtonsActionId);
 		}
 		
-		/*public void addOptionEntry(ZLOptionEntry entry) {
+		public void addOptionEntry(ZLOptionEntry entry) {
 			if (entry != null) {
 				myItems.add(new OptionEntryItem(entry));
 			}
-		}*/
+		}
+		*/
 		
 		public void addSeparator() {
 			myItems.add(new SeparatorItem());
@@ -359,7 +357,7 @@ public abstract class ZLApplication {
 			private final int myActionId;
 			private final String myIconName;
 			private final ZLResource myTooltip;
-			private	ButtonGroup myButtonGroup;
+			//private ButtonGroup myButtonGroup;
 			
 			public ButtonItem(int actionId, String iconName, ZLResource tooltip) {
 				myActionId = actionId;
@@ -379,6 +377,7 @@ public abstract class ZLApplication {
 				return myTooltip.hasValue() ? myTooltip.getValue() : null;
 			}
 
+			/*
 			ButtonGroup getButtonGroup() {
 				return myButtonGroup;
 			}
@@ -408,21 +407,23 @@ public abstract class ZLApplication {
 					myButtonGroup.Items.add(this);
 				}
 			}	
+			*/
 		}
 		
 		public class SeparatorItem implements Item {
 		}
 		
+		/*
 		public class OptionEntryItem implements Item {
-			//private ZLOptionEntry myOptionEntry;
+			private ZLOptionEntry myOptionEntry;
 
-			//public OptionEntryItem(ZLOptionEntry entry) {
-				//myOptionEntry = entry;
-			//}
-				
-			//public ZLOptionEntry entry() {
-			//	return myOptionEntry;
-			//}
+			public OptionEntryItem(ZLOptionEntry entry) {
+				myOptionEntry = entry;
+			}
+			
+			public ZLOptionEntry entry() {
+				return myOptionEntry;
+			}
 		}
 
 		public final class ButtonGroup {
@@ -439,6 +440,7 @@ public abstract class ZLApplication {
 				PressedItem = item;
 			}
 		}
+		*/
 	}
 	
 	//Menu

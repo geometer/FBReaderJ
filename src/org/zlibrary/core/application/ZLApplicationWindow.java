@@ -35,6 +35,7 @@ abstract public class ZLApplicationWindow {
 	abstract protected void initMenu();
 
 	public void onButtonPress(ZLApplication.Toolbar.ButtonItem button) {
+		/*
 		if (myToggleButtonLock) {
 			return;
 		}
@@ -55,6 +56,7 @@ abstract public class ZLApplicationWindow {
 			}
 			myToggleButtonLock = false;
 		}
+		*/
 		
 		
 		getApplication().doAction(button.getActionId());
@@ -76,8 +78,9 @@ abstract public class ZLApplicationWindow {
 			final int size = toolbar.size();
 			for (int i = 0; i < size; ++i) {
 				final ZLApplication.Toolbar.Item item = toolbar.getItem(i);
+				/*
 				if (item instanceof ZLApplication.Toolbar.OptionEntryItem) {
-				/*case OPTION_ENTRY:
+				case OPTION_ENTRY:
 				{
 					boolean visible = ((OptionEntryItem)item.entry().isVisible())//((Toolbar.OptionEntryItem)**it).entry()->isVisible();
 							if (visible) {
@@ -89,8 +92,9 @@ abstract public class ZLApplicationWindow {
 							}
 							setToolbarItemState(item, visible, true);
 						}
-						break;*/
-				} else if (item instanceof ZLApplication.Toolbar.ButtonItem) {
+						break;
+				} else */
+				if (item instanceof ZLApplication.Toolbar.ButtonItem) {
 					ZLApplication.Toolbar.ButtonItem button = (ZLApplication.Toolbar.ButtonItem)item;
 					int id = button.getActionId();
 	
@@ -104,6 +108,7 @@ abstract public class ZLApplicationWindow {
 						}
 						enableToolbarSpace = true;
 					}
+					/*
 					if (!enabled && button.isPressed()) {
 						ZLApplication.Toolbar.ButtonGroup group = button.getButtonGroup();
 						group.press(null);
@@ -112,6 +117,7 @@ abstract public class ZLApplicationWindow {
 						setToggleButtonState(button);
 						myToggleButtonLock = false;
 					}
+					*/
 					setToolbarItemState(item, visible, enabled);
 				} else if (item instanceof ZLApplication.Toolbar.SeparatorItem) {
 					if (enableToolbarSpace) {
