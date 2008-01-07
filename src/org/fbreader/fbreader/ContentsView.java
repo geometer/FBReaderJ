@@ -15,7 +15,7 @@ class ContentsView extends FBView {
 			return true;
 		}
 
-		final int index = paragraphIndexByCoordinate(y);
+		final int index = getParagraphIndexByCoordinate(y);
 		if (index == -1) {
 			return false;
 		}

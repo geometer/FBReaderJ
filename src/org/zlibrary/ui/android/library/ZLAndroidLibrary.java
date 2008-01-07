@@ -3,6 +3,8 @@ package org.zlibrary.ui.android.library;
 import java.io.InputStream;
 
 import android.content.Resources;
+import android.content.Intent;
+import android.net.ContentURI;
 
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
@@ -58,6 +60,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		if (myActivity != null) {
 			myActivity.finish();
 		}
+	}
+
+	public void openInBrowser(String reference) {
+		Intent intent = new Intent(Intent.VIEW_ACTION);
+		intent.setData(ContentURI.create(reference));
+		myActivity.startActivity(intent);
 	}
 
 	void run(ZLAndroidActivity activity) {

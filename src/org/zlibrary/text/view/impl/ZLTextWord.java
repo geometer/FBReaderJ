@@ -2,7 +2,7 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.core.view.ZLPaintContext;
 
-final class ZLTextWord extends ZLTextElement { 
+public final class ZLTextWord extends ZLTextElement { 
 	public final char[] Data;
 	public final int Offset;
 	public final int Length;

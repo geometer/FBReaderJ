@@ -1,6 +1,6 @@
 package org.zlibrary.text.view.impl;
 
-final class ZLTextControlElement extends ZLTextElement {
+public class ZLTextControlElement extends ZLTextElement {
 	private final static ZLTextControlElement[] myStartElements = new ZLTextControlElement[256];
 	private final static ZLTextControlElement[] myEndElements = new ZLTextControlElement[256];
 
@@ -17,7 +17,7 @@ final class ZLTextControlElement extends ZLTextElement {
 	public final byte Kind;
 	public final boolean IsStart;
 
-	private ZLTextControlElement(byte kind, boolean isStart) {
+	protected ZLTextControlElement(byte kind, boolean isStart) {
 		Kind = kind;
 		IsStart = isStart;
 	}

@@ -26,7 +26,11 @@ public abstract class ZLTextParagraphCursor {
 						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength());
 						break;
 					case ZLTextParagraph.Entry.CONTROL:
-						myElements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
+						if (it.getControlIsStart() && it.getControlIsHyperlink()) {
+							myElements.add(new ZLTextHyperlinkControlElement(it.getControlKind(), it.getHyperlinkControlLabel()));
+						} else {
+							myElements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
+						}
 						break;
 					case ZLTextParagraph.Entry.IMAGE:
 						ZLImage image = it.getImageEntry().getImage();

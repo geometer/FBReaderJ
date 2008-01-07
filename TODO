@@ -5,6 +5,8 @@ ZLTextView:
 	переход по ссылкам
 		внутренним
 		внешним (вызов браузера)
+			swing
+DONE	android
 	переносы
 	position indicator
 	обработка неразрывных пробелов

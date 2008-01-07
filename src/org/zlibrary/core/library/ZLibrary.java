@@ -38,6 +38,7 @@ public abstract class ZLibrary {
 
 	abstract public ZLPaintContext createPaintContext();
 	abstract public InputStream getResourceInputStream(String fileName);
+	abstract public void openInBrowser(String reference);
 
 	protected final void loadProperties() {
 		new ZLXMLReaderAdapter() {

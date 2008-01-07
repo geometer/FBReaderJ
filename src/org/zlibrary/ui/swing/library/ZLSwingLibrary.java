@@ -54,4 +54,9 @@ public class ZLSwingLibrary extends ZLibrary {
 		
 //		ZLDialogManager.getInstance().errorBox(new "noHelpBox");
 	}
+
+	public void openInBrowser(String reference) {
+		// TODO: implement
+		System.out.println("to open in browser: " + reference);
+	}
 }

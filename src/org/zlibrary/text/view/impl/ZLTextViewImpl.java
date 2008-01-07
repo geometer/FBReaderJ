@@ -339,7 +339,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharNumber, myTextStyle);
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
 		if (cachedInfo != null) {
-			//System.err.println("cached!!!!");
 			return cachedInfo;
 		}
 
@@ -898,7 +897,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return start;
 	}
 
-	protected int paragraphIndexByCoordinate(int y) {
+	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
+		return ZLTextRectangularArea.binarySearch(myTextElementMap, x, y);
+	}
+
+	protected int getParagraphIndexByCoordinate(int y) {
 		ZLTextElementArea area = ZLTextRectangularArea.binarySearch(myTextElementMap, y);
 		return (area != null) ? area.ParagraphNumber : -1;
 	}

@@ -36,6 +36,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		private byte myControlKind;
 		private boolean myControlIsStart;
 		private boolean myControlIsHyperlink;
+		private String myHyperlinkControlLabel;
 
 		private ZLImageEntry myImageEntry;
 
@@ -67,6 +68,9 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		}
 		public boolean getControlIsHyperlink() {
 			return myControlIsHyperlink;
+		}
+		public String getHyperlinkControlLabel() {
+			return myHyperlinkControlLabel;
 		}
 
 		public ZLImageEntry getImageEntry() {
@@ -109,6 +113,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					if ((kind & 0x0200) == 0x0200) {
 						myControlIsHyperlink = true;
 						short labelLength = (short)data[dataOffset++];
+						myHyperlinkControlLabel = new String(data, dataOffset, labelLength);
 						dataOffset += labelLength;
 					} else {
 						myControlIsHyperlink = false;
@@ -219,8 +224,6 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		block[blockOffset++] = (char)labelLength;
 		label.getChars(0, labelLength, block, blockOffset);
 		myBlockOffset = blockOffset + labelLength;
-		//addEntry(code + myEntries.size());
-		//myEntries.add(new ZLTextHyperlinkControlEntry(textKind, label));
 	}
 	
 	public final void addImage(String id, ZLImageMap imageMap, short vOffset) {

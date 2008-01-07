@@ -2,7 +2,7 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.core.image.ZLImageData;
 
-class ZLTextImageElement extends ZLTextElement {
+public final class ZLTextImageElement extends ZLTextElement {
 	private ZLImageData myImageData;
 
 	ZLTextImageElement(ZLImageData imageData) {

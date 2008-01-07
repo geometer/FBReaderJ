@@ -20,6 +20,8 @@ public interface ZLTextParagraph {
 
 		byte getControlKind();
 		boolean getControlIsStart();
+		boolean getControlIsHyperlink();
+		String getHyperlinkControlLabel();
 
 		ZLImageEntry getImageEntry();
 
