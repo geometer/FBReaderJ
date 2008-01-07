@@ -83,6 +83,7 @@ class BookTextView extends FBView {
 							return true;
 						case FBTextKind.FOOTNOTE:
 						case FBTextKind.INTERNAL_HYPERLINK:
+							getFBReader().tryOpenFootnote(id);
 							return true;
 					}
 				}

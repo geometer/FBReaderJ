@@ -50,6 +50,9 @@ public final class FBReader extends ZLApplication {
 
 	private final BookTextView myBookTextView;
 	private final ContentsView myContentsView;
+	private final FootnoteView myFootnoteView;
+
+	private BookModel myBookModel;
 
 	public FBReader() {
 		this(new String[0]);
@@ -100,6 +103,7 @@ public final class FBReader extends ZLApplication {
 
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
+		myFootnoteView = new FootnoteView(this, getContext());
 
 		String fileName = null;
 		if (args.length > 0) {
@@ -118,13 +122,14 @@ public final class FBReader extends ZLApplication {
 		if (fileName == null) {
 			fileName = myBookNameOption.getValue();
 		}
-		BookModel model = new BookModel(fileName);
-		if (!new FB2Reader(model).read()) {
+		myBookModel = new BookModel(fileName);
+		if (!new FB2Reader(myBookModel).read()) {
+			myBookModel = null;
 			return false;
 		}
 		myBookNameOption.setValue(fileName);
-		myBookTextView.setModel(model.getBookTextModel(), model.getFileName());
-		myContentsView.setModel(model.getContentsModel());
+		myBookTextView.setModel(myBookModel.getBookTextModel(), myBookModel.getFileName());
+		myContentsView.setModel(myBookModel.getContentsModel());
 		setMode(ViewMode.BOOK_TEXT);
 		return true;
 	}
@@ -170,6 +175,9 @@ public final class FBReader extends ZLApplication {
 			case ViewMode.CONTENTS:
 				setView(myContentsView);
 				break;
+			case ViewMode.FOOTNOTE:
+				setView(myFootnoteView);
+				break;
 			default:
 				break;
 		}
@@ -178,6 +186,16 @@ public final class FBReader extends ZLApplication {
 	void restorePreviousMode() {
 		setMode(myPreviousMode);
 		myPreviousMode = ViewMode.BOOK_TEXT;
+	}
+
+	void tryOpenFootnote(String id) {
+		if (myBookModel != null) {
+			ZLTextModel footnoteModel = myBookModel.getFootnoteModel(id);
+			if (footnoteModel != null) {
+				myFootnoteView.setModel(footnoteModel);
+				setMode(ViewMode.FOOTNOTE);
+			}
+		}
 	}
 
 	BookTextView getBookTextView() {

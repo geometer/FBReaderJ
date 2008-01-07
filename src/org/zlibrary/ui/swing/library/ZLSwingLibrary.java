@@ -56,7 +56,20 @@ public class ZLSwingLibrary extends ZLibrary {
 	}
 
 	public void openInBrowser(String reference) {
-		// TODO: implement
-		System.out.println("to open in browser: " + reference);
+		String os = System.getProperty("os.name");
+		try {
+			if (os.startsWith("Windows")) {
+				Runtime.getRuntime().exec("openLink " + reference);
+			} else if (os.startsWith("Mac OS")) {
+				Class fileManager = Class.forName("com.apple.eio.FileManager");
+				java.lang.reflect.Method openURL = fileManager.getDeclaredMethod("openURL", new Class[] { String.class });
+				openURL.invoke(null, new Object[] { reference });
+			} else { // os is UNIX
+				Runtime.getRuntime().exec(new String[] { "iceweasel", reference });
+			}
+		} catch (Exception e) {
+			System.out.println("to open in browser: " + reference);
+			e.printStackTrace();
+		}
 	}
 }

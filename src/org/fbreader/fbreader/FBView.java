@@ -4,7 +4,7 @@ import org.zlibrary.core.options.*;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
 
-public class FBView extends ZLTextViewImpl {
+public abstract class FBView extends ZLTextViewImpl {
 	private static ZLIntegerRangeOption ourLeftMarginOption;
 	private static ZLIntegerRangeOption ourRightMarginOption;
 	private static ZLIntegerRangeOption ourTopMarginOption;
@@ -58,5 +58,9 @@ public class FBView extends ZLTextViewImpl {
 	}
 	public int getBottomMargin() {
 		return getBottomMarginOption().getValue();
+	}
+
+	FBReader getFBReader() {
+		return (FBReader)getApplication();
 	}
 }

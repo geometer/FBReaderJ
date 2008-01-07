@@ -3,7 +3,7 @@ ZLTextView:
 	выделение текста мышкой
 	прокрутка текста мышкой
 	переход по ссылкам
-		внутренним
+DONE		внутренним
 		внешним (вызов браузера)
 			swing
 DONE	android
@@ -12,6 +12,7 @@ DONE	android
 	обработка неразрывных пробелов
 	undo/redo position stack
 	обработка китайских текстов
+	desktop: менять курсор над ссылкой
 
 рисунки:
 	обработка palm'овых рисунков
@@ -60,7 +61,7 @@ DONE	избавиться от многократных вычислений (ZLImageData)
 представления:
 	CollectionView
 	RecentBooksView
-	FootnoteView
+DONE	FootnoteView
 	не показывать ContentsView, если оглавление пустое
 
 конфиг:
