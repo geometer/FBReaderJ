@@ -31,39 +31,36 @@ final class FB2Tag {
 	public static final byte FICTIONBOOK = 25;
 
 	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
-	private static final Byte ourUnknownTag = UNKNOWN;
-
-	private static void addToTable(String name, byte tag) {
-		ourTagByName.put(name, tag);
-	}
+	private static final Byte ourUnknownTag;
 
 	static {
-		ourTagByName.put("unknown", ourUnknownTag);
-		addToTable("p", P);
-		addToTable("v", V);
-		addToTable("subtitle", SUBTITLE);
-		addToTable("text-author", TEXT_AUTHOR);
-		addToTable("date", DATE);
-		addToTable("cite", CITE);
-		addToTable("section", SECTION);
-		addToTable("poem", POEM);
-		addToTable("stanza", STANZA);
-		addToTable("epigraph", EPIGRAPH);
-		addToTable("annotation", ANNOTATION);
-		addToTable("coverpage", COVERPAGE);
-		addToTable("a", A);
-		addToTable("empty-line", EMPTY_LINE);
-		addToTable("sup", SUP);
-		addToTable("sub", SUB);
-		addToTable("emphasis", EMPHASIS);
-		addToTable("strong", STRONG);
-		addToTable("code", CODE);
-		addToTable("strikethrough", STRIKETHROUGH);
-		addToTable("title", TITLE);
-		addToTable("body", BODY);
-		addToTable("image", IMAGE);
-		addToTable("binary", BINARY);
-		addToTable("fictionbook", FICTIONBOOK);
+		ourTagByName.put("unknown", UNKNOWN);
+		ourUnknownTag = (Byte)ourTagByName.get("unknown");
+		ourTagByName.put("p", P);
+		ourTagByName.put("v", V);
+		ourTagByName.put("subtitle", SUBTITLE);
+		ourTagByName.put("text-author", TEXT_AUTHOR);
+		ourTagByName.put("date", DATE);
+		ourTagByName.put("cite", CITE);
+		ourTagByName.put("section", SECTION);
+		ourTagByName.put("poem", POEM);
+		ourTagByName.put("stanza", STANZA);
+		ourTagByName.put("epigraph", EPIGRAPH);
+		ourTagByName.put("annotation", ANNOTATION);
+		ourTagByName.put("coverpage", COVERPAGE);
+		ourTagByName.put("a", A);
+		ourTagByName.put("empty-line", EMPTY_LINE);
+		ourTagByName.put("sup", SUP);
+		ourTagByName.put("sub", SUB);
+		ourTagByName.put("emphasis", EMPHASIS);
+		ourTagByName.put("strong", STRONG);
+		ourTagByName.put("code", CODE);
+		ourTagByName.put("strikethrough", STRIKETHROUGH);
+		ourTagByName.put("title", TITLE);
+		ourTagByName.put("body", BODY);
+		ourTagByName.put("image", IMAGE);
+		ourTagByName.put("binary", BINARY);
+		ourTagByName.put("fictionbook", FICTIONBOOK);
 	}
 
 	public static byte getTagByName(String name) {
