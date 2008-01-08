@@ -25,16 +25,15 @@ class ZLTextParagraphCursorCache {
 		}
 	}
 
-	private static final HashMap<Key,WeakReference<ZLTextParagraphCursor>> ourMap =
-		new HashMap<Key,WeakReference<ZLTextParagraphCursor>>();
+	private static final HashMap ourMap = new HashMap();
 
 	public static void put(ZLTextModel model, int index, ZLTextParagraphCursor cursor) {
-		ourMap.put(new Key(model, index), new WeakReference<ZLTextParagraphCursor>(cursor));
+		ourMap.put(new Key(model, index), new WeakReference(cursor));
 	}
 
 	public static ZLTextParagraphCursor get(ZLTextModel model, int index) {
-		WeakReference<ZLTextParagraphCursor> ref = ourMap.get(new Key(model, index));
-		return (ref != null) ? ref.get() : null;
+		WeakReference ref = (WeakReference)ourMap.get(new Key(model, index));
+		return (ref != null) ? (ZLTextParagraphCursor)ref.get() : null;
 	}
 
 	public static void clear() {

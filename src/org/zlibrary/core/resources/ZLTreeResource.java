@@ -8,7 +8,7 @@ final class ZLTreeResource extends ZLResource {
 
 	private boolean myHasValue;
 	private	String myValue;
-	private HashMap<String,ZLTreeResource> myChildren;
+	private HashMap myChildren;
 	
 	public static void buildTree() {
 		if (ourRoot == null) {
@@ -48,9 +48,9 @@ final class ZLTreeResource extends ZLResource {
 	}
 
 	public ZLResource getResource(String key) {
-		final HashMap<String,ZLTreeResource> children = myChildren;
+		final HashMap children = myChildren;
 		if (children != null) {
-			ZLResource child = children.get(key);
+			ZLResource child = (ZLResource)children.get(key);
 			if (child != null) {
 				return child;
 			}
@@ -60,7 +60,7 @@ final class ZLTreeResource extends ZLResource {
 		
 	private static class ResourceTreeReader extends ZLXMLReaderAdapter {
 		private static final String NODE = "node"; 
-		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
+		private final ArrayList myStack = new ArrayList();
 		
 		public void readDocument(ZLTreeResource root, String fileName) {
 			myStack.clear();
@@ -73,20 +73,20 @@ final class ZLTreeResource extends ZLResource {
 		}
 
 		public void startElementHandler(String tag, ZLStringMap attributes) {
-			final ArrayList<ZLTreeResource> stack = myStack;
+			final ArrayList stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.getValue("name");
 				if (name != null) {
 					String value = attributes.getValue("value");
-					ZLTreeResource peek = stack.get(stack.size() - 1);
+					ZLTreeResource peek = (ZLTreeResource)stack.get(stack.size() - 1);
 					ZLTreeResource node;
-					HashMap<String,ZLTreeResource> children = peek.myChildren;
+					HashMap children = peek.myChildren;
 					if (children == null) {
 						node = null;
-						children = new HashMap<String,ZLTreeResource>();
+						children = new HashMap();
 						peek.myChildren = children;
 					} else {
-						node = children.get(name);
+						node = (ZLTreeResource)children.get(name);
 					}
 					if (node == null) {
 						node = new ZLTreeResource(name, value);
@@ -102,7 +102,7 @@ final class ZLTreeResource extends ZLResource {
 		}
 
 		public void endElementHandler(String tag) {
-			final ArrayList<ZLTreeResource> stack = myStack;
+			final ArrayList stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				stack.remove(stack.size() - 1);
 			}

@@ -2,12 +2,10 @@ package org.zlibrary.text.model.impl;
 
 import java.util.ArrayList;
 
-import org.zlibrary.text.model.ZLTextTreeModel;
-import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.*;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
-	private final ArrayList<ZLTextTreeParagraphImpl> myParagraphs =
-		new ArrayList<ZLTextTreeParagraphImpl>();
+	private final ArrayList myParagraphs = new ArrayList();
 	private final ZLTextTreeParagraphImpl myRoot;
 	
 	public ZLTextTreeModelImpl() {
@@ -20,8 +18,12 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 		return myParagraphs.size();
 	}
 
-	public final ZLTextTreeParagraph getParagraph(int index) {
-		return myParagraphs.get(index);
+	public final ZLTextParagraph getParagraph(int index) {
+		return (ZLTextParagraph)myParagraphs.get(index);
+	}
+
+	public final ZLTextTreeParagraph getTreeParagraph(int index) {
+		return (ZLTextTreeParagraph)myParagraphs.get(index);
 	}
 
 	public final ZLTextTreeParagraph createParagraph(ZLTextTreeParagraph parent) {
@@ -35,7 +37,7 @@ public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeMo
 	}
 	
 	public final void removeParagraph(int index) {
-		ZLTextTreeParagraph p = getParagraph(index);
+		ZLTextTreeParagraph p = getTreeParagraph(index);
 		p.removeFromParent();
 		myParagraphs.remove(index);
 	}

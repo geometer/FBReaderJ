@@ -9,14 +9,14 @@ import org.zlibrary.text.model.ZLTextParagraph;
 import java.util.*;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
-	private final ArrayList<ZLImageEntry> myEntries = new ArrayList<ZLImageEntry>();
+	private final ArrayList myEntries = new ArrayList();
 	final static int INITIAL_CAPACITY = 1024;
 	private int[] myStartEntryIndices = new int[INITIAL_CAPACITY];
 	private int[] myStartEntryOffsets = new int[INITIAL_CAPACITY];
 	private int[] myParagraphLengths = new int[INITIAL_CAPACITY];
 	int myParagraphsNumber;
 
-	private final ArrayList<char[]> myData = new ArrayList<char[]>(1024);
+	private final ArrayList myData = new ArrayList(1024);
 	private final int myDataBlockSize;
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
@@ -87,10 +87,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 				++myDataIndex;
 				dataOffset = 0;
 			}
-			char[] data = myData.get(myDataIndex);
+			char[] data = (char[])myData.get(myDataIndex);
 			byte type = (byte)data[dataOffset];
 			if (type == 0) {
-				data = myData.get(++myDataIndex);
+				data = (char[])myData.get(++myDataIndex);
 				dataOffset = 0;
 				type = (byte)data[0];
 			}
@@ -121,7 +121,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
-					myImageEntry = myEntries.get((int)data[dataOffset++]);
+					myImageEntry = (ZLImageEntry)myEntries.get((int)data[dataOffset++]);
 					break;
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 				case ZLTextParagraph.Entry.FORCED_CONTROL:
@@ -229,7 +229,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	public final void addImage(String id, ZLImageMap imageMap, short vOffset) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
-		final ArrayList<ZLImageEntry> entries = myEntries;
+		final ArrayList entries = myEntries;
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
 		block[myBlockOffset++] = (char)entries.size();
 		entries.add(new ZLImageEntry(imageMap, id, vOffset));

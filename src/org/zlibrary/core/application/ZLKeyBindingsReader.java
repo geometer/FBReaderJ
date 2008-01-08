@@ -5,9 +5,9 @@ import java.util.HashMap;
 import org.zlibrary.core.xml.*;
 
 class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
-	private HashMap<String,Integer> myKeymap;
+	private HashMap myKeymap;
 	
-	public ZLKeyBindingsReader(HashMap<String,Integer> keymap) {
+	public ZLKeyBindingsReader(HashMap keymap) {
 		myKeymap = keymap; 
 	}
 		

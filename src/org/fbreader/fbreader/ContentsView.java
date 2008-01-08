@@ -21,7 +21,7 @@ class ContentsView extends FBView {
 		}
 
 		final ContentsModel contentsModel = (ContentsModel)getModel();
-		final ZLTextTreeParagraph paragraph = contentsModel.getParagraph(index);
+		final ZLTextTreeParagraph paragraph = contentsModel.getTreeParagraph(index);
 		final int reference = contentsModel.getReference(paragraph);
 
 		FBReader fbreader = (FBReader)getApplication();

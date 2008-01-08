@@ -8,7 +8,7 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 	private boolean myIsOpen;
 	private	int myDepth;
 	private	ZLTextTreeParagraphImpl myParent;
-	private	ArrayList<ZLTextTreeParagraph> myChildren = null;
+	private	ArrayList myChildren = null;
 	
 	ZLTextTreeParagraphImpl(ZLTextTreeParagraph parent, ZLTextModelImpl model) {
 		super(model);
@@ -56,17 +56,17 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 		if (myParent == null) {
 			return false;
 		}
-		ArrayList<ZLTextTreeParagraph> siblings = myParent.myChildren;
+		ArrayList siblings = myParent.myChildren;
 		return this == siblings.get(siblings.size() - 1);
 	}
 	
 	public int getFullSize() {
 		int size = 1;
-		final ArrayList<ZLTextTreeParagraph> children = myChildren;
+		final ArrayList children = myChildren;
 		if (children != null) {
 			final int length = children.size();
 			for (int i = 0; i < length; ++i) {
-				size += children.get(i).getFullSize();
+				size += ((ZLTextTreeParagraph)children.get(i)).getFullSize();
 			}
 		}
 		return size;
@@ -80,7 +80,7 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 
 	private void addChild(ZLTextTreeParagraph child) {
 		if (myChildren == null) {
-			myChildren = new ArrayList<ZLTextTreeParagraph>();
+			myChildren = new ArrayList();
 		}
 		myChildren.add(child);
 	}

@@ -28,7 +28,7 @@ public class BookReader {
 	private boolean mySectionContainsRegularContents = false;
 	
 	private boolean myContentsParagraphExists = false;
-	private final ArrayList<ZLTextTreeParagraph> myTOCStack = new ArrayList<ZLTextTreeParagraph>();
+	private final ArrayList myTOCStack = new ArrayList();
 	private boolean myLastTOCParagraphIsEmpty = false;
 
 	private final char[] PERIOD = "...".toCharArray();
@@ -190,14 +190,14 @@ public class BookReader {
 	
 	public final void beginContentsParagraph(int referenceNumber) {
 		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
-		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
+		final ArrayList tocStack = myTOCStack;
 		if (textModel == myBookModel.getBookTextModel()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
 			}
 			int size = tocStack.size();
-			ZLTextTreeParagraph peek = (size == 0) ? null : tocStack.get(size - 1);
+			ZLTextTreeParagraph peek = (size != 0) ? (ZLTextTreeParagraph)tocStack.get(size - 1) : null;
 			final ZLTextBuffer contentsBuffer = myContentsBuffer;
 			if (!contentsBuffer.isEmpty()) {
 				contentsModel.addText(contentsBuffer);
@@ -216,7 +216,7 @@ public class BookReader {
 	}
 
 	public final void endContentsParagraph() {
-		final ArrayList<ZLTextTreeParagraph> tocStack = myTOCStack;
+		final ArrayList tocStack = myTOCStack;
 		if (!tocStack.isEmpty()) {
 			ContentsModel contentsModel = myBookModel.getContentsModel();
 			final ZLTextBuffer contentsBuffer = myContentsBuffer;
@@ -237,7 +237,7 @@ public class BookReader {
 		ContentsModel contentsModel = myBookModel.getContentsModel();
 		if (contentsParagraphNumber < contentsModel.getParagraphsNumber()) {
 			contentsModel.setReference(
-				contentsModel.getParagraph(contentsParagraphNumber), referenceNumber
+				contentsModel.getTreeParagraph(contentsParagraphNumber), referenceNumber
 			);
 		}
 	}

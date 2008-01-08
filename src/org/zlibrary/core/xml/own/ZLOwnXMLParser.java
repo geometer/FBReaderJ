@@ -24,8 +24,8 @@ final class ZLOwnXMLParser {
 	private static final byte ATTRIBUTE_VALUE = 14;
 	private static final byte ENTITY_REF = 15;
 
-	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString contatiner) {
-		String s = strings.get(contatiner);
+	private static String convertToString(HashMap strings, ZLMutableString contatiner) {
+		String s = (String)strings.get(contatiner);
 		if (s == null) {
 			s = contatiner.toString();
 			strings.put(new ZLMutableString(contatiner), s);
@@ -69,8 +69,8 @@ final class ZLOwnXMLParser {
 		myStreamReader = new InputStreamReader(stream, encoding);
 	}
 
-	private static char[] getEntityValue(HashMap<String,char[]> entityMap, String name) {
-		char[] value = entityMap.get(name);
+	private static char[] getEntityValue(HashMap entityMap, String name) {
+		char[] value = (char[])entityMap.get(name);
 		if (value == null) {
 			if ((name.length() > 0) && (name.charAt(0) == '#')) {
 				try {
@@ -90,7 +90,7 @@ final class ZLOwnXMLParser {
 	}
 
 	public void doIt() throws IOException {
-		final HashMap<String,char[]> entityMap = new HashMap<String,char[]>();
+		final HashMap entityMap = new HashMap();
 		entityMap.put("amp", new char[] { '&' });
 		entityMap.put("apos", new char[] { '\'' });
 		entityMap.put("gt", new char[] { '>' });
@@ -105,7 +105,7 @@ final class ZLOwnXMLParser {
 		final ZLMutableString attributeValue = new ZLMutableString();
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final ZLMutableString entityName = new ZLMutableString();
-		final HashMap<ZLMutableString,String> strings = new HashMap<ZLMutableString,String>();
+		final HashMap strings = new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
 		String[] tagStack = new String[10];
 		int tagStackSize = 0;

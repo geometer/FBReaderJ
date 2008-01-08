@@ -1,7 +1,7 @@
 package org.zlibrary.core.application;
 
 import java.util.HashMap;
-import java.util.Set;
+//import java.util.Set;
 
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
@@ -14,7 +14,7 @@ public final class ZLKeyBindings {
 	private static final String BINDED_ACTION = "Action";
 
 	private final String myName;
-	private final HashMap<String,Integer> myBindingsMap = new HashMap<String,Integer>();
+	private final HashMap myBindingsMap = new HashMap();
 	private	boolean myIsChanged;
 
 	public ZLKeyBindings(String name) {
@@ -30,13 +30,15 @@ public final class ZLKeyBindings {
 	}
 	
 	public int getBinding(String key) {
-		Integer num = myBindingsMap.get(key);
-		return (num == null) ? 0 : num;
+		Integer num = (Integer)myBindingsMap.get(key);
+		return (num == null) ? 0 : num.intValue();
 	}
 	
-	public Set<String> getKeys() {
+	/*
+	public Set getKeys() {
 		return myBindingsMap.keySet();
 	}
+	*/
 	
 	private	void loadCustomBindings() {
 		final int size =
@@ -58,12 +60,13 @@ public final class ZLKeyBindings {
 		}
 	}
 
+	/*
 	public void saveCustomBindings() {
 		if (!myIsChanged) {
 			return;
 		}
 		
-		final HashMap<String,Integer> keymap = new HashMap<String,Integer>();
+		final HashMap keymap = new HashMap();
 		new ZLKeyBindingsReader(keymap).readBindings();
 		
 		int counter = 0;
@@ -84,4 +87,5 @@ public final class ZLKeyBindings {
 		}
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
 	}
+	*/
 }

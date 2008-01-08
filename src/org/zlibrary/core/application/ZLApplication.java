@@ -317,7 +317,7 @@ public abstract class ZLApplication {
 	
 	//toolbar
 	static public final class Toolbar {
-		private final ArrayList<Item> myItems = new ArrayList<Item>();
+		private final ArrayList myItems = new ArrayList();
 		private final ZLResource myResource = ZLResource.resource("toolbar");
 
 		private void addButton(int actionId, String key/*, ButtonGroup group*/) {
@@ -347,7 +347,7 @@ public abstract class ZLApplication {
 		}
 
 		Item getItem(int index) {
-			return myItems.get(index);
+			return (Item)myItems.get(index);
 		}
 
 		public interface Item {
@@ -448,7 +448,7 @@ public abstract class ZLApplication {
 		public interface Item {
 		}
 
-		private final ArrayList<Item> myItems = new ArrayList<Item>();
+		private final ArrayList myItems = new ArrayList();
 		private final ZLResource myResource;
 
 		Menu(ZLResource resource) {
@@ -478,7 +478,7 @@ public abstract class ZLApplication {
 		}
 
 		Item getItem(int index) {
-			return myItems.get(index);
+			return (Item)myItems.get(index);
 		}
 	}
 	
@@ -589,14 +589,14 @@ public abstract class ZLApplication {
 		private static final String ITEM = "item";
 		private static final String SUBMENU = "submenu";
 
-		private final ArrayList<Menubar.Submenu> mySubmenuStack = new ArrayList<Menubar.Submenu>();
+		private final ArrayList mySubmenuStack = new ArrayList();
 
 		public void startElementHandler(String tag, ZLStringMap attributes) {
 			if (myMenubar == null) {
 				myMenubar = new Menubar();
 			}
-			final ArrayList<Menubar.Submenu> stack = mySubmenuStack;
-			Menu menu = stack.isEmpty() ? myMenubar : stack.get(stack.size() - 1);
+			final ArrayList stack = mySubmenuStack;
+			Menu menu = stack.isEmpty() ? myMenubar : (Menu)stack.get(stack.size() - 1);
 			if (ITEM == tag) {
 				String action = attributes.getValue("action");
 				String key = attributes.getValue("key");
@@ -617,7 +617,7 @@ public abstract class ZLApplication {
 
 		public void endElementHandler(String tag) {
 			if (SUBMENU == tag) {
-				final ArrayList<Menubar.Submenu> stack = mySubmenuStack;
+				final ArrayList stack = mySubmenuStack;
 				if (!stack.isEmpty()) {
 					stack.remove(stack.size() - 1);
 				}

@@ -43,8 +43,10 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 		
-	private final ArrayList<ZLTextElementArea> myTextElementMap = new ArrayList<ZLTextElementArea>();
-	private final ArrayList<ZLTextTreeNodeArea> myTreeNodeMap = new ArrayList<ZLTextTreeNodeArea>();
+	private final ZLTextRectangularAreaVector myTextElementMap
+		= new ZLTextRectangularAreaVector();
+	private final ZLTextRectangularAreaVector myTreeNodeMap
+		= new ZLTextRectangularAreaVector();
 
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
@@ -171,13 +173,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final int[] labels = new int[lineInfosSize + 1];
 		context.moveYTo(getTopMargin());
 		for (int i = 0; i < lineInfosSize; ) {
-			prepareTextLine(lineInfos.get(i));
+			prepareTextLine(lineInfos.getInfo(i));
 			labels[++i] = myTextElementMap.size();
 		}
 
 		context.moveYTo(getTopMargin());
 		for (int i = 0; i < lineInfosSize; ++i) {
-			drawTextLine(context, lineInfos.get(i), labels[i], labels[i + 1]);
+			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
 			//System.out.println("Line " + index + " Y = " + context.getY());
 		}
 
@@ -264,7 +266,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final ZLTextElement element = paragraph.getElement(wordNumber);
 			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
 				//System.out.println("Word = " + ((ZLTextWord) element).getWord());
-				ZLTextElementArea area = myTextElementMap.get(index++);
+				ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.getArea(index++);
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
 				}
@@ -280,7 +282,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		}
 		if (index != to) {
-			ZLTextElementArea area = myTextElementMap.get(index++);
+			ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.getArea(index++);
 			if (area.ChangeStyle) {
 				setTextStyle(area.Style);
 			}
@@ -337,7 +339,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	private ZLTextLineInfo processTextLine(final ZLPaintContext context, final ZLTextParagraphCursor paragraphCursor, final int startIndex, final int startCharNumber, final int endIndex) {
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharNumber, myTextStyle);
-		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
+		final ZLTextLineInfo cachedInfo = myLineInfoCache.getInfo(info);
 		if (cachedInfo != null) {
 			return cachedInfo;
 		}
@@ -622,7 +624,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final int infosSize = infos.size();
 		final ZLTextLineInfoCache cache = myLineInfoCache;
 		for (int i = 0; i < infosSize; ++i) {
-			cache.put(infos.get(i));
+			cache.put(infos.getInfo(i));
 		}
 
 		switch (myPaintState) {
@@ -721,7 +723,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final ZLTextLineInfoVector infos = myLineInfos;
 		final int infosSize = infos.size();
 		for (int i = 0; i < infosSize; ++i) {
-			if (infos.get(i).IsVisible) {
+			if (infos.getInfo(i).IsVisible) {
 				return false;
 			}
 		}
@@ -736,7 +738,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int size = infos.size();
 			ZLTextLineInfo info = null;
 			for (int i = 0; i < size; ++i) {
-				info = infos.get(i);
+				info = infos.getInfo(i);
 				if (info.IsVisible) {
 					--overlappingValue;
 					if (overlappingValue == 0) {
@@ -757,7 +759,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int size = infos.size();
 			ZLTextLineInfo info = null;
 			for (int i = size; i >= 0; --i) {
-				info = infos.get(i);
+				info = infos.getInfo(i);
 				if (info.IsVisible) {
 					--overlappingValue;
 					if (overlappingValue == 0) {
@@ -780,7 +782,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int size = infos.size();
 			ZLTextLineInfo info = null;
 			for (int i = 0; i < size; ++i) {
-				info = infos.get(i);
+				info = infos.getInfo(i);
 				if (info.IsVisible) {
 					visibleLineOccured = true;
 				}
@@ -898,20 +900,20 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
-		return ZLTextRectangularArea.binarySearch(myTextElementMap, x, y);
+		return (ZLTextElementArea)myTextElementMap.binarySearch(x, y);
 	}
 
 	protected int getParagraphIndexByCoordinate(int y) {
-		ZLTextElementArea area = ZLTextRectangularArea.binarySearch(myTextElementMap, y);
+		ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.binarySearch(y);
 		return (area != null) ? area.ParagraphNumber : -1;
 	}
 
 	public boolean onStylusPress(int x, int y) {
 		if (myModel instanceof ZLTextTreeModel) {
-			ZLTextTreeNodeArea nodeArea = ZLTextRectangularArea.binarySearch(myTreeNodeMap, x, y);
+			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
 			if (nodeArea != null) {
 				final int index = nodeArea.ParagraphNumber;
-				final ZLTextTreeParagraph paragraph = ((ZLTextTreeModel)myModel).getParagraph(index);
+				final ZLTextTreeParagraph paragraph = ((ZLTextTreeModel)myModel).getTreeParagraph(index);
 				paragraph.open(!paragraph.isOpen());
 				rebuildPaintInfo(true);
 				preparePaintInfo();

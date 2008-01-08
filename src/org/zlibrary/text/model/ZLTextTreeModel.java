@@ -1,7 +1,7 @@
 package org.zlibrary.text.model;
 
 public interface ZLTextTreeModel extends ZLTextModel {
-	ZLTextTreeParagraph getParagraph(int index);
+	ZLTextTreeParagraph getTreeParagraph(int index);
 	ZLTextTreeParagraph createParagraph(ZLTextTreeParagraph parent);
 	void removeParagraph(int index);
 	

@@ -14,42 +14,4 @@ class ZLTextRectangularArea {
 		YStart = yStart;
 		YEnd = yEnd;
 	}
-
-	static <T extends ZLTextRectangularArea> T binarySearch(ArrayList<T> vector, int x, int y) {
-		int left = 0;
-		int right = vector.size();
-		while (left < right) {
-			final int middle = (left + right) / 2;
-			final T candidate = vector.get(middle);
-			if (candidate.YStart > y) {
-				right = middle;
-			} else if (candidate.YEnd < y) {
-				left = middle + 1;
-			} else if (candidate.XStart > x) {
-				right = middle;
-			} else if (candidate.XEnd < x) {
-				left = middle + 1;
-			} else {
-				return candidate;
-			}
-		}
-		return null;
-	}
-
-	static <T extends ZLTextRectangularArea> T binarySearch(ArrayList<T> vector, int y) {
-		int left = 0;
-		int right = vector.size();
-		while (left < right) {
-			final int middle = (left + right) / 2;
-			final T candidate = vector.get(middle);
-			if (candidate.YStart > y) {
-				right = middle;
-			} else if (candidate.YEnd < y) {
-				left = middle + 1;
-			} else {
-				return candidate;
-			}
-		}
-		return null;
-	}
 }

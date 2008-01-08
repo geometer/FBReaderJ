@@ -11,12 +11,12 @@ import org.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 public final class BookModel {
 	private final ZLTextPlainModelImpl myBookTextModel = new ZLTextPlainModelImpl(65536);
 	private final ContentsModel myContentsModel = new ContentsModel();
-	private final HashMap<String,ZLTextPlainModelImpl> myFootnotes = new HashMap<String,ZLTextPlainModelImpl>();
-	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
+	private final HashMap myFootnotes = new HashMap();
+	private final HashMap myInternalHyperlinks = new HashMap();
 
-	private static final class ImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
+	private static final class ImageMap extends HashMap implements ZLImageMap {
 		public ZLImage getImage(String id) {
-			return get(id);
+			return (ZLImage)super.get(id);
 		}
 	};
 	private final ImageMap myImageMap = new ImageMap(); 
@@ -50,8 +50,8 @@ public final class BookModel {
 	}
 	
 	public ZLTextPlainModelImpl getFootnoteModel(String id) {
-		final HashMap<String,ZLTextPlainModelImpl> footnotes = myFootnotes;
-		ZLTextPlainModelImpl model = footnotes.get(id);
+		final HashMap footnotes = myFootnotes;
+		ZLTextPlainModelImpl model = (ZLTextPlainModelImpl)footnotes.get(id);
 		if (model == null) {
 			model = new ZLTextPlainModelImpl(4096); 
 			footnotes.put(id, model); 
@@ -65,7 +65,7 @@ public final class BookModel {
 	
 	//tmp	
 	public ZLTextParagraph getParagraphByLink(String link) {
-		Label label = myInternalHyperlinks.get(link);
+		Label label = (Label)myInternalHyperlinks.get(link);
 		if (label != null) {
 			return label.Model.getParagraph(label.ParagraphNumber);
 		}
