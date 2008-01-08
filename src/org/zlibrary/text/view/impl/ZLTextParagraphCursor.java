@@ -58,6 +58,11 @@ public abstract class ZLTextParagraphCursor {
 		}
 	}
 
+	private static final boolean isWhitespace(char c) {
+		// we cannot use Character.isWhitespace(c) because it is missing in j2me
+		return (c <= 0x0D) || (c == ' ');
+	}
+
 	private static final class StandardProcessor extends Processor {
 		StandardProcessor(ZLTextParagraph paragraph, int index, ArrayList elements) {
 			super(paragraph, index, elements);
@@ -74,7 +79,7 @@ public abstract class ZLTextParagraphCursor {
 				int firstNonSpace = -1;
 				boolean spaceInserted = false;
 				for (int charPos = offset; charPos < end; ++charPos) {
-					if (Character.isWhitespace(data[charPos])) {
+					if (isWhitespace(data[charPos])) {
 						if (firstNonSpace != -1) {
 							addWord(data, firstNonSpace, charPos);
 							myElements.add(hSpace);
