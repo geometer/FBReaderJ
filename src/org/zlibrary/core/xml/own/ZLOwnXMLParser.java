@@ -1,7 +1,8 @@
 package org.zlibrary.core.xml.own;
 
-import java.util.HashMap;
 import java.io.*;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.core.xml.*;

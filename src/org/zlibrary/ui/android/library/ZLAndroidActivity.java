@@ -2,8 +2,7 @@ package org.zlibrary.ui.android.library;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.KeyEvent;
+import android.view.*;
 
 import org.zlibrary.core.application.ZLApplication;
 
@@ -15,6 +14,9 @@ public class ZLAndroidActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		StartTime = System.currentTimeMillis();
 		super.onCreate(icicle);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//getWindow().setFlags(WindowManager.LayoutParams.NO_STATUS_BAR_FLAG, WindowManager.LayoutParams.NO_STATUS_BAR_FLAG);
+		setContentView(R.layout.main);
 		new ZLAndroidLibrary().run(this);
 	}
 

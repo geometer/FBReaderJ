@@ -1,7 +1,8 @@
 package org.zlibrary.text.view.impl;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.text.model.ZLTextModel;
 

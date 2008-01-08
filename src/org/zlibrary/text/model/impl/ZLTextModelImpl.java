@@ -1,12 +1,10 @@
 package org.zlibrary.text.model.impl;
 
-import org.zlibrary.core.util.ZLArrayUtils;
-import org.zlibrary.core.util.ZLTextBuffer;
+import java.util.*;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
-
-import java.util.*;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList myEntries = new ArrayList();

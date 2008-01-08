@@ -77,8 +77,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		loadProperties();
 		new ZLAndroidImageManager();
 
-		activity.setContentView(R.layout.main);
-
 		try {
 			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
 			myMainWindow = new ZLAndroidApplicationWindow(application);

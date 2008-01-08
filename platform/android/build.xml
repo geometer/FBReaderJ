@@ -93,7 +93,7 @@
 
 	<!-- Compile this project's .java files into .class files. -->
 	<target name="compile" depends="depend">
-		<javac target="1.5" debug="true" extdirs="" srcdir="${srcdir}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
+		<javac target="1.5" srcdir="${srcdir}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
 			<exclude name = "org/zlibrary/core/xml/sax/**"/>
 			<exclude name="org/zlibrary/core/xmlconfig/**"/>
 			<exclude name = "org/zlibrary/ui/swing/**"/>

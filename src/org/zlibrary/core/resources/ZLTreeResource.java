@@ -1,6 +1,7 @@
 package org.zlibrary.core.resources;
 
 import java.util.*;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.xml.*;
 
 final class ZLTreeResource extends ZLResource {

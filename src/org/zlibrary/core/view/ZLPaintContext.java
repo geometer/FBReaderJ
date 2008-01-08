@@ -1,9 +1,9 @@
 package org.zlibrary.core.view;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.image.ZLImageData;
-import org.zlibrary.core.util.ZLColor;
 
 abstract public class ZLPaintContext {
 	private int myX = 0;

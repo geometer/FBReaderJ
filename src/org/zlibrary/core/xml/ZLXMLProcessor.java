@@ -1,6 +1,7 @@
 package org.zlibrary.core.xml;
 
 import java.io.*;
+import org.zlibrary.core.io.*;
 
 import org.zlibrary.core.library.ZLibrary;
 

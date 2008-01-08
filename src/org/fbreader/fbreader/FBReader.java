@@ -1,7 +1,7 @@
 package org.fbreader.fbreader;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import org.zlibrary.core.io.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
