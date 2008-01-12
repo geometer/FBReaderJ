@@ -97,10 +97,10 @@ abstract public class ZLApplicationWindow {
 				} else */
 				if (item instanceof ZLApplication.Toolbar.ButtonItem) {
 					ZLApplication.Toolbar.ButtonItem button = (ZLApplication.Toolbar.ButtonItem)item;
-					int id = button.getActionId();
+					final String id = button.getActionId();
 	
-					boolean visible = getApplication().isActionVisible(id);
-					boolean enabled = getApplication().isActionEnabled(id);
+					final boolean visible = getApplication().isActionVisible(id);
+					final boolean enabled = getApplication().isActionEnabled(id);
     
 					if (visible) {
 						if (lastSeparator != null) {

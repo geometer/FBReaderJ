@@ -4,54 +4,54 @@
 	  <node name="bookInfo" value="Informazioni Libro..."/>
 	  <node name="toc" value="Indice"/>
 		<node name="library" value="Biblioteca">
-			<node name="open" value="Apri"/>
-			<node name="previous" value="Libro Precedente"/>
-			<node name="recent" value="Recenti"/>
+			<node name="showLibrary" value="Apri"/>
+			<node name="previousBook" value="Libro Precedente"/>
+			<node name="showRecent" value="Recenti"/>
 			<node name="addBook" value="Aggiungi Libro..."/>
-			<node name="about" value="Informazioni su FBReader"/>
+			<node name="showHelp" value="Informazioni su FBReader"/>
 		</node>
 		<node name="navigate" value="Navigazione">
-			<node name="gotoStartOfDocument" value="Vai all'Inizio del Documento"/>
-			<node name="gotoStartOfSection" value="Vai all'Inizio di Sezione"/>
-			<node name="gotoEndOfSection" value="Vai alla Fine di Sezione"/>
-			<node name="gotoNextTOCItem" value="Vai al Successivo Elemento dell'Indice"/>
-			<node name="gotoPreviousTOCItem" value="Vai al Precedente Elemento dell'Indice"/>
-			<node name="goBack" value="Vai Indietro"/>
-			<node name="goForward" value="Vai Avanti"/>
+			<node name="gotoHome" value="Vai all'Inizio del Documento"/>
+			<node name="gotoSectionStart" value="Vai all'Inizio di Sezione"/>
+			<node name="gotoSectionEnd" value="Vai alla Fine di Sezione"/>
+			<node name="nextTOCSection" value="Vai al Successivo Elemento dell'Indice"/>
+			<node name="previousTOCSection" value="Vai al Precedente Elemento dell'Indice"/>
+			<node name="undo" value="Vai Indietro"/>
+			<node name="redo" value="Vai Avanti"/>
 		</node>
 		<node name="selection" value="Selezione">
-			<node name="clipboard" value="Copia negli Appunti"/>
-			<node name="dictionary" value="Apri in Dizionario"/>
-			<node name="clear" value="Deseleziona"/>
+			<node name="copyToClipboard" value="Copia negli Appunti"/>
+			<node name="openInDictionary" value="Apri in Dizionario"/>
+			<node name="clearSelection" value="Deseleziona"/>
 		</node>
 		<node name="search" value="Trova">
-			<node name="find" value="Trova Testo..."/>
-			<node name="next" value="Trova Successivo"/>
-			<node name="previous" value="Trova Precedente"/>
+			<node name="search" value="Trova Testo..."/>
+			<node name="findNext" value="Trova Successivo"/>
+			<node name="findPrevious" value="Trova Precedente"/>
 		</node>
 		<node name="view" value="Visualizzazione">
 			<node name="rotate" value="Ruota Schermo"/>
-			<node name="fullScreen" value="A Tutto Schermo"/>
+			<node name="toggleFullscreen" value="A Tutto Schermo"/>
 			<node name="toggleIndicator" value="Alterna Indicatore"/>
 		</node>
-		<node name="settings" value="Preferenze..."/>
-		<node name="close" value="Chiudi"/>
+		<node name="preferences" value="Preferenze..."/>
+		<node name="quit" value="Chiudi"/>
 	</node>
 	<node name="toolbar">
-		<node name="books" value="Mostra Albero Biblioteca"/>
-		<node name="history" value="Mostra Elenco Libri Recenti"/>
-		<node name="addbook" value="Aggiungi File alla Biblioteca"/>
-		<node name="home" value="Vai all'Inizio del Testo"/>
-		<node name="leftarrow" value="Vai Indietro"/>
-		<node name="rightarrow" value="Vai Avanti"/>
-		<node name="contents" value="Indice"/>
-		<node name="find" value="Trova Testo"/>
-		<node name="findnext" value="Trova Successivo"/>
-		<node name="findprev" value="Trova Precedente"/>
-		<node name="bookinfo" value="Mostra Finestra Informazioni Libro"/>
-		<node name="settings" value="Mostra Finestra Preferenze"/>
-		<node name="rotatescreen" value="Ruota Testo"/>
-		<node name="help" value="Informazioni su FBReader"/>
+		<node name="showLibrary" value="Mostra Albero Biblioteca"/>
+		<node name="showRecent" value="Mostra Elenco Libri Recenti"/>
+		<node name="addBook" value="Aggiungi File alla Biblioteca"/>
+		<node name="gotoHome" value="Vai all'Inizio del Testo"/>
+		<node name="undo" value="Vai Indietro"/>
+		<node name="redo" value="Vai Avanti"/>
+		<node name="toc" value="Indice"/>
+		<node name="search" value="Trova Testo"/>
+		<node name="findNext" value="Trova Successivo"/>
+		<node name="findPrevious" value="Trova Precedente"/>
+		<node name="bookInfo" value="Mostra Finestra Informazioni Libro"/>
+		<node name="preferences" value="Mostra Finestra Preferenze"/>
+		<node name="rotate" value="Ruota Testo"/>
+		<node name="showHelp" value="Informazioni su FBReader"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -221,7 +221,7 @@
 					<node name="command" value="Comando da Eseguire"/>
 				</node>
 				<node name="Maemo" value="Maemo">
-					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press" toBeTranslated="true"/>
+					<node name="keyActionOnRelease" value="Action on Key Release, not on Key Press" toBeTranslated="true"/>
 					<node name="minStylusPressure" value="Minimal Stylus Pressure" toBeTranslated="true"/>
 					<node name="maxStylusPressure" value="Maximal Stylus Pressure" toBeTranslated="true"/>
 				</node>

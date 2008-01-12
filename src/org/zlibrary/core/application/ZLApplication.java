@@ -45,8 +45,7 @@ public abstract class ZLApplication {
 	private ZLApplicationWindow myWindow;
 	private ZLView myInitialView;
 
-	// TODO: 256!!!
-	private final ZLAction[] myActionMap = new ZLAction[256];
+	private final HashMap myIdToActionMap = new HashMap();
 	private Toolbar myToolbar;
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
@@ -141,10 +140,8 @@ public abstract class ZLApplication {
 		return (myWindow != null) && myWindow.isFullscreen();
 	}
 	
-	protected final void addAction(int actionId, ZLAction action) {
-		if ((actionId >= 0) && (actionId < 256)) {
-			myActionMap[actionId] = action;
-		}
+	protected final void addAction(String actionId, ZLAction action) {
+		myIdToActionMap.put(actionId, action);
 	}
 
 	public final boolean isFullKeyboardControlSupported() {
@@ -181,24 +178,21 @@ public abstract class ZLApplication {
 		}
 	}
 
-	private final ZLAction getAction(int actionId) {
-		if ((actionId >= 0) && (actionId < 256)) {
-			return myActionMap[actionId];
-		}
-		return null;
+	private final ZLAction getAction(String actionId) {
+		return (ZLAction)myIdToActionMap.get(actionId);
 	}
 	
-	public final boolean isActionVisible(int actionId) {
+	public final boolean isActionVisible(String actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isVisible();
 	}
 	
-	public final boolean isActionEnabled(int actionId) {
+	public final boolean isActionEnabled(String actionId) {
 		ZLAction action = getAction(actionId);
 		return (action != null) && action.isEnabled();
 	}
 	
-	public final void doAction(int actionId) {
+	public final void doAction(String actionId) {
 		ZLAction action = getAction(actionId);
 		if (action != null) {
 			action.checkAndRun();
@@ -321,8 +315,8 @@ public abstract class ZLApplication {
 		private final ArrayList myItems = new ArrayList();
 		private final ZLResource myResource = ZLResource.resource("toolbar");
 
-		private void addButton(int actionId, String key/*, ButtonGroup group*/) {
-			ButtonItem button = new ButtonItem(actionId, key, myResource.getResource(key));
+		private void addButton(String actionId/*, ButtonGroup group*/) {
+			ButtonItem button = new ButtonItem(actionId, myResource.getResource(actionId));
 			myItems.add(button);
 			//button.setButtonGroup(group);
 		}
@@ -355,23 +349,21 @@ public abstract class ZLApplication {
 		}
 		
 		public final class ButtonItem implements Item {
-			private final int myActionId;
-			private final String myIconName;
+			private final String myActionId;
 			private final ZLResource myTooltip;
 			//private ButtonGroup myButtonGroup;
 			
-			public ButtonItem(int actionId, String iconName, ZLResource tooltip) {
+			public ButtonItem(String actionId, ZLResource tooltip) {
 				myActionId = actionId;
-				myIconName = iconName;
 				myTooltip = tooltip;
 			}
 
-			public int getActionId() {
+			public String getActionId() {
 				return myActionId;
 			}
 			
 			public String getIconName() {
-				return myIconName;
+				return myActionId;
 			}
 			
 			public String getTooltip() {
@@ -460,8 +452,8 @@ public abstract class ZLApplication {
 			return myResource;
 		}
 
-		void addItem(int actionId, String key) {
-			myItems.add(new Menubar.PlainItem(myResource.getResource(key).getValue(), actionId));
+		void addItem(String actionId) {
+			myItems.add(new Menubar.PlainItem(myResource.getResource(actionId).getValue(), actionId));
 		}
 		
 		void addSeparator() {
@@ -487,9 +479,9 @@ public abstract class ZLApplication {
 	public static final class Menubar extends Menu {
 		public static final class PlainItem implements Item {
 			private final String myName;
-			private final int myActionId;
+			private final String myActionId;
 
-			public PlainItem(String name, int actionId) {
+			public PlainItem(String name, String actionId) {
 				myName = name;
 				myActionId = actionId;
 			}
@@ -498,7 +490,7 @@ public abstract class ZLApplication {
 				return myName;
 			}
 			
-			public int getActionId() {
+			public String getActionId() {
 				return myActionId;
 			}
 		};
@@ -571,14 +563,9 @@ public abstract class ZLApplication {
 				myToolbar = new Toolbar();
 			}
 			if (BUTTON == tag) {
-				String action = attributes.getValue("action");
-				String key = attributes.getValue("key");
-				if ((action != null) && (key != null)) {
-					try {
-						int actionId = Integer.parseInt(action);
-						myToolbar.addButton(actionId, key);
-					} catch (NumberFormatException exception) {
-					}
+				String id = attributes.getValue("id");
+				if (id != null) {
+					myToolbar.addButton(id);
 				}
 			} else if (SEPARATOR == tag) {
 				myToolbar.addSeparator();
@@ -599,19 +586,14 @@ public abstract class ZLApplication {
 			final ArrayList stack = mySubmenuStack;
 			Menu menu = stack.isEmpty() ? myMenubar : (Menu)stack.get(stack.size() - 1);
 			if (ITEM == tag) {
-				String action = attributes.getValue("action");
-				String key = attributes.getValue("key");
-				if ((action != null) && (key != null)) {
-					try {
-						int actionId = Integer.parseInt(action);
-						menu.addItem(actionId, key);
-					} catch (NumberFormatException exception) {
-					}
+				String id = attributes.getValue("id");
+				if (id != null) {
+					menu.addItem(id);
 				}
 			} else if (SUBMENU == tag) {
-				String key = attributes.getValue("key");
-				if (key != null) {
-					stack.add(menu.addSubmenu(key));
+				String id = attributes.getValue("id");
+				if (id != null) {
+					stack.add(menu.addSubmenu(id));
 				}
 			}
 		}

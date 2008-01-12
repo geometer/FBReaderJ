@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <toolbar>
-	<button action="1" key="books"/>
-	<button action="28" key="history"/>
-	<button action="24" key="addbook"/>
+	<button id="showLibrary"/>
+	<button id="showRecent"/>
+	<button id="addBook"/>
 	<separator/>
-	<button action="15" key="home"/>
-	<button action="3" key="leftarrow"/>
-	<button action="4" key="rightarrow"/>
+	<button id="gotoHome"/>
+	<button id="undo"/>
+	<button id="redo"/>
 	<separator/>
-	<button action="5" key="contents"/>
+	<button id="toc"/>
 	<separator/>
-	<button action="6" key="find"/>
-	<button action="7" key="findnext"/>
-	<button action="8" key="findprev"/>
+	<button id="search"/>
+	<button id="findPrevious"/>
+	<button id="findNext"/>
 	<separator/>
-	<button action="25" key="bookinfo"/>
-	<button action="2" key="settings"/>
+	<button id="bookInfo"/>
+	<button id="preferences"/>
 	<separator/>
-	<button action="27" key="rotatescreen"/>
+	<button id="rotate"/>
 	<separator/>
-	<button action="26" key="help"/>
+	<button id="showHelp"/>
 </toolbar>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <node name="menu">
+	  <node name="bookInfo" value="Bokinformation..."/>
+	  <node name="toc" value="Innehållsförteckning"/>
+		<node name="library" value="Bibliotek">
+			<node name="showLibrary" value="Öppna"/>
+			<node name="previousBook" value="Föregående bok"/>
+			<node name="showRecent" value="Tidigare"/>
+			<node name="addBook" value="Lägg till bok..."/>
+			<node name="showHelp" value="Om FBReader"/>
+		</node>
+		<node name="navigate" value="Navigation">
+			<node name="gotoHome" value="Gå till början av dokumentet"/>
+			<node name="gotoSectionStart" value="Gå till början av textavsnitt"/>
+			<node name="gotoSectionEnd" value="Gå till slutet av textavsnitt"/>
+			<node name="nextTOCSection" value="Gå till nästa post i innehållsförteckning"/>
+			<node name="previousTOCSection" value="Gå till föregående post i innehållsförteckning"/>
+			<node name="undo" value="Gå bakåt"/>
+			<node name="redo" value="Gå framåt"/>
+		</node>
+		<node name="selection" value="Markering">
+			<node name="copyToClipboard" value="Kopiera till urklipp"/>
+			<node name="openInDictionary" value="Öppna i ordbok"/>
+			<node name="clearSelection" value="Töm"/>
+		</node>
+		<node name="search" value="Sök">
+			<node name="search" value="Sök text..."/>
+			<node name="findNext" value="Sök nästa"/>
+			<node name="findPrevious" value="Sök föregående"/>
+		</node>
+		<node name="view" value="Visa">
+			<node name="rotate" value="Rotera skärm"/>
+			<node name="toggleFullscreen" value="Helskärm"/>
+			<node name="toggleIndicator" value="Växla indikator"/>
+		</node>
+		<node name="preferences" value="Inställningar..."/>
+		<node name="quit" value="Stäng"/>
+	</node>
+	<node name="toolbar">
+		<node name="showLibrary" value="Visa biblioteksträd"/>
+		<node name="showRecent" value="Visa tidigare bokhistorik"/>
+		<node name="addBook" value="Lägg till fil till bibliotek"/>
+		<node name="gotoHome" value="Gå till början av text"/>
+		<node name="undo" value="Gå bakåt"/>
+		<node name="redo" value="Gå framåt"/>
+		<node name="toc" value="Innehållsförteckning"/>
+		<node name="search" value="Textsökning"/>
+		<node name="findNext" value="Sök nästa"/>
+		<node name="findPrevious" value="Sök föregående"/>
+		<node name="bookInfo" value="Visa bokinformation"/>
+		<node name="preferences" value="Visa inställningar"/>
+		<node name="rotate" value="Rotera text"/>
+		<node name="showHelp" value="Om FBReader"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="go" value="&amp;Gå!"/>
+		</node>
+		<node name="OptionsDialog">
+			<node name="title" value="FBReader - Alternativ"/>
+			<node name="tab">
+				<node name="General" value="Allmänt">
+					<node name="bookPath" value="Boksökväg"/>
+					<node name="lookInSubdirectories" value="Leta efter böcker i underkataloger"/>
+					<node name="recentListSize" value="Storlek på lista över tidigare böcker"/>
+					<node name="keyDelay" value="Delay Between Accepted Key Pressings"/>
+				</node>
+				<node name="Language" value="Språk">
+					<node name="autoDetect" value="Upptäck automatiskt språk och kodning"/>
+					<node name="defaultLanguage" value="Standardspråk"/>
+					<node name="defaultEncodingSet" value="Standardteckenuppsättning"/>
+					<node name="defaultEncoding" value="Standardkodning"/>
+					<node name="useWindows1252Hack" value="Använd windows-1252 istället för iso-8859-1"/>
+					<node name="chineseBreakAtAnyPosition" value="För kinesiska radbrytningar på valfri position"/>
+				</node>
+				<node name="Indicator" value="Indikator">
+					<node name="show" value="Visa positionsindikator"/>
+					<node name="height" value="Indikatorns höjd"/>
+					<node name="offset" value="Offset från text"/>
+					<node name="pageNumber" value="Visa position som siffror"/>
+					<node name="time" value="Visa tid"/>
+					<node name="fontSize" value="Typsnittsstorlek"/>
+					<node name="tocMarks" value="Visa förteckningsmarkeringar"/>
+					<node name="navigation" value="Aktivera navigering"/>
+				</node>
+				<node name="Scrolling" value="Rullning">
+					<node name="optionsFor" value="Alternativ för">
+						<node name="large" value="Large Scrollings"/>
+						<node name="small" value="Small Scrollings"/>
+						<node name="mouse" value="Mouse Scrollings"/>
+						<node name="finger" value="Finger Tap Scrollings"/>
+					</node>
+					<node name="delay" value="Fördröjning mellan rullningar, ms"/>
+					<node name="mode" value="Rullningsläge">
+						<node name="noOverlapping" value="Ingen överlappning"/>
+						<node name="keepLines" value="Behåll rader"/>
+						<node name="scrollLines" value="Rulla rader"/>
+						<node name="scrollPercentage" value="Rulla procentandel"/>
+						<node name="disable" value="Inaktivera"/>
+					</node>
+					<node name="linesToKeep" value="Rader att behålla"/>
+					<node name="linesToScroll" value="Rader att rulla"/>
+					<node name="percentToScroll" value="Procentandel att rulla"/>
+				</node>
+				<node name="Selection" value="Markering">
+					<node name="enableSelection" value="Aktivera textmarkering"/>
+				</node>
+				<node name="Margins" value="Marginaler">
+					<node name="left" value="Vänstermarginal"/>
+					<node name="right" value="Högermarginal"/>
+					<node name="top" value="Övermarginal"/>
+					<node name="bottom" value="Nedermarginal"/>
+				</node>
+				<node name="Format" value="Formatering">
+					<node name="optionsFor" value="Alternativ för"/>
+					<node name="lineSpacing" value="Radmellanrum">
+						<node name="unchanged" value="&lt;oförändrad&gt;"/>
+					</node>
+					<node name="firstLineIndent" value="Indentera första raden"/>
+					<node name="alignment" value="Justering">
+						<node name="left" value="Vänster"/>
+						<node name="right" value="Höger"/>
+						<node name="center" value="Centrera"/>
+						<node name="justify" value="Justera"/>
+						<node name="unchanged" value="&lt;oförändrad&gt;"/>
+					</node>
+					<node name="spaceBefore" value="Blanksteg före"/>
+					<node name="spaceAfter" value="Blanksteg efter"/>
+					<node name="leftIndent" value="Vänsterindentering"/>
+					<node name="rightIndent" value="Högerindentering"/>
+				</node>
+				<node name="Styles" value="Stilar">
+					<node name="optionsFor" value="Alternativ för"/>
+					<node name="fontFamily" value="Familj">
+						<node name="unchanged" value="&lt;oförändrad&gt;"/>
+					</node>
+					<node name="fontSize" value="Storlek"/>
+					<node name="fontSizeDifference" value="Storleksskillnad"/>
+					<node name="bold" value="Fet"/>
+					<node name="italic" value="Kursiv"/>
+					<node name="allowHyphenations" value="Tillåt avstavningar"/>
+					<node name="autoHyphenations" value="Automatiska avstavningar"/>
+				</node>
+				<node name="Rotation" value="Rotering">
+					<node name="direction" value="Roteringstyp">
+						<node name="disabled" value="Inaktiverad"/>
+						<node name="clockwise" value="90 grader medsols"/>
+						<node name="counterclockwise" value="90 grader motsols"/>
+						<node name="180" value="180 grader"/>
+						<node name="cycle" value="Växla genom alla fyra riktningar"/>
+					</node>
+				</node>
+				<node name="Colors" value="Färger">
+					<node name="colorFor" value="Färg för">
+						<node name="background" value="Bakgrund"/>
+						<node name="selectionBackground" value="Markeringsbakgrund"/>
+						<node name="text" value="Vanlig text"/>
+						<node name="internalLink" value="Text för intern hyperlänk"/>
+						<node name="externalLink" value="Text för extern hyperlänk"/>
+						<node name="highlighted" value="Färgmarkerad text"/>
+						<node name="treeLines" value="Trädrader"/>
+						<node name="indicator" value="Positionsindikator"/>
+					</node>
+				</node>
+				<node name="Keys" value="Tangenter">
+					<node name="grabSystemKeys" value="Fånga systemtangenter"/>
+					<node name="separate" value="Tangentbindningar beroende av orientering"/>
+					<node name="orientation" value="Orientering"/>
+					<node name="action">
+						<node name="none" value="Ingen"/>
+						<node name="showLibrary" value="Visa bibliotek"/>
+						<node name="showRecent" value="Visa tidigare böcker"/>
+						<node name="previousBook" value="Öppna föregående bok"/>
+						<node name="toc" value="Visa innehållsförteckning"/>
+						<node name="gotoHome" value="Gå hem"/>
+						<node name="gotoSectionStart" value="Gå till början av avsnitt"/>
+						<node name="gotoSectionEnd" value="Gå till slutet av avsnitt"/>
+						<node name="nextTOCSection" value="Gå till nästa avsnitt i förteckning"/>
+						<node name="previousTOCSection" value="Gå till föregående avsnitt i förteckning"/>
+						<node name="largeScrollForward" value="Stor rullning framåt"/>
+						<node name="largeScrollBackward" value="Stor rullning bakåt"/>
+						<node name="smallScrollForward" value="Liten rullning framåt"/>
+						<node name="smallScrollBackward" value="Liten rullning bakåt"/>
+						<node name="undo" value="Ångra"/>
+						<node name="redo" value="Gör om"/>
+						<node name="copyToClipboard" value="Kopiera markerad text till urklipp"/>
+						<node name="openInDictionary" value="Öppna markerad text i ordbok"/>
+						<node name="clearSelection" value="Töm markering"/>
+						<node name="search" value="Sök"/>
+						<node name="findPrevious" value="Sök föregående"/>
+						<node name="findNext" value="Sök nästa"/>
+						<node name="increaseFont" value="Öka typsnittsstorlek"/>
+						<node name="decreaseFont" value="Minska typsnittsstorlek"/>
+						<node name="toggleIndicator" value="Växla positionsindikator"/>
+						<node name="toggleFullscreen" value="Växla helskärmsläge"/>
+						<node name="onFullscreen" value="Växla till helskärmsläge"/>
+						<node name="rotate" value="Rotera skärm"/>
+						<node name="preferences" value="Visa alternativdialog"/>
+						<node name="bookInfo" value="Visa bokinformation"/>
+						<node name="addBook" value="Lägg till bok"/>
+						<node name="cancel" value="Avbryt"/>
+						<node name="quit" value="Avsluta"/>
+					</node>
+					<node name="quitOnCancel" value="Avsluta programmet vid avbryt"/>
+				</node>
+				<node name="Config" value="Konfiguration">
+					<node name="autoSave" value="Spara tillstånd automatiskt"/>
+					<node name="timeout" value="Tidsgräns mellan sparningar, sekunder"/>
+				</node>
+				<node name="Dictionary" value="Ordbok">
+					<node name="enableIntegration" value="Aktivera integration med %s"/>
+					<node name="defaultText" value="Aktivera integration med ordbok"/>
+					<node name="choice" value="Integrera med"/>
+					<node name="singleClickOpen" value="Öppna med ett klick"/>
+				</node>
+				<node name="Web" value="Webb">
+					<node name="enableIntegration" value="Öppna externa länkar med %s"/>
+					<node name="defaultText" value="Öppna externa länkar i webbläsare"/>
+					<node name="choice" value="Använd webbläsare"/>
+					<node name="command" value="Kommando att köra"/>
+				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Åtgärd vid tangentsläpp, inte tangenttryck"/>
+					<node name="minStylusPressure" value="Minimalt pentryck"/>
+					<node name="maxStylusPressure" value="Maximalt pentryck"/>
+				</node>
+			</node>
+		</node>
+		<node name="InfoDialog">
+			<node name="title" value="FBReader - Bokinformation"/>
+			<node name="tab">
+				<node name="Common" value="Allmänt">
+					<node name="file" value="Fil"/>
+					<node name="title" value="Titel"/>
+					<node name="authorDisplayName" value="Författare (Visningsnamn)"/>
+					<node name="authorSortKey" value="Författare (Sorteringsnyckel)"/>
+					<node name="language" value="Språk"/>
+					<node name="encodingSet" value="Teckenuppsättning"/>
+					<node name="encoding" value="Kodning"/>
+				</node>
+				<node name="Series" value="Serier">
+					<node name="seriesTitle" value="Serietitel"/>
+					<node name="bookNumber" value="Boknummer"/>
+				</node>
+				<node name="Text" value="Text">
+					<node name="breakType" value="Bryt stycke vid"/>
+					<node name="ignoreIndent" value="Ignorera indentering mindre än"/>
+					<node name="buildTOC" value="Bygg innehållsförteckning"/>
+					<node name="emptyLines" value="Tomma rader innan nytt avsnitt"/>
+				</node>
+				<node name="&lt;PRE&gt;" value="&lt;PRE&gt;">
+					<node name="breakType" value="Bryt stycke vid"/>
+					<node name="ignoreIndent" value="Ignorera indentering mindre än"/>
+					<node name="buildTOC" value="Bygg innehållsförteckning"/>
+					<node name="emptyLines" value="Tomma rader innan nytt avsnitt"/>
+				</node>
+			</node>
+		</node>
+		<node name="addFileDialog">
+			<node name="title" value="FBReader - Lägg till bok till biblioteket"/>
+		</node>
+		<node name="textSearchDialog">
+			<node name="title" value="Textsökning"/>
+			<node name="text" value=""/>
+			<node name="ignoreCase" value="&amp;Ignorera skiftläge"/>
+			<node name="wholeText" value="I h&amp;ela texten"/>
+			<node name="backward" value="&amp;Bakåt"/>
+			<node name="currentSection" value="Endast i &amp;detta avsnitt"/>
+		</node>
+		<node name="removeBookBox">
+			<node name="title" value="Ta bort bok"/>
+			<node name="message" value="Ta bort boken &#13;&quot;%s&quot;&#13; från biblioteket?"/>
+		</node>
+		<node name="openBookErrorBox">
+			<node name="title" value="Fel"/>
+			<node name="message" value="Kunde inte öppna:&#13;%s"/>
+		</node>
+		<node name="noHelpBox">
+			<node name="title" value="Fel"/>
+			<node name="message" value="Tyvärr, hjälpfilen hittades inte"/>
+		</node>
+		<node name="waitMessage">
+			<node name="loadingBook" value="Läser in bok. Var god vänta..."/>
+			<node name="loadingBookList" value="Läser in boklista. Var god vänta..."/>
+		</node>
+	</node>
+	<node name="style">
+		<node name="Base" value="Bas"/>
+		<node name="Regular Paragraph" value="Vanligt stycke"/>
+		<node name="Title" value="Titel"/>
+		<node name="Section Title" value="Avsnittstitel"/>
+		<node name="Poem Title" value="Poem Title"/>
+		<node name="Subtitle" value="Undertext"/>
+		<node name="Annotation" value="Notation"/>
+		<node name="Epigraph" value="Epigram"/>
+		<node name="Stanza" value="Strof"/>
+		<node name="Verse" value="Vers"/>
+		<node name="Preformatted text" value="Förformaterad text"/>
+		<node name="Image" value="Bild"/>
+		<node name="Cite" value="Citat"/>
+		<node name="Author" value="Författare"/>
+		<node name="Date" value="Datum"/>
+		<node name="Internal Hyperlink" value="Intern hyperlänk"/>
+		<node name="Footnote" value="Fotnot"/>
+		<node name="Emphasis" value="Betoning"/>
+		<node name="Strong" value="Stark"/>
+		<node name="Subscript" value="Nedsänkt"/>
+		<node name="Superscript" value="Upphöjt"/>
+		<node name="Code" value="Kod"/>
+		<node name="StrikeThrough" value="Genomstruket"/>
+		<node name="Contents Table" value="Innehållstabell"/>
+		<node name="Author in Library" value="Författare i bibliotek"/>
+		<node name="Book in Library" value="Bok i bibliotek"/>
+		<node name="Recent Book List" value="Lista över tidigare böcker"/>
+		<node name="Italic" value="Kursiv"/>
+		<node name="Bold" value="Fet"/>
+		<node name="Definition" value="Definition"/>
+		<node name="Definition Description" value="Definitionsbeskrivning"/>
+		<node name="Header 1" value="Rubrik 1"/>
+		<node name="Header 2" value="Rubrik 2"/>
+		<node name="Header 3" value="Rubrik 3"/>
+		<node name="Header 4" value="Rubrik 4"/>
+		<node name="Header 5" value="Rubrik 5"/>
+		<node name="Header 6" value="Rubrik 6"/>
+		<node name="External Hyperlink" value="Extern hyperlänk"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Webbläsare"/>
+		<node name="defaultBrowser" value="Standardwebbläsare"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Okänt fel"/>
+		<node name="unsupportedCompressionMethod" value="Komprimeringsmetoden stöds inte"/>
+		<node name="encriptedFile" value="DRM-skyddad fil"/>
+	</node>
+</resources>

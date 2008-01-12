@@ -4,54 +4,54 @@
 	  <node name="bookInfo" value="Информация о книге..."/>
 	  <node name="toc" value="Содержание"/>
 		<node name="library" value="Библиотека">
-			<node name="open" value="Открыть библиотеку"/>
-			<node name="previous" value="Предыдущая книга"/>
-			<node name="recent" value="Прочитанные книги"/>
+			<node name="showLibrary" value="Открыть библиотеку"/>
+			<node name="previousBook" value="Предыдущая книга"/>
+			<node name="showRecent" value="Прочитанные книги"/>
 			<node name="addBook" value="Добавить файл..."/>
-			<node name="about" value="О программе FBReader"/>
+			<node name="showHelp" value="О программе FBReader"/>
 		</node>
 		<node name="navigate" value="Переход">
-			<node name="gotoStartOfDocument" value="В начало книги"/>
-			<node name="gotoStartOfSection" value="В начало раздела"/>
-			<node name="gotoEndOfSection" value="В конец раздела"/>
-			<node name="gotoNextTOCItem" value="К следующей главе"/>
-			<node name="gotoPreviousTOCItem" value="К предыдущей главе"/>
-			<node name="goBack" value="Назад"/>
-			<node name="goForward" value="Вперед"/>
+			<node name="gotoHome" value="В начало книги"/>
+			<node name="gotoSectionStart" value="В начало раздела"/>
+			<node name="gotoSectionEnd" value="В конец раздела"/>
+			<node name="nextTOCSection" value="К следующей главе"/>
+			<node name="previousTOCSection" value="К предыдущей главе"/>
+			<node name="undo" value="Назад"/>
+			<node name="redo" value="Вперед"/>
 		</node>
 		<node name="selection" value="Пометка">
-			<node name="clipboard" value="Скопировать в буфер"/>
-			<node name="dictionary" value="Посмотреть в словаре"/>
-			<node name="clear" value="Убрать пометку"/>
+			<node name="copyToClipboard" value="Скопировать в буфер"/>
+			<node name="openInDictionary" value="Посмотреть в словаре"/>
+			<node name="clearSelection" value="Убрать пометку"/>
 		</node>
 		<node name="search" value="Поиск">
-			<node name="find" value="Искать..."/>
-			<node name="next" value="Искать дальше"/>
-			<node name="previous" value="Искать раньше"/>
+			<node name="search" value="Искать..."/>
+			<node name="findNext" value="Искать дальше"/>
+			<node name="findPrevious" value="Искать раньше"/>
 		</node>
 		<node name="view" value="Изображение">
 			<node name="rotate" value="Повернуть"/>
-			<node name="fullScreen" value="На весь экран"/>
+			<node name="toggleFullscreen" value="На весь экран"/>
 			<node name="toggleIndicator" value="Индикатор позиции"/>
 		</node>
-		<node name="settings" value="Настройки..."/>
-		<node name="close" value="Закрыть"/>
+		<node name="preferences" value="Настройки..."/>
+		<node name="quit" value="Закрыть"/>
 	</node>
 	<node name="toolbar">
-		<node name="books" value="Библиотека"/>
-		<node name="history" value="Прочитанные книги"/>
-		<node name="addbook" value="Добавить файл в библиотеку"/>
-		<node name="home" value="В начало книги"/>
-		<node name="leftarrow" value="Назад"/>
-		<node name="rightarrow" value="Вперед"/>
-		<node name="contents" value="Оглавление"/>
-		<node name="find" value="Поиск"/>
-		<node name="findnext" value="Найти следующий"/>
-		<node name="findprev" value="Найти предыдущий"/>
-		<node name="bookinfo" value="Информация о книге"/>
-		<node name="settings" value="Настройки"/>
-		<node name="rotatescreen" value="Поворот текста"/>
-		<node name="help" value="О программе"/>
+		<node name="showLibrary" value="Библиотека"/>
+		<node name="showRecent" value="Прочитанные книги"/>
+		<node name="addBook" value="Добавить файл в библиотеку"/>
+		<node name="gotoHome" value="В начало книги"/>
+		<node name="undo" value="Назад"/>
+		<node name="redo" value="Вперед"/>
+		<node name="toc" value="Оглавление"/>
+		<node name="search" value="Поиск"/>
+		<node name="findNext" value="Найти следующий"/>
+		<node name="findPrevious" value="Найти предыдущий"/>
+		<node name="bookInfo" value="Информация о книге"/>
+		<node name="preferences" value="Настройки"/>
+		<node name="rotate" value="Поворот текста"/>
+		<node name="showHelp" value="О программе"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -71,7 +71,7 @@
 					<node name="defaultLanguage" value="Язык по умолчанию"/>
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
-					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1" toBeTranslated="true"/>
+					<node name="useWindows1252Hack" value="Использовать windows-1252 вместо iso-8859-1"/>
 					<node name="chineseBreakAtAnyPosition" value="В китайском языке разрыв строки в любом месте"/>
 				</node>
 				<node name="Indicator" value="Индикатор">
@@ -221,7 +221,7 @@
 					<node name="command" value="Выполнять команду"/>
 				</node>
 				<node name="Maemo" value="Maemo">
-					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press" toBeTranslated="true"/>
+					<node name="keyActionOnRelease" value="Реагировать на отпускание клавиши, а не на нажатие"/>
 					<node name="minStylusPressure" value="Минимальное давление стилуса"/>
 					<node name="maxStylusPressure" value="Максимальное давление стилуса"/>
 				</node>

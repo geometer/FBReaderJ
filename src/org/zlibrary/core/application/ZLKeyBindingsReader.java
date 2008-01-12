@@ -15,13 +15,9 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	public void startElementHandler(String tag, ZLStringMap attributes) {
 		if ("binding".equals(tag)) {
 			String key = attributes.getValue("key");
-			String action = attributes.getValue("action");
-			if ((key != null) && (action != null)) {
-				try {
-					int actionId = Integer.parseInt(action);
-					myKeymap.put(key, actionId);
-				} catch (NumberFormatException e) {
-				}
+			String actionId = attributes.getValue("action");
+			if ((key != null) && (actionId != null)) {
+				myKeymap.put(key, actionId);
 			}
 		}
 	}

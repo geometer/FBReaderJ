@@ -24,14 +24,13 @@ public final class ZLKeyBindings {
 		myIsChanged = false;
 	}
 	
-	public void bindKey(String key, int code) {
-		myBindingsMap.put(key, code);
+	public void bindKey(String key, String actionId) {
+		myBindingsMap.put(key, actionId);
 		myIsChanged = true;
 	}
 	
-	public int getBinding(String key) {
-		Integer num = (Integer)myBindingsMap.get(key);
-		return (num == null) ? 0 : num.intValue();
+	public String getBinding(String key) {
+		return (String)myBindingsMap.get(key);
 	}
 	
 	/*
@@ -45,15 +44,15 @@ public final class ZLKeyBindings {
 			new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
 		final ZLStringOption keyOption =
 			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
-		final ZLIntegerOption actionOption =
-			new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, "", -1);
+		final ZLStringOption actionOption =
+			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
 		for (int i = 0; i < size; ++i) {
 			keyOption.changeName(BINDED_KEY + i);
 			String keyValue = keyOption.getValue();
 			if (keyValue.length() != 0) {
-				keyOption.changeName(BINDED_ACTION + i);
-				int actionValue = actionOption.getValue();
-				if (actionValue != -1) {
+				actionOption.changeName(BINDED_ACTION + i);
+				String actionValue = actionOption.getValue();
+				if (actionValue.length() != 0) {
 					bindKey(keyValue, actionValue);
 				}
 			}

@@ -62,7 +62,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	protected void refresh() {
 		super.refresh();
 		for (Map.Entry<Menu.Item,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
-			final int actionId = entry.getValue().getActionId();
+			final String actionId = entry.getValue().getActionId();
 			final ZLApplication application = getApplication();
 			entry.getKey().setShown(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}

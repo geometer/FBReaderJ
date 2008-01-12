@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;Ok"/>
+			<node name="cancel" value="&amp;Avbryt"/>
+			<node name="yes" value="&amp;Ja"/>
+			<node name="no" value="&amp;Nej"/>
+			<node name="apply" value="&amp;Verkställ"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Sparar konfiguration..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Röd"/>
+		<node name="green" value="Grön"/>
+		<node name="blue" value="Blå"/>
+		<node name="black" value="Svart"/>
+		<node name="white" value="Vit"/>
+		<node name="maroon" value="Mörk brun"/>
+		<node name="olive" value="Oliv"/>
+		<node name="navy" value="Marin"/>
+		<node name="purple" value="Lila"/>
+		<node name="teal" value="Teal"/>
+		<node name="silver" value="Silver"/>
+		<node name="gray" value="Grå"/>
+		<node name="lime" value="Lime"/>
+		<node name="yellow" value="Gul"/>
+		<node name="magenta" value="Magenta"/>
+		<node name="cyan" value="Cyan"/>
+		<node name="custom..." value="Anpassad..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Tjeckiska"/>
+		<node name="de" value="Tyska"/>
+		<node name="de-traditional" value="Tyska (traditionell ortografi)"/>
+		<node name="en" value="Engelska"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spanska"/>
+		<node name="fi" value="Finska"/>
+		<node name="fr" value="Franska"/>
+		<node name="it" value="Italienska"/>
+		<node name="no" value="Norska"/>
+		<node name="pt" value="Portugisiska"/>
+		<node name="ru" value="Ryska"/>
+		<node name="sv" value="Svenska"/>
+		<node name="uk" value="Ukrainska"/>
+		<node name="zh" value="Kinesiska"/>
+		<node name="other" value="Annat"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="på"/>
+		<node name="off" value="av"/>
+		<node name="unchanged" value="oförändrat"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Åtgärd för tangent"/>
+	</node>
+</resources>

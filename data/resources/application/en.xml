@@ -4,54 +4,54 @@
 	  <node name="bookInfo" value="Book Info..."/>
 	  <node name="toc" value="Table of Contents"/>
 		<node name="library" value="Library">
-			<node name="open" value="Open"/>
-			<node name="previous" value="Previous Book"/>
-			<node name="recent" value="Recent"/>
+			<node name="showLibrary" value="Open"/>
+			<node name="previousBook" value="Previous Book"/>
+			<node name="showRecent" value="Recent"/>
 			<node name="addBook" value="Add Book..."/>
-			<node name="about" value="About FBReader"/>
+			<node name="showHelp" value="About FBReader"/>
 		</node>
 		<node name="navigate" value="Navigate">
-			<node name="gotoStartOfDocument" value="Go to Start of Document"/>
-			<node name="gotoStartOfSection" value="Go to Start of Text Section"/>
-			<node name="gotoEndOfSection" value="Go to End of Text Section"/>
-			<node name="gotoNextTOCItem" value="Go to Next TOC Item"/>
-			<node name="gotoPreviousTOCItem" value="Go to Previous TOC Item"/>
-			<node name="goBack" value="Go Back"/>
-			<node name="goForward" value="Go Forward"/>
+			<node name="gotoHome" value="Go to Start of Document"/>
+			<node name="gotoSectionStart" value="Go to Start of Text Section"/>
+			<node name="gotoSectionEnd" value="Go to End of Text Section"/>
+			<node name="nextTOCSection" value="Go to Next TOC Item"/>
+			<node name="previousTOCSection" value="Go to Previous TOC Item"/>
+			<node name="undo" value="Go Back"/>
+			<node name="redo" value="Go Forward"/>
 		</node>
 		<node name="selection" value="Selection">
-			<node name="clipboard" value="Copy to Clipboard"/>
-			<node name="dictionary" value="Open in Dictionary"/>
-			<node name="clear" value="Clear"/>
+			<node name="copyToClipboard" value="Copy to Clipboard"/>
+			<node name="openInDictionary" value="Open in Dictionary"/>
+			<node name="clearSelection" value="Clear"/>
 		</node>
 		<node name="search" value="Find">
-			<node name="find" value="Find Text..."/>
-			<node name="next" value="Find Next"/>
-			<node name="previous" value="Find Previous"/>
+			<node name="search" value="Find Text..."/>
+			<node name="findNext" value="Find Next"/>
+			<node name="findPrevious" value="Find Previous"/>
 		</node>
 		<node name="view" value="View">
 			<node name="rotate" value="Rotate Screen"/>
-			<node name="fullScreen" value="Full Screen"/>
+			<node name="toggleFullscreen" value="Full Screen"/>
 			<node name="toggleIndicator" value="Toggle Indicator"/>
 		</node>
-		<node name="settings" value="Preferences..."/>
-		<node name="close" value="Close"/>
+		<node name="preferences" value="Preferences..."/>
+		<node name="quit" value="Close"/>
 	</node>
 	<node name="toolbar">
-		<node name="books" value="Show Library Tree"/>
-		<node name="history" value="Show Recent Books List"/>
-		<node name="addbook" value="Add File to Library"/>
-		<node name="home" value="Go to Start of Text"/>
-		<node name="leftarrow" value="Go Back"/>
-		<node name="rightarrow" value="Go Forward"/>
-		<node name="contents" value="Table of Contents"/>
-		<node name="find" value="Text Search"/>
-		<node name="findnext" value="Find Next"/>
-		<node name="findprev" value="Find Previous"/>
-		<node name="bookinfo" value="Show Book Info Dialog"/>
-		<node name="settings" value="Show Preferences Dialog"/>
-		<node name="rotatescreen" value="Rotate Text"/>
-		<node name="help" value="About FBReader"/>
+		<node name="showLibrary" value="Show Library Tree"/>
+		<node name="showRecent" value="Show Recent Books List"/>
+		<node name="addBook" value="Add File to Library"/>
+		<node name="gotoHome" value="Go to Start of Text"/>
+		<node name="undo" value="Go Back"/>
+		<node name="redo" value="Go Forward"/>
+		<node name="toc" value="Table of Contents"/>
+		<node name="search" value="Text Search"/>
+		<node name="findNext" value="Find Next"/>
+		<node name="findPrevious" value="Find Previous"/>
+		<node name="bookInfo" value="Show Book Info Dialog"/>
+		<node name="preferences" value="Show Preferences Dialog"/>
+		<node name="rotate" value="Rotate Text"/>
+		<node name="showHelp" value="About FBReader"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -221,7 +221,7 @@
 					<node name="command" value="Command to Execute"/>
 				</node>
 				<node name="Maemo" value="Maemo">
-					<node name="keyActionOnRelease" value="Key Action on Release, Not on Press"/>
+					<node name="keyActionOnRelease" value="Action on Key Release, not on Key Press"/>
 					<node name="minStylusPressure" value="Minimal Stylus Pressure"/>
 					<node name="maxStylusPressure" value="Maximal Stylus Pressure"/>
 				</node>
