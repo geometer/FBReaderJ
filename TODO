@@ -87,3 +87,4 @@ DONE	FootnoteView
 	заголовок окна
 	macos: название меню
 	macos: иконка
+	xml: сделать нормальную поддержку namespace'ов
