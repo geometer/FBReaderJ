@@ -59,7 +59,7 @@ public class ZLSwingLibrary extends ZLibrary {
 		String os = System.getProperty("os.name");
 		try {
 			if (os.startsWith("Windows")) {
-				Runtime.getRuntime().exec("openLink " + reference);
+				Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + reference);
 			} else if (os.startsWith("Mac OS")) {
 				Class fileManager = Class.forName("com.apple.eio.FileManager");
 				java.lang.reflect.Method openURL = fileManager.getDeclaredMethod("openURL", new Class[] { String.class });
