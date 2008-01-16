@@ -7,12 +7,12 @@ import org.zlibrary.core.view.ZLViewWidget;
 
 abstract public class ZLApplicationWindow {
 	private ZLApplication myApplication;
-	private boolean myToggleButtonLock;
+	//private boolean myToggleButtonLock;
 
 	protected ZLApplicationWindow(ZLApplication application) {
 		myApplication = application;
 		myApplication.setWindow(this);
-		myToggleButtonLock = false;
+		//myToggleButtonLock = false;
 	}
 
 	public ZLApplication getApplication() {
@@ -63,7 +63,7 @@ abstract public class ZLApplicationWindow {
 		getApplication().doAction(button.getActionId());
 	}
 	
-	public abstract void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item);
+	//public abstract void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item);
 	
 	public abstract void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled);
 	

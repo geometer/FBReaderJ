@@ -42,6 +42,7 @@
 		<jar destfile="${main.jar}" manifest="${manifest.file}">
 			<fileset dir="${bin.dir}" includes="**/*.class"/>
 			<fileset dir="${project.dir}" includes="data/**"/>
+			<fileset dir="${platform.dir}" includes="data/**"/>
 		</jar>
 	</target>
 

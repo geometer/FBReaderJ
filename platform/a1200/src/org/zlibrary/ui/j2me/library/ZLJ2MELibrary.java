@@ -5,28 +5,22 @@ import java.io.InputStream;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Display;
 
-//import android.content.Resources;
-//import android.content.Intent;
-//import android.net.ContentURI;
-
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.application.ZLApplication;
 
-//import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
 import org.zlibrary.ui.j2me.config.ZLJ2MEConfigManager;
-import org.zlibrary.ui.j2me.view.ZLJ2MEPaintContext;
 import org.zlibrary.ui.j2me.view.ZLCanvas;
-//import org.zlibrary.ui.android.view.ZLAndroidWidget;
-//import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
-//import org.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.zlibrary.ui.j2me.application.ZLJ2MEApplicationWindow;
+import org.zlibrary.ui.j2me.image.ZLJ2MEImageManager;
 
 final class ZLJ2MELibrary extends ZLibrary {
+	private ZLCanvas myCanvas;
+
 	public ZLPaintContext createPaintContext() {
-		// TODO: implement
-		return new ZLJ2MEPaintContext();
+		return myCanvas.getContext();
 	}
 
 	public InputStream getResourceInputStream(String fileName) {
@@ -54,17 +48,19 @@ final class ZLJ2MELibrary extends ZLibrary {
 		new ZLOwnXMLProcessorFactory();
 		new ZLJ2MEConfigManager();
 		loadProperties();
-		//new ZLAndroidImageManager();
+		new ZLJ2MEImageManager();
+
+		myCanvas = new ZLCanvas();
 
 		try {
 			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
-			//myMainWindow = new ZLAndroidApplicationWindow(application);
-			//application.initWindow();
+			new ZLJ2MEApplicationWindow(application, myCanvas);
+			application.initWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 			//finish();
 		}
-		ZLCanvas canvas = new ZLCanvas();
-		Display.getDisplay(midlet).setCurrent(canvas);
+
+		Display.getDisplay(midlet).setCurrent(myCanvas);
 	}
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menubar>
+	<item id="bookInfo"/>
+	<item id="toc"/>
+	<submenu id="library">
+		<item id="showLibrary"/>
+		<item id="previousBook"/>
+		<item id="showRecent"/>
+		<item id="addBook"/>
+		<item id="showHelp"/>
+	</submenu>
+	<submenu id="navigate">
+		<item id="gotoHome"/>
+		<item id="gotoSectionStart"/>
+		<item id="gotoSectionEnd"/>
+		<item id="nextTOCSection"/>
+		<item id="previousTOCSection"/>
+		<item id="undo"/>
+		<item id="redo"/>
+	</submenu>
+	<submenu id="selection">
+		<item id="copyToClipboard"/>
+		<item id="openInDictionary"/>
+		<item id="clearSelection"/>
+	</submenu>
+	<submenu id="search">
+		<item id="search"/>
+		<item id="findPrevious"/>
+		<item id="findNext"/>
+	</submenu>
+	<submenu id="view">
+		<item id="rotate"/>
+		<item id="toggleFullscreen"/>
+		<item id="toggleIndicator"/>
+	</submenu>
+	<item id="preferences"/>
+	<item id="quit"/>
+</menubar>

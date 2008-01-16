@@ -1,13 +1,37 @@
 package org.zlibrary.ui.j2me.view;
 
+import javax.microedition.lcdui.*;
+
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.image.ZLImageData;
 
 import org.zlibrary.core.view.ZLPaintContext;
 
-public class ZLJ2MEPaintContext extends ZLPaintContext {
+class ZLJ2MEPaintContext extends ZLPaintContext {
+	private final Canvas myCanvas;
+	private Graphics myGraphics;
+
+	private ZLColor myTextColor = new ZLColor(0, 0, 0);
+	private ZLColor myFillColor = new ZLColor(0, 0, 0);
+	private boolean myTextNotFillMode;
+
+	ZLJ2MEPaintContext(Canvas canvas) {
+		myCanvas = canvas;
+	}
+
+	void begin(Graphics g) {
+		myGraphics = g;
+	}
+
+	void end() {
+		myGraphics = null;
+	}
+
 	public void clear(ZLColor color) {
-		// TODO: implement
+		myGraphics.setColor(color.Red, color.Green, color.Blue);
+		myGraphics.fillRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
+		color = myTextNotFillMode ? myTextColor : myFillColor;
+		myGraphics.setColor(color.Red, color.Green, color.Blue);
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
@@ -15,36 +39,48 @@ public class ZLJ2MEPaintContext extends ZLPaintContext {
 	}
 
 	public void setColor(ZLColor color, int style) {
-		// TODO: implement
+		// TODO: use style
+		if (color != myTextColor) {
+			myTextColor = color;
+			myGraphics.setColor(color.Red, color.Green, color.Blue);
+			myTextNotFillMode = true;
+		} else if (!myTextNotFillMode) {
+			myGraphics.setColor(color.Red, color.Green, color.Blue);
+			myTextNotFillMode = true;
+		}
 	}
 
 	public void setFillColor(ZLColor color, int style) {
-		// TODO: implement
+		// TODO: use style
+		if (color != myFillColor) {
+			myFillColor = color;
+			myGraphics.setColor(color.Red, color.Green, color.Blue);
+			myTextNotFillMode = false;
+		} else if (!myTextNotFillMode) {
+			myGraphics.setColor(color.Red, color.Green, color.Blue);
+			myTextNotFillMode = false;
+		}
 	}
 
 	public int getWidth() {
-		// TODO: implement
-		return 100;
+		return myCanvas.getWidth();
 	}
 
 	public int getHeight() {
-		// TODO: implement
-		return 100;
+		return myCanvas.getHeight();
 	}
 	
 	public int getStringWidth(char[] string, int offset, int length) {
-		// TODO: implement
-		return 10 * length;
+		// TODO: optimize
+		return myGraphics.getFont().charsWidth(string, offset, length);
 	}
 
 	protected int getSpaceWidthInternal() {
-		// TODO: implement
-		return 10;
+		return myGraphics.getFont().charWidth(' ');
 	}
 
 	protected int getStringHeightInternal() {
-		// TODO: implement
-		return 10;
+		return myGraphics.getFont().getHeight();
 	}
 
 	protected int getDescentInternal() {
@@ -53,7 +89,7 @@ public class ZLJ2MEPaintContext extends ZLPaintContext {
 	}
 
 	public void drawString(int x, int y, char[] string, int offset, int length) {
-		// TODO: implement
+		myGraphics.drawChars(string, offset, length, x, y, Graphics.BOTTOM | Graphics.LEFT);
 	}
 
 	public int imageWidth(ZLImageData image) {
@@ -71,7 +107,7 @@ public class ZLJ2MEPaintContext extends ZLPaintContext {
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
-		// TODO: implement
+		myGraphics.drawLine(x0, y0, x1, y1);
 	}
 
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
