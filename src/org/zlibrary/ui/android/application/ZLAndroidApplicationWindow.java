@@ -108,24 +108,4 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 		return false;
 	}
-
-	public boolean isFingerTapEventSupported() {
-		// TODO: implement
-		return false;
-	}
-
-	public boolean isMousePresented() {
-		// TODO: implement
-		return true;
-	}
-
-	public boolean isKeyboardPresented() {
-		// TODO: implement
-		return true;
-	}
-
-	public boolean isFullKeyboardControlSupported() {
-		// TODO: implement
-		return true;
-	}
 }

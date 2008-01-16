@@ -144,28 +144,12 @@ public abstract class ZLApplication {
 		myIdToActionMap.put(actionId, action);
 	}
 
-	public final boolean isFullKeyboardControlSupported() {
-		return true;//(myWindow != null) && myWindow.isFullKeyboardControlSupported();
-	}
-	
 	private final void grabAllKeys(boolean grab) {
 		if (myWindow != null) {
 			//myWindow.grabAllKeys(grab);
 		}
 	}
 
-	public final boolean isFingerTapEventSupported() {
-		return (myWindow != null) && myWindow.isFingerTapEventSupported();
-	}
-	
-	public final boolean isMousePresented() {
-		return (myWindow != null) && myWindow.isMousePresented();
-	}
-	
-	public final boolean isKeyboardPresented() {
-		return (myWindow != null) && myWindow.isKeyboardPresented();
-	}
-	
 	public final void trackStylus(boolean track) {
 		if (myViewWidget != null) {
 			myViewWidget.trackStylus(track);

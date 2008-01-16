@@ -2,6 +2,9 @@ package org.zlibrary.ui.j2me.library;
 
 import java.io.InputStream;
 
+import javax.microedition.midlet.MIDlet;
+import javax.microedition.lcdui.Display;
+
 //import android.content.Resources;
 //import android.content.Intent;
 //import android.net.ContentURI;
@@ -15,6 +18,7 @@ import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
 import org.zlibrary.ui.j2me.config.ZLJ2MEConfigManager;
 import org.zlibrary.ui.j2me.view.ZLJ2MEPaintContext;
+import org.zlibrary.ui.j2me.view.ZLCanvas;
 //import org.zlibrary.ui.android.view.ZLAndroidWidget;
 //import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 //import org.zlibrary.ui.android.image.ZLAndroidImageManager;
@@ -46,11 +50,10 @@ final class ZLJ2MELibrary extends ZLibrary {
 		// TODO: implement
 	}
 
-	void run() {
+	void run(MIDlet midlet) {
 		new ZLOwnXMLProcessorFactory();
 		new ZLJ2MEConfigManager();
 		loadProperties();
-		//System.err.println(getApplicationName());
 		//new ZLAndroidImageManager();
 
 		try {
@@ -61,5 +64,7 @@ final class ZLJ2MELibrary extends ZLibrary {
 			e.printStackTrace();
 			//finish();
 		}
+		ZLCanvas canvas = new ZLCanvas();
+		Display.getDisplay(midlet).setCurrent(canvas);
 	}
 }

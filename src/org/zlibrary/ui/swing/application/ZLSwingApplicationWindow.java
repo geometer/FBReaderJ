@@ -222,22 +222,6 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		return myFrame.getExtendedState() == Frame.MAXIMIZED_BOTH;		
 	}
 	
-	public boolean isFingerTapEventSupported() {
-		return false;
-	}
-	
-	public boolean isMousePresented() {
-		return true;
-	}
-	
-	public boolean isKeyboardPresented() {
-		return true;
-	}
-	
-	public boolean isFullKeyboardControlSupported() {
-		return true;
-	}
-	
 	public void close() {
 		ZLSwingLibrary.shutdown();
 		// TODO: implement

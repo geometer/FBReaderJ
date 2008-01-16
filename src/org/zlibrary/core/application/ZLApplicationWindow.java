@@ -145,11 +145,6 @@ abstract public class ZLApplicationWindow {
 	abstract public void setFullscreen(boolean fullscreen);
 	abstract public boolean isFullscreen();
 
-	abstract public boolean isFingerTapEventSupported();
-	abstract public boolean isMousePresented();
-	abstract public boolean isKeyboardPresented();
-	abstract public boolean isFullKeyboardControlSupported();
-
 /*
 	virtual void grabAllKeys(bool grab) = 0;
 	virtual void setHyperlinkCursor(bool) {}
