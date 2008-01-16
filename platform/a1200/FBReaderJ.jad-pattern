@@ -1,0 +1,9 @@
+MIDlet-1: FBReaderJ, FBReader.png, org.zlibrary.ui.j2me.library.ZLMIDlet
+MIDlet-Description: E-book reader
+MIDlet-Jar-Size: %SIZE%
+MIDlet-Jar-URL: FBReaderJ.jar
+MIDlet-Name: FBReaderJ
+MIDlet-Vendor: Geometer Plus
+MIDlet-Version: 0.1
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0
