@@ -8,13 +8,13 @@ import java.io.InputStream;
 
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.view.ZLPaintContext;
-//import org.zlibrary.core.application.ZLApplication;
+import org.zlibrary.core.application.ZLApplication;
 
 //import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-//import org.zlibrary.ui.android.sqliteconfig.ZLSQLiteConfigManager;
 
-//import org.zlibrary.ui.android.view.ZLAndroidPaintContext;
+import org.zlibrary.ui.j2me.config.ZLJ2MEConfigManager;
+import org.zlibrary.ui.j2me.view.ZLJ2MEPaintContext;
 //import org.zlibrary.ui.android.view.ZLAndroidWidget;
 //import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 //import org.zlibrary.ui.android.image.ZLAndroidImageManager;
@@ -22,11 +22,11 @@ import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 final class ZLJ2MELibrary extends ZLibrary {
 	public ZLPaintContext createPaintContext() {
 		// TODO: implement
-		return null;
+		return new ZLJ2MEPaintContext();
 	}
 
 	public InputStream getResourceInputStream(String fileName) {
-		return getClass().getResourceAsStream(fileName);
+		return getClass().getResourceAsStream("/" + fileName);
 	}
 
 /*
@@ -48,18 +48,18 @@ final class ZLJ2MELibrary extends ZLibrary {
 
 	void run() {
 		new ZLOwnXMLProcessorFactory();
-		//new ZLSQLiteConfigManager();
-		//loadProperties();
-		/*
-		new ZLAndroidImageManager();
+		new ZLJ2MEConfigManager();
+		loadProperties();
+		//System.err.println(getApplicationName());
+		//new ZLAndroidImageManager();
 
 		try {
 			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
-			myMainWindow = new ZLAndroidApplicationWindow(application);
-			application.initWindow();
+			//myMainWindow = new ZLAndroidApplicationWindow(application);
+			//application.initWindow();
 		} catch (Exception e) {
-			finish();
+			e.printStackTrace();
+			//finish();
 		}
-		*/
 	}
 }
