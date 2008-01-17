@@ -23,7 +23,6 @@
 			<exclude name="org/zlibrary/core/xml/sax/**"/>
 			<exclude name="org/zlibrary/core/xmlconfig/**"/>
 			<exclude name="org/zlibrary/ui/swing/**"/>
-			<exclude name="org/zlibrary/ui/android/**"/>
 		</wtkbuild>
 	</target>
 

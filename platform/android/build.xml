@@ -22,13 +22,10 @@
 	<!-- Input directories -->
 	<property name="resource-dir" value="res" />
 	<property name="asset-dir" value="assets" />
-	<property name="srcdir" value="../../src" />
+	<property name="src.path" value="../../src:src" />
 
 	<!-- Output directories -->
 	<property name="outdir-classes" value="${outdir}/classes" />
-
-	<!-- Create R.java in the source directory -->
-	<property name="outdir-r" value="${srcdir}" />
 
 	<!-- Intermediate files -->
 	<property name="dex-file" value="classes.dex" />
@@ -39,7 +36,6 @@
 
 	<!-- Tools -->
 	<property name="aapt" value="${android-tools}/aapt" />
-	<property name="aidl" value="${android-tools}/aidl" />
 	<property name="dx" value="${android-tools}/dx" />
 	<property name="zip" value="zip" />
 	<property name="android-jar" value="${sdk-folder}/android.jar" />
@@ -64,7 +60,7 @@
 			<arg value="compile" />
 			<arg value="-m" />
 			<arg value="-J" />
-			<arg value="${outdir-r}" />
+			<arg value="src" />
 			<arg value="-M" />
 			<arg value="AndroidManifest.xml" />
 			<arg value="-S" />
@@ -74,17 +70,8 @@
 		</exec>
 	</target>
 
-	<!-- Generate java classes from .aidl files. -->
-	<target name="aidl" depends="dirs">
-		<apply executable="${aidl}" failonerror="true">
-			<fileset dir="${srcdir}">
-				<include name="**/*.aidl"/>
-			</fileset>
-		</apply>
-	</target>
-
-	<target name="depend" depends="dirs, resource-src, aidl">
-		<depend srcdir="${srcdir}" destdir="${outdir-classes}" cache="${cachedir}" closure="yes">
+	<target name="depend" depends="dirs, resource-src">
+		<depend srcdir="${src.path}" destdir="${outdir-classes}" cache="${cachedir}" closure="yes">
 			<exclude name="org/zlibrary/core/xml/sax/**"/>
 			<exclude name="org/zlibrary/core/xmlconfig/**"/>
 			<exclude name="org/zlibrary/ui/swing/**"/>
@@ -93,7 +80,7 @@
 
 	<!-- Compile this project's .java files into .class files. -->
 	<target name="compile" depends="depend">
-		<javac target="1.5" srcdir="${srcdir}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
+		<javac target="1.5" srcdir="${src.path}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
 			<exclude name = "org/zlibrary/core/xml/sax/**"/>
 			<exclude name="org/zlibrary/core/xmlconfig/**"/>
 			<exclude name = "org/zlibrary/ui/swing/**"/>

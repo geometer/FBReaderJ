@@ -16,14 +16,12 @@
 
 	<target name = "depend" depends = "prepare">
 		<depend srcdir = "${src.dir}" destdir = "${bin.dir}" cache = "${cache.dir}" closure = "yes">
-			<exclude name = "org/zlibrary/ui/android/**"/>
 			<exclude name = "org/zlibrary/core/xml/sax/**"/>
 		</depend>
 	</target>
 
 	<target name = "compile" depends = "depend">
 		<javac srcdir = "${src.dir}" destdir = "${bin.dir}">
-			<exclude name = "org/zlibrary/ui/android/**"/>
 			<exclude name = "org/zlibrary/core/xml/sax/**"/>
 		</javac>
 	</target>
@@ -64,7 +62,7 @@
 		<delete file = "${sources.zip}"/>
 		<delete file = "FBReaderJ.jad"/>
 		<delete dir = "platform/android/res/raw"/>
-		<delete file = "src/org/zlibrary/ui/android/library/R.java"/>
+		<delete file = "platform/android/src/org/zlibrary/ui/android/library/R.java"/>
 	</target>
 
 	<target name = "sources-archive" depends = "clean">
