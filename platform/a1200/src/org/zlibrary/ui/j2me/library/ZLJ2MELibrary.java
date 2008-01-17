@@ -23,7 +23,12 @@ final class ZLJ2MELibrary extends ZLibrary {
 		return myCanvas.getContext();
 	}
 
-	public InputStream getResourceInputStream(String fileName) {
+	protected InputStream getFileInputStream(String fileName) {
+		// TODO: implement
+		return null;
+	}
+
+	protected InputStream getResourceInputStream(String fileName) {
 		return getClass().getResourceAsStream("/" + fileName);
 	}
 

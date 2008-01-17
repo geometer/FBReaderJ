@@ -1,5 +1,6 @@
 package org.zlibrary.text.view.style;
 
+import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.util.ZLBoolean3;
 import org.zlibrary.core.xml.*;
 import org.zlibrary.text.model.ZLTextAlignmentType;
@@ -13,7 +14,7 @@ public class ZLTextStyleCollection {
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 	
 	private ZLTextStyleCollection() {
-		new TextStyleReader(this).read("data/default/styles.xml");
+		new TextStyleReader(this).read(ZLibrary.JAR_DATA_PREFIX + "data/default/styles.xml");
 		if (myBaseStyle == null) {
 			myBaseStyle = new ZLTextBaseStyle("", 20);
 		}

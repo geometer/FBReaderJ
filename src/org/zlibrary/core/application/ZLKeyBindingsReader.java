@@ -3,6 +3,7 @@ package org.zlibrary.core.application;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
+import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.xml.*;
 
 class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
@@ -23,6 +24,6 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	}
 
 	public void readBindings() {
-		read("data/default/keymap.xml");
+		read(ZLibrary.JAR_DATA_PREFIX + "data/default/keymap.xml");
 	}
 }

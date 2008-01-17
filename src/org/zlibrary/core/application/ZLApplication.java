@@ -61,8 +61,8 @@ public abstract class ZLApplication {
 		//myPresentWindowHandler = new PresentWindowHandler(this);
 		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
 
-		new ToolbarCreator().read("data/default/toolbar.xml");
-		new MenubarCreator().read("data/default/menubar.xml");
+		new ToolbarCreator().read(ZLibrary.JAR_DATA_PREFIX + "data/default/toolbar.xml");
+		new MenubarCreator().read(ZLibrary.JAR_DATA_PREFIX + "data/default/menubar.xml");
 	}
 	
 	final Toolbar getToolbar() {

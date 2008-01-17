@@ -9,7 +9,7 @@
 	<property name="manifest.file" value="manifest.mf"/>
 	<property name="main.jar" value="${project.dir}/FBReaderJ.jar"/>
 	<property name="main.jad" value="${project.dir}/FBReaderJ.jad"/>
-	<property name="a1200.jars" value="${sdk.dir}/lib/cldcapi11.jar:${sdk.dir}/lib/midpapi20.jar" />
+	<property name="a1200.jars" value="${sdk.dir}/lib/cldcapi11.jar:${sdk.dir}/lib/midpapi20.jar:${sdk.dir}/lib/jsr75.jar" />
 
 	<target name="dirs">
 		<mkdir dir="${prebin.dir}" />

@@ -10,6 +10,8 @@ import org.zlibrary.core.xml.*;
 import org.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLibrary {
+	public static final String JAR_DATA_PREFIX = "#JAR#://";
+
 	private final HashMap myProperties = new HashMap();
 
 	public static ZLibrary getInstance() {
@@ -37,8 +39,18 @@ public abstract class ZLibrary {
 		return null;
 	}
 
+	public final InputStream getInputStream(String fileName) {
+		if (fileName.startsWith(JAR_DATA_PREFIX)) {
+			return getResourceInputStream(fileName.substring(JAR_DATA_PREFIX.length()));
+		} else {
+			return getFileInputStream(fileName);
+		}
+	}
+
+	abstract protected InputStream getResourceInputStream(String fileName);
+	abstract protected InputStream getFileInputStream(String fileName);
+
 	abstract public ZLPaintContext createPaintContext();
-	abstract public InputStream getResourceInputStream(String fileName);
 	abstract public void openInBrowser(String reference);
 
 	protected final void loadProperties() {
@@ -48,6 +60,6 @@ public abstract class ZLibrary {
 					myProperties.put(attributes.getValue("name"), attributes.getValue("value"));
 				}
 			}
-		}.read("data/application.xml");
+		}.read(JAR_DATA_PREFIX + "data/application.xml");
 	}
 }

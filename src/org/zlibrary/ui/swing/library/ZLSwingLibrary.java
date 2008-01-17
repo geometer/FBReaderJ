@@ -1,6 +1,6 @@
 package org.zlibrary.ui.swing.library;
 
-import java.io.InputStream;
+import java.io.*;
 
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.xmlconfig.ZLXMLConfigManager;
@@ -20,7 +20,15 @@ public class ZLSwingLibrary extends ZLibrary {
 		return new ZLSwingPaintContext();
 	}
 
-	public InputStream getResourceInputStream(String fileName) {
+	protected InputStream getFileInputStream(String fileName) {
+		try {
+			return new BufferedInputStream(new FileInputStream(fileName));
+		} catch (FileNotFoundException e) {
+			return null;
+		}
+	}
+
+	protected InputStream getResourceInputStream(String fileName) {
 		return getClass().getClassLoader().getResourceAsStream(fileName);
 	}
 

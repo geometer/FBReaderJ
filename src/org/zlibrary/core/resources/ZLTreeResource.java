@@ -1,6 +1,8 @@
 package org.zlibrary.core.resources;
 
 import java.util.*;
+
+import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.util.*;
 import org.zlibrary.core.xml.*;
 
@@ -26,8 +28,8 @@ final class ZLTreeResource extends ZLResource {
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
 		ResourceTreeReader reader = new ResourceTreeReader();
-		reader.readDocument(ourRoot, "data/resources/zlibrary/" + fileName);
-		reader.readDocument(ourRoot, "data/resources/application/" + fileName);
+		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/zlibrary/" + fileName);
+		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/application/" + fileName);
 	}
 
 	private	ZLTreeResource(String name, String value) {

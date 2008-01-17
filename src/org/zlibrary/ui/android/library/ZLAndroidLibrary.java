@@ -1,6 +1,6 @@
 package org.zlibrary.ui.android.library;
 
-import java.io.InputStream;
+import java.io.*;
 
 import android.content.Resources;
 import android.content.Intent;
@@ -38,7 +38,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myWidget;
 	}
 
-	public InputStream getResourceInputStream(String fileName) {
+	protected InputStream getFileInputStream(String fileName) {
+		try {
+			return new BufferedInputStream(new FileInputStream(fileName));
+		} catch (FileNotFoundException e) {
+			return null;
+		}
+	}
+
+	protected InputStream getResourceInputStream(String fileName) {
 		final String fieldName = fileName.replace("/", "__").replace(".", "_").toLowerCase();
 		int resourceId;
 		try {

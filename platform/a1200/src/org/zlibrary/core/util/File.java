@@ -1,4 +1,4 @@
-package org.zlibrary.core.io;
+package org.zlibrary.core.util;
 
 import java.io.IOException;
 
