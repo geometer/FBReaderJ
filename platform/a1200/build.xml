@@ -1,58 +1,38 @@
 <?xml version="1.0"?>
-<project name="FBReaderJ" default="buildAll">
-	<property name="sdk.dir" value="/home/geometer/WTK2.5.2" />
+<project name="FBReaderJ" default="package">
 	<property name="project.dir" value="/home/geometer/src/projects/FBReaderJ" />
+	<taskdef resource="antenna.properties" classpath="${project.dir}/lib/antenna-bin-1.0.0.jar"/>
+	<property name="wtk.home" value="/home/geometer/WTK2.5.2" />
+	<property name="wtk.cldc.version" value="1.1" />
+	<property name="wtk.midp.version" value="2.0" />
+	<property name="wtk.proguard.home" value="${project.dir}"/>
 	<property name="platform.dir" value="${project.dir}/platform/a1200" />
-	<property name="prebin.dir" value="${project.dir}/prebin" />
 	<property name="bin.dir" value="${project.dir}/bin" />
 	<property name="src.path" value="${project.dir}/src:${platform.dir}/src" />
-	<property name="manifest.file" value="manifest.mf"/>
 	<property name="main.jar" value="${project.dir}/FBReaderJ.jar"/>
 	<property name="main.jad" value="${project.dir}/FBReaderJ.jad"/>
-	<property name="a1200.jars" value="${sdk.dir}/lib/cldcapi11.jar:${sdk.dir}/lib/midpapi20.jar:${sdk.dir}/lib/jsr75.jar" />
+	<property name="main.jad.copy" value="${platform.dir}/FBReaderJ.jad"/>
 
-	<target name="dirs">
-		<mkdir dir="${prebin.dir}" />
-		<mkdir dir="${bin.dir}" />
+	<target name="prepare">
+		<mkdir dir="${bin.dir}"/>
+		<copy file="${main.jad.copy}" todir="${project.dir}"/>
 	</target>
 
-	<target name="compile" depends="dirs">
-		<javac source="1.3" target="1.3"
-					 srcdir="${src.path}" destdir="${prebin.dir}"
-					 bootclasspath="${a1200.jars}"
-					 classpath="${prebin.dir}">
+	<target name="compile" depends="prepare">
+		<wtkbuild srcdir="${src.path}" destdir="${bin.dir}">
 			<exclude name="org/zlibrary/core/xml/sax/**"/>
 			<exclude name="org/zlibrary/core/xmlconfig/**"/>
 			<exclude name="org/zlibrary/ui/swing/**"/>
 			<exclude name="org/zlibrary/ui/android/**"/>
-		</javac>
+		</wtkbuild>
 	</target>
 
-	<target name="preverify" depends="compile">
-		<exec executable="${sdk.dir}/bin/preverify">
-			<arg value="-classpath"/>
-			<arg value="${a1200.jars}:${prebin.dir}"/>
-			<arg value="-d"/>
-			<arg value="${bin.dir}"/>
-			<arg value="${prebin.dir}"/>
-		</exec>
-	</target>
-
-	<target name="buildJar" depends="preverify">
-		<jar destfile="${main.jar}" manifest="${manifest.file}">
+	<target name="package" depends="compile">
+		<wtkpackage jarfile="${main.jar}" jadfile="${main.jad}" preverify="yes" obfuscate="yes">
 			<fileset dir="${bin.dir}" includes="**/*.class"/>
 			<fileset dir="${project.dir}" includes="data/**"/>
 			<fileset dir="${platform.dir}" includes="data/**"/>
-		</jar>
-	</target>
-
-	<target name="buildAll" depends="buildJar">
-		<exec executable="${platform.dir}/createJad.sh"/>
-	</target>
-
-	<target name="clean">
-		<delete dir="${bin.dir}"/>
-		<delete file="${main.jar}"/>
-		<delete file="${main.jad}"/>
+			<preserve class="org.fbreader.fbreader.FBReader"/>
+		</wtkpackage>
 	</target>
 </project>

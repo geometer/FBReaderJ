@@ -1,6 +1,5 @@
 MIDlet-1: FBReaderJ, /data/FBReaderJ.png, org.zlibrary.ui.j2me.library.ZLMIDlet
 MIDlet-Description: E-book reader
-MIDlet-Jar-Size: %SIZE%
 MIDlet-Jar-URL: FBReaderJ.jar
 MIDlet-Name: FBReaderJ
 MIDlet-Icon: /data/FBReaderJ.png

@@ -1,7 +1,6 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <project basedir = "." default = "buildJar" name = "fbreader">
 	<property name = "src.dir" value = "src"/>
-	<property name = "prebin.dir" value = "prebin"/>
 	<property name = "bin.dir" value = "bin"/>
 	<property name = "cache.dir" value = "depcache"/>
 	<property name = "icons.dir" value = "icons"/>
@@ -59,7 +58,6 @@
 	</target>
 
 	<target name = "clean">
-		<delete dir = "${prebin.dir}"/>
 		<delete dir = "${bin.dir}"/>
 		<delete dir = "${cache.dir}"/>
 		<delete file = "${main.jar}"/>
