@@ -55,6 +55,7 @@ final class ZLJ2MELibrary extends ZLibrary {
 		try {
 			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
 			new ZLJ2MEApplicationWindow(application, myCanvas);
+			myCanvas.setApplication(application);
 			application.initWindow();
 		} catch (Exception e) {
 			e.printStackTrace();

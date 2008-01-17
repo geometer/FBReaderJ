@@ -1,19 +1,17 @@
 package org.zlibrary.ui.j2me.image;
 
-//import android.graphics.Bitmap;
+import javax.microedition.lcdui.Image;
 
 import org.zlibrary.core.image.ZLImageData;
 
 public final class ZLJ2MEImageData implements ZLImageData {
-	//private Bitmap myBitmap;
+	private Image myImage;
 
-	ZLJ2MEImageData(/*Bitmap bitmap*/) {
-		//myBitmap = bitmap;
+	ZLJ2MEImageData(Image image) {
+		myImage = image;
 	}
 
-	/*
-	public Bitmap getBitmap() {
-		return myBitmap;
+	public Image getImage() {
+		return myImage;
 	}
-	*/
 }

@@ -4,6 +4,7 @@ import javax.microedition.lcdui.*;
 
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.image.ZLImageData;
+import org.zlibrary.ui.j2me.image.ZLJ2MEImageData;
 
 import org.zlibrary.core.view.ZLPaintContext;
 
@@ -36,6 +37,11 @@ class ZLJ2MEPaintContext extends ZLPaintContext {
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
 		// TODO: implement
+		if (myGraphics != null) {
+			final int style = (bold ? Font.STYLE_BOLD : Font.STYLE_PLAIN) |
+												(italic ? Font.STYLE_ITALIC : Font.STYLE_PLAIN);
+			myGraphics.setFont(Font.getFont(Font.FACE_PROPORTIONAL, style, Font.SIZE_MEDIUM));
+		}
 	}
 
 	public void setColor(ZLColor color, int style) {
@@ -92,18 +98,16 @@ class ZLJ2MEPaintContext extends ZLPaintContext {
 		myGraphics.drawChars(string, offset, length, x, y, Graphics.BOTTOM | Graphics.LEFT);
 	}
 
-	public int imageWidth(ZLImageData image) {
-		// TODO: implement
-		return 10;
+	public int imageWidth(ZLImageData data) {
+		return ((ZLJ2MEImageData)data).getImage().getWidth();
 	}
 
-	public int imageHeight(ZLImageData image) {
-		// TODO: implement
-		return 10;
+	public int imageHeight(ZLImageData data) {
+		return ((ZLJ2MEImageData)data).getImage().getHeight();
 	}
 
-	public void drawImage(int x, int y, ZLImageData image) {
-		// TODO: implement
+	public void drawImage(int x, int y, ZLImageData data) {
+		myGraphics.drawImage(((ZLJ2MEImageData)data).getImage(), x, y, Graphics.BOTTOM | Graphics.LEFT);
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {

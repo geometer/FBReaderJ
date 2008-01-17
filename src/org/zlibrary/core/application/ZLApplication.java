@@ -186,12 +186,15 @@ public abstract class ZLApplication {
 	abstract public ZLKeyBindings keyBindings();
 	
 	public final void doActionByKey(String key) {		
-		ZLAction a = getAction(keyBindings().getBinding(key));
-		if ((a != null)){// &&
-				//(!a.useKeyDelay() /*||
-				 //(myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
-			a.checkAndRun();
-			//myLastKeyActionTime = ZLTime();
+		String actionId = keyBindings().getBinding(key);
+		if (actionId != null) {
+			ZLAction a = getAction(keyBindings().getBinding(key));
+			if ((a != null)){// &&
+					//(!a.useKeyDelay() /*||
+					 //(myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
+				a.checkAndRun();
+				//myLastKeyActionTime = ZLTime();
+			}
 		}
 	}
 
