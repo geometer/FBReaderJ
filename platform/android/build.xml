@@ -2,7 +2,7 @@
 <project name="FBReaderJ" default="package">
 	
 	<property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc37a" />
-	<property name="android-tools" value="/home/geometer/src/android_sdk_linux_m3-rc37a/tools" />
+	<property name="android-tools" value="${sdk-folder}/tools" />
 	<property name="project-dir" value="/home/geometer/src/projects/FBReaderJ" />
 
 <!--
@@ -17,11 +17,8 @@
 	<property name="outdir" value="../../bin" />
 	<property name="cachedir" value="../../depcache" />
 
-	<!-- No user servicable parts below. -->
-
 	<!-- Input directories -->
 	<property name="resource-dir" value="res" />
-	<property name="asset-dir" value="assets" />
 	<property name="src.path" value="../../src:src" />
 
 	<!-- Output directories -->
@@ -73,8 +70,6 @@
 	<target name="depend" depends="dirs, resource-src">
 		<depend srcdir="${src.path}" destdir="${outdir-classes}" cache="${cachedir}" closure="yes">
 			<exclude name="org/zlibrary/core/xml/sax/**"/>
-			<exclude name="org/zlibrary/core/xmlconfig/**"/>
-			<exclude name="org/zlibrary/ui/swing/**"/>
 		</depend>
 	</target>
 
@@ -82,8 +77,6 @@
 	<target name="compile" depends="depend">
 		<javac target="1.5" srcdir="${src.path}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
 			<exclude name = "org/zlibrary/core/xml/sax/**"/>
-			<exclude name="org/zlibrary/core/xmlconfig/**"/>
-			<exclude name = "org/zlibrary/ui/swing/**"/>
 		</javac>
 	</target>
 
@@ -99,27 +92,7 @@
 		</exec>
 	</target>
 
-	<!-- Put the project's resources into the output package file. -->
-	<target name="package-res-and-assets">
-		<echo>Packaging resources and assets...</echo>
-		<exec executable="${aapt}" failonerror="true">
-			<arg value="package" />
-			<arg value="-f" />
-			<arg value="-c" />
-			<arg value="-M" />
-			<arg value="AndroidManifest.xml" />
-			<arg value="-S" />
-			<arg value="${resource-dir}" />
-			<arg value="-A" />
-			<arg value="${asset-dir}" />
-			<arg value="-I" />
-			<arg value="${android-jar}" />
-			<arg value="${out-package}" />
-		</exec>
-	</target>
-
-	<!-- Same as package-res-and-assets, but without "-A ${asset-dir}" -->
-	<target name="package-res-no-assets">
+	<target name="package-res">
 		<echo>Packaging resources...</echo>
 		<exec executable="${aapt}" failonerror="true">
 			<arg value="package" />
@@ -134,17 +107,6 @@
 			<arg value="${android-jar}" />
 			<arg value="${out-package}" />
 		</exec>
-	</target>
-
-	<!-- Invoke the proper target depending on whether or not
-		 an assets directory is present. -->
-	<!-- TODO: find a nicer way to include the "-A ${asset-dir}" argument
-		 only when the assets dir exists. -->
-	<target name="package-res">
-		<available file="${asset-dir}" type="dir"
-				property="res-target" value="and-assets" />
-		<property name="res-target" value="no-assets" />
-		<antcall target="package-res-${res-target}" />
 	</target>
 
 	<!-- Put the project's .class files into the output package file. -->

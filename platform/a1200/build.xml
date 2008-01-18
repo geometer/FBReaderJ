@@ -5,6 +5,7 @@
 	<property name="wtk.home" value="/home/geometer/WTK2.5.2" />
 	<property name="wtk.cldc.version" value="1.1" />
 	<property name="wtk.midp.version" value="2.0" />
+	<property name="wtk.optionalpda.enabled" value="true" />
 	<property name="wtk.proguard.home" value="${project.dir}"/>
 	<property name="platform.dir" value="${project.dir}/platform/a1200" />
 	<property name="bin.dir" value="${project.dir}/bin" />
@@ -21,8 +22,6 @@
 	<target name="compile" depends="prepare">
 		<wtkbuild srcdir="${src.path}" destdir="${bin.dir}">
 			<exclude name="org/zlibrary/core/xml/sax/**"/>
-			<exclude name="org/zlibrary/core/xmlconfig/**"/>
-			<exclude name="org/zlibrary/ui/swing/**"/>
 		</wtkbuild>
 	</target>
 

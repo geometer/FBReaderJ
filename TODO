@@ -95,3 +95,4 @@ DONE	FootnoteView
 	выход по escape из view, не из приложения
 	получение списка шрифтов в ZLPaintContext
 	полноэкранный режим
+	tap scrolling

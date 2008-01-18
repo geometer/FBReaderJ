@@ -1,6 +1,8 @@
 package org.zlibrary.ui.j2me.library;
 
 import java.io.InputStream;
+import javax.microedition.io.Connector;
+import javax.microedition.io.file.*;
 
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Display;
@@ -25,6 +27,15 @@ final class ZLJ2MELibrary extends ZLibrary {
 
 	protected InputStream getFileInputStream(String fileName) {
 		// TODO: implement
+		/*
+		try {
+			FileConnection connection = (FileConnection)Connector.open("file:///SDCard/test.fb2", Connector.READ);
+			if ((connection != null) && connection.exists()) {
+				return connection.openInputStream();
+			}
+		} catch (Exception e) {
+		}
+		*/
 		return null;
 	}
 
