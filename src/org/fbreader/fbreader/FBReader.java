@@ -36,7 +36,7 @@ public final class FBReader extends ZLApplication {
 	public final ScrollingOptions FingerTapScrollingOptions =
 		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
 
-	final static String HELP_FILE_NAME = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.en.fb2";
+	final static String HELP_FILE_NAME = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.ru.fb2";
 	private final ZLStringOption myBookNameOption =
 		//new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", HELP_FILE_NAME);
 		new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
