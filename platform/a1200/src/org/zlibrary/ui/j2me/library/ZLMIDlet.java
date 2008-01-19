@@ -9,9 +9,13 @@ public class ZLMIDlet extends MIDlet /*implements CommandListener*/ {
 		super();
 	}
 	*/
+	private boolean myStarted;
 
 	public void startApp() {
-		new ZLJ2MELibrary().run(this);
+		if (!myStarted) {
+			new ZLJ2MELibrary().run(this);
+			myStarted = true;
+		}
 	}
 
 	public void destroyApp(boolean destroy) {
