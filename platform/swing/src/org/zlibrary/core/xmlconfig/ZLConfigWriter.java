@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.*;
 
 final class ZLConfigWriter implements ZLWriter {
+
 	private final ZLConfigImpl myConfig;
+
 	private final File myDestinationDirectory;
 
 	protected ZLConfigWriter(ZLConfigImpl config, String path) {
@@ -16,33 +18,31 @@ final class ZLConfigWriter implements ZLWriter {
 		myDestinationDirectory = file;
 	}
 
-	private void writeConfigFile(String configFileContent, String filePath) {
-		File file = new File(filePath);
-		try {
-			PrintWriter pw = new PrintWriter(file, "UTF-8");
-			try {
-				pw.write(configFileContent);
-			} finally {
-				pw.close();
-			}
-		} catch (FileNotFoundException fnfException) {
-			if (!file.getName().equals("delta.xml")) {
-				System.err.println(fnfException.getMessage());
-			}
-		} catch (UnsupportedEncodingException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
 	private void deleteConfigFile(String filePath) {
 		File file = new File(filePath);
 		file.delete();
 	}
 
-	//TODO пока public в целях отладки
+	// TODO пока public в целях отладки
 	public void writeDelta() {
-		this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+		this.writeFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 				+ myConfig.getDelta(), myDestinationDirectory + "/delta.xml");
+	}
+
+	private void writeFile(String content, String path) {
+		File file = new File(path);
+		try {
+			PrintWriter pw = new PrintWriter(file, "UTF-8");
+			try {
+				pw.write(content);
+			} finally {
+				pw.close();
+			}
+		} catch (FileNotFoundException fnfException) {
+			//TODO handle exception
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private String configFilePath(String category) {
@@ -50,54 +50,71 @@ final class ZLConfigWriter implements ZLWriter {
 	}
 
 	public void write() {
+		
+		// usedCategories contains A if and only if 
+		// there's at least one option in config, which category name = A 
 		final Set<String> usedCategories = myConfig.applyDelta();
-		// ключ - имя категории, значение - содержимое соответствующего файла
-		final HashMap<String, StringBuffer> configFilesContent = new HashMap<String, StringBuffer>();
+				
+		// list of writers. one for each category-file
+		final HashMap<String, PrintWriter> categoryWriters 
+			= new HashMap<String, PrintWriter>();
 
+		// groupExistsIn - list of category-files where 
+		// current group must be written
+		final Set<String> groupExistsIn = new HashSet<String>();
+
+		// for every group.....
 		for (String groupName : myConfig.groupNames()) {
 
-			// ключ - имена категорий, о которых мы уже знаем, что она там есть
-			// значение - записали ли мы уже это в файле
-			final HashMap<String,Boolean> currentGroupOpenedIn = new HashMap<String, Boolean>();
-
 			ZLGroup group = myConfig.getGroup(groupName);
+			
+			// for every option in this group
 			for (String optionName : group.optionNames()) {
+				
 				ZLOptionInfo option = group.getOption(optionName);
-				StringBuffer sb = configFilesContent.get(option.getCategory());
+				String category = option.getCategory();
+				
+				PrintWriter categoryWriter = categoryWriters.get(category);
 
-				if (currentGroupOpenedIn.get(option.getCategory()) == null) {
-					currentGroupOpenedIn.put(option.getCategory(), false);
+				if (categoryWriter == null) {
+					try {
+						categoryWriter = new PrintWriter(configFilePath(category));
+						categoryWriters.put(category, categoryWriter);
+						categoryWriter.write("<?xml version=\"1.0\" " +
+								"encoding=\"UTF-8\"?>\n<config>\n");
+					} catch (FileNotFoundException fnf) {
+						//TODO handle exception
+					}
 				}
-
-				if (sb == null) {
-					sb = new StringBuffer();
-					configFilesContent.put(option.getCategory(), sb);
+				
+				// open group in current category, if it wasn't
+				if (!groupExistsIn.contains(category)) {
+					groupExistsIn.add(category);
+					categoryWriter.write("  <group name=\"" + groupName + "\">\n");
 				}
-
-				if (!currentGroupOpenedIn.get(option.getCategory())) {
-					sb.append("  <group name=\"" + groupName + "\">\n");
-					currentGroupOpenedIn.put(option.getCategory(), true);
-				}
-				sb.append(option);
+				
+				// write each option
+				categoryWriter.write(option.toXML(optionName) + "");
 			}
 
-			for (String category : currentGroupOpenedIn.keySet()) {
-				configFilesContent.get(category).append("  </group>\n");
+			// close group everywhere, where it was opened, after handling
+			for (String category : groupExistsIn) {
+				categoryWriters.get(category).write("  </group>\n");
 			}
+			
+			groupExistsIn.clear();
 		}
 
-		for (String category : usedCategories) {
-			this.writeConfigFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-					+ "<config>\n" + configFilesContent.get(category)
-					+ "</config>", configFilePath(category));
+		// записываем в концы всех файлов закрывающий тэг, закрываем соответствующие
+		// потоки
+		for (PrintWriter writer : categoryWriters.values()) {
+			writer.write("</config>");
+			writer.close();
 		}
-
-		/**
-		 * если в категориях, которые мы изменили, существуют те, в которых
-		 * после изменений ничего не лежит, то мы удаляем соответствующие файлы
-		 */
+		
+		// delete files, according to empty categories
 		for (String category : usedCategories) {
-			if (!configFilesContent.keySet().contains(category)) {
+			if (!categoryWriters.keySet().contains(category)) {
 				deleteConfigFile(configFilePath(category));
 			}
 		}

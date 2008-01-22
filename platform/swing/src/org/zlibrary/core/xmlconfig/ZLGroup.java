@@ -25,7 +25,7 @@ final class ZLGroup {
 			info.setValue(value);
 			info.setCategory(category);
 		} else {
-			myData.put(name, new ZLOptionInfo(name, value, category));
+			myData.put(name, new ZLOptionInfo(value, category));
 		}
 	}
 
