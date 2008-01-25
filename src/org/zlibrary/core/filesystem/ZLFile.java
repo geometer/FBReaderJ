@@ -1,5 +1,6 @@
 package org.zlibrary.core.filesystem;
 
+import java.io.InputStream;
 import java.util.Map;
 
 public class ZLFile {
@@ -78,7 +79,7 @@ public class ZLFile {
 			}
 		}
 //(arg0)rfind
-		int index = myNameWithoutExtension.indexOf('.');
+		int index = myNameWithoutExtension.lastIndexOf('.');
 		if (index > 0) {
 			myExtension = myNameWithoutExtension.substring(index + 1);
 			myNameWithoutExtension = myNameWithoutExtension.substring(0, index);
@@ -111,7 +112,7 @@ public class ZLFile {
 	}
 	
 	public boolean isCompressed() {
-		 return !(0 == (myArchiveType & ArchiveType.COMPRESSED)); 
+		 return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
 	}
 	
 	public boolean isDirectory() {
@@ -120,7 +121,7 @@ public class ZLFile {
 	}
 	
 	public boolean isArchive() {
-		return !(0 == (myArchiveType & ArchiveType.ARCHIVE));
+		return (0 != (myArchiveType & ArchiveType.ARCHIVE));
 	}
 
 	public boolean remove() {
@@ -153,19 +154,19 @@ public class ZLFile {
 		return path;
 	}
 
-	public ZLInputStream inputStream() {
+	public InputStream inputStream() {
 		if (isDirectory()) {
 			return null;
 		}
 
-		ZLInputStream stream = null;
+		InputStream stream = null;
 		
 		int index = ZLFSManager.instance().findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
 			stream = ZLFSManager.instance().createPlainInputStream(myPath);
 		} else {
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
-			ZLInputStream base = baseFile.inputStream();
+			InputStream base = baseFile.inputStream();
 			if (base != null) {
 				if ( 0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
 					//stream = new ZLZipInputStream(base, myPath.substring(index + 1));
@@ -193,9 +194,9 @@ public class ZLFile {
 		/*if (exists()) {
 			if (isDirectory()) {
 				return ZLFSManager.instance().createPlainDirectory(myPath);
-			} else if (!(0 == (myArchiveType & ArchiveType.ZIP))) {
+			} else if (0 != (myArchiveType & ArchiveType.ZIP)) {
 				return new ZLZipDir(myPath);
-			} else if (!(0 == (myArchiveType & ArchiveType.TAR))) {
+			} else if (0 != (myArchiveType & ArchiveType.TAR)) {
 				return new ZLTarDir(myPath);
 			}
 		} else if (createUnexisting) {

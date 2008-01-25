@@ -1,5 +1,7 @@
 package org.zlibrary.core.filesystem;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Map;
 
@@ -30,8 +32,8 @@ abstract class ZLFSManager {
 		
 	public void normalize(String path) {}
 
-	abstract protected ZLInputStream createPlainInputStream(String path);
-	abstract protected ZLOutputStream createOutputStream(String path);
+	abstract protected InputStream createPlainInputStream(String path);
+	abstract protected OutputStream createOutputStream(String path);
 	//abstract protected ZLFSDir createPlainDirectory(String path);
 	//abstract protected ZLFSDir createNewDirectory(String path);
 	abstract protected ZLFileInfo fileInfo(String path);
@@ -43,5 +45,4 @@ abstract class ZLFSManager {
 	abstract protected ZLDir rootDirectory();
 	abstract protected String rootDirectoryPath();
 	abstract protected String parentPath(String path);
-
 }
