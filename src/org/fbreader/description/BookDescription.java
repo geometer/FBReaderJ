@@ -2,6 +2,8 @@ package org.fbreader.description;
 
 import java.util.Map;
 
+import org.fbreader.description.Author.MultiAuthor;
+import org.fbreader.description.Author.SingleAuthor;
 import org.fbreader.option.FBOptions;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLBooleanOption;
