@@ -61,14 +61,14 @@ public class BookDescription {
 		//	return null;
 		//}
 
-		if (description.myTitle.equals("")) {
+		if (description.myTitle.length() == 0) {
 			description.myTitle = ZLFile.fileNameToUtf8(bookFile.name(true));
 		}
 		Author author = description.myAuthor;
-		if (author == null || author.displayName().equals("")) {
+		if (author == null || author.displayName().length() == 0) {
 			description.myAuthor = SingleAuthor.create();
 		}
-		if (description.myEncoding.equals("")) {
+		if (description.myEncoding.length() == 0) {
 			description.myEncoding = "auto";
 		}
 		{
