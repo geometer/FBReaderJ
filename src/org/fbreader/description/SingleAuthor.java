@@ -1,6 +1,6 @@
 package org.fbreader.description;
 
-public class SingleAuthor implements Author {
+class SingleAuthor implements Author {
 	private String myDisplayName;
 	private	String mySortKey;
 

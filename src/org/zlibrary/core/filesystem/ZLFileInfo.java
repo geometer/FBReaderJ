@@ -1,6 +1,6 @@
 package org.zlibrary.core.filesystem;
 
-public class ZLFileInfo {
+class ZLFileInfo {
 	public boolean Exists;
 	public boolean IsDirectory;
 	public long MTime;

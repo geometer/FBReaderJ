@@ -3,7 +3,7 @@ package org.zlibrary.core.filesystem;
 import java.util.Collections;
 import java.util.Map;
 
-public abstract class ZLFSManager {
+abstract class ZLFSManager {
 	private Map<String,Integer> myForcedFiles;
 	protected static ZLFSManager ourInstance;
 	

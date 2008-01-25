@@ -2,7 +2,7 @@ package org.fbreader.description;
 
 import java.util.List;
 
-public class MultiAuthor implements Author {
+class MultiAuthor implements Author {
 	private List<Author> myAuthors;
 	private String myDisplayName;
 	private	String mySortKey;
