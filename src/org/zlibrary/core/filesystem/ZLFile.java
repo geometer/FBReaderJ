@@ -84,9 +84,24 @@ public class ZLFile {
 	/*public String physicalFilePath();
 
 	public ZLInputStream inputStream();
-	public ZLOutputStream outputStream();
-	public ZLDir directory(boolean createUnexisting = false);
-*/
+	public ZLOutputStream outputStream();*/
+	public ZLDir directory(boolean createUnexisting) {
+		createUnexisting = false;
+		/*if (exists()) {
+			if (isDirectory()) {
+				return ZLFSManager.instance().createPlainDirectory(myPath);
+			} else if (!(0 == (myArchiveType & ArchiveType.ZIP))) {
+				return new ZLZipDir(myPath);
+			} else if (!(0 == (myArchiveType & ArchiveType.TAR))) {
+				return new ZLTarDir(myPath);
+			}
+		} else if (createUnexisting) {
+			myInfoIsFilled = false;
+			return ZLFSManager.instance().createNewDirectory(myPath);
+		}*/
+		return null;
+	}
+
 }
 
 
