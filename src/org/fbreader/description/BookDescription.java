@@ -1,6 +1,6 @@
 package org.fbreader.description;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import org.fbreader.description.Author.MultiAuthor;
 import org.fbreader.description.Author.SingleAuthor;
@@ -15,10 +15,10 @@ public class BookDescription {
 	private	String myTitle;
 	private	String mySequenceName;
 	private	int myNumberInSequence;
-	private	String myFileName;
+	private	final String myFileName;
 	private	String myLanguage;
 	private	String myEncoding;
-	private static Map ourDescriptions;
+	private final static HashMap ourDescriptions = new HashMap();
 	
 	private static final String EMPTY = "";
 	private static final String UNKNOWN = "unknown";
@@ -65,7 +65,7 @@ public class BookDescription {
 			description.myTitle = ZLFile.fileNameToUtf8(bookFile.name(true));
 		}
 		Author author = description.myAuthor;
-		if (author == null || author.displayName().length() == 0) {
+		if (author == null || author.getDisplayName().length() == 0) {
 			description.myAuthor = SingleAuthor.create();
 		}
 		if (description.myEncoding.length() == 0) {
@@ -73,8 +73,8 @@ public class BookDescription {
 		}
 		{
 			BookInfo info = new BookInfo(fileName);
-			info.AuthorDisplayNameOption.setValue(description.myAuthor.displayName());
-			info.AuthorSortKeyOption.setValue(description.myAuthor.sortKey());
+			info.AuthorDisplayNameOption.setValue(description.myAuthor.getDisplayName());
+			info.AuthorSortKeyOption.setValue(description.myAuthor.getSortKey());
 			info.TitleOption.setValue(description.myTitle);
 			info.SequenceNameOption.setValue(description.mySequenceName);
 			info.NumberInSequenceOption.setValue(description.myNumberInSequence);
@@ -83,7 +83,6 @@ public class BookDescription {
 			info.IsSequenceDefinedOption.setValue(true);
 		}
 		return description;
-
 	}
 
 
@@ -93,31 +92,31 @@ public class BookDescription {
 		myNumberInSequence = 0;
 	}
 
-	public Author author() {
+	public Author getAuthor() {
 		return myAuthor;
 	}
 	
-	public String title() {
+	public String getTitle() {
 		return myTitle;
 	}
 	
-	public String sequenceName() {
+	public String getSequenceName() {
 		return mySequenceName;
 	}
 	
-	public int numberInSequence() {
+	public int getNumberInSequence() {
 		return myNumberInSequence; 
 	}
 	
-	public String fileName() {
+	public String getFileName() {
 		return myFileName; 
 	}
 	
-	public String language() {
+	public String getLanguage() {
 		return myLanguage;
 	}
 	
-	public String encoding() {
+	public String getEncoding() {
 		return myEncoding;
 	}
 	
@@ -127,7 +126,7 @@ public class BookDescription {
 		// This option is used to fix problem with missing sequence-related options
 		// in config in versions < 0.7.4k
 		// It makes no sense if old fbreader was never used on your device.
-		ZLBooleanOption IsSequenceDefinedOption;
+		private final ZLBooleanOption IsSequenceDefinedOption;
 
 		public BookInfo(String fileName) {
 			AuthorDisplayNameOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "AuthorDisplayName", EMPTY);
@@ -160,18 +159,18 @@ public class BookDescription {
 			EncodingOption.setValue(EMPTY);
 		}
 
-		public ZLStringOption AuthorDisplayNameOption;
-		public ZLStringOption AuthorSortKeyOption;
-		public ZLStringOption TitleOption;
-		public ZLStringOption SequenceNameOption;
-		public ZLIntegerRangeOption NumberInSequenceOption;
-		public ZLStringOption LanguageOption;
-		public ZLStringOption EncodingOption;
+		private final ZLStringOption AuthorDisplayNameOption;
+		private final ZLStringOption AuthorSortKeyOption;
+		private final ZLStringOption TitleOption;
+		private final ZLStringOption SequenceNameOption;
+		private final ZLIntegerRangeOption NumberInSequenceOption;
+		private final ZLStringOption LanguageOption;
+		private final ZLStringOption EncodingOption;
 
 	}
 	
 	public class WritableBookDescription {
-		private BookDescription myDescription;
+		private final BookDescription myDescription;
 		
 		public WritableBookDescription(BookDescription description) {
 			myDescription = description;
@@ -218,30 +217,31 @@ public class BookDescription {
 			myDescription.myAuthor = null;
 		}
 		
-		public Author author() {
-			return myDescription.author();
+		public Author getAuthor() {
+			return myDescription.getAuthor();
 		}
 		
-		public String title() {
+		public String getTitle() {
 			return myDescription.myTitle;
 		}
 		
-		public String sequenceName() {
+		public String getSequenceName() {
 			return myDescription.mySequenceName;
 		}
 		
-		public int numberInSequence() {
+		public int getNumberInSequence() {
 			return myDescription.myNumberInSequence;
 		}
 		
-		public String fileName() {
+		public String getFileName() {
 			return myDescription.myFileName; 
 		}
 		
-		public String language() {
+		public String getLanguage() {
 			return myDescription.myLanguage;
 		}
-		public String encoding() {
+		
+		public String getEncoding() {
 			return myDescription.myEncoding;
 		}
 	};

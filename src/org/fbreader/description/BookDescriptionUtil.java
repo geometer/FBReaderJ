@@ -37,7 +37,7 @@ class BookDescriptionUtil {
 			optionName = optionName + i;
 			//ZLStringUtil.appendNumber(optionName, i);
 			String entry = new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), optionName, "").getValue();
-			if (!entry.equals("")) {
+			if (entry.length() != 0) {
 				entries.add(entry);
 			}
 		}

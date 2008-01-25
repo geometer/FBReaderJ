@@ -1,15 +1,15 @@
 package org.fbreader.description;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface Author {
-	public String displayName();
-	public String sortKey();
+	public String getDisplayName();
+	public String getSortKey();
 	public boolean isSingle();	
 	
 	class SingleAuthor implements Author {
-		private String myDisplayName;
-		private	String mySortKey;
+		private final String myDisplayName;
+		private final String mySortKey;
 
 		public static Author create(String displayName, String sortKey) {
 			return new SingleAuthor(displayName, sortKey);
@@ -24,11 +24,11 @@ public interface Author {
 			mySortKey = sortKey;
 		}
 
-		public String displayName() {
+		public String getDisplayName() {
 			return myDisplayName;
 		}
 		
-		public String sortKey() {
+		public String getSortKey() {
 			return mySortKey;
 		}
 		
@@ -40,7 +40,7 @@ public interface Author {
 	
 	
 	class MultiAuthor implements Author {
-		private List myAuthors;
+		private final ArrayList myAuthors = new ArrayList();
 		private String myDisplayName;
 		private	String mySortKey;
 
@@ -58,22 +58,22 @@ public interface Author {
 			mySortKey = "";
 		}
 		
-		public String displayName() {
+		public String getDisplayName() {
 			if ((myDisplayName.length() == 0) && !(myAuthors.size() == 0)) {
-				myDisplayName = ((Author)myAuthors.get(0)).displayName();
+				myDisplayName = ((Author)myAuthors.get(0)).getDisplayName();
 				for (int i = 1; i < myAuthors.size(); ++i) {
 					myDisplayName += ", ";
-					myDisplayName += ((Author)myAuthors.get(i)).displayName();
+					myDisplayName += ((Author)myAuthors.get(i)).getDisplayName();
 				}
 			}
 			return myDisplayName;
 		}
 		
-		public String sortKey() {
+		public String getSortKey() {
 			if ((mySortKey.length() == 0) && !(myAuthors.size() == 0)) {
-				mySortKey = ((Author)myAuthors.get(0)).sortKey();
+				mySortKey = ((Author)myAuthors.get(0)).getSortKey();
 				for (int i = 1; i < myAuthors.size(); ++i) {
-					String key = ((Author)myAuthors.get(i)).sortKey();
+					String key = ((Author)myAuthors.get(i)).getSortKey();
 					//key < mySortKey
 					if (key.compareTo(mySortKey) < 0) {
 						mySortKey = key;
