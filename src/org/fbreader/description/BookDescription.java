@@ -18,7 +18,7 @@ public class BookDescription {
 	private	String myFileName;
 	private	String myLanguage;
 	private	String myEncoding;
-	private static Map<String, BookDescription> ourDescriptions;
+	private static Map ourDescriptions;
 	
 	private static final String EMPTY = "";
 	private static final String UNKNOWN = "unknown";
@@ -31,7 +31,7 @@ public class BookDescription {
 			return null;
 		}
 
-		BookDescription description = ourDescriptions.get(fileName);
+		BookDescription description = (BookDescription)ourDescriptions.get(fileName);
 		if (description == null) {
 			description = new BookDescription(fileName);
 			ourDescriptions.put(fileName, description);

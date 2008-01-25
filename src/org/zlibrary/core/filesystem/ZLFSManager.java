@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 abstract class ZLFSManager {
-	private Map<String,Integer> myForcedFiles;
+	private Map myForcedFiles;
 	protected static ZLFSManager ourInstance;
 	
 	public static void deleteInstance() {
@@ -13,7 +13,7 @@ abstract class ZLFSManager {
 		}
 	}
 	
-	public Map<String,Integer> getForcedFiles() {
+	public Map getForcedFiles() {
 		return Collections.unmodifiableMap(myForcedFiles);
 	}
 	

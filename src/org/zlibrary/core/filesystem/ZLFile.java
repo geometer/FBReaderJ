@@ -50,8 +50,8 @@ public class ZLFile {
 		}
 		myNameWithoutExtension = myNameWithExtension;
 
-		Map<String,Integer> forcedFiles = ZLFSManager.instance().getForcedFiles();
-		Integer value = forcedFiles.get(myPath);
+		Map forcedFiles = ZLFSManager.instance().getForcedFiles();
+		Integer value = (Integer)forcedFiles.get(myPath);
 		if (value != null) {
 			myArchiveType = value;
 		} else {

@@ -40,8 +40,8 @@ public abstract class ZLDir {
 		return myPath == ZLFSManager.instance().rootDirectoryPath();
 	}
 
-	abstract public void collectSubDirs(List<String> names, boolean includeSymlinks);
-	abstract public void collectFiles(List<String> names, boolean includeSymlinks);
+	abstract public void collectSubDirs(List names, boolean includeSymlinks);
+	abstract public void collectFiles(List names, boolean includeSymlinks);
 
 	abstract protected String delimiter();
 		

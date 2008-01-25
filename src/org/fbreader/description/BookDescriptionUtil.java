@@ -25,7 +25,7 @@ class BookDescriptionUtil {
 		new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, file.path(), SIZE, -1).setValue((int)file.size());		
 	}
 	
-	public static void listZipEntries(ZLFile zipFile, List<String> entries) {
+	public static void listZipEntries(ZLFile zipFile, List entries) {
 		int entriesNumber = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), ENTRIES_NUMBER, -1).getValue();
 		if (entriesNumber == -1) {
 			//??? why so??resetZipInfo(zipFile.path());

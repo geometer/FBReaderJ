@@ -40,7 +40,7 @@ public interface Author {
 	
 	
 	class MultiAuthor implements Author {
-		private List<Author> myAuthors;
+		private List myAuthors;
 		private String myDisplayName;
 		private	String mySortKey;
 
@@ -60,10 +60,10 @@ public interface Author {
 		
 		public String displayName() {
 			if (myDisplayName.equals("") && !myAuthors.equals("")) {
-				myDisplayName = myAuthors.get(0).displayName();
+				myDisplayName = ((Author)myAuthors.get(0)).displayName();
 				for (int i = 1; i < myAuthors.size(); ++i) {
 					myDisplayName += ", ";
-					myDisplayName += myAuthors.get(i).displayName();
+					myDisplayName += ((Author)myAuthors.get(i)).displayName();
 				}
 			}
 			return myDisplayName;
@@ -72,9 +72,9 @@ public interface Author {
 		
 		public String sortKey() {
 			if (mySortKey.equals("") && !myAuthors.equals("")) {
-				mySortKey = myAuthors.get(0).sortKey();
+				mySortKey = ((Author)myAuthors.get(0)).sortKey();
 				for (int i = 1; i < myAuthors.size(); ++i) {
-					String key = myAuthors.get(i).sortKey();
+					String key = ((Author)myAuthors.get(i)).sortKey();
 					//key < mySortKey
 					if (key.compareTo(mySortKey) < 0) {
 						mySortKey = key;
