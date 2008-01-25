@@ -54,12 +54,12 @@ public interface Author {
 
 		public void addAuthor(Author author) {
 			myAuthors.add(author);
-			//myDisplayName.erase();
-			//mySortKey.erase();
+			myDisplayName = ""; 
+			mySortKey = "";
 		}
 		
 		public String displayName() {
-			if (myDisplayName.equals("") && !myAuthors.equals("")) {
+			if ((myDisplayName.length() == 0) && !(myAuthors.size() == 0)) {
 				myDisplayName = ((Author)myAuthors.get(0)).displayName();
 				for (int i = 1; i < myAuthors.size(); ++i) {
 					myDisplayName += ", ";
@@ -67,11 +67,10 @@ public interface Author {
 				}
 			}
 			return myDisplayName;
-
 		}
 		
 		public String sortKey() {
-			if (mySortKey.equals("") && !myAuthors.equals("")) {
+			if ((mySortKey.length() == 0) && !(myAuthors.size() == 0)) {
 				mySortKey = ((Author)myAuthors.get(0)).sortKey();
 				for (int i = 1; i < myAuthors.size(); ++i) {
 					String key = ((Author)myAuthors.get(i)).sortKey();
@@ -82,7 +81,6 @@ public interface Author {
 				}
 			}
 			return mySortKey;
-
 		}
 		
 		public boolean isSingle() {
