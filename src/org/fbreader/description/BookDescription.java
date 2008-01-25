@@ -119,6 +119,8 @@ public class BookDescription {
 		return myEncoding;
 	}
 	
+	
+	
 	public static class BookInfo {
 		// This option is used to fix problem with missing sequence-related options
 		// in config in versions < 0.7.4k
@@ -165,4 +167,80 @@ public class BookDescription {
 		public ZLStringOption EncodingOption;
 
 	}
+	
+	public class WritableBookDescription {
+		private BookDescription myDescription;
+		
+		public WritableBookDescription(BookDescription description) {
+			myDescription = description;
+		}
+		
+		//String sortKey = ""
+		public void addAuthor(String name, String sortKey) {
+			String strippedName = name;
+			//ZLStringUtil.stripWhiteSpaces(strippedName);
+			strippedName.trim();
+			if (strippedName.length() == 0) {
+				return;
+			}
+
+			String strippedKey = sortKey;
+			strippedKey.trim();
+			//ZLStringUtil.stripWhiteSpaces(strippedKey);
+			if (strippedKey.length() == 0) {
+				int index = strippedName.indexOf(' ');
+				if (index == -1) {
+					strippedKey = strippedName;
+				} else {
+					strippedKey = strippedName.substring(index + 1);
+					while ((index >= 0) && (strippedName.charAt(index) == ' ')) {
+						--index;
+					}
+					strippedName = strippedName.substring(0, index + 1) + ' ' + strippedKey;
+				}
+			}
+			//Author author = SingleAuthor.create(strippedName, ZLUnicodeUtil.toLower(strippedKey));
+			Author author = SingleAuthor.create(strippedName, strippedKey);
+			
+			if (myDescription.myAuthor == null) {
+				myDescription.myAuthor = author;
+			} else {
+				if (myDescription.myAuthor.isSingle()) {
+					myDescription.myAuthor = MultiAuthor.create(myDescription.myAuthor);
+				}
+				((MultiAuthor)myDescription.myAuthor).addAuthor(author);
+			}
+		}
+		
+		public void clearAuthor() {
+			myDescription.myAuthor = null;
+		}
+		
+		public Author author() {
+			return myDescription.author();
+		}
+		
+		public String title() {
+			return myDescription.myTitle;
+		}
+		
+		public String sequenceName() {
+			return myDescription.mySequenceName;
+		}
+		
+		public int numberInSequence() {
+			return myDescription.myNumberInSequence;
+		}
+		
+		public String fileName() {
+			return myDescription.myFileName; 
+		}
+		
+		public String language() {
+			return myDescription.myLanguage;
+		}
+		public String encoding() {
+			return myDescription.myEncoding;
+		}
+	};
 }
