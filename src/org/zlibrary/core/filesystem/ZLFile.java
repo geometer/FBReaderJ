@@ -1,5 +1,7 @@
 package org.zlibrary.core.filesystem;
 
+import java.util.Map;
+
 public class ZLFile {
 	public class ArchiveType {
 		public static final int	NONE = 0;
@@ -30,9 +32,58 @@ public class ZLFile {
 		myInfoIsFilled = true;
 	}
 	
-	//public static String fileNameToUtf8(String fileName) {}
+	public static String fileNameToUtf8(String fileName) {
+		return ZLFSManager.instance().convertFilenameToUtf8(fileName);
+	}
 	
-	public ZLFile(String path) {}
+	public ZLFile(String path) {
+		myPath = path;
+		myInfoIsFilled = false;
+		ZLFSManager.instance().normalize(myPath);
+		{
+			int index = ZLFSManager.instance().findLastFileNameDelimiter(myPath);
+			if (index < myPath.length() - 1) {
+				myNameWithExtension = myPath.substring(index + 1);
+			} else {
+				myNameWithExtension = myPath;
+			}
+		}
+		myNameWithoutExtension = myNameWithExtension;
+
+		Map<String,Integer> forcedFiles = ZLFSManager.instance().getForcedFiles();
+		Integer value = forcedFiles.get(myPath);
+		if (value != null) {
+			myArchiveType = value;
+		} else {
+			myArchiveType = ArchiveType.NONE;
+			String lowerCaseName = "";// = ZLUnicodeUtil.toLower(myNameWithoutExtension);
+
+			if (lowerCaseName.endsWith(".gz")) {
+				myNameWithoutExtension = myNameWithoutExtension.substring(0, myNameWithoutExtension.length() - 3);
+				lowerCaseName = lowerCaseName.substring(0, lowerCaseName.length() - 3);
+				myArchiveType = (int)(myArchiveType | ArchiveType.GZIP);
+			}
+			if (lowerCaseName.endsWith(".bz2")) {
+				myNameWithoutExtension = myNameWithoutExtension.substring(0, myNameWithoutExtension.length() - 4);
+				lowerCaseName = lowerCaseName.substring(0, lowerCaseName.length() - 4);
+				myArchiveType = (int)(myArchiveType | ArchiveType.BZIP2);
+			}
+			if (lowerCaseName.endsWith(".zip")) {
+				myArchiveType = (int)(myArchiveType | ArchiveType.ZIP);
+			} else if (lowerCaseName.endsWith(".tar")) {
+				myArchiveType = (int)(myArchiveType | ArchiveType.TAR);
+			} else if (lowerCaseName.endsWith(".tgz") || lowerCaseName.endsWith(".ipk")) {
+				//nothing to-do myNameWithoutExtension = myNameWithoutExtension.substr(0, myNameWithoutExtension.length() - 3) + "tar";
+				myArchiveType = (int)(myArchiveType | ArchiveType.TAR | ArchiveType.GZIP);
+			}
+		}
+//(arg0)rfind
+		int index = myNameWithoutExtension.indexOf('.');
+		if (index > 0) {
+			myExtension = myNameWithoutExtension.substring(index + 1);
+			myNameWithoutExtension = myNameWithoutExtension.substring(0, index);
+		}
+	}
 	
 	public boolean exists() {
 		if (!myInfoIsFilled) 
@@ -52,7 +103,12 @@ public class ZLFile {
 		return myInfo.Size;
 	}	
 	
-	//public void forceArchiveType(ArchiveType type);
+	public void forceArchiveType(int type) {
+		if (myArchiveType != type) {
+			myArchiveType = type;
+			ZLFSManager.instance().putForcedFiles(myPath, myArchiveType);
+		}
+	}
 	
 	public boolean isCompressed() {
 		 return !(0 == (myArchiveType & ArchiveType.COMPRESSED)); 
@@ -67,7 +123,14 @@ public class ZLFile {
 		return !(0 == (myArchiveType & ArchiveType.ARCHIVE));
 	}
 
-	//public boolean remove();
+	public boolean remove() {
+		if (ZLFSManager.instance().removeFile(myPath)) {
+			myInfoIsFilled = false;
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public String path() {
 		return myPath;
@@ -81,12 +144,52 @@ public class ZLFile {
 		return myExtension;
 	}
 
-	/*public String physicalFilePath();
+	public String physicalFilePath() {
+		String path = myPath;
+		int index;
+		while ((index = ZLFSManager.instance().findArchiveFileNameDelimiter(path)) != -1) {
+			path = path.substring(0, index);
+		}
+		return path;
+	}
 
-	public ZLInputStream inputStream();
-	public ZLOutputStream outputStream();*/
+	public ZLInputStream inputStream() {
+		if (isDirectory()) {
+			return null;
+		}
+
+		ZLInputStream stream = null;
+		
+		int index = ZLFSManager.instance().findArchiveFileNameDelimiter(myPath);
+		if (index == -1) {
+			stream = ZLFSManager.instance().createPlainInputStream(myPath);
+		} else {
+			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
+			ZLInputStream base = baseFile.inputStream();
+			if (base != null) {
+				if ( 0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
+					//stream = new ZLZipInputStream(base, myPath.substring(index + 1));
+				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
+					//stream = new ZLTarInputStream(base, myPath.substring(index + 1));
+				}
+			}
+		}
+
+		if (stream != null) {
+			if (0 != (myArchiveType & ArchiveType.GZIP)) {
+				//return new ZLGzipInputStream(stream);
+			}
+			if (0 != (myArchiveType & ArchiveType.BZIP2)) {
+				//return new ZLBzip2InputStream(stream);
+			}
+		}
+		return stream;
+	}
+	//public ZLOutputStream outputStream();*/
+	
+	//always createUnexisting = false;
 	public ZLDir directory(boolean createUnexisting) {
-		createUnexisting = false;
+		
 		/*if (exists()) {
 			if (isDirectory()) {
 				return ZLFSManager.instance().createPlainDirectory(myPath);

@@ -1,5 +1,6 @@
 package org.zlibrary.core.filesystem;
 
+import java.util.Collections;
 import java.util.Map;
 
 public abstract class ZLFSManager {
@@ -12,6 +13,14 @@ public abstract class ZLFSManager {
 		}
 	}
 	
+	public Map<String,Integer> getForcedFiles() {
+		return Collections.unmodifiableMap(myForcedFiles);
+	}
+	
+	public void putForcedFiles(String key, Integer value) {
+		myForcedFiles.put(key, value);
+	}
+	
 	public static ZLFSManager instance() {
 		return ourInstance;
 	}
@@ -21,8 +30,8 @@ public abstract class ZLFSManager {
 		
 	public void normalize(String path) {}
 
-	//abstract protected ZLInputStream createPlainInputStream(String path);
-	//abstract protected ZLOutputStream createOutputStream(String path);
+	abstract protected ZLInputStream createPlainInputStream(String path);
+	abstract protected ZLOutputStream createOutputStream(String path);
 	//abstract protected ZLFSDir createPlainDirectory(String path);
 	//abstract protected ZLFSDir createNewDirectory(String path);
 	abstract protected ZLFileInfo fileInfo(String path);
