@@ -5,5 +5,6 @@ MIDlet-Name: FBReaderJ
 MIDlet-Icon: /data/FBReaderJ.png
 MIDlet-Vendor: Geometer Plus
 MIDlet-Version: 0.1
+MIDlet-Permissions: javax.microedition.io.Connector.file.read
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.0

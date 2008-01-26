@@ -1,6 +1,7 @@
 package org.fbreader.description;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 public interface Author {
 	public String getDisplayName();

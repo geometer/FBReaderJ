@@ -27,15 +27,13 @@ final class ZLJ2MELibrary extends ZLibrary {
 
 	protected InputStream getFileInputStream(String fileName) {
 		// TODO: implement
-		/*
 		try {
-			FileConnection connection = (FileConnection)Connector.open("file:///SDCard/test.fb2", Connector.READ);
+			FileConnection connection = (FileConnection)Connector.open("file:///Memory Card" + fileName, Connector.READ);
 			if ((connection != null) && connection.exists()) {
 				return connection.openInputStream();
 			}
 		} catch (Exception e) {
 		}
-		*/
 		return null;
 	}
 

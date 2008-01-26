@@ -1,7 +1,7 @@
 package org.fbreader.description;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.description.BookDescription.BookInfo;
 import org.fbreader.option.FBOptions;
@@ -51,10 +51,10 @@ class BookDescriptionUtil {
 		ZLDir zipDir = zipFile.directory(false);
 		if (zipDir != null) {
 			String zipPrefix = zipFile.path() + ':';
-			ArrayList entries = new ArrayList();
 			int counter = 0;
-			zipDir.collectFiles(entries, false);
-			for (Iterator zit = entries.iterator(); zit.hasNext();) {
+			final ArrayList entries = zipDir.collectFiles();
+			final int size = entries.size();
+			for (int i = 0; i < size; ++i) {
 				/*if (PluginCollection.instance().plugin(ZLFile(zit), true) != 0) {
 					String optionName = ENTRY;
 					//ZLStringUtil::appendNumber(optionName, counter);

@@ -1,6 +1,7 @@
 package org.zlibrary.core.filesystem;
 
-import java.util.List;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 public abstract class ZLDir {
 	private String myPath;
@@ -40,9 +41,8 @@ public abstract class ZLDir {
 		return myPath == ZLFSManager.instance().rootDirectoryPath();
 	}
 
-	abstract public void collectSubDirs(List names, boolean includeSymlinks);
-	abstract public void collectFiles(List names, boolean includeSymlinks);
+	abstract public ArrayList collectSubDirs();
+	abstract public ArrayList collectFiles();
 
 	abstract protected String delimiter();
-		
 }

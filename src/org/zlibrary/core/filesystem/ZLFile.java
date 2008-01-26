@@ -1,7 +1,8 @@
 package org.zlibrary.core.filesystem;
 
 import java.io.InputStream;
-import java.util.Map;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 public class ZLFile {
 	public class ArchiveType {
@@ -51,10 +52,10 @@ public class ZLFile {
 		}
 		myNameWithoutExtension = myNameWithExtension;
 
-		Map forcedFiles = ZLFSManager.instance().getForcedFiles();
+		HashMap forcedFiles = ZLFSManager.instance().getForcedFiles();
 		Integer value = (Integer)forcedFiles.get(myPath);
 		if (value != null) {
-			myArchiveType = value;
+			myArchiveType = value.intValue();
 		} else {
 			myArchiveType = ArchiveType.NONE;
 			String lowerCaseName = "";// = ZLUnicodeUtil.toLower(myNameWithoutExtension);
@@ -107,7 +108,7 @@ public class ZLFile {
 	public void forceArchiveType(int type) {
 		if (myArchiveType != type) {
 			myArchiveType = type;
-			ZLFSManager.instance().putForcedFiles(myPath, myArchiveType);
+			ZLFSManager.instance().putForcedFile(myPath, myArchiveType);
 		}
 	}
 	

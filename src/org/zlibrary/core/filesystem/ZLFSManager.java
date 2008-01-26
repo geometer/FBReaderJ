@@ -2,11 +2,11 @@ package org.zlibrary.core.filesystem;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 abstract class ZLFSManager {
-	private Map myForcedFiles;
+	private final HashMap myForcedFiles = new HashMap();
 	protected static ZLFSManager ourInstance;
 	
 	public static void deleteInstance() {
@@ -15,11 +15,11 @@ abstract class ZLFSManager {
 		}
 	}
 	
-	public Map getForcedFiles() {
-		return Collections.unmodifiableMap(myForcedFiles);
+	public HashMap getForcedFiles() {
+		return myForcedFiles;
 	}
 	
-	public void putForcedFiles(String key, Integer value) {
+	public void putForcedFile(String key, int value) {
 		myForcedFiles.put(key, value);
 	}
 	
