@@ -6,7 +6,7 @@ import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.xml.*;
 import org.zlibrary.text.model.ZLTextParagraph;
 
-public final class FB2Reader extends BookReader implements ZLXMLReader {
+public class FB2Reader extends BookReader implements ZLXMLReader {
 	private boolean myInsidePoem = false;
 	private boolean myInsideTitle = false;
 	private int myBodyCounter = 0;

@@ -30,7 +30,17 @@ final class FB2Tag {
 	public static final byte IMAGE = 23;
 	public static final byte BINARY = 24;
 	public static final byte FICTIONBOOK = 25;
-
+	
+	public static final byte TITLE_INFO = 26;
+	public static final byte BOOK_TITLE = 27;
+	public static final byte AUTHOR = 28;
+	public static final byte LANG = 29;
+	public static final byte FIRST_NAME = 30;
+	public static final byte MIDDLE_NAME = 31;
+	public static final byte LAST_NAME = 32;
+	public static final byte SEQUENCE = 33;
+	
+	
 	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
 	private static final Byte ourUnknownTag;
 

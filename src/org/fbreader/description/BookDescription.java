@@ -166,14 +166,15 @@ public class BookDescription {
 		private final ZLStringOption SequenceNameOption;
 		private final ZLIntegerRangeOption NumberInSequenceOption;
 		private final ZLStringOption LanguageOption;
-		private final ZLStringOption EncodingOption;
+		public final ZLStringOption EncodingOption;
 
 	}
 	
-	public class WritableBookDescription {
+	static public class WritableBookDescription  {
 		private final BookDescription myDescription;
 		
 		public WritableBookDescription(BookDescription description) {
+			//super(description.getFileName());
 			myDescription = description;
 		}
 		
@@ -226,6 +227,10 @@ public class BookDescription {
 			return myDescription.myTitle;
 		}
 		
+		public void setTitle(String title) {
+			myDescription.myTitle = title;
+		}
+		
 		public String getSequenceName() {
 			return myDescription.mySequenceName;
 		}
@@ -242,8 +247,16 @@ public class BookDescription {
 			return myDescription.myLanguage;
 		}
 		
+		public void setLanguage(String language) {
+			this.myDescription.myLanguage = language;
+		}
+		
 		public String getEncoding() {
 			return myDescription.myEncoding;
+		}
+		
+		public void setEncoding(String encoding) {
+			this.myDescription.myEncoding = encoding;
 		}
 	};
 }
