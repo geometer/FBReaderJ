@@ -143,10 +143,10 @@ public class BookDescription {
 	
 		public boolean isFull() {
 			return
-			(!(AuthorDisplayNameOption.getValue().length() == 0) &&
-			!(AuthorSortKeyOption.getValue().length() == 0) &&
-			!(TitleOption.getValue().length() == 0) &&
-			!(EncodingOption.getValue().length() == 0) &&
+			((AuthorDisplayNameOption.getValue().length() != 0) &&
+			(AuthorSortKeyOption.getValue().length() != 0) &&
+			(TitleOption.getValue().length() != 0) &&
+			(EncodingOption.getValue().length() != 0) &&
 			IsSequenceDefinedOption.getValue());
 		}
 		
@@ -177,10 +177,12 @@ public class BookDescription {
 			myDescription = description;
 		}
 		
-		//String sortKey = ""
+		public void addAuthor(String name) {
+			addAuthor(name, "");
+		}
+		
 		public void addAuthor(String name, String sortKey) {
 			String strippedName = name;
-			//ZLStringUtil.stripWhiteSpaces(strippedName);
 			strippedName.trim();
 			if (strippedName.length() == 0) {
 				return;
@@ -188,7 +190,6 @@ public class BookDescription {
 
 			String strippedKey = sortKey;
 			strippedKey.trim();
-			//ZLStringUtil.stripWhiteSpaces(strippedKey);
 			if (strippedKey.length() == 0) {
 				int index = strippedName.indexOf(' ');
 				if (index == -1) {
@@ -201,7 +202,6 @@ public class BookDescription {
 					strippedName = strippedName.substring(0, index + 1) + ' ' + strippedKey;
 				}
 			}
-			//Author author = SingleAuthor.create(strippedName, ZLUnicodeUtil.toLower(strippedKey));
 			Author author = SingleAuthor.create(strippedName, strippedKey);
 			
 			if (myDescription.myAuthor == null) {

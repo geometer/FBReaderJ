@@ -60,7 +60,7 @@ public interface Author {
 		}
 		
 		public String getDisplayName() {
-			if ((myDisplayName.length() == 0) && !(myAuthors.size() == 0)) {
+			if ((myDisplayName.length() == 0) && (myAuthors.size() != 0)) {
 				myDisplayName = ((Author)myAuthors.get(0)).getDisplayName();
 				for (int i = 1; i < myAuthors.size(); ++i) {
 					myDisplayName += ", ";
@@ -71,7 +71,7 @@ public interface Author {
 		}
 		
 		public String getSortKey() {
-			if ((mySortKey.length() == 0) && !(myAuthors.size() == 0)) {
+			if ((mySortKey.length() == 0) && (myAuthors.size() != 0)) {
 				mySortKey = ((Author)myAuthors.get(0)).getSortKey();
 				for (int i = 1; i < myAuthors.size(); ++i) {
 					String key = ((Author)myAuthors.get(i)).getSortKey();

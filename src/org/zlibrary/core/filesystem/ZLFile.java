@@ -58,7 +58,7 @@ public class ZLFile {
 			myArchiveType = value.intValue();
 		} else {
 			myArchiveType = ArchiveType.NONE;
-			String lowerCaseName = "";// = ZLUnicodeUtil.toLower(myNameWithoutExtension);
+			String lowerCaseName = myNameWithoutExtension;// = ZLUnicodeUtil.toLower(myNameWithoutExtension);
 
 			if (lowerCaseName.endsWith(".gz")) {
 				myNameWithoutExtension = myNameWithoutExtension.substring(0, myNameWithoutExtension.length() - 3);
@@ -170,7 +170,7 @@ public class ZLFile {
 			InputStream base = baseFile.inputStream();
 			if (base != null) {
 				if ( 0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
-					//stream = new ZLZipInputStream(base, myPath.substring(index + 1));
+					//stream = new InputStream(base, myPath.substring(index + 1));
 				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
 					//stream = new ZLTarInputStream(base, myPath.substring(index + 1));
 				}
@@ -189,7 +189,10 @@ public class ZLFile {
 	}
 	//public ZLOutputStream outputStream();*/
 	
-	//always createUnexisting = false;
+	public ZLDir directory() {
+		return directory(false);
+	}
+	
 	public ZLDir directory(boolean createUnexisting) {
 		
 		/*if (exists()) {
