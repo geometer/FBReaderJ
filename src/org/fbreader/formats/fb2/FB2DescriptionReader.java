@@ -2,7 +2,6 @@ package org.fbreader.formats.fb2;
 
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
-import org.zlibrary.core.xml.ZLXMLReader;
 
 public class FB2DescriptionReader {
 	private WritableBookDescription myDescription;
@@ -15,14 +14,13 @@ public class FB2DescriptionReader {
 	private	String[] myAuthorNames = new String[3];
 
 	public FB2DescriptionReader(BookDescription description) {
-		//TODOOOOOOOOOOOOOOO
-		//super(null);
 		myDescription = new WritableBookDescription(description);
 		myDescription.clearAuthor();
 		myDescription.setTitle("");
 		myDescription.setLanguage("");
 		
 	}
+	
 	public boolean readDescription(String fileName) {
 		myReadSomething = false;
 		myReadTitle = false;
@@ -70,19 +68,20 @@ public class FB2DescriptionReader {
 			}
 			break;
 		case FB2Tag.SEQUENCE:
-			{if (myReadSomething) {
+			if (myReadSomething) {
 				/*String name = attributeValue(attributes, "name");
 				if (name != null) {
 					String sequenceName = name;
 					sequenceName.trim();
-					myDescription.sequenceName = sequenceName;
+					myDescription.setSequenceName(sequenceName);
 					String number = attributeValue(attributes, "number");
-					myDescription.numberInSequence() = (number != null) ? atoi(number) : 0;
-				*/}
+					myDescription.setNumberInSequence((number != null) ? Integer.parseInt(number) : 0);
+				}*/
 			}
-			break;}
-		//default:
-			//{break;}
+			break;
+	   default : 
+			break;
+	   }
 	}
 	
 	public void endElementHandler(int tag) {
@@ -148,5 +147,54 @@ public class FB2DescriptionReader {
 		}
 	}
 
+	//------------------------------------------------
+	
+	private boolean myInterrupted;
+	//private	ZLXMLReaderInternal myInternalReader;
+	private	String myParserBuffer;
+
+	
+	public static int bufferSize() { 
+		return 2048; 
+	}
+	
+	public boolean isInterrupted() {
+		return myInterrupted;
+	}
+
+	public void interrupt() {
+		myInterrupted = true;
+	}
+
+	/*public String attributeValue(String[] xmlattributes, String name) {
+		while (xmlattributes != null) {
+			boolean useNext = strcmp(*xmlattributes, name) == 0;
+			++xmlattributes;
+			if (*xmlattributes == 0) {
+				return 0;
+			}
+			if (useNext) {
+				return *xmlattributes;
+			}
+			++xmlattributes;
+		}
+		return null;
+	}
+
+	String attributeValue(const char **xmlattributes, const std::string &name) {
+		while (*xmlattributes != 0) {
+			bool useNext = name == *xmlattributes;
+			++xmlattributes;
+			if (*xmlattributes == 0) {
+				return 0;
+			}
+			if (useNext) {
+				return *xmlattributes;
+			}
+			++xmlattributes;
+		}
+		return 0;
+	}
+*/
 
 }

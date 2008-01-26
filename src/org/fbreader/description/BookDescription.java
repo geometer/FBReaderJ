@@ -235,8 +235,16 @@ public class BookDescription {
 			return myDescription.mySequenceName;
 		}
 		
+		public void setSequenceName(String sequenceName) {
+			myDescription.mySequenceName = sequenceName;
+		}
+		
 		public int getNumberInSequence() {
 			return myDescription.myNumberInSequence;
+		}
+		
+		public void setNumberInSequence(int numberInSequence) {
+			myDescription.myNumberInSequence = numberInSequence;
 		}
 		
 		public String getFileName() {

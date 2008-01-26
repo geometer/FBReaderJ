@@ -11,6 +11,7 @@ import org.fbreader.formats.fb2.FB2Plugin;
 import org.fbreader.formats.util.EncodingDetector;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLOption;
 
 
 public abstract class FormatPlugin {
@@ -20,9 +21,9 @@ public abstract class FormatPlugin {
 	public abstract boolean providesMetaInfo();
 	public abstract boolean acceptsFile(ZLFile file);
 	public abstract String iconName();
-	//public FormatInfoPage createInfoPage(ZLOptionsDialog dialog, String path) {
-	//	return 0;
-	//}
+	/*public FormatInfoPage createInfoPage(ZLOptionsDialog dialog, String path) {
+		return 0;
+	}*/
 
 	public String tryOpen(String path) {
 		final String EMPTY = "";
@@ -99,7 +100,7 @@ public abstract class FormatPlugin {
 		}
 
 		private PluginCollection() {
-			//DefaultLanguageOption = new DefaultLanguageOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", EncodingDetector.Language.RUSSIAN); 
+			DefaultLanguageOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", EncodingDetector.Language.RUSSIAN); 
 		}
 			
 		public FormatPlugin plugin(ZLFile file, boolean strong) {
