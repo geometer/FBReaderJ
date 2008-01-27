@@ -1,14 +1,14 @@
 package org.fbreader.formats;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
 import org.fbreader.formats.fb2.FB2Plugin;
 import org.fbreader.formats.util.EncodingDetector;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLOption;
@@ -104,8 +104,10 @@ public abstract class FormatPlugin {
 		}
 			
 		public FormatPlugin plugin(ZLFile file, boolean strong) {
-			for (Iterator it = myPlugins.iterator(); it.hasNext(); ) {
-				FormatPlugin fp = (FormatPlugin)it.next();
+			final ArrayList plugins = myPlugins;
+			final int numberOfPlugins = plugins.size();
+			for (int i = 0; i < numberOfPlugins; ++i) {
+				FormatPlugin fp = (FormatPlugin)plugins.get(i);
 				if ((!strong || fp.providesMetaInfo()) && fp.acceptsFile(file)) {
 					return fp;
 				}
