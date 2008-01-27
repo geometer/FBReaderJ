@@ -41,7 +41,6 @@ final class ZLConfigWriter implements ZLWriter {
 		} catch (FileNotFoundException fnfException) {
 			//TODO handle exception
 		} catch (UnsupportedEncodingException e) {
-			System.out.println(e.getMessage());
 		}
 	}
 
@@ -78,12 +77,13 @@ final class ZLConfigWriter implements ZLWriter {
 
 				if (categoryWriter == null) {
 					try {
-						categoryWriter = new PrintWriter(configFilePath(category));
+						categoryWriter = new PrintWriter(configFilePath(category), "UTF-8");
 						categoryWriters.put(category, categoryWriter);
 						categoryWriter.write("<?xml version=\"1.0\" " +
 								"encoding=\"UTF-8\"?>\n<config>\n");
 					} catch (FileNotFoundException fnf) {
 						//TODO handle exception
+					} catch (UnsupportedEncodingException e) {
 					}
 				}
 				
