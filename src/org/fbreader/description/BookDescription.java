@@ -61,6 +61,7 @@ public class BookDescription {
 		}
 
 		ZLFile bookFile = new ZLFile(fileName);
+		
 		FormatPlugin plugin = PluginCollection.instance().plugin(bookFile, false);
 		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
 			return null;
