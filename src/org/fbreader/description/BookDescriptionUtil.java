@@ -1,9 +1,10 @@
 package org.fbreader.description;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.fbreader.description.BookDescription.BookInfo;
+import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.fbreader.option.FBOptions;
 import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.filesystem.ZLFile;
@@ -36,7 +37,6 @@ class BookDescriptionUtil {
 		for (int i = 0; i < entriesNumber; ++i) {
 			String optionName = ENTRY;
 			optionName += i;
-			//ZLStringUtil.appendNumber(optionName, i);
 			String entry = new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), optionName, "").getValue();
 			if (entry.length() != 0) {
 				entries.add(entry);
@@ -48,24 +48,25 @@ class BookDescriptionUtil {
 	public static void resetZipInfo(ZLFile zipFile) {
 		//ZLOption.clearGroup(zipFile.path());
 
-		ZLDir zipDir = zipFile.directory(false);
+		ZLDir zipDir = zipFile.directory();
 		if (zipDir != null) {
 			String zipPrefix = zipFile.path() + ':';
 			int counter = 0;
 			final ArrayList entries = zipDir.collectFiles();
 			final int size = entries.size();
-			for (int i = 0; i < size; ++i) {
-				/*if (PluginCollection.instance().plugin(ZLFile(zit), true) != 0) {
+			for (Iterator zit = entries.iterator(); zit.hasNext();) { 
+				String entry = (String)zit.next();
+				if (PluginCollection.instance().plugin(new ZLFile(entry), true) != null) {
 					String optionName = ENTRY;
-					//ZLStringUtil::appendNumber(optionName, counter);
 					optionName += counter;
-					String fullName = zipPrefix + zit;
+					String fullName = zipPrefix + entry;
 					new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), optionName, "").setValue(fullName);
 					new BookInfo(fullName).reset();
 					++counter;
-				}*/
+				}
 			}
 			new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), ENTRIES_NUMBER, -1).setValue(counter);
 		}
 	}
+	
 }

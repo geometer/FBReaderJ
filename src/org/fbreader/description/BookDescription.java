@@ -1,10 +1,11 @@
 package org.fbreader.description;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
 import org.fbreader.description.Author.MultiAuthor;
 import org.fbreader.description.Author.SingleAuthor;
+import org.fbreader.formats.FormatPlugin;
+import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.fbreader.option.FBOptions;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLBooleanOption;
@@ -24,7 +25,10 @@ public class BookDescription {
 	private static final String EMPTY = "";
 	private static final String UNKNOWN = "unknown";
 	
-//boolean checkFile = true
+	public static BookDescription getDescription(String fileName) {
+		return getDescription(fileName, true); 
+	} 
+	
 	public static BookDescription getDescription(String fileName, boolean checkFile) {
 		String physicalFileName = new ZLFile(fileName).physicalFilePath();
 		ZLFile file = new ZLFile(physicalFileName);
@@ -57,10 +61,10 @@ public class BookDescription {
 		}
 
 		ZLFile bookFile = new ZLFile(fileName);
-		//FormatPlugin plugin = PluginCollection.instance().plugin(bookFile, false);
-		//if ((plugin == 0) || !plugin.readDescription(fileName, description)) {
-		//	return null;
-		//}
+		FormatPlugin plugin = PluginCollection.instance().plugin(bookFile, false);
+		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
+			return null;
+		}
 
 		if (description.myTitle.length() == 0) {
 			description.myTitle = ZLFile.fileNameToUtf8(bookFile.name(true));
@@ -174,7 +178,6 @@ public class BookDescription {
 		private final BookDescription myDescription;
 		
 		public WritableBookDescription(BookDescription description) {
-			//super(description.getFileName());
 			myDescription = description;
 		}
 		

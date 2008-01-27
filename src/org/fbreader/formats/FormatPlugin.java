@@ -19,7 +19,9 @@ public abstract class FormatPlugin {
 	protected FormatPlugin() {}
 		
 	public abstract boolean providesMetaInfo();
+	
 	public abstract boolean acceptsFile(ZLFile file);
+	
 	public abstract String iconName();
 	/*public FormatInfoPage createInfoPage(ZLOptionsDialog dialog, String path) {
 		return 0;
@@ -31,6 +33,7 @@ public abstract class FormatPlugin {
 	}
 	
 	public abstract	boolean readDescription(String path, BookDescription description);
+	
 	public abstract boolean readModel(BookDescription description, BookModel model);
 
 	public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) {	
@@ -68,11 +71,12 @@ public abstract class FormatPlugin {
 		protected FormatInfoPage() {}
 	};
 
-	static class PluginCollection {
+	public static class PluginCollection {
 
 		private static PluginCollection ourInstance;
 		private ArrayList myPlugins;
 		public ZLIntegerOption DefaultLanguageOption;
+		
 		public static PluginCollection instance() {
 			if (ourInstance == null) {
 				ourInstance = new PluginCollection();

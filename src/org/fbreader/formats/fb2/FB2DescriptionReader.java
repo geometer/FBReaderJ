@@ -2,8 +2,12 @@ package org.fbreader.formats.fb2;
 
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
+import org.zlibrary.core.xml.ZLStringMap;
+import org.zlibrary.core.xml.ZLXMLProcessor;
+import org.zlibrary.core.xml.ZLXMLProcessorFactory;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public class FB2DescriptionReader {
+public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 	private WritableBookDescription myDescription;
 	private	boolean myReturnCode;
 	private	boolean myReadSomething;
@@ -21,6 +25,10 @@ public class FB2DescriptionReader {
 		
 	}
 	
+	public boolean dontCacheAttributeValues() {
+		return true;
+	}
+	
 	public boolean readDescription(String fileName) {
 		myReadSomething = false;
 		myReadTitle = false;
@@ -29,15 +37,16 @@ public class FB2DescriptionReader {
 		for (int i = 0; i < 3; ++i) {
 			myReadAuthorName[i] = false;
 		}
-		//return readDocument(fileName);
+		return readDocument(fileName);
 		//TODO!!
-		return true;
+		//return true;
 	}
 
-	public void startElementHandler(int tag, char attributes) {
-		switch (tag) {
+	public void startElementHandler(String tagName, ZLStringMap attributes) {
+		switch (FB2Tag.getTagByName(tagName)) {
 		case FB2Tag.BODY:
 			myReturnCode = true;
+			//TODO
 			//interrupt();
 			break;
 		case FB2Tag.TITLE_INFO:
@@ -69,14 +78,14 @@ public class FB2DescriptionReader {
 			break;
 		case FB2Tag.SEQUENCE:
 			if (myReadSomething) {
-				/*String name = attributeValue(attributes, "name");
+				String name = attributes.getValue("name");
 				if (name != null) {
 					String sequenceName = name;
 					sequenceName.trim();
 					myDescription.setSequenceName(sequenceName);
-					String number = attributeValue(attributes, "number");
+					String number = attributes.getValue("number");
 					myDescription.setNumberInSequence((number != null) ? Integer.parseInt(number) : 0);
-				}*/
+				}
 			}
 			break;
 	   default : 
@@ -84,8 +93,8 @@ public class FB2DescriptionReader {
 	   }
 	}
 	
-	public void endElementHandler(int tag) {
-		switch (tag) {
+	public void endElementHandler(String tag) {
+		switch (FB2Tag.getTagByName(tag)) {
 		case FB2Tag.TITLE_INFO:
 			myReadSomething = false;
 			break;
@@ -130,16 +139,18 @@ public class FB2DescriptionReader {
 	    }	
 	}
 	
-	public void characterDataHandler(String text, int len) {
+	public void characterDataHandler(char[] ch, int start, int length) {
+		//TODO
+		final String text = new String(ch).substring(start, length);
 		if (myReadSomething) {
 			if (myReadTitle) {
-				//myDescription.getTitle().append(text, len);
+				myDescription.setTitle(myDescription.getTitle()+text);//.append(text, len);
 			} else if (myReadLanguage) {
-				//myDescription.getLanguage().append(text, len);
+				myDescription.setLanguage(myDescription.getLanguage()+text);
 			} else {
 				for (int i = 0; i < 3; ++i) {
 					if (myReadAuthorName[i]) {
-						//myAuthorNames[i].append(text, len);
+						myAuthorNames[i] += text;
 						break;
 					}
 				}
@@ -149,52 +160,15 @@ public class FB2DescriptionReader {
 
 	//------------------------------------------------
 	
-	private boolean myInterrupted;
-	//private	ZLXMLReaderInternal myInternalReader;
-	private	String myParserBuffer;
+	//private boolean myInterrupted;
+		
+	//public void interrupt() {
+	//	myInterrupted = true;
+	//}
 
-	
-	public static int bufferSize() { 
-		return 2048; 
+	public boolean readDocument(String fileName) {
+		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
+		return processor.read(this, fileName);
 	}
-	
-	public boolean isInterrupted() {
-		return myInterrupted;
-	}
-
-	public void interrupt() {
-		myInterrupted = true;
-	}
-
-	/*public String attributeValue(String[] xmlattributes, String name) {
-		while (xmlattributes != null) {
-			boolean useNext = strcmp(*xmlattributes, name) == 0;
-			++xmlattributes;
-			if (*xmlattributes == 0) {
-				return 0;
-			}
-			if (useNext) {
-				return *xmlattributes;
-			}
-			++xmlattributes;
-		}
-		return null;
-	}
-
-	String attributeValue(const char **xmlattributes, const std::string &name) {
-		while (*xmlattributes != 0) {
-			bool useNext = name == *xmlattributes;
-			++xmlattributes;
-			if (*xmlattributes == 0) {
-				return 0;
-			}
-			if (useNext) {
-				return *xmlattributes;
-			}
-			++xmlattributes;
-		}
-		return 0;
-	}
-*/
 
 }
