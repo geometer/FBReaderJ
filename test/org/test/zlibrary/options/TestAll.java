@@ -17,9 +17,6 @@ public class TestAll {
 		suite.addTestSuite(ZLBooleanOptionTests2.class);
 		suite.addTestSuite(ZLColorOptionTests1.class);
 		suite.addTestSuite(ZLColorOptionTests2.class);
-		suite.addTestSuite(ZLDoubleOptionTests1.class);
-		suite.addTestSuite(ZLDoubleOptionTests2a.class);
-		suite.addTestSuite(ZLDoubleOptionTests2b.class);
 		suite.addTestSuite(ZLIntegerOptionTests1.class);
 		suite.addTestSuite(ZLIntegerOptionTests2.class);
 		suite.addTestSuite(ZLIntegerRangeOptionTests1.class);
