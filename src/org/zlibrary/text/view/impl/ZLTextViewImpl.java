@@ -121,14 +121,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			int wordHeight = myWordHeight;
 			if (wordHeight == -1) {
 				final ZLTextStyle textStyle = myTextStyle;
-				wordHeight = (int)(getContext().getStringHeight() * textStyle.getLineSpace()) + textStyle.getVerticalShift();
+				wordHeight = (int)(getContext().getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
 				myWordHeight = wordHeight;
 			}
 			return wordHeight;
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLPaintContext context = getContext();
 			return context.imageHeight(((ZLTextImageElement)element).getImageData()) + 
-				Math.max((int)(context.getStringHeight() * (myTextStyle.getLineSpace() - 1)), 3);
+				Math.max((int)(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100), 3);
 		}
 		return 0;
 	}

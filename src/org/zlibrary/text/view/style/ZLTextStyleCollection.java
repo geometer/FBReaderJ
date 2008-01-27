@@ -50,8 +50,8 @@ public class ZLTextStyleCollection {
 	private static class TextStyleReader extends ZLXMLReaderAdapter {
 		private ZLTextStyleCollection myCollection;
 
-		private static int intValue(ZLStringMap attributes, String name) {
-			int i = 0;
+		private static int intValue(ZLStringMap attributes, String name, int defaultValue) {
+			int i = defaultValue;
 			String value = attributes.getValue(name);
 			if (value != null) {
 				try {
@@ -61,19 +61,6 @@ public class ZLTextStyleCollection {
 				}
 			} 
 			return i;
-		}
-
-		private static double doubleValue(ZLStringMap attributes, String name) {
-			double d = 0;
-			String value = attributes.getValue(name);
-			if (value != null) {
-				try {
-					d = Double.parseDouble(value);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-				}
-			}
-			return d;
 		}
 
 		private static boolean booleanValue(ZLStringMap attributes, String name) {
@@ -93,7 +80,7 @@ public class ZLTextStyleCollection {
 			final String STYLE = "style";
 
 			if (BASE.equals(tag)) {
-				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.getValue("family"), intValue(attributes, "fontSize"));
+				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.getValue("family"), intValue(attributes, "fontSize", 0));
 			} else if (STYLE.equals(tag)) {
 				String idString = attributes.getValue("id");
 				String name = attributes.getValue("name");
@@ -101,10 +88,10 @@ public class ZLTextStyleCollection {
 					byte id = Byte.parseByte(idString);
 					ZLTextStyleDecoration decoration;
 
-					int fontSizeDelta = intValue(attributes, "fontSizeDelta");
+					int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
 					int bold = b3Value(attributes, "bold");
 					int italic = b3Value(attributes, "italic");
-					int verticalShift = intValue(attributes, "vShift");
+					int verticalShift = intValue(attributes, "vShift", 0);
 					int allowHyphenations = b3Value(attributes, "allowHyphenations");
 					byte hyperlinkStyle = HyperlinkStyle.NONE;
 					String hyperlink = attributes.getValue("hyperlink");
@@ -120,11 +107,11 @@ public class ZLTextStyleCollection {
 					if (booleanValue(attributes, "partial")) {
 						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
 					} else {
-						int spaceBefore = intValue(attributes, "spaceBefore");
-						int spaceAfter = intValue(attributes, "spaceAfter");
-						int leftIndent = intValue(attributes, "leftIndent");
-						int rightIndent = intValue(attributes, "rightIndent");
-						int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta");
+						int spaceBefore = intValue(attributes, "spaceBefore", 0);
+						int spaceAfter = intValue(attributes, "spaceAfter", 0);
+						int leftIndent = intValue(attributes, "leftIndent", 0);
+						int rightIndent = intValue(attributes, "rightIndent", 0);
+						int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta", 0);
 
 						byte alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
 						String alignmentString = attributes.getValue("alignment");
@@ -139,9 +126,9 @@ public class ZLTextStyleCollection {
 								alignment = ZLTextAlignmentType.ALIGN_JUSTIFY;
 							}
 						}
-						double lineSpace = doubleValue(attributes, "lineSpace");
+						final int lineSpacePercent = intValue(attributes, "lineSpacePercent", -1);
 
-						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpace, allowHyphenations);
+						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
 					decoration.setHyperlinkStyle(hyperlinkStyle);
 

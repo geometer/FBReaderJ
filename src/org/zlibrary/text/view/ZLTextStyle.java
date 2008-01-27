@@ -13,7 +13,7 @@ public interface ZLTextStyle {
 	int getLeftIndent();
 	int getRightIndent();
 	int getFirstLineIndentDelta();
-	double getLineSpace();
+	int getLineSpacePercent();
 	int getVerticalShift();
 	int getSpaceBefore();
 	int getSpaceAfter();

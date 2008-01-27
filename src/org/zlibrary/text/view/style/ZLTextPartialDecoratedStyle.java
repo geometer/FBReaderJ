@@ -70,8 +70,8 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 		return getBase().getFirstLineIndentDelta();
 	}	
 	
-	public double getLineSpace() {
-		return getBase().getLineSpace();
+	public int getLineSpacePercent() {
+		return getBase().getLineSpacePercent();
 	}
 
 	public int getVerticalShift() {

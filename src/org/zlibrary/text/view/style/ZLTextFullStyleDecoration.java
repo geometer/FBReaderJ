@@ -16,9 +16,9 @@ class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 
 	public final ZLIntegerOption AlignmentOption;
 
-	public final ZLDoubleOption LineSpaceOption;
+	public final ZLIntegerOption LineSpacePercentOption;
 
-	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, double lineSpace, int allowHyphenations) {
+	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, int lineSpace, int allowHyphenations) {
 		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
 		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
 		SpaceBeforeOption = new ZLIntegerRangeOption(category, STYLE, name + ":spaceBefore", -10, 100, spaceBefore);
@@ -27,7 +27,7 @@ class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		RightIndentOption = new ZLIntegerRangeOption(category, STYLE, name + ":rightIndent", -300, 300, rightIndent);
 		FirstLineIndentDeltaOption = new ZLIntegerRangeOption(category, STYLE, name + ":firstLineIndentDelta", -300, 300, firstLineIndentDelta);
 		AlignmentOption = new ZLIntegerOption(category, STYLE, name + ":alignment", alignment);
-		LineSpaceOption = new ZLDoubleOption(category, STYLE, name + ":lineSpace", lineSpace);
+		LineSpacePercentOption = new ZLIntegerOption(category, STYLE, name + ":lineSpacePercent", lineSpace);
 	}
 
 	public boolean isFullDecoration() {

@@ -36,8 +36,8 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		new ZLBooleanOption(CATEGORY, GROUP, "Base:italic", false);
 	public final ZLIntegerOption AlignmentOption =
 		new ZLIntegerOption(CATEGORY, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
-	public final ZLDoubleOption LineSpaceOption =
-		new ZLDoubleOption(CATEGORY, GROUP, "Base:lineSpacing", 1.2);
+	public final ZLIntegerOption LineSpacePercentOption =
+		new ZLIntegerOption(CATEGORY, GROUP, "Base:lineSpacingPercent", 120);
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
@@ -79,8 +79,8 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		return 0;
 	}
 	
-	public double getLineSpace() {
-		return LineSpaceOption.getValue();
+	public int getLineSpacePercent() {
+		return LineSpacePercentOption.getValue();
 	}
 
 	public int getVerticalShift() {

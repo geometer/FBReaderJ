@@ -69,9 +69,9 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : getBase().getFirstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
 	}
 	
-	public double getLineSpace() {
-		double value = myDecoration.LineSpaceOption.getValue();
-		return (value != 0.0) ? value : getBase().getLineSpace();
+	public int getLineSpacePercent() {
+		int value = myDecoration.LineSpacePercentOption.getValue();
+		return (value != -1) ? value : getBase().getLineSpacePercent();
 	}
 
 	public int getVerticalShift() {
