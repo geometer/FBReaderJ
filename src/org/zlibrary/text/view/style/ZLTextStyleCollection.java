@@ -126,7 +126,7 @@ public class ZLTextStyleCollection {
 								alignment = ZLTextAlignmentType.ALIGN_JUSTIFY;
 							}
 						}
-						final int lineSpacePercent = intValue(attributes, "lineSpacePercent", -1);
+						final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
 						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
