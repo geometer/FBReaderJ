@@ -11,7 +11,7 @@ import org.zlibrary.core.application.ZLApplication;
 
 //import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.ui.android.sqliteconfig.ZLSQLiteConfigManager;
+import org.zlibrary.core.sqliteconfig.ZLSQLiteConfigManager;
 
 import org.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.zlibrary.ui.android.view.ZLAndroidWidget;

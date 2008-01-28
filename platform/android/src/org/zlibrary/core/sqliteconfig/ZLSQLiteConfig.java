@@ -1,4 +1,4 @@
-package org.zlibrary.ui.android.sqliteconfig;
+package org.zlibrary.core.sqliteconfig;
 
 import org.zlibrary.core.config.ZLConfig;
 
