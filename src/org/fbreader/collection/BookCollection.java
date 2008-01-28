@@ -19,9 +19,9 @@ public class BookCollection {
 	public final ZLBooleanOption ScanSubdirsOption;
 	private final static String OPTIONS = "Options";
 
-	private ArrayList myAuthors;
+	private final ArrayList myAuthors = new ArrayList();
 	private	HashMap myCollection;
-	private	HashSet myExternalBooks;
+	private	final ArrayList myExternalBooks = new ArrayList();
 
 	private	String myPath;
 	private	boolean myScanSubdirs;
@@ -33,6 +33,12 @@ public class BookCollection {
 		ScanSubdirsOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "ScanSubdirs", false);
 		myDoStrongRebuild = true;
 		myDoWeakRebuild = false;
+	}
+	
+	private void addExternalBook(BookDescription bookDescription) {
+		if (!myExternalBooks.contains(bookDescription)) {
+			myExternalBooks.add(bookDescription);
+		}
 	}
 
 	public ArrayList authors() {
@@ -75,13 +81,12 @@ public class BookCollection {
 			myCollection.clear();
 			myExternalBooks.clear();
 
-			final HashSet fileNamesSet = collectBookFileNames();
-			// TODO: !!!
-			/*
-			for (Iterator it = fileNamesSet.iterator(); it.hasNext();) {
-				addDescription(BookDescription.getDescription((String)it.next()));
+			final ArrayList fileNamesSet = collectBookFileNames();
+			final int sizeOfSet = fileNamesSet.size();
+			for (int i = 0; i < sizeOfSet; ++i) {
+				addDescription(BookDescription.getDescription((String)fileNamesSet.get(i)));
 			}
-			*/
+			
 
 			final ArrayList bookListFileNames = new BookList().fileNames();
 			final int sizeOfList = bookListFileNames.size();
@@ -91,14 +96,13 @@ public class BookCollection {
 					BookDescription description = BookDescription.getDescription(fileName);
 					if (description != null) {
 						addDescription(description);
-						myExternalBooks.add(description);
+						addExternalBook(description);
 					}
 				}
 			}
 		} else {
 			// something strange :(
-			/*
-			final BookList bookList = new BookList();
+			/*final BookList bookList = new BookList();
 			final ArrayList bookListSet = bookList.fileNames();
 			final ArrayList fileNames = new ArrayList();
 			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
@@ -163,8 +167,8 @@ public class BookCollection {
 		}*/
 	}
 	
-	private HashSet collectBookFileNames() {
-		final HashSet bookFileNames = new HashSet();
+	private ArrayList collectBookFileNames() {
+		final ArrayList bookFileNames = new ArrayList();
 		final ArrayList dirs = collectDirNames();
 		final int numberOfDirs = dirs.size();
 		for (int i = 0; i < numberOfDirs; ++i) {
@@ -182,7 +186,9 @@ public class BookCollection {
 				String fileName = dir.getItemPath((String)files.get(j));
 				ZLFile file = new ZLFile(fileName);
 				if (PluginCollection.instance().getPlugin(file, true) != null) {
-					bookFileNames.add(fileName);
+					if (!bookFileNames.contains(fileName)) {
+						bookFileNames.add(fileName);
+					}
 				// TODO: zip -> any archive
 				} else if (file.getExtension() == "zip") {
 					if (!BookDescriptionUtil.checkInfo(file)) {
@@ -193,7 +199,10 @@ public class BookCollection {
 					BookDescriptionUtil.listZipEntries(file, zipEntries);
 					final int numberOfZipEntries = zipEntries.size();
 					for (int k = 0; k < numberOfZipEntries; ++k) {
-						bookFileNames.add(zipEntries.get(i));
+						String str = (String)zipEntries.get(i);
+						if (!bookFileNames.contains(str)) {
+							bookFileNames.add(str);
+						}
 					}
 				}
 			}

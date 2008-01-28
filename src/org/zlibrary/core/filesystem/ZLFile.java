@@ -2,6 +2,8 @@ package org.zlibrary.core.filesystem;
 
 import java.io.InputStream;
 import java.util.*;
+
+import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.util.*;
 
 public class ZLFile {
@@ -154,15 +156,19 @@ public class ZLFile {
 		}
 		return path;
 	}
-
+    
+	//my method for test
+	public InputStream getInputStream(String myHelpFileName) {
+		return ZLibrary.getInstance().getInputStream(myHelpFileName);
+	}
+	
 	public InputStream getInputStream() {
 		if (isDirectory()) {
 			return null;
 		}
 
 		InputStream stream = null;
-		
-		int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
+		/*int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
 			stream = ZLFSManager.getInstance().createPlainInputStream(myPath);
 		} else {
@@ -184,7 +190,7 @@ public class ZLFile {
 			if (0 != (myArchiveType & ArchiveType.BZIP2)) {
 				//return new ZLBzip2InputStream(stream);
 			}
-		}
+		}*/
 		return stream;
 	}
 	//public ZLOutputStream outputStream();*/
