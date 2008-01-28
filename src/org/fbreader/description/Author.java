@@ -3,12 +3,29 @@ package org.fbreader.description;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
-public interface Author {
-	public String getDisplayName();
-	public String getSortKey();
-	public boolean isSingle();	
+public abstract class Author {
+	public abstract String getDisplayName();
+	public abstract String getSortKey();
+	public abstract boolean isSingle();	
+
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+
+		if (!(o instanceof Author)) {
+			return false;
+		}
+
+		Author author = (Author)o;
+		return getSortKey().equals(author.getSortKey()) && getDisplayName().equals(author.getDisplayName());
+	}
+
+	public int hashCode() {
+		return getSortKey().hashCode() + getDisplayName().hashCode();
+	}
 	
-	class SingleAuthor implements Author {
+	static class SingleAuthor extends Author {
 		private final String myDisplayName;
 		private final String mySortKey;
 
@@ -38,9 +55,7 @@ public interface Author {
 		}
 	}
 	
-	
-	
-	class MultiAuthor implements Author {
+	static class MultiAuthor extends Author {
 		private final ArrayList myAuthors = new ArrayList();
 		private String myDisplayName;
 		private	String mySortKey;

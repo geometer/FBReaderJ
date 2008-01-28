@@ -1,11 +1,11 @@
 package org.fbreader.description;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 import org.fbreader.description.BookDescription.BookInfo;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.fbreader.option.FBOptions;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLIntegerOption;
@@ -54,8 +54,8 @@ public class BookDescriptionUtil {
 			int counter = 0;
 			final ArrayList entries = zipDir.collectFiles();
 			final int size = entries.size();
-			for (Iterator zit = entries.iterator(); zit.hasNext();) { 
-				String entry = (String)zit.next();
+			for (int i = 0; i < size; ++i) { 
+				String entry = (String)entries.get(i);
 				if (PluginCollection.instance().plugin(new ZLFile(entry), true) != null) {
 					String optionName = ENTRY;
 					optionName += counter;

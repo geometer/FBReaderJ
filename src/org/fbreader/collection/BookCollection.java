@@ -1,16 +1,12 @@
 package org.fbreader.collection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescriptionUtil;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.library.ZLibrary;
@@ -79,18 +75,20 @@ public class BookCollection {
 			myCollection.clear();
 			myExternalBooks.clear();
 
-			HashSet fileNamesSet = new HashSet();
-			collectBookFileNames(fileNamesSet);
+			final HashSet fileNamesSet = collectBookFileNames();
+			// TODO: !!!
+			/*
 			for (Iterator it = fileNamesSet.iterator(); it.hasNext();) {
 				addDescription(BookDescription.getDescription((String)it.next()));
 			}
+			*/
 
-			BookList bookList = new BookList();
-			HashSet bookListSet = bookList.fileNames();
-			for (Iterator it = bookListSet.iterator(); it.hasNext();) {
-				String itValue = (String)it.next();
-				if (!fileNamesSet.contains(itValue)) {
-					BookDescription description = BookDescription.getDescription(itValue);
+			final ArrayList bookListFileNames = new BookList().fileNames();
+			final int sizeOfList = bookListFileNames.size();
+			for (int i = 0; i < sizeOfList; ++i) {
+				final String fileName = (String)bookListFileNames.get(i);
+				if (!fileNamesSet.contains(fileName)) {
+					BookDescription description = BookDescription.getDescription(fileName);
 					if (description != null) {
 						addDescription(description);
 						myExternalBooks.add(description);
@@ -98,26 +96,29 @@ public class BookCollection {
 				}
 			}
 		} else {
-			BookList bookList = new BookList();
-			HashSet bookListSet = bookList.fileNames();
-			ArrayList fileNames = new ArrayList();
-			for (Iterator it = myCollection.entrySet().iterator(); it.hasNext();) {
-				final Map.Entry en =  (Map.Entry)it.next();
-				final ArrayList books = (ArrayList)en.getValue();
-				
-				for (Iterator jt = books.iterator(); jt.hasNext(); ) {
-					BookDescription jtValue = (BookDescription)jt.next();
-					if ((!myExternalBooks.contains(jtValue)) || 
-							(bookListSet.contains(jtValue.getFileName()))) {
-						fileNames.add(jtValue.getFileName());
+			// something strange :(
+			/*
+			final BookList bookList = new BookList();
+			final HashSet bookListSet = bookList.fileNames();
+			final ArrayList fileNames = new ArrayList();
+			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
+				final ArrayList books = (ArrayList)it.next();
+				final int numberOfBooks = books.size();
+				for (int j = 0; j < numberOfBooks; ++j) {
+					final BookDescription description = (BookDescription)books.get(j);
+					final String fileName = description.getFileName();
+					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
+						fileNames.add(fileName);
 					}
 				}
 			}
 			myCollection.clear();
 			myAuthors.clear();
-			for (Iterator it = fileNames.iterator(); it.hasNext(); ) {
-				addDescription(BookDescription.getDescription((String)it.next(), false));
+			final int fileNamesSize = fileNames.size();
+			for (int i = 0; i < fileNamesSize; ++i) {
+				addDescription(BookDescription.getDescription((String)fileNames.get(i), false));
 			}
+			*/
 		}
 
 		/*std::sort(myAuthors.begin(), myAuthors.end(), AuthorComparator());
@@ -128,7 +129,8 @@ public class BookCollection {
 		return true;
 	}
 		
-	private void collectDirNames(HashSet names) {
+	private ArrayList collectDirNames() {
+		return new ArrayList();
 		/*Queue nameQueue;// = new ArrayQueue();
 
 		String path = myPath;
@@ -161,42 +163,42 @@ public class BookCollection {
 		}*/
 	}
 	
-	private void collectBookFileNames(HashSet bookFileNames) {
-		HashSet dirs = new HashSet();
-		collectDirNames(dirs);
-
-		for (Iterator it = dirs.iterator(); it.hasNext();) {
-			String dirfile = (String)it.next();
-			ArrayList files = new ArrayList();
-			ZLDir dir = new ZLFile(dirfile).directory();
+	private HashSet collectBookFileNames() {
+		final HashSet bookFileNames = new HashSet();
+		final ArrayList dirs = collectDirNames();
+		final int numberOfDirs = dirs.size();
+		for (int i = 0; i < numberOfDirs; ++i) {
+			final String dirfile = (String)dirs.get(i);
+			final ArrayList files = new ArrayList();
+			final ZLDir dir = new ZLFile(dirfile).directory();
 			if (dir == null) {
 				continue;
 			}
-			
+
 			//dir.collectFiles(files, false);
-			
-			if (!files.isEmpty()) {
-				for (Iterator jt = files.iterator(); jt.hasNext();) {
-					String jtValue = (String)jt.next();
-					String fileName = dir.itemPath(jtValue);
-					ZLFile file = new ZLFile(fileName);
-					if (PluginCollection.instance().plugin(file, true) != null) {
-						bookFileNames.add(fileName);
-					// TODO: zip -> any archive
-					} else if (file.extension() == "zip") {
-						if (!BookDescriptionUtil.checkInfo(file)) {
-							BookDescriptionUtil.resetZipInfo(file);
-							BookDescriptionUtil.saveInfo(file);
-						}
-						ArrayList zipEntries = new ArrayList();
-						BookDescriptionUtil.listZipEntries(file, zipEntries);
-						for (Iterator zit = zipEntries.iterator(); zit.hasNext(); ) {
-							bookFileNames.add(zit.next());
-						}
+
+			final int numberOfFiles = files.size();
+			for (int j = 0; i < numberOfFiles; ++j) {
+				String fileName = dir.itemPath((String)files.get(j));
+				ZLFile file = new ZLFile(fileName);
+				if (PluginCollection.instance().plugin(file, true) != null) {
+					bookFileNames.add(fileName);
+				// TODO: zip -> any archive
+				} else if (file.extension() == "zip") {
+					if (!BookDescriptionUtil.checkInfo(file)) {
+						BookDescriptionUtil.resetZipInfo(file);
+						BookDescriptionUtil.saveInfo(file);
+					}
+					final ArrayList zipEntries = new ArrayList();
+					BookDescriptionUtil.listZipEntries(file, zipEntries);
+					final int numberOfZipEntries = zipEntries.size();
+					for (int k = 0; k < numberOfZipEntries; ++k) {
+						bookFileNames.add(zipEntries.get(i));
 					}
 				}
 			}
 		}
+		return bookFileNames;
 	}
 
 	private void addDescription(BookDescription description) {
@@ -204,30 +206,13 @@ public class BookCollection {
 			return;
 		}
 
-		Author author = description.getAuthor();
-		String displayName = author.getDisplayName();
-		String sortKey = author.getSortKey();
-
-		Iterator it = myCollection.entrySet().iterator();
-		
-		for (; it.hasNext(); ) {
-			Map.Entry entry = (Map.Entry)it.next();
-			Author author1 = (Author)entry.getKey();
-			if ((author1.getSortKey().equals(sortKey)) && (author1.getDisplayName().equals(displayName))) {
-				break;
-			}
-		}
-		
-		if (it.hasNext()) {
-			Map.Entry entry = (Map.Entry)it.next();
-			((ArrayList)entry.getValue()).add(description);
-		} else {
-			ArrayList books = new ArrayList();
-			books.add(description);
+		final Author author = description.getAuthor();
+		ArrayList books = (ArrayList)myCollection.get(author);
+		if (books == null) {
+			books = new ArrayList();
 			myCollection.put(author, books);
 			myAuthors.add(author);
 		}
+		books.add(description);
 	}
-
-
 }

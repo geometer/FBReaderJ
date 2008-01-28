@@ -1,16 +1,15 @@
 package org.fbreader.collection;
 
-import java.util.HashSet;
+import java.util.*;
 
-import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.util.*;
+import org.zlibrary.core.options.*;
 
 public class BookList {
 	private final static String GROUP = "BookList";
 	static final String BOOK = "Book";
 	static final String SIZE = "Size";
-	private final HashSet myFileNames = new HashSet();
+	private final ArrayList myFileNames = new ArrayList();
 	
 	public BookList() {
 		int size = new ZLIntegerOption(ZLOption.STATE_CATEGORY, GROUP, SIZE, 0).getValue();
@@ -23,10 +22,9 @@ public class BookList {
 				addFileName(fileName);
 			}
 		}
-
 	}
 
-	public HashSet fileNames() {
+	public ArrayList fileNames() {
 		return myFileNames;
 	}
 	
