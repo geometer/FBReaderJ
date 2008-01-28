@@ -6,43 +6,43 @@ import org.zlibrary.core.util.*;
 public abstract class ZLDir {
 	private String myPath;
 
-	public static ZLDir root() {
-		return ZLFSManager.instance().rootDirectory();
+	public static ZLDir getRoot() {
+		return ZLFSManager.getInstance().getRootDirectory();
 	}
 
 	public ZLDir(String path) {
 		myPath = path;
-		ZLFSManager.instance().normalize(myPath);
+		ZLFSManager.getInstance().normalize(myPath);
 	}
 	
-	public String path() {
+	public String getPath() {
 		return myPath;
 	}
 	
-	public String name() {
-		int index = ZLFSManager.instance().findLastFileNameDelimiter(myPath);
+	public String getName() {
+		int index = ZLFSManager.getInstance().findLastFileNameDelimiter(myPath);
 		return myPath.substring(index + 1);
 	}
 	
-	public String parentPath() {
-		return ZLFSManager.instance().parentPath(myPath);
+	public String getParentPath() {
+		return ZLFSManager.getInstance().getParentPath(myPath);
 	}
 	
-	public String itemPath(String itemName) {
+	public String getItemPath(String itemName) {
 		if (itemName == "..") {
-			return parentPath();
+			return getParentPath();
 		} else {
-			return isRoot() ? myPath + itemName : myPath + delimiter() + itemName;
+			return isRoot() ? myPath + itemName : myPath + getDelimiter() + itemName;
 		}
 
 	}
 	
 	public boolean isRoot() {
-		return myPath == ZLFSManager.instance().rootDirectoryPath();
+		return myPath == ZLFSManager.getInstance().getRootDirectoryPath();
 	}
 
 	abstract public ArrayList collectSubDirs();
 	abstract public ArrayList collectFiles();
 
-	abstract protected String delimiter();
+	abstract protected String getDelimiter();
 }

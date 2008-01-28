@@ -35,12 +35,12 @@ public class BookCollection {
 		myDoWeakRebuild = false;
 	}
 
-	public ArrayList getAuthors() {
+	public ArrayList authors() {
 		synchronize();
 		return myAuthors;
 	}
 	
-	public ArrayList getBooks(Author author) {
+	public ArrayList books(Author author) {
 		synchronize();
 		return (ArrayList)(myCollection.get(author));
 	}
@@ -99,7 +99,7 @@ public class BookCollection {
 			// something strange :(
 			/*
 			final BookList bookList = new BookList();
-			final HashSet bookListSet = bookList.fileNames();
+			final ArrayList bookListSet = bookList.fileNames();
 			final ArrayList fileNames = new ArrayList();
 			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
 				final ArrayList books = (ArrayList)it.next();
@@ -170,7 +170,7 @@ public class BookCollection {
 		for (int i = 0; i < numberOfDirs; ++i) {
 			final String dirfile = (String)dirs.get(i);
 			final ArrayList files = new ArrayList();
-			final ZLDir dir = new ZLFile(dirfile).directory();
+			final ZLDir dir = new ZLFile(dirfile).getDirectory();
 			if (dir == null) {
 				continue;
 			}
@@ -179,12 +179,12 @@ public class BookCollection {
 
 			final int numberOfFiles = files.size();
 			for (int j = 0; i < numberOfFiles; ++j) {
-				String fileName = dir.itemPath((String)files.get(j));
+				String fileName = dir.getItemPath((String)files.get(j));
 				ZLFile file = new ZLFile(fileName);
-				if (PluginCollection.instance().plugin(file, true) != null) {
+				if (PluginCollection.instance().getPlugin(file, true) != null) {
 					bookFileNames.add(fileName);
 				// TODO: zip -> any archive
-				} else if (file.extension() == "zip") {
+				} else if (file.getExtension() == "zip") {
 					if (!BookDescriptionUtil.checkInfo(file)) {
 						BookDescriptionUtil.resetZipInfo(file);
 						BookDescriptionUtil.saveInfo(file);

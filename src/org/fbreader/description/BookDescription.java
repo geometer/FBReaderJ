@@ -30,7 +30,7 @@ public class BookDescription {
 	} 
 	
 	public static BookDescription getDescription(String fileName, boolean checkFile) {
-		String physicalFileName = new ZLFile(fileName).physicalFilePath();
+		String physicalFileName = new ZLFile(fileName).getPhysicalFilePath();
 		ZLFile file = new ZLFile(physicalFileName);
 		if (checkFile && !file.exists()) {
 			return null;
@@ -62,13 +62,13 @@ public class BookDescription {
 
 		ZLFile bookFile = new ZLFile(fileName);
 		
-		FormatPlugin plugin = PluginCollection.instance().plugin(bookFile, false);
+		FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile, false);
 		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
 			return null;
 		}
 
 		if (description.myTitle.length() == 0) {
-			description.myTitle = ZLFile.fileNameToUtf8(bookFile.name(true));
+			description.myTitle = ZLFile.fileNameToUtf8(bookFile.getName(true));
 		}
 		Author author = description.myAuthor;
 		if (author == null || author.getDisplayName().length() == 0) {
@@ -142,7 +142,7 @@ public class BookDescription {
 			NumberInSequenceOption = new ZLIntegerRangeOption(FBOptions.BOOKS_CATEGORY, fileName, "Number in seq", 0, 100, 0);
 			LanguageOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Language", UNKNOWN);
 			EncodingOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Encoding", EMPTY);
-			IsSequenceDefinedOption = new ZLBooleanOption(FBOptions.BOOKS_CATEGORY, fileName, "SequenceDefined", new ZLFile(fileName).extension().equals("fb2")); 
+			IsSequenceDefinedOption = new ZLBooleanOption(FBOptions.BOOKS_CATEGORY, fileName, "SequenceDefined", new ZLFile(fileName).getExtension().equals("fb2")); 
 			
 		}
 	

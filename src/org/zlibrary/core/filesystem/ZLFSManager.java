@@ -23,7 +23,7 @@ abstract class ZLFSManager {
 		myForcedFiles.put(key, value);
 	}
 	
-	public static ZLFSManager instance() {
+	public static ZLFSManager getInstance() {
 		return ourInstance;
 	}
 
@@ -36,13 +36,13 @@ abstract class ZLFSManager {
 	abstract protected OutputStream createOutputStream(String path);
 	//abstract protected ZLFSDir createPlainDirectory(String path);
 	//abstract protected ZLFSDir createNewDirectory(String path);
-	abstract protected ZLFileInfo fileInfo(String path);
+	abstract protected ZLFileInfo getFileInfo(String path);
 	abstract protected boolean removeFile(String path);
 	abstract protected String convertFilenameToUtf8(String name);
 
 	abstract protected int findArchiveFileNameDelimiter(String path);
 	abstract protected int findLastFileNameDelimiter(String path);
-	abstract protected ZLDir rootDirectory();
-	abstract protected String rootDirectoryPath();
-	abstract protected String parentPath(String path);
+	abstract protected ZLDir getRootDirectory();
+	abstract protected String getRootDirectoryPath();
+	abstract protected String getParentPath(String path);
 }

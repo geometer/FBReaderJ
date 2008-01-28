@@ -22,7 +22,7 @@ public abstract class FormatPlugin {
 	
 	public abstract boolean acceptsFile(ZLFile file);
 	
-	public abstract String iconName();
+	public abstract String getIconName();
 	/*public FormatInfoPage createInfoPage(ZLOptionsDialog dialog, String path) {
 		return 0;
 	}*/
@@ -107,7 +107,7 @@ public abstract class FormatPlugin {
 			DefaultLanguageOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", EncodingDetector.Language.RUSSIAN); 
 		}
 			
-		public FormatPlugin plugin(ZLFile file, boolean strong) {
+		public FormatPlugin getPlugin(ZLFile file, boolean strong) {
 			final ArrayList plugins = myPlugins;
 			final int numberOfPlugins = plugins.size();
 			for (int i = 0; i < numberOfPlugins; ++i) {

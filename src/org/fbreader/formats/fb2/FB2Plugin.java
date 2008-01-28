@@ -15,7 +15,7 @@ public class FB2Plugin extends FormatPlugin {
 	}
 	
 	public boolean acceptsFile(ZLFile file) {
-		return file.extension().equals("fb2");
+		return file.getExtension().equals("fb2");
 	}
 	
 	public boolean readDescription(String path, BookDescription description) {
@@ -33,7 +33,7 @@ public class FB2Plugin extends FormatPlugin {
 
 	}
 	
-	public String iconName() {
+	public String getIconName() {
 		final String ICON_NAME = "fb2";
 		return ICON_NAME;
 	}

@@ -18,26 +18,26 @@ public class BookDescriptionUtil {
 
 	
 	public static boolean checkInfo(ZLFile file) {
-		ZLIntegerOption op = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, file.path(), SIZE, -1);
+		ZLIntegerOption op = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, file.getPath(), SIZE, -1);
 		return op.getValue() == (int)file.size();
 
 	}
 	
 	public static void saveInfo(ZLFile file) {
-		new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, file.path(), SIZE, -1).setValue((int)file.size());		
+		new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, file.getPath(), SIZE, -1).setValue((int)file.size());		
 	}
 	
 	public static void listZipEntries(ZLFile zipFile, ArrayList entries) {
-		int entriesNumber = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), ENTRIES_NUMBER, -1).getValue();
+		int entriesNumber = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), ENTRIES_NUMBER, -1).getValue();
 		if (entriesNumber == -1) {
 			//??? why so??resetZipInfo(zipFile.path());
 			resetZipInfo(zipFile);
-			entriesNumber = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), ENTRIES_NUMBER, -1).getValue();
+			entriesNumber = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), ENTRIES_NUMBER, -1).getValue();
 		}
 		for (int i = 0; i < entriesNumber; ++i) {
 			String optionName = ENTRY;
 			optionName += i;
-			String entry = new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), optionName, "").getValue();
+			String entry = new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), optionName, "").getValue();
 			if (entry.length() != 0) {
 				entries.add(entry);
 			}
@@ -48,24 +48,24 @@ public class BookDescriptionUtil {
 	public static void resetZipInfo(ZLFile zipFile) {
 		//ZLOption.clearGroup(zipFile.path());
 
-		ZLDir zipDir = zipFile.directory();
+		ZLDir zipDir = zipFile.getDirectory();
 		if (zipDir != null) {
-			String zipPrefix = zipFile.path() + ':';
+			String zipPrefix = zipFile.getPath() + ':';
 			int counter = 0;
 			final ArrayList entries = zipDir.collectFiles();
 			final int size = entries.size();
 			for (int i = 0; i < size; ++i) { 
 				String entry = (String)entries.get(i);
-				if (PluginCollection.instance().plugin(new ZLFile(entry), true) != null) {
+				if (PluginCollection.instance().getPlugin(new ZLFile(entry), true) != null) {
 					String optionName = ENTRY;
 					optionName += counter;
 					String fullName = zipPrefix + entry;
-					new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), optionName, "").setValue(fullName);
+					new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), optionName, "").setValue(fullName);
 					new BookInfo(fullName).reset();
 					++counter;
 				}
 			}
-			new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.path(), ENTRIES_NUMBER, -1).setValue(counter);
+			new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), ENTRIES_NUMBER, -1).setValue(counter);
 		}
 	}
 	

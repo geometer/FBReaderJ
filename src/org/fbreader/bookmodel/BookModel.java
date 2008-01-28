@@ -1,12 +1,16 @@
 package org.fbreader.bookmodel;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
+import org.fbreader.description.BookDescription;
+import org.fbreader.formats.FormatPlugin;
+import org.fbreader.formats.FormatPlugin.PluginCollection;
+import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 import org.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 
 public final class BookModel {
@@ -15,11 +19,14 @@ public final class BookModel {
 	private final HashMap myFootnotes = new HashMap();
 	private final HashMap myInternalHyperlinks = new HashMap();
 
+	private final BookDescription myDescription;
+	
 	private static final class ImageMap extends HashMap implements ZLImageMap {
 		public ZLImage getImage(String id) {
 			return (ZLImage)super.get(id);
 		}
 	};
+	
 	private final ImageMap myImageMap = new ImageMap(); 
 	
 	private final String myFileName;
@@ -33,13 +40,33 @@ public final class BookModel {
 			Model = model;
 		}
 	}
-	
+	/**
+	 * @deprecated
+	 * */
+	//old version for compilation
 	public BookModel(String fileName) {
 		myFileName = fileName;
+		myDescription = null;
+	}
+	
+	public BookModel(final BookDescription description) {
+		myFileName = description.getFileName();
+		myDescription = description;
+		ZLFile file = new ZLFile(description.getFileName());
+		FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
+		if (plugin != null) {
+			plugin.readModel(description, this);
+		}
 	}
 
+	//method changed!!!
 	public String getFileName() {
-		return myFileName;
+		return myDescription.getFileName();
+		//return myFileName;
+	}
+	
+	public BookDescription getDescription() { 
+		return myDescription; 
 	}
 
 	public ZLTextPlainModelImpl getBookTextModel() {
