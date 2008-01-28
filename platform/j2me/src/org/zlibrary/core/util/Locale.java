@@ -1,16 +1,24 @@
 package org.zlibrary.core.util;
 
 public final class Locale {
-	static public final Locale ENGLISH = new Locale("en");
+	static private Locale ourDefaultLocale;
 
 	private final String myLanguage;
 
-	public Locale(String language) {
-		myLanguage = language;
+	private Locale(String property) {
+		if (property == null) {
+			final int index = property.indexOf('-');
+			myLanguage = (index != -1) ? property.substring(0, index) : property;
+		} else {
+			myLanguage = "en";
+		}
 	}
 
 	public static Locale getDefault() {
-		return ENGLISH;
+		if (ourDefaultLocale == null) {
+			ourDefaultLocale = new Locale(System.getProperty("microedition.locale"));
+		}
+		return ourDefaultLocale;
 	}
 
 	public String getLanguage() {

@@ -1,6 +1,7 @@
 package org.fbreader.fbreader;
 
 import java.io.*;
+import java.util.*;
 import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
@@ -36,9 +37,25 @@ public final class FBReader extends ZLApplication {
 	public final ScrollingOptions FingerTapScrollingOptions =
 		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
 
-	final static String HELP_FILE_NAME = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.ru.fb2";
+	private String myHelpFileName;
+	String getHelpFileName() {
+		if (myHelpFileName == null) {
+			myHelpFileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2";
+			InputStream testStream = null;
+			try {
+				testStream = ZLibrary.getInstance().getInputStream(myHelpFileName);
+				testStream.close();
+			} catch (Exception e) {
+			}
+			if (testStream == null) {
+				myHelpFileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.en.fb2";
+			}
+		}
+		return myHelpFileName;
+	}
+
 	private final ZLStringOption myBookNameOption =
-		//new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", HELP_FILE_NAME);
+		//new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "");
 		new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
 
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
@@ -114,7 +131,7 @@ public final class FBReader extends ZLApplication {
 			}
 		}
 		if (!openBook(fileName)) {
-			openBook(HELP_FILE_NAME);
+			openBook(getHelpFileName());
 		}
 		refreshWindow();
 	}
