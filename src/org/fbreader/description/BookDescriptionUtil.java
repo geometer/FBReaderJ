@@ -11,7 +11,7 @@ import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLStringOption;
 
-class BookDescriptionUtil {
+public class BookDescriptionUtil {
 	private static final String SIZE = "Size";
 	private static final String ENTRY = "Entry";
 	private static final String ENTRIES_NUMBER = "EntriesNumber";
