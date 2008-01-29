@@ -1,17 +1,20 @@
 package org.fbreader.bookmodel;
 
-import java.util.HashMap;
+import java.util.*;
 
-import org.fbreader.description.BookDescription;
-import org.fbreader.formats.FormatPlugin;
-import org.fbreader.formats.FormatPlugin.PluginCollection;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.image.ZLImageMap;
+
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 import org.zlibrary.text.model.impl.ZLTextPlainModelImpl;
+
+import org.fbreader.description.BookDescription;
+import org.fbreader.formats.FormatPlugin;
+import org.fbreader.formats.FormatPlugin.PluginCollection;
 
 public final class BookModel {
 	private final ZLTextPlainModelImpl myBookTextModel = new ZLTextPlainModelImpl(65536);

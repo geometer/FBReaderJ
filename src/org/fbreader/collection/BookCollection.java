@@ -48,7 +48,7 @@ public class BookCollection {
 	
 	public ArrayList books(Author author) {
 		synchronize();
-		return (ArrayList)(myCollection.get(author));
+		return (ArrayList)myCollection.get(author);
 	}
 	
 	//public boolean isBookExternal(BookDescription description);
