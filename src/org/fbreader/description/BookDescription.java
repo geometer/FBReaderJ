@@ -1,6 +1,7 @@
 package org.fbreader.description;
 
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.description.Author.MultiAuthor;
 import org.fbreader.description.Author.SingleAuthor;

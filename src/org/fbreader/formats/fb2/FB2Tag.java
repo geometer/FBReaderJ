@@ -1,6 +1,7 @@
 package org.fbreader.formats.fb2;
 
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 final class FB2Tag {
 	public static final byte UNKNOWN = 0;

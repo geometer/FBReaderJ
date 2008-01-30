@@ -1,6 +1,7 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.image.ZLImage;
 import org.zlibrary.core.image.ZLImageData;

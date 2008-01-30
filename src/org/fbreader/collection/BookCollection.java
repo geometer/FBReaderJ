@@ -1,8 +1,6 @@
 package org.fbreader.collection;
 
 import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;

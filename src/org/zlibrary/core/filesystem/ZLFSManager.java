@@ -2,7 +2,8 @@ package org.zlibrary.core.filesystem;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 abstract class ZLFSManager {
 	private final HashMap myForcedFiles = new HashMap();

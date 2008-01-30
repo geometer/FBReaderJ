@@ -1,6 +1,7 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 final class ZLTextLineInfoVector extends ArrayList {
 	ZLTextLineInfo getInfo(int index) {

@@ -1,6 +1,7 @@
 package org.fbreader.description;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.description.BookDescription.BookInfo;
 import org.fbreader.formats.FormatPlugin.PluginCollection;

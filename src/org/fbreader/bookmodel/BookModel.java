@@ -1,8 +1,6 @@
 package org.fbreader.bookmodel;
 
 import java.util.*;
-import java.util.HashMap;
-
 import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.image.ZLImage;
@@ -65,8 +63,8 @@ public final class BookModel {
 
 	//method changed!!!
 	public String getFileName() {
-		return myDescription.getFileName();
-		//return myFileName;
+		//return myDescription.getFileName();
+		return myFileName;
 	}
 	
 	public BookDescription getDescription() { 

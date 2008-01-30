@@ -1,7 +1,8 @@
 package org.fbreader.formats;
 
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;

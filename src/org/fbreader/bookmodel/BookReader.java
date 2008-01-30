@@ -1,8 +1,6 @@
 package org.fbreader.bookmodel;
 
 import java.util.*;
-import java.util.ArrayList;
-
 import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.image.ZLImage;

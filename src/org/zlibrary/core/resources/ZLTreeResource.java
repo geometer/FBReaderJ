@@ -1,8 +1,7 @@
 package org.zlibrary.core.resources;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.xml.ZLStringMap;

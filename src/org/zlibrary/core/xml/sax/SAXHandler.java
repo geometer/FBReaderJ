@@ -1,6 +1,7 @@
 package org.zlibrary.core.xml.sax;
 
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

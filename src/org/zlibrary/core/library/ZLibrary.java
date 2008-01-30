@@ -1,7 +1,8 @@
 package org.zlibrary.core.library;
 
 import java.io.InputStream;
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLPaintContext;

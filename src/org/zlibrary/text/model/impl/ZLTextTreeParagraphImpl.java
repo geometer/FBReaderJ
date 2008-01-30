@@ -1,7 +1,7 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.ArrayList;
-
+import java.util.*;
+import org.zlibrary.core.util.*;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeParagraph {
