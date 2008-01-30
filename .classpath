@@ -2,8 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+        <classpathentry kind="src" path="platform/swing/src"/>
+ 	<classpathentry kind="src" path="platform/android/src"/>
+
+        <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/465/workspace/FBReaderJTest/lib/android.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/465/workspace/FBReaderJtodo/lib/android.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -3,7 +3,8 @@ package org.fbreader.fbreader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.formats.fb2.FB2Reader;
