@@ -1,6 +1,8 @@
 package org.fbreader.collection;
 
 import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;
@@ -51,7 +53,10 @@ public class BookCollection {
 		return (ArrayList)myCollection.get(author);
 	}
 	
-	//public boolean isBookExternal(BookDescription description);
+	public boolean isBookExternal(BookDescription description) {
+		synchronize();
+		return myExternalBooks.contains(description);
+	}
 
 	public	void rebuild(boolean strong) {
 		if (strong) {
@@ -101,6 +106,7 @@ public class BookCollection {
 				}
 			}
 		} else {
+			
 			// something strange :(
 			/*final BookList bookList = new BookList();
 			final ArrayList bookListSet = bookList.fileNames();
@@ -134,37 +140,38 @@ public class BookCollection {
 	}
 		
 	private ArrayList collectDirNames() {
-		return new ArrayList();
-		/*Queue nameQueue;// = new ArrayQueue();
-
+		//return new ArrayList();
+		PriorityQueue nameQueue = new PriorityQueue();
+		ArrayList nameSet = new ArrayList();
+		
 		String path = myPath;
-		int pos = path.find(ZLibrary.PathDelimiter);
+		int pos = path.indexOf(ZLibrary.PathDelimiter);
 		while (pos != -1) {
 			nameQueue.add(path.substring(0, pos));
 			path = path.substring(0, pos + 1);
-			pos = path.find(ZLibrary.PathDelimiter);
+			pos = path.indexOf(ZLibrary.PathDelimiter);
 		}
 		if (path.length() != 0) {
 			nameQueue.add(path);
 		}
 
-		while (!nameQueue.empty()) {
-			String name = nameQueue.front();
-			nameQueue.pop();
-			if (nameSet.find(name) == nameSet.end()) {
+		while (!nameQueue.isEmpty()) {
+			String name = (String)nameQueue.peek();
+			nameQueue.remove();
+			if (!nameSet.contains(name)) {
 				if (myScanSubdirs) {
-					shared_ptr<ZLDir> dir = ZLFile(name).directory();
-					if (!dir.isNull()) {
-						std::vector<std::string> subdirs;
-						dir->collectSubDirs(subdirs, false);
-						for (std::vector<std::string>::const_iterator it = subdirs.begin(); it != subdirs.end(); ++it) {
-							nameQueue.push(dir->itemPath(*it));
+					ZLDir dir = new ZLFile(name).getDirectory();
+					if (dir != null) {
+						ArrayList subdirs = dir.collectSubDirs();
+						for (int i = 0; i <  subdirs.size(); ++i) {
+							nameQueue.add(dir.getItemPath((String)subdirs.get(i)));
 						}
 					}
 				}
-				nameSet.insert(name);
+				nameSet.add(name);
 			}
-		}*/
+		}
+		return nameSet;
 	}
 	
 	private ArrayList collectBookFileNames() {
@@ -173,13 +180,12 @@ public class BookCollection {
 		final int numberOfDirs = dirs.size();
 		for (int i = 0; i < numberOfDirs; ++i) {
 			final String dirfile = (String)dirs.get(i);
-			final ArrayList files = new ArrayList();
 			final ZLDir dir = new ZLFile(dirfile).getDirectory();
 			if (dir == null) {
 				continue;
 			}
 
-			//dir.collectFiles(files, false);
+			final ArrayList files = dir.collectFiles();
 
 			final int numberOfFiles = files.size();
 			for (int j = 0; i < numberOfFiles; ++j) {
@@ -224,4 +230,41 @@ public class BookCollection {
 		}
 		books.add(description);
 	}
+	
+	/*private class DescriptionComparator implements Comparator {
+			public int compare(Object descr1, Object descr2) {
+				BookDescription d1 = (BookDescription)descr1;
+				BookDescription d2 = (BookDescription)descr2;
+				
+				String sequenceName1 = d1.getSequenceName();
+				String sequenceName2 = d2.getSequenceName();
+				if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
+					return d1.getTitle()
+					//return (d1.getTitle(). < d2.getTitle()) ? 0 : 1;
+				}
+				if (sequenceName1.empty()) {
+					return d1.getTitle() < sequenceName2;
+				}
+				if (sequenceName2.empty()) {
+					return sequenceName1 <= d2.getTitle();
+				}
+				if (!sequenceName1.equals(sequenceName2)) {
+					return sequenceName1 < sequenceName2;
+				}
+				return (d1.getNumberInSequence() < d2.getNumberInSequence());
+			}
+	}*/
+	
+	/*class LastOpenedBooks {
+
+		public ZLIntegerRangeOption MaxListSizeOption;
+
+		public LastOpenedBooks();
+		public	void addBook(String fileName);
+		public	Books books() ;
+
+		private:
+			Books myBooks;
+		};
+	}*/
 }

@@ -1,7 +1,6 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
 
 final class ZLTextRectangularAreaVector extends ArrayList {
 	ZLTextRectangularArea getArea(int index) {

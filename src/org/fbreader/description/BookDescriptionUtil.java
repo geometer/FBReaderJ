@@ -1,11 +1,10 @@
 package org.fbreader.description;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import org.fbreader.description.BookDescription.BookInfo;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.fbreader.option.FBOptions;
-import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLIntegerOption;

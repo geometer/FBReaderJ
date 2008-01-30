@@ -1,9 +1,10 @@
 package org.fbreader.collection;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import org.zlibrary.core.util.*;
-import org.zlibrary.core.options.*;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLStringOption;
 
 public class BookList {
 	private final static String GROUP = "BookList";

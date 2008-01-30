@@ -1,9 +1,7 @@
 package org.zlibrary.core.application;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
-import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;

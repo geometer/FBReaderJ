@@ -1,10 +1,9 @@
 package org.zlibrary.core.filesystem;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.HashMap;
 
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.util.*;
 
 public class ZLFile {
 	public class ArchiveType {

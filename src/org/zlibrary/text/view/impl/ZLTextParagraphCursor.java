@@ -1,11 +1,13 @@
 package org.zlibrary.text.view.impl;
 
-import org.zlibrary.text.model.*;
+import java.util.ArrayList;
 
-import org.zlibrary.core.image.*;
-
-import java.util.*;
-import org.zlibrary.core.util.*;
+import org.zlibrary.core.image.ZLImage;
+import org.zlibrary.core.image.ZLImageData;
+import org.zlibrary.core.image.ZLImageManager;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextTreeModel;
 
 public abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {

@@ -1,10 +1,10 @@
 package org.zlibrary.core.application;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.xml.*;
+import org.zlibrary.core.xml.ZLStringMap;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	private HashMap myKeymap;

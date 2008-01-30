@@ -1,21 +1,20 @@
 package org.fbreader.fbreader;
 
-import java.io.*;
-import java.util.*;
-import org.zlibrary.core.util.*;
-
-import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.application.ZLKeyBindings;
-import org.zlibrary.core.view.ZLViewWidget;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLStringOption;
-
-import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.view.ZLTextView;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.formats.fb2.FB2Reader;
+import org.zlibrary.core.application.ZLApplication;
+import org.zlibrary.core.application.ZLKeyBindings;
+import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.view.ZLViewWidget;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.view.ZLTextView;
 
 public final class FBReader extends ZLApplication {
 	static interface ViewMode {

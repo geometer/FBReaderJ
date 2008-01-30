@@ -1,9 +1,10 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
 
-import org.zlibrary.text.model.*;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextTreeModel;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
 	private final ArrayList myParagraphs = new ArrayList();

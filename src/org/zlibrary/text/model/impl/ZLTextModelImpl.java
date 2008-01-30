@@ -1,8 +1,10 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
+
 import org.zlibrary.core.image.ZLImageMap;
+import org.zlibrary.core.util.ZLArrayUtils;
+import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 

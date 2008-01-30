@@ -1,6 +1,7 @@
 package org.fbreader.bookmodel;
 
 import java.util.*;
+import java.util.HashMap;
 
 import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLFile;

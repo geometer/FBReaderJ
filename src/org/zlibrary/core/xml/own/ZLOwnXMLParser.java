@@ -1,11 +1,13 @@
 package org.zlibrary.core.xml.own;
 
-import java.io.*;
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import org.zlibrary.core.util.ZLArrayUtils;
-import org.zlibrary.core.xml.*;
+import org.zlibrary.core.xml.ZLStringMap;
+import org.zlibrary.core.xml.ZLXMLReader;
 
 final class ZLOwnXMLParser {
 	private static final byte START_DOCUMENT = 0;

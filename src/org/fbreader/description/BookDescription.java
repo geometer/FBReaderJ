@@ -1,16 +1,16 @@
 package org.fbreader.description;
 
-import java.util.*;
-
-import org.zlibrary.core.filesystem.ZLFile;
-import org.zlibrary.core.util.*;
-import org.zlibrary.core.options.*;
+import java.util.HashMap;
 
 import org.fbreader.description.Author.MultiAuthor;
 import org.fbreader.description.Author.SingleAuthor;
 import org.fbreader.formats.FormatPlugin;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.fbreader.option.FBOptions;
+import org.zlibrary.core.filesystem.ZLFile;
+import org.zlibrary.core.options.ZLBooleanOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLStringOption;
 
 public class BookDescription {
 	private Author myAuthor;

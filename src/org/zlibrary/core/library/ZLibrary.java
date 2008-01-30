@@ -1,17 +1,16 @@
 package org.zlibrary.core.library;
 
 import java.io.InputStream;
-
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
 import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.xml.*;
 import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.core.xml.ZLStringMap;
+import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public abstract class ZLibrary {
 	public static final String JAR_DATA_PREFIX = "#JAR#://";
-
+	public static  String PathDelimiter;
 	private final HashMap myProperties = new HashMap();
 
 	public static ZLibrary getInstance() {

@@ -1,7 +1,6 @@
 package org.zlibrary.text.model.impl;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
 
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 

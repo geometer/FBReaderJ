@@ -1,16 +1,16 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.*;
-
 import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.core.options.*;
-
-import org.zlibrary.text.model.*;
-
-import org.zlibrary.text.view.*;
-import org.zlibrary.text.view.style.*;
+import org.zlibrary.text.model.ZLTextAlignmentType;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextTreeModel;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.view.ZLTextStyle;
+import org.zlibrary.text.view.ZLTextView;
+import org.zlibrary.text.view.style.ZLTextStyleCollection;
+import org.zlibrary.text.view.style.ZLTextStyleDecoration;
 
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;

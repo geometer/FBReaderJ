@@ -1,7 +1,6 @@
 package org.zlibrary.text.view.impl;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
 final class ZLTextLineInfoCache extends HashMap {
 	public void put(ZLTextLineInfo info) {

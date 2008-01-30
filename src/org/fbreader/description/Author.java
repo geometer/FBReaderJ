@@ -1,7 +1,6 @@
 package org.fbreader.description;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
 
 public abstract class Author {
 	public abstract String getDisplayName();

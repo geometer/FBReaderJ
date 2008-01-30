@@ -1,14 +1,13 @@
 package org.fbreader.formats;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
 import org.fbreader.formats.fb2.FB2Plugin;
 import org.fbreader.formats.util.EncodingDetector;
-import org.zlibrary.core.util.*;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLOption;
