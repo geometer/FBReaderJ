@@ -139,7 +139,7 @@ public class BookCollection {
 		
 	private ArrayList collectDirNames() {
 		//return new ArrayList();
-		PriorityQueue nameQueue = new PriorityQueue();
+		ArrayList nameQueue = new ArrayList();
 		ArrayList nameSet = new ArrayList();
 		
 		String path = myPath;
@@ -154,8 +154,8 @@ public class BookCollection {
 		}
 
 		while (!nameQueue.isEmpty()) {
-			String name = (String)nameQueue.peek();
-			nameQueue.remove();
+			String name = (String)nameQueue.get(0);
+			nameQueue.remove(0);
 			if (!nameSet.contains(name)) {
 				if (myScanSubdirs) {
 					ZLDir dir = new ZLFile(name).getDirectory();
