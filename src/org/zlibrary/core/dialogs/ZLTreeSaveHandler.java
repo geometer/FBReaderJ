@@ -1,8 +1,6 @@
 package org.zlibrary.core.dialogs;
 
 public abstract class ZLTreeSaveHandler extends ZLTreeHandler {
-
-	@Override
 	public boolean isOpenHandler() {
 		return false;
 	}
