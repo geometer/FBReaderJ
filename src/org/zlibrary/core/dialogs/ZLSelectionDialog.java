@@ -4,7 +4,7 @@ import java.util.*;
 import org.zlibrary.core.util.*;
 
 public abstract class ZLSelectionDialog {
-	private ZLTreeHandler myHandler;
+	private final ZLTreeHandler myHandler;
 
 	protected ZLSelectionDialog(ZLTreeHandler myHandler) {
 		this.myHandler = myHandler;
@@ -17,7 +17,7 @@ public abstract class ZLSelectionDialog {
 		}
 
 		int index = handler().selectedIndex();
-		if ((index < 0) || (index >= (int) nodes.size())) {
+		if ((index < 0) || (index >= nodes.size())) {
 			if (handler().isOpenHandler()) {
 				index = 0;
 			} else {
@@ -35,7 +35,6 @@ public abstract class ZLSelectionDialog {
 		if (node == null) {
 			return;
 		}
-
 		if (node.isFolder()) {
 			myHandler.changeFolder(node);
 			update();

@@ -1,10 +1,10 @@
 package org.zlibrary.core.dialogs;
 
 public class ZLTreeNode {
-	private String myId;
-	private String myDisplayName;
-	private String myPixmapName;
-	private boolean myIsFolder;
+	private final String myId;
+	private final String myDisplayName;
+	private final String myPixmapName;
+	private final boolean myIsFolder;
 	
 	public ZLTreeNode(String myId, String myDisplayName, String myPixmapName, boolean myIsFolder) {
 		this.myId = myId;
