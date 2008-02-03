@@ -34,7 +34,6 @@ public abstract class ZLDir {
 		} else {
 			return isRoot() ? myPath + itemName : myPath + getDelimiter() + itemName;
 		}
-
 	}
 	
 	public boolean isRoot() {
@@ -43,6 +42,5 @@ public abstract class ZLDir {
 
 	abstract public ArrayList collectSubDirs();
 	abstract public ArrayList collectFiles();
-
 	abstract protected String getDelimiter();
 }

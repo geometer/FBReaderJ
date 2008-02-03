@@ -1,8 +1,15 @@
 package org.zlibrary.core.filesystem;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import org.zlibrary.core.util.*;
+
+
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import org.zlibrary.core.library.ZLibrary;
 
@@ -81,7 +88,7 @@ public class ZLFile {
 				myArchiveType = (int)(myArchiveType | ArchiveType.TAR | ArchiveType.GZIP);
 			}
 		}
-//(arg0)rfind
+
 		int index = myNameWithoutExtension.lastIndexOf('.');
 		if (index > 0) {
 			myExtension = myNameWithoutExtension.substring(index + 1);
@@ -162,13 +169,13 @@ public class ZLFile {
 		return ZLibrary.getInstance().getInputStream(myHelpFileName);
 	}
 	
-	public InputStream getInputStream() {
+	public InputStream getInputStream() throws IOException {
 		if (isDirectory()) {
 			return null;
 		}
 
 		InputStream stream = null;
-		/*int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
+		int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
 			stream = ZLFSManager.getInstance().createPlainInputStream(myPath);
 		} else {
@@ -176,7 +183,9 @@ public class ZLFile {
 			InputStream base = baseFile.getInputStream();
 			if (base != null) {
 				if ( 0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
-					//stream = new InputStream(base, myPath.substring(index + 1));
+					ZipFile zf = new ZipFile(myPath.substring(0, index));
+					ZipEntry entry = zf.getEntry (myPath.substring(index+1));
+					stream = zf.getInputStream (entry);
 				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
 					//stream = new ZLTarInputStream(base, myPath.substring(index + 1));
 				}
@@ -190,7 +199,7 @@ public class ZLFile {
 			if (0 != (myArchiveType & ArchiveType.BZIP2)) {
 				//return new ZLBzip2InputStream(stream);
 			}
-		}*/
+		}
 		return stream;
 	}
 	//public ZLOutputStream outputStream();*/
@@ -203,7 +212,7 @@ public class ZLFile {
 		
 		if (exists()) {
 			if (isDirectory()) {
-				//return ZLFSManager.instance().createPlainDirectory(myPath);
+				return ZLFSManager.getInstance().createPlainDirectory(myPath);
 			} else if (0 != (myArchiveType & ArchiveType.ZIP)) {
 				//return new ZLZipDir(myPath);
 			} else if (0 != (myArchiveType & ArchiveType.TAR)) {
@@ -211,7 +220,7 @@ public class ZLFile {
 			}
 		} else if (createUnexisting) {
 			myInfoIsFilled = false;
-			//return ZLFSManager.instance().createNewDirectory(myPath);
+			return ZLFSManager.getInstance().createNewDirectory(myPath);
 		}
 		return null;
 	}

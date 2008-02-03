@@ -1,13 +1,16 @@
 package org.zlibrary.core.filesystem;
 
+import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
-abstract class ZLFSManager {
+
+import org.zlibrary.core.library.ZLibrary;
+
+class ZLFSManager {
 	private final HashMap myForcedFiles = new HashMap();
-	protected static ZLFSManager ourInstance;
+	private static ZLFSManager ourInstance;
 	
 	public static void deleteInstance() {
 		if (ourInstance != null) {
@@ -24,25 +27,77 @@ abstract class ZLFSManager {
 	}
 	
 	public static ZLFSManager getInstance() {
+		if (ourInstance == null) {
+		    ourInstance = new ZLFSManager();  
+		}
 		return ourInstance;
 	}
 
 		
-	//protected ZLFSManager();
+	private ZLFSManager() {	}
+	
 		
 	public void normalize(String path) {}
 
-	abstract protected InputStream createPlainInputStream(String path);
-	abstract protected OutputStream createOutputStream(String path);
-	//abstract protected ZLFSDir createPlainDirectory(String path);
-	//abstract protected ZLFSDir createNewDirectory(String path);
-	abstract protected ZLFileInfo getFileInfo(String path);
-	abstract protected boolean removeFile(String path);
-	abstract protected String convertFilenameToUtf8(String name);
+	protected InputStream createPlainInputStream(String path) {
+		return ZLibrary.getInstance().getInputStream(path);
+	}
+	
+	//public OutputStream createOutputStream(String path);
+	
+	public ZLFSDir createPlainDirectory(String path) {
+		return new ZLFSDir(path);
+	}
+	
+	public ZLFSDir createNewDirectory(String path) {
+		File a = new File(path);
+		a.mkdirs();	
+		return new ZLFSDir(path);
+	}
+	
+	protected ZLFileInfo getFileInfo(String path) {
+		ZLFileInfo info = new ZLFileInfo();
+		File file = new File(path);
+		info.Exists = (file != null);
+		info.Size = file.length();
+		info.MTime = file.lastModified();
+		info.IsDirectory = file.isDirectory();
+		return info;
+	}
+	
+	public boolean removeFile(String path) {
+		File file = new File(path);
+		return file.delete();
+	}
+	
+	//TODO
+	public String convertFilenameToUtf8(String name) {
+		return name;		
+	}
 
-	abstract protected int findArchiveFileNameDelimiter(String path);
-	abstract protected int findLastFileNameDelimiter(String path);
-	abstract protected ZLDir getRootDirectory();
-	abstract protected String getRootDirectoryPath();
-	abstract protected String getParentPath(String path);
+	public int findArchiveFileNameDelimiter(String path) {
+		return path.lastIndexOf(':');
+	}
+	
+	public int findLastFileNameDelimiter(String path) {
+		int index = findArchiveFileNameDelimiter(path);
+		if (index == -1) {
+			index = path.lastIndexOf(ZLibrary.FileNameDelimiter);
+		}
+		return index;
+	}
+	//TODO "" - windows "/"--unix
+	public ZLDir getRootDirectory() {
+		return createPlainDirectory("");
+        		
+	}
+	
+	public String getRootDirectoryPath() {
+		return "";
+	}
+	
+	public String getParentPath(String path) {
+		File file = new File(path);
+		return file.getParent();
+	}
 }
