@@ -8,7 +8,7 @@ import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
 
-class ZLFSManager {
+public class ZLFSManager {
 	private final HashMap myForcedFiles = new HashMap();
 	private static ZLFSManager ourInstance;
 	

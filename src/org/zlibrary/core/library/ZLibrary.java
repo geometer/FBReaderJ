@@ -18,7 +18,7 @@ public abstract class ZLibrary {
 	public static ZLibrary getInstance() {
 		return ourImplementation;
 	}
-	
+		
 	private static ZLibrary ourImplementation;
 
 	protected ZLibrary() {
