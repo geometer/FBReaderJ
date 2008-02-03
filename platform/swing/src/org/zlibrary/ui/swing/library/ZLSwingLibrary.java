@@ -39,6 +39,9 @@ public class ZLSwingLibrary extends ZLibrary {
 
 	@SuppressWarnings("unchecked")
 	public void run(String[] args) {
+		ZLibrary.FileNameDelimiter = "\\";
+		ZLibrary.PathDelimiter = ";";
+		//EndOfLine = "\r\n";
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
 		loadProperties();
@@ -79,5 +82,10 @@ public class ZLSwingLibrary extends ZLibrary {
 			System.out.println("to open in browser: " + reference);
 			e.printStackTrace();
 		}
+	}
+	
+	public void init() {
+		ZLibrary.FileNameDelimiter = "\\";
+		ZLibrary.PathDelimiter = ";";
 	}
 }
