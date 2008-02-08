@@ -15,7 +15,7 @@ public class FB2Plugin extends FormatPlugin {
 	}
 	
 	public boolean acceptsFile(ZLFile file) {
-		return file.getExtension().equals("fb2");
+		return "fb2".equals(file.getExtension());
 	}
 	
 	public boolean readDescription(String path, BookDescription description) {

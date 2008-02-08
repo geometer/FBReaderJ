@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- French zlibrary resources, by Pierre Senellart -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="O&amp;k"/>
+			<node name="cancel" value="A&amp;nnuler"/>
+			<node name="yes" value="&amp;Oui"/>
+			<node name="no" value="&amp;Non"/>
+			<node name="apply" value="&amp;Appliquer"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Enregistrement de la configuration..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rouge"/>
+		<node name="green" value="Vert"/>
+		<node name="blue" value="Bleu"/>
+		<node name="black" value="Noir"/>
+		<node name="white" value="Blanc"/>
+		<node name="maroon" value="Marron"/>
+		<node name="olive" value="Vert olive"/>
+		<node name="navy" value="Bleu marine"/>
+		<node name="purple" value="Violet"/>
+		<node name="teal" value="Bleu canard"/>
+		<node name="silver" value="Argent"/>
+		<node name="gray" value="Gris"/>
+		<node name="lime" value="Vert clair"/>
+		<node name="yellow" value="Jaune"/>
+		<node name="magenta" value="Magenta"/>
+		<node name="cyan" value="Cyan"/>
+		<node name="custom..." value="Personnalisé..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Tchèque"/>
+		<node name="de" value="Allemand"/>
+		<node name="de-traditional" value="Allemand (l'orthographie traditionelle)"/>
+		<node name="en" value="Anglais"/>
+		<node name="eo" value="Espéranto"/>
+		<node name="es" value="Espagnol"/>
+		<node name="fi" value="Finnois"/>
+		<node name="fr" value="Français"/>
+		<node name="it" value="Italien"/>
+		<node name="no" value="Norvégien"/>
+		<node name="pt" value="Portugais"/>
+		<node name="ru" value="Russe"/>
+		<node name="sv" value="Suédois"/>
+		<node name="uk" value="Ukrainien"/>
+		<node name="zh" value="Chinois"/>
+		<node name="other" value="Autre"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="activé"/>
+		<node name="off" value="désactivé"/>
+		<node name="unchanged" value="unchanged"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Action pour la touche"/>
+	</node>
+</resources>

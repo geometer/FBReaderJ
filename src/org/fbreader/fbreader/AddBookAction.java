@@ -12,7 +12,7 @@ class AddBookAction extends FBAction {
 	}
 
 	public void run() {
-		ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", null);
+		ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", new FBFileHandler());
 		/*
 		FBFileHandler handler;
 		if (ZLDialogManager::instance().selectionDialog(ZLResourceKey("addFileDialog"), handler)) {

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <node name="menu">
+	  <node name="bookInfo" value="Kirjan tiedot..."/>
+	  <node name="toc" value="Sisällysluettolo"/>
+		<node name="library" value="Kirjasto">
+			<node name="showLibrary" value="Avaa"/>
+			<node name="previousBook" value="Edellinen kirja"/>
+			<node name="showRecent" value="Viimeisin"/>
+			<node name="addBook" value="Lisää kirja..."/>
+			<node name="showHelp" value="Tietoja FBReaderista"/>
+		</node>
+		<node name="navigate" value="Navigoi">
+			<node name="gotoHome" value="Siirry dokumentin alkuun"/>
+			<node name="gotoSectionStart" value="Siirry tekstiosion alkuun"/>
+			<node name="gotoSectionEnd" value="Siirry tekstiosion loppuun"/>
+			<node name="nextTOCSection" value="Sisällysluettelon seuraavaan kohtaan"/>
+			<node name="previousTOCSection" value="Sisällysluettelon edelliseen kohtaan"/>
+			<node name="undo" value="Siirry edelliseen kohtaan"/>
+			<node name="redo" value="Siirry eteenpäin"/>
+		</node>
+		<node name="selection" value="Valinta">
+			<node name="copyToClipboard" value="Kopioi leikepöydälle"/>
+			<node name="openInDictionary" value="Avaa sanakirjassa"/>
+			<node name="clearSelection" value="Tyhjennä"/>
+		</node>
+		<node name="search" value="Etsi">
+			<node name="search" value="Etsi teksti..."/>
+			<node name="findNext" value="Etsi seuraava"/>
+			<node name="findPrevious" value="Etsi edellinen"/>
+		</node>
+		<node name="view" value="Näytä">
+			<node name="rotate" value="Kierrä näyttö"/>
+			<node name="toggleFullscreen" value="Koko näyttö"/>
+			<node name="toggleIndicator" value="Sijainninilmaisin päällä/pois"/>
+		</node>
+		<node name="preferences" value="Asetukset..."/>
+		<node name="quit" value="Sulje"/>
+	</node>
+	<node name="toolbar">
+		<node name="showLibrary" value="Näytä kirjastopuu"/>
+		<node name="showRecent" value="Näytä viimeisimmät kirjat"/>
+		<node name="addBook" value="Lisää tiedosto kirjastoon"/>
+		<node name="gotoHome" value="Siirry tekstin alkuun"/>
+		<node name="undo" value="Siirry edelliseen kohtaan"/>
+		<node name="redo" value="Siirry eteenpäin"/>
+		<node name="toc" value="Sisällysluettelo"/>
+		<node name="search" value="Etsi teksti"/>
+		<node name="findNext" value="Etsi seuraava"/>
+		<node name="findPrevious" value="Etsi edellinen"/>
+		<node name="bookInfo" value="Näytä kirjan tiedot valintaikkuna"/>
+		<node name="preferences" value="Näytä asetukset valintaikkuna"/>
+		<node name="rotate" value="Kierrä teksti"/>
+		<node name="showHelp" value="Tietoja FBReaderista"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="go" value="&amp;Mene!"/>
+		</node>
+		<node name="OptionsDialog">
+			<node name="title" value="FBReader - Asetukset"/>
+			<node name="tab">
+				<node name="General" value="Yleinen">
+					<node name="bookPath" value="Kirjaston polku"/>
+					<node name="lookInSubdirectories" value="Hae kirjoja alihakemistoista"/>
+					<node name="recentListSize" value="Viimeisimmät kirjat listan koko"/>
+					<node name="keyDelay" value="Hyväksyttyjen näppäinpainallusten viive"/>
+				</node>
+				<node name="Language" value="Kieli">
+					<node name="autoDetect" value="Tunnista kieli ja merkistö automaattisesti"/>
+					<node name="defaultLanguage" value="Oletuskieli"/>
+					<node name="defaultEncodingSet" value="Oletusmerkistöalue"/>
+					<node name="defaultEncoding" value="Oletusmerkistö"/>
+					<node name="useWindows1252Hack" value="Käytä windows-1252 merkistöä iso-8859-1 sijaan"/>
+					<node name="chineseBreakAtAnyPosition" value="Katkaise Kiinaksi oleva teksti mistä tahansa kohdasta"/>
+				</node>
+				<node name="Indicator" value="Ilmaisin">
+					<node name="show" value="Näytä sijainninilmaisin"/>
+					<node name="height" value="Ilmaisimen korkeus"/>
+					<node name="offset" value="Etäisyys tekstistä"/>
+					<node name="pageNumber" value="Näytä sijainti numeroina"/>
+					<node name="time" value="Näytä aika"/>
+					<node name="fontSize" value="Kirjasinkoko"/>
+					<node name="tocMarks" value="Näytä sisällysmerkit"/>
+					<node name="navigation" value="Salli navigointi"/>
+				</node>
+				<node name="Scrolling" value="Vieritys">
+					<node name="optionsFor" value="Valinnat">
+						<node name="large" value="Sivun vieritykselle"/>
+						<node name="small" value="Rivin vieritykselle"/>
+						<node name="mouse" value="Hiirellä vieritykselle"/>
+						<node name="finger" value="Sormi vieritykselle"/>
+					</node>
+					<node name="delay" value="Vieritysten viive, msec"/>
+					<node name="mode" value="Vieritystila">
+						<node name="noOverlapping" value="Sivu kerrallaan"/>
+						<node name="keepLines" value="Säilytä rivit"/>
+						<node name="scrollLines" value="Vieritä rivit"/>
+						<node name="scrollPercentage" value="Prosentuaalinen vieritys"/>
+						<node name="disable" value="Poista käytöstä"/>
+					</node>
+					<node name="linesToKeep" value="Rivien määrä"/>
+					<node name="linesToScroll" value="Rivien määrä"/>
+					<node name="percentToScroll" value="Vieritysprosentti"/>
+				</node>
+				<node name="Selection" value="Valinta">
+					<node name="enableSelection" value="Ota käyttöön tekstin valinta"/>
+				</node>
+				<node name="Margins" value="Reunus">
+					<node name="left" value="Vasenreunus"/>
+					<node name="right" value="Oikeareunus"/>
+					<node name="top" value="Yläreunus"/>
+					<node name="bottom" value="Alareunus"/>
+				</node>
+				<node name="Format" value="Muotoilu">
+					<node name="optionsFor" value="Asetukset"/>
+					<node name="lineSpacing" value="Riviväli">
+						<node name="unchanged" value="&lt;ei muutosta&gt;"/>
+					</node>
+					<node name="firstLineIndent" value="1. rivin sisennys"/>
+					<node name="alignment" value="Tasaus">
+						<node name="left" value="Vasen"/>
+						<node name="right" value="Oikea"/>
+						<node name="center" value="Keskitetty"/>
+						<node name="justify" value="Tasattu"/>
+						<node name="unchanged" value="&lt;ei muutosta&gt;"/>
+					</node>
+					<node name="spaceBefore" value="Väli ennen"/>
+					<node name="spaceAfter" value="Väli jälkeen"/>
+					<node name="leftIndent" value="Vasen sisennys"/>
+					<node name="rightIndent" value="Oikea sisennys"/>
+				</node>
+				<node name="Styles" value="Tyylit">
+					<node name="optionsFor" value="Asetukset"/>
+					<node name="fontFamily" value="Kirjasinperhe">
+						<node name="unchanged" value="&lt;ei muutosta&gt;"/>
+					</node>
+					<node name="fontSize" value="Koko"/>
+					<node name="fontSizeDifference" value="Koon ero"/>
+					<node name="bold" value="Lihavoitu"/>
+					<node name="italic" value="Kursivoitu"/>
+					<node name="allowHyphenations" value="Salli tavutus"/>
+					<node name="autoHyphenations" value="Automaattinen tavutus"/>
+				</node>
+				<node name="Rotation" value="Kierto">
+					<node name="direction" value="Kiertämistapa">
+						<node name="disabled" value="Pois käytöstä"/>
+						<node name="clockwise" value="90 astetta myötäpäivään"/>
+						<node name="counterclockwise" value="90 astetta vastapäivään"/>
+						<node name="180" value="180 astetta"/>
+						<node name="cycle" value="Kierrä neljä suuntaa"/>
+					</node>
+				</node>
+				<node name="Colors" value="Värit">
+					<node name="colorFor" value="Värit">
+						<node name="background" value="Taustalle"/>
+						<node name="selectionBackground" value="Valitun tekstin taustalle"/>
+						<node name="text" value="Normaalille tekstille"/>
+						<node name="internalLink" value="Sisäisen linkin tekstille"/>
+						<node name="externalLink" value="Ulkoisen linkin tekstille"/>
+						<node name="highlighted" value="Korostetulle tekstille"/>
+						<node name="treeLines" value="Kirjapuun viivoille"/>
+						<node name="indicator" value="Sijainnin ilmaisimelle"/>
+					</node>
+				</node>
+				<node name="Keys" value="Näpäimet">
+					<node name="grabSystemKeys" value="Valitse järjestelmänäppäimet"/>
+					<node name="separate" value="Näytön suunnasta riippuvat näppäintoiminnot"/>
+					<node name="orientation" value="Näytön suuntaus"/>
+					<node name="action">
+						<node name="none" value="Ei mitään"/>
+						<node name="showLibrary" value="Näytä kirjasto"/>
+						<node name="showRecent" value="Näytä viimeisimmät kirjat"/>
+						<node name="previousBook" value="Avaa edellinen kirja"/>
+						<node name="toc" value="Näytä sisällysluettelo"/>
+						<node name="gotoHome" value="Siirry alkuun"/>
+						<node name="gotoSectionStart" value="Siirry tekstiosion alkuun"/>
+						<node name="gotoSectionEnd" value="Siirry tekstiosion loppuun"/>
+						<node name="nextTOCSection" value="Sisällysluettelon seuraavaan kohtaan"/>
+						<node name="previousTOCSection" value="Sisällysluettelon edelliseen kohtaan"/>
+						<node name="largeScrollForward" value="Sivunvaihto eteenpäin"/>
+						<node name="largeScrollBackward" value="Sivunvaihto taaksepäin"/>
+						<node name="smallScrollForward" value="Rivinvaihto eteenpäin"/>
+						<node name="smallScrollBackward" value="Rivinvaihto taaksepäin"/>
+						<node name="undo" value="Peru"/>
+						<node name="redo" value="Palauta"/>
+						<node name="copyToClipboard" value="Kopioi valittu teksti leikepöydälle"/>
+						<node name="openInDictionary" value="Avaa valittu teksti sanakirjassa"/>
+						<node name="clearSelection" value="Tyjennä valinta"/>
+						<node name="search" value="Etsi"/>
+						<node name="findPrevious" value="Etsi edellinen"/>
+						<node name="findNext" value="Etsi seuraava"/>
+						<node name="increaseFont" value="Suurenna kirjasinkokoa"/>
+						<node name="decreaseFont" value="Pienennä kirjasinkokoa"/>
+						<node name="toggleIndicator" value="Sijainninilmaisin päällä/pois"/>
+						<node name="toggleFullscreen" value="Koko näyttö päällä/pois"/>
+						<node name="onFullscreen" value="Koko näyttö käyttöön"/>
+						<node name="rotate" value="Kierrä näyttöä"/>
+						<node name="preferences" value="Näytä asetukset valintaikkuna"/>
+						<node name="bookInfo" value="Näytä kirjantidot valintaikkuna"/>
+						<node name="addBook" value="Lisää kirja"/>
+						<node name="cancel" value="Peru"/>
+						<node name="quit" value="Lopeta"/>
+					</node>
+					<node name="quitOnCancel" value="Sulje sovellus peruttaessa"/>
+				</node>
+				<node name="Config" value="Tila">
+					<node name="autoSave" value="Tallenna tila automaattisesti"/>
+					<node name="timeout" value="Tallennusvälin aika sekunneissa"/>
+				</node>
+				<node name="Dictionary" value="Sanakirja">
+					<node name="enableIntegration" value="Käytä sanakirjaa: %s"/>
+					<node name="defaultText" value="Käyttöönotettava sanakirja"/>
+					<node name="choice" value="Integroi seuraavan kanssa:"/>
+					<node name="singleClickOpen" value="Avaa yhdellä kosketuksella"/>
+				</node>
+				<node name="Web" value="Web">
+					<node name="enableIntegration" value="Ulkoisten linkkien avaus: %s"/>
+					<node name="defaultText" value="Avaa ulkoiset linkit selaimessa"/>
+					<node name="choice" value="Käytä selainta"/>
+					<node name="command" value="Suorituskomento"/>
+				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Toiminta näppäimen vapautuksesta painalluksen sijaan"/>
+					<node name="minStylusPressure" value="Styluksen minimi paine"/>
+					<node name="maxStylusPressure" value="Styluksen maksimi paine"/>
+				</node>
+			</node>
+		</node>
+		<node name="InfoDialog">
+			<node name="title" value="FBReader - Kirjan tiedot"/>
+			<node name="tab">
+				<node name="Common" value="Yleiset">
+					<node name="file" value="Tiedosto"/>
+					<node name="title" value="Nimi"/>
+					<node name="authorDisplayName" value="Tekijä (Näytä nimi)"/>
+					<node name="authorSortKey" value="Tekijä (Lajitteluavain)"/>
+					<node name="language" value="Kieli"/>
+					<node name="encodingSet" value="Merkistöalue"/>
+					<node name="encoding" value="Merkistö"/>
+				</node>
+				<node name="Series" value="Kirjasarja">
+					<node name="seriesTitle" value="Sarjan nimi"/>
+					<node name="bookNumber" value="Kirjan numero"/>
+				</node>
+				<node name="Text" value="Teksti">
+					<node name="breakType" value="Katkaise kappale"/>
+					<node name="ignoreIndent" value="Hylkää pienempi sisennys kuin"/>
+					<node name="buildTOC" value="Luo sisällysluettelo"/>
+					<node name="emptyLines" value="Tyhjät rivit ennen uutta osaa"/>
+				</node>
+				<node name="&lt;PRE&gt;" value="&lt;ESI&gt;">
+					<node name="breakType" value="Katkaise kappale"/>
+					<node name="ignoreIndent" value="Hylkää pienempi sisennys kuin"/>
+					<node name="buildTOC" value="Luo sisällysluettelo"/>
+					<node name="emptyLines" value="Tyhjät rivit ennen uutta osaa"/>
+				</node>
+			</node>
+		</node>
+		<node name="addFileDialog">
+			<node name="title" value="FBReader - Lisää kirja kirjastoon"/>
+		</node>
+		<node name="textSearchDialog">
+			<node name="title" value="Etsi teksti"/>
+			<node name="text" value=""/>
+			<node name="ignoreCase" value="&amp;Älä huomioi kirjainkokoa"/>
+			<node name="wholeText" value="K&amp;oko tekstistä"/>
+			<node name="backward" value="&amp;Taaksepäin"/>
+			<node name="currentSection" value="&amp;Vain tästä osasta"/>
+		</node>
+		<node name="removeBookBox">
+			<node name="title" value="Poista kirja"/>
+			<node name="message" value="Poista &#13;&quot;%s&quot;&#13; kirjastosta?"/>
+		</node>
+		<node name="openBookErrorBox">
+			<node name="title" value="Virhe"/>
+			<node name="message" value="Ei voitu avata:&#13;%s"/>
+		</node>
+		<node name="noHelpBox">
+			<node name="title" value="Virhe"/>
+			<node name="message" value="Ohjetiedostoa ei löytynyt"/>
+		</node>
+		<node name="waitMessage">
+			<node name="loadingBook" value="Avataan kirjaa..."/>
+			<node name="loadingBookList" value="Avataan kirjalistaa..."/>
+		</node>
+	</node>
+	<node name="style">
+		<node name="Base" value="Perustekstille"/>
+		<node name="Regular Paragraph" value="Normaalille kappaleelle"/>
+		<node name="Title" value="Otsikolle"/>
+		<node name="Section Title" value="Valinnan otsikolle"/>
+		<node name="Poem Title" value="Runon otsikolle"/>
+		<node name="Subtitle" value="Alaotsikolle"/>
+		<node name="Annotation" value="Huomautukselle"/>
+		<node name="Epigraph" value="Epigraphille"/>
+		<node name="Stanza" value="Säkeistölle"/>
+		<node name="Verse" value="Jakeelle"/>
+		<node name="Preformatted text" value="Esimuotoillulle tekstille"/>
+		<node name="Image" value="Kuvalle"/>
+		<node name="Cite" value="Lainaukselle"/>
+		<node name="Author" value="Tekijälle"/>
+		<node name="Date" value="Päivämäärälle"/>
+		<node name="Internal Hyperlink" value="Sisäiselle linkille"/>
+		<node name="Footnote" value="Alaviitteelle"/>
+		<node name="Emphasis" value="Korostukselle"/>
+		<node name="Strong" value="Vahvennetulle"/>
+		<node name="Subscript" value="Viitteelle"/>
+		<node name="Superscript" value="Yläviitteelle"/>
+		<node name="Code" value="Koodille"/>
+		<node name="StrikeThrough" value="Yliviivatulle"/>
+		<node name="Contents Table" value="Sisällysluettelolle"/>
+		<node name="Author in Library" value="Tekijälle kirjastossa"/>
+		<node name="Book in Library" value="Kirjalle kirjastossa"/>
+		<node name="Recent Book List" value="Viimeisimmät kirjat listalle"/>
+		<node name="Italic" value="Kursivoidulle"/>
+		<node name="Bold" value="Lihavoidulle"/>
+		<node name="Definition" value="Määrittelylle"/>
+		<node name="Definition Description" value="Määrittelyn kuvaukselle"/>
+		<node name="Header 1" value="Otsikolle 1"/>
+		<node name="Header 2" value="Otsikolle 2"/>
+		<node name="Header 3" value="Otsikolle 3"/>
+		<node name="Header 4" value="Otsikolle 4"/>
+		<node name="Header 5" value="Otsikolle 5"/>
+		<node name="Header 6" value="Otsikolle 6"/>
+		<node name="External Hyperlink" value="Ulkoiselle linkille"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Selain"/>
+		<node name="defaultBrowser" value="Oletusselain"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Tuntematon virhe"/>
+		<node name="unsupportedCompressionMethod" value="Tiivistysmuodolle ei tukea"/>
+		<node name="encriptedFile" value="Digitaalisesti suojattu tiedosto"/>
+	</node>
+</resources>

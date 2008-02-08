@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;ОК"/>
+			<node name="cancel" value="О&amp;тменить"/>
+			<node name="yes" value="&amp;Да"/>
+			<node name="no" value="&amp;Нет"/>
+			<node name="apply" value="При&amp;менить"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Сохранение настроек..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Красный"/>
+		<node name="green" value="Зеленый"/>
+		<node name="blue" value="Синий"/>
+		<node name="black" value="Черный"/>
+		<node name="white" value="Белый"/>
+		<node name="maroon" value="Бордовый"/>
+		<node name="olive" value="Оливковый"/>
+		<node name="navy" value="Темно-синий"/>
+		<node name="purple" value="Фиолетовый"/>
+		<node name="teal" value="Темно-голубой"/>
+		<node name="silver" value="Серебристый"/>
+		<node name="gray" value="Серый"/>
+		<node name="lime" value="Светло-зеленый"/>
+		<node name="yellow" value="Желтый"/>
+		<node name="magenta" value="Пурпурный"/>
+		<node name="cyan" value="Голубой"/>
+		<node name="custom..." value="Настроить..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="чешский"/>
+		<node name="de" value="немецкий"/>
+		<node name="de-traditional" value="немецкий (старая орфография)"/>
+		<node name="en" value="английский"/>
+		<node name="eo" value="эсперанто"/>
+		<node name="es" value="испанский"/>
+		<node name="fi" value="финский"/>
+		<node name="fr" value="французский"/>
+		<node name="it" value="итальянский"/>
+		<node name="no" value="норвежский"/>
+		<node name="pt" value="португальский"/>
+		<node name="ru" value="русский"/>
+		<node name="sv" value="шведский"/>
+		<node name="uk" value="украинский"/>
+		<node name="zh" value="китайский"/>
+		<node name="other" value="другой"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="включить"/>
+		<node name="off" value="выключить"/>
+		<node name="unchanged" value="не менять"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Действие для"/>
+	</node>
+</resources>

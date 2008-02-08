@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;Ok"/>
+			<node name="cancel" value="&amp;Peruuta"/>
+			<node name="yes" value="&amp;Kyllä"/>
+			<node name="no" value="&amp;Ei"/>
+			<node name="apply" value="&amp;Toteuta"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Tallennetaan asetuksia..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Punainen"/>
+		<node name="green" value="Vihreä"/>
+		<node name="blue" value="Sininen"/>
+		<node name="black" value="Musta"/>
+		<node name="white" value="Valkoinen"/>
+		<node name="maroon" value="Kastanjanruskea"/>
+		<node name="olive" value="Oliivinvihreä"/>
+		<node name="navy" value="Tummansininen"/>
+		<node name="purple" value="Purppura"/>
+		<node name="teal" value="Sinivihreä"/>
+		<node name="silver" value="Hopea"/>
+		<node name="gray" value="Harmaa"/>
+		<node name="lime" value="Kellanvihreä"/>
+		<node name="yellow" value="Keltainen"/>
+		<node name="magenta" value="Magenta"/>
+		<node name="cyan" value="Syaani"/>
+		<node name="custom..." value="Valinnainen..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Tsekki"/>
+		<node name="de" value="Saksa"/>
+		<node name="de-traditional" value="Saksa (perinteinen oikeinkirjoitus)"/>
+		<node name="en" value="Englanti"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Espanja"/>
+		<node name="fi" value="Suomi"/>
+		<node name="fr" value="Ranska"/>
+		<node name="it" value="Italia"/>
+		<node name="no" value="Norja"/>
+		<node name="pt" value="Portugali"/>
+		<node name="ru" value="Venäjä"/>
+		<node name="sv" value="Ruotsi"/>
+		<node name="uk" value="Ukraina"/>
+		<node name="zh" value="Kiina"/>
+		<node name="other" value="Muu"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on"/>
+		<node name="off" value="off"/>
+		<node name="unchanged" value="ei muutoksia"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Toiminta näppäimelle"/>
+	</node>
+</resources>

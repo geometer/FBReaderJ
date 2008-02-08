@@ -14,7 +14,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 	}
 	
 	public boolean runSelectionDialog(String key, ZLTreeHandler handler) {
-		new ZLSwingSelectionDialog(myApplicationWindow.getFrame()).run();
+		new ZLSwingSelectionDialog(myApplicationWindow.getFrame(), getDialogTitle(key), handler).run();
 		return false;
 	}
 

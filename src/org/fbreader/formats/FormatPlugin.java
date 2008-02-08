@@ -74,7 +74,7 @@ public abstract class FormatPlugin {
 	public static class PluginCollection {
 
 		private static PluginCollection ourInstance;
-		private ArrayList myPlugins;
+		private final ArrayList myPlugins = new ArrayList();
 		public ZLIntegerOption DefaultLanguageOption;
 		
 		public static PluginCollection instance() {

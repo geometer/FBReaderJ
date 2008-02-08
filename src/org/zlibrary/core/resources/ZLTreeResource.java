@@ -29,8 +29,8 @@ final class ZLTreeResource extends ZLResource {
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
 		ResourceTreeReader reader = new ResourceTreeReader();
-		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/zlibrary/" + fileName);
-		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/application/" + fileName);
+		reader.readDocument(ourRoot, ourZLibraryDirectory + fileName);
+		reader.readDocument(ourRoot, ourApplicationDirectory + fileName);
 	}
 
 	private	ZLTreeResource(String name, String value) {

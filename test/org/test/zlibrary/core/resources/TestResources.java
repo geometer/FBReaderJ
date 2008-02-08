@@ -14,6 +14,8 @@ public class TestResources extends TestCase {
 		new ZLSwingLibrary();
 		new ZLOwnXMLProcessorFactory();
 		Locale.setDefault(Locale.ENGLISH);
+		ZLResource.setApplicationDirectory("test/data/resources/application/");
+		ZLResource.setZLibraryDirectory("test/data/resources/zlibrary/");
 	}
 	
 	public void testMissingResource() {
@@ -57,7 +59,7 @@ public class TestResources extends TestCase {
 	}
 	
 	public void testValue2() {
-		ZLResource res = ZLResource.resource("menu").getResource("search").getResource("find");
+		ZLResource res = ZLResource.resource("menu").getResource("search").getResource("search");
 		assertEquals(res.getValue(), "Find Text...");
 	}
 }

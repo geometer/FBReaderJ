@@ -76,6 +76,10 @@ public class ZLFSManager {
 	}
 
 	public int findArchiveFileNameDelimiter(String path) {
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			int index = path.lastIndexOf(':');
+			return (index == 1) ? -1 : index;
+		}
 		return path.lastIndexOf(':');
 	}
 	

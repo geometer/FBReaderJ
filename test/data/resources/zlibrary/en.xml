@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;Ok"/>
+			<node name="cancel" value="&amp;Cancel"/>
+			<node name="yes" value="&amp;Yes"/>
+			<node name="no" value="&amp;No"/>
+			<node name="apply" value="&amp;Apply"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Saving config..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Red"/>
+		<node name="green" value="Green"/>
+		<node name="blue" value="Blue"/>
+		<node name="black" value="Black"/>
+		<node name="white" value="White"/>
+		<node name="maroon" value="Maroon"/>
+		<node name="olive" value="Olive"/>
+		<node name="navy" value="Navy"/>
+		<node name="purple" value="Purple"/>
+		<node name="teal" value="Teal"/>
+		<node name="silver" value="Silver"/>
+		<node name="gray" value="Gray"/>
+		<node name="lime" value="Lime"/>
+		<node name="yellow" value="Yellow"/>
+		<node name="magenta" value="Magenta"/>
+		<node name="cyan" value="Cyan"/>
+		<node name="custom..." value="Custom..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Czech"/>
+		<node name="de" value="German"/>
+		<node name="de-traditional" value="German (traditional orthography)"/>
+		<node name="en" value="English"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spanish"/>
+		<node name="fi" value="Finnish"/>
+		<node name="fr" value="French"/>
+		<node name="it" value="Italian"/>
+		<node name="no" value="Norwegian"/>
+		<node name="pt" value="Portuguese"/>
+		<node name="ru" value="Russian"/>
+		<node name="sv" value="Swedish"/>
+		<node name="uk" value="Ukrainian"/>
+		<node name="zh" value="Chinese"/>
+		<node name="other" value="Other"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on"/>
+		<node name="off" value="off"/>
+		<node name="unchanged" value="unchanged"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Action for Key"/>
+	</node>
+</resources>
