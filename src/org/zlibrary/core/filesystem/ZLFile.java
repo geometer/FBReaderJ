@@ -36,10 +36,12 @@ public class ZLFile {
 		int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
 			myInfo = ZLFSManager.getInstance().getFileInfo(myPath);
+			//myInfo.IsDirectory = true;
 		} else {
 			myInfo = ZLFSManager.getInstance().getFileInfo(myPath.substring(0, index));
 			myInfo.IsDirectory = false;
 		}
+		
 		myInfoIsFilled = true;
 	}
 	

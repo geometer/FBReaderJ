@@ -58,6 +58,7 @@ public class ZLFSManager {
 	protected ZLFileInfo getFileInfo(String path) {
 		ZLFileInfo info = new ZLFileInfo();
 		File file = new File(path);
+		
 		info.Exists = (file != null);
 		info.Size = file.length();
 		info.MTime = file.lastModified();
