@@ -7,7 +7,7 @@ import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
-public class TestFileManager extends TestCase {
+public class TestZLFile extends TestCase {
 	private final String filename = "testfb2book.fb2";
 	private final String filenameZip = "testbookZip.zip";
 
