@@ -29,7 +29,7 @@ public class FB2Plugin extends FormatPlugin {
 			new BookDescription.BookInfo(description.getFileName()).EncodingOption.setValue(AUTO);
 		}
         // FB2BookReader
-		return true;//TODO new FB2Reader(model).readBook(description.getFileName());
+		return new FB2Reader(model).readBook(description.getFileName());
 
 	}
 	

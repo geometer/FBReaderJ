@@ -33,6 +33,13 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		return processor.read(this, getModel().getFileName());
 	}
 	
+	//strange
+	boolean readBook(String fileName) {
+		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
+		return processor.read(this, fileName);
+		//return readDocument(fileName);
+	}
+
 	public void startDocumentHandler() {
 	}
 

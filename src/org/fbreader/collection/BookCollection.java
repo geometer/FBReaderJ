@@ -20,7 +20,7 @@ public class BookCollection {
 	private final static String OPTIONS = "Options";
 
 	private final ArrayList myAuthors = new ArrayList();
-	private	HashMap myCollection;
+	private	HashMap myCollection = new HashMap();
 	private	final ArrayList myExternalBooks = new ArrayList();
 
 	private	String myPath;
