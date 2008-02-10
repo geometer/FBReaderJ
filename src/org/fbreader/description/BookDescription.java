@@ -16,11 +16,11 @@ import org.zlibrary.core.options.ZLStringOption;
 public class BookDescription {
 	private Author myAuthor;
 	private	String myTitle;
-	private	String mySequenceName;
+	private	String mySequenceName = "";
 	private	int myNumberInSequence;
 	private	final String myFileName;
-	private	String myLanguage;
-	private	String myEncoding;
+	private	String myLanguage = "";
+	private	String myEncoding = "";
 	private final static HashMap ourDescriptions = new HashMap();
 	
 	private static final String EMPTY = "";

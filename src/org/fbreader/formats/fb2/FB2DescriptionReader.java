@@ -140,8 +140,8 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 	}
 	
 	public void characterDataHandler(char[] ch, int start, int length) {
-		//TODO
-		final String text = new String(ch).substring(start, length);
+		//TODO + length -- remove
+		final String text = new String(ch).substring(start, start + length);
 		if (myReadSomething) {
 			if (myReadTitle) {
 				myDescription.setTitle(myDescription.getTitle()+text);//.append(text, len);
