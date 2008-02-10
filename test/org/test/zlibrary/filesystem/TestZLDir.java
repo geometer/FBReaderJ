@@ -25,8 +25,9 @@ public class TestZLDir extends TestCase {
     	ArrayList/*<String>*/ list = dir.collectFiles();
     	
     	for (int i = 0; i < list.size(); i++) {
+    		
     		String str = (String)list.get(i);
-    		if (str.equals(filename) || str.equals(filenameZip) || str.equals(filenameDir)) {
+    		if (str.equals(filename) || str.equals(filenameZip) || str.equals(filenameDir) ||str.equals(".svn")) {
     			assertEquals(true, true);
     		} else {
     			assertEquals(false, true);
@@ -41,8 +42,8 @@ public class TestZLDir extends TestCase {
 		ArrayList/*<String>*/ list = dir.collectSubDirs();
     	
     	for (int i = 0; i < list.size(); i++) {
-    		
-    		if (list.get(i).equals(filenameDir)) {
+    		  
+    		if (list.get(i).equals(filenameDir) || list.get(i).equals(".svn")) {
     			assertEquals(true, true);
     		} else {
     			assertEquals(false, true);

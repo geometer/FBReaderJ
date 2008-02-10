@@ -19,13 +19,14 @@ public class TestZLFile extends TestCase {
 	
 	public void testCreateFile() {
 		ZLFile file = new ZLFile(myDirectory + filename);
+		
     	file.getInputStream(myDirectory + filename);
 	}
 	
 	public void testCreateFile2() {
-		ZLFile file = new ZLFile(myDirectory + filename);
-    	file.getInputStream(myDirectory + filename);
-    	
+		ZLFile file = new ZLFile(myDirectory +"\\"+ filename);
+    	file.getInputStream(myDirectory + "\\"+filename);
+    	System.out.println(file.getPhysicalFilePath());
     	assertEquals(file.getDirectory(), null);
     	assertEquals(file.getExtension(), "fb2");       
        	assertEquals(file.exists(), true);
@@ -55,6 +56,7 @@ public class TestZLFile extends TestCase {
     	ZLDir dir = file.getDirectory();
     	//assertEquals(dir.getName(), myDirectory);
         assertEquals(dir.getItemPath(".."), "test\\data\\fb2");
+        System.out.println(dir.getItemPath("marina"));
         assertEquals(dir.getItemPath("marina"), "test\\data\\fb2\\filesystem\\marina");
         assertEquals(dir.getParentPath(), "test\\data\\fb2");
     	assertEquals(dir.getPath(), "test\\data\\fb2\\filesystem");
