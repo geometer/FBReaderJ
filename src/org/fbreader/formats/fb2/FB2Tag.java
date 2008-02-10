@@ -44,7 +44,7 @@ final class FB2Tag {
 	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
-	static {
+	static {	
 		ourTagByName.put("unknown", UNKNOWN);
 		ourUnknownTag = (Byte)ourTagByName.get("unknown");
 		ourTagByName.put("p", P);
@@ -68,10 +68,19 @@ final class FB2Tag {
 		ourTagByName.put("code", CODE);
 		ourTagByName.put("strikethrough", STRIKETHROUGH);
 		ourTagByName.put("title", TITLE);
+		ourTagByName.put("title-info", TITLE_INFO);
 		ourTagByName.put("body", BODY);
 		ourTagByName.put("image", IMAGE);
 		ourTagByName.put("binary", BINARY);
 		ourTagByName.put("fictionbook", FICTIONBOOK);
+		ourTagByName.put("book-title", BOOK_TITLE);
+		ourTagByName.put("sequence", SEQUENCE);
+		ourTagByName.put("first-name", FIRST_NAME);
+		ourTagByName.put("middle-name", MIDDLE_NAME);
+		ourTagByName.put("last-name", LAST_NAME);
+		ourTagByName.put("book-title", BOOK_TITLE);
+		ourTagByName.put("author", AUTHOR);
+		ourTagByName.put("lang", LANG);
 	}
 
 	public static byte getTagByName(String name) {

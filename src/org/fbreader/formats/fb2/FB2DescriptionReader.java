@@ -22,7 +22,9 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 		myDescription.clearAuthor();
 		myDescription.setTitle("");
 		myDescription.setLanguage("");
-		
+		myAuthorNames[0] = "";
+		myAuthorNames[1] = "";
+		myAuthorNames[2] = "";
 	}
 	
 	public boolean dontCacheAttributeValues() {
@@ -104,7 +106,7 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 		case FB2Tag.AUTHOR:
 			if (myReadSomething) {
 				myAuthorNames[0].trim();
-				myAuthorNames[1].trim();
+			    myAuthorNames[1].trim();
 				myAuthorNames[2].trim();
 				String fullName = myAuthorNames[0];
 				if (fullName.length() != 0 && myAuthorNames[1].length() != 0) {
@@ -142,6 +144,11 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 	public void characterDataHandler(char[] ch, int start, int length) {
 		//TODO + length -- remove
 		final String text = new String(ch).substring(start, start + length);
+		//for (int i = 0 ; i < ch.length; i++) {
+		//	System.out.print(ch[i]);
+		//}
+		//System.out.println();
+		//System.out.println("characterDataHandler---" +text + "  start=" + start + "  lenght="+length);
 		if (myReadSomething) {
 			if (myReadTitle) {
 				myDescription.setTitle(myDescription.getTitle()+text);//.append(text, len);
