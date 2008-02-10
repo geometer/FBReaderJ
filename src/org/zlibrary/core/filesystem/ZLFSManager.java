@@ -87,7 +87,7 @@ public class ZLFSManager {
 	public int findLastFileNameDelimiter(String path) {
 		int index = findArchiveFileNameDelimiter(path);
 		if (index == -1) {
-			index = path.lastIndexOf(ZLibrary.FileNameDelimiter);
+			index = path.lastIndexOf(File.separator);
 		}
 		return index;
 	}

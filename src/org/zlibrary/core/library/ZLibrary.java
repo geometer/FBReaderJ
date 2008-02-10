@@ -11,8 +11,8 @@ import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public abstract class ZLibrary {
 	public static final String JAR_DATA_PREFIX = "#JAR#://";
-	public static  String PathDelimiter;
-	public static String FileNameDelimiter;
+	//public static  String PathDelimiter;
+	//public static String FileNameDelimiter;
 	private final HashMap myProperties = new HashMap();
 
 	public static ZLibrary getInstance() {

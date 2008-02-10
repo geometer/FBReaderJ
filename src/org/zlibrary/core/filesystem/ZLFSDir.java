@@ -16,7 +16,7 @@ public class ZLFSDir extends ZLDir {
 	}
 
 	public String getDelimiter() {
-		return ZLibrary.getInstance().FileNameDelimiter;
+		return File.separator;
 	};
 	
 	public ArrayList collectSubDirs() {

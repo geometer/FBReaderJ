@@ -1,7 +1,8 @@
 package org.fbreader.collection;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;
@@ -143,11 +144,11 @@ public class BookCollection {
 		ArrayList nameSet = new ArrayList();
 		
 		String path = myPath;
-		int pos = path.indexOf(ZLibrary.PathDelimiter);
+		int pos = path.indexOf(File.pathSeparator);
 		while (pos != -1) {
 			nameQueue.add(path.substring(0, pos));
 			path = path.substring(0, pos + 1);
-			pos = path.indexOf(ZLibrary.PathDelimiter);
+			pos = path.indexOf(File.pathSeparator);
 		}
 		if (path.length() != 0) {
 			nameQueue.add(path);
