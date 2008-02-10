@@ -33,25 +33,20 @@ public class TestDescriptionBook extends TestCase {
 		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename);
 		assertTrue(bd != null);
 		assertEquals(bd.getEncoding(), "auto");	
-        System.out.println(bd.getFileName());	
-        System.out.println(bd.getLanguage());	
-        System.out.println(bd.getNumberInSequence());	
-        System.out.println(bd.getSequenceName());	
-	    System.out.println(bd.getTitle());	
-	    
-
-		
+		assertEquals(bd.getFileName(), "test\\data\\fb2\\filesystem\\testfb2book.fb2");	
+		assertEquals(bd.getLanguage(), "ru");	
+        //System.out.println(bd.getNumberInSequence());	
+		assertEquals(bd.getSequenceName(), "Приключения Эраста Фандорина");	
+		assertEquals(bd.getTitle(), "Алмазная колесница");	
 	}
 	
 	public void test() {
-		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename);
+		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename, false);
 		assertTrue(bd != null);
-        
-		//System.out.println(bd.getEncoding());	
-        //System.out.println(bd.getFileName());	
-        //System.out.println(bd.getLanguage());	
-        //System.out.println(bd.getNumberInSequence());	
-        //System.out.println(bd.getSequenceName());	
+		
+		BookDescription bd2 = BookDescription.getDescription(myDirectory+"\\c"+filename, false);
+		assertTrue(bd2 == null);
+		
 	}
 
 }
