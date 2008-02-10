@@ -2,6 +2,7 @@ package org.test.zlibrary.description;
 
 import junit.framework.TestCase;
 
+import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
@@ -40,7 +41,7 @@ public class TestDescriptionBook extends TestCase {
 		assertEquals(bd.getTitle(), "Алмазная колесница");	
 	}
 	
-	public void test() {
+	public void testGetDescription() {
 		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename, false);
 		assertTrue(bd != null);
 		
@@ -48,5 +49,15 @@ public class TestDescriptionBook extends TestCase {
 		assertTrue(bd2 == null);
 		
 	}
+	
+	public void testBookModel() {
+		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename, false);
+		assertTrue(bd != null);
+		BookModel bm = new BookModel(bd);
+		assertTrue(bm != null);
+		//System.out.println(bm.getContentsModel().getParagraphsNumber());
+	}
+	
+	
 
 }
