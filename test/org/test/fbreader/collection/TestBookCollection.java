@@ -15,7 +15,7 @@ import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 public class TestBookCollection extends TestCase  {
 	private final String filename = "testfb2book.fb2";
 	private final String filenameZip = "testbookZip.zip";	
-	private String myDirectory = "test\\data\\fb2\\filesystem";
+	private String myDirectory = "test/data/fb2/filesystem";
 	
 	public void setUp() {
 		new ZLSwingLibrary();
@@ -34,7 +34,7 @@ public class TestBookCollection extends TestCase  {
 	}
 	
 	public void testExternalBook() {
-		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename);
+		BookDescription bd = BookDescription.getDescription(myDirectory+"/"+filename);
 		assertTrue(bd != null);
 		
 		BookCollection bc = new BookCollection();
