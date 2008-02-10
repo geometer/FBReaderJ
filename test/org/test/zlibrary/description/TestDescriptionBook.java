@@ -24,20 +24,19 @@ public class TestDescriptionBook extends TestCase {
 		assertTrue(bd != null);
 		Author author = bd.getAuthor();
 		assertTrue(author != null);
-		assertEquals(author.getDisplayName(), "Unknown Author");
-		//System.out.println(author.getSortKey());
-		//System.out.println(author.isSingle());
-		assertEquals(author.isSingle(), true);	
+		assertEquals(author.getDisplayName(), "Борис Акунин");
+		assertEquals(author.getSortKey(), "Акунин");
+		assertEquals(author.isSingle(), true);
 	}
 	
 	public void testLanguageEncoding() {
 		BookDescription bd = BookDescription.getDescription(myDirectory+"\\"+filename);
 		assertTrue(bd != null);
-        //System.out.println(bd.getEncoding());	
-        //System.out.println(bd.getFileName());	
-        //System.out.println(bd.getLanguage());	
-        //System.out.println(bd.getNumberInSequence());	
-        //System.out.println(bd.getSequenceName());	
+		assertEquals(bd.getEncoding(), "auto");	
+        System.out.println(bd.getFileName());	
+        System.out.println(bd.getLanguage());	
+        System.out.println(bd.getNumberInSequence());	
+        System.out.println(bd.getSequenceName());	
 	    System.out.println(bd.getTitle());	
 	    
 
