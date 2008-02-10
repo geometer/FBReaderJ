@@ -18,7 +18,7 @@ public class TestBookCollection extends TestCase  {
 	private String myDirectory = "test\\data\\fb2\\filesystem";
 	
 	public void setUp() {
-		new ZLSwingLibrary().init();
+		new ZLSwingLibrary();
 		new ZLOwnXMLProcessorFactory();
 		//Locale.setDefault(Locale.ENGLISH);
 		//ZLResource.setApplicationDirectory("test/data/resources/application/");

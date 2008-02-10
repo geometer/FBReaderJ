@@ -16,7 +16,7 @@ public class TestZLDir extends TestCase {
 	private String myDirectory = "test\\data\\fb2\\filesystem";
 	
 	public void setUp() {
-		new ZLSwingLibrary().init();
+		new ZLSwingLibrary();
 	}
 
 	public void testCollectFiles() {

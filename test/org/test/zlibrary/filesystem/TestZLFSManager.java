@@ -13,7 +13,7 @@ public class TestZLFSManager extends TestCase {
 	private String myDirectory = "test\\data\\fb2\\filesystem";
 	
 	public void setUp() {
-		new ZLSwingLibrary().init();
+		//new ZLSwingLibrary().init();
 	}
 
 	public void testAddRemoveDir() {
