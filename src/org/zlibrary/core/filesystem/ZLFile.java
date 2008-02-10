@@ -1,8 +1,6 @@
 package org.zlibrary.core.filesystem;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 import org.zlibrary.core.util.*;
 

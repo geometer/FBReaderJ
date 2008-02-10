@@ -1,6 +1,6 @@
 package org.zlibrary.core.filesystem;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
