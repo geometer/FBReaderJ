@@ -39,8 +39,8 @@ public class ZLSwingLibrary extends ZLibrary {
 
 	@SuppressWarnings("unchecked")
 	public void run(String[] args) {
-		ZLibrary.FileNameDelimiter = "\\";
-		ZLibrary.PathDelimiter = ";";
+		//ZLibrary.FileNameDelimiter = "\\";
+		//ZLibrary.PathDelimiter = ";";
 		//EndOfLine = "\r\n";
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
@@ -84,8 +84,8 @@ public class ZLSwingLibrary extends ZLibrary {
 		}
 	}
 	
-	public void init() {
+	/*public void init() {
 		ZLibrary.FileNameDelimiter = "\\";
 		ZLibrary.PathDelimiter = ";";
-	}
+	}*/
 }
