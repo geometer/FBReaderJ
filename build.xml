@@ -53,6 +53,7 @@
 			<test name="org.test.zlibrary.core.resources.AllTests"/>
 			<test name="org.test.fbreader.formats.fb2.AllTests"/>
 			<test name="org.test.zlibrary.filesystem.TestALL"/>
+			
 		</junit>
 	</target>
 
