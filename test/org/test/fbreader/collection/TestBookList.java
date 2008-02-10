@@ -11,7 +11,7 @@ public class TestBookList extends TestCase {
 	private final String filename = "testfb2book.fb2";
 	private final String filenameZip = "testbookZip.zip";
 
-	private String myDirectory = "test\\data\\fb2\\filesystem";
+	private String myDirectory = "test/data/fb2/filesystem";
 	
 	public void setUp() {
 		//new ZLSwingLibrary().init();
@@ -22,11 +22,11 @@ public class TestBookList extends TestCase {
 	public void test() {
 		BookList bookList= new BookList();
 		ArrayList list = bookList.fileNames();
-		bookList.addFileName(myDirectory+"\\"+filename);
+		bookList.addFileName(myDirectory+"/"+filename);
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));
 		}
-		bookList.removeFileName(myDirectory+"\\"+filename);
+		bookList.removeFileName(myDirectory+"/"+filename);
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));
 		}
