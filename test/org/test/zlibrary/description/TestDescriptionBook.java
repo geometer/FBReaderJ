@@ -13,7 +13,7 @@ public class TestDescriptionBook extends TestCase {
 	private final String filenameZip = "testbookZip.zip";	
 	
 	public void setUp() {
-		new ZLSwingLibrary().init();
+		new ZLSwingLibrary();
 		new ZLOwnXMLProcessorFactory();
 	}
 
