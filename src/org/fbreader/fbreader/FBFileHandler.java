@@ -49,7 +49,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	
 // override private	
 	
-	@Override
 	public boolean accept(ZLTreeNode node) {
 		final String name = myDir.getItemPath(node.id());
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(name), false);
@@ -64,7 +63,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		return true;
 	}
 
-	@Override
 	public void changeFolder(ZLTreeNode node) {
 		// TODO Auto-generated method stub
 		// id != null
@@ -89,17 +87,14 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		}
 	}
 
-	@Override
 	public int selectedIndex() {
 		return mySelectedIndex;
 	}
 
-	@Override
 	public String stateDisplayName() {
 		return ZLFile.fileNameToUtf8(myDir.getPath());
 	}
 
-	@Override
 	public ArrayList subnodes() {
 		// TODO Auto-generated method stub
 		
