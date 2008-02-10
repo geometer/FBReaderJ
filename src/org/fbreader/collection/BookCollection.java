@@ -2,6 +2,7 @@ package org.fbreader.collection;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import org.fbreader.description.Author;
@@ -10,8 +11,8 @@ import org.fbreader.description.BookDescriptionUtil;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.filesystem.ZLFile;
-import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.ZLBooleanOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 
@@ -79,7 +80,7 @@ public class BookCollection {
 		myScanSubdirs = ScanSubdirsOption.getValue();
 		myDoWeakRebuild = false;
 		myDoStrongRebuild = false;
-
+		
 		if (doStrongRebuild) {
 			myAuthors.clear();
 			myCollection.clear();
@@ -105,13 +106,15 @@ public class BookCollection {
 				}
 			}
 		} else {
-			
+			System.out.println("strange code");
 			// something strange :(
-			/*final BookList bookList = new BookList();
-			final ArrayList bookListSet = bookList.fileNames();
-			final ArrayList fileNames = new ArrayList();
-			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
-				final ArrayList books = (ArrayList)it.next();
+			final BookList bookList = new BookList();
+			final ArrayList/*<String>*/ bookListSet = bookList.fileNames();
+			final ArrayList/*<String>*/ fileNames = new ArrayList();
+			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
+			
+			for (int i = 0; i < list.size(); i++) {
+				final ArrayList books = (ArrayList)list.get(i);
 				final int numberOfBooks = books.size();
 				for (int j = 0; j < numberOfBooks; ++j) {
 					final BookDescription description = (BookDescription)books.get(j);
@@ -121,13 +124,25 @@ public class BookCollection {
 					}
 				}
 			}
+			
+			/*for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
+				final ArrayList books = (ArrayList)it.next();
+				final int numberOfBooks = books.size();
+				for (int j = 0; j < numberOfBooks; ++j) {
+					final BookDescription description = (BookDescription)books.get(j);
+					final String fileName = description.getFileName();
+					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
+						fileNames.add(fileName);
+					}
+				}
+			}*/
 			myCollection.clear();
 			myAuthors.clear();
 			final int fileNamesSize = fileNames.size();
 			for (int i = 0; i < fileNamesSize; ++i) {
 				addDescription(BookDescription.getDescription((String)fileNames.get(i), false));
 			}
-			*/
+			
 		}
 
 		/*std::sort(myAuthors.begin(), myAuthors.end(), AuthorComparator());
@@ -139,7 +154,6 @@ public class BookCollection {
 	}
 		
 	private ArrayList collectDirNames() {
-		//return new ArrayList();
 		ArrayList nameQueue = new ArrayList();
 		ArrayList nameSet = new ArrayList();
 		
@@ -230,40 +244,77 @@ public class BookCollection {
 		books.add(description);
 	}
 	
-	/*private class DescriptionComparator implements Comparator {
-			public int compare(Object descr1, Object descr2) {
-				BookDescription d1 = (BookDescription)descr1;
-				BookDescription d2 = (BookDescription)descr2;
+	private class DescriptionComparator implements Comparator {
+		public int compare(Object descr1, Object descr2) {
+			BookDescription d1 = (BookDescription)descr1;
+			BookDescription d2 = (BookDescription)descr2;
 				
-				String sequenceName1 = d1.getSequenceName();
-				String sequenceName2 = d2.getSequenceName();
-				if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
-					return d1.getTitle()
-					//return (d1.getTitle(). < d2.getTitle()) ? 0 : 1;
-				}
-				if (sequenceName1.empty()) {
-					return d1.getTitle() < sequenceName2;
-				}
-				if (sequenceName2.empty()) {
-					return sequenceName1 <= d2.getTitle();
-				}
-				if (!sequenceName1.equals(sequenceName2)) {
-					return sequenceName1 < sequenceName2;
-				}
-				return (d1.getNumberInSequence() < d2.getNumberInSequence());
+			String sequenceName1 = d1.getSequenceName();
+			String sequenceName2 = d2.getSequenceName();
+			if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
+					//return d1.getTitle()
+				return d1.getTitle().compareTo(d2.getTitle());
 			}
-	}*/
+			if (sequenceName1.length() == 0) {
+				return d1.getTitle().compareTo(sequenceName2);
+			}
+			if (sequenceName2.length() == 0) {
+				return sequenceName1.compareTo(d2.getTitle());
+			}
+			if (!sequenceName1.equals(sequenceName2)) {
+				return sequenceName1.compareTo(sequenceName2);
+			}
+			return (d1.getNumberInSequence() - d2.getNumberInSequence());
+		}
+	}
 	
-	/*class LastOpenedBooks {
+	class LastOpenedBooks {
 
 		public ZLIntegerRangeOption MaxListSizeOption;
+		static private final String GROUP = "LastOpenedBooks";
+		static private final String BOOK = "Book";
 
-		public LastOpenedBooks();
-		public	void addBook(String fileName);
-		public	Books books() ;
+		public LastOpenedBooks() {
+			MaxListSizeOption = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, GROUP, "MaxSize", 1, 100, 10);
+            final int size = MaxListSizeOption.getValue();
+			for (int i = 0; i < size; ++i) {
+				String num = BOOK;
+				num += i;
+				String name = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, num, "").getValue();
+				if (name.length() != 0) {
+					BookDescription description = BookDescription.getDescription(name);
+					if (description != null) {
+						myBooks.add(description);
+					}
+				}
+			}
+		}
+			
+		public	void addBook(String fileName) {
+			for (int i = 0; i < myBooks.size(); i++) {
+				if (((BookDescription)(myBooks.get(i))).getFileName().equals(fileName)) {
+					myBooks.remove(myBooks.get(i));
+					break;
+				}
+			}
+			
+			BookDescription description = BookDescription.getDescription(fileName);
+			if (description!=null) {
+				//myBooks.insert(myBooks.begin(), description);
+				myBooks.add(0, description);
+			}
+			
+			final int maxSize = MaxListSizeOption.getValue();
+			if (myBooks.size() > maxSize) {
+				myBooks.retainAll(myBooks.subList(maxSize, myBooks.size()));
+			}
+		}
+		
+		public	ArrayList/*BookDescription*/ books() {
+			return myBooks;
+		}
 
-		private:
-			Books myBooks;
-		};
-	}*/
+		private ArrayList/*BookDescription*/ myBooks;
+		
+	}
 }
