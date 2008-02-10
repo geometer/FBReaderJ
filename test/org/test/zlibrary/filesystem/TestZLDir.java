@@ -13,7 +13,7 @@ public class TestZLDir extends TestCase {
 	private final String filenameZip = "testbookZip.zip";
 	private final String filenameDir = "directory";
 
-	private String myDirectory = "test\\data\\fb2\\filesystem";
+	private String myDirectory = "test/data/fb2/filesystem";
 	
 	public void setUp() {
 		new ZLSwingLibrary();
@@ -49,7 +49,5 @@ public class TestZLDir extends TestCase {
     			assertEquals(false, true);
     		}
         }       
-	}
-	
-	
+	}	
 }
