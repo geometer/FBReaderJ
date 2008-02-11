@@ -89,4 +89,9 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 	public byte getAlignment() {
 		return getBase().getAlignment();
 	}
+
+	public boolean allowHyphenations() {
+		int a = myDecoration.AllowHyphenationsOption.getValue();
+		return (a == ZLBoolean3.B3_UNDEFINED) ? getBase().allowHyphenations() : (a == ZLBoolean3.B3_TRUE);
+	}
 }

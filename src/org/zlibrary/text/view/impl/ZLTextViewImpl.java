@@ -84,14 +84,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private void applyControl(ZLTextControlElement control) {
 		final ZLTextStyle textStyle = myTextStyle;
 		if (control.IsStart) {
-//			System.out.println("Apply Start " + control.Kind);
 			ZLTextStyleDecoration decoration = ZLTextStyleCollection.getInstance().getDecoration(control.Kind);
 			setTextStyle(decoration.createDecoratedStyle(textStyle));
-//			if (decoration instanceof ZLTextFullStyleDecoration) {
-//				System.out.println("FontSize = " + textStyle.getFontSize());
-//			}
 		} else {
-//			System.out.println("Apply End " + control.Kind);
 			setTextStyle(textStyle.getBase());
 		}
 	}
@@ -152,7 +147,15 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (start == 0 && length == -1) {
 			return word.getWidth(getContext());
 		}	
-		return 0;
+		int startPos = start;
+		int endPos = (length == -1) ? word.Length : start + length;
+		if (!addHyphenationSign) {
+			return getContext().getStringWidth(word.Data, word.Offset + startPos, endPos - startPos);
+		}
+		String substr = new String(word.Data);
+		substr = substr.substring(startPos, endPos);
+		substr += "-";
+		return getContext().getStringWidth(substr.toCharArray(), 0, substr.length());
 	}
 		
 	public void paint() {
@@ -180,12 +183,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		context.moveYTo(getTopMargin());
 		for (int i = 0; i < lineInfosSize; ++i) {
 			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
-			//System.out.println("Line " + index + " Y = " + context.getY());
 		}
-
-//		for (ZLTextElementArea area : myTextElementMap) {
-//			System.out.println(area.XStart + " " + area.XEnd + " " + area.YStart + " " + area.YEnd);
-//		}
 	}
 
 	private void drawTreeLines(ZLPaintContext context, ZLTextLineInfo.TreeNodeInfo info, int height, int vSpaceAfter) {
@@ -265,7 +263,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		for (int wordNumber = info.RealStartWordNumber; wordNumber != endWordNumber; ++wordNumber, charNumber = 0) {
 			final ZLTextElement element = paragraph.getElement(wordNumber);
 			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
-				//System.out.println("Word = " + ((ZLTextWord) element).getWord());
 				ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.getArea(index++);
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
@@ -274,7 +271,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				final int y = area.YEnd - getElementDescent(element) - myTextStyle.getVerticalShift();
 				context.moveXTo(x);
 				if (element instanceof ZLTextWord) {
-					//System.out.println("Draw " + x + " " + y + " " + area.YEnd);
 					drawWord(x, y, (ZLTextWord) element, charNumber, -1, false);
 				} else {
 					context.drawImage(x, y, ((ZLTextImageElement) element).getImageData());
@@ -291,6 +287,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int x = area.XStart;
 			final int y = area.YEnd - getElementDescent(word) - myTextStyle.getVerticalShift();
 			drawWord(x, y, word, 0, len, area.AddHyphenationSign);
+			
 		}
 		context.moveY(info.Descent + info.VSpaceAfter);
 	}
@@ -301,7 +298,16 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			context.setColor(myTextStyle.getColor());	
 			context.drawString(x, y, word.Data, word.Offset, word.Length);
 		} else {
-			System.out.println("Shouldn't be here - no hyphenations supported yet.");
+			int startPos = start;
+			int endPos = (length == -1) ? word.Length : start + length;
+			if (!addHyphenationSign) {
+				context.drawString(x, y, word.Data, word.Offset + startPos, endPos - startPos);
+			} else {
+				String substr = new String(word.Data);
+				substr = substr.substring(word.Offset + startPos, word.Offset + endPos);
+				substr += "-";
+				context.drawString(x, y, substr.toCharArray(), 0, substr.length());	
+			}	
 		}
 	}
 
@@ -334,10 +340,10 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && (textAreaHeight >= 0));
 		resetTextStyle();
-//		System.out.println("----------------------INFOS BUILT--------------------------------");
 	}
 
-	private ZLTextLineInfo processTextLine(final ZLPaintContext context, final ZLTextParagraphCursor paragraphCursor, final int startIndex, final int startCharNumber, final int endIndex) {
+	private ZLTextLineInfo processTextLine(final ZLPaintContext context, final ZLTextParagraphCursor paragraphCursor, 
+		final int startIndex, final int startCharNumber, final int endIndex) {
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharNumber, myTextStyle);
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.getInfo(info);
 		if (cachedInfo != null) {
@@ -432,7 +438,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			} else if (element instanceof ZLTextWord) {
 				wordOccurred = true;
 				isVisible = true;
-				//System.out.println("Word = " + ((ZLTextWord) element).Data + " FontSize = " + myTextStyle.getFontSize());
 			} else if (element instanceof ZLTextControlElement) {
 				applyControl((ZLTextControlElement) element);
 			} else if (element instanceof ZLTextImageElement) {
@@ -449,7 +454,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			if (!allowBreak) {
 				element = paragraphCursor.getElement(currentWordIndex); 
 				allowBreak = (((!(element instanceof ZLTextWord)) || (previousElement instanceof ZLTextWord)) && 
-						!(element instanceof ZLTextImageElement) && !(element instanceof ZLTextControlElement));
+						!(element instanceof ZLTextImageElement) && 
+						!(element instanceof ZLTextControlElement));
 			}
 			if (allowBreak) {
 				info.IsVisible = isVisible;
@@ -464,18 +470,38 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}	
 		} while (currentWordIndex != endIndex);
 
-/*		if (!current.equalWordNumber(end)) {
-			ZLTextElement element = paragraphCursor.getElement(current.getWordNumber());
+		if ((currentWordIndex != endIndex) 
+			&& (ZLTextStyleCollection.getInstance().getBaseStyle().AutoHyphenationOption.getValue()) 
+			&& (myTextStyle.allowHyphenations())) {
+			ZLTextElement element = paragraphCursor.getElement(currentWordIndex);
 			if (element instanceof ZLTextWord) { 
-				newWidth -= getElementWidth(element, current.getCharNumber());
+				newWidth -= getElementWidth(element, currentCharNumber);
+				final ZLTextWord word = (ZLTextWord) element;
+				int spaceLeft = maxWidth - newWidth;
+				if ((word.Length > 3) && (spaceLeft > 2 * getContext().getSpaceWidth())) {
+					int hyphenationPosition = word.Length - 1;
+					int subwordWidth = 0;
+					for(; hyphenationPosition > 0; hyphenationPosition--) {
+						subwordWidth = getWordWidth(word, word.Offset, hyphenationPosition, 
+							word.Data[hyphenationPosition - 1] != '-');
+						if (subwordWidth <= spaceLeft) {
+							break;
+						}
+					}
+					if (hyphenationPosition > 0) {
+						info.IsVisible = true;
+						info.Width = newWidth + subwordWidth;
+						info.Height = Math.max(info.Height, newHeight);
+						info.Descent = Math.max(info.Descent, newDescent);
+						info.EndWordNumber = currentWordIndex;
+						info.EndCharNumber = hyphenationPosition;
+						info.SpaceCounter = internalSpaceCounter;
+						storedStyle = myTextStyle;
+						removeLastSpace = false;
+					}
+				}
 			}
-			info.IsVisible = true;
-			info.Width = newWidth;
-			info.Height = Math.max(info.Height, newHeight);
-			info.Descent = Math.max(info.Descent, newDescent);
-			info.setEnd(current);
-			info.SpaceCounter = internalSpaceCounter;
-		}*/
+		}
 		
 		if (removeLastSpace) {
 			info.Width -= lastSpaceWidth;
@@ -491,10 +517,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			info.VSpaceAfter = myTextStyle.getSpaceAfter();
 		}		
 
-		//System.out.println();
-		//System.out.println("Info widht = " + info.Width);
-
-	//	System.out.println(info.End.getElement());
 		if ((info.EndWordNumber != endIndex) || (endIndex == info.ParagraphCursorLength)) {
 			myLineInfoCache.put(info);
 		}
@@ -515,7 +537,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		boolean changeStyle = true;
 
 		context.moveXTo(getLeftMargin() + info.LeftIndent);
-		//System.out.println(context.getWidth() + " " + info.Width);
 		final int maxWidth = context.getWidth() - getLeftMargin() - getRightMargin();
 		switch (myTextStyle.getAlignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT: {
@@ -540,7 +561,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		int paragraphNumber = paragraph.getIndex();
-//		System.out.println();
 		final int endWordNumber = info.EndWordNumber;
 		int charNumber = info.RealStartCharNumber;
 		for (int wordNumber = info.RealStartWordNumber; wordNumber != endWordNumber; ++wordNumber, charNumber = 0) {
@@ -556,7 +576,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					--spaceCounter;
 				}	
 			} else if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
-				//System.out.print(((ZLTextWord) element).Data + " " + x + " ");
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = (element instanceof ZLTextWord) ? ((ZLTextWord) element).Length : 0;
@@ -569,6 +588,19 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				changeStyle = true;
 			}
 			context.moveX(width);
+		}
+		if (!endOfParagraph && (paragraph.getElement(info.EndWordNumber) instanceof ZLTextWord)) {
+			int len = info.EndCharNumber;
+			if (len > 0) {
+				final ZLTextWord word = (ZLTextWord) paragraph.getElement(info.EndWordNumber);
+				final boolean addHyphenationSign = word.Data[len - 1] != '-';
+				final int x = context.getX();
+				final int width = getWordWidth(word, 0, len, addHyphenationSign);
+				final int height = getElementHeight(word);
+				final int descent = getElementDescent(word);
+				myTextElementMap.add(new ZLTextElementArea(paragraphNumber, info.EndWordNumber, 0, len, addHyphenationSign,
+					changeStyle, myTextStyle, paragraph.getElement(info.EndWordNumber), x, x + width - 1, y - height + 1, y + descent));
+			}	
 		}
 		context.moveY(info.Height + info.Descent + info.VSpaceAfter);
 	}

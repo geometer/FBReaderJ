@@ -19,5 +19,7 @@ public interface ZLTextStyle {
 	int getSpaceAfter();
 	byte getAlignment();
 
+	boolean allowHyphenations();
+
 	ZLTextStyle getBase();
 }

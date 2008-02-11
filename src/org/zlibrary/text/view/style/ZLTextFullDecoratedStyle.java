@@ -90,4 +90,9 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		byte value = (byte)myDecoration.AlignmentOption.getValue();
 		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? getBase().getAlignment() : value;
 	}
+
+	public boolean allowHyphenations() {
+		int a = myDecoration.AllowHyphenationsOption.getValue();
+	      	return (a == ZLBoolean3.B3_UNDEFINED) ? getBase().allowHyphenations() : (a == ZLBoolean3.B3_TRUE);	
+	}
 }

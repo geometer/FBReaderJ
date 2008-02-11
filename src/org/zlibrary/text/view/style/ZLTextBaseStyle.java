@@ -102,4 +102,8 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	public ZLTextStyle getBase() {
 		return this;
 	}
+
+	public boolean allowHyphenations() {
+		return true;
+	}
 }
