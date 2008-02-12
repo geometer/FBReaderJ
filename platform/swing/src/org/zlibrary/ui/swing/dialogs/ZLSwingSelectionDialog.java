@@ -69,16 +69,12 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		myJDialog.setLocationRelativeTo(myJDialog.getParent());
 		myJDialog.setVisible(true);
 		
-		
-		
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	protected void selectItem(int index) {
-		// TODO Auto-generated method stub
-		
+		myList.setSelectedIndex(index);
 	}
 
 	@Override
@@ -88,48 +84,29 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 
 	@Override
 	protected void updateStateLine() {
-		// TODO Auto-generated method stub
 		myStateLine.setText(handler().stateDisplayName());
-	}
-	
-	private void accept(ZLTreeNode node) {
-		if (handler().isOpenHandler()) {
-			((ZLTreeOpenHandler) handler()).accept(node);
-		}
 	}
 	
 	private void changeFolder(int index) {
 		ZLTreeNode node = (ZLTreeNode) handler().subnodes().get(index);
-        if (node.isFolder()) {
-       	 handler().changeFolder(node);
-            update();
-        } else {
-        	accept(node);
-        }
+        runNode(node);
 	}
 	
 	private class MyMouseListener extends MouseInputAdapter {
-
-		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getClickCount() == 2) {
 	             changeFolder(myList.locationToIndex(e.getPoint()));
 	        }
-		}
-		
+		}	
 	}
 	
 	private class MyKeyAdapter extends KeyAdapter {
-
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				changeFolder(myList.getSelectedIndex());
 			}
 		}
-	
 	}
 	
 	private class CancelAction extends AbstractAction {
@@ -143,16 +120,14 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	}
 	
 	private class OKAction extends AbstractAction {
-
 		public OKAction(String text) {
 			putValue(NAME, text);
 			setEnabled(false);
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-//			 TODO Auto-generated method stub
+			runNode((ZLTreeNode) handler().subnodes().get(myList.getSelectedIndex())); 
 		}
-		
 	}
 	
 	private class SelectionListener implements ListSelectionListener {

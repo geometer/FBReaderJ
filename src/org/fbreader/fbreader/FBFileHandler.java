@@ -60,6 +60,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 			return false;
 		}
 		myDescription = BookDescription.getDescription(name);
+		System.out.println(myDescription.getFileName());
 		return true;
 	}
 
