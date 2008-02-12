@@ -28,7 +28,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 
 	private final static String FOLDER_ICON = "folder";
 	private final static String ZIP_FOLDER_ICON = "zipfolder";
-	private static HashMap pluginIcons; // <FormatPlugin, String> ?static
+	private final static HashMap pluginIcons = new HashMap(); // <FormatPlugin, String>
 	
 	public FBFileHandler() {
 		DirectoryOption = new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "OpenFileDialog", "Directory", System.getProperty("user.home"));
@@ -53,7 +53,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		final String name = myDir.getItemPath(node.id());
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(name), false);
 		final String message = (plugin == null) ? "Unknown File Format" : plugin.tryOpen(name);
-		if ("".equals(message)) {
+		if (! "".equals(message)) {
 			final String boxKey = "openBookErrorBox";
 			ZLDialogManager.getInstance().showErrorBox(boxKey,
 				ZLDialogManager.getDialogMessage(boxKey) + " " + message);
@@ -140,8 +140,8 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 				}
 			}
 
-			mySubnodes.add(folderNodes.values());
-			mySubnodes.add(fileNodes.values());
+			mySubnodes.addAll(folderNodes.values());
+			mySubnodes.addAll(fileNodes.values());
 			myIsUpToDate = true;
 		}
 		
