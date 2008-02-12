@@ -5,6 +5,7 @@ import java.util.*;
 import org.fbreader.description.BookDescription;
 import org.fbreader.formats.FormatPlugin;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
+import org.fbreader.formats.fb2.FB2Plugin;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.core.util.*;
@@ -28,6 +29,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 
 	private final static String FOLDER_ICON = "folder";
 	private final static String ZIP_FOLDER_ICON = "zipfolder";
+	private final static String UPFOLDER_ICON = "upfolder";
 	private final static HashMap pluginIcons = new HashMap(); // <FormatPlugin, String>
 	
 	public FBFileHandler() {
@@ -71,6 +73,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		if (dir != null) {
 			final String selectedId = myDir.getName();
 			myDir = dir;
+			DirectoryOption.setValue(myDir.getPath()); //?
 			myIsUpToDate = false;
 			mySubnodes.clear();
 			mySelectedIndex = 0;
@@ -101,7 +104,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		
 		if (!myIsUpToDate) {
 			if (!myDir.isRoot()) {
-				mySubnodes.add(new ZLTreeNode("..", "..", FOLDER_ICON, true));
+				mySubnodes.add(new ZLTreeNode("..", "..", UPFOLDER_ICON, true));
 			}
 
 			HashMap folderNodes = new HashMap(); // <String, ZLTreeNode>
@@ -131,7 +134,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 				FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
 				if (plugin != null) {
 					String icon = (String) pluginIcons.get(plugin);
-					if ("".equals(icon)) {
+					if (icon == null) {
 						icon = plugin.getIconName();
 						pluginIcons.put(plugin, icon);
 					}

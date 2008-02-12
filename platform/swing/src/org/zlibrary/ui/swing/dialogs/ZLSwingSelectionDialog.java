@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.zlibrary.core.dialogs.ZLTreeHandler;
@@ -20,15 +21,17 @@ import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
 class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	private JDialog myJDialog;
-	private final String myCaption;
 	private JTextField myStateLine = new JTextField();
 	private JList myList = new JList();
 	private OKAction myOKAction;
 	
+	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
+	private static final String ourIconDirectory = "icons/filetree/";
+	
 	protected ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler) {
 		super(myHandler);
 		myJDialog = new JDialog(frame);
-		myCaption = caption;
+		myJDialog.setTitle(caption);
 		update();
 	}
 
@@ -41,7 +44,6 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	@Override
 	public boolean run() {
 		myJDialog.setLayout(new BorderLayout());
-		myJDialog.setTitle(myCaption);
 		myStateLine.setEditable(false);
 		myJDialog.add(myStateLine, BorderLayout.NORTH);
 	
@@ -85,6 +87,16 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	@Override
 	protected void updateStateLine() {
 		myStateLine.setText(handler().stateDisplayName());
+	}
+	
+	private static ImageIcon getIcon(ZLTreeNode node) {
+		final String pixmapName = node.pixmapName();
+		ImageIcon icon = (ImageIcon) ourIcons.get(pixmapName);
+		if (icon == null) {
+			icon = ZLSwingIconUtil.getIcon(ourIconDirectory + pixmapName + ".png");
+			ourIcons.put(pixmapName, icon);
+		}
+		return icon;
 	}
 	
 	private void changeFolder(int index) {
@@ -139,9 +151,9 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	
 	
 	private static class CellRenderer extends JLabel implements ListCellRenderer {
-		final static ImageIcon icon = ZLSwingIconUtil.getIcon("icons/filetree/unknown.png");
-		final static ImageIcon upicon = ZLSwingIconUtil.getIcon("icons/filetree/upfolder.png");
-		final static ImageIcon folderIcon = ZLSwingIconUtil.getIcon("icons/filetree/folder.png");
+//		final static ImageIcon icon = ZLSwingIconUtil.getIcon("icons/filetree/unknown.png");
+//		final static ImageIcon upicon = ZLSwingIconUtil.getIcon("icons/filetree/upfolder.png");
+//		final static ImageIcon folderIcon = ZLSwingIconUtil.getIcon("icons/filetree/folder.png");
 
 		public Component getListCellRendererComponent(
 			JList list,
@@ -152,7 +164,8 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		{
 			String s = ((ZLTreeNode) value).displayName();
 			setText(s);
-			setIcon(s.equals("..") ? upicon : (((ZLTreeNode) value).isFolder() ? folderIcon : icon));
+			setIcon(ZLSwingSelectionDialog.getIcon((ZLTreeNode) value));
+	//		setIcon(s.equals("..") ? upicon : (((ZLTreeNode) value).isFolder() ? folderIcon : icon));
 			if (isSelected) {
 				setBackground(list.getSelectionBackground());
 				setForeground(list.getSelectionForeground());
