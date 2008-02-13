@@ -4,7 +4,7 @@ import java.io.*;
 
 import android.content.Resources;
 import android.content.Intent;
-import android.net.ContentURI;
+import android.net.Uri;
 
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.application.ZLApplication;
@@ -72,7 +72,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public void openInBrowser(String reference) {
 		Intent intent = new Intent(Intent.VIEW_ACTION);
-		intent.setData(ContentURI.create(reference));
+		//intent.setData(ContentURI.create(reference));
 		myActivity.startActivity(intent);
 	}
 

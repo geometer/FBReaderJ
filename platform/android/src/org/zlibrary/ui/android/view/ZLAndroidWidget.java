@@ -14,9 +14,6 @@ public class ZLAndroidWidget extends View {
 	private final ZLAndroidPaintContext myPaintContext = new ZLAndroidPaintContext();
 	private ZLAndroidViewWidget myViewWidget;
 
-	private int myWidth;
-	private int myHeight;
-
 	public ZLAndroidWidget(Context context, AttributeSet attrs, Map inflateParams, int defStyle) {
 		super(context, attrs, inflateParams, defStyle);
 	}
@@ -33,11 +30,6 @@ public class ZLAndroidWidget extends View {
 		myViewWidget = viewWidget;
 	}
 
-	public void onSizeChanged(int w, int h, int oldW, int oldH) {
-		myWidth = w;
-		myHeight = h;
-	}
-
 	private long myTime;
 
 	public void onDraw(Canvas canvas) {
@@ -50,23 +42,26 @@ public class ZLAndroidWidget extends View {
 			return;
 		}
 
+		final int w = getWidth();
+		final int h = getHeight();
+
 		myPaintContext.beginPaint(canvas);
 		long start = System.currentTimeMillis();
 		switch (myViewWidget.getRotation()) {
 			case ZLViewWidget.Angle.DEGREES0:
-				myPaintContext.setSize(myWidth, myHeight);
+				myPaintContext.setSize(w, h);
 				break;
 			case ZLViewWidget.Angle.DEGREES90:
-				myPaintContext.setSize(myHeight, myWidth);
-				canvas.rotate(270, myHeight / 2, myHeight / 2);
+				myPaintContext.setSize(h, w);
+				canvas.rotate(270, h / 2, h / 2);
 				break;
 			case ZLViewWidget.Angle.DEGREES180:
-				myPaintContext.setSize(myWidth, myHeight);
-				canvas.rotate(180, myWidth / 2, myHeight / 2);
+				myPaintContext.setSize(w, h);
+				canvas.rotate(180, w / 2, h / 2);
 				break;
 			case ZLViewWidget.Angle.DEGREES270:
-				myPaintContext.setSize(myHeight, myWidth);
-				canvas.rotate(90, myWidth / 2, myWidth / 2);
+				myPaintContext.setSize(h, w);
+				canvas.rotate(90, w / 2, w / 2);
 				break;
 		}
 		view.paint();
@@ -90,19 +85,19 @@ public class ZLAndroidWidget extends View {
 			case ZLViewWidget.Angle.DEGREES90:
 			{
 				int swap = x;
-				x = myHeight - y - 1;
+				x = getHeight() - y - 1;
 				y = swap;
 				break;
 			}
 			case ZLViewWidget.Angle.DEGREES180:
 			{
-				x = myWidth - x - 1;
-				y = myHeight - y - 1;
+				x = getWidth() - x - 1;
+				y = getHeight() - y - 1;
 				break;
 			}
 			case ZLViewWidget.Angle.DEGREES270:
 			{
-				int swap = myWidth - x - 1;
+				int swap = getWidth() - x - 1;
 				x = y;
 				y = swap;
 				break;

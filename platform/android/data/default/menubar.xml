@@ -34,5 +34,4 @@
 		<item id="toggleIndicator"/>
 	</submenu>
 	<item id="preferences"/>
-	<item id="quit"/>
 </menubar>

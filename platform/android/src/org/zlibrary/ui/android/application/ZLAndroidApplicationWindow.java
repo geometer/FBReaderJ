@@ -33,7 +33,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			myMenuItemMap.put(menuItem, item);
 		}
 		protected void processSepartor(ZLApplication.Menubar.Separator separator) {
-			myMenuStack.peek().addSeparator(0, myItemCount++);
+			//myMenuStack.peek().addSeparator(0, myItemCount++);
 		}
 	}
 

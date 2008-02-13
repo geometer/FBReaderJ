@@ -3,6 +3,8 @@ package org.zlibrary.core.util;
 import java.io.IOException;
 
 public class File {
+	public static final String separator = "/";
+
 	public File(String name) {
 		// TODO: implement
 	}
@@ -36,6 +38,11 @@ public class File {
 	}
 
 	public String[] list() {
+		// TODO: implement
+		return null;
+	}
+
+	public String getParent() {
 		// TODO: implement
 		return null;
 	}

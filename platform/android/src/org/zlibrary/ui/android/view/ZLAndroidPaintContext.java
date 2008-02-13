@@ -18,7 +18,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private int myWidth;
 	private int myHeight;
 
-	private float[] myWidthsArray = new float[10];
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
 	ZLAndroidPaintContext() {
@@ -43,6 +42,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	public void clear(ZLColor color) {
 		// TODO: implement
+		myColor = color;
+		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		myCanvas.drawRect(0, 0, myWidth, myHeight, myPaint);
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
@@ -82,22 +84,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 	
 	public int getStringWidth(char[] string, int offset, int length) {
-		float[] widths = myWidthsArray;
-		if (widths.length < length) {
-			widths = new float[length];
-			myWidthsArray = widths;
-		}
-		myPaint.getTextWidths(string, offset, length, widths);
-		float sum = 0.5f;
-		for (int i = 0; i < length; ++i) {
-			sum += widths[i];
-		}
-		return (int)sum;
+		return (int)(myPaint.measureText(string, offset, length) + 0.5f);
 	}
 	protected int getSpaceWidthInternal() {
-		final float[] widths = myWidthsArray;
-		myPaint.getTextWidths(" ", 0, 1, widths);
-		return (int)(widths[0] + 0.5f);
+		return (int)(myPaint.measureText(" ", 0, 1) + 0.5f);
 	}
 	protected int getStringHeightInternal() {
 		return (int)(myPaint.getTextSize() + 0.5f);

@@ -115,8 +115,6 @@ public final class ZLAndroidKeyUtil {
 				return "<=>";
 			case KeyEvent.KEYCODE_EXPLORER:
 				return "<Explorer>";
-			case KeyEvent.KEYCODE_FN:
-				return "<Fn>";
 			case KeyEvent.KEYCODE_GRAVE:
 				return "<???>";
 			case KeyEvent.KEYCODE_HEADSETHOOK:
