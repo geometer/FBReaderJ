@@ -72,7 +72,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public void openInBrowser(String reference) {
 		Intent intent = new Intent(Intent.VIEW_ACTION);
-		//intent.setData(ContentURI.create(reference));
+		intent.setData(Uri.parse(reference));
 		myActivity.startActivity(intent);
 	}
 
