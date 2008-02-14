@@ -141,10 +141,12 @@ public final class FBReader extends ZLApplication {
 			fileName = myBookNameOption.getValue();
 		}
 		myBookModel = new BookModel(fileName);
+		//android.os.Debug.startMethodTracing("/tmp/openBook2");
 		if (!new FB2Reader(myBookModel).read()) {
 			myBookModel = null;
 			return false;
 		}
+		//android.os.Debug.stopMethodTracing();
 		myBookNameOption.setValue(fileName);
 		myBookTextView.setModel(myBookModel.getBookTextModel(), myBookModel.getFileName());
 		myContentsView.setModel(myBookModel.getContentsModel());

@@ -17,6 +17,7 @@ public class BookReader {
 	private boolean myTextParagraphExists = false;
 	
 	private final ZLTextBuffer myBuffer = new ZLTextBuffer();
+	private boolean myBufferIsNotEmpty = false;
 	private final ZLTextBuffer myContentsBuffer = new ZLTextBuffer();
 
 	private byte[] myKindStack = new byte[20];
@@ -39,11 +40,12 @@ public class BookReader {
 	}
 	
 	private final void flushTextBufferToParagraph() {
-		final ZLTextBuffer buffer = myBuffer;
-		if (!buffer.isEmpty()) {
+		if (myBufferIsNotEmpty) {
+			final ZLTextBuffer buffer = myBuffer;
 			myCurrentTextModel.addText(buffer);
 			buffer.clear();
-		}		
+			myBufferIsNotEmpty = false;
+		}
 	}
 	
 	public final void addControl(byte kind, boolean start) {
@@ -136,6 +138,7 @@ public class BookReader {
 	public final void addData(char[] data, int offset, int length) {
 		if (myTextParagraphExists) {
 			myBuffer.append(data, offset, length);
+			myBufferIsNotEmpty = true;
 			if (!myInsideTitle) {
 				mySectionContainsRegularContents = true;
 			} else {
@@ -145,7 +148,7 @@ public class BookReader {
 	}
 	
 	public final void addDataFinal(char[] data, int offset, int length) {
-		if (!myBuffer.isEmpty()) {
+		if (myBufferIsNotEmpty) {
 			addData(data, offset, length);
 		} else {
 			if (myTextParagraphExists) {

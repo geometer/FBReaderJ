@@ -4,6 +4,7 @@ import org.fbreader.bookmodel.BookModel;
 import org.fbreader.bookmodel.BookReader;
 import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.xml.*;
+import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.text.model.ZLTextParagraph;
 
 public final class FB2Reader extends BookReader implements ZLXMLReader {
@@ -23,6 +24,9 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 
 	private final char[] SPACE = { ' ' }; 
 	private String myHrefAttribute = ":href";
+
+	private byte[] myTagStack = new byte[10];
+	private int myTagStackSize = 0;
 
 	public FB2Reader(BookModel model) {
  		super(model);
@@ -75,7 +79,8 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	}
 
 	public void endElementHandler(String tagName) {
-		switch (FB2Tag.getTagByName(tagName)) {
+		final byte tag = myTagStack[--myTagStackSize];
+		switch (tag) {
 			case FB2Tag.P:
 				endParagraph();		
 				break;
@@ -183,7 +188,14 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			}
 			addHyperlinkLabel(id);
 		}
-		switch (FB2Tag.getTagByName(tagName)) {
+		final byte tag = FB2Tag.getTagByName(tagName);
+		byte[] tagStack = myTagStack;
+		if (tagStack.length == myTagStackSize) {
+			tagStack = ZLArrayUtils.createCopy(tagStack, myTagStackSize, myTagStackSize * 2);
+			myTagStack = tagStack;
+		}
+		tagStack[myTagStackSize++] = tag;
+		switch (tag) {
 			case FB2Tag.FICTIONBOOK:
 			{
 				final int attibutesNumber = attributes.getSize();
