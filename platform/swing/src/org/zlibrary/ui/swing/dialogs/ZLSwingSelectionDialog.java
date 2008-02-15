@@ -16,7 +16,6 @@ import java.util.HashMap;
 import org.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.zlibrary.core.dialogs.ZLTreeHandler;
 import org.zlibrary.core.dialogs.ZLTreeNode;
-import org.zlibrary.core.dialogs.ZLTreeOpenHandler;
 import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
 class ZLSwingSelectionDialog extends ZLSelectionDialog{
@@ -44,14 +43,16 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	@Override
 	public boolean run() {
 		myJDialog.setLayout(new BorderLayout());
-		myStateLine.setEditable(false);
+		myStateLine.setEditable(!handler().isOpenHandler());
+		//myStateLine.setEnabled(!handler().isOpenHandler());
+		myStateLine.setFocusable(false);
 		myJDialog.add(myStateLine, BorderLayout.NORTH);
 	
 		myList.setCellRenderer(new CellRenderer());
 		JScrollPane scrollPane = new JScrollPane(myList);
 		scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
 		myJDialog.add(scrollPane, BorderLayout.CENTER);
-
+		
 		myList.addListSelectionListener(new SelectionListener());
 		myList.addKeyListener(new MyKeyAdapter());
 		myList.addMouseListener(new MyMouseListener());
@@ -59,13 +60,19 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
-		buttonPanel.add(button1);
 		myOKAction = new OKAction(button1.getText());
 		button1.setAction(myOKAction);
 		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
-		buttonPanel.add(button2);
 		button2.setAction(new CancelAction (button2.getText()));
+		if (button1.getPreferredSize().width < button2.getPreferredSize().width) {
+			button1.setPreferredSize(button2.getPreferredSize());
+		} else {
+			button2.setPreferredSize(button1.getPreferredSize());
+		}
+		buttonPanel.add(button1);
+		buttonPanel.add(button2);
 		myJDialog.add(buttonPanel, BorderLayout.SOUTH);
+		
 		myJDialog.pack();
 		myJDialog.setSize(600, 400);
 		myJDialog.setLocationRelativeTo(myJDialog.getParent());
@@ -106,17 +113,43 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	
 	private class MyMouseListener extends MouseInputAdapter {
 		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() == 2) {
-	             changeFolder(myList.locationToIndex(e.getPoint()));
-	        }
+			if (!((System.getProperty("os.name").startsWith("Windows")) && (e.getClickCount() == 1))) {
+				changeFolder(myList.locationToIndex(e.getPoint()));
+			}		
 		}	
 	}
 	
 	private class MyKeyAdapter extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			final int code = e.getKeyCode();	
+			switch (code) {
+			case KeyEvent.VK_ENTER:
 				changeFolder(myList.getSelectedIndex());
+				break;
+			case KeyEvent.VK_ESCAPE:
+				exitDialog();
+				break;
+			}
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			final char keyChar = e.getKeyChar();
+			if (keyChar != KeyEvent.CHAR_UNDEFINED) {
+				ArrayList nodes = handler().subnodes();
+				final int size = nodes.size();
+				final int startIndex = (myList.getSelectedIndex() + 1) % size;
+				for (int i = 0; i < size - 1; i++) {
+					final int index = (startIndex + i) % size;
+					if (((ZLTreeNode) nodes.get(index)).displayName().toLowerCase().charAt(0) >= keyChar) {
+						if (((ZLTreeNode) nodes.get(index)).displayName().toLowerCase().charAt(0) == keyChar) {
+							selectItem(index);
+						}
+						break;
+					}	
+				}
 			}
 		}
 	}
@@ -151,9 +184,6 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	
 	
 	private static class CellRenderer extends JLabel implements ListCellRenderer {
-//		final static ImageIcon icon = ZLSwingIconUtil.getIcon("icons/filetree/unknown.png");
-//		final static ImageIcon upicon = ZLSwingIconUtil.getIcon("icons/filetree/upfolder.png");
-//		final static ImageIcon folderIcon = ZLSwingIconUtil.getIcon("icons/filetree/folder.png");
 
 		public Component getListCellRendererComponent(
 			JList list,
@@ -165,7 +195,6 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 			String s = ((ZLTreeNode) value).displayName();
 			setText(s);
 			setIcon(ZLSwingSelectionDialog.getIcon((ZLTreeNode) value));
-	//		setIcon(s.equals("..") ? upicon : (((ZLTreeNode) value).isFolder() ? folderIcon : icon));
 			if (isSelected) {
 				setBackground(list.getSelectionBackground());
 				setForeground(list.getSelectionForeground());
@@ -180,81 +209,4 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	private JDialog myJDialog;
-
-	ZLSwingSelectionDialog(JFrame frame) {
-		myJDialog = new JDialog(frame, true);
-	}
-
-	private static class CellRenderer extends JLabel implements ListCellRenderer {
-		final static ImageIcon icon = ZLSwingIconUtil.getIcon("icons/filetree/unknown.png");
-		final static ImageIcon upicon = ZLSwingIconUtil.getIcon("icons/filetree/upfolder.png");
-
-		public Component getListCellRendererComponent(
-			JList list,
-			Object value,            // value to display
-			int index,               // cell index
-			boolean isSelected,      // is the cell selected
-			boolean cellHasFocus)    // the list and the cell have the focus
-		{
-			String s = value.toString();
-			setText(s);
-			setIcon(s.equals("..") ? upicon : icon);
-			if (isSelected) {
-				setBackground(list.getSelectionBackground());
-				setForeground(list.getSelectionForeground());
-			} else {
-				setBackground(list.getBackground());
-				setForeground(list.getForeground());
-			}
-			setEnabled(list.isEnabled());
-			setFont(list.getFont());
-			setOpaque(true);
-			return this;
-		}
-	}
-
-	void run() {
-		myJDialog.setLayout(new BorderLayout());
-
-		JTextField textLine = new JTextField();
-		textLine.setText("directory name");
-		textLine.setEditable(false);
-		myJDialog.add(textLine, BorderLayout.NORTH);
-
-		String[] books = new String[] { "..", "Book 0", "Book 1", "Book 2", "Book 3", "Book 4", "Book 5" };
-		JList list = new JList(books);
-		list.setCellRenderer(new CellRenderer());
-		JScrollPane scrollPane = new JScrollPane(list);
-		scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
-		myJDialog.add(scrollPane, BorderLayout.CENTER);
-
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
-		buttonPanel.add(button1);
-		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
-		buttonPanel.add(button2);
-		myJDialog.add(buttonPanel, BorderLayout.SOUTH);
-		myJDialog.pack();
-		myJDialog.setSize(600, 400);
-		myJDialog.setLocationRelativeTo(myJDialog.getParent());
-		myJDialog.setVisible(true);
-	}
-	*/
 }

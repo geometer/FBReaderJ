@@ -5,5 +5,5 @@ public abstract class ZLTreeOpenHandler extends ZLTreeHandler {
 		return true;
 	}
 
-	public abstract boolean accept(ZLTreeNode node);
+	protected abstract boolean accept(ZLTreeNode node);
 }

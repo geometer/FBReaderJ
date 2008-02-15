@@ -51,7 +51,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	
 // override private	
 	
-	public boolean accept(ZLTreeNode node) {
+	protected boolean accept(ZLTreeNode node) {
 		final String name = myDir.getItemPath(node.id());
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(name), false);
 		final String message = (plugin == null) ? "Unknown File Format" : plugin.tryOpen(name);
@@ -144,12 +144,26 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 				}
 			}
 
+	//		Collections.sort((List) folderNodes.values(), new ZLTreeNodeComparator());
 			mySubnodes.addAll(folderNodes.values());
 			mySubnodes.addAll(fileNodes.values());
 			myIsUpToDate = true;
+			Collections.sort(mySubnodes, new ZLTreeNodeComparator());
 		}
 		
 		return mySubnodes;
+	}
+	
+	private static class ZLTreeNodeComparator implements Comparator {
+		public int compare(Object o1, Object o2) {	
+			if (((ZLTreeNode) o1).isFolder() == ((ZLTreeNode) o2).isFolder()) {
+				return ((ZLTreeNode) o1).displayName().toLowerCase().compareTo(((ZLTreeNode) o2).displayName().toLowerCase());
+			} else if (((ZLTreeNode) o1).isFolder()) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}		
 	}
 
 }
