@@ -76,6 +76,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		myJDialog.pack();
 		myJDialog.setSize(600, 400);
 		myJDialog.setLocationRelativeTo(myJDialog.getParent());
+		myJDialog.setModal(true);
 		myJDialog.setVisible(true);
 		
 		return false;
@@ -143,12 +144,10 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 				final int startIndex = (myList.getSelectedIndex() + 1) % size;
 				for (int i = 0; i < size - 1; i++) {
 					final int index = (startIndex + i) % size;
-					if (((ZLTreeNode) nodes.get(index)).displayName().toLowerCase().charAt(0) >= keyChar) {
-						if (((ZLTreeNode) nodes.get(index)).displayName().toLowerCase().charAt(0) == keyChar) {
-							selectItem(index);
-						}
+					if (((ZLTreeNode) nodes.get(index)).displayName().toLowerCase().charAt(0) == keyChar) {
+						selectItem(index);
 						break;
-					}	
+					}
 				}
 			}
 		}
