@@ -61,12 +61,19 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			myPaintState = PaintState.START_IS_KNOWN;
 		}
 	}
+
 	protected ZLTextModel getModel() {
 		return myModel;
 	}
 
 	protected ZLTextWordCursor getStartCursor() {
 		return myStartCursor;
+	}
+	
+	public void highlightParagraph(int paragraphNumber) {
+		//TODO select
+		myModel.getParagraph(paragraphNumber);
+		rebuildPaintInfo(true);
 	}
 
 	private void setTextStyle(ZLTextStyle style) {
@@ -628,12 +635,50 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myPaintState = PaintState.START_IS_KNOWN;
 	}
 
-	/*
+	
 	public void gotoParagraph(int index) {
 		// TODO: implement
-		myStartParagraphNumber = index;
+		//myStartParagraphNumber = index;		
 	}
-	*/
+	
+	void gotoParagraph(int num, boolean last) {
+	/*	if (myModel == null) {
+			return;
+		}
+
+		if (myModel instanceof ZLTextTreeModel) {
+			if ((num >= 0) && (num < (int)myModel.getParagraphsNumber())) {
+				ZLTextTreeParagraph tp = (ZLTextTreeParagraph)(myModel).getParagraph(num);
+				if (myTreeStateIsFrozen) {
+					int corrected = num;
+					ZLTextTreeParagraph parent = tp.getParent();
+					while ((corrected > 0) && (parent != null) && !parent.isOpen()) {
+						for (--corrected; ((corrected > 0) && parent != (myModel).getParagraph(corrected)); --corrected);
+						parent = parent.getParent();
+					}
+					if (last && (corrected != num)) {
+						++corrected;
+					}
+					num = corrected;
+				} else {
+					tp.openTree();
+					rebuildPaintInfo(true);
+				}
+			}
+		}
+
+		if (last) {
+			if ((num > 0) && (num <= (int)myModel.getParagraphsNumber())) {
+				moveEndCursor(num);
+			}
+		} else {
+			if ((num >= 0) && (num < (int)myModel.getParagraphsNumber())) {
+				moveStartCursor(num);
+			}
+		}*/
+	}
+
+	
 
 	private int getViewWidth() {
 		return Math.max(getContext().getWidth() - getLeftMargin() - getRightMargin(), 1);
