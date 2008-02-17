@@ -73,12 +73,21 @@ public class CollectionView extends FBView {
 				}
 				return true;
 			} else if (imageElement.id() == DELETE_IMAGE_ID) {
-				ZLResourceKey boxKey = new ZLResourceKey("removeBookBox");
-				final String message =
-					ZLStringUtil.printf(ZLDialogManager.dialogMessage(boxKey), book.getTitle());
-				if (ZLDialogManager.getInstance().questionBox(boxKey, message,
+				//ZLResourceKey
+				String boxKey = "removeBookBox";
+				final String message;
+				final String format = ZLDialogManager.getDialogMessage(boxKey);
+				int index = format.indexOf("%s");
+				if (index == -1) {
+					message = format;
+				} else {
+				    message = ZLDialogManager.getDialogMessage(boxKey).substring(0, index) + book.getTitle() + format.substring(index + 2);
+				}
+				//final String message =
+				//	ZLStringUtil.printf(ZLDialogManager.dialogMessage(boxKey), book.getTitle());
+				if (ZLDialogManager.getInstance().getQuestionBox(boxKey, message,
 					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON) == 0) {
-					collectionModel().removeAllMarks();
+					//collectionModel().removeAllMarks();
 					new BookList().removeFileName(book.getFileName());
 					ZLTextTreeParagraph paragraph = (ZLTextTreeParagraph)collectionModel()[imageArea.ParagraphNumber];
 					ZLTextTreeParagraph parent = paragraph.getParent();
