@@ -1,7 +1,7 @@
 package org.zlibrary.core.filesystem;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.io.File;
+import java.util.ArrayList;
 
 public abstract class ZLDir {
 	private String myPath;
@@ -32,11 +32,14 @@ public abstract class ZLDir {
 		if (itemName == "..") {
 			return getParentPath();
 		} else {
-			return isRoot() ? myPath + itemName : myPath + getDelimiter() + itemName;
+			
+			return myPath.endsWith(File.separator) ? myPath + itemName : myPath + File.separator + itemName;
+			//return isRoot() ? myPath + itemName : myPath + getDelimiter() + itemName;
 		}
 	}
 	
 	public boolean isRoot() {
+		System.out.println("isRoot-->"+myPath+"<--");
 		return myPath == ZLFSManager.getInstance().getRootDirectoryPath();
 	}
 
