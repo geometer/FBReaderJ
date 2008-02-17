@@ -113,8 +113,8 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
-		addAction(ActionCode.SHOW_COLLECTION, new DummyAction(this));
-		addAction(ActionCode.SHOW_LAST_BOOKS, new DummyAction(this));
+		addAction(ActionCode.SHOW_COLLECTION, new SetModeAction(this, ViewMode.BOOK_COLLECTION, ViewMode.BOOK_TEXT | ViewMode.CONTENTS | ViewMode.RECENT_BOOKS));
+		addAction(ActionCode.SHOW_LAST_BOOKS, new SetModeAction(this, ViewMode.RECENT_BOOKS, ViewMode.BOOK_TEXT | ViewMode.CONTENTS));
 		addAction(ActionCode.SHOW_OPTIONS, new DummyAction(this));
 		addAction(ActionCode.SHOW_CONTENTS, new ShowContentsAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new DummyAction(this));
