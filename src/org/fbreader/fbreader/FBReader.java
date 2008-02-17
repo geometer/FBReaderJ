@@ -92,6 +92,7 @@ public final class FBReader extends ZLApplication {
 	private final BookTextView myBookTextView;
 	private final ContentsView myContentsView;
 	private final FootnoteView myFootnoteView;
+	private final CollectionView myCollectionView;
 	private final RecentBooksView myRecentBooksView;
 
 	private BookModel myBookModel;
@@ -146,6 +147,7 @@ public final class FBReader extends ZLApplication {
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
 		myFootnoteView = new FootnoteView(this, getContext());
+		myCollectionView = new CollectionView(this, getContext());
 		myRecentBooksView = new RecentBooksView(this, getContext());
 		
 		String fileName = null;
@@ -229,6 +231,12 @@ public final class FBReader extends ZLApplication {
 				break;
 			case ViewMode.FOOTNOTE:
 				setView(myFootnoteView);
+				break;
+			case ViewMode.RECENT_BOOKS:
+				setView(myRecentBooksView);
+				break;
+			case ViewMode.BOOK_COLLECTION:
+				setView(myCollectionView);
 				break;
 			default:
 				break;
