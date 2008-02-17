@@ -30,7 +30,7 @@ public class BookCollection {
 	private	boolean myDoWeakRebuild;
 
 	public BookCollection() {
-		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "");
+		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "/home/geometer/FBooks");
 		ScanSubdirsOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "ScanSubdirs", false);
 		myDoStrongRebuild = true;
 		myDoWeakRebuild = false;
@@ -200,7 +200,7 @@ public class BookCollection {
 			final ArrayList files = dir.collectFiles();
 
 			final int numberOfFiles = files.size();
-			for (int j = 0; i < numberOfFiles; ++j) {
+			for (int j = 0; j < numberOfFiles; ++j) {
 				String fileName = dir.getItemPath((String)files.get(j));
 				ZLFile file = new ZLFile(fileName);
 				if (PluginCollection.instance().getPlugin(file, true) != null) {

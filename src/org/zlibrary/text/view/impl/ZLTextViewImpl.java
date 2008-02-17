@@ -55,8 +55,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public void setModel(ZLTextModel model) {
 		myModel = model;
-		if (myModel.getParagraphsNumber() > 0) {
-			myStartCursor.setCursor(ZLTextParagraphCursor.cursor(myModel, 0));
+		if ((model != null) && (model.getParagraphsNumber() > 0)) {
+			myStartCursor.setCursor(ZLTextParagraphCursor.cursor(model, 0));
 			myEndCursor.reset();
 			myPaintState = PaintState.START_IS_KNOWN;
 		}

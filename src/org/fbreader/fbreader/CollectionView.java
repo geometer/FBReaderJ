@@ -30,7 +30,7 @@ public class CollectionView extends FBView {
 	static private final String SERIES_ORDER_IMAGE_ID = "seriesOrder";
 
 	
-	private BookCollection myCollection;
+	private final BookCollection myCollection = new BookCollection();
 	private boolean myTreeStateIsFrozen;
 	private boolean myUpdateModel;
 
@@ -46,6 +46,10 @@ public class CollectionView extends FBView {
 	}
 
 	public boolean onStylusPress(int x, int y) {
+		if (super.onStylusPress(x, y)) {
+			return true;
+		}
+
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		//(imageArea.Kind == ZLTextElement.IMAGE_ELEMENT)
 		/*if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
@@ -179,10 +183,10 @@ public class CollectionView extends FBView {
 	private class CollectionModel extends ZLTextTreeModelImpl {
 
 		
-		private BookCollection myCollection = new BookCollection();
-		private ZLImageMap myImageMap;//= new ImageMap();
-		private HashMap/*<ZLTextParagraph,BookDescription>*/ myParagraphToBook;
-		private HashMap/*<BookDescription,Integer>*/ myBookToParagraph;
+		private final BookCollection myCollection;
+		private ZLImageMap myImageMap; // = new ZLImageMap();
+		private final HashMap/*<ZLTextParagraph,BookDescription>*/ myParagraphToBook = new HashMap();
+		private final HashMap/*<BookDescription,Integer>*/ myBookToParagraph = new HashMap();
 
 		public CollectionModel(BookCollection collection) {
 			super();
@@ -228,9 +232,10 @@ public class CollectionView extends FBView {
 					currentSequenceName = "";
 					sequenceParagraph = null;
                     //todo 
-					ZLTextTreeParagraph authorParagraph = ZLModelFactory.createTreeParagraph(null);
+					//ZLTextTreeParagraph authorParagraph = ZLModelFactory.createTreeParagraph(null);
+					ZLTextTreeParagraph authorParagraph = createParagraph(null);
 					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
-					insertImage(AUTHOR_INFO_IMAGE_ID);
+					//insertImage(AUTHOR_INFO_IMAGE_ID);
 					for (int j = 0; j < books.size(); j++) {
 						BookDescription jt = (BookDescription)books.get(j);
 						final String sequenceName = jt.getSequenceName();
@@ -241,15 +246,15 @@ public class CollectionView extends FBView {
 							currentSequenceName = sequenceName;
 							sequenceParagraph = createParagraph(authorParagraph);
 							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
-							insertImage(SERIES_ORDER_IMAGE_ID);
+							//insertImage(SERIES_ORDER_IMAGE_ID);
 						}
 						ZLTextTreeParagraph bookParagraph = createParagraph(
 							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
 						);
 						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
-						insertImage(BOOK_INFO_IMAGE_ID);
+						//insertImage(BOOK_INFO_IMAGE_ID);
 						if (myCollection.isBookExternal(jt)) {
-							insertImage(DELETE_IMAGE_ID);
+							//insertImage(DELETE_IMAGE_ID);
 						}
 						myParagraphToBook.put(bookParagraph, jt);
 						myBookToParagraph.put(jt, getParagraphsNumber() - 1);
