@@ -184,7 +184,7 @@ public class CollectionView extends FBView {
 
 		
 		private final BookCollection myCollection;
-		private ZLImageMap myImageMap; // = new ZLImageMap();
+		private ZLImageMap myImageMap = new ZLImageMap();
 		private final HashMap/*<ZLTextParagraph,BookDescription>*/ myParagraphToBook = new HashMap();
 		private final HashMap/*<BookDescription,Integer>*/ myBookToParagraph = new HashMap();
 
@@ -192,12 +192,13 @@ public class CollectionView extends FBView {
 			super();
 			myCollection = collection;
 			//TODO
+			/*
 			String prefix = "";//ZLResource.ourApplicationImageDirectory() + ZLibrary.FileNameDelimiter;
-			//myImageMap.put(DELETE_IMAGE_ID, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
-			//myImageMap[BOOK_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-bookinfo.png", 0);
-			//myImageMap[AUTHOR_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-authorinfo.png", 0);
-			//myImageMap[SERIES_ORDER_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-order.png", 0);
-
+			myImageMap.put(DELETE_IMAGE_ID, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
+			myImageMap[BOOK_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-bookinfo.png", 0);
+			myImageMap[AUTHOR_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-authorinfo.png", 0);
+			myImageMap[SERIES_ORDER_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-order.png", 0);
+			*/
 		}
 
 		public BookDescription bookByParagraphNumber(int num) {
@@ -252,9 +253,9 @@ public class CollectionView extends FBView {
 							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
 						);
 						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
-						//insertImage(BOOK_INFO_IMAGE_ID);
+						insertImage(BOOK_INFO_IMAGE_ID);
 						if (myCollection.isBookExternal(jt)) {
-							//insertImage(DELETE_IMAGE_ID);
+							insertImage(DELETE_IMAGE_ID);
 						}
 						myParagraphToBook.put(bookParagraph, jt);
 						myBookToParagraph.put(jt, getParagraphsNumber() - 1);

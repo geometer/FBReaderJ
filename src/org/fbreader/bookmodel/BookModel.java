@@ -23,13 +23,7 @@ public final class BookModel {
 
 	private final BookDescription myDescription;
 	
-	private static final class ImageMap extends HashMap implements ZLImageMap {
-		public ZLImage getImage(String id) {
-			return (ZLImage)super.get(id);
-		}
-	};
-	
-	private final ImageMap myImageMap = new ImageMap(); 
+	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	private final String myFileName;
 
