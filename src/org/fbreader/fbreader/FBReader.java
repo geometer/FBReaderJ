@@ -1,18 +1,20 @@
 package org.fbreader.fbreader;
 
-import java.io.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.Locale;
 
 import org.fbreader.bookmodel.BookModel;
+import org.fbreader.description.BookDescription;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
+import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.ZLTextView;
@@ -38,6 +40,27 @@ public final class FBReader extends ZLApplication {
 		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
 
 	private String myHelpFileName;
+	
+	private BookModel myModel;
+	
+	private static final String OPTIONS = "Options";
+	private static final String SEARCH = "Search";
+	private static final String STATE = "State";
+	private static final String BOOK = "Book";
+
+	private static final String LARGE_SCROLLING = "LargeScrolling";
+	private static final String SMALL_SCROLLING = "SmallScrolling";
+	private static final String MOUSE_SCROLLING = "MouseScrolling";
+	private static final String FINGER_TAP_SCROLLING = "FingerTapScrolling";
+
+	private static final String DELAY = "ScrollingDelay";
+	private static final String MODE = "Mode";
+	private static final String LINES_TO_KEEP = "LinesToKeep";
+	private static final String LINES_TO_SCROLL = "LinesToScroll";
+	private static final String PERCENT_TO_SCROLL = "PercentToScroll";
+
+	
+	
 	String getHelpFileName() {
 		if (myHelpFileName == null) {
 			myHelpFileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2";
@@ -69,6 +92,7 @@ public final class FBReader extends ZLApplication {
 	private final BookTextView myBookTextView;
 	private final ContentsView myContentsView;
 	private final FootnoteView myFootnoteView;
+	private final RecentBooksView myRecentBooksView;
 
 	private BookModel myBookModel;
 
@@ -122,7 +146,8 @@ public final class FBReader extends ZLApplication {
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());
 		myFootnoteView = new FootnoteView(this, getContext());
-
+		myRecentBooksView = new RecentBooksView(this, getContext());
+		
 		String fileName = null;
 		if (args.length > 0) {
 			try {
@@ -152,6 +177,13 @@ public final class FBReader extends ZLApplication {
 		myContentsView.setModel(myBookModel.getContentsModel());
 		setMode(ViewMode.BOOK_TEXT);
 		return true;
+	}
+	
+	
+	public void openBook(BookDescription bookDescription) {
+		OpenBookRunnable runnable = new OpenBookRunnable(this, bookDescription);
+		//ZLDialogManager.getInstance().wait(new ZLResourceKey("loadingBook"), runnable);
+		resetWindowCaption();
 	}
 
 	public ZLKeyBindings keyBindings() {
@@ -226,4 +258,54 @@ public final class FBReader extends ZLApplication {
 		myBookTextView.clearCaches();
 		myContentsView.clearCaches();
 	}
+	
+	void openBookInternal(BookDescription description) {
+		if (description != null) {
+			BookTextView bookTextView = (BookTextView)myBookTextView;
+			ContentsView contentsView = (ContentsView)myContentsView;
+			FootnoteView footnoteView = (FootnoteView)myFootnoteView;
+			RecentBooksView recentBooksView = (RecentBooksView)myRecentBooksView;
+
+			bookTextView.saveState();
+			bookTextView.setModel(null, "");
+			bookTextView.setContentsModel(null);
+			contentsView.setModel(null, "");
+			if (myModel != null) {
+				myModel = null;
+			}
+			myModel = new BookModel(description);
+			new ZLStringOption(ZLOption.STATE_CATEGORY, STATE, BOOK, "").setValue(myModel.getFileName());
+			//ZLTextHyphenator.instance().load(description.getLanguage());
+			bookTextView.setModel(myModel.getBookTextModel(), description.getFileName());
+			bookTextView.setCaption(description.getTitle());
+			bookTextView.setContentsModel(myModel.getContentsModel());
+			footnoteView.setModel(null, "");
+			footnoteView.setCaption(description.getTitle());
+			contentsView.setModel(myModel.getContentsModel(), description.getFileName());
+			contentsView.setCaption(description.getTitle());
+
+			recentBooksView.lastBooks().addBook(description.getFileName());
+		}
+	}
+	
+	public void showBookTextView() {
+		setMode(ViewMode.BOOK_TEXT);
+	}
+
+	
+	private class OpenBookRunnable implements ZLRunnable {
+		private FBReader myReader;
+		private	BookDescription myDescription;
+
+		public OpenBookRunnable(FBReader reader, BookDescription description) { 
+			myReader = reader;
+			myDescription = description; 
+		}
+		
+		public	void run() { 
+			myReader.openBookInternal(myDescription); 
+		}
+
+	};
+
 }

@@ -5,16 +5,22 @@ import java.util.HashMap;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.fbreader.collection.BookCollection;
+import org.fbreader.collection.BookList;
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;
+import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 import org.zlibrary.text.model.impl.ZLModelFactory;
 import org.zlibrary.text.model.impl.ZLTextTreeModelImpl;
 import org.zlibrary.text.view.ZLTextView;
+import org.zlibrary.text.view.impl.ZLTextElement;
+import org.zlibrary.text.view.impl.ZLTextElementArea;
+import org.zlibrary.text.view.impl.ZLTextImageElement;
+import org.zlibrary.text.view.impl.ZLTextParagraphCursor;
+import org.zlibrary.text.view.impl.ZLTextWordCursor;
 
 public class CollectionView extends FBView {
 	static private final String LIBRARY = "Library";
@@ -39,14 +45,16 @@ public class CollectionView extends FBView {
 		return LIBRARY;
 	}
 
-	/*public boolean onStylusPress(int x, int y) {
-		ZLTextElementArea imageArea = elementByCoordinates(x, y);
-		if ((imageArea != null) && (imageArea.Kind == ZLTextElement.IMAGE_ELEMENT)) {
-			ZLTextWordCursor cursor = startCursor();
+	public boolean onStylusPress(int x, int y) {
+		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
+		//(imageArea.Kind == ZLTextElement.IMAGE_ELEMENT)
+		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
+			ZLTextWordCursor cursor = getStartCursor();
 			cursor.moveToParagraph(imageArea.ParagraphNumber);
 			cursor.moveTo(imageArea.TextElementNumber, 0);
 			final ZLTextElement element = cursor.getElement();
-			if (element.getKind() != ZLTextElement.IMAGE_ELEMENT) {
+			//element.getKind() != ZLTextElement.IMAGE_ELEMENT
+			if (!(element instanceof ZLTextImageElement)) {
 				return false;
 			}
 			final ZLTextImageElement imageElement = (ZLTextImageElement)element;
@@ -56,7 +64,7 @@ public class CollectionView extends FBView {
 				return false;
 			}
 
-			if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
+			/*if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
 				if (new BookInfoDialog(myCollection, book.getFileName()).dialog().run()) {
 					myCollection.rebuild(false);
 					myUpdateModel = true;
@@ -68,43 +76,45 @@ public class CollectionView extends FBView {
 				ZLResourceKey boxKey = new ZLResourceKey("removeBookBox");
 				final String message =
 					ZLStringUtil.printf(ZLDialogManager.dialogMessage(boxKey), book.getTitle());
-				if (ZLDialogManager.instance().questionBox(boxKey, message,
+				if (ZLDialogManager.getInstance().questionBox(boxKey, message,
 					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON) == 0) {
 					collectionModel().removeAllMarks();
 					new BookList().removeFileName(book.getFileName());
 					ZLTextTreeParagraph paragraph = (ZLTextTreeParagraph)collectionModel()[imageArea.ParagraphNumber];
 					ZLTextTreeParagraph parent = paragraph.getParent();
-					if (parent.children().size() == 1) {
+					if (parent.getChildren().size() == 1) {
 						collectionModel().removeParagraph(imageArea.ParagraphNumber);
 						collectionModel().removeParagraph(imageArea.ParagraphNumber - 1);
 					} else {
 						collectionModel().removeParagraph(imageArea.ParagraphNumber);
 					}
 					if (collectionModel().getParagraphsNumber() == 0) {
-						setStartCursor(0);
+						this.getStartCursor().setCursor((ZLTextParagraphCursor)null);
+						//setStartCursor(0);
 					}
 					rebuildPaintInfo(true);
 					repaintView();
 				}
 				return true;
-			}
+			}*/
 			return false;
 		}
 
-		int index = paragraphIndexByCoordinate(y);
+		int index = getParagraphIndexByCoordinate(y);
 		if (index == -1) {
 			return false;
 		}
 
 		BookDescription book = collectionModel().bookByParagraphNumber(index);
 		if (book != null) {
-			fbreader().openBook(book);
-			fbreader().showBookTextView();
+			
+			getFBReader().openBook(book);
+			getFBReader().showBookTextView();
 			return true;
 		}
 
 		return false;
-	}*/
+	}
 
 	public void paint() {
 		if (myUpdateModel) {

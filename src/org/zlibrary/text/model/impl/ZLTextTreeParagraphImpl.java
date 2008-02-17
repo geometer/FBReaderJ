@@ -77,6 +77,10 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 			myParent.myChildren.remove(this);
 		}
 	}
+	
+	public ArrayList getChildren() {
+		return myChildren;
+	}
 
 	private void addChild(ZLTextTreeParagraph child) {
 		if (myChildren == null) {

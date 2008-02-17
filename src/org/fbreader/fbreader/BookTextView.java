@@ -1,18 +1,50 @@
 package org.fbreader.fbreader;
 
+import java.util.ArrayList;
+
+import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.*;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.view.impl.*;
-import org.fbreader.bookmodel.FBTextKind;
+import org.zlibrary.text.view.impl.ZLTextControlElement;
+import org.zlibrary.text.view.impl.ZLTextElement;
+import org.zlibrary.text.view.impl.ZLTextElementArea;
+import org.zlibrary.text.view.impl.ZLTextHyperlinkControlElement;
+import org.zlibrary.text.view.impl.ZLTextImageElement;
+import org.zlibrary.text.view.impl.ZLTextWord;
+import org.zlibrary.text.view.impl.ZLTextWordCursor;
 
 class BookTextView extends FBView {
+	private static final String PARAGRAPH_OPTION_NAME = "Paragraph";
+	private static final String WORD_OPTION_NAME = "Word";
+	private static final String CHAR_OPTION_NAME = "Char";
+	private static final String BUFFER_SIZE = "UndoBufferSize";
+	private static final String POSITION_IN_BUFFER = "PositionInBuffer";
+	private static final String BUFFER_PARAGRAPH_PREFIX = "Paragraph_";
+	private static final String BUFFER_WORD_PREFIX = "Word_";
+
+	
 	private ZLIntegerOption myParagraphNumberOption;
 	private ZLIntegerOption myWordNumberOption;
 	private ZLIntegerOption myCharNumberOption;
+	private ZLTextModel myContentsModel;
+    
+	//todo deque
+	private ArrayList/*<Position>*/ myPositionStack = new ArrayList();
+	private int myCurrentPointInStack;
+	private int myMaxStackSize;
+    private boolean myLockUndoStackChanges;
+    private String myFileName;
+
+	
 	BookTextView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
+	}
+	
+	public void setContentsModel(ZLTextModel contentsModel) {
+		myContentsModel = contentsModel;
 	}
 
 	public void setModel(ZLTextModel model, String fileName) {
@@ -90,5 +122,51 @@ class BookTextView extends FBView {
 			}
 		}
 		return false;
+	}
+	
+	public String getFileName() {
+		return this.myFileName;
+	}
+	
+	public void saveState() {
+		final ZLTextWordCursor cursor = getStartCursor();
+		final String group = getFileName();
+
+		if (!cursor.isNull()) {
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_OPTION_NAME, 0).setValue(cursor.getParagraphCursor().getIndex());
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, WORD_OPTION_NAME, 0).setValue(cursor.getWordNumber());
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, CHAR_OPTION_NAME, 0).setValue(cursor.getCharNumber());
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, BUFFER_SIZE, 0).setValue(myPositionStack.size());
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, POSITION_IN_BUFFER, 0).setValue(myCurrentPointInStack);
+
+			for (int i = 0; i < myPositionStack.size(); ++i) {
+				String bufferParagraph = BUFFER_PARAGRAPH_PREFIX;
+				String bufferWord = BUFFER_WORD_PREFIX;
+				bufferParagraph += i;
+				bufferWord += i;
+				new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, bufferParagraph, -1).setValue(((Position)myPositionStack.get(i)).getFirst());
+				new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, bufferWord, -1).setValue(((Position)myPositionStack.get(i)).getSecond());
+			}
+		}
+	}
+	
+	private class Position {
+		private int first;
+		private int second;
+		
+		public Position() {}
+		
+		public Position(int first, int second) {
+			this.first = first;
+			this.second = second;
+		}
+		
+		public int getFirst() {
+			return first;
+		}
+		
+		public int getSecond() {
+			return second;
+		}
 	}
 }

@@ -11,6 +11,8 @@ public abstract class FBView extends ZLTextViewImpl {
 	private static ZLIntegerRangeOption ourTopMarginOption;
 	private static ZLIntegerRangeOption ourBottomMarginOption;
 
+	private String myCaption;
+	
 	private ZLIntegerRangeOption createMarginOption(String name, int defaultValue) {
 		return new ZLIntegerRangeOption(
 			ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", name, 0, 1000, defaultValue
@@ -63,5 +65,9 @@ public abstract class FBView extends ZLTextViewImpl {
 
 	FBReader getFBReader() {
 		return (FBReader)getApplication();
+	}
+	
+	public void setCaption(String caption) {
+		myCaption = caption;
 	}
 }

@@ -11,7 +11,11 @@ public class ZLModelFactory {
 	//models
 	static public ZLTextPlainModel createPlainModel(int dataBlockSize) {
 		return new ZLTextPlainModelImpl(dataBlockSize);
-	} 
+	}
+	
+	/*static public ZLTextPlainModel createPlainModel() {
+		return new ZLTextPlainModelImpl();
+	}*/
 	
 	static public ZLTextTreeModel createZLTextTreeModel() {
 		return new ZLTextTreeModelImpl();

@@ -203,7 +203,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myBlockOffset = blockOffset + length;
 	}
 	
-	/*
+	
 	public final void addControl(ZLTextForcedControlEntry entry) {
 		final char[] block = getDataBlock(3);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -213,7 +213,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		block[myBlockOffset++] = (char)entryAddress;
 		myEntries.add(entry);
 	}
-	*/
+	
 	
 	public final void addHyperlinkControl(byte textKind, String label) {
 		final short labelLength = (short)label.length();

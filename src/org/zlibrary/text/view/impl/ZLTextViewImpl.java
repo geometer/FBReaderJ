@@ -878,7 +878,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		ZLTextParagraphCursorCache.clear();
 	}
 
-	private void rebuildPaintInfo(boolean strong) {
+	protected void rebuildPaintInfo(boolean strong) {
 		if (myPaintState == PaintState.NOTHING_TO_PAINT) {
 			return;
 		}

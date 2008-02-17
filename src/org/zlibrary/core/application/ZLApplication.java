@@ -127,7 +127,7 @@ public abstract class ZLApplication {
 		}
 	}
 
-	private final void resetWindowCaption() {
+	protected final void resetWindowCaption() {
 		if (myWindow != null) {
 			ZLView view = getCurrentView();
 			if (view != null) {

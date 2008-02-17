@@ -267,7 +267,7 @@ public class BookCollection {
 		}
 	}
 	
-	class LastOpenedBooks {
+	static public class LastOpenedBooks {
 
 		public ZLIntegerRangeOption MaxListSizeOption;
 		static private final String GROUP = "LastOpenedBooks";

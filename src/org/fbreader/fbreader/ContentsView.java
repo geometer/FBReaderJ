@@ -1,6 +1,9 @@
 package org.fbreader.fbreader;
 
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
 
 import org.fbreader.bookmodel.ContentsModel;
@@ -30,4 +33,10 @@ class ContentsView extends FBView {
 
 		return true;
 	}
+	
+	//TODO
+	public void setModel(ZLTextModel model, String fileName) {
+		super.setModel(model);
+	}
+
 }
