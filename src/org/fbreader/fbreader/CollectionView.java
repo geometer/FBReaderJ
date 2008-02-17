@@ -48,7 +48,7 @@ public class CollectionView extends FBView {
 	public boolean onStylusPress(int x, int y) {
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		//(imageArea.Kind == ZLTextElement.IMAGE_ELEMENT)
-		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
+		/*if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
 			ZLTextWordCursor cursor = getStartCursor();
 			cursor.moveToParagraph(imageArea.ParagraphNumber);
 			cursor.moveTo(imageArea.TextElementNumber, 0);
@@ -64,7 +64,7 @@ public class CollectionView extends FBView {
 				return false;
 			}
 
-			/*if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
+			if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
 				if (new BookInfoDialog(myCollection, book.getFileName()).dialog().run()) {
 					myCollection.rebuild(false);
 					myUpdateModel = true;
@@ -89,7 +89,7 @@ public class CollectionView extends FBView {
 					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON) == 0) {
 					//collectionModel().removeAllMarks();
 					new BookList().removeFileName(book.getFileName());
-					ZLTextTreeParagraph paragraph = (ZLTextTreeParagraph)collectionModel()[imageArea.ParagraphNumber];
+					ZLTextTreeParagraph paragraph = (ZLTextTreeParagraph)collectionModel().getTreeParagraph(imageArea.ParagraphNumber);
 					ZLTextTreeParagraph parent = paragraph.getParent();
 					if (parent.getChildren().size() == 1) {
 						collectionModel().removeParagraph(imageArea.ParagraphNumber);
@@ -105,7 +105,7 @@ public class CollectionView extends FBView {
 					repaintView();
 				}
 				return true;
-			}*/
+			}
 			return false;
 		}
 
@@ -120,7 +120,7 @@ public class CollectionView extends FBView {
 			getFBReader().openBook(book);
 			getFBReader().showBookTextView();
 			return true;
-		}
+		}*/
 
 		return false;
 	}
