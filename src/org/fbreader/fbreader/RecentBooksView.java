@@ -13,7 +13,8 @@ import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class RecentBooksView extends FBView {
 	private static final String LIBRARY = "Recent Books";
-	private BookCollection.LastOpenedBooks myLastBooks;
+
+	private BookCollection.LastOpenedBooks myLastBooks;// = new BookCollection.LastOpenedBooks();
 
 	public RecentBooksView(FBReader reader, ZLPaintContext context) {
 		super(reader, context);	

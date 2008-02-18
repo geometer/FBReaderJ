@@ -175,7 +175,7 @@ public class BookCollection {
 					ZLDir dir = new ZLFile(name).getDirectory();
 					if (dir != null) {
 						ArrayList subdirs = dir.collectSubDirs();
-						for (int i = 0; i <  subdirs.size(); ++i) {
+						for (int i = 0; i < subdirs.size(); ++i) {
 							nameQueue.add(dir.getItemPath((String)subdirs.get(i)));
 						}
 					}
@@ -275,7 +275,7 @@ public class BookCollection {
 
 		public LastOpenedBooks() {
 			MaxListSizeOption = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, GROUP, "MaxSize", 1, 100, 10);
-            final int size = MaxListSizeOption.getValue();
+			final int size = MaxListSizeOption.getValue();
 			for (int i = 0; i < size; ++i) {
 				String num = BOOK;
 				num += i;

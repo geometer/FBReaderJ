@@ -13,7 +13,6 @@ import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
-import org.zlibrary.text.model.impl.ZLModelFactory;
 import org.zlibrary.text.model.impl.ZLTextTreeModelImpl;
 import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextElement;
@@ -233,7 +232,6 @@ public class CollectionView extends FBView {
 					currentSequenceName = "";
 					sequenceParagraph = null;
                     //todo 
-					//ZLTextTreeParagraph authorParagraph = ZLModelFactory.createTreeParagraph(null);
 					ZLTextTreeParagraph authorParagraph = createParagraph(null);
 					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
 					//insertImage(AUTHOR_INFO_IMAGE_ID);
