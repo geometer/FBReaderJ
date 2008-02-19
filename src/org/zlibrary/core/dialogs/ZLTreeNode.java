@@ -28,5 +28,10 @@ public class ZLTreeNode {
 	public String pixmapName() {
 		return myPixmapName;
 	}
+
+	@Override
+	public String toString() {
+		return myDisplayName;
+	}
 	
 }

@@ -313,7 +313,7 @@ public class BookCollection {
 			return myBooks;
 		}
 
-		private ArrayList/*BookDescription*/ myBooks;
+		private final ArrayList/*BookDescription*/ myBooks = new ArrayList();
 		
 	}
 }

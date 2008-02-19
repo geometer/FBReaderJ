@@ -10,12 +10,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.HashMap;
 
 import org.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.zlibrary.core.dialogs.ZLTreeHandler;
 import org.zlibrary.core.dialogs.ZLTreeNode;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
+import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
 class ZLSwingSelectionDialog extends ZLSelectionDialog{
@@ -24,33 +28,43 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	private JList myList = new JList();
 	private OKAction myOKAction;
 	
+	private ZLIntegerRangeOption myWidthOption;
+	private	ZLIntegerRangeOption myHeightOption;
+	private static final String OPTION_GROUP_NAME = "OpenFileDialog";
+	
 	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
 	private static final String ourIconDirectory = "icons/filetree/";
 	
 	protected ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler) {
 		super(myHandler);
+		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 400);
+		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 300);
 		myJDialog = new JDialog(frame);
 		myJDialog.setTitle(caption);
 		update();
 	}
 
 	@Override
-	protected void exitDialog() {
-		// TODO Auto-generated method stub
+	protected void exitDialog() {	
 		myJDialog.dispose();
 	}
 
 	@Override
 	public boolean run() {
+		myJDialog.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+				myWidthOption.setValue(myJDialog.getWidth());
+				myHeightOption.setValue(myJDialog.getHeight());
+			}
+		});
 		myJDialog.setLayout(new BorderLayout());
 		myStateLine.setEditable(!handler().isOpenHandler());
-		//myStateLine.setEnabled(!handler().isOpenHandler());
-		myStateLine.setFocusable(false);
+		myStateLine.setEnabled(!handler().isOpenHandler());
 		myJDialog.add(myStateLine, BorderLayout.NORTH);
 	
 		myList.setCellRenderer(new CellRenderer());
 		JScrollPane scrollPane = new JScrollPane(myList);
-		scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
+		scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());		
 		myJDialog.add(scrollPane, BorderLayout.CENTER);
 		
 		myList.addListSelectionListener(new SelectionListener());
@@ -74,12 +88,13 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		myJDialog.add(buttonPanel, BorderLayout.SOUTH);
 		
 		myJDialog.pack();
-		myJDialog.setSize(600, 400);
+		myList.requestFocusInWindow();	
+		myJDialog.setSize(myWidthOption.getValue(), myHeightOption.getValue());
 		myJDialog.setLocationRelativeTo(myJDialog.getParent());
 		myJDialog.setModal(true);
 		myJDialog.setVisible(true);
 		
-		return false;
+		return true; //????
 	}
 
 	@Override
@@ -133,24 +148,6 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 				break;
 			}
 		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			final char keyChar = e.getKeyChar();
-			if (keyChar != KeyEvent.CHAR_UNDEFINED) {
-				ArrayList nodes = handler().subnodes();
-				final int size = nodes.size();
-				final int startIndex = (myList.getSelectedIndex() + 1) % size;
-				for (int i = 0; i < size - 1; i++) {
-					final int index = (startIndex + i) % size;
-					if (((ZLTreeNode) nodes.get(index)).displayName().toLowerCase().charAt(0) == keyChar) {
-						selectItem(index);
-						break;
-					}
-				}
-			}
-		}
 	}
 	
 	private class CancelAction extends AbstractAction {
@@ -181,9 +178,8 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		}		
 	}
 	
-	
 	private static class CellRenderer extends JLabel implements ListCellRenderer {
-
+		
 		public Component getListCellRendererComponent(
 			JList list,
 			Object value,            // value to display
@@ -203,7 +199,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 			}
 			setEnabled(list.isEnabled());
 			setFont(list.getFont());
-			setOpaque(true);
+			setOpaque(true);			
 			return this;
 		}
 	}

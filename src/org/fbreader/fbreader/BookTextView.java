@@ -49,10 +49,13 @@ class BookTextView extends FBView {
 
 	public void setModel(ZLTextModel model, String fileName) {
 		super.setModel(model);
+		myFileName = fileName;
 		myParagraphNumberOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Paragraph", 0);
 		myWordNumberOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Word", 0);
 		myCharNumberOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Char", 0);
-		gotoPosition(myParagraphNumberOption.getValue(), myWordNumberOption.getValue(), myCharNumberOption.getValue());
+		if (model != null) {
+			gotoPosition(myParagraphNumberOption.getValue(), myWordNumberOption.getValue(), myCharNumberOption.getValue());
+		}
 	}
 
 	protected void preparePaintInfo() {
@@ -131,6 +134,8 @@ class BookTextView extends FBView {
 	public void saveState() {
 		final ZLTextWordCursor cursor = getStartCursor();
 		final String group = getFileName();
+		
+		System.out.println("group " + group);
 
 		if (!cursor.isNull()) {
 			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_OPTION_NAME, 0).setValue(cursor.getParagraphCursor().getIndex());

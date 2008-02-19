@@ -164,6 +164,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	boolean openBook(String fileName) {
+		System.out.println("try open " + fileName);
 		if (fileName == null) {
 			fileName = myBookNameOption.getValue();
 		}
@@ -184,6 +185,7 @@ public final class FBReader extends ZLApplication {
 	
 	public void openBook(BookDescription bookDescription) {
 		OpenBookRunnable runnable = new OpenBookRunnable(this, bookDescription);
+		runnable.run();
 		//ZLDialogManager.getInstance().wait(new ZLResourceKey("loadingBook"), runnable);
 		resetWindowCaption();
 	}
@@ -292,6 +294,7 @@ public final class FBReader extends ZLApplication {
 			contentsView.setModel(myModel.getContentsModel(), description.getFileName());
 			contentsView.setCaption(description.getTitle());
 
+			System.out.println("yes");
 			recentBooksView.lastBooks().addBook(description.getFileName());
 		}
 	}
