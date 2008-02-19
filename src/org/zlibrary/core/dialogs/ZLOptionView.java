@@ -11,21 +11,18 @@ public abstract class ZLOptionView { // ? public
 		myOption = option;
 		myTooltip = tooltip;
 		myInitialized = false;
-//		myOption.SetView(this);
+		myOption.setView(this);
 	}
 
-	// TODO: change to pure virtual
-	public void reset() {
-		
-	}
+	public abstract void reset();
 
-	public void setVisible(boolean visible) {
+	public final void setVisible(boolean visible) {
 		if (visible) {
 			if (!myInitialized) {
 				createItem();
 				myInitialized = true;
 			}
-		//	setActive(myOption.isActive());
+			setActive(myOption.isActive());
 			show();
 		} else {
 			if (myInitialized) {
@@ -34,13 +31,13 @@ public abstract class ZLOptionView { // ? public
 		}
 	}
 	
-	public void setActive(boolean active) {
+	public final void setActive(boolean active) {
 		if (myInitialized) {
 			_setActive(active);
 		}
 	}
 	
-	public void onAccept() {
+	public final void onAccept() {
 		if (myInitialized) {
 			_onAccept();
 		}
@@ -52,18 +49,15 @@ public abstract class ZLOptionView { // ? public
 	
 	protected abstract void show();
 	
-	// TODO: replace by pure virtual method
-	protected void _setActive(boolean active) {
-		
-	}
+	protected abstract void _setActive(boolean active);
 		
 	protected abstract void _onAccept();
 
-	protected String getName() {
+	protected final String getName() {
 		return myName;	
 	}
 	
-	protected String getTooltip() {
+	protected final String getTooltip() {
 		return myTooltip;
 	}
 }
