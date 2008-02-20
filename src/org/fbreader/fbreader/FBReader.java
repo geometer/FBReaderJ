@@ -18,6 +18,7 @@ import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.ZLTextView;
+import org.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 public final class FBReader extends ZLApplication {
 	static interface ViewMode {
@@ -164,6 +165,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	boolean openBook(String fileName) {
+//		System.err.println("openBook");
 //		System.out.println("try open " + fileName);
 		if (fileName == null) {
 			fileName = myBookNameOption.getValue();
@@ -270,6 +272,7 @@ public final class FBReader extends ZLApplication {
 	}
 	
 	void openBookInternal(BookDescription description) {
+//		System.err.println("openBookInternal");
 		if (description != null) {
 			BookTextView bookTextView = (BookTextView)myBookTextView;
 			ContentsView contentsView = (ContentsView)myContentsView;
@@ -285,7 +288,7 @@ public final class FBReader extends ZLApplication {
 			}
 			myModel = new BookModel(description);
 			new ZLStringOption(ZLOption.STATE_CATEGORY, STATE, BOOK, "").setValue(myModel.getFileName());
-			//ZLTextHyphenator.instance().load(description.getLanguage());
+			ZLTextHyphenator.getInstance().load(description.getLanguage());
 			bookTextView.setModel(myModel.getBookTextModel(), description.getFileName());
 			bookTextView.setCaption(description.getTitle());
 			bookTextView.setContentsModel(myModel.getContentsModel());
@@ -311,7 +314,7 @@ public final class FBReader extends ZLApplication {
 			myDescription = description; 
 		}
 		
-		public	void run() { 
+		public void run() { 
 			myReader.openBookInternal(myDescription); 
 		}
 

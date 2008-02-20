@@ -7,6 +7,8 @@ import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.hyphenation.ZLTextHyphenationInfo;
+import org.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.zlibrary.text.view.ZLTextStyle;
 import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -486,14 +488,17 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				final ZLTextWord word = (ZLTextWord) element;
 				int spaceLeft = maxWidth - newWidth;
 				if ((word.Length > 3) && (spaceLeft > 2 * getContext().getSpaceWidth())) {
+//					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.getInstance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
 					for(; hyphenationPosition > 0; hyphenationPosition--) {
-						subwordWidth = getWordWidth(word, word.Offset, hyphenationPosition, 
-							word.Data[hyphenationPosition - 1] != '-');
-						if (subwordWidth <= spaceLeft) {
-							break;
-						}
+//						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
+							subwordWidth = getWordWidth(word, word.Offset, hyphenationPosition, 
+								word.Data[hyphenationPosition - 1] != '-');
+							if (subwordWidth <= spaceLeft) {
+								break;
+							}
+//						}
 					}
 					if (hyphenationPosition > 0) {
 						info.IsVisible = true;
