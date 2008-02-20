@@ -116,7 +116,7 @@ public final class FBReader extends ZLApplication {
 
 		addAction(ActionCode.SHOW_COLLECTION, new SetModeAction(this, ViewMode.BOOK_COLLECTION, ViewMode.BOOK_TEXT | ViewMode.CONTENTS | ViewMode.RECENT_BOOKS));
 		addAction(ActionCode.SHOW_LAST_BOOKS, new SetModeAction(this, ViewMode.RECENT_BOOKS, ViewMode.BOOK_TEXT | ViewMode.CONTENTS));
-		addAction(ActionCode.SHOW_OPTIONS, new DummyAction(this));
+		addAction(ActionCode.SHOW_OPTIONS, new ShowOptionsDialogAction(this));
 		addAction(ActionCode.SHOW_CONTENTS, new ShowContentsAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new DummyAction(this));
 		addAction(ActionCode.ADD_BOOK, new AddBookAction(this));
@@ -164,7 +164,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	boolean openBook(String fileName) {
-		System.out.println("try open " + fileName);
+//		System.out.println("try open " + fileName);
 		if (fileName == null) {
 			fileName = myBookNameOption.getValue();
 		}
@@ -293,8 +293,6 @@ public final class FBReader extends ZLApplication {
 			footnoteView.setCaption(description.getTitle());
 			contentsView.setModel(myModel.getContentsModel(), description.getFileName());
 			contentsView.setCaption(description.getTitle());
-
-			System.out.println("yes");
 			recentBooksView.lastBooks().addBook(description.getFileName());
 		}
 	}

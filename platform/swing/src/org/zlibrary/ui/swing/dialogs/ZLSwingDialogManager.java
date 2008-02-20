@@ -5,6 +5,7 @@ import javax.swing.*;
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.resources.ZLResource;
+import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 
 public class ZLSwingDialogManager extends ZLDialogManager {
@@ -33,6 +34,11 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 	static JButton createButton(String key) {
 		String text = getButtonText(key).replace("&", "");
 		return new JButton(text);
+	}
+
+	public ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key),
+				applyAction, showApplyButton);
 	}
 }
 

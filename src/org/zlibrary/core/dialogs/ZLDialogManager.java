@@ -1,7 +1,9 @@
 package org.zlibrary.core.dialogs;
 
 import org.zlibrary.core.application.ZLApplication;
+import org.zlibrary.core.application.ZLApplicationWindow;
 import org.zlibrary.core.resources.ZLResource;
+import org.zlibrary.core.runnable.ZLRunnable;
 
 public abstract class ZLDialogManager {
 	protected static ZLDialogManager ourInstance;
@@ -13,6 +15,7 @@ public abstract class ZLDialogManager {
 	public static final String APPLY_BUTTON = "apply";
 	
 	public static final String COLOR_KEY = "color";
+	public static final String DIALOG_TITLE = "title";
 	
 	protected ZLDialogManager() {
 		ourInstance = this;
@@ -22,21 +25,27 @@ public abstract class ZLDialogManager {
 		return ourInstance;
 	} 
 	
-	abstract public boolean runSelectionDialog(String key, ZLTreeHandler handler);
+	public abstract boolean runSelectionDialog(String key, ZLTreeHandler handler);
 
-	abstract public void showInformationBox(String key, String message);
+	public abstract void showInformationBox(String key, String message);
 
-	public void showInformationBox(String key) {
+	public final void showInformationBox(String key) {
 		showInformationBox(key, getDialogMessage(key));
 	}
 	
 	public abstract void showErrorBox(String key, String message);
 	
-	public void showErrorBox(String key) {
+	public final void showErrorBox(String key) {
 		showErrorBox(key, getDialogMessage(key));
 	}
 	
-	//public abstract void createApplicationWindow(ZLApplication application);
+	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
+	
+	public abstract ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton);
+	
+	public final ZLOptionsDialog createOptionsDialog(String key) {
+		return createOptionsDialog(key, null, false);
+	}
 	
 	public static String getButtonText(String key) {
 		return getResource().getResource("button").getResource(key).getValue();
