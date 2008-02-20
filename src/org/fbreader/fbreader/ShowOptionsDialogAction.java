@@ -1,5 +1,7 @@
 package org.fbreader.fbreader;
 
+import org.fbreader.optionsdialog.OptionsDialog;
+
 class ShowOptionsDialogAction extends FBAction {
 
 	ShowOptionsDialogAction(FBReader fbreader) {
@@ -10,7 +12,7 @@ class ShowOptionsDialogAction extends FBAction {
 	protected void run() {
 		// TODO Auto-generated method stub
 		FBReader f = fbreader();
-	//	new OptionsDialog(f).dialog().run();
+		new OptionsDialog(f).getDialog().run();
 	}
 
 }
