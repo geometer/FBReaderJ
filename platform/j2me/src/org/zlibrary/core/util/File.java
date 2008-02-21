@@ -4,6 +4,12 @@ import java.io.IOException;
 
 public class File {
 	public static final String separator = "/";
+	public static final String pathSeparator = ":";
+
+	public static File[] listRoots() {
+		// TODO: implement
+		return new File[0];
+	}
 
 	public File(String name) {
 		// TODO: implement
@@ -23,13 +29,19 @@ public class File {
 		// TODO: implement
 	}
 
-	public void delete() {
+	public boolean delete() {
 		// TODO: implement
+		return false;
 	}
 
 	public boolean exists() {
 		// TODO: implement
 		return false;
+	}
+
+	public int length() {
+		// TODO: implement
+		return 0;
 	}
 
 	public boolean isDirectory() {
@@ -40,6 +52,11 @@ public class File {
 	public String[] list() {
 		// TODO: implement
 		return null;
+	}
+
+	public File[] listFiles() {
+		// TODO: implement
+		return new File[0];
 	}
 
 	public String getParent() {
