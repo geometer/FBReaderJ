@@ -18,7 +18,7 @@ import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 	public static final ArrayList getLanguageCodes();
 	public static final ArrayList getLanguageNames();
 */	
-	private ArrayList myPatternTable;
+	private final ArrayList myPatternTable = new ArrayList();
 	private String myLanguage;
 	private String myBreakingAlgorithm;
 	
