@@ -1,6 +1,7 @@
 package org.zlibrary.text.hyphenation;
 
-import java.util.Comparator;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 /*package*/ class ZLTextTeXPatternComparator implements Comparator {
 	public int compare(Object o1, Object o2) {
