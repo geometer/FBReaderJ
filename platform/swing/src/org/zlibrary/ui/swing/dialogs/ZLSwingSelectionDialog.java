@@ -1,19 +1,10 @@
 package org.zlibrary.ui.swing.dialogs;
 
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.MouseInputAdapter;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.HashMap;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
 
 import org.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.zlibrary.core.dialogs.ZLTreeHandler;
@@ -23,17 +14,17 @@ import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
 class ZLSwingSelectionDialog extends ZLSelectionDialog{
-	private JDialog myJDialog;
-	private JTextField myStateLine = new JTextField();
-	private JList myList = new JList();
-	private OKAction myOKAction;
-	
-	private ZLIntegerRangeOption myWidthOption;
-	private	ZLIntegerRangeOption myHeightOption;
 	private static final String OPTION_GROUP_NAME = "OpenFileDialog";
-	
 	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
 	private static final String ourIconDirectory = "icons/filetree/";
+
+	private final JDialog myJDialog;
+	private final JTextField myStateLine = new JTextField();
+	private final JList myList = new JList();
+	private OKAction myOKAction;
+	
+	private final ZLIntegerRangeOption myWidthOption;
+	private	final ZLIntegerRangeOption myHeightOption;
 	
 	protected ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler) {
 		super(myHandler);
@@ -100,6 +91,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	@Override
 	protected void selectItem(int index) {
 		myList.setSelectedIndex(index);
+		myList.ensureIndexIsVisible(index);
 	}
 
 	@Override
