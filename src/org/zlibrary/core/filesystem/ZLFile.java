@@ -2,12 +2,8 @@ package org.zlibrary.core.filesystem;
 
 import java.io.*;
 import java.util.*;
+import java.util.zip.*;
 import org.zlibrary.core.util.*;
-
-
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import org.zlibrary.core.library.ZLibrary;
 
