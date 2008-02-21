@@ -209,7 +209,6 @@ public class ZLFile {
 	}
 	
 	public ZLDir getDirectory(boolean createUnexisting) {
-		
 		if (exists()) {
 			if (isDirectory()) {
 				return ZLFSManager.getInstance().createPlainDirectory(myPath);

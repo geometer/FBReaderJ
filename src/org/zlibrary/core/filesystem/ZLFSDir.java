@@ -21,8 +21,15 @@ public class ZLFSDir extends ZLDir {
 	
 	public ArrayList collectSubDirs() {
 		File[] dirs = myFile.listFiles();
+		
 		ArrayList/*<String>*/ newdirs  = new ArrayList();
-		if (dirs != null) {
+		
+		if (dirs == null && isRoot()) {
+			dirs = File.listRoots();
+			for(int i = 0; i < dirs.length; i++) {			
+				newdirs.add(dirs[i].getPath());
+			}
+		} else if (dirs != null) {
 			for(int i = 0; i < dirs.length; i++) {
 				if (dirs[i].isDirectory()) {
 					newdirs.add(dirs[i].getName());
@@ -35,7 +42,13 @@ public class ZLFSDir extends ZLDir {
 	public ArrayList/*<String>*/ collectFiles() {		
 		File[] dirs = myFile.listFiles();
 		ArrayList/*<String>*/ newdirs  = new ArrayList();
-		if (dirs != null) {
+		
+		if (dirs == null && isRoot()) {
+			dirs = File.listRoots();
+			for(int i = 0; i < dirs.length; i++) {			
+				newdirs.add(dirs[i].getPath());
+			}
+		} else if (dirs != null) {
 			for(int i = 0; i < dirs.length; i++) {
 				newdirs.add(dirs[i].getName());
 			}

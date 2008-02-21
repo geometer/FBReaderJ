@@ -5,7 +5,6 @@ import java.util.*;
 import org.fbreader.description.BookDescription;
 import org.fbreader.formats.FormatPlugin;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
-import org.fbreader.formats.fb2.FB2Plugin;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.core.util.*;

@@ -32,8 +32,8 @@ public abstract class ZLDir {
 		if (itemName == "..") {
 			return getParentPath();
 		} else {
-			
-			return myPath.endsWith(File.separator) ? myPath + itemName : myPath + File.separator + itemName;
+			return myPath.endsWith(File.separator) || myPath == "" ? myPath + itemName : myPath + File.separator + itemName;
+			//	return myPath.endsWith(File.separator) || isRoot() ? myPath + itemName : myPath + File.separator + itemName;
 			//return isRoot() ? myPath + itemName : myPath + getDelimiter() + itemName;
 		}
 	}

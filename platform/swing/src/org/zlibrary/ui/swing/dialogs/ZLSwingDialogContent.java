@@ -1,11 +1,13 @@
 package org.zlibrary.ui.swing.dialogs;
 
+import javax.swing.JLabel;
+
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.resources.ZLResource;
 
 public class ZLSwingDialogContent extends ZLDialogContent {
-
+	
 	protected ZLSwingDialogContent(ZLResource resource) {
 		super(resource);
 		// TODO Auto-generated constructor stub
@@ -14,7 +16,6 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 	@Override
 	public void addOption(String name, String tooltip, ZLOptionEntry option) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

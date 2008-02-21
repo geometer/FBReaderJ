@@ -57,11 +57,10 @@ public class ZLFSManager {
 	protected ZLFileInfo getFileInfo(String path) {
 		ZLFileInfo info = new ZLFileInfo();
 		File file = new File(path);
-		
 		info.Exists = (file != null);
 		info.Size = file.length();
 		info.MTime = file.lastModified();
-		info.IsDirectory = file.isDirectory();
+		info.IsDirectory = file.isDirectory() || getRootDirectoryPath().equals(path);
 		return info;
 	}
 	
@@ -92,16 +91,25 @@ public class ZLFSManager {
 	}
 	//TODO "" - windows "/"--unix
 	public ZLDir getRootDirectory() {
-		return createPlainDirectory("");
-        		
+		return createPlainDirectory(getRootDirectoryPath());
 	}
 	
 	public String getRootDirectoryPath() {
-		return "";
+		return File.listRoots().length == 1 ? File.listRoots()[0].getParent() : "";
 	}
 	
 	public String getParentPath(String path) {
 		File file = new File(path);
-		return file.getParent();
+		String parent = file.getParent();
+		if (parent == null) {
+			File [] roots = File.listRoots();
+			for (int i = 0; i < roots.length; i++) {
+				if (roots[i].equals(file)) {
+					parent = getRootDirectoryPath();
+					break;
+				}
+			}
+		}
+		return parent;
 	}
 }
