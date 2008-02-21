@@ -15,6 +15,11 @@ public class File {
 		// TODO: implement
 	}
 
+	public String getPath() {
+		// TODO: implement
+		return null;
+	}
+
 	public String getCanonicalPath() throws IOException {
 		// TODO: implement
 		return null;
