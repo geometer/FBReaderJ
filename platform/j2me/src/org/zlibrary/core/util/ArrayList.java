@@ -18,6 +18,10 @@ public class ArrayList extends Vector {
 		super.addElement(element);
 	}
 
+	public final void set(int index, Object element) {
+		super.setElementAt(element, index);
+	}
+
 	public final void remove(int index) {
 		super.removeElementAt(index);
 	}
