@@ -1,25 +1,19 @@
 package org.fbreader.fbreader;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
-import org.fbreader.bookmodel.FBTextKind;
-import org.fbreader.collection.BookCollection;
-import org.fbreader.collection.BookList;
-import org.fbreader.description.Author;
-import org.fbreader.description.BookDescription;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.model.ZLTextTreeParagraph;
-import org.zlibrary.text.model.impl.ZLTextTreeModelImpl;
-import org.zlibrary.text.view.ZLTextView;
-import org.zlibrary.text.view.impl.ZLTextElement;
-import org.zlibrary.text.view.impl.ZLTextElementArea;
-import org.zlibrary.text.view.impl.ZLTextImageElement;
-import org.zlibrary.text.view.impl.ZLTextParagraphCursor;
-import org.zlibrary.text.view.impl.ZLTextWordCursor;
+import org.zlibrary.text.model.*;
+import org.zlibrary.text.model.impl.*;
+import org.zlibrary.text.view.*;
+import org.zlibrary.text.view.impl.*;
+
+import org.fbreader.bookmodel.FBTextKind;
+import org.fbreader.collection.*;
+import org.fbreader.description.*;
 
 public class CollectionView extends FBView {
 	static private final String LIBRARY = "Library";

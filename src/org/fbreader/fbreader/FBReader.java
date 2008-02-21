@@ -1,9 +1,8 @@
 package org.fbreader.fbreader;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Locale;
+import java.io.*;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
@@ -12,8 +11,7 @@ import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.options.*;
 import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.model.ZLTextModel;

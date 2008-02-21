@@ -2,7 +2,6 @@ package org.zlibrary.text.hyphenation;
 
 import java.util.*;
 import org.zlibrary.core.util.*;
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
 /*package*/ class ZLTextTeXHyphenator extends ZLTextHyphenator {
 
@@ -41,8 +40,7 @@ import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 		}
 		myLanguage = language;
 		unload();
-		ZLOwnXMLProcessorFactory.getInstance().createXMLProcessor().read(new ZLTextHyphenationReader(this), 
-			"hyphenationPatterns.zip" + ":" + language + POSTFIX);
+		new ZLTextHyphenationReader(this).read("hyphenationPatterns.zip" + ":" + language + POSTFIX);
 		Collections.sort(myPatternTable, new ZLTextTeXPatternComparator());
 	}
 
