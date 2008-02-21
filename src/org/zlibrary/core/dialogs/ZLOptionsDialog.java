@@ -1,12 +1,12 @@
 package org.zlibrary.core.dialogs;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.runnable.ZLRunnable;
-import org.zlibrary.core.util.*;
 
 public abstract class ZLOptionsDialog {
 	private final ZLResource myResource;

@@ -1,6 +1,7 @@
 package org.zlibrary.text.hyphenation;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 public class ZLTextHyphenationInfo {
 	private ArrayList myMask;

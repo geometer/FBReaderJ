@@ -1,15 +1,17 @@
 package org.fbreader.fbreader;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
+
+import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.text.model.ZLTextParagraph;
+import org.zlibrary.text.model.ZLTextPlainModel;
+import org.zlibrary.text.model.impl.ZLModelFactory;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.fbreader.collection.BookCollection;
 import org.fbreader.collection.BookCollection.LastOpenedBooks;
 import org.fbreader.description.BookDescription;
-import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextPlainModel;
-import org.zlibrary.text.model.impl.ZLModelFactory;
 
 public class RecentBooksView extends FBView {
 	private static final String LIBRARY = "Recent Books";

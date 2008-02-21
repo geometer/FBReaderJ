@@ -1,6 +1,7 @@
 package org.fbreader.fbreader;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.library.ZLibrary;
@@ -8,13 +9,7 @@ import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.view.impl.ZLTextControlElement;
-import org.zlibrary.text.view.impl.ZLTextElement;
-import org.zlibrary.text.view.impl.ZLTextElementArea;
-import org.zlibrary.text.view.impl.ZLTextHyperlinkControlElement;
-import org.zlibrary.text.view.impl.ZLTextImageElement;
-import org.zlibrary.text.view.impl.ZLTextWord;
-import org.zlibrary.text.view.impl.ZLTextWordCursor;
+import org.zlibrary.text.view.impl.*;
 
 class BookTextView extends FBView {
 	private static final String PARAGRAPH_OPTION_NAME = "Paragraph";

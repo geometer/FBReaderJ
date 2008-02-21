@@ -1,7 +1,8 @@
 package org.zlibrary.core.filesystem;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 public abstract class ZLDir {
 	private String myPath;

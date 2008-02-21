@@ -1,16 +1,13 @@
 package org.zlibrary.core.dialogs;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.optionentries.ZLSimpleBoolean3OptionEntry;
 import org.zlibrary.core.optionentries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.optionentries.ZLSimpleStringOptionEntry;
-import org.zlibrary.core.options.ZLBoolean3Option;
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLSimpleOption;
-import org.zlibrary.core.options.ZLStringOption;
-import org.zlibrary.core.util.*;
+import org.zlibrary.core.options.*;
 
 public abstract class ZLDialogContent {
 	private static final String TOOLTIP_KEY = "tooltip";
