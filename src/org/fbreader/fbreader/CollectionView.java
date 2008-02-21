@@ -203,7 +203,7 @@ public class CollectionView extends FBView {
 		
 		public int paragraphNumberByBook(BookDescription book) {
 			Integer num = (Integer)myBookToParagraph.get(book);
-			return (num != null) ? num : 0;
+			return (num != null) ? num.intValue() : 0;
 		}
 
 		public void update() {
