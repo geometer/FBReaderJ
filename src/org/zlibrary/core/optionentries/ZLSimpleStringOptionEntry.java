@@ -10,12 +10,10 @@ public class ZLSimpleStringOptionEntry extends ZLStringOptionEntry {
 		myOption = option;
 	}
 	
-	@Override
 	public String initialValue() {
 		return myOption.getValue();
 	}
 
-	@Override
 	public void onAccept(String value) {
 		myOption.setValue(value);
 	}

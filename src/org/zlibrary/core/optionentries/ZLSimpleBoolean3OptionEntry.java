@@ -12,12 +12,10 @@ public class ZLSimpleBoolean3OptionEntry extends ZLBoolean3OptionEntry {
 		myOption = option;
 	}
 	
-	@Override
 	public int initialState() {
 		return myOption.getValue();
 	}
 
-	@Override
 	public void onAccept(int state) {
 		myOption.setValue(state);
 	}

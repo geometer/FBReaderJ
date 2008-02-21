@@ -8,7 +8,6 @@ class ShowOptionsDialogAction extends FBAction {
 		super(fbreader);
 	}
 
-	@Override
 	protected void run() {
 		// TODO Auto-generated method stub
 		FBReader f = fbreader();

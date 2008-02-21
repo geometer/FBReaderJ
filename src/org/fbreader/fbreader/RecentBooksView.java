@@ -46,9 +46,9 @@ public class RecentBooksView extends FBView {
 		if (getModel() == null) {
 			//TODO
 			ZLTextPlainModel recentBooksModel = ZLModelFactory.createPlainModel(0);;
-			final ArrayList<BookDescription> books = myLastBooks.books();
+			final ArrayList/*<BookDescription>*/ books = myLastBooks.books();
 			for (int i = 0 ; i < books.size(); i++) {
-				BookDescription it = books.get(i);
+				BookDescription it = (BookDescription)books.get(i);
 				recentBooksModel.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				recentBooksModel.addControl(FBTextKind.RECENT_BOOK_LIST, true);
 				recentBooksModel.addControl(FBTextKind.LIBRARY_AUTHOR_ENTRY, true);
