@@ -264,7 +264,7 @@ public final class FBReader extends ZLApplication {
 		return myBookTextView;
 	}
 
-	void clearTextCaches() {
+	public void clearTextCaches() {
 		myBookTextView.clearCaches();
 		myContentsView.clearCaches();
 	}
@@ -272,10 +272,10 @@ public final class FBReader extends ZLApplication {
 	void openBookInternal(BookDescription description) {
 //		System.err.println("openBookInternal");
 		if (description != null) {
-			BookTextView bookTextView = (BookTextView)myBookTextView;
-			ContentsView contentsView = (ContentsView)myContentsView;
-			FootnoteView footnoteView = (FootnoteView)myFootnoteView;
-			RecentBooksView recentBooksView = (RecentBooksView)myRecentBooksView;
+			BookTextView bookTextView = myBookTextView;
+			ContentsView contentsView = myContentsView;
+			FootnoteView footnoteView = myFootnoteView;
+			RecentBooksView recentBooksView = myRecentBooksView;
 
 			bookTextView.saveState();
 			bookTextView.setModel(null, "");
@@ -302,6 +302,9 @@ public final class FBReader extends ZLApplication {
 		setMode(ViewMode.BOOK_TEXT);
 	}
 
+	public CollectionView getCollectionView() {
+		return myCollectionView;
+	}
 	
 	private class OpenBookRunnable implements ZLRunnable {
 		private FBReader myReader;

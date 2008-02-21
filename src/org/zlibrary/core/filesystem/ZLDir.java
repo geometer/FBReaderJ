@@ -41,7 +41,7 @@ public abstract class ZLDir {
 	
 	public boolean isRoot() {
 		System.out.println("isRoot-->"+myPath+"<--");
-		return myPath == ZLFSManager.getInstance().getRootDirectoryPath();
+		return ZLFSManager.getInstance().getRootDirectoryPath().equals(myPath);
 	}
 
 	abstract public ArrayList collectSubDirs();

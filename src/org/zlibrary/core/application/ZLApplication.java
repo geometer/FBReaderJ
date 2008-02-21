@@ -150,7 +150,7 @@ public abstract class ZLApplication {
 		myIdToActionMap.put(actionId, action);
 	}
 
-	private final void grabAllKeys(boolean grab) {
+	public final void grabAllKeys(boolean grab) {
 		if (myWindow != null) {
 			//myWindow.grabAllKeys(grab);
 		}

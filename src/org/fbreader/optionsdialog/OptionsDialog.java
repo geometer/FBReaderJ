@@ -1,6 +1,5 @@
 package org.fbreader.optionsdialog;
 
-import org.fbreader.fbreader.CollectionView;
 import org.fbreader.fbreader.FBReader;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
@@ -124,7 +123,6 @@ public class OptionsDialog {
 	}
 	
 	private static class OptionsApplyRunnable implements ZLRunnable {
-
 		private final FBReader myFBReader;
 		
 		public OptionsApplyRunnable(FBReader fbreader) {
@@ -132,9 +130,9 @@ public class OptionsDialog {
 		}
 		
 		public void run() {
-	//		myFBReader.grabAllKeys(myFBReader.KeyboardControlOption.getValue());
-	//		myFBReader.clearTextCaches();
-	//		((CollectionView) myFBReader.CollectionView).synchronizeModel();
+			myFBReader.grabAllKeys(myFBReader.KeyboardControlOption.getValue());
+			myFBReader.clearTextCaches();
+			myFBReader.getCollectionView().synchronizeModel();
 			myFBReader.refreshWindow();
 		}
 	}

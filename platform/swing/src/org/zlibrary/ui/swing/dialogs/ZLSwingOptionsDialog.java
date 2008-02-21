@@ -40,7 +40,6 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		ZLSwingDialogContent tab = new ZLSwingDialogContent(getTabResource(key));
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(400, 300));
-//		panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		myTabbedPane.addTab(tab.getDisplayName(), panel);
 		// TODO Auto-generated method stub
 		return null;
@@ -77,14 +76,11 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		}
 		myDialog.add(buttonPanel, BorderLayout.SOUTH);
 		
-		myTabbedPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-				
+		myTabbedPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));				
 		myDialog.getContentPane().add(myTabbedPane, BorderLayout.NORTH);
 		
 		myDialog.pack();
 		myDialog.setLocationRelativeTo(myDialog.getParent());
-		myDialog.setResizable(false);
-//		myDialog.setSize(800, 600);
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
 		// TODO Auto-generated method stub
