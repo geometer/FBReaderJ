@@ -95,7 +95,7 @@ public class ZLFSManager {
 	}
 	
 	public String getRootDirectoryPath() {
-		return File.listRoots().length == 1 ? File.listRoots()[0].getParent() : "";
+		return File.listRoots().length == 1 ? File.listRoots()[0].getPath() : "";
 	}
 	
 	public String getParentPath(String path) {
