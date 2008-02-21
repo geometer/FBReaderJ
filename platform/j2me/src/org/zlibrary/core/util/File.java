@@ -30,7 +30,7 @@ public class File {
 		return null;
 	}
 
-	public void mkdir() {
+	public void mkdirs() {
 		// TODO: implement
 	}
 
@@ -44,7 +44,12 @@ public class File {
 		return false;
 	}
 
-	public int length() {
+	public long lastModified() {
+		// TODO: implement
+		return 0;
+	}
+
+	public long length() {
 		// TODO: implement
 		return 0;
 	}

@@ -49,8 +49,8 @@ public class ZLFSManager {
 	}
 	
 	public ZLFSDir createNewDirectory(String path) {
-		File a = new File(path);
-		a.mkdirs();	
+		File file = new File(path);
+		file.mkdirs();
 		return new ZLFSDir(path);
 	}
 	
