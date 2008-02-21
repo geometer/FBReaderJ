@@ -76,7 +76,7 @@ public class ZLAndroidWidget extends View {
 		myPaintContext.endPaint();
 	}
 
-	public boolean onMotionEvent(MotionEvent event) {
+	public boolean onTouchEvent(MotionEvent event) {
 		int x = (int)event.getX();
 		int y = (int)event.getY();
 		switch (myViewWidget.getRotation()) {
