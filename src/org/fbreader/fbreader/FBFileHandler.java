@@ -102,10 +102,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		// TODO Auto-generated method stub
 		
 		if (!myIsUpToDate) {
-			if (!myDir.isRoot()) {
-				mySubnodes.add(new ZLTreeNode("..", "..", UPFOLDER_ICON, true));
-			}
-
 			HashMap folderNodes = new HashMap(); // <String, ZLTreeNode>
 			HashMap fileNodes = new HashMap();
 
@@ -148,6 +144,9 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 			mySubnodes.addAll(fileNodes.values());
 			myIsUpToDate = true;
 			Collections.sort(mySubnodes, new ZLTreeNodeComparator());
+			if (!myDir.isRoot()) {
+				mySubnodes.add(0, new ZLTreeNode("..", "..", UPFOLDER_ICON, true));
+			}
 		}
 		
 		return mySubnodes;
