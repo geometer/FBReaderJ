@@ -4,7 +4,6 @@ package org.zlibrary.core.html.own.test;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.html.ZLHtmlReaderAdapter;
 import org.zlibrary.core.html.own.ZLOwnHtmlProcessorFactory;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class Main {
 	

@@ -1,9 +1,7 @@
 package org.zlibrary.core.html;
 
-import java.io.InputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
+import org.zlibrary.core.util.*;
 import org.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLHtmlProcessor {
@@ -16,9 +14,9 @@ public abstract class ZLHtmlProcessor {
 	
 	public boolean read(ZLHtmlReader xmlReader, String filename) {
 		try {
-			InputStream stream = new FileInputStream(filename);
+			InputStream stream = ZLibrary.getInstance().getInputStream(filename);
 			return (stream != null) ? read(xmlReader, stream) : false;
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return false;
