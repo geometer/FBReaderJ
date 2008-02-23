@@ -1,7 +1,5 @@
 package org.zlibrary.text.hyphenation;
 
-import java.util.Arrays;
-
 /*package*/ class ZLTextTeXHyphenationPattern {
 	private int myLength;
 	private char[] mySymbols;
