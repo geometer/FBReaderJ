@@ -45,6 +45,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 		
+	private boolean myTreeStateIsFrozen = false;
+	
 	private final ZLTextRectangularAreaVector myTextElementMap
 		= new ZLTextRectangularAreaVector();
 	private final ZLTextRectangularAreaVector myTreeNodeMap
@@ -166,7 +168,48 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		substr += "-";
 		return getContext().getStringWidth(substr.toCharArray(), 0, substr.length());
 	}
+	
+	private void moveStartCursor(int paragraphNumber) {
+		moveStartCursor(paragraphNumber, 0, 0);
+	}
 		
+	private void moveStartCursor(int paragraphNumber, int wordNumber, int charNumber) {
+		if (myPaintState == PaintState.NOTHING_TO_PAINT) {
+			return;
+		}
+		if (myStartCursor == null) {
+			myStartCursor.setCursor(myEndCursor);
+		}
+		myStartCursor.moveToParagraph(paragraphNumber);
+		myStartCursor.moveTo(wordNumber, charNumber);
+		myEndCursor.reset();
+		myLineInfos.clear();
+		myPaintState = PaintState.START_IS_KNOWN;
+	}
+
+	private void moveEndCursor(int paragraphNumber) {
+		moveEndCursor(paragraphNumber, 0, 0);
+	}
+
+	private void moveEndCursor(int paragraphNumber, int wordNumber, int charNumber) {
+		if (myPaintState == PaintState.NOTHING_TO_PAINT) {
+			return;	
+		}
+		if (myEndCursor == null) {
+			myEndCursor.setCursor(myStartCursor);
+		}
+		myEndCursor.moveToParagraph(paragraphNumber);
+		if ((paragraphNumber > 0) && (wordNumber == 0) && (charNumber == 0)) {
+			myEndCursor.previousParagraph();
+			myEndCursor.moveToParagraphEnd();
+		} else {
+			myEndCursor.moveTo(wordNumber, charNumber);
+		}
+		myStartCursor.reset();
+		myLineInfos.clear();
+		myPaintState = PaintState.END_IS_KNOWN;
+	}
+	
 	public void paint() {
 		preparePaintInfo();
 
@@ -647,7 +690,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 	
 	void gotoParagraph(int num, boolean last) {
-	/*	if (myModel == null) {
+		if (myModel == null) {
 			return;
 		}
 
@@ -680,7 +723,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			if ((num >= 0) && (num < (int)myModel.getParagraphsNumber())) {
 				moveStartCursor(num);
 			}
-		}*/
+		}
 	}
 
 	

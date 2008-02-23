@@ -7,8 +7,6 @@ public final class ZLTextWordCursor {
 	private int myWordNumber;
 	private int myCharNumber;
 
-	/*Why do we create cursor without paragraph number and then are having all the troubles with cheking whether it is null or not?*/
-	
 	public ZLTextWordCursor() {
 		myWordNumber = 0;
 		myCharNumber = 0;
