@@ -14,7 +14,9 @@ public abstract class ZLOptionView { // ? public
 		myOption.setView(this);
 	}
 
-	public abstract void reset();
+	public void reset() {}
+	
+	protected void _setActive(boolean active) {}	
 
 	public final void setVisible(boolean visible) {
 		if (visible) {
@@ -48,8 +50,6 @@ public abstract class ZLOptionView { // ? public
 	protected abstract void hide();
 	
 	protected abstract void show();
-	
-	protected abstract void _setActive(boolean active);
 		
 	protected abstract void _onAccept();
 

@@ -1,6 +1,7 @@
 package org.fbreader.optionsdialog;
 
 import org.fbreader.fbreader.FBReader;
+import org.fbreader.fbreader.FBView;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
@@ -23,7 +24,7 @@ public class OptionsDialog {
 		myDialog.createTab("Scrolling");
 		
 		ZLDialogContent selectionTab = myDialog.createTab("Selection");
-	//	selectionTab.addOption(ZLResourceKey("enableSelection"), FBView::selectionOption());
+		selectionTab.addOption("enableSelection", FBView.selectionOption());
 		
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
 		

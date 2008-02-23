@@ -1,6 +1,7 @@
 package org.fbreader.fbreader;
 
 
+import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.view.impl.ZLTextViewImpl;
@@ -10,6 +11,8 @@ public abstract class FBView extends ZLTextViewImpl {
 	private static ZLIntegerRangeOption ourRightMarginOption;
 	private static ZLIntegerRangeOption ourTopMarginOption;
 	private static ZLIntegerRangeOption ourBottomMarginOption;
+	
+	private static ZLBooleanOption ourSelectionOption;
 
 	private String myCaption;
 	
@@ -69,5 +72,12 @@ public abstract class FBView extends ZLTextViewImpl {
 	
 	public void setCaption(String caption) {
 		myCaption = caption;
+	}
+
+	public static ZLBooleanOption selectionOption() {
+		if (ourSelectionOption == null) {
+			ourSelectionOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "IsSelectionEnabled", true);
+		}
+		return ourSelectionOption;
 	}
 }

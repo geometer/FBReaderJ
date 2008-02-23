@@ -25,7 +25,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final JDialog myDialog;
 	private final JTabbedPane myTabbedPane = new JTabbedPane();
 	private String mySelectedTabKey;
-	private final HashMap<ZLSwingDialogContent, String> myTabToKeyMap = new HashMap<ZLSwingDialogContent, String>(); //?
+	private final HashMap<JPanel, String> myPanelToKeyMap = new HashMap<JPanel, String>(); //?
 	
 	protected ZLSwingOptionsDialog(JFrame frame, ZLResource resource, ZLRunnable applyAction, boolean showApplyButton) {
 		super(resource, applyAction);
@@ -38,11 +38,14 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	@Override
 	public ZLDialogContent createTab(String key) {
 		ZLSwingDialogContent tab = new ZLSwingDialogContent(getTabResource(key));
-		JPanel panel = new JPanel();
+		JPanel contentPanel = tab.getContentPanel();
+		JPanel panel = new JPanel(new BorderLayout()); 
 		panel.setPreferredSize(new Dimension(400, 300));
+		panel.add(contentPanel, BorderLayout.PAGE_START);
+		myPanelToKeyMap.put(panel, tab.getKey());
 		myTabbedPane.addTab(tab.getDisplayName(), panel);
 		// TODO Auto-generated method stub
-		return null;
+		return tab;
 	}
 
 	@Override
@@ -80,6 +83,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myDialog.getContentPane().add(myTabbedPane, BorderLayout.NORTH);
 		
 		myDialog.pack();
+		button1.requestFocusInWindow();
 		myDialog.setLocationRelativeTo(myDialog.getParent());
 		myDialog.setModal(true);
 		myDialog.setVisible(true);

@@ -1,52 +1,35 @@
 package org.zlibrary.ui.swing.dialogs;
 
+import javax.swing.JCheckBox;
+
 import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionView;
 
 public class ZLBooleanOptionView extends ZLOptionView {
-
+	private final JCheckBox myCheckBox;	
+	
 	public ZLBooleanOptionView(String name, String tooltip, ZLBooleanOptionEntry option,
-			ZLDialogContent tab, int from, int to) {
+			ZLDialogContent tab) {
 		super(name, tooltip, option);
-		
-		// TODO Auto-generated constructor stub
+		myCheckBox = new JCheckBox(name);
+		myCheckBox.setSelected(option.initialState());
+		((ZLSwingDialogContent) tab).insertWidget(myCheckBox);
 	}
 
-	@Override
 	protected void _onAccept() {
-		// TODO Auto-generated method stub
-
+		((ZLBooleanOptionEntry) myOption).onAccept(myCheckBox.isSelected());
 	}
 
-	@Override
-	protected void _setActive(boolean active) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void createItem() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
-	@Override
 	protected void hide() {
-		// TODO Auto-generated method stub
-
+		myCheckBox.setVisible(false);
 	}
 
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void show() {
-		// TODO Auto-generated method stub
-
+		myCheckBox.setVisible(true);
 	}
 }

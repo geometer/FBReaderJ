@@ -1,6 +1,10 @@
 package org.zlibrary.core.dialogs;
 
 import java.util.*;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+
 import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.resources.ZLResource;
@@ -85,4 +89,5 @@ public abstract class ZLDialogContent {
 			myViews.add(view);
 		}
 	}
+
 }
