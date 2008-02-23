@@ -531,17 +531,17 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				final ZLTextWord word = (ZLTextWord) element;
 				int spaceLeft = maxWidth - newWidth;
 				if ((word.Length > 3) && (spaceLeft > 2 * getContext().getSpaceWidth())) {
-//					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.getInstance().getInfo(word);
+					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.getInstance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
 					for(; hyphenationPosition > 0; hyphenationPosition--) {
-//						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
+						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
 							subwordWidth = getWordWidth(word, word.Offset, hyphenationPosition, 
 								word.Data[hyphenationPosition - 1] != '-');
 							if (subwordWidth <= spaceLeft) {
 								break;
 							}
-//						}
+						}
 					}
 					if (hyphenationPosition > 0) {
 						info.IsVisible = true;

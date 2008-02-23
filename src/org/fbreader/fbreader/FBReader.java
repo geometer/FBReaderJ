@@ -179,6 +179,7 @@ public final class FBReader extends ZLApplication {
 		myBookTextView.setModel(myBookModel.getBookTextModel(), myBookModel.getFileName());
 		myContentsView.setModel(myBookModel.getContentsModel());
 		setMode(ViewMode.BOOK_TEXT);
+		ZLTextHyphenator.getInstance().load("ru");
 		return true;
 	}
 	
@@ -270,7 +271,6 @@ public final class FBReader extends ZLApplication {
 	}
 	
 	void openBookInternal(BookDescription description) {
-//		System.err.println("openBookInternal");
 		if (description != null) {
 			BookTextView bookTextView = myBookTextView;
 			ContentsView contentsView = myContentsView;

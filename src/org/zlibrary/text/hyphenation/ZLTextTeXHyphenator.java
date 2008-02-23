@@ -2,6 +2,7 @@ package org.zlibrary.text.hyphenation;
 
 import java.util.*;
 import org.zlibrary.core.util.*;
+import org.zlibrary.core.library.ZLibrary;
 
 /*package*/ class ZLTextTeXHyphenator extends ZLTextHyphenator {
 
@@ -32,16 +33,21 @@ import org.zlibrary.core.util.*;
 	void addPattern(ZLTextTeXHyphenationPattern pattern) {
 		myPatternTable.add(pattern);
 	}
-	
+
+	private String PatternZip() {
+		return ZLibrary.JAR_DATA_PREFIX + "data/";
+	}
+
 	public void load(final String language) {
-		System.err.println("here");
 		if (language.equals(myLanguage)) {
 			return;
 		}
 		myLanguage = language;
 		unload();
-		new ZLTextHyphenationReader(this).read("hyphenationPatterns.zip" + ":" + language + POSTFIX);
-		Collections.sort(myPatternTable, new ZLTextTeXPatternComparator());
+		System.err.println(new ZLTextHyphenationReader(this).read(PatternZip() + language + POSTFIX));
+//		System.err.println("hyphenationPatterns were read.");
+		System.err.println(myPatternTable.size());
+//		Collections.sort(myPatternTable, new ZLTextTeXPatternComparator());
 	}
 
 	public void unload() {
@@ -54,9 +60,6 @@ import org.zlibrary.core.util.*;
 	}
 
 	protected void hyphenate(StringBuffer ucs2String, boolean[] mask, int length) {
-		if (myPatternTable == null) {
-			System.err.println("myPatternTable == null");
-		}
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
 				mask[i] = false;
@@ -69,18 +72,30 @@ import org.zlibrary.core.util.*;
 			values[i] = 0;
 		}
 		
+		ZLTextTeXPatternComparator comparator = new ZLTextTeXPatternComparator();
+		
 		for (int j = 0; j < length - 2; j++) {
 			for (int k = 1; k <= length - j; k++) {
 				ZLTextTeXHyphenationPattern pattern = new ZLTextTeXHyphenationPattern(ucs2String.toString().toCharArray(), j, k);
-				int index = myPatternTable.indexOf(pattern);
+				int index = -1;
+				for (int i = 0; i < myPatternTable.size(); i++) {
+					if (comparator.compare(myPatternTable.get(i), pattern) == 0) {
+						index = i;
+						break;
+					}
+				}
 				if (index == -1) {
 					continue;
 				}
 				((ZLTextTeXHyphenationPattern) myPatternTable.get(index)).apply(values, j);
 			}
 		}
+ 	
+//     		System.err.println("hyphenating...");
 		for (int i = 0; i < length - 1; i++) {
+//			System.err.print(values[i + 1] + " ");
 			mask[i] =  (values[i + 1] % 2) == 1;
 		}
+//		System.err.println();
 	}
 }
