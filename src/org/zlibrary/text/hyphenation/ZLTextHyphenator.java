@@ -31,12 +31,12 @@ public abstract class ZLTextHyphenator {
 
 	public ZLTextHyphenationInfo getInfo(final ZLTextWord word) {
 		StringBuffer pattern = new StringBuffer();
-		ArrayList isLetter = new ArrayList();
+		boolean[] isLetter = new boolean[word.Length];
 		pattern.append(' ');
 		for (int i = word.Offset; i < word.Offset + word.Length; i++) {
 			char symbol = word.Data[i];
 			boolean letter = Character.isLetter(symbol);
-			isLetter.add(letter);
+			isLetter[i - word.Offset] = letter;
 			pattern.append(letter ? Character.toLowerCase(symbol) : ' ');
 		}
 		pattern.append(' ');
@@ -45,19 +45,19 @@ public abstract class ZLTextHyphenator {
 		hyphenate(pattern, info.getMask(), word.Length + 2);
 		for (int i = 0; i < word.Length + 1; i++) {
 			if ((i < 2) || (i > word.Length - 2)) {
-				info.getMask().set(i, false);
+				info.getMask()[i] = false;
 			} else if (word.Data[word.Offset + i - 1] == '-') {
-				info.getMask().set(i, (i >= 3)
-					&& (Boolean) isLetter.get(i - 3) 
-					&& (Boolean) isLetter.get(i - 2) 
-					&& (Boolean) isLetter.get(i) 
-					&& (Boolean) isLetter.get(i + 1));
+				info.getMask()[i] = (i >= 3)
+					&& isLetter[i - 3] 
+					&& isLetter[i - 2] 
+					&& isLetter[i] 
+					&& isLetter[i + 1];
 			} else {
-				info.getMask().set(i, (Boolean) info.getMask().get(i) 
-					&& (Boolean) isLetter.get(i - 2) 
-					&& (Boolean) isLetter.get(i - 1) 
-					&& (Boolean) isLetter.get(i) 
-					&& (Boolean) isLetter.get(i + 1));
+				info.getMask()[i] = info.getMask()[i] 
+					&& isLetter[i - 2] 
+					&& isLetter[i - 1] 
+					&& isLetter[i] 
+					&& isLetter[i + 1];
 			}
 		}
 
@@ -66,5 +66,5 @@ public abstract class ZLTextHyphenator {
 
 	public abstract String getBreakingAlgorithm();
 
-	protected abstract void hyphenate(StringBuffer ucs2String, ArrayList mask, int length);
+	protected abstract void hyphenate(StringBuffer ucs2String, boolean[] mask, int length);
 }

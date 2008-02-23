@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
 <project name="FBReaderJ" default="package">
+<!--	
 	<property name="project.dir" value="/home/geometer/src/projects/FBReaderJ" />
 	<property name="wtk.home" value="/home/geometer/WTK2.5.2" />
+-->
 <!--
 	<property name="project.dir" value="C:/Documents and Settings/465/workspace/FBReaderJ" />
 	<property name="wtk.home" value="C:/WTK2.5.2" />
 -->
+
+	<property name="project.dir" value="/home/grigory/programming/amse/fbreader/java/trunk"/>
+	<property name="wtk.home" value="/home/grigory/soft/WTK2.5.2"/>
+	
+
 	<taskdef resource="antenna.properties" classpath="${project.dir}/lib/antenna-bin-1.0.0.jar"/>
 	<property name="wtk.cldc.version" value="1.1" />
 	<property name="wtk.midp.version" value="2.0" />

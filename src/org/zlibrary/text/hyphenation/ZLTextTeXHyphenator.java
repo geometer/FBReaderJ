@@ -53,13 +53,13 @@ import org.zlibrary.core.util.*;
 		return myBreakingAlgorithm;	
 	}
 
-	protected void hyphenate(StringBuffer ucs2String, ArrayList mask, int length) {
+	protected void hyphenate(StringBuffer ucs2String, boolean[] mask, int length) {
 		if (myPatternTable == null) {
 			System.err.println("myPatternTable == null");
 		}
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
-				mask.set(i, false);
+				mask[i] = false;
 			}
 			return;
 		}
@@ -80,7 +80,7 @@ import org.zlibrary.core.util.*;
 			}
 		}
 		for (int i = 0; i < length - 1; i++) {
-			mask.set(i, (values[i + 1] % 2) == 1);
+			mask[i] =  (values[i + 1] % 2) == 1;
 		}
 	}
 }
