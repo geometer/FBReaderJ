@@ -2,44 +2,44 @@ package org.zlibrary.text.hyphenation;
 
 import org.zlibrary.core.xml.ZLStringMap;
 import org.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.zlibrary.core.util.ZLArrayUtils;
 
-/*package*/ class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
-	public static final String PATTERN = "pattern";
-	public static final String LINE_BREAKING_ALGORITHM = "lineBreakingAlgorithm";
+class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
+	private static final String PATTERN = "pattern";
 
+	private final ZLTextTeXHyphenator myHyphenator;
+	private boolean myReadPattern;
+	private char[] myBuffer = new char[10];
+	private int myBufferLength;
 
-	private ZLTextTeXHyphenator myHyphenator;
-	private boolean myReadPattern = false;
-	private StringBuffer myBuffer = new StringBuffer();
-
-	/*package*/ ZLTextHyphenationReader(ZLTextTeXHyphenator hyphenator) {
+	ZLTextHyphenationReader(ZLTextTeXHyphenator hyphenator) {
 		myHyphenator = hyphenator;
 	}
 
 	public void startElementHandler(String tag, ZLStringMap attributes) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = true;
-		} else if (LINE_BREAKING_ALGORITHM.equals(tag)) {
-			final String algorithm = attributes.getValue("name");
-			if (algorithm != null) {
-				myHyphenator.setBreakingAlgorithm(algorithm);
-			}
 		}
 	}
 
 	public void endElementHandler(String tag) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = false;
-			if (!(myBuffer.length() == 0)) {
-				myHyphenator.addPattern(new ZLTextTeXHyphenationPattern(myBuffer.toString().toCharArray(), 0, myBuffer.length()));
+			final int len = myBufferLength;
+			if (len != 0) {
+				myHyphenator.addPattern(new ZLTextTeXHyphenationPattern(myBuffer, 0, len));
 			}
-			myBuffer = new StringBuffer();
+			myBufferLength = 0;
 		}
 	}
 
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (myReadPattern) {
-			myBuffer.append(ch, start, length);
+			if (myBufferLength + length > myBuffer.length) {
+				myBuffer = ZLArrayUtils.createCopy(myBuffer, myBufferLength, myBufferLength + length + 10);
+			}
+			System.arraycopy(ch, start, myBuffer, myBufferLength, length);
+			myBufferLength += length;
 		}
 	}
 }
