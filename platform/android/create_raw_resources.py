@@ -23,7 +23,7 @@ def process_data_dir(prefix, dir):
 		if os.path.isfile(full_file_name):
 			#if (file.endswith(".xml")):
 			#	shutil.copyfile(full_file_name, xml_res_dir + os.sep + prefix + file.lower())
-			shutil.copyfile(full_file_name, raw_res_dir + os.sep + prefix + file.lower().replace('.', '_'))
+			shutil.copyfile(full_file_name, (raw_res_dir + os.sep + prefix + file).lower().replace('.', '_').replace('-', '_'))
 		elif (file != ".svn"):
 			process_data_dir(prefix + file + "__", full_file_name)
 

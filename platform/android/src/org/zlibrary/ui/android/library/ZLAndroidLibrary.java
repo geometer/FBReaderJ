@@ -47,7 +47,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	protected InputStream getResourceInputStream(String fileName) {
-		final String fieldName = fileName.replace("/", "__").replace(".", "_").toLowerCase();
+		final String fieldName = fileName.replace("/", "__").replace(".", "_").replace("-", "_").toLowerCase();
 		int resourceId;
 		try {
 			resourceId = R.raw.class.getField(fieldName).getInt(null);
