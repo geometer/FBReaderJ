@@ -160,17 +160,18 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (start == 0 && length == -1) {
 			return word.getWidth(getContext());
 		}	
-		int startPos = start;
-		int endPos = (length == -1) ? word.Length : start + length;
+		if (length == -1) {
+			length = word.Length - start;
+		}
 		if (!addHyphenationSign) {
-			return getContext().getStringWidth(word.Data, word.Offset + startPos, endPos - startPos);
+			return getContext().getStringWidth(word.Data, word.Offset + start, length);
 		}
 		char[] part = myWordPartArray;
 		if (length + 1 > part.length) {
 			part = new char[length + 1];
 			myWordPartArray = part;
 		}
-		System.arraycopy(word.Data, startPos, part, 0, length);
+		System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 		part[length] = '-';
 		return getContext().getStringWidth(part, 0, length + 1);
 	}
@@ -347,7 +348,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int x = area.XStart;
 			final int y = area.YEnd - getElementDescent(word) - myTextStyle.getVerticalShift();
 			drawWord(x, y, word, 0, len, area.AddHyphenationSign);
-			
 		}
 		context.moveY(info.Descent + info.VSpaceAfter);
 	}
@@ -358,17 +358,18 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if ((start == 0) && (length == -1)) {
 			context.drawString(x, y, word.Data, word.Offset, word.Length);
 		} else {
-			int startPos = start;
-			int endPos = (length == -1) ? word.Length : start + length;
+			if (length == -1) {
+				length = word.Length - start;
+			}
 			if (!addHyphenationSign) {
-				context.drawString(x, y, word.Data, word.Offset + startPos, endPos - startPos);
+				context.drawString(x, y, word.Data, word.Offset + start, length);
 			} else {
 				char[] part = myWordPartArray;
 				if (length + 1 > part.length) {
 					part = new char[length + 1];
 					myWordPartArray = part;
 				}
-				System.arraycopy(word.Data, word.Offset + startPos, part, 0, length);
+				System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 				part[length] = '-';
 				context.drawString(x, y, part, 0, length + 1);	
 			}	
@@ -562,8 +563,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					int subwordWidth = 0;
 					for(; hyphenationPosition > 0; hyphenationPosition--) {
 						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
-							subwordWidth = getWordWidth(word, word.Offset, hyphenationPosition, 
-								word.Data[hyphenationPosition - 1] != '-');
+							subwordWidth = getWordWidth(word, 0, hyphenationPosition, 
+								word.Data[word.Offset + hyphenationPosition - 1] != '-');
 							if (subwordWidth <= spaceLeft) {
 								break;
 							}
@@ -678,7 +679,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			int len = info.EndCharNumber;
 			if (len > 0) {
 				final ZLTextWord word = (ZLTextWord) paragraph.getElement(info.EndWordNumber);
-				final boolean addHyphenationSign = word.Data[len - 1] != '-';
+				final boolean addHyphenationSign = word.Data[word.Offset + len - 1] != '-';
 				final int x = context.getX();
 				final int width = getWordWidth(word, 0, len, addHyphenationSign);
 				final int height = getElementHeight(word);
