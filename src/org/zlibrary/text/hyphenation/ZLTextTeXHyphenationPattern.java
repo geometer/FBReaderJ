@@ -13,29 +13,33 @@ final class ZLTextTeXHyphenationPattern {
 				++patternLength;
 			}
 		}
-		myLength = patternLength;
-		mySymbols = new char[patternLength];
-		myValues = new byte[patternLength + 1];
+		final char[] symbols = new char[patternLength];
+		final byte[] values = new byte[patternLength + 1];
 
-		myValues[0] = 0;
+		values[0] = 0;
 		for (int i = 0, k = 0; i < length; ++i) {
-			final char symbol = pattern[offset + i];
-			if ((symbol <= '9') && (symbol >= '0')) {
-				myValues[k] = (byte)(symbol - '0');
+			final char sym = pattern[offset + i];
+			if ((sym <= '9') && (sym >= '0')) {
+				values[k] = (byte)(sym - '0');
 			} else {
-				mySymbols[k] = symbol;
+				symbols[k] = sym;
 				++k;
-				myValues[k] = 0;
+				values[k] = 0;
 			}
 		}
+
+		myLength = patternLength;
+		mySymbols = symbols;
+		myValues = values;
 	}
 	
-	void apply(byte[] values, int position) {
+	void apply(byte[] mask, int position) {
 		final int patternLength = myLength;
-		for (int i = 0; i <= patternLength; i++) {
-			final byte val = myValues[i];
-			if (values[position + i] < val) {
-				values[position + i] = val;
+		final byte[] values = myValues;
+		for (int i = 0, j = position; i <= patternLength; ++i, ++j) {
+			final byte val = values[i];
+			if (mask[j] < val) {
+				mask[j] = val;
 			}
 		}
 	}
