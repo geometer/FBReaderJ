@@ -1,4 +1,4 @@
-package org.zlibrary.core.optionentries;
+package org.zlibrary.core.optione;
 
 import org.zlibrary.core.dialogs.ZLBoolean3OptionEntry;
 import org.zlibrary.core.options.ZLBoolean3Option;

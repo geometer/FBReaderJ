@@ -1,4 +1,4 @@
-package org.zlibrary.core.optionentries;
+package org.zlibrary.core.optione;
 
 import org.zlibrary.core.dialogs.ZLStringOptionEntry;
 import org.zlibrary.core.options.ZLStringOption;
