@@ -6,7 +6,8 @@ import org.zlibrary.core.library.ZLibrary;
 
 /*package*/ class ZLTextTeXHyphenator extends ZLTextHyphenator {
 
-	public static final String POSTFIX = ".pattern";	
+	private static final String PREFIX = ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/";
+	private static final String POSTFIX = ".pattern";	
 /*	
 	private static final String getPatternZip();
 	private static void collectLanguages();
@@ -34,17 +35,13 @@ import org.zlibrary.core.library.ZLibrary;
 		myPatternTable.add(pattern);
 	}
 
-	private String PatternZip() {
-		return ZLibrary.JAR_DATA_PREFIX + "data/";
-	}
-
 	public void load(final String language) {
 		if (language.equals(myLanguage)) {
 			return;
 		}
 		myLanguage = language;
 		unload();
-		System.err.println(new ZLTextHyphenationReader(this).read(PatternZip() + language + POSTFIX));
+		System.err.println(new ZLTextHyphenationReader(this).read(PREFIX + language + POSTFIX));
 //		System.err.println("hyphenationPatterns were read.");
 		System.err.println(myPatternTable.size());
 //		Collections.sort(myPatternTable, new ZLTextTeXPatternComparator());
