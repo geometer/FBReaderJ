@@ -13,7 +13,7 @@ public abstract class ZLSpinOptionEntry extends ZLOptionEntry {
 	
 	public abstract int maxValue() ;
 	
-	public abstract int step();
+	public abstract int getStep();
 	
 	public abstract void onAccept(int value);
 }
