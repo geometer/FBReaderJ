@@ -18,14 +18,15 @@ import org.zlibrary.core.library.ZLibrary;
 	public static final ArrayList getLanguageCodes();
 	public static final ArrayList getLanguageNames();
 */	
-	private final ArrayList myPatternTable = new ArrayList();
+	//private final ArrayList myPatternTable = new ArrayList();
+	private final HashMap myPatternTable = new HashMap();
 	private String myLanguage;
 	
 	public ZLTextTeXHyphenator() {
 	}
 
 	void addPattern(ZLTextTeXHyphenationPattern pattern) {
-		myPatternTable.add(pattern);
+		myPatternTable.put(pattern, pattern);
 	}
 
 	public void load(final String language) {
@@ -61,6 +62,7 @@ import org.zlibrary.core.library.ZLibrary;
 		return len1 - len2;
 	}
 
+	/*
 	private static ZLTextTeXHyphenationPattern findPattern(ArrayList patternTable, ZLTextTeXHyphenationPattern pattern) {
 		int left = 0;
 		ZLTextTeXHyphenationPattern candidate = (ZLTextTeXHyphenationPattern)patternTable.get(left);
@@ -96,6 +98,7 @@ import org.zlibrary.core.library.ZLibrary;
 		}
 		return null;
 	}
+	*/
 
 	protected void hyphenate(char[] stringToHyphenate, boolean[] mask, int length) {
 		if (myPatternTable.isEmpty()) {
@@ -113,7 +116,7 @@ import org.zlibrary.core.library.ZLibrary;
 		for (int j = 0; j < length - 2; j++) {
 			for (int k = 1; k <= length - j; k++) {
 				ZLTextTeXHyphenationPattern pattern = new ZLTextTeXHyphenationPattern(stringToHyphenate, j, k);
-				ZLTextTeXHyphenationPattern toApply = findPattern(myPatternTable, pattern);
+				ZLTextTeXHyphenationPattern toApply = (ZLTextTeXHyphenationPattern)myPatternTable.get(pattern);
 				if (toApply != null) {
 					toApply.apply(values, j);
 				}

@@ -43,4 +43,37 @@ final class ZLTextTeXHyphenationPattern {
 			}
 		}
 	}
+
+	public boolean equals(Object o) {
+		ZLTextTeXHyphenationPattern pattern = (ZLTextTeXHyphenationPattern)o;
+		final int len = myLength;
+		if (len != pattern.myLength) {
+			return false;
+		}
+		final char[] symbols0 = mySymbols;
+		final char[] symbols1 = pattern.mySymbols;
+		for (int i = 0; i < len; ++i) {
+			if (symbols0[i] != symbols1[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private int myHashCode = -1;
+
+	public int hashCode() {
+		int hash = myHashCode;
+		if (hash == -1) {
+			final int len = myLength;
+			final char[] symbols = mySymbols;
+			hash = 0;
+			for (int i = 0; i < len; ++i) {
+				hash *= 31;
+				hash += symbols[i];
+			}
+			myHashCode = hash;
+		}
+		return hash;
+	}
 }
