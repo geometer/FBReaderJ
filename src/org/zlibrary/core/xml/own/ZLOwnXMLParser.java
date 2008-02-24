@@ -119,6 +119,7 @@ final class ZLOwnXMLParser {
 		while (true) {
 			int count = streamReader.read(buffer);
 			if (count <= 0) {
+				streamReader.close();
 				return;
 			}
 			if (count < buffer.length) {
