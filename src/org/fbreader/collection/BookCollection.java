@@ -110,19 +110,21 @@ public class BookCollection {
 			final BookList bookList = new BookList();
 			final ArrayList/*<String>*/ bookListSet = bookList.fileNames();
 			final ArrayList/*<String>*/ fileNames = new ArrayList();
-			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
-			
-			for (int i = 0; i < list.size(); i++) {
-				final ArrayList books = (ArrayList)list.get(i);
-				final int numberOfBooks = books.size();
-				for (int j = 0; j < numberOfBooks; ++j) {
-					final BookDescription description = (BookDescription)books.get(j);
-					final String fileName = description.getFileName();
-					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
-						fileNames.add(fileName);
-					}
-				}
-			}
+
+//		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
+//			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
+//			
+//			for (int i = 0; i < list.size(); i++) {
+//				final ArrayList books = (ArrayList)list.get(i);
+//				final int numberOfBooks = books.size();
+//				for (int j = 0; j < numberOfBooks; ++j) {
+//					final BookDescription description = (BookDescription)books.get(j);
+//					final String fileName = description.getFileName();
+//					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
+//						fileNames.add(fileName);
+//					}
+//				}
+//			}
 			
 			/*for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
 				final ArrayList books = (ArrayList)it.next();
@@ -298,14 +300,14 @@ public class BookCollection {
 			}
 			
 			BookDescription description = BookDescription.getDescription(fileName);
-			if (description!=null) {
+			if (description != null) {
 				//myBooks.insert(myBooks.begin(), description);
 				myBooks.add(0, description);
 			}
 			
 			final int maxSize = MaxListSizeOption.getValue();
-			if (myBooks.size() > maxSize) {
-				myBooks.retainAll(myBooks.subList(maxSize, myBooks.size()));
+			while (myBooks.size() > maxSize) {
+				myBooks.remove(myBooks.size() - 1);
 			}
 		}
 		

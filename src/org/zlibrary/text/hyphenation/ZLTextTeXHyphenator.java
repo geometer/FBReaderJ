@@ -12,7 +12,6 @@ import org.zlibrary.core.library.ZLibrary;
 	private static final String getPatternZip();
 	private static void collectLanguages();
 */	
-	private static ZLTextTeXPatternComparator comparator = new ZLTextTeXPatternComparator();
 	private static ArrayList languageCodes;
 	private static ArrayList languageNames;
 /*
@@ -56,6 +55,59 @@ import org.zlibrary.core.library.ZLibrary;
 		return myBreakingAlgorithm;	
 	}
 
+	private static int comparePatterns(ZLTextTeXHyphenationPattern pattern1, ZLTextTeXHyphenationPattern pattern2) {
+		final int len1 = pattern1.getLength();
+		final int len2 = pattern2.getLength();
+		final int minLength = (len1 < len2) ? len1 : len2;
+
+		final char[] symbols1 = pattern1.getSymbols();
+		final char[] symbols2 = pattern2.getSymbols();
+		for (int i = 0; i < minLength; i++) {
+			final int diff = symbols1[i] - symbols2[i];
+			if (diff != 0) {
+				return diff;
+			}
+		}
+		
+		return len1 - len2;
+	}
+
+	private static ZLTextTeXHyphenationPattern findPattern(ArrayList patternTable, ZLTextTeXHyphenationPattern pattern) {
+		int left = 0;
+		ZLTextTeXHyphenationPattern candidate = (ZLTextTeXHyphenationPattern)patternTable.get(left);
+		int test = comparePatterns(candidate, pattern);
+		if (test == 0) {
+			return candidate;
+		}
+		if (test > 0) {
+			return null;
+		}
+
+		int right = patternTable.size() - 1;
+		candidate = (ZLTextTeXHyphenationPattern)patternTable.get(right);
+		test = comparePatterns(candidate, pattern);
+		if (test == 0) {
+			return candidate;
+		}
+		if (test < 0) {
+			return null;
+		}
+		while (right - left > 1) {
+			final int middle = (left + right) / 2;
+			candidate = (ZLTextTeXHyphenationPattern)patternTable.get(middle);
+			test = comparePatterns(candidate, pattern);
+			if (test == 0) {
+				return candidate;
+			}
+			if (test < 0) {
+				left = middle;
+			} else {
+				right = middle;
+			}
+		}
+		return null;
+	}
+
 	protected void hyphenate(StringBuffer ucs2String, boolean[] mask, int length) {
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
@@ -69,22 +121,13 @@ import org.zlibrary.core.library.ZLibrary;
 			values[i] = 0;
 		}
 		
-		ZLTextTeXPatternComparator comparator = new ZLTextTeXPatternComparator();
-		
 		for (int j = 0; j < length - 2; j++) {
 			for (int k = 1; k <= length - j; k++) {
 				ZLTextTeXHyphenationPattern pattern = new ZLTextTeXHyphenationPattern(ucs2String.toString().toCharArray(), j, k);
-				int index = -1;
-				for (int i = 0; i < myPatternTable.size(); i++) {
-					if (comparator.compare(myPatternTable.get(i), pattern) == 0) {
-						index = i;
-						break;
-					}
+				ZLTextTeXHyphenationPattern toApply = findPattern(myPatternTable, pattern);
+				if (toApply != null) {
+					toApply.apply(values, j);
 				}
-				if (index == -1) {
-					continue;
-				}
-				((ZLTextTeXHyphenationPattern) myPatternTable.get(index)).apply(values, j);
 			}
 		}
  	
