@@ -20,14 +20,8 @@ import org.zlibrary.core.library.ZLibrary;
 */	
 	private final ArrayList myPatternTable = new ArrayList();
 	private String myLanguage;
-	private String myBreakingAlgorithm;
 	
 	public ZLTextTeXHyphenator() {
-		myBreakingAlgorithm = "";
-	}
-
-	void setBreakingAlgorithm(String algorithm) {
-		myBreakingAlgorithm = algorithm;
 	}
 
 	void addPattern(ZLTextTeXHyphenationPattern pattern) {
@@ -40,7 +34,7 @@ import org.zlibrary.core.library.ZLibrary;
 		}
 		myLanguage = language;
 		unload();
-		System.err.println(new ZLTextHyphenationReader(this).read(PREFIX + language + POSTFIX));
+		new ZLTextHyphenationReader(this).read(PREFIX + language + POSTFIX);
 //		System.err.println("hyphenationPatterns were read.");
 		System.err.println(myPatternTable.size());
 //		Collections.sort(myPatternTable, new ZLTextTeXPatternComparator());
@@ -48,11 +42,6 @@ import org.zlibrary.core.library.ZLibrary;
 
 	public void unload() {
 		myPatternTable.clear();
-		myBreakingAlgorithm = "";	
-	}
-
-	public String getBreakingAlgorithm() {
-		return myBreakingAlgorithm;	
 	}
 
 	private static int comparePatterns(ZLTextTeXHyphenationPattern pattern1, ZLTextTeXHyphenationPattern pattern2) {
@@ -108,7 +97,7 @@ import org.zlibrary.core.library.ZLibrary;
 		return null;
 	}
 
-	protected void hyphenate(StringBuffer ucs2String, boolean[] mask, int length) {
+	protected void hyphenate(char[] stringToHyphenate, boolean[] mask, int length) {
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
 				mask[i] = false;
@@ -123,7 +112,7 @@ import org.zlibrary.core.library.ZLibrary;
 		
 		for (int j = 0; j < length - 2; j++) {
 			for (int k = 1; k <= length - j; k++) {
-				ZLTextTeXHyphenationPattern pattern = new ZLTextTeXHyphenationPattern(ucs2String.toString().toCharArray(), j, k);
+				ZLTextTeXHyphenationPattern pattern = new ZLTextTeXHyphenationPattern(stringToHyphenate, j, k);
 				ZLTextTeXHyphenationPattern toApply = findPattern(myPatternTable, pattern);
 				if (toApply != null) {
 					toApply.apply(values, j);
@@ -134,7 +123,7 @@ import org.zlibrary.core.library.ZLibrary;
 //     		System.err.println("hyphenating...");
 		for (int i = 0; i < length - 1; i++) {
 //			System.err.print(values[i + 1] + " ");
-			mask[i] =  (values[i + 1] % 2) == 1;
+			mask[i] = (values[i + 1] % 2) == 1;
 		}
 //		System.err.println();
 	}

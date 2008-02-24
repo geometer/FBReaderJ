@@ -30,16 +30,18 @@ public abstract class ZLTextHyphenator {
 	public abstract void unload();
 
 	public ZLTextHyphenationInfo getInfo(final ZLTextWord word) {
-		StringBuffer pattern = new StringBuffer();
-		boolean[] isLetter = new boolean[word.Length];
-		pattern.append(' ');
-		for (int i = word.Offset; i < word.Offset + word.Length; i++) {
-			char symbol = word.Data[i];
-			boolean letter = CharacterUtil.isLetter(symbol);
-			isLetter[i - word.Offset] = letter;
-			pattern.append(letter ? Character.toLowerCase(symbol) : ' ');
+		final int len = word.Length;
+		final boolean[] isLetter = new boolean[len];
+		final char[] pattern = new char[len + 2];
+		final char[] data = word.Data;
+		pattern[0] = ' ';
+		for (int i = 0, j = word.Offset; i < len; ++i, ++j) {
+			char symbol = data[j];
+			boolean flag = CharacterUtil.isLetter(symbol);
+			isLetter[i] = flag;
+			pattern[i + 1] = flag ? Character.toLowerCase(symbol) : ' ';
 		}
-		pattern.append(' ');
+		pattern[len + 1] = ' ';
 
 		ZLTextHyphenationInfo info = new ZLTextHyphenationInfo(word.Length + 2);
 		hyphenate(pattern, info.getMask(), word.Length + 2);
@@ -64,7 +66,5 @@ public abstract class ZLTextHyphenator {
 		return info;
 	}
 
-	public abstract String getBreakingAlgorithm();
-
-	protected abstract void hyphenate(StringBuffer ucs2String, boolean[] mask, int length);
+	protected abstract void hyphenate(char[] stringToHyphenate, boolean[] mask, int length);
 }
