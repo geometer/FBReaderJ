@@ -56,12 +56,12 @@ import org.zlibrary.core.library.ZLibrary;
 	}
 
 	private static int comparePatterns(ZLTextTeXHyphenationPattern pattern1, ZLTextTeXHyphenationPattern pattern2) {
-		final int len1 = pattern1.getLength();
-		final int len2 = pattern2.getLength();
+		final int len1 = pattern1.myLength;
+		final int len2 = pattern2.myLength;
 		final int minLength = (len1 < len2) ? len1 : len2;
 
-		final char[] symbols1 = pattern1.getSymbols();
-		final char[] symbols2 = pattern2.getSymbols();
+		final char[] symbols1 = pattern1.mySymbols;
+		final char[] symbols2 = pattern2.mySymbols;
 		for (int i = 0; i < minLength; i++) {
 			final int diff = symbols1[i] - symbols2[i];
 			if (diff != 0) {
