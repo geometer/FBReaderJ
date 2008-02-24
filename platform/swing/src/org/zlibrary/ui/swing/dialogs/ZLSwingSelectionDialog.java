@@ -18,7 +18,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
 	private static final String ourIconDirectory = "icons/filetree/";
 
-	private final JDialog myJDialog;
+	private final JDialog myDialog;
 	private final JTextField myStateLine = new JTextField();
 	private final JList myList = new JList();
 	private OKAction myOKAction;
@@ -32,35 +32,35 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		super(myHandler);
 		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 400);
 		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 300);
-		myJDialog = new JDialog(frame);
-		myJDialog.setTitle(caption);
+		myDialog = new JDialog(frame);
+		myDialog.setTitle(caption);
 		update();
 	}
 
 	@Override
 	protected void exitDialog() {
-		myWidthOption.setValue(myJDialog.getWidth());
-		myHeightOption.setValue(myJDialog.getHeight());
-		myJDialog.dispose();
+		myWidthOption.setValue(myDialog.getWidth());
+		myHeightOption.setValue(myDialog.getHeight());
+		myDialog.dispose();
 	}
 
 	@Override
 	public boolean run() {
-		myJDialog.addWindowListener(new WindowAdapter(){
+		myDialog.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
-				myWidthOption.setValue(myJDialog.getWidth());
-				myHeightOption.setValue(myJDialog.getHeight());
+				myWidthOption.setValue(myDialog.getWidth());
+				myHeightOption.setValue(myDialog.getHeight());
 			}
 		});
-		myJDialog.setLayout(new BorderLayout());
+		myDialog.setLayout(new BorderLayout());
 		myStateLine.setEditable(!handler().isOpenHandler());
 		myStateLine.setEnabled(!handler().isOpenHandler());
-		myJDialog.add(myStateLine, BorderLayout.NORTH);
+		myDialog.add(myStateLine, BorderLayout.NORTH);
 	
 		myList.setCellRenderer(new CellRenderer());
 		JScrollPane scrollPane = new JScrollPane(myList);
 		scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());		
-		myJDialog.add(scrollPane, BorderLayout.CENTER);
+		myDialog.add(scrollPane, BorderLayout.CENTER);
 		
 		myList.addListSelectionListener(new SelectionListener());
 		myList.addKeyListener(new MyKeyAdapter());
@@ -80,14 +80,14 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		}
 		buttonPanel.add(button1);
 		buttonPanel.add(button2);
-		myJDialog.add(buttonPanel, BorderLayout.SOUTH);
+		myDialog.add(buttonPanel, BorderLayout.SOUTH);
 		
-		myJDialog.pack();
+		myDialog.pack();
 		myList.requestFocusInWindow();	
-		myJDialog.setSize(myWidthOption.getValue(), myHeightOption.getValue());
-		myJDialog.setLocationRelativeTo(myJDialog.getParent());
-		myJDialog.setModal(true);
-		myJDialog.setVisible(true);
+		myDialog.setSize(myWidthOption.getValue(), myHeightOption.getValue());
+		myDialog.setLocationRelativeTo(myDialog.getParent());
+		myDialog.setModal(true);
+		myDialog.setVisible(true);
 		
 		return myReturnValue;
 	}

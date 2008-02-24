@@ -29,16 +29,16 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private String mySelectedTabKey;
 	private final HashMap<JPanel, String> myPanelToKeyMap = new HashMap<JPanel, String>(); //?
 	
-//	private final ZLIntegerRangeOption myWidthOption;
-//	private	final ZLIntegerRangeOption myHeightOption;
+	private final ZLIntegerRangeOption myWidthOption;
+	private	final ZLIntegerRangeOption myHeightOption;
 	
 	protected ZLSwingOptionsDialog(JFrame frame, ZLResource resource, ZLRunnable applyAction, boolean showApplyButton) {
 		super(resource, applyAction);
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(getCaption());
 		myShowApplyButton = showApplyButton;
-//		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 500);
-//		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 400);
+		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 500);
+		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 400);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -63,10 +63,8 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	protected boolean runInternal() {
 		myDialog.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
-//				System.out.println(myDialog.getWidth() + " width");
-//				System.out.println(myDialog.getHeight() + " height");
-//				myWidthOption.setValue(myDialog.getWidth());
-//				myHeightOption.setValue(myDialog.getHeight());
+				myWidthOption.setValue(myDialog.getWidth());
+				myHeightOption.setValue(myDialog.getHeight());
 			}
 		});
 		myDialog.setLayout(new BorderLayout());
@@ -98,6 +96,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		
 		myDialog.pack();
 		button1.requestFocusInWindow();
+		myDialog.setSize(myWidthOption.getValue(), myHeightOption.getValue());
 		myDialog.setLocationRelativeTo(myDialog.getParent());
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
