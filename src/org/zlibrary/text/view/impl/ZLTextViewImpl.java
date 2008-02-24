@@ -346,8 +346,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	private void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		final ZLPaintContext context = getContext();
+		context.setColor(myTextStyle.getColor());	
 		if ((start == 0) && (length == -1)) {
-			context.setColor(myTextStyle.getColor());	
 			context.drawString(x, y, word.Data, word.Offset, word.Length);
 		} else {
 			int startPos = start;
