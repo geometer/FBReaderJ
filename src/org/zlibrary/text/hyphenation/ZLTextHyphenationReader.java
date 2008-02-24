@@ -27,7 +27,7 @@ final  class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 			myReadPattern = false;
 			final int len = myBufferLength;
 			if (len != 0) {
-				myHyphenator.addPattern(new ZLTextTeXHyphenationPattern(myBuffer, 0, len));
+				myHyphenator.addPattern(new ZLTextTeXHyphenationPattern(myBuffer, 0, len, true));
 			}
 			myBufferLength = 0;
 		}

@@ -1,36 +1,52 @@
 package org.zlibrary.text.hyphenation;
 
 final class ZLTextTeXHyphenationPattern {
-	final int myLength;
+	int myLength;
 	final char[] mySymbols;
 	private final byte[] myValues;
+	private int myHashCode = -1;
 
-	ZLTextTeXHyphenationPattern(char[] pattern, int offset, int length) {
-		int patternLength = 0;
-		for (int i = 0; i < length; ++i) {
-			final char symbol = pattern[offset + i];
-			if ((symbol > '9') || (symbol < '0')) {
-				++patternLength;
+	void update(char[] pattern, int offset, int length) {
+		// We assert
+		// 		1. this pattern doesn't use values
+		// 		length <= original pattern length
+		System.arraycopy(pattern, offset, mySymbols, 0, length);
+		myLength = length;
+		myHashCode = -1;
+	}
+
+	ZLTextTeXHyphenationPattern(char[] pattern, int offset, int length, boolean useValues) {
+		if (useValues) {
+			int patternLength = 0;
+			for (int i = 0; i < length; ++i) {
+				final char symbol = pattern[offset + i];
+				if ((symbol > '9') || (symbol < '0')) {
+					++patternLength;
+				}
 			}
-		}
-		final char[] symbols = new char[patternLength];
-		final byte[] values = new byte[patternLength + 1];
-
-		values[0] = 0;
-		for (int i = 0, k = 0; i < length; ++i) {
-			final char sym = pattern[offset + i];
-			if ((sym <= '9') && (sym >= '0')) {
-				values[k] = (byte)(sym - '0');
-			} else {
-				symbols[k] = sym;
-				++k;
-				values[k] = 0;
+			final char[] symbols = new char[patternLength];
+			final byte[] values = new byte[patternLength + 1];
+    
+			for (int i = 0, k = 0; i < length; ++i) {
+				final char sym = pattern[offset + i];
+				if ((sym <= '9') && (sym >= '0')) {
+					values[k] = (byte)(sym - '0');
+				} else {
+					symbols[k] = sym;
+					++k;
+				}
 			}
+    
+			myLength = patternLength;
+			mySymbols = symbols;
+			myValues = values;
+		} else {
+			final char[] symbols = new char[length];
+			System.arraycopy(pattern, offset, symbols, 0, length);
+			myLength = length;
+			mySymbols = symbols;
+			myValues = null;
 		}
-
-		myLength = patternLength;
-		mySymbols = symbols;
-		myValues = values;
 	}
 	
 	void apply(byte[] mask, int position) {
@@ -59,8 +75,6 @@ final class ZLTextTeXHyphenationPattern {
 		}
 		return true;
 	}
-
-	private int myHashCode = -1;
 
 	public int hashCode() {
 		int hash = myHashCode;

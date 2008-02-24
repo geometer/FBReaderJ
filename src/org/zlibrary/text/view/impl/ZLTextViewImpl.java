@@ -134,7 +134,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLPaintContext context = getContext();
 			return context.imageHeight(((ZLTextImageElement)element).getImageData()) + 
-				Math.max((int)(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100), 3);
+				Math.max(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
 		}
 		return 0;
 	}
@@ -217,7 +217,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 	
 	public void paint() {
-		//android.os.Debug.startMethodTracing("/tmp/paint");
+		android.os.Debug.startMethodTracing("/tmp/paint");
 		preparePaintInfo();
 
 		myTextElementMap.clear();
@@ -243,7 +243,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		for (int i = 0; i < lineInfosSize; ++i) {
 			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
 		}
-		//android.os.Debug.stopMethodTracing();
+		android.os.Debug.stopMethodTracing();
 	}
 
 	private void drawTreeLines(ZLPaintContext context, ZLTextLineInfo.TreeNodeInfo info, int height, int vSpaceAfter) {
@@ -490,8 +490,18 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		do {
 			ZLTextElement element = paragraphCursor.getElement(currentWordIndex); 
 			newWidth += getElementWidth(element, currentCharNumber);
-			newHeight = Math.max(newHeight, getElementHeight(element));
-			newDescent = Math.max(newDescent, getElementDescent(element));
+			{
+				final int eltHeight = getElementHeight(element);
+				if (newHeight < eltHeight) {
+					newHeight = eltHeight;
+				}
+			}
+			{
+				final int eltDescent = getElementDescent(element);
+				if (newDescent < eltDescent) {
+					newDescent = eltDescent;
+				}
+			}
 			if (element == ZLTextElement.HSpace) {
 				if (wordOccurred) {
 					wordOccurred = false;
@@ -524,8 +534,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			if (allowBreak) {
 				info.IsVisible = isVisible;
 				info.Width = newWidth;
-				info.Height = Math.max(info.Height, newHeight);
-				info.Descent = Math.max(info.Descent, newDescent);
+				if (info.Height < newHeight) {
+					info.Height = newHeight;
+				}
+				if (info.Descent < newDescent) {
+					info.Descent = newDescent;
+				}
 				info.EndWordNumber = currentWordIndex;
 				info.EndCharNumber = currentCharNumber;
 				info.SpaceCounter = internalSpaceCounter;
@@ -558,8 +572,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					if (hyphenationPosition > 0) {
 						info.IsVisible = true;
 						info.Width = newWidth + subwordWidth;
-						info.Height = Math.max(info.Height, newHeight);
-						info.Descent = Math.max(info.Descent, newDescent);
+						if (info.Height < newHeight) {
+							info.Height = newHeight;
+						}
+						if (info.Descent < newDescent) {
+							info.Descent = newDescent;
+						}
 						info.EndWordNumber = currentWordIndex;
 						info.EndCharNumber = hyphenationPosition;
 						info.SpaceCounter = internalSpaceCounter;
@@ -737,8 +755,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		}
 	}
-
-	
 
 	private int getViewWidth() {
 		return Math.max(getContext().getWidth() - getLeftMargin() - getRightMargin(), 1);
