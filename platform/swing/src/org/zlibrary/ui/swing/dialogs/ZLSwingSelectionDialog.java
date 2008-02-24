@@ -26,6 +26,8 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	private final ZLIntegerRangeOption myWidthOption;
 	private	final ZLIntegerRangeOption myHeightOption;
 	
+	private boolean myReturnValue = false;
+	
 	protected ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler) {
 		super(myHandler);
 		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 400);
@@ -36,7 +38,9 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	}
 
 	@Override
-	protected void exitDialog() {	
+	protected void exitDialog() {
+		myWidthOption.setValue(myJDialog.getWidth());
+		myHeightOption.setValue(myJDialog.getHeight());
 		myJDialog.dispose();
 	}
 
@@ -85,7 +89,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		myJDialog.setModal(true);
 		myJDialog.setVisible(true);
 		
-		return true; //????
+		return myReturnValue;
 	}
 
 	@Override
@@ -116,6 +120,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	
 	private void changeFolder(int index) {
 		ZLTreeNode node = (ZLTreeNode) handler().subnodes().get(index);
+		myReturnValue = !node.isFolder();
         runNode(node);
 	}
 	
@@ -159,6 +164,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
+			myReturnValue = true;
 			runNode((ZLTreeNode) handler().subnodes().get(myList.getSelectedIndex())); 
 		}
 	}
