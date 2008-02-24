@@ -1,6 +1,6 @@
 package org.fbreader.fbreader;
 
-import org.fbreader.optionsDialog.OptionsDialog;
+import org.fbreader.optionsdialog.OptionsDialog;
 
 class ShowOptionsDialogAction extends FBAction {
 
