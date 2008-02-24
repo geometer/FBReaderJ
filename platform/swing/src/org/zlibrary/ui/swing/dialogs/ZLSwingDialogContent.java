@@ -16,6 +16,8 @@ import org.zlibrary.core.resources.ZLResource;
 public class ZLSwingDialogContent extends ZLDialogContent {
 	private final JPanel myContentPanel = new JPanel();
 	private final GridLayout myGridLayout = new GridLayout(0, 1, 10, 10);
+	private JPanel myTwoOptionsPanel;
+	private boolean myAddTwoOptions = false;
 	
 	protected ZLSwingDialogContent(ZLResource resource) {
 		super(resource);
@@ -32,7 +34,13 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 	@Override
 	public void addOptions(String name0, String tooltip0, ZLOptionEntry option0, String name1, String tooltip1, ZLOptionEntry option1) {
 		// TODO Auto-generated method stub
-		
+		myAddTwoOptions = true;
+		myTwoOptionsPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+		myGridLayout.setRows(myGridLayout.getRows() + 1);
+		myContentPanel.add(myTwoOptionsPanel);
+		createViewByEntry(name0, tooltip0, option0);
+		createViewByEntry(name1, tooltip1, option1);
+		myAddTwoOptions = false;
 	}
 	
 	public JPanel getContentPanel() {
@@ -41,8 +49,12 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 	
 	public void insertWidget(JComponent comp) {
 		// TODO Auto-generated method stub
-		myGridLayout.setRows(myGridLayout.getRows() + 1);
-		myContentPanel.add(comp);
+		if (myAddTwoOptions) {
+			myTwoOptionsPanel.add(comp);
+		} else {
+			myGridLayout.setRows(myGridLayout.getRows() + 1);
+			myContentPanel.add(comp);
+		}	
 	}
 	
 	private void createViewByEntry(String name, String tooltip, ZLOptionEntry option) {

@@ -1,10 +1,13 @@
 package org.fbreader.optionsDialog;
 
+import org.fbreader.fbreader.CollectionView;
 import org.fbreader.fbreader.FBReader;
 import org.fbreader.fbreader.FBView;
+import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
+import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.text.view.style.ZLTextBaseStyle;
@@ -18,8 +21,11 @@ public class OptionsDialog {
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", new OptionsApplyRunnable(fbreader), true);
 
 		ZLDialogContent generalTab = myDialog.createTab("General");
+		CollectionView collectionView = fbreader.getCollectionView();
+		generalTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
 
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
+	//	encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
 		
 		myDialog.createTab("Scrolling");
 		
