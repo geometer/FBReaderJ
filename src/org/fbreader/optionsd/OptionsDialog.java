@@ -1,4 +1,4 @@
-package org.fbreader.optionsdialog;
+package org.fbreader.optionsd;
 
 import org.fbreader.fbreader.FBReader;
 import org.fbreader.fbreader.FBView;
