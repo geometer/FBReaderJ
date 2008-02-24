@@ -37,8 +37,8 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(getCaption());
 		myShowApplyButton = showApplyButton;
-		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 500);
-		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 400);
+		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 485);
+		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 332);
 		// TODO Auto-generated constructor stub
 	}
 
