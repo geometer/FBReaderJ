@@ -154,6 +154,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return word.getWidth(getContext());
 	}
 	
+	private char[] myWordPartArray = new char[20];
+
 	private int getWordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		if (start == 0 && length == -1) {
 			return word.getWidth(getContext());
@@ -163,10 +165,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (!addHyphenationSign) {
 			return getContext().getStringWidth(word.Data, word.Offset + startPos, endPos - startPos);
 		}
-		String substr = new String(word.Data);
-		substr = substr.substring(startPos, endPos);
-		substr += "-";
-		return getContext().getStringWidth(substr.toCharArray(), 0, substr.length());
+		char[] part = myWordPartArray;
+		if (length + 1> part.length) {
+			part = new char[length + 1];
+			myWordPartArray = part;
+		}
+		System.arraycopy(word.Data, startPos, part, 0, length);
+		part[length] = '-';
+		return getContext().getStringWidth(part, 0, length + 1);
 	}
 	
 	private void moveStartCursor(int paragraphNumber) {
@@ -211,6 +217,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 	
 	public void paint() {
+		android.os.Debug.startMethodTracing("/tmp/paint");
 		preparePaintInfo();
 
 		myTextElementMap.clear();
@@ -236,6 +243,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		for (int i = 0; i < lineInfosSize; ++i) {
 			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
 		}
+		android.os.Debug.stopMethodTracing();
 	}
 
 	private void drawTreeLines(ZLPaintContext context, ZLTextLineInfo.TreeNodeInfo info, int height, int vSpaceAfter) {
