@@ -14,7 +14,6 @@ public abstract class ZLTextHyphenator {
 		}
 		return ourInstance;
 	}
-	
 
 	public static void deleteInstance() {
 		if (ourInstance != null) {
