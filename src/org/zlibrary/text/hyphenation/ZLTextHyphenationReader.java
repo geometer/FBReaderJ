@@ -4,7 +4,7 @@ import org.zlibrary.core.xml.ZLStringMap;
 import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.zlibrary.core.util.ZLArrayUtils;
 
-class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
+final  class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 	private static final String PATTERN = "pattern";
 
 	private final ZLTextTeXHyphenator myHyphenator;
@@ -35,11 +35,15 @@ class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (myReadPattern) {
-			if (myBufferLength + length > myBuffer.length) {
-				myBuffer = ZLArrayUtils.createCopy(myBuffer, myBufferLength, myBufferLength + length + 10);
+			char[] buffer = myBuffer;
+			final int oldLen = myBufferLength;
+			final int newLen = oldLen + length;
+			if (newLen > buffer.length) {
+				buffer = ZLArrayUtils.createCopy(buffer, oldLen, newLen + 10);
+				myBuffer = buffer;
 			}
-			System.arraycopy(ch, start, myBuffer, myBufferLength, length);
-			myBufferLength += length;
+			System.arraycopy(ch, start, buffer, oldLen, length);
+			myBufferLength = newLen;
 		}
 	}
 }
