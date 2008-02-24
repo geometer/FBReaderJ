@@ -1,6 +1,6 @@
 package org.zlibrary.text.hyphenation;
 
-public class ZLTextHyphenationInfo {
+public final class ZLTextHyphenationInfo {
 	final boolean[] myMask;
 
 	public ZLTextHyphenationInfo(int length) {
