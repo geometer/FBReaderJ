@@ -35,7 +35,7 @@ public abstract class ZLTextHyphenator {
 		pattern.append(' ');
 		for (int i = word.Offset; i < word.Offset + word.Length; i++) {
 			char symbol = word.Data[i];
-			boolean letter = Character.isLetter(symbol);
+			boolean letter = CharacterUtil.isLetter(symbol);
 			isLetter[i - word.Offset] = letter;
 			pattern.append(letter ? Character.toLowerCase(symbol) : ' ');
 		}
