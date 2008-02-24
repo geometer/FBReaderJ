@@ -42,19 +42,20 @@ public abstract class ZLTextHyphenator {
 		}
 		pattern[len + 1] = ' ';
 
-		ZLTextHyphenationInfo info = new ZLTextHyphenationInfo(word.Length + 2);
-		hyphenate(pattern, info.getMask(), word.Length + 2);
-		for (int i = 0; i < word.Length + 1; i++) {
-			if ((i < 2) || (i > word.Length - 2)) {
-				info.getMask()[i] = false;
-			} else if (word.Data[word.Offset + i - 1] == '-') {
-				info.getMask()[i] = (i >= 3)
+		final ZLTextHyphenationInfo info = new ZLTextHyphenationInfo(len + 2);
+		final boolean[] mask = info.myMask;
+		hyphenate(pattern, mask, len + 2);
+		for (int i = 0, j = word.Offset - 1; i <= len; ++i, ++j) {
+			if ((i < 2) || (i > len - 2)) {
+				mask[i] = false;
+			} else if (data[j] == '-') {
+				mask[i] = (i >= 3)
 					&& isLetter[i - 3] 
 					&& isLetter[i - 2] 
 					&& isLetter[i] 
 					&& isLetter[i + 1];
 			} else {
-				info.getMask()[i] = info.getMask()[i] 
+				mask[i] = mask[i] 
 					&& isLetter[i - 2] 
 					&& isLetter[i - 1] 
 					&& isLetter[i] 
