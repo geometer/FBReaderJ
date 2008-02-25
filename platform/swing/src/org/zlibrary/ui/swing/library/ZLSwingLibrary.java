@@ -49,7 +49,7 @@ public class ZLSwingLibrary extends ZLibrary {
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
 		loadProperties();
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", getApplicationName());
+		//System.setProperty("com.apple.mrj.application.apple.menu.about.name", getApplicationName());
 
 		new ZLXMLConfigManager(System.getProperty("user.home") + "/." + getInstance().getApplicationName());
 		new ZLSwingImageManager();
