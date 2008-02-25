@@ -1,6 +1,7 @@
 package org.zlibrary.ui.swing.library;
 
 import java.io.*;
+import javax.swing.UIManager;
 
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.xmlconfig.ZLXMLConfigManager;
@@ -39,9 +40,12 @@ public class ZLSwingLibrary extends ZLibrary {
 
 	@SuppressWarnings("unchecked")
 	public void run(String[] args) {
-		//ZLibrary.FileNameDelimiter = "\\";
-		//ZLibrary.PathDelimiter = ";";
-		//EndOfLine = "\r\n";
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", getApplicationName());
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
 		loadProperties();
