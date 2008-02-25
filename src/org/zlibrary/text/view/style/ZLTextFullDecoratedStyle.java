@@ -13,12 +13,12 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		myDecoration = decoration;	
 	}
 
-	public String getFontFamily() {
+	protected String getFontFamilyInternal() {
 		String decoratedValue = myDecoration.FontFamilyOption.getValue();
 		return (decoratedValue.length() != 0) ? decoratedValue : getBase().getFontFamily();
 	}
 
-	public ZLColor getColor() {
+	protected ZLColor getColorInternal() {
 		byte hyperlinkStyle = myDecoration.getHyperlinkStyle();
 		if (hyperlinkStyle == HyperlinkStyle.NONE) {
 			return getBase().getColor();
@@ -31,11 +31,11 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		}
 	}
 
-	public int getFontSize() {
+	protected int getFontSizeInternal() {
 		return getBase().getFontSize() + myDecoration.FontSizeDeltaOption.getValue();
 	}
 	
-	public boolean isBold() {
+	protected boolean isBoldInternal() {
 		switch (myDecoration.BoldOption.getValue()) {
 			case ZLBoolean3.B3_TRUE:
 				return true;
@@ -46,7 +46,7 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		}
 	}
 
-	public boolean isItalic() {
+	protected boolean isItalicInternal() {
 		switch (myDecoration.ItalicOption.getValue()) {
 			case ZLBoolean3.B3_TRUE:
 				return true;
@@ -74,7 +74,7 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		return (value != -1) ? value : getBase().getLineSpacePercent();
 	}
 
-	public int getVerticalShift() {
+	protected int getVerticalShiftInternal() {
 		return getBase().getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
 	}
 
