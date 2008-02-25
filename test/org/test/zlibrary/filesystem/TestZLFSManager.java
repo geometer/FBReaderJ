@@ -3,7 +3,7 @@ package org.test.zlibrary.filesystem;
 import junit.framework.TestCase;
 
 import org.zlibrary.core.filesystem.ZLFSDir;
-import org.zlibrary.core.filesystem.ZLFSManager;
+import org.zlibrary.core.filesystem.ZLFSManagerUtil;
 import org.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class TestZLFSManager extends TestCase {
@@ -17,14 +17,14 @@ public class TestZLFSManager extends TestCase {
 	}
 
 	public void testAddRemoveDir() {
-		ZLFSDir dir = ZLFSManager.getInstance().createNewDirectory(myDirectory + "\\test");
-		assertEquals(ZLFSManager.getInstance().removeFile(dir.getPath()), true);
+		ZLFSDir dir = ZLFSManagerUtil.getInstance().createNewDirectory(myDirectory + "\\test");
+		assertEquals(ZLFSManagerUtil.getInstance().removeFile(dir.getPath()), true);
 	}
 
 	public void testAddRemoveDirPlainDirectory() {
-		ZLFSDir dir = ZLFSManager.getInstance().createPlainDirectory(myDirectory + "\\test");
+		ZLFSDir dir = ZLFSManagerUtil.getInstance().createPlainDirectory(myDirectory + "\\test");
 		System.out.println(dir.getName());
-		assertEquals(ZLFSManager.getInstance().removeFile(dir.getPath()), false);
+		assertEquals(ZLFSManagerUtil.getInstance().removeFile(dir.getPath()), false);
 	}
 	
 	//public void testAddRemoveDirPlainDirectory() {
