@@ -208,7 +208,6 @@ public class ZLFile {
 		if (exists()) {
 			if (isDirectory()) {
 				return new ZLFSDir(myPath);
-				//return ZLFSManager.getInstance().createPlainDirectory(myPath);
 			} else if (0 != (myArchiveType & ArchiveType.ZIP)) {
 				//return new ZLFSDir(myPath);
 				return new ZLZipDir(myPath);

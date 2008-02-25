@@ -109,44 +109,44 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 
 			ArrayList/*<String>*/ names = myDir.collectSubDirs();
 			if (names != null) {
-			int size = names.size();
-			for (int i = 0; i < size; i++) {
-				final String subDir = (String) names.get(i);
-				final String displayName = ZLFile.fileNameToUtf8(new ZLFile(subDir).getName(false));
-				final ZLTreeNode node = new ZLTreeNode(subDir, displayName, FOLDER_ICON, true);
-				//folderNodeMap.put(displayName, node);
-				mySubnodes.add(node);
-			}
-			names.clear();
-		    }    
-			names = myDir.collectFiles();
-			if (names != null) {
-			int size = names.size();
-			for (int i = 0; i < size; i++) {
-				final String fileName = (String) names.get(i);
-				if ("".equals(fileName)) {
-					continue;
-				}
-				ZLFile file = new ZLFile(myDir.getItemPath(fileName));
-				final String displayName = ZLFile.fileNameToUtf8(file.getName(false));
-				if ("".equals(displayName)) {
-					continue;
-				}
-				FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
-				if (plugin != null) {
-					String icon = (String) pluginIcons.get(plugin);
-					if (icon == null) {
-						icon = plugin.getIconName();
-						pluginIcons.put(plugin, icon);
-					}
-					final ZLTreeNode node = new ZLTreeNode(fileName, displayName, icon, false);
-					//fileNodeMap.put(displayName, node);
-					mySubnodes.add(node);
-				} else if (file.isArchive()) {
-					final ZLTreeNode node = new ZLTreeNode(fileName, displayName, ZIP_FOLDER_ICON, true);
+				int size = names.size();
+				for (int i = 0; i < size; i++) {
+					final String subDir = (String) names.get(i);
+					final String displayName = ZLFile.fileNameToUtf8(new ZLFile(subDir).getName(false));
+					final ZLTreeNode node = new ZLTreeNode(subDir, displayName, FOLDER_ICON, true);
 					//folderNodeMap.put(displayName, node);
 					mySubnodes.add(node);
 				}
+				names.clear();
+		    }    
+			names = myDir.collectFiles();
+			if (names != null) {
+				int size = names.size();
+				for (int i = 0; i < size; i++) {
+					final String fileName = (String) names.get(i);
+					if ("".equals(fileName)) {
+						continue;
+					}
+					ZLFile file = new ZLFile(myDir.getItemPath(fileName));
+					final String displayName = ZLFile.fileNameToUtf8(file.getName(false));
+					if ("".equals(displayName)) {
+						continue;
+					}
+					FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
+					if (plugin != null) {
+						String icon = (String) pluginIcons.get(plugin);
+						if (icon == null) {
+							icon = plugin.getIconName();
+							pluginIcons.put(plugin, icon);
+						}
+						final ZLTreeNode node = new ZLTreeNode(fileName, displayName, icon, false);
+						//fileNodeMap.put(displayName, node);
+						mySubnodes.add(node);
+					} else if (file.isArchive()) {
+						final ZLTreeNode node = new ZLTreeNode(fileName, displayName, ZIP_FOLDER_ICON, true);
+						//folderNodeMap.put(displayName, node);
+						mySubnodes.add(node);
+					}
 				}
 			}
 
