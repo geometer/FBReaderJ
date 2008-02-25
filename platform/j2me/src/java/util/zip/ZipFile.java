@@ -1,10 +1,23 @@
 package java.util.zip;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
+
+import org.zlibrary.core.util.File;
 
 public class ZipFile {
-	public ZipFile(String name) {
+	public ZipFile(String name) throws IOException {
 		// TODO: implement
+	}
+
+	public ZipFile(File file) throws IOException, ZipException {
+		// TODO: implement
+	}
+
+	public Enumeration entries() {
+		// TODO: implement
+		return null;
 	}
 
 	public ZipEntry getEntry(String entryName) {

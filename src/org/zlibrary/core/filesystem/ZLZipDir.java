@@ -1,12 +1,9 @@
 package org.zlibrary.core.filesystem;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+import org.zlibrary.core.util.*;
 
 public class ZLZipDir extends ZLDir {
 	private File myFile;
