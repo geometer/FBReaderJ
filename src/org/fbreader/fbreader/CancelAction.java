@@ -10,8 +10,8 @@ class CancelAction extends FBAction {
 			fbreader().restorePreviousMode();
 		} else if (fbreader().isFullscreen()) {
 			fbreader().setFullscreen(false);
-		//} else if (fbreader().QuitOnCancelOption.value()) {
+		} //else if (fbreader().QuitOnCancelOption.getValue()) {
 		//	fbreader().quit();
-		}
+		//}
 	}
 }

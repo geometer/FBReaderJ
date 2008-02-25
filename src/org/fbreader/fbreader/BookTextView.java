@@ -68,9 +68,9 @@ class BookTextView extends FBView {
 		if (!cursor.isNull() && cursor.isStartOfParagraph() && cursor.getParagraphCursor().getIndex() == 0) {
 			return;
 		}
-	  //gotoParagraph(0, false);
+	    gotoParagraph(0, false);
 		gotoPosition(0, 0, 0);
-	  getApplication().refreshWindow();
+	    getApplication().refreshWindow();
 	}
 
 	public boolean onStylusPress(int x, int y) {

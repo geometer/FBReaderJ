@@ -725,7 +725,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		//myStartParagraphNumber = index;		
 	}
 	
-	void gotoParagraph(int num, boolean last) {
+	public void gotoParagraph(int num, boolean last) {
 		if (myModel == null) {
 			return;
 		}

@@ -108,6 +108,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 			//final HashMap fileNodeMap = new HashMap();
 
 			ArrayList/*<String>*/ names = myDir.collectSubDirs();
+			if (names != null) {
 			int size = names.size();
 			for (int i = 0; i < size; i++) {
 				final String subDir = (String) names.get(i);
@@ -117,9 +118,10 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 				mySubnodes.add(node);
 			}
 			names.clear();
-
+		    }    
 			names = myDir.collectFiles();
-			size = names.size();
+			if (names != null) {
+			int size = names.size();
 			for (int i = 0; i < size; i++) {
 				final String fileName = (String) names.get(i);
 				if ("".equals(fileName)) {
@@ -144,6 +146,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 					final ZLTreeNode node = new ZLTreeNode(fileName, displayName, ZIP_FOLDER_ICON, true);
 					//folderNodeMap.put(displayName, node);
 					mySubnodes.add(node);
+				}
 				}
 			}
 

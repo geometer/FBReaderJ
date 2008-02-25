@@ -16,7 +16,7 @@ class UndoAction extends FBAction {
 
 	public void run() {
 		if (fbreader().getMode() == FBReader.ViewMode.BOOK_TEXT) {
-			//fbreader().bookTextView().undoPageMove();
+			//fbreader().getBookTextView().undoPageMove();
 		} else {
 			fbreader().restorePreviousMode();
 		}

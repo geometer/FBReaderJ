@@ -45,7 +45,7 @@ public class CollectionView extends FBView {
 
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		//(imageArea.Kind == ZLTextElement.IMAGE_ELEMENT)
-		/*if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
+		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
 			ZLTextWordCursor cursor = getStartCursor();
 			cursor.moveToParagraph(imageArea.ParagraphNumber);
 			cursor.moveTo(imageArea.TextElementNumber, 0);
@@ -61,7 +61,7 @@ public class CollectionView extends FBView {
 				return false;
 			}
 
-			if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
+			/*if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
 				if (new BookInfoDialog(myCollection, book.getFileName()).dialog().run()) {
 					myCollection.rebuild(false);
 					myUpdateModel = true;
@@ -96,13 +96,12 @@ public class CollectionView extends FBView {
 					}
 					if (collectionModel().getParagraphsNumber() == 0) {
 						this.getStartCursor().setCursor((ZLTextParagraphCursor)null);
-						//setStartCursor(0);
 					}
 					rebuildPaintInfo(true);
 					repaintView();
 				}
 				return true;
-			}
+			}*/
 			return false;
 		}
 
@@ -117,7 +116,7 @@ public class CollectionView extends FBView {
 			getFBReader().openBook(book);
 			getFBReader().showBookTextView();
 			return true;
-		}*/
+		}
 
 		return false;
 	}
@@ -126,10 +125,8 @@ public class CollectionView extends FBView {
 		if (myUpdateModel) {
 			ZLTextModel oldModel = getModel();
 			setModel(null);
-			//setModel(0, LIBRARY);
 			((CollectionModel)oldModel).update();
 			setModel(oldModel);
-			//setModel(oldModel, LIBRARY);
 			myUpdateModel = false;
 		}
 		super.paint();
@@ -150,10 +147,8 @@ public class CollectionView extends FBView {
 		if (myUpdateModel) {
 			ZLTextModel oldModel = getModel();
 			setModel(null);
-			//setModel(0, LIBRARY);
 			((CollectionModel)oldModel).update();
 			setModel(oldModel);
-			//setModel(oldModel, LIBRARY);
 			myUpdateModel = false;
 		}
 		int toSelect = collectionModel().paragraphNumberByBook(book);
@@ -185,9 +180,9 @@ public class CollectionView extends FBView {
 			super();
 			myCollection = collection;
 			//TODO
-			/*
+			
 			String prefix = "";//ZLResource.ourApplicationImageDirectory() + ZLibrary.FileNameDelimiter;
-			myImageMap.put(DELETE_IMAGE_ID, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
+			/*myImageMap.put(DELETE_IMAGE_ID, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
 			myImageMap[BOOK_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-bookinfo.png", 0);
 			myImageMap[AUTHOR_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-authorinfo.png", 0);
 			myImageMap[SERIES_ORDER_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-order.png", 0);
@@ -262,7 +257,7 @@ public class CollectionView extends FBView {
 		}
 		
 		private void insertImage(String id) {
-			//addFixedHSpace(1);
+			addFixedHSpace((short)1);
 			addImage(id, myImageMap, (short)0);
 		}
 	};

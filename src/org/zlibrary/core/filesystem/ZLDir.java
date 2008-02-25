@@ -7,13 +7,12 @@ import org.zlibrary.core.util.*;
 public abstract class ZLDir {
 	private String myPath;
 
-	public static ZLDir getRoot() {
+	public static ZLDir getRoot() {		
 		return ZLFSManager.getInstance().getRootDirectory();
 	}
 
 	public ZLDir(String path) {
-		myPath = path;
-		ZLFSManager.getInstance().normalize(myPath);
+		myPath = ZLFSManager.getInstance().normalize(path);
 	}
 	
 	public String getPath() {
@@ -34,13 +33,10 @@ public abstract class ZLDir {
 			return getParentPath();
 		} else {
 			return myPath.endsWith(File.separator) || myPath == "" ? myPath + itemName : myPath + File.separator + itemName;
-			//	return myPath.endsWith(File.separator) || isRoot() ? myPath + itemName : myPath + File.separator + itemName;
-			//return isRoot() ? myPath + itemName : myPath + getDelimiter() + itemName;
 		}
 	}
 	
 	public boolean isRoot() {
-		System.out.println("isRoot-->"+myPath+"<--");
 		return ZLFSManager.getInstance().getRootDirectoryPath().equals(myPath);
 	}
 

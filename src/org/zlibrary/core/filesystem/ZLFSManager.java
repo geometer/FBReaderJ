@@ -36,7 +36,15 @@ public class ZLFSManager {
 	private ZLFSManager() {	}
 	
 		
-	public void normalize(String path) {}
+	public String normalize(String path) {
+		try {
+			path = new File(path).getCanonicalPath();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return path;
+	}
 
 	protected InputStream createPlainInputStream(String path) {
 		return ZLibrary.getInstance().getInputStream(path);
@@ -92,6 +100,7 @@ public class ZLFSManager {
 	//TODO "" - windows "/"--unix
 	public ZLDir getRootDirectory() {
 		return createPlainDirectory(getRootDirectoryPath());
+		//return createPlainDirectory(getRootDirectoryPath());
 	}
 	
 	public String getRootDirectoryPath() {

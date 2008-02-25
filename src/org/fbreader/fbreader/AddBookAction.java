@@ -18,19 +18,9 @@ class AddBookAction extends FBAction {
 			BookDescription description = handler.description();
 			if (description != null) {
 				fbreader().openBook(description);
-		//		fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
+				fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
 				fbreader().refreshWindow();
 			}
 		}
-		/*
-		FBFileHandler handler;
-		if (ZLDialogManager::instance().selectionDialog(ZLResourceKey("addFileDialog"), handler)) {
-			BookDescriptionPtr description = handler.description();
-			if (!description.isNull() && fbreader().runBookInfoDialog(description->fileName())) {
-				BookList().addFileName(description->fileName());
-				fbreader().setMode(FBReader::BOOK_TEXT_MODE);
-			}
-		}
-		*/
 	}
 }
