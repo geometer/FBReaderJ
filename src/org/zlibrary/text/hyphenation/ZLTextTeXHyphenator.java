@@ -7,10 +7,8 @@ import org.zlibrary.core.library.ZLibrary;
 final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 /*	
 	private static void collectLanguages();
-*/	
 	private static ArrayList languageCodes;
 	private static ArrayList languageNames;
-/*
 	public static final ArrayList getLanguageCodes();
 	public static final ArrayList getLanguageNames();
 */	
@@ -52,9 +50,12 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		final HashMap table = myPatternTable;
 		ZLTextTeXHyphenationPattern pattern =
 			new ZLTextTeXHyphenationPattern(stringToHyphenate, 0, length, false);
-		for (int offset = 0; offset < length - 2; offset++) {
-			for (int len = 1; len <= length - offset; len++) {
-				pattern.update(stringToHyphenate, offset, len);
+		for (int offset = 0; offset < length - 1; offset++) {
+			int len = length - offset + 1;
+			pattern.update(stringToHyphenate, offset, len - 1);
+			while (--len > 0) {
+				pattern.myLength = len;
+				pattern.myHashCode = 0;
 				ZLTextTeXHyphenationPattern toApply =
 					(ZLTextTeXHyphenationPattern)table.get(pattern);
 				if (toApply != null) {

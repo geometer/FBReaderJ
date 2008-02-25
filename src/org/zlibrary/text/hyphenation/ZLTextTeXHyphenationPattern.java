@@ -4,7 +4,7 @@ final class ZLTextTeXHyphenationPattern {
 	int myLength;
 	final char[] mySymbols;
 	private final byte[] myValues;
-	private int myHashCode = -1;
+	int myHashCode;
 
 	void update(char[] pattern, int offset, int length) {
 		// We assert
@@ -12,7 +12,7 @@ final class ZLTextTeXHyphenationPattern {
 		// 		length <= original pattern length
 		System.arraycopy(pattern, offset, mySymbols, 0, length);
 		myLength = length;
-		myHashCode = -1;
+		myHashCode = 0;
 	}
 
 	ZLTextTeXHyphenationPattern(char[] pattern, int offset, int length, boolean useValues) {
@@ -62,14 +62,14 @@ final class ZLTextTeXHyphenationPattern {
 
 	public boolean equals(Object o) {
 		ZLTextTeXHyphenationPattern pattern = (ZLTextTeXHyphenationPattern)o;
-		final int len = myLength;
+		int len = myLength;
 		if (len != pattern.myLength) {
 			return false;
 		}
 		final char[] symbols0 = mySymbols;
 		final char[] symbols1 = pattern.mySymbols;
-		for (int i = 0; i < len; ++i) {
-			if (symbols0[i] != symbols1[i]) {
+		while (len-- != 0) {
+			if (symbols0[len] != symbols1[len]) {
 				return false;
 			}
 		}
@@ -78,13 +78,13 @@ final class ZLTextTeXHyphenationPattern {
 
 	public int hashCode() {
 		int hash = myHashCode;
-		if (hash == -1) {
-			final int len = myLength;
+		if (hash == 0) {
 			final char[] symbols = mySymbols;
 			hash = 0;
-			for (int i = 0; i < len; ++i) {
+			int index = myLength;
+			while (index-- != 0) {
 				hash *= 31;
-				hash += symbols[i];
+				hash += symbols[index];
 			}
 			myHashCode = hash;
 		}

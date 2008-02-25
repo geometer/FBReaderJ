@@ -12,8 +12,8 @@ import org.zlibrary.text.model.ZLTextTreeModel;
 
 public abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
-		protected ZLTextParagraph myParagraph;
-		protected ArrayList myElements;
+		protected final ZLTextParagraph myParagraph;
+		protected final ArrayList myElements;
 		//protected int myOffset;
 
 		protected Processor(ZLTextParagraph paragraph, int index, ArrayList elements) {
@@ -23,6 +23,7 @@ public abstract class ZLTextParagraphCursor {
 		}
 
 		void fill() {
+			final ArrayList elements = myElements;
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
 				it.next();
 				switch (it.getType()) {
@@ -31,9 +32,9 @@ public abstract class ZLTextParagraphCursor {
 						break;
 					case ZLTextParagraph.Entry.CONTROL:
 						if (it.getControlIsStart() && it.getControlIsHyperlink()) {
-							myElements.add(new ZLTextHyperlinkControlElement(it.getControlKind(), it.getHyperlinkControlLabel()));
+							elements.add(new ZLTextHyperlinkControlElement(it.getControlKind(), it.getHyperlinkControlLabel()));
 						} else {
-							myElements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
+							elements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
 						}
 						break;
 					case ZLTextParagraph.Entry.IMAGE:
@@ -41,7 +42,7 @@ public abstract class ZLTextParagraphCursor {
 						if (image != null) {
 							ZLImageData data = ZLImageManager.getInstance().getImageData(image);
 							if (data != null) {
-								myElements.add(new ZLTextImageElement(data));
+								elements.add(new ZLTextImageElement(data));
 							}
 						}
 						break;
@@ -57,14 +58,11 @@ public abstract class ZLTextParagraphCursor {
 		
 		abstract void processTextEntry(final char[] data, final int offset, final int length);
 
+		/*
 		protected final void addWord(char[] data, int from, int to) {
 			myElements.add(new ZLTextWord(data, from, to - from));
 		}
-	}
-
-	private static final boolean isWhitespace(char c) {
-		// we cannot use Character.isWhitespace(c) because it is missing in j2me
-		return (c <= 0x0D) || (c == ' ');
+		*/
 	}
 
 	private static final class StandardProcessor extends Processor {
@@ -79,18 +77,20 @@ public abstract class ZLTextParagraphCursor {
 			if (length != 0) {
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
 				final int end = offset + length;
-				char ch;
 				int firstNonSpace = -1;
 				boolean spaceInserted = false;
+				final ArrayList elements = myElements;
 				for (int charPos = offset; charPos < end; ++charPos) {
-					if (isWhitespace(data[charPos])) {
+					final char ch = data[charPos];
+					if ((ch == ' ') || (ch <= 0x0D)) {
 						if (firstNonSpace != -1) {
-							addWord(data, firstNonSpace, charPos);
-							myElements.add(hSpace);
+							elements.add(new ZLTextWord(data, firstNonSpace, charPos - firstNonSpace));
+							//addWord(data, firstNonSpace, charPos);
+							elements.add(hSpace);
 							spaceInserted = true;
 							firstNonSpace = -1;					
 						} else if (!spaceInserted) {
-							myElements.add(hSpace);
+							elements.add(hSpace);
 							spaceInserted = true;	
 						}	
 					} else if (firstNonSpace == -1) {
@@ -98,7 +98,8 @@ public abstract class ZLTextParagraphCursor {
 					}
 				} 
 				if (firstNonSpace != -1) {
-					addWord(data, firstNonSpace, end);
+					//addWord(data, firstNonSpace, end);
+					elements.add(new ZLTextWord(data, firstNonSpace, end - firstNonSpace));
 				}
 				//myOffset += length;
 			}
@@ -167,7 +168,7 @@ public abstract class ZLTextParagraphCursor {
 	abstract ZLTextParagraphCursor previous();
 	abstract ZLTextParagraphCursor next();
 	
-	ZLTextElement getElement(int index) {
+	final ZLTextElement getElement(int index) {
 		return (ZLTextElement)myElements.get(index);
 	}
 
