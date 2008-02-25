@@ -7,9 +7,9 @@ import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
 
-public class ZLFSManager {
-	private final HashMap myForcedFiles = new HashMap();
-	private static ZLFSManager ourInstance;
+public class ZLFSManagerUtil {
+	
+	private static ZLFSManagerUtil ourInstance;
 	
 	public static void deleteInstance() {
 		if (ourInstance != null) {
@@ -17,23 +17,16 @@ public class ZLFSManager {
 		}
 	}
 	
-	public HashMap getForcedFiles() {
-		return myForcedFiles;
-	}
 	
-	public void putForcedFile(String key, int value) {
-		myForcedFiles.put(key, value);
-	}
-	
-	public static ZLFSManager getInstance() {
+	public static ZLFSManagerUtil getInstance() {
 		if (ourInstance == null) {
-		    ourInstance = new ZLFSManager();  
+		    ourInstance = new ZLFSManagerUtil();  
 		}
 		return ourInstance;
 	}
 
 		
-	private ZLFSManager() {	}
+	private ZLFSManagerUtil() {	}
 	
 		
 	public String normalize(String path) {
@@ -52,58 +45,18 @@ public class ZLFSManager {
 	
 	//public OutputStream createOutputStream(String path);
 	
-	public ZLFSDir createPlainDirectory(String path) {
+	/*public ZLFSDir createPlainDirectory(String path) {
 		return new ZLFSDir(path);
-	}
+	}*/
 	
-	public ZLFSDir createNewDirectory(String path) {
-		File file = new File(path);
-		file.mkdirs();
-		return new ZLFSDir(path);
-	}
 	
-	protected ZLFileInfo getFileInfo(String path) {
-		ZLFileInfo info = new ZLFileInfo();
-		File file = new File(path);
-		info.Exists = (file != null);
-		info.Size = file.length();
-		info.MTime = file.lastModified();
-		info.IsDirectory = file.isDirectory() || getRootDirectoryPath().equals(path);
-		return info;
-	}
 	
-	public boolean removeFile(String path) {
-		File file = new File(path);
-		return file.delete();
-	}
-	
-	//TODO
-	public String convertFilenameToUtf8(String name) {
-		return name;		
-	}
-
-	public int findArchiveFileNameDelimiter(String path) {
-		if (System.getProperty("os.name").startsWith("Windows")) {
-			int index = path.lastIndexOf(':');
-			return (index == 1) ? -1 : index;
-		}
-		return path.lastIndexOf(':');
-	}
-	
-	public int findLastFileNameDelimiter(String path) {
-		int index = findArchiveFileNameDelimiter(path);
-		if (index == -1) {
-			index = path.lastIndexOf(File.separatorChar);
-		}
-		return index;
-	}
 	//TODO "" - windows "/"--unix
-	public ZLDir getRootDirectory() {
-		return createPlainDirectory(getRootDirectoryPath());
-		//return createPlainDirectory(getRootDirectoryPath());
+	static public ZLDir getRootDirectory() {
+		return new ZLFSDir(getRootDirectoryPath());
 	}
 	
-	public String getRootDirectoryPath() {
+	static public String getRootDirectoryPath() {
 		return File.listRoots().length == 1 ? File.listRoots()[0].getPath() : "";
 	}
 	
@@ -120,5 +73,33 @@ public class ZLFSManager {
 			}
 		}
 		return parent;
+	}
+	
+	protected ZLFileInfo getFileInfo(String path) {
+		ZLFileInfo info = new ZLFileInfo();
+		File file = new File(path);
+		info.Exists = (file != null);
+		info.Size = file.length();
+		info.MTime = file.lastModified();
+		info.IsDirectory = file.isDirectory() || getRootDirectoryPath().equals(path);
+		return info;
+	}
+
+	
+
+	public int findArchiveFileNameDelimiter(String path) {
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			int index = path.lastIndexOf(':');
+			return (index == 1) ? -1 : index;
+		}
+		return path.lastIndexOf(':');
+	}
+	
+	public int findLastFileNameDelimiter(String path) {
+		int index = findArchiveFileNameDelimiter(path);
+		if (index == -1) {
+			index = path.lastIndexOf(File.separatorChar);
+		}
+		return index;
 	}
 }

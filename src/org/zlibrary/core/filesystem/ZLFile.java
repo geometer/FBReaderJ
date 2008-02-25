@@ -25,13 +25,34 @@ public class ZLFile {
 	private	int myArchiveType;
 	private	ZLFileInfo myInfo;
 	private	boolean myInfoIsFilled;
+	
+	private final HashMap myForcedFiles = new HashMap();
+	
+	public HashMap getForcedFiles() {
+		return myForcedFiles;
+	}
+	
+	public void putForcedFile(String key, int value) {
+		myForcedFiles.put(key, value);
+	}
+	
+	public boolean removeFile(String path) {
+		File file = new File(path);
+		return file.delete();
+	}
+	
+	public ZLFSDir createNewDirectory(String path) {
+		File file = new File(path);
+		file.mkdirs();
+		return new ZLFSDir(path);
+	}
 
 	private void fillInfo() {
-		int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
+		int index = ZLFSManagerUtil.getInstance().findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			myInfo = ZLFSManager.getInstance().getFileInfo(myPath);
+			myInfo = ZLFSManagerUtil.getInstance().getFileInfo(myPath);
 		} else {
-			myInfo = ZLFSManager.getInstance().getFileInfo(myPath.substring(0, index));
+			myInfo = ZLFSManagerUtil.getInstance().getFileInfo(myPath.substring(0, index));
 			myInfo.IsDirectory = false;
 		}
 		
@@ -39,14 +60,14 @@ public class ZLFile {
 	}
 	
 	public static String fileNameToUtf8(String fileName) {
-		return ZLFSManager.getInstance().convertFilenameToUtf8(fileName);
+		return fileName;
 	}
 	
 	public ZLFile(String path) {
 		myInfoIsFilled = false;
-		myPath = ZLFSManager.getInstance().normalize(path);
+		myPath = ZLFSManagerUtil.getInstance().normalize(path);
 		{
-			int index = ZLFSManager.getInstance().findLastFileNameDelimiter(myPath);
+			int index = ZLFSManagerUtil.getInstance().findLastFileNameDelimiter(myPath);
 			if (index < myPath.length() - 1) {
 				myNameWithExtension = myPath.substring(index + 1);
 			} else {
@@ -55,7 +76,7 @@ public class ZLFile {
 		}
 		myNameWithoutExtension = myNameWithExtension;
 
-		HashMap forcedFiles = ZLFSManager.getInstance().getForcedFiles();
+		HashMap forcedFiles = getForcedFiles();
 		Integer value = (Integer)forcedFiles.get(myPath);
 		if (value != null) {
 			myArchiveType = value.intValue();
@@ -111,7 +132,7 @@ public class ZLFile {
 	public void forceArchiveType(int type) {
 		if (myArchiveType != type) {
 			myArchiveType = type;
-			ZLFSManager.getInstance().putForcedFile(myPath, myArchiveType);
+			putForcedFile(myPath, myArchiveType);
 		}
 	}
 	
@@ -129,7 +150,7 @@ public class ZLFile {
 	}
 
 	public boolean remove() {
-		if (ZLFSManager.getInstance().removeFile(myPath)) {
+		if (removeFile(myPath)) {
 			myInfoIsFilled = false;
 			return true;
 		} else {
@@ -152,7 +173,7 @@ public class ZLFile {
 	public String getPhysicalFilePath() {
 		String path = myPath;
 		int index;
-		while ((index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(path)) != -1) {
+		while ((index = ZLFSManagerUtil.getInstance().findArchiveFileNameDelimiter(path)) != -1) {
 			path = path.substring(0, index);
 		}
 		return path;
@@ -170,9 +191,9 @@ public class ZLFile {
 		}
 
 		InputStream stream = null;
-		int index = ZLFSManager.getInstance().findArchiveFileNameDelimiter(myPath);
+		int index = ZLFSManagerUtil.getInstance().findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			stream = ZLFSManager.getInstance().createPlainInputStream(myPath);
+			stream = ZLFSManagerUtil.getInstance().createPlainInputStream(myPath);
 		} else {
 			System.out.println("I am here" + myPath.substring(0, index));
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
@@ -216,7 +237,7 @@ public class ZLFile {
 			}
 		} else if (createUnexisting) {
 			myInfoIsFilled = false;
-			return ZLFSManager.getInstance().createNewDirectory(myPath);
+			return createNewDirectory(myPath);
 		}
 		return null;
 	}

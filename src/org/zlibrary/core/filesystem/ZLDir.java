@@ -8,11 +8,11 @@ public abstract class ZLDir {
 	private String myPath;
 
 	public static ZLDir getRoot() {		
-		return ZLFSManager.getInstance().getRootDirectory();
+		return ZLFSManagerUtil.getInstance().getRootDirectory();
 	}
 
 	public ZLDir(String path) {
-		myPath = ZLFSManager.getInstance().normalize(path);
+		myPath = ZLFSManagerUtil.getInstance().normalize(path);
 	}
 	
 	public String getPath() {
@@ -20,12 +20,12 @@ public abstract class ZLDir {
 	}
 	
 	public String getName() {
-		int index = ZLFSManager.getInstance().findLastFileNameDelimiter(myPath);
+		int index = ZLFSManagerUtil.getInstance().findLastFileNameDelimiter(myPath);
 		return myPath.substring(index + 1);
 	}
 	
 	public String getParentPath() {
-		return ZLFSManager.getInstance().getParentPath(myPath);
+		return ZLFSManagerUtil.getInstance().getParentPath(myPath);
 	}
 	
 	public String getItemPath(String itemName) {
@@ -37,8 +37,33 @@ public abstract class ZLDir {
 	}
 	
 	public boolean isRoot() {
-		return ZLFSManager.getInstance().getRootDirectoryPath().equals(myPath);
+		return ZLFSManagerUtil.getInstance().getRootDirectoryPath().equals(myPath);
 	}
+	
+	//TODO "" - windows "/"--unix
+	public ZLDir getRootDirectory() {
+		return new ZLFSDir(getRootDirectoryPath());
+	}
+	
+	public String getRootDirectoryPath() {
+		return File.listRoots().length == 1 ? File.listRoots()[0].getPath() : "";
+	}
+	
+	public String getParentPath(String path) {
+		File file = new File(path);
+		String parent = file.getParent();
+		if (parent == null) {
+			File [] roots = File.listRoots();
+			for (int i = 0; i < roots.length; i++) {
+				if (roots[i].equals(file)) {
+					parent = getRootDirectoryPath();
+					break;
+				}
+			}
+		}
+		return parent;
+	}
+
 
 	abstract public ArrayList collectSubDirs();
 	abstract public ArrayList collectFiles();
