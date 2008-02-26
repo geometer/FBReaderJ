@@ -1,19 +1,13 @@
-package org.zlibrary.ui.swing.dialogs;
+package org.zlibrary.ui.android.dialogs;
 
 import java.util.HashMap;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
 
 import org.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.zlibrary.core.dialogs.ZLTreeHandler;
 import org.zlibrary.core.dialogs.ZLTreeNode;
-import org.zlibrary.core.options.ZLIntegerRangeOption;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
-class ZLSwingSelectionDialog extends ZLSelectionDialog{
+class ZLAndroidSelectionDialog extends ZLSelectionDialog {
+	/*
 	private static final String OPTION_GROUP_NAME = "OpenFileDialog";
 	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
 	private static final String ourIconDirectory = "icons/filetree/";
@@ -23,29 +17,24 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 	private final JList myList = new JList();
 	private OKAction myOKAction;
 	
-	private final ZLIntegerRangeOption myWidthOption;
-	private	final ZLIntegerRangeOption myHeightOption;
-	
 	private boolean myReturnValue = false;
+	*/
 	
-	protected ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler) {
+	protected ZLAndroidSelectionDialog(String caption, ZLTreeHandler myHandler) {
 		super(myHandler);
-		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 400);
-		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 300);
+		/*
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(caption);
 		update();
+		*/
 	}
 
-	@Override
 	protected void exitDialog() {
-		myWidthOption.setValue(myDialog.getWidth());
-		myHeightOption.setValue(myDialog.getHeight());
-		myDialog.hide();
+		//myDialog.hide();
 	}
 
-	@Override
 	public boolean run() {
+		/*
 		myDialog.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				myWidthOption.setValue(myDialog.getWidth());
@@ -68,10 +57,10 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
+		JButton button1 = ZLAndroidDialogManager.createButton(ZLAndroidDialogManager.OK_BUTTON);
 		myOKAction = new OKAction(button1.getText());
 		button1.setAction(myOKAction);
-		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
+		JButton button2 = ZLAndroidDialogManager.createButton(ZLAndroidDialogManager.CANCEL_BUTTON);
 		button2.setAction(new CancelAction (button2.getText()));
 		if (button1.getPreferredSize().width < button2.getPreferredSize().width) {
 			button1.setPreferredSize(button2.getPreferredSize());
@@ -90,29 +79,29 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		myDialog.setVisible(true);
 		
 		return myReturnValue;
+		*/
+		return false;
 	}
 
-	@Override
 	protected void selectItem(int index) {
-		myList.setSelectedIndex(index);
-		myList.ensureIndexIsVisible(index);
+		//myList.setSelectedIndex(index);
+		//myList.ensureIndexIsVisible(index);
 	}
 
-	@Override
 	protected void updateList() {
-		myList.setListData(handler().subnodes().toArray());
+		//myList.setListData(handler().subnodes().toArray());
 	}
 
-	@Override
 	protected void updateStateLine() {
-		myStateLine.setText(handler().stateDisplayName());
+		//myStateLine.setText(handler().stateDisplayName());
 	}
 	
+	/*
 	private static ImageIcon getIcon(ZLTreeNode node) {
 		final String pixmapName = node.pixmapName();
 		ImageIcon icon = (ImageIcon) ourIcons.get(pixmapName);
 		if (icon == null) {
-			icon = ZLSwingIconUtil.getIcon(ourIconDirectory + pixmapName + ".png");
+			icon = ZLAndroidIconUtil.getIcon(ourIconDirectory + pixmapName + ".png");
 			ourIcons.put(pixmapName, icon);
 		}
 		return icon;
@@ -187,7 +176,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 		{
 			String s = ((ZLTreeNode) value).displayName();
 			setText(s);
-			setIcon(ZLSwingSelectionDialog.getIcon((ZLTreeNode) value));
+			setIcon(ZLAndroidSelectionDialog.getIcon((ZLTreeNode) value));
 			if (isSelected) {
 				setBackground(list.getSelectionBackground());
 				setForeground(list.getSelectionForeground());
@@ -201,5 +190,5 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog{
 			return this;
 		}
 	}
-	
+	*/	
 }
