@@ -28,17 +28,20 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 
 	public int showQuestionBox(String key, String message, String button0, String button1, String button2) {
 		Object [] options = new Object [3];
+		int size = 0;
 		if (button0 != null) {
-			options[0] = getButtonText(button0);
+			options[size++] = getButtonText(button0).replace("&", "");
 		}
 		if (button1 != null) {
-			options[options.length] = getButtonText(button1);
+			options[size++] = getButtonText(button1).replace("&", "");
 		}
 		if (button2 != null) {
-			options[options.length] = getButtonText(button2);
+			options[size++] = getButtonText(button2).replace("&", "");
 		}
 		int optionType;
-		switch (options.length) {
+		Object [] opt = new Object[size];
+		System.arraycopy(options, 0, opt, 0, size);
+		switch (size) {
 		case 3:
 			optionType = JOptionPane.YES_NO_CANCEL_OPTION;
 			break;
@@ -54,7 +57,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		
 		return JOptionPane.showOptionDialog(myApplicationWindow.getFrame(), message,
 			    getDialogTitle(key), optionType, JOptionPane.QUESTION_MESSAGE,
-			    null, options, options[0]);
+			    null, opt, opt[0]);
 	}
 
 	public ZLSwingApplicationWindow createApplicationWindow(ZLApplication application) {
