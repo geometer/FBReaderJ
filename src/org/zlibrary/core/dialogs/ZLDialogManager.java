@@ -59,6 +59,12 @@ public abstract class ZLDialogManager {
 		return getResource().getResource(key).getResource("title").getValue();
 	}
 	
+	public final int questionBox(String key, String button0, String button1, String button2) {
+		return questionBox(key, getDialogMessage(key), button0, button1, button2);
+	}
+	
+	public abstract int questionBox(String key, String message, String button0, String button1, String button2);
+	
 	protected static ZLResource getResource() {
 		return ZLResource.resource("dialog");
 	}
@@ -77,12 +83,7 @@ public:
 	
 
 	virtual shared_ptr<ZLDialog> createDialog(const ZLResourceKey &key) const = 0;
-	virtual shared_ptr<ZLOptionsDialog> createOptionsDialog(const ZLResourceKey &key, shared_ptr<ZLRunnable> applyAction = 0, bool showApplyButton = false) const = 0;
-	virtual bool selectionDialog(const ZLResourceKey &key, ZLTreeHandler &handler) const = 0;
-
-	int questionBox(const ZLResourceKey &key, const ZLResourceKey &button0, const ZLResourceKey &button1, const ZLResourceKey &button2 = ZLResourceKey()) const;
-	virtual int questionBox(const ZLResourceKey &key, const std::string &message, const ZLResourceKey &button0, const ZLResourceKey &button1, const ZLResourceKey &button2 = ZLResourceKey()) const = 0;
-
+	
 	virtual void wait(const ZLResourceKey &key, ZLRunnable &runnable) const = 0;
 
 	interface ClipboardType {

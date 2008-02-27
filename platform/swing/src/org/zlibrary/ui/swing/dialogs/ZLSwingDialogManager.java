@@ -40,6 +40,37 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key),
 				applyAction, showApplyButton);
 	}
+
+	public int questionBox(String key, String message, String button0, String button1, String button2) {
+		Object [] options = new Object [3];
+		if (button0 != null) {
+			options[0] = getButtonText(button0);
+		}
+		if (button1 != null) {
+			options[options.length] = getButtonText(button1);
+		}
+		if (button2 != null) {
+			options[options.length] = getButtonText(button2);
+		}
+		int optionType;
+		switch (options.length) {
+		case 3:
+			optionType = JOptionPane.YES_NO_CANCEL_OPTION;
+			break;
+		case 2:
+			optionType = JOptionPane.YES_NO_OPTION;
+			break;
+		case 1:
+			optionType = JOptionPane.YES_OPTION;
+			break;
+		default:
+			return 0;
+		}
+		
+		return JOptionPane.showOptionDialog(myApplicationWindow.getFrame(), message,
+			    getDialogTitle(key), optionType, JOptionPane.QUESTION_MESSAGE,
+			    null, options, options[0]);
+	}
 }
 
 /*
