@@ -26,22 +26,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
 	}
 
-	public ZLSwingApplicationWindow createApplicationWindow(ZLApplication application) {
-		myApplicationWindow = new ZLSwingApplicationWindow(application);
-		return myApplicationWindow;
-	}
-
-	static JButton createButton(String key) {
-		String text = getButtonText(key).replace("&", "");
-		return new JButton(text);
-	}
-
-	public ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
-		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key),
-				applyAction, showApplyButton);
-	}
-
-	public int questionBox(String key, String message, String button0, String button1, String button2) {
+	public int showQuestionBox(String key, String message, String button0, String button1, String button2) {
 		Object [] options = new Object [3];
 		if (button0 != null) {
 			options[0] = getButtonText(button0);
@@ -71,6 +56,22 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 			    getDialogTitle(key), optionType, JOptionPane.QUESTION_MESSAGE,
 			    null, options, options[0]);
 	}
+
+	public ZLSwingApplicationWindow createApplicationWindow(ZLApplication application) {
+		myApplicationWindow = new ZLSwingApplicationWindow(application);
+		return myApplicationWindow;
+	}
+
+	static JButton createButton(String key) {
+		String text = getButtonText(key).replace("&", "");
+		return new JButton(text);
+	}
+
+	public ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key),
+				applyAction, showApplyButton);
+	}
+
 }
 
 /*

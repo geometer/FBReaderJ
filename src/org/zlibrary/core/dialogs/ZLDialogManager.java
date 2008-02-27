@@ -39,6 +39,12 @@ public abstract class ZLDialogManager {
 		showErrorBox(key, getDialogMessage(key));
 	}
 	
+	public abstract int showQuestionBox(String key, String message, String button0, String button1, String button2);
+
+	public final int showQuestionBox(String key, String button0, String button1, String button2) {
+		return showQuestionBox(key, getDialogMessage(key), button0, button1, button2);
+	}
+	
 	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
 	
 	public abstract ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton);
@@ -58,12 +64,6 @@ public abstract class ZLDialogManager {
 	public static String getDialogTitle(String key) {
 		return getResource().getResource(key).getResource("title").getValue();
 	}
-	
-	public final int questionBox(String key, String button0, String button1, String button2) {
-		return questionBox(key, getDialogMessage(key), button0, button1, button2);
-	}
-	
-	public abstract int questionBox(String key, String message, String button0, String button1, String button2);
 	
 	protected static ZLResource getResource() {
 		return ZLResource.resource("dialog");

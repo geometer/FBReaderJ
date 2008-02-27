@@ -17,14 +17,22 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	}
 
 	public void showErrorBox(String key, String message) {
+		// TODO: implement
 		//JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
 	}
 
 	public void showInformationBox(String key, String message) {
+		// TODO: implement
 		//JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
 	}
 
+	public int showQuestionBox(String key, String message, String button0, String button1, String button2) {
+		// TODO: implement
+		return 0;
+	}
+
 	public ZLAndroidApplicationWindow createApplicationWindow(ZLApplication application) {
+		// TODO: implement
 		//myApplicationWindow = new ZLAndroidApplicationWindow(application);
 		//return myApplicationWindow;
 		return null;
@@ -38,6 +46,7 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	*/
 
 	public ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+		// TODO: implement
 		//return new ZLAndroidOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key), applyAction, showApplyButton);
 		return null;
 	}
