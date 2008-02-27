@@ -270,7 +270,7 @@
 		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Удаление книги"/>
-			<node name="message" value="Удалить книгу &#10;&quot;%s&quot;&#10; из библиотки?"/>
+			<node name="message" value="Удалить книгу &#10;&quot;%s&quot;&#10; из библиотеки?"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Ошибка"/>
