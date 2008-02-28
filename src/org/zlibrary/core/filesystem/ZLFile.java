@@ -48,11 +48,11 @@ public class ZLFile {
 	}
 
 	private void fillInfo() {
-		int index = ZLFSManagerUtil.getInstance().findArchiveFileNameDelimiter(myPath);
+		int index = ZLFSUtil.findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			myInfo = ZLFSManagerUtil.getInstance().getFileInfo(myPath);
+			myInfo = ZLFSUtil.getFileInfo(myPath);
 		} else {
-			myInfo = ZLFSManagerUtil.getInstance().getFileInfo(myPath.substring(0, index));
+			myInfo = ZLFSUtil.getFileInfo(myPath.substring(0, index));
 			myInfo.IsDirectory = false;
 		}
 		
@@ -65,9 +65,9 @@ public class ZLFile {
 	
 	public ZLFile(String path) {
 		myInfoIsFilled = false;
-		myPath = ZLFSManagerUtil.getInstance().normalize(path);
+		myPath = ZLFSUtil.normalize(path);
 		{
-			int index = ZLFSManagerUtil.getInstance().findLastFileNameDelimiter(myPath);
+			int index = ZLFSUtil.findLastFileNameDelimiter(myPath);
 			if (index < myPath.length() - 1) {
 				myNameWithExtension = myPath.substring(index + 1);
 			} else {
@@ -173,7 +173,7 @@ public class ZLFile {
 	public String getPhysicalFilePath() {
 		String path = myPath;
 		int index;
-		while ((index = ZLFSManagerUtil.getInstance().findArchiveFileNameDelimiter(path)) != -1) {
+		while ((index = ZLFSUtil.findArchiveFileNameDelimiter(path)) != -1) {
 			path = path.substring(0, index);
 		}
 		return path;
@@ -191,9 +191,9 @@ public class ZLFile {
 		}
 
 		InputStream stream = null;
-		int index = ZLFSManagerUtil.getInstance().findArchiveFileNameDelimiter(myPath);
+		int index = ZLFSUtil.findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			stream = ZLFSManagerUtil.getInstance().createPlainInputStream(myPath);
+			stream = createPlainInputStream(myPath);
 		} else {
 			System.out.println("I am here" + myPath.substring(0, index));
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
@@ -220,6 +220,15 @@ public class ZLFile {
 		return stream;
 	}
 	//public ZLOutputStream outputStream();*/
+	
+	private InputStream createPlainInputStream(String path) {
+		try {
+			return new BufferedInputStream(new FileInputStream(path));
+		} catch (FileNotFoundException e) {
+			return null;
+		}
+		//ZLibrary.getInstance().getInputStream(path);
+	}
 	
 	public ZLDir getDirectory() {
 		return getDirectory(false);

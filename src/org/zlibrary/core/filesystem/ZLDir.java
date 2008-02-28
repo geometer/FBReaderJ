@@ -8,11 +8,11 @@ public abstract class ZLDir {
 	private String myPath;
 
 	public static ZLDir getRoot() {		
-		return ZLFSManagerUtil.getInstance().getRootDirectory();
+		return ZLFSUtil.getRootDirectory();
 	}
 
 	public ZLDir(String path) {
-		myPath = ZLFSManagerUtil.getInstance().normalize(path);
+		myPath = ZLFSUtil.normalize(path);
 	}
 	
 	public String getPath() {
@@ -20,12 +20,12 @@ public abstract class ZLDir {
 	}
 	
 	public String getName() {
-		int index = ZLFSManagerUtil.getInstance().findLastFileNameDelimiter(myPath);
+		int index = ZLFSUtil.findLastFileNameDelimiter(myPath);
 		return myPath.substring(index + 1);
 	}
 	
 	public String getParentPath() {
-		return ZLFSManagerUtil.getInstance().getParentPath(myPath);
+		return ZLFSUtil.getParentPath(myPath);
 	}
 	
 	public String getItemPath(String itemName) {
@@ -37,7 +37,7 @@ public abstract class ZLDir {
 	}
 	
 	public boolean isRoot() {
-		return ZLFSManagerUtil.getInstance().getRootDirectoryPath().equals(myPath);
+		return ZLFSUtil.getRootDirectoryPath().equals(myPath);
 	}
 	
 	//TODO "" - windows "/"--unix
