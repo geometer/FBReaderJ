@@ -48,8 +48,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		return myDescription;
 	}
 	
-// override private	
-	
 	protected boolean accept(ZLTreeNode node) {
 		final String name = myDir.getItemPath(node.id());
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(name), false);
@@ -61,7 +59,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 			return false;
 		}
 		myDescription = BookDescription.getDescription(name);
-//		System.out.println(myDescription.getFileName());
 		return true;
 	}
 
@@ -100,13 +97,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 
 	public ArrayList subnodes() {
 		if (!myIsUpToDate) {
-			if (!myDir.isRoot()) {
-				mySubnodes.add(new ZLTreeNode("..", "..", UPFOLDER_ICON, true));
-			}
-
-			//final HashMap folderNodeMap = new HashMap(); // <String, ZLTreeNode>
-			//final HashMap fileNodeMap = new HashMap();
-
 			ArrayList/*<String>*/ names = myDir.collectSubDirs();
 			if (names != null) {
 				int size = names.size();
@@ -114,7 +104,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 					final String subDir = (String) names.get(i);
 					final String displayName = ZLFile.fileNameToUtf8(new ZLFile(subDir).getName(false));
 					final ZLTreeNode node = new ZLTreeNode(subDir, displayName, FOLDER_ICON, true);
-					//folderNodeMap.put(displayName, node);
 					mySubnodes.add(node);
 				}
 				names.clear();
@@ -133,7 +122,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 						continue;
 					}
 					FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
-					if (plugin != null) {
+					if (plugin != null && !file.isDirectory()) {
 						String icon = (String) pluginIcons.get(plugin);
 						if (icon == null) {
 							icon = plugin.getIconName();
@@ -150,11 +139,11 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 				}
 			}
 
-	//		Collections.sort((List) folderNodes.values(), new ZLTreeNodeComparator());
-			//mySubnodes.addAll(folderNodes.values());
-			//mySubnodes.addAll(fileNodes.values());
 			myIsUpToDate = true;
 			Collections.sort(mySubnodes, new ZLTreeNodeComparator());
+			if (!myDir.isRoot()) {
+				mySubnodes.add(0, new ZLTreeNode("..", "..", UPFOLDER_ICON, true));
+			}
 		}
 		
 		return mySubnodes;
