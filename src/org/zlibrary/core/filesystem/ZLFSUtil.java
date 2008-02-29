@@ -10,6 +10,9 @@ import org.zlibrary.core.library.ZLibrary;
 abstract class ZLFSUtil {
 		
 	static String normalize(String path) {
+		if (getRootDirectoryPath().equals(path)) {
+			return path;
+		}
 		try {
 			path = new File(path).getCanonicalPath();
 		} catch (IOException e) {
