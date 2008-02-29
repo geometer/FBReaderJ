@@ -5,9 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
-import org.zlibrary.core.config.ZLConfig;
 import org.zlibrary.core.config.ZLConfigManager;
 
 /**
@@ -19,7 +16,7 @@ import org.zlibrary.core.config.ZLConfigManager;
 public class ZLConfigWriterTests extends ZLOptionTests {
 	final static String outputPath = "test/org/test/zlibrary/options/examples/output/";
 
-	ZLConfigWriterTests() {
+	private ZLConfigWriterTests() {
 		super(outputPath);
 	}
 

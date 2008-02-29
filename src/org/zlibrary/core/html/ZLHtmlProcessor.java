@@ -12,12 +12,14 @@ public abstract class ZLHtmlProcessor {
 		return (stream != null) ? read(xmlReader, stream) : false;
 	}*/
 	
-	public boolean read(ZLHtmlReader xmlReader, String filename) {
+	public boolean read(ZLHtmlReader htmlReader, String filename) {
 		try {
 			InputStream stream = ZLibrary.getInstance().getInputStream(filename);
-			return (stream != null) ? read(xmlReader, stream) : false;
+			//InputStream stream = new FileInputStream(filename);
+			return (stream != null) ? read(htmlReader, stream) : false;
 		} catch (Exception e) {
 			System.out.println(e);
+			//e.printStackTrace();
 		}
 		return false;
 	}

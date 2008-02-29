@@ -3,10 +3,7 @@ package org.test.zlibrary.options;
 import java.io.File;
 
 import org.zlibrary.core.options.*;
-import org.zlibrary.core.config.ZLConfig;
 import org.zlibrary.core.config.ZLConfigManager;
-
-import junit.framework.TestCase;
 
 /**
  * содержит тесты на ZLConfigReader

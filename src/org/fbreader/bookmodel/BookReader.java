@@ -96,6 +96,11 @@ public class BookReader {
 		}
 	}
 	
+	// new method
+	public boolean isTextParagraphExists() {
+		return myTextParagraphExists;
+	}
+	
 	private final void insertEndParagraph(byte kind) {
 		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if ((textModel != null) && mySectionContainsRegularContents) {

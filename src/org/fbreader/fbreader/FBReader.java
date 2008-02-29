@@ -7,6 +7,7 @@ import org.zlibrary.core.util.*;
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
 import org.fbreader.formats.fb2.FB2Reader;
+import org.fbreader.formats.html.HtmlReader;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.dialogs.ZLDialogManager;
@@ -170,9 +171,24 @@ public final class FBReader extends ZLApplication {
 		}
 		myBookModel = new BookModel(fileName);
 		//android.os.Debug.startMethodTracing("/tmp/openBook2");
-		if (!new FB2Reader(myBookModel).read()) {
-			myBookModel = null;
-			return false;
+		
+		/*if (!new FB2Reader(myBookModel).read()) {
+		myBookModel = null;
+		return false;
+		}*/
+		
+		// я тут пока прописал самый примитивный выбор читателя. Женя
+		
+		if (fileName.endsWith("html") || fileName.endsWith("htm")) {
+			if (!new HtmlReader(myBookModel).read()) {
+				myBookModel = null;
+				return false;
+			}
+		} else {
+			if (!new FB2Reader(myBookModel).read()) {
+				myBookModel = null;
+				return false;
+			}
 		}
 		//android.os.Debug.stopMethodTracing();
 		myBookNameOption.setValue(fileName);

@@ -7,7 +7,7 @@ import java.util.*;
 import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.util.ZLArrayUtils;
-import org.zlibrary.core.html.ZLStringMap;
+import org.zlibrary.core.xml.ZLStringMap;
 import org.zlibrary.core.html.ZLHtmlReader;
 
 final class ZLOwnHtmlParser {
@@ -64,15 +64,18 @@ final class ZLOwnHtmlParser {
 			}
 			buffer[len] = c;
 		}
-		if (len < 256) {
+		if (len < 384) {
 			String xmlDescription = new String(buffer, 0, len + 1);
 			int index = xmlDescription.indexOf("encoding");
+			if (index == 0) {
+				index = xmlDescription.indexOf("charset");
+			}
 			if (index > 0) {
 				int startIndex = xmlDescription.indexOf('=', index) + 1;
 				if (startIndex > 0) {
-					int endIndex = Math.min(xmlDescription.indexOf('"', startIndex + 1),
-								Math.min(xmlDescription.indexOf(' ', startIndex + 1), 
-										xmlDescription.indexOf('>', startIndex + 1)));
+					//TODO это очень плохое определение кодировки
+					int endIndex = Math.min(xmlDescription.indexOf(' ', startIndex + 1), 
+										xmlDescription.indexOf('>', startIndex + 1));
 					if (endIndex > 0) {
 						encoding = xmlDescription.substring(startIndex + 1, endIndex);
 					}

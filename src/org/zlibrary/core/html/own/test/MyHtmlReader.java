@@ -1,7 +1,7 @@
 package org.zlibrary.core.html.own.test;
 
 import org.zlibrary.core.html.ZLHtmlReaderAdapter;
-import org.zlibrary.core.html.ZLStringMap;
+import org.zlibrary.core.xml.ZLStringMap;
 
 
 public class MyHtmlReader extends ZLHtmlReaderAdapter {

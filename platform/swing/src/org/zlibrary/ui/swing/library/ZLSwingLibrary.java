@@ -8,7 +8,7 @@ import org.zlibrary.core.xmlconfig.ZLXMLConfigManager;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 
-//import org.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
+import org.zlibrary.core.html.own.ZLOwnHtmlProcessorFactory;
 import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
 import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
@@ -48,6 +48,7 @@ public class ZLSwingLibrary extends ZLibrary {
 
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
+		new ZLOwnHtmlProcessorFactory();
 		loadProperties();
 		//System.setProperty("com.apple.mrj.application.apple.menu.about.name", getApplicationName());
 

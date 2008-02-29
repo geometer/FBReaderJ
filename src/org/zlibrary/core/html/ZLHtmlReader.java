@@ -1,5 +1,7 @@
 package org.zlibrary.core.html;
 
+import org.zlibrary.core.xml.ZLStringMap;
+
 public interface ZLHtmlReader {
 	public boolean dontCacheAttributeValues();
 

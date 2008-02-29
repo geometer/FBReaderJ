@@ -7,6 +7,9 @@ import org.zlibrary.core.util.*;
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
+
+import org.fbreader.formats.html.HtmlPlugin;
+
 import org.fbreader.formats.fb2.FB2Plugin;
 import org.fbreader.formats.util.EncodingDetector;
 import org.zlibrary.core.filesystem.ZLFile;
@@ -82,8 +85,8 @@ public abstract class FormatPlugin {
 				ourInstance = new PluginCollection();
 				ourInstance.myPlugins.add(new FB2Plugin());
 				//ourInstance->myPlugins.push_back(new DocBookPlugin());
-				/*ourInstance.myPlugins.add(new HtmlPlugin());
-				ourInstance.myPlugins.add(new TxtPlugin());
+				ourInstance.myPlugins.add(new HtmlPlugin());
+				/*ourInstance.myPlugins.add(new TxtPlugin());
 				ourInstance.myPlugins.add(new PluckerPlugin());
 				ourInstance.myPlugins.add(new PalmDocPlugin());
 				ourInstance.myPlugins.add(new MobipocketPlugin());
@@ -113,6 +116,7 @@ public abstract class FormatPlugin {
 			for (int i = 0; i < numberOfPlugins; ++i) {
 				FormatPlugin fp = (FormatPlugin)plugins.get(i);
 				if ((!strong || fp.providesMetaInfo()) && fp.acceptsFile(file)) {
+					System.out.println(fp);
 					return fp;
 				}
 			}

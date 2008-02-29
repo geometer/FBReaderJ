@@ -1,7 +1,5 @@
 package org.test.zlibrary.options;
 
-import junit.framework.TestCase;
-
 import org.zlibrary.core.util.*;
 
 /**

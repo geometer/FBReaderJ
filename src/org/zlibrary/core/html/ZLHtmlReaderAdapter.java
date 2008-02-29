@@ -1,8 +1,10 @@
 package org.zlibrary.core.html;
 
+import org.zlibrary.core.xml.ZLStringMap;
+
 public class ZLHtmlReaderAdapter implements ZLHtmlReader {
 	public boolean read(String fileName) {
-		return ZLHtmlLProcessorFactory.getInstance().createHTMLProcessor().read(this, fileName);
+		return ZLHtmlProcessorFactory.getInstance().createHtmlProcessor().read(this, fileName);
 	}
 	
 	public boolean dontCacheAttributeValues() {

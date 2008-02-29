@@ -14,6 +14,7 @@ public class ZLOwnXMLProcessor extends ZLXMLProcessor {
 			parser.doIt();
 			reader.endDocumentHandler();
 		} catch (IOException e) {
+			//System.out.println(e);
 			return false;
 		}
 		return true;
