@@ -23,7 +23,7 @@ class ZLTextMark {
 		Length = mark.Length;
 	}
 
-	int compareTo(ZLTextMark mark) {
+	public int compareTo(ZLTextMark mark) {
 		if (ParagraphNumber == mark.ParagraphNumber) {
 			if (Offset == mark.Offset) {
 				return 0;
