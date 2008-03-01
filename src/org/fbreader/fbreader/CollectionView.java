@@ -1,19 +1,24 @@
 package org.fbreader.fbreader;
 
-import java.util.*;
-import org.zlibrary.core.util.*;
-
-import org.zlibrary.core.dialogs.ZLDialogManager;
-import org.zlibrary.core.image.ZLImageMap;
-import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.text.model.*;
-import org.zlibrary.text.model.impl.*;
-import org.zlibrary.text.view.*;
-import org.zlibrary.text.view.impl.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.fbreader.bookmodel.FBTextKind;
-import org.fbreader.collection.*;
-import org.fbreader.description.*;
+import org.fbreader.collection.BookCollection;
+import org.fbreader.description.Author;
+import org.fbreader.description.BookDescription;
+import org.zlibrary.core.application.ZLApplication;
+import org.zlibrary.core.image.ZLImageMap;
+import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.text.model.ZLTextModel;
+import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.impl.ZLTextTreeModelImpl;
+import org.zlibrary.text.view.ZLTextView;
+import org.zlibrary.text.view.impl.ZLTextElement;
+import org.zlibrary.text.view.impl.ZLTextElementArea;
+import org.zlibrary.text.view.impl.ZLTextImageElement;
+import org.zlibrary.text.view.impl.ZLTextWordCursor;
 
 public class CollectionView extends FBView {
 	static private final String LIBRARY = "Library";
@@ -178,8 +183,8 @@ public class CollectionView extends FBView {
 			myCollection = collection;
 			//TODO
 			
-			String prefix = "";//ZLResource.ourApplicationImageDirectory() + ZLibrary.FileNameDelimiter;
-			/*myImageMap.put(DELETE_IMAGE_ID, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
+			/*String prefix = ZLApplication.ourApplicationImageDirectory() + ZLibrary.FileNameDelimiter;
+			myImageMap.put(DELETE_IMAGE_ID, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
 			myImageMap[BOOK_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-bookinfo.png", 0);
 			myImageMap[AUTHOR_INFO_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-authorinfo.png", 0);
 			myImageMap[SERIES_ORDER_IMAGE_ID] = new ZLFileImage("image/png", prefix + "tree-order.png", 0);

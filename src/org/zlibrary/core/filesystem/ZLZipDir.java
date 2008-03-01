@@ -47,5 +47,14 @@ public class ZLZipDir extends ZLDir {
         	newdirs.add(entry.getName());
         }
 		return newdirs;
-	};	
+	};
+	
+	public String getItemPath(String itemName) {
+		if (itemName == "..") {
+			return getParentPath();
+		} else {
+			return myPath.endsWith(File.separator) || myPath == "" ? myPath + itemName : myPath + ":" + itemName;
+		}
+	}
+
 }

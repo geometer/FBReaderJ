@@ -5,7 +5,7 @@ import java.util.*;
 import org.zlibrary.core.util.*;
 
 public abstract class ZLDir {
-	private String myPath;
+	protected String myPath;
 
 	public static ZLDir getRoot() {		
 		return ZLFSUtil.getRootDirectory();
@@ -28,13 +28,7 @@ public abstract class ZLDir {
 		return ZLFSUtil.getParentPath(myPath);
 	}
 	
-	public String getItemPath(String itemName) {
-		if (itemName == "..") {
-			return getParentPath();
-		} else {
-			return myPath.endsWith(File.separator) || myPath == "" ? myPath + itemName : myPath + File.separator + itemName;
-		}
-	}
+	abstract public String getItemPath(String itemName);
 	
 	public boolean isRoot() {
 		return ZLFSUtil.getRootDirectoryPath().equals(myPath);
