@@ -246,4 +246,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		block[myBlockOffset++] = (char)entryAddress;
 		myEntries.add(new ZLTextFixedHSpaceEntry(length));
 	}	
+
+	public final void search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
+//		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
+//		myMarks.clear();
+					
+	}	
 }

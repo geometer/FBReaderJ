@@ -18,4 +18,6 @@ public interface ZLTextModel {
 	void addHyperlinkControl(byte textKind, String label);
 	void addImage(String id, ZLImageMap imageMap, short vOffset);
 	void addFixedHSpace(short length);
+
+	void search(final String text, int startIndex, int endIndex, boolean ignoreCase);
 }
