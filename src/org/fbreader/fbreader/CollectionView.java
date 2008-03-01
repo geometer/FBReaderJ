@@ -5,9 +5,11 @@ import java.util.HashMap;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.fbreader.collection.BookCollection;
+import org.fbreader.collection.BookList;
 import org.fbreader.description.Author;
 import org.fbreader.description.BookDescription;
 import org.zlibrary.core.application.ZLApplication;
+import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.image.ZLImageMap;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.view.ZLPaintContext;
@@ -18,6 +20,7 @@ import org.zlibrary.text.view.ZLTextView;
 import org.zlibrary.text.view.impl.ZLTextElement;
 import org.zlibrary.text.view.impl.ZLTextElementArea;
 import org.zlibrary.text.view.impl.ZLTextImageElement;
+import org.zlibrary.text.view.impl.ZLTextParagraphCursor;
 import org.zlibrary.text.view.impl.ZLTextWordCursor;
 
 public class CollectionView extends FBView {
@@ -63,15 +66,15 @@ public class CollectionView extends FBView {
 				return false;
 			}
 
-			/*if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
-				if (new BookInfoDialog(myCollection, book.getFileName()).dialog().run()) {
+			if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
+				/*if (new BookInfoDialog(myCollection, book.getFileName()).dialog().run()) {
 					myCollection.rebuild(false);
 					myUpdateModel = true;
 					selectBook(book);
 					repaintView();
-				}
+				}*/
 				return true;
-			} else if (imageElement.id() == DELETE_IMAGE_ID) {
+			} else if (imageElement.getId() == DELETE_IMAGE_ID) {
 				//ZLResourceKey
 				String boxKey = "removeBookBox";
 				final String message;
@@ -84,7 +87,7 @@ public class CollectionView extends FBView {
 				}
 				//final String message =
 				//	ZLStringUtil.printf(ZLDialogManager.dialogMessage(boxKey), book.getTitle());
-				if (ZLDialogManager.getInstance().getQuestionBox(boxKey, message,
+				/*if (ZLDialogManager.getInstance().getQuestionBox(boxKey, message,
 					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON) == 0) {
 					//collectionModel().removeAllMarks();
 					new BookList().removeFileName(book.getFileName());
@@ -101,9 +104,9 @@ public class CollectionView extends FBView {
 					}
 					rebuildPaintInfo(true);
 					repaintView();
-				}
+				}*/
 				return true;
-			}*/
+			}
 			return false;
 		}
 
