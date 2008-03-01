@@ -116,7 +116,6 @@ public abstract class FormatPlugin {
 			for (int i = 0; i < numberOfPlugins; ++i) {
 				FormatPlugin fp = (FormatPlugin)plugins.get(i);
 				if ((!strong || fp.providesMetaInfo()) && fp.acceptsFile(file)) {
-					System.out.println(fp);
 					return fp;
 				}
 			}

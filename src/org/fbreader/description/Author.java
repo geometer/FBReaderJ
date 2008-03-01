@@ -104,9 +104,11 @@ public abstract class Author {
 		}
 	}
 
-	class AuthorComparator {
-		public boolean operator(Author a1, Author a2) {
-			return a1.getSortKey().equals(a2.getSortKey());
+	static public class AuthorComparator implements Comparator {
+		public int compare(Object aobj1, Object aobj2) {
+			Author a1 = (Author)aobj1;
+			Author a2 = (Author)aobj1;
+			return a1.getSortKey().compareTo(a2.getSortKey());
 		}
 	}
 

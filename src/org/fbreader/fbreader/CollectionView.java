@@ -31,7 +31,6 @@ public class CollectionView extends FBView {
 		super(reader, context);
 		myUpdateModel = true;
 		setModel(new CollectionModel(myCollection));
-		//setModel(new CollectionModel(myCollection), LIBRARY);
 	}
 	
 	public String getCaption() {
@@ -44,13 +43,11 @@ public class CollectionView extends FBView {
 		}
 
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
-		//(imageArea.Kind == ZLTextElement.IMAGE_ELEMENT)
 		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
 			ZLTextWordCursor cursor = getStartCursor();
 			cursor.moveToParagraph(imageArea.ParagraphNumber);
 			cursor.moveTo(imageArea.TextElementNumber, 0);
 			final ZLTextElement element = cursor.getElement();
-			//element.getKind() != ZLTextElement.IMAGE_ELEMENT
 			if (!(element instanceof ZLTextImageElement)) {
 				return false;
 			}

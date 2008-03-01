@@ -65,7 +65,7 @@ public class ZLFile {
 	
 	public ZLFile(String path) {
 		myInfoIsFilled = false;
-		myPath = ZLFSUtil.normalize(path);
+		myPath = ZLFSUtil.normalize(path);		
 		{
 			int index = ZLFSUtil.findLastFileNameDelimiter(myPath);
 			if (index < myPath.length() - 1) {
@@ -94,7 +94,6 @@ public class ZLFile {
 				myArchiveType = (int)(myArchiveType | ArchiveType.BZIP2);
 			}
 			if (lowerCaseName.endsWith(".zip")) {
-				System.out.println("it is zip file");
 				myArchiveType = (int)(myArchiveType | ArchiveType.ZIP);
 			} else if (lowerCaseName.endsWith(".tar")) {
 				myArchiveType = (int)(myArchiveType | ArchiveType.TAR);
@@ -185,7 +184,7 @@ public class ZLFile {
 	}
 	
 	public InputStream getInputStream() throws IOException {
-		System.out.println("i am invisibl;e");
+		System.out.println(myPath);
 		if (isDirectory()) {
 			return null;
 		}
@@ -195,7 +194,6 @@ public class ZLFile {
 		if (index == -1) {
 			stream = createPlainInputStream(myPath);
 		} else {
-			System.out.println("I am here" + myPath.substring(0, index));
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
 			InputStream base = baseFile.getInputStream();
 			if (base != null) {
@@ -227,7 +225,6 @@ public class ZLFile {
 		} catch (FileNotFoundException e) {
 			return null;
 		}
-		//ZLibrary.getInstance().getInputStream(path);
 	}
 	
 	public ZLDir getDirectory() {
@@ -239,7 +236,6 @@ public class ZLFile {
 			if (isDirectory()) {
 				return new ZLFSDir(myPath);
 			} else if (0 != (myArchiveType & ArchiveType.ZIP)) {
-				//return new ZLFSDir(myPath);
 				return new ZLZipDir(myPath);
 			} else if (0 != (myArchiveType & ArchiveType.TAR)) {
 				//return new ZLTarDir(myPath);

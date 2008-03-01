@@ -13,7 +13,7 @@ import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
-class ZLSwingSelectionDialog extends ZLSelectionDialog{
+class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	private static final String OPTION_GROUP_NAME = "OpenFileDialog";
 	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
 	private static final String ourIconDirectory = "icons/filetree/";

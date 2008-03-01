@@ -8,8 +8,11 @@ import org.zlibrary.core.util.*;
 public class ZLZipDir extends ZLDir {
 	private File myFile;
 	
-	ZLZipDir(String path) {
+	ZLZipDir(String path) {		
 		super(path);
+		System.out.println();
+		System.out.println(path);
+
 		myFile = new File(path);
 	}
 

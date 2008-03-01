@@ -20,8 +20,8 @@ public class BookCollection {
 	public final ZLBooleanOption ScanSubdirsOption;
 	private final static String OPTIONS = "Options";
 
-	private final ArrayList myAuthors = new ArrayList();
-	private	HashMap myCollection = new HashMap();
+	private final ArrayList/*Author*/ myAuthors = new ArrayList();
+	private	HashMap/*<Author, ArrayList<Description>>*/ myCollection = new HashMap();
 	private	final ArrayList myExternalBooks = new ArrayList();
 
 	private	String myPath;
@@ -112,21 +112,21 @@ public class BookCollection {
 			final ArrayList/*<String>*/ fileNames = new ArrayList();
 
 //		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
-//			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
-//			
-//			for (int i = 0; i < list.size(); i++) {
-//				final ArrayList books = (ArrayList)list.get(i);
-//				final int numberOfBooks = books.size();
-//				for (int j = 0; j < numberOfBooks; ++j) {
-//					final BookDescription description = (BookDescription)books.get(j);
-//					final String fileName = description.getFileName();
-//					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
-//						fileNames.add(fileName);
-//					}
-//				}
-//			}
+			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
 			
-			/*for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
+			for (int i = 0; i < list.size(); i++) {
+				final ArrayList books = (ArrayList)list.get(i);
+				final int numberOfBooks = books.size();
+				for (int j = 0; j < numberOfBooks; ++j) {
+					final BookDescription description = (BookDescription)books.get(j);
+					final String fileName = description.getFileName();
+					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
+						fileNames.add(fileName);
+					}
+				}
+			}
+			
+			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
 				final ArrayList books = (ArrayList)it.next();
 				final int numberOfBooks = books.size();
 				for (int j = 0; j < numberOfBooks; ++j) {
@@ -136,7 +136,7 @@ public class BookCollection {
 						fileNames.add(fileName);
 					}
 				}
-			}*/
+			}
 			myCollection.clear();
 			myAuthors.clear();
 			final int fileNamesSize = fileNames.size();
@@ -145,12 +145,13 @@ public class BookCollection {
 			}
 			
 		}
-
-		/*std::sort(myAuthors.begin(), myAuthors.end(), AuthorComparator());
-		DescriptionComparator descriptionComparator;
+    
+		Collections.sort(myAuthors, new Author.AuthorComparator());
+		DescriptionComparator descriptionComparator = new DescriptionComparator();
 		for (Iterator it = myCollection.entrySet().iterator(); it.hasNext();) {
-			std::sort((*it).second.begin(), (*it).second.end(), descriptionComparator);
-		}*/
+			ArrayList list = (ArrayList)myCollection.get(it.next());
+			Collections.sort(list, descriptionComparator);
+		}
 		return true;
 	}
 		
@@ -253,7 +254,6 @@ public class BookCollection {
 			String sequenceName1 = d1.getSequenceName();
 			String sequenceName2 = d2.getSequenceName();
 			if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
-					//return d1.getTitle()
 				return d1.getTitle().compareTo(d2.getTitle());
 			}
 			if (sequenceName1.length() == 0) {
@@ -301,7 +301,6 @@ public class BookCollection {
 			
 			BookDescription description = BookDescription.getDescription(fileName);
 			if (description != null) {
-				//myBooks.insert(myBooks.begin(), description);
 				myBooks.add(0, description);
 			}
 			
