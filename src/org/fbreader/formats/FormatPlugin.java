@@ -13,6 +13,7 @@ import org.fbreader.formats.html.HtmlPlugin;
 import org.fbreader.formats.fb2.FB2Plugin;
 import org.fbreader.formats.util.EncodingDetector;
 import org.zlibrary.core.filesystem.ZLFile;
+import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLOption;
 
@@ -79,6 +80,7 @@ public abstract class FormatPlugin {
 		private static PluginCollection ourInstance;
 		private final ArrayList myPlugins = new ArrayList();
 		public ZLIntegerOption DefaultLanguageOption;
+		public ZLBooleanOption LanguageAutoDetectOption;
 		
 		public static PluginCollection instance() {
 			if (ourInstance == null) {
@@ -107,6 +109,7 @@ public abstract class FormatPlugin {
 		}
 
 		private PluginCollection() {
+			LanguageAutoDetectOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Format", "AutoDetect", true);
 			DefaultLanguageOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", EncodingDetector.Language.RUSSIAN); 
 		}
 			

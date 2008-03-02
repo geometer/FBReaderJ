@@ -67,12 +67,12 @@ public class CollectionView extends FBView {
 			}
 
 			if (imageElement.getId() == BOOK_INFO_IMAGE_ID) {
-				/*if (new BookInfoDialog(myCollection, book.getFileName()).dialog().run()) {
+				if (new BookInfoDialog(myCollection, book.getFileName()).getDialog().run()) {
 					myCollection.rebuild(false);
 					myUpdateModel = true;
 					selectBook(book);
 					repaintView();
-				}*/
+				}
 				return true;
 			} else if (imageElement.getId() == DELETE_IMAGE_ID) {
 				//ZLResourceKey

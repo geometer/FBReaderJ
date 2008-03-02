@@ -25,7 +25,7 @@ public class OptionsDialog {
 		generalTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
 
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
-	//	encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
+		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
 		
 		myDialog.createTab("Scrolling");
 		

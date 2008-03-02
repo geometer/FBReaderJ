@@ -17,7 +17,7 @@ abstract class ZLFSUtil {
 			path = new File(path).getCanonicalPath();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+	//		e.printStackTrace();
 		}
 		return path;
 	}
@@ -26,7 +26,6 @@ abstract class ZLFSUtil {
 	
 	//public OutputStream createOutputStream(String path);
 	
-	//TODO "" - windows "/"--unix
 	static ZLDir getRootDirectory() {
 		return new ZLFSDir(getRootDirectoryPath());
 	}
