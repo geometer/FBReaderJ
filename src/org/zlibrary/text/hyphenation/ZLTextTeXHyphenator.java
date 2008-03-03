@@ -23,14 +23,19 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	}
 
 	public void load(final String language) {
+		load(language, ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern"); 
+	}
+
+	public void load(final String language, final String path) {
 		if (language.equals(myLanguage)) {
 			return;
 		}
 		myLanguage = language;
 		unload();
-		new ZLTextHyphenationReader(this).read(ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern");
-		System.err.println(myPatternTable.size());
-	}
+	//	System.err.println(path);
+		new ZLTextHyphenationReader(this).read(path);
+	//	System.err.println(myPatternTable.size());
+	}	
 
 	public void unload() {
 		myPatternTable.clear();
