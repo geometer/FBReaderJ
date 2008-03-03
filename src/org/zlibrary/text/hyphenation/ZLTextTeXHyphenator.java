@@ -4,7 +4,7 @@ import java.util.*;
 import org.zlibrary.core.util.*;
 import org.zlibrary.core.library.ZLibrary;
 
-final class ZLTextTeXHyphenator extends ZLTextHyphenator {
+public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 /*	
 	private static void collectLanguages();
 	private static ArrayList languageCodes;
@@ -29,7 +29,6 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		myLanguage = language;
 		unload();
 		new ZLTextHyphenationReader(this).read(ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern");
-//		System.err.println("hyphenationPatterns were read.");
 		System.err.println(myPatternTable.size());
 	}
 
@@ -37,7 +36,7 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		myPatternTable.clear();
 	}
 
-	protected void hyphenate(char[] stringToHyphenate, boolean[] mask, int length) {
+	public void hyphenate(char[] stringToHyphenate, boolean[] mask, int length) {
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
 				mask[i] = false;
@@ -64,11 +63,8 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 			}
 		}
  	
-//     		System.err.println("hyphenating...");
 		for (int i = 0; i < length - 1; i++) {
-//			System.err.print(values[i + 1] + " ");
 			mask[i] = (values[i + 1] % 2) == 1;
 		}
-//		System.err.println();
 	}
 }

@@ -8,7 +8,7 @@ public class TestALL {
         TestSuite suite = new TestSuite();
         suite.addTestSuite(TestZLDir.class);
         suite.addTestSuite(TestZLFile.class);
-        suite.addTestSuite(TestZLFSManager.class);
+//      suite.addTestSuite(TestZLFSManager.class);
         return suite;
     }
 }

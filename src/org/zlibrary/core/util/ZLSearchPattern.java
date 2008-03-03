@@ -1,6 +1,6 @@
 package org.zlibrary.core.util;
 
-class ZLSearchPattern {
+public class ZLSearchPattern {
 	/*package*/ boolean IgnoreCase;
 	/*package*/ String LowerCasePattern;
 	/*package*/ String UpperCasePattern;

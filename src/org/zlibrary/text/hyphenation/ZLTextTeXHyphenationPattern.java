@@ -1,6 +1,8 @@
 package org.zlibrary.text.hyphenation;
 
-final class ZLTextTeXHyphenationPattern {
+import java.util.Arrays;
+
+public final class ZLTextTeXHyphenationPattern {
 	int myLength;
 	final char[] mySymbols;
 	private final byte[] myValues;
@@ -15,7 +17,7 @@ final class ZLTextTeXHyphenationPattern {
 		myHashCode = 0;
 	}
 
-	ZLTextTeXHyphenationPattern(char[] pattern, int offset, int length, boolean useValues) {
+	public ZLTextTeXHyphenationPattern(char[] pattern, int offset, int length, boolean useValues) {
 		if (useValues) {
 			int patternLength = 0;
 			for (int i = 0; i < length; ++i) {
@@ -89,5 +91,17 @@ final class ZLTextTeXHyphenationPattern {
 			myHashCode = hash;
 		}
 		return hash;
+	}
+
+	public int getLength() {
+		return myLength;
+	}
+
+	public char[] getSymbols() {
+		return mySymbols;	
+	}
+
+	public byte[] getValues() {
+		return myValues;
 	}
 }

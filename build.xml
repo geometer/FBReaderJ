@@ -44,8 +44,9 @@
 	</target>
 
 	<target name="runtests" depends="test">
-		<junit printsummary="yes">
+		<junit printsummary="yes" showoutput="yes">
 			<classpath>
+				<pathelement location="lib/junit.jar"/>
 				<pathelement location="${bin.dir}"/>
 			</classpath>
 			<test name="org.test.zlibrary.model.TestAll"/>
@@ -55,6 +56,7 @@
 			<test name="org.test.zlibrary.filesystem.TestALL"/>
 			<test name="org.test.fbreader.collection.AllTests"/>
 			<test name="org.test.zlibrary.description.AllTests"/>
+			<test name="org.test.zlibrary.hyphenation.TestAll"/>
 		</junit>
 	</target>
 

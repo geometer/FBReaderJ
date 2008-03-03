@@ -18,6 +18,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	int myParagraphsNumber;
 
 	private final ArrayList myData = new ArrayList(1024);
+	private final ArrayList myMarks = new ArrayList();
 	private final int myDataBlockSize;
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
@@ -248,8 +249,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}	
 
 	public final void search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
-//		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
-//		myMarks.clear();
+		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
+		myMarks.clear();
 					
 	}	
 }
