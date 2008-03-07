@@ -18,7 +18,8 @@ final class HtmlTag {
 	public static final byte H6 = 10;
 	public static final byte A = 11;
 	public static final byte B = 12;
-	public static final byte BR = 13;
+	public static final byte I = 13;
+	public static final byte BR = 14;
 
 	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
 	private static final Byte ourUnknownTag;
@@ -39,6 +40,7 @@ final class HtmlTag {
 		ourTagByName.put("h6", H6);
 		ourTagByName.put("a", A);
 		ourTagByName.put("b", B);
+		ourTagByName.put("i", I);
 		ourTagByName.put("br", BR);
 	}
 
