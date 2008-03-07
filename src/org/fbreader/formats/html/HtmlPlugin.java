@@ -2,6 +2,7 @@ package org.fbreader.formats.html;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
+import org.fbreader.description.BookDescription.WritableBookDescription;
 import org.fbreader.formats.FormatPlugin;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.core.filesystem.ZLFile;
@@ -32,8 +33,8 @@ public class HtmlPlugin extends FormatPlugin {
 		if (!description.getEncoding().equals(AUTO)) {
 			new BookDescription.BookInfo(description.getFileName()).EncodingOption.setValue(AUTO);
 		}
-        // FB2BookReader
-		return false;
+        // always true =)
+		return true;
 	}
 
 	@Override
