@@ -1,7 +1,11 @@
 package org.zlibrary.core.util;
 
-class ZLSearchUtil {
+public class ZLSearchUtil {
 	private ZLSearchUtil() {
+	}
+
+	public static int find(char[] text, int offset, int length, final ZLSearchPattern pattern) {
+		return find(text, offset, length, pattern, 0);
 	}
 
 	public static int find(char[] text, int offset, int length, final ZLSearchPattern pattern, int pos) {

@@ -251,6 +251,27 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	public final void search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks.clear();
-					
+		if (startIndex > myParagraphsNumber) {
+                	startIndex = myParagraphsNumber;				
+		}
+		if (endIndex > myParagraphsNumber) {
+			endIndex = myParagraphsNumber;
+		}				
+		for (int i = startIndex; i < endIndex; i++) {
+			int offset = 0;
+			for (EntryIteratorImpl it = new EntryIteratorImpl(i); it.hasNext(); it.next()) {
+				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
+					char[] textData = it.getTextData();
+					int textOffset = it.getTextOffset();
+					int textLength = it.getTextLength();
+					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1; 
+						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
+						myMarks.add(new ZLTextMark(i, offset + pos, pattern.getLength()));
+					}
+					offset += textLength;						
+				}				
+			}
+		}
+
 	}	
 }

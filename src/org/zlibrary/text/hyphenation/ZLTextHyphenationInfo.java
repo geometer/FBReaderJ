@@ -11,4 +11,8 @@ public final class ZLTextHyphenationInfo {
 		final boolean mask[] = myMask;
 		return (position < mask.length && mask[position]);
 	}
+
+	public boolean[] getMask() {
+		return myMask;
+	}
 }

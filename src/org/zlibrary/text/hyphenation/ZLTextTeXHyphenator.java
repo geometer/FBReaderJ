@@ -32,7 +32,7 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		}
 		myLanguage = language;
 		unload();
-	//	System.err.println(path);
+		System.err.println(language);
 		new ZLTextHyphenationReader(this).read(path);
 	//	System.err.println(myPatternTable.size());
 	}	
