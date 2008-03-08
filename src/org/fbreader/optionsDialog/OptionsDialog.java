@@ -8,6 +8,7 @@ import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
+import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.text.view.style.ZLTextBaseStyle;
@@ -23,6 +24,7 @@ public class OptionsDialog {
 		ZLDialogContent generalTab = myDialog.createTab("General");
 		CollectionView collectionView = fbreader.getCollectionView();
 		generalTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
+		generalTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
 
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));

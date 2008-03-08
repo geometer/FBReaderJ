@@ -7,10 +7,12 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
+import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionKind;
 import org.zlibrary.core.dialogs.ZLOptionView;
+import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
 import org.zlibrary.core.resources.ZLResource;
 
 public class ZLSwingDialogContent extends ZLDialogContent {
@@ -75,10 +77,10 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 //				view = new StringOptionView(name, tooltip, (ZLStringOptionEntry*)option, *this, from, to);
 				break;
 			case ZLOptionKind.CHOICE:
-//				view = new ChoiceOptionView(name, tooltip, (ZLChoiceOptionEntry*)option, *this, from, to);
+				view = new ZLChoiceOptionView(name, tooltip, (ZLChoiceOptionEntry) option, this);
 				break;
 			case ZLOptionKind.SPIN:
-//				view = new SpinOptionView(name, tooltip, (ZLSpinOptionEntry*)option, *this, from, to);
+				view = new ZLSpinOptionView(name, tooltip, (ZLSpinOptionEntry) option, this);
 				break;
 			case ZLOptionKind.COMBO:
 //				view = new ComboOptionView(name, tooltip, (ZLComboOptionEntry*)option, *this, from, to);

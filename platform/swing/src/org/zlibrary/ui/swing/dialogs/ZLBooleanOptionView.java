@@ -10,20 +10,18 @@ public class ZLBooleanOptionView extends ZLOptionView {
 	private final JCheckBox myCheckBox;	
 	
 	public ZLBooleanOptionView(String name, String tooltip, ZLBooleanOptionEntry option,
-			ZLDialogContent tab) {
+			ZLSwingDialogContent tab) {
 		super(name, tooltip, option);
 		myCheckBox = new JCheckBox(name);
 		myCheckBox.setSelected(option.initialState());
-		((ZLSwingDialogContent) tab).insertWidget(myCheckBox);
+		tab.insertWidget(myCheckBox);
 	}
 
 	protected void _onAccept() {
 		((ZLBooleanOptionEntry) myOption).onAccept(myCheckBox.isSelected());
 	}
 
-	protected void createItem() {
-		
-	}
+	protected void createItem() {}
 
 	protected void hide() {
 		myCheckBox.setVisible(false);
