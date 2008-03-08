@@ -21,7 +21,8 @@ public class ZLSearchUtil {
 				int j = 0;
 				int k = i;
 				for (; j <= patternLast; j++, k++) {
-					if (lower.charAt(j) != text[k] && upper.charAt(j) != text[k]) {
+					final char symbol = text[k];
+					if (lower.charAt(j) != symbol && upper.charAt(j) != symbol) {
 						break;
 					}
 				}
