@@ -363,13 +363,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final ZLPaintContext context = getContext();
 		context.setColor(myTextStyle.getColor());	
 		if ((start == 0) && (length == -1)) {
-			context.drawString(x, y, word.Data, word.Offset, word.Length);
+			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
 		} else {
 			if (length == -1) {
 				length = word.Length - start;
 			}
 			if (!addHyphenationSign) {
-				context.drawString(x, y, word.Data, word.Offset + start, length);
+				drawString(x, y, word.Data, word.Offset + start, length, word.getMark(), start);
 			} else {
 				char[] part = myWordPartArray;
 				if (length + 1 > part.length) {
@@ -378,8 +378,50 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				}
 				System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 				part[length] = '-';
-				context.drawString(x, y, part, 0, length + 1);	
+				drawString(x, y, part, 0, length + 1, word.getMark(), start);	
 			}	
+		}
+	}
+
+	private void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
+		final ZLPaintContext context = getContext();
+		context.setColor(myTextStyle.getColor());
+		if (mark == null) {
+			context.drawString(x, y, str, offset, length);
+		} else {
+			int pos = 0;
+			for (; (mark != null) && (pos < length); mark = mark.getNext()) {
+				int markStart = mark.getStart() - shift;
+				int markLen = mark.getLength();
+
+				if (markStart < pos) {
+					markLen += markStart - pos;
+					markStart = pos;
+				}
+
+				if (markLen <= 0) {
+					continue;
+				}
+
+				if (markStart > pos) {
+					int endPos = Math.min(markStart, length);
+					context.drawString(x, y, str, offset + pos, endPos - pos);
+					x += context.getStringWidth(str, offset + pos, endPos - pos);
+				}
+
+				if (markStart < length) {
+					context.setColor(ZLTextStyleCollection.getInstance().getBaseStyle().SelectedTextColorOption.getValue());
+					int endPos = Math.min(markStart + markLen, length);
+					context.drawString(x, y, str, offset + markStart, endPos - markStart);
+					x += context.getStringWidth(str, offset + markStart, endPos - markStart);
+					context.setColor(myTextStyle.getColor());
+				}
+				pos = markStart + markLen;
+			}
+
+			if (pos < length) {
+				context.drawString(x, y, str, offset + pos, length - pos);
+			}
 		}
 	}
 
