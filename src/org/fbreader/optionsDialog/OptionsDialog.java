@@ -9,7 +9,6 @@ import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
-import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.text.view.style.ZLTextBaseStyle;
 import org.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -35,6 +34,14 @@ public class OptionsDialog {
 		selectionTab.addOption("enableSelection", FBView.selectionOption());
 		
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
+		marginTab.addOptions(
+			"left", new ZLSimpleSpinOptionEntry(FBView.getLeftMarginOption(), 1),
+			"right", new ZLSimpleSpinOptionEntry(FBView.getRightMarginOption(), 1)
+		);
+		marginTab.addOptions(
+			"top", new ZLSimpleSpinOptionEntry(FBView.getTopMarginOption(), 1),
+			"bottom", new ZLSimpleSpinOptionEntry(FBView.getBottomMarginOption(), 1)
+		);
 		
 		myDialog.createTab("Format");
 		
@@ -68,20 +75,6 @@ public class OptionsDialog {
 		encodingTab.addOption(ZLResourceKey("chineseBreakAtAnyPosition"), new ZLSimpleBooleanOptionEntry(ZLChineseBreakingAlgorithm::instance().AnyPositionBreakingOption));
 
 		myScrollingPage = new ScrollingOptionsPage(myDialog->createTab(ZLResourceKey("Scrolling")), fbreader);
-
-		ZLDialogContent &selectionTab = myDialog->createTab(ZLResourceKey("Selection"));
-		selectionTab.addOption(ZLResourceKey("enableSelection"), FBView::selectionOption());
-
-		ZLDialogContent &marginTab = myDialog->createTab(ZLResourceKey("Margins"));
-		FBMargins &margins = FBView::margins();
-		marginTab.addOptions(
-			ZLResourceKey("left"), new ZLSimpleSpinOptionEntry(margins.LeftMarginOption, 1),
-			ZLResourceKey("right"), new ZLSimpleSpinOptionEntry(margins.RightMarginOption, 1)
-		);
-		marginTab.addOptions(
-			ZLResourceKey("top"), new ZLSimpleSpinOptionEntry(margins.TopMarginOption, 1),
-			ZLResourceKey("bottom"), new ZLSimpleSpinOptionEntry(margins.BottomMarginOption, 1)
-		);
 
 		myFormatPage = new FormatOptionsPage(myDialog->createTab(ZLResourceKey("Format")));
 		myStylePage = new StyleOptionsPage(myDialog->createTab(ZLResourceKey("Styles")), *fbreader.context());

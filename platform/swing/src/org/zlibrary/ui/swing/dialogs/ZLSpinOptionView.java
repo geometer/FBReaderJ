@@ -1,6 +1,6 @@
 package org.zlibrary.ui.swing.dialogs;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,9 +23,11 @@ public class ZLSpinOptionView extends ZLOptionView {
 			tab.insertWidget(mySpinner);
 		} else {
 			myLabel = new JLabel(name);
-			JPanel panel = new JPanel(new GridLayout(1, 2, 10, 10));
-			panel.add(myLabel);
-			panel.add(mySpinner);
+			JPanel panel = new JPanel(new BorderLayout());
+			JPanel panel2 = new JPanel();
+			panel2.add(myLabel);
+			panel2.add(mySpinner);
+			panel.add(panel2, BorderLayout.LINE_END);
 			tab.insertWidget(panel);
 		}
 	}
