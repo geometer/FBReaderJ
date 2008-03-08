@@ -335,6 +335,10 @@ public final class FBReader extends ZLApplication {
 			myReader.openBookInternal(myDescription); 
 		}
 
-	};
+	}
+
+	public RecentBooksView getRecentBooksView() {
+		return myRecentBooksView;
+	}
 
 }

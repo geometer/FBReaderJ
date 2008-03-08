@@ -3,13 +3,18 @@ package org.fbreader.optionsDialog;
 import org.fbreader.fbreader.CollectionView;
 import org.fbreader.fbreader.FBReader;
 import org.fbreader.fbreader.FBView;
+import org.fbreader.fbreader.RecentBooksView;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
+import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
+import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.runnable.ZLRunnable;
+import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.view.style.ZLTextBaseStyle;
 import org.zlibrary.text.view.style.ZLTextStyleCollection;
 
@@ -22,7 +27,10 @@ public class OptionsDialog {
 
 		ZLDialogContent generalTab = myDialog.createTab("General");
 		CollectionView collectionView = fbreader.getCollectionView();
+		generalTab.addOption("bookPath", collectionView.getCollection().PathOption);
 		generalTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
+		RecentBooksView recentBooksView = (RecentBooksView) fbreader.getRecentBooksView();
+		generalTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(recentBooksView.lastBooks().MaxListSizeOption, 1));
 		generalTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
 
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
@@ -48,6 +56,7 @@ public class OptionsDialog {
 		myDialog.createTab("Styles");
 		
 		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
+		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
 		
 		ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		
@@ -56,16 +65,7 @@ public class OptionsDialog {
 		myDialog.createTab("Config");
 		
 		/*
-		ZLDialogContent &generalTab = myDialog->createTab(ZLResourceKey("General"));
-		CollectionView &collectionView = (CollectionView&)*fbreader.myCollectionView;
-		generalTab.addOption(ZLResourceKey("bookPath"), collectionView.collection().PathOption);
-		generalTab.addOption(ZLResourceKey("lookInSubdirectories"), collectionView.collection().ScanSubdirsOption);
-		RecentBooksView &recentBooksView = (RecentBooksView&)*fbreader.myRecentBooksView;
-		generalTab.addOption(ZLResourceKey("recentListSize"), new ZLSimpleSpinOptionEntry(recentBooksView.lastBooks().MaxListSizeOption, 1));
-		generalTab.addOption(ZLResourceKey("keyDelay"), new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
-
-		ZLDialogContent &encodingTab = myDialog->createTab(ZLResourceKey("Language"));
-		encodingTab.addOption(ZLResourceKey("autoDetect"), new ZLSimpleBooleanOptionEntry(PluginCollection::instance().LanguageAutoDetectOption));
+		
 		encodingTab.addOption(ZLResourceKey("defaultLanguage"), new ZLLanguageOptionEntry(PluginCollection::instance().DefaultLanguageOption, ZLLanguageList::languageCodes()));
 		EncodingEntry *encodingEntry = new EncodingEntry(PluginCollection::instance().DefaultEncodingOption);
 		EncodingSetEntry *encodingSetEntry = new EncodingSetEntry(*encodingEntry);
@@ -80,10 +80,6 @@ public class OptionsDialog {
 		myStylePage = new StyleOptionsPage(myDialog->createTab(ZLResourceKey("Styles")), *fbreader.context());
 
 		createIndicatorTab(fbreader);
-
-		ZLDialogContent &rotationTab = myDialog->createTab(ZLResourceKey("Rotation"));
-		ZLResourceKey directionKey("direction");
-		rotationTab.addOption(directionKey, new RotationTypeEntry(rotationTab.resource(directionKey), fbreader.RotationAngleOption));
 
 		ZLDialogContent &colorsTab = myDialog->createTab(ZLResourceKey("Colors"));
 		ZLResourceKey colorKey("colorFor");
@@ -137,5 +133,75 @@ public class OptionsDialog {
 			myFBReader.getCollectionView().synchronizeModel();
 			myFBReader.refreshWindow();
 		}
+	}
+	
+	private static class RotationTypeEntry extends ZLChoiceOptionEntry {
+		private final ZLResource myResource;
+		private ZLIntegerOption myAngleOption;
+		
+		public RotationTypeEntry(ZLResource resource, ZLIntegerOption angleOption) {
+			myAngleOption = angleOption;
+			myResource = resource;
+		}
+		
+		public int choiceNumber() {
+			return 5;
+		}
+
+		public String getText(int index) {
+			final String keyName;
+			switch (index) {
+				case 1:
+					keyName = "counterclockwise";
+					break;
+				case 2:
+					keyName = "180";
+					break;
+				case 3:
+					keyName = "clockwise";
+					break;
+				case 4:
+					keyName = "cycle";
+					break;
+				default:
+					keyName = "disabled";
+					break;
+			}
+			return myResource.getResource(keyName).getValue();
+		}
+
+		public int initialCheckedIndex() {
+			switch (myAngleOption.getValue()) {
+			default:
+				return 0;
+			case ZLViewWidget.Angle.DEGREES90:
+				return 1;
+			case ZLViewWidget.Angle.DEGREES180:
+				return 2;
+			case ZLViewWidget.Angle.DEGREES270:
+				return 3;
+			case -1:
+				return 4;
+			}
+		}
+
+		public void onAccept(int index) {
+			int angle = ZLViewWidget.Angle.DEGREES0;
+			switch (index) {
+				case 1:
+					angle = ZLViewWidget.Angle.DEGREES90;
+					break;
+				case 2:
+					angle = ZLViewWidget.Angle.DEGREES180;
+					break;
+				case 3:
+					angle = ZLViewWidget.Angle.DEGREES270;
+					break;
+				case 4:
+					angle = -1;
+					break;
+			}
+			myAngleOption.setValue(angle);
+		}	
 	}
 }
