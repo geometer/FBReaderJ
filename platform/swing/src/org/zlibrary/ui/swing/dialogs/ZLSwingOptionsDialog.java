@@ -1,17 +1,26 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
@@ -26,7 +35,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final JDialog myDialog;
 	private final JTabbedPane myTabbedPane = new JTabbedPane();
 	private String mySelectedTabKey;
-	private final HashMap<JPanel, String> myPanelToKeyMap = new HashMap<JPanel, String>(); //?
+	private final HashMap<String, JPanel> myPanelToKeyMap = new HashMap<String, JPanel>(); //?
 	
 	private final ZLIntegerRangeOption myWidthOption;
 	private	final ZLIntegerRangeOption myHeightOption;
@@ -47,8 +56,9 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		JPanel contentPanel = tab.getContentPanel();
 		JPanel panel = new JPanel(new BorderLayout()); 
 		panel.add(contentPanel, BorderLayout.PAGE_START);
-		myPanelToKeyMap.put(panel, tab.getKey());
+		myPanelToKeyMap.put(tab.getKey(), panel);
 		myTabbedPane.addTab(tab.getDisplayName(), panel);
+		myTabs.add(tab);
 		// TODO Auto-generated method stub
 		return tab;
 	}
@@ -71,6 +81,8 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
 		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
+		CancelAction cancelAction = new CancelAction(button2.getText());
+		button2.setAction(cancelAction);
 		buttonPanel.add(button1);
 		buttonPanel.add(button2);
 		if (button1.getPreferredSize().width < button2.getPreferredSize().width) {
@@ -92,20 +104,51 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		
 		myTabbedPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));				
 		myDialog.getContentPane().add(myTabbedPane, BorderLayout.CENTER);
+		myTabbedPane.addChangeListener(new MyChangeListener());
+		if (myPanelToKeyMap.get(mySelectedTabKey) != null) {
+			myTabbedPane.setSelectedComponent(myPanelToKeyMap.get(mySelectedTabKey));
+		}	
 		
-		myDialog.pack();
 		button1.requestFocusInWindow();
+		
+		KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+		myDialog.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, "ESCAPE");
+		myDialog.getRootPane().getActionMap().put("ESCAPE", cancelAction);
+			
+		myDialog.pack();
+		
 		myDialog.setSize(myWidthOption.getValue(), myHeightOption.getValue());
 		myDialog.setLocationRelativeTo(myDialog.getParent());
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
-	@Override
 	protected void selectTab(String key) {
 		mySelectedTabKey = key;
 	}
 
+	private class MyChangeListener implements ChangeListener {
+		public void stateChanged(ChangeEvent e) {
+			Component component = myTabbedPane.getSelectedComponent();
+			for (Map.Entry entry : myPanelToKeyMap.entrySet()) {
+				if (entry.getValue().equals(component)) {
+					mySelectedTabKey = (String) entry.getKey();
+					break;
+				}
+			}
+		}		
+	}
+	
+	private class CancelAction extends AbstractAction {
+		public CancelAction(String text) {
+			putValue(NAME, text);
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			myDialog.dispose();
+		}		
+	}
+	
 }

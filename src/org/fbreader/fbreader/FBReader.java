@@ -5,6 +5,7 @@ import java.util.*;
 import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.BookModel;
+import org.fbreader.collection.BookCollection;
 import org.fbreader.description.BookDescription;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.fbreader.formats.html.HtmlReader;
@@ -339,6 +340,25 @@ public final class FBReader extends ZLApplication {
 
 	public RecentBooksView getRecentBooksView() {
 		return myRecentBooksView;
+	}
+
+	boolean runBookInfoDialog(String fileName) {
+		BookCollection collection = myCollectionView.getCollection();
+		if (new BookInfoDialog(collection, fileName).getDialog().run()) {
+			openFile(fileName);
+			collection.rebuild(false);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void openFile(String fileName) {
+		BookDescription description = BookDescription.getDescription(fileName);
+		if (description != null) {
+			openBook(description);
+			refreshWindow();
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.fbreader.fbreader;
 
+import org.fbreader.collection.BookList;
 import org.fbreader.description.BookDescription;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 
@@ -16,11 +17,17 @@ class AddBookAction extends FBAction {
 		FBFileHandler handler = new FBFileHandler();
 		if (ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", handler)) {
 			BookDescription description = handler.description();
-			if (description != null) {
+			if (description != null && fbreader().runBookInfoDialog(description.getFileName())) {
+				(new BookList()).addFileName(description.getFileName());
+				fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
+			}
+			
+		/*	if (description != null) {
 				fbreader().openBook(description);
 				fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
 				fbreader().refreshWindow();
 			}
+		*/	
 		}
 	}
 }
