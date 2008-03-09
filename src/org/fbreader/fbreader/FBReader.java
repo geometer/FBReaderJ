@@ -312,6 +312,7 @@ public final class FBReader extends ZLApplication {
 			contentsView.setModel(myModel.getContentsModel(), description.getFileName());
 			contentsView.setCaption(description.getTitle());
 			recentBooksView.lastBooks().addBook(description.getFileName());
+			System.err.println("openBookInternal");
 		}
 	}
 	

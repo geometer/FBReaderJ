@@ -7,6 +7,7 @@ import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeModel;
 import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.impl.ZLTextMark;
 import org.zlibrary.text.hyphenation.ZLTextHyphenationInfo;
 import org.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.zlibrary.text.view.ZLTextStyle;
@@ -191,7 +192,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myPaintState == PaintState.NOTHING_TO_PAINT) {
 			return;
 		}
-		if (myStartCursor == null) {
+		if (myStartCursor.isNull()) {
 			myStartCursor.setCursor(myEndCursor);
 		}
 		myStartCursor.moveToParagraph(paragraphNumber);
@@ -209,7 +210,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myPaintState == PaintState.NOTHING_TO_PAINT) {
 			return;	
 		}
-		if (myEndCursor == null) {
+		if (myEndCursor.isNull()) {
 			myEndCursor.setCursor(myStartCursor);
 		}
 		myEndCursor.moveToParagraph(paragraphNumber);
@@ -223,7 +224,61 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myLineInfos.clear();
 		myPaintState = PaintState.END_IS_KNOWN;
 	}
+
+	public void gotoMark(ZLTextMark mark) {
+		//System.err.println("goto " + mark);
+		if (mark.ParagraphNumber < 0) {
+			return;
+		}
+		boolean doRepaint = false;
+		if (myStartCursor.isNull()) {
+			doRepaint = true;
+			preparePaintInfo();
+		}
+		if (myStartCursor.isNull()) {
+			return;
+		}
+		if ((myStartCursor.getParagraphCursor().getIndex() != mark.ParagraphNumber) || (myStartCursor.getPosition().compareTo(mark) > 0)) {
+			doRepaint = true;
+			gotoParagraph(mark.ParagraphNumber);
+			preparePaintInfo();
+		}
+		if (myEndCursor.isNull()) {
+			preparePaintInfo();
+		}
+		while (mark.compareTo(myEndCursor.getPosition()) > 0) { 
+			doRepaint = true;
+			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			preparePaintInfo();
+		}
+		if (doRepaint) {
+			getApplication().refreshWindow();
+		}
+	}
 	
+	public void search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
+		//System.err.println("Searching...");
+		//System.err.println(myModel.getMarks().size());	
+		if (text.length() == 0) {
+			return;
+		}
+		int startIndex = 0;
+		int endIndex = myModel.getParagraphsNumber();
+		if (thisSectionOnly) {
+			//To be written
+		}
+		myModel.search(text, startIndex, endIndex, ignoreCase);
+		if (!myStartCursor.isNull()) {
+			rebuildPaintInfo(true);
+			ZLTextMark position = myStartCursor.getPosition();
+			//System.err.println("Position = " + position);
+			gotoMark(wholeText ? 
+				(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
+				(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
+			getApplication().refreshWindow();
+		}
+	}
+
 	public void paint() {
 		//android.os.Debug.startMethodTracing("/tmp/paint");
 		preparePaintInfo();
@@ -1113,6 +1168,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public boolean onStylusPress(int x, int y) {
+//		search("FBReader", true, true, false, false);
 		if (myModel instanceof ZLTextTreeModel) {
 			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
 			if (nodeArea != null) {

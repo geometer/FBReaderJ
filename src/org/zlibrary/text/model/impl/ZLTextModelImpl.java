@@ -248,6 +248,40 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myEntries.add(new ZLTextFixedHSpaceEntry(length));
 	}	
 
+	public ZLTextMark getFirstMark() {
+		return myMarks.size() == 0 ? new ZLTextMark() : (ZLTextMark) myMarks.get(0);
+	}
+	
+	public ZLTextMark getLastMark() {
+		return myMarks.size() == 0 ? new ZLTextMark() : (ZLTextMark) myMarks.get(myMarks.size() - 1);
+	}
+
+	public ZLTextMark getNextMark(ZLTextMark position) {
+		ZLTextMark mark = null;
+		for (int i = 0; i < myMarks.size(); i++) {
+			ZLTextMark current = (ZLTextMark) myMarks.get(i);
+			if (current.compareTo(position) > 0) {
+				if ((mark == null) || (mark.compareTo(current) > 0)) {
+					mark = current;
+				}
+			}
+		}
+		return (mark != null) ? mark : new ZLTextMark();	
+	}
+
+	public ZLTextMark getPreviousMark(ZLTextMark position) {
+		ZLTextMark mark = null;
+		for (int i = 0; i < myMarks.size(); i++) {
+			ZLTextMark current = (ZLTextMark) myMarks.get(i);
+			if (current.compareTo(position) < 0) {
+				if ((mark == null) || (mark.compareTo(current) < 0)) {
+					mark = current;
+				}
+			}
+		}
+		return (mark != null) ? mark : new ZLTextMark();
+	}
+
 	public final void search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks.clear();
@@ -273,5 +307,9 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 			}
 		}
 
+	}
+
+	public ArrayList getMarks() {
+		return myMarks;
 	}	
 }

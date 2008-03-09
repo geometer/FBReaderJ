@@ -9,17 +9,34 @@ import org.zlibrary.core.image.ZLImageManager;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.model.ZLTextParagraph;
 import org.zlibrary.text.model.ZLTextTreeModel;
+import org.zlibrary.text.model.impl.ZLTextMark;
 
 public abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
 		protected final ZLTextParagraph myParagraph;
 		protected final ArrayList myElements;
-		//protected int myOffset;
-
-		protected Processor(ZLTextParagraph paragraph, int index, ArrayList elements) {
+		protected int myOffset;
+		protected int myFirstMark;
+		protected int myLastMark;
+		protected final ArrayList myMarks;
+		
+		protected Processor(ZLTextParagraph paragraph, ArrayList marks, int paragraphNumber, ArrayList elements) {
 			myParagraph = paragraph;
 			myElements = elements;
-			//myOffset = 0;
+			myMarks = marks;
+			ZLTextMark mark = new ZLTextMark(paragraphNumber, 0, 0);
+			int i;
+			//System.err.println("Mark = " + mark);
+			for (i = 0; i < myMarks.size(); i++) {
+				if (((ZLTextMark) myMarks.get(i)).compareTo(mark) >= 0) {
+					break;
+				}
+			//	System.err.println(i + " " + ((ZLTextMark) myMarks.get(i)));
+			}
+			myFirstMark = i;
+			myLastMark = myFirstMark;
+			for (; (myLastMark != myMarks.size()) && (((ZLTextMark) myMarks.get(myLastMark)).ParagraphNumber == paragraphNumber); myLastMark++);
+			myOffset = 0;
 		}
 
 		void fill() {
@@ -58,21 +75,32 @@ public abstract class ZLTextParagraphCursor {
 		
 		abstract void processTextEntry(final char[] data, final int offset, final int length);
 
-		/*
-		protected final void addWord(char[] data, int from, int to) {
-			myElements.add(new ZLTextWord(data, from, to - from));
+		
+		protected final void addWord(char[] data, int offset, int len, int paragraphOffset) {
+			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
+/*			for (int i = offset; i < offset + len; i++) {
+				System.err.print(data[i]);
+			}
+			System.err.println();
+			System.err.println("Size = " + myMarks.size());
+			System.err.println("First = " + myFirstMark);
+			System.err.println("Last = " + myLastMark);*/
+			for (int i = myFirstMark; i < myLastMark; i++) {
+				ZLTextMark mark = (ZLTextMark) myMarks.get(i);
+				if ((mark.Offset < offset + len) && (mark.Offset + mark.Length > offset)) {
+					word.addMark(mark.Offset - offset, mark.Length);
+				}
+			}
+			myElements.add(word);		
 		}
-		*/
+		
 	}
 
 	private static final class StandardProcessor extends Processor {
-		StandardProcessor(ZLTextParagraph paragraph, int index, ArrayList elements) {
-			super(paragraph, index, elements);
-		}		
+		StandardProcessor(ZLTextParagraph paragraph, ArrayList marks, int paragraphNumber, ArrayList elements) {
+			super(paragraph, marks, paragraphNumber, elements);
+		}					int i;
 	
-		/*Some useless code in C++ version here.
-			Is spaceInserted variable used for inserting one separator instead of multiple spaces?*/
-
 		void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
@@ -84,8 +112,8 @@ public abstract class ZLTextParagraphCursor {
 					final char ch = data[charPos];
 					if ((ch == ' ') || (ch <= 0x0D)) {
 						if (firstNonSpace != -1) {
-							elements.add(new ZLTextWord(data, firstNonSpace, charPos - firstNonSpace));
-							//addWord(data, firstNonSpace, charPos);
+						//	elements.add(new ZLTextWord(data, firstNonSpace, charPos - firstNonSpace, 0));
+							addWord(data, firstNonSpace, charPos - firstNonSpace, 0);
 							elements.add(hSpace);
 							spaceInserted = true;
 							firstNonSpace = -1;					
@@ -98,10 +126,10 @@ public abstract class ZLTextParagraphCursor {
 					}
 				} 
 				if (firstNonSpace != -1) {
-					//addWord(data, firstNonSpace, end);
-					elements.add(new ZLTextWord(data, firstNonSpace, end - firstNonSpace));
+					addWord(data, firstNonSpace, end - firstNonSpace, 0);
+//					elements.add(new ZLTextWord(data, firstNonSpace, end - firstNonSpace, 0));
 				}
-				//myOffset += length;
+				myOffset += length;
 			}
 		}
 	}
@@ -136,7 +164,7 @@ public abstract class ZLTextParagraphCursor {
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
 			case ZLTextParagraph.Kind.TREE_PARAGRAPH:
-				new StandardProcessor(paragraph, myIndex, myElements).fill();
+				new StandardProcessor(paragraph, myModel.getMarks(), myIndex, myElements).fill();
 				break;
 			default:
 				break;

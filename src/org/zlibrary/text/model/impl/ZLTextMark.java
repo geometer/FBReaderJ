@@ -1,6 +1,6 @@
 package org.zlibrary.text.model.impl;
 
-class ZLTextMark {
+public class ZLTextMark {
 	public int ParagraphNumber;
 	public int Offset;
 	public int Length;
@@ -37,5 +37,9 @@ class ZLTextMark {
 		} else {
 			return 1;
 		}
+	}
+
+	public String toString() {
+		return (ParagraphNumber + " " + Offset + " " + Length);
 	}
 }

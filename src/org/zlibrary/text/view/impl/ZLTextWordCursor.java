@@ -2,6 +2,8 @@ package org.zlibrary.text.view.impl;
 
 //import java.util.*;
 
+import org.zlibrary.text.model.impl.ZLTextMark;
+
 public final class ZLTextWordCursor {
 	private ZLTextParagraphCursor myParagraphCursor;
 	private int myWordNumber;
@@ -66,6 +68,22 @@ public final class ZLTextWordCursor {
 		return myParagraphCursor;
 	}
 
+	public ZLTextMark getPosition() {
+		if (myParagraphCursor == null) {
+			return new ZLTextMark();
+		}
+		final ZLTextParagraphCursor paragraph = myParagraphCursor;
+		int paragraphLength = paragraph.getParagraphLength();
+		int wordNumber = myWordNumber;
+		while ((wordNumber != paragraphLength) && (!(paragraph.getElement(wordNumber) instanceof ZLTextWord))) {
+			wordNumber++;
+		}
+		if (wordNumber != paragraphLength) {
+			return new ZLTextMark(paragraph.getIndex(), ((ZLTextWord) paragraph.getElement(wordNumber)).getParagraphOffset(), 0);
+		}
+		return new ZLTextMark(paragraph.getIndex() + 1, 0, 0);
+	}
+	
 	public void nextWord() {
 		myWordNumber++;
 		myCharNumber = 0;
@@ -105,16 +123,12 @@ public final class ZLTextWordCursor {
 		}
 	}
 
-	/*Why are we moving outside of the paragraph?*/
-
 	public void moveToParagraphEnd() {
 		if (!isNull()) {
 			myWordNumber = myParagraphCursor.getParagraphLength();
 			myCharNumber = 0;
 		}
 	}
-
-	/*Why do we create new object here instead of just changing myParagraphNumber?*/
 
 	public void moveToParagraph(int paragraphNumber) {
 		if (!isNull() && (paragraphNumber != myParagraphCursor.getIndex())) {

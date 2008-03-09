@@ -8,6 +8,7 @@ public final class ZLTextWord extends ZLTextElement {
 	public final int Length;
 	private int myWidth = -1;
 	private Mark myMark;
+	private int myParagraphOffset;
 
 	public class Mark {
 		private int myStart;
@@ -37,17 +38,21 @@ public final class ZLTextWord extends ZLTextElement {
 		}
 	}
 	
-	public ZLTextWord(char[] data, int offset, int length) {
+	public ZLTextWord(char[] data, int offset, int length, int paragraphOffset) {
 		Data = data;
 		Offset = offset;
 		Length = length;
-		myMark = new Mark(0, 1);
+		myParagraphOffset = paragraphOffset;
 	}
 
 	public Mark getMark() {
 		return myMark;
 	}
 
+	public int getParagraphOffset() {
+		return myParagraphOffset;
+	}
+	
 	public void addMark(int start, int length) {
 		Mark existingMark = myMark;
 		Mark mark = new Mark(start, length);
@@ -70,5 +75,13 @@ public final class ZLTextWord extends ZLTextElement {
 			myWidth = width;
 		}
 		return width;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for (int i = Offset; i < Offset + Length; i++) {
+			sb.append(Data[i]);
+		}	
+		return sb.toString();
 	}
 }

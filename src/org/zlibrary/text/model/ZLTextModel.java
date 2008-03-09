@@ -1,9 +1,12 @@
 package org.zlibrary.text.model;
 
+import java.util.ArrayList;
+
 import org.zlibrary.core.util.ZLTextBuffer;
 import org.zlibrary.core.image.ZLImageMap;
 
 import org.zlibrary.text.model.impl.ZLTextForcedControlEntry;
+import org.zlibrary.text.model.impl.ZLTextMark;
 
 public interface ZLTextModel {
 	int getParagraphsNumber();
@@ -19,5 +22,12 @@ public interface ZLTextModel {
 	void addImage(String id, ZLImageMap imageMap, short vOffset);
 	void addFixedHSpace(short length);
 
+	ZLTextMark getFirstMark();
+	ZLTextMark getLastMark();
+	ZLTextMark getNextMark(ZLTextMark position);
+	ZLTextMark getPreviousMark(ZLTextMark position);
+
+	ArrayList getMarks();
+	
 	void search(final String text, int startIndex, int endIndex, boolean ignoreCase);
 }
