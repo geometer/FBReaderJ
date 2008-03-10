@@ -35,7 +35,8 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final JDialog myDialog;
 	private final JTabbedPane myTabbedPane = new JTabbedPane();
 	private String mySelectedTabKey;
-	private final HashMap<String, JPanel> myPanelToKeyMap = new HashMap<String, JPanel>(); //?
+	private final HashMap<String, JPanel> myPanelToKeyMap = new HashMap<String, JPanel>();
+	private boolean myReturnValue = false;
 	
 	private final ZLIntegerRangeOption myWidthOption;
 	private	final ZLIntegerRangeOption myHeightOption;
@@ -47,7 +48,6 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myShowApplyButton = showApplyButton;
 		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 485);
 		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 332);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -59,7 +59,6 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myPanelToKeyMap.put(tab.getKey(), panel);
 		myTabbedPane.addTab(tab.getDisplayName(), panel);
 		myTabs.add(tab);
-		// TODO Auto-generated method stub
 		return tab;
 	}
 
@@ -82,6 +81,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
 		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
 		CancelAction cancelAction = new CancelAction(button2.getText());
+		button1.setAction(new OKAction(button1.getText()));
 		button2.setAction(cancelAction);
 		buttonPanel.add(button1);
 		buttonPanel.add(button2);
@@ -93,6 +93,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		if (myShowApplyButton) {
 			JButton button3 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.APPLY_BUTTON);
 			buttonPanel.add(button3);
+			button3.setAction(new ApplyAction(button3.getText()));
 			if (button3.getPreferredSize().width < button2.getPreferredSize().width) {
 				button3.setPreferredSize(button2.getPreferredSize());
 			} else {
@@ -121,14 +122,19 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myDialog.setLocationRelativeTo(myDialog.getParent());
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
-		// TODO Auto-generated method stub
-		return true;
+		return myReturnValue;
 	}
 
 	protected void selectTab(String key) {
 		mySelectedTabKey = key;
 	}
 
+	private void exitDialog() {
+		myWidthOption.setValue(myDialog.getWidth());
+		myHeightOption.setValue(myDialog.getHeight());
+		myDialog.dispose();
+	}
+	
 	private class MyChangeListener implements ChangeListener {
 		public void stateChanged(ChangeEvent e) {
 			Component component = myTabbedPane.getSelectedComponent();
@@ -141,13 +147,35 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		}		
 	}
 	
+	private class ApplyAction extends AbstractAction {
+		public ApplyAction(String text) {
+			putValue(NAME, text);
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			myReturnValue = false;
+			accept();
+		}
+	}
+	
+	private class OKAction extends AbstractAction {
+		public OKAction(String text) {
+			putValue(NAME, text);
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			myReturnValue = true;
+			exitDialog();
+		}
+	}
+	
 	private class CancelAction extends AbstractAction {
 		public CancelAction(String text) {
 			putValue(NAME, text);
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			myDialog.dispose();
+			exitDialog();
 		}		
 	}
 	

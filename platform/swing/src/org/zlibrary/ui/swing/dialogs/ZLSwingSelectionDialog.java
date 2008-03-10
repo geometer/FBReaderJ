@@ -3,6 +3,7 @@ package org.zlibrary.ui.swing.dialogs;
 import java.util.HashMap;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -72,7 +73,8 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 		myOKAction = new OKAction(button1.getText());
 		button1.setAction(myOKAction);
 		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
-		button2.setAction(new CancelAction (button2.getText()));
+		CancelAction cancelAction = new CancelAction (button2.getText());
+		button2.setAction(cancelAction);
 		if (button1.getPreferredSize().width < button2.getPreferredSize().width) {
 			button1.setPreferredSize(button2.getPreferredSize());
 		} else {
@@ -81,6 +83,10 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 		buttonPanel.add(button1);
 		buttonPanel.add(button2);
 		myDialog.add(buttonPanel, BorderLayout.SOUTH);
+		
+		KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+		myDialog.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, "ESCAPE");
+		myDialog.getRootPane().getActionMap().put("ESCAPE", cancelAction);
 		
 		myDialog.pack();
 		myList.requestFocusInWindow();	
@@ -133,17 +139,10 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	}
 	
 	private class MyKeyAdapter extends KeyAdapter {
-		@Override
 		public void keyPressed(KeyEvent e) {
-			final int code = e.getKeyCode();	
-			switch (code) {
-			case KeyEvent.VK_ENTER:
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				changeFolder(myList.getSelectedIndex());
-				break;
-			case KeyEvent.VK_ESCAPE:
-				exitDialog();
-				break;
-			}
+			}	
 		}
 	}
 	

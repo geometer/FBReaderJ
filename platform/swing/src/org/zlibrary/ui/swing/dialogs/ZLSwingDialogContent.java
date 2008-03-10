@@ -33,7 +33,7 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 
 	public void addOptions(String name0, String tooltip0, ZLOptionEntry option0, String name1, String tooltip1, ZLOptionEntry option1) {
 		myAddTwoOptions = true;
-		myTwoOptionsPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+		myTwoOptionsPanel = new JPanel(new GridLayout(1, 2, 10, 0));
 		myContentPanel.add(myTwoOptionsPanel);
 		createViewByEntry(name0, tooltip0, option0);
 		createViewByEntry(name1, tooltip1, option1);
