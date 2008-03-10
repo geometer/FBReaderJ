@@ -174,6 +174,26 @@ public class BookDescription {
 		private final ZLStringOption LanguageOption;
 		public final ZLStringOption EncodingOption;
 
+		public ZLStringOption getAuthorSortKeyOption() {
+			return AuthorSortKeyOption;
+		}
+
+		public ZLStringOption getAuthorDisplayNameOption() {
+			return AuthorDisplayNameOption;
+		}
+
+		public ZLStringOption getSequenceNameOption() {
+			return SequenceNameOption;
+		}
+
+		public ZLStringOption getTitleOption() {
+			return TitleOption;
+		}
+
+		public ZLIntegerRangeOption getNumberInSequenceOption() {
+			return NumberInSequenceOption;
+		}
+
 	}
 	
 	static public class WritableBookDescription  {
