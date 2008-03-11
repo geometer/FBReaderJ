@@ -17,7 +17,7 @@ public class BookDescription {
 	private Author myAuthor;
 	private	String myTitle;
 	private	String mySequenceName = "";
-	private	int myNumberInSequence;
+	private	int myNumberInSequence = 0;
 	private	final String myFileName;
 	private	String myLanguage = "";
 	private	String myEncoding = "";

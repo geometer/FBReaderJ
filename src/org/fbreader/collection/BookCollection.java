@@ -105,17 +105,18 @@ public class BookCollection {
 				}
 			}
 		} else {
-			System.out.println("strange code");
+			System.out.println("strange code form BookCollection");
 			// something strange :(
 			final BookList bookList = new BookList();
 			final ArrayList/*<String>*/ bookListSet = bookList.fileNames();
 			final ArrayList/*<String>*/ fileNames = new ArrayList();
 
 //		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
+			System.out.println("before strange code new ArrayList(myCollection.keySet());");
 			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
-			
+			System.out.println("after strange code new ArrayList(myCollection.keySet());");
 			for (int i = 0; i < list.size(); i++) {
-				final ArrayList books = (ArrayList)list.get(i);
+				final ArrayList books = (ArrayList)myCollection.get((Author)list.get(i));
 				final int numberOfBooks = books.size();
 				for (int j = 0; j < numberOfBooks; ++j) {
 					final BookDescription description = (BookDescription)books.get(j);
@@ -125,7 +126,7 @@ public class BookCollection {
 					}
 				}
 			}
-			
+			System.out.println("after first for");
 			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
 				final ArrayList books = (ArrayList)it.next();
 				final int numberOfBooks = books.size();
@@ -137,20 +138,25 @@ public class BookCollection {
 					}
 				}
 			}
+			System.out.println("after second for");
+
 			myCollection.clear();
 			myAuthors.clear();
 			final int fileNamesSize = fileNames.size();
 			for (int i = 0; i < fileNamesSize; ++i) {
 				addDescription(BookDescription.getDescription((String)fileNames.get(i), false));
-			}
-			
+			}		
 		}
-    
-		Collections.sort(myAuthors, new Author.AuthorComparator());
+		
+		if (myAuthors != null) {
+			Collections.sort(myAuthors, new Author.AuthorComparator());
+		}
 		DescriptionComparator descriptionComparator = new DescriptionComparator();
 		for (Iterator it = myCollection.entrySet().iterator(); it.hasNext();) {
 			ArrayList list = (ArrayList)myCollection.get(it.next());
-			Collections.sort(list, descriptionComparator);
+		    if (list != null) {
+		    	Collections.sort(list, descriptionComparator);
+		    }
 		}
 		return true;
 	}
@@ -250,9 +256,9 @@ public class BookCollection {
 		public int compare(Object descr1, Object descr2) {
 			BookDescription d1 = (BookDescription)descr1;
 			BookDescription d2 = (BookDescription)descr2;
-				
 			String sequenceName1 = d1.getSequenceName();
 			String sequenceName2 = d2.getSequenceName();
+				
 			if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
 				return d1.getTitle().compareTo(d2.getTitle());
 			}

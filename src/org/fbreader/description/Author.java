@@ -108,6 +108,7 @@ public abstract class Author {
 		public int compare(Object aobj1, Object aobj2) {
 			Author a1 = (Author)aobj1;
 			Author a2 = (Author)aobj1;
+			
 			return a1.getSortKey().compareTo(a2.getSortKey());
 		}
 	}

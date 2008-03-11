@@ -6,6 +6,6 @@
 	<classpathentry kind="src" path="platform/android/src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="lib/junit.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Documents and Settings/465/workspace/FBReaderJtodo/lib/android.jar"/>
+	<classpathentry kind="lib" path="/MyFBReaderJ/lib/android.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

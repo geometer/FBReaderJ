@@ -85,9 +85,7 @@ public class CollectionView extends FBView {
 				} else {
 				    message = ZLDialogManager.getDialogMessage(boxKey).substring(0, index) + book.getTitle() + format.substring(index + 2);
 				}
-				//final String message =
-				//	ZLStringUtil.printf(ZLDialogManager.dialogMessage(boxKey), book.getTitle());
-				/*if (ZLDialogManager.getInstance().getQuestionBox(boxKey, message,
+				if (ZLDialogManager.getInstance().showQuestionBox(boxKey, message,
 					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON) == 0) {
 					//collectionModel().removeAllMarks();
 					new BookList().removeFileName(book.getFileName());
@@ -104,7 +102,7 @@ public class CollectionView extends FBView {
 					}
 					rebuildPaintInfo(true);
 					repaintView();
-				}*/
+				}
 				return true;
 			}
 			return false;
@@ -127,14 +125,22 @@ public class CollectionView extends FBView {
 	}
 
 	public void paint() {
+		System.out.println("paint begin");
 		if (myUpdateModel) {
+			System.out.println("myUpdateModel");
 			ZLTextModel oldModel = getModel();
+			System.out.println("paint begin1");
 			setModel(null);
+			System.out.println("paint begin2");
 			((CollectionModel)oldModel).update();
+			System.out.println("paint begin3");
 			setModel(oldModel);
-			myUpdateModel = false;
+			System.out.println("paint begin4");
+			//myUpdateModel = false;
 		}
+		System.out.println("paint begin5");
 		super.paint();
+		System.out.println("paint begin6");
 	}
 	
 	public void updateModel() {
@@ -154,7 +160,7 @@ public class CollectionView extends FBView {
 			setModel(null);
 			((CollectionModel)oldModel).update();
 			setModel(oldModel);
-			myUpdateModel = false;
+			//myUpdateModel = false;
 		}
 		int toSelect = collectionModel().paragraphNumberByBook(book);
 		if (toSelect >= 0) {
@@ -217,6 +223,7 @@ public class CollectionView extends FBView {
 
 		private void build() {
 			final ArrayList/*<Author>*/ authors = myCollection.authors();
+			System.out.println("after authors in build");
 			String currentSequenceName = "";
 			ZLTextTreeParagraph sequenceParagraph;
 			for (int i = 0; i < authors.size(); i++) {
@@ -228,7 +235,7 @@ public class CollectionView extends FBView {
                     //todo 
 					ZLTextTreeParagraph authorParagraph = createParagraph(null);
 					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
-					//insertImage(AUTHOR_INFO_IMAGE_ID);
+					insertImage(AUTHOR_INFO_IMAGE_ID);
 					for (int j = 0; j < books.size(); j++) {
 						BookDescription jt = (BookDescription)books.get(j);
 						final String sequenceName = jt.getSequenceName();
@@ -239,7 +246,7 @@ public class CollectionView extends FBView {
 							currentSequenceName = sequenceName;
 							sequenceParagraph = createParagraph(authorParagraph);
 							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
-							//insertImage(SERIES_ORDER_IMAGE_ID);
+							insertImage(SERIES_ORDER_IMAGE_ID);
 						}
 						ZLTextTreeParagraph bookParagraph = createParagraph(
 							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
