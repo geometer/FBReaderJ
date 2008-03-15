@@ -142,7 +142,8 @@ public class CollectionView extends FBView {
 	
 	public void synchronizeModel() {
 		if (myCollection.synchronize()) {
-	    	updateModel();
+	    	System.out.println("synchronizeModel");
+			updateModel();
 		}
 	}
 

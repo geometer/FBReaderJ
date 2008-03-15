@@ -158,12 +158,18 @@ public final class FBReader extends ZLApplication {
 			} catch (IOException e) {
 			}
 		}
+        /*BookDescription description = BookDescription.getDescription(fileName);   
+		if (description == null) {
+			description = BookDescription.getDescription(getHelpFileName()); 
+			//openBook(getHelpFileName());
+		}
+		openBook(description);*/
 		if (!openBook(fileName)) {
 			openBook(getHelpFileName());
 		}
 		refreshWindow();
 	}
-
+    @Deprecated
 	boolean openBook(String fileName) {
 //		System.err.println("openBook");
 //		System.out.println("try open " + fileName);
