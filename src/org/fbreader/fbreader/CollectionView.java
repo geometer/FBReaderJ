@@ -214,8 +214,7 @@ public class CollectionView extends FBView {
 		}
 
 		private void build() {
-			final ArrayList/*<Author>*/ authors = myCollection.authors();
-			System.out.println("after authors in build");
+			final ArrayList/*<Author>*/ authors = myCollection.authors();			
 			String currentSequenceName = "";
 			ZLTextTreeParagraph sequenceParagraph;
 			for (int i = 0; i < authors.size(); i++) {
@@ -227,7 +226,7 @@ public class CollectionView extends FBView {
                     //todo 
 					ZLTextTreeParagraph authorParagraph = createParagraph(null);
 					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
-					//insertImage(AUTHOR_INFO_IMAGE_ID);
+					insertImage(AUTHOR_INFO_IMAGE_ID);
 					for (int j = 0; j < books.size(); j++) {
 						BookDescription jt = (BookDescription)books.get(j);
 						final String sequenceName = jt.getSequenceName();
@@ -238,15 +237,15 @@ public class CollectionView extends FBView {
 							currentSequenceName = sequenceName;
 							sequenceParagraph = createParagraph(authorParagraph);
 							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
-							//insertImage(SERIES_ORDER_IMAGE_ID);
+							insertImage(SERIES_ORDER_IMAGE_ID);
 						}
 						ZLTextTreeParagraph bookParagraph = createParagraph(
 							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
 						);
 						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
-						//insertImage(BOOK_INFO_IMAGE_ID);
+						insertImage(BOOK_INFO_IMAGE_ID);
 						if (myCollection.isBookExternal(jt)) {
-							//insertImage(DELETE_IMAGE_ID);
+							insertImage(DELETE_IMAGE_ID);
 						}
 						myParagraphToBook.put(bookParagraph, jt);
 						myBookToParagraph.put(jt, getParagraphsNumber() - 1);
@@ -261,7 +260,7 @@ public class CollectionView extends FBView {
 		}
 		
 		private void insertImage(String id) {
-			addFixedHSpace((short)1);
+			//addFixedHSpace((short)1);
 			addImage(id, myImageMap, (short)0);
 		}
 	};

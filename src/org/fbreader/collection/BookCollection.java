@@ -276,6 +276,7 @@ public class BookCollection {
 		public ZLIntegerRangeOption MaxListSizeOption;
 		static private final String GROUP = "LastOpenedBooks";
 		static private final String BOOK = "Book";
+		private final ArrayList/*BookDescription*/ myBooks = new ArrayList();
 
 		public LastOpenedBooks() {
 			MaxListSizeOption = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, GROUP, "MaxSize", 1, 100, 10);
@@ -310,13 +311,20 @@ public class BookCollection {
 			while (myBooks.size() > maxSize) {
 				myBooks.remove(myBooks.size() - 1);
 			}
+			save();
 		}
 		
 		public	ArrayList/*BookDescription*/ books() {
 			return myBooks;
 		}
-
-		private final ArrayList/*BookDescription*/ myBooks = new ArrayList();
 		
+		public void save() {
+			int size = Math.min(MaxListSizeOption.getValue(), myBooks.size());
+			for (int i = 0; i < size; ++i) {
+				String num = BOOK;
+				num += i;
+				new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, num, "").setValue(((BookDescription)myBooks.get(i)).getFileName());
+			}
+		}
 	}
 }

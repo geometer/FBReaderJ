@@ -47,7 +47,7 @@ public class RecentBooksView extends FBView {
 	public void paint() {
 		if (getModel() == null) {
 			//TODO
-			ZLTextPlainModel recentBooksModel = ZLModelFactory.createPlainModel(0);;
+			ZLTextPlainModel recentBooksModel = ZLModelFactory.createPlainModel(1024);;
 			final ArrayList/*<BookDescription>*/ books = myLastBooks.books();
 			for (int i = 0 ; i < books.size(); i++) {
 				BookDescription it = (BookDescription)books.get(i);
