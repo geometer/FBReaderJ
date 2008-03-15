@@ -125,22 +125,14 @@ public class CollectionView extends FBView {
 	}
 
 	public void paint() {
-		System.out.println("paint begin");
-		if (myUpdateModel) {
-			System.out.println("myUpdateModel");
+		if (myUpdateModel) {			
 			ZLTextModel oldModel = getModel();
-			System.out.println("paint begin1");
 			setModel(null);
-			System.out.println("paint begin2");
 			((CollectionModel)oldModel).update();
-			System.out.println("paint begin3");
 			setModel(oldModel);
-			System.out.println("paint begin4");
-			//myUpdateModel = false;
+			myUpdateModel = false;
 		}
-		System.out.println("paint begin5");
 		super.paint();
-		System.out.println("paint begin6");
 	}
 	
 	public void updateModel() {
@@ -160,7 +152,7 @@ public class CollectionView extends FBView {
 			setModel(null);
 			((CollectionModel)oldModel).update();
 			setModel(oldModel);
-			//myUpdateModel = false;
+			myUpdateModel = false;
 		}
 		int toSelect = collectionModel().paragraphNumberByBook(book);
 		if (toSelect >= 0) {
@@ -235,7 +227,7 @@ public class CollectionView extends FBView {
                     //todo 
 					ZLTextTreeParagraph authorParagraph = createParagraph(null);
 					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
-					insertImage(AUTHOR_INFO_IMAGE_ID);
+					//insertImage(AUTHOR_INFO_IMAGE_ID);
 					for (int j = 0; j < books.size(); j++) {
 						BookDescription jt = (BookDescription)books.get(j);
 						final String sequenceName = jt.getSequenceName();
@@ -246,15 +238,15 @@ public class CollectionView extends FBView {
 							currentSequenceName = sequenceName;
 							sequenceParagraph = createParagraph(authorParagraph);
 							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
-							insertImage(SERIES_ORDER_IMAGE_ID);
+							//insertImage(SERIES_ORDER_IMAGE_ID);
 						}
 						ZLTextTreeParagraph bookParagraph = createParagraph(
 							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
 						);
 						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
-						insertImage(BOOK_INFO_IMAGE_ID);
+						//insertImage(BOOK_INFO_IMAGE_ID);
 						if (myCollection.isBookExternal(jt)) {
-							insertImage(DELETE_IMAGE_ID);
+							//insertImage(DELETE_IMAGE_ID);
 						}
 						myParagraphToBook.put(bookParagraph, jt);
 						myBookToParagraph.put(jt, getParagraphsNumber() - 1);

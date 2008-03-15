@@ -112,9 +112,7 @@ public class BookCollection {
 			final ArrayList/*<String>*/ fileNames = new ArrayList();
 
 //		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
-			System.out.println("before strange code new ArrayList(myCollection.keySet());");
 			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
-			System.out.println("after strange code new ArrayList(myCollection.keySet());");
 			for (int i = 0; i < list.size(); i++) {
 				final ArrayList books = (ArrayList)myCollection.get((Author)list.get(i));
 				final int numberOfBooks = books.size();
@@ -126,7 +124,6 @@ public class BookCollection {
 					}
 				}
 			}
-			System.out.println("after first for");
 			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
 				final ArrayList books = (ArrayList)it.next();
 				final int numberOfBooks = books.size();
@@ -138,7 +135,6 @@ public class BookCollection {
 					}
 				}
 			}
-			System.out.println("after second for");
 
 			myCollection.clear();
 			myAuthors.clear();
