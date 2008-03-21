@@ -3,6 +3,7 @@ package org.zlibrary.core.html.own;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
@@ -20,7 +21,7 @@ final class ZLOwnHtmlParser {
 	private static final byte COMMENT = 6;
 	private static final byte LANGLE = 7;
 	private static final byte WS_AFTER_START_TAG_NAME = 8;
-	//private static final byte WS_AFTER_END_TAG_NAME = 9;
+	private static final byte WS_AFTER_END_TAG_NAME = 9;
 	private static final byte WAIT_EQUALS = 10;
 	private static final byte WAIT_ATTRIBUTE_VALUE = 11;
 	private static final byte SLASH = 12;
@@ -55,35 +56,45 @@ final class ZLOwnHtmlParser {
 		myReader = htmlReader;
 
 		String encoding = "UTF-8";
+		stream.mark(512);
 		final char[] buffer = myBuffer;
 		int len;
-		for (len = 0; len < 256; ++len) {
+		for (len = 0; len < 512; ++len) {
 			char c = (char)stream.read();
-			if (c == '>') {
-				break;
-			}
 			buffer[len] = c;
 		}
-		if (len < 384) {
-			String xmlDescription = new String(buffer, 0, len + 1);
-			int index = xmlDescription.indexOf("encoding");
-			if (index == 0) {
-				index = xmlDescription.indexOf("charset");
+		//if (len < 384) {
+			StringBuffer description = new StringBuffer(new String(buffer, 0, 512));
+			int index = description.indexOf("encoding");
+			if (index <= 0) {
+				index = description.indexOf("charset");
 			}
 			if (index > 0) {
-				int startIndex = xmlDescription.indexOf('=', index) + 1;
+				int startIndex;
+				for (startIndex = description.indexOf("=", index) + 1; 
+					!Character.isLetter(description.charAt(startIndex));
+					startIndex++) {
+				}
 				if (startIndex > 0) {
-					//TODO это очень плохое определение кодировки
-					int endIndex = Math.min(xmlDescription.indexOf(' ', startIndex + 1), 
-										xmlDescription.indexOf('>', startIndex + 1));
+					//TODO это плохое определение кодировки
+					int endIndex = Math.min(description.indexOf("\"", startIndex + 1),
+									Math.min(description.indexOf(" ", startIndex + 1), 
+									description.indexOf(">", startIndex + 1)));
 					if (endIndex > 0) {
-						encoding = xmlDescription.substring(startIndex + 1, endIndex);
+						encoding = description.substring(startIndex, endIndex);
 					}
 				}
 			}
-		}
+		//}
 
-		myStreamReader = new InputStreamReader(stream, encoding);
+		stream.reset();
+		InputStreamReader test;
+		try {
+			test = new InputStreamReader(stream, encoding);
+		} catch (UnsupportedEncodingException e) {
+			test = new InputStreamReader(stream, "UTF-8");
+		}
+		myStreamReader = test;
 	}
 
 	private static char[] getEntityValue(HashMap entityMap, String name) {
@@ -124,7 +135,6 @@ final class ZLOwnHtmlParser {
 		final ZLMutableString entityName = new ZLMutableString();
 		final HashMap strings = new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
-		String[] tagStack = new String[10];
 		int tagStackSize = 0;
 
 		byte state = START_DOCUMENT;
@@ -194,10 +204,7 @@ mainSwitchLabel:
 										tagName.append(buffer, startPosition, i - startPosition);
 										{
 											String stringTagName = convertToString(strings, tagName);
-											if (tagStackSize == tagStack.length) {
-												tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
-											}
-											tagStack[tagStackSize++] = stringTagName;
+											tagStackSize++;
 											processStartTag(htmlReader, stringTagName, attributes);
 										}
 										startPosition = i + 1;
@@ -220,10 +227,7 @@ mainSwitchLabel:
 								case '>':
 									{
 										String stringTagName = convertToString(strings, tagName);
-										if (tagStackSize == tagStack.length) {
-											tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
-										}
-										tagStack[tagStackSize++] = stringTagName;
+										tagStackSize++;
 										processStartTag(htmlReader, stringTagName, attributes);
 									}
 									state = TEXT;
@@ -246,6 +250,23 @@ mainSwitchLabel:
 									break;
 							}
 							break;
+							
+						case WS_AFTER_END_TAG_NAME:
+							switch (buffer[++i]) {
+								case '>':
+									{
+										String stringTagName = convertToString(strings, tagName);
+										tagStackSize--;
+										processEndTag(htmlReader, stringTagName);
+									}
+									state = TEXT;
+									startPosition = i + 1;
+									break;
+								default:
+									break;
+							}
+							break;
+							
 						case ATTRIBUTE_NAME:
 							while (true) {
 								switch (buffer[++i]) {
@@ -326,10 +347,7 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 									case '>':
 										String stringTagName = convertToString(strings, tagName);
-										if (tagStackSize == tagStack.length) {
-											tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
-										}
-										tagStack[tagStackSize++] = stringTagName;
+										tagStackSize++;
 										processStartTag(htmlReader, stringTagName, attributes);
 										state = TEXT;
 										startPosition = i + 1;
@@ -403,9 +421,24 @@ mainSwitchLabel:
 						case END_TAG:
 							while (true) {
 								switch (buffer[++i]) {
+									case 0x0008:
+									case 0x0009:
+									case 0x000A:
+									case 0x000B:
+									case 0x000C:
+									case 0x000D:
+									case ' ':
+										state = WS_AFTER_END_TAG_NAME;
+										tagName.append(buffer, startPosition, i - startPosition);
+										break mainSwitchLabel;
 									case '>':
 										if (tagStackSize > 0) {
-											processEndTag(htmlReader, tagStack[--tagStackSize]);
+											tagName.append(buffer, startPosition, i - startPosition);
+											{
+												String stringTagName = convertToString(strings, tagName);
+												tagStackSize--;
+												processEndTag(htmlReader, stringTagName);
+											}
 										}
 										state = TEXT;
 										startPosition = i + 1;
@@ -436,7 +469,7 @@ mainSwitchLabel:
 			} catch (ArrayIndexOutOfBoundsException e) {
 				switch (state) {
 					case START_TAG:
-					//case END_TAG:
+					case END_TAG:
 						tagName.append(buffer, startPosition, count - startPosition);
 						break;
 					case ATTRIBUTE_NAME:

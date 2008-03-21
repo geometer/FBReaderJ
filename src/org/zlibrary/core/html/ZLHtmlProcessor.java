@@ -19,7 +19,7 @@ public abstract class ZLHtmlProcessor {
 			return (stream != null) ? read(htmlReader, stream) : false;
 		} catch (Exception e) {
 			System.out.println(e);
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		return false;
 	}

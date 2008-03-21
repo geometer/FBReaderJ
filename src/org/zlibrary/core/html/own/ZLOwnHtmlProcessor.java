@@ -13,8 +13,9 @@ public class ZLOwnHtmlProcessor extends ZLHtmlProcessor {
 			reader.startDocumentHandler();
 			parser.doIt();
 			reader.endDocumentHandler();
-		} catch (IOException e) {
-			System.out.println(e);
+		} catch (Exception e) {
+//			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 		return true;

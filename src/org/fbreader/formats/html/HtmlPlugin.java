@@ -4,6 +4,7 @@ import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
 import org.fbreader.formats.FormatPlugin;
+import org.fbreader.formats.fb2.FB2DescriptionReader;
 import org.fbreader.formats.fb2.FB2Reader;
 import org.zlibrary.core.filesystem.ZLFile;
 
@@ -30,11 +31,9 @@ public class HtmlPlugin extends FormatPlugin {
 
 	@Override
 	public boolean readDescription(String path, BookDescription description) {
-		if (!description.getEncoding().equals(AUTO)) {
-			new BookDescription.BookInfo(description.getFileName()).EncodingOption.setValue(AUTO);
-		}
+		return new HtmlDescriptionReader(description).readDescription(path);
         // always true =)
-		return true;
+		//return true;
 	}
 
 	@Override
@@ -43,7 +42,6 @@ public class HtmlPlugin extends FormatPlugin {
 		if (!description.getEncoding().equals(AUTO)) {
 			new BookDescription.BookInfo(description.getFileName()).EncodingOption.setValue(AUTO);
 		}
-        // FB2BookReader
 		return new HtmlReader(model).readBook(description.getFileName());
 	}
 

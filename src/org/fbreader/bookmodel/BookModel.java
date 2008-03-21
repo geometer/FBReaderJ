@@ -49,8 +49,8 @@ public final class BookModel {
 		myFileName = description.getFileName();
 		myDescription = description;
 		ZLFile file = new ZLFile(description.getFileName());
+		System.out.println(description.getFileName());
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
-		System.out.println(plugin);
 		if (plugin != null) {
 			plugin.readModel(description, this);
 		}

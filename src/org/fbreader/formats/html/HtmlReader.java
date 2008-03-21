@@ -11,6 +11,7 @@ import org.zlibrary.core.html.ZLHtmlProcessor;
 import org.zlibrary.core.html.ZLHtmlProcessorFactory;
 import org.zlibrary.core.html.ZLHtmlReader;
 import org.zlibrary.text.model.ZLTextParagraph;
+import java.awt.image.*;
 
 public class HtmlReader extends BookReader implements ZLHtmlReader {
 
@@ -20,7 +21,6 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private boolean mySectionStarted = false;
 	private byte myHyperlinkType;
 	//private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
-	private boolean myUnnaturalTextBlockExists = false;
 	private final char[] SPACE = { ' ' };
 	private String myHrefAttribute = "href";
 	private boolean myAdditionalParagraphExists = false;
@@ -76,68 +76,67 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		// }
 	}
 
-	private void endUnnaturalTextBlock() {
-		/*if (myUnnaturalTextBlockExists) {
-			endParagraph();
-			myUnnaturalTextBlockExists = false;
-		}*/
-		if (myAdditionalParagraphExists) {
-			endParagraph();
-			beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-			myAdditionalParagraphExists = false; 
-		}
+	private void startNewParagraph() {
+		endParagraph();
+		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 	
 	public void endElementHandler(String tagName) {
 		switch (HtmlTag.getTagByName(tagName)) {
 			case HtmlTag.P:
-				endParagraph();
-				startUnnaturalTextBlock();
+				//endParagraph();
+				//startUnnaturalTextBlock();
+				startNewParagraph();
 				break;
 
 			case HtmlTag.H1:
-				endUnnaturalTextBlock();
 				addControl(FBTextKind.H1, false);
+				startNewParagraph();
 				break;
 				
 			case HtmlTag.H2:
-				endUnnaturalTextBlock();
 				addControl(FBTextKind.H2, false);
+				startNewParagraph();
 				break;
 				
 			case HtmlTag.H3:
-				endUnnaturalTextBlock();
 				addControl(FBTextKind.H3, false);
+				startNewParagraph();
 				break;
 				
 			case HtmlTag.H4:
-				endUnnaturalTextBlock();
 				addControl(FBTextKind.H4, false);
+				startNewParagraph();
 				break;
 				
 			case HtmlTag.H5:
-				endUnnaturalTextBlock();
 				addControl(FBTextKind.H5, false);
+				startNewParagraph();
 				break;
 				
 			case HtmlTag.H6:
-				endUnnaturalTextBlock();
 				addControl(FBTextKind.H6, false);
+				startNewParagraph();
 				break;
 				
 			case HtmlTag.A:
-				endUnnaturalTextBlock();
 				addControl(myHyperlinkType, false);
 				break;
 
 			case HtmlTag.BODY:
-				popKind();
 				myReadMainText = false;
-				unsetCurrentTextModel();
 				break;
 
+			case HtmlTag.HTML:
+				unsetCurrentTextModel();
+				break;
+				
 			case HtmlTag.B:
 				addControl(FBTextKind.BOLD, false);
+				break;
+				
+			case HtmlTag.STRONG:
+				addControl(FBTextKind.STRONG, false);
 				break;
 				
 			case HtmlTag.I:
@@ -149,21 +148,6 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 
-	/**
-	 * если тэг типа bold встретился вне параграфа, то нужно начать новый,
-	 * а если внутри, то нужно продолжить параграф 
-	 */ 
-	private void startUnnaturalTextBlock() {
-		if (!isTextParagraphExists()) {
-			myUnnaturalTextBlockExists = true;
-			beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-		} else {
-			endParagraph();
-			myAdditionalParagraphExists = true;
-			beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-		}
-	}
-	
 	public void startElementHandler(String tagName, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
 		if (id != null) {
@@ -199,7 +183,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					myReadMainText = true;
 				}
 				pushKind(FBTextKind.REGULAR);
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 
 			case HtmlTag.P:
@@ -228,19 +212,15 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.BR: {
-				boolean paragraphExists = isTextParagraphExists();
-				if (paragraphExists) {
-					endParagraph();
-				}
-				beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
-				endParagraph();
-				if (paragraphExists) {
-					beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
-				}
+				startNewParagraph();
 				break;
 			}
 			case HtmlTag.B:
 				addControl(FBTextKind.BOLD, true);
+				break;
+				
+			case HtmlTag.STRONG:
+				addControl(FBTextKind.STRONG, true);
 				break;
 				
 			case HtmlTag.I:
@@ -248,34 +228,35 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 				
 			case HtmlTag.H1:
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				addControl(FBTextKind.H1, true);
 				break;
 				
 			case HtmlTag.H2:
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				addControl(FBTextKind.H2, true);
 				break;
 				
 			case HtmlTag.H3:
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				addControl(FBTextKind.H3, true);
 				break;
 				
 			case HtmlTag.H4:
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				addControl(FBTextKind.H4, true);
 				break;
 				
 			case HtmlTag.H5:
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				addControl(FBTextKind.H5, true);
 				break;
 				
 			case HtmlTag.H6:
-				startUnnaturalTextBlock();
+				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				addControl(FBTextKind.H6, true);
 				break;
+				
 			default:
 				break;
 		}
