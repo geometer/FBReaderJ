@@ -44,8 +44,6 @@ public final class FBReader extends ZLApplication {
 	
 	private static final String OPTIONS = "Options";
 	private static final String SEARCH = "Search";
-	private static final String STATE = "State";
-	private static final String BOOK = "Book";
 
 	private static final String LARGE_SCROLLING = "LargeScrolling";
 	private static final String SMALL_SCROLLING = "SmallScrolling";
@@ -162,66 +160,22 @@ public final class FBReader extends ZLApplication {
 			//openBook(getHelpFileName());
 		}
 		openBook(description);*/
-		if (fileName == null) {
-			fileName = myBookNameOption.getValue();
+		BookDescription description = BookDescription.getDescription(fileName);   
+		if (description == null) {
+			description = BookDescription.getDescription(myBookNameOption.getValue());
 		}
-		if (!openBook(fileName)) {
-			openBook(getHelpFileName());
+		if (description == null) {
+			description = BookDescription.getDescription(getHelpFileName());
 		}
+		openBook(description);
+		setMode(ViewMode.BOOK_TEXT);
 		refreshWindow();
 	}
-    @Deprecated
-	boolean openBook(String fileName) {
-		if (fileName == null) {
-			return false;
-		}
-		if (false) {
-			BookDescription description = BookDescription.getDescription(fileName);   
-			if (description != null) {
-				openBook(description);
-				System.err.println("found description for " + fileName);
-				return true;
-			} else {
-				return false;
-			}
-		}
-//		System.err.println("openBook");
-//		System.out.println("try open " + fileName);
-		myBookModel = new BookModel(fileName);
-		//android.os.Debug.startMethodTracing("/tmp/openBook2");
-		
-		/*if (!new FB2Reader(myBookModel).read()) {
-		myBookModel = null;
-		return false;
-		}*/
-		
-		// я тут пока прописал самый примитивный выбор читателя. Женя
-		
-		if (fileName.endsWith("html") || fileName.endsWith("htm")) {
-			if (!new HtmlReader(myBookModel).read()) {
-				//myBookModel = null;
-				return false;
-			}
-		} else {
-			if (!new FB2Reader(myBookModel).read()) {
-				//myBookModel = null;
-				return false;
-			}
-		}
-		//android.os.Debug.stopMethodTracing();
-		myBookNameOption.setValue(fileName);
-		myBookTextView.setModel(myBookModel.getBookTextModel(), myBookModel.getFileName());
-		myContentsView.setModel(myBookModel.getContentsModel());
-		setMode(ViewMode.BOOK_TEXT);
-		ZLTextHyphenator.getInstance().load("ru");
-		return true;
-	}
-	
 	
 	public void openBook(BookDescription bookDescription) {
-		OpenBookRunnable runnable = new OpenBookRunnable(this, bookDescription);
-		runnable.run();
+		OpenBookRunnable runnable = new OpenBookRunnable(bookDescription);
 		//ZLDialogManager.getInstance().wait(new ZLResourceKey("loadingBook"), runnable);
+		runnable.run();
 		resetWindowCaption();
 	}
 
@@ -318,7 +272,7 @@ public final class FBReader extends ZLApplication {
 			contentsView.setModel(null);
 			myBookModel = new BookModel(description);
 			final String fileName = description.getFileName();
-			new ZLStringOption(ZLOption.STATE_CATEGORY, STATE, BOOK, "").setValue(fileName);
+			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());
 			bookTextView.setModel(myBookModel.getBookTextModel(), fileName);
 			bookTextView.setCaption(description.getTitle());
@@ -328,7 +282,6 @@ public final class FBReader extends ZLApplication {
 			contentsView.setModel(myBookModel.getContentsModel());
 			contentsView.setCaption(description.getTitle());
 			recentBooksView.lastBooks().addBook(fileName);
-			//System.err.println("openBookInternal");
 		}
 	}
 	
@@ -341,18 +294,15 @@ public final class FBReader extends ZLApplication {
 	}
 	
 	private class OpenBookRunnable implements ZLRunnable {
-		private FBReader myReader;
 		private	BookDescription myDescription;
 
-		public OpenBookRunnable(FBReader reader, BookDescription description) { 
-			myReader = reader;
+		public OpenBookRunnable(BookDescription description) { 
 			myDescription = description; 
 		}
 		
 		public void run() { 
-			myReader.openBookInternal(myDescription); 
+			openBookInternal(myDescription); 
 		}
-
 	}
 
 	public RecentBooksView getRecentBooksView() {
@@ -377,5 +327,4 @@ public final class FBReader extends ZLApplication {
 			refreshWindow();
 		}
 	}
-
 }

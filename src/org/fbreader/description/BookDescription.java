@@ -31,6 +31,9 @@ public class BookDescription {
 	} 
 	
 	public static BookDescription getDescription(String fileName, boolean checkFile) {
+		if (fileName == null) {
+			return null;
+		}
 		String physicalFileName = new ZLFile(fileName).getPhysicalFilePath();
 		ZLFile file = new ZLFile(physicalFileName);
 		if (checkFile && !file.exists()) {
