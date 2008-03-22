@@ -20,20 +20,21 @@ public class BookList {
 			optionName += i;
 			ZLStringOption bookOption = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, optionName, "");
 			final String fileName = bookOption.getValue();
-			if (fileName.length() != 0) {
-				addFileName(fileName);
+			if ((fileName.length() != 0) && !myFileNames.contains(fileName)) {
+				myFileNames.add(fileName);
 			}
 		}
 	}
 
 	public ArrayList fileNames() {
-		save();
-		return myFileNames;
+		return new ArrayList(myFileNames);
 	}
 	
 	public void addFileName(String fileName) {
-		myFileNames.add(fileName);
-		save();
+		if (!myFileNames.contains(fileName)) {
+			myFileNames.add(fileName);
+			save();
+		}
 	}
 	
 	public void removeFileName(String fileName) {
@@ -41,7 +42,7 @@ public class BookList {
 		save();
 	}
 	
-	public void  save() {
+	private void  save() {
 		new ZLIntegerOption(ZLOption.STATE_CATEGORY, GROUP, SIZE, 0).setValue(myFileNames.size());
 		int i = 0;
 		for (Iterator it = myFileNames.iterator(); it.hasNext(); ++i) {
@@ -49,7 +50,6 @@ public class BookList {
 			optionName += i;
 			new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, optionName, "").setValue((String)it.next());
 		}
-		System.out.println("add book");
 	}
 }
 

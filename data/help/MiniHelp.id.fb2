@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="koi8-r"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>О программе FBReader</book-title> <lang>ru</lang></title-info></description>
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Mengenai FBReader</book-title> <lang>id</lang></title-info></description>
 <body>
-<title><p>О программе FBReader &FBReaderVersion;</p></title>
-<p>FBReader &#8211; программа для чтения электронных книг, работающая под операционными системами Linux, FreeBSD, Windows XP. FBReader позволяет читать книги во многих форматах: <code>fb2</code>, <code>html</code>, <code>chm</code>, <code>rtf</code>, <code>plucker</code>, и&#160;т.&#160;д. Файлы можно читать напрямую из архивов <code>zip</code>, <code>tar</code>, <code>gzip</code> и <code>bzip2</code>.</p>
-<p>FBReader распространяется свободно, включая исходные тексты, под лицензией <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<title><p>Mengenai FBReader &FBReaderVersion;</p></title>
+<p>FBReader adalah aplikasi pembaca buku elektronik (e-book) untuk komputer PDA/UMPC/desktop dengan sistem operasi Linux/Windows XP. FBReader mendukung beberapa format buku elektronik: <code>fb2</code>, <code>html</code>, <code>chm</code>, <code>rtf</code>, <code>plucker</code>, dan lain-lain. Juga mendukung pembacaan langsung dari berkas terkompresi dalam format <code>zip</code>, <code>tar</code>, <code>gzip</code> dan <code>bzip2</code>.</p>
+<p>FBReader didistribusikan di bawah lisensi <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
 <empty-line/>
-<subtitle><p>С чего начать</p></subtitle>
-<p>FBReader автоматически собирает в библиотеку файлы форматов <code>fb2</code>, <code>oeb</code> и <code>OpenReader</code>, лежащие в каталогах, заданных параметром <code>&#171;Каталоги с книгами&#187;</code>. Поэтому прежде всего нужно определить этот параметр. Откройте диалог настроек (нажмите на кнопку <image l:href="#settings.png" voffset="-6"/>) и отредактруйте <code>&#171;каталоги с книгами&#187;</code> в разделе <code>&#171;Библиотека&#187;</code>. Каталоги перечисляются через двоеточие, в этих каталогах должны лежать файлы с расширениями <code>fb2</code>, <code>oebzip</code> или <code>orb</code>, или содержащие их архивы.</p>
-<p>Теперь откройте <code>библиотеку</code> (нажмите на <image l:href="#books.png" voffset="-6"/>), выберите книгу, и приступайте к чтению.</p>
-<p>Чтобы читать книгу в другом формате, ее нужно вручную добавить в библиотеку. Запустите <code>диалог добавления книги</code> (<image l:href="#addbook.png"/>), выберите файл и отредактируйте информацию о книге. В следующий раз вы сможете открыть эту книгу уже с помощью <code>библиотеки</code> (<image l:href="#books.png" voffset="-6"/>).</p>
+<subtitle><p>Bagaimana Memulainya</p></subtitle>
+<p>FBReader mencari buku format <code>fb2</code>, <code>oeb</code> dan <code>OpenReader</code> dalam direktori yang tercantum dalam pengaturan <code>Lokasi Buku</code>. Anda perlu mengatur lokasi ini terlebih dahulu. Buka dialog pengaturan (klik pada ikon <image l:href="#settings.png" voffset="-6"/> di toolbar) dan ubah pengaturan <code>Lokasi Buku</code> pada halaman <code>Pustaka</code>. Pengaturan ini berisi daftar direktori yang terdapat berkas <code>*.fb2</code>, <code>*.oebzip</code>, <code>*.orb</code> atau berkas terkompresi. Daftar direktori ini dipisahkan oleh titik dua.</p>
+<p>Buka <code>pustaka</code> (klik pada ikon <image l:href="#books.png" voffset="-6"/>), pilih sebuah buku dari daftar dan Anda bisa mulai membaca.</p>
+<p>Untuk membaca berkas dalam format lain, Anda perlu menambahkannya ke pustaka. Mulailah <code>dialog tambah ke pustaka</code> (<image l:href="#addbook.png"/>), pilih sebuah berkas dan ubah informasi berkasnya jika perlu. Di lain waktu Anda dapat membuka berkas ini menggunakan <code>pustaka</code> (<image l:href="#books.png" voffset="-6"/>).</p>
 <empty-line/>
-<subtitle><p>Ссылки</p></subtitle>
-<p>Информацию об FBReader'е и свежую версию программы можно найти на <a l:href="http://www.fbreader.org">сайте FBReader'а</a>.</p>
-<p>Если вы хотите получать сообщения о новых версиях, подпишитесь на <a l:href="http://freshmeat.net/projects/fbreader">проект FBReader на freshmeat</a>.</p>
-<p>Чтобы связаться с авторами программы, воспользуйтесь <a l:href="http://groups.google.com/group/fbreader">группой FBReader на googlegroups</a>.</p>
+<subtitle><p>Alamat yang berkaitan</p></subtitle>
+<p>Informasi tambahan mengenai aplikasi ini dapat ditemukan di <a l:href="http://www.fbreader.org">situs FBReader</a>.</p>
+<p>Jika ingin menerima informasi mengenai rilis baru aplikasi ini, silakan daftarkan diri ke <a l:href="http://freshmeat.net/projects/fbreader">proyek FBReader di freshmeat</a>.</p>
+<p>Jika Anda memiliki pertanyaan atau masukan, silakan gunakan <a l:href="http://groups.google.com/group/fbreader">grup FBReader di googlegroups</a>.</p>
 </body>
 <binary content-type="image/png" id="settings.png">
 iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgI

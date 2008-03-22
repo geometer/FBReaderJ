@@ -12,6 +12,7 @@
 		</node>
 		<node name="navigate" value="Navigate">
 			<node name="gotoHome" value="Go to Start of Document"/>
+			<node name="gotoPageNumber" value="Go to Page..."/>
 			<node name="gotoSectionStart" value="Go to Start of Text Section"/>
 			<node name="gotoSectionEnd" value="Go to End of Text Section"/>
 			<node name="nextTOCSection" value="Go to Next TOC Item"/>
@@ -56,15 +57,18 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="go" value="&amp;Go!"/>
+			<node name="thisOnly" value="This only"/>
+			<node name="withSubtags" value="With subtags"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Options"/>
 			<node name="tab">
-				<node name="General" value="General">
+				<node name="Library" value="Library">
 					<node name="bookPath" value="Book Path"/>
 					<node name="lookInSubdirectories" value="Look for Books in Subdirectories"/>
 					<node name="recentListSize" value="Recent Books List Size"/>
-					<node name="keyDelay" value="Delay Between Accepted Key Pressings"/>
+					<node name="showTags" value="Show Tag Hierarchies"/>
+					<node name="showAllBooksList" value="Show All Books Branch"/>
 				</node>
 				<node name="Language" value="Language">
 					<node name="autoDetect" value="Automatically Detect Language and Encoding"/>
@@ -72,7 +76,6 @@
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
 					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1"/>
-					<node name="chineseBreakAtAnyPosition" value="For Chinese Break Line at Any Position"/>
 				</node>
 				<node name="Indicator" value="Indicator">
 					<node name="show" value="Show Position Indicator"/>
@@ -89,7 +92,7 @@
 						<node name="large" value="Large Scrollings"/>
 						<node name="small" value="Small Scrollings"/>
 						<node name="mouse" value="Mouse Scrollings"/>
-						<node name="finger" value="Finger Tap Scrollings"/>
+						<node name="tap" value="Tap Scrollings"/>
 					</node>
 					<node name="delay" value="Delay between Scrollings, msecs"/>
 					<node name="mode" value="Scrolling Mode">
@@ -102,6 +105,7 @@
 					<node name="linesToKeep" value="Lines to Keep"/>
 					<node name="linesToScroll" value="Lines to Scroll"/>
 					<node name="percentToScroll" value="Percent to Scroll"/>
+					<node name="fingerOnly" value="Scroll on Finger Tap Only"/>
 				</node>
 				<node name="Selection" value="Selection">
 					<node name="enableSelection" value="Enable Text Selection"/>
@@ -203,6 +207,7 @@
 						<node name="quit" value="Quit"/>
 					</node>
 					<node name="quitOnCancel" value="Quit Application on Cancel"/>
+					<node name="keyDelay" value="Delay Between Accepted Key Pressings"/>
 				</node>
 				<node name="Config" value="Config">
 					<node name="autoSave" value="Save State Automatically"/>
@@ -243,6 +248,9 @@
 					<node name="seriesTitle" value="Series Title"/>
 					<node name="bookNumber" value="Book Number"/>
 				</node>
+				<node name="Tags" value="Tags">
+					<node name="tags" value="Tag List"/>
+				</node>
 				<node name="Text" value="Text">
 					<node name="breakType" value="Break Paragraph at"/>
 					<node name="ignoreIndent" value="Ignore Indent Less than"/>
@@ -268,21 +276,47 @@
 			<node name="backward" value="&amp;Backward"/>
 			<node name="currentSection" value="&amp;This section only"/>
 		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Go To Page"/>
+			<node name="pageNumber" value="Go to Page Number"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Edit/Clone Tag"/>
+			<node name="editOrClone" value="Action">
+				<node name="edit" value="Rename Tag"/>
+				<node name="clone" value="Clone Tag"/>
+			</node>
+			<node name="name" value="Tag Name"/>
+			<node name="includeSubtags" value="Include Subtags"/>
+		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Remove Book"/>
-			<node name="message" value="Remove Book &#13;&quot;%s&quot;&#13; from the Library?"/>
+			<node name="message" value="Remove Book &#10;&#8220;%s&#8221;&#10; from the Library?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Remove Tag"/>
+			<node name="message" value="Remove Tag &#8220;%s&#8221;?"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Error"/>
-			<node name="message" value="Couldn't open:&#13;%s"/>
+			<node name="message" value="Couldn't open:&#10;%s"/>
 		</node>
 		<node name="noHelpBox">
 			<node name="title" value="Error"/>
 			<node name="message" value="Help file not found, sorry"/>
 		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Error"/>
+			<node name="message" value="Tag name must be a non-empty string"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Error"/>
+			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol"/>
+		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Loading book. Please, wait..."/>
 			<node name="loadingBookList" value="Loading book list. Please, wait..."/>
+			<node name="migrate" value="Upgrading to the new version. Please, wait..."/>
 		</node>
 	</node>
 	<node name="style">
@@ -333,5 +367,11 @@
 		<node name="unknown" value="Unknown Error"/>
 		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
 		<node name="encriptedFile" value="DRM-protected File"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Library"/>
+		<node name="allBooks" value="All Books"/>
+		<node name="booksWithoutTags" value="Books with no Tags"/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button."/>
 	</node>
 </resources>

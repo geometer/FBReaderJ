@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <node name="menu">
+	  <node name="bookInfo" value="Informasi Buku..."/>
+	  <node name="toc" value="Daftar Isi"/>
+		<node name="library" value="Pustaka">
+			<node name="showLibrary" value="Buka"/>
+			<node name="previousBook" value="Buku Sebelumnya"/>
+			<node name="showRecent" value="Buku-buku Sebelumnya"/>
+			<node name="addBook" value="Tambah Buku..."/>
+			<node name="showHelp" value="Mengenai FBReader"/>
+		</node>
+		<node name="navigate" value="Navigasi">
+			<node name="gotoHome" value="Ke Awal Dokumen"/>
+			<node name="gotoPageNumber" value="Ke Halaman..."/>
+			<node name="gotoSectionStart" value="Ke Bagian Awal Teks"/>
+			<node name="gotoSectionEnd" value="Ke Bagian Akhir Teks"/>
+			<node name="nextTOCSection" value="Ke Item Daftar Isi Berikutnya"/>
+			<node name="previousTOCSection" value="Ke Item Daftar Isi Sebelumnya"/>
+			<node name="undo" value="Mundur"/>
+			<node name="redo" value="Maju"/>
+		</node>
+		<node name="selection" value="Seleksi">
+			<node name="copyToClipboard" value="Salin ke Clipboard"/>
+			<node name="openInDictionary" value="Buka di Kamus"/>
+			<node name="clearSelection" value="Bersihkan"/>
+		</node>
+		<node name="search" value="Cari">
+			<node name="search" value="Pencarian Teks..."/>
+			<node name="findNext" value="Pencarian Maju"/>
+			<node name="findPrevious" value="Pencarian Mundur"/>
+		</node>
+		<node name="view" value="Tampilan">
+			<node name="rotate" value="Putar Layar"/>
+			<node name="toggleFullscreen" value="Layar Penuh"/>
+			<node name="toggleIndicator" value="Hidup/Matikan Indikator"/>
+		</node>
+		<node name="preferences" value="Pengaturan..."/>
+		<node name="quit" value="Keluar"/>
+	</node>
+	<node name="toolbar">
+		<node name="showLibrary" value="Perlihatkan Daftar Pustaka"/>
+		<node name="showRecent" value="Perlihatkan Daftar Buku-buku Sebelumnya"/>
+		<node name="addBook" value="Tambahkan Berkas ke Pustaka"/>
+		<node name="gotoHome" value="Ke Bagian Awal Teks"/>
+		<node name="undo" value="Mundur"/>
+		<node name="redo" value="Maju"/>
+		<node name="toc" value="Daftart Isi"/>
+		<node name="search" value="Pencarian Teks"/>
+		<node name="findNext" value="Pencarian Maju"/>
+		<node name="findPrevious" value="Pencarian Mundur"/>
+		<node name="bookInfo" value="Tampilkan Dialog Informasi Buku"/>
+		<node name="preferences" value="Tampilkan Dialog Pengaturan"/>
+		<node name="rotate" value="Putar Layar"/>
+		<node name="showHelp" value="Mengenai FBReader"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="go" value="&amp;Mulai!"/>
+			<node name="thisOnly" value="This only" toBeTranslated="true"/>
+			<node name="withSubtags" value="With subtags" toBeTranslated="true"/>
+		</node>
+		<node name="OptionsDialog">
+			<node name="title" value="FBReader - Pengaturan"/>
+			<node name="tab">
+				<node name="Library" value="Pustaka">
+					<node name="bookPath" value="Lokasi Buku"/>
+					<node name="lookInSubdirectories" value="Tampilkan Buku-buku yang Ada di Sub Direktori"/>
+					<node name="recentListSize" value="Jumlah Daftar Buku-buku yang dibuka sebelumnya"/>
+					<node name="showTags" value="Show Tag Hierarchies" toBeTranslated="true"/>
+					<node name="showAllBooksList" value="Show All Books Branch" toBeTranslated="true"/>
+				</node>
+				<node name="Language" value="Bahasa">
+					<node name="autoDetect" value="Deteksi Bahasa dan Enkode secara Otomatis"/>
+					<node name="defaultLanguage" value="Bahasa Standar"/>
+					<node name="defaultEncodingSet" value="Set Enkode Standar"/>
+					<node name="defaultEncoding" value="Enkode Standar"/>
+					<node name="useWindows1252Hack" value="Gunakan windows-1252 daripada iso-8859-1"/>
+				</node>
+				<node name="Indicator" value="Indikator">
+					<node name="show" value="Tampilkan Indikator Posisi"/>
+					<node name="height" value="Tinggi Indikator"/>
+					<node name="offset" value="Jarak dari Teks"/>
+					<node name="pageNumber" value="Tampilkan Posisi sebagai Nomor"/>
+					<node name="time" value="Tampilkan Waktu"/>
+					<node name="fontSize" value="Ukuran Huruf"/>
+					<node name="tocMarks" value="Tampilkan Penanda Daftar Isi"/>
+					<node name="navigation" value="Aktifkan Navigasi"/>
+				</node>
+				<node name="Scrolling" value="Geser Layar">
+					<node name="optionsFor" value="Pengaturan untuk">
+						<node name="large" value="Pergeseran Besar"/>
+						<node name="small" value="Pergeseran Kecil"/>
+						<node name="mouse" value="Pergeseran Mouse"/>
+						<node name="tap" value="Pergeseran Layar Sentuh"/>
+					</node>
+					<node name="delay" value="Waktu Tunda antara Pergeseran, mdetik"/>
+					<node name="mode" value="Mode Pergeseran">
+						<node name="noOverlapping" value="Jangan Tumpang Tindih"/>
+						<node name="keepLines" value="Biarkan Baris"/>
+						<node name="scrollLines" value="Geser Baris"/>
+						<node name="scrollPercentage" value="Pensentase Pergeseran"/>
+						<node name="disable" value="Non-aktifkan"/>
+					</node>
+					<node name="linesToKeep" value="Baris yang Dibiarkan"/>
+					<node name="linesToScroll" value="Baris yang Digeser"/>
+					<node name="percentToScroll" value="Persentase yang Digeser"/>
+					<node name="fingerOnly" value="Geser Hanya Menggunakan Layar Sentuh"/>
+				</node>
+				<node name="Selection" value="Seleksi">
+					<node name="enableSelection" value="Aktifkan Seleksi Teks"/>
+				</node>
+				<node name="Margins" value="Margin">
+					<node name="left" value="Margin Kiri"/>
+					<node name="right" value="Margin Kanan"/>
+					<node name="top" value="Margin Atas"/>
+					<node name="bottom" value="Margin Bawah"/>
+				</node>
+				<node name="Format" value="Format">
+					<node name="optionsFor" value="Pengaturan untuk"/>
+					<node name="lineSpacing" value="Jarak Baris">
+						<node name="unchanged" value="&lt;tidak diubah&gt;"/>
+					</node>
+					<node name="firstLineIndent" value="Indentasi Baris Pertama"/>
+					<node name="alignment" value="Perataan Teks">
+						<node name="left" value="Kiri"/>
+						<node name="right" value="Kanan"/>
+						<node name="center" value="Tengah"/>
+						<node name="justify" value="Rata Kanan Kiri"/>
+						<node name="unchanged" value="&lt;tidak diubah&gt;"/>
+					</node>
+					<node name="spaceBefore" value="Jarak Sebelumnya"/>
+					<node name="spaceAfter" value="Jarak Setelahnya"/>
+					<node name="leftIndent" value="Indentasi Kiri"/>
+					<node name="rightIndent" value="Indentasi Kanan"/>
+				</node>
+				<node name="Styles" value="Bentuk">
+					<node name="optionsFor" value="Pengaturan untuk"/>
+					<node name="fontFamily" value="Keluarga">
+						<node name="unchanged" value="&lt;tidak diubah&gt;"/>
+					</node>
+					<node name="fontSize" value="Ukuran"/>
+					<node name="fontSizeDifference" value="Perbedaan Ukuran"/>
+					<node name="bold" value="Tebal"/>
+					<node name="italic" value="Miring"/>
+					<node name="allowHyphenations" value="Ijinkan Pemenggalan Kata"/>
+					<node name="autoHyphenations" value="Pemenggalan Kata Otomatis"/>
+				</node>
+				<node name="Rotation" value="Rotasi">
+					<node name="direction" value="Tipe Rotasi">
+						<node name="disabled" value="Non-aktifkan"/>
+						<node name="clockwise" value="90 Derajat Searah Jarum Jam"/>
+						<node name="counterclockwise" value="90 Derajat Berlawanan Jarum Jam"/>
+						<node name="180" value="180 Derajat"/>
+						<node name="cycle" value="Rotasi 4 Arah Bergantian"/>
+					</node>
+				</node>
+				<node name="Colors" value="Warna">
+					<node name="colorFor" value="Warna untuk">
+						<node name="background" value="Latar Belakang"/>
+						<node name="selectionBackground" value="Latar Belakang Seleksi"/>
+						<node name="text" value="Teks Biasa"/>
+						<node name="internalLink" value="Teks Hyperlink Internal"/>
+						<node name="externalLink" value="Teks Hyperlink Eksternal"/>
+						<node name="highlighted" value="Text Berwarna Cerah"/>
+						<node name="treeLines" value="Garis Diagram Pohon"/>
+						<node name="indicator" value="Indikator Posisi"/>
+					</node>
+				</node>
+				<node name="Keys" value="Tombol">
+					<node name="grabSystemKeys" value="Tangkap Tombol Sistem"/>
+					<node name="separate" value="Tombol Tergantung dari Orientasi"/>
+					<node name="orientation" value="Orientasi"/>
+					<node name="action">
+						<node name="none" value="Tidak Terpakai"/>
+						<node name="showLibrary" value="Tampilkan Pustaka"/>
+						<node name="showRecent" value="Tampilkan Buku-buku Sebelumnya"/>
+						<node name="previousBook" value="Buka Buku Sebelumnya"/>
+						<node name="toc" value="Tampilkan Daftar Isi"/>
+						<node name="gotoHome" value="Ke Awal Dokumen"/>
+						<node name="gotoSectionStart" value="Ke Awal Seksi"/>
+						<node name="gotoSectionEnd" value="Ke Akhir Seksi"/>
+						<node name="nextTOCSection" value="Ke Seksi Daftar Isi Berikutnya"/>
+						<node name="previousTOCSection" value="Ke Seksi Daftar Isi Sebelumnya"/>
+						<node name="largeScrollForward" value="Pergeseran Maju yang Besar"/>
+						<node name="largeScrollBackward" value="Pergeseran Mundur yang Besar"/>
+						<node name="smallScrollForward" value="Pergeseran Maju yang Kecil"/>
+						<node name="smallScrollBackward" value="Pergeseran Mundur yang Kecil"/>
+						<node name="undo" value="Mundur"/>
+						<node name="redo" value="Maju"/>
+						<node name="copyToClipboard" value="Salin Teks yang Diseleksi ke Clipboard"/>
+						<node name="openInDictionary" value="Buka Teks yang Diseleksi di Kamus"/>
+						<node name="clearSelection" value="Bersihkan Seleksi"/>
+						<node name="search" value="Pencarian"/>
+						<node name="findPrevious" value="Pencarian Mundur"/>
+						<node name="findNext" value="Pencarian Maju"/>
+						<node name="increaseFont" value="Besarkan Ukuran Huruf"/>
+						<node name="decreaseFont" value="Kecilkan Ukuran Huruf"/>
+						<node name="toggleIndicator" value="Hidup/Matikan Indikator"/>
+						<node name="toggleFullscreen" value="Hidup/Matikan Layar Penuh"/>
+						<node name="onFullscreen" value="Ubah ke Layar Penuh"/>
+						<node name="rotate" value="Putar Layar"/>
+						<node name="preferences" value="Tampilkan Dialog Pengaturan"/>
+						<node name="bookInfo" value="Tampilkan Dialog Informasi Buku"/>
+						<node name="addBook" value="Tambah Buku"/>
+						<node name="cancel" value="Batal"/>
+						<node name="quit" value="Keluar"/>
+					</node>
+					<node name="quitOnCancel" value="Keluar dari Aplikasi Ketika Pembatalan"/>
+					<node name="keyDelay" value="Waktu Tunda Antara Penekanan Tombol"/>
+				</node>
+				<node name="Config" value="Konfigurasi">
+					<node name="autoSave" value="Simpan Status Secara Otomatis"/>
+					<node name="timeout" value="Waktu Tunda Antara Penyimpanan, detik"/>
+				</node>
+				<node name="Dictionary" value="Kamus">
+					<node name="enableIntegration" value="Aktifkan Integrasi dengan %s"/>
+					<node name="defaultText" value="Aktifkan Integrasi dengan Kamus"/>
+					<node name="choice" value="Integrasikan dengan"/>
+					<node name="singleClickOpen" value="Buka dengan Klik Tunggal"/>
+				</node>
+				<node name="Web" value="Web">
+					<node name="enableIntegration" value="Buka Link Eksternal dengan %s"/>
+					<node name="defaultText" value="Buka Link Eksternal dengan Browser"/>
+					<node name="choice" value="Gunakan Browser"/>
+					<node name="command" value="Perintah yang Dieksekusi"/>
+				</node>
+				<node name="Maemo" value="Maemo">
+					<node name="keyActionOnRelease" value="Tombol Aktif saat Dilepas, bukan saat Ditekan"/>
+					<node name="minStylusPressure" value="Tekanan Minimal Stylus"/>
+					<node name="maxStylusPressure" value="Tekanan Maksimal Stylus"/>
+				</node>
+			</node>
+		</node>
+		<node name="InfoDialog">
+			<node name="title" value="FBReader - Informasi Buku"/>
+			<node name="tab">
+				<node name="Common" value="Umum">
+					<node name="file" value="Berkas"/>
+					<node name="title" value="Judul"/>
+					<node name="authorDisplayName" value="Pengarang (Tertampil)"/>
+					<node name="authorSortKey" value="Pengarang (Pengurut)"/>
+					<node name="language" value="Bahasa"/>
+					<node name="encodingSet" value="Set Enkode"/>
+					<node name="encoding" value="Enkode"/>
+				</node>
+				<node name="Series" value="Seri">
+					<node name="seriesTitle" value="Judul Seri"/>
+					<node name="bookNumber" value="Nomor Buku"/>
+				</node>
+				<node name="Tags" value="Tags" toBeTranslated="true">
+					<node name="tags" value="Tag List" toBeTranslated="true"/>
+				</node>
+				<node name="Text" value="Teks">
+					<node name="breakType" value="Penggal Paragraf pada"/>
+					<node name="ignoreIndent" value="Abaikan Indentasi Kurang dari"/>
+					<node name="buildTOC" value="Buat Daftar Isi"/>
+					<node name="emptyLines" value="Baris Kosong Sebelum Seksi Baru"/>
+				</node>
+				<node name="&lt;PRE&gt;" value="&lt;PRE&gt;">
+					<node name="breakType" value="Penggal Paragraf pada"/>
+					<node name="ignoreIndent" value="Abaikan Indentasi Kurang dari"/>
+					<node name="buildTOC" value="Buat Daftar Isi"/>
+					<node name="emptyLines" value="Baris Kosong Sebelum Seksi Baru"/>
+				</node>
+			</node>
+		</node>
+		<node name="addFileDialog">
+			<node name="title" value="FBReader - Tambahkan Buku ke Pustaka"/>
+		</node>
+		<node name="textSearchDialog">
+			<node name="title" value="Pencarian Text"/>
+			<node name="text" value=""/>
+			<node name="ignoreCase" value="&amp;Abaikan huruf besar/kecil"/>
+			<node name="wholeText" value="&amp;Dalam keseluruhan teks"/>
+			<node name="backward" value="&amp;Pencarian mundur"/>
+			<node name="currentSection" value="&amp;Hanya dalam seksi ini"/>
+		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Ke Halaman"/>
+			<node name="pageNumber" value="Ke Nomor Halaman"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Edit/Clone Tag" toBeTranslated="true"/>
+			<node name="editOrClone" value="Action" toBeTranslated="true">
+				<node name="edit" value="Rename Tag" toBeTranslated="true"/>
+				<node name="clone" value="Clone Tag" toBeTranslated="true"/>
+			</node>
+			<node name="name" value="Tag Name" toBeTranslated="true"/>
+			<node name="includeSubtags" value="Include Subtags" toBeTranslated="true"/>
+		</node>
+		<node name="removeBookBox">
+			<node name="title" value="Hapus Buku"/>
+			<node name="message" value="Hapus buku &#13;&quot;%s&quot;&#13; dari Pustaka?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Remove Tag" toBeTranslated="true"/>
+			<node name="message" value="Remove Tag &#8220;%s&#8221;?" toBeTranslated="true"/>
+		</node>
+		<node name="openBookErrorBox">
+			<node name="title" value="Ada Kesalahan"/>
+			<node name="message" value="Tidak dapat membuka:&#13;%s"/>
+		</node>
+		<node name="noHelpBox">
+			<node name="title" value="Ada Kesalahan"/>
+			<node name="message" value="Berkas tidak ditemukan, maaf"/>
+		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Ada Kesalahan"/>
+			<node name="message" value="Tag name must be a non-empty string" toBeTranslated="true"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Ada Kesalahan"/>
+			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol" toBeTranslated="true"/>
+		</node>
+		<node name="waitMessage">
+			<node name="loadingBook" value="Membaca buku. Silakan tunggu..."/>
+			<node name="loadingBookList" value="Membaca daftar buku. Silakan tunggu..."/>
+			<node name="migrate" value="Upgrading to the new version. Please, wait..." toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="style">
+		<node name="Base" value="Dasar"/>
+		<node name="Regular Paragraph" value="Paragraf Biasa"/>
+		<node name="Title" value="Judul"/>
+		<node name="Section Title" value="Judul Seksi"/>
+		<node name="Poem Title" value="Judul Poem"/>
+		<node name="Subtitle" value="Sub Judul"/>
+		<node name="Annotation" value="Anotasi"/>
+		<node name="Epigraph" value="Epigraf"/>
+		<node name="Stanza" value="Stanza"/>
+		<node name="Verse" value="Verse"/>
+		<node name="Preformatted text" value="Teks Terformat"/>
+		<node name="Image" value="Gambar"/>
+		<node name="Cite" value="Cite"/>
+		<node name="Author" value="Pengarang"/>
+		<node name="Date" value="Tanggal"/>
+		<node name="Internal Hyperlink" value="Hyperlink Internal"/>
+		<node name="Footnote" value="Catatan Kaki"/>
+		<node name="Emphasis" value="Emphasis"/>
+		<node name="Strong" value="Strong"/>
+		<node name="Subscript" value="Subscript"/>
+		<node name="Superscript" value="Superscript"/>
+		<node name="Code" value="Kode"/>
+		<node name="StrikeThrough" value="Teks Tercoret"/>
+		<node name="Contents Table" value="Daftar Isi"/>
+		<node name="Author in Library" value="Pengarang dalam Pustaka"/>
+		<node name="Book in Library" value="Buku dalam Pustaka"/>
+		<node name="Recent Book List" value="Daftar Buku-buku Sebelumnya"/>
+		<node name="Italic" value="Miring"/>
+		<node name="Bold" value="Tebal"/>
+		<node name="Definition" value="Definisi"/>
+		<node name="Definition Description" value="Deskripsi Definisi"/>
+		<node name="Header 1" value="Header 1"/>
+		<node name="Header 2" value="Header 2"/>
+		<node name="Header 3" value="Header 3"/>
+		<node name="Header 4" value="Header 4"/>
+		<node name="Header 5" value="Header 5"/>
+		<node name="Header 6" value="Header 6"/>
+		<node name="External Hyperlink" value="Hyperlink Eksternal"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Browser"/>
+		<node name="defaultBrowser" value="Browser Standar"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Ada Kesalahan"/>
+		<node name="unsupportedCompressionMethod" value="Metode kompresi tidak didukung"/>
+		<node name="encriptedFile" value="Berkas terproteksi DRM"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Pustaka"/>
+		<node name="allBooks" value="All Books" toBeTranslated="true"/>
+		<node name="booksWithoutTags" value="Books with no Tags" toBeTranslated="true"/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button." toBeTranslated="true"/>
+	</node>
+</resources>

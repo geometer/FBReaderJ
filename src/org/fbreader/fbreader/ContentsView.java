@@ -33,10 +33,4 @@ class ContentsView extends FBView {
 
 		return true;
 	}
-	
-	//TODO
-	public void setModel(ZLTextModel model, String fileName) {
-		super.setModel(model);
-	}
-
 }

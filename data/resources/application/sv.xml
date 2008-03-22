@@ -12,6 +12,7 @@
 		</node>
 		<node name="navigate" value="Navigation">
 			<node name="gotoHome" value="Gå till början av dokumentet"/>
+			<node name="gotoPageNumber" value="Go to Page..." toBeTranslated="true"/>
 			<node name="gotoSectionStart" value="Gå till början av textavsnitt"/>
 			<node name="gotoSectionEnd" value="Gå till slutet av textavsnitt"/>
 			<node name="nextTOCSection" value="Gå till nästa post i innehållsförteckning"/>
@@ -56,15 +57,18 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="go" value="&amp;Gå!"/>
+			<node name="thisOnly" value="This only" toBeTranslated="true"/>
+			<node name="withSubtags" value="With subtags" toBeTranslated="true"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Alternativ"/>
 			<node name="tab">
-				<node name="General" value="Allmänt">
+				<node name="Library" value="Bibliotek">
 					<node name="bookPath" value="Boksökväg"/>
 					<node name="lookInSubdirectories" value="Leta efter böcker i underkataloger"/>
 					<node name="recentListSize" value="Storlek på lista över tidigare böcker"/>
-					<node name="keyDelay" value="Delay Between Accepted Key Pressings"/>
+					<node name="showTags" value="Show Tag Hierarchies" toBeTranslated="true"/>
+					<node name="showAllBooksList" value="Show All Books Branch" toBeTranslated="true"/>
 				</node>
 				<node name="Language" value="Språk">
 					<node name="autoDetect" value="Upptäck automatiskt språk och kodning"/>
@@ -72,7 +76,6 @@
 					<node name="defaultEncodingSet" value="Standardteckenuppsättning"/>
 					<node name="defaultEncoding" value="Standardkodning"/>
 					<node name="useWindows1252Hack" value="Använd windows-1252 istället för iso-8859-1"/>
-					<node name="chineseBreakAtAnyPosition" value="För kinesiska radbrytningar på valfri position"/>
 				</node>
 				<node name="Indicator" value="Indikator">
 					<node name="show" value="Visa positionsindikator"/>
@@ -86,10 +89,10 @@
 				</node>
 				<node name="Scrolling" value="Rullning">
 					<node name="optionsFor" value="Alternativ för">
-						<node name="large" value="Large Scrollings"/>
-						<node name="small" value="Small Scrollings"/>
-						<node name="mouse" value="Mouse Scrollings"/>
-						<node name="finger" value="Finger Tap Scrollings"/>
+						<node name="large" value="Large Scrollings" toBeTranslated="true"/>
+						<node name="small" value="Small Scrollings" toBeTranslated="true"/>
+						<node name="mouse" value="Mouse Scrollings" toBeTranslated="true"/>
+						<node name="tap" value="Tap Scrollings" toBeTranslated="true"/>
 					</node>
 					<node name="delay" value="Fördröjning mellan rullningar, ms"/>
 					<node name="mode" value="Rullningsläge">
@@ -102,6 +105,7 @@
 					<node name="linesToKeep" value="Rader att behålla"/>
 					<node name="linesToScroll" value="Rader att rulla"/>
 					<node name="percentToScroll" value="Procentandel att rulla"/>
+					<node name="fingerOnly" value="Scroll on Finger Tap Only" toBeTranslated="true"/>
 				</node>
 				<node name="Selection" value="Markering">
 					<node name="enableSelection" value="Aktivera textmarkering"/>
@@ -203,6 +207,7 @@
 						<node name="quit" value="Avsluta"/>
 					</node>
 					<node name="quitOnCancel" value="Avsluta programmet vid avbryt"/>
+					<node name="keyDelay" value="Delay Between Accepted Key Pressings" toBeTranslated="true"/>
 				</node>
 				<node name="Config" value="Konfiguration">
 					<node name="autoSave" value="Spara tillstånd automatiskt"/>
@@ -243,6 +248,9 @@
 					<node name="seriesTitle" value="Serietitel"/>
 					<node name="bookNumber" value="Boknummer"/>
 				</node>
+				<node name="Tags" value="Tags" toBeTranslated="true">
+					<node name="tags" value="Tag List" toBeTranslated="true"/>
+				</node>
 				<node name="Text" value="Text">
 					<node name="breakType" value="Bryt stycke vid"/>
 					<node name="ignoreIndent" value="Ignorera indentering mindre än"/>
@@ -268,9 +276,26 @@
 			<node name="backward" value="&amp;Bakåt"/>
 			<node name="currentSection" value="Endast i &amp;detta avsnitt"/>
 		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Go To Page" toBeTranslated="true"/>
+			<node name="pageNumber" value="Go to Page Number" toBeTranslated="true"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Edit/Clone Tag" toBeTranslated="true"/>
+			<node name="editOrClone" value="Action" toBeTranslated="true">
+				<node name="edit" value="Rename Tag" toBeTranslated="true"/>
+				<node name="clone" value="Clone Tag" toBeTranslated="true"/>
+			</node>
+			<node name="name" value="Tag Name" toBeTranslated="true"/>
+			<node name="includeSubtags" value="Include Subtags" toBeTranslated="true"/>
+		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Ta bort bok"/>
 			<node name="message" value="Ta bort boken &#13;&quot;%s&quot;&#13; från biblioteket?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Remove Tag" toBeTranslated="true"/>
+			<node name="message" value="Remove Tag &#8220;%s&#8221;?" toBeTranslated="true"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Fel"/>
@@ -280,9 +305,18 @@
 			<node name="title" value="Fel"/>
 			<node name="message" value="Tyvärr, hjälpfilen hittades inte"/>
 		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Fel"/>
+			<node name="message" value="Tag name must be a non-empty string" toBeTranslated="true"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Fel"/>
+			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol" toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Läser in bok. Var god vänta..."/>
 			<node name="loadingBookList" value="Läser in boklista. Var god vänta..."/>
+			<node name="migrate" value="Upgrading to the new version. Please, wait..." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="style">
@@ -333,5 +367,11 @@
 		<node name="unknown" value="Okänt fel"/>
 		<node name="unsupportedCompressionMethod" value="Komprimeringsmetoden stöds inte"/>
 		<node name="encriptedFile" value="DRM-skyddad fil"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Bibliotek"/>
+		<node name="allBooks" value="All Books" toBeTranslated="true"/>
+		<node name="booksWithoutTags" value="Books with no Tags" toBeTranslated="true"/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button." toBeTranslated="true"/>
 	</node>
 </resources>

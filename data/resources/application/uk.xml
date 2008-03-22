@@ -12,6 +12,7 @@
 		</node>
 		<node name="navigate" value="Навігація">
 			<node name="gotoHome" value="На початок книги"/>
+			<node name="gotoPageNumber" value="Go to Page..." toBeTranslated="true"/>
 			<node name="gotoSectionStart" value="На початок розділу"/>
 			<node name="gotoSectionEnd" value="В кінець розділу"/>
 			<node name="nextTOCSection" value="До наступної глави"/>
@@ -56,15 +57,18 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="go" value="&amp;Шукати"/>
+			<node name="thisOnly" value="This only" toBeTranslated="true"/>
+			<node name="withSubtags" value="With subtags" toBeTranslated="true"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Налаштування"/>
 			<node name="tab">
-				<node name="General" value="Загальні налаштування">
+				<node name="Library" value="Бібліотека">
 					<node name="bookPath" value="Каталоги з книгами"/>
 					<node name="lookInSubdirectories" value="Шукати книги в підтеках"/>
 					<node name="recentListSize" value="Розмір списку прочитаних книг"/>
-					<node name="keyDelay" value="Затримка між натисканням на клавіші"/>
+					<node name="showTags" value="Show Tag Hierarchies" toBeTranslated="true"/>
+					<node name="showAllBooksList" value="Show All Books Branch" toBeTranslated="true"/>
 				</node>
 				<node name="Language" value="Мова">
 					<node name="autoDetect" value="Визначити мову та кодувати автоматично"/>
@@ -72,7 +76,6 @@
 					<node name="defaultEncodingSet" value="Набiр символiв"/>
 					<node name="defaultEncoding" value="Типовий набiр символiв"/>
 					<node name="useWindows1252Hack" value="Використати windows-1252 замiсть iso-8859-1"/>
-					<node name="chineseBreakAtAnyPosition" value="В китайскому розбивати строку у будь якому мiсцi"/>
 				</node>
 				<node name="Indicator" value="Індикатор">
 					<node name="show" value="Показувати індикатор"/>
@@ -89,7 +92,7 @@
 						<node name="large" value="на велику відстань"/>
 						<node name="small" value="на невелику відстань"/>
 						<node name="mouse" value="колесом мишки"/>
-						<node name="finger" value="натисканням пальця"/>
+						<node name="tap" value="Tap Scrollings" toBeTranslated="true"/>
 					</node>
 					<node name="delay" value="Затримка, мілісекунд"/>
 					<node name="mode" value="Перегортання">
@@ -102,6 +105,7 @@
 					<node name="linesToKeep" value="Скільки рядків перекривати"/>
 					<node name="linesToScroll" value="Скільки рядків зсувати"/>
 					<node name="percentToScroll" value="Скільки відсотків зсувати"/>
+					<node name="fingerOnly" value="Scroll on Finger Tap Only" toBeTranslated="true"/>
 				</node>
 				<node name="Selection" value="Помітка">
 					<node name="enableSelection" value="Дозволити помiчати текст"/>
@@ -203,6 +207,7 @@
 						<node name="quit" value="Вийти з програми"/>
 					</node>
 					<node name="quitOnCancel" value="Вийти з програми"/>
+					<node name="keyDelay" value="Затримка між натисканням на клавіші"/>
 				</node>
 				<node name="Config" value="Налаштування">
 					<node name="autoSave" value="Автоматично зберігати стан"/>
@@ -243,6 +248,9 @@
 					<node name="seriesTitle" value="Назва серії"/>
 					<node name="bookNumber" value="Номер книги у серії"/>
 				</node>
+				<node name="Tags" value="Tags" toBeTranslated="true">
+					<node name="tags" value="Tag List" toBeTranslated="true"/>
+				</node>
 				<node name="Text" value="Текст">
 					<node name="breakType" value="Новий параграф по"/>
 					<node name="ignoreIndent" value="Ігнорувати відступи менше"/>
@@ -268,9 +276,26 @@
 			<node name="backward" value="Назад"/>
 			<node name="currentSection" value="Тільки у цьому розділі"/>
 		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Go To Page" toBeTranslated="true"/>
+			<node name="pageNumber" value="Go to Page Number" toBeTranslated="true"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Edit/Clone Tag" toBeTranslated="true"/>
+			<node name="editOrClone" value="Action" toBeTranslated="true">
+				<node name="edit" value="Rename Tag" toBeTranslated="true"/>
+				<node name="clone" value="Clone Tag" toBeTranslated="true"/>
+			</node>
+			<node name="name" value="Tag Name" toBeTranslated="true"/>
+			<node name="includeSubtags" value="Include Subtags" toBeTranslated="true"/>
+		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Видалення книги"/>
 			<node name="message" value="Видалити книгу &#10;&quot;%s&quot;&#10; з бібліотеки?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Remove Tag" toBeTranslated="true"/>
+			<node name="message" value="Remove Tag &#8220;%s&#8221;?" toBeTranslated="true"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Помилка"/>
@@ -280,9 +305,18 @@
 			<node name="title" value="Помилка"/>
 			<node name="message" value="Вибачте, немає файлу з інформацією"/>
 		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Помилка"/>
+			<node name="message" value="Tag name must be a non-empty string" toBeTranslated="true"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Помилка"/>
+			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol" toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Завантаження книги. Зачекайте..."/>
 			<node name="loadingBookList" value="Завантаження списку книг. Зачекайте..."/>
+			<node name="migrate" value="Upgrading to the new version. Please, wait..." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="style">
@@ -333,5 +367,11 @@
 		<node name="unknown" value="невідома помилка"/>
 		<node name="unsupportedCompressionMethod" value="метод натискання, що не підтримується"/>
 		<node name="encriptedFile" value="файл захищений DRM"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Бібліотека"/>
+		<node name="allBooks" value="All Books" toBeTranslated="true"/>
+		<node name="booksWithoutTags" value="Books with no Tags" toBeTranslated="true"/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button." toBeTranslated="true"/>
 	</node>
 </resources>

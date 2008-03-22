@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Informazioni su FBReader</book-title> <lang>it</lang></title-info></description>
 <body>
-<title><p>Informazioni su FBReader</p></title>
+<title><p>Informazioni su FBReader &FBReaderVersion;</p></title>
 <p>FBReader è un lettore di e-book per PDA/UMPC/computer Linux/Windows. FBReader supporta diversi formati di e-book: <code>fb2</code>, <code>html</code>, <code>chm</code>, <code>rtf</code>, <code>plucker</code>, etc. E' anche supportata la lettura diretta da archivi <code>zip</code>, <code>tar</code>, <code>gzip</code> e <code>bzip2</code>.</p>
 <p>FBReader è distribuito nei termini is della licenza <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
 <empty-line/>
 <subtitle><p>Come Iniziare</p></subtitle>
-<p>FBReader cerca i libri <code>fb2</code>, <code>oeb</code> e <code>OpenReader</code> nelle cartelle elencate nell'opzione <code>Percorso Libri</code>. Prima di tutto occorre impostare questo percorso. Apri la finestra Opzioni (basta fare clic su <image l:href="#settings.png" voffset="-6"/> nella barra degli strumenti) and cambiare il valore dell'opzione <code>Percorso Libri</code> nella scheda <code>Generale</code>. Questa opzione contiene l'elenco delle cartelle contenenti file <code>*.fb2</code>, <code>*.oebzip</code>, <code>*.orb</code> o archivi. Le cartelle dell'elenco sono separate da due punti.</p>
+<p>FBReader cerca i libri <code>fb2</code>, <code>oeb</code> e <code>OpenReader</code> nelle cartelle elencate nell'opzione <code>Percorso Libri</code>. Prima di tutto occorre impostare questo percorso. Apri la finestra Opzioni (basta fare clic su <image l:href="#settings.png" voffset="-6"/> nella barra degli strumenti) and cambiare il valore dell'opzione <code>Percorso Libri</code> nella scheda <code>Biblioteca</code>. Questa opzione contiene l'elenco delle cartelle contenenti file <code>*.fb2</code>, <code>*.oebzip</code>, <code>*.orb</code> o archivi. Le cartelle dell'elenco sono separate da due punti.</p>
 <p>Apri <code>biblioteca</code> (fare clic su <image l:href="#books.png" voffset="-6"/>), seleziona un libro dall'elenco e leggi.</p>
 <p>Per leggere un file in un altro formato, devi aggiungerlo alla biblioteca. Apri la <code>finestra aggiungi alla biblioteca</code> (<image l:href="#addbook.png"/>), seleziona un file e modifica le informazioni sul file. La prossima volta puoi aprire questo file usando la <code>biblioteca</code> (<image l:href="#books.png" voffset="-6"/>).</p>
 <empty-line/>

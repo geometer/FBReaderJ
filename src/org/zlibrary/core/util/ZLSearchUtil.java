@@ -29,7 +29,6 @@ public class ZLSearchUtil {
 				if (j > patternLast) {
 					return i - offset;
 				}
-
 			}
 		} else {
 			for (int i = offset + pos; i <= last; i++) {

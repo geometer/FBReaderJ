@@ -25,6 +25,8 @@ public interface ZLTextParagraph {
 
 		ZLImageEntry getImageEntry();
 
+		short getFixedHSpaceLength();
+
 		boolean hasNext();
 		void next();
 	}

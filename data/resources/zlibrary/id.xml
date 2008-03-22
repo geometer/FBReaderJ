@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="&amp;OK"/>
+			<node name="cancel" value="&amp;Batal"/>
+			<node name="yes" value="&amp;Ya"/>
+			<node name="no" value="&amp;Tidak"/>
+			<node name="apply" value="&amp;Terapkan"/>
+		</node>
+		<node name="waitMessage">
+			<node name="savingConfig" value="Menyimpan pengaturan..."/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Merah"/>
+		<node name="green" value="Hijau"/>
+		<node name="blue" value="Biru"/>
+		<node name="black" value="Hitam"/>
+		<node name="white" value="Putih"/>
+		<node name="maroon" value="Merah Tua"/>
+		<node name="olive" value="Hijau Kekuningan"/>
+		<node name="navy" value="Biru Tua"/>
+		<node name="purple" value="Ungu"/>
+		<node name="teal" value="Teal"/>
+		<node name="silver" value="Perak"/>
+		<node name="gray" value="Abu-abu"/>
+		<node name="lime" value="Lime"/>
+		<node name="yellow" value="Kuning"/>
+		<node name="magenta" value="Merah Keunguan"/>
+		<node name="cyan" value="Biru Muda"/>
+		<node name="custom..." value="Kustom..."/>
+	</node>
+	<node name="language">
+		<node name="cs" value="Cekoslowakia"/>
+		<node name="de" value="Jerman"/>
+		<node name="de-traditional" value="Jerman (tradisionil)"/>
+		<node name="en" value="Inggris"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Spanyol"/>
+		<node name="fi" value="Finlandia"/>
+		<node name="fr" value="Perancis"/>
+		<node name="id" value="Indonesia"/>
+		<node name="it" value="Italia"/>
+		<node name="no" value="Norwegia"/>
+		<node name="pt" value="Portugis"/>
+		<node name="ru" value="Rusia"/>
+		<node name="sv" value="Swedia"/>
+		<node name="uk" value="Ukraina"/>
+		<node name="zh" value="Cina"/>
+		<node name="other" value="Lainnya"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="Hidup"/>
+		<node name="off" value="Mati"/>
+		<node name="unchanged" value="tidak berubah"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Aksi Tombol"/>
+	</node>
+</resources>

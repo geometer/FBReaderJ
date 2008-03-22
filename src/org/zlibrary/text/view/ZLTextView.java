@@ -19,8 +19,6 @@ public abstract class ZLTextView extends ZLView {
 	}
 
 	public abstract void setModel(ZLTextModel model);
-	public abstract void paint();
-	public abstract String caption();
 
 	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
 

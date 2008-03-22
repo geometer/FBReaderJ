@@ -68,7 +68,11 @@ public abstract class FBView extends ZLTextViewImpl {
 		return (FBReader)getApplication();
 	}
 	
-	public void setCaption(String caption) {
+	public String getCaption() {
+		return myCaption;
+	}
+
+	void setCaption(String caption) {
 		myCaption = caption;
 	}
 

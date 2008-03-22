@@ -12,6 +12,7 @@
 		</node>
 		<node name="navigate" value="Navigoi">
 			<node name="gotoHome" value="Siirry dokumentin alkuun"/>
+			<node name="gotoPageNumber" value="Go to Page..." toBeTranslated="true"/>
 			<node name="gotoSectionStart" value="Siirry tekstiosion alkuun"/>
 			<node name="gotoSectionEnd" value="Siirry tekstiosion loppuun"/>
 			<node name="nextTOCSection" value="Sisällysluettelon seuraavaan kohtaan"/>
@@ -56,15 +57,18 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="go" value="&amp;Mene!"/>
+			<node name="thisOnly" value="This only" toBeTranslated="true"/>
+			<node name="withSubtags" value="With subtags" toBeTranslated="true"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Asetukset"/>
 			<node name="tab">
-				<node name="General" value="Yleinen">
+				<node name="Library" value="Kirjasto">
 					<node name="bookPath" value="Kirjaston polku"/>
 					<node name="lookInSubdirectories" value="Hae kirjoja alihakemistoista"/>
 					<node name="recentListSize" value="Viimeisimmät kirjat listan koko"/>
-					<node name="keyDelay" value="Hyväksyttyjen näppäinpainallusten viive"/>
+					<node name="showTags" value="Show Tag Hierarchies" toBeTranslated="true"/>
+					<node name="showAllBooksList" value="Show All Books Branch" toBeTranslated="true"/>
 				</node>
 				<node name="Language" value="Kieli">
 					<node name="autoDetect" value="Tunnista kieli ja merkistö automaattisesti"/>
@@ -72,7 +76,6 @@
 					<node name="defaultEncodingSet" value="Oletusmerkistöalue"/>
 					<node name="defaultEncoding" value="Oletusmerkistö"/>
 					<node name="useWindows1252Hack" value="Käytä windows-1252 merkistöä iso-8859-1 sijaan"/>
-					<node name="chineseBreakAtAnyPosition" value="Katkaise Kiinaksi oleva teksti mistä tahansa kohdasta"/>
 				</node>
 				<node name="Indicator" value="Ilmaisin">
 					<node name="show" value="Näytä sijainninilmaisin"/>
@@ -89,7 +92,7 @@
 						<node name="large" value="Sivun vieritykselle"/>
 						<node name="small" value="Rivin vieritykselle"/>
 						<node name="mouse" value="Hiirellä vieritykselle"/>
-						<node name="finger" value="Sormi vieritykselle"/>
+						<node name="tap" value="Tap Scrollings" toBeTranslated="true"/>
 					</node>
 					<node name="delay" value="Vieritysten viive, msec"/>
 					<node name="mode" value="Vieritystila">
@@ -102,6 +105,7 @@
 					<node name="linesToKeep" value="Rivien määrä"/>
 					<node name="linesToScroll" value="Rivien määrä"/>
 					<node name="percentToScroll" value="Vieritysprosentti"/>
+					<node name="fingerOnly" value="Scroll on Finger Tap Only" toBeTranslated="true"/>
 				</node>
 				<node name="Selection" value="Valinta">
 					<node name="enableSelection" value="Ota käyttöön tekstin valinta"/>
@@ -203,6 +207,7 @@
 						<node name="quit" value="Lopeta"/>
 					</node>
 					<node name="quitOnCancel" value="Sulje sovellus peruttaessa"/>
+					<node name="keyDelay" value="Hyväksyttyjen näppäinpainallusten viive"/>
 				</node>
 				<node name="Config" value="Tila">
 					<node name="autoSave" value="Tallenna tila automaattisesti"/>
@@ -243,6 +248,9 @@
 					<node name="seriesTitle" value="Sarjan nimi"/>
 					<node name="bookNumber" value="Kirjan numero"/>
 				</node>
+				<node name="Tags" value="Tags" toBeTranslated="true">
+					<node name="tags" value="Tag List" toBeTranslated="true"/>
+				</node>
 				<node name="Text" value="Teksti">
 					<node name="breakType" value="Katkaise kappale"/>
 					<node name="ignoreIndent" value="Hylkää pienempi sisennys kuin"/>
@@ -268,9 +276,26 @@
 			<node name="backward" value="&amp;Taaksepäin"/>
 			<node name="currentSection" value="&amp;Vain tästä osasta"/>
 		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Go To Page" toBeTranslated="true"/>
+			<node name="pageNumber" value="Go to Page Number" toBeTranslated="true"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Edit/Clone Tag" toBeTranslated="true"/>
+			<node name="editOrClone" value="Action" toBeTranslated="true">
+				<node name="edit" value="Rename Tag" toBeTranslated="true"/>
+				<node name="clone" value="Clone Tag" toBeTranslated="true"/>
+			</node>
+			<node name="name" value="Tag Name" toBeTranslated="true"/>
+			<node name="includeSubtags" value="Include Subtags" toBeTranslated="true"/>
+		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Poista kirja"/>
 			<node name="message" value="Poista &#13;&quot;%s&quot;&#13; kirjastosta?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Remove Tag" toBeTranslated="true"/>
+			<node name="message" value="Remove Tag &#8220;%s&#8221;?" toBeTranslated="true"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Virhe"/>
@@ -280,9 +305,18 @@
 			<node name="title" value="Virhe"/>
 			<node name="message" value="Ohjetiedostoa ei löytynyt"/>
 		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Virhe"/>
+			<node name="message" value="Tag name must be a non-empty string" toBeTranslated="true"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Virhe"/>
+			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol" toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Avataan kirjaa..."/>
 			<node name="loadingBookList" value="Avataan kirjalistaa..."/>
+			<node name="migrate" value="Upgrading to the new version. Please, wait..." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="style">
@@ -333,5 +367,11 @@
 		<node name="unknown" value="Tuntematon virhe"/>
 		<node name="unsupportedCompressionMethod" value="Tiivistysmuodolle ei tukea"/>
 		<node name="encriptedFile" value="Digitaalisesti suojattu tiedosto"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Kirjasto"/>
+		<node name="allBooks" value="All Books" toBeTranslated="true"/>
+		<node name="booksWithoutTags" value="Books with no Tags" toBeTranslated="true"/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button." toBeTranslated="true"/>
 	</node>
 </resources>

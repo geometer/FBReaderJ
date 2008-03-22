@@ -40,6 +40,7 @@
 		<node name="es" value="Spanska"/>
 		<node name="fi" value="Finska"/>
 		<node name="fr" value="Franska"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
 		<node name="it" value="Italienska"/>
 		<node name="no" value="Norska"/>
 		<node name="pt" value="Portugisiska"/>

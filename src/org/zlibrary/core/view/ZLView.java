@@ -15,7 +15,7 @@ abstract public class ZLView {
 		myContext = context;
 	}
 
-	abstract public String caption();
+	abstract public String getCaption();
 
 	abstract public void paint();
 

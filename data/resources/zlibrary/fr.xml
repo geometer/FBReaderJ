@@ -41,6 +41,7 @@
 		<node name="es" value="Espagnol"/>
 		<node name="fi" value="Finnois"/>
 		<node name="fr" value="Français"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
 		<node name="it" value="Italien"/>
 		<node name="no" value="Norvégien"/>
 		<node name="pt" value="Portugais"/>

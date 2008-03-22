@@ -131,7 +131,9 @@ public abstract class ZLApplication {
 		if (myWindow != null) {
 			ZLView view = getCurrentView();
 			if (view != null) {
-				myWindow.setCaption(view.caption());
+				myWindow.setCaption(ZLibrary.getInstance().getApplicationName() + " - " + view.getCaption());
+			} else {
+				myWindow.setCaption(ZLibrary.getInstance().getApplicationName());
 			}
 		}
 	}

@@ -3,27 +3,12 @@ package org.zlibrary.text.view.impl;
 import org.zlibrary.core.image.ZLImageData;
 
 public final class ZLTextImageElement extends ZLTextElement {
-	private ZLImageData myImageData;
-	private String myId;
+	public final String Id;
+	public final ZLImageData ImageData;
     
-	@Deprecated
-    ZLTextImageElement(ZLImageData imageData) {
-		myImageData = imageData;
-		myId = "";
+	ZLTextImageElement(String id, ZLImageData imageData) {
+		Id = id;
+		ImageData = imageData;
 	}
-
-	public ZLImageData getImageData() {
-		return myImageData;
-	}
-	
-	public String getId() {
-		return myId;
-	}
-	//new version	
-	ZLTextImageElement(String id, ZLImageData image) {
-		 myId = id;
-		 myImageData = image;
-	}
-
 }
 

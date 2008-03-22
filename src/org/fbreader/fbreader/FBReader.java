@@ -42,8 +42,6 @@ public final class FBReader extends ZLApplication {
 
 	private String myHelpFileName;
 	
-	private BookModel myModel;
-	
 	private static final String OPTIONS = "Options";
 	private static final String SEARCH = "Search";
 	private static final String STATE = "State";
@@ -96,7 +94,7 @@ public final class FBReader extends ZLApplication {
 	private final CollectionView myCollectionView;
 	private final RecentBooksView myRecentBooksView;
 
-	private BookModel myBookModel;
+	private BookModel myBookModel = new BookModel("XXX");
 
 	public FBReader() {
 		this(new String[0]);
@@ -164,6 +162,9 @@ public final class FBReader extends ZLApplication {
 			//openBook(getHelpFileName());
 		}
 		openBook(description);*/
+		if (fileName == null) {
+			fileName = myBookNameOption.getValue();
+		}
 		if (!openBook(fileName)) {
 			openBook(getHelpFileName());
 		}
@@ -171,11 +172,21 @@ public final class FBReader extends ZLApplication {
 	}
     @Deprecated
 	boolean openBook(String fileName) {
+		if (fileName == null) {
+			return false;
+		}
+		if (false) {
+			BookDescription description = BookDescription.getDescription(fileName);   
+			if (description != null) {
+				openBook(description);
+				System.err.println("found description for " + fileName);
+				return true;
+			} else {
+				return false;
+			}
+		}
 //		System.err.println("openBook");
 //		System.out.println("try open " + fileName);
-		if (fileName == null) {
-			fileName = myBookNameOption.getValue();
-		}
 		myBookModel = new BookModel(fileName);
 		//android.os.Debug.startMethodTracing("/tmp/openBook2");
 		
@@ -188,12 +199,12 @@ public final class FBReader extends ZLApplication {
 		
 		if (fileName.endsWith("html") || fileName.endsWith("htm")) {
 			if (!new HtmlReader(myBookModel).read()) {
-				myBookModel = null;
+				//myBookModel = null;
 				return false;
 			}
 		} else {
 			if (!new FB2Reader(myBookModel).read()) {
-				myBookModel = null;
+				//myBookModel = null;
 				return false;
 			}
 		}
@@ -262,6 +273,7 @@ public final class FBReader extends ZLApplication {
 				setView(myRecentBooksView);
 				break;
 			case ViewMode.BOOK_COLLECTION:
+				myCollectionView.updateModel();
 				setView(myCollectionView);
 				break;
 			default:
@@ -303,22 +315,20 @@ public final class FBReader extends ZLApplication {
 			bookTextView.saveState();
 			bookTextView.setModel(null, "");
 			bookTextView.setContentsModel(null);
-			contentsView.setModel(null, "");
-			if (myModel != null) {
-				myModel = null;
-			}
-			myModel = new BookModel(description);
-			new ZLStringOption(ZLOption.STATE_CATEGORY, STATE, BOOK, "").setValue(myModel.getFileName());
+			contentsView.setModel(null);
+			myBookModel = new BookModel(description);
+			final String fileName = description.getFileName();
+			new ZLStringOption(ZLOption.STATE_CATEGORY, STATE, BOOK, "").setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());
-			bookTextView.setModel(myModel.getBookTextModel(), description.getFileName());
+			bookTextView.setModel(myBookModel.getBookTextModel(), fileName);
 			bookTextView.setCaption(description.getTitle());
-			bookTextView.setContentsModel(myModel.getContentsModel());
-			footnoteView.setModel(null, "");
+			bookTextView.setContentsModel(myBookModel.getContentsModel());
+			footnoteView.setModel(null);
 			footnoteView.setCaption(description.getTitle());
-			contentsView.setModel(myModel.getContentsModel(), description.getFileName());
+			contentsView.setModel(myBookModel.getContentsModel());
 			contentsView.setCaption(description.getTitle());
-			recentBooksView.lastBooks().addBook(description.getFileName());
-			System.err.println("openBookInternal");
+			recentBooksView.lastBooks().addBook(fileName);
+			//System.err.println("openBookInternal");
 		}
 	}
 	

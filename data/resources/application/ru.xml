@@ -12,6 +12,7 @@
 		</node>
 		<node name="navigate" value="Переход">
 			<node name="gotoHome" value="В начало книги"/>
+			<node name="gotoPageNumber" value="На страницу..."/>
 			<node name="gotoSectionStart" value="В начало раздела"/>
 			<node name="gotoSectionEnd" value="В конец раздела"/>
 			<node name="nextTOCSection" value="К следующей главе"/>
@@ -56,15 +57,18 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="go" value="&amp;Искать"/>
+			<node name="thisOnly" value="Только эту"/>
+			<node name="withSubtags" value="С подкатегориями"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Настройки"/>
 			<node name="tab">
-				<node name="General" value="Общие настройки">
+				<node name="Library" value="Библиотека">
 					<node name="bookPath" value="Каталоги с книгами"/>
 					<node name="lookInSubdirectories" value="Искать книги в подкаталогах"/>
 					<node name="recentListSize" value="Размер списка прочитанных книг"/>
-					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
+					<node name="showTags" value="Сортировать книги по категориям"/>
+					<node name="showAllBooksList" value="Показывать список всех книг"/>
 				</node>
 				<node name="Language" value="Язык">
 					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
@@ -72,7 +76,6 @@
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
 					<node name="useWindows1252Hack" value="Использовать windows-1252 вместо iso-8859-1"/>
-					<node name="chineseBreakAtAnyPosition" value="В китайском языке разрыв строки в любом месте"/>
 				</node>
 				<node name="Indicator" value="Индикатор">
 					<node name="show" value="Показывать индикатор"/>
@@ -89,7 +92,7 @@
 						<node name="large" value="на большое расстояние"/>
 						<node name="small" value="на небольшое расстояние"/>
 						<node name="mouse" value="колесом мышки"/>
-						<node name="finger" value="нажатием пальцем"/>
+						<node name="tap" value="нажатием на экран"/>
 					</node>
 					<node name="delay" value="Задержка, миллисекунды"/>
 					<node name="mode" value="Перелистывание">
@@ -102,6 +105,7 @@
 					<node name="linesToKeep" value="Сколько строк перекрывать"/>
 					<node name="linesToScroll" value="Сколько строк сдвигать"/>
 					<node name="percentToScroll" value="Сколько процентов сдвигать"/>
+					<node name="fingerOnly" value="Только при нажатии пальцем"/>
 				</node>
 				<node name="Selection" value="Пометка">
 					<node name="enableSelection" value="Разрешить помечать текст"/>
@@ -190,8 +194,8 @@
 						<node name="search" value="Показать диалог поиска"/>
 						<node name="findPrevious" value="Искать назад"/>
 						<node name="findNext" value="Искать вперед"/>
-						<node name="increaseFont" value="Увеличить размера шрифта"/>
-						<node name="decreaseFont" value="Уменьшить размера шрифта"/>
+						<node name="increaseFont" value="Увеличить размер шрифта"/>
+						<node name="decreaseFont" value="Уменьшить размер шрифта"/>
 						<node name="toggleIndicator" value="Показать/спрятать индикатор"/>
 						<node name="toggleFullscreen" value="Включить/выключить полноэкранный режим"/>
 						<node name="onFullscreen" value="Включить полноэкранный режим"/>
@@ -203,6 +207,7 @@
 						<node name="quit" value="Выйти из программы"/>
 					</node>
 					<node name="quitOnCancel" value="Выходить из программы"/>
+					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
 				</node>
 				<node name="Config" value="Настройки">
 					<node name="autoSave" value="Автоматически сохранять состояние"/>
@@ -243,6 +248,9 @@
 					<node name="seriesTitle" value="Название серии"/>
 					<node name="bookNumber" value="Номер книги в серии"/>
 				</node>
+				<node name="Tags" value="Категории">
+					<node name="tags" value="Список категорий"/>
+				</node>
 				<node name="Text" value="Текст">
 					<node name="breakType" value="Новый параграф по"/>
 					<node name="ignoreIndent" value="Игнорировать отступы меньше"/>
@@ -268,9 +276,26 @@
 			<node name="backward" value="Назад"/>
 			<node name="currentSection" value="Только в этом разделе"/>
 		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Перейти на страницу"/>
+			<node name="pageNumber" value="Номер страницы"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Редактирование/копирование категории"/>
+			<node name="editOrClone" value="Действие">
+				<node name="edit" value="Редактирование"/>
+				<node name="clone" value="Копирование"/>
+			</node>
+			<node name="name" value="Название"/>
+			<node name="includeSubtags" value="Включая подкатегории"/>
+		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Удаление книги"/>
-			<node name="message" value="Удалить книгу &#10;&quot;%s&quot;&#10; из библиотеки?"/>
+			<node name="message" value="Удалить книгу &#10;&#171;%s&#187;&#10; из библиотеки?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Удаление категории"/>
+			<node name="message" value="Удалить категорию &#171;%s&#187;?"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Ошибка"/>
@@ -280,9 +305,18 @@
 			<node name="title" value="Ошибка"/>
 			<node name="message" value="Извините, нет файла с информацией"/>
 		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Ошибка"/>
+			<node name="message" value="Название категории не может быть пустым"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Ошибка"/>
+			<node name="message" value="В названии категории не может быть запятой"/>
+		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Загрузка книги. Подождите, пожалуйста..."/>
 			<node name="loadingBookList" value="Загрузка списка книг. Подождите, пожалуйста..."/>
+			<node name="migrate" value="Переход на новую версию. Подождите, пожалуйста..."/>
 		</node>
 	</node>
 	<node name="style">
@@ -333,5 +367,11 @@
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
 		<node name="encriptedFile" value="файл защищен DRM"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Библиотека"/>
+		<node name="allBooks" value="Все книги"/>
+		<node name="booksWithoutTags" value="Книги без категорий"/>
+		<node name="noBooks" value="В библиотеке нет ни одной книги. Введите, пожалуйста, список каталогов, содержащих книги в диалоге настроек (вкладка &#171;Библиотека&#187;, поле &#171;Путь к книгам&#187;), либо добавьте книги вручную с помощью кнопки &#171;Добавить книгу&#187;."/>
 	</node>
 </resources>

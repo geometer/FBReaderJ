@@ -2,9 +2,9 @@
 <project name="FBReaderJ" default="package">
 	
 	<!-- property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc37a" / -->
-	<property name="sdk-folder" value="/home/geometer/src/android-sdk_m5-rc14_linux-x86" />
+	<property name="sdk-folder" value="/Users/geometer/android-sdk_m5-rc15_mac-x86" />
 	<property name="android-tools" value="${sdk-folder}/tools" />
-	<property name="project-dir" value="/home/geometer/src/projects/FBReaderJ" />
+	<property name="project-dir" value="/Users/geometer/src/projects/FBReaderJ" />
 
 <!--
 	<property name="sdk-folder" value="/home/grigory/distrib/android_sdk_linux_m3-rc20a" />
@@ -35,6 +35,7 @@
 	<!-- Tools -->
 	<property name="aapt" value="${android-tools}/aapt" />
 	<property name="dx" value="${android-tools}/dx" />
+	<property name="adb" value="${android-tools}/adb" />
 	<property name="zip" value="zip" />
 	<property name="android-jar" value="${sdk-folder}/android.jar" />
 
@@ -130,4 +131,12 @@
 
 	<!-- Create the package file for this project from the sources. -->
 	<target name="package" depends="package-dex" />
+
+	<target name="install" depends="package">
+		<echo>Installing to emulator...</echo>
+		<exec executable="${adb}" failonerror="true">
+			<arg value="install"/>
+			<arg value="${out-package}"/>
+		</exec>
+	</target>
 </project>

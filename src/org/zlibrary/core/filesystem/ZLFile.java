@@ -184,7 +184,7 @@ public class ZLFile {
 	}
 	
 	public InputStream getInputStream() throws IOException {
-		System.out.println(myPath);
+		//System.out.println(myPath);
 		if (isDirectory()) {
 			return null;
 		}

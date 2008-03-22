@@ -7,8 +7,4 @@ public final class FootnoteView extends FBView {
 	FootnoteView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
 	}
-	//TODO
-	public void setModel(ZLTextModel model, String fileName) {
-		super.setModel(model);
-	}
 }

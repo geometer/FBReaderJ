@@ -91,7 +91,6 @@ public class BookCollection {
 				addDescription(BookDescription.getDescription((String)fileNamesSet.get(i)));
 			}
 			
-
 			final ArrayList bookListFileNames = new BookList().fileNames();
 			final int sizeOfList = bookListFileNames.size();
 			for (int i = 0; i < sizeOfList; ++i) {
@@ -148,11 +147,11 @@ public class BookCollection {
 			Collections.sort(myAuthors, new Author.AuthorComparator());
 		}
 		DescriptionComparator descriptionComparator = new DescriptionComparator();
-		for (Iterator it = myCollection.entrySet().iterator(); it.hasNext();) {
+		for (Iterator it = myCollection.keySet().iterator(); it.hasNext();) {
 			ArrayList list = (ArrayList)myCollection.get(it.next());
-		    if (list != null) {
-		    	Collections.sort(list, descriptionComparator);
-		    }
+			if (list != null) {
+				Collections.sort(list, descriptionComparator);
+			}
 		}
 		return true;
 	}

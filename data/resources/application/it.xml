@@ -12,6 +12,7 @@
 		</node>
 		<node name="navigate" value="Navigazione">
 			<node name="gotoHome" value="Vai all'Inizio del Documento"/>
+			<node name="gotoPageNumber" value="Go to Page..." toBeTranslated="true"/>
 			<node name="gotoSectionStart" value="Vai all'Inizio di Sezione"/>
 			<node name="gotoSectionEnd" value="Vai alla Fine di Sezione"/>
 			<node name="nextTOCSection" value="Vai al Successivo Elemento dell'Indice"/>
@@ -56,15 +57,18 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="go" value="&amp;Vai!"/>
+			<node name="thisOnly" value="This only" toBeTranslated="true"/>
+			<node name="withSubtags" value="With subtags" toBeTranslated="true"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Opzioni"/>
 			<node name="tab">
-				<node name="General" value="Generale">
+				<node name="Library" value="Biblioteca">
 					<node name="bookPath" value="Percorso Libri"/>
 					<node name="lookInSubdirectories" value="Cerca Libri in Sottocartelle"/>
 					<node name="recentListSize" value="Lunghezza Elenco Libri Recenti"/>
-					<node name="keyDelay" value="Ritardo Tra Pressione Tasti Accettati"/>
+					<node name="showTags" value="Show Tag Hierarchies" toBeTranslated="true"/>
+					<node name="showAllBooksList" value="Show All Books Branch" toBeTranslated="true"/>
 				</node>
 				<node name="Language" value="Lingua">
 					<node name="autoDetect" value="Riconosci Lingua e Codifica Automaticamente"/>
@@ -72,7 +76,6 @@
 					<node name="defaultEncodingSet" value="Insieme Predefinito di Codifica"/>
 					<node name="defaultEncoding" value="Codifica Predefinita"/>
 					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1" toBeTranslated="true"/>
-					<node name="chineseBreakAtAnyPosition" value="In Cinese Interrompi Riga in Qualsiasi Posizione"/>
 				</node>
 				<node name="Indicator" value="Indicatore">
 					<node name="show" value="Mostra Indicatore di Posizione"/>
@@ -89,10 +92,10 @@
 						<node name="large" value="Scorrimenti Grandi"/>
 						<node name="small" value="Scorrimenti Piccoli"/>
 						<node name="mouse" value="Scorrimenti con Mouse"/>
-						<node name="finger" value="Scorrimenti con Tocco Dito"/>
+						<node name="tap" value="Tap Scrollings" toBeTranslated="true"/>
 					</node>
 					<node name="delay" value="Ritardo tra Scorrimenti, msec"/>
-					<node name="mode" value="Modalit&agrave; Scorrimento">
+					<node name="mode" value="Modalit&#224; Scorrimento">
 						<node name="noOverlapping" value="Non Sovrapporre"/>
 						<node name="keepLines" value="Mantieni Righe"/>
 						<node name="scrollLines" value="Scorri Righe"/>
@@ -102,6 +105,7 @@
 					<node name="linesToKeep" value="Righe da Mantenere"/>
 					<node name="linesToScroll" value="Righe da Scorrere"/>
 					<node name="percentToScroll" value="Percentuale da Scorrere"/>
+					<node name="fingerOnly" value="Scroll on Finger Tap Only" toBeTranslated="true"/>
 				</node>
 				<node name="Selection" value="Selezione">
 					<node name="enableSelection" value="Enable Text Selection" toBeTranslated="true"/>
@@ -203,6 +207,7 @@
 						<node name="quit" value="Esci"/>
 					</node>
 					<node name="quitOnCancel" value="Esci dall'Applicazione su Annullamento"/>
+					<node name="keyDelay" value="Ritardo Tra Pressione Tasti Accettati"/>
 				</node>
 				<node name="Config" value="Configurazione">
 					<node name="autoSave" value="Salva Stato Automaticamente"/>
@@ -243,6 +248,9 @@
 					<node name="seriesTitle" value="Titolo della Serie"/>
 					<node name="bookNumber" value="Libro Numero"/>
 				</node>
+				<node name="Tags" value="Tags" toBeTranslated="true">
+					<node name="tags" value="Tag List" toBeTranslated="true"/>
+				</node>
 				<node name="Text" value="Testo">
 					<node name="breakType" value="Interrompi Paragrafo a"/>
 					<node name="ignoreIndent" value="Ignora Rientri Inferiori a"/>
@@ -268,9 +276,26 @@
 			<node name="backward" value="&amp;All'indietro"/>
 			<node name="currentSection" value="&amp;Solo questa sezione"/>
 		</node>
+		<node name="gotoPageDialog">
+			<node name="title" value="Go To Page" toBeTranslated="true"/>
+			<node name="pageNumber" value="Go to Page Number" toBeTranslated="true"/>
+		</node>
+		<node name="editTagInfoDialog">
+			<node name="title" value="Edit/Clone Tag" toBeTranslated="true"/>
+			<node name="editOrClone" value="Action" toBeTranslated="true">
+				<node name="edit" value="Rename Tag" toBeTranslated="true"/>
+				<node name="clone" value="Clone Tag" toBeTranslated="true"/>
+			</node>
+			<node name="name" value="Tag Name" toBeTranslated="true"/>
+			<node name="includeSubtags" value="Include Subtags" toBeTranslated="true"/>
+		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Elimina Libro"/>
 			<node name="message" value="Elimina Libro &#13;&quot;%s&quot;&#13; dalla Biblioteca?"/>
+		</node>
+		<node name="removeTagBox">
+			<node name="title" value="Remove Tag" toBeTranslated="true"/>
+			<node name="message" value="Remove Tag &#8220;%s&#8221;?" toBeTranslated="true"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Errore"/>
@@ -280,9 +305,18 @@
 			<node name="title" value="Errore"/>
 			<node name="message" value="Spiacente, file della Guida non trovato"/>
 		</node>
+		<node name="tagMustBeNonEmpty">
+			<node name="title" value="Errore"/>
+			<node name="message" value="Tag name must be a non-empty string" toBeTranslated="true"/>
+		</node>
+		<node name="tagMustNotContainComma">
+			<node name="title" value="Errore"/>
+			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol" toBeTranslated="true"/>
+		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Caricamento libro. Attendere, prego..."/>
 			<node name="loadingBookList" value="Caricamento elenco libri. Attendere, prego..."/>
+			<node name="migrate" value="Upgrading to the new version. Please, wait..." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="style">
@@ -333,5 +367,11 @@
 		<node name="unknown" value="Errore Sconosciuto"/>
 		<node name="unsupportedCompressionMethod" value="Metodo di Compressione non Supportato"/>
 		<node name="encriptedFile" value="File Protetto da DRM"/>
+	</node>
+	<node name="library">
+		<node name="caption" value="Biblioteca"/>
+		<node name="allBooks" value="All Books" toBeTranslated="true"/>
+		<node name="booksWithoutTags" value="Books with no Tags" toBeTranslated="true"/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button." toBeTranslated="true"/>
 	</node>
 </resources>

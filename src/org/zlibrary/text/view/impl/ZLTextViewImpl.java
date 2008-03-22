@@ -116,9 +116,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (element instanceof ZLTextWord) {
 			return getWordWidth(context, (ZLTextWord)element, charNumber);
 		} else if (element instanceof ZLTextImageElement) {
-			return context.imageWidth(((ZLTextImageElement)element).getImageData());
+			return context.imageWidth(((ZLTextImageElement)element).ImageData);
 		} else if (element == ZLTextElement.IndentElement) {
 			return myTextStyle.getFirstLineIndentDelta();
+		} else if (element instanceof ZLTextFixedHSpaceElement) {
+			return context.getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;
 		}
 		return 0; 
 	}
@@ -134,7 +136,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			return wordHeight;
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLPaintContext context = getContext();
-			return context.imageHeight(((ZLTextImageElement)element).getImageData()) + 
+			return context.imageHeight(((ZLTextImageElement)element).ImageData) + 
 				Math.max(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
 		}
 		return 0;
@@ -396,7 +398,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				if (element instanceof ZLTextWord) {
 					drawWord(x, y, (ZLTextWord) element, charNumber, -1, false);
 				} else {
-					context.drawImage(x, y, ((ZLTextImageElement) element).getImageData());
+					context.drawImage(x, y, ((ZLTextImageElement) element).ImageData);
 				}
 			}
 		}
@@ -796,10 +798,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		context.moveY(info.Height + info.Descent + info.VSpaceAfter);
 	}
 	
-	public String caption() {
-		return "SampleView";
-	}
-
 	public void scrollPage(boolean forward, int scrollingMode, int value) {
 		preparePaintInfo();
 		if (myPaintState == PaintState.READY) {
@@ -1057,7 +1055,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public void clearCaches() {
 		rebuildPaintInfo(true);
-		ZLTextParagraphCursorCache.clear();
 	}
 
 	protected void rebuildPaintInfo(boolean strong) {
@@ -1068,6 +1065,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myLineInfos.clear();
 		if (!myStartCursor.isNull()) {
 			if (strong) {
+				ZLTextParagraphCursorCache.clear();
 				myStartCursor.rebuild();
 				myLineInfoCache.clear();
 			}
@@ -1075,6 +1073,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			myPaintState = PaintState.START_IS_KNOWN;
 		} else if (!myEndCursor.isNull()) {
 			if (strong) {
+				ZLTextParagraphCursorCache.clear();
 				myEndCursor.rebuild();
 				myLineInfoCache.clear();
 			}

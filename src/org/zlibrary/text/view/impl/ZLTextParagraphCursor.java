@@ -3,13 +3,9 @@ package org.zlibrary.text.view.impl;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
-import org.zlibrary.core.image.ZLImage;
-import org.zlibrary.core.image.ZLImageData;
-import org.zlibrary.core.image.ZLImageManager;
-import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextTreeModel;
-import org.zlibrary.text.model.impl.ZLTextMark;
+import org.zlibrary.core.image.*;
+import org.zlibrary.text.model.*;
+import org.zlibrary.text.model.impl.*;
 
 public abstract class ZLTextParagraphCursor {
 	private static abstract class Processor {
@@ -55,11 +51,12 @@ public abstract class ZLTextParagraphCursor {
 						}
 						break;
 					case ZLTextParagraph.Entry.IMAGE:
-						ZLImage image = it.getImageEntry().getImage();
+						final ZLImageEntry imageEntry = it.getImageEntry();
+						final ZLImage image = imageEntry.getImage();
 						if (image != null) {
 							ZLImageData data = ZLImageManager.getInstance().getImageData(image);
 							if (data != null) {
-								elements.add(new ZLTextImageElement(data));
+								elements.add(new ZLTextImageElement(imageEntry.getId(), data));
 							}
 						}
 						break;
@@ -67,7 +64,7 @@ public abstract class ZLTextParagraphCursor {
 						// TODO: implement
 						break;
 					case ZLTextParagraph.Entry.FIXED_HSPACE:
-						// TODO: implement
+						elements.add(ZLTextFixedHSpaceElement.getElement(it.getFixedHSpaceLength()));
 						break;
 				}
 			}

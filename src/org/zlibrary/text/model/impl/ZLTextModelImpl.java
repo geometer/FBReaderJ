@@ -42,6 +42,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 		private ZLImageEntry myImageEntry;
 
+		private short myFixedHSpaceLength;
+
 		EntryIteratorImpl(int index) {
 			myLength = myParagraphLengths[index];
 			myDataIndex = myStartEntryIndices[index];
@@ -77,6 +79,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
+		}
+
+		public short getFixedHSpaceLength() {
+			return myFixedHSpaceLength;
 		}
 
 		public boolean hasNext() {
@@ -126,6 +132,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					myImageEntry = (ZLImageEntry)myEntries.get((int)data[dataOffset++]);
 					break;
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
+					myFixedHSpaceLength = (short)data[dataOffset++];
+					break;
 				case ZLTextParagraph.Entry.FORCED_CONTROL:
 					//entry = myEntries.get((int)code);
 					break;
@@ -239,13 +247,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	
 	
 	public final void addFixedHSpace(short length) {
-		final char[] block = getDataBlock(3);
+		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
-		final int entryAddress = myEntries.size();
-		block[myBlockOffset++] = (char)(entryAddress >> 16);
-		block[myBlockOffset++] = (char)entryAddress;
-		myEntries.add(new ZLTextFixedHSpaceEntry(length));
+		block[myBlockOffset++] = (char)length;
 	}	
 
 	public ZLTextMark getFirstMark() {
@@ -306,10 +311,18 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 				}				
 			}
 		}
-
 	}
 
 	public ArrayList getMarks() {
 		return myMarks;
 	}	
+
+	protected void clear() {
+		myParagraphsNumber = 0;
+		myEntries.clear();
+		myData.clear();
+		myMarks.clear();
+		myCurrentDataBlock = null;
+		myBlockOffset = 0;
+	}
 }

@@ -39,10 +39,6 @@ public class ZLModelFactory {
 	}
 
 	//entries
-	static public ZLTextFixedHSpaceEntry createFixedHSpaceEntry(byte lenght) {
-		return new ZLTextFixedHSpaceEntry(lenght);
-	}
-	
 	static public ZLTextForcedControlEntry createForcedControlEntry() {
 		return new ZLTextForcedControlEntryImpl();
 	}

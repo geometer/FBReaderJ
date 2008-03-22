@@ -15,6 +15,10 @@ public final class ZLImageEntry {
 		VOffset = vOffset;
 	}
 	
+	public String getId() {
+		return myId;
+	}
+
 	public ZLImage getImage() {
 		return myImageMap.getImage(myId);
 	}
