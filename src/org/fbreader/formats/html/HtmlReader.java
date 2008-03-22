@@ -24,7 +24,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private final char[] SPACE = { ' ' };
 	private String myHrefAttribute = "href";
 	private boolean myAdditionalParagraphExists = false;
-
+	private boolean myOrderedListIsStarted = false;
+	private boolean myUnorderedListIsStarted = false;
+	private int myOLCounter = 0;
+	
 	public HtmlReader(BookModel model) {
 		super(model);
 	}
@@ -83,9 +86,13 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	
 	public void endElementHandler(String tagName) {
 		switch (HtmlTag.getTagByName(tagName)) {
+			
+			case HtmlTag.SCRIPT:
+			case HtmlTag.SELECT:
+				startNewParagraph();
+				break;
+				
 			case HtmlTag.P:
-				//endParagraph();
-				//startUnnaturalTextBlock();
 				startNewParagraph();
 				break;
 
@@ -143,6 +150,15 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				addControl(FBTextKind.ITALIC, false);
 				break;
 
+			case HtmlTag.OL:
+				myOrderedListIsStarted = false;
+				myOLCounter = 0;
+				break;
+				
+			case HtmlTag.UL:
+				myUnorderedListIsStarted = false;
+				break;
+				
 			default:
 				break;
 		}
@@ -211,10 +227,6 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				}
 				break;
 
-			case HtmlTag.BR: {
-				startNewParagraph();
-				break;
-			}
 			case HtmlTag.B:
 				addControl(FBTextKind.BOLD, true);
 				break;
@@ -228,35 +240,64 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 				
 			case HtmlTag.H1:
-				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				startNewParagraph();
 				addControl(FBTextKind.H1, true);
 				break;
 				
 			case HtmlTag.H2:
-				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				startNewParagraph();
 				addControl(FBTextKind.H2, true);
 				break;
 				
 			case HtmlTag.H3:
-				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				startNewParagraph();
 				addControl(FBTextKind.H3, true);
 				break;
 				
 			case HtmlTag.H4:
-				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				startNewParagraph();
 				addControl(FBTextKind.H4, true);
 				break;
 				
 			case HtmlTag.H5:
-				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				startNewParagraph();
 				addControl(FBTextKind.H5, true);
 				break;
 				
 			case HtmlTag.H6:
-				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+				startNewParagraph();
 				addControl(FBTextKind.H6, true);
 				break;
 				
+			case HtmlTag.OL:
+				myOrderedListIsStarted = true;
+				break;
+				
+			case HtmlTag.UL:
+				myUnorderedListIsStarted = true;
+				break;
+				
+			case HtmlTag.LI:
+				startNewParagraph();
+				if (myOrderedListIsStarted) {
+					char[] number = (new Integer(++myOLCounter)).toString().toCharArray();
+					addDataFinal(number, 0, number.length);
+					addDataFinal(new char[] {'.', ' '}, 0, 2);
+				} else {
+					addDataFinal(new char[] {'*', ' '}, 0, 2);
+				}
+				break;
+				
+			case HtmlTag.SCRIPT:
+			case HtmlTag.SELECT:
+			case HtmlTag.STYLE:
+				endParagraph();
+				break;
+				
+			case HtmlTag.TR: 
+			case HtmlTag.BR:
+				startNewParagraph();
+				break;
 			default:
 				break;
 		}

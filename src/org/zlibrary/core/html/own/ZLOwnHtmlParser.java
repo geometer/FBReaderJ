@@ -26,10 +26,13 @@ final class ZLOwnHtmlParser {
 	private static final byte WAIT_ATTRIBUTE_VALUE = 11;
 	private static final byte SLASH = 12;
 	private static final byte ATTRIBUTE_NAME = 13;
-	private static final byte ATTRIBUTE_VALUE = 14;
+	private static final byte S_ATTRIBUTE_VALUE = 14;
 	private static final byte DEFAULT_ATTRIBUTE_VALUE = 15;
 	private static final byte ENTITY_REF = 16;
-
+	private static final byte COMMENT_MINUS = 17;
+	private static final byte D_ATTRIBUTE_VALUE = 18;
+	private static final byte SCRIPT = 19;
+	
 	private static String convertToString(HashMap strings, ZLMutableString contatiner) {
 		String s = (String)strings.get(contatiner);
 		if (s == null) {
@@ -55,16 +58,17 @@ final class ZLOwnHtmlParser {
 	public ZLOwnHtmlParser(ZLHtmlReader htmlReader, InputStream stream) throws IOException {
 		myReader = htmlReader;
 
-		String encoding = "UTF-8";
-		stream.mark(512);
+		String encoding = "cp1251";
+		int observeChars = 1024;
+		stream.mark(observeChars);
 		final char[] buffer = myBuffer;
 		int len;
-		for (len = 0; len < 512; ++len) {
+		for (len = 0; len < observeChars; ++len) {
 			char c = (char)stream.read();
 			buffer[len] = c;
 		}
 		//if (len < 384) {
-			StringBuffer description = new StringBuffer(new String(buffer, 0, 512));
+			StringBuffer description = new StringBuffer(new String(buffer, 0, observeChars));
 			int index = description.indexOf("encoding");
 			if (index <= 0) {
 				index = description.indexOf("charset");
@@ -92,7 +96,7 @@ final class ZLOwnHtmlParser {
 		try {
 			test = new InputStreamReader(stream, encoding);
 		} catch (UnsupportedEncodingException e) {
-			test = new InputStreamReader(stream, "UTF-8");
+			test = new InputStreamReader(stream, "cp1251");
 		}
 		myStreamReader = test;
 	}
@@ -124,6 +128,8 @@ final class ZLOwnHtmlParser {
 		entityMap.put("gt", new char[] { '>' });
 		entityMap.put("lt", new char[] { '<' });
 		entityMap.put("quot", new char[] { '\"' });
+		entityMap.put("rarr", new char[] { '-', '>'});
+		entityMap.put("larr", new char[] { '<', '-'});
 
 		final InputStreamReader streamReader = myStreamReader;
 		final ZLHtmlReader htmlReader = myReader;
@@ -135,7 +141,7 @@ final class ZLOwnHtmlParser {
 		final ZLMutableString entityName = new ZLMutableString();
 		final HashMap strings = new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
-		int tagStackSize = 0;
+		boolean scriptOpened = false;
 
 		byte state = START_DOCUMENT;
 		byte savedState = START_DOCUMENT;
@@ -150,7 +156,9 @@ final class ZLOwnHtmlParser {
 			int startPosition = 0;
 			try {
 				for (int i = -1;;) {
-mainSwitchLabel:
+					
+mainSwitchLabel:	
+	
 					switch (state) {
 						case START_DOCUMENT:
 							while (true) {
@@ -161,6 +169,7 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+							
 						case LANGLE:
 							switch (buffer[++i]) {
 								case '/':
@@ -168,6 +177,17 @@ mainSwitchLabel:
 									startPosition = i + 1;
 									break;
 								case '!':
+								{
+									switch (buffer[++i]) {
+										case '-':
+											state = COMMENT_MINUS;
+											i--;
+											break;
+										default :
+											state = COMMENT;
+											break;
+									}
+								}
 								case '?':
 									state = COMMENT;
 									break;
@@ -177,7 +197,40 @@ mainSwitchLabel:
 									break;
 							}
 							break;
-						case COMMENT:
+							
+						case SCRIPT:
+							while (true) {
+								if (buffer[++i] == '<') {
+									if (buffer[++i] == '/') {
+										state = END_TAG;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+									}
+								}
+							}
+							
+						case COMMENT_MINUS:
+						{
+							int minusCounter = 0;
+							while (minusCounter != 2) {
+								switch (buffer[++i]) {
+									case '-':
+										minusCounter++;
+										break;
+									default :
+										minusCounter = 0;
+										break;
+								}
+							}
+							switch (buffer[++i]) {
+								case '>':
+									state = TEXT;
+									startPosition = i + 1;
+									break mainSwitchLabel;
+							}
+						}
+						
+						case COMMENT :
 							while (true) {
 								switch (buffer[++i]) {
 									case '>':
@@ -186,6 +239,7 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+							
 						case START_TAG:
 							while (true) {
 								switch (buffer[++i]) {
@@ -204,8 +258,12 @@ mainSwitchLabel:
 										tagName.append(buffer, startPosition, i - startPosition);
 										{
 											String stringTagName = convertToString(strings, tagName);
-											tagStackSize++;
 											processStartTag(htmlReader, stringTagName, attributes);
+											if ("script".equals(stringTagName.toLowerCase())) {
+												scriptOpened = true;
+												state = SCRIPT;
+												break mainSwitchLabel;
+											}
 										}
 										startPosition = i + 1;
 										break mainSwitchLabel;
@@ -222,13 +280,51 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+						case END_TAG:
+							while (true) {
+								switch (buffer[++i]) {
+									case 0x0008:
+									case 0x0009:
+									case 0x000A:
+									case 0x000B:
+									case 0x000C:
+									case 0x000D:
+									case ' ':
+										state = WS_AFTER_END_TAG_NAME;
+										tagName.append(buffer, startPosition, i - startPosition);
+										break mainSwitchLabel;
+									case '>':
+
+											tagName.append(buffer, startPosition, i - startPosition);
+											{
+												String stringTagName = convertToString(strings, tagName);
+												processEndTag(htmlReader, stringTagName);
+												if (scriptOpened){
+												}
+												if ("script".equals(stringTagName.toLowerCase())) {
+													scriptOpened = false;
+												}
+											}
+										if (scriptOpened){
+											state = SCRIPT;
+										} else {
+											state = TEXT;
+											startPosition = i + 1;
+										}
+										break mainSwitchLabel;
+								}
+							}
 						case WS_AFTER_START_TAG_NAME:
 							switch (buffer[++i]) {
 								case '>':
 									{
 										String stringTagName = convertToString(strings, tagName);
-										tagStackSize++;
 										processStartTag(htmlReader, stringTagName, attributes);
+										if ("script".equals(stringTagName.toLowerCase())) {
+											scriptOpened = true;
+											state = SCRIPT;
+											break mainSwitchLabel;
+										}
 									}
 									state = TEXT;
 									startPosition = i + 1;
@@ -256,13 +352,17 @@ mainSwitchLabel:
 								case '>':
 									{
 										String stringTagName = convertToString(strings, tagName);
-										tagStackSize--;
 										processEndTag(htmlReader, stringTagName);
+										if ("script".equals(stringTagName.toLowerCase())) {
+											scriptOpened = false;
+										}
 									}
-									state = TEXT;
-									startPosition = i + 1;
-									break;
-								default:
+									if (scriptOpened){
+										state = SCRIPT;
+									} else {
+										state = TEXT;
+										startPosition = i + 1;
+									}
 									break;
 							}
 							break;
@@ -309,8 +409,12 @@ mainSwitchLabel:
 										break;
 									case '\n' : 
 										break;
+									case '\'':
+										state = S_ATTRIBUTE_VALUE;
+										startPosition = i + 1;
+										break mainSwitchLabel;
 									case '"' :
-										state = ATTRIBUTE_VALUE;
+										state = D_ATTRIBUTE_VALUE;
 										startPosition = i + 1;
 										break mainSwitchLabel;
 									default :
@@ -322,7 +426,8 @@ mainSwitchLabel:
 						case DEFAULT_ATTRIBUTE_VALUE:
 							while (true) {
 								i++;
-								if ((buffer[i] == ' ') || (buffer[i] == '"') || (buffer[i] == '>')) {
+								if ((buffer[i] == ' ') || (buffer[i] == '\'') 
+									|| (buffer[i] == '"') || (buffer[i] == '>')) {
 									attributeValue.append(buffer, startPosition, i - startPosition);
 									if (dontCacheAttributeValues) {
 										attributes.put(convertToString(strings, attributeName), attributeValue.toString());
@@ -333,12 +438,13 @@ mainSwitchLabel:
 								}
 								switch (buffer[i]) {
 									case ' ':
+									case '\'':
 									case '"':
 										state = WS_AFTER_START_TAG_NAME;
 										break mainSwitchLabel;
 									case '&':
 										attributeValue.append(buffer, startPosition, i - startPosition);
-										savedState = ATTRIBUTE_VALUE;
+										savedState = DEFAULT_ATTRIBUTE_VALUE;
 										state = ENTITY_REF;
 										startPosition = i + 1;
 										break mainSwitchLabel;
@@ -347,14 +453,19 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 									case '>':
 										String stringTagName = convertToString(strings, tagName);
-										tagStackSize++;
+										
 										processStartTag(htmlReader, stringTagName, attributes);
+										if ("script".equals(stringTagName.toLowerCase())) {
+											scriptOpened = true;
+											state = SCRIPT;
+											break mainSwitchLabel;
+										}
 										state = TEXT;
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
 							}	
-						case ATTRIBUTE_VALUE:
+						case D_ATTRIBUTE_VALUE:
 							while (true) {
 								switch (buffer[++i]) {
 									case '"':
@@ -369,30 +480,55 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 									case '&':
 										attributeValue.append(buffer, startPosition, i - startPosition);
-										savedState = ATTRIBUTE_VALUE;
+										savedState = D_ATTRIBUTE_VALUE;
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
+							
+						case S_ATTRIBUTE_VALUE:
+							while (true) {
+								switch (buffer[++i]) {
+									case '\'':
+										attributeValue.append(buffer, startPosition, i - startPosition);
+										state = WS_AFTER_START_TAG_NAME;
+										if (dontCacheAttributeValues) {
+											attributes.put(convertToString(strings, attributeName), attributeValue.toString());
+											attributeValue.clear();
+										} else {
+											attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
+										}
+										break mainSwitchLabel;
+									case '&':
+										attributeValue.append(buffer, startPosition, i - startPosition);
+										savedState = S_ATTRIBUTE_VALUE;
 										state = ENTITY_REF;
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
 							}
 						case ENTITY_REF:
-							while (true) {
+							int savePosition = i;
+							while (i - savePosition < 6) {
 								switch (buffer[++i]) {
 									case ';':
+										
 										entityName.append(buffer, startPosition, i - startPosition);
 										state = savedState;
 										startPosition = i + 1;
 										final char[] value = getEntityValue(entityMap, convertToString(strings, entityName));
 										if (value != null) {
 											switch (state) {
-												case ATTRIBUTE_VALUE:
+												case S_ATTRIBUTE_VALUE:
+												case D_ATTRIBUTE_VALUE:
 													attributeValue.append(value, 0, value.length);
 													break;
 												case ATTRIBUTE_NAME:
 													attributeName.append(value, 0, value.length);
 													break;
 												case START_TAG:
-												//case END_TAG:
+												case END_TAG:
 													tagName.append(value, 0, value.length);
 													break;
 												case TEXT:
@@ -403,6 +539,8 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+							i = savePosition;
+							state = savedState;
 						case SLASH:
 							while (true) {
 								switch (buffer[++i]) {
@@ -415,33 +553,6 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 									default :
 										state = DEFAULT_ATTRIBUTE_VALUE;
-										break mainSwitchLabel;
-								}
-							}
-						case END_TAG:
-							while (true) {
-								switch (buffer[++i]) {
-									case 0x0008:
-									case 0x0009:
-									case 0x000A:
-									case 0x000B:
-									case 0x000C:
-									case 0x000D:
-									case ' ':
-										state = WS_AFTER_END_TAG_NAME;
-										tagName.append(buffer, startPosition, i - startPosition);
-										break mainSwitchLabel;
-									case '>':
-										if (tagStackSize > 0) {
-											tagName.append(buffer, startPosition, i - startPosition);
-											{
-												String stringTagName = convertToString(strings, tagName);
-												tagStackSize--;
-												processEndTag(htmlReader, stringTagName);
-											}
-										}
-										state = TEXT;
-										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
 							}
@@ -475,7 +586,8 @@ mainSwitchLabel:
 					case ATTRIBUTE_NAME:
 						attributeName.append(buffer, startPosition, count - startPosition);
 						break;
-					case ATTRIBUTE_VALUE:
+					case S_ATTRIBUTE_VALUE:
+					case D_ATTRIBUTE_VALUE:
 						attributeValue.append(buffer, startPosition, count - startPosition);
 						break;
 					case ENTITY_REF:
