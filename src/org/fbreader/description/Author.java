@@ -107,7 +107,7 @@ public abstract class Author {
 	static public class AuthorComparator implements Comparator {
 		public int compare(Object aobj1, Object aobj2) {
 			Author a1 = (Author)aobj1;
-			Author a2 = (Author)aobj1;
+			Author a2 = (Author)aobj2;
 			System.out.println(a1.getSortKey()+"   "+ a2.getSortKey()+"authors sort"+a1.getSortKey().compareTo(a2.getSortKey()));
 			return a1.getSortKey().compareTo(a2.getSortKey());
 		}
