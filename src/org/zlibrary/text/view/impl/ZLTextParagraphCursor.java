@@ -22,12 +22,10 @@ public abstract class ZLTextParagraphCursor {
 			myMarks = marks;
 			ZLTextMark mark = new ZLTextMark(paragraphNumber, 0, 0);
 			int i;
-			//System.err.println("Mark = " + mark);
 			for (i = 0; i < myMarks.size(); i++) {
 				if (((ZLTextMark) myMarks.get(i)).compareTo(mark) >= 0) {
 					break;
 				}
-			//	System.err.println(i + " " + ((ZLTextMark) myMarks.get(i)));
 			}
 			myFirstMark = i;
 			myLastMark = myFirstMark;
@@ -74,20 +72,10 @@ public abstract class ZLTextParagraphCursor {
 		
 		protected final void addWord(char[] data, int offset, int len, int paragraphOffset) {
 			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
-/*			for (int i = offset; i < offset + len; i++) {
-				System.err.print(data[i]);
-			}
-			System.err.println();
-			System.err.println("Size = " + myMarks.size());
-			System.err.println("First = " + myFirstMark);
-			System.err.println("Last = " + myLastMark);
-			*/
 			for (int i = myFirstMark; i < myLastMark; ++i) {
 				final ZLTextMark mark = (ZLTextMark)myMarks.get(i);
-				final int markOffset = mark.Offset + paragraphOffset;
-				final int markLength = mark.Length;
-				if ((markOffset < offset + len) && (markOffset + markLength > offset)) {
-					word.addMark(markOffset - offset, markLength);
+				if ((mark.Offset < paragraphOffset + len) && (mark.Offset + mark.Length > paragraphOffset)) {
+					word.addMark(mark.Offset - paragraphOffset, mark.Length);
 				}
 			}
 			myElements.add(word);		
@@ -111,7 +99,7 @@ public abstract class ZLTextParagraphCursor {
 					final char ch = data[charPos];
 					if ((ch == ' ') || (ch <= 0x0D)) {
 						if (firstNonSpace != -1) {
-							addWord(data, firstNonSpace, charPos - firstNonSpace, offset);
+							addWord(data, firstNonSpace, charPos - firstNonSpace, myOffset + (firstNonSpace - offset));
 							elements.add(hSpace);
 							spaceInserted = true;
 							firstNonSpace = -1;					
@@ -124,7 +112,7 @@ public abstract class ZLTextParagraphCursor {
 					}
 				} 
 				if (firstNonSpace != -1) {
-					addWord(data, firstNonSpace, end - firstNonSpace, offset);
+					addWord(data, firstNonSpace, end - firstNonSpace, myOffset + (firstNonSpace - offset));
 //					elements.add(new ZLTextWord(data, firstNonSpace, end - firstNonSpace, 0));
 				}
 				myOffset += length;

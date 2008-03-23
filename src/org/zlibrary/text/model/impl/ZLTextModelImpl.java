@@ -298,7 +298,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		}				
 		for (int i = startIndex; i < endIndex; i++) {
 			int offset = 0;
-			for (EntryIteratorImpl it = new EntryIteratorImpl(i); it.hasNext(); it.next()) {
+			for (EntryIteratorImpl it = new EntryIteratorImpl(i); it.hasNext();) {
+				it.next();
 				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
@@ -309,7 +310,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					}
 					offset += textLength;						
 				}				
-			}
+			} 
 		}
 	}
 

@@ -227,7 +227,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void gotoMark(ZLTextMark mark) {
-		//System.err.println("goto " + mark);
 		if (mark.ParagraphNumber < 0) {
 			return;
 		}
@@ -258,8 +257,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 	
 	public void search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
-		//System.err.println("Searching...");
-		//System.err.println(myModel.getMarks().size());	
 		if (text.length() == 0) {
 			return;
 		}
@@ -272,7 +269,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (!myStartCursor.isNull()) {
 			rebuildPaintInfo(true);
 			ZLTextMark position = myStartCursor.getPosition();
-			//System.err.println("Position = " + position);
 			gotoMark(wholeText ? 
 				(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
 				(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
@@ -1160,7 +1156,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public boolean onStylusPress(int x, int y) {
-//		search("FBReader", true, true, false, false);
+		search("FBReader", true, true, false, false);
 		if (myModel instanceof ZLTextTreeModel) {
 			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
 			if (nodeArea != null) {
