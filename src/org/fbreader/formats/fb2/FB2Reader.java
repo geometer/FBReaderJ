@@ -321,9 +321,10 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			
 			case FB2Tag.A:
 				String ref = attributes.getValue(myHrefAttribute);
+				String type = attributes.getValue("type");
 				if ((ref != null) && (ref.length() != 0)) {
 					if (ref.charAt(0) == '#') {
-						myHyperlinkType = FBTextKind.FOOTNOTE;
+						myHyperlinkType = "note".equals(type) ? FBTextKind.FOOTNOTE : FBTextKind.INTERNAL_HYPERLINK;
 						ref = ref.substring(1);
 					} else {
 						myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
