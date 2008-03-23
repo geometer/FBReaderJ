@@ -230,9 +230,39 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 	private class MyKeyListener extends KeyAdapter {
 		 
 		public void keyPressed(KeyEvent e) {			
-			String keyCode = keyTextModifiersParse(e.getModifiersExText(e.getModifiersEx()))
-										 + keyTextParse(e.getKeyText(e.getKeyCode()));
-			//System.out.println(keyCode);
+			final String modifiers = e.getModifiersExText(e.getModifiersEx());
+			final int code = e.getKeyCode();
+			String main;
+			switch (code) {
+				case 33:
+					main = "Page Up";
+					break;
+				case 34:
+					main = "Page Down";
+					break;
+				case 35:
+					main = "End";
+					break;
+				case 36:
+					main = "Home";
+					break;
+				case 37:
+					main = "LeftArrow";
+					break;
+				case 38:
+					main = "UpArrow";
+					break;
+				case 39:
+					main = "RightArrow";
+					break;
+				case 40:
+					main = "DownArrow";
+					break;
+				default:
+					main = e.getKeyText(code);
+					break;
+			}
+			final String keyCode = keyTextModifiersParse(modifiers) + keyTextParse(main);
 			getApplication().doActionByKey(keyCode);
 		}
 		

@@ -22,6 +22,7 @@ public interface ZLTextModel {
 	void addImage(String id, ZLImageMap imageMap, short vOffset);
 	void addFixedHSpace(short length);
 
+	void selectParagraph(int index);
 	ZLTextMark getFirstMark();
 	ZLTextMark getLastMark();
 	ZLTextMark getNextMark(ZLTextMark position);

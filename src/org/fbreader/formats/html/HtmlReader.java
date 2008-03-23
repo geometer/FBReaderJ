@@ -11,7 +11,6 @@ import org.zlibrary.core.html.ZLHtmlProcessor;
 import org.zlibrary.core.html.ZLHtmlProcessorFactory;
 import org.zlibrary.core.html.ZLHtmlReader;
 import org.zlibrary.text.model.ZLTextParagraph;
-import java.awt.image.*;
 
 public class HtmlReader extends BookReader implements ZLHtmlReader {
 

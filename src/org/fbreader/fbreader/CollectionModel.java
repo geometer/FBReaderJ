@@ -23,9 +23,9 @@ class CollectionModel extends ZLTextTreeModelImpl {
 	private final BookCollection myCollection;
 	private final CollectionView myView;
 
-	private ZLImageMap myImageMap = new ZLImageMap();
+	private final ZLImageMap myImageMap = new ZLImageMap();
 	private final HashMap myParagraphToBook = new HashMap();
-	private final HashMap myBookToParagraph = new HashMap();
+	private HashMap myBookToParagraphNumber = new HashMap();
 
 	public CollectionModel(CollectionView view, BookCollection collection) {
 		myView = view;
@@ -48,7 +48,7 @@ class CollectionModel extends ZLTextTreeModelImpl {
 	}
 	
 	public int paragraphNumberByBook(BookDescription book) {
-		Integer num = (Integer)myBookToParagraph.get(book);
+		Integer num = (Integer)myBookToParagraphNumber.get(book);
 		return (num != null) ? num.intValue() : 0;
 	}
 
@@ -87,7 +87,7 @@ class CollectionModel extends ZLTextTreeModelImpl {
 						insertImage(RemoveBookImageId);
 					}
 					myParagraphToBook.put(bookParagraph, jt);
-					myBookToParagraph.put(jt, getParagraphsNumber() - 1);
+					myBookToParagraphNumber.put(jt, getParagraphsNumber() - 1);
 				}
 			}
 		}
@@ -95,7 +95,7 @@ class CollectionModel extends ZLTextTreeModelImpl {
 
 	public void update() {
 		myParagraphToBook.clear();
-		myBookToParagraph.clear();
+		myBookToParagraphNumber.clear();
 		super.clear();
 		build();
 	}
@@ -108,5 +108,38 @@ class CollectionModel extends ZLTextTreeModelImpl {
 	private void insertImage(String id) {
 		addFixedHSpace((short)1);
 		addImage(id, myImageMap, (short)0);
+	}
+
+	void removeBook(BookDescription book) {
+		int index = paragraphNumberByBook(book);
+		if (index == 0) {
+			return;
+		}
+		myBookToParagraphNumber.remove(book);
+
+		ZLTextTreeParagraph paragraph = getTreeParagraph(index);
+		int count = 1;
+		for (ZLTextTreeParagraph parent = paragraph.getParent(); (parent != null) && (parent.getChildren().size() == 1); parent = parent.getParent()) {
+			++count;
+		}
+    
+		if (count > index) {
+			count = index;
+		}
+    
+		HashMap newMap = new HashMap();
+		for (Object b : myBookToParagraphNumber.keySet()) {
+			Integer i = (Integer)myBookToParagraphNumber.get(b);
+			if (i.intValue() < index) {
+				newMap.put(b, i);
+			} else {
+				newMap.put(b, i.intValue() - count);
+			}
+		}
+		myBookToParagraphNumber = newMap;
+
+		for (; count > 0; --count) {
+			removeParagraph(index--);
+		}
 	}
 }

@@ -76,8 +76,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 	
 	public void highlightParagraph(int paragraphNumber) {
-		//TODO select
-		myModel.getParagraph(paragraphNumber);
+		myModel.selectParagraph(paragraphNumber);
 		rebuildPaintInfo(true);
 	}
 
@@ -242,7 +241,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 		if ((myStartCursor.getParagraphCursor().getIndex() != mark.ParagraphNumber) || (myStartCursor.getPosition().compareTo(mark) > 0)) {
 			doRepaint = true;
-			gotoParagraph(mark.ParagraphNumber);
+			gotoParagraph(mark.ParagraphNumber, false);
 			preparePaintInfo();
 		}
 		if (myEndCursor.isNull()) {
@@ -448,8 +447,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		} else {
 			int pos = 0;
 			for (; (mark != null) && (pos < length); mark = mark.getNext()) {
-				int markStart = mark.getStart() - shift;
-				int markLen = mark.getLength();
+				int markStart = mark.Start - shift;
+				int markLen = mark.Length;
 
 				if (markStart < pos) {
 					markLen += markStart - pos;
@@ -817,12 +816,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myPaintState = PaintState.START_IS_KNOWN;
 	}
 
-	
-	public void gotoParagraph(int index) {
-		// TODO: implement
-		//myStartParagraphNumber = index;		
-	}
-	
 	public void gotoParagraph(int num, boolean last) {
 		if (myModel == null) {
 			return;

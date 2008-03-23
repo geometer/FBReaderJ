@@ -10,8 +10,6 @@ public final class ZLTextWordCursor {
 	private int myCharNumber;
 
 	public ZLTextWordCursor() {
-		myWordNumber = 0;
-		myCharNumber = 0;
 	}
 
 	public ZLTextWordCursor(ZLTextWordCursor cursor) {
@@ -179,6 +177,7 @@ public final class ZLTextWordCursor {
 		if (!isNull()) {
 			myParagraphCursor.clear();
 			myParagraphCursor.fill();
+			moveTo(myWordNumber, myCharNumber);
 		}
 	}
 }

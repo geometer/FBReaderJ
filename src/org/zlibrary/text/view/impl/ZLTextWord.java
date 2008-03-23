@@ -10,23 +10,15 @@ public final class ZLTextWord extends ZLTextElement {
 	private Mark myMark;
 	private int myParagraphOffset;
 
-	public class Mark {
-		private int myStart;
-		private int myLength;
+	class Mark {
+		public final int Start;
+		public final int Length;
 		private Mark myNext;
 
 		private Mark(int start, int length) {
-			myStart = start;
-			myLength = length;
+			Start = start;
+			Length = length;
 			myNext = null;
-		}
-		
-		public int getStart() {
-			return myStart;
-		}
-
-		public int getLength() {
-			return myLength;
 		}
 
 		public Mark getNext() {
@@ -54,13 +46,14 @@ public final class ZLTextWord extends ZLTextElement {
 	}
 	
 	public void addMark(int start, int length) {
+		System.err.println("addMark");
 		Mark existingMark = myMark;
 		Mark mark = new Mark(start, length);
-		if ((existingMark == null) || (existingMark.getStart() > start)) {
+		if ((existingMark == null) || (existingMark.Start > start)) {
 			mark.setNext(existingMark);
 			myMark = mark;
 		} else {
-			while ((existingMark.getNext() != null) && (existingMark.getNext().getStart() < start)) {
+			while ((existingMark.getNext() != null) && (existingMark.getNext().Start < start)) {
 				existingMark = existingMark.getNext();
 			}
 			mark.setNext(existingMark.getNext());

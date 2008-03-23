@@ -7,8 +7,6 @@ import org.zlibrary.core.util.*;
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.collection.BookCollection;
 import org.fbreader.description.BookDescription;
-import org.fbreader.formats.fb2.FB2Reader;
-import org.fbreader.formats.html.HtmlReader;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.dialogs.ZLDialogManager;
@@ -41,22 +39,6 @@ public final class FBReader extends ZLApplication {
 		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
 
 	private String myHelpFileName;
-	
-	private static final String OPTIONS = "Options";
-	private static final String SEARCH = "Search";
-
-	private static final String LARGE_SCROLLING = "LargeScrolling";
-	private static final String SMALL_SCROLLING = "SmallScrolling";
-	private static final String MOUSE_SCROLLING = "MouseScrolling";
-	private static final String FINGER_TAP_SCROLLING = "FingerTapScrolling";
-
-	private static final String DELAY = "ScrollingDelay";
-	private static final String MODE = "Mode";
-	private static final String LINES_TO_KEEP = "LinesToKeep";
-	private static final String LINES_TO_SCROLL = "LinesToScroll";
-	private static final String PERCENT_TO_SCROLL = "PercentToScroll";
-
-	
 	
 	String getHelpFileName() {
 		if (myHelpFileName == null) {
@@ -92,7 +74,7 @@ public final class FBReader extends ZLApplication {
 	private final CollectionView myCollectionView;
 	private final RecentBooksView myRecentBooksView;
 
-	private BookModel myBookModel = new BookModel("XXX");
+	private BookModel myBookModel;
 
 	public FBReader() {
 		this(new String[0]);
@@ -154,12 +136,6 @@ public final class FBReader extends ZLApplication {
 			} catch (IOException e) {
 			}
 		}
-        /*BookDescription description = BookDescription.getDescription(fileName);   
-		if (description == null) {
-			description = BookDescription.getDescription(getHelpFileName()); 
-			//openBook(getHelpFileName());
-		}
-		openBook(description);*/
 		BookDescription description = BookDescription.getDescription(fileName);   
 		if (description == null) {
 			description = BookDescription.getDescription(myBookNameOption.getValue());
@@ -224,10 +200,14 @@ public final class FBReader extends ZLApplication {
 				setView(myFootnoteView);
 				break;
 			case ViewMode.RECENT_BOOKS:
+				myRecentBooksView.rebuild();
 				setView(myRecentBooksView);
 				break;
 			case ViewMode.BOOK_COLLECTION:
 				myCollectionView.updateModel();
+				if (myBookModel != null) {
+					myCollectionView.selectBook(myBookModel.getDescription());
+				}
 				setView(myCollectionView);
 				break;
 			default:
@@ -270,6 +250,7 @@ public final class FBReader extends ZLApplication {
 			bookTextView.setModel(null, "");
 			bookTextView.setContentsModel(null);
 			contentsView.setModel(null);
+
 			myBookModel = new BookModel(description);
 			final String fileName = description.getFileName();
 			myBookNameOption.setValue(fileName);
@@ -285,7 +266,7 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 	
-	public void showBookTextView() {
+	void showBookTextView() {
 		setMode(ViewMode.BOOK_TEXT);
 	}
 

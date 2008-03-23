@@ -35,7 +35,6 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 		ZLTextTreeParagraph parent = myParent;
 		while (parent != null) {
 			parent.open(true);
-			System.out.print("here->"+parent.isOpen());
 			parent = parent.getParent();
 		}	
 	}

@@ -25,8 +25,6 @@ public final class BookModel {
 	
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
-	private final String myFileName;
-
 	private class Label {
 		final int ParagraphNumber;
 		final ZLTextModel Model;
@@ -36,17 +34,8 @@ public final class BookModel {
 			Model = model;
 		}
 	}
-	/**
-	 * @deprecated
-	 * */
-	//old version for compilation
-	public BookModel(String fileName) {
-		myFileName = fileName;
-		myDescription = null;
-	}
 	
 	public BookModel(final BookDescription description) {
-		myFileName = description.getFileName();
 		myDescription = description;
 		ZLFile file = new ZLFile(description.getFileName());
 		System.out.println(description.getFileName());
@@ -56,10 +45,8 @@ public final class BookModel {
 		}
 	}
 
-	//method changed!!!
 	public String getFileName() {
-		//return myDescription.getFileName();
-		return myFileName;
+		return myDescription.getFileName();
 	}
 	
 	public BookDescription getDescription() { 

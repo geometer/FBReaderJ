@@ -71,7 +71,6 @@ public abstract class ZLTextParagraphCursor {
 		}
 		
 		abstract void processTextEntry(final char[] data, final int offset, final int length);
-
 		
 		protected final void addWord(char[] data, int offset, int len, int paragraphOffset) {
 			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
@@ -81,11 +80,14 @@ public abstract class ZLTextParagraphCursor {
 			System.err.println();
 			System.err.println("Size = " + myMarks.size());
 			System.err.println("First = " + myFirstMark);
-			System.err.println("Last = " + myLastMark);*/
-			for (int i = myFirstMark; i < myLastMark; i++) {
-				ZLTextMark mark = (ZLTextMark) myMarks.get(i);
-				if ((mark.Offset < offset + len) && (mark.Offset + mark.Length > offset)) {
-					word.addMark(mark.Offset - offset, mark.Length);
+			System.err.println("Last = " + myLastMark);
+			*/
+			for (int i = myFirstMark; i < myLastMark; ++i) {
+				final ZLTextMark mark = (ZLTextMark)myMarks.get(i);
+				final int markOffset = mark.Offset + paragraphOffset;
+				final int markLength = mark.Length;
+				if ((markOffset < offset + len) && (markOffset + markLength > offset)) {
+					word.addMark(markOffset - offset, markLength);
 				}
 			}
 			myElements.add(word);		
@@ -96,7 +98,7 @@ public abstract class ZLTextParagraphCursor {
 	private static final class StandardProcessor extends Processor {
 		StandardProcessor(ZLTextParagraph paragraph, ArrayList marks, int paragraphNumber, ArrayList elements) {
 			super(paragraph, marks, paragraphNumber, elements);
-		}					int i;
+		}
 	
 		void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
@@ -109,8 +111,7 @@ public abstract class ZLTextParagraphCursor {
 					final char ch = data[charPos];
 					if ((ch == ' ') || (ch <= 0x0D)) {
 						if (firstNonSpace != -1) {
-						//	elements.add(new ZLTextWord(data, firstNonSpace, charPos - firstNonSpace, 0));
-							addWord(data, firstNonSpace, charPos - firstNonSpace, 0);
+							addWord(data, firstNonSpace, charPos - firstNonSpace, offset);
 							elements.add(hSpace);
 							spaceInserted = true;
 							firstNonSpace = -1;					
@@ -123,7 +124,7 @@ public abstract class ZLTextParagraphCursor {
 					}
 				} 
 				if (firstNonSpace != -1) {
-					addWord(data, firstNonSpace, end - firstNonSpace, 0);
+					addWord(data, firstNonSpace, end - firstNonSpace, offset);
 //					elements.add(new ZLTextWord(data, firstNonSpace, end - firstNonSpace, 0));
 				}
 				myOffset += length;

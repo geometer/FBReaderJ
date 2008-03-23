@@ -32,7 +32,7 @@ public class CollectionView extends FBView {
 
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
-			ZLTextWordCursor cursor = getStartCursor();
+			ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
 			cursor.moveToParagraph(imageArea.ParagraphNumber);
 			cursor.moveTo(imageArea.TextElementNumber, 0);
 			final ZLTextElement element = cursor.getElement();
@@ -73,51 +73,22 @@ public class CollectionView extends FBView {
 					//collectionModel().removeAllMarks();
 
 					new BookList().removeFileName(book.getFileName());
-
-					int index = cModel.paragraphNumberByBook(book);
-					ZLTextTreeParagraph paragraph = cModel.getTreeParagraph(index);
-					int count = 1;
-					for (ZLTextTreeParagraph parent = paragraph.getParent(); (parent != null) && (parent.getChildren().size() == 1); parent = parent.getParent()) {
-						++count;
-					}
-        
-					if (count > index) {
-						count = index;
-					}
-        
-					for (; count > 0; --count) {
-						cModel.removeParagraph(index--);
-					}
+					cModel.removeBook(book);
   
 					if (cModel.getParagraphsNumber() == 0) {
-						//setStartCursor(null);
+						gotoParagraph(0, false);
 					} else {
-						int pIndex = getStartCursor().getParagraphCursor().getIndex();
-						if (pIndex >= cModel.getParagraphsNumber()) {
-							pIndex = cModel.getParagraphsNumber() - 1;
+						int index = getStartCursor().getParagraphCursor().getIndex();
+						if (index >= cModel.getParagraphsNumber()) {
+							index = cModel.getParagraphsNumber() - 1;
 						}
 						while (!cModel.getTreeParagraph(index).getParent().isOpen()) {
-							--pIndex;
+							--index;
 						}
-						gotoParagraph(pIndex);
+						gotoParagraph(index, false);
 					}
 					rebuildPaintInfo(true);
 					getApplication().refreshWindow();
-					/*
-					ZLTextTreeParagraph paragraph = (ZLTextTreeParagraph)collectionModel().getTreeParagraph(imageArea.ParagraphNumber);
-					ZLTextTreeParagraph parent = paragraph.getParent();
-					if (parent.getChildren().size() == 1) {
-						collectionModel().removeParagraph(imageArea.ParagraphNumber);
-						collectionModel().removeParagraph(imageArea.ParagraphNumber - 1);
-					} else {
-						collectionModel().removeParagraph(imageArea.ParagraphNumber);
-					}
-					if (collectionModel().getParagraphsNumber() == 0) {
-						this.getStartCursor().setCursor((ZLTextParagraphCursor)null);
-					}
-					rebuildPaintInfo(true);
-					repaintView();
-					*/
 				}
 				return true;
 			}
@@ -175,7 +146,7 @@ public class CollectionView extends FBView {
 		int toSelect = collectionModel().paragraphNumberByBook(book);
 		if (toSelect >= 0) {
 			highlightParagraph(toSelect);
-			gotoParagraph(toSelect);
+			gotoParagraph(toSelect, false);
 			scrollPage(false, ZLTextView.ScrollingMode.SCROLL_PERCENTAGE, 40);
 		}
 	}

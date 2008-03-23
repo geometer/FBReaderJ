@@ -325,4 +325,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		myCurrentDataBlock = null;
 		myBlockOffset = 0;
 	}
+
+	public void selectParagraph(int index) {
+		if (index < myParagraphsNumber) {
+			myMarks.add(new ZLTextMark(index, 0, getParagraph(index).getTextLength()));
+		}
+	}
 }
