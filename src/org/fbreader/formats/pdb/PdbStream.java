@@ -12,6 +12,7 @@ public abstract class PdbStream extends InputStream {
 	public PdbStream(ZLFile file) {
 		myBuffer = null;
 	}
+	
 	public  int read(byte[] buffer,int offset, int maxSize) {
         int realSize = 0;
         while (realSize < maxSize) {
