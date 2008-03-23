@@ -67,10 +67,12 @@ public class BookReader {
 		stack[myKindStackSize++] = kind;
 	}
 	
-	public final void popKind() {
+	public final boolean popKind() {
 		if (myKindStackSize != 0) {
 			--myKindStackSize;
+			return true;
 		}
+		return false;
 	}
 	
 	public final void beginParagraph(byte kind) {
