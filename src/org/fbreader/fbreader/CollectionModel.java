@@ -111,6 +111,8 @@ class CollectionModel extends ZLTextTreeModelImpl {
 	}
 
 	void removeBook(BookDescription book) {
+		removeAllMarks();
+
 		int index = paragraphNumberByBook(book);
 		if (index == 0) {
 			return;

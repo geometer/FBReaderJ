@@ -70,7 +70,6 @@ public class CollectionView extends FBView {
 				if (ZLDialogManager.getInstance().showQuestionBox(boxKey, message,
 					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON, null) == 0) {
 					CollectionModel cModel = collectionModel();
-					//collectionModel().removeAllMarks();
 
 					new BookList().removeFileName(book.getFileName());
 					cModel.removeBook(book);

@@ -46,7 +46,6 @@ public final class ZLTextWord extends ZLTextElement {
 	}
 	
 	public void addMark(int start, int length) {
-		System.err.println("addMark");
 		Mark existingMark = myMark;
 		Mark mark = new Mark(start, length);
 		if ((existingMark == null) || (existingMark.Start > start)) {
