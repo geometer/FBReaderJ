@@ -281,6 +281,26 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
+	public boolean canFindNext() {
+		return !myEndCursor.isNull() && (myModel.getNextMark(myEndCursor.getPosition()).ParagraphNumber > -1);
+	}
+
+	public void findNext() {
+		if (myEndCursor.isNull()) {
+			gotoMark(myModel.getNextMark(myEndCursor.getPosition()));
+		}
+	}
+
+	public boolean canFindPrevious() {
+		return !myStartCursor.isNull() && (myModel.getPreviousMark(myStartCursor.getPosition()).ParagraphNumber > -1);
+	}
+
+	public void findPrevious() {
+		if (myStartCursor.isNull()) {
+			gotoMark(myModel.getPreviousMark(myStartCursor.getPosition()));
+		}
+	}
+
 	public void paint() {
 		//android.os.Debug.startMethodTracing("/tmp/paint");
 		preparePaintInfo();

@@ -57,8 +57,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	private final ZLStringOption myBookNameOption =
-		//new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "");
-		new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "/test.fb2");
+		new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "");
 
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
@@ -77,7 +76,8 @@ public final class FBReader extends ZLApplication {
 	private BookModel myBookModel;
 
 	public FBReader() {
-		this(new String[0]);
+		//this(new String[0]);
+		this(new String[] { "/test.fb2" });
 	}
 
 	public FBReader(String[] args) {
@@ -99,9 +99,9 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_CONTENTS, new ShowContentsAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new DummyAction(this));
 		addAction(ActionCode.ADD_BOOK, new AddBookAction(this));
-		addAction(ActionCode.SEARCH, new DummyAction(this));
-		addAction(ActionCode.FIND_NEXT, new DummyAction(this));
-		addAction(ActionCode.FIND_PREVIOUS, new DummyAction(this));
+		addAction(ActionCode.SEARCH, new SearchAction(this));
+		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
+		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
