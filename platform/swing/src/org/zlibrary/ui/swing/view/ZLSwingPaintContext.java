@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.core.view.ZLViewWidget;
 
 import org.zlibrary.ui.swing.image.ZLSwingImageData;
 
@@ -13,6 +14,8 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	private Graphics2D myGraphics;
 	private int myWidth;
 	private int myHeight;
+	private boolean myReversedX;
+	private boolean myReversedY;
 	private Color myBackgroundColor = new Color(255, 255, 255);
 	private Color myColor = new Color(0, 0, 0);
 	private Color myFillColor = new Color(255, 255, 255);
@@ -22,6 +25,27 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 			(awtColor.getRed() == zlColor.Red) &&
 			(awtColor.getGreen() == zlColor.Green) &&
 			(awtColor.getBlue() == zlColor.Blue);
+	}
+
+	void setRotation(int rotation) {
+		switch (rotation) {
+			case ZLViewWidget.Angle.DEGREES0:
+				myReversedX = false;
+				myReversedY = false;
+				break;
+			case ZLViewWidget.Angle.DEGREES90:
+				myReversedX = true;
+				myReversedY = false;
+				break;
+			case ZLViewWidget.Angle.DEGREES180:
+				myReversedX = true;
+				myReversedY = true;
+				break;
+			case ZLViewWidget.Angle.DEGREES270:
+				myReversedX = false;
+				myReversedY = true;
+				break;
+		}
 	}
 
 	public void clear(ZLColor color) {
@@ -104,6 +128,14 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
+		if (myReversedX) {
+			++x0;
+			++x1;
+		}
+		if (myReversedY) {
+			++y0;
+			++y1;
+		}
 		myGraphics.drawLine(x0, y0, x1, y1);
 	}
 
@@ -118,7 +150,9 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 			y0 = y1;
 			y1 = swap;
 		}
+		myGraphics.setColor(myFillColor);
 		myGraphics.fillRect(x0, y0, x1 - x0 + 1, y1 - y0 + 1);
+		myGraphics.setColor(myColor);
 	}
 
 	public void drawFilledCircle(int x, int y, int r) {

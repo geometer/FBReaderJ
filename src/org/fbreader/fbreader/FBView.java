@@ -2,7 +2,7 @@ package org.fbreader.fbreader;
 
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.text.view.impl.ZLTextViewImpl;
+import org.zlibrary.text.view.impl.*;
 
 public abstract class FBView extends ZLTextViewImpl {
 	private static ZLIntegerRangeOption ourLeftMarginOption;
@@ -11,6 +11,8 @@ public abstract class FBView extends ZLTextViewImpl {
 	private static ZLIntegerRangeOption ourBottomMarginOption;
 	
 	private static ZLBooleanOption ourSelectionOption;
+
+	private static FBIndicatorInfo ourIndicatorInfo;
 
 	private String myCaption;
 	
@@ -81,5 +83,12 @@ public abstract class FBView extends ZLTextViewImpl {
 			ourSelectionOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "IsSelectionEnabled", true);
 		}
 		return ourSelectionOption;
+	}
+
+	protected ZLTextIndicatorInfo getIndicatorInfo() {
+		if (ourIndicatorInfo == null) {
+			ourIndicatorInfo = new FBIndicatorInfo();
+		}
+		return ourIndicatorInfo;
 	}
 }

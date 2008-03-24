@@ -18,7 +18,9 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 			final ZLView view = getView();
 			final ZLSwingPaintContext context = (ZLSwingPaintContext)view.getContext();
 			final Dimension size = getSize();
-			switch (getRotation()) {
+			final int rotation = getRotation();
+			context.setRotation(rotation);
+			switch (rotation) {
 				case Angle.DEGREES0:
 					context.setSize(size.width, size.height);
 					break;

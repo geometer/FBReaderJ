@@ -7,6 +7,7 @@ import android.graphics.*;
 import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.core.view.ZLViewWidget;
 
 import org.zlibrary.ui.android.image.ZLAndroidImageData;
 
@@ -14,9 +15,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private Canvas myCanvas;
 	private final Paint myPaint;
 	private ZLColor myColor = new ZLColor(0, 0, 0);
+	private ZLColor myFillColor = new ZLColor(0, 0, 0);
 
 	private int myWidth;
 	private int myHeight;
+	private boolean myReversedX;
+	private boolean myReversedY;
 
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
@@ -29,6 +33,27 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	void setSize(int w, int h) {
 		myWidth = w;
 		myHeight = h;
+	}
+
+	void setRotation(int rotation) {
+		switch (rotation) {
+			case ZLViewWidget.Angle.DEGREES0:
+				myReversedX = false;
+				myReversedY = false;
+				break;
+			case ZLViewWidget.Angle.DEGREES90:
+				myReversedX = true;
+				myReversedY = false;
+				break;
+			case ZLViewWidget.Angle.DEGREES180:
+				myReversedX = true;
+				myReversedY = true;
+				break;
+			case ZLViewWidget.Angle.DEGREES270:
+				myReversedX = false;
+				myReversedY = true;
+				break;
+		}
 	}
 
 	void beginPaint(Canvas canvas) {
@@ -73,7 +98,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void setFillColor(ZLColor color, int style) {
-		// TODO: implement
+		// TODO: use style
+		myFillColor = color;
 	}
 
 	public int getWidth() {
@@ -117,6 +143,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
+		if (myReversedX) {
+			++x0;
+			++x1;
+		}
+		if (myReversedY) {
+			++y0;
+			++y1;
+		}
 		final Paint paint = myPaint;
 		final Canvas canvas = myCanvas;
 		paint.setAntiAlias(false);
@@ -127,7 +161,21 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
-		// TODO: implement
+		ZLColor color = myFillColor;
+		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		if (x1 < x0) {
+			int swap = x1;
+			x1 = x0;
+			x0 = swap;
+		}
+		if (y1 < y0) {
+			int swap = y1;
+			y1 = y0;
+			y0 = swap;
+		}
+		myCanvas.drawRect(x0, y0, x1 + 1, y1 + 1, myPaint);
+		color = myColor;
+		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
 	}
 	public void drawFilledCircle(int x, int y, int r) {
 		// TODO: implement

@@ -47,7 +47,9 @@ public class ZLAndroidWidget extends View {
 
 		myPaintContext.beginPaint(canvas);
 		long start = System.currentTimeMillis();
-		switch (myViewWidget.getRotation()) {
+		final int rotation = myViewWidget.getRotation();
+		myPaintContext.setRotation(rotation);
+		switch (rotation) {
 			case ZLViewWidget.Angle.DEGREES0:
 				myPaintContext.setSize(w, h);
 				break;

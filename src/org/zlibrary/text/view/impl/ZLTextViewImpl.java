@@ -2,18 +2,11 @@ package org.zlibrary.text.view.impl;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.text.model.ZLTextAlignmentType;
-import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextTreeModel;
-import org.zlibrary.text.model.ZLTextTreeParagraph;
+import org.zlibrary.text.model.*;
 import org.zlibrary.text.model.impl.ZLTextMark;
-import org.zlibrary.text.hyphenation.ZLTextHyphenationInfo;
-import org.zlibrary.text.hyphenation.ZLTextHyphenator;
-import org.zlibrary.text.view.ZLTextStyle;
-import org.zlibrary.text.view.ZLTextView;
-import org.zlibrary.text.view.style.ZLTextStyleCollection;
-import org.zlibrary.text.view.style.ZLTextStyleDecoration;
+import org.zlibrary.text.hyphenation.*;
+import org.zlibrary.text.view.*;
+import org.zlibrary.text.view.style.*;
 
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
@@ -148,12 +141,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return 0;
 	}
 
+	abstract protected ZLTextIndicatorInfo getIndicatorInfo();
+
 	private int getTextAreaHeight() {
-		return getContext().getHeight() - getTopMargin() - getBottomMargin();
+		return getContext().getHeight() - getTopMargin() - getBottomMargin() - getIndicatorInfo().getFullHeight();
 	}
 
 	private int getBottomLine() {
-		return getContext().getHeight() - getBottomMargin();
+		return getContext().getHeight() - getBottomMargin() - getIndicatorInfo().getFullHeight();
 	}
 
 	private static int getWordWidth(ZLPaintContext context, ZLTextWord word, int start) {
@@ -283,8 +278,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myTextElementMap.clear();
 		myTreeNodeMap.clear();
 
+		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
 		final ZLPaintContext context = getContext();
-		context.clear(ZLTextStyleCollection.getInstance().getBaseStyle().BackgroundColorOption.getValue());
+		context.clear(baseStyle.BackgroundColorOption.getValue());
 
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return;
@@ -304,6 +300,29 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
 		}
 		//android.os.Debug.stopMethodTracing();
+
+		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
+		if (indicatorInfo.isVisible()) {
+			final int yBottom = context.getHeight() - getBottomMargin() - 1;
+			final int yTop = yBottom - indicatorInfo.getHeight() + 1;
+			final int xLeft = getLeftMargin();
+			final int xRight = context.getWidth() - getRightMargin() - 1;
+			context.setColor(baseStyle.getColor());
+			context.drawLine(xLeft, yBottom, xRight, yBottom);
+			context.drawLine(xLeft, yTop, xRight, yTop);
+			context.drawLine(xLeft, yBottom, xLeft, yTop);
+			context.drawLine(xRight, yBottom, xRight, yTop);
+			context.setFillColor(indicatorInfo.getColor());
+			final long fullWidth = xRight - xLeft - 2;
+			long width = fullWidth * 33 / 100;
+			if (width < 0) {
+				width = 0;
+			}
+			if (width > fullWidth) {
+				width = fullWidth;
+			}
+			context.fillRectangle(xLeft + 1, yTop + 1, xLeft + 1 + (int)width, yBottom - 1);
+		}
 	}
 
 	private void drawTreeLines(ZLPaintContext context, ZLTextLineInfo.TreeNodeInfo info, int height, int vSpaceAfter) {
@@ -513,6 +532,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharNumber, myTextStyle);
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.getInfo(info);
 		if (cachedInfo != null) {
+			applyControls(paragraphCursor, startIndex, cachedInfo.EndWordNumber);
 			return cachedInfo;
 		}
 
@@ -1156,7 +1176,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public boolean onStylusPress(int x, int y) {
-		search("FBReader", true, true, false, false);
+		//search("FBReader", true, true, false, false);
 		if (myModel instanceof ZLTextTreeModel) {
 			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
 			if (nodeArea != null) {
