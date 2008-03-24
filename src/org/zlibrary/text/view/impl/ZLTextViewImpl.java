@@ -323,31 +323,34 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			context.drawLine(xLeft, yBottom, xLeft, yTop);
 			context.drawLine(xRight, yBottom, xRight, yTop);
 			final long fullWidth = xRight - xLeft - 2;
+			long width = fullWidth;
 
-			final ZLTextWordCursor wordCursor = myEndCursor;
-			final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
-			final int paragraphIndex = paragraphCursor.getIndex();
-			final int[] textSizeVector = myTextSize;
-			int fullTextSize = textSizeVector[textSizeVector.length - 1];
-			if (fullTextSize > 0) {
-				int textSizeBeforeCursor = textSizeVector[paragraphIndex];
-				final int paragraphLength = paragraphCursor.getParagraphLength();
-				if (paragraphLength > 0) {
-					textSizeBeforeCursor +=
-						(textSizeVector[paragraphIndex + 1] - textSizeBeforeCursor)
-						* wordCursor.getWordNumber()
-						/ paragraphLength;
+			final ZLTextWordCursor wordCursor = new ZLTextWordCursor(myEndCursor);
+			if (!wordCursor.isEndOfParagraph() || wordCursor.nextParagraph()) {
+				final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
+				final int paragraphIndex = paragraphCursor.getIndex();
+				final int[] textSizeVector = myTextSize;
+				int fullTextSize = textSizeVector[textSizeVector.length - 1];
+				if (fullTextSize > 0) {
+					int textSizeBeforeCursor = textSizeVector[paragraphIndex];
+					final int paragraphLength = paragraphCursor.getParagraphLength();
+					if (paragraphLength > 0) {
+						textSizeBeforeCursor +=
+							(textSizeVector[paragraphIndex + 1] - textSizeBeforeCursor)
+							* wordCursor.getWordNumber()
+							/ paragraphLength;
+					}
+					width = fullWidth * textSizeBeforeCursor / fullTextSize;
+					if (width < 0) {
+						width = 0;
+					}
+					if (width > fullWidth) {
+						width = fullWidth;
+					}
 				}
-				long width = fullWidth * textSizeBeforeCursor / fullTextSize;
-				if (width < 0) {
-					width = 0;
-				}
-				if (width > fullWidth) {
-					width = fullWidth;
-				}
-				context.setFillColor(indicatorInfo.getColor());
-				context.fillRectangle(xLeft + 1, yTop + 1, xLeft + 1 + (int)width, yBottom - 1);
 			}
+			context.setFillColor(indicatorInfo.getColor());
+			context.fillRectangle(xLeft + 1, yTop + 1, xLeft + 1 + (int)width, yBottom - 1);
 		}
 	}
 
