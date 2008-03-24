@@ -71,7 +71,7 @@ DONE		zip
 книги:
 DONE	BookDescription
 DONE	Collection
-	собирать книги, лежащие в указанных каталогах в архивах
+DONE		собирать книги, лежащие в указанных каталогах в архивах
 
 представления:
 DONE	CollectionView

@@ -212,7 +212,7 @@ public class BookCollection {
 						bookFileNames.add(fileName);
 					}
 				// TODO: zip -> any archive
-				} else if (file.getExtension() == "zip") {
+				} else if (file.getExtension().equals("zip")) {
 					if (!BookDescriptionUtil.checkInfo(file)) {
 						BookDescriptionUtil.resetZipInfo(file);
 						BookDescriptionUtil.saveInfo(file);
