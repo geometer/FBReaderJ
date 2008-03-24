@@ -1201,7 +1201,28 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return (area != null) ? area.ParagraphNumber : -1;
 	}
 
+	private static int lowerBound(int[] array, int value) {
+		int leftIndex = 0;
+		int rightIndex = array.length - 1;
+		if (array[rightIndex] <= value) {
+			return rightIndex;
+		}
+		while (leftIndex < rightIndex - 1) {
+			int middleIndex = (leftIndex + rightIndex) / 2;
+			if (array[middleIndex] <= value) {
+				leftIndex = middleIndex;
+			} else {
+				rightIndex = middleIndex;
+			}
+		}
+		return leftIndex;
+	}
+
 	public boolean onStylusPress(int x, int y) {
+		if (myModel == null) {
+			return false;
+		}
+
 		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
 		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive()) {
 			final ZLPaintContext context = getContext();
@@ -1210,7 +1231,32 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int xLeft = getLeftMargin();
 			final int xRight = context.getWidth() - getRightMargin() - 1;
 			if ((x > xLeft) && (x < xRight) && (y > yTop) && (y < yBottom)) {
-				System.err.println("indicator touched at " + (x - xLeft) + " of " + (xRight - xLeft - 1));
+				final int[] textSizeVector = myTextSize;
+				final int value = textSizeVector[textSizeVector.length - 1] * (x - xLeft) / (xRight - xLeft - 1);
+				final int paragraphIndex = lowerBound(textSizeVector, value);
+				gotoParagraph(paragraphIndex, true);
+				preparePaintInfo();
+				final int endCursorIndex = myEndCursor.getParagraphCursor().getIndex();
+				if (endCursorIndex == paragraphIndex) {
+					final int paragraphLength = 
+						myEndCursor.getParagraphCursor().getParagraphLength();
+					int wordCounter = paragraphLength
+						* (value - textSizeVector[paragraphIndex])
+						/ (textSizeVector[paragraphIndex + 1] - textSizeVector[paragraphIndex]);
+					if (wordCounter > 0) {
+						if (wordCounter == paragraphLength) {
+							myEndCursor.nextParagraph();
+						} else {
+							wordCounter -= myEndCursor.getWordNumber();
+							while (wordCounter-- > 0) {
+								myEndCursor.nextWord();
+							}
+						}
+						myStartCursor.reset();
+						rebuildPaintInfo(false);
+					}
+				}
+				getApplication().refreshWindow();
 				return true;
 			}
 		}

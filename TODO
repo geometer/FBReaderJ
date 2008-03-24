@@ -15,7 +15,9 @@ DONE		внутренним
 DONE	android
 	переносы
 	position indicator
-		навигация
+DONE		отрисовка
+DONE		навигация
+		взаимодействие с деревом
 		обработка текстов с endSection
 		засечки для пунктов из оглавления
 		часы
@@ -30,7 +32,7 @@ DONE	android
 DONE	избавиться от многократных вычислений (ZLImageData)
 
 форматы:
-	fb2 (сделать чтение описания книги)
+DONE	fb2 (сделать чтение описания книги)
 	chm
 	html
 	oeb
@@ -45,7 +47,7 @@ DONE	избавиться от многократных вычислений (ZL
 
 файловая система:
 	архивы
-		zip
+DONE		zip
 		gzip
 		tar
 		bz2
@@ -68,9 +70,11 @@ DONE	избавиться от многократных вычислений (ZL
 книги:
 DONE	BookDescription
 DONE	Collection
+	собирать книги, лежащие в указанных каталогах в архивах
 
 представления:
 DONE	CollectionView
+	тэги
 DONE	RecentBooksView
 DONE	FootnoteView
 	не показывать ContentsView, если оглавление пустое
