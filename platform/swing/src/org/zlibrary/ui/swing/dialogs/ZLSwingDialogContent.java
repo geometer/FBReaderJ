@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
 import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
+import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionKind;
@@ -76,7 +77,7 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 				view = new ZLSpinOptionView(name, tooltip, (ZLSpinOptionEntry) option, this);
 				break;
 			case ZLOptionKind.COMBO:
-//				view = new ComboOptionView(name, tooltip, (ZLComboOptionEntry*)option, *this, from, to);
+				view = new ZLComboOptionView(name, tooltip, (ZLComboOptionEntry) option, this);
 				break;
 			case ZLOptionKind.COLOR:
 //				view = new ColorOptionView(name, tooltip, (ZLColorOptionEntry*)option, *this, from, to);

@@ -1,11 +1,7 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;

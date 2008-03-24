@@ -30,7 +30,6 @@ import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.runnable.ZLRunnable;
 
 public class ZLSwingOptionsDialog extends ZLOptionsDialog {
-	private static final String OPTION_GROUP_NAME = "OptionsDialog";
 	private final boolean myShowApplyButton;
 	private final JDialog myDialog;
 	private final JTabbedPane myTabbedPane = new JTabbedPane();
@@ -46,8 +45,9 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(getCaption());
 		myShowApplyButton = showApplyButton;
-		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 485);
-		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 332);
+		final String optionGroupName = resource.Name;
+		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, optionGroupName, "Width", 10, 2000, 485);
+		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, optionGroupName, "Height", 10, 2000, 332);
 	}
 
 	@Override

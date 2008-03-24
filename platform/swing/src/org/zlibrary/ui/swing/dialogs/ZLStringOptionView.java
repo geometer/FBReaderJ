@@ -1,9 +1,8 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -19,6 +18,7 @@ public class ZLStringOptionView extends ZLOptionView {
 	public ZLStringOptionView(String name, String tooltip, ZLStringOptionEntry option, ZLSwingDialogContent tab) {
 		super(name, tooltip, option);
 		myTextField = new JTextField(option.initialValue());
+		myTextField.setMargin(new Insets(0, 5, 0, 5));
 		if (name == null) {
 			myLabel = null;
 			tab.insertWidget(myTextField);
