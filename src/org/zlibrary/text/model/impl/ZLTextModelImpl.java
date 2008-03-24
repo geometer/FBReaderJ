@@ -25,7 +25,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
-		private final int myLength;
+		private int myLength;
 		private byte myType;
 
 		int myDataIndex;
@@ -45,6 +45,13 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
+			myLength = myParagraphLengths[index];
+			myDataIndex = myStartEntryIndices[index];
+			myDataOffset = myStartEntryOffsets[index];
+		}
+
+		void reset(int index) {
+			myCounter = 0;
 			myLength = myParagraphLengths[index];
 			myDataIndex = myStartEntryIndices[index];
 			myDataOffset = myStartEntryOffsets[index];
@@ -296,9 +303,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
 		}				
-		for (int i = startIndex; i < endIndex; i++) {
+		int index = startIndex;
+		for (EntryIteratorImpl it = new EntryIteratorImpl(index); index < endIndex; it.reset(++index)) {
 			int offset = 0;
-			for (EntryIteratorImpl it = new EntryIteratorImpl(i); it.hasNext();) {
+			while (it.hasNext()) {
 				it.next();
 				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
 					char[] textData = it.getTextData();
@@ -306,7 +314,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					int textLength = it.getTextLength();
 					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1; 
 						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
-						myMarks.add(new ZLTextMark(i, offset + pos, pattern.getLength()));
+						myMarks.add(new ZLTextMark(index, offset + pos, pattern.getLength()));
 					}
 					offset += textLength;						
 				}				
@@ -338,13 +346,48 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}
 
 	public int getParagraphTextLength(int index) {
-		int size = 0;
-		for (EntryIteratorImpl it = new EntryIteratorImpl(index); it.hasNext();) {
-			it.next();
-			if (it.getType() == ZLTextParagraph.Entry.TEXT) {
-				size += it.getTextLength();
+		int textLength = 0;
+		int dataIndex = myStartEntryIndices[index];
+		int dataOffset = myStartEntryOffsets[index];
+		char[] data = (char[])myData.get(dataIndex);
+
+		for (int len = myParagraphLengths[index]; len > 0; --len) {
+			if (dataOffset == myDataBlockSize) {
+				data = (char[])myData.get(++dataIndex);
+				dataOffset = 0;
+			}
+			byte type = (byte)data[dataOffset];
+			if (type == 0) {
+				data = (char[])myData.get(++dataIndex);
+				dataOffset = 0;
+				type = (byte)data[0];
+			}
+			++dataOffset;
+			switch (type) {
+				case ZLTextParagraph.Entry.TEXT:
+					int entryLength =
+						((int)data[dataOffset++] << 16) +
+						(int)data[dataOffset++];
+					dataOffset += entryLength;
+					textLength += entryLength;
+					break;
+				case ZLTextParagraph.Entry.CONTROL:
+				{
+					if ((data[dataOffset++] & 0x0200) == 0x0200) {
+						dataOffset += (short)data[dataOffset++];
+					}
+					break;
+				}
+				case ZLTextParagraph.Entry.IMAGE:
+				case ZLTextParagraph.Entry.FIXED_HSPACE:
+					++dataOffset;
+					break;
+				case ZLTextParagraph.Entry.FORCED_CONTROL:
+					//entry = myEntries.get((int)code);
+					break;
 			}
 		}
-		return size;
+
+		return textLength;
 	}
 }

@@ -44,5 +44,4 @@ public interface ZLTextParagraph {
 	};
 
 	byte getKind();
-	int getTextLength();
 }

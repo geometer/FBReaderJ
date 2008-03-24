@@ -22,14 +22,4 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
 	public byte getKind() {
 		return Kind.TEXT_PARAGRAPH;
 	}
-
-	public final int getTextLength() {
-		int size = 0;
-		for (EntryIterator it = iterator(); it.hasNext(); it.next()) {
-			if (it.getType() == Entry.TEXT) {
-				size += it.getTextLength();
-			}
-		}
-		return size;
-	}
 }

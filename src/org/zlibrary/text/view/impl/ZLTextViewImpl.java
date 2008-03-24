@@ -1231,6 +1231,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int xLeft = getLeftMargin();
 			final int xRight = context.getWidth() - getRightMargin() - 1;
 			if ((x > xLeft) && (x < xRight) && (y > yTop) && (y < yBottom)) {
+				myTreeStateIsFrozen = true;
 				final int[] textSizeVector = myTextSize;
 				final int value = textSizeVector[textSizeVector.length - 1] * (x - xLeft) / (xRight - xLeft - 1);
 				final int paragraphIndex = lowerBound(textSizeVector, value);
@@ -1257,6 +1258,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					}
 				}
 				getApplication().refreshWindow();
+				myTreeStateIsFrozen = false;
 				return true;
 			}
 		}
