@@ -10,10 +10,10 @@ ZLTextView:
 	переход по ссылкам
 DONE		внутренним
 		внутри той же модели
-		внешним (вызов браузера)
-			swing
-DONE	android
-DONE	переносы
+DONE		внешним (вызов браузера)
+DONE			swing
+DONE			android
+DONE			переносы
 	position indicator
 DONE		отрисовка
 DONE		навигация
