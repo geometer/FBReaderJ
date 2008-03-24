@@ -1,15 +1,34 @@
 package org.zlibrary.core.sqliteconfig;
 
+import java.io.FileNotFoundException;
+import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
+
 import org.zlibrary.core.config.ZLConfig;
 import org.zlibrary.core.config.ZLConfigManager;
 
 public class ZLSQLiteConfigManager extends ZLConfigManager {
-	public ZLSQLiteConfigManager() {
-		setConfig(new ZLSQLiteConfig());
+	private SQLiteDatabase myDatabase;
+
+	public ZLSQLiteConfigManager(Activity activity, String applicationName) {
+		try {
+			myDatabase = activity.openDatabase(applicationName, null);
+		} catch (FileNotFoundException e) {
+			try {
+				myDatabase = activity.createDatabase(applicationName, 0, Activity.MODE_PRIVATE, null);
+				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+			} catch (FileNotFoundException e2) {
+			}
+		}
+		if (myDatabase != null) {
+			setConfig(new ZLSQLiteConfig(myDatabase));
+		}
 	}
 
 	public void shutdown() {
-		saveAll();
+		if (myDatabase != null) {
+			myDatabase.close();
+		}
 	}
 
 	public void saveAll() {

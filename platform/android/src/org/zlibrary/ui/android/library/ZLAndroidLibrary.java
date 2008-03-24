@@ -82,8 +82,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
-		new ZLSQLiteConfigManager();
 		loadProperties();
+		new ZLSQLiteConfigManager(activity, getApplicationName());
 		new ZLAndroidImageManager();
 		new ZLAndroidDialogManager();
 
