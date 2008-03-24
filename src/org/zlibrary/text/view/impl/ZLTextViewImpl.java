@@ -36,6 +36,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private final ZLTextLineInfoVector myLineInfos = new ZLTextLineInfoVector();
 	private final ZLTextLineInfoCache myLineInfoCache = new ZLTextLineInfoCache();
 
+	private int[] myTextSize;
+
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 		
@@ -53,10 +55,18 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public void setModel(ZLTextModel model) {
 		myModel = model;
-		if ((model != null) && (model.getParagraphsNumber() > 0)) {
-			myStartCursor.setCursor(ZLTextParagraphCursor.cursor(model, 0));
-			myEndCursor.reset();
-			myPaintState = PaintState.START_IS_KNOWN;
+		if (model != null) {
+			final int paragraphsNumber = model.getParagraphsNumber();
+			if (paragraphsNumber > 0) {
+				myTextSize = new int[paragraphsNumber + 1];
+				myTextSize[0] = 0;
+				for (int i = 0; i < paragraphsNumber; ++i) {
+					myTextSize[i + 1] = myTextSize[i] + model.getParagraphTextLength(i);
+				}
+				myStartCursor.setCursor(ZLTextParagraphCursor.cursor(model, 0));
+				myEndCursor.reset();
+				myPaintState = PaintState.START_IS_KNOWN;
+			}
 		}
 	}
 
@@ -312,16 +322,32 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			context.drawLine(xLeft, yTop, xRight, yTop);
 			context.drawLine(xLeft, yBottom, xLeft, yTop);
 			context.drawLine(xRight, yBottom, xRight, yTop);
-			context.setFillColor(indicatorInfo.getColor());
 			final long fullWidth = xRight - xLeft - 2;
-			long width = fullWidth * 33 / 100;
-			if (width < 0) {
-				width = 0;
+
+			final ZLTextWordCursor wordCursor = myEndCursor;
+			final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
+			final int paragraphIndex = paragraphCursor.getIndex();
+			final int[] textSizeVector = myTextSize;
+			int fullTextSize = textSizeVector[textSizeVector.length - 1];
+			if (fullTextSize > 0) {
+				int textSizeBeforeCursor = textSizeVector[paragraphIndex];
+				final int paragraphLength = paragraphCursor.getParagraphLength();
+				if (paragraphLength > 0) {
+					textSizeBeforeCursor +=
+						(textSizeVector[paragraphIndex + 1] - textSizeBeforeCursor)
+						* wordCursor.getWordNumber()
+						/ paragraphLength;
+				}
+				long width = fullWidth * textSizeBeforeCursor / fullTextSize;
+				if (width < 0) {
+					width = 0;
+				}
+				if (width > fullWidth) {
+					width = fullWidth;
+				}
+				context.setFillColor(indicatorInfo.getColor());
+				context.fillRectangle(xLeft + 1, yTop + 1, xLeft + 1 + (int)width, yBottom - 1);
 			}
-			if (width > fullWidth) {
-				width = fullWidth;
-			}
-			context.fillRectangle(xLeft + 1, yTop + 1, xLeft + 1 + (int)width, yBottom - 1);
 		}
 	}
 
@@ -1176,6 +1202,19 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public boolean onStylusPress(int x, int y) {
+		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
+		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive()) {
+			final ZLPaintContext context = getContext();
+			final int yBottom = context.getHeight() - getBottomMargin() - 1;
+			final int yTop = yBottom - indicatorInfo.getHeight() + 1;
+			final int xLeft = getLeftMargin();
+			final int xRight = context.getWidth() - getRightMargin() - 1;
+			if ((x > xLeft) && (x < xRight) && (y > yTop) && (y < yBottom)) {
+				System.err.println("indicator touched at " + (x - xLeft) + " of " + (xRight - xLeft - 1));
+				return true;
+			}
+		}
+
 		//search("FBReader", true, true, false, false);
 		if (myModel instanceof ZLTextTreeModel) {
 			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);

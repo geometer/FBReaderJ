@@ -29,6 +29,8 @@ public interface ZLTextModel {
 	ZLTextMark getPreviousMark(ZLTextMark position);
 
 	ArrayList getMarks();
+
+	int getParagraphTextLength(int index);
 	
 	void search(final String text, int startIndex, int endIndex, boolean ignoreCase);
 }

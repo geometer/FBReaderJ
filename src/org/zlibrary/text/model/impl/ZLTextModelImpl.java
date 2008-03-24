@@ -333,7 +333,18 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 	public void selectParagraph(int index) {
 		if (index < myParagraphsNumber) {
-			myMarks.add(new ZLTextMark(index, 0, getParagraph(index).getTextLength()));
+			myMarks.add(new ZLTextMark(index, 0, getParagraphTextLength(index)));
 		}
+	}
+
+	public int getParagraphTextLength(int index) {
+		int size = 0;
+		for (EntryIteratorImpl it = new EntryIteratorImpl(index); it.hasNext();) {
+			it.next();
+			if (it.getType() == ZLTextParagraph.Entry.TEXT) {
+				size += it.getTextLength();
+			}
+		}
+		return size;
 	}
 }
