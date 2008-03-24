@@ -10,6 +10,6 @@ class SearchAction extends FBAction {
 	}
 
 	public void run() {
-		fbreader().getTextView().search("!", true, true, false, false);
+		fbreader().getTextView().search("!", true, false, false, false);
 	}
 }
