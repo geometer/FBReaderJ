@@ -13,7 +13,7 @@ DONE		внутренним
 		внешним (вызов браузера)
 			swing
 DONE	android
-	переносы
+DONE	переносы
 	position indicator
 DONE		отрисовка
 DONE		навигация
@@ -66,6 +66,7 @@ DONE		zip
 		сохранение конфига
 	другие
 		диалог поиска
+		диалог перехода на страницу по номеру
 
 книги:
 DONE	BookDescription
