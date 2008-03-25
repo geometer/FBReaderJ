@@ -17,30 +17,37 @@ public class ZLSearchUtil {
 		final int patternLast = lower.length() - 1;
 		if (pattern.IgnoreCase) {
 			final String upper = pattern.UpperCasePattern;
+			final char firstCharLower = lower.charAt(0);
+			final char firstCharUpper = upper.charAt(0);
 			for (int i = offset + pos; i <= last; i++) {
-				int j = 0;
-				int k = i;
-				for (; j <= patternLast; j++, k++) {
-					final char symbol = text[k];
-					if (lower.charAt(j) != symbol && upper.charAt(j) != symbol) {
-						break;
+				final char current = text[i];
+				if ((current == firstCharLower) || (current == firstCharUpper)) {
+					int j = 1;
+					for (int k = i + 1; j <= patternLast; ++j, ++k) {
+						final char symbol = text[k];
+						if ((lower.charAt(j) != symbol) &&
+								(upper.charAt(j) != symbol)) {
+							break;
+						}
 					}
-				}
-				if (j > patternLast) {
-					return i - offset;
+					if (j > patternLast) {
+						return i - offset;
+					}
 				}
 			}
 		} else {
+			final char firstChar = lower.charAt(0);
 			for (int i = offset + pos; i <= last; i++) {
-				int j = 0;
-				int k = i;
-				for (; j <= patternLast; j++, k++) {
-					if (lower.charAt(j) != text[k]) {
-						break;
+				if (text[i] == firstChar) {
+					int j = 1;
+					for (int k = i + 1; j <= patternLast; ++j, ++k) {
+						if (lower.charAt(j) != text[k]) {
+							break;
+						}
 					}
-				}
-				if (j > patternLast) {
-					return i - offset;
+					if (j > patternLast) {
+						return i - offset;
+					}
 				}
 			}
 		}
