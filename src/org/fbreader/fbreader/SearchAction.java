@@ -13,11 +13,11 @@ class SearchAction extends FBAction {
 	public static final String SEARCH = "Search";
 	public static final String PATTERN = "Pattern";
 
-	private ZLBooleanOption SearchBackwardOption;
-	private ZLBooleanOption SearchIgnoreCaseOption;
-	private ZLBooleanOption SearchInWholeTextOption;
-	private ZLBooleanOption SearchThisSectionOnlyOption;
-	private ZLStringOption SearchPatternOption;
+	public ZLBooleanOption SearchBackwardOption;
+	public ZLBooleanOption SearchIgnoreCaseOption;
+	public ZLBooleanOption SearchInWholeTextOption;
+	public ZLBooleanOption SearchThisSectionOnlyOption;
+	public ZLStringOption SearchPatternOption;
 
 	SearchAction(FBReader fbreader) {
 		super(fbreader);
