@@ -99,9 +99,11 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_CONTENTS, new ShowContentsAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new DummyAction(this));
 		addAction(ActionCode.ADD_BOOK, new AddBookAction(this));
+		
 		addAction(ActionCode.SEARCH, new SearchAction(this));
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
+		
 		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));

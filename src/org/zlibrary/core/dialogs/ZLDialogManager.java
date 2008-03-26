@@ -47,6 +47,12 @@ public abstract class ZLDialogManager {
 	
 	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
 	
+	public abstract ZLDialog createDialog(String key, ZLRunnable applyAction, boolean showApplyButton);
+	
+	public final ZLDialog createDialog(String key) {
+		return createDialog(key, null, false);
+	}
+	
 	public abstract ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton);
 	
 	public final ZLOptionsDialog createOptionsDialog(String key) {
