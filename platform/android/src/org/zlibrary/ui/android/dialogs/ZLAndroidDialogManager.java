@@ -61,4 +61,9 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		//return new ZLAndroidOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key), applyAction, showApplyButton);
 		return null;
 	}
+
+	public ZLDialog createDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+		// TODO: implement
+		return null;
+	}
 }

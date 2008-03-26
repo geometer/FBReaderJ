@@ -60,9 +60,12 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 			myCaption = caption;
 		}
 
-		public void onStart() {
+		protected void onStart() {
 			setContentView(mySelectionView);
 			setTitle(myCaption);
+		}
+
+		protected void onStop() {
 		}
 	}
 
