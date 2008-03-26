@@ -14,6 +14,7 @@ DONE		внешним (вызов браузера)
 DONE			swing
 DONE			android
 DONE			переносы
+		оптимизировать место в памяти
 	position indicator
 DONE		отрисовка
 DONE		навигация
