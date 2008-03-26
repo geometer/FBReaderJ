@@ -1,4 +1,4 @@
-package org.zlibrary.text.view.impl;
+package org.zlibrary.text.view;
 
 import org.zlibrary.core.util.ZLColor;
 

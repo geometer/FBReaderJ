@@ -24,7 +24,6 @@ public class ZLFile {
 	private String myExtension;
 	private	int myArchiveType;
 	private	ZLFileInfo myInfo;
-	private	boolean myInfoIsFilled;
 	
 	private final HashMap myForcedFiles = new HashMap();
 	
@@ -47,26 +46,34 @@ public class ZLFile {
 		return new ZLFSDir(path);
 	}
 
+	private static ZLFileInfo getFileInfo(String path) {
+		ZLFileInfo info = new ZLFileInfo();
+		File file = new File(path);
+		info.Exists = file.exists();
+		info.Size = file.length();
+		info.MTime = file.lastModified();
+		info.IsDirectory = file.isDirectory() || ZLFSUtil.getRootDirectoryPath().equals(path);
+		return info;
+	}
+
 	private void fillInfo() {
 		int index = ZLFSUtil.findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			myInfo = ZLFSUtil.getFileInfo(myPath);
+			myInfo = getFileInfo(myPath);
 		} else {
-			myInfo = ZLFSUtil.getFileInfo(myPath.substring(0, index));
+			myInfo = getFileInfo(myPath.substring(0, index));
 			myInfo.IsDirectory = false;
 		}
-		
-		myInfoIsFilled = true;
-	}
-	
-	public static String fileNameToUtf8(String fileName) {
-		return fileName;
 	}
 	
 	public ZLFile(String path) {
-		myInfoIsFilled = false;
-		myPath = ZLFSUtil.normalize(path);		
-		{
+		if (path.startsWith(ZLibrary.JAR_DATA_PREFIX)) {
+			myInfo = new ZLFileInfo();
+			myInfo.Exists = true;
+			myPath = path;
+			myNameWithExtension = myPath;
+		} else {
+			myPath = ZLFSUtil.normalize(path);		
 			int index = ZLFSUtil.findLastFileNameDelimiter(myPath);
 			if (index < myPath.length() - 1) {
 				myNameWithExtension = myPath.substring(index + 1);
@@ -111,19 +118,19 @@ public class ZLFile {
 	}
 	
 	public boolean exists() {
-		if (!myInfoIsFilled) 
+		if (myInfo == null) 
 			fillInfo(); 
 		return myInfo.Exists;
 	}
 	
 	public long getMTime() {
-		if (!myInfoIsFilled) 
+		if (myInfo == null) 
 			fillInfo(); 
 		return myInfo.MTime; 
 	}
 	
 	public long size() {
-		if (!myInfoIsFilled) 
+		if (myInfo == null) 
 			fillInfo(); 
 		return myInfo.Size;
 	}	
@@ -140,7 +147,8 @@ public class ZLFile {
 	}
 	
 	public boolean isDirectory() {
-		if (!myInfoIsFilled) fillInfo(); 
+		if (myInfo == null)
+			fillInfo(); 
 		return myInfo.IsDirectory;
 	}
 	
@@ -150,7 +158,7 @@ public class ZLFile {
 
 	public boolean remove() {
 		if (removeFile(myPath)) {
-			myInfoIsFilled = false;
+			myInfo = null;
 			return true;
 		} else {
 			return false;
@@ -171,6 +179,9 @@ public class ZLFile {
 
 	public String getPhysicalFilePath() {
 		String path = myPath;
+		if (path.startsWith(ZLibrary.JAR_DATA_PREFIX)) {
+			return path;
+		}
 		int index;
 		while ((index = ZLFSUtil.findArchiveFileNameDelimiter(path)) != -1) {
 			path = path.substring(0, index);
@@ -241,7 +252,7 @@ public class ZLFile {
 				//return new ZLTarDir(myPath);
 			}
 		} else if (createUnexisting) {
-			myInfoIsFilled = false;
+			myInfo = null;
 			return createNewDirectory(myPath);
 		}
 		return null;

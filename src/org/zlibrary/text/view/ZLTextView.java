@@ -34,4 +34,5 @@ public abstract class ZLTextView extends ZLView {
 	public abstract int getTopMargin();
 	public abstract int getBottomMargin();
 
+	public abstract ZLTextIndicatorInfo getIndicatorInfo();
 }

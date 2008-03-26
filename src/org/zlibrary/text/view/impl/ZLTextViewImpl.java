@@ -151,8 +151,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return 0;
 	}
 
-	abstract protected ZLTextIndicatorInfo getIndicatorInfo();
-
 	private int getTextAreaHeight() {
 		return getContext().getHeight() - getTopMargin() - getBottomMargin() - getIndicatorInfo().getFullHeight();
 	}

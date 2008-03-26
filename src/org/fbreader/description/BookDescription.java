@@ -72,7 +72,7 @@ public class BookDescription {
 		}
 
 		if (description.myTitle.length() == 0) {
-			description.myTitle = ZLFile.fileNameToUtf8(bookFile.getName(true));
+			description.myTitle = bookFile.getName(true);
 		}
 		Author author = description.myAuthor;
 		if (author == null || author.getDisplayName().length() == 0) {

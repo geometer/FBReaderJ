@@ -2,6 +2,7 @@ package org.fbreader.fbreader;
 
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.view.ZLPaintContext;
+import org.zlibrary.text.view.*;
 import org.zlibrary.text.view.impl.*;
 
 public abstract class FBView extends ZLTextViewImpl {
@@ -85,7 +86,7 @@ public abstract class FBView extends ZLTextViewImpl {
 		return ourSelectionOption;
 	}
 
-	protected ZLTextIndicatorInfo getIndicatorInfo() {
+	public ZLTextIndicatorInfo getIndicatorInfo() {
 		if (ourIndicatorInfo == null) {
 			ourIndicatorInfo = new FBIndicatorInfo();
 		}

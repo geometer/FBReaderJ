@@ -85,7 +85,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		loadProperties();
 		new ZLSQLiteConfigManager(activity, getApplicationName());
 		new ZLAndroidImageManager();
-		new ZLAndroidDialogManager();
+		new ZLAndroidDialogManager(activity);
 
 		try {
 			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();

@@ -4,11 +4,9 @@ import java.io.*;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
-
 import org.zlibrary.core.library.ZLibrary;
 
 abstract class ZLFSUtil {
-		
 	static String normalize(String path) {
 		if (getRootDirectoryPath().equals(path)) {
 			return path;
@@ -16,14 +14,10 @@ abstract class ZLFSUtil {
 		try {
 			path = new File(path).getCanonicalPath();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-	//		e.printStackTrace();
 		}
 		return path;
 	}
 
-	
-	
 	//public OutputStream createOutputStream(String path);
 	
 	static ZLDir getRootDirectory() {
@@ -31,7 +25,7 @@ abstract class ZLFSUtil {
 	}
 	
 	static String getRootDirectoryPath() {
-		return File.listRoots().length == 1 ? File.listRoots()[0].getPath() : "";
+		return File.listRoots().length == 1 ? File.listRoots()[0].getPath().trim() : "";
 	}
 	
 	static String getParentPath(String path) {
@@ -48,25 +42,13 @@ abstract class ZLFSUtil {
 		}
 		return parent;
 	}
-	
-	static ZLFileInfo getFileInfo(String path) {
-		ZLFileInfo info = new ZLFileInfo();
-		File file = new File(path);
-		info.Exists = (file != null);
-		info.Size = file.length();
-		info.MTime = file.lastModified();
-		info.IsDirectory = file.isDirectory() || getRootDirectoryPath().equals(path);
-		return info;
-	}
-
-	
 
 	static int findArchiveFileNameDelimiter(String path) {
+		int index = path.lastIndexOf(':');
 		if (System.getProperty("os.name").startsWith("Windows")) {
-			int index = path.lastIndexOf(':');
 			return (index == 1) ? -1 : index;
 		}
-		return path.lastIndexOf(':');
+		return index;
 	}
 	
 	static int findLastFileNameDelimiter(String path) {

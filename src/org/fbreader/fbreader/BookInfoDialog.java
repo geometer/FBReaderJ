@@ -42,9 +42,7 @@ public class BookInfoDialog {
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog");
 		
 		ZLDialogContent commonTab = myDialog.createTab("Common");
-		commonTab.addOption("file", 
-				new ZLStringInfoEntry(ZLFile.fileNameToUtf8(new ZLFile(fileName).getPath()))
-			);
+		commonTab.addOption("file", new ZLStringInfoEntry(new ZLFile(fileName).getPath()));
 		commonTab.addOption("title", myBookInfo.getTitleOption());
 		
 		myAuthorDisplayNameEntry = new AuthorDisplayNameEntry(this);

@@ -10,16 +10,20 @@ import android.util.AttributeSet;
 import org.zlibrary.core.view.ZLView;
 import org.zlibrary.core.view.ZLViewWidget;
 
+import org.zlibrary.ui.android.util.ZLAndroidKeyUtil;
+
 public class ZLAndroidWidget extends View {
 	private final ZLAndroidPaintContext myPaintContext = new ZLAndroidPaintContext();
 	private ZLAndroidViewWidget myViewWidget;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, Map inflateParams, int defStyle) {
 		super(context, attrs, inflateParams, defStyle);
+		setFocusable(true);
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, Map inflateParams) {
 		super(context, attrs, inflateParams);
+		setFocusable(true);
 	}
 
 	public ZLAndroidPaintContext getPaintContext() {
@@ -120,5 +124,11 @@ public class ZLAndroidWidget extends View {
 		}
 
 		return true;
+	}
+
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+		myViewWidget.getView().getApplication().doActionByKey(keyName);
+		return false;
 	}
 }

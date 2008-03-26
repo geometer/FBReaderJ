@@ -5,13 +5,6 @@ import org.zlibrary.core.util.*;
 import org.zlibrary.core.library.ZLibrary;
 
 public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
-/*	
-	private static void collectLanguages();
-	private static ArrayList languageCodes;
-	private static ArrayList languageNames;
-	public static final ArrayList getLanguageCodes();
-	public static final ArrayList getLanguageNames();
-*/	
 	private final HashMap myPatternTable = new HashMap();
 	private String myLanguage;
 	
@@ -23,15 +16,12 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	}
 
 	public void load(final String language) {
-		load(language, ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern"); 
-	}
-
-	public void load(final String language, final String path) {
 		if (language.equals(myLanguage)) {
 			return;
 		}
 		myLanguage = language;
 		unload();
+		final String path = ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern"; 
 		new ZLTextHyphenationReader(this).read(path);
 	}	
 

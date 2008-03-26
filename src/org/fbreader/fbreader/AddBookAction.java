@@ -16,8 +16,8 @@ class AddBookAction extends FBAction {
 	public void run() {
 		FBFileHandler handler = new FBFileHandler();
 		if (ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", handler)) {
-			BookDescription description = handler.description();
-			if (description != null && fbreader().runBookInfoDialog(description.getFileName())) {
+			BookDescription description = handler.getDescription();
+			if ((description != null) && fbreader().runBookInfoDialog(description.getFileName())) {
 				new BookList().addFileName(description.getFileName());
 				fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
 			}

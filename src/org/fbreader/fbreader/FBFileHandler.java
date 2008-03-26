@@ -5,20 +5,14 @@ import java.util.*;
 import org.fbreader.description.BookDescription;
 import org.fbreader.formats.FormatPlugin;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLStringOption;
+import org.zlibrary.core.options.*;
 import org.zlibrary.core.util.*;
-
-import org.zlibrary.core.dialogs.UpdateType;
-import org.zlibrary.core.dialogs.ZLDialogManager;
-import org.zlibrary.core.dialogs.ZLTreeNode;
-import org.zlibrary.core.dialogs.ZLTreeOpenHandler;
-import org.zlibrary.core.filesystem.ZLDir;
-import org.zlibrary.core.filesystem.ZLFile;
+import org.zlibrary.core.dialogs.*;
+import org.zlibrary.core.filesystem.*;
 
 public class FBFileHandler extends ZLTreeOpenHandler {
-
-	public ZLStringOption DirectoryOption; //?public
+	private final ZLStringOption DirectoryOption =
+		new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "OpenFileDialog", "Directory", System.getProperty("user.home"));
 
 	private ZLDir myDir;
 	private boolean myIsUpToDate;
@@ -32,7 +26,6 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	private final static HashMap pluginIcons = new HashMap(); // <FormatPlugin, String>
 	
 	public FBFileHandler() {
-		DirectoryOption = new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "OpenFileDialog", "Directory", System.getProperty("user.home"));
 		myIsUpToDate = false;
 		mySelectedIndex = 0; 
 		myDir = (new ZLFile(DirectoryOption.getValue())).getDirectory();
@@ -44,7 +37,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		}
 	}
 	
-	public BookDescription description() {
+	public BookDescription getDescription() {
 		return myDescription;
 	}
 	
@@ -52,7 +45,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		final String name = myDir.getItemPath(node.id());
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(name), false);
 		final String message = (plugin == null) ? "Unknown File Format" : plugin.tryOpen(name);
-		if (! "".equals(message)) {
+		if (message.length() != 0) {
 			final String boxKey = "openBookErrorBox";
 			ZLDialogManager.getInstance().showErrorBox(boxKey,
 				ZLDialogManager.getDialogMessage(boxKey) + " " + message);
@@ -92,7 +85,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	}
 
 	public String stateDisplayName() {
-		return ZLFile.fileNameToUtf8(myDir.getPath());
+		return myDir.getPath();
 	}
 
 	public ArrayList subnodes() {
@@ -102,7 +95,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 				int size = names.size();
 				for (int i = 0; i < size; i++) {
 					final String subDir = (String) names.get(i);
-					final String displayName = ZLFile.fileNameToUtf8(new ZLFile(subDir).getName(false));
+					final String displayName = new ZLFile(subDir).getName(false);
 					final ZLTreeNode node = new ZLTreeNode(subDir, displayName, FOLDER_ICON, true);
 					mySubnodes.add(node);
 				}
@@ -117,7 +110,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 						continue;
 					}
 					ZLFile file = new ZLFile(myDir.getItemPath(fileName));
-					final String displayName = ZLFile.fileNameToUtf8(file.getName(false));
+					final String displayName = file.getName(false);
 					if ("".equals(displayName)) {
 						continue;
 					}

@@ -1,19 +1,30 @@
 package org.zlibrary.ui.android.dialogs;
 
+import android.app.Activity;
+import android.view.View;
+
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
+import org.zlibrary.ui.android.library.*;
+
 public class ZLAndroidDialogManager extends ZLDialogManager {
 	//private ZLAndroidApplicationWindow myApplicationWindow;
+	private final Activity myActivity;
 	
-	public ZLAndroidDialogManager() {
+	public ZLAndroidDialogManager(Activity activity) {
+		myActivity = activity;
 	}
 	
 	public boolean runSelectionDialog(String key, ZLTreeHandler handler) {
-		return new ZLAndroidSelectionDialog(getDialogTitle(key), handler).run();
+		boolean code = new ZLAndroidSelectionDialog(myActivity, getDialogTitle(key), handler).run();
+		View mainView = ((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget();
+		myActivity.setContentView(mainView);
+		mainView.requestFocus();
+		return code;
 	}
 
 	public void showErrorBox(String key, String message) {

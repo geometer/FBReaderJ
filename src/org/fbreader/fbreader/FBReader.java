@@ -76,8 +76,7 @@ public final class FBReader extends ZLApplication {
 	private BookModel myBookModel;
 
 	public FBReader() {
-		//this(new String[0]);
-		this(new String[] { "/test.fb2" });
+		this(new String[0]);
 	}
 
 	public FBReader(String[] args) {
@@ -116,7 +115,7 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new ScrollingAction(this, FingerTapScrollingOptions, true));
 		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new ScrollingAction(this, FingerTapScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
-		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new DummyAction(this));
+		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new ToggleIndicatorAction(this));
 		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new DummyAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));

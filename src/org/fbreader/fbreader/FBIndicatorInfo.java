@@ -2,7 +2,7 @@ package org.fbreader.fbreader;
 
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.util.ZLColor;
-import org.zlibrary.text.view.impl.ZLTextIndicatorInfo;
+import org.zlibrary.text.view.ZLTextIndicatorInfo;
 
 class FBIndicatorInfo extends ZLTextIndicatorInfo {
 	private static final String INDICATOR = "Indicator";

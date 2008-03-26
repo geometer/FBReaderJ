@@ -31,6 +31,7 @@
 			<fileset dir="${bin.dir}" includes="**/*.class"/>
 			<fileset dir="." includes="${icons.dir}/**/*.png"/>
 			<fileset dir="." includes="${data.dir}/**"/>
+			<fileset dir="platform/swing" includes="${icons.dir}/**/*.png"/>
 			<fileset dir="platform/swing" includes="${data.dir}/**"/>
 		</jar>
 	</target>
@@ -67,6 +68,7 @@
 		<delete file="${sources.zip}"/>
 		<delete file="FBReaderJ.jad"/>
 		<delete dir="platform/android/res/raw"/>
+		<delete dir="platform/android/res/drawable"/>
 		<delete file="platform/android/src/org/zlibrary/ui/android/library/R.java"/>
 	</target>
 
