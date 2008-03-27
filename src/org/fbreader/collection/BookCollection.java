@@ -104,27 +104,16 @@ public class BookCollection {
 				}
 			}
 		} else {
-			System.out.println("strange code form BookCollection");
+			//System.out.println("strange code form BookCollection");
 			// something strange :(
 			final BookList bookList = new BookList();
-			final ArrayList/*<String>*/ bookListSet = bookList.fileNames();
-			final ArrayList/*<String>*/ fileNames = new ArrayList();
+			final ArrayList bookListSet = bookList.fileNames();
+			final ArrayList fileNames = new ArrayList();
 
 //		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
-			final ArrayList/*<List<BookDescription>>*/ list = /*<Author,Books>*/new ArrayList(myCollection.keySet());
+			final ArrayList list = new ArrayList(myCollection.keySet());
 			for (int i = 0; i < list.size(); i++) {
-				final ArrayList books = (ArrayList)myCollection.get((Author)list.get(i));
-				final int numberOfBooks = books.size();
-				for (int j = 0; j < numberOfBooks; ++j) {
-					final BookDescription description = (BookDescription)books.get(j);
-					final String fileName = description.getFileName();
-					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
-						fileNames.add(fileName);
-					}
-				}
-			}
-			for (Iterator it = myCollection.values().iterator(); it.hasNext();) {
-				final ArrayList books = (ArrayList)it.next();
+				final ArrayList books = (ArrayList)myCollection.get(list.get(i));
 				final int numberOfBooks = books.size();
 				for (int j = 0; j < numberOfBooks; ++j) {
 					final BookDescription description = (BookDescription)books.get(j);
