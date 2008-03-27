@@ -21,8 +21,6 @@ public class ZLSwingDialog extends ZLDialog {
 	private final JDialog myDialog;
 	private final JPanel buttonPanel = new JPanel();
 	
-	private boolean myReturnValue = false;
-
 	public final ZLIntegerRangeOption myWidthOption;
 	public final ZLIntegerRangeOption myHeightOption;
 
@@ -36,17 +34,11 @@ public class ZLSwingDialog extends ZLDialog {
 		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, optionGroupName, "Height", 10, 2000, 332);	
 	}
 
-	public void addButton(final String key, boolean accept) {
-		JButton button;
-		if (accept) {
-			button = new JButton(new OKAction(ZLDialogManager.getButtonText(key).replace("&", "")));
-		} else {
-			button = new JButton(new CancelAction(ZLDialogManager.getButtonText(key).replace("&", "")));
-		}
-		buttonPanel.add(button);
+	public void addButton(final String key, Runnable action) {
+		buttonPanel.add(new JButton(new ButtonAction(ZLDialogManager.getButtonText(key).replace("&", ""), action)));
 	}
 
-	public boolean run() {
+	public void run() {
 		myDialog.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				myWidthOption.setValue(myDialog.getWidth());
@@ -64,7 +56,6 @@ public class ZLSwingDialog extends ZLDialog {
 		myDialog.setLocationRelativeTo(myDialog.getParent());
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
-		return myReturnValue;
 	}
 	
 	private void exitDialog() {
@@ -73,24 +64,19 @@ public class ZLSwingDialog extends ZLDialog {
 		myDialog.dispose();
 	}
 	
-	private class OKAction extends AbstractAction {
-		public OKAction(String text) {
+	private class ButtonAction extends AbstractAction {
+		private final Runnable myAction;
+
+		public ButtonAction(String text, Runnable action) {
 			putValue(NAME, text);
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			myReturnValue = true;
-			exitDialog();
-		}
-	}
-	
-	private class CancelAction extends AbstractAction {
-		public CancelAction(String text) {
-			putValue(NAME, text);
+			myAction = action;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
 			exitDialog();
-		}		
+			if (myAction != null) {
+				myAction.run();
+			}
+		}
 	}
 }

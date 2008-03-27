@@ -65,7 +65,9 @@ DONE	MessageBox
 Оля 0		загрузка списка библиотеки
 3		сохранение конфига
 	другие
-Оля 0		диалог поиска
+DONE		диалог поиска
+1			combobox вместо поля для текста
+1			multisection search
 3		диалог перехода на страницу по номеру
 
 диалоги (swing):
@@ -73,7 +75,7 @@ DONE	Selection
 Оля 0	Option
 DONE	MessageBox
 Оля 0	WaitMessage
-Оля 0	другие
+DONE	другие
 
 диалоги (android):
 DONE	Selection

@@ -6,10 +6,11 @@ import org.zlibrary.core.options.ZLSimpleOption;
 public abstract class ZLDialog {
 	protected ZLDialogContent myTab;	
 
-	protected ZLDialog() {
+	public ZLResource resource(final String key) {
+		return myTab.getResource(key);
 	}
 
-	public abstract void addButton(final String key, boolean accept);
+	public abstract void addButton(final String key, Runnable action);
 
 	public void addOption(final String name, final String tooltip, ZLOptionEntry entry) {
 		myTab.addOption(name, tooltip, entry);
@@ -23,11 +24,7 @@ public abstract class ZLDialog {
 		myTab.addOption(name, option);
 	}
 
-	public ZLResource resource(final String key) {
-		return myTab.getResource(key);
-	}
-
-	public abstract boolean run();
+	public abstract void run();
 
 	public void acceptValues() {
 		myTab.accept();

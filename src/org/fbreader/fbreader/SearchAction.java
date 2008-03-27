@@ -1,15 +1,12 @@
 package org.fbreader.fbreader;
 
 import org.fbreader.option.FBOptions;
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLStringOption;
-import org.zlibrary.core.dialogs.ZLDialog;
-import org.zlibrary.core.dialogs.ZLDialogManager;
+import org.zlibrary.core.options.*;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.text.view.ZLTextView;
 
 class SearchAction extends FBAction {
-	
 	public static final String SEARCH = "Search";
 	public static final String PATTERN = "Pattern";
 
@@ -37,11 +34,8 @@ class SearchAction extends FBAction {
 	}
 
 	public void run() {
-//		System.err.println("SearchAction running...");
-		
-		ZLTextView textView = fbreader().getTextView();	
-	
-		ZLDialog searchDialog = ZLDialogManager.getInstance().createDialog("textSearchDialog");
+		final ZLTextView textView = fbreader().getTextView();	
+		final ZLDialog searchDialog = ZLDialogManager.getInstance().createDialog("textSearchDialog");
 	
 		searchDialog.addOption("text", SearchPatternOption);
 		searchDialog.addOption("ignoreCase", SearchIgnoreCaseOption);
@@ -51,20 +45,20 @@ class SearchAction extends FBAction {
 			searchDialog.addOption("currentSection", SearchThisSectionOnlyOption);
 		}
 */
-		searchDialog.addButton("go", true);
-		searchDialog.addButton(ZLDialogManager.CANCEL_BUTTON, false);
+		searchDialog.addButton("go", new Runnable() {
+			public void run() {
+				searchDialog.acceptValues();
+				textView.search(
+					SearchPatternOption.getValue(),
+					SearchIgnoreCaseOption.getValue(),
+					SearchInWholeTextOption.getValue(),
+					SearchBackwardOption.getValue(),
+					SearchThisSectionOnlyOption.getValue()
+				);
+			}
+		});
+		searchDialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
 		
-		if (searchDialog.run()) {
-			searchDialog.acceptValues();
-	//		SearchPatternOption.setValue("FBReader");
-			textView.search(
-				SearchPatternOption.getValue(),
-		//		"!",
-				SearchIgnoreCaseOption.getValue(),
-				SearchInWholeTextOption.getValue(),
-				SearchBackwardOption.getValue(),
-				SearchThisSectionOnlyOption.getValue()
-			);
-		}
+		searchDialog.run();
 	}
 }
