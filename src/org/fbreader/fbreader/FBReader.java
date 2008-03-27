@@ -12,7 +12,6 @@ import org.zlibrary.core.application.ZLKeyBindings;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.options.*;
-import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.ZLTextView;
@@ -195,6 +194,7 @@ public final class FBReader extends ZLApplication {
 				setView(myBookTextView);
 				break;
 			case ViewMode.CONTENTS:
+				myContentsView.gotoReference();
 				setView(myContentsView);
 				break;
 			case ViewMode.FOOTNOTE:
@@ -271,11 +271,15 @@ public final class FBReader extends ZLApplication {
 		setMode(ViewMode.BOOK_TEXT);
 	}
 
+	public ContentsView getContentsView() {
+		return myContentsView;
+	}
+	
 	public CollectionView getCollectionView() {
 		return myCollectionView;
 	}
 	
-	private class OpenBookRunnable implements ZLRunnable {
+	private class OpenBookRunnable implements Runnable {
 		private	BookDescription myDescription;
 
 		public OpenBookRunnable(BookDescription description) { 

@@ -376,4 +376,11 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 				break;
 		}
 	}
+
+	public boolean processNamespaces() {
+		return false;
+	}
+
+	public void namespaceListChangedHandler() {
+	}
 }

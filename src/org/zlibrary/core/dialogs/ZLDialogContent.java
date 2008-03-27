@@ -29,7 +29,7 @@ public abstract class ZLDialogContent {
 		}
 	}
 	
-	protected ZLDialogContent(ZLResource resource){
+	protected ZLDialogContent(ZLResource resource) {
 		myResource = resource;
 	}
 
@@ -60,8 +60,7 @@ public abstract class ZLDialogContent {
 		addOption(key, createEntryByOption(option));
 	}
 	
-	public abstract void addOptions(String name0, String tooltip0, ZLOptionEntry option0,
-														String name1, String tooltip1, ZLOptionEntry option1);
+	public abstract void addOptions(String name0, String tooltip0, ZLOptionEntry option0, String name1, String tooltip1, ZLOptionEntry option1);
 	
 	public final void addOptions(String key0, ZLOptionEntry option0, String key1, ZLOptionEntry option1) {
 		final ZLResource resource0 = myResource.getResource(key0);

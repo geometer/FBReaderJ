@@ -4,83 +4,83 @@
 ***************************************************************
 
 ZLTextView:
-	пометки (для найденных строк и т.п.)
-	выделение текста мышкой
-	прокрутка текста мышкой
+?	пометки (для найденных строк и т.п.)
+2	выделение текста мышкой
+1	прокрутка текста мышкой
 	переход по ссылкам
 DONE		внутренним
-		внутри той же модели
+1		внутри той же модели
 DONE		внешним (вызов браузера)
 DONE			swing
 DONE			android
 DONE			переносы
-		оптимизировать место в памяти
+2		оптимизировать место в памяти
 	position indicator
 DONE		отрисовка
 DONE		навигация
 DONE		взаимодействие с деревом
-		обработка текстов с endSection
-		засечки для пунктов из оглавления
-		часы
-		количество прочитанных страниц
-	обработка неразрывных пробелов
-	undo/redo position stack
-	обработка китайских текстов
-	desktop: менять курсор над ссылкой
+2		обработка текстов с endSection
+3		засечки для пунктов из оглавления
+3		часы
+3		количество прочитанных страниц
+3	обработка неразрывных пробелов
+1	undo/redo position stack
+3	обработка китайских текстов
+3	desktop: менять курсор над ссылкой
 
 рисунки:
-	обработка palm'овых рисунков
+2	обработка palm'овых рисунков
 DONE	избавиться от многократных вычислений (ZLImageData)
 
 форматы:
 DONE	fb2 (сделать чтение описания книги)
-	chm
-	html
-	oeb/epub
-	openreader
-	ztxt
-	palmdoc
-	plucker
-	rtf
-	tcr
-	txt
+3	chm
+2	html
+1	oeb/epub
+3	openreader
+3	ztxt
+2	palmdoc
+Марина 1	plucker
+3	rtf
+3	tcr
+3	txt
 
 файловая система:
 	архивы
 DONE		zip
-		gzip
-		tar
-		bz2
+3		gzip
+3		tar
+3		bz2
 
 диалоги (abstract):
 DONE	Selection
 DONE		открытие книги
-	Option
-		настройки
-		book info
+Оля 0	Option
+Оля 0		настройки
+Оля 0		book info
 DONE	MessageBox
-	WaitMessage
-		запуск программы (?)
-		загрузка книги
-		загрузка списка библиотеки
-		сохранение конфига
+Оля 0	WaitMessage
+Оля 0		запуск программы
+Оля 0		загрузка книги
+Оля 0		загрузка списка библиотеки
+3		сохранение конфига
 	другие
-		диалог поиска
-		диалог перехода на страницу по номеру
+Оля 0		диалог поиска
+3		диалог перехода на страницу по номеру
 
 диалоги (swing):
 DONE	Selection
-	Option
+Оля 0	Option
 DONE	MessageBox
-	WaitMessage
-	другие
+Оля 0	WaitMessage
+Оля 0	другие
 
 диалоги (android):
-	Selection
-	Option
-	MessageBox
-	WaitMessage
-	другие
+DONE	Selection
+НМ 0	Option
+DONE	MessageBox
+НМ 0	WaitMessage
+НМ 0	другие
 
 книги:
 DONE	BookDescription
@@ -89,54 +89,57 @@ DONE		собирать книги, лежащие в указанных ката
 
 представления:
 DONE	CollectionView
-	тэги
+3	теги
 DONE	RecentBooksView
 DONE	FootnoteView
-	не показывать ContentsView, если оглавление пустое
-	открывать ContentsView на том разделе, который сейчас читается
+DONE	не показывать ContentsView, если оглавление пустое
+DONE	открывать ContentsView на том разделе, который сейчас читается
 
 конфиг:
-	чтение дефолтного конфига
-	не сохранять конфиг, если не было изменений!!!!!
+3	чтение дефолтного конфига
+3	не сохранять конфиг, если не было изменений!!!!!
 DONE	нормальная запись в десктопном варианте (без длинной-длинной строки)
-	сохранение раз в 30 секунд
+3	сохранение раз в 30 секунд
 DONE	реализация на базе sqlite (для андроида)
-		оптимизация по количеству сохранений?
+3		оптимизация по количеству сохранений?
 
 внешний вид:
 DONE	заголовок окна
-	macos: название меню
-	macos: иконка
-	macos: корректное завершение по Command+Q
+3	macos: название меню
+3	macos: иконка
+3	macos: корректное завершение по Command+Q
 
 код:
-	изменить систему названий package'й (org. -> org.geometerplus.)
-	вставить copyright notices
+НМ 0	изменить систему названий package'й (org. -> org.geometerplus.)
+НМ 0	вставить copyright notices
 
 доделать все Actions:
-	ActionCode.SHOW_BOOK_INFO
-	ActionCode.SCROLL_TO_START_OF_TEXT
-	ActionCode.SCROLL_TO_END_OF_TEXT
-	ActionCode.OPEN_PREVIOUS_BOOK
-	ActionCode.GOTO_NEXT_TOC_SECTION
-	ActionCode.GOTO_PREVIOUS_TOC_SECTION
-	ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD
-	ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY
-	ActionCode.CLEAR_SELECTION
+1	ActionCode.SHOW_BOOK_INFO
+1	ActionCode.SCROLL_TO_START_OF_TEXT
+1	ActionCode.SCROLL_TO_END_OF_TEXT
+1	ActionCode.OPEN_PREVIOUS_BOOK
+1	ActionCode.GOTO_NEXT_TOC_SECTION
+1	ActionCode.GOTO_PREVIOUS_TOC_SECTION
+2	ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD
+2	ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY
+2	ActionCode.CLEAR_SELECTION
 
 другое:
-	поиск
-		поиск следующего
-		поиск предыдущего
-	написать другой how-to-start (без иконок)
-	автоопределение языка/кодировки
-	обработка разных кодировок (в хитрых форматах типа plucker)
-	выход по escape из view, не из приложения
+DONE	поиск
+DONE		поиск следующего
+DONE		поиск предыдущего
+НМ 0	написать другой how-to-start (без иконок)
+Марина 0	автоопределение языка/кодировки
+Марина 0	обработка разных кодировок (в хитрых форматах типа plucker)
+НМ 0	выход по escape из view, не из приложения
 	получение списка шрифтов в ZLPaintContext
-	полноэкранный режим
-	tap scrolling
-	обработка архивов в параметре командной строки
-	добавлять в библиотеку книгу из командной строки
-	xml: сделать нормальную поддержку namespace'ов
+Марина 0		swing
+НМ 0		android
+3	полноэкранный режим
+НМ 0	tap scrolling
+2	обработка архивов в параметре командной строки
+1	добавлять в библиотеку книгу из командной строки
+1	xml: сделать нормальную поддержку namespace'ов
+2 fb2descriptionReader: interrupt()
 
-при нажатии на кнопку выхода (в swing) и на Esc (android) закрывать текущий View, а не выходить из программы
+1 при нажатии на кнопку выхода (в swing) и на Esc (android) закрывать текущий View, а не выходить из программы

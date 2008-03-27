@@ -14,20 +14,17 @@ class AddBookAction extends FBAction {
 	}
 
 	public void run() {
-		FBFileHandler handler = new FBFileHandler();
-		if (ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", handler)) {
-			BookDescription description = handler.getDescription();
-			if ((description != null) && fbreader().runBookInfoDialog(description.getFileName())) {
-				new BookList().addFileName(description.getFileName());
-				fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
+		final FBFileHandler handler = new FBFileHandler();
+		Runnable actionOnAccept = new Runnable() {
+			public void run() {
+				BookDescription description = handler.getDescription();
+				if ((description != null) && fbreader().runBookInfoDialog(description.getFileName())) {
+					new BookList().addFileName(description.getFileName());
+					fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
+					fbreader().refreshWindow();
+				}
 			}
-			
-		/*	if (description != null) {
-				fbreader().openBook(description);
-				fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
-				fbreader().refreshWindow();
-			}
-		*/	
-		}
+		};
+		ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", handler, actionOnAccept);
 	}
 }

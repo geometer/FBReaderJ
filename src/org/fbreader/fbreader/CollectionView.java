@@ -41,7 +41,7 @@ public class CollectionView extends FBView {
 			}
 			final ZLTextImageElement imageElement = (ZLTextImageElement)element;
 
-			BookDescription book = collectionModel().bookByParagraphNumber(imageArea.ParagraphNumber);
+			final BookDescription book = collectionModel().bookByParagraphNumber(imageArea.ParagraphNumber);
 			if (book == null) {
 				return false;
 			}
@@ -67,28 +67,35 @@ public class CollectionView extends FBView {
 						message = format.substring(0, index) + book.getTitle() + format.substring(index + 2);
 					}
 				}
-				if (ZLDialogManager.getInstance().showQuestionBox(boxKey, message,
-					ZLDialogManager.YES_BUTTON, ZLDialogManager.NO_BUTTON, null) == 0) {
-					CollectionModel cModel = collectionModel();
-
-					new BookList().removeFileName(book.getFileName());
-					cModel.removeBook(book);
-  
-					if (cModel.getParagraphsNumber() == 0) {
-						gotoParagraph(0, false);
-					} else {
-						int index = getStartCursor().getParagraphCursor().getIndex();
-						if (index >= cModel.getParagraphsNumber()) {
-							index = cModel.getParagraphsNumber() - 1;
+				Runnable okAction = new Runnable() {
+					public void run() {
+						CollectionModel cModel = collectionModel();
+          
+						new BookList().removeFileName(book.getFileName());
+						cModel.removeBook(book);
+          
+						if (cModel.getParagraphsNumber() == 0) {
+							gotoParagraph(0, false);
+						} else {
+							int index = getStartCursor().getParagraphCursor().getIndex();
+							if (index >= cModel.getParagraphsNumber()) {
+								index = cModel.getParagraphsNumber() - 1;
+							}
+							while (!cModel.getTreeParagraph(index).getParent().isOpen()) {
+								--index;
+							}
+							gotoParagraph(index, false);
 						}
-						while (!cModel.getTreeParagraph(index).getParent().isOpen()) {
-							--index;
-						}
-						gotoParagraph(index, false);
+						rebuildPaintInfo(true);
+						getApplication().refreshWindow();
 					}
-					rebuildPaintInfo(true);
-					getApplication().refreshWindow();
-				}
+				};
+				ZLDialogManager.getInstance().showQuestionBox(
+					boxKey, message,
+					ZLDialogManager.YES_BUTTON, okAction,
+					ZLDialogManager.NO_BUTTON, null,
+					null, null
+				);
 				return true;
 			}
 			return false;
@@ -99,9 +106,8 @@ public class CollectionView extends FBView {
 			return false;
 		}
 
-		BookDescription book = collectionModel().bookByParagraphNumber(index);
+		final BookDescription book = collectionModel().bookByParagraphNumber(index);
 		if (book != null) {
-			
 			getFBReader().openBook(book);
 			getFBReader().showBookTextView();
 			return true;

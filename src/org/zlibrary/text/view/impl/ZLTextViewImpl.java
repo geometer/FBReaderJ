@@ -40,9 +40,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
-		
+
 	private boolean myTreeStateIsFrozen = false;
-	
+
 	private final ZLTextRectangularAreaVector myTextElementMap
 		= new ZLTextRectangularAreaVector();
 	private final ZLTextRectangularAreaVector myTreeNodeMap
@@ -74,7 +74,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return myModel;
 	}
 
-	protected ZLTextWordCursor getStartCursor() {
+	public ZLTextWordCursor getStartCursor() {
 		return myStartCursor;
 	}
 	
@@ -280,21 +280,21 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public boolean canFindNext() {
-		return !myEndCursor.isNull() && (myModel.getNextMark(myEndCursor.getPosition()).ParagraphNumber > -1);
+		return !myEndCursor.isNull() && (myModel != null) && (myModel.getNextMark(myEndCursor.getPosition()).ParagraphNumber > -1);
 	}
 
 	public void findNext() {
-		if (myEndCursor.isNull()) {
+		if (!myEndCursor.isNull()) {
 			gotoMark(myModel.getNextMark(myEndCursor.getPosition()));
 		}
 	}
 
 	public boolean canFindPrevious() {
-		return !myStartCursor.isNull() && (myModel.getPreviousMark(myStartCursor.getPosition()).ParagraphNumber > -1);
+		return !myStartCursor.isNull() && (myModel != null) && (myModel.getPreviousMark(myStartCursor.getPosition()).ParagraphNumber > -1);
 	}
 
 	public void findPrevious() {
-		if (myStartCursor.isNull()) {
+		if (!myStartCursor.isNull()) {
 			gotoMark(myModel.getPreviousMark(myStartCursor.getPosition()));
 		}
 	}
@@ -870,10 +870,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void gotoPosition(int paragraphNumber, int wordNumber, int charNumber) {
-		// TODO: implement
-		int paragraphs = myModel.getParagraphsNumber();
-		int pn = Math.max(0, Math.min(paragraphNumber, paragraphs - 2));
-		myStartCursor.setCursor(ZLTextParagraphCursor.cursor(myModel, pn));
+		final int maxParagraphNumber = myModel.getParagraphsNumber() - 1;
+		if (paragraphNumber > maxParagraphNumber) {
+			paragraphNumber = maxParagraphNumber;
+		}
+		if (paragraphNumber < 0) {
+			paragraphNumber = 0;
+		}
+		myStartCursor.setCursor(ZLTextParagraphCursor.cursor(myModel, paragraphNumber));
 		myStartCursor.moveTo(wordNumber, charNumber);
 		myEndCursor.reset();
 		myPaintState = PaintState.START_IS_KNOWN;

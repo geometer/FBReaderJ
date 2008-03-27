@@ -5,7 +5,6 @@ import javax.swing.*;
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 
 public class ZLSwingDialogManager extends ZLDialogManager {
@@ -14,8 +13,8 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 	public ZLSwingDialogManager() {
 	}
 	
-	public boolean runSelectionDialog(String key, ZLTreeHandler handler) {
-		return new ZLSwingSelectionDialog(myApplicationWindow.getFrame(), getDialogTitle(key), handler).run();
+	public void runSelectionDialog(String key, ZLTreeHandler handler, Runnable actionOnAccept) {
+		new ZLSwingSelectionDialog(myApplicationWindow.getFrame(), getDialogTitle(key), handler, actionOnAccept).run();
 	}
 
 	public void showErrorBox(String key, String message) {
@@ -26,7 +25,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
 	}
 
-	public int showQuestionBox(String key, String message, String button0, String button1, String button2) {
+	public void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2) {
 		Object [] options = new Object [3];
 		int size = 0;
 		if (button0 != null) {
@@ -52,12 +51,26 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 			optionType = JOptionPane.YES_OPTION;
 			break;
 		default:
-			return 0;
+			return;
 		}
 		
-		return JOptionPane.showOptionDialog(myApplicationWindow.getFrame(), message,
+		Runnable action = null;
+		switch (JOptionPane.showOptionDialog(myApplicationWindow.getFrame(), message,
 			    getDialogTitle(key), optionType, JOptionPane.QUESTION_MESSAGE,
-			    null, opt, opt[0]);
+			    null, opt, opt[0])) {
+			case 0:
+				action = action0;
+				break;
+			case 1:
+				action = action1;
+				break;
+			case 2:
+				action = action2;
+				break;
+		}
+		if (action != null) {
+			action.run();
+		}
 	}
 
 	public ZLSwingApplicationWindow createApplicationWindow(ZLApplication application) {
@@ -70,11 +83,11 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		return new JButton(text);
 	}
 
-	public ZLDialog createDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+	public ZLDialog createDialog(String key, Runnable applyAction, boolean showApplyButton) {
 		return new ZLSwingDialog(myApplicationWindow.getFrame(), getResource().getResource(key));
 	}
 
-	public ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+	public ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton) {
 		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key),
 				applyAction, showApplyButton);
 	}
@@ -86,12 +99,12 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 	void createApplicationWindow(ZLApplication *application) const;
 
 	shared_ptr<ZLDialog> createDialog(const ZLResourceKey &key) const;
-	shared_ptr<ZLOptionsDialog> createOptionsDialog(const ZLResourceKey &id, shared_ptr<ZLRunnable> applyAction, bool showApplyButton) const;
+	shared_ptr<ZLOptionsDialog> createOptionsDialog(const ZLResourceKey &id, shared_ptr<Runnable> applyAction, bool showApplyButton) const;
 	void informationBox(const ZLResourceKey &key, const std::string &message) const;
 	void errorBox(const ZLResourceKey &key, const std::string &message) const;
 	int questionBox(const ZLResourceKey &key, const std::string &message, const ZLResourceKey &button0, const ZLResourceKey &button1, const ZLResourceKey &button2) const;
 	bool selectionDialog(const ZLResourceKey &key, ZLTreeHandler &handler) const;
-	void wait(const ZLResourceKey &key, ZLRunnable &runnable) const;
+	void wait(const ZLResourceKey &key, Runnable &runnable) const;
 
 	bool isClipboardSupported(ClipboardType type) const;
 	void setClipboardText(const std::string &text, ClipboardType type) const;

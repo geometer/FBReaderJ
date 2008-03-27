@@ -23,6 +23,7 @@ public interface ZLTextModel {
 	void addFixedHSpace(short length);
 
 	void selectParagraph(int index);
+	void removeAllMarks();
 	ZLTextMark getFirstMark();
 	ZLTextMark getLastMark();
 	ZLTextMark getNextMark(ZLTextMark position);

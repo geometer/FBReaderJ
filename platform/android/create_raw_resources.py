@@ -8,6 +8,7 @@ drawable_res_dir = "res/drawable"
 data_dir_common = "../../data"
 application_icons_dir_common = "../../icons/application"
 filetree_icons_dir_android = "icons/filetree"
+booktree_icons_dir_common = "../../icons/booktree"
 data_dir_android = "data"
 
 print os.getcwd()
@@ -35,4 +36,5 @@ clean_res_dir(drawable_res_dir)
 process_data_dir("data__", data_dir_common, raw_res_dir)
 process_data_dir("data__", data_dir_android, raw_res_dir)
 process_data_dir("filetree__", filetree_icons_dir_android, drawable_res_dir, 0)
+process_data_dir("icons__booktree__", booktree_icons_dir_common, raw_res_dir)
 shutil.copyfile(application_icons_dir_common + "/48x48.png", drawable_res_dir + "/fbreader.png")

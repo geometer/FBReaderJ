@@ -27,7 +27,6 @@ import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.runnable.ZLRunnable;
 
 public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final boolean myShowApplyButton;
@@ -40,7 +39,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final ZLIntegerRangeOption myWidthOption;
 	private	final ZLIntegerRangeOption myHeightOption;
 	
-	protected ZLSwingOptionsDialog(JFrame frame, ZLResource resource, ZLRunnable applyAction, boolean showApplyButton) {
+	protected ZLSwingOptionsDialog(JFrame frame, ZLResource resource, Runnable applyAction, boolean showApplyButton) {
 		super(resource, applyAction);
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(getCaption());

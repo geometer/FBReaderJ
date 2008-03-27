@@ -10,4 +10,7 @@ public interface ZLXMLReader {
 	public void endElementHandler(String tag);
 	public void characterDataHandler(char[] ch, int start, int length);
 	public void characterDataHandlerFinal(char[] ch, int start, int length);
+
+	boolean processNamespaces();
+	void namespaceListChangedHandler();
 }

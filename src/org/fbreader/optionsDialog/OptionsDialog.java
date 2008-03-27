@@ -13,7 +13,6 @@ import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.view.style.ZLTextBaseStyle;
 import org.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -120,7 +119,7 @@ public class OptionsDialog {
 		return myDialog;
 	}
 	
-	private static class OptionsApplyRunnable implements ZLRunnable {
+	private static class OptionsApplyRunnable implements Runnable {
 		private final FBReader myFBReader;
 		
 		public OptionsApplyRunnable(FBReader fbreader) {

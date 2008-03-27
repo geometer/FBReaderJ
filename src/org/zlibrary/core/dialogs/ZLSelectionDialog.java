@@ -79,6 +79,4 @@ public abstract class ZLSelectionDialog {
 	protected abstract void updateList();
 	
 	protected abstract void selectItem(int index);
-
-	public abstract boolean run();	
 }

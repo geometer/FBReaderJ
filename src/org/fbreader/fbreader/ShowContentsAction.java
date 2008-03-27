@@ -9,7 +9,7 @@ class ShowContentsAction extends FBAction {
 		switch (fbreader().getMode()) {
 			case FBReader.ViewMode.BOOK_TEXT:
 			case FBReader.ViewMode.FOOTNOTE:
-				return true;
+				return !fbreader().getContentsView().isEmpty();
 			default:
 				return false;
 		}

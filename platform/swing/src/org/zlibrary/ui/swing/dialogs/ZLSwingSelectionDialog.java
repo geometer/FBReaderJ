@@ -28,11 +28,13 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	private	final ZLIntegerRangeOption myHeightOption;
 	
 	private boolean myReturnValue = false;
+	private final Runnable myActionOnAccept;
 	
-	protected ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler) {
+	ZLSwingSelectionDialog(JFrame frame, String caption, ZLTreeHandler myHandler, Runnable actionOnAccept) {
 		super(myHandler);
 		myWidthOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Width", 10, 2000, 400);
 		myHeightOption = new ZLIntegerRangeOption(ZLOption.LOOK_AND_FEEL_CATEGORY, OPTION_GROUP_NAME, "Height", 10, 2000, 300);
+		myActionOnAccept = actionOnAccept;
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(caption);
 		update();
@@ -45,8 +47,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 		myDialog.hide();
 	}
 
-	@Override
-	public boolean run() {
+	public void run() {
 		myDialog.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				myWidthOption.setValue(myDialog.getWidth());
@@ -95,7 +96,9 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
 		
-		return myReturnValue;
+		if (myReturnValue) {
+			myActionOnAccept.run();
+		}
 	}
 
 	@Override

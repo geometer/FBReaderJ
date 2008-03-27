@@ -54,16 +54,17 @@ class SearchAction extends FBAction {
 		searchDialog.addButton("go", true);
 		searchDialog.addButton(ZLDialogManager.CANCEL_BUTTON, false);
 		
-		if (searchDialog.run()) {
+		//if (searchDialog.run()) {
 			searchDialog.acceptValues();
 			SearchPatternOption.setValue("FBReader");
 			textView.search(
-				SearchPatternOption.getValue(),
+				//SearchPatternOption.getValue(),
+				"!",
 				SearchIgnoreCaseOption.getValue(),
 				SearchInWholeTextOption.getValue(),
 				SearchBackwardOption.getValue(),
 				SearchThisSectionOnlyOption.getValue()
 			);
-		}
+		//}
 	}
 }

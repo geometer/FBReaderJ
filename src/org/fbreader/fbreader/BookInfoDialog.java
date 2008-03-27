@@ -3,28 +3,19 @@ package org.fbreader.fbreader;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
-import org.zlibrary.core.optionEntries.ZLStringInfoEntry;
+import org.zlibrary.core.optionEntries.*;
 import org.zlibrary.core.util.*;
 
 import org.fbreader.collection.BookCollection;
-import org.fbreader.description.Author;
-import org.fbreader.description.BookDescription;
-import org.fbreader.description.BookDescription.BookInfo;
+import org.fbreader.description.*;
 import org.fbreader.formats.FormatPlugin;
-import org.fbreader.formats.FormatPlugin.PluginCollection;
-import org.zlibrary.core.dialogs.ZLComboOptionEntry;
-import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLDialogManager;
-import org.zlibrary.core.dialogs.ZLOptionsDialog;
-import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
-import org.zlibrary.core.dialogs.ZLStringOptionEntry;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.filesystem.ZLFile;
 
 public class BookInfoDialog {
 	private final ZLOptionsDialog myDialog;
 	private final BookCollection myCollection;
-	private BookInfo myBookInfo;
+	private final BookDescription.BookInfo myBookInfo;
 //	private FormatInfoPage myFormatInfoPage;
 	
 	private AuthorDisplayNameEntry myAuthorDisplayNameEntry;
@@ -38,7 +29,7 @@ public class BookInfoDialog {
 	
 	public BookInfoDialog(BookCollection collection, String fileName) {
 		myCollection = collection;
-		myBookInfo = new BookInfo(fileName);
+		myBookInfo = new BookDescription.BookInfo(fileName);
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog");
 		
 		ZLDialogContent commonTab = myDialog.createTab("Common");
@@ -54,7 +45,8 @@ public class BookInfoDialog {
 		std::vector<std::string> languageCodes = ZLLanguageList::languageCodes();
 		languageCodes.push_back("de-traditional");
 		myLanguageEntry = new ZLLanguageOptionEntry(myBookInfo.LanguageOption, languageCodes);
-*/		mySeriesTitleEntry = new SeriesTitleEntry(this);
+	*/
+		mySeriesTitleEntry = new SeriesTitleEntry(this);
 		myBookNumberEntry = new ZLSimpleSpinOptionEntry(myBookInfo.getNumberInSequenceOption(), 1);
 
 		commonTab.addOption("authorDisplayName", myAuthorDisplayNameEntry);
@@ -72,10 +64,12 @@ public class BookInfoDialog {
 
 		mySeriesTitleEntry.onValueEdited(mySeriesTitleEntry.initialValue());
 		
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(fileName), false);
+		/*
+		FormatPlugin plugin = FormatPlugin.PluginCollection.instance().getPlugin(new ZLFile(fileName), false);
 		if (plugin != null) {
 	//		myFormatInfoPage = plugin.createInfoPage(myDialog, fileName);
 		}
+		*/
 	}
 
 	public ZLOptionsDialog getDialog() {

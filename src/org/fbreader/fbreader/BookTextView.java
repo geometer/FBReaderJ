@@ -130,8 +130,6 @@ class BookTextView extends FBView {
 		final ZLTextWordCursor cursor = getStartCursor();
 		final String group = getFileName();
 		
-		System.out.println("group " + group);
-
 		if (!cursor.isNull()) {
 			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_OPTION_NAME, 0).setValue(cursor.getParagraphCursor().getIndex());
 			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, WORD_OPTION_NAME, 0).setValue(cursor.getWordNumber());

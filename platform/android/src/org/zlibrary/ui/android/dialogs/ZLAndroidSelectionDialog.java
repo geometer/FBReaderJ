@@ -10,16 +10,16 @@ import org.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.zlibrary.core.dialogs.ZLTreeHandler;
 import org.zlibrary.core.dialogs.ZLTreeNode;
 
-import org.zlibrary.ui.android.library.R;
-
 class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 	private boolean myReturnValue = false;
+	private final Runnable myActionOnAccept;
 	private final TextView myHeader;
 	private final SelectionView mySelectionView;
 	private final ZLAndroidDialog myDialog;
 	
-	protected ZLAndroidSelectionDialog(Context context, String caption, ZLTreeHandler handler) {
+	protected ZLAndroidSelectionDialog(Context context, String caption, ZLTreeHandler handler, Runnable actionOnAccept) {
 		super(handler);
+		myActionOnAccept = actionOnAccept;
 		myHeader = new TextView(context);
 		mySelectionView = new SelectionView(context);
 		myDialog = new ZLAndroidDialog(context, caption);
@@ -30,13 +30,8 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		myDialog.dismiss();
 	}
 
-	public boolean run() {
-		new Handler().post(new Runnable() {
-			public void run() {
-				myDialog.show();
-			}
-		});
-		return myReturnValue;
+	public void run() {
+		myDialog.show();
 	}
 
 	protected void selectItem(int index) {
@@ -66,6 +61,10 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		}
 
 		protected void onStop() {
+			android.util.Log.i("onStop", "" + myReturnValue);	
+			if (myReturnValue) {
+				new Handler().post(myActionOnAccept);
+			}
 		}
 	}
 

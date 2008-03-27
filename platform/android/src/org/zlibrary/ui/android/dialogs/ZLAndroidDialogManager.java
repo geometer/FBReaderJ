@@ -1,45 +1,75 @@
 package org.zlibrary.ui.android.dialogs;
 
-import android.app.Activity;
+import android.app.*;
 import android.view.View;
+import android.content.DialogInterface;
+import android.os.Handler;
 
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.runnable.ZLRunnable;
 import org.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 import org.zlibrary.ui.android.library.*;
 
 public class ZLAndroidDialogManager extends ZLDialogManager {
-	//private ZLAndroidApplicationWindow myApplicationWindow;
 	private final Activity myActivity;
 	
 	public ZLAndroidDialogManager(Activity activity) {
 		myActivity = activity;
 	}
 	
-	public boolean runSelectionDialog(String key, ZLTreeHandler handler) {
-		boolean code = new ZLAndroidSelectionDialog(myActivity, getDialogTitle(key), handler).run();
+	public void runSelectionDialog(String key, ZLTreeHandler handler, Runnable actionOnAccept) {
+		new ZLAndroidSelectionDialog(myActivity, getDialogTitle(key), handler, actionOnAccept).run();
 		View mainView = ((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget();
 		myActivity.setContentView(mainView);
 		mainView.requestFocus();
-		return code;
 	}
 
 	public void showErrorBox(String key, String message) {
-		// TODO: implement
-		//JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
+		showAlert(0, key, message);
 	}
 
 	public void showInformationBox(String key, String message) {
-		// TODO: implement
-		//JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
+		showAlert(0, key, message);
 	}
 
-	public int showQuestionBox(String key, String message, String button0, String button1, String button2) {
-		// TODO: implement
-		return 0;
+	private void showAlert(int iconId, String key, String message) {
+		AlertDialog.show(myActivity, null, iconId, message, getButtonText(OK_BUTTON), null, true, null);
+	}
+
+	private static class AlertListener implements DialogInterface.OnClickListener {
+		private final Runnable myAction0, myAction1, myAction2;
+
+		public AlertListener(Runnable action0, Runnable action1, Runnable action2) {
+			myAction0 = action0;
+			myAction1 = action1;
+			myAction2 = action2;
+		}
+
+		public void onClick(DialogInterface dialog, int which) {
+			Runnable action = null;
+			switch (which) {
+				case DialogInterface.BUTTON1:
+					action = myAction0;
+					break;
+				case DialogInterface.BUTTON2:
+					action = myAction1;
+					break;
+				case DialogInterface.BUTTON3:
+					action = myAction2;
+					break;
+			}
+			if (action != null) {
+				new Handler().post(action);
+			}
+			dialog.dismiss();
+		}
+	}
+
+	public void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2) {
+		final AlertListener al = new AlertListener(action0, action1, action2);
+		AlertDialog.show(myActivity, null, 0, message, button0, al, button1, al, button2, al, true, null);
 	}
 
 	public ZLAndroidApplicationWindow createApplicationWindow(ZLApplication application) {
@@ -56,13 +86,11 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	}
 	*/
 
-	public ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
-		// TODO: implement
-		//return new ZLAndroidOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key), applyAction, showApplyButton);
-		return null;
+	public ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton) {
+		return new ZLAndroidOptionsDialog(getResource().getResource(key), applyAction);
 	}
 
-	public ZLDialog createDialog(String key, ZLRunnable applyAction, boolean showApplyButton) {
+	public ZLDialog createDialog(String key, Runnable applyAction, boolean showApplyButton) {
 		// TODO: implement
 		return null;
 	}

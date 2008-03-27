@@ -27,4 +27,11 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 	
 	public void endDocumentHandler() {
 	}
+
+	public boolean processNamespaces() {
+		return false;
+	}
+
+	public void namespaceListChangedHandler() {
+	}
 }

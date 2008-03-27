@@ -177,5 +177,4 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
 		return processor.read(this, fileName);
 	}
-
 }

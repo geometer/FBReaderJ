@@ -6,15 +6,14 @@ import org.zlibrary.core.util.*;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.runnable.ZLRunnable;
 
 public abstract class ZLOptionsDialog {
 	private final ZLResource myResource;
 	protected final ArrayList /*ZLDialogContent*/ myTabs = new ArrayList();
-	protected ZLRunnable myApplyAction;
+	protected Runnable myApplyAction;
 	protected ZLStringOption myTabOption;
 	
-	protected ZLOptionsDialog(ZLResource resource, ZLRunnable applyAction) {
+	protected ZLOptionsDialog(ZLResource resource, Runnable applyAction) {
 		myResource = resource;
 		myApplyAction = applyAction;
 		myTabOption = new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, resource.Name, "SelectedTab", "");

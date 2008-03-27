@@ -13,6 +13,9 @@ public class ZLFileImage implements ZLImage {
 
 	public byte [] byteData() {
 		final InputStream stream = ZLibrary.getInstance().getInputStream(myPath);
+		if (stream == null) {
+			return new byte[0];
+		}
 		final ArrayList data = new ArrayList();
 		byte[] buffer;
 		int sizeOfBufferData;

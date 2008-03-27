@@ -3,7 +3,6 @@ package org.zlibrary.core.dialogs;
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.application.ZLApplicationWindow;
 import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.runnable.ZLRunnable;
 
 public abstract class ZLDialogManager {
 	protected static ZLDialogManager ourInstance;
@@ -25,7 +24,7 @@ public abstract class ZLDialogManager {
 		return ourInstance;
 	} 
 	
-	public abstract boolean runSelectionDialog(String key, ZLTreeHandler handler);
+	public abstract void runSelectionDialog(String key, ZLTreeHandler handler, Runnable actionOnAccept);
 
 	public abstract void showInformationBox(String key, String message);
 
@@ -39,21 +38,21 @@ public abstract class ZLDialogManager {
 		showErrorBox(key, getDialogMessage(key));
 	}
 	
-	public abstract int showQuestionBox(String key, String message, String button0, String button1, String button2);
+	public abstract void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2);
 
-	public final int showQuestionBox(String key, String button0, String button1, String button2) {
-		return showQuestionBox(key, getDialogMessage(key), button0, button1, button2);
+	public final void showQuestionBox(String key, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2) {
+		showQuestionBox(key, getDialogMessage(key), button0, action0, button1, action1, button2, action2);
 	}
 	
 	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
 	
-	public abstract ZLDialog createDialog(String key, ZLRunnable applyAction, boolean showApplyButton);
+	public abstract ZLDialog createDialog(String key, Runnable applyAction, boolean showApplyButton);
 	
 	public final ZLDialog createDialog(String key) {
 		return createDialog(key, null, false);
 	}
 	
-	public abstract ZLOptionsDialog createOptionsDialog(String key, ZLRunnable applyAction, boolean showApplyButton);
+	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton);
 	
 	public final ZLOptionsDialog createOptionsDialog(String key) {
 		return createOptionsDialog(key, null, false);
@@ -90,7 +89,7 @@ public:
 
 	virtual shared_ptr<ZLDialog> createDialog(const ZLResourceKey &key) const = 0;
 	
-	virtual void wait(const ZLResourceKey &key, ZLRunnable &runnable) const = 0;
+	virtual void wait(const ZLResourceKey &key, Runnable &runnable) const = 0;
 
 	interface ClipboardType {
 		CLIPBOARD_MAIN,

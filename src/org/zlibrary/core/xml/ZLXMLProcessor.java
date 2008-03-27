@@ -21,4 +21,6 @@ public abstract class ZLXMLProcessor {
 		}
 		return (stream != null) ? read(xmlReader, stream) : false;
 	}
+
+	//public abstract void interrupt();
 }
