@@ -1,8 +1,11 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Insets;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -18,17 +21,22 @@ public class ZLStringOptionView extends ZLOptionView {
 	public ZLStringOptionView(String name, String tooltip, ZLStringOptionEntry option, ZLSwingDialogContent tab) {
 		super(name, tooltip, option);
 		myTextField = new JTextField(option.initialValue());
-		myTextField.setMargin(new Insets(0, 5, 0, 5));
-		if (name == null) {
+		myTextField.setCaretPosition(0);
+		myTextField.setMargin(new Insets(0, 2, 0, 0));
+		if (name == null || "".equals(name)) {
 			myLabel = null;
 			tab.insertWidget(myTextField);
 		} else {
+			JPanel panel1 = new JPanel();
+			panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
+			myTextField.setMaximumSize(new Dimension(myTextField.getMaximumSize().width, myTextField.getPreferredSize().height));
+			panel1.add(myTextField);
 			myLabel = new JLabel(name);
-			JPanel panel = new JPanel(new BorderLayout());
-			JPanel panel2 = new JPanel();
-			panel2.add(myLabel);
-			panel2.add(myTextField);
-			panel.add(panel2, BorderLayout.LINE_END);
+			JPanel panel2 = new JPanel(new BorderLayout());
+			panel2.add(myLabel, BorderLayout.LINE_END);
+			JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+			panel.add(panel2);
+			panel.add(panel1);
 			tab.insertWidget(panel);
 		}
 	}

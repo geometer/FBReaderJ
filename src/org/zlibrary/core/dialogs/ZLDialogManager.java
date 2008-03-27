@@ -58,10 +58,16 @@ public abstract class ZLDialogManager {
 		return createOptionsDialog(key, null, false);
 	}
 	
+	public abstract void wait(String key, Runnable runnable);
+	
 	public static String getButtonText(String key) {
 		return getResource().getResource("button").getResource(key).getValue();
 	}
 
+	public static String getWaitMessageText(String key) {
+		return getResource().getResource("waitMessage").getResource(key).getValue();
+	}
+	
 	public static String getDialogMessage(String key) {
 		return getResource().getResource(key).getResource("message").getValue();
 	}
@@ -78,11 +84,7 @@ public abstract class ZLDialogManager {
 
 /*
  * 
- * public:
-
-	
-	static const std::string &buttonName(const ZLResourceKey &key);
-	static const std::string &waitMessageText(const ZLResourceKey &key);
+ * 
 
 public:
 	

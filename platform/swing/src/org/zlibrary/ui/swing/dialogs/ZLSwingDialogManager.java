@@ -92,6 +92,18 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 				applyAction, showApplyButton);
 	}
 
+	@Override
+	public void wait(String key, Runnable runnable) {
+		// TODO Auto-generated method stub
+		if (myApplicationWindow != null) {
+	//		myApplicationWindow.setWait(true);
+		}
+		runnable.run();
+		if (myApplicationWindow != null) {
+	//		myApplicationWindow.setWait(false);
+		}
+	}
+
 }
 
 /*

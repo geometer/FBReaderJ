@@ -1,7 +1,10 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -18,16 +21,28 @@ public class ZLSpinOptionView extends ZLOptionView {
 		super(name, tooltip, option);
 		mySpinner = new JSpinner(new SpinnerNumberModel(option.initialValue(), option.minValue(),
 				option.maxValue(), option.getStep()));
-		if (name == null) {
+		if (name == null  || "".equals(name)) {
 			myLabel = null;
 			tab.insertWidget(mySpinner);
 		} else {
-			myLabel = new JLabel(name);
+/*			myLabel = new JLabel(name);
 			JPanel panel = new JPanel(new BorderLayout());
 			JPanel panel2 = new JPanel();
 			panel2.add(myLabel);
 			panel2.add(mySpinner);
 			panel.add(panel2, BorderLayout.LINE_END);
+			tab.insertWidget(panel);
+*/			
+			JPanel panel1 = new JPanel();
+			panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
+			mySpinner.setMaximumSize(new Dimension(mySpinner.getMaximumSize().width, mySpinner.getPreferredSize().height));
+			panel1.add(mySpinner);
+			myLabel = new JLabel(name);
+			JPanel panel2 = new JPanel(new BorderLayout());
+			panel2.add(myLabel, BorderLayout.LINE_END);
+			JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+			panel.add(panel2);
+			panel.add(panel1);
 			tab.insertWidget(panel);
 		}
 	}

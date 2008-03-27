@@ -1,12 +1,19 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionView;
@@ -30,16 +37,28 @@ public class ZLComboOptionView extends ZLOptionView {
 		myComboBox = new JComboBox(values.toArray());
 		myComboBox.setSelectedIndex(index);
 		myComboBox.setEditable(option.isEditable());
-		if (name == null) {
+		if (name == null  || "".equals(name)) {
 			myLabel = null;
 			tab.insertWidget(myComboBox);
 		} else {
-			myLabel = new JLabel(name);
+/*			myLabel = new JLabel(name);
 			JPanel panel = new JPanel(new BorderLayout());
 			JPanel panel2 = new JPanel();
 			panel2.add(myLabel);
 			panel2.add(myComboBox);
 			panel.add(panel2, BorderLayout.LINE_END);
+			tab.insertWidget(panel);
+*/			
+			JPanel panel1 = new JPanel();
+			panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
+			myComboBox.setMaximumSize(new Dimension(myComboBox.getMaximumSize().width, myComboBox.getPreferredSize().height));
+			panel1.add(myComboBox);
+			myLabel = new JLabel(name);
+			JPanel panel2 = new JPanel(new BorderLayout());
+			panel2.add(myLabel, BorderLayout.LINE_END);
+			JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
+			panel.add(panel2);
+			panel.add(panel1);
 			tab.insertWidget(panel);
 		}
 	}
@@ -82,5 +101,5 @@ public class ZLComboOptionView extends ZLOptionView {
 		myComboBox.setModel(new DefaultComboBoxModel(values.toArray()));
 		myComboBox.setSelectedIndex(index);
 	}
-
+	
 }
