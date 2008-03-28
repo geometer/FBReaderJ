@@ -1,19 +1,19 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionView;
@@ -37,6 +37,10 @@ public class ZLComboOptionView extends ZLOptionView {
 		myComboBox = new JComboBox(values.toArray());
 		myComboBox.setSelectedIndex(index);
 		myComboBox.setEditable(option.isEditable());
+		myComboBox.addItemListener(new MyItemListener());
+		if (option.useOnValueEdited()) {
+			myComboBox.getEditor().getEditorComponent().addKeyListener(new MyKeyListener());
+		}	
 		if (name == null  || "".equals(name)) {
 			myLabel = null;
 			tab.insertWidget(myComboBox);
@@ -103,6 +107,20 @@ public class ZLComboOptionView extends ZLOptionView {
 		}
 		myComboBox.setModel(new DefaultComboBoxModel(values.toArray()));
 		myComboBox.setSelectedIndex(index);
+	}
+	
+	private class MyItemListener implements ItemListener {
+
+		public void itemStateChanged(ItemEvent e) {
+			((ZLComboOptionEntry) myOption).onValueSelected(myComboBox.getSelectedIndex());
+		}
+		
+	}
+	
+	private class MyKeyListener extends KeyAdapter {
+		public void keyTyped(KeyEvent e) {
+			((ZLComboOptionEntry) myOption).onValueEdited((String) myComboBox.getSelectedItem());
+		}
 	}
 	
 }

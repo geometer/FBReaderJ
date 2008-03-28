@@ -27,9 +27,9 @@ public abstract class ZLOptionView {
 			setActive(myOption.isActive());
 			show();
 		} else {
-			if (myInitialized) {
+	//		if (myInitialized) {
 				hide();
-			}
+	//		}
 		}
 	}
 	

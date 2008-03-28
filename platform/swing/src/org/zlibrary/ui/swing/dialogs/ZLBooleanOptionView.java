@@ -1,9 +1,10 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import javax.swing.JCheckBox;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
-import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionView;
 
 public class ZLBooleanOptionView extends ZLOptionView {
@@ -14,6 +15,10 @@ public class ZLBooleanOptionView extends ZLOptionView {
 		super(name, tooltip, option);
 		myCheckBox = new JCheckBox(name);
 		myCheckBox.setSelected(option.initialState());
+		myCheckBox.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				((ZLBooleanOptionEntry) myOption).onStateChanged(myCheckBox.isSelected());
+			}});
 		tab.insertWidget(myCheckBox);
 	}
 

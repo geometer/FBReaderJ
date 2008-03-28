@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -14,7 +16,6 @@ import org.zlibrary.core.dialogs.ZLOptionView;
 import org.zlibrary.core.dialogs.ZLStringOptionEntry;
 
 public class ZLStringOptionView extends ZLOptionView {
-
 	private final JLabel myLabel;
 	private final JTextField myTextField;
 	
@@ -23,6 +24,7 @@ public class ZLStringOptionView extends ZLOptionView {
 		myTextField = new JTextField(option.initialValue());
 		myTextField.setCaretPosition(0);
 		myTextField.setMargin(new Insets(0, 5, 0, 0));
+		myTextField.addKeyListener(new MyKeyListener());
 		if (name == null || "".equals(name)) {
 			myLabel = null;
 			tab.insertWidget(myTextField);
@@ -68,4 +70,15 @@ public class ZLStringOptionView extends ZLOptionView {
 	public void reset() {
 		myTextField.setText(((ZLStringOptionEntry) myOption).initialValue());
 	}
+	
+	private class MyKeyListener extends KeyAdapter {
+		public void keyTyped(KeyEvent e) {
+			System.out.println("key");
+			ZLStringOptionEntry o = (ZLStringOptionEntry) myOption;
+			if (o.useOnValueEdited()) {
+				o.onValueEdited(myTextField.getText());
+			}
+		}
+	}
+
 }

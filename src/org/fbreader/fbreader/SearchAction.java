@@ -38,7 +38,6 @@ class SearchAction extends FBAction {
 		final ZLDialog searchDialog = ZLDialogManager.getInstance().createDialog("textSearchDialog");
 	
 		searchDialog.addOption("text", new SearchPatternEntry(this));
-		searchDialog.addOption("text", SearchPatternOption);
 		searchDialog.addOption("ignoreCase", SearchIgnoreCaseOption);
 		searchDialog.addOption("wholeText", SearchInWholeTextOption);
 		searchDialog.addOption("backward", SearchBackwardOption);
