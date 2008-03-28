@@ -49,13 +49,16 @@ class SearchAction extends FBAction {
 		searchDialog.addButton("go", new Runnable() {
 			public void run() {
 				searchDialog.acceptValues();
-				textView.search(
-					SearchPatternOption.getValue(),
-					SearchIgnoreCaseOption.getValue(),
-					SearchInWholeTextOption.getValue(),
-					SearchBackwardOption.getValue(),
-					SearchThisSectionOnlyOption.getValue()
-				);
+				final String pattern = SearchPatternOption.getValue();
+				if (pattern.length() != 0) {
+					textView.search(
+						pattern,
+						SearchIgnoreCaseOption.getValue(),
+						SearchInWholeTextOption.getValue(),
+						SearchBackwardOption.getValue(),
+						SearchThisSectionOnlyOption.getValue()
+					);
+				}
 			}
 		});
 		searchDialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);

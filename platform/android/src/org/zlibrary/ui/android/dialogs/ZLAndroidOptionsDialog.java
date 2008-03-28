@@ -1,7 +1,7 @@
 package org.zlibrary.ui.android.dialogs;
 
-/*
 import android.content.Context;
+/*
 import android.app.Dialog;
 import android.os.*;
 import android.view.*;
@@ -13,8 +13,12 @@ import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.resources.ZLResource;
 
 class ZLAndroidOptionsDialog extends ZLOptionsDialog {
-	ZLAndroidOptionsDialog(ZLResource resource, Runnable applyAction) {
+	// TODO: remove
+	private final Context myContext;
+
+	ZLAndroidOptionsDialog(Context context, ZLResource resource, Runnable applyAction) {
 		super(resource, applyAction);
+		myContext = context;
 		// TODO: implement
 	}
 
@@ -33,6 +37,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	}
 	
 	public ZLDialogContent createTab(String key) {
-		return new ZLAndroidDialogContent(getTabResource(key));
+		return new ZLAndroidDialogContent(myContext, getTabResource(key));
 	}
 }

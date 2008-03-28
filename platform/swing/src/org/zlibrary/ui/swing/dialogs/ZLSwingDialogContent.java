@@ -6,15 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
-import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
-import org.zlibrary.core.dialogs.ZLComboOptionEntry;
-import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLOptionEntry;
-import org.zlibrary.core.dialogs.ZLOptionKind;
-import org.zlibrary.core.dialogs.ZLOptionView;
-import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
-import org.zlibrary.core.dialogs.ZLStringOptionEntry;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.resources.ZLResource;
 
 public class ZLSwingDialogContent extends ZLDialogContent {

@@ -15,14 +15,14 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 	private final Runnable myActionOnAccept;
 	private final TextView myHeader;
 	private final SelectionView mySelectionView;
-	private final ZLAndroidDialog myDialog;
+	private final AndroidDialog myDialog;
 	
 	protected ZLAndroidSelectionDialog(Context context, String caption, ZLTreeHandler handler, Runnable actionOnAccept) {
 		super(handler);
 		myActionOnAccept = actionOnAccept;
 		myHeader = new TextView(context);
 		mySelectionView = new SelectionView(context);
-		myDialog = new ZLAndroidDialog(context, caption);
+		myDialog = new AndroidDialog(context, caption);
 		update();
 	}
 
@@ -47,10 +47,10 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		myHeader.setText(handler().stateDisplayName());
 	}
 	
-	private class ZLAndroidDialog extends Dialog {
+	private class AndroidDialog extends Dialog {
 		private final String myCaption;
 
-		ZLAndroidDialog(Context context, String caption) {
+		AndroidDialog(Context context, String caption) {
 			super(context);
 			myCaption = caption;
 		}
@@ -61,7 +61,6 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		}
 
 		protected void onStop() {
-			android.util.Log.i("onStop", "" + myReturnValue);	
 			if (myReturnValue) {
 				new Handler().post(myActionOnAccept);
 			}

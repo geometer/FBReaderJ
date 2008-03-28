@@ -87,11 +87,15 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	*/
 
 	public ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton) {
-		return new ZLAndroidOptionsDialog(getResource().getResource(key), applyAction);
+		return new ZLAndroidOptionsDialog(myActivity, getResource().getResource(key), applyAction);
 	}
 
-	public ZLDialog createDialog(String key, Runnable applyAction, boolean showApplyButton) {
+	public ZLDialog createDialog(String key) {
+		return new ZLAndroidDialog(myActivity, getResource().getResource(key));
+	}
+
+	public void wait(String key, Runnable runnable) {
 		// TODO: implement
-		return null;
+		runnable.run();
 	}
 }

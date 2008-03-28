@@ -1,6 +1,6 @@
 package org.zlibrary.core.dialogs;
 
-public abstract class ZLOptionView { // ? public
+public abstract class ZLOptionView {
 	private boolean myInitialized;
 	protected final String myName;
 	protected final String myTooltip;

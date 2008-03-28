@@ -87,7 +87,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		return new JButton(text);
 	}
 
-	public ZLDialog createDialog(String key, Runnable applyAction, boolean showApplyButton) {
+	public ZLDialog createDialog(String key) {
 		return new ZLSwingDialog(myApplicationWindow.getFrame(), getResource().getResource(key));
 	}
 
