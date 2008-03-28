@@ -272,7 +272,7 @@
 			<node name="title" value="Поиск по тексту"/>
 			<node name="text" value=""/>
 			<node name="ignoreCase" value="Игнорировать регистр букв"/>
-			<node name="wholeText" value="По всему тексту"/>
+			<node name="wholeText" value="С начала текста"/>
 			<node name="backward" value="Назад"/>
 			<node name="currentSection" value="Только в этом разделе"/>
 		</node>

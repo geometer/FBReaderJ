@@ -12,7 +12,7 @@
 		</node>
 		<node name="navigate" value="Navigoi">
 			<node name="gotoHome" value="Siirry dokumentin alkuun"/>
-			<node name="gotoPageNumber" value="Go to Page..." toBeTranslated="true"/>
+			<node name="gotoPageNumber" value="Siirry sivulle..."/>
 			<node name="gotoSectionStart" value="Siirry tekstiosion alkuun"/>
 			<node name="gotoSectionEnd" value="Siirry tekstiosion loppuun"/>
 			<node name="nextTOCSection" value="Sisällysluettelon seuraavaan kohtaan"/>
@@ -56,9 +56,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="go" value="&amp;Mene!"/>
-			<node name="thisOnly" value="This only" toBeTranslated="true"/>
-			<node name="withSubtags" value="With subtags" toBeTranslated="true"/>
+			<node name="go" value="&amp;Siirry"/>
+			<node name="thisOnly" value="Vain tämä"/>
+			<node name="withSubtags" value="Alaluokalliset"/>
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Asetukset"/>
@@ -67,8 +67,8 @@
 					<node name="bookPath" value="Kirjaston polku"/>
 					<node name="lookInSubdirectories" value="Hae kirjoja alihakemistoista"/>
 					<node name="recentListSize" value="Viimeisimmät kirjat listan koko"/>
-					<node name="showTags" value="Show Tag Hierarchies" toBeTranslated="true"/>
-					<node name="showAllBooksList" value="Show All Books Branch" toBeTranslated="true"/>
+					<node name="showTags" value="Näytä luokkahierarkiat"/>
+					<node name="showAllBooksList" value="Näytä kaikki kirjat haara"/>
 				</node>
 				<node name="Language" value="Kieli">
 					<node name="autoDetect" value="Tunnista kieli ja merkistö automaattisesti"/>
@@ -92,7 +92,7 @@
 						<node name="large" value="Sivun vieritykselle"/>
 						<node name="small" value="Rivin vieritykselle"/>
 						<node name="mouse" value="Hiirellä vieritykselle"/>
-						<node name="tap" value="Tap Scrollings" toBeTranslated="true"/>
+						<node name="tap" value="Kosketusnäyttö vieritykselle"/>
 					</node>
 					<node name="delay" value="Vieritysten viive, msec"/>
 					<node name="mode" value="Vieritystila">
@@ -105,7 +105,7 @@
 					<node name="linesToKeep" value="Rivien määrä"/>
 					<node name="linesToScroll" value="Rivien määrä"/>
 					<node name="percentToScroll" value="Vieritysprosentti"/>
-					<node name="fingerOnly" value="Scroll on Finger Tap Only" toBeTranslated="true"/>
+					<node name="fingerOnly" value="Vieritä ainoastaan kosketusnäytöstä"/>
 				</node>
 				<node name="Selection" value="Valinta">
 					<node name="enableSelection" value="Ota käyttöön tekstin valinta"/>
@@ -248,8 +248,8 @@
 					<node name="seriesTitle" value="Sarjan nimi"/>
 					<node name="bookNumber" value="Kirjan numero"/>
 				</node>
-				<node name="Tags" value="Tags" toBeTranslated="true">
-					<node name="tags" value="Tag List" toBeTranslated="true"/>
+				<node name="Tags" value="Luokka">
+					<node name="tags" value="Luokkalista"/>
 				</node>
 				<node name="Text" value="Teksti">
 					<node name="breakType" value="Katkaise kappale"/>
@@ -277,25 +277,25 @@
 			<node name="currentSection" value="&amp;Vain tästä osasta"/>
 		</node>
 		<node name="gotoPageDialog">
-			<node name="title" value="Go To Page" toBeTranslated="true"/>
-			<node name="pageNumber" value="Go to Page Number" toBeTranslated="true"/>
+			<node name="title" value="Siirry sivulle"/>
+			<node name="pageNumber" value="Siirry sivunumerolle"/>
 		</node>
 		<node name="editTagInfoDialog">
-			<node name="title" value="Edit/Clone Tag" toBeTranslated="true"/>
-			<node name="editOrClone" value="Action" toBeTranslated="true">
-				<node name="edit" value="Rename Tag" toBeTranslated="true"/>
-				<node name="clone" value="Clone Tag" toBeTranslated="true"/>
+			<node name="title" value="Muokkaa/kloonaa luokka"/>
+			<node name="editOrClone" value="Toiminto">
+				<node name="edit" value="Uudelleennimeä luokka"/>
+				<node name="clone" value="Kloonaa luokka"/>
 			</node>
-			<node name="name" value="Tag Name" toBeTranslated="true"/>
-			<node name="includeSubtags" value="Include Subtags" toBeTranslated="true"/>
+			<node name="name" value="Luokan nimi"/>
+			<node name="includeSubtags" value="Sisällytä alaluokat"/>
 		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Poista kirja"/>
 			<node name="message" value="Poista &#13;&quot;%s&quot;&#13; kirjastosta?"/>
 		</node>
 		<node name="removeTagBox">
-			<node name="title" value="Remove Tag" toBeTranslated="true"/>
-			<node name="message" value="Remove Tag &#8220;%s&#8221;?" toBeTranslated="true"/>
+			<node name="title" value="Poista luokka"/>
+			<node name="message" value="Poista luokka &#8220;%s&#8221;?"/>
 		</node>
 		<node name="openBookErrorBox">
 			<node name="title" value="Virhe"/>
@@ -307,16 +307,16 @@
 		</node>
 		<node name="tagMustBeNonEmpty">
 			<node name="title" value="Virhe"/>
-			<node name="message" value="Tag name must be a non-empty string" toBeTranslated="true"/>
+			<node name="message" value="Luoka nimi ei saa olla tyhjä merkkijono"/>
 		</node>
 		<node name="tagMustNotContainComma">
 			<node name="title" value="Virhe"/>
-			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol" toBeTranslated="true"/>
+			<node name="message" value="Luokan nimi ei saa sisältää &#8220;,&#8221; symbolia"/>
 		</node>
 		<node name="waitMessage">
 			<node name="loadingBook" value="Avataan kirjaa..."/>
 			<node name="loadingBookList" value="Avataan kirjalistaa..."/>
-			<node name="migrate" value="Upgrading to the new version. Please, wait..." toBeTranslated="true"/>
+			<node name="migrate" value="Päivitetään uuteen versioon. Olehyvä ja odota..."/>
 		</node>
 	</node>
 	<node name="style">
@@ -370,8 +370,8 @@
 	</node>
 	<node name="library">
 		<node name="caption" value="Kirjasto"/>
-		<node name="allBooks" value="All Books" toBeTranslated="true"/>
-		<node name="booksWithoutTags" value="Books with no Tags" toBeTranslated="true"/>
-		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button." toBeTranslated="true"/>
+		<node name="allBooks" value="Kaikki kirjat"/>
+		<node name="booksWithoutTags" value="Kirjat ilman luokkaa"/>
+		<node name="noBooks" value="FBReader ei löytänyt kirjoja määritellyistä sijainneista. Määrittele polku e-kirjastoosi Asetukset valintaikkunan (&#8220;Kirjasto&#8221; välilehdellä, &#8220;Kirjaston polku&#8221; kohdassa). Vaihtoehtoisesti voit lisätä kirjoja kirjastoosi käyttämällä &#8220;Lisää kirja&#8221; nappia."/>
 	</node>
 </resources>
