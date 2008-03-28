@@ -22,7 +22,7 @@ public class ZLStringOptionView extends ZLOptionView {
 		super(name, tooltip, option);
 		myTextField = new JTextField(option.initialValue());
 		myTextField.setCaretPosition(0);
-		myTextField.setMargin(new Insets(0, 2, 0, 0));
+		myTextField.setMargin(new Insets(0, 5, 0, 0));
 		if (name == null || "".equals(name)) {
 			myLabel = null;
 			tab.insertWidget(myTextField);

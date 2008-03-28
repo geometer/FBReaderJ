@@ -150,8 +150,8 @@ public final class FBReader extends ZLApplication {
 	
 	public void openBook(BookDescription bookDescription) {
 		OpenBookRunnable runnable = new OpenBookRunnable(bookDescription);
-		//ZLDialogManager.getInstance().wait(new ZLResourceKey("loadingBook"), runnable);
-		runnable.run();
+		ZLDialogManager.getInstance().wait("loadingBook", runnable);
+	//	runnable.run();
 		resetWindowCaption();
 	}
 
@@ -287,7 +287,11 @@ public final class FBReader extends ZLApplication {
 		}
 		
 		public void run() { 
-			openBookInternal(myDescription); 
+/*			try {for (int i = 0; i < 20; i++) {
+				Random random = new Random();
+                Thread.sleep(random.nextInt(1000));}
+            } catch (InterruptedException ignore) {}
+*/			openBookInternal(myDescription); 
 		}
 	}
 

@@ -1,10 +1,14 @@
 package org.zlibrary.ui.swing.dialogs;
 
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
 
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.ui.swing.application.ZLSwingApplicationWindow;
 
 public class ZLSwingDialogManager extends ZLDialogManager {
@@ -92,18 +96,46 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 				applyAction, showApplyButton);
 	}
 
-	@Override
 	public void wait(String key, Runnable runnable) {
-		// TODO Auto-generated method stub
-		if (myApplicationWindow != null) {
-	//		myApplicationWindow.setWait(true);
-		}
-		runnable.run();
-		if (myApplicationWindow != null) {
-	//		myApplicationWindow.setWait(false);
+		Thread t = new Thread(runnable);		
+		t.start();
+		try {
+			t.join(500);
+		} catch (InterruptedException e) {}
+		if (t.isAlive()) {
+			JDialog dialog = new JDialog();
+			JPanel panel = new JPanel(new BorderLayout());
+			panel.add(new JLabel(getWaitMessageText(key)), BorderLayout.CENTER);
+			panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			dialog.add(panel);
+			if (myApplicationWindow != null) {
+				dialog.setLocationRelativeTo(myApplicationWindow.getFrame());
+			} else {
+				dialog.setLocation(300, 300);
+			}
+			dialog.pack();
+			dialog.setModal(true);
+			dialog.addWindowListener(new MyWindowListener(dialog, t));		
+			dialog.setVisible(true);
 		}
 	}
+	
+	private static class MyWindowListener extends WindowAdapter {
+		private final JDialog myDialog;
+		private final Thread myThread;
+		
+		public MyWindowListener(JDialog dialog, Thread thread) {
+			myDialog = dialog;
+			myThread = thread;
+		}
 
+		public void windowOpened(WindowEvent e) {
+			try {
+				myThread.join();
+			} catch (InterruptedException ex) {}
+			myDialog.dispose();
+		}		
+	}
 }
 
 /*
