@@ -51,7 +51,8 @@ public class OptionsDialog {
 		
 		myDialog.createTab("Format");
 		
-		myDialog.createTab("Styles");
+//		myDialog.createTab("Styles");
+		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getContext());
 		
 		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));

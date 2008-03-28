@@ -114,7 +114,7 @@ public abstract class ZLApplication {
 		setView(myInitialView);
 	}
 
-	protected final ZLPaintContext getContext() {
+	public final ZLPaintContext getContext() {
 		return myContext;
 	}
 
