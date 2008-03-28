@@ -18,8 +18,8 @@ public abstract class ZLHtmlProcessor {
 			//InputStream stream = new FileInputStream(filename);
 			return (stream != null) ? read(htmlReader, stream) : false;
 		} catch (Exception e) {
-			System.out.println(e);
-			e.printStackTrace();
+			//System.out.println(e);
+			//e.printStackTrace();
 		}
 		return false;
 	}

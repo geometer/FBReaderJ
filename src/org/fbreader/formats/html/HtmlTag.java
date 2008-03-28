@@ -31,6 +31,16 @@ final class HtmlTag {
 	public static final byte TR = 23;
 	public static final byte STYLE = 24;
 	
+	public static final byte S = 25;
+	public static final byte SUB = 26;
+	public static final byte SUP = 27;
+	public static final byte PRE = 28;
+	public static final byte CODE = 29;
+	public static final byte EM = 30;
+	public static final byte DFN = 31;
+	public static final byte CITE = 32;
+	
+	
 	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
@@ -61,6 +71,14 @@ final class HtmlTag {
 		ourTagByName.put("select", SELECT);
 		ourTagByName.put("tr", TR);
 		ourTagByName.put("style", STYLE);
+		ourTagByName.put("s", S);
+		ourTagByName.put("sub", SUB);
+		ourTagByName.put("sup", SUP);
+		ourTagByName.put("pre", PRE);
+		ourTagByName.put("code", CODE);
+		ourTagByName.put("em", EM);
+		ourTagByName.put("def", DFN);
+		ourTagByName.put("cite", CITE);
 	}
 
 	public static byte getTagByName(String name) {

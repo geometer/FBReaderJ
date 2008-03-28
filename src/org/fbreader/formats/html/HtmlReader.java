@@ -10,6 +10,8 @@ import org.zlibrary.core.xml.ZLXMLProcessorFactory;
 import org.zlibrary.core.html.ZLHtmlProcessor;
 import org.zlibrary.core.html.ZLHtmlProcessorFactory;
 import org.zlibrary.core.html.ZLHtmlReader;
+import org.zlibrary.core.image.ZLFileImage;
+import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.text.model.ZLTextParagraph;
 
 public class HtmlReader extends BookReader implements ZLHtmlReader {
@@ -22,10 +24,13 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	//private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 	private final char[] SPACE = { ' ' };
 	private String myHrefAttribute = "href";
+	private String mySrcAttribute = "src";
 	private boolean myAdditionalParagraphExists = false;
 	private boolean myOrderedListIsStarted = false;
 	private boolean myUnorderedListIsStarted = false;
 	private int myOLCounter = 0;
+	private byte[] myControls = new byte[10];
+	private byte myControlsQuantity = 0;
 	
 	public HtmlReader(BookModel model) {
 		super(model);
@@ -48,6 +53,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	}
 
 	public void endDocumentHandler() {
+		unsetCurrentTextModel();
 	}
 
 	public boolean dontCacheAttributeValues() {
@@ -70,14 +76,44 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		if (length == 0) {
 			return;
 		}
-		// final Base64EncodedImage image = myCurrentImage;
-		// if (image != null) {
-		// image.addData(ch, start, length);
-		// } else {
 		addDataFinal(ch, start, length);
-		// }
 	}
 
+	private void openControl(byte control) {
+		addControl(control, true);
+		if (++myControlsQuantity > myControls.length) {
+			byte[] temp = ZLArrayUtils.createCopy(myControls, 0, myControls.length);
+			myControls = new byte[2 * myControlsQuantity];
+			for (int i = 0; i < myControlsQuantity - 1; i++) {
+				myControls[i] = temp[i];
+			}
+		}
+		myControls[myControlsQuantity - 1] = control;
+	}
+	
+	private void closeControl(byte control) {
+		for (int i = 0; i < myControlsQuantity; i++) {
+			addControl(myControls[i], false);
+		}
+		boolean flag = false;
+		int removedControl = myControlsQuantity;
+		for (int i = 0; i < myControlsQuantity; i++) {
+			if (!flag && (myControls[i] == control)) {
+				flag = true;
+				removedControl = i;
+				continue;
+			}
+			addControl(myControls[i], true);
+		}
+		if (removedControl == myControlsQuantity) {
+			return;
+		}
+		--myControlsQuantity;
+		for (int i = removedControl; i < myControlsQuantity; i++) {
+			myControls[i] = myControls[i + 1];
+		}
+	}
+	
 	private void startNewParagraph() {
 		endParagraph();
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
@@ -88,6 +124,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			
 			case HtmlTag.SCRIPT:
 			case HtmlTag.SELECT:
+			case HtmlTag.STYLE:
 				startNewParagraph();
 				break;
 				
@@ -96,37 +133,37 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.H1:
-				addControl(FBTextKind.H1, false);
+				closeControl(FBTextKind.H1);
 				startNewParagraph();
 				break;
 				
 			case HtmlTag.H2:
-				addControl(FBTextKind.H2, false);
+				closeControl(FBTextKind.H2);
 				startNewParagraph();
 				break;
 				
 			case HtmlTag.H3:
-				addControl(FBTextKind.H3, false);
+				closeControl(FBTextKind.H3);
 				startNewParagraph();
 				break;
 				
 			case HtmlTag.H4:
-				addControl(FBTextKind.H4, false);
+				closeControl(FBTextKind.H4);
 				startNewParagraph();
 				break;
 				
 			case HtmlTag.H5:
-				addControl(FBTextKind.H5, false);
+				closeControl(FBTextKind.H5);
 				startNewParagraph();
 				break;
 				
 			case HtmlTag.H6:
-				addControl(FBTextKind.H6, false);
+				closeControl(FBTextKind.H6);
 				startNewParagraph();
 				break;
 				
 			case HtmlTag.A:
-				addControl(myHyperlinkType, false);
+				closeControl(myHyperlinkType);
 				break;
 
 			case HtmlTag.BODY:
@@ -134,19 +171,52 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.HTML:
-				unsetCurrentTextModel();
+				//unsetCurrentTextModel();
 				break;
 				
 			case HtmlTag.B:
-				addControl(FBTextKind.BOLD, false);
+				closeControl(FBTextKind.BOLD);
+				break;
+				
+			case HtmlTag.S:
+				closeControl(FBTextKind.STRIKETHROUGH);
+				break;
+				
+			case HtmlTag.SUB:
+				closeControl(FBTextKind.SUB);
+				break;
+				
+			case HtmlTag.SUP:
+				closeControl(FBTextKind.SUP);
+				break;
+				
+			case HtmlTag.PRE:
+				closeControl(FBTextKind.PREFORMATTED);
+				startNewParagraph();
+				break;
+				
+			case HtmlTag.EM:
+				closeControl(FBTextKind.EMPHASIS);
+				break;
+				
+			case HtmlTag.DFN:
+				closeControl(FBTextKind.DEFINITION);
+				break;
+				
+			case HtmlTag.CITE:
+				closeControl(FBTextKind.CITE);
+				break;
+				
+			case HtmlTag.CODE:
+				closeControl(FBTextKind.CODE);
 				break;
 				
 			case HtmlTag.STRONG:
-				addControl(FBTextKind.STRONG, false);
+				closeControl(FBTextKind.STRONG);
 				break;
 				
 			case HtmlTag.I:
-				addControl(FBTextKind.ITALIC, false);
+				closeControl(FBTextKind.ITALIC);
 				break;
 
 			case HtmlTag.OL:
@@ -210,7 +280,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 
-			case HtmlTag.A:
+			case HtmlTag.A:{
 				String ref = attributes.getValue(myHrefAttribute);
 				if ((ref != null) && (ref.length() != 0)) {
 					if (ref.charAt(0) == '#') {
@@ -220,52 +290,105 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 						myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
 					}
 					addHyperlinkControl(myHyperlinkType, ref);
+					myControls[myControlsQuantity] = myHyperlinkType;
+					myControlsQuantity ++;
+					//openControl(myHyperlinkType);
+					//System.out.println("open 37 - " + myControlsQuantity);
 				} else {
-					myHyperlinkType = FBTextKind.FOOTNOTE;
-					addControl(myHyperlinkType, true);
+					//myHyperlinkType = FBTextKind.FOOTNOTE;
+					//openControl(myHyperlinkType);
+					//addControl(myHyperlinkType, true);
 				}
 				break;
-
+			}
+			
+			case HtmlTag.IMG: {
+				String ref = attributes.getValue(mySrcAttribute);
+				if ((ref != null) && (ref.length() != 0)) {
+					addImageReference(ref, (short)0);
+					if (":\\".equals(ref.substring(1, 3))) {
+						addImage(ref, new ZLFileImage("image/auto", ref, 0));
+					} else {
+						String fileName = getModel().getFileName();
+						addImage(ref, new ZLFileImage("image/auto", 
+								fileName.substring(0, fileName.lastIndexOf('\\') + 1) + ref, 0));
+					}
+				}
+				break;
+			}
+			
 			case HtmlTag.B:
-				addControl(FBTextKind.BOLD, true);
+				openControl(FBTextKind.BOLD);
+				break;
+				
+			case HtmlTag.S:
+				openControl(FBTextKind.STRIKETHROUGH);
+				break;
+				
+			case HtmlTag.SUB:
+				openControl(FBTextKind.SUB);
+				break;
+				
+			case HtmlTag.SUP:
+				openControl(FBTextKind.SUP);
+				break;
+				
+			case HtmlTag.PRE:
+				openControl(FBTextKind.PREFORMATTED);
 				break;
 				
 			case HtmlTag.STRONG:
-				addControl(FBTextKind.STRONG, true);
+				openControl(FBTextKind.STRONG);
+				break;
+				
+			case HtmlTag.CODE:
+				openControl(FBTextKind.CODE);
+				break;
+				
+			case HtmlTag.EM:
+				openControl(FBTextKind.EMPHASIS);
+				break;
+				
+			case HtmlTag.CITE:
+				openControl(FBTextKind.CITE);
+				break;
+				
+			case HtmlTag.DFN:
+				openControl(FBTextKind.DEFINITION);
 				break;
 				
 			case HtmlTag.I:
-				addControl(FBTextKind.ITALIC, true);
+				openControl(FBTextKind.ITALIC);
 				break;
 				
 			case HtmlTag.H1:
 				startNewParagraph();
-				addControl(FBTextKind.H1, true);
+				openControl(FBTextKind.H1);
 				break;
 				
 			case HtmlTag.H2:
 				startNewParagraph();
-				addControl(FBTextKind.H2, true);
+				openControl(FBTextKind.H2);
 				break;
 				
 			case HtmlTag.H3:
 				startNewParagraph();
-				addControl(FBTextKind.H3, true);
+				openControl(FBTextKind.H3);
 				break;
 				
 			case HtmlTag.H4:
 				startNewParagraph();
-				addControl(FBTextKind.H4, true);
+				openControl(FBTextKind.H4);
 				break;
 				
 			case HtmlTag.H5:
 				startNewParagraph();
-				addControl(FBTextKind.H5, true);
+				openControl(FBTextKind.H5);
 				break;
 				
 			case HtmlTag.H6:
 				startNewParagraph();
-				addControl(FBTextKind.H6, true);
+				openControl(FBTextKind.H6);
 				break;
 				
 			case HtmlTag.OL:

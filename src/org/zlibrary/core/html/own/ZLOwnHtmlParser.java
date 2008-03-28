@@ -76,7 +76,7 @@ final class ZLOwnHtmlParser {
 			if (index > 0) {
 				int startIndex;
 				for (startIndex = description.indexOf("=", index) + 1; 
-					!Character.isLetter(description.charAt(startIndex));
+					!CharacterUtil.isLetter(description.charAt(startIndex));
 					startIndex++) {
 				}
 				if (startIndex > 0) {
@@ -142,7 +142,8 @@ final class ZLOwnHtmlParser {
 		final HashMap strings = new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
 		boolean scriptOpened = false;
-
+		boolean html = false;
+		
 		byte state = START_DOCUMENT;
 		byte savedState = START_DOCUMENT;
 		while (true) {
@@ -263,6 +264,9 @@ mainSwitchLabel:
 												scriptOpened = true;
 												state = SCRIPT;
 												break mainSwitchLabel;
+											}
+											if ("html".equals(stringTagName.toLowerCase())) {
+												html = true;
 											}
 										}
 										startPosition = i + 1;
