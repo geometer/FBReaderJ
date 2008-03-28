@@ -49,6 +49,10 @@ public class ZLComboOptionView extends ZLOptionView {
 			panel.add(panel2, BorderLayout.LINE_END);
 			tab.insertWidget(panel);
 */			
+			System.out.println(myComboBox.getMinimumSize().width + "   " + myComboBox.getPreferredSize().width);
+			
+			myComboBox.setMinimumSize(new Dimension(0, myComboBox.getPreferredSize().height));
+			
 			JPanel panel1 = new JPanel();
 			panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
 			myComboBox.setMaximumSize(new Dimension(myComboBox.getMaximumSize().width, myComboBox.getPreferredSize().height));
