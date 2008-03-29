@@ -137,7 +137,8 @@ public class ZLLanguageDetector {
 			}
 		}
 
-		LanguageInfo info;
+		LanguageInfo info = null;
+		
 		for (Iterator it = wbMatchers.iterator(); it.hasNext(); ) {
 			ZLWordBasedMatcher itzl = (ZLWordBasedMatcher)it.next();
 			int criterion = itzl.criterion();
@@ -147,6 +148,7 @@ public class ZLLanguageDetector {
 			}
 			itzl.reset();
 		}
+		
 		if (encodingType == EncodingType.OTHER) {
 			/*for (Iterator it = myChineseMatchers.begin(); it != myChineseMatchers.end(); ++it) {
 				(*it)->processBuffer((const unsigned char*)start, (const unsigned char*)end);
