@@ -6,6 +6,7 @@ import java.util.Iterator;
 import org.zlibrary.core.filesystem.ZLDir;
 import org.zlibrary.core.language.ZLLanguageMatcher.ZLLanguagePatternBasedMatcher;
 import org.zlibrary.core.language.ZLLanguageMatcher.ZLWordBasedMatcher;
+import org.zlibrary.core.util.ZLUnicodeUtil;
 
 public class ZLLanguageDetector {
 	// 0: no break
@@ -71,7 +72,7 @@ public class ZLLanguageDetector {
 	enum EncodingType { ASCII, UTF8, OTHER 
 	};
 	
-	public LanguageInfo findInfo(char[] buffer, int length, int matchingCriterion) {
+	public LanguageInfo findInfo(byte[] buffer, int length, int matchingCriterion) {
 		final int start = 0;
 		final int end = length;
 
@@ -115,7 +116,7 @@ public class ZLLanguageDetector {
 					if (!containsSpecialSymbols && (ptr > wordStart)) {
 						int length2 = ptr - wordStart;
 						if (encodingType == EncodingType.UTF8) {
-							//length = ZLUnicodeUtil.utf8Length(wordStart, length2);
+							length = ZLUnicodeUtil.utf8Length(buffer, wordStart, length2);
 						}
 						String str = new String(buffer); 
 						word += str.substring(wordStart,wordStart + ptr - wordStart);	
