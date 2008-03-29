@@ -1,12 +1,8 @@
 package org.zlibrary.ui.swing.view;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
+import java.util.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Collections;
-import java.util.List;
 
 import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
@@ -172,7 +168,7 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		return fontFamily;
 	}
 	
-	protected void fillFamiliesList(List<String> families) {
+	protected void fillFamiliesList(ArrayList families) {
 		String[] fontlist = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 		for (int i = 0; i < fontlist.length; i++) {
 			families.add(fontlist[i]);

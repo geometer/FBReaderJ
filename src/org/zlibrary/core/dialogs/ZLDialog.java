@@ -12,16 +12,16 @@ public abstract class ZLDialog {
 
 	public abstract void addButton(final String key, Runnable action);
 
-	public void addOption(final String name, final String tooltip, ZLOptionEntry entry) {
-		myTab.addOption(name, tooltip, entry);
+	public void addOptionByName(final String name, ZLOptionEntry entry) {
+		myTab.addOptionByName(name, entry);
 	}
 	
-	public void addOption(final String name, ZLOptionEntry entry) {
-		myTab.addOption(name, entry);
+	public void addOption(final String key, ZLOptionEntry entry) {
+		myTab.addOption(key, entry);
 	}
 	
-	public void addOption(final String name, ZLSimpleOption option) {
-		myTab.addOption(name, option);
+	public void addOption(final String key, ZLSimpleOption option) {
+		myTab.addOption(key, option);
 	}
 
 	public abstract void run();

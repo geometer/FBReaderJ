@@ -22,9 +22,9 @@ public class ZLComboOptionView extends ZLOptionView {
 	private final JComboBox myComboBox;
 	private final JLabel myLabel;
 	
-	public ZLComboOptionView(String name, String tooltip, ZLComboOptionEntry option,
+	public ZLComboOptionView(String name, ZLComboOptionEntry option,
 			ZLSwingDialogContent tab) {
-		super(name, tooltip, option);
+		super(name, option);
 		final ArrayList values = option.getValues();
 		final String initialValue = option.initialValue();
 		int index = 0;

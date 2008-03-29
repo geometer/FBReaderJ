@@ -17,9 +17,9 @@ public class ZLChoiceOptionView extends ZLOptionView {
 	private final JPanel myButtonPanel = new JPanel(new GridLayout(0, 1, 10, 5));
 	private final ArrayList<ButtonModel> myButtonModels = new ArrayList<ButtonModel>();
 	
-	public ZLChoiceOptionView(String name, String tooltip, ZLChoiceOptionEntry option,
+	public ZLChoiceOptionView(String name, ZLChoiceOptionEntry option,
 			ZLSwingDialogContent tab) {
-		super(name, tooltip, option);
+		super(name, option);
 		myButtonPanel.setBorder(new TitledBorder(name));
 		final int choiceNumber = option.choiceNumber();
 		for (int i = 0; i < choiceNumber; i++) {
@@ -34,6 +34,10 @@ public class ZLChoiceOptionView extends ZLOptionView {
 
 	protected void _onAccept() {
 		((ZLChoiceOptionEntry) myOption).onAccept(myButtonModels.indexOf(myButtonGroup.getSelection()));
+	}
+
+	protected void _setActive(boolean active) {
+		// TODO: implement
 	}
 
 	protected void createItem() {}

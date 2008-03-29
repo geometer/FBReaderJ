@@ -14,11 +14,11 @@ import org.zlibrary.core.dialogs.ZLOptionView;
 import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
 
 public class ZLSpinOptionView extends ZLOptionView {
-	private final JSpinner mySpinner;
-	private final JLabel myLabel;
+	private JSpinner mySpinner;
+	private JLabel myLabel;
 
-	public ZLSpinOptionView(String name, String tooltip, ZLSpinOptionEntry option, ZLSwingDialogContent tab) {
-		super(name, tooltip, option);
+	public ZLSpinOptionView(String name, ZLSpinOptionEntry option, ZLSwingDialogContent tab) {
+		super(name, option);
 		mySpinner = new JSpinner(new SpinnerNumberModel(option.initialValue(), option.minValue(),
 				option.maxValue(), option.getStep()));
 		if (name == null  || "".equals(name)) {
@@ -47,11 +47,16 @@ public class ZLSpinOptionView extends ZLOptionView {
 		}
 	}
 
+	protected void _setActive(boolean active) {
+		// TODO: implement
+	}
+
 	protected void _onAccept() {
 		((ZLSpinOptionEntry) myOption).onAccept((Integer) mySpinner.getValue());
 	}
 
-	protected void createItem() {}
+	protected void createItem() {
+	}
 
 	protected void hide() {
 		mySpinner.setVisible(false);
@@ -66,5 +71,4 @@ public class ZLSpinOptionView extends ZLOptionView {
 			myLabel.setVisible(true);
 		}
 	}
-
 }

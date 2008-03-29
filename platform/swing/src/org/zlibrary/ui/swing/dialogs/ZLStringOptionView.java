@@ -19,8 +19,8 @@ public class ZLStringOptionView extends ZLOptionView {
 	private final JLabel myLabel;
 	private final JTextField myTextField;
 	
-	public ZLStringOptionView(String name, String tooltip, ZLStringOptionEntry option, ZLSwingDialogContent tab) {
-		super(name, tooltip, option);
+	public ZLStringOptionView(String name, ZLStringOptionEntry option, ZLSwingDialogContent tab) {
+		super(name, option);
 		myTextField = new JTextField(option.initialValue());
 		myTextField.setCaretPosition(0);
 		myTextField.setMargin(new Insets(0, 5, 0, 0));

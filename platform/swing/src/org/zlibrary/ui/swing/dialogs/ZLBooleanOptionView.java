@@ -10,9 +10,9 @@ import org.zlibrary.core.dialogs.ZLOptionView;
 public class ZLBooleanOptionView extends ZLOptionView {
 	private final JCheckBox myCheckBox;	
 	
-	public ZLBooleanOptionView(String name, String tooltip, ZLBooleanOptionEntry option,
+	public ZLBooleanOptionView(String name, ZLBooleanOptionEntry option,
 			ZLSwingDialogContent tab) {
-		super(name, tooltip, option);
+		super(name, option);
 		myCheckBox = new JCheckBox(name);
 		myCheckBox.setSelected(option.initialState());
 		myCheckBox.addChangeListener(new ChangeListener() {
@@ -26,7 +26,12 @@ public class ZLBooleanOptionView extends ZLOptionView {
 		((ZLBooleanOptionEntry) myOption).onAccept(myCheckBox.isSelected());
 	}
 
-	protected void createItem() {}
+	protected void _setActive(boolean active) {
+		// TODO: implement
+	}
+
+	protected void createItem() {
+	}
 
 	protected void hide() {
 		myCheckBox.setVisible(false);

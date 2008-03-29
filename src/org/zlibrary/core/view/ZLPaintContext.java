@@ -9,7 +9,7 @@ abstract public class ZLPaintContext {
 	private int myX = 0;
 	private int myY = 0;
 
-	private final ArrayList<String> myFamilies = new ArrayList<String>();
+	private final ArrayList myFamilies = new ArrayList();
 
 	public interface LineStyle {
 		int SOLID_LINE = 0;
@@ -146,7 +146,7 @@ abstract public class ZLPaintContext {
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 	abstract public void drawFilledCircle(int x, int y, int r);
 
-	public List<String> fontFamilies() {
+	public List fontFamilies() {
 		if (myFamilies.isEmpty()) {
 			fillFamiliesList(myFamilies);
 		}
@@ -154,7 +154,7 @@ abstract public class ZLPaintContext {
 	}	
 	
 	abstract public String realFontFamilyName(String fontFamily);
-	abstract protected void fillFamiliesList(List<String> families);
+	abstract protected void fillFamiliesList(ArrayList families);
 }
 
 

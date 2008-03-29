@@ -1,5 +1,6 @@
 package org.zlibrary.ui.android.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.graphics.*;
@@ -181,14 +182,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
-/*	public List<String> fontFamilies() {
-		if (myFamilies.isEmpty()) {
-			fillFamiliesList(myFamilies);
-		}
-		return myFamilies;
+	public String realFontFamilyName(String fontFamily) {
+		// TODO: implement
+		return fontFamily;
 	}
 	
-	public String realFontFamilyName(String fontFamily);
-	protected void fillFamiliesList(List<String> families);
-*/
+	protected void fillFamiliesList(ArrayList families) {
+		// TODO: implement
+	}
 }

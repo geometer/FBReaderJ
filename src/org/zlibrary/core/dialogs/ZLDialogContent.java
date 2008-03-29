@@ -11,10 +11,8 @@ import org.zlibrary.core.optionEntries.ZLSimpleStringOptionEntry;
 import org.zlibrary.core.options.*;
 
 public abstract class ZLDialogContent {
-	private static final String TOOLTIP_KEY = "tooltip";
-	
 	private final ZLResource myResource;
-	private final ArrayList /*<ZLOptionView>*/ myViews = new ArrayList();
+	private final ArrayList myViews = new ArrayList();
 	
 	private static ZLOptionEntry createEntryByOption(ZLSimpleOption option) {
 		switch (option.getType()) {
@@ -27,6 +25,10 @@ public abstract class ZLDialogContent {
 		default:
 			return null;
 		}
+	}
+
+	protected ArrayList getViews() {
+		return myViews;
 	}
 	
 	protected ZLDialogContent(ZLResource resource) {
@@ -49,24 +51,22 @@ public abstract class ZLDialogContent {
 		return myResource.getResource(key);
 	}
 
-	public abstract void addOption(String name, String tooltip, ZLOptionEntry option);
+	public abstract void addOptionByName(String name, ZLOptionEntry option);
 	
 	public final void addOption(String key, ZLOptionEntry option) {
-		final ZLResource resource = myResource.getResource(key);
-		addOption(resource.getValue(), resource.getResource(TOOLTIP_KEY).getValue(), option);
+		addOptionByName(myResource.getResource(key).getValue(), option);
 	}
 	
 	public final void addOption(String key, ZLSimpleOption option) {
 		addOption(key, createEntryByOption(option));
 	}
 	
-	public abstract void addOptions(String name0, String tooltip0, ZLOptionEntry option0, String name1, String tooltip1, ZLOptionEntry option1);
+	public abstract void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1);
 	
 	public final void addOptions(String key0, ZLOptionEntry option0, String key1, ZLOptionEntry option1) {
 		final ZLResource resource0 = myResource.getResource(key0);
 		final ZLResource resource1 = myResource.getResource(key1);
-		addOptions(resource0.getValue(), resource0.getResource(key0).getValue(), option0,
-				resource1.getValue(), resource1.getResource(key1).getValue(), option1);
+		addOptionsByNames(resource0.getValue(), option0, resource1.getValue(), option1);
 	}
 	
 	public final void addOptions(String key0, ZLSimpleOption option0, String key1, ZLSimpleOption option1) {
@@ -76,7 +76,7 @@ public abstract class ZLDialogContent {
 	public final void accept() {
 		final int size = myViews.size();
 		for (int i = 0; i < size; i++) {
-			((ZLOptionView) myViews.get(i)).onAccept();
+			((ZLOptionView)myViews.get(i)).onAccept();
 		}
 	}
 
@@ -85,5 +85,4 @@ public abstract class ZLDialogContent {
 			myViews.add(view);
 		}
 	}
-
 }

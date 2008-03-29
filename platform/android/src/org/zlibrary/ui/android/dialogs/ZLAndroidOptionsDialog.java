@@ -37,6 +37,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	}
 	
 	public ZLDialogContent createTab(String key) {
-		return new ZLAndroidDialogContent(myContext, getTabResource(key));
+		return new ZLAndroidDialogContent(myContext, getTabResource(key), null);
 	}
 }
