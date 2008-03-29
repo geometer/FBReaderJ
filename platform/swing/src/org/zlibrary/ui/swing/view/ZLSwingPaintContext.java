@@ -1,13 +1,17 @@
 package org.zlibrary.ui.swing.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
+import java.util.List;
 
 import org.zlibrary.core.image.ZLImageData;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.core.view.ZLViewWidget;
-
 import org.zlibrary.ui.swing.image.ZLSwingImageData;
 
 public final class ZLSwingPaintContext extends ZLPaintContext {
@@ -163,4 +167,17 @@ public final class ZLSwingPaintContext extends ZLPaintContext {
 		myGraphics = g;
 		resetFont();
 	}
+	//why?
+	public String realFontFamilyName(String fontFamily) {
+		return fontFamily;
+	}
+	
+	protected void fillFamiliesList(List<String> families) {
+		String[] fontlist = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+		for (int i = 0; i < fontlist.length; i++) {
+			families.add(fontlist[i]);
+		}
+		//Collections.sort(families);
+	}
+
 }

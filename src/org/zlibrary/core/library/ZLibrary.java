@@ -1,8 +1,8 @@
 package org.zlibrary.core.library;
 
+import java.io.File;
 import java.io.InputStream;
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.HashMap;
 
 import org.zlibrary.core.application.ZLApplication;
 import org.zlibrary.core.view.ZLPaintContext;
@@ -12,7 +12,10 @@ import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 public abstract class ZLibrary {
 	public static final String JAR_DATA_PREFIX = "#JAR#://";
 	private final HashMap myProperties = new HashMap();
-
+    private static String ourZLibraryDirectory;
+    static {
+    	ourZLibraryDirectory = /*BaseDirectory*/"" + File.separator + "zlibrary";
+    }
 	public static ZLibrary getInstance() {
 		return ourImplementation;
 	}
@@ -25,6 +28,10 @@ public abstract class ZLibrary {
 
 	public final String getApplicationName() {
 		return (String)myProperties.get("applicationName");
+	}
+	
+	public String getZLibraryDirectory() {
+		return ourZLibraryDirectory;
 	}
 
 	protected final Class getApplicationClass() {
