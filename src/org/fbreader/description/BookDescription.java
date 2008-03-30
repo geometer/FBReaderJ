@@ -174,7 +174,7 @@ public class BookDescription {
 		private final ZLStringOption TitleOption;
 		private final ZLStringOption SequenceNameOption;
 		private final ZLIntegerRangeOption NumberInSequenceOption;
-		private final ZLStringOption LanguageOption;
+		public final ZLStringOption LanguageOption;
 		public final ZLStringOption EncodingOption;
 
 		public ZLStringOption getAuthorSortKeyOption() {
