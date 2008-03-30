@@ -23,11 +23,12 @@ public class PluckerPlugin extends PdbPlugin {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();
+			detectEncodingAndLanguage(description, stream);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		detectEncodingAndLanguage(description, stream);
+		
 		if (description.getEncoding().length() == 0) {
 			return false;
 		}

@@ -10,6 +10,7 @@ import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLStringOption;
 
 public abstract  class PdbPlugin extends FormatPlugin {
+
 	protected PdbPlugin() {
 		super();
 	}
@@ -35,7 +36,7 @@ public abstract  class PdbPlugin extends FormatPlugin {
 				if (stream == null || !((PdbStream)stream).open()) {
 					return "";
 				}
-				stream.skip(60);	
+				stream.skip(60);
 				stream.read(id, 0, 8);
 				stream.close();
 		    } catch (IOException e) {

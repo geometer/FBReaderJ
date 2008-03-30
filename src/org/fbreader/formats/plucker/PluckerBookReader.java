@@ -20,7 +20,7 @@ import org.zlibrary.text.model.impl.ZLModelFactory;
 import org.zlibrary.text.model.impl.ZLTextForcedControlEntry;
 
 public class PluckerBookReader extends BookReader {
-
+	
 	public PluckerBookReader(String filePath, BookModel model, String encoding){
 		 super(model);
 		 //, EncodedTextReader = encoding, 
