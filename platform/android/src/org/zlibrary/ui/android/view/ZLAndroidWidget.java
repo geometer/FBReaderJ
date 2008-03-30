@@ -127,12 +127,12 @@ public class ZLAndroidWidget extends View {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+		myViewWidget.getView().getApplication().doActionByKey(keyName);
 		return true;
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-		myViewWidget.getView().getApplication().doActionByKey(keyName);
-		return false;
+		return true;
 	}
 }
