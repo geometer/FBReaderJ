@@ -184,10 +184,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	public String realFontFamilyName(String fontFamily) {
 		// TODO: implement
-		return fontFamily;
+		if ("DroidSerif".equals(fontFamily)) {
+			return fontFamily;
+		}
+		return "DroidSans";
 	}
 	
 	protected void fillFamiliesList(ArrayList families) {
 		// TODO: implement
+		families.add("DroidSans");
+		families.add("DroidSerif");
 	}
 }

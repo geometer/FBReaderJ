@@ -135,7 +135,7 @@ DONE		поиск предыдущего
 DONE	выход по escape из view, не из приложения
 	получение списка шрифтов в ZLPaintContext
 Марина 0		swing
-НМ 0		android
+DONE		android
 3	полноэкранный режим
 НМ 0	tap scrolling
 2	обработка архивов в параметре командной строки
