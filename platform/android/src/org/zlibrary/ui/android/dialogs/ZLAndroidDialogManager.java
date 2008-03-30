@@ -2,8 +2,8 @@ package org.zlibrary.ui.android.dialogs;
 
 import android.app.*;
 import android.view.View;
-import android.content.DialogInterface;
-import android.os.Handler;
+import android.content.*;
+import android.os.*;
 
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.application.ZLApplication;
@@ -92,8 +92,18 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		return new ZLAndroidDialog(myActivity, getResource().getResource(key));
 	}
 
-	public void wait(String key, Runnable runnable) {
-		// TODO: implement
-		runnable.run();
+	public void wait(String key, final Runnable runnable) {
+		final ProgressDialog progress = ProgressDialog.show(myActivity, null, getWaitMessageText(key), true, true);
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				progress.dismiss();
+			}
+		};
+		new Thread(new Runnable() {
+			public void run() {
+				runnable.run();
+				handler.sendEmptyMessage(0);
+			}
+		}).start();
 	}
 }

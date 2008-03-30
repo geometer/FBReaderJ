@@ -73,12 +73,14 @@ public final class FBReader extends ZLApplication {
 	private final RecentBooksView myRecentBooksView;
 
 	private BookModel myBookModel;
+	private final String myArg0;
 
 	public FBReader() {
 		this(new String[0]);
 	}
 
 	public FBReader(String[] args) {
+		myArg0 = (args.length > 0) ? args[0] : null;
 		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(this, true));
 		addAction(ActionCode.FULLSCREEN_ON, new ZLApplication.FullscreenAction(this, false));
 		addAction(ActionCode.QUIT, new QuitAction(this));
@@ -128,11 +130,17 @@ public final class FBReader extends ZLApplication {
 		myFootnoteView = new FootnoteView(this, getContext());
 		myCollectionView = new CollectionView(this, getContext());
 		myRecentBooksView = new RecentBooksView(this, getContext());
+
+		setMode(ViewMode.BOOK_TEXT);
+	}
 		
+	public void initWindow() {
+		super.initWindow();
+		refreshWindow();
 		String fileName = null;
-		if (args.length > 0) {
+		if (myArg0 != null) {
 			try {
-				fileName = new File(args[0]).getCanonicalPath();
+				fileName = new File(myArg0).getCanonicalPath();
 			} catch (IOException e) {
 			}
 		}
@@ -144,7 +152,6 @@ public final class FBReader extends ZLApplication {
 			description = BookDescription.getDescription(getHelpFileName());
 		}
 		openBook(description);
-		setMode(ViewMode.BOOK_TEXT);
 		refreshWindow();
 	}
 	
@@ -152,7 +159,7 @@ public final class FBReader extends ZLApplication {
 		OpenBookRunnable runnable = new OpenBookRunnable(bookDescription);
 		ZLDialogManager.getInstance().wait("loadingBook", runnable);
 	//	runnable.run();
-		resetWindowCaption();
+		//resetWindowCaption();
 	}
 
 	public ZLKeyBindings keyBindings() {
@@ -265,6 +272,7 @@ public final class FBReader extends ZLApplication {
 			contentsView.setCaption(description.getTitle());
 			recentBooksView.lastBooks().addBook(fileName);
 		}
+		refreshWindow();
 	}
 	
 	void showBookTextView() {

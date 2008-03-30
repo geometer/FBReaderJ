@@ -59,9 +59,8 @@ DONE		открытие книги
 Оля 0		настройки
 Оля 0		book info
 DONE	MessageBox
-Оля 0	WaitMessage
-Оля 0		запуск программы
-Оля 0		загрузка книги
+DONE	WaitMessage
+DONE		загрузка книги
 Оля 0		загрузка списка библиотеки
 3		сохранение конфига
 	другие
@@ -81,8 +80,8 @@ DONE	другие
 DONE	Selection
 НМ 0	Option
 DONE	MessageBox
-НМ 0	WaitMessage
-НМ 0	другие
+DONE	WaitMessage
+DONE	другие
 
 книги:
 DONE	BookDescription

@@ -33,6 +33,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	
 	protected void runInternal() {
 		// TODO: implement
+		accept();
 	}
 	
 	public ZLDialogContent createTab(String key) {
