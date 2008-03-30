@@ -1,21 +1,19 @@
 package org.fbreader.formats;
 
 import java.io.InputStream;
-import java.util.*;
-import org.zlibrary.core.util.*;
+import java.util.ArrayList;
 
 import org.fbreader.bookmodel.BookModel;
 import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
-
-import org.fbreader.formats.html.HtmlPlugin;
-
 import org.fbreader.formats.fb2.FB2Plugin;
+import org.fbreader.formats.html.HtmlPlugin;
 import org.fbreader.formats.util.EncodingDetector;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.ZLStringOption;
 
 
 public abstract class FormatPlugin {
@@ -59,13 +57,13 @@ public abstract class FormatPlugin {
 					(encoding.equals("ISO-8859-5")) ||
 					(encoding.equals("IBM866"))) {
 				new WritableBookDescription(description).setLanguage("ru");
-			} else if (
+			} /*else if (
 	                (PluginCollection.instance().DefaultLanguageOption.getValue() == EncodingDetector.Language.CZECH) &&
 					((encoding == "windows-1250") ||
 					 (encoding == "ISO-8859-2") ||
 					 (encoding == "IBM852"))) {
 				new WritableBookDescription(description).setLanguage("cs");
-			}
+			}*/
 		}
 
 	}
@@ -79,7 +77,8 @@ public abstract class FormatPlugin {
 
 		private static PluginCollection ourInstance;
 		private final ArrayList myPlugins = new ArrayList();
-		public ZLIntegerOption DefaultLanguageOption;
+		public ZLStringOption DefaultLanguageOption;
+		//public ZLIntegerOption DefaultLanguageOption;
 		public ZLBooleanOption LanguageAutoDetectOption;
 		
 		public static PluginCollection instance() {
@@ -110,7 +109,7 @@ public abstract class FormatPlugin {
 
 		private PluginCollection() {
 			LanguageAutoDetectOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Format", "AutoDetect", true);
-			DefaultLanguageOption = new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", EncodingDetector.Language.RUSSIAN); 
+			DefaultLanguageOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", "ru"); 
 		}
 			
 		public FormatPlugin getPlugin(ZLFile file, boolean strong) {

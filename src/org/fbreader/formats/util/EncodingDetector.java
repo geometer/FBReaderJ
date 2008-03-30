@@ -13,7 +13,7 @@ public class EncodingDetector {
 	private final static int BUFSIZE = 65536;
 
 
-	public static String detect(InputStream stream, int language) {
+	public static String detect(InputStream stream, String language) {
 		String encodingString = "ISO-8859-1";
 		/*if (stream.open()) {
 			String languageString = "none";

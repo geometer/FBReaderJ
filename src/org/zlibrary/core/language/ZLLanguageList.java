@@ -45,7 +45,7 @@ public class ZLLanguageList {
 	}
 
 	public	static ZLDir patternsDirectory() {
-		String dirName = ZLibrary.getInstance().getZLibraryDirectory() + File.separator + "languagePatterns.zip";
+		String dirName = ZLibrary.JAR_DATA_PREFIX + "zlibrary" + File.separator + "languagePatterns.zip";
 		return new ZLFile(dirName).getDirectory(false);
 	}
 

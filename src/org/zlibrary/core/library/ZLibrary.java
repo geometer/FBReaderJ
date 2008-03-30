@@ -12,10 +12,7 @@ import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 public abstract class ZLibrary {
 	public static final String JAR_DATA_PREFIX = "#JAR#://";
 	private final HashMap myProperties = new HashMap();
-    private static String ourZLibraryDirectory;
-    static {
-    	ourZLibraryDirectory = /*BaseDirectory*/"" + File.separator + "zlibrary";
-    }
+
 	public static ZLibrary getInstance() {
 		return ourImplementation;
 	}
@@ -30,9 +27,6 @@ public abstract class ZLibrary {
 		return (String)myProperties.get("applicationName");
 	}
 	
-	public String getZLibraryDirectory() {
-		return ourZLibraryDirectory;
-	}
 
 	protected final Class getApplicationClass() {
 		try {

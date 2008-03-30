@@ -9,6 +9,8 @@ import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
+import org.zlibrary.core.language.ZLLanguageList;
+import org.zlibrary.core.optionEntries.ZLLanguageOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.zlibrary.core.options.ZLIntegerOption;
@@ -33,6 +35,8 @@ public class OptionsDialog {
 
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
+		new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes());
+		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
 		
 		myDialog.createTab("Scrolling");
 		
