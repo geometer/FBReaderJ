@@ -13,7 +13,7 @@
 	<binding key="&lt;Ctrl&gt;+&lt;Home&gt;" action="gotoHome"/>
 	<binding key="&lt;Home&gt;" action="gotoSectionStart"/>
 	<binding key="&lt;End&gt;" action="gotoSectionEnd"/>
-	<binding key="&lt;Esc&gt;" action="cancel"/>
+	<binding key="&lt;Back&gt;" action="cancel"/>
 	<binding key="&lt;=&gt;" action="increaseFont"/>
 	<binding key="&lt;-&gt;" action="decreaseFont"/>
 	<binding key="&lt;D&gt;" action="toggleIndicator"/>

@@ -29,7 +29,7 @@ public final class FBReader extends ZLApplication {
 	};
 
 	public final ZLBooleanOption QuitOnCancelOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "QuitOnCancel", false);
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "QuitOnCancel", true);
 
 	public final ScrollingOptions LargeScrollingOptions =
 		new ScrollingOptions("LargeScrolling", 250, ZLTextView.ScrollingMode.NO_OVERLAPPING);
@@ -322,9 +322,5 @@ public final class FBReader extends ZLApplication {
 			openBook(description);
 			refreshWindow();
 		}
-	}
-
-	public void quit() {
-		// TODO: implement
 	}
 }

@@ -95,7 +95,7 @@ public abstract class ZLApplication {
 		return (myViewWidget != null) ? myViewWidget.getView() : null;
 	}
 
-	private final void quit() {
+	public final void quit() {
 		if (myWindow != null) {
 			myWindow.close();
 		}
