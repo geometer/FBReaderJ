@@ -18,15 +18,17 @@ public class ZLLanguageList {
 			codes.add("zh");
 			ZLDir dir = patternsDirectory();
 			if (dir != null) {
-				ArrayList/*<String>*/ fileNames = new ArrayList();
-				fileNames = dir.collectFiles();
-				for (Iterator it = fileNames.iterator(); it.hasNext();) {
-					String itstr = (String)it.next();
-					final int index = itstr.indexOf("_");
-					if (index != -1) {
-						String str = itstr.substring(0, index);
-						if (!codes.contains(str)) {
-						    codes.add(str);
+				final ArrayList fileNames = dir.collectFiles();
+				if (fileNames != null) {
+					final int len = fileNames.size();
+					for (int i = 0; i < len; ++i) {
+						String itstr = (String)fileNames.get(i);
+						final int index = itstr.indexOf("_");
+						if (index != -1) {
+							String str = itstr.substring(0, index);
+							if (!codes.contains(str)) {
+							    codes.add(str);
+							}
 						}
 					}
 				}

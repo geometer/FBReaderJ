@@ -28,10 +28,9 @@ public class ZLLanguageOptionEntry extends ZLComboOptionEntry {
 		String otherName = ZLLanguageList.languageName(otherCode);
 		myValues.add(otherName);
 		myValuesToCodes.put(otherName,otherCode);
-		if (myInitialValue.length() == 0) {
+		if ((myInitialValue == null) || (myInitialValue.length() == 0)) {
 			myInitialValue = otherName;
 		}
-
 	}
 
 	public	String initialValue() {
@@ -46,8 +45,8 @@ public class ZLLanguageOptionEntry extends ZLComboOptionEntry {
 		myLanguageOption.setValue((String)myValuesToCodes.get(value));
 	}
 
-	private ArrayList/*<String>*/ myValues;
-	private	HashMap/*<String,String>*/ myValuesToCodes;
+	private final ArrayList/*<String>*/ myValues = new ArrayList();
+	private	final HashMap/*<String,String>*/ myValuesToCodes = new HashMap();
 	private	String myInitialValue;
 	private	ZLStringOption myLanguageOption;
 }

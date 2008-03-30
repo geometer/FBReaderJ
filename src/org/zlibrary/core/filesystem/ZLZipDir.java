@@ -33,13 +33,13 @@ public class ZLZipDir extends ZLDir {
 			zf = new ZipFile(myFile);
 		} catch (ZipException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		if ((zf == null) || (zf.entries() == null)) {		
-			return null;
+			return new ArrayList();
 		}
 		Enumeration/*ZipEntry*/ en = zf.entries();
         while(en.hasMoreElements()) {
