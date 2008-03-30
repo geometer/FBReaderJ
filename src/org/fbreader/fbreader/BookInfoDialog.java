@@ -27,10 +27,10 @@ public class BookInfoDialog {
 	private ZLSpinOptionEntry myBookNumberEntry;
 	
 	
-	public BookInfoDialog(BookCollection collection, String fileName) {
+	public BookInfoDialog(BookCollection collection, String fileName, Runnable actionOnAccept) {
 		myCollection = collection;
 		myBookInfo = new BookDescription.BookInfo(fileName);
-		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog");
+		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog", actionOnAccept, false);
 		
 		ZLDialogContent commonTab = myDialog.createTab("Common");
 		commonTab.addOption("file", new ZLStringInfoEntry(new ZLFile(fileName).getPath()));

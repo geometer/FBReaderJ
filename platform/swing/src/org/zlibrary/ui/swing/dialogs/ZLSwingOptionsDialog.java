@@ -1,31 +1,14 @@
 package org.zlibrary.ui.swing.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.*;
+import javax.swing.event.*;
 
-import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLOptionsDialog;
-import org.zlibrary.core.options.ZLIntegerRangeOption;
-import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.*;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.resources.ZLResource;
 
 public class ZLSwingOptionsDialog extends ZLOptionsDialog {
@@ -34,7 +17,6 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final JTabbedPane myTabbedPane = new JTabbedPane();
 	private String mySelectedTabKey;
 	private final HashMap<String, JPanel> myPanelToKeyMap = new HashMap<String, JPanel>();
-	private boolean myReturnValue = false;
 	
 	private final ZLIntegerRangeOption myWidthOption;
 	private	final ZLIntegerRangeOption myHeightOption;
@@ -67,7 +49,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	}
 
 	@Override
-	protected boolean runInternal() {
+	protected void runInternal() {
 		myDialog.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				myWidthOption.setValue(myDialog.getWidth());
@@ -77,29 +59,27 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myDialog.setLayout(new BorderLayout());
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
-		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
-		CancelAction cancelAction = new CancelAction(button2.getText());
-		button1.setAction(new OKAction(button1.getText()));
-		button2.setAction(cancelAction);
-		buttonPanel.add(button1);
-		buttonPanel.add(button2);
-		if (button1.getPreferredSize().width < button2.getPreferredSize().width) {
-			button1.setPreferredSize(button2.getPreferredSize());
-		} else {
-			button2.setPreferredSize(button1.getPreferredSize());
+		JButton okButton = new JButton(new OptionsDialogAction(ZLSwingDialogManager.OK_BUTTON, true, true));
+		Action cancelAction = new OptionsDialogAction(ZLSwingDialogManager.CANCEL_BUTTON, false, true);
+		JButton cancelButton = new JButton(cancelAction);
+		buttonPanel.add(okButton);
+		buttonPanel.add(cancelButton);
+		Dimension preferredSize = okButton.getPreferredSize();
+		Dimension size = cancelButton.getPreferredSize();
+		if (preferredSize.width < size.width) {
+			preferredSize = size;
 		}
 		if (myShowApplyButton) {
-			JButton button3 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.APPLY_BUTTON);
-			buttonPanel.add(button3);
-			button3.setAction(new ApplyAction(button3.getText()));
-			if (button3.getPreferredSize().width < button2.getPreferredSize().width) {
-				button3.setPreferredSize(button2.getPreferredSize());
-			} else {
-				button2.setPreferredSize(button3.getPreferredSize());
-				button1.setPreferredSize(button3.getPreferredSize());
+			JButton applyButton = new JButton(new OptionsDialogAction(ZLSwingDialogManager.APPLY_BUTTON, true, false));
+			buttonPanel.add(applyButton);
+			size = applyButton.getPreferredSize();
+			if (preferredSize.width < size.width) {
+				preferredSize = size;
 			}
+			applyButton.setPreferredSize(preferredSize);
 		}
+		okButton.setPreferredSize(preferredSize);
+		cancelButton.setPreferredSize(preferredSize);
 		myDialog.add(buttonPanel, BorderLayout.SOUTH);
 		
 		myTabbedPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));				
@@ -109,7 +89,7 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 			myTabbedPane.setSelectedComponent(myPanelToKeyMap.get(mySelectedTabKey));
 		}	
 		
-		button1.requestFocusInWindow();
+		okButton.requestFocusInWindow();
 		
 		KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
 		myDialog.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, "ESCAPE");
@@ -121,7 +101,6 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myDialog.setLocationRelativeTo(myDialog.getParent());
 		myDialog.setModal(true);
 		myDialog.setVisible(true);
-		return myReturnValue;
 	}
 
 	protected void selectTab(String key) {
@@ -146,36 +125,23 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		}		
 	}
 	
-	private class ApplyAction extends AbstractAction {
-		public ApplyAction(String text) {
-			putValue(NAME, text);
+	private class OptionsDialogAction extends AbstractAction {
+		private final boolean myDoAccept;
+		private final boolean myDoExit;
+	
+		public OptionsDialogAction(String name, boolean doAccept, boolean doExit) {
+			putValue(NAME, ZLSwingDialogManager.createButtonText(name));
+			myDoAccept = doAccept;
+			myDoExit = doExit;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			myReturnValue = false;
-			accept();
+			if (myDoAccept) {
+				accept();
+			}
+			if (myDoExit) {
+				exitDialog();
+			}
 		}
 	}
-	
-	private class OKAction extends AbstractAction {
-		public OKAction(String text) {
-			putValue(NAME, text);
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			myReturnValue = true;
-			exitDialog();
-		}
-	}
-	
-	private class CancelAction extends AbstractAction {
-		public CancelAction(String text) {
-			putValue(NAME, text);
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			exitDialog();
-		}		
-	}
-	
 }

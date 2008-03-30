@@ -1,6 +1,6 @@
 package org.fbreader.fbreader;
 
-import org.fbreader.collection.BookList;
+import org.fbreader.collection.*;
 import org.fbreader.description.BookDescription;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 
@@ -17,12 +17,22 @@ class AddBookAction extends FBAction {
 		final FBFileHandler handler = new FBFileHandler();
 		Runnable actionOnAccept = new Runnable() {
 			public void run() {
-				BookDescription description = handler.getDescription();
-				if ((description != null) && fbreader().runBookInfoDialog(description.getFileName())) {
-					new BookList().addFileName(description.getFileName());
-					fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
-					fbreader().refreshWindow();
+				final BookDescription description = handler.getDescription();
+				if (description == null) {
+					return;
 				}
+				final BookCollection collection = fbreader().getCollectionView().getCollection();
+				final String fileName = description.getFileName();
+				Runnable action = new Runnable() {
+					public void run() {
+						fbreader().openFile(fileName);
+						collection.rebuild(false);
+						new BookList().addFileName(fileName);
+						fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
+						fbreader().refreshWindow();
+					}
+				};
+				new BookInfoDialog(collection, fileName, action).getDialog().run();
 			}
 		};
 		ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", handler, actionOnAccept);

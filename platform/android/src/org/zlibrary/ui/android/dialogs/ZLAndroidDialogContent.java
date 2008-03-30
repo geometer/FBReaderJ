@@ -90,7 +90,7 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 		}
 
 		public boolean isSelectable(int position) {
-			return false;
+			return true;
 		}
 
 		public int getCount() {

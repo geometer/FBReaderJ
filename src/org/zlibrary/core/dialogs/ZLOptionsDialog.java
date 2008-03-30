@@ -33,7 +33,7 @@ public abstract class ZLOptionsDialog {
 	
 	protected abstract void selectTab(String key);
 	
-	protected abstract boolean runInternal();
+	protected abstract void runInternal();
 	
 	protected final String getCaption() {
 		return myResource.getResource(ZLDialogManager.DIALOG_TITLE).getValue();
@@ -45,14 +45,10 @@ public abstract class ZLOptionsDialog {
 	
 	public abstract ZLDialogContent createTab(String key);
 	
-	public boolean run() {
+	public void run() {
 		selectTab(myTabOption.getValue());
-		boolean code = runInternal();
-		if (code) {
-			accept();
-		}
+		runInternal();
 		myTabOption.setValue(getSelectedTabKey());
-		return code;
 	}
 	
 	/*

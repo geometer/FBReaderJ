@@ -50,10 +50,6 @@ public abstract class ZLDialogManager {
 	
 	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton);
 	
-	public final ZLOptionsDialog createOptionsDialog(String key) {
-		return createOptionsDialog(key, null, false);
-	}
-	
 	public abstract void wait(String key, Runnable runnable);
 	
 	public static String getButtonText(String key) {

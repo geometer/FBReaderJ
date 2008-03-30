@@ -299,16 +299,6 @@ public final class FBReader extends ZLApplication {
 		return myRecentBooksView;
 	}
 
-	boolean runBookInfoDialog(String fileName) {
-		BookCollection collection = myCollectionView.getCollection();
-		if (new BookInfoDialog(collection, fileName).getDialog().run()) {
-			openFile(fileName);
-			collection.rebuild(false);
-			return true;
-		}
-		return false;
-	}
-
 	@Override
 	public void openFile(String fileName) {
 		BookDescription description = BookDescription.getDescription(fileName);

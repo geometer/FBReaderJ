@@ -48,12 +48,15 @@ public class CollectionView extends FBView {
 
 			final String imageId = imageElement.Id;
 			if (imageId == CollectionModel.BookInfoImageId) {
-				if (new BookInfoDialog(myCollection, book.getFileName()).getDialog().run()) {
-					myCollection.rebuild(false);
-					myUpdateModel = true;
-					selectBook(book);
-					repaintView();
-				}
+				Runnable action = new Runnable() {
+					public void run() {
+						myCollection.rebuild(false);
+						myUpdateModel = true;
+						selectBook(book);
+						repaintView();
+					}
+				};
+				new BookInfoDialog(myCollection, book.getFileName(), action).getDialog().run();
 				return true;
 			} else if (imageId == CollectionModel.RemoveBookImageId) {
 				String boxKey = "removeBookBox";

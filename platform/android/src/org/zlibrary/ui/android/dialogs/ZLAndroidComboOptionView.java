@@ -14,7 +14,7 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 	protected void createItem() {
 		Spinner view = new Spinner(myTab.getView().getContext());
 		view.setAdapter(new ComboAdapter());
-		view.setDrawSelectorOnTop(true);
+		//view.setDrawSelectorOnTop(true);
 		//view.setText(myName);	
 		myView = view;
 	}
@@ -31,8 +31,11 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 
 		public View getDropDownView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = new TextView(parent.getContext());
-				((TextView)convertView).setText((String)getItem(position));
+				TextView textView = new TextView(parent.getContext());
+				textView.setPadding(0, 12, 0, 12);
+				textView.setTextSize(20);
+				textView.setText((String)getItem(position));
+				convertView = textView;
 			}
 			return convertView;
 		}
@@ -42,6 +45,7 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 				myEditor = new EditText(parent.getContext());
 				myEditor.setSingleLine(true);
 				myEditor.setText((String)getItem(position), TextView.BufferType.EDITABLE);
+				myEditor.setText((String)getItem(position), TextView.BufferType.SPANNABLE);
 				convertView = myEditor;
 			}
 			return convertView;

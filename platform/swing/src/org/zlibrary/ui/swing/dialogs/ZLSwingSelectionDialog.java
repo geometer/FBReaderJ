@@ -70,11 +70,11 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton button1 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.OK_BUTTON);
-		myOKAction = new OKAction(button1.getText());
+		JButton button1 = new JButton();
+		myOKAction = new OKAction(ZLSwingDialogManager.createButtonText(ZLSwingDialogManager.OK_BUTTON));
 		button1.setAction(myOKAction);
-		JButton button2 = ZLSwingDialogManager.createButton(ZLSwingDialogManager.CANCEL_BUTTON);
-		CancelAction cancelAction = new CancelAction (button2.getText());
+		JButton button2 = new JButton();
+		CancelAction cancelAction = new CancelAction(ZLSwingDialogManager.createButtonText(ZLSwingDialogManager.CANCEL_BUTTON));
 		button2.setAction(cancelAction);
 		if (button1.getPreferredSize().width < button2.getPreferredSize().width) {
 			button1.setPreferredSize(button2.getPreferredSize());

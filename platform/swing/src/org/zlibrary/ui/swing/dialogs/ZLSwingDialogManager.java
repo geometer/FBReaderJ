@@ -82,9 +82,8 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		return myApplicationWindow;
 	}
 
-	static JButton createButton(String key) {
-		String text = getButtonText(key).replace("&", "");
-		return new JButton(text);
+	static String createButtonText(String key) {
+		return getButtonText(key).replace("&", "");
 	}
 
 	public ZLDialog createDialog(String key) {
