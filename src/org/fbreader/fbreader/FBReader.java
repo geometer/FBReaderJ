@@ -161,14 +161,11 @@ public final class FBReader extends ZLApplication {
 	public void openBook(BookDescription bookDescription) {
 		OpenBookRunnable runnable = new OpenBookRunnable(bookDescription);
 		ZLDialogManager.getInstance().wait("loadingBook", runnable);
-	//	runnable.run();
-		//resetWindowCaption();
 	}
 
 	public ZLKeyBindings keyBindings() {
 		return myBindings0;
 	}
-	
 	private ZLKeyBindings keyBindings(int angle) {
 		switch (angle) {
 			case ZLViewWidget.Angle.DEGREES0:
@@ -280,6 +277,7 @@ public final class FBReader extends ZLApplication {
 			contentsView.setCaption(description.getTitle());
 			recentBooksView.lastBooks().addBook(fileName);
 		}
+		resetWindowCaption();
 		refreshWindow();
 	}
 	
@@ -303,11 +301,7 @@ public final class FBReader extends ZLApplication {
 		}
 		
 		public void run() { 
-/*			try {for (int i = 0; i < 20; i++) {
-				Random random = new Random();
-                Thread.sleep(random.nextInt(1000));}
-            } catch (InterruptedException ignore) {}
-*/			openBookInternal(myDescription); 
+			openBookInternal(myDescription); 
 		}
 	}
 

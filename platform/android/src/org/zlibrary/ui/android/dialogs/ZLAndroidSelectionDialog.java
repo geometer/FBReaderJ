@@ -22,12 +22,15 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		myActionOnAccept = actionOnAccept;
 		myHeader = new TextView(context);
 		mySelectionView = new SelectionView(context);
-		myDialog = new AndroidDialog(context, caption);
+		myDialog = new AndroidDialog(context, mySelectionView, caption);
 		update();
 	}
 
 	protected void exitDialog() {
 		myDialog.dismiss();
+		if (myReturnValue) {
+			new Handler().post(myActionOnAccept);
+		}
 	}
 
 	public void run() {
@@ -47,26 +50,6 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		myHeader.setText(handler().stateDisplayName());
 	}
 	
-	private class AndroidDialog extends Dialog {
-		private final String myCaption;
-
-		AndroidDialog(Context context, String caption) {
-			super(context);
-			myCaption = caption;
-		}
-
-		protected void onStart() {
-			setContentView(mySelectionView);
-			setTitle(myCaption);
-		}
-
-		protected void onStop() {
-			if (myReturnValue) {
-				new Handler().post(myActionOnAccept);
-			}
-		}
-	}
-
 	private class SelectionViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {

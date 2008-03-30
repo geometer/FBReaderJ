@@ -18,8 +18,10 @@ class ZLAndroidDialog extends ZLDialog {
 		myFooter = new LinearLayout(context);
 		myFooter.setOrientation(LinearLayout.HORIZONTAL);
 		myFooter.setHorizontalGravity(0x01);
-		myTab = new ZLAndroidDialogContent(context, resource, myFooter);
-		myDialog = new AndroidDialog(context, resource.getResource(ZLDialogManager.DIALOG_TITLE).getValue());
+		ZLAndroidDialogContent tab =
+			new ZLAndroidDialogContent(context, resource, myFooter);
+		myTab = tab;
+		myDialog = new AndroidDialog(context, tab.getView(), resource.getResource(ZLDialogManager.DIALOG_TITLE).getValue());
 	}
 
 	public void run() {
@@ -48,27 +50,6 @@ class ZLAndroidDialog extends ZLDialog {
 				myAction.run();
 			}
 			return true;
-		}
-	}
-
-	private class AndroidDialog extends Dialog {
-		private final String myCaption;
-
-		AndroidDialog(Context context, String caption) {
-			super(context);
-			myCaption = caption;
-		}
-
-		public void onStart() {
-			final ZLAndroidDialogContent content = (ZLAndroidDialogContent)myTab;
-			final ListView contentView = (ListView)content.getView();
-			//contentView.addFooterView(myFooter, null, false);
-			setContentView(contentView);
-			setTitle(myCaption);
-		}
-
-		protected void onStop() {
-			((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget().requestFocus();
 		}
 	}
 }
