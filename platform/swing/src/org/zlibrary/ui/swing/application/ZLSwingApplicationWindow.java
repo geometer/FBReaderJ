@@ -234,6 +234,9 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 			final int code = e.getKeyCode();
 			String main;
 			switch (code) {
+				case 27:
+					main = "Esc";
+					break;
 				case 33:
 					main = "Page Up";
 					break;

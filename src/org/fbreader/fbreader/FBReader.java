@@ -28,6 +28,9 @@ public final class FBReader extends ZLApplication {
 		int RECENT_BOOKS = 1 << 5;
 	};
 
+	public final ZLBooleanOption QuitOnCancelOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "QuitOnCancel", false);
+
 	public final ScrollingOptions LargeScrollingOptions =
 		new ScrollingOptions("LargeScrolling", 250, ZLTextView.ScrollingMode.NO_OVERLAPPING);
 	public final ScrollingOptions SmallScrollingOptions =
@@ -212,11 +215,16 @@ public final class FBReader extends ZLApplication {
 				setView(myRecentBooksView);
 				break;
 			case ViewMode.BOOK_COLLECTION:
-				myCollectionView.updateModel();
-				if (myBookModel != null) {
-					myCollectionView.selectBook(myBookModel.getDescription());
-				}
-				setView(myCollectionView);
+				Runnable action = new Runnable() {
+					public void run() {
+						myCollectionView.updateModel();
+						if (myBookModel != null) {
+							myCollectionView.selectBook(myBookModel.getDescription());
+						}
+						setView(myCollectionView);
+					}
+				};
+				ZLDialogManager.getInstance().wait("loadingBookList", action);
 				break;
 			default:
 				break;
@@ -314,5 +322,9 @@ public final class FBReader extends ZLApplication {
 			openBook(description);
 			refreshWindow();
 		}
+	}
+
+	public void quit() {
+		// TODO: implement
 	}
 }
