@@ -100,11 +100,12 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	}
 
 	private class ReturnFromTabAction implements Runnable {
-		private int myIndex;
-		private boolean myDoApply;
+		private final int myIndex;
+		private final boolean myDoApply;
 
 		ReturnFromTabAction(int index, boolean doApply) {
 			myIndex = index;
+			myDoApply = doApply;
 		}
 
 		public void run() {
