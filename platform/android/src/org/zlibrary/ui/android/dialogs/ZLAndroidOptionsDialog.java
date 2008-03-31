@@ -12,12 +12,16 @@ import org.zlibrary.core.resources.ZLResource;
 
 class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final AndroidDialog myDialog;
+	private final String myCaption;
 	private final TabListView myTabListView;
+	private final ReturnFromTabAction myReturnFromTabAction;
 
 	ZLAndroidOptionsDialog(Context context, ZLResource resource, Runnable applyAction) {
 		super(resource, applyAction);
 		myTabListView = new TabListView(context);	
-		myDialog = new AndroidDialog(context, myTabListView, resource.getResource("title").getValue());
+		myCaption = resource.getResource("title").getValue();
+		myDialog = new AndroidDialog(context, myTabListView, myCaption);
+		myReturnFromTabAction = new ReturnFromTabAction();
 	}
 
 	protected String getSelectedTabKey() {
@@ -57,7 +61,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	
 	public ZLDialogContent createTab(String key) {
 		ZLAndroidDialogContent tab =
-			new ZLAndroidDialogContent(myDialog.getContext(), getTabResource(key), null);
+			new ZLAndroidDialogContent(myDialog.getContext(), getTabResource(key), null, null);
 		myTabs.add(tab);
 		return tab;
 	}
@@ -67,6 +71,16 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			(ZLAndroidDialogContent)myTabListView.getAdapter().getItem(index);
 		myDialog.setTitle(tab.getDisplayName());
 		myDialog.setContentView(tab.getView());
+		myDialog.setCancelAction(myReturnFromTabAction);
+	}
+
+	private class ReturnFromTabAction implements Runnable {
+		public void run() {
+			myDialog.setTitle(myCaption);
+			myDialog.setContentView(myTabListView);
+			myTabListView.requestFocus();
+			myDialog.setCancelAction(null);
+		}
 	}
 
 	private class TabListView extends ListView {

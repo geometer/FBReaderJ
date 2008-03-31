@@ -14,9 +14,12 @@ import org.zlibrary.core.dialogs.*;
 class ZLAndroidDialogContent extends ZLDialogContent {
 	private final ListView myListView;
 
-	ZLAndroidDialogContent(Context context, ZLResource resource, View footer) {
+	ZLAndroidDialogContent(Context context, ZLResource resource, View header, View footer) {
 		super(resource);
 		myListView = new ListView(context);	
+		if (header != null) {
+			myListView.addHeaderView(header, null, false);
+		}
 		if (footer != null) {
 			myListView.addFooterView(footer, null, false);
 		}
