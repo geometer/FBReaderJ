@@ -12,11 +12,11 @@ import org.zlibrary.core.resources.ZLResource;
 
 class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final AndroidDialog myDialog;
-	private final ListView myTabListView;
+	private final TabListView myTabListView;
 
 	ZLAndroidOptionsDialog(Context context, ZLResource resource, Runnable applyAction) {
 		super(resource, applyAction);
-		myTabListView = new ListView(context);	
+		myTabListView = new TabListView(context);	
 		myDialog = new AndroidDialog(context, myTabListView, resource.getResource("title").getValue());
 	}
 
@@ -60,6 +60,40 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			new ZLAndroidDialogContent(myDialog.getContext(), getTabResource(key), null);
 		myTabs.add(tab);
 		return tab;
+	}
+
+	private void gotoTab(int index) {
+		ZLAndroidDialogContent tab =
+			(ZLAndroidDialogContent)myTabListView.getAdapter().getItem(index);
+		myDialog.setTitle(tab.getDisplayName());
+		myDialog.setContentView(tab.getView());
+	}
+
+	private class TabListView extends ListView {
+		TabListView(Context context) {
+			super(context);
+		}
+
+		public boolean onKeyUp(int keyCode, KeyEvent event) {
+			switch (keyCode) {
+				case KeyEvent.KEYCODE_DPAD_CENTER:
+				case KeyEvent.KEYCODE_NEWLINE:
+					View selectedView = getSelectedView();
+					if (selectedView != null) {
+						gotoTab(indexOfChild(selectedView));
+					}
+					return false;
+				default:	
+					return super.onKeyUp(keyCode, event);
+			}
+		}
+
+		public boolean onTouchEvent(MotionEvent event) {
+			final int x = (int)event.getX();
+			final int y = (int)event.getY();
+			gotoTab(pointToPosition(x, y));
+			return false;
+		}
 	}
 
 	private class TabListAdapter extends BaseAdapter {
