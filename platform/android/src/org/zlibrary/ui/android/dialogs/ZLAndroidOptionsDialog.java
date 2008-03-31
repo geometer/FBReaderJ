@@ -6,8 +6,7 @@ import android.content.Context;
 import android.view.*;
 import android.widget.*;
 
-import org.zlibrary.core.dialogs.ZLOptionsDialog;
-import org.zlibrary.core.dialogs.ZLDialogContent;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.resources.ZLResource;
 
 class ZLAndroidOptionsDialog extends ZLOptionsDialog {
@@ -59,10 +58,32 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 		// TODO: implement
 		accept();
 	}
-	
+
 	public ZLDialogContent createTab(String key) {
-		ZLAndroidDialogContent tab =
-			new ZLAndroidDialogContent(myDialog.getContext(), getTabResource(key), null, null);
+		final Context context = myDialog.getContext();
+
+		final LinearLayout header = new LinearLayout(context);
+		header.setOrientation(LinearLayout.HORIZONTAL);
+
+		header.addView(
+			new TabButton(
+				context,
+				ZLDialogManager.getButtonText(ZLDialogManager.APPLY_BUTTON).replaceAll("&", ""),
+				myReturnFromTabAction
+			),
+			new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+		);
+		header.addView(
+			new TabButton(
+				context,
+				ZLDialogManager.getButtonText(ZLDialogManager.CANCEL_BUTTON).replaceAll("&", ""),
+				myReturnFromTabAction
+			),
+			new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+		);
+
+		final ZLAndroidDialogContent tab =
+			new ZLAndroidDialogContent(context, getTabResource(key), header, null);
 		myTabs.add(tab);
 		return tab;
 	}
@@ -142,6 +163,21 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 
 		public long getItemId(int position) {
 			return position;
+		}
+	}
+
+	private static class TabButton extends Button {
+		private Runnable myAction;
+
+		TabButton(Context context, String text, Runnable action) {
+			super(context);
+			setText(text);
+			myAction = action;
+		}
+
+		public boolean onTouchEvent(MotionEvent event) {
+			myAction.run();
+			return true;
 		}
 	}
 }
