@@ -46,10 +46,10 @@ class ZLAndroidDialog extends ZLDialog {
 		}
 
 		public boolean onTouchEvent(MotionEvent event) {
-			myDialog.dismiss();
 			if (myAction != null) {
 				new Handler().post(myAction);
 			}
+			myDialog.dismiss();
 			return true;
 		}
 	}
