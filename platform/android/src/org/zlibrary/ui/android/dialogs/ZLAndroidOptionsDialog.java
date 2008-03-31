@@ -55,8 +55,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 
 	protected void runInternal() {
 		myDialog.show();
-		// TODO: implement
-		accept();
 	}
 
 	public ZLDialogContent createTab(String key) {
