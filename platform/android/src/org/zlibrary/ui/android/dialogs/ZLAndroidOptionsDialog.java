@@ -21,8 +21,8 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	}
 
 	protected String getSelectedTabKey() {
+		// TODO: implement
 		final View selectedView = myTabListView.getSelectedView();
-		android.util.Log.i("selectedView", "" + selectedView);
 		if (selectedView != null) {
 			int index = myTabListView.indexOfChild(selectedView);
 			if ((index >= 0) && (index <= myTabs.size())) {
