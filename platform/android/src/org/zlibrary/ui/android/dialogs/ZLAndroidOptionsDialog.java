@@ -13,7 +13,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final AndroidDialog myDialog;
 	private final String myCaption;
 	private final TabListView myTabListView;
-	private final ReturnFromTabAction myReturnFromTabAction;
+	private final ArrayList myCancelActions = new ArrayList();
 
 	ZLAndroidOptionsDialog(Context context, ZLResource resource, Runnable exitAction, Runnable applyAction) {
 		super(resource, exitAction, applyAction);
@@ -21,7 +21,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 		myCaption = resource.getResource("title").getValue();
 		myDialog = new AndroidDialog(context, myTabListView, myCaption);
 		myDialog.setExitAction(exitAction);
-		myReturnFromTabAction = new ReturnFromTabAction();
 	}
 
 	protected String getSelectedTabKey() {
@@ -30,7 +29,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 		if (selectedView != null) {
 			int index = myTabListView.indexOfChild(selectedView);
 			if ((index >= 0) && (index <= myTabs.size())) {
-				return ((ZLAndroidDialogContent)myTabs.get(index)).getKey();
+				return ((ZLDialogContent)myTabs.get(index)).getKey();
 			}
 		}
 		return "";
@@ -40,7 +39,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 		final ArrayList tabs = myTabs;
 		final int len = tabs.size();
 		for (int i = 0; i < len; ++i) {
-			ZLAndroidDialogContent tab = (ZLAndroidDialogContent)tabs.get(i);
+			ZLDialogContent tab = (ZLDialogContent)tabs.get(i);
 			if (tab.getKey().equals(key)) {
 				myTabListView.setSelection(i);
 				return;
@@ -60,6 +59,12 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	public ZLDialogContent createTab(String key) {
 		final Context context = myDialog.getContext();
 
+		final int index = myTabs.size();
+
+		Runnable applyAction = new ReturnFromTabAction(index, true);
+		Runnable cancelAction = new ReturnFromTabAction(index, false);
+		myCancelActions.add(cancelAction);
+
 		final LinearLayout header = new LinearLayout(context);
 		header.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -67,7 +72,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			new TabButton(
 				context,
 				ZLDialogManager.getButtonText(ZLDialogManager.APPLY_BUTTON).replaceAll("&", ""),
-				myReturnFromTabAction
+				applyAction
 			),
 			new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 		);
@@ -75,12 +80,12 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			new TabButton(
 				context,
 				ZLDialogManager.getButtonText(ZLDialogManager.CANCEL_BUTTON).replaceAll("&", ""),
-				myReturnFromTabAction
+				cancelAction
 			),
 			new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 		);
 
-		final ZLAndroidDialogContent tab =
+		final ZLDialogContent tab =
 			new ZLAndroidDialogContent(context, getTabResource(key), header, null);
 		myTabs.add(tab);
 		return tab;
@@ -91,15 +96,28 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			(ZLAndroidDialogContent)myTabListView.getAdapter().getItem(index);
 		myDialog.setTitle(tab.getDisplayName());
 		myDialog.setContentView(tab.getView());
-		myDialog.setCancelAction(myReturnFromTabAction);
+		myDialog.setCancelAction((Runnable)myCancelActions.get(index));
 	}
 
 	private class ReturnFromTabAction implements Runnable {
+		private int myIndex;
+		private boolean myDoApply;
+
+		ReturnFromTabAction(int index, boolean doApply) {
+			myIndex = index;
+		}
+
 		public void run() {
 			myDialog.setTitle(myCaption);
 			myDialog.setContentView(myTabListView);
 			myTabListView.requestFocus();
 			myDialog.setCancelAction(null);
+			ZLDialogContent tab = (ZLDialogContent)myTabs.get(myIndex);
+			if (myDoApply) {
+				acceptTab(tab);
+			} else {
+				resetTab(tab);
+			}
 		}
 	}
 
@@ -137,7 +155,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			}
 
 			TextView textView = new TextView(parent.getContext());
-			textView.setText(((ZLAndroidDialogContent)getItem(position)).getDisplayName());
+			textView.setText(((ZLDialogContent)getItem(position)).getDisplayName());
 			textView.setPadding(0, 12, 0, 12);
 			textView.setTextSize(20);
 			return textView;

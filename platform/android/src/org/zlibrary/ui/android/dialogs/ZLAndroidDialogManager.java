@@ -21,7 +21,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	
 	public void runSelectionDialog(String key, ZLTreeHandler handler, Runnable actionOnAccept) {
 		new ZLAndroidSelectionDialog(myActivity, getDialogTitle(key), handler, actionOnAccept).run();
-		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget().requestFocus();
 	}
 
 	public void showErrorBox(String key, String message) {

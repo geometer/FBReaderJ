@@ -1,6 +1,7 @@
 package org.zlibrary.ui.android.dialogs;
 
 import android.app.Dialog;
+import android.os.Handler;
 import android.content.Context;
 import android.view.*;
 import android.widget.*;
@@ -47,7 +48,7 @@ class ZLAndroidDialog extends ZLDialog {
 		public boolean onTouchEvent(MotionEvent event) {
 			myDialog.dismiss();
 			if (myAction != null) {
-				myAction.run();
+				new Handler().post(myAction);
 			}
 			return true;
 		}

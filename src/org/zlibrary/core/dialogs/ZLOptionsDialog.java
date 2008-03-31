@@ -28,6 +28,10 @@ public abstract class ZLOptionsDialog {
 		}
 	}
 
+	protected void resetTab(ZLDialogContent tab) {
+		tab.reset();
+	}
+
 	protected void accept() {
 		final int size = myTabs.size();
 		for (int i = 0; i < size; i++) {

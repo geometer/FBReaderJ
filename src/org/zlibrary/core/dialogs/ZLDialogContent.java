@@ -80,6 +80,13 @@ public abstract class ZLDialogContent {
 		}
 	}
 
+	final void reset() {
+		final int size = myViews.size();
+		for (int i = 0; i < size; i++) {
+			((ZLOptionView)myViews.get(i)).reset();
+		}
+	}
+
 	protected final void addView(ZLOptionView view) {
 		if (view != null) {
 			myViews.add(view);
