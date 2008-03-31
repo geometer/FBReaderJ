@@ -48,7 +48,7 @@ public abstract class ZLDialogManager {
 	
 	public abstract ZLDialog createDialog(String key);
 	
-	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton);
+	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton);
 	
 	public abstract void wait(String key, Runnable runnable);
 	

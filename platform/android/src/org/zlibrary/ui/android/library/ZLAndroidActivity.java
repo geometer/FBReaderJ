@@ -2,7 +2,7 @@ package org.zlibrary.ui.android.library;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.*;
 
 import org.zlibrary.core.application.ZLApplication;
 
@@ -28,5 +28,15 @@ public class ZLAndroidActivity extends Activity {
 		super.onCreateOptionsMenu(menu);
 		getLibrary().getMainWindow().buildMenu(menu);
 		return true;
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		View view = findViewById(R.id.zlandroidactivity);
+		return (view != null) ? view.onKeyDown(keyCode, event) : true;
+	}
+
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		View view = findViewById(R.id.zlandroidactivity);
+		return (view != null) ? view.onKeyUp(keyCode, event) : true;
 	}
 }

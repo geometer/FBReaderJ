@@ -16,11 +16,12 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final TabListView myTabListView;
 	private final ReturnFromTabAction myReturnFromTabAction;
 
-	ZLAndroidOptionsDialog(Context context, ZLResource resource, Runnable applyAction) {
-		super(resource, applyAction);
+	ZLAndroidOptionsDialog(Context context, ZLResource resource, Runnable exitAction, Runnable applyAction) {
+		super(resource, exitAction, applyAction);
 		myTabListView = new TabListView(context);	
 		myCaption = resource.getResource("title").getValue();
 		myDialog = new AndroidDialog(context, myTabListView, myCaption);
+		myDialog.setExitAction(exitAction);
 		myReturnFromTabAction = new ReturnFromTabAction();
 	}
 

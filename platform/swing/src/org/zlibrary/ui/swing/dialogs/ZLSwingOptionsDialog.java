@@ -21,8 +21,8 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 	private final ZLIntegerRangeOption myWidthOption;
 	private	final ZLIntegerRangeOption myHeightOption;
 	
-	protected ZLSwingOptionsDialog(JFrame frame, ZLResource resource, Runnable applyAction, boolean showApplyButton) {
-		super(resource, applyAction);
+	protected ZLSwingOptionsDialog(JFrame frame, ZLResource resource, Runnable exitAction, Runnable applyAction, boolean showApplyButton) {
+		super(resource, exitAction, applyAction);
 		myDialog = new JDialog(frame);
 		myDialog.setTitle(getCaption());
 		myShowApplyButton = showApplyButton;
@@ -111,6 +111,9 @@ public class ZLSwingOptionsDialog extends ZLOptionsDialog {
 		myWidthOption.setValue(myDialog.getWidth());
 		myHeightOption.setValue(myDialog.getHeight());
 		myDialog.dispose();
+		if (myExitAction != null) {
+			myExitAction.run();
+		}
 	}
 	
 	private class MyChangeListener implements ChangeListener {

@@ -24,7 +24,7 @@ public class OptionsDialog {
 	
 	public OptionsDialog(FBReader fbreader) {
 		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().baseStyle();
-		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", new OptionsApplyRunnable(fbreader), true);
+		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
 		ZLDialogContent libraryTab = myDialog.createTab("Library");
 		CollectionView collectionView = fbreader.getCollectionView();

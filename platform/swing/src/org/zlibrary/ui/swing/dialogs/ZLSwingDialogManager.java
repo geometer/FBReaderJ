@@ -90,9 +90,8 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		return new ZLSwingDialog(myApplicationWindow.getFrame(), getResource().getResource(key));
 	}
 
-	public ZLOptionsDialog createOptionsDialog(String key, Runnable applyAction, boolean showApplyButton) {
-		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key),
-				applyAction, showApplyButton);
+	public ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton) {
+		return new ZLSwingOptionsDialog(myApplicationWindow.getFrame(), getResource().getResource(key), exitAction, applyAction, showApplyButton);
 	}
 
 	public void wait(String key, Runnable runnable) {

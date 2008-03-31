@@ -1,23 +1,14 @@
 package org.fbreader.fbreader;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 import org.fbreader.collection.BookCollection;
-import org.fbreader.description.Author;
-import org.fbreader.description.BookDescription;
+import org.fbreader.description.*;
 import org.fbreader.formats.FormatPlugin;
-import org.zlibrary.core.dialogs.ZLComboOptionEntry;
-import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLDialogManager;
-import org.zlibrary.core.dialogs.ZLOptionsDialog;
-import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
-import org.zlibrary.core.dialogs.ZLStringOptionEntry;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.language.ZLLanguageList;
-import org.zlibrary.core.optionEntries.ZLLanguageOptionEntry;
-import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
-import org.zlibrary.core.optionEntries.ZLStringInfoEntry;
+import org.zlibrary.core.optionEntries.*;
 
 public class BookInfoDialog {
 	private final ZLOptionsDialog myDialog;
@@ -38,7 +29,7 @@ public class BookInfoDialog {
 	public BookInfoDialog(BookCollection collection, String fileName, Runnable actionOnAccept) {
 		myCollection = collection;
 		myBookInfo = new BookDescription.BookInfo(fileName);
-		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog", actionOnAccept, false);
+		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog", actionOnAccept, null, false);
 		
 		ZLDialogContent commonTab = myDialog.createTab("Common");
 		commonTab.addOption("file", new ZLStringInfoEntry(new ZLFile(fileName).getPath()));

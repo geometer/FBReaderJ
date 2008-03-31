@@ -10,19 +10,28 @@ import org.zlibrary.core.resources.ZLResource;
 public abstract class ZLOptionsDialog {
 	private final ZLResource myResource;
 	protected final ArrayList /*ZLDialogContent*/ myTabs = new ArrayList();
+	protected Runnable myExitAction;
 	protected Runnable myApplyAction;
 	protected ZLStringOption myTabOption;
 	
-	protected ZLOptionsDialog(ZLResource resource, Runnable applyAction) {
+	protected ZLOptionsDialog(ZLResource resource, Runnable exitAction, Runnable applyAction) {
 		myResource = resource;
+		myExitAction = exitAction;
 		myApplyAction = applyAction;
 		myTabOption = new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, resource.Name, "SelectedTab", "");
 	}
 	
+	protected void acceptTab(ZLDialogContent tab) {
+		tab.accept();
+		if (myApplyAction != null) {
+			myApplyAction.run();
+		}
+	}
+
 	protected void accept() {
 		final int size = myTabs.size();
 		for (int i = 0; i < size; i++) {
-			((ZLDialogContent) myTabs.get(i)).accept();
+			((ZLDialogContent)myTabs.get(i)).accept();
 		}
 		if (myApplyAction != null) {
 			myApplyAction.run();
