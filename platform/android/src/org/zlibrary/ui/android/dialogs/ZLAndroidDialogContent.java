@@ -13,21 +13,30 @@ import org.zlibrary.core.dialogs.*;
 
 class ZLAndroidDialogContent extends ZLDialogContent {
 	private final ListView myListView;
+	private final View myMainView;
 
 	ZLAndroidDialogContent(Context context, ZLResource resource, View header, View footer) {
 		super(resource);
 		myListView = new ListView(context);	
-		if (header != null) {
-			myListView.addHeaderView(header, null, false);
-		}
-		if (footer != null) {
-			myListView.addFooterView(footer, null, false);
+		if ((header != null) || (footer != null)) {
+			LinearLayout layout = new LinearLayout(context);
+			layout.setOrientation(LinearLayout.VERTICAL);
+			if (header != null) {
+				layout.addView(header, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			}
+			layout.addView(myListView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			if (footer != null) {
+				layout.addView(footer, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			}
+			myMainView = layout;
+		} else {
+			myMainView = myListView;
 		}
 		myListView.setAdapter(new ViewAdapter());
 	}
 
 	View getView() {
-		return myListView;
+		return myMainView;
 	}
 
 	public void addOptionByName(String name, ZLOptionEntry option) {

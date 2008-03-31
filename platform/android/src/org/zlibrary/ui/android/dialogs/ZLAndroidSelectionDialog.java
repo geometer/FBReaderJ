@@ -21,8 +21,14 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		super(handler);
 		myActionOnAccept = actionOnAccept;
 		myHeader = new TextView(context);
+		myHeader.setPadding(0, 5, 5, 0);
+		myHeader.setTextSize(18);
 		mySelectionView = new SelectionView(context);
-		myDialog = new AndroidDialog(context, mySelectionView, caption);
+		LinearLayout layout = new LinearLayout(context);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		layout.addView(myHeader, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		layout.addView(mySelectionView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		myDialog = new AndroidDialog(context, layout, caption);
 		update();
 	}
 
@@ -38,7 +44,7 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 	}
 
 	protected void selectItem(int index) {
-		mySelectionView.setSelection(index + 1);
+		mySelectionView.setSelection(index);
 	}
 
 	protected void updateList() {
@@ -84,7 +90,6 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 		public SelectionView(Context context) {
 			super(context);
 			setFocusable(true);
-			addHeaderView(myHeader, null, false);
 		}
 
 		public boolean onKeyUp(int keyCode, KeyEvent event) {
