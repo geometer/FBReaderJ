@@ -38,6 +38,8 @@ class ItemView extends LinearLayout {
 		addView(imageView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		final TextView textView = new TextView(context);
+		textView.setPadding(0, 2, 0, 0);
+		textView.setTextSize(18);
 		textView.setText(node.displayName());
 		addView(textView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}
