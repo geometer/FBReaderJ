@@ -3,6 +3,9 @@ package org.fbreader.optionsDialog;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
@@ -29,10 +32,17 @@ class ComboOptionEntry extends ZLComboOptionEntry {
 
 	public void onValueSelected(int index) {
 		final Object selectedValue = myValues.get(index);
-		final HashMap /*<ZLOptionEntry*,std::string>*/ entries = myPage.getEntries();
-		for (Iterator it = entries.keySet().iterator(); it.hasNext(); ) {
+		final LinkedHashMap /*<ZLOptionEntry*,std::string>*/ entries = myPage.getEntries();
+/*		for (Iterator it = entries.keySet().iterator(); it.hasNext(); ) {
 			ZLOptionEntry entry = (ZLOptionEntry) it.next();
 			entry.setVisible(selectedValue != null && selectedValue.equals(entries.get(entry)));
+			if (entry.isVisible())
+				System.out.println(entry.getKind()+" "+entry.hashCode());
+		} 
+	*/
+		for (Iterator it = entries.entrySet().iterator(); it.hasNext(); ) {
+			Entry entry = (Entry) it.next();
+			((ZLOptionEntry) entry.getKey()).setVisible(selectedValue != null && selectedValue.equals(entry.getValue()));
 		} 
 	}
 	

@@ -4,7 +4,7 @@ import org.zlibrary.core.options.*;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.text.view.ZLTextIndicatorInfo;
 
-class FBIndicatorInfo extends ZLTextIndicatorInfo {
+public class FBIndicatorInfo extends ZLTextIndicatorInfo {
 	private static final String INDICATOR = "Indicator";
 
 	public final ZLBooleanOption ShowOption =

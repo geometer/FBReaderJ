@@ -5,21 +5,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
-import org.zlibrary.core.dialogs.ZLOptionView;
 
-public class ZLBooleanOptionView extends ZLOptionView {
-	private final JCheckBox myCheckBox;	
+public class ZLBooleanOptionView extends ZLSwingOptionView {
+	private JCheckBox myCheckBox;	
 	
 	public ZLBooleanOptionView(String name, ZLBooleanOptionEntry option,
 			ZLSwingDialogContent tab) {
-		super(name, option);
-		myCheckBox = new JCheckBox(name);
-		myCheckBox.setSelected(option.initialState());
-		myCheckBox.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				((ZLBooleanOptionEntry) myOption).onStateChanged(myCheckBox.isSelected());
-			}});
-		tab.insertWidget(myCheckBox);
+		super(name, option, tab);
 	}
 
 	protected void _onAccept() {
@@ -28,9 +20,17 @@ public class ZLBooleanOptionView extends ZLOptionView {
 
 	protected void _setActive(boolean active) {
 		// TODO: implement
+		myCheckBox.setEnabled(active);
 	}
 
 	protected void createItem() {
+		myCheckBox = new JCheckBox(myName);
+		myCheckBox.setSelected(((ZLBooleanOptionEntry) myOption).initialState());
+		myCheckBox.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				((ZLBooleanOptionEntry) myOption).onStateChanged(myCheckBox.isSelected());
+			}});
+		myTab.insertWidget(myCheckBox);
 	}
 
 	protected void hide() {

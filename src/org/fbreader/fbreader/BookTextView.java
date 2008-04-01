@@ -5,13 +5,14 @@ import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.library.ZLibrary;
+import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.impl.*;
 
-class BookTextView extends FBView {
+public class BookTextView extends FBView {
 	private static final String PARAGRAPH_OPTION_NAME = "Paragraph";
 	private static final String WORD_OPTION_NAME = "Word";
 	private static final String CHAR_OPTION_NAME = "Char";
@@ -33,9 +34,11 @@ class BookTextView extends FBView {
     private boolean myLockUndoStackChanges;
     private String myFileName;
 
+    public ZLBooleanOption ShowTOCMarksOption;
 	
 	BookTextView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
+		ShowTOCMarksOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Indicator", "ShowTOCMarks", false);
 	}
 	
 	public void setContentsModel(ZLTextModel contentsModel) {

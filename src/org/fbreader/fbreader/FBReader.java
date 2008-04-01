@@ -243,7 +243,7 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	BookTextView getBookTextView() {
+	public BookTextView getBookTextView() {
 		return myBookTextView;
 	}
 

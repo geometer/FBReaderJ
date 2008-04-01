@@ -1,12 +1,13 @@
 package org.fbreader.optionsDialog;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
 
 public class OptionsPage {
-	private final HashMap /*<ZLOptionEntry, String>*/ myEntries = new HashMap();
+	private final LinkedHashMap /*<ZLOptionEntry, String>*/ myEntries = new LinkedHashMap();
 	protected ComboOptionEntry myComboEntry;
 	
 	protected OptionsPage() {}
@@ -32,7 +33,7 @@ public class OptionsPage {
 		tab.addOptions(entry0Key, entry0, entry1Key, entry1);
 	}
 
-	HashMap getEntries() {
+	LinkedHashMap getEntries() {
 		return myEntries;
 	}
 			

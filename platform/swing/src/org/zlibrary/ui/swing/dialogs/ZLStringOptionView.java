@@ -12,42 +12,43 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.zlibrary.core.dialogs.ZLOptionView;
 import org.zlibrary.core.dialogs.ZLStringOptionEntry;
+import org.zlibrary.core.dialogs.ZLTextOptionEntry;
 
-public class ZLStringOptionView extends ZLOptionView {
-	private final JLabel myLabel;
-	private final JTextField myTextField;
+public class ZLStringOptionView extends ZLSwingOptionView {
+	private JLabel myLabel;
+	private JTextField myTextField;
 	
 	public ZLStringOptionView(String name, ZLStringOptionEntry option, ZLSwingDialogContent tab) {
-		super(name, option);
-		myTextField = new JTextField(option.initialValue());
-		myTextField.setCaretPosition(0);
-		myTextField.setMargin(new Insets(0, 5, 0, 0));
-		myTextField.addKeyListener(new MyKeyListener());
-		if (name == null || "".equals(name)) {
-			myLabel = null;
-			tab.insertWidget(myTextField);
-		} else {
-			JPanel panel1 = new JPanel();
-			panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
-			myTextField.setMaximumSize(new Dimension(myTextField.getMaximumSize().width, myTextField.getPreferredSize().height));
-			panel1.add(myTextField);
-			myLabel = new JLabel(name);
-			JPanel panel2 = new JPanel(new BorderLayout());
-			panel2.add(myLabel, BorderLayout.LINE_END);
-			JPanel panel = new JPanel(new GridLayout(1, 2, 5, 0));
-			panel.add(panel2);
-			panel.add(panel1);
-			tab.insertWidget(panel);
-		}
+		super(name, option, tab);
 	}
 
 	protected void _onAccept() {
 		((ZLStringOptionEntry) myOption).onAccept(myTextField.getText());
 	}
 
-	protected void createItem() {}
+	protected void createItem() {
+		myTextField = new JTextField(((ZLTextOptionEntry) myOption).initialValue());
+		myTextField.setCaretPosition(0);
+		myTextField.setMargin(new Insets(0, 5, 0, 0));
+		myTextField.addKeyListener(new MyKeyListener());
+		if (myName == null || "".equals(myName)) {
+			myLabel = null;
+			myTab.insertWidget(myTextField);
+		} else {
+			JPanel panel1 = new JPanel();
+			panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
+			myTextField.setMaximumSize(new Dimension(myTextField.getMaximumSize().width, myTextField.getPreferredSize().height));
+			panel1.add(myTextField);
+			myLabel = new JLabel(myName);
+			JPanel panel2 = new JPanel(new BorderLayout());
+			panel2.add(myLabel, BorderLayout.LINE_END);
+			JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
+			panel.add(panel2);
+			panel.add(panel1);
+			myTab.insertWidget(panel);
+		}
+	}
 
 	protected void hide() {
 		myTextField.setVisible(false);

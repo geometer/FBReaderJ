@@ -10,26 +10,15 @@ import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
 import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
-import org.zlibrary.core.dialogs.ZLOptionView;
 
-public class ZLChoiceOptionView extends ZLOptionView {
+public class ZLChoiceOptionView extends ZLSwingOptionView {
 	private final ButtonGroup myButtonGroup = new ButtonGroup();
 	private final JPanel myButtonPanel = new JPanel(new GridLayout(0, 1, 10, 5));
 	private final ArrayList<ButtonModel> myButtonModels = new ArrayList<ButtonModel>();
 	
 	public ZLChoiceOptionView(String name, ZLChoiceOptionEntry option,
 			ZLSwingDialogContent tab) {
-		super(name, option);
-		myButtonPanel.setBorder(new TitledBorder(name));
-		final int choiceNumber = option.choiceNumber();
-		for (int i = 0; i < choiceNumber; i++) {
-			JRadioButton button = new JRadioButton(option.getText(i));
-			myButtonGroup.add(button);
-			myButtonPanel.add(button);
-			myButtonModels.add(button.getModel());
-		}
-		myButtonGroup.setSelected(myButtonModels.get(((ZLChoiceOptionEntry) myOption).initialCheckedIndex()), true);
-		tab.insertWidget(myButtonPanel);
+		super(name, option, tab);
 	}
 
 	protected void _onAccept() {
@@ -38,9 +27,21 @@ public class ZLChoiceOptionView extends ZLOptionView {
 
 	protected void _setActive(boolean active) {
 		// TODO: implement
+		myButtonPanel.setEnabled(active);
 	}
 
-	protected void createItem() {}
+	protected void createItem() {
+		myButtonPanel.setBorder(new TitledBorder(myName));
+		final int choiceNumber = ((ZLChoiceOptionEntry) myOption).choiceNumber();
+		for (int i = 0; i < choiceNumber; i++) {
+			JRadioButton button = new JRadioButton(((ZLChoiceOptionEntry) myOption).getText(i));
+			myButtonGroup.add(button);
+			myButtonPanel.add(button);
+			myButtonModels.add(button.getModel());
+		}
+		myButtonGroup.setSelected(myButtonModels.get(((ZLChoiceOptionEntry) myOption).initialCheckedIndex()), true);
+		myTab.insertWidget(myButtonPanel);
+	}
 
 	protected void hide() {
 		myButtonPanel.setVisible(false);

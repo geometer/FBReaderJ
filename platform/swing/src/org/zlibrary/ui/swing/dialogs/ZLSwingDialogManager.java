@@ -1,7 +1,7 @@
 package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.Cursor;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -102,9 +102,10 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		} catch (InterruptedException e) {}
 		if (t.isAlive()) {
 			JDialog dialog = new JDialog();
+			dialog.setUndecorated(true);
 			JPanel panel = new JPanel(new BorderLayout());
 			panel.add(new JLabel(getWaitMessageText(key)), BorderLayout.CENTER);
-			panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 			dialog.add(panel);
 			if (myApplicationWindow != null) {
 				dialog.setLocationRelativeTo(myApplicationWindow.getFrame());
@@ -113,7 +114,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 			}
 			dialog.pack();
 			dialog.setModal(true);
-			dialog.addWindowListener(new MyWindowListener(dialog, t));		
+			dialog.addWindowListener(new MyWindowListener(dialog, t));	
 			dialog.setVisible(true);
 		}
 	}
@@ -138,16 +139,7 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 
 /*
  * public:
-	void createApplicationWindow(ZLApplication *application) const;
-
-	shared_ptr<ZLDialog> createDialog(const ZLResourceKey &key) const;
-	shared_ptr<ZLOptionsDialog> createOptionsDialog(const ZLResourceKey &id, shared_ptr<Runnable> applyAction, bool showApplyButton) const;
-	void informationBox(const ZLResourceKey &key, const std::string &message) const;
-	void errorBox(const ZLResourceKey &key, const std::string &message) const;
-	int questionBox(const ZLResourceKey &key, const std::string &message, const ZLResourceKey &button0, const ZLResourceKey &button1, const ZLResourceKey &button2) const;
-	bool selectionDialog(const ZLResourceKey &key, ZLTreeHandler &handler) const;
-	void wait(const ZLResourceKey &key, Runnable &runnable) const;
-
+	
 	bool isClipboardSupported(ClipboardType type) const;
 	void setClipboardText(const std::string &text, ClipboardType type) const;
 

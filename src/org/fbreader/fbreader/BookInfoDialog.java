@@ -158,7 +158,7 @@ public class BookInfoDialog {
 		}
 		
 		public void onValueEdited(String value) {
-			myInfoDialog.myBookNumberEntry.setVisible(value != null);;
+			myInfoDialog.myBookNumberEntry.setVisible(value != null && !value.equals(""));;
 		}
 		
 		public void onValueSelected(int index) {

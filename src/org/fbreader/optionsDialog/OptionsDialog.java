@@ -1,6 +1,7 @@
 package org.fbreader.optionsDialog;
 
 import org.fbreader.fbreader.CollectionView;
+import org.fbreader.fbreader.FBIndicatorInfo;
 import org.fbreader.fbreader.FBReader;
 import org.fbreader.fbreader.FBView;
 import org.fbreader.fbreader.RecentBooksView;
@@ -8,12 +9,16 @@ import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.zlibrary.core.dialogs.ZLChoiceOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLDialogManager;
+import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.language.ZLLanguageList;
 import org.zlibrary.core.optionEntries.ZLLanguageOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
+import org.zlibrary.core.optionEntries.ZLToggleBooleanOptionEntry;
+import org.zlibrary.core.options.ZLBooleanOption;
 import org.zlibrary.core.options.ZLIntegerOption;
+import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.view.ZLViewWidget;
 import org.zlibrary.text.view.style.ZLTextBaseStyle;
@@ -57,6 +62,7 @@ public class OptionsDialog {
 		
 //		myDialog.createTab("Styles");
 		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getContext());
+		createIndicatorTab(fbreader);
 		
 		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
@@ -118,6 +124,54 @@ public class OptionsDialog {
 
 		myDialog->createPlatformDependentTabs();
 		*/
+	}
+	
+	private void createIndicatorTab(FBReader fbreader) {
+		ZLDialogContent indicatorTab = myDialog.createTab("Indicator");
+		//TODO
+		FBIndicatorInfo indicatorInfo = (FBIndicatorInfo) fbreader.getCollectionView().getIndicatorInfo();
+		ZLToggleBooleanOptionEntry showIndicatorEntry =
+			new ZLToggleBooleanOptionEntry(indicatorInfo.ShowOption);
+		indicatorTab.addOption("show", showIndicatorEntry);
+
+		ZLOptionEntry heightEntry =
+			new ZLSimpleSpinOptionEntry(indicatorInfo.HeightOption, 1);
+		ZLOptionEntry offsetEntry =
+			new ZLSimpleSpinOptionEntry(indicatorInfo.OffsetOption, 1);
+		indicatorTab.addOptions("height", heightEntry, "offset", offsetEntry);
+		showIndicatorEntry.addDependentEntry(heightEntry);
+		showIndicatorEntry.addDependentEntry(offsetEntry);
+
+		StateOptionEntry showTextPositionEntry =
+			new StateOptionEntry(indicatorInfo.ShowTextPositionOption);
+		indicatorTab.addOption("pageNumber", showTextPositionEntry);
+		showIndicatorEntry.addDependentEntry(showTextPositionEntry);
+
+		StateOptionEntry showTimeEntry =
+			new StateOptionEntry(indicatorInfo.ShowTimeOption);
+		indicatorTab.addOption("time", showTimeEntry);
+		showIndicatorEntry.addDependentEntry(showTimeEntry);
+
+		SpecialFontSizeEntry fontSizeEntry =
+			new SpecialFontSizeEntry(indicatorInfo.FontSizeOption, 2, showTextPositionEntry, showTimeEntry);
+		indicatorTab.addOption("fontSize", fontSizeEntry);
+		showIndicatorEntry.addDependentEntry(fontSizeEntry);
+		showTextPositionEntry.addDependentEntry(fontSizeEntry);
+		showTimeEntry.addDependentEntry(fontSizeEntry);
+
+		ZLOptionEntry tocMarksEntry =
+			new ZLSimpleBooleanOptionEntry(fbreader.getBookTextView().ShowTOCMarksOption);
+		indicatorTab.addOption("tocMarks", tocMarksEntry);
+		showIndicatorEntry.addDependentEntry(tocMarksEntry);
+
+		ZLOptionEntry navigationEntry =
+			new ZLSimpleBooleanOptionEntry(indicatorInfo.IsSensitiveOption);
+		indicatorTab.addOption("navigation", navigationEntry);
+		showIndicatorEntry.addDependentEntry(navigationEntry);
+
+		showIndicatorEntry.onStateChanged(showIndicatorEntry.initialState());
+		showTextPositionEntry.onStateChanged(showTextPositionEntry.initialState());
+		showTimeEntry.onStateChanged(showTimeEntry.initialState());
 	}
 	
 	public ZLOptionsDialog getDialog() {
@@ -208,4 +262,37 @@ public class OptionsDialog {
 			myAngleOption.setValue(angle);
 		}	
 	}
+	
+	private static class StateOptionEntry extends ZLToggleBooleanOptionEntry {
+		private boolean myState;
+		
+		public StateOptionEntry(ZLBooleanOption option) {
+			super(option);
+			myState = option.getValue();
+		}
+	
+		public void onStateChanged(boolean state) {
+			myState = state;
+			super.onStateChanged(state);
+		}
+	}
+
+	private static class SpecialFontSizeEntry extends ZLSimpleSpinOptionEntry {
+		private StateOptionEntry myFirst;
+		private StateOptionEntry mySecond;
+		
+		public SpecialFontSizeEntry(ZLIntegerRangeOption option, int step, StateOptionEntry first, StateOptionEntry second) {
+			super(option, step);
+			myFirst = first;
+			mySecond = second;
+		}
+
+		public void setVisible(boolean state) {
+			super.setVisible(
+					(myFirst.isVisible() && myFirst.myState) ||
+					(mySecond.isVisible() && mySecond.myState)
+			);
+		}	
+	}
+	
 }
