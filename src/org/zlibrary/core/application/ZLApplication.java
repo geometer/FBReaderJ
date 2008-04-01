@@ -18,6 +18,7 @@ import org.zlibrary.core.xml.ZLXMLReaderAdapter;
 public abstract class ZLApplication {
 	private static final String MouseScrollUpKey = "<MouseScrollDown>";
 	private static final String MouseScrollDownKey = "<MouseScrollUp>";
+	public static final String NoAction = "none";
 	
 	private static final String ROTATION = "Rotation";
 	private static final String ANGLE = "Angle";

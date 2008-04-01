@@ -3,6 +3,7 @@ package org.zlibrary.core.application;
 import java.util.*;
 import org.zlibrary.core.util.*;
 
+import org.zlibrary.core.options.ZLIntegerOption;
 import org.zlibrary.core.options.ZLIntegerRangeOption;
 import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.options.ZLStringOption;
@@ -58,7 +59,6 @@ public final class ZLKeyBindings {
 		}
 	}
 
-	/*
 	public void saveCustomBindings() {
 		if (!myIsChanged) {
 			return;
@@ -72,9 +72,10 @@ public final class ZLKeyBindings {
 			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
 		final ZLIntegerOption actionOption =
 			new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, "", -1);
-		for (String key : myBindingsMap.keySet()) {
-			Integer originalValue = keymap.get(key);
-			Integer value = myBindingsMap.get(key);
+		for (Iterator it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
+			final String key = (String) it.next();
+			Integer originalValue = (Integer) keymap.get(key);
+			Integer value = (Integer) myBindingsMap.get(key);
 			if (!originalValue.equals(value)) {
 				keyOption.changeName(BINDED_KEY + counter);
 				actionOption.changeName(BINDED_ACTION + counter);
@@ -85,5 +86,5 @@ public final class ZLKeyBindings {
 		}
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
 	}
-	*/
+	
 }
