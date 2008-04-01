@@ -115,7 +115,7 @@ DONE	заголовок окна
 НМ 0	вставить copyright notices
 
 доделать все Actions:
-1	ActionCode.SHOW_BOOK_INFO
+DONE	ActionCode.SHOW_BOOK_INFO
 1	ActionCode.SCROLL_TO_START_OF_TEXT
 1	ActionCode.SCROLL_TO_END_OF_TEXT
 1	ActionCode.OPEN_PREVIOUS_BOOK

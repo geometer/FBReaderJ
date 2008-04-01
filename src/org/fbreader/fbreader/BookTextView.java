@@ -20,7 +20,6 @@ public class BookTextView extends FBView {
 	private static final String POSITION_IN_BUFFER = "PositionInBuffer";
 	private static final String BUFFER_PARAGRAPH_PREFIX = "Paragraph_";
 	private static final String BUFFER_WORD_PREFIX = "Word_";
-
 	
 	private ZLIntegerOption myParagraphNumberOption;
 	private ZLIntegerOption myWordNumberOption;
