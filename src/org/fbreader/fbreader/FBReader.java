@@ -30,6 +30,9 @@ public final class FBReader extends ZLApplication {
 
 	public final ZLBooleanOption QuitOnCancelOption =
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "QuitOnCancel", true);
+	
+	public final ZLBooleanOption UseSeparateBindingsOption = 
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "KeysOptions", "UseSeparateBindings", false);
 
 	public final ScrollingOptions LargeScrollingOptions =
 		new ScrollingOptions("LargeScrolling", 250, ZLTextView.ScrollingMode.NO_OVERLAPPING);
@@ -166,7 +169,8 @@ public final class FBReader extends ZLApplication {
 	public ZLKeyBindings keyBindings() {
 		return myBindings0;
 	}
-	private ZLKeyBindings keyBindings(int angle) {
+	
+	public ZLKeyBindings keyBindings(int angle) {
 		switch (angle) {
 			case ZLViewWidget.Angle.DEGREES0:
 			default:

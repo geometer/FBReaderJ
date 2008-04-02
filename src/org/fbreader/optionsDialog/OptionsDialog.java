@@ -69,8 +69,9 @@ public class OptionsDialog {
 		
 		ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		
-		ZLDialogContent keysTab = myDialog.createTab("Keys");
-		keysTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
+		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
+	//	ZLDialogContent keysTab = myDialog.createTab("Keys");
+	//	keysTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
 		
 		myDialog.createTab("Config");
 		

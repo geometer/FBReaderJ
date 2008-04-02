@@ -75,7 +75,7 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 //				view = new ColorOptionView(name, (ZLColorOptionEntry*)option, *this, from, to);
 				break;
 			case ZLOptionKind.KEY:
-//				view = new KeyOptionView(name, (ZLKeyOptionEntry*)option, *this, from, to);
+				view = new ZLKeyOptionView(name, (ZLKeyOptionEntry) option, this);
 				break;
 			case ZLOptionKind.ORDER:
 				// TODO: implement

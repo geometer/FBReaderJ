@@ -74,7 +74,6 @@ public class ZLStringOptionView extends ZLSwingOptionView {
 	
 	private class MyKeyListener extends KeyAdapter {
 		public void keyTyped(KeyEvent e) {
-			System.out.println("key");
 			ZLStringOptionEntry o = (ZLStringOptionEntry) myOption;
 			if (o.useOnValueEdited()) {
 				o.onValueEdited(myTextField.getText());

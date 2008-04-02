@@ -50,7 +50,7 @@ public abstract class ZLSimpleKeyOptionEntry extends ZLKeyOptionEntry {
 		}
 			
 		public int indexByCode(final String code) {
-			return (Integer) IndexByCode.get(code); 
+			return IndexByCode.get(code) == null ? 0 : (Integer) IndexByCode.get(code); 
 		}
 		
 		public String codeByIndex(int index) {

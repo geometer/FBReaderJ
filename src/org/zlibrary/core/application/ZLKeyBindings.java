@@ -1,6 +1,8 @@
 package org.zlibrary.core.application;
 
 import java.util.*;
+import java.util.Map.Entry;
+
 import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.options.ZLIntegerOption;
@@ -70,13 +72,13 @@ public final class ZLKeyBindings {
 		int counter = 0;
 		final ZLStringOption keyOption =
 			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
-		final ZLIntegerOption actionOption =
-			new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, myName, "", -1);
+		final ZLStringOption actionOption =
+			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
 		for (Iterator it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
 			final String key = (String) it.next();
-			Integer originalValue = (Integer) keymap.get(key);
-			Integer value = (Integer) myBindingsMap.get(key);
-			if (!originalValue.equals(value)) {
+			String originalValue = (String) keymap.get(key);
+			String value = (String) myBindingsMap.get(key);
+			if (!value.equals(originalValue)) {
 				keyOption.changeName(BINDED_KEY + counter);
 				actionOption.changeName(BINDED_ACTION + counter);
 				keyOption.setValue(key);
