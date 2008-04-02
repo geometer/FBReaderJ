@@ -13,19 +13,14 @@ public class ZLFontFamilyOptionEntry extends ZLComboOptionEntry {
 	public ZLFontFamilyOptionEntry(ZLStringOption option, final ZLPaintContext context) {
 		myOption = option;
 		myContext = context;
-	/*	String value = option.getValue();
+		String value = option.getValue();
 		if (value != null && !value.equals("")) {
 			option.setValue(myContext.realFontFamilyName(value));
-		}
-	*/	
+		}	
 	}
 
 	public ArrayList getValues() {
-		// TODO create fontFamilies()
-	//	return myContext.fontFamilies();
-		ArrayList list = new ArrayList();
-		list.add("font");
-		return list;
+		return (ArrayList) myContext.fontFamilies();
 	}
 
 	public String initialValue() {
