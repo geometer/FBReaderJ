@@ -17,7 +17,6 @@
 					<node name="time" value="Показывать текущее время"/>
 					<node name="fontSize" value="Размер шрифта"/>
 					<node name="tocMarks" value="Показывать пометки начала глав"/>
-					<node name="navigation" value="Реагировать на нажатия"/>
 				</node>
 -				<node name="Scrolling" value="Перелистывание">
 -					<node name="optionsFor" value="Настройки перелистывания">
