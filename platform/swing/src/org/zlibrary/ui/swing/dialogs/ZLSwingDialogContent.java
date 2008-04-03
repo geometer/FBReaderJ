@@ -1,6 +1,8 @@
 package org.zlibrary.ui.swing.dialogs;
 
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -11,13 +13,21 @@ import org.zlibrary.core.resources.ZLResource;
 
 public class ZLSwingDialogContent extends ZLDialogContent {
 	private final JPanel myContentPanel = new JPanel();
-	private JPanel myTwoOptionsPanel;
 	private boolean myAddTwoOptions = false;
+	private final GridBagLayout myLayout = new GridBagLayout();
+	private final GridBagConstraints myConstraints = new GridBagConstraints();
 	
 	protected ZLSwingDialogContent(ZLResource resource) {
 		super(resource);
 		myContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		myContentPanel.setLayout(new GridLayout(0, 1, 10, 5));
+		myContentPanel.setLayout(myLayout);
+		myConstraints.fill = GridBagConstraints.HORIZONTAL;
+		myConstraints.anchor = GridBagConstraints.WEST;
+		myConstraints.gridx = 0;
+		myConstraints.gridy = 0;
+		myConstraints.insets = new Insets(5, 5, 0, 5);
+		myConstraints.weightx = 1;
+		myConstraints.ipady = 0;
 	}
 
 	public void addOptionByName(String name, ZLOptionEntry option) {
@@ -26,11 +36,11 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 
 	public void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1) {
 		myAddTwoOptions = true;
-		myTwoOptionsPanel = new JPanel(new GridLayout(1, 2, 10, 0));
-		myContentPanel.add(myTwoOptionsPanel);
 		createViewByEntry(name0, option0);
 		createViewByEntry(name1, option1);
 		myAddTwoOptions = false;
+		myConstraints.gridx = 0;
+		myConstraints.gridy++;
 	}
 	
 	public JPanel getContentPanel() {
@@ -38,11 +48,12 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 	}
 	
 	public void insertWidget(JComponent comp) {
+		myContentPanel.add(comp, myConstraints);	
 		if (myAddTwoOptions) {
-			myTwoOptionsPanel.add(comp);
+			myConstraints.gridx = 1;
 		} else {
-			myContentPanel.add(comp);
-		}	
+			myConstraints.gridy++;
+		}
 	}
 	
 	private void createViewByEntry(String name, ZLOptionEntry option) {
@@ -54,28 +65,28 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 
 		switch (option.getKind()) {
 			case ZLOptionKind.BOOLEAN:
-				view = new ZLBooleanOptionView(name, (ZLBooleanOptionEntry) option, this);
+				view = new ZLBooleanOptionView(name, (ZLBooleanOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.BOOLEAN3:
 //				view = new Boolean3OptionView(name, (ZLBoolean3OptionEntry*)option, *this, from, to);
 				break;
 			case ZLOptionKind.STRING:
-				view = new ZLStringOptionView(name, (ZLStringOptionEntry) option, this);
+				view = new ZLStringOptionView(name, (ZLStringOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.CHOICE:
-				view = new ZLChoiceOptionView(name, (ZLChoiceOptionEntry) option, this);
+				view = new ZLChoiceOptionView(name, (ZLChoiceOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.SPIN:
-				view = new ZLSpinOptionView(name, (ZLSpinOptionEntry) option, this);
+				view = new ZLSpinOptionView(name, (ZLSpinOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.COMBO:
-				view = new ZLComboOptionView(name, (ZLComboOptionEntry) option, this);
+				view = new ZLComboOptionView(name, (ZLComboOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.COLOR:
 //				view = new ColorOptionView(name, (ZLColorOptionEntry*)option, *this, from, to);
 				break;
 			case ZLOptionKind.KEY:
-				view = new ZLKeyOptionView(name, (ZLKeyOptionEntry) option, this);
+				view = new ZLKeyOptionView(name, (ZLKeyOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.ORDER:
 				// TODO: implement

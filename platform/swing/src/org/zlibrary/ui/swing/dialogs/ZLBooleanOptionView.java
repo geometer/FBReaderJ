@@ -1,5 +1,9 @@
 package org.zlibrary.ui.swing.dialogs;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -10,8 +14,8 @@ public class ZLBooleanOptionView extends ZLSwingOptionView {
 	private JCheckBox myCheckBox;	
 	
 	public ZLBooleanOptionView(String name, ZLBooleanOptionEntry option,
-			ZLSwingDialogContent tab) {
-		super(name, option, tab);
+			ZLSwingDialogContent tab, GridBagLayout layout) {
+		super(name, option, tab, layout);
 	}
 
 	protected void _onAccept() {
@@ -34,10 +38,10 @@ public class ZLBooleanOptionView extends ZLSwingOptionView {
 	}
 
 	protected void hide() {
-		myCheckBox.setVisible(false);
+		hide(myCheckBox);
 	}
 
 	protected void show() {
-		myCheckBox.setVisible(true);
+		show(myCheckBox);
 	}
 }

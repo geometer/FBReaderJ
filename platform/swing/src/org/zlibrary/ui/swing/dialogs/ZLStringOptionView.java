@@ -2,6 +2,7 @@ package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
@@ -18,9 +19,11 @@ import org.zlibrary.core.dialogs.ZLTextOptionEntry;
 public class ZLStringOptionView extends ZLSwingOptionView {
 	private JLabel myLabel;
 	private JTextField myTextField;
+	private JPanel myPanel;
 	
-	public ZLStringOptionView(String name, ZLStringOptionEntry option, ZLSwingDialogContent tab) {
-		super(name, option, tab);
+	public ZLStringOptionView(String name, ZLStringOptionEntry option,
+			ZLSwingDialogContent tab, GridBagLayout layout) {
+		super(name, option, tab, layout);
 	}
 
 	protected void _onAccept() {
@@ -43,24 +46,26 @@ public class ZLStringOptionView extends ZLSwingOptionView {
 			myLabel = new JLabel(myName);
 			JPanel panel2 = new JPanel(new BorderLayout());
 			panel2.add(myLabel, BorderLayout.LINE_END);
-			JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
-			panel.add(panel2);
-			panel.add(panel1);
-			myTab.insertWidget(panel);
+			myPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+			myPanel.add(panel2);
+			myPanel.add(panel1);
+			myTab.insertWidget(myPanel);
 		}
 	}
 
-	protected void hide() {
-		myTextField.setVisible(false);
-		if (myLabel != null) {
-			myLabel.setVisible(false);
+	protected void hide() {	
+		if (myPanel != null) {
+			hide(myPanel);
+		} else {
+			hide(myTextField);
 		}
 	}
 
-	protected void show() {
-		myTextField.setVisible(true);
-		if (myLabel != null) {
-			myLabel.setVisible(true);
+	protected void show() {	
+		if (myPanel != null) {
+			show(myPanel);
+		} else {
+			show(myTextField);
 		}
 	}
 

@@ -2,6 +2,7 @@ package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
@@ -15,9 +16,11 @@ import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
 public class ZLSpinOptionView extends ZLSwingOptionView {
 	private JSpinner mySpinner;
 	private JLabel myLabel;
+	private JPanel myPanel;
 
-	public ZLSpinOptionView(String name, ZLSpinOptionEntry option, ZLSwingDialogContent tab) {
-		super(name, option, tab);
+	public ZLSpinOptionView(String name, ZLSpinOptionEntry option, ZLSwingDialogContent tab,
+			GridBagLayout layout) {
+		super(name, option, tab, layout);
 	}
 
 	protected void _setActive(boolean active) {
@@ -44,24 +47,26 @@ public class ZLSpinOptionView extends ZLSwingOptionView {
 			myLabel = new JLabel(myName);
 			JPanel panel2 = new JPanel(new BorderLayout());
 			panel2.add(myLabel, BorderLayout.LINE_END);
-			JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
-			panel.add(panel2);
-			panel.add(panel1);
-			myTab.insertWidget(panel);
+			myPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+			myPanel.add(panel2);
+			myPanel.add(panel1);
+			myTab.insertWidget(myPanel);
 		}
 	}
 
 	protected void hide() {
-		mySpinner.setVisible(false);
-		if (myLabel != null) {
-			myLabel.setVisible(false);
+		if (myPanel != null) {
+			hide(myPanel);
+		} else {
+			hide(mySpinner);
 		}
 	}
 
 	protected void show() {
-		mySpinner.setVisible(true);
-		if (myLabel != null) {
-			myLabel.setVisible(true);
+		if (myPanel != null) {
+			show(myPanel);
+		} else {
+			show(mySpinner);
 		}
 	}
 }

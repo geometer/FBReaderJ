@@ -2,6 +2,7 @@ package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -20,10 +21,11 @@ import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 public class ZLComboOptionView extends ZLSwingOptionView {
 	private JComboBox myComboBox;
 	private JLabel myLabel;
+	private JPanel myPanel;
 	
 	public ZLComboOptionView(String name, ZLComboOptionEntry option,
-			ZLSwingDialogContent tab) {
-		super(name, option, tab);
+			ZLSwingDialogContent tab, GridBagLayout layout) {
+		super(name, option, tab, layout);
 	}
 
 	protected void _onAccept() {
@@ -60,24 +62,26 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 			myLabel = new JLabel(myName);
 			JPanel panel2 = new JPanel(new BorderLayout());
 			panel2.add(myLabel, BorderLayout.LINE_END);
-			JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
-			panel.add(panel2);
-			panel.add(panel1);
-			myTab.insertWidget(panel);
+			myPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+			myPanel.add(panel2);
+			myPanel.add(panel1);
+			myTab.insertWidget(myPanel);
 		}
 	}
 
 	protected void hide() {
-		myComboBox.setVisible(false);
-		if (myLabel != null) {
-			myLabel.setVisible(false);
+		if (myPanel != null) {
+			hide(myPanel);
+		} else {
+			hide(myComboBox);
 		}
 	}
 
-	protected void show() {
-		myComboBox.setVisible(true);
-		if (myLabel != null) {
-			myLabel.setVisible(true);
+	protected void show() {		
+		if (myPanel != null) {
+			show(myPanel);
+		} else {
+			show(myComboBox);
 		}
 	}
 

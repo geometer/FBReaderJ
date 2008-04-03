@@ -2,6 +2,7 @@ package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
@@ -26,10 +27,12 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 	private JComboBox myComboBox;
 	private	KeyEditor myKeyEditor;
 	private JLabel myLabel;
+	private JPanel myPanel;
 	private	String myCurrentKey = "";
 		
-	public ZLKeyOptionView(String name, ZLKeyOptionEntry option, ZLSwingDialogContent tab) {
-		super(name, option, tab);
+	public ZLKeyOptionView(String name, ZLKeyOptionEntry option, ZLSwingDialogContent tab,
+			GridBagLayout layout) {
+		super(name, option, tab, layout);
 	}
 	
 	protected void _onAccept() {
@@ -54,10 +57,10 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 		myLabel = new JLabel(ZLResource.resource("keyOptionView").getResource("actionFor").getValue());
 		JPanel panel2 = new JPanel(new BorderLayout());
 		panel2.add(myLabel, BorderLayout.LINE_END);
-		JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
-		panel.add(panel2);
-		panel.add(panel1);
-		myTab.insertWidget(panel);
+		myPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+		myPanel.add(panel2);
+		myPanel.add(panel1);
+		myTab.insertWidget(myPanel);
 		
 		myComboBox = new JComboBox(((ZLKeyOptionEntry) myOption).getActionNames().toArray());
 		myComboBox.addItemListener(new MyItemListener());
@@ -65,15 +68,15 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 	}
 
 	protected void hide() {
-		myKeyEditor.setVisible(false);
-		myLabel.setVisible(false);
-		myComboBox.setVisible(false);
+		hide(myPanel);
+		hide(myComboBox);
 	}
 
 	protected void show() {
-		myKeyEditor.setVisible(true);
-		myLabel.setVisible(true);
-		myComboBox.setVisible(! "".equals(myCurrentKey));
+		show(myPanel);
+		if (! "".equals(myCurrentKey)) {
+			show(myComboBox);
+		}
 	}
 
 	public void reset() {

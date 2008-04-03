@@ -1,5 +1,7 @@
 package org.zlibrary.ui.swing.dialogs;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -17,8 +19,8 @@ public class ZLChoiceOptionView extends ZLSwingOptionView {
 	private final ArrayList<ButtonModel> myButtonModels = new ArrayList<ButtonModel>();
 	
 	public ZLChoiceOptionView(String name, ZLChoiceOptionEntry option,
-			ZLSwingDialogContent tab) {
-		super(name, option, tab);
+			ZLSwingDialogContent tab, GridBagLayout layout) {
+		super(name, option, tab, layout);
 	}
 
 	protected void _onAccept() {
@@ -44,10 +46,10 @@ public class ZLChoiceOptionView extends ZLSwingOptionView {
 	}
 
 	protected void hide() {
-		myButtonPanel.setVisible(false);
+		hide(myButtonPanel);
 	}
 
 	protected void show() {
-		myButtonPanel.setVisible(true);
+		show(myButtonPanel);
 	}
 }
