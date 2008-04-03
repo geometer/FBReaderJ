@@ -112,7 +112,7 @@ public class BookCollection {
 
 //		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
 			final ArrayList list = new ArrayList(myCollection.keySet());
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < list.size(); ++i) {
 				final ArrayList books = (ArrayList)myCollection.get(list.get(i));
 				final int numberOfBooks = books.size();
 				for (int j = 0; j < numberOfBooks; ++j) {
@@ -210,7 +210,7 @@ public class BookCollection {
 					BookDescriptionUtil.listZipEntries(file, zipEntries);
 					final int numberOfZipEntries = zipEntries.size();
 					for (int k = 0; k < numberOfZipEntries; ++k) {
-						String str = (String)zipEntries.get(i);
+						String str = (String)zipEntries.get(k);
 						if (!bookFileNames.contains(str)) {
 							bookFileNames.add(str);
 						}

@@ -18,10 +18,10 @@ public class ZLFile {
 		public static final int	ARCHIVE = 0xff00;
 	};
 	
-	private String myPath;
-	private String myNameWithExtension;
+	private final String myPath;
+	private final String myNameWithExtension;
 	private String myNameWithoutExtension;
-	private String myExtension;
+	private final String myExtension;
 	private	int myArchiveType;
 	private	ZLFileInfo myInfo;
 	
@@ -114,6 +114,8 @@ public class ZLFile {
 		if (index > 0) {
 			myExtension = myNameWithoutExtension.substring(index + 1);
 			myNameWithoutExtension = myNameWithoutExtension.substring(0, index);
+		} else {
+			myExtension = "";
 		}
 	}
 	

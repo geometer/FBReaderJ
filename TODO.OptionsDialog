@@ -1,0 +1,107 @@
+		<node name="OptionsDialog">
+			<node name="tab">
+				<node name="Library" value="Библиотека">
+					<node name="recentListSize" value="Размер списка прочитанных книг"/>
+					<node name="showTags" value="Сортировать книги по категориям"/>
+					<node name="showAllBooksList" value="Показывать список всех книг"/>
+				</node>
+				<node name="Language" value="Язык">
+					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
+-					<node name="defaultLanguage" value="Язык по умолчанию"/>
+-					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
+-					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
+-					<node name="useWindows1252Hack" value="Использовать windows-1252 вместо iso-8859-1"/>
+				</node>
+				<node name="Indicator" value="Индикатор">
+					<node name="pageNumber" value="Показывать номера страниц"/>
+					<node name="time" value="Показывать текущее время"/>
+					<node name="fontSize" value="Размер шрифта"/>
+					<node name="tocMarks" value="Показывать пометки начала глав"/>
+					<node name="navigation" value="Реагировать на нажатия"/>
+				</node>
+-				<node name="Scrolling" value="Перелистывание">
+-					<node name="optionsFor" value="Настройки перелистывания">
+-						<node name="large" value="на большое расстояние"/>
+-						<node name="small" value="на небольшое расстояние"/>
+-						<node name="mouse" value="колесом мышки"/>
+-						<node name="tap" value="нажатием на экран"/>
+-					</node>
+-					<node name="delay" value="Задержка, миллисекунды"/>
+-					<node name="mode" value="Перелистывание">
+-						<node name="noOverlapping" value="без перекрытия"/>
+-						<node name="keepLines" value="перекрывает несколько строк"/>
+-						<node name="scrollLines" value="сдвигает несколько строк"/>
+-						<node name="scrollPercentage" value="сдвигает часть текста"/>
+-						<node name="disable" value="выключено"/>
+-					</node>
+-					<node name="linesToKeep" value="Сколько строк перекрывать"/>
+-					<node name="linesToScroll" value="Сколько строк сдвигать"/>
+-					<node name="percentToScroll" value="Сколько процентов сдвигать"/>
+-					<node name="fingerOnly" value="Только при нажатии пальцем"/>
+-				</node>
+				<node name="Selection" value="Пометка">
+					<node name="enableSelection" value="Разрешить помечать текст"/>
+				</node>
+-				<node name="Format" value="Форматирование">
+-					<node name="optionsFor" value="Настройки для"/>
+-					<node name="lineSpacing" value="Интервал">
+-						<node name="unchanged" value="&lt;не менять&gt;"/>
+-					</node>
+-					<node name="firstLineIndent" value="Красная строка"/>
+-					<node name="alignment" value="Выравнивание">
+-						<node name="left" value="левое"/>
+-						<node name="right" value="правое"/>
+-						<node name="center" value="по центру"/>
+-						<node name="justify" value="по краям"/>
+-						<node name="unchanged" value="&lt;не менять&gt;"/>
+-					</node>
+-					<node name="spaceBefore" value="Пропуск перед"/>
+-					<node name="spaceAfter" value="Пропуск после"/>
+-					<node name="leftIndent" value="Отступ слева"/>
+-					<node name="rightIndent" value="Отступ справа"/>
+-				</node>
+-				<node name="Styles" value="Стили">
+-					<node name="optionsFor" value="Настройки для"/>
+-					<node name="fontFamily" value="Шрифт">
+-						<node name="unchanged" value="&lt;не менять&gt;"/>
+-					</node>
+-					<node name="fontSize" value="Размер"/>
+-					<node name="fontSizeDifference" value="Размер"/>
+-					<node name="bold" value="Жирный"/>
+-					<node name="italic" value="Курсив"/>
+-					<node name="allowHyphenations" value="Переносы"/>
+-					<node name="autoHyphenations" value="Переносы"/>
+-				</node>
+-				<node name="Colors" value="Цвета">
+-					<node name="colorFor" value="Цвет">
+-						<node name="background" value="фона"/>
+-						<node name="selectionBackground" value="фона пометки"/>
+-						<node name="text" value="обычного текста"/>
+-						<node name="internalLink" value="ссылки"/>
+-						<node name="externalLink" value="внешней ссылки"/>
+-						<node name="highlighted" value="подсвеченного текста"/>
+-						<node name="treeLines" value="линий"/>
+-						<node name="indicator" value="индикатора"/>
+-					</node>
+-				</node>
+				<node name="Keys" value="Клавиши">
+					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
+				</node>
+-				<node name="Web" value="Web">
+-					<node name="defaultText" value="Окрывать внешние ссылки в браузере"/>
+-				</node>
+			</node>
+		</node>
+		<node name="InfoDialog">
+			<node name="tab">
+				<node name="Common" value="Основная информация">
+					<node name="authorSortKey" value="Имя для сортировки"/>
+-					<node name="language" value="Язык"/>
+-					<node name="encodingSet" value="Набор кодировок"/>
+-					<node name="encoding" value="Кодировка"/>
+				</node>
+				<node name="Series" value="Серия">
+-					<node name="seriesTitle" value="Название серии"/>
+				</node>
+			</node>
+		</node>
