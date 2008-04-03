@@ -71,7 +71,7 @@ public class ZLFile {
 			myInfo = new ZLFileInfo();
 			myInfo.Exists = true;
 			myPath = path;
-			myNameWithExtension = myPath;
+			myNameWithExtension = path;
 		} else {
 			myPath = ZLFSUtil.normalize(path);		
 			int index = ZLFSUtil.findLastFileNameDelimiter(myPath);
@@ -93,20 +93,20 @@ public class ZLFile {
 			if (lowerCaseName.endsWith(".gz")) {
 				myNameWithoutExtension = myNameWithoutExtension.substring(0, myNameWithoutExtension.length() - 3);
 				lowerCaseName = lowerCaseName.substring(0, lowerCaseName.length() - 3);
-				myArchiveType = (int)(myArchiveType | ArchiveType.GZIP);
+				myArchiveType = myArchiveType | ArchiveType.GZIP;
 			}
 			if (lowerCaseName.endsWith(".bz2")) {
 				myNameWithoutExtension = myNameWithoutExtension.substring(0, myNameWithoutExtension.length() - 4);
 				lowerCaseName = lowerCaseName.substring(0, lowerCaseName.length() - 4);
-				myArchiveType = (int)(myArchiveType | ArchiveType.BZIP2);
+				myArchiveType = myArchiveType | ArchiveType.BZIP2;
 			}
 			if (lowerCaseName.endsWith(".zip")) {
-				myArchiveType = (int)(myArchiveType | ArchiveType.ZIP);
+				myArchiveType = myArchiveType | ArchiveType.ZIP;
 			} else if (lowerCaseName.endsWith(".tar")) {
-				myArchiveType = (int)(myArchiveType | ArchiveType.TAR);
+				myArchiveType = myArchiveType | ArchiveType.TAR;
 			} else if (lowerCaseName.endsWith(".tgz") || lowerCaseName.endsWith(".ipk")) {
 				//nothing to-do myNameWithoutExtension = myNameWithoutExtension.substr(0, myNameWithoutExtension.length() - 3) + "tar";
-				myArchiveType = (int)(myArchiveType | ArchiveType.TAR | ArchiveType.GZIP);
+				myArchiveType = myArchiveType | ArchiveType.TAR | ArchiveType.GZIP;
 			}
 		}
 
@@ -191,13 +191,8 @@ public class ZLFile {
 		return path;
 	}
     
-	//my method for test
-	public InputStream getInputStream(String myHelpFileName) {
-		return ZLibrary.getInstance().getInputStream(myHelpFileName);
-	}
-	
 	public InputStream getInputStream() throws IOException {
-		//System.out.println(myPath);
+		System.out.println(myPath);
 		if (isDirectory()) {
 			return null;
 		}
@@ -205,7 +200,7 @@ public class ZLFile {
 		InputStream stream = null;
 		int index = ZLFSUtil.findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			stream = createPlainInputStream(myPath);
+			stream = ZLibrary.getInstance().getInputStream(myPath);
 		} else {
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
 			InputStream base = baseFile.getInputStream();
@@ -232,14 +227,6 @@ public class ZLFile {
 	}
 	//public ZLOutputStream outputStream();*/
 	
-	private InputStream createPlainInputStream(String path) {
-		try {
-			return new BufferedInputStream(new FileInputStream(path));
-		} catch (FileNotFoundException e) {
-			return null;
-		}
-	}
-	
 	public ZLDir getDirectory() {
 		return getDirectory(false);
 	}
@@ -251,7 +238,7 @@ public class ZLFile {
 			} else if (0 != (myArchiveType & ArchiveType.ZIP)) {
 				return new ZLZipDir(myPath);
 			} else if (0 != (myArchiveType & ArchiveType.TAR)) {
-				//return new ZLTarDir(myPath);
+				return new ZLTarDir(myPath);
 			}
 		} else if (createUnexisting) {
 			myInfo = null;

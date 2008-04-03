@@ -11,8 +11,8 @@ public abstract class ZLDir {
 		return ZLFSUtil.getRootDirectory();
 	}
 
-	public ZLDir(String path) {
-		myPath = ZLFSUtil.normalize(path);
+	ZLDir(String path) {
+		myPath = path;
 	}
 	
 	public String getPath() {
@@ -28,7 +28,13 @@ public abstract class ZLDir {
 		return ZLFSUtil.getParentPath(myPath);
 	}
 	
-	abstract public String getItemPath(String itemName);
+	public String getItemPath(String itemName) {
+		if (itemName == "..") {
+			return getParentPath();
+		} else {
+			return myPath.endsWith(File.separator) || myPath == "" ? myPath + itemName : myPath + getDelimiter() + itemName;
+		}
+	}
 	
 	public boolean isRoot() {
 		return ZLFSUtil.getRootDirectoryPath().equals(myPath);

@@ -45,6 +45,9 @@ abstract class ZLFSUtil {
 
 	static int findArchiveFileNameDelimiter(String path) {
 		int index = path.lastIndexOf(':');
+		if (path.startsWith(ZLibrary.JAR_DATA_PREFIX)) {
+			return (index < ZLibrary.JAR_DATA_PREFIX.length()) ? -1 : index;
+		}
 		if (System.getProperty("os.name").startsWith("Windows")) {
 			return (index == 1) ? -1 : index;
 		}

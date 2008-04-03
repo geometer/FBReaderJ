@@ -7,7 +7,7 @@ import org.zlibrary.core.util.*;
 
 import org.zlibrary.core.library.ZLibrary;
 
-public class ZLFSDir extends ZLDir {
+class ZLFSDir extends ZLDir {
 	private File myFile;
 	
 	ZLFSDir(String path) {

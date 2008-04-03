@@ -10,18 +10,16 @@ public class ZLZipDir extends ZLDir {
 	
 	ZLZipDir(String path) {		
 		super(path);
-		System.out.println();
-		System.out.println(path);
-
 		myFile = new File(path);
 	}
 
 	public String getDelimiter() {
-		return File.separator;
+		return ":";
 	};
 	
+	private static ArrayList EMPTY = new ArrayList();
 	public ArrayList collectSubDirs() {
-	    return null;
+		return EMPTY;
 	};
 	
 	public ArrayList/*<String>*/ collectFiles() {		
@@ -39,7 +37,7 @@ public class ZLZipDir extends ZLDir {
 			//e.printStackTrace();
 		}
 		if ((zf == null) || (zf.entries() == null)) {		
-			return new ArrayList();
+			return EMPTY;
 		}
 		Enumeration/*ZipEntry*/ en = zf.entries();
         while(en.hasMoreElements()) {
@@ -48,13 +46,4 @@ public class ZLZipDir extends ZLDir {
         }
 		return newdirs;
 	};
-	
-	public String getItemPath(String itemName) {
-		if (itemName == "..") {
-			return getParentPath();
-		} else {
-			return myPath.endsWith(File.separator) || myPath == "" ? myPath + itemName : myPath + ":" + itemName;
-		}
-	}
-
 }
