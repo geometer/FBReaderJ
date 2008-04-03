@@ -1,5 +1,7 @@
 package org.fbreader.fbreader;
 
+import org.zlibrary.core.options.ZLBooleanOption;
+import org.zlibrary.core.options.ZLOption;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.dialogs.ZLDialogManager;
 import org.zlibrary.core.view.ZLPaintContext;
@@ -14,11 +16,21 @@ public class CollectionView extends FBView {
 	private final BookCollection myCollection = new BookCollection();
 	private boolean myTreeStateIsFrozen;
 	private boolean myUpdateModel;
+	private boolean myShowTags;
+	private boolean myShowAllBooksList;
 
+	private static final String LIBRARY = "Library";
+	public final ZLBooleanOption ShowTagsOption =
+		new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, LIBRARY, "ShowTags", true);
+	public final ZLBooleanOption ShowAllBooksTagOption =
+		new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, LIBRARY, "ShowAllBooksTag", true);
+	
 	public CollectionView(FBReader reader, ZLPaintContext context) {
 		super(reader, context);
 		myUpdateModel = true;
 		setModel(new CollectionModel(this, myCollection));
+		myShowTags = ShowTagsOption.getValue();
+		myShowAllBooksList = ShowAllBooksTagOption.getValue();
 	}
 	
 	public String getCaption() {
@@ -120,6 +132,12 @@ public class CollectionView extends FBView {
 	}
 
 	public void paint() {
+		if ((myShowTags != ShowTagsOption.getValue()) ||
+				(myShowAllBooksList != ShowAllBooksTagOption.getValue())) {
+			myShowTags = ShowTagsOption.getValue();
+			myShowAllBooksList = ShowAllBooksTagOption.getValue();
+			myUpdateModel = true;
+		}
 		if (myUpdateModel) {			
 			ZLTextModel oldModel = getModel();
 			setModel(null);

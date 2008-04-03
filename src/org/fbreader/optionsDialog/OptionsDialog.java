@@ -37,7 +37,14 @@ public class OptionsDialog {
 		libraryTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
 		RecentBooksView recentBooksView = (RecentBooksView) fbreader.getRecentBooksView();
 		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(recentBooksView.lastBooks().MaxListSizeOption, 1));
-
+		
+		ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
+		ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
+		showTagsEntry.addDependentEntry(showAllBooksTagEntry);
+		libraryTab.addOption("showTags", showTagsEntry);
+		libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
+		showTagsEntry.onStateChanged(showTagsEntry.initialState());
+		
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
 		new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes());
@@ -60,7 +67,6 @@ public class OptionsDialog {
 		
 		myDialog.createTab("Format");
 		
-//		myDialog.createTab("Styles");
 		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getContext());
 		createIndicatorTab(fbreader);
 		
@@ -70,10 +76,8 @@ public class OptionsDialog {
 		ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		
 		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
-	//	ZLDialogContent keysTab = myDialog.createTab("Keys");
-	//	keysTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
-		
-		myDialog.createTab("Config");
+	
+	//	myDialog.createTab("Config");
 		
 		/*
 		
