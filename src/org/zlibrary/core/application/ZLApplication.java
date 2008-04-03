@@ -48,7 +48,7 @@ public abstract class ZLApplication {
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
 	
 	private final ZLPaintContext myContext;
-	private ZLViewWidget myViewWidget;
+	protected ZLViewWidget myViewWidget;
 	private ZLApplicationWindow myWindow;
 	private ZLView myInitialView;
 

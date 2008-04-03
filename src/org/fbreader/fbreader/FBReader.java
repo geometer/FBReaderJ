@@ -167,7 +167,8 @@ public final class FBReader extends ZLApplication {
 	}
 
 	public ZLKeyBindings keyBindings() {
-		return myBindings0;
+		return UseSeparateBindingsOption.getValue() ?
+				keyBindings(myViewWidget.getRotation()) : myBindings0;
 	}
 	
 	public ZLKeyBindings keyBindings(int angle) {
