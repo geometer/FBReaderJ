@@ -1,5 +1,7 @@
 package org.zlibrary.core.xml;
 
+import java.util.*;
+
 public class ZLXMLReaderAdapter implements ZLXMLReader {
 	public boolean read(String fileName) {
 		return ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, fileName);
@@ -32,6 +34,6 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void namespaceListChangedHandler(ZLStringMap namespaces) {
+	public void namespaceListChangedHandler(HashMap namespaces) {
 	}
 }

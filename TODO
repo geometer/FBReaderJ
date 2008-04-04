@@ -140,7 +140,7 @@ DONE		android
 НМ 0	tap scrolling
 2	обработка архивов в параметре командной строки
 1	добавлять в библиотеку книгу из командной строки
-1	xml: сделать нормальную поддержку namespace'ов
+DONE	xml: сделать нормальную поддержку namespace'ов
 1	xml: сделать поддержку внешних DTD (xhtml entities)
 2 fb2descriptionReader: interrupt()
 

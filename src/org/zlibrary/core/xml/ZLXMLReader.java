@@ -1,5 +1,7 @@
 package org.zlibrary.core.xml;
 
+import java.util.*;
+
 public interface ZLXMLReader {
 	public boolean dontCacheAttributeValues();
 
@@ -12,5 +14,5 @@ public interface ZLXMLReader {
 	public void characterDataHandlerFinal(char[] ch, int start, int length);
 
 	boolean processNamespaces();
-	void namespaceListChangedHandler(ZLStringMap namespaces);
+	void namespaceListChangedHandler(HashMap namespaces);
 }

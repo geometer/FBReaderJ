@@ -1,10 +1,9 @@
 package org.fbreader.formats.fb2;
 
-import org.fbreader.bookmodel.BookModel;
-import org.fbreader.bookmodel.BookReader;
-import org.fbreader.bookmodel.FBTextKind;
+import java.util.*;
+import org.zlibrary.core.util.*;
+import org.fbreader.bookmodel.*;
 import org.zlibrary.core.xml.*;
-import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.text.model.ZLTextParagraph;
 
 public final class FB2Reader extends BookReader implements ZLXMLReader {
@@ -23,7 +22,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 
 	private final char[] SPACE = { ' ' }; 
-	private String myHrefAttribute = ":href";
+	private String myHrefAttribute;
 
 	private byte[] myTagStack = new byte[10];
 	private int myTagStackSize = 0;
@@ -196,21 +195,6 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		}
 		tagStack[myTagStackSize++] = tag;
 		switch (tag) {
-			case FB2Tag.FICTIONBOOK:
-			{
-				final int attibutesNumber = attributes.getSize();
-				for (int i = 0; i < attibutesNumber; ++i) {
-					final String key = attributes.getKey(i);
-					if (key.startsWith("xmlns:")) {
-						final String value = attributes.getValue(key);
-						if (value.endsWith("/xlink")) {
-							myHrefAttribute = (key.substring(6) + ":href").intern();
-							break;
-						}
-					}
-				}
-				break;
-			}
 			case FB2Tag.P:
 				if (mySectionStarted) {
 					mySectionStarted = false;
@@ -320,19 +304,21 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 				break;
 			
 			case FB2Tag.A:
-				String ref = attributes.getValue(myHrefAttribute);
-				String type = attributes.getValue("type");
-				if ((ref != null) && (ref.length() != 0)) {
-					if (ref.charAt(0) == '#') {
-						myHyperlinkType = "note".equals(type) ? FBTextKind.FOOTNOTE : FBTextKind.INTERNAL_HYPERLINK;
-						ref = ref.substring(1);
+				if (myHrefAttribute != null) {
+					String ref = attributes.getValue(myHrefAttribute);
+					String type = attributes.getValue("type");
+					if ((ref != null) && (ref.length() != 0)) {
+						if (ref.charAt(0) == '#') {
+							myHyperlinkType = "note".equals(type) ? FBTextKind.FOOTNOTE : FBTextKind.INTERNAL_HYPERLINK;
+							ref = ref.substring(1);
+						} else {
+							myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
+						}
+						addHyperlinkControl(myHyperlinkType, ref);
 					} else {
-						myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
+						myHyperlinkType = FBTextKind.FOOTNOTE;
+						addControl(myHyperlinkType, true);
 					}
-					addHyperlinkControl(myHyperlinkType, ref);
-				} else {
-					myHyperlinkType = FBTextKind.FOOTNOTE;
-					addControl(myHyperlinkType, true);
 				}
 				break;
 			
@@ -344,21 +330,23 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 				break;	
 			
 			case FB2Tag.IMAGE:
-				String imgRef = attributes.getValue(myHrefAttribute);
-				if ((imgRef != null) && (imgRef.length() != 0) && (imgRef.charAt(0) == '#')) {
-					String vOffset = attributes.getValue("voffset");
-					short offset = 0;
-					try {
-						offset = Short.parseShort(vOffset);
-					} catch (NumberFormatException e) {
-					}
-					imgRef = imgRef.substring(1);
-					if (!imgRef.equals(myCoverImageReference) ||
-							myParagraphsBeforeBodyNumber != getModel().getBookTextModel().getParagraphsNumber()) {
-						addImageReference(imgRef, offset);
-					}
-					if (myInsideCoverpage) {
-						myCoverImageReference = imgRef;
+				if (myHrefAttribute != null) {
+					String imgRef = attributes.getValue(myHrefAttribute);
+					if ((imgRef != null) && (imgRef.length() != 0) && (imgRef.charAt(0) == '#')) {
+						String vOffset = attributes.getValue("voffset");
+						short offset = 0;
+						try {
+							offset = Short.parseShort(vOffset);
+						} catch (NumberFormatException e) {
+						}
+						imgRef = imgRef.substring(1);
+						if (!imgRef.equals(myCoverImageReference) ||
+								myParagraphsBeforeBodyNumber != getModel().getBookTextModel().getParagraphsNumber()) {
+							addImageReference(imgRef, offset);
+						}
+						if (myInsideCoverpage) {
+							myCoverImageReference = imgRef;
+						}
 					}
 				}
 				break;
@@ -381,6 +369,11 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		return true;
 	}
 
-	public void namespaceListChangedHandler(ZLStringMap namespaces) {
+	public void namespaceListChangedHandler(HashMap namespaces) {
+		myHrefAttribute = (String)namespaces.get("http://www.w3.org/1999/xlink");
+		if (myHrefAttribute != null) {
+			myHrefAttribute += ":href";
+			myHrefAttribute = myHrefAttribute.intern();
+		}
 	}
 }

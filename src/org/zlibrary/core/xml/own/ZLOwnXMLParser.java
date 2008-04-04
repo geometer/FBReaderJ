@@ -106,6 +106,8 @@ final class ZLOwnXMLParser {
 		final InputStreamReader streamReader = myStreamReader;
 		final ZLXMLReader xmlReader = myXMLReader;
 		final boolean processNamespaces = myProcessNamespaces;
+		HashMap oldNamespaceMap = processNamespaces ? new HashMap() : null;
+		HashMap currentNamespaceMap = null;
 		final ArrayList namespaceMapStack = new ArrayList();
 		char[] buffer = myBuffer;
 		final ZLMutableString tagName = new ZLMutableString();
@@ -190,7 +192,14 @@ mainSwitchLabel:
 												tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
 											}
 											tagStack[tagStackSize++] = stringTagName;
-											processStartTag(xmlReader, stringTagName, attributes);
+											if (processNamespaces) {
+												if (currentNamespaceMap != null) {
+													oldNamespaceMap = currentNamespaceMap;
+												}
+												namespaceMapStack.add(currentNamespaceMap);
+											}
+											processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap);
+											currentNamespaceMap = null;
 										}
 										startPosition = i + 1;
 										break mainSwitchLabel;
@@ -198,6 +207,7 @@ mainSwitchLabel:
 										state = SLASH;
 										tagName.append(buffer, startPosition, i - startPosition);
 										processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+										currentNamespaceMap = null;
 										break mainSwitchLabel;
 									case '&':
 										savedState = START_TAG;
@@ -216,7 +226,14 @@ mainSwitchLabel:
 											tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
 										}
 										tagStack[tagStackSize++] = stringTagName;
-										processStartTag(xmlReader, stringTagName, attributes);
+										if (processNamespaces) {
+											if (currentNamespaceMap != null) {
+												oldNamespaceMap = currentNamespaceMap;
+											}
+											namespaceMapStack.add(currentNamespaceMap);
+										}
+										processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap);
+										currentNamespaceMap = null;
 									}
 									state = TEXT;
 									startPosition = i + 1;
@@ -224,6 +241,7 @@ mainSwitchLabel:
 								case '/':
 									state = SLASH;
 									processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+									currentNamespaceMap = null;
 									break;
 								case 0x0008:
 								case 0x0009:
@@ -289,9 +307,12 @@ mainSwitchLabel:
 										state = WS_AFTER_START_TAG_NAME;
 										final String aName = convertToString(strings, attributeName);
 										if (processNamespaces && aName.startsWith("xmlns:")) {
-											System.err.println("NS map changed");
-										}
-										if (dontCacheAttributeValues) {
+											if (currentNamespaceMap == null) {
+												currentNamespaceMap = new HashMap(oldNamespaceMap);
+											}
+											currentNamespaceMap.put(attributeValue.toString(), aName.substring(6));
+											attributeValue.clear();
+										} else if (dontCacheAttributeValues) {
 											attributes.put(aName, attributeValue.toString());
 											attributeValue.clear();
 										} else {
@@ -349,9 +370,21 @@ mainSwitchLabel:
 									case '>':
 										//tagName.append(buffer, startPosition, i - startPosition);
 										if (tagStackSize > 0) {
-											processEndTag(xmlReader, tagStack[--tagStackSize]);
+											if (processNamespaces &&
+													(namespaceMapStack.remove(tagStackSize - 1) != null)) {
+												for (int j = namespaceMapStack.size() - 1; j >= 0; --j) {
+													Object element = namespaceMapStack.get(j);
+													if (element != null) {
+														oldNamespaceMap = (HashMap)element;
+														currentNamespaceMap = oldNamespaceMap;
+														break;
+													}
+												}
+											}
+											processEndTag(xmlReader, tagStack[--tagStackSize], currentNamespaceMap);
+											currentNamespaceMap = null;
 										}
-										//processEndTag(xmlReader, convertToString(strings, tagName));
+										//processEndTag(xmlReader, convertToString(strings, tagName), currentNamespaceMap);
 										state = TEXT;
 										startPosition = i + 1;
 										break mainSwitchLabel;
@@ -380,9 +413,9 @@ mainSwitchLabel:
 									case '>':
 										state = TEXT;
 										if (tagStackSize > 0) {
-											processEndTag(xmlReader, tagStack[--tagStackSize]);
+											processEndTag(xmlReader, tagStack[--tagStackSize], currentNamespaceMap);
 										}
-										//processEndTag(xmlReader, convertToString(strings, tagName));
+										//processEndTag(xmlReader, convertToString(strings, tagName), currentNamespaceMap);
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
@@ -438,12 +471,18 @@ mainSwitchLabel:
 		attributes.clear();
 	}
 
-	private static void processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes) {
+	private static void processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes, HashMap currentNamespaceMap) {
 		xmlReader.startElementHandler(tagName, attributes);
+		if (currentNamespaceMap != null) {
+			xmlReader.namespaceListChangedHandler(currentNamespaceMap);
+		}
 		attributes.clear();
 	}
 
-	private static void processEndTag(ZLXMLReader xmlReader, String tagName) {
+	private static void processEndTag(ZLXMLReader xmlReader, String tagName, HashMap currentNamespaceMap) {
+		if (currentNamespaceMap != null) {
+			xmlReader.namespaceListChangedHandler(currentNamespaceMap);
+		}
 		xmlReader.endElementHandler(tagName);
 	}
 }
