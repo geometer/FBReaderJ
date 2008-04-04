@@ -49,7 +49,7 @@ DONE	fb2 (сделать чтение описания книги)
 	архивы
 DONE		zip
 3		gzip
-3		tar
+DONE		tar
 3		bz2
 
 диалоги (abstract):

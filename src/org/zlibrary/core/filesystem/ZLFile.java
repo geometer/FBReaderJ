@@ -192,7 +192,6 @@ public class ZLFile {
 	}
     
 	public InputStream getInputStream() throws IOException {
-		System.out.println(myPath);
 		if (isDirectory()) {
 			return null;
 		}
@@ -210,7 +209,7 @@ public class ZLFile {
 					ZipEntry entry = zf.getEntry (myPath.substring(index+1));
 					stream = zf.getInputStream (entry);
 				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
-					//stream = new ZLTarInputStream(base, myPath.substring(index + 1));
+					stream = new ZLTarInputStream(base, myPath.substring(index + 1));
 				}
 			}
 		}

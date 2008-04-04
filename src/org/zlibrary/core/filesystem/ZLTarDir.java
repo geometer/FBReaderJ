@@ -33,7 +33,9 @@ class ZLTarDir extends ZLDir {
 					if (lenToSkip < 0) {
 						break;
 					}
-					stream.skip(lenToSkip);
+					if (stream.skip(lenToSkip) != lenToSkip) {
+						break;
+					}
 					header.erase();
 				}
 			}
