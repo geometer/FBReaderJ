@@ -218,7 +218,7 @@ public class ZLFile {
 
 		if (stream != null) {
 			if (0 != (myArchiveType & ArchiveType.GZIP)) {
-				return new GZIPInputStream(stream);
+				return new GZIPInputStream(stream, 8192);
 			}
 			//if (0 != (myArchiveType & ArchiveType.BZIP2)) {
 				//return new ZLBzip2InputStream(stream);
