@@ -8,6 +8,7 @@ public abstract class ZLOption {
 	public static final String CONFIG_CATEGORY = "options";
 	public static final String STATE_CATEGORY = "state";
 	public static final String EMPTY = "";
+	public static final String PLATFORM_GROUP = "PlatformOptions";
 	
 	private final String myCategory;
 	private final String myGroup;

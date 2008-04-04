@@ -7,7 +7,7 @@ import org.zlibrary.text.view.ZLTextStyle;
 
 import org.zlibrary.text.model.ZLTextAlignmentType;
 
-class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
+public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 	public final ZLIntegerRangeOption SpaceBeforeOption;
 	public final ZLIntegerRangeOption SpaceAfterOption;
 	public final ZLIntegerRangeOption LeftIndentOption;

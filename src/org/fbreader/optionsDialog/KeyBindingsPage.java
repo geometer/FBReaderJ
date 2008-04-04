@@ -23,7 +23,7 @@ import org.zlibrary.core.options.ZLOption;;
 public class KeyBindingsPage {
 
 	public KeyBindingsPage(FBReader fbreader, ZLDialogContent dialogTab) {
-		if (new ZLBooleanOption(ZLOption.EMPTY, "PlatformOptions", "FullKeyboardControlSupported", false).getValue()) {
+		if (new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "FullKeyboardControlSupported", false).getValue()) {
 			dialogTab.addOption("grabSystemKeys", new KeyboardControlEntry(fbreader));
 		}
 		MultiKeyOptionEntry keyEntry = new MultiKeyOptionEntry(dialogTab.getResource("action"), fbreader);

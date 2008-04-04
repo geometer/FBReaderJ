@@ -43,6 +43,11 @@ public final class FBReader extends ZLApplication {
 	public final ScrollingOptions FingerTapScrollingOptions =
 		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
 
+	public final ZLBooleanOption EnableTapScrollingOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "TapScrolling", "Enabled", true);
+	public final ZLBooleanOption TapScrollingOnFingerOnlyOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "TapScrolling", "FingerOnly", true);
+	
 	private String myHelpFileName;
 	
 	String getHelpFileName() {

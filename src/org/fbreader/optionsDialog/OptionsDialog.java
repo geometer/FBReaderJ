@@ -50,7 +50,9 @@ public class OptionsDialog {
 		new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes());
 		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
 		
-		myDialog.createTab("Scrolling");
+	//	myDialog.createTab("Scrolling");
+		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
+		
 		
 		ZLDialogContent selectionTab = myDialog.createTab("Selection");
 		selectionTab.addOption("enableSelection", FBView.selectionOption());
@@ -65,7 +67,9 @@ public class OptionsDialog {
 			"bottom", new ZLSimpleSpinOptionEntry(FBView.getBottomMarginOption(), 1)
 		);
 		
-		myDialog.createTab("Format");
+	//	myDialog.createTab("Format");
+		new FormatOptionsPage(myDialog.createTab("Format"));
+		
 		
 		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getContext());
 		createIndicatorTab(fbreader);
@@ -76,6 +80,9 @@ public class OptionsDialog {
 		ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		
 		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
+		
+//		ZLDialogContent webTab = myDialog.createTab("Web");
+//		webTab.addOption("defaultText", option);
 	
 	//	myDialog.createTab("Config");
 		

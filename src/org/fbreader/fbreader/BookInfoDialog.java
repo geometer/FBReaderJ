@@ -129,6 +129,13 @@ public class BookInfoDialog {
 
 		public void onAccept(String value) {
 			myInfoDialog.myBookInfo.getAuthorDisplayNameOption().setValue(value);
+		}
+
+		public void onValueSelected(int index) {
+			final ArrayList authors = myInfoDialog.myCollection.authors();
+			myCurrentAuthor = (Author) authors.get(index);
+			myInfoDialog.myAuthorSortKeyEntry.resetView();
+			myInfoDialog.mySeriesTitleEntry.resetView();
 		}	
 	}
 	
