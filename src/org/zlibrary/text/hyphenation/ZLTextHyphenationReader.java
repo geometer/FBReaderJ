@@ -16,13 +16,14 @@ final  class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		myHyphenator = hyphenator;
 	}
 
-	public void startElementHandler(String tag, ZLStringMap attributes) {
+	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = true;
 		}
+		return false;
 	}
 
-	public void endElementHandler(String tag) {
+	public boolean endElementHandler(String tag) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = false;
 			final int len = myBufferLength;
@@ -31,6 +32,7 @@ final  class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 			}
 			myBufferLength = 0;
 		}
+		return false;
 	}
 
 	public void characterDataHandler(char[] ch, int start, int length) {

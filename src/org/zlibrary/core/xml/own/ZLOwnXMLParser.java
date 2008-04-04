@@ -209,7 +209,10 @@ mainSwitchLabel:
 												}
 												namespaceMapStack.add(currentNamespaceMap);
 											}
-											processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap);
+											if (processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap)) {
+												streamReader.close();
+												return;
+											}
 											currentNamespaceMap = null;
 										}
 										startPosition = i + 1;
@@ -217,7 +220,10 @@ mainSwitchLabel:
 									case '/':
 										state = SLASH;
 										tagName.append(buffer, startPosition, i - startPosition);
-										processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+										if (processFullTag(xmlReader, convertToString(strings, tagName), attributes)) {
+											streamReader.close();
+											return;
+										}
 										currentNamespaceMap = null;
 										break mainSwitchLabel;
 									case '&':
@@ -243,7 +249,10 @@ mainSwitchLabel:
 											}
 											namespaceMapStack.add(currentNamespaceMap);
 										}
-										processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap);
+										if (processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap)) {
+											streamReader.close();
+											return;
+										}
 										currentNamespaceMap = null;
 									}
 									state = TEXT;
@@ -251,7 +260,10 @@ mainSwitchLabel:
 									break;
 								case '/':
 									state = SLASH;
-									processFullTag(xmlReader, convertToString(strings, tagName), attributes);
+									if (processFullTag(xmlReader, convertToString(strings, tagName), attributes)) {
+										streamReader.close();
+										return;
+									}
 									currentNamespaceMap = null;
 									break;
 								case 0x0008:
@@ -392,7 +404,10 @@ mainSwitchLabel:
 													}
 												}
 											}
-											processEndTag(xmlReader, tagStack[--tagStackSize], currentNamespaceMap);
+											if (processEndTag(xmlReader, tagStack[--tagStackSize], currentNamespaceMap)) {
+												streamReader.close();
+												return;
+											}
 											currentNamespaceMap = null;
 										}
 										//processEndTag(xmlReader, convertToString(strings, tagName), currentNamespaceMap);
@@ -476,24 +491,32 @@ mainSwitchLabel:
 		}
 	}
 
-	private static void processFullTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes) {
-		xmlReader.startElementHandler(tagName, attributes);
-		xmlReader.endElementHandler(tagName);
+	private static boolean processFullTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes) {
+		if (xmlReader.startElementHandler(tagName, attributes)) {
+			return true;
+		}
+		if (xmlReader.endElementHandler(tagName)) {
+			return true;
+		}
 		attributes.clear();
+		return false;
 	}
 
-	private static void processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes, HashMap currentNamespaceMap) {
-		xmlReader.startElementHandler(tagName, attributes);
+	private static boolean processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes, HashMap currentNamespaceMap) {
+		if (xmlReader.startElementHandler(tagName, attributes)) {
+			return true;
+		}
 		if (currentNamespaceMap != null) {
 			xmlReader.namespaceListChangedHandler(currentNamespaceMap);
 		}
 		attributes.clear();
+		return false;
 	}
 
-	private static void processEndTag(ZLXMLReader xmlReader, String tagName, HashMap currentNamespaceMap) {
+	private static boolean processEndTag(ZLXMLReader xmlReader, String tagName, HashMap currentNamespaceMap) {
 		if (currentNamespaceMap != null) {
 			xmlReader.namespaceListChangedHandler(currentNamespaceMap);
 		}
-		xmlReader.endElementHandler(tagName);
+		return xmlReader.endElementHandler(tagName);
 	}
 }

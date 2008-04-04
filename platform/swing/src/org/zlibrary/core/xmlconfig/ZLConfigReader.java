@@ -15,7 +15,7 @@ final class ZLConfigReader implements ZLReader {
 			myDepth = 0;
 		}
 
-		public void startElementHandler(String tag, ZLStringMap attributes) {
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -40,10 +40,12 @@ final class ZLConfigReader implements ZLReader {
 					System.out.println("too many nesting elements! in main");
 			}
 			myDepth++;
+			return false;
 		}
 
-		public void endElementHandler(String tag) {
+		public boolean endElementHandler(String tag) {
 			myDepth--;
+			return false;
 		}
 
 		public void endDocumentHandler() {
@@ -63,7 +65,7 @@ final class ZLConfigReader implements ZLReader {
 			myFile = "delta.xml";
 		}
 
-		public void startElementHandler(String tag, ZLStringMap attributes) {
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			switch (myDepth) {
 				case 0:
 					if (!tag.equals("config")) {
@@ -97,18 +99,16 @@ final class ZLConfigReader implements ZLReader {
 					System.out.println("too many nesting elements!");
 			}
 			myDepth++;
+			return false;
 		}
 
-		public void endElementHandler(String tag) {
+		public boolean endElementHandler(String tag) {
 			if ((myDepth == 1) && (myCurrentGroupIsEmpty) 
 					&& (tag.equals("group"))) {
 				myConfig.removeGroup(myCurrentGroup);
 			}
 			myDepth--;
-		}
-
-		public void endDocumentHandler() {
-			
+			return false;
 		}
 	}
 

@@ -75,7 +75,7 @@ public class ZLTextStyleCollection {
 			myCollection = collection;
 		}
 
-		public void startElementHandler(String tag, ZLStringMap attributes) {
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";
 
@@ -140,6 +140,7 @@ public class ZLTextStyleCollection {
 					myCollection.myDecorationMap[id & 0xFF] = decoration;
 				}
 			}
+			return false;
 		}
 	}	
 }

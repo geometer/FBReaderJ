@@ -76,7 +76,7 @@ final class ZLTreeResource extends ZLResource {
 			return true;
 		}
 
-		public void startElementHandler(String tag, ZLStringMap attributes) {
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final ArrayList stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.getValue("name");
@@ -103,13 +103,15 @@ final class ZLTreeResource extends ZLResource {
 					stack.add(node);
 				}
 			}
+			return false;
 		}
 
-		public void endElementHandler(String tag) {
+		public boolean endElementHandler(String tag) {
 			final ArrayList stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				stack.remove(stack.size() - 1);
 			}
+			return false;
 		}
 	}
 }

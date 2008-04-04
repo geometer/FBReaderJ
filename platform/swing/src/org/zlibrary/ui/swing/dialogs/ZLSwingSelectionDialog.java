@@ -44,7 +44,7 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	protected void exitDialog() {
 		myWidthOption.setValue(myDialog.getWidth());
 		myHeightOption.setValue(myDialog.getHeight());
-		myDialog.hide();
+		myDialog.setVisible(false);
 	}
 
 	public void run() {

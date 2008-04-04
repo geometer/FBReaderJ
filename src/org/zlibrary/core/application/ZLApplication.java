@@ -554,7 +554,7 @@ public abstract class ZLApplication {
 		private static final String BUTTON = "button";
 		private static final String SEPARATOR = "separator";
 
-		public void startElementHandler(String tag, ZLStringMap attributes) {
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if (myToolbar == null) {
 				myToolbar = new Toolbar();
 			}
@@ -566,6 +566,7 @@ public abstract class ZLApplication {
 			} else if (SEPARATOR == tag) {
 				myToolbar.addSeparator();
 			}
+			return false;
 		}
 	}
 
@@ -575,7 +576,7 @@ public abstract class ZLApplication {
 
 		private final ArrayList mySubmenuStack = new ArrayList();
 
-		public void startElementHandler(String tag, ZLStringMap attributes) {
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if (myMenubar == null) {
 				myMenubar = new Menubar();
 			}
@@ -592,15 +593,17 @@ public abstract class ZLApplication {
 					stack.add(menu.addSubmenu(id));
 				}
 			}
+			return false;
 		}
 
-		public void endElementHandler(String tag) {
+		public boolean endElementHandler(String tag) {
 			if (SUBMENU == tag) {
 				final ArrayList stack = mySubmenuStack;
 				if (!stack.isEmpty()) {
 					stack.remove(stack.size() - 1);
 				}
 			}
+			return false;
 		}
 	}
 }

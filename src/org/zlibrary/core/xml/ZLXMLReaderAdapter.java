@@ -11,10 +11,12 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void startElementHandler(String tag, ZLStringMap attributes) {
+	public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		return false;
 	}
 	
-	public void endElementHandler(String tag) {
+	public boolean endElementHandler(String tag) {
+		return false;
 	}
 	
 	public void characterDataHandler(char[] ch, int start, int length) {

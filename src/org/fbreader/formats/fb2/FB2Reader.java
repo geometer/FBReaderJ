@@ -71,7 +71,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		}		
 	}
 
-	public void endElementHandler(String tagName) {
+	public boolean endElementHandler(String tagName) {
 		final byte tag = myTagStack[--myTagStackSize];
 		switch (tag) {
 			case FB2Tag.P:
@@ -171,9 +171,10 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			default:
 				break;
 		}		
+		return false;
 	}
 
-	public void startElementHandler(String tagName, ZLStringMap attributes) {
+	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
 		if (id != null) {
 			if (!myReadMainText) {
@@ -357,6 +358,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			default:
 				break;
 		}
+		return false;
 	}
 
 	public boolean processNamespaces() {

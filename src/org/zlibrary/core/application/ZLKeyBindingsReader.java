@@ -14,7 +14,7 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 		myKeymap = keymap; 
 	}
 		
-	public void startElementHandler(String tag, ZLStringMap attributes) {
+	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if ("binding".equals(tag)) {
 			String key = attributes.getValue("key");
 			String actionId = attributes.getValue("action");
@@ -22,6 +22,7 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 				myKeymap.put(key, actionId);
 			}
 		}
+		return false;
 	}
 
 	public void readBindings() {

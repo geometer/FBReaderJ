@@ -55,10 +55,11 @@ public abstract class ZLibrary {
 
 	protected final void loadProperties() {
 		new ZLXMLReaderAdapter() {
-			public void startElementHandler(String tag, ZLStringMap attributes) {
+			public boolean startElementHandler(String tag, ZLStringMap attributes) {
 				if (tag.equals("property")) {
 					myProperties.put(attributes.getValue("name"), attributes.getValue("value"));
 				}
+				return false;
 			}
 		}.read(JAR_DATA_PREFIX + "data/application.xml");
 	}

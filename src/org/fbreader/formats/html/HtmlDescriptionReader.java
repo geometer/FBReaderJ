@@ -27,7 +27,7 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 		return readDocument(fileName);
 	}
 
-	public void startElementHandler(String tagName, ZLStringMap attributes) {
+	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		switch (HtmlTag.getTagByName(tagName)) {
 			case HtmlTag.TITLE:
 				myReadTitle = true;
@@ -35,9 +35,10 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 			default:
 				break;
 		}
+		return false;
 	}
 
-	public void endElementHandler(String tag) {
+	public boolean endElementHandler(String tag) {
 		switch (HtmlTag.getTagByName(tag)) {
 			case HtmlTag.TITLE:
 				myReadTitle = false;
@@ -45,6 +46,7 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 			default:
 				break;
 		}
+		return false;
 	}
 
 	public void characterDataHandler(char[] ch, int start, int length) {
