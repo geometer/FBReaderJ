@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 import org.zlibrary.core.util.*;
+import org.zlibrary.core.filesystem.*;
 
 import org.zlibrary.core.util.ZLArrayUtils;
 import org.zlibrary.core.xml.ZLStringMap;
@@ -103,8 +104,18 @@ final class ZLOwnXMLParser {
 		entityMap.put("lt", new char[] { '<' });
 		entityMap.put("quot", new char[] { '\"' });
 
-		final InputStreamReader streamReader = myStreamReader;
 		final ZLXMLReader xmlReader = myXMLReader;
+
+		final ArrayList dtdList = xmlReader.externalDTDs();
+		final int dtdListSize = dtdList.size();
+		for (int i = 0; i < dtdListSize; ++i) {
+			InputStream stream = new ZLFile((String)dtdList.get(i)).getInputStream();
+			if (stream != null) {
+				new ZLOwnDTDParser().doIt(stream, entityMap);
+			}
+		}
+
+		final InputStreamReader streamReader = myStreamReader;
 		final boolean processNamespaces = myProcessNamespaces;
 		HashMap oldNamespaceMap = processNamespaces ? new HashMap() : null;
 		HashMap currentNamespaceMap = null;

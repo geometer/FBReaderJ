@@ -1,6 +1,7 @@
 package org.fbreader.formats.fb2;
 
 import java.util.*;
+import org.zlibrary.core.library.ZLibrary;
 import org.zlibrary.core.util.*;
 import org.fbreader.bookmodel.*;
 import org.zlibrary.core.xml.*;
@@ -368,5 +369,14 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			myHrefAttribute += ":href";
 			myHrefAttribute = myHrefAttribute.intern();
 		}
+	}
+
+	private static ArrayList ourExternalDTDs = new ArrayList();
+
+	public ArrayList externalDTDs() {
+		if (ourExternalDTDs.isEmpty()) {
+			ourExternalDTDs.add(ZLibrary.JAR_DATA_PREFIX + "data/formats/fb2/FBReaderVersion.ent");
+		}
+		return ourExternalDTDs;
 	}
 }
