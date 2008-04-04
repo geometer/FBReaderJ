@@ -32,6 +32,6 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void namespaceListChangedHandler() {
+	public void namespaceListChangedHandler(ZLStringMap namespaces) {
 	}
 }

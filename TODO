@@ -48,9 +48,9 @@ DONE	fb2 (сделать чтение описания книги)
 файловая система:
 	архивы
 DONE		zip
-3		gzip
+DONE		gzip
 DONE		tar
-3		bz2
+DELAYED		bz2
 
 диалоги (abstract):
 DONE	Selection
@@ -141,6 +141,7 @@ DONE		android
 2	обработка архивов в параметре командной строки
 1	добавлять в библиотеку книгу из командной строки
 1	xml: сделать нормальную поддержку namespace'ов
+1	xml: сделать поддержку внешних DTD (xhtml entities)
 2 fb2descriptionReader: interrupt()
 
 DONE при нажатии на кнопку выхода (в swing) и на Esc (android) закрывать текущий View, а не выходить из программы

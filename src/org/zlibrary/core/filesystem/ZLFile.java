@@ -95,11 +95,13 @@ public class ZLFile {
 				lowerCaseName = lowerCaseName.substring(0, lowerCaseName.length() - 3);
 				myArchiveType = myArchiveType | ArchiveType.GZIP;
 			}
+			/*
 			if (lowerCaseName.endsWith(".bz2")) {
 				myNameWithoutExtension = myNameWithoutExtension.substring(0, myNameWithoutExtension.length() - 4);
 				lowerCaseName = lowerCaseName.substring(0, lowerCaseName.length() - 4);
 				myArchiveType = myArchiveType | ArchiveType.BZIP2;
 			}
+			*/
 			if (lowerCaseName.endsWith(".zip")) {
 				myArchiveType = myArchiveType | ArchiveType.ZIP;
 			} else if (lowerCaseName.endsWith(".tar")) {
@@ -216,15 +218,14 @@ public class ZLFile {
 
 		if (stream != null) {
 			if (0 != (myArchiveType & ArchiveType.GZIP)) {
-				//return new ZLGzipInputStream(stream);
+				return new GZIPInputStream(stream);
 			}
-			if (0 != (myArchiveType & ArchiveType.BZIP2)) {
+			//if (0 != (myArchiveType & ArchiveType.BZIP2)) {
 				//return new ZLBzip2InputStream(stream);
-			}
+			//}
 		}
 		return stream;
 	}
-	//public ZLOutputStream outputStream();*/
 	
 	public ZLDir getDirectory() {
 		return getDirectory(false);
@@ -245,7 +246,4 @@ public class ZLFile {
 		}
 		return null;
 	}
-
 }
-
-

@@ -17,10 +17,6 @@ public final class ZLStringMap {
 		myValues = new String[8];
 	}
 
-	private void extend() {
-		final int length = myKeys.length;
-	}
-
 	public void put(String key, String value) {
 		final int size = mySize++;
 		String[] keys = myKeys;

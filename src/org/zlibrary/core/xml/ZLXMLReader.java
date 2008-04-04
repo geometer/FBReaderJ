@@ -12,5 +12,5 @@ public interface ZLXMLReader {
 	public void characterDataHandlerFinal(char[] ch, int start, int length);
 
 	boolean processNamespaces();
-	void namespaceListChangedHandler();
+	void namespaceListChangedHandler(ZLStringMap namespaces);
 }

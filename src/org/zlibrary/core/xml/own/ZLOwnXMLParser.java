@@ -40,11 +40,13 @@ final class ZLOwnXMLParser {
 
 	private final InputStreamReader myStreamReader;
 	private final ZLXMLReader myXMLReader;
+	private final boolean myProcessNamespaces;
 
 	private final char[] myBuffer = new char[8192];
 
 	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream) throws IOException {
 		myXMLReader = xmlReader;
+		myProcessNamespaces = xmlReader.processNamespaces();
 
 		String encoding = "utf-8";
 		final char[] buffer = myBuffer;
@@ -103,6 +105,8 @@ final class ZLOwnXMLParser {
 
 		final InputStreamReader streamReader = myStreamReader;
 		final ZLXMLReader xmlReader = myXMLReader;
+		final boolean processNamespaces = myProcessNamespaces;
+		final ArrayList namespaceMapStack = new ArrayList();
 		char[] buffer = myBuffer;
 		final ZLMutableString tagName = new ZLMutableString();
 		final ZLMutableString attributeName = new ZLMutableString();
@@ -283,11 +287,15 @@ mainSwitchLabel:
 									case '"':
 										attributeValue.append(buffer, startPosition, i - startPosition);
 										state = WS_AFTER_START_TAG_NAME;
+										final String aName = convertToString(strings, attributeName);
+										if (processNamespaces && aName.startsWith("xmlns:")) {
+											System.err.println("NS map changed");
+										}
 										if (dontCacheAttributeValues) {
-											attributes.put(convertToString(strings, attributeName), attributeValue.toString());
+											attributes.put(aName, attributeValue.toString());
 											attributeValue.clear();
 										} else {
-											attributes.put(convertToString(strings, attributeName), convertToString(strings, attributeValue));
+											attributes.put(aName, convertToString(strings, attributeValue));
 										}
 										break mainSwitchLabel;
 									case '&':

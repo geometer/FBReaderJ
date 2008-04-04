@@ -378,9 +378,9 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	}
 
 	public boolean processNamespaces() {
-		return false;
+		return true;
 	}
 
-	public void namespaceListChangedHandler() {
+	public void namespaceListChangedHandler(ZLStringMap namespaces) {
 	}
 }
