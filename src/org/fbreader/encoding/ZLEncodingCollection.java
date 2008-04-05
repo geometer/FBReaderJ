@@ -68,9 +68,9 @@ public class ZLEncodingCollection {
 		return myProviders;
 	}
 
-	private ArrayList/*<ZLEncodingSet>*/ mySets;
-	private	HashMap/*<String,ZLEncodingConverterInfo>*/ myInfosByName;
-	private	ArrayList/*<ZLEncodingConverterProvider>*/  myProviders;
+	private final ArrayList/*<ZLEncodingSet>*/ mySets = new ArrayList();
+	private	final HashMap/*<String,ZLEncodingConverterInfo>*/ myInfosByName = new HashMap();
+	private	final ArrayList/*<ZLEncodingConverterProvider>*/  myProviders = new ArrayList();
 
 	//private ZLEncodingCollection();
 	private	void init() {

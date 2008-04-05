@@ -1,7 +1,5 @@
 package org.zlibrary.core.dialogs;
 
-import org.zlibrary.core.util.ZLBoolean3;
-
 public abstract class ZLBoolean3OptionEntry extends ZLOptionEntry {
 	protected ZLBoolean3OptionEntry() {
 	}
@@ -10,7 +8,7 @@ public abstract class ZLBoolean3OptionEntry extends ZLOptionEntry {
 		return ZLOptionKind.BOOLEAN3;
 	}
 
-	public void onStateChanged(ZLBoolean3 state) {	
+	public void onStateChanged(int state) {	
 	}
 	
 	public abstract int initialState();

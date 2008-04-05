@@ -68,7 +68,7 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 				view = new ZLBooleanOptionView(name, (ZLBooleanOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.BOOLEAN3:
-//				view = new Boolean3OptionView(name, (ZLBoolean3OptionEntry*)option, *this, from, to);
+				view = new ZLBoolean3OptionView(name, (ZLBoolean3OptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.STRING:
 				view = new ZLStringOptionView(name, (ZLStringOptionEntry) option, this, myLayout);

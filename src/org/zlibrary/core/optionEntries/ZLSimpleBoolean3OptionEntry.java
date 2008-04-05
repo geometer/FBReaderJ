@@ -19,4 +19,5 @@ public class ZLSimpleBoolean3OptionEntry extends ZLBoolean3OptionEntry {
 	public void onAccept(int state) {
 		myOption.setValue(state);
 	}
+
 }

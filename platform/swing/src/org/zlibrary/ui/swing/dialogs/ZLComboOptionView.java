@@ -34,8 +34,8 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 
 	protected void createItem() {
 		final ZLComboOptionEntry option = (ZLComboOptionEntry) myOption;
-		final ArrayList values = (option).getValues();
-		final String initialValue = (option).initialValue();
+		final ArrayList values = option.getValues();
+		final String initialValue = option.initialValue();
 		int index = 0;
 		for (int i = 0; i < values.size(); ++i) {
 			if (values.get(i).equals(initialValue)) {

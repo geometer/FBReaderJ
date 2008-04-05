@@ -1,5 +1,7 @@
 package org.fbreader.optionsDialog;
-
+import org.fbreader.encoding.ZLEncodingCollection;
+import org.fbreader.encodingOption.EncodingEntry;
+import org.fbreader.encodingOption.EncodingSetEntry;
 import org.fbreader.fbreader.*;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.zlibrary.core.dialogs.*;
@@ -24,7 +26,6 @@ public class OptionsDialog {
 		libraryTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
 		RecentBooksView recentBooksView = (RecentBooksView) fbreader.getRecentBooksView();
 		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(recentBooksView.lastBooks().MaxListSizeOption, 1));
-		
 		ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
 		ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
 		showTagsEntry.addDependentEntry(showAllBooksTagEntry);
@@ -34,13 +35,15 @@ public class OptionsDialog {
 		
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
-		new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes());
 		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
-		
-	//	myDialog.createTab("Scrolling");
+		EncodingEntry encodingEntry = new EncodingEntry(PluginCollection.instance().DefaultEncodingOption);
+		EncodingSetEntry encodingSetEntry = new EncodingSetEntry(encodingEntry);
+	//	encodingTab.addOption("defaultEncodingSet", encodingSetEntry);
+	//	encodingTab.addOption("defaultEncoding", encodingEntry);
+		encodingTab.addOption("useWindows1252Hack", new ZLSimpleBooleanOptionEntry(ZLEncodingCollection.useWindows1252HackOption()));
+
 		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
-		
-		
+				
 		ZLDialogContent selectionTab = myDialog.createTab("Selection");
 		selectionTab.addOption("enableSelection", FBView.selectionOption());
 		
