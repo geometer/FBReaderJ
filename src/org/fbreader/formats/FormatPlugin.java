@@ -9,6 +9,7 @@ import org.fbreader.description.BookDescription;
 import org.fbreader.description.BookDescription.WritableBookDescription;
 import org.fbreader.formats.fb2.FB2Plugin;
 import org.fbreader.formats.html.HtmlPlugin;
+import org.fbreader.formats.oeb.OEBPlugin;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.language.ZLLanguageDetector;
@@ -124,9 +125,10 @@ public abstract class FormatPlugin {
 				ourInstance.myPlugins.add(new ZTXTPlugin());
 				ourInstance.myPlugins.add(new TcrPlugin());
 				ourInstance.myPlugins.add(new CHMPlugin());
+				*/
 				ourInstance.myPlugins.add(new OEBPlugin());
-				ourInstance.myPlugins.add(new RtfPlugin());
-				ourInstance.myPlugins.add(new OpenReaderPlugin());*/
+				//ourInstance.myPlugins.add(new RtfPlugin());
+				//ourInstance.myPlugins.add(new OpenReaderPlugin());
 			}
 			return ourInstance;
 		}

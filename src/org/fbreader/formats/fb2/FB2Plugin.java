@@ -23,7 +23,6 @@ public class FB2Plugin extends FormatPlugin {
 	}
 	
 	public String getIconName() {
-		final String ICON_NAME = "fb2";
-		return ICON_NAME;
+		return "fb2";
 	}
 }
