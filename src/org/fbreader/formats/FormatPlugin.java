@@ -12,10 +12,7 @@ import org.fbreader.formats.html.HtmlPlugin;
 import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.language.ZLLanguageDetector;
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLOption;
-import org.zlibrary.core.options.ZLStringOption;
-
+import org.zlibrary.core.options.*;
 
 public abstract class FormatPlugin {
 
@@ -111,7 +108,6 @@ public abstract class FormatPlugin {
 		private static PluginCollection ourInstance;
 		private final ArrayList myPlugins = new ArrayList();
 		public ZLStringOption DefaultLanguageOption;
-		//public ZLIntegerOption DefaultLanguageOption;
 		public ZLStringOption DefaultEncodingOption;
 		public ZLBooleanOption LanguageAutoDetectOption;
 		
@@ -143,7 +139,7 @@ public abstract class FormatPlugin {
 
 		private PluginCollection() {
 			LanguageAutoDetectOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Format", "AutoDetect", true);
-			DefaultLanguageOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", "ru"); 
+			DefaultLanguageOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", "en"); 
 			DefaultEncodingOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultEncoding", "windows-1252");
 		}
 			

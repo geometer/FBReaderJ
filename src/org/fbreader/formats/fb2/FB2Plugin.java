@@ -6,10 +6,6 @@ import org.fbreader.formats.FormatPlugin;
 import org.zlibrary.core.filesystem.ZLFile;
 
 public class FB2Plugin extends FormatPlugin {
-	private final static String AUTO = "auto";
-
-	public FB2Plugin() {}
-	
 	public boolean providesMetaInfo() {
 		 return true;
 	}
@@ -23,19 +19,11 @@ public class FB2Plugin extends FormatPlugin {
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
-		// this code fixes incorrect config entry created by fbreader of version <= 0.6.1
-		// makes no sense if old fbreader was not used
-		if (!description.getEncoding().equals(AUTO)) {
-			new BookDescription.BookInfo(description.getFileName()).EncodingOption.setValue(AUTO);
-		}
-        // FB2BookReader
 		return new FB2Reader(model).readBook(description.getFileName());
-
 	}
 	
 	public String getIconName() {
 		final String ICON_NAME = "fb2";
 		return ICON_NAME;
 	}
-	
 }

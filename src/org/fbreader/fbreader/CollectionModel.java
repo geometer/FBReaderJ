@@ -49,7 +49,7 @@ class CollectionModel extends ZLTextTreeModelImpl {
 	
 	public int paragraphNumberByBook(BookDescription book) {
 		Integer num = (Integer)myBookToParagraphNumber.get(book);
-		return (num != null) ? num.intValue() : 0;
+		return (num != null) ? num.intValue() : -1;
 	}
 
 	private void build() {

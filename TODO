@@ -113,6 +113,7 @@ DELAYED	macos: корректное завершение по Command+Q
 код:
 НМ 0	изменить систему названий package'й (org. -> org.geometerplus.)
 НМ 0	вставить copyright notices
+НМ 0	убрать вывод отладочной информации в андроиде
 
 доделать все Actions:
 DONE	ActionCode.SHOW_BOOK_INFO
