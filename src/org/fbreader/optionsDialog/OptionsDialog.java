@@ -66,66 +66,32 @@ public class OptionsDialog {
 		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
 		
+		
+		
 		ZLDialogContent colorsTab = myDialog.createTab("Colors");
+		final String colorKey = "colorFor";
+		final ZLResource resource = colorsTab.getResource(colorKey);
+		ZLColorOptionBuilder builder = new ZLColorOptionBuilder();
+		final String BACKGROUND = resource.getResource("background").getValue();
+		builder.addOption(BACKGROUND, baseStyle.BackgroundColorOption);
+		builder.addOption(resource.getResource("selectionBackground").getValue(), baseStyle.SelectionBackgroundColorOption);
+		builder.addOption(resource.getResource("text").getValue(), baseStyle.RegularTextColorOption);
+		builder.addOption(resource.getResource("internalLink").getValue(), baseStyle.InternalHyperlinkTextColorOption);
+		builder.addOption(resource.getResource("externalLink").getValue(), baseStyle.ExternalHyperlinkTextColorOption);
+		builder.addOption(resource.getResource("highlighted").getValue(), baseStyle.SelectedTextColorOption);
+		builder.addOption(resource.getResource("treeLines").getValue(), baseStyle.TreeLinesColorOption);
+		builder.addOption(resource.getResource("indicator").getValue(), ((FBIndicatorInfo) fbreader.getCollectionView().getIndicatorInfo()).ColorOption);
+		builder.setInitial(BACKGROUND);
+		colorsTab.addOption(colorKey, builder.comboEntry());
+		colorsTab.addOption("", builder.colorEntry());
+		
+		
 		
 		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
 		
 		ZLDialogContent webTab = myDialog.createTab("Web");
 		webTab.addOption("defaultText",
-				new ZLToggleBooleanOptionEntry(fbreader.getBookTextView().OpenInBrowserOption));
-	
-	//	myDialog.createTab("Config");
-		
-		/*
-		
-		encodingTab.addOption(ZLResourceKey("defaultLanguage"), new ZLLanguageOptionEntry(PluginCollection::instance().DefaultLanguageOption, ZLLanguageList::languageCodes()));
-		EncodingEntry *encodingEntry = new EncodingEntry(PluginCollection::instance().DefaultEncodingOption);
-		EncodingSetEntry *encodingSetEntry = new EncodingSetEntry(*encodingEntry);
-		encodingTab.addOption(ZLResourceKey("defaultEncodingSet"), encodingSetEntry);
-		encodingTab.addOption(ZLResourceKey("defaultEncoding"), encodingEntry);
-		encodingTab.addOption(ZLResourceKey("useWindows1252Hack"), new ZLSimpleBooleanOptionEntry(ZLEncodingCollection::useWindows1252HackOption()));
-		encodingTab.addOption(ZLResourceKey("chineseBreakAtAnyPosition"), new ZLSimpleBooleanOptionEntry(ZLChineseBreakingAlgorithm::instance().AnyPositionBreakingOption));
-
-		myScrollingPage = new ScrollingOptionsPage(myDialog->createTab(ZLResourceKey("Scrolling")), fbreader);
-
-		myFormatPage = new FormatOptionsPage(myDialog->createTab(ZLResourceKey("Format")));
-		myStylePage = new StyleOptionsPage(myDialog->createTab(ZLResourceKey("Styles")), *fbreader.context());
-
-		createIndicatorTab(fbreader);
-
-		ZLDialogContent &colorsTab = myDialog->createTab(ZLResourceKey("Colors"));
-		ZLResourceKey colorKey("colorFor");
-		const ZLResource &resource = colorsTab.resource(colorKey);
-		ZLColorOptionBuilder builder;
-		const std::string BACKGROUND = resource["background"].value();
-		builder.addOption(BACKGROUND, baseStyle.BackgroundColorOption);
-		builder.addOption(resource["selectionBackground"].value(), baseStyle.SelectionBackgroundColorOption);
-		builder.addOption(resource["text"].value(), baseStyle.RegularTextColorOption);
-		builder.addOption(resource["internalLink"].value(), baseStyle.InternalHyperlinkTextColorOption);
-		builder.addOption(resource["externalLink"].value(), baseStyle.ExternalHyperlinkTextColorOption);
-		builder.addOption(resource["highlighted"].value(), baseStyle.SelectedTextColorOption);
-		builder.addOption(resource["treeLines"].value(), baseStyle.TreeLinesColorOption);
-		builder.addOption(resource["indicator"].value(), (FBView::commonIndicatorInfo().ColorOption));
-		builder.setInitial(BACKGROUND);
-		colorsTab.addOption(colorKey, builder.comboEntry());
-		colorsTab.addOption("", "", builder.colorEntry());
-
-		myKeyBindingsPage = new KeyBindingsPage(fbreader, myDialog->createTab(ZLResourceKey("Keys")));
-		if (ZLOption::isAutoSavingSupported()) {
-			myConfigPage = new ConfigPage(fbreader, myDialog->createTab(ZLResourceKey("Config")));
-		}
-
-		std::vector<std::pair<ZLResourceKey,ZLOptionEntry*> > additional;
-		additional.push_back(std::pair<ZLResourceKey,ZLOptionEntry*>(
-			ZLResourceKey("singleClickOpen"),
-			new ZLSimpleBooleanOptionEntry(fbreader.EnableSingleClickDictionaryOption)
-		));
-		createIntegrationTab(fbreader.dictionaryCollection(), ZLResourceKey("Dictionary"), additional);
-		additional.clear();
-		createIntegrationTab(fbreader.webBrowserCollection(), ZLResourceKey("Web"), additional);
-
-		myDialog->createPlatformDependentTabs();
-		*/
+				new ZLToggleBooleanOptionEntry(fbreader.getBookTextView().OpenInBrowserOption));	
 	}
 	
 	private void createIndicatorTab(FBReader fbreader) {

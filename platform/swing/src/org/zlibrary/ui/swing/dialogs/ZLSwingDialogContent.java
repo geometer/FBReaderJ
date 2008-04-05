@@ -83,7 +83,7 @@ public class ZLSwingDialogContent extends ZLDialogContent {
 				view = new ZLComboOptionView(name, (ZLComboOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.COLOR:
-//				view = new ColorOptionView(name, (ZLColorOptionEntry*)option, *this, from, to);
+				view = new ZLColorOptionView(name, (ZLColorOptionEntry) option, this, myLayout);
 				break;
 			case ZLOptionKind.KEY:
 				view = new ZLKeyOptionView(name, (ZLKeyOptionEntry) option, this, myLayout);

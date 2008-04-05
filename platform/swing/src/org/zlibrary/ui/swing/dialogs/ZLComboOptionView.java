@@ -45,7 +45,7 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 		}
 		myComboBox = new JComboBox(values.toArray());
 		myComboBox.setSelectedIndex(index);
-		myComboBox.setEditable((option).isEditable());
+		myComboBox.setEditable(option.isEditable());
 		myComboBox.addItemListener(new MyItemListener());
 		if (option.useOnValueEdited()) {
 			myComboBox.getEditor().getEditorComponent().addKeyListener(new MyKeyListener());
