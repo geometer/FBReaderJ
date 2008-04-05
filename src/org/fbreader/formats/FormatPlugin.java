@@ -16,26 +16,20 @@ import org.zlibrary.core.language.ZLLanguageDetector;
 import org.zlibrary.core.options.*;
 
 public abstract class FormatPlugin {
-
-	protected FormatPlugin() {}
-		
 	public abstract boolean providesMetaInfo();
-	
 	public abstract boolean acceptsFile(ZLFile file);
-	
 	public abstract String getIconName();
 	
-
 	public String tryOpen(String path) {
-		final String EMPTY = "";
-		return EMPTY;
+		return "";
 	}
 	
 	public abstract	boolean readDescription(String path, BookDescription description);
-	
 	public abstract boolean readModel(BookDescription description, BookModel model);
 	
-	public FormatInfoPage createInfoPage(ZLOptionsDialog d, String str) { return null; }
+	public FormatInfoPage createInfoPage(ZLOptionsDialog d, String str) {
+		return null;
+	}
 
 	public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) throws IOException {	
 		String language = description.getLanguage();
