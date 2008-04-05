@@ -34,6 +34,9 @@ public class BookTextView extends FBView {
     private String myFileName;
 
     public ZLBooleanOption ShowTOCMarksOption;
+    
+    public final ZLBooleanOption OpenInBrowserOption =
+    	new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Web Browser", "Enabled", true);
 	
 	BookTextView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
@@ -111,7 +114,9 @@ public class BookTextView extends FBView {
 				if (id != null) {
 					switch (hyperlinkKind) {
 						case FBTextKind.EXTERNAL_HYPERLINK:
-							ZLibrary.getInstance().openInBrowser(id);
+							if (OpenInBrowserOption.getValue()) {
+								ZLibrary.getInstance().openInBrowser(id);
+							}
 							return true;
 						case FBTextKind.FOOTNOTE:
 						case FBTextKind.INTERNAL_HYPERLINK:

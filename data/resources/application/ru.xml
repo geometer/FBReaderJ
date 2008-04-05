@@ -221,7 +221,7 @@
 				</node>
 				<node name="Web" value="Web">
 					<node name="enableIntegration" value="Открывать внешние ссылки в %s"/>
-					<node name="defaultText" value="Окрывать внешние ссылки в браузере"/>
+					<node name="defaultText" value="Открывать внешние ссылки в браузере"/>
 					<node name="choice" value="Браузер"/>
 					<node name="command" value="Выполнять команду"/>
 				</node>

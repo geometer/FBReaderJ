@@ -36,10 +36,10 @@ public class OptionsDialog {
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
 		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
-		EncodingEntry encodingEntry = new EncodingEntry(PluginCollection.instance().DefaultEncodingOption);
-		EncodingSetEntry encodingSetEntry = new EncodingSetEntry(encodingEntry);
-	//	encodingTab.addOption("defaultEncodingSet", encodingSetEntry);
-	//	encodingTab.addOption("defaultEncoding", encodingEntry);
+//		EncodingEntry encodingEntry = new EncodingEntry(PluginCollection.instance().DefaultEncodingOption);
+//		EncodingSetEntry encodingSetEntry = new EncodingSetEntry(encodingEntry);
+//		encodingTab.addOption("defaultEncodingSet", encodingSetEntry);
+//		encodingTab.addOption("defaultEncoding", encodingEntry);
 		encodingTab.addOption("useWindows1252Hack", new ZLSimpleBooleanOptionEntry(ZLEncodingCollection.useWindows1252HackOption()));
 
 		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
@@ -57,11 +57,10 @@ public class OptionsDialog {
 			"bottom", new ZLSimpleSpinOptionEntry(FBView.getBottomMarginOption(), 1)
 		);
 		
-	//	myDialog.createTab("Format");
 		new FormatOptionsPage(myDialog.createTab("Format"));
-		
-		
+			
 		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getContext());
+		
 		createIndicatorTab(fbreader);
 		
 		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
@@ -71,8 +70,9 @@ public class OptionsDialog {
 		
 		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
 		
-//		ZLDialogContent webTab = myDialog.createTab("Web");
-//		webTab.addOption("defaultText", option);
+		ZLDialogContent webTab = myDialog.createTab("Web");
+		webTab.addOption("defaultText",
+				new ZLToggleBooleanOptionEntry(fbreader.getBookTextView().OpenInBrowserOption));
 	
 	//	myDialog.createTab("Config");
 		

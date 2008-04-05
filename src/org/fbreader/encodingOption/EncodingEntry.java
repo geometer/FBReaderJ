@@ -48,7 +48,7 @@ public class EncodingEntry extends ZLComboOptionEntry {
 			}
 		}
 
-		if (myInitialSetName.length() == 0 && ! mySetNames.isEmpty()) {
+		if (myInitialSetName.length() == 0) {
 			myInitialSetName = (String) mySetNames.get(0);
 		}
 	}
@@ -65,7 +65,7 @@ public class EncodingEntry extends ZLComboOptionEntry {
 	}
 
 	public String initialValue() {
-		if (((ArrayList) myInitialValues.get(myInitialSetName)) == null) {
+		if ( myInitialValues.get(myInitialSetName) == null) {
 			myInitialValues.put(myInitialSetName, ((ArrayList) myValues.get(myInitialSetName)).get(0));
 		}
 		return (String) myInitialValues.get(myInitialSetName);

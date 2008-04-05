@@ -9,6 +9,8 @@ import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.filesystem.ZLFile;
 import org.zlibrary.core.language.ZLLanguageList;
 import org.zlibrary.core.optionEntries.*;
+import org.fbreader.encodingOption.*;
+import org.fbreader.encodingOption.EncodingEntry;
 
 public class BookInfoDialog {
 	private final ZLOptionsDialog myDialog;
@@ -37,10 +39,10 @@ public class BookInfoDialog {
 		
 		myAuthorDisplayNameEntry = new AuthorDisplayNameEntry(this);
 		myAuthorSortKeyEntry = new AuthorSortKeyEntry(this);
-		//myEncodingEntry = new EncodingEntry(myBookInfo.EncodingOption);
-		//myEncodingSetEntry =
-		//	(myEncodingEntry.initialValue() != "auto") ?
-		//	new EncodingSetEntry((EncodingEntry)myEncodingEntry) : null;
+		myEncodingEntry = new EncodingEntry(myBookInfo.EncodingOption);
+		myEncodingSetEntry =
+			(!"auto".equals(myEncodingEntry.initialValue())) ?
+			new EncodingSetEntry((EncodingEntry)myEncodingEntry) : null;
 		ArrayList/*<std::string>*/ languageCodes = ZLLanguageList.languageCodes();
 		languageCodes.add("de-traditional");
 		myLanguageEntry = new ZLLanguageOptionEntry(myBookInfo.LanguageOption, languageCodes);
@@ -54,7 +56,7 @@ public class BookInfoDialog {
 		if (myEncodingSetEntry != null) {
 			commonTab.addOption("encodingSet", myEncodingSetEntry);
 		}
-//		commonTab.addOption("encoding", myEncodingEntry);
+		commonTab.addOption("encoding", myEncodingEntry);
 
 		ZLDialogContent seriesTab = myDialog.createTab("Series");
 		
