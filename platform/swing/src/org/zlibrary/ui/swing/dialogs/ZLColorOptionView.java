@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,6 +27,7 @@ import javax.swing.SwingConstants;
 
 import org.zlibrary.core.dialogs.ZLColorOptionEntry;
 import org.zlibrary.core.dialogs.ZLDialogManager;
+import org.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -34,6 +36,7 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 	private JComboBox myStandardColorComboBox;
 	private JButton myCustomColorButton;
 	private JPanel myPanel; 
+	private boolean myUseCustomColor = false;
 	private static final LinkedHashMap/*<ZLColor,String>*/ ourStandardColors = new LinkedHashMap();
 	
 	public ZLColorOptionView(String name, ZLColorOptionEntry option,
@@ -44,7 +47,8 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 	public void reset() {
 		ZLColorOptionEntry colorEntry = (ZLColorOptionEntry) myOption;
 		colorEntry.onReset((ZLColor) myStandardColorComboBox.getSelectedItem());
-		myStandardColorComboBox.setSelectedItem(colorEntry.getColor());
+		setSelectedColor(colorEntry.getColor());
+//		myStandardColorComboBox.setSelectedItem(colorEntry.getColor());
 	}
 	
 	protected void _onAccept() {
@@ -56,7 +60,7 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 	protected void createItem() {
 		initStandardColors();
 		myStandardColorComboBox = new JComboBox(ourStandardColors.keySet().toArray());
-		myStandardColorComboBox.setSelectedItem(((ZLColorOptionEntry) myOption).getColor());
+		setSelectedColor(((ZLColorOptionEntry) myOption).getColor());
 		myStandardColorComboBox.setRenderer(new ComboBoxRenderer());
 		
 		myStandardColorComboBox.setMinimumSize(new Dimension(0, myStandardColorComboBox.getPreferredSize().height));
@@ -86,23 +90,39 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 	}
 
 	private static void initStandardColors() {
-		final ZLResource resource = ZLResource.resource(ZLDialogManager.COLOR_KEY);
-		ourStandardColors.put(new ZLColor(0, 0, 0), resource.getResource("black").getValue());
-		ourStandardColors.put(new ZLColor(255, 255, 255), resource.getResource("white").getValue());
-		ourStandardColors.put(new ZLColor(128, 0, 0), resource.getResource("maroon").getValue());
-		ourStandardColors.put(new ZLColor(0, 128, 0), resource.getResource("green").getValue());
-		ourStandardColors.put(new ZLColor(128, 128, 0), resource.getResource("olive").getValue());
-		ourStandardColors.put(new ZLColor(0, 0, 128), resource.getResource("navy").getValue());
-		ourStandardColors.put(new ZLColor(128, 0, 128), resource.getResource("purple").getValue());
-		ourStandardColors.put(new ZLColor(0, 128, 128), resource.getResource("teal").getValue());
-		ourStandardColors.put(new ZLColor(192, 192, 192), resource.getResource("silver").getValue());
-		ourStandardColors.put(new ZLColor(128, 128, 128), resource.getResource("gray").getValue());
-		ourStandardColors.put(new ZLColor(255, 0, 0), resource.getResource("red").getValue());
-		ourStandardColors.put(new ZLColor(0, 255, 0), resource.getResource("lime").getValue());
-		ourStandardColors.put(new ZLColor(255, 255, 0), resource.getResource("yellow").getValue());
-		ourStandardColors.put(new ZLColor(0, 0, 255), resource.getResource("blue").getValue());
-		ourStandardColors.put(new ZLColor(255, 0, 255), resource.getResource("magenta").getValue());
-		ourStandardColors.put(new ZLColor(0, 255, 255), resource.getResource("cyan").getValue());
+		if (ourStandardColors.size() == 0) {
+			final ZLResource resource = ZLResource.resource(ZLDialogManager.COLOR_KEY);
+			ourStandardColors.put(new ZLColor(0, 0, 0), resource.getResource("black").getValue());
+			ourStandardColors.put(new ZLColor(255, 255, 255), resource.getResource("white").getValue());
+			ourStandardColors.put(new ZLColor(128, 0, 0), resource.getResource("maroon").getValue());
+			ourStandardColors.put(new ZLColor(0, 128, 0), resource.getResource("green").getValue());
+			ourStandardColors.put(new ZLColor(128, 128, 0), resource.getResource("olive").getValue());
+			ourStandardColors.put(new ZLColor(0, 0, 128), resource.getResource("navy").getValue());
+			ourStandardColors.put(new ZLColor(128, 0, 128), resource.getResource("purple").getValue());
+			ourStandardColors.put(new ZLColor(0, 128, 128), resource.getResource("teal").getValue());
+			ourStandardColors.put(new ZLColor(192, 192, 192), resource.getResource("silver").getValue());
+			ourStandardColors.put(new ZLColor(128, 128, 128), resource.getResource("gray").getValue());
+			ourStandardColors.put(new ZLColor(255, 0, 0), resource.getResource("red").getValue());
+			ourStandardColors.put(new ZLColor(0, 255, 0), resource.getResource("lime").getValue());
+			ourStandardColors.put(new ZLColor(255, 255, 0), resource.getResource("yellow").getValue());
+			ourStandardColors.put(new ZLColor(0, 0, 255), resource.getResource("blue").getValue());
+			ourStandardColors.put(new ZLColor(255, 0, 255), resource.getResource("magenta").getValue());
+			ourStandardColors.put(new ZLColor(0, 255, 255), resource.getResource("cyan").getValue());
+		}
+	}
+	
+	private void setSelectedColor(ZLColor color) {
+		initStandardColors();
+		if(!ourStandardColors.containsKey(color)) {
+			if (! myUseCustomColor) {
+				myStandardColorComboBox.insertItemAt(color, 0);
+				myUseCustomColor = true;
+			} else {
+				myStandardColorComboBox.removeItem(myStandardColorComboBox.getItemAt(0));
+				myStandardColorComboBox.insertItemAt(color, 0);
+			}
+		}
+		myStandardColorComboBox.setSelectedItem(color);
 	}
 	
 	
@@ -130,7 +150,12 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 			}
 
 			ZLColor color = (ZLColor) value;
-			setText((String) ourStandardColors.get(color));
+			if (ourStandardColors.containsKey(color)) {
+				setText((String) ourStandardColors.get(color));
+			} else {
+				setText("(" + color.Red + "," + color.Green + "," + color.Blue + ")");
+			}
+			
 			setIcon(new ColorIcon(color, this.getPreferredSize().height));
 			setHorizontalTextPosition(SwingConstants.RIGHT);
 			setIconTextGap(5);
@@ -173,15 +198,21 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 	}
 	
 	
-	private static class CustomColorAction extends AbstractAction {
+	private class CustomColorAction extends AbstractAction {
 		
 		public CustomColorAction(String name) {
 			putValue(NAME, name);
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			JColorChooser chooser = new JColorChooser();
+			chooser.removeChooserPanel(chooser.getChooserPanels()[0]);
+			chooser.removeChooserPanel(chooser.getChooserPanels()[1]);
+			Color color = chooser.showDialog(null, ZLResource.resource("dialog").getResource("OptionsDialog").getResource("tab").getResource("Colors").getResource("colorFor").getValue(),
+					new Color(((ZLColor) myStandardColorComboBox.getSelectedItem()).getIntValue()));
+			if (color != null) {
+				setSelectedColor(new ZLColor(color.getRGB()));
+			}
 		}
 		
 	}
