@@ -1075,7 +1075,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final ZLTextLineInfoVector infos = myLineInfos;
 			final int size = infos.size();
 			ZLTextLineInfo info = null;
-			for (int i = size; i >= 0; --i) {
+			for (int i = size - 1; i >= 0; --i) {
 				info = infos.getInfo(i);
 				if (info.IsVisible) {
 					--overlappingValue;
