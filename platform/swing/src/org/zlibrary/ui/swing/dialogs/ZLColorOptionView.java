@@ -1,33 +1,12 @@
 package org.zlibrary.ui.swing.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.LinkedHashMap;
 
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
-import org.zlibrary.core.dialogs.ZLColorOptionEntry;
-import org.zlibrary.core.dialogs.ZLDialogManager;
-import org.zlibrary.core.dialogs.ZLOptionsDialog;
+import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.util.ZLColor;
 import org.zlibrary.text.view.style.ZLTextStyleCollection;

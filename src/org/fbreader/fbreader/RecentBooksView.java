@@ -10,7 +10,6 @@ import org.zlibrary.text.model.impl.ZLModelFactory;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.fbreader.collection.BookCollection;
-import org.fbreader.collection.BookCollection.LastOpenedBooks;
 import org.fbreader.description.BookDescription;
 
 public class RecentBooksView extends FBView {
@@ -65,7 +64,7 @@ public class RecentBooksView extends FBView {
 		super.paint();
 	}
 
-	public LastOpenedBooks lastBooks() {
+	public BookCollection.LastOpenedBooks lastBooks() {
 		return myLastBooks;
 	}
 }

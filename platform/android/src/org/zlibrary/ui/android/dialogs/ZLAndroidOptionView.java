@@ -6,7 +6,6 @@ import org.zlibrary.core.dialogs.ZLOptionView;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
 
 abstract class ZLAndroidOptionView extends ZLOptionView {
-	View myView;
 	ZLAndroidDialogContent myTab;
 	private boolean myIsVisible;
 
@@ -16,9 +15,8 @@ abstract class ZLAndroidOptionView extends ZLOptionView {
 		myTab = tab;
 	}
 
-	View getAndroidView() {
-		setVisible(true);
-		return myView;
+	protected void addAndroidView(View view, boolean isSelectable) {
+		myTab.addAndroidView(view, isSelectable);
 	}
 
 	boolean isVisible() {

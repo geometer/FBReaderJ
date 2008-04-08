@@ -64,7 +64,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 
 		protected void processWindowEvent(WindowEvent event) {
 			if (event.getID() == WindowEvent.WINDOW_CLOSING) {
-				ZLSwingLibrary.shutdown();
+				close();
 			}
 			super.processWindowEvent(event);
 		}
@@ -222,7 +222,7 @@ public class ZLSwingApplicationWindow extends ZLApplicationWindow {
 		return myFrame.getExtendedState() == Frame.MAXIMIZED_BOTH;		
 	}
 	
-	public void close() {
+	protected void closeInternal() {
 		ZLSwingLibrary.shutdown();
 		// TODO: implement
 	}

@@ -86,9 +86,6 @@
 				<node name="Keys" value="Клавиши">
 					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
 				</node>
--				<node name="Web" value="Web">
--					<node name="defaultText" value="Окрывать внешние ссылки в браузере"/>
--				</node>
 			</node>
 		</node>
 		<node name="InfoDialog">

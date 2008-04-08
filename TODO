@@ -24,7 +24,7 @@ DONE		взаимодействие с деревом
 3		часы
 3		количество прочитанных страниц
 3	обработка неразрывных пробелов
-1	undo/redo position stack
+DONE	undo/redo position stack
 DELAYED	обработка китайских текстов
 DELAYED	desktop: менять курсор над ссылкой
 
@@ -79,6 +79,15 @@ DONE	другие
 диалоги (android):
 DONE	Selection
 НМ 0	Option
+		show/hide option views
+		boolean option view
+		boolean3 option view
+		spin option view
+		string option view
+		combo option view
+		color option view
+		key option view
+		choice option view
 DONE	MessageBox
 DONE	WaitMessage
 DONE	другие
@@ -144,6 +153,7 @@ DELAYED	добавлять в библиотеку книгу из команд�
 DONE	xml: сделать нормальную поддержку namespace'ов
 DONE	xml: сделать поддержку внешних DTD (xhtml entities)
 DONE fb2descriptionReader: interrupt()
+НМ 0	author sort key -> to lowercase
 
 DONE при нажатии на кнопку выхода (в swing) и на Esc (android) закрывать текущий View, а не выходить из программы
 
@@ -151,3 +161,4 @@ DONE при нажатии на кнопку выхода (в swing) и на Esc
 	combo box: цвет шрифта при первом редактировании
 	combo box: высота пунктов в списке
 	время работы GZIPInputStream
+	иногда падение при загрузке большой по объему книги (креш виртуальной машины)

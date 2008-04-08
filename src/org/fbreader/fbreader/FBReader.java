@@ -327,4 +327,10 @@ public final class FBReader extends ZLApplication {
 			refreshWindow();
 		}
 	}
+
+	protected void onQuit() {
+		if (myBookTextView != null) {
+			myBookTextView.saveState();
+		}
+	}
 }

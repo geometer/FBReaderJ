@@ -260,7 +260,6 @@ public class BookCollection {
 	}
 	
 	static public class LastOpenedBooks {
-
 		public ZLIntegerRangeOption MaxListSizeOption;
 		static private final String GROUP = "LastOpenedBooks";
 		static private final String BOOK = "Book";

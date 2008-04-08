@@ -12,8 +12,7 @@ public abstract class ZLOptionView {
 		myOption.setView(this);
 	}
 
-	public void reset() {
-	}
+	protected abstract void reset();
 
 	public final void setActive(boolean active) {
 		if (myInitialized) {

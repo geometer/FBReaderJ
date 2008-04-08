@@ -11,6 +11,37 @@ import org.zlibrary.text.view.style.*;
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
 
+	protected class Position {
+		public int ParagraphIndex;
+		public int WordIndex;
+		public int CharIndex;
+
+		public Position(int paragraphIndex, int wordIndex, int charIndex) {
+			ParagraphIndex = paragraphIndex;
+			WordIndex = wordIndex;
+			CharIndex = charIndex;
+		}
+
+		public Position(ZLTextWordCursor cursor) {
+			set(cursor);
+		}
+
+		public void set(ZLTextWordCursor cursor) {
+			if (!cursor.isNull()) {
+				ParagraphIndex = cursor.getParagraphCursor().getIndex();
+				WordIndex = cursor.getWordNumber();
+				CharIndex = cursor.getCharNumber();
+			}
+		}
+
+		public boolean equalsToCursor(ZLTextWordCursor cursor) {
+			return
+				(ParagraphIndex == cursor.getParagraphCursor().getIndex()) &&
+				(WordIndex == cursor.getWordNumber()) &&
+				(CharIndex == cursor.getCharNumber());
+		} 
+	}
+
 	private interface SizeUnit {
 		int PIXEL_UNIT = 0;
 		int LINE_UNIT = 1;
@@ -241,6 +272,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myStartCursor.isNull()) {
 			return;
 		}
+		final Position position = new Position(myStartCursor);
 		if ((myStartCursor.getParagraphCursor().getIndex() != mark.ParagraphNumber) || (myStartCursor.getPosition().compareTo(mark) > 0)) {
 			doRepaint = true;
 			gotoParagraph(mark.ParagraphNumber, false);
@@ -255,8 +287,17 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			preparePaintInfo();
 		}
 		if (doRepaint) {
+			if (myStartCursor.isNull()) {
+				preparePaintInfo();
+			}
+			if (!position.equalsToCursor(myStartCursor)) {
+				savePosition(position);
+			}
 			getApplication().refreshWindow();
 		}
+	}
+
+	protected void savePosition(Position position) {
 	}
 	
 	public void search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
@@ -869,7 +910,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
-	public void gotoPosition(int paragraphNumber, int wordNumber, int charNumber) {
+	public final void gotoPosition(Position position) {
+		gotoPosition(position.ParagraphIndex, position.WordIndex, position.CharIndex);
+	}
+
+	public final void gotoPosition(int paragraphNumber, int wordNumber, int charNumber) {
 		final int maxParagraphNumber = myModel.getParagraphsNumber() - 1;
 		if (paragraphNumber > maxParagraphNumber) {
 			paragraphNumber = maxParagraphNumber;
@@ -924,7 +969,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return Math.max(getContext().getWidth() - getLeftMargin() - getRightMargin(), 1);
 	}
 
-	protected void preparePaintInfo() {
+	protected synchronized void preparePaintInfo() {
 		int newWidth = getViewWidth();
 		int newHeight = getTextAreaHeight();
 		if ((newWidth != myOldWidth) || (newHeight != myOldHeight)) {
@@ -1249,13 +1294,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 
 		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
-		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive()) {
+		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive() && !myStartCursor.isNull()) {
 			final ZLPaintContext context = getContext();
 			final int yBottom = context.getHeight() - getBottomMargin() - 1;
 			final int yTop = yBottom - indicatorInfo.getHeight() + 1;
 			final int xLeft = getLeftMargin();
 			final int xRight = context.getWidth() - getRightMargin() - 1;
 			if ((x > xLeft) && (x < xRight) && (y > yTop) && (y < yBottom)) {
+				Position position = new Position(myStartCursor);
 				myTreeStateIsFrozen = true;
 				final int[] textSizeVector = myTextSize;
 				final int value = textSizeVector[textSizeVector.length - 1] * (x - xLeft) / (xRight - xLeft - 1);
@@ -1282,13 +1328,18 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 						rebuildPaintInfo(false);
 					}
 				}
+				if (myStartCursor.isNull()) {
+					preparePaintInfo();
+				}
+				if (!position.equalsToCursor(myStartCursor)) {
+					savePosition(position);
+				}
 				getApplication().refreshWindow();
 				myTreeStateIsFrozen = false;
 				return true;
 			}
 		}
 
-		//search("FBReader", true, true, false, false);
 		if (myModel instanceof ZLTextTreeModel) {
 			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
 			if (nodeArea != null) {

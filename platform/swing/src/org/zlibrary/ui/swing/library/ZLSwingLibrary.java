@@ -46,7 +46,6 @@ public class ZLSwingLibrary extends ZLibrary {
 			e.printStackTrace();
 		}
 
-		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
 		new ZLOwnHtmlProcessorFactory();
 		loadProperties();
@@ -68,8 +67,6 @@ public class ZLSwingLibrary extends ZLibrary {
 			((ZLSwingDialogManager)ZLSwingDialogManager.getInstance()).createApplicationWindow(application);
 		application.initWindow();
 		mainWindow.run();
-		
-//		ZLDialogManager.getInstance().errorBox(new "noHelpBox");
 	}
 
 	public void openInBrowser(String reference) {

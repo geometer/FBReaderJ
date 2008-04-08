@@ -5,38 +5,34 @@ import org.zlibrary.core.util.*;
 
 import org.fbreader.bookmodel.FBTextKind;
 import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.options.ZLOption;
+import org.zlibrary.core.options.*;
 import org.zlibrary.core.view.ZLPaintContext;
 import org.zlibrary.text.model.ZLTextModel;
 import org.zlibrary.text.view.impl.*;
 
 public class BookTextView extends FBView {
-	private static final String PARAGRAPH_OPTION_NAME = "Paragraph";
-	private static final String WORD_OPTION_NAME = "Word";
-	private static final String CHAR_OPTION_NAME = "Char";
 	private static final String BUFFER_SIZE = "UndoBufferSize";
 	private static final String POSITION_IN_BUFFER = "PositionInBuffer";
-	private static final String BUFFER_PARAGRAPH_PREFIX = "Paragraph_";
-	private static final String BUFFER_WORD_PREFIX = "Word_";
+	private static final String PARAGRAPH_PREFIX = "Paragraph_";
+	private static final String WORD_PREFIX = "Word_";
+	private static final String CHAR_PREFIX = "Char_";
+
+	private static final int MAX_UNDO_STACK_SIZE = 20;
 	
 	private ZLIntegerOption myParagraphNumberOption;
 	private ZLIntegerOption myWordNumberOption;
 	private ZLIntegerOption myCharNumberOption;
 	private ZLTextModel myContentsModel;
-    
-	//todo deque
-	private ArrayList/*<Position>*/ myPositionStack = new ArrayList();
-	private int myCurrentPointInStack;
-	private int myMaxStackSize;
-    private boolean myLockUndoStackChanges;
-    private String myFileName;
 
-    public ZLBooleanOption ShowTOCMarksOption;
-    
-    public final ZLBooleanOption OpenInBrowserOption =
-    	new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Web Browser", "Enabled", true);
+	private ArrayList myPositionStack = new ArrayList();
+	private int myCurrentPointInStack;
+
+	private String myFileName;
+
+	public ZLBooleanOption ShowTOCMarksOption;
+
+	public final ZLBooleanOption OpenInBrowserOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Web Browser", "Enabled", true);
 	
 	BookTextView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
@@ -50,21 +46,31 @@ public class BookTextView extends FBView {
 	public void setModel(ZLTextModel model, String fileName) {
 		super.setModel(model);
 		myFileName = fileName;
-		myParagraphNumberOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Paragraph", 0);
-		myWordNumberOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Word", 0);
-		myCharNumberOption = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "Char", 0);
-		if (model != null) {
-			gotoPosition(myParagraphNumberOption.getValue(), myWordNumberOption.getValue(), myCharNumberOption.getValue());
+
+		myPositionStack.clear();
+
+		final int stackSize = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, fileName, BUFFER_SIZE, 0, MAX_UNDO_STACK_SIZE, 0).getValue();
+		myCurrentPointInStack = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, fileName, POSITION_IN_BUFFER, 0, (stackSize == 0) ? 0 : (stackSize - 1), 0).getValue();
+
+		for (int i = 0; i < stackSize; ++i) {
+			myPositionStack.add(new Position(
+				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, PARAGRAPH_PREFIX + i, 0).getValue(),
+				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, WORD_PREFIX + i, 0).getValue(),
+				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, CHAR_PREFIX + i, 0).getValue()
+			));
+		}
+
+		if ((model != null) && (!myPositionStack.isEmpty())) {
+			gotoPosition((Position)myPositionStack.get(myCurrentPointInStack));
 		}
 	}
 
-	protected void preparePaintInfo() {
+	protected synchronized void preparePaintInfo() {
 		super.preparePaintInfo();
-		final ZLTextWordCursor cursor = getStartCursor();
-		if (!cursor.isNull()) {
-			myParagraphNumberOption.setValue(cursor.getParagraphCursor().getIndex());
-			myWordNumberOption.setValue(cursor.getWordNumber());
-			myCharNumberOption.setValue(cursor.getCharNumber());
+		if (myPositionStack.isEmpty()) {
+			myPositionStack.add(new Position(getStartCursor()));
+		} else {
+			((Position)myPositionStack.get(myCurrentPointInStack)).set(getStartCursor());
 		}
 	}
 
@@ -73,9 +79,14 @@ public class BookTextView extends FBView {
 		if (!cursor.isNull() && cursor.isStartOfParagraph() && cursor.getParagraphCursor().getIndex() == 0) {
 			return;
 		}
-	    gotoParagraph(0, false);
+		final Position position = new Position(cursor);
+		gotoParagraph(0, false);
 		gotoPosition(0, 0, 0);
-	    getApplication().refreshWindow();
+		preparePaintInfo();
+		if (!position.equalsToCursor(getStartCursor())) {
+			savePosition(position);
+		}
+		getApplication().refreshWindow();
 	}
 
 	public boolean onStylusPress(int x, int y) {
@@ -133,45 +144,56 @@ public class BookTextView extends FBView {
 		return this.myFileName;
 	}
 	
+	protected void savePosition(Position position) {
+		if (myPositionStack.isEmpty()) {
+			preparePaintInfo();
+		}
+		Position currentPosition =
+			(Position)myPositionStack.get(myCurrentPointInStack);
+		while (myPositionStack.size() > myCurrentPointInStack) {
+			myPositionStack.remove(myPositionStack.size() - 1);
+		}
+		myPositionStack.add(position);
+		myPositionStack.add(currentPosition);
+		while (myPositionStack.size() >= MAX_UNDO_STACK_SIZE) {
+			myPositionStack.remove(0);
+		}
+		myCurrentPointInStack = myPositionStack.size() - 1;
+	}
+
 	public void saveState() {
-		final ZLTextWordCursor cursor = getStartCursor();
+		if (getModel() == null) {
+			return;
+		}
+
 		final String group = getFileName();
 		
-		if (!cursor.isNull()) {
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_OPTION_NAME, 0).setValue(cursor.getParagraphCursor().getIndex());
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, WORD_OPTION_NAME, 0).setValue(cursor.getWordNumber());
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, CHAR_OPTION_NAME, 0).setValue(cursor.getCharNumber());
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, BUFFER_SIZE, 0).setValue(myPositionStack.size());
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, POSITION_IN_BUFFER, 0).setValue(myCurrentPointInStack);
+		new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, BUFFER_SIZE, 0).setValue(myPositionStack.size());
+		new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, POSITION_IN_BUFFER, 0).setValue(myCurrentPointInStack);
 
-			for (int i = 0; i < myPositionStack.size(); ++i) {
-				String bufferParagraph = BUFFER_PARAGRAPH_PREFIX;
-				String bufferWord = BUFFER_WORD_PREFIX;
-				bufferParagraph += i;
-				bufferWord += i;
-				new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, bufferParagraph, -1).setValue(((Position)myPositionStack.get(i)).getFirst());
-				new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, bufferWord, -1).setValue(((Position)myPositionStack.get(i)).getSecond());
-			}
+		for (int i = 0; i < myPositionStack.size(); ++i) {
+			Position position = (Position)myPositionStack.get(i);
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_PREFIX + i, 0).setValue(position.ParagraphIndex);
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, WORD_PREFIX + i, 0).setValue(position.WordIndex);
+			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, CHAR_PREFIX + i, 0).setValue(position.CharIndex);
 		}
 	}
-	
-	private class Position {
-		private int first;
-		private int second;
-		
-		public Position() {}
-		
-		public Position(int first, int second) {
-			this.first = first;
-			this.second = second;
-		}
-		
-		public int getFirst() {
-			return first;
-		}
-		
-		public int getSecond() {
-			return second;
-		}
+
+	boolean canUndoPageMove() {
+		return myCurrentPointInStack > 0;
+	}
+
+	void undoPageMove() {
+		gotoPosition((Position)myPositionStack.get(--myCurrentPointInStack));
+		getFBReader().refreshWindow();
+	}
+
+	boolean canRedoPageMove() {
+		return myCurrentPointInStack < myPositionStack.size() - 1;
+	}
+
+	void redoPageMove() {
+		gotoPosition((Position)myPositionStack.get(++myCurrentPointInStack));
+		getFBReader().refreshWindow();
 	}
 }

@@ -10,11 +10,10 @@ class RedoAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		return false;
-		//return isVisible();
-			// && fbreader().bookTextView().canRedoPageMove();
+		return isVisible() && fbreader().getBookTextView().canRedoPageMove();
 	}
 
 	public void run() {
+		fbreader().getBookTextView().redoPageMove();
 	}
 }

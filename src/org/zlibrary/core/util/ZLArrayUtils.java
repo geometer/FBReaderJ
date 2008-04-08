@@ -1,6 +1,14 @@
 package org.zlibrary.core.util;
 
 public abstract class ZLArrayUtils {
+	public static boolean[] createCopy(boolean[] array, int dataSize, int newLength) {
+		boolean[] newArray = new boolean[newLength];
+		if (dataSize > 0) {
+			System.arraycopy(array, 0, newArray, 0, dataSize);
+		}
+		return newArray;
+	}
+
 	public static byte[] createCopy(byte[] array, int dataSize, int newLength) {
 		byte[] newArray = new byte[newLength];
 		if (dataSize > 0) {

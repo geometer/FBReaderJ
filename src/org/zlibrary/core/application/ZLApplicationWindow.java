@@ -140,10 +140,15 @@ abstract public class ZLApplicationWindow {
 	//virtual void present() {}
 
 //*/
-	abstract public void close();
-	abstract public void setCaption(String caption);
-	abstract public void setFullscreen(boolean fullscreen);
-	abstract public boolean isFullscreen();
+	final protected void close() {
+		getApplication().onQuit();
+		closeInternal();
+	}
+
+	abstract protected void closeInternal();
+	abstract protected void setCaption(String caption);
+	abstract protected void setFullscreen(boolean fullscreen);
+	abstract protected boolean isFullscreen();
 
 /*
 	virtual void grabAllKeys(bool grab) = 0;

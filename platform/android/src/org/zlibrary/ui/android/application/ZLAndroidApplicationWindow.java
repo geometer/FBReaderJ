@@ -54,11 +54,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		refresh();
 	}
 
-	public void init() {
-		// TODO: implement
-		super.init();
-	}
-
 	protected void refresh() {
 		super.refresh();
 		for (Map.Entry<Menu.Item,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
@@ -92,7 +87,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
-	public void close() {
+	public void closeInternal() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).finish();
 	}
 

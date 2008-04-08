@@ -10,10 +10,14 @@ import org.zlibrary.core.dialogs.ZLDialogContent;
 import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.dialogs.*;
+import org.zlibrary.core.util.ZLArrayUtils;
 
 class ZLAndroidDialogContent extends ZLDialogContent {
 	private final ListView myListView;
 	private final View myMainView;
+
+	private final ArrayList myAndroidViews = new ArrayList();
+	private boolean[] mySelectableMarks = new boolean[10];
 
 	ZLAndroidDialogContent(Context context, ZLResource resource, View header, View footer) {
 		super(resource);
@@ -40,7 +44,9 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	}
 
 	public void addOptionByName(String name, ZLOptionEntry option) {
-		name = name.replaceAll("&", "");
+		if (name != null) {
+			name = name.replaceAll("&", "");
+		}
 		ZLAndroidOptionView view = null;
 		switch (option.getKind()) {
 			case ZLOptionKind.BOOLEAN:
@@ -52,15 +58,17 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 //				view = new Boolean3OptionView(name, tooltip, (ZLBoolean3OptionEntry*)option, *this, from, to);
 				break;
 			case ZLOptionKind.STRING:
-				//view = new EditText(myListView.getContext());
-				//((EditText)view).setText("HELLO", TextView.BufferType.EDITABLE);
-//				view = new ZLStringOptionView(name, tooltip, (ZLStringOptionEntry) option, this);
+				view = new ZLAndroidStringOptionView(
+					this, name, (ZLStringOptionEntry)option
+				);
 				break;
 			case ZLOptionKind.CHOICE:
 //				view = new ZLChoiceOptionView(name, tooltip, (ZLChoiceOptionEntry) option, this);
 				break;
 			case ZLOptionKind.SPIN:
-//				view = new ZLSpinOptionView(name, tooltip, (ZLSpinOptionEntry) option, this);
+				view = new ZLAndroidSpinOptionView(
+					this, name, (ZLSpinOptionEntry)option
+				);
 				break;
 			case ZLOptionKind.COMBO:
 				view = new ZLAndroidComboOptionView(
@@ -68,7 +76,9 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 				);
 				break;
 			case ZLOptionKind.COLOR:
-//				view = new ColorOptionView(name, tooltip, (ZLColorOptionEntry*)option, *this, from, to);
+				view = new ZLAndroidColorOptionView(
+					this, name, (ZLColorOptionEntry)option
+				);
 				break;
 			case ZLOptionKind.KEY:
 //				view = new KeyOptionView(name, tooltip, (ZLKeyOptionEntry*)option, *this, from, to);
@@ -80,18 +90,37 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 				// TODO: implement
 				break;
 		}
+		if (view != null) {
+			view.setVisible(option.isVisible());
+		}
 		addView(view);
 	}
 
 	public void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1) {
-		addOption(name0, option0);
-		addOption(name1, option1);
+		if (option0 != null) {
+			addOptionByName(name0, option0);
+		}
+		if (option1 != null) {
+			addOptionByName(name1, option1);
+		}
+	}
+
+	void addAndroidView(View view, boolean isSelectable) {
+		boolean[] marks = mySelectableMarks;
+		final int len = marks.length;
+		final int index = myAndroidViews.size();
+		if (index == len) {
+			marks = ZLArrayUtils.createCopy(marks, len, 2 * len);
+			mySelectableMarks = marks;
+		}
+		myAndroidViews.add(view);
+		marks[index] = isSelectable;
 	}
 
 	private class ViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = ((ZLAndroidOptionView)getViews().get(position)).getAndroidView();
+				convertView = (View)myAndroidViews.get(position);
 			}
 
 			return convertView;
@@ -102,11 +131,11 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 		}
 
 		public boolean isSelectable(int position) {
-			return true;
+			return mySelectableMarks[position];
 		}
 
 		public int getCount() {
-			return getViews().size();
+			return myAndroidViews.size();
 		}
 
 		public Object getItem(int position) {

@@ -10,13 +10,13 @@ class UndoAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		return fbreader().getMode() != FBReader.ViewMode.BOOK_TEXT;
-			//|| fbreader().bookTextView().canUndoPageMove();
+		return fbreader().getMode() != FBReader.ViewMode.BOOK_TEXT ||
+					 fbreader().getBookTextView().canUndoPageMove();
 	}
 
 	public void run() {
 		if (fbreader().getMode() == FBReader.ViewMode.BOOK_TEXT) {
-			//fbreader().getBookTextView().undoPageMove();
+			fbreader().getBookTextView().undoPageMove();
 		} else {
 			fbreader().restorePreviousMode();
 		}

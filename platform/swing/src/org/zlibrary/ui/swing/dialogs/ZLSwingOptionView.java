@@ -18,6 +18,10 @@ public abstract class ZLSwingOptionView extends ZLOptionView {
 		myLayout = layout;
 	}
 	
+	// TODO: remove
+	protected void reset() {
+	}
+
 	protected void hide(JComponent component) {
 		component.setVisible(false);
 		final GridBagConstraints constraints = myLayout.getConstraints(component);

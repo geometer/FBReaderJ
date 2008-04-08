@@ -102,6 +102,8 @@ public abstract class ZLApplication {
 		}
 	}
 
+	abstract protected void onQuit();
+
 	final void setWindow(ZLApplicationWindow window) {
 		myWindow = window;
 	}

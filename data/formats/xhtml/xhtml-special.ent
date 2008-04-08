@@ -21,13 +21,6 @@
      character set. Names are Unicode names. 
 -->
 
-<!-- C0 Controls and Basic Latin -->
-<!ENTITY quot    "&#34;"> <!--  quotation mark, U+0022 ISOnum -->
-<!ENTITY amp     "&#38;#38;"> <!--  ampersand, U+0026 ISOnum -->
-<!ENTITY lt      "&#38;#60;"> <!--  less-than sign, U+003C ISOnum -->
-<!ENTITY gt      "&#62;"> <!--  greater-than sign, U+003E ISOnum -->
-<!ENTITY apos	 "&#39;"> <!--  apostrophe = APL quote, U+0027 ISOnum -->
-
 <!-- Latin Extended-A -->
 <!ENTITY OElig   "&#338;"> <!--  latin capital ligature OE,
                                     U+0152 ISOlat2 -->

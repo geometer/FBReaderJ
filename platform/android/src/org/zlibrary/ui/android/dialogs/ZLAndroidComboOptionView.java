@@ -7,20 +7,28 @@ import android.database.DataSetObserver;
 import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 
 class ZLAndroidComboOptionView extends ZLAndroidOptionView {
+	private Spinner mySpinner;
+
 	protected ZLAndroidComboOptionView(ZLAndroidDialogContent tab, String name, ZLComboOptionEntry option) {
 		super(tab, name, option);
 	}
 
 	protected void createItem() {
-		Spinner view = new Spinner(myTab.getView().getContext());
-		view.setAdapter(new ComboAdapter());
+		Spinner spinner = new Spinner(myTab.getView().getContext());
+		spinner.setAdapter(new ComboAdapter());
 		//view.setDrawSelectorOnTop(true);
 		//view.setText(myName);	
-		myView = view;
+		mySpinner = spinner;
+		addAndroidView(mySpinner, true);
+	}
+			//((ZLComboOptionEntry) myOption).onValueSelected(myComboBox.getSelectedIndex());
+
+	protected void reset() {
+		// TODO: implement
 	}
 
 	protected void _onAccept() {
-		EditText editor = ((ComboAdapter)((Spinner)myView).getAdapter()).myEditor;
+		EditText editor = ((ComboAdapter)mySpinner.getAdapter()).myEditor;
 		if (editor != null) {
 			((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
 		}
