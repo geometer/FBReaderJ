@@ -1,20 +1,10 @@
 package org.zlibrary.ui.swing.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import org.zlibrary.core.dialogs.ZLComboOptionEntry;
 
@@ -91,6 +81,7 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 
 	public void reset() {
 		ZLComboOptionEntry o = (ZLComboOptionEntry) myOption;
+		o.onReset();
 		final ArrayList values = o.getValues();
 		final String initialValue = o.initialValue();
 		int index = 0;

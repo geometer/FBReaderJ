@@ -38,7 +38,6 @@ public abstract class ZLOptionView {
 	}
 	
 	protected abstract void hide();
-	
 	protected abstract void show();
 		
 	public final void onAccept() {

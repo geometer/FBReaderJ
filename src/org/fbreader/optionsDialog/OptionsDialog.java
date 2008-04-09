@@ -1,7 +1,6 @@
 package org.fbreader.optionsDialog;
 import org.fbreader.encoding.ZLEncodingCollection;
-import org.fbreader.encodingOption.EncodingEntry;
-import org.fbreader.encodingOption.EncodingSetEntry;
+import org.fbreader.encodingOption.*;
 import org.fbreader.fbreader.*;
 import org.fbreader.formats.FormatPlugin.PluginCollection;
 import org.zlibrary.core.dialogs.*;
@@ -10,8 +9,7 @@ import org.zlibrary.core.optionEntries.*;
 import org.zlibrary.core.options.*;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.view.ZLViewWidget;
-import org.zlibrary.text.view.style.ZLTextBaseStyle;
-import org.zlibrary.text.view.style.ZLTextStyleCollection;
+import org.zlibrary.text.view.style.*;
 
 public class OptionsDialog {
 	private ZLOptionsDialog myDialog;

@@ -25,12 +25,9 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 
 	protected String getSelectedTabKey() {
 		// TODO: implement
-		final View selectedView = myTabListView.getSelectedView();
-		if (selectedView != null) {
-			int index = myTabListView.indexOfChild(selectedView);
-			if ((index >= 0) && (index <= myTabs.size())) {
-				return ((ZLDialogContent)myTabs.get(index)).getKey();
-			}
+		int index = myTabListView.getSelectedItemPosition();
+		if ((index >= 0) && (index <= myTabs.size())) {
+			return ((ZLDialogContent)myTabs.get(index)).getKey();
 		}
 		return "";
 	}
@@ -131,9 +128,9 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 			switch (keyCode) {
 				case KeyEvent.KEYCODE_DPAD_CENTER:
 				case KeyEvent.KEYCODE_NEWLINE:
-					View selectedView = getSelectedView();
-					if (selectedView != null) {
-						gotoTab(indexOfChild(selectedView));
+					final int index = getSelectedItemPosition();
+					if (index != -1) {
+						gotoTab(index);
 					}
 					return false;
 				default:	

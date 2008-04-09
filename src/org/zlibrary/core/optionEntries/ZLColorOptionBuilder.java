@@ -46,25 +46,29 @@ public class ZLColorOptionBuilder {
 		}
 
 		public ZLColor getColor() {
-			return (ZLColor) myData.myCurrentColors.get(myData.myCurrentOptionName);
+			Object color = myData.myCurrentColors.get(myData.myCurrentOptionName);
+			return (color != null) ? (ZLColor)color : initialColor();
 		}
 
 		public ZLColor initialColor() {
-			return ((ZLColorOption) myData.myOptions.get(myData.myCurrentOptionName)).getValue();
+			return ((ZLColorOption)myData.myOptions.get(myData.myCurrentOptionName)).getValue();
 		}
 
 		public void onAccept(ZLColor color) {
 			onReset(color);
-			for (int i = 0; i < myData.myOptionNames.size(); i++) {
-				Object optionName = myData.myOptionNames.get(i);
-				((ZLColorOption) myData.myOptions.get(optionName)).setValue((ZLColor) myData.myCurrentColors.get(optionName));
+			final ArrayList optionNames = myData.myOptionNames;
+			final HashMap options = myData.myOptions;
+			final HashMap colors = myData.myCurrentColors;
+			final int len = optionNames.size();
+			for (int i = 0; i < len; i++) {
+				Object name = optionNames.get(i);
+				((ZLColorOption)options.get(name)).setValue((ZLColor)colors.get(name));
 			}
 		}
 
 		public void onReset(ZLColor color) {
 			myData.myCurrentColors.put(myData.myPreviousOptionName, color);
 		}
-
 	}
 
 	private static class ZLColorComboOptionEntry extends ZLComboOptionEntry {
@@ -84,12 +88,15 @@ public class ZLColorOptionBuilder {
 
 		public void onAccept(String value) {}
 
+		public void onReset() {
+			myData.myCurrentColors.clear();
+		}
+
 		public void onValueSelected(int index) {
-			myData.myCurrentOptionName = (String) getValues().get(index);
+			myData.myCurrentOptionName = (String)getValues().get(index);
 			myData.myColorEntry.resetView();
 			myData.myPreviousOptionName = myData.myCurrentOptionName;
 		}
-
 	}
 
 	private static class ZLColorOptionsData {

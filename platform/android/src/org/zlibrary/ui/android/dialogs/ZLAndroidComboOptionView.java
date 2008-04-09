@@ -1,5 +1,6 @@
 package org.zlibrary.ui.android.dialogs;
 
+import android.content.Context;
 import android.view.*;
 import android.widget.*;
 import android.database.DataSetObserver;
@@ -21,17 +22,15 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 		mySpinner = spinner;
 		addAndroidView(mySpinner, true);
 	}
-			//((ZLComboOptionEntry) myOption).onValueSelected(myComboBox.getSelectedIndex());
 
 	protected void reset() {
+		((ZLComboOptionEntry)myOption).onReset();
 		// TODO: implement
 	}
 
 	protected void _onAccept() {
 		EditText editor = ((ComboAdapter)mySpinner.getAdapter()).myEditor;
-		if (editor != null) {
-			((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
-		}
+		((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
 	}
 
 	private class ComboAdapter implements SpinnerAdapter {
@@ -49,11 +48,11 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
+			((ZLComboOptionEntry)myOption).onValueSelected(position);
 			if (convertView == null) {
 				myEditor = new EditText(parent.getContext());
 				myEditor.setSingleLine(true);
 				myEditor.setText((String)getItem(position), TextView.BufferType.EDITABLE);
-				myEditor.setText((String)getItem(position), TextView.BufferType.SPANNABLE);
 				convertView = myEditor;
 			}
 			return convertView;

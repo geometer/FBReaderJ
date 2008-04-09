@@ -42,4 +42,7 @@ public abstract class ZLComboOptionEntry extends ZLOptionEntry {
 	public abstract ArrayList/*<String>*/ getValues();
 	
 	public abstract void onAccept(String value);
+
+	public void onReset() {
+	}
 }

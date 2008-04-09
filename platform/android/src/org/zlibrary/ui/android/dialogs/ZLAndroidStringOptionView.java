@@ -1,14 +1,14 @@
 package org.zlibrary.ui.android.dialogs;
 
-import android.view.View;
 import android.content.Context;
+import android.view.*;
 import android.widget.*;
 
 import org.zlibrary.core.dialogs.ZLStringOptionEntry;
 
 class ZLAndroidStringOptionView extends ZLAndroidOptionView {
 	private TextView myLabel;
-	private TextView myEditor;
+	private EditText myEditor;
 	protected ZLAndroidStringOptionView(ZLAndroidDialogContent tab, String name, ZLStringOptionEntry option) {
 		super(tab, name, option);
 	}
@@ -23,15 +23,21 @@ class ZLAndroidStringOptionView extends ZLAndroidOptionView {
 			myLabel = label;
 			addAndroidView(label, false);
 		}
-		EditText editor = new EditText(context);
-		editor.setText(((ZLStringOptionEntry)myOption).initialValue());	
-		myEditor = editor;
-		addAndroidView(editor, true);
+		final ZLStringOptionEntry stringEntry = (ZLStringOptionEntry)myOption;
+		myEditor = new EditText(context) {
+			protected boolean getDefaultEditable() {
+				return stringEntry.isActive();
+			}
+		};
+		myEditor.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		myEditor.setText(stringEntry.initialValue());
+		addAndroidView(myEditor, true);
 	}
 
 	protected void reset() {
 		if (myEditor != null) {
-			myEditor.setText(((ZLStringOptionEntry)myOption).initialValue());	
+			final ZLStringOptionEntry stringEntry = (ZLStringOptionEntry)myOption;
+			myEditor.setText(stringEntry.initialValue());	
 		}
 	}
 

@@ -2,23 +2,14 @@ package org.fbreader.optionsDialog;
 
 import java.util.ArrayList;
 
-import org.fbreader.fbreader.ActionCode;
-import org.fbreader.fbreader.FBReader;
-import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.application.ZLKeyBindings;
-import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
-import org.zlibrary.core.dialogs.ZLComboOptionEntry;
-import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLKeyOptionEntry;
-import org.zlibrary.core.dialogs.ZLOptionEntry;
-import org.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
-import org.zlibrary.core.optionEntries.ZLSimpleKeyOptionEntry;
-import org.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
-import org.zlibrary.core.optionEntries.ZLSimpleKeyOptionEntry.CodeIndexBimap;
+import org.zlibrary.core.application.*;
+import org.zlibrary.core.dialogs.*;
+import org.zlibrary.core.options.*;
+import org.zlibrary.core.optionEntries.*;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.view.ZLViewWidget;
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.options.ZLOption;;
+
+import org.fbreader.fbreader.*;
 
 public class KeyBindingsPage {
 
@@ -71,7 +62,7 @@ public class KeyBindingsPage {
 	
 	private static class MultiKeyOptionEntry extends ZLKeyOptionEntry {
 		private final ZLResource myResource;
-		private CodeIndexBimap myBimap;
+		private ZLSimpleKeyOptionEntry.CodeIndexBimap myBimap;
 		private SingleKeyOptionEntry myEntry0;
 		private SingleKeyOptionEntry myEntry90;
 		private SingleKeyOptionEntry myEntry180;
@@ -82,7 +73,7 @@ public class KeyBindingsPage {
 		public MultiKeyOptionEntry(final ZLResource resource, FBReader fbreader) {
 			super();
 			myResource = resource;
-			myBimap = new CodeIndexBimap();
+			myBimap = new ZLSimpleKeyOptionEntry.CodeIndexBimap();
 			myEntry0 = new SingleKeyOptionEntry(myBimap, fbreader.keyBindings(ZLViewWidget.Angle.DEGREES0));
 			myEntry90 = new SingleKeyOptionEntry(myBimap, fbreader.keyBindings(ZLViewWidget.Angle.DEGREES90));
 			myEntry180 = new SingleKeyOptionEntry(myBimap, fbreader.keyBindings(ZLViewWidget.Angle.DEGREES180));

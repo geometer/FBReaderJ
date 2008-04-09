@@ -71,18 +71,6 @@
 -					<node name="allowHyphenations" value="Переносы"/>
 -					<node name="autoHyphenations" value="Переносы"/>
 -				</node>
--				<node name="Colors" value="Цвета">
--					<node name="colorFor" value="Цвет">
--						<node name="background" value="фона"/>
--						<node name="selectionBackground" value="фона пометки"/>
--						<node name="text" value="обычного текста"/>
--						<node name="internalLink" value="ссылки"/>
--						<node name="externalLink" value="внешней ссылки"/>
--						<node name="highlighted" value="подсвеченного текста"/>
--						<node name="treeLines" value="линий"/>
--						<node name="indicator" value="индикатора"/>
--					</node>
--				</node>
 				<node name="Keys" value="Клавиши">
 					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
 				</node>

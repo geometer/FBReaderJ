@@ -23,11 +23,9 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 		final int max = spinOption.maxValue();
 		if ((value >= min) && (value <= max)) {
 			myValue = value;
-			if (mySpinView != null) {
-				myDataView.setText("" + value);
-				myMinusButton.setEnabled(value > min);
-				myPlusButton.setEnabled(value < max);
-			}
+			myDataView.setText("" + value);
+			myMinusButton.setEnabled(value > min);
+			myPlusButton.setEnabled(value < max);
 		}
 	}
 
@@ -57,13 +55,11 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 		};
 		minusButton.setText("-");
 		minusButton.setTextSize(24);
-		minusButton.setEnabled(value > min);
 		myMinusButton = minusButton;
 
 		TextView data = new TextView(context);
 		data.setPadding(0, 12, 0, 12);
 		data.setTextSize(20);
-		data.setText("" + value);
 		myDataView = data;
 
 		Button plusButton = new Button(context) {
@@ -76,7 +72,6 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 		};
 		plusButton.setText("+");
 		plusButton.setTextSize(24);
-		plusButton.setEnabled(value < max);
 		myPlusButton = plusButton;
 
 		setValue(((ZLSpinOptionEntry)myOption).initialValue());
@@ -91,7 +86,9 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void reset() {
-		setValue(((ZLSpinOptionEntry)myOption).initialValue());
+		if (mySpinView != null) {
+			setValue(((ZLSpinOptionEntry)myOption).initialValue());
+		}
 	}
 
 	protected void _onAccept() {

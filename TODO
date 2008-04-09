@@ -79,15 +79,17 @@ DONE	другие
 диалоги (android):
 DONE	Selection
 НМ 0	Option
+		правильное расположение парных опций
+		кнопки наверху -- со стрелками влево
 		show/hide option views
 		boolean option view
 		boolean3 option view
-		spin option view
+		spin option view (размеры!!!!)
 		string option view
 		combo option view
-		color option view
+DONE		color option view
 		key option view
-		choice option view
+DONE		choice option view
 DONE	MessageBox
 DONE	WaitMessage
 DONE	другие

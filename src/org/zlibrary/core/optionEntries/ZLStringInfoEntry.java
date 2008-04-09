@@ -20,5 +20,4 @@ public class ZLStringInfoEntry extends ZLStringOptionEntry {
 	}
 
 	public void onAccept(String value) {}
-
 }

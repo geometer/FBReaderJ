@@ -63,7 +63,9 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 				);
 				break;
 			case ZLOptionKind.CHOICE:
-//				view = new ZLChoiceOptionView(name, tooltip, (ZLChoiceOptionEntry) option, this);
+				view = new ZLAndroidChoiceOptionView(
+					this, name, (ZLChoiceOptionEntry)option
+				);
 				break;
 			case ZLOptionKind.SPIN:
 				view = new ZLAndroidSpinOptionView(
