@@ -2,6 +2,7 @@ package org.zlibrary.ui.swing.dialogs;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 
 import javax.swing.*;
@@ -9,7 +10,6 @@ import javax.swing.*;
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.util.ZLColor;
-import org.zlibrary.text.view.style.ZLTextStyleCollection;
 
 public class ZLColorOptionView extends ZLSwingOptionView {
 	private JComboBox myStandardColorComboBox;
@@ -185,14 +185,23 @@ public class ZLColorOptionView extends ZLSwingOptionView {
 		
 		public void actionPerformed(ActionEvent e) {
 			JColorChooser chooser = new JColorChooser();
-			chooser.removeChooserPanel(chooser.getChooserPanels()[0]);
-			chooser.removeChooserPanel(chooser.getChooserPanels()[1]);
-			Color color = chooser.showDialog(null, ZLResource.resource("dialog").getResource("OptionsDialog").getResource("tab").getResource("Colors").getResource("colorFor").getValue(),
-					new Color(((ZLColor) myStandardColorComboBox.getSelectedItem()).getIntValue()));
-			if (color != null) {
-				setSelectedColor(new ZLColor(color.getRGB()));
-			}
+			chooser.setColor(((ZLColor) myStandardColorComboBox.getSelectedItem()).getIntValue());
+			JColorChooser.createDialog(null, myTab.getResource("colorFor").getValue(), true, chooser,
+					new OKListener(chooser), null).setVisible(true);
 		}
 		
+	}
+	
+	private class OKListener implements ActionListener {
+		private JColorChooser myChooser;
+
+		public OKListener(JColorChooser chooser) {
+			myChooser = chooser;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			setSelectedColor(new ZLColor(myChooser.getColor().getRGB()));
+		}
+
 	}
 }
