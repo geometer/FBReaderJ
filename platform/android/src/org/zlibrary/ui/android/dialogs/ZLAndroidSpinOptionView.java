@@ -7,6 +7,7 @@ import android.widget.*;
 import org.zlibrary.core.dialogs.ZLSpinOptionEntry;
 
 class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
+	private TextView myLabel;
 	private View mySpinView;
 	private TextView myDataView;
 	private Button myMinusButton;
@@ -31,14 +32,16 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 
 	protected void createItem() {
 		final Context context = myTab.getView().getContext();
+		if (myName != null) {
+			myLabel = new TextView(context);
+			myLabel.setText(myName);
+			myLabel.setPadding(0, 12, 0, 12);
+			myLabel.setTextSize(18);
+		}
+
 		LinearLayout layout = new LinearLayout(context);
 		layout.setOrientation(LinearLayout.HORIZONTAL);
 		layout.setHorizontalGravity(0x05);
-
-		TextView label = new TextView(context);
-		label.setText(myName);
-		label.setPadding(0, 12, 0, 12);
-		label.setTextSize(16);
 
 		final ZLSpinOptionEntry spinOption = (ZLSpinOptionEntry)myOption;
 		final int min = spinOption.minValue();
@@ -76,7 +79,6 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 
 		setValue(((ZLSpinOptionEntry)myOption).initialValue());
 
-		layout.addView(label, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		layout.addView(minusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
 		layout.addView(data, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		layout.addView(plusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -85,6 +87,7 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 	}
 
 	void addAndroidViews() {
+		myTab.addAndroidView(myLabel, false);
 		myTab.addAndroidView(mySpinView, true);
 	}
 

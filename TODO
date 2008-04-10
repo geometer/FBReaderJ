@@ -82,9 +82,9 @@ DONE	Selection
 		правильное расположение парных опций
 		кнопки наверху -- со стрелками влево
 DONE		show/hide option views
-		boolean option view
+DONE		boolean option view
 		boolean3 option view
-		spin option view (размеры!!!!)
+DONE		spin option view
 DONE		string option view
 		combo option view
 DONE		color option view
