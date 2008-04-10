@@ -160,7 +160,10 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 		layout.addView(myBlueView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
 		myContainer = layout;
-		addAndroidView(layout, true);
+	}
+
+	void addAndroidViews() {
+		myTab.addAndroidView(myContainer, true);
 	}
 
 	private void updateColorArea() {

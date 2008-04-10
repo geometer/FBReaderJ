@@ -15,12 +15,12 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void createItem() {
-		Spinner spinner = new Spinner(myTab.getView().getContext());
-		spinner.setAdapter(new ComboAdapter());
-		//view.setDrawSelectorOnTop(true);
-		//view.setText(myName);	
-		mySpinner = spinner;
-		addAndroidView(mySpinner, true);
+		mySpinner = new Spinner(myTab.getView().getContext());
+		mySpinner.setAdapter(new ComboAdapter());
+	}
+
+	void addAndroidViews() {
+		myTab.addAndroidView(mySpinner, true);
 	}
 
 	protected void reset() {

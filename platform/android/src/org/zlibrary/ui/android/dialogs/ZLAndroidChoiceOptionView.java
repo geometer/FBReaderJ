@@ -27,7 +27,10 @@ class ZLAndroidChoiceOptionView extends ZLAndroidOptionView {
 			myGroup.addView(button, new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
 		}
 		myGroup.check(choiceEntry.initialCheckedIndex() + 1);
-		addAndroidView(myGroup, true);
+	}
+
+	void addAndroidViews() {
+		myTab.addAndroidView(myGroup, true);
 	}
 
 	protected void reset() {

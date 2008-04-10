@@ -6,8 +6,6 @@ import android.content.Context;
 import android.view.*;
 import android.widget.*;
 
-import org.zlibrary.core.dialogs.ZLDialogContent;
-import org.zlibrary.core.dialogs.ZLOptionEntry;
 import org.zlibrary.core.resources.ZLResource;
 import org.zlibrary.core.dialogs.*;
 import org.zlibrary.core.util.ZLArrayUtils;
@@ -41,6 +39,28 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 
 	View getView() {
 		return myMainView;
+	}
+
+	private ArrayList getAndroidViews() {
+		if (myAndroidViews.isEmpty()) {
+			final ArrayList views = getViews();
+			final int len = views.size();
+			for (int i = 0; i < len; ++i) {
+				final ZLAndroidOptionView v = (ZLAndroidOptionView)views.get(i);
+				if (v.isVisible()) {
+					v.addAndroidViews();	
+				}
+			}
+		}
+		return myAndroidViews;
+	}
+
+	void invalidateView() {
+		if (!myAndroidViews.isEmpty()) {
+			myAndroidViews.clear();
+			myListView.setAdapter(new ViewAdapter());
+			myListView.invalidate();
+		}
 	}
 
 	public void addOptionByName(String name, ZLOptionEntry option) {
@@ -108,21 +128,23 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	}
 
 	void addAndroidView(View view, boolean isSelectable) {
-		boolean[] marks = mySelectableMarks;
-		final int len = marks.length;
-		final int index = myAndroidViews.size();
-		if (index == len) {
-			marks = ZLArrayUtils.createCopy(marks, len, 2 * len);
-			mySelectableMarks = marks;
+		if (view != null) {
+			boolean[] marks = mySelectableMarks;
+			final int len = marks.length;
+			final int index = myAndroidViews.size();
+			if (index == len) {
+				marks = ZLArrayUtils.createCopy(marks, len, 2 * len);
+				mySelectableMarks = marks;
+			}
+			myAndroidViews.add(view);
+			marks[index] = isSelectable;
 		}
-		myAndroidViews.add(view);
-		marks[index] = isSelectable;
 	}
 
 	private class ViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = (View)myAndroidViews.get(position);
+				convertView = (View)getAndroidViews().get(position);
 			}
 
 			return convertView;
@@ -137,7 +159,7 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 		}
 
 		public int getCount() {
-			return myAndroidViews.size();
+			return getAndroidViews().size();
 		}
 
 		public Object getItem(int position) {

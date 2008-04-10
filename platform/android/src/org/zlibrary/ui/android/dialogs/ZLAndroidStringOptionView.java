@@ -16,12 +16,10 @@ class ZLAndroidStringOptionView extends ZLAndroidOptionView {
 	protected void createItem() {
 		final Context context = myTab.getView().getContext();
 		if (myName != null) {
-			final TextView label = new TextView(context);
-			label.setText(myName);
-			label.setPadding(0, 12, 0, 12);
-			label.setTextSize(18);
-			myLabel = label;
-			addAndroidView(label, false);
+			myLabel = new TextView(context);
+			myLabel.setText(myName);
+			myLabel.setPadding(0, 12, 0, 12);
+			myLabel.setTextSize(18);
 		}
 		final ZLStringOptionEntry stringEntry = (ZLStringOptionEntry)myOption;
 		myEditor = new EditText(context) {
@@ -29,9 +27,13 @@ class ZLAndroidStringOptionView extends ZLAndroidOptionView {
 				return stringEntry.isActive();
 			}
 		};
-		myEditor.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		myEditor.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		myEditor.setText(stringEntry.initialValue());
-		addAndroidView(myEditor, true);
+	}
+
+	void addAndroidViews() {
+		myTab.addAndroidView(myLabel, false);
+		myTab.addAndroidView(myEditor, true);
 	}
 
 	protected void reset() {

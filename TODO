@@ -81,11 +81,11 @@ DONE	Selection
 НМ 0	Option
 		правильное расположение парных опций
 		кнопки наверху -- со стрелками влево
-		show/hide option views
+DONE		show/hide option views
 		boolean option view
 		boolean3 option view
 		spin option view (размеры!!!!)
-		string option view
+DONE		string option view
 		combo option view
 DONE		color option view
 		key option view

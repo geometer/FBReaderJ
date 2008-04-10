@@ -19,7 +19,7 @@ public class ZLBooleanOptionView extends ZLSwingOptionView {
 	}
 
 	protected void _onAccept() {
-		((ZLBooleanOptionEntry) myOption).onAccept(myCheckBox.isSelected());
+		((ZLBooleanOptionEntry)myOption).onAccept(myCheckBox.isSelected());
 	}
 
 	protected void _setActive(boolean active) {
@@ -28,11 +28,12 @@ public class ZLBooleanOptionView extends ZLSwingOptionView {
 	}
 
 	protected void createItem() {
+		final ZLBooleanOptionEntry booleanEntry = (ZLBooleanOptionEntry)myOption;
 		myCheckBox = new JCheckBox(myName);
-		myCheckBox.setSelected(((ZLBooleanOptionEntry) myOption).initialState());
+		myCheckBox.setSelected(booleanEntry.initialState());
 		myCheckBox.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				((ZLBooleanOptionEntry) myOption).onStateChanged(myCheckBox.isSelected());
+				booleanEntry.onStateChanged(myCheckBox.isSelected());
 			}});
 		myTab.insertWidget(myCheckBox);
 	}

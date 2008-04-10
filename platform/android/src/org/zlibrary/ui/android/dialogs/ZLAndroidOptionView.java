@@ -11,12 +11,7 @@ abstract class ZLAndroidOptionView extends ZLOptionView {
 
 	protected ZLAndroidOptionView(ZLAndroidDialogContent tab, String name, ZLOptionEntry option) {
 		super(name, option);
-		//setVisible(option.isVisible());
 		myTab = tab;
-	}
-
-	protected void addAndroidView(View view, boolean isSelectable) {
-		myTab.addAndroidView(view, isSelectable);
 	}
 
 	boolean isVisible() {
@@ -25,13 +20,17 @@ abstract class ZLAndroidOptionView extends ZLOptionView {
 
 	protected void show() {
 		myIsVisible = true;
+		myTab.invalidateView();
 	}
 
 	protected void hide() {
 		myIsVisible = false;
+		myTab.invalidateView();
 	}
 
 	protected void _setActive(boolean active) {
 		// TODO: implement
 	}
+
+	abstract void addAndroidViews();
 }

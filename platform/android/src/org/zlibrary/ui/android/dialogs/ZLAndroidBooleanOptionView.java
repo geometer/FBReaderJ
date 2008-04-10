@@ -1,6 +1,6 @@
 package org.zlibrary.ui.android.dialogs;
 
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 
 import org.zlibrary.core.dialogs.ZLBooleanOptionEntry;
@@ -13,11 +13,24 @@ class ZLAndroidBooleanOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void createItem() {
-		CheckBox checkBox = new CheckBox(myTab.getView().getContext());
+		final ZLBooleanOptionEntry booleanEntry = (ZLBooleanOptionEntry)myOption;
+		CheckBox checkBox = new CheckBox(myTab.getView().getContext()) {
+			public boolean onTouchEvent(MotionEvent event) {
+				final boolean checked = isChecked();
+				final boolean code = super.onTouchEvent(event);
+				if (checked != isChecked()) {
+					booleanEntry.onStateChanged(!checked);
+				}
+				return code;
+			}
+		};
 		checkBox.setText(myName);	
-		checkBox.setChecked(((ZLBooleanOptionEntry)myOption).initialState());
+		checkBox.setChecked(booleanEntry.initialState());
 		myCheckBox = checkBox;
-		addAndroidView(checkBox, true);
+	}
+
+	void addAndroidViews() {
+		myTab.addAndroidView(myCheckBox, true);
 	}
 
 	protected void reset() {

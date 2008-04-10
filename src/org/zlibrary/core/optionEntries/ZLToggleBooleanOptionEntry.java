@@ -20,7 +20,7 @@ public class ZLToggleBooleanOptionEntry extends ZLSimpleBooleanOptionEntry {
 	public void onStateChanged(boolean state) {
 		final int size = myDependentEntries.size();
 		for (int i = 0; i < size; i++) {
-			((ZLOptionEntry) myDependentEntries.get(i)).setVisible(state);
+			((ZLOptionEntry)myDependentEntries.get(i)).setVisible(state);
 		}
 	}
 }

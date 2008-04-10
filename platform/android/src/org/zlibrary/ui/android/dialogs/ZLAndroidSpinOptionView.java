@@ -82,7 +82,10 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 		layout.addView(plusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
 
 		mySpinView = layout;
-		addAndroidView(layout, true);
+	}
+
+	void addAndroidViews() {
+		myTab.addAndroidView(mySpinView, true);
 	}
 
 	protected void reset() {
