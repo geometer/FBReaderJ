@@ -34,8 +34,10 @@ class ZLAndroidBooleanOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void reset() {
+		final ZLBooleanOptionEntry booleanEntry = (ZLBooleanOptionEntry)myOption;
+		booleanEntry.onReset();
 		if (myCheckBox != null) {
-			myCheckBox.setChecked(((ZLBooleanOptionEntry)myOption).initialState());
+			myCheckBox.setChecked(booleanEntry.initialState());
 		}
 	}
 

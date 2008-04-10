@@ -15,4 +15,7 @@ public abstract class ZLBooleanOptionEntry extends ZLOptionEntry {
 	public abstract boolean initialState();
 	
 	public abstract void onAccept(boolean state);
+
+	public void onReset() {
+	}
 }

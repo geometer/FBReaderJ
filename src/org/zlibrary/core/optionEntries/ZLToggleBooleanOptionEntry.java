@@ -23,4 +23,8 @@ public class ZLToggleBooleanOptionEntry extends ZLSimpleBooleanOptionEntry {
 			((ZLOptionEntry)myDependentEntries.get(i)).setVisible(state);
 		}
 	}
+
+	public void onReset() {
+		onStateChanged(initialState());
+	}
 }
