@@ -1,22 +1,11 @@
 		<node name="OptionsDialog">
 			<node name="tab">
-				<node name="Library" value="Библиотека">
-					<node name="recentListSize" value="Размер списка прочитанных книг"/>
-					<node name="showTags" value="Сортировать книги по категориям"/>
-					<node name="showAllBooksList" value="Показывать список всех книг"/>
-				</node>
 				<node name="Language" value="Язык">
 					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
 -					<node name="defaultLanguage" value="Язык по умолчанию"/>
 -					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 -					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
 -					<node name="useWindows1252Hack" value="Использовать windows-1252 вместо iso-8859-1"/>
-				</node>
-				<node name="Indicator" value="Индикатор">
-					<node name="pageNumber" value="Показывать номера страниц"/>
-					<node name="time" value="Показывать текущее время"/>
-					<node name="fontSize" value="Размер шрифта"/>
-					<node name="tocMarks" value="Показывать пометки начала глав"/>
 				</node>
 -				<node name="Scrolling" value="Перелистывание">
 -					<node name="optionsFor" value="Настройки перелистывания">

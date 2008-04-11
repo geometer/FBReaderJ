@@ -186,6 +186,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 		TabButton(Context context, String text, Runnable action) {
 			super(context);
 			setText(text);
+			setFocusable(false);
 			myAction = action;
 		}
 

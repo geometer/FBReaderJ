@@ -24,12 +24,12 @@ public class OptionsDialog {
 		libraryTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
 		RecentBooksView recentBooksView = (RecentBooksView) fbreader.getRecentBooksView();
 		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(recentBooksView.lastBooks().MaxListSizeOption, 1));
-		ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
-		ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
-		showTagsEntry.addDependentEntry(showAllBooksTagEntry);
-		libraryTab.addOption("showTags", showTagsEntry);
-		libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
-		showTagsEntry.onStateChanged(showTagsEntry.initialState());
+		//ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
+		//ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
+		//showTagsEntry.addDependentEntry(showAllBooksTagEntry);
+		//libraryTab.addOption("showTags", showTagsEntry);
+		//libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
+		//showTagsEntry.onStateChanged(showTagsEntry.initialState());
 		
 		ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
@@ -63,8 +63,6 @@ public class OptionsDialog {
 		
 		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
-		
-		
 		
 		ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
@@ -108,27 +106,27 @@ public class OptionsDialog {
 		showIndicatorEntry.addDependentEntry(heightEntry);
 		showIndicatorEntry.addDependentEntry(offsetEntry);
 
-		StateOptionEntry showTextPositionEntry =
-			new StateOptionEntry(indicatorInfo.ShowTextPositionOption);
-		indicatorTab.addOption("pageNumber", showTextPositionEntry);
-		showIndicatorEntry.addDependentEntry(showTextPositionEntry);
+		//StateOptionEntry showTextPositionEntry =
+		//	new StateOptionEntry(indicatorInfo.ShowTextPositionOption);
+		//indicatorTab.addOption("pageNumber", showTextPositionEntry);
+		//showIndicatorEntry.addDependentEntry(showTextPositionEntry);
 
-		StateOptionEntry showTimeEntry =
-			new StateOptionEntry(indicatorInfo.ShowTimeOption);
-		indicatorTab.addOption("time", showTimeEntry);
-		showIndicatorEntry.addDependentEntry(showTimeEntry);
+		//StateOptionEntry showTimeEntry =
+		//	new StateOptionEntry(indicatorInfo.ShowTimeOption);
+		//indicatorTab.addOption("time", showTimeEntry);
+		//showIndicatorEntry.addDependentEntry(showTimeEntry);
 
-		SpecialFontSizeEntry fontSizeEntry =
-			new SpecialFontSizeEntry(indicatorInfo.FontSizeOption, 2, showTextPositionEntry, showTimeEntry);
-		indicatorTab.addOption("fontSize", fontSizeEntry);
-		showIndicatorEntry.addDependentEntry(fontSizeEntry);
-		showTextPositionEntry.addDependentEntry(fontSizeEntry);
-		showTimeEntry.addDependentEntry(fontSizeEntry);
+		//SpecialFontSizeEntry fontSizeEntry =
+		//	new SpecialFontSizeEntry(indicatorInfo.FontSizeOption, 2, showTextPositionEntry, showTimeEntry);
+		//indicatorTab.addOption("fontSize", fontSizeEntry);
+		//showIndicatorEntry.addDependentEntry(fontSizeEntry);
+		//showTextPositionEntry.addDependentEntry(fontSizeEntry);
+		//showTimeEntry.addDependentEntry(fontSizeEntry);
 
-		ZLOptionEntry tocMarksEntry =
-			new ZLSimpleBooleanOptionEntry(fbreader.getBookTextView().ShowTOCMarksOption);
-		indicatorTab.addOption("tocMarks", tocMarksEntry);
-		showIndicatorEntry.addDependentEntry(tocMarksEntry);
+		//ZLOptionEntry tocMarksEntry =
+		//	new ZLSimpleBooleanOptionEntry(fbreader.getBookTextView().ShowTOCMarksOption);
+		//indicatorTab.addOption("tocMarks", tocMarksEntry);
+		//showIndicatorEntry.addDependentEntry(tocMarksEntry);
 
 		ZLOptionEntry navigationEntry =
 			new ZLSimpleBooleanOptionEntry(indicatorInfo.IsSensitiveOption);
@@ -136,8 +134,8 @@ public class OptionsDialog {
 		showIndicatorEntry.addDependentEntry(navigationEntry);
 
 		showIndicatorEntry.onStateChanged(showIndicatorEntry.initialState());
-		showTextPositionEntry.onStateChanged(showTextPositionEntry.initialState());
-		showTimeEntry.onStateChanged(showTimeEntry.initialState());
+		//showTextPositionEntry.onStateChanged(showTextPositionEntry.initialState());
+		//showTimeEntry.onStateChanged(showTimeEntry.initialState());
 	}
 	
 	public ZLOptionsDialog getDialog() {
