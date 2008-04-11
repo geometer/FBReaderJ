@@ -94,7 +94,7 @@ public class OptionsDialog {
 		builder.addOption(resource.getResource("externalLink").getValue(), baseStyle.ExternalHyperlinkTextColorOption);
 		builder.addOption(resource.getResource("highlighted").getValue(), baseStyle.SelectedTextColorOption);
 		builder.addOption(resource.getResource("treeLines").getValue(), baseStyle.TreeLinesColorOption);
-		builder.addOption(resource.getResource("indicator").getValue(), ((FBIndicatorInfo) fbreader.getCollectionView().getIndicatorInfo()).ColorOption);
+		builder.addOption(resource.getResource("indicator").getValue(), FBView.getIndicatorInfoStatic().ColorOption);
 		builder.setInitial(BACKGROUND);
 		colorsTab.addOption(colorKey, builder.comboEntry());
 		colorsTab.addOption("", builder.colorEntry());
@@ -110,8 +110,7 @@ public class OptionsDialog {
 	
 	private void createIndicatorTab(FBReader fbreader) {
 		ZLDialogContent indicatorTab = myDialog.createTab("Indicator");
-		//TODO
-		FBIndicatorInfo indicatorInfo = (FBIndicatorInfo) fbreader.getCollectionView().getIndicatorInfo();
+		FBIndicatorInfo indicatorInfo = FBView.getIndicatorInfoStatic();
 		ZLToggleBooleanOptionEntry showIndicatorEntry =
 			new ZLToggleBooleanOptionEntry(indicatorInfo.ShowOption);
 		indicatorTab.addOption("show", showIndicatorEntry);

@@ -105,6 +105,10 @@ public abstract class FBView extends ZLTextViewImpl {
 	}
 
 	public ZLTextIndicatorInfo getIndicatorInfo() {
+		return getIndicatorInfoStatic();
+	}
+	
+	public static FBIndicatorInfo getIndicatorInfoStatic() {
 		if (ourIndicatorInfo == null) {
 			ourIndicatorInfo = new FBIndicatorInfo();
 		}
