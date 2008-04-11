@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public class BookDescription {
 	private Author myAuthor;
-	private	String myTitle;
+	private	String myTitle = "";
 	private	String mySequenceName = "";
 	private	int myNumberInSequence = 0;
 	private	final String myFileName;
@@ -57,13 +57,11 @@ public class BookDescription {
 		if (checkFile && !file.exists()) {
 			return null;
 		}
-
 		BookDescription description = (BookDescription)ourDescriptions.get(fileName);
 		if (description == null) {
 			description = new BookDescription(fileName);
 			ourDescriptions.put(fileName, description);
 		}
-
 		if (!checkFile || BookDescriptionUtil.checkInfo(file)) {
 			BookInfo info = new BookInfo(fileName);
 			description.myAuthor = SingleAuthor.create(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
@@ -81,7 +79,6 @@ public class BookDescription {
 			}
 			BookDescriptionUtil.saveInfo(file);
 		}
-
 		ZLFile bookFile = new ZLFile(fileName);
 		
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile, false);
