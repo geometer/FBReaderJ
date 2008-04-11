@@ -103,9 +103,9 @@ public class KeyBindingsPage {
 			addAction(ActionCode.REDO);
 
 			// selection
-			addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD);
-			addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY);
-			addAction(ActionCode.CLEAR_SELECTION);
+			//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD);
+			//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY);
+			//addAction(ActionCode.CLEAR_SELECTION);
 
 			// search
 			addAction(ActionCode.SEARCH);

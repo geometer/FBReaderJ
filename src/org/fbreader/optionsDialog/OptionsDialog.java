@@ -42,8 +42,8 @@ public class OptionsDialog {
 
 		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
 				
-		ZLDialogContent selectionTab = myDialog.createTab("Selection");
-		selectionTab.addOption("enableSelection", FBView.selectionOption());
+		//ZLDialogContent selectionTab = myDialog.createTab("Selection");
+		//selectionTab.addOption("enableSelection", FBView.selectionOption());
 		
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
 		marginTab.addOptions(
@@ -70,7 +70,7 @@ public class OptionsDialog {
 		ZLColorOptionBuilder builder = new ZLColorOptionBuilder();
 		final String BACKGROUND = resource.getResource("background").getValue();
 		builder.addOption(BACKGROUND, baseStyle.BackgroundColorOption);
-		builder.addOption(resource.getResource("selectionBackground").getValue(), baseStyle.SelectionBackgroundColorOption);
+		//builder.addOption(resource.getResource("selectionBackground").getValue(), baseStyle.SelectionBackgroundColorOption);
 		builder.addOption(resource.getResource("text").getValue(), baseStyle.RegularTextColorOption);
 		builder.addOption(resource.getResource("internalLink").getValue(), baseStyle.InternalHyperlinkTextColorOption);
 		builder.addOption(resource.getResource("externalLink").getValue(), baseStyle.ExternalHyperlinkTextColorOption);

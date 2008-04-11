@@ -27,9 +27,6 @@
 -					<node name="percentToScroll" value="Сколько процентов сдвигать"/>
 -					<node name="fingerOnly" value="Только при нажатии пальцем"/>
 -				</node>
-				<node name="Selection" value="Пометка">
-					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
 -				<node name="Format" value="Форматирование">
 -					<node name="optionsFor" value="Настройки для"/>
 -					<node name="lineSpacing" value="Интервал">

@@ -5,7 +5,7 @@
 
 ZLTextView:
 DONE	пометки (для найденных строк и т.п.)
-2	выделение текста мышкой
+DELAYED	выделение текста мышкой
 2	прокрутка текста мышкой
 	переход по ссылкам
 DONE		внутренним
@@ -133,9 +133,9 @@ DONE	ActionCode.SHOW_BOOK_INFO
 1	ActionCode.OPEN_PREVIOUS_BOOK
 1	ActionCode.GOTO_NEXT_TOC_SECTION
 1	ActionCode.GOTO_PREVIOUS_TOC_SECTION
-2	ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD
-2	ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY
-2	ActionCode.CLEAR_SELECTION
+DELAYED	ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD
+DELAYED	ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY
+DELAYED	ActionCode.CLEAR_SELECTION
 
 другое:
 DONE	поиск
