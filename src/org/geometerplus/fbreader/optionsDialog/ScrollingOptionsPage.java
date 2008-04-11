@@ -59,7 +59,7 @@ public class ScrollingOptionsPage {
 		final boolean isMousePresented = 
 			new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
 		final boolean hasTouchScreen = 
-			new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", false).getValue();
+			new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
 
 		if (isMousePresented) {
 			myMouseScrollingEntries = new ScrollingEntries(fbreader, fbreader.MouseScrollingOptions);
@@ -159,10 +159,10 @@ public class ScrollingOptionsPage {
 			myValues.add(myLargeScrollingString);
 			myValues.add(mySmallScrollingString);
 
-			final boolean isMousePresented = 
+			final boolean isMousePresented =
 				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
-			final boolean hasTouchScreen = 
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", false).getValue();
+			final boolean hasTouchScreen =
+				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
 
 			if (isMousePresented) {
 				myValues.add(myMouseScrollingString);
@@ -180,7 +180,7 @@ public class ScrollingOptionsPage {
 			final boolean isMousePresented = 
 				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
 			final boolean hasTouchScreen = 
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", false).getValue();
+				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
 
 			if (isMousePresented) {
 				myPage.myMouseScrollingEntries.show(myMouseScrollingString.equals(selectedValue));
@@ -199,7 +199,6 @@ public class ScrollingOptionsPage {
 		}
 
 		public void onAccept(String value) {}
-		
 	}
 
 	
@@ -299,5 +298,4 @@ public class ScrollingOptionsPage {
 			}
 		}
 	}
-	
 }

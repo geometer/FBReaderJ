@@ -76,8 +76,11 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	void invalidateView() {
 		if (!myAndroidViews.isEmpty()) {
 			myAndroidViews.clear();
+			android.util.Log.i("invalidateView", "0");
 			myListView.setAdapter(new ViewAdapter());
+			android.util.Log.i("invalidateView", "1");
 			myListView.invalidate();
+			android.util.Log.i("invalidateView", "2");
 		}
 	}
 
@@ -162,7 +165,13 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	private class ViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = (View)getAndroidViews().get(position);
+				final ArrayList views = getAndroidViews();
+				// just a hack
+				// TODO: make a correct fix for a problem in Scrollings tab
+				if (position >= views.size()) {
+					position = views.size() - 1;
+				}
+				convertView = (View)views.get(position);
 			}
 
 			return convertView;
