@@ -71,14 +71,14 @@
 
 	<target name="depend" depends="dirs, resource-src">
 		<depend srcdir="${src.path}" destdir="${outdir-classes}" cache="${cachedir}" closure="yes">
-			<exclude name="org/zlibrary/core/xml/sax/**"/>
+			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
 		</depend>
 	</target>
 
 	<!-- Compile this project's .java files into .class files. -->
 	<target name="compile" depends="depend">
 		<javac target="1.5" srcdir="${src.path}" destdir="${outdir-classes}" bootclasspath="${android-jar}">
-			<exclude name = "org/zlibrary/core/xml/sax/**"/>
+			<exclude name = "org/geometerplus/zlibrary/core/xml/sax/**"/>
 		</javac>
 	</target>
 

@@ -5,12 +5,12 @@ import java.util.Locale;
 
 import junit.framework.TestCase;
 
-import org.fbreader.collection.BookCollection;
-import org.fbreader.description.Author;
-import org.fbreader.description.BookDescription;
-import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.fbreader.collection.BookCollection;
+import org.geometerplus.fbreader.description.Author;
+import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class TestBookCollection extends TestCase  {
 	private final String filename = "testfb2book.fb2";

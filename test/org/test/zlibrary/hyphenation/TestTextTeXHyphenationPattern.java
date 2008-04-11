@@ -2,7 +2,7 @@ package org.test.zlibrary.hyphenation;
 
 import java.util.Arrays;
 
-import org.zlibrary.text.hyphenation.ZLTextTeXHyphenationPattern;
+import org.geometerplus.zlibrary.text.hyphenation.ZLTextTeXHyphenationPattern;
 
 import junit.framework.TestCase;
 

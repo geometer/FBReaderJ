@@ -1,17 +1,17 @@
 package org.test.fbreader.formats.fb2;
 
-import org.fbreader.bookmodel.BookModel;
-import org.fbreader.bookmodel.ContentsModel;
-import org.fbreader.formats.fb2.FB2Reader;
-import org.zlibrary.core.image.*;
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.ContentsModel;
+import org.geometerplus.fbreader.formats.fb2.FB2Reader;
+import org.geometerplus.zlibrary.core.image.*;
 
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.text.model.ZLTextModel;
-import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.ZLTextTreeParagraph;
-import org.zlibrary.text.model.impl.ZLImageEntry;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
-import org.zlibrary.ui.swing.view.ZLSwingPaintContext;
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
+import org.geometerplus.zlibrary.text.model.impl.ZLImageEntry;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.zlibrary.ui.swing.view.ZLSwingPaintContext;
 
 import org.test.zlibrary.model.ModelDumper;
 

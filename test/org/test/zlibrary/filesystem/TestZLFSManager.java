@@ -2,9 +2,9 @@ package org.test.zlibrary.filesystem;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.core.filesystem.ZLFSDir;
-//import org.zlibrary.core.filesystem.ZLFSManagerUtil;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLFSDir;
+//import org.geometerplus.zlibrary.core.filesystem.ZLFSManagerUtil;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class TestZLFSManager extends TestCase {
 	

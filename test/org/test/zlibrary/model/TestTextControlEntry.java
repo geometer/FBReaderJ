@@ -1,6 +1,6 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.text.model.impl.ZLModelFactory;
+import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
 
 import junit.framework.TestCase;
 

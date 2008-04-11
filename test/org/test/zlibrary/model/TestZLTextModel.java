@@ -2,12 +2,12 @@ package org.test.zlibrary.model;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.core.util.ZLTextBuffer;
+import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
 
-import org.zlibrary.text.model.ZLTextPlainModel;
-import org.zlibrary.text.model.ZLTextParagraph;
-import org.zlibrary.text.model.impl.ZLTextForcedControlEntry;
-import org.zlibrary.text.model.impl.ZLModelFactory;
+import org.geometerplus.zlibrary.text.model.ZLTextPlainModel;
+import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+import org.geometerplus.zlibrary.text.model.impl.ZLTextForcedControlEntry;
+import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
 
 public class TestZLTextModel extends TestCase {
     private ZLModelFactory factory = new ZLModelFactory(); 

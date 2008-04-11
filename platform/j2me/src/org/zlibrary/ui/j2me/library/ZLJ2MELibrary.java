@@ -1,4 +1,4 @@
-package org.zlibrary.ui.j2me.library;
+package org.geometerplus.zlibrary.ui.j2me.library;
 
 import java.io.InputStream;
 import javax.microedition.io.Connector;
@@ -7,16 +7,16 @@ import javax.microedition.io.file.*;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Display;
 
-import org.zlibrary.core.library.ZLibrary;
-import org.zlibrary.core.view.ZLPaintContext;
-import org.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 
-import org.zlibrary.ui.j2me.config.ZLJ2MEConfigManager;
-import org.zlibrary.ui.j2me.view.ZLCanvas;
-import org.zlibrary.ui.j2me.application.ZLJ2MEApplicationWindow;
-import org.zlibrary.ui.j2me.image.ZLJ2MEImageManager;
+import org.geometerplus.zlibrary.ui.j2me.config.ZLJ2MEConfigManager;
+import org.geometerplus.zlibrary.ui.j2me.view.ZLCanvas;
+import org.geometerplus.zlibrary.ui.j2me.application.ZLJ2MEApplicationWindow;
+import org.geometerplus.zlibrary.ui.j2me.image.ZLJ2MEImageManager;
 
 final class ZLJ2MELibrary extends ZLibrary {
 	private ZLCanvas myCanvas;

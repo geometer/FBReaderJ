@@ -33,7 +33,7 @@
 
 	<target name="compile" depends="prepare">
 		<wtkbuild srcdir="${src.path}" destdir="${bin.dir}">
-			<exclude name="org/zlibrary/core/xml/sax/**"/>
+			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
 		</wtkbuild>
 	</target>
 
@@ -42,7 +42,7 @@
 			<fileset dir="${bin.dir}" includes="**/*.class"/>
 			<fileset dir="${project.dir}" includes="data/**"/>
 			<fileset dir="${platform.dir}" includes="data/**"/>
-			<preserve class="org.fbreader.fbreader.FBReader"/>
+			<preserve class="org.geometerplus.fbreader.fbreader.FBReader"/>
 		</wtkpackage>
 	</target>
 </project>

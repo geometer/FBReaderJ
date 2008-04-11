@@ -1,8 +1,8 @@
-package org.zlibrary.ui.j2me.image;
+package org.geometerplus.zlibrary.ui.j2me.image;
 
 import javax.microedition.lcdui.Image;
 
-import org.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.image.*;
 
 public final class ZLJ2MEImageManager extends ZLImageManager {
 	public ZLImageData getImageData(ZLImage image) {

@@ -1,7 +1,7 @@
 package org.test.zlibrary.options;
 
-import org.zlibrary.core.options.ZLStringOption;
-import org.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public class ZLStringOptionTests2 extends ZLOptionTests {
 

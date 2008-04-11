@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.zlibrary.ui.android.library">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android.library">
 	<application android:icon="@drawable/fbreader">
 		<activity android:name="ZLAndroidActivity" android:label="FBReaderJ">
 			<intent-filter>

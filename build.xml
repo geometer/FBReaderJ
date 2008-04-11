@@ -16,13 +16,13 @@
 
 	<target name="depend" depends="prepare">
 		<depend srcdir="${src.path}" destdir="${bin.dir}" cache="${cache.dir}" closure="yes">
-			<exclude name="org/zlibrary/core/xml/sax/**"/>
+			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
 		</depend>
 	</target>
 
 	<target name="compile" depends="depend">
 		<javac srcdir="${src.path}" destdir="${bin.dir}">
-			<exclude name="org/zlibrary/core/xml/sax/**"/>
+			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
 		</javac>
 	</target>
 
@@ -69,7 +69,7 @@
 		<delete file="FBReaderJ.jad"/>
 		<delete dir="platform/android/res/raw"/>
 		<delete dir="platform/android/res/drawable"/>
-		<delete file="platform/android/src/org/zlibrary/ui/android/library/R.java"/>
+		<delete file="platform/android/src/org/geometerplus/zlibrary/ui/android/library/R.java"/>
 	</target>
 
 	<target name="sources-archive" depends="clean">

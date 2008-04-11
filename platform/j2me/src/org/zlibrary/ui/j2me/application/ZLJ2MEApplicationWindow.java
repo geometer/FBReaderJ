@@ -1,9 +1,9 @@
-package org.zlibrary.ui.j2me.application;
+package org.geometerplus.zlibrary.ui.j2me.application;
 
-import org.zlibrary.core.application.*;
-import org.zlibrary.core.view.ZLViewWidget;
+import org.geometerplus.zlibrary.core.application.*;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.zlibrary.ui.j2me.view.*;
+import org.geometerplus.zlibrary.ui.j2me.view.*;
 
 public class ZLJ2MEApplicationWindow extends ZLApplicationWindow {
 	private final ZLCanvas myCanvas;

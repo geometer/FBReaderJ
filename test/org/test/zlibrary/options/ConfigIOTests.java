@@ -2,8 +2,8 @@ package org.test.zlibrary.options;
 
 import java.io.File;
 
-import org.zlibrary.core.options.*;
-import org.zlibrary.core.config.ZLConfigManager;
+import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.config.ZLConfigManager;
 
 /**
  * содержит тесты на ZLConfigReader

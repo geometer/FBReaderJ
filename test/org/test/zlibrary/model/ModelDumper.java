@@ -1,6 +1,6 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.text.model.*;
 
 public class ModelDumper {
 	public static String dump(ZLTextModel model) {

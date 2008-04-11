@@ -1,6 +1,6 @@
-package org.zlibrary.ui.j2me.config;
+package org.geometerplus.zlibrary.ui.j2me.config;
 
-import org.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 class ZLJ2MEConfig implements ZLConfig {
 	public void removeGroup(String name) {

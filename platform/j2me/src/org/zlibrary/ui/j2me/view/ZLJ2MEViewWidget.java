@@ -1,6 +1,6 @@
-package org.zlibrary.ui.j2me.view;
+package org.geometerplus.zlibrary.ui.j2me.view;
 
-import org.zlibrary.core.view.ZLViewWidget;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 public class ZLJ2MEViewWidget extends ZLViewWidget {
 	private final ZLCanvas myCanvas;

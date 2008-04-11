@@ -2,9 +2,9 @@ package org.test.zlibrary.filesystem;
 
 import java.util.ArrayList;
 
-import org.zlibrary.core.filesystem.ZLDir;
-import org.zlibrary.core.filesystem.ZLFile;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLDir;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 import junit.framework.TestCase;
 

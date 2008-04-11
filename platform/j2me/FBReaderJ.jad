@@ -1,4 +1,4 @@
-MIDlet-1: FBReaderJ, /data/FBReaderJ.png, org.zlibrary.ui.j2me.library.ZLMIDlet
+MIDlet-1: FBReaderJ, /data/FBReaderJ.png, org.geometerplus.zlibrary.ui.j2me.library.ZLMIDlet
 MIDlet-Description: E-book reader
 MIDlet-Jar-URL: FBReaderJ.jar
 MIDlet-Name: FBReaderJ

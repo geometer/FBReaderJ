@@ -3,9 +3,9 @@ package org.test.zlibrary.filesystem;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.core.filesystem.ZLDir;
-import org.zlibrary.core.filesystem.ZLFile;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLDir;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class TestZLFile extends TestCase {
 	private final String filename = "testfb2book.fb2";

@@ -1,7 +1,7 @@
 package org.test.zlibrary.options;
 
-import org.zlibrary.core.options.ZLBooleanOption;
-import org.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public class ZLBooleanOptionTests2 extends ZLOptionTests {
 

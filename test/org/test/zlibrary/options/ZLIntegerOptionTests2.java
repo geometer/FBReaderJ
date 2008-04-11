@@ -1,7 +1,7 @@
 package org.test.zlibrary.options;
 
-import org.zlibrary.core.options.ZLIntegerOption;
-import org.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public class ZLIntegerOptionTests2 extends ZLOptionTests {
 

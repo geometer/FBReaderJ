@@ -1,9 +1,9 @@
-package org.zlibrary.ui.j2me.view;
+package org.geometerplus.zlibrary.ui.j2me.view;
 
 import javax.microedition.lcdui.*;
 
-import org.zlibrary.core.application.ZLApplication;
-import org.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public class ZLCanvas extends Canvas {
 	private final ZLJ2MEPaintContext myContext = new ZLJ2MEPaintContext(this);

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.zlibrary.core.config.ZLConfigManager;
+import org.geometerplus.zlibrary.core.config.ZLConfigManager;
 
 /**
  * тесты после 3-го - на запись дельты

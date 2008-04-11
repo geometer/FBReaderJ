@@ -2,9 +2,9 @@ package org.test.zlibrary.core.resources;
 
 import java.util.*;
 
-import org.zlibrary.core.resources.ZLResource;
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 import junit.framework.TestCase;
 

@@ -1,4 +1,4 @@
-package org.zlibrary.ui.j2me.library;
+package org.geometerplus.zlibrary.ui.j2me.library;
 
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.*;

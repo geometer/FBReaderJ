@@ -1,8 +1,8 @@
 package org.test.zlibrary.options;
 
-import org.zlibrary.core.util.ZLColor;
-import org.zlibrary.core.options.ZLColorOption;
-import org.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.options.ZLColorOption;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public class ZLColorOptionTests1 extends ZLOptionTests {
 

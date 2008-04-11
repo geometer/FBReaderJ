@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 
-import org.zlibrary.core.util.File;
+import org.geometerplus.zlibrary.core.util.File;
 
 public class ZipFile {
 	public ZipFile(String name) throws IOException {

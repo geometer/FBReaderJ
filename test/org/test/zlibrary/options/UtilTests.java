@@ -1,6 +1,6 @@
 package org.test.zlibrary.options;
 
-import org.zlibrary.core.util.*;
+import org.geometerplus.zlibrary.core.util.*;
 
 /**
  * тесты на Util часть, где лежат всякие вспомогательные сущности тесты 01 - это

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-import org.fbreader.collection.BookList;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.fbreader.collection.BookList;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class TestBookList extends TestCase {
 	private final String filename = "testfb2book.fb2";

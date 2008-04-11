@@ -2,11 +2,11 @@ package org.test.zlibrary.description;
 
 import junit.framework.TestCase;
 
-import org.fbreader.bookmodel.BookModel;
-import org.fbreader.description.Author;
-import org.fbreader.description.BookDescription;
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.ui.swing.library.ZLSwingLibrary;
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.description.Author;
+import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.ui.swing.library.ZLSwingLibrary;
 
 public class TestDescriptionBook extends TestCase {
 	private final String filename = "testfb2book.fb2";

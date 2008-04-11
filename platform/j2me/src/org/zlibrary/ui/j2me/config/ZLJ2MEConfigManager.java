@@ -1,7 +1,7 @@
-package org.zlibrary.ui.j2me.config;
+package org.geometerplus.zlibrary.ui.j2me.config;
 
-import org.zlibrary.core.config.ZLConfig;
-import org.zlibrary.core.config.ZLConfigManager;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.config.ZLConfigManager;
 
 public class ZLJ2MEConfigManager extends ZLConfigManager {
 	public ZLJ2MEConfigManager() {

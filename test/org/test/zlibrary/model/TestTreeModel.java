@@ -1,8 +1,8 @@
 package org.test.zlibrary.model;
 
-import org.zlibrary.text.model.ZLTextTreeModel;
-import org.zlibrary.text.model.ZLTextTreeParagraph;
-import org.zlibrary.text.model.impl.ZLModelFactory;
+import org.geometerplus.zlibrary.text.model.ZLTextTreeModel;
+import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
+import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
 
 import junit.framework.TestCase;
 

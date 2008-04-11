@@ -2,9 +2,9 @@ package org.test.zlibrary.options;
 
 import junit.framework.TestCase;
 
-import org.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.zlibrary.core.config.ZLConfig;
-import org.zlibrary.core.xmlconfig.ZLXMLConfigManager;
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.xmlconfig.ZLXMLConfigManager;
 
 abstract class ZLOptionTests extends TestCase {
 	ZLOptionTests(String inputPath, String outputPath) {

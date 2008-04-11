@@ -1,4 +1,4 @@
-package org.zlibrary.core.util;
+package org.geometerplus.zlibrary.core.util;
 
 import java.util.Vector;
 
