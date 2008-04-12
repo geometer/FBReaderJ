@@ -21,12 +21,21 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-class XHTMLTagRestartParagraphAction extends XHTMLTagAction {
+import org.geometerplus.fbreader.bookmodel.BookReader;
+
+class XHTMLTagItemAction extends XHTMLTagAction {
+	private final char[] BULLET = { '\u2022' };
+
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.getModelReader().beginParagraph();
-		reader.getModelReader().endParagraph();
+		final BookReader modelReader = reader.getModelReader();
+		modelReader.endParagraph();
+		// TODO: increase left indent
+		modelReader.beginParagraph();
+		// TODO: replace bullet sign by number inside OL tag
+		modelReader.addData(BULLET);
 	}
 
 	protected void doAtEnd(XHTMLReader reader) {
+		reader.getModelReader().endParagraph();
 	}
 }

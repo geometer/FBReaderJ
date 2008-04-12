@@ -44,8 +44,8 @@ public final class BookModel {
 	
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
-	private class Label {
-		final int ParagraphNumber;
+	public class Label {
+		public final int ParagraphNumber;
 		final ZLTextModel Model;
 		
 		Label(ZLTextModel model, int paragraphNumber) {
@@ -91,6 +91,10 @@ public final class BookModel {
 	
 	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
 		myInternalHyperlinks.put(label, new Label(model, paragraphNumber));
+	}
+
+	public Label getLabel(String id) {
+		return (Label)myInternalHyperlinks.get(id);
 	}
 	
 	//tmp	

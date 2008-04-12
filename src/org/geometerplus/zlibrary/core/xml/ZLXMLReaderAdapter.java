@@ -20,10 +20,15 @@
 package org.geometerplus.zlibrary.core.xml;
 
 import java.util.*;
+import java.io.InputStream;
 
 public class ZLXMLReaderAdapter implements ZLXMLReader {
 	public boolean read(String fileName) {
 		return ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, fileName);
+	}
+	
+	public boolean read(InputStream stream) {
+		return ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, stream);
 	}
 	
 	public boolean dontCacheAttributeValues() {

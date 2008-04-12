@@ -17,18 +17,105 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.format.xhtml;
+package org.geometerplus.fbreader.formats.xhtml;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.bookmodel.*;
 
 public class XHTMLReader extends ZLXMLReaderAdapter {
+	private static final HashMap ourTagActions = new HashMap();
+
+	public static XHTMLTagAction addAction(String tag, XHTMLTagAction action) {
+		XHTMLTagAction old = (XHTMLTagAction)ourTagActions.get(tag);
+		ourTagActions.put(tag, action);
+		return old;
+	}
+
+	public static void fillTagTable() {
+		if (ourTagActions.isEmpty()) {
+			//addAction("html", new XHTMLTagAction());
+			addAction("body", new XHTMLTagParagraphAction());
+			//addAction("title", new XHTMLTagAction());
+			//addAction("meta", new XHTMLTagAction());
+			//addAction("script", new XHTMLTagAction());
+
+			//addAction("font", new XHTMLTagAction());
+			//addAction("style", new XHTMLTagAction());
+
+			addAction("p", new XHTMLTagParagraphAction());
+			addAction("h1", new XHTMLTagParagraphWithControlAction(FBTextKind.H1));
+			addAction("h2", new XHTMLTagParagraphWithControlAction(FBTextKind.H2));
+			addAction("h3", new XHTMLTagParagraphWithControlAction(FBTextKind.H3));
+			addAction("h4", new XHTMLTagParagraphWithControlAction(FBTextKind.H4));
+			addAction("h5", new XHTMLTagParagraphWithControlAction(FBTextKind.H5));
+			addAction("h6", new XHTMLTagParagraphWithControlAction(FBTextKind.H6));
+
+			//addAction("ol", new XHTMLTagAction());
+			//addAction("ul", new XHTMLTagAction());
+			//addAction("dl", new XHTMLTagAction());
+			addAction("li", new XHTMLTagItemAction());
+
+			addAction("strong", new XHTMLTagControlAction(FBTextKind.STRONG));
+			addAction("b", new XHTMLTagControlAction(FBTextKind.BOLD));
+			addAction("em", new XHTMLTagControlAction(FBTextKind.EMPHASIS));
+			addAction("i", new XHTMLTagControlAction(FBTextKind.ITALIC));
+			final XHTMLTagAction codeControlAction = new XHTMLTagControlAction(FBTextKind.CODE);
+			addAction("code", codeControlAction);
+			addAction("tt", codeControlAction);
+			addAction("kbd", codeControlAction);
+			addAction("var", codeControlAction);
+			addAction("samp", codeControlAction);
+			addAction("cite", new XHTMLTagControlAction(FBTextKind.CITE));
+			addAction("sub", new XHTMLTagControlAction(FBTextKind.SUB));
+			addAction("sup", new XHTMLTagControlAction(FBTextKind.SUP));
+			addAction("dd", new XHTMLTagControlAction(FBTextKind.DEFINITION_DESCRIPTION));
+			addAction("dfn", new XHTMLTagControlAction(FBTextKind.DEFINITION));
+			addAction("strike", new XHTMLTagControlAction(FBTextKind.STRIKETHROUGH));
+
+			addAction("a", new XHTMLTagHyperlinkAction());
+
+			addAction("img", new XHTMLTagImageAction("src"));
+			addAction("object", new XHTMLTagImageAction("data"));
+
+			//addAction("area", new XHTMLTagAction());
+			//addAction("map", new XHTMLTagAction());
+
+			//addAction("base", new XHTMLTagAction());
+			//addAction("blockquote", new XHTMLTagAction());
+			addAction("br", new XHTMLTagRestartParagraphAction());
+			//addAction("center", new XHTMLTagAction());
+			addAction("div", new XHTMLTagParagraphAction());
+			//addAction("dt", new XHTMLTagAction());
+			//addAction("head", new XHTMLTagAction());
+			//addAction("hr", new XHTMLTagAction());
+			//addAction("link", new XHTMLTagAction());
+			//addAction("param", new XHTMLTagAction());
+			//addAction("q", new XHTMLTagAction());
+			//addAction("s", new XHTMLTagAction());
+
+			addAction("pre", new XHTMLTagPreAction());
+			//addAction("big", new XHTMLTagAction());
+			//addAction("small", new XHTMLTagAction());
+			//addAction("u", new XHTMLTagAction());
+
+			//addAction("table", new XHTMLTagAction());
+			addAction("td", new XHTMLTagParagraphAction());
+			addAction("th", new XHTMLTagParagraphAction());
+			//addAction("tr", new XHTMLTagAction());
+			//addAction("caption", new XHTMLTagAction());
+			//addAction("span", new XHTMLTagAction());
+		}
+	}
+
 	private final BookReader myModelReader;
 	private String myPathPrefix;
+	private String myReferenceName;
+	boolean myPreformatted;
 
 	public XHTMLReader(BookReader modelReader) {
 		myModelReader = modelReader;
@@ -42,314 +129,76 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return myPathPrefix;
 	}
 
-/*
-public:
-	static XHTMLTagAction *addAction(const std::string &tag, XHTMLTagAction *action);
-	static void fillTagTable();
+	public boolean readFile(String pathPrefix, String fileName, String referenceName) {
+		myModelReader.addHyperlinkLabel(referenceName);
 
-private:
-	static std::map<std::string,XHTMLTagAction*> ourTagActions;
+		fillTagTable();
 
-public:
-	bool readFile(const std::string &pathPrefix, const std::string &fileName, const std::string &referenceName);
-	bool readFile(const std::string &pathPrefix, shared_ptr<ZLInputStream> stream, const std::string &referenceName);
+		myPathPrefix = pathPrefix;
+		myReferenceName = referenceName;
 
-	void startElementHandler(const char *tag, const char **attributes);
-	void endElementHandler(const char *tag);
-	void characterDataHandler(const char *text, int len);
+		myPreformatted = false;
 
-private:
-	std::string myReferenceName;
-	bool myPreformatted;
-};
-
-std::map<std::string,XHTMLTagAction*> XHTMLReader::ourTagActions;
-
-XHTMLTagAction::~XHTMLTagAction() {
-}
-
-BookReader &XHTMLTagAction::bookReader(XHTMLReader &reader) {
-	return reader.myModelReader;
-}
-
-const std::string &XHTMLTagAction::pathPrefix(XHTMLReader &reader) {
-	return reader.myPathPrefix;
-}
-
-class XHTMLTagItemAction : public XHTMLTagAction {
-
-public:
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-};
-
-class XHTMLTagHyperlinkAction : public XHTMLTagAction {
-
-public:
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-
-private:
-	std::stack<FBTextKind> myHyperlinkStack;
-};
-
-class XHTMLTagControlAction : public XHTMLTagAction {
-
-public:
-	XHTMLTagControlAction(FBTextKind control);
-
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-
-private:
-	FBTextKind myControl;
-};
-
-class XHTMLTagParagraphWithControlAction : public XHTMLTagAction {
-
-public:
-	XHTMLTagParagraphWithControlAction(FBTextKind control);
-
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-
-private:
-	FBTextKind myControl;
-};
-
-class XHTMLTagPreAction : public XHTMLTagAction {
-
-public:
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-};
-
-void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
-	bookReader(reader).endParagraph();
-	// TODO: increase left indent
-	bookReader(reader).beginParagraph();
-	// TODO: replace bullet sign by number inside OL tag
-	const std::string bullet = "\xE2\x80\xA2\xC0\xA0";
-	bookReader(reader).addData(bullet);
-}
-
-void XHTMLTagItemAction::doAtEnd(XHTMLReader &reader) {
-	bookReader(reader).endParagraph();
-}
-
-XHTMLTagControlAction::XHTMLTagControlAction(FBTextKind control) : myControl(control) {
-}
-
-void XHTMLTagControlAction::doAtStart(XHTMLReader &reader, const char**) {
-	bookReader(reader).pushKind(myControl);
-	bookReader(reader).addControl(myControl, true);
-}
-
-void XHTMLTagControlAction::doAtEnd(XHTMLReader &reader) {
-	bookReader(reader).addControl(myControl, false);
-	bookReader(reader).popKind();
-}
-
-void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
-	const char *href = reader.attributeValue(xmlattributes, "href");
-	if (href != 0) {
-		const std::string link = (*href == '#') ? (reader.myReferenceName + href) : href;
-		FBTextKind hyperlinkType = MiscUtil::isReference(link) ? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
-		myHyperlinkStack.push(hyperlinkType);
-		bookReader(reader).addHyperlinkControl(hyperlinkType, link);
-	} else {
-		myHyperlinkStack.push(REGULAR);
-	}
-	const char *name = reader.attributeValue(xmlattributes, "name");
-	if (name != 0) {
-		bookReader(reader).addHyperlinkLabel(reader.myReferenceName + "#" + name);
-	}
-}
-
-void XHTMLTagHyperlinkAction::doAtEnd(XHTMLReader &reader) {
-	FBTextKind kind = myHyperlinkStack.top();
-	if (kind != REGULAR) {
-		bookReader(reader).addControl(kind, false);
-	}
-	myHyperlinkStack.pop();
-}
-
-XHTMLTagParagraphWithControlAction::XHTMLTagParagraphWithControlAction(FBTextKind control) : myControl(control) {
-}
-
-void XHTMLTagParagraphWithControlAction::doAtStart(XHTMLReader &reader, const char**) {
-	if ((myControl == TITLE) && (bookReader(reader).model().bookTextModel()->paragraphsNumber() > 1)) {
-		bookReader(reader).insertEndOfSectionParagraph();
-	}
-	bookReader(reader).pushKind(myControl);
-	bookReader(reader).beginParagraph();
-}
-
-void XHTMLTagParagraphWithControlAction::doAtEnd(XHTMLReader &reader) {
-	bookReader(reader).endParagraph();
-	bookReader(reader).popKind();
-}
-
-void XHTMLTagPreAction::doAtStart(XHTMLReader &reader, const char**) {
-	reader.myPreformatted = true;
-	bookReader(reader).beginParagraph();
-	bookReader(reader).addControl(CODE, true);
-}
-
-void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
-	bookReader(reader).addControl(CODE, false);
-	bookReader(reader).endParagraph();
-	reader.myPreformatted = false;
-}
-
-XHTMLTagAction *XHTMLReader::addAction(const std::string &tag, XHTMLTagAction *action) {
-	XHTMLTagAction *old = ourTagActions[tag];
-	ourTagActions[tag] = action;
-	return old;
-}
-
-void XHTMLReader::fillTagTable() {
-	if (ourTagActions.empty()) {
-		//addAction("html",	new XHTMLTagAction());
-		addAction("body",	new XHTMLTagParagraphAction());
-		//addAction("title",	new XHTMLTagAction());
-		//addAction("meta",	new XHTMLTagAction());
-		//addAction("script",	new XHTMLTagAction());
-
-		//addAction("font",	new XHTMLTagAction());
-		//addAction("style",	new XHTMLTagAction());
-
-		addAction("p",	new XHTMLTagParagraphAction());
-		addAction("h1",	new XHTMLTagParagraphWithControlAction(H1));
-		addAction("h2",	new XHTMLTagParagraphWithControlAction(H2));
-		addAction("h3",	new XHTMLTagParagraphWithControlAction(H3));
-		addAction("h4",	new XHTMLTagParagraphWithControlAction(H4));
-		addAction("h5",	new XHTMLTagParagraphWithControlAction(H5));
-		addAction("h6",	new XHTMLTagParagraphWithControlAction(H6));
-
-		//addAction("ol",	new XHTMLTagAction());
-		//addAction("ul",	new XHTMLTagAction());
-		//addAction("dl",	new XHTMLTagAction());
-		addAction("li",	new XHTMLTagItemAction());
-
-		addAction("strong",	new XHTMLTagControlAction(STRONG));
-		addAction("b",	new XHTMLTagControlAction(BOLD));
-		addAction("em",	new XHTMLTagControlAction(EMPHASIS));
-		addAction("i",	new XHTMLTagControlAction(ITALIC));
-		addAction("code",	new XHTMLTagControlAction(CODE));
-		addAction("tt",	new XHTMLTagControlAction(CODE));
-		addAction("kbd",	new XHTMLTagControlAction(CODE));
-		addAction("var",	new XHTMLTagControlAction(CODE));
-		addAction("samp",	new XHTMLTagControlAction(CODE));
-		addAction("cite",	new XHTMLTagControlAction(CITE));
-		addAction("sub",	new XHTMLTagControlAction(SUB));
-		addAction("sup",	new XHTMLTagControlAction(SUP));
-		addAction("dd",	new XHTMLTagControlAction(DEFINITION_DESCRIPTION));
-		addAction("dfn",	new XHTMLTagControlAction(DEFINITION));
-		addAction("strike",	new XHTMLTagControlAction(STRIKETHROUGH));
-
-		addAction("a",	new XHTMLTagHyperlinkAction());
-
-		addAction("img",	new XHTMLTagImageAction("src"));
-		addAction("object",	new XHTMLTagImageAction("data"));
-
-		//addAction("area",	new XHTMLTagAction());
-		//addAction("map",	new XHTMLTagAction());
-
-		//addAction("base",	new XHTMLTagAction());
-		//addAction("blockquote",	new XHTMLTagAction());
-		addAction("br",	new XHTMLTagRestartParagraphAction());
-		//addAction("center",	new XHTMLTagAction());
-		addAction("div",	new XHTMLTagParagraphAction());
-		//addAction("dt",	new XHTMLTagAction());
-		//addAction("head",	new XHTMLTagAction());
-		//addAction("hr",	new XHTMLTagAction());
-		//addAction("link",	new XHTMLTagAction());
-		//addAction("param",	new XHTMLTagAction());
-		//addAction("q",	new XHTMLTagAction());
-		//addAction("s",	new XHTMLTagAction());
-
-		addAction("pre",	new XHTMLTagPreAction());
-		//addAction("big",	new XHTMLTagAction());
-		//addAction("small",	new XHTMLTagAction());
-		//addAction("u",	new XHTMLTagAction());
-
-		//addAction("table",	new XHTMLTagAction());
-		addAction("td",	new XHTMLTagParagraphAction());
-		addAction("th",	new XHTMLTagParagraphAction());
-		//addAction("tr",	new XHTMLTagAction());
-		//addAction("caption",	new XHTMLTagAction());
-		//addAction("span",	new XHTMLTagAction());
-	}
-}
-
-bool XHTMLReader::readFile(const std::string &pathPrefix, const std::string &fileName, const std::string &referenceName) {
-	myModelReader.addHyperlinkLabel(referenceName);
-
-	fillTagTable();
-
-	myPathPrefix = pathPrefix;
-	myReferenceName = referenceName;
-
-	myPreformatted = false;
-
-	return readDocument(pathPrefix + fileName);
-}
-
-bool XHTMLReader::readFile(const std::string &pathPrefix, shared_ptr<ZLInputStream> stream, const std::string &referenceName) {
-	myModelReader.addHyperlinkLabel(referenceName);
-
-	fillTagTable();
-
-	myPathPrefix = pathPrefix;
-	myReferenceName = referenceName;
-
-	myPreformatted = false;
-
-	return readDocument(stream);
-}
-
-void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
-	static const std::string HASH = "#";
-	const char *id = attributeValue(attributes, "id");
-	if (id != 0) {
-		myModelReader.addHyperlinkLabel(myReferenceName + HASH + id);
+		return read(pathPrefix + fileName);
 	}
 
-	XHTMLTagAction *action = ourTagActions[ZLUnicodeUtil::toLower(tag)];
-	if (action != 0) {
-		action->doAtStart(*this, attributes);
-	}
-}
+	public boolean readFile(String pathPrefix, InputStream stream, String referenceName) {
+		myModelReader.addHyperlinkLabel(referenceName);
 
-void XHTMLReader::endElementHandler(const char *tag) {
-	XHTMLTagAction *action = ourTagActions[ZLUnicodeUtil::toLower(tag)];
-	if (action != 0) {
-		action->doAtEnd(*this);
-	}
-}
+		fillTagTable();
 
-void XHTMLReader::characterDataHandler(const char *text, int len) {
-	if (myPreformatted) {
-		if ((*text == '\r') || (*text == '\n')) {
-			myModelReader.addControl(CODE, false);
-			myModelReader.endParagraph();
-			myModelReader.beginParagraph();
-			myModelReader.addControl(CODE, true);
+		myPathPrefix = pathPrefix;
+		myReferenceName = referenceName;
+
+		myPreformatted = false;
+
+		return read(stream);
+	}
+
+	public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		String id = attributes.getValue("id");
+		if (id != null) {
+			myModelReader.addHyperlinkLabel(myReferenceName + '#' + id);
 		}
-		int spaceCounter = 0;
-		while ((spaceCounter < len) && isspace((unsigned char)*text)) {
-			++spaceCounter;
+
+		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
+		if (action != null) {
+			action.doAtStart(this, attributes);
 		}
-		myModelReader.addFixedHSpace(spaceCounter);
-		text += spaceCounter;
-		len -= spaceCounter;
+		return false;
 	}
-	if (len > 0) {
-		myModelReader.addData(std::string(text, len));
+
+	public boolean endElementHandler(String tag) {
+		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
+		if (action != null) {
+			action.doAtEnd(this);
+		}
+		return false;
 	}
-}
-*/
+
+	public void characterDataHandler(char[] data, int start, int len) {
+		if (myPreformatted) {
+			final char first = data[start]; 
+			if ((first == '\r') || (first == '\n')) {
+				myModelReader.addControl(FBTextKind.CODE, false);
+				myModelReader.endParagraph();
+				myModelReader.beginParagraph();
+				myModelReader.addControl(FBTextKind.CODE, true);
+			}
+			/*
+			int spaceCounter = 0;
+			while ((spaceCounter < len) && isspace((unsigned char)*text)) {
+				++spaceCounter;
+			}
+			myModelReader.addFixedHSpace(spaceCounter);
+			text += spaceCounter;
+			len -= spaceCounter;
+			*/
+		}
+		if (len > 0) {
+			myModelReader.addData(data, start, len);
+		}
+	}
 
 	private static ArrayList ourExternalDTDs = new ArrayList();
 

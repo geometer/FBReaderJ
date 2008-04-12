@@ -21,12 +21,25 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-class XHTMLTagRestartParagraphAction extends XHTMLTagAction {
+class XHTMLTagPreAction extends XHTMLTagAction {
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		reader.getModelReader().beginParagraph();
-		reader.getModelReader().endParagraph();
 	}
 
 	protected void doAtEnd(XHTMLReader reader) {
+		reader.getModelReader().endParagraph();
 	}
 }
+/*
+void XHTMLTagPreAction::doAtStart(XHTMLReader &reader, const char**) {
+	reader.myPreformatted = true;
+	bookReader(reader).beginParagraph();
+	bookReader(reader).addControl(CODE, true);
+}
+
+void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
+	bookReader(reader).addControl(CODE, false);
+	bookReader(reader).endParagraph();
+	reader.myPreformatted = false;
+}
+*/

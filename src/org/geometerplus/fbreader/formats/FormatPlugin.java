@@ -169,7 +169,5 @@ public abstract class FormatPlugin {
 			}
 			return null;
 		}
-		
-	};
-
+	}
 }

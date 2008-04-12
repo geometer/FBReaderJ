@@ -21,12 +21,37 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-class XHTMLTagRestartParagraphAction extends XHTMLTagAction {
+import org.geometerplus.fbreader.bookmodel.*;
+
+class XHTMLTagParagraphWithControlAction extends XHTMLTagAction {
+	final byte myControl;
+
+	XHTMLTagParagraphWithControlAction(byte control) {
+		myControl = control;
+	}
+
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.getModelReader().beginParagraph();
-		reader.getModelReader().endParagraph();
+		final BookReader modelReader = reader.getModelReader();
+		if ((myControl == FBTextKind.TITLE) &&
+				(modelReader.getModel().getBookTextModel().getParagraphsNumber() > 1)) {
+			modelReader.insertEndOfSectionParagraph();
+		}
+		modelReader.pushKind(myControl);
+		modelReader.beginParagraph();
 	}
 
 	protected void doAtEnd(XHTMLReader reader) {
+		final BookReader modelReader = reader.getModelReader();
+		modelReader.endParagraph();
+		modelReader.popKind();
 	}
 }
+/*
+void XHTMLTagParagraphWithControlAction::doAtStart(XHTMLReader &reader, const char**) {
+	if ((myControl == TITLE) && (bookReader(reader).model().bookTextModel()->paragraphsNumber() > 1)) {
+		bookReader(reader).insertEndOfSectionParagraph();
+	}
+	bookReader(reader).pushKind(myControl);
+	bookReader(reader).beginParagraph();
+}
+*/

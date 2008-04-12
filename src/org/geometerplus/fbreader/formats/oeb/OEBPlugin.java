@@ -66,8 +66,7 @@ public class OEBPlugin extends FormatPlugin {
 		if (path == null) {
 			return false;
 		}
-		return false;
-		//return new FB2DescriptionReader(description).readDescription(path);
+		return new OEBDescriptionReader(description).readDescription(path);
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
@@ -75,8 +74,7 @@ public class OEBPlugin extends FormatPlugin {
 		if (path == null) {
 			return false;
 		}
-		return false;
-		//return new FB2Reader(model).readBook(description.getFileName());
+		return new OEBBookReader(model).readBook(path);
 	}
 	
 	public String getIconName() {
