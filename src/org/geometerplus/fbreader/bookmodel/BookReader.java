@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.bookmodel;
 
 import java.util.*;
@@ -93,6 +94,10 @@ public class BookReader {
 		return false;
 	}
 	
+	public final void beginParagraph() {
+		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
+	}
+
 	public final void beginParagraph(byte kind) {
 		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if (textModel != null) {
@@ -271,6 +276,10 @@ public class BookReader {
 		}
 	}
 	
+	public final boolean paragraphIsOpen() {
+		return myTextParagraphExists;
+	}
+
 	public final boolean contentsParagraphIsOpen() {
 		return myContentsParagraphExists;
 	}

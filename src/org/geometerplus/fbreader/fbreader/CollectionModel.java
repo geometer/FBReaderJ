@@ -16,12 +16,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.model.impl.ZLTextTreeModelImpl;
@@ -72,40 +74,46 @@ class CollectionModel extends ZLTextTreeModelImpl {
 
 	private void build() {
 		final ArrayList/*<Author>*/ authors = myCollection.authors();			
-		String currentSequenceName = "";
-		ZLTextTreeParagraph sequenceParagraph;
-		for (int i = 0; i < authors.size(); i++) {
-			Author it = (Author)authors.get(i);
-			final ArrayList/*<BookDescription>*/ books = myCollection.books(it);
-			if (!books.isEmpty()) {
-				currentSequenceName = "";
-				sequenceParagraph = null;
-                  //todo 
-				ZLTextTreeParagraph authorParagraph = createParagraph(null);
-				insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
-				//insertImage(AuthorInfoImageId);
-				for (int j = 0; j < books.size(); j++) {
-					BookDescription jt = (BookDescription)books.get(j);
-					final String sequenceName = jt.getSequenceName();
-					if (sequenceName.length() == 0) {
-						currentSequenceName = "";
-						sequenceParagraph = null;
-					} else if (sequenceName != currentSequenceName) {
-						currentSequenceName = sequenceName;
-						sequenceParagraph = createParagraph(authorParagraph);
-						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
-						//insertImage(SeriesOrderImageId);
+
+		if (authors.isEmpty()) {
+			createParagraph(null);
+			insertText(FBTextKind.REGULAR, ZLResource.resource("library").getResource("noBooks").getValue());
+		} else {
+			String currentSequenceName = "";
+			ZLTextTreeParagraph sequenceParagraph;
+			for (int i = 0; i < authors.size(); i++) {
+				Author it = (Author)authors.get(i);
+				final ArrayList/*<BookDescription>*/ books = myCollection.books(it);
+				if (!books.isEmpty()) {
+					currentSequenceName = "";
+					sequenceParagraph = null;
+                    //todo 
+					ZLTextTreeParagraph authorParagraph = createParagraph(null);
+					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
+					//insertImage(AuthorInfoImageId);
+					for (int j = 0; j < books.size(); j++) {
+						BookDescription jt = (BookDescription)books.get(j);
+						final String sequenceName = jt.getSequenceName();
+						if (sequenceName.length() == 0) {
+							currentSequenceName = "";
+							sequenceParagraph = null;
+						} else if (sequenceName != currentSequenceName) {
+							currentSequenceName = sequenceName;
+							sequenceParagraph = createParagraph(authorParagraph);
+							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
+							//insertImage(SeriesOrderImageId);
+						}
+						ZLTextTreeParagraph bookParagraph = createParagraph(
+							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
+						);
+						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
+						insertImage(BookInfoImageId);
+						if (myCollection.isBookExternal(jt)) {
+							insertImage(RemoveBookImageId);
+						}
+						myParagraphToBook.put(bookParagraph, jt);
+						myBookToParagraphNumber.put(jt, getParagraphsNumber() - 1);
 					}
-					ZLTextTreeParagraph bookParagraph = createParagraph(
-						(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
-					);
-					insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
-					insertImage(BookInfoImageId);
-					if (myCollection.isBookExternal(jt)) {
-						insertImage(RemoveBookImageId);
-					}
-					myParagraphToBook.put(bookParagraph, jt);
-					myBookToParagraphNumber.put(jt, getParagraphsNumber() - 1);
 				}
 			}
 		}

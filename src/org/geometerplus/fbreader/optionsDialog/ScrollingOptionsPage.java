@@ -16,22 +16,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.optionsDialog;
 
-import java.util.ArrayList;
+import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
-import org.geometerplus.fbreader.fbreader.ScrollingOptions;
-import org.geometerplus.zlibrary.core.dialogs.ZLBooleanOptionEntry;
-import org.geometerplus.zlibrary.core.dialogs.ZLComboOptionEntry;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
-import org.geometerplus.zlibrary.core.dialogs.ZLSpinOptionEntry;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
+import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.zlibrary.core.dialogs.*;
+import org.geometerplus.zlibrary.core.optionEntries.*;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
@@ -40,10 +34,15 @@ public class ScrollingOptionsPage {
 	private ScrollingEntries mySmallScrollingEntries;
 	private ScrollingEntries myMouseScrollingEntries;
 	private ScrollingEntries myTapScrollingEntries;
+
+	private final boolean myIsMousePresented =
+		new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
+	private final boolean myHasTouchScreen =
+		new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
 	
 	public ScrollingOptionsPage(ZLDialogContent dialogTab, FBReader fbreader) {
 		final String optionsForKey = "optionsFor";
-		ZLComboOptionEntry mainEntry = new ScrollingTypeEntry(dialogTab.getResource(optionsForKey), fbreader, this);
+		ZLComboOptionEntry mainEntry = new ScrollingTypeEntry(dialogTab.getResource(optionsForKey), fbreader);
 		dialogTab.addOption(optionsForKey, mainEntry);
 
 		final ZLResource modeResource = dialogTab.getResource("mode");
@@ -56,15 +55,10 @@ public class ScrollingOptionsPage {
 		myLargeScrollingEntries = new ScrollingEntries(fbreader, fbreader.LargeScrollingOptions);
 		mySmallScrollingEntries = new ScrollingEntries(fbreader, fbreader.SmallScrollingOptions);
 
-		final boolean isMousePresented = 
-			new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
-		final boolean hasTouchScreen = 
-			new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
-
-		if (isMousePresented) {
+		if (myIsMousePresented) {
 			myMouseScrollingEntries = new ScrollingEntries(fbreader, fbreader.MouseScrollingOptions);
 		}
-		if (hasTouchScreen) {
+		if (myHasTouchScreen) {
 			myTapScrollingEntries = new ScrollingEntries(fbreader, fbreader.FingerTapScrollingOptions);
 		}
 
@@ -72,10 +66,10 @@ public class ScrollingOptionsPage {
 
 		myLargeScrollingEntries.connect(dialogTab);
 		mySmallScrollingEntries.connect(dialogTab);
-		if (isMousePresented) {
+		if (myIsMousePresented) {
 			myMouseScrollingEntries.connect(dialogTab);
 		}
-		if (hasTouchScreen) {
+		if (myHasTouchScreen) {
 			myTapScrollingEntries.connect(dialogTab);
 		}
 	}
@@ -106,7 +100,7 @@ public class ScrollingOptionsPage {
 		}
 		
 		void connect(ZLDialogContent dialogTab) {
-			dialogTab.addOption("delay", myDelayEntry);
+			//dialogTab.addOption("delay", myDelayEntry);
 			dialogTab.addOption("mode", myModeEntry);
 			dialogTab.addOption("linesToKeep", myLinesToKeepEntry);
 			dialogTab.addOption("linesToScroll", myLinesToScrollEntry);
@@ -135,21 +129,19 @@ public class ScrollingOptionsPage {
 	}
 
 	
-	private static class ScrollingTypeEntry extends ZLComboOptionEntry {
-		private String myLargeScrollingString;
-		private String mySmallScrollingString;
-		private String myMouseScrollingString;
-		private String myTapScrollingString;
+	private class ScrollingTypeEntry extends ZLComboOptionEntry {
+		private final String myLargeScrollingString;
+		private final String mySmallScrollingString;
+		private final String myMouseScrollingString;
+		private final String myTapScrollingString;
 		
 		private final ZLResource myResource;
-		private FBReader myFBReader;
-		private ScrollingOptionsPage myPage;
-		private final ArrayList/*<std.string>*/ myValues = new ArrayList();
+		private final FBReader myFBReader;
+		private final ArrayList myValues = new ArrayList();
 		
-		public ScrollingTypeEntry(final ZLResource resource, FBReader fbreader, ScrollingOptionsPage page) {
+		public ScrollingTypeEntry(final ZLResource resource, FBReader fbreader) {
 			myResource = resource;
 			myFBReader = fbreader;
-			myPage = page;
 			
 			myLargeScrollingString = resource.getResource("large").getValue();
 			mySmallScrollingString = resource.getResource("small").getValue();
@@ -159,34 +151,24 @@ public class ScrollingOptionsPage {
 			myValues.add(myLargeScrollingString);
 			myValues.add(mySmallScrollingString);
 
-			final boolean isMousePresented =
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
-			final boolean hasTouchScreen =
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
-
-			if (isMousePresented) {
+			if (myIsMousePresented) {
 				myValues.add(myMouseScrollingString);
 			}
-			if (hasTouchScreen) {
+			if (myHasTouchScreen) {
 				myValues.add(myTapScrollingString);
 			}
 		}
 		
 		public void onValueSelected(int index) {
 			final String selectedValue = (String) getValues().get(index);
-			myPage.myLargeScrollingEntries.show(myLargeScrollingString.equals(selectedValue));
-			myPage.mySmallScrollingEntries.show(mySmallScrollingString.equals(selectedValue));
+			myLargeScrollingEntries.show(myLargeScrollingString.equals(selectedValue));
+			mySmallScrollingEntries.show(mySmallScrollingString.equals(selectedValue));
 
-			final boolean isMousePresented = 
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
-			final boolean hasTouchScreen = 
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
-
-			if (isMousePresented) {
-				myPage.myMouseScrollingEntries.show(myMouseScrollingString.equals(selectedValue));
+			if (myIsMousePresented) {
+				myMouseScrollingEntries.show(myMouseScrollingString.equals(selectedValue));
 			}
-			if (hasTouchScreen) {
-				myPage.myTapScrollingEntries.show(myTapScrollingString.equals(selectedValue));
+			if (myHasTouchScreen) {
+				myTapScrollingEntries.show(myTapScrollingString.equals(selectedValue));
 			}
 		}
 
@@ -242,17 +224,16 @@ public class ScrollingOptionsPage {
 			return ZLTextView.ScrollingMode.NO_OVERLAPPING;
 		}
 			
-		public ScrollingModeEntry(FBReader fbreader, ScrollingOptionsPage.ScrollingEntries entries,
-				ZLIntegerOption option, boolean isTapOption) {
+		public ScrollingModeEntry(FBReader fbreader, ScrollingOptionsPage.ScrollingEntries entries, ZLIntegerOption option, boolean isTapOption) {
 			myEntries = entries;
 			myFBReader = fbreader;
-			myIsTapOption = isTapOption;
 			myOption = option;
 			myValues.add(ourNoOverlappingString);
 			myValues.add(ourKeepLinesString);
 			myValues.add(ourScrollLinesString);
 			myValues.add(ourScrollPercentageString);
-			if (myIsTapOption) {
+			myIsTapOption = isTapOption;
+			if (isTapOption) {
 				myValues.add(ourDisableString);
 			}
 		}

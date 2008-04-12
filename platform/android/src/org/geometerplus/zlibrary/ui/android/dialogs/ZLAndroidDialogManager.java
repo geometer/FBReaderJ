@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import android.app.*;
@@ -110,7 +111,7 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	}
 
 	public void wait(String key, final Runnable runnable) {
-		final ProgressDialog progress = ProgressDialog.show(myActivity, null, getWaitMessageText(key), true, true);
+		final ProgressDialog progress = ProgressDialog.show(myActivity, null, getWaitMessageText(key), true, false);
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				progress.dismiss();

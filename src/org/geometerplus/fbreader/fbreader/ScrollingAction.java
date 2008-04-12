@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -37,7 +38,7 @@ class ScrollingAction extends FBAction {
 
 	public void run() {
 		// TODO: use delay option
-		int mode = myOptions.ModeOption.getValue();
+		final int mode = myOptions.ModeOption.getValue();
 		int value = 0;
 		switch (mode) {
 			case ZLTextView.ScrollingMode.KEEP_LINES:

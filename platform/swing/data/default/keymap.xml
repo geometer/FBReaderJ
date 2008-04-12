@@ -29,4 +29,5 @@
 	<binding key="&lt;Ctrl&gt;+&lt;DownArrow&gt;" action="nextTOCSection"/>
 	<binding key="&lt;Ctrl&gt;+&lt;UpArrow&gt;" action="previousTOCSection"/>
 	<binding key="&lt;Ctrl&gt;+&lt;C&gt;" action="copyToClipboard"/>
+	<binding key="&lt;1&gt;" action="previousBook"/>
 </keymap>

@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.description;
 
 import java.util.*;
@@ -57,7 +58,7 @@ public abstract class Author {
 		
 		private SingleAuthor(String displayName, String sortKey) {
 			myDisplayName = displayName;
-			mySortKey = sortKey;
+			mySortKey = sortKey.toLowerCase();
 		}
 
 		public String getDisplayName() {
@@ -129,8 +130,4 @@ public abstract class Author {
 			return a1.getSortKey().compareTo(a2.getSortKey());
 		}
 	}
-
 }
-
-
-

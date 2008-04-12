@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.swing.dialogs;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 	}
 
 	protected void createItem() {
-		final ZLComboOptionEntry option = (ZLComboOptionEntry) myOption;
+		final ZLComboOptionEntry option = (ZLComboOptionEntry)myOption;
 		final ArrayList values = option.getValues();
 		final String initialValue = option.initialValue();
 		int index = 0;
@@ -114,11 +115,9 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 	}
 	
 	private class MyItemListener implements ItemListener {
-
 		public void itemStateChanged(ItemEvent e) {
 			((ZLComboOptionEntry) myOption).onValueSelected(myComboBox.getSelectedIndex());
 		}
-		
 	}
 	
 	private class MyKeyListener extends KeyAdapter {
@@ -126,5 +125,4 @@ public class ZLComboOptionView extends ZLSwingOptionView {
 			((ZLComboOptionEntry) myOption).onValueEdited((String) myComboBox.getSelectedItem());
 		}
 	}
-	
 }

@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.optionsDialog;
 
 import java.util.ArrayList;
@@ -46,27 +47,25 @@ public class KeyBindingsPage {
 		dialogTab.addOption("quitOnCancel", exitOnCancelEntry);
 		exitOnCancelEntry.setVisible(false);
 		useSeparateBindingsEntry.onStateChanged(useSeparateBindingsEntry.initialState());
-		dialogTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
+		//dialogTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
 	}
-	
-	
+
 	private static class KeyboardControlEntry extends ZLSimpleBooleanOptionEntry {
 		private FBReader myFBReader;
 		public KeyboardControlEntry(FBReader fbreader) {
 			super(fbreader.KeyboardControlOption);
 			myFBReader = fbreader;
 		}
-		
+
 		public void onStateChanged(boolean state) {
 			super.onStateChanged(state);
 			myFBReader.grabAllKeys(state);
 		}
 	}
-	
-	
+
 	private static class SingleKeyOptionEntry extends ZLSimpleKeyOptionEntry {
 		private final CodeIndexBimap myBimap;
-		
+
 		public SingleKeyOptionEntry(final CodeIndexBimap bimap, ZLKeyBindings bindings) {
 			super(bindings);
 			myBimap = bimap;
@@ -76,8 +75,7 @@ public class KeyBindingsPage {
 			return myBimap;
 		}
 	}
-	
-	
+
 	private static class MultiKeyOptionEntry extends ZLKeyOptionEntry {
 		private final ZLResource myResource;
 		private ZLSimpleKeyOptionEntry.CodeIndexBimap myBimap;
@@ -87,7 +85,7 @@ public class KeyBindingsPage {
 		private SingleKeyOptionEntry myEntry270;
 		private SingleKeyOptionEntry myCurrentEntry;
 		private ZLOptionEntry myExitOnCancelEntry;
-		
+
 		public MultiKeyOptionEntry(final ZLResource resource, FBReader fbreader) {
 			super();
 			myResource = resource;
@@ -98,7 +96,7 @@ public class KeyBindingsPage {
 			myEntry270 = new SingleKeyOptionEntry(myBimap, fbreader.keyBindings(ZLViewWidget.Angle.DEGREES270));
 			myCurrentEntry = myEntry0;
 			myExitOnCancelEntry = null;
-			
+
 			addAction(ZLApplication.NoAction);
 
 			// switch view
@@ -147,7 +145,7 @@ public class KeyBindingsPage {
 			addAction(ActionCode.CANCEL);
 			addAction(ActionCode.QUIT);
 		}
-		
+
 		public int actionIndex(String key) {
 			return myCurrentEntry.actionIndex(key);
 		}
@@ -157,6 +155,13 @@ public class KeyBindingsPage {
 			myEntry90.onAccept();
 			myEntry180.onAccept();
 			myEntry270.onAccept();
+		}
+
+		public void onReset() {
+			myEntry0.onReset();
+			myEntry90.onReset();
+			myEntry180.onReset();
+			myEntry270.onReset();
 		}
 
 		public void onKeySelected(String key) {
@@ -193,18 +198,17 @@ public class KeyBindingsPage {
 		public void setExitOnCancelEntry(ZLOptionEntry exitOnCancelEntry) {
 			myExitOnCancelEntry = exitOnCancelEntry;
 		}
-		
+
 		private void addAction(final String actionId) {
 			myBimap.insert(actionId);
 			addActionName(myResource.getResource(actionId).getValue());
 		}		
 	}
-	
-	
+
 	private static class OrientationEntry extends ZLComboOptionEntry {
 		private MultiKeyOptionEntry myKeyEntry;
 		private static final ArrayList VALUES = new ArrayList();
-		
+
 		public OrientationEntry(MultiKeyOptionEntry keyEntry) {
 			myKeyEntry = keyEntry;
 		}
@@ -231,23 +235,21 @@ public class KeyBindingsPage {
 			myKeyEntry.setOrientation(angles[index]);
 		}
 	}
-	
-	
+
 	private static class UseSeparateOptionsEntry extends ZLSimpleBooleanOptionEntry {
 		private ZLOptionEntry myKeyEntry;
 		private	OrientationEntry myOrientationEntry;
-		
+
 		public UseSeparateOptionsEntry(FBReader fbreader, ZLOptionEntry keyEntry, OrientationEntry orientationEntry) {
 			super(fbreader.UseSeparateBindingsOption);
 			myKeyEntry = keyEntry;
 			myOrientationEntry = orientationEntry;
 		}
-		
+
 		public void onStateChanged(boolean state) {
 			super.onStateChanged(state);
 			myOrientationEntry.setVisible(state);
 			myKeyEntry.resetView();
 		}
 	}
-
 }

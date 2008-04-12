@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.options.*;
@@ -43,6 +44,29 @@ public abstract class FBView extends ZLTextViewImpl {
 
 	FBView(FBReader fbreader, ZLPaintContext context) {
 		super(fbreader, context);
+	}
+
+	protected boolean _onStylusPress(int x, int y) {
+		return false;
+	}
+
+	public final boolean onStylusPress(int x, int y) {
+		if (super.onStylusPress(x, y)) {
+			return true;
+		}
+		if (_onStylusPress(x, y)) {
+			return true;
+		}
+		if (getFBReader().EnableTapScrollingOption.getValue()) {
+			if (2 * y < getContext().getHeight()) {
+				getFBReader().doAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD);
+			} else {
+				getFBReader().doAction(ActionCode.FINGER_TAP_SCROLL_FORWARD);
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static final ZLIntegerRangeOption getLeftMarginOption() {

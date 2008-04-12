@@ -16,27 +16,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.swing.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.PlainDocument;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.text.*;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLKeyOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -48,8 +34,7 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 	private JPanel myPanel;
 	private	String myCurrentKey = "";
 		
-	public ZLKeyOptionView(String name, ZLKeyOptionEntry option, ZLSwingDialogContent tab,
-			GridBagLayout layout) {
+	public ZLKeyOptionView(String name, ZLKeyOptionEntry option, ZLSwingDialogContent tab, GridBagLayout layout) {
 		super(name, option, tab, layout);
 	}
 	
@@ -59,7 +44,6 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 
 	protected void _setActive(boolean active) {
 		// TODO Auto-generated method stub
-
 	}
 
 	protected void createItem() {
@@ -110,7 +94,6 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 	}
 
 	private class MyKeyListener extends KeyAdapter {
-
 		public void keyPressed(KeyEvent e) {			
 			final String modifiers = e.getModifiersExText(e.getModifiersEx());
 			final int code = e.getKeyCode();
@@ -184,36 +167,28 @@ public class ZLKeyOptionView extends ZLSwingOptionView {
 			}
 			return "<" + str + ">+";
 		}
-
 	}
-	
-	
-	
-	private static class KeyEditor extends JTextField {
-		 
-	     public KeyEditor(String string) {
-	         super(string);
-	     }
-	 
-	     protected Document createDefaultModel() {
-	         return new KeyEditorDocument();
-	     }
-	 
-	     private static class KeyEditorDocument extends PlainDocument {
-	 
-	         public void insertString(int offs, String str, AttributeSet a) 
-	         	throws BadLocationException {
-	 
-	            if (str == null) {
-	                 return;
-	            }
-	            if (str.startsWith("<") || str.startsWith("+")) {
-	            	super.insertString(offs, str, a);
-	            } else {
-	            	super.insertString(offs, "", a);
-	            }
-	         }
 
-	     }
-	 }
+	private static class KeyEditor extends JTextField {
+		public KeyEditor(String string) {
+			super(string);
+		}
+
+		protected Document createDefaultModel() {
+			return new KeyEditorDocument();
+		}
+
+		private static class KeyEditorDocument extends PlainDocument {
+			public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+				if (str == null) {
+					return;
+				}
+				if (str.startsWith("<") || str.startsWith("+")) {
+					super.insertString(offs, str, a);
+				} else {
+					super.insertString(offs, "", a);
+				}
+			}
+		}
+	}
 }

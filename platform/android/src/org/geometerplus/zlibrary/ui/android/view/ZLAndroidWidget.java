@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.Map;
@@ -136,11 +137,18 @@ public class ZLAndroidWidget extends View {
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+		if (keyName.equals("<Menu>")) {
+			return false;
+		}
 		myViewWidget.getView().getApplication().doActionByKey(keyName);
 		return true;
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+		if (keyName.equals("<Menu>")) {
+			return false;
+		}
 		return true;
 	}
 }

@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.collection;
 
 import java.io.*;
@@ -48,7 +49,7 @@ public class BookCollection {
 	private	boolean myDoWeakRebuild;
 
 	public BookCollection() {
-		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "/home/geometer/FBooks");
+		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "/FBooks");
 		ScanSubdirsOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "ScanSubdirs", false);
 		myDoStrongRebuild = true;
 		myDoWeakRebuild = false;

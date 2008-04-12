@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import java.io.*;
@@ -146,13 +147,13 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new ScrollingAction(this, FingerTapScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
 		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new ToggleIndicatorAction(this));
-		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new DummyAction(this));
+		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new OpenPreviousBookAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
 		addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new DummyAction(this));
-		addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
-		addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
-		addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
+		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
+		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
+		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 
 		myBookTextView = new BookTextView(this, getContext());
 		myContentsView = new ContentsView(this, getContext());

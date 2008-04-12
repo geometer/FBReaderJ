@@ -16,16 +16,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import android.content.Context;
 import android.view.*;
 import android.widget.*;
-import android.database.DataSetObserver;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLComboOptionEntry;
 
 class ZLAndroidComboOptionView extends ZLAndroidOptionView {
+	private TextView myLabel;
 	private Spinner mySpinner;
 
 	protected ZLAndroidComboOptionView(ZLAndroidDialogContent tab, String name, ZLComboOptionEntry option) {
@@ -33,26 +34,56 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void createItem() {
-		mySpinner = new Spinner(myTab.getView().getContext());
-		mySpinner.setAdapter(new ComboAdapter());
+		final Context context = myTab.getView().getContext();
+		if (myName != null) {
+			myLabel = new TextView(context);
+			myLabel.setText(myName);
+			myLabel.setPadding(0, 12, 0, 12);
+			myLabel.setTextSize(18);
+		}
+
+		mySpinner = new Spinner(context);
+		final ComboAdapter adapter = new ComboAdapter();
+		mySpinner.setAdapter(adapter);
+		mySpinner.setOnItemSelectedListener(adapter);
+		mySpinner.setSelection(initialIndex((ZLComboOptionEntry)myOption));
 	}
 
 	void addAndroidViews() {
+		myTab.addAndroidView(myLabel, false);
 		myTab.addAndroidView(mySpinner, true);
 	}
 
+	private static int initialIndex(ZLComboOptionEntry comboEntry) {
+		int index = comboEntry.getValues().indexOf(comboEntry.initialValue());	
+		return (index >= 0) ? index : 0;
+	}
+
 	protected void reset() {
-		((ZLComboOptionEntry)myOption).onReset();
-		// TODO: implement
+		final ZLComboOptionEntry comboEntry = (ZLComboOptionEntry)myOption;
+		comboEntry.onReset();
+		if (mySpinner != null) {
+			mySpinner.setSelection(initialIndex(comboEntry));
+		}
 	}
 
 	protected void _onAccept() {
-		EditText editor = ((ComboAdapter)mySpinner.getAdapter()).myEditor;
-		((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
+		final EditText editor = ((ComboAdapter)mySpinner.getAdapter()).myEditor;
+		if (editor != null) {
+			((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
+		}
 	}
 
-	private class ComboAdapter implements SpinnerAdapter {
+	private class ComboAdapter extends BaseAdapter implements Spinner.OnItemSelectedListener {
 		EditText myEditor;
+
+		public void onItemSelected(AdapterView parent, View v, int position, long id) {
+			final ZLComboOptionEntry comboEntry = (ZLComboOptionEntry)myOption;
+			comboEntry.onValueSelected(position);
+		}
+
+		public void onNothingSelected(AdapterView parent) {
+		}
 
 		public View getDropDownView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
@@ -66,19 +97,18 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			((ZLComboOptionEntry)myOption).onValueSelected(position);
+			final ZLComboOptionEntry comboEntry = (ZLComboOptionEntry)myOption;
 			if (convertView == null) {
-				myEditor = new EditText(parent.getContext());
+				myEditor = new EditText(parent.getContext()) {
+					protected boolean getDefaultEditable() {
+						return comboEntry.isEditable();
+					}
+				};
 				myEditor.setSingleLine(true);
 				myEditor.setText((String)getItem(position), TextView.BufferType.EDITABLE);
 				convertView = myEditor;
 			}
 			return convertView;
-		}
-
-		public View getMeasurementView(ViewGroup parent) {
-			// TODO: implement
-			return null;
 		}
 
 		public int getCount() {
@@ -93,18 +123,8 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 			return position;
 		}
 
-		public int getNewSelectionForKey(int currentSelection, int keyCode, KeyEvent event) {
-			return NO_SELECTION;
-		}
-
 		public boolean stableIds() {
-			return true;
-		}
-
-		public void registerDataSetObserver(DataSetObserver observer) {
-		}
-
-		public void unregisterDataSetObserver(DataSetObserver observer) {
+			return false;
 		}
 	}
 }

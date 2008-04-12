@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.ArrayList;
@@ -202,15 +203,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	public String realFontFamilyName(String fontFamily) {
 		// TODO: implement
-		if ("DroidSerif".equals(fontFamily)) {
+		if ("Serif".equals(fontFamily)) {
 			return fontFamily;
 		}
-		return "DroidSans";
+		return "Sans";
 	}
 	
 	protected void fillFamiliesList(ArrayList families) {
 		// TODO: implement
-		families.add("DroidSans");
-		families.add("DroidSerif");
+		families.add("Sans");
+		families.add("Serif");
 	}
 }

@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
@@ -48,7 +49,7 @@ public class RecentBooksView extends FBView {
 		setModel(null);//, LIBRARY);
 	}
 	
-	public boolean onStylusPress(int x, int y) {
+	public boolean _onStylusPress(int x, int y) {
 		final ArrayList/*<BookDescription>*/ books = myLastBooks.books();
 
 		int index = getParagraphIndexByCoordinate(y);

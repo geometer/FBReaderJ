@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
@@ -107,11 +108,7 @@ public class BookTextView extends FBView {
 		getApplication().refreshWindow();
 	}
 
-	public boolean onStylusPress(int x, int y) {
-		if (super.onStylusPress(x, y)) {
-			return true;
-		}
-
+	public boolean _onStylusPress(int x, int y) {
 		ZLTextElementArea area = getElementByCoordinates(x, y);
 		if (area != null) {
 			ZLTextElement element = area.Element;

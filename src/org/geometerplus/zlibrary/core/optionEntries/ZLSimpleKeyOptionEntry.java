@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.core.optionEntries;
 
 import java.util.ArrayList;
@@ -31,12 +32,12 @@ import org.geometerplus.zlibrary.core.util.*;
 public abstract class ZLSimpleKeyOptionEntry extends ZLKeyOptionEntry {
 	private ZLKeyBindings myBindings;
 	private final HashMap/*<std::string,std::string>*/ myChangedCodes = new HashMap();
-	
+
 	public ZLSimpleKeyOptionEntry(ZLKeyBindings bindings) {
 		super();
 		myBindings = bindings;
 	}
-	
+
 	public int actionIndex(String key) {
 		String code = (String) myChangedCodes.get(key);
 		return codeIndexBimap().indexByCode((code != null) ? code : myBindings.getBinding(key));
@@ -50,27 +51,31 @@ public abstract class ZLSimpleKeyOptionEntry extends ZLKeyOptionEntry {
 		myBindings.saveCustomBindings();
 	}
 
+	public void onReset() {
+		myChangedCodes.clear();
+	}
+
 	public void onKeySelected(String key) {}
 
 	public void onValueChanged(String key, int index) {
 		myChangedCodes.put(key, codeIndexBimap().codeByIndex(index));
 	}
-	
+
 	public abstract CodeIndexBimap codeIndexBimap();
-	
+
 	public static class CodeIndexBimap {
 		private final ArrayList/*<String>*/ CodeByIndex = new ArrayList();
 		private final HashMap/*<std::string,int>*/ IndexByCode = new HashMap();
-			
+
 		public void insert(final String code) {
 			IndexByCode.put(code, CodeByIndex.size());
 			CodeByIndex.add(code);
 		}
-			
+
 		public int indexByCode(final String code) {
 			return IndexByCode.get(code) == null ? 0 : (Integer) IndexByCode.get(code); 
 		}
-		
+
 		public String codeByIndex(int index) {
 			if ((index < 0) || (index >= (int) CodeByIndex.size())) {
 				return ZLApplication.NoAction;
@@ -78,5 +83,4 @@ public abstract class ZLSimpleKeyOptionEntry extends ZLKeyOptionEntry {
 			return (String) CodeByIndex.get(index);
 		}
 	}
-
 }

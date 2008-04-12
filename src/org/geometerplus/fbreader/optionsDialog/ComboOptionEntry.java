@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.optionsDialog;
 
 import java.util.ArrayList;
@@ -47,6 +48,10 @@ class ComboOptionEntry extends ZLComboOptionEntry {
 	}
 
 	public void onAccept(String value) {}
+
+	public void onReset() {
+		onValueSelected(0);
+	}
 
 	public void onValueSelected(int index) {
 		final Object selectedValue = myValues.get(index);

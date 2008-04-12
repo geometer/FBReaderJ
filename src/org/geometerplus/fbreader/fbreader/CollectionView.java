@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
@@ -55,11 +56,7 @@ public class CollectionView extends FBView {
 		return ZLResource.resource("library").getResource("caption").getValue();
 	}
 
-	public boolean onStylusPress(int x, int y) {
-		if (super.onStylusPress(x, y)) {
-			return true;
-		}
-
+	public boolean _onStylusPress(int x, int y) {
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
 			ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());

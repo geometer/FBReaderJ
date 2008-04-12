@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.android.util;
 
 import android.view.KeyEvent;
@@ -134,9 +135,9 @@ public final class ZLAndroidKeyUtil {
 			case KeyEvent.KEYCODE_EXPLORER:
 				return "<Explorer>";
 			case KeyEvent.KEYCODE_GRAVE:
-				return "<???>";
+				return "<??? 0>";
 			case KeyEvent.KEYCODE_HEADSETHOOK:
-				return "<???>";
+				return "<??? 1>";
 			case KeyEvent.KEYCODE_HOME:
 				return "<Home>";
 			case KeyEvent.KEYCODE_LEFT_BRACKET:
@@ -148,9 +149,9 @@ public final class ZLAndroidKeyUtil {
 			case KeyEvent.KEYCODE_NUM:
 				return "<Num>";
 			case KeyEvent.KEYCODE_PERIOD:
-				return "<???>";
+				return "<??? 2>";
 			case KeyEvent.KEYCODE_POUND:
-				return "<???>";
+				return "<??? 3>";
 			case KeyEvent.KEYCODE_POWER:
 				return "<Power>";
 			case KeyEvent.KEYCODE_RIGHT_BRACKET:
@@ -160,9 +161,9 @@ public final class ZLAndroidKeyUtil {
 			case KeyEvent.KEYCODE_SLASH:
 				return "</>";
 			case KeyEvent.KEYCODE_SOFT_LEFT:
-				return "<???>";
+				return "<Menu>";
 			case KeyEvent.KEYCODE_SOFT_RIGHT:
-				return "<???>";
+				return "<??? 4>";
 			case KeyEvent.KEYCODE_SPACE:
 				return "<Space>";
 			case KeyEvent.KEYCODE_STAR:

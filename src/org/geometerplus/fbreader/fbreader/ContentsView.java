@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.options.*;
@@ -30,11 +31,7 @@ class ContentsView extends FBView {
 		super(fbreader, context);
 	}
 
-	public boolean onStylusPress(int x, int y) {
-		if (super.onStylusPress(x, y)) {
-			return true;
-		}
-
+	public boolean _onStylusPress(int x, int y) {
 		final int index = getParagraphIndexByCoordinate(y);
 		if (index == -1) {
 			return false;

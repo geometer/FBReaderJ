@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import java.util.ArrayList;
@@ -76,11 +77,8 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	void invalidateView() {
 		if (!myAndroidViews.isEmpty()) {
 			myAndroidViews.clear();
-			android.util.Log.i("invalidateView", "0");
 			myListView.setAdapter(new ViewAdapter());
-			android.util.Log.i("invalidateView", "1");
 			myListView.invalidate();
-			android.util.Log.i("invalidateView", "2");
 		}
 	}
 
@@ -96,7 +94,9 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 				);
 				break;
 			case ZLOptionKind.BOOLEAN3:
-//				view = new Boolean3OptionView(name, tooltip, (ZLBoolean3OptionEntry*)option, *this, from, to);
+				view = new ZLAndroidBoolean3OptionView(
+					this, name, (ZLBoolean3OptionEntry)option
+				);
 				break;
 			case ZLOptionKind.STRING:
 				view = new ZLAndroidStringOptionView(
@@ -124,7 +124,9 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 				);
 				break;
 			case ZLOptionKind.KEY:
-//				view = new KeyOptionView(name, tooltip, (ZLKeyOptionEntry*)option, *this, from, to);
+				view = new ZLAndroidKeyOptionView(
+					this, name, (ZLKeyOptionEntry)option
+				);
 				break;
 			case ZLOptionKind.ORDER:
 				// TODO: implement
@@ -165,13 +167,7 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	private class ViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				final ArrayList views = getAndroidViews();
-				// just a hack
-				// TODO: make a correct fix for a problem in Scrollings tab
-				if (position >= views.size()) {
-					position = views.size() - 1;
-				}
-				convertView = (View)views.get(position);
+				convertView = (View)getAndroidViews().get(position);
 			}
 
 			return convertView;

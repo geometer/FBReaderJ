@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.core.dialogs;
 
 import java.util.*;
@@ -23,9 +24,9 @@ import org.geometerplus.zlibrary.core.util.*;
 
 public abstract class ZLKeyOptionEntry extends ZLOptionEntry {
 	private final ArrayList/*<String>*/ myActionNames = new ArrayList();
-	
+
 	public ZLKeyOptionEntry() {}
-	
+
 	public int getKind() {
 		return ZLOptionKind.KEY;
 	}
@@ -33,16 +34,17 @@ public abstract class ZLKeyOptionEntry extends ZLOptionEntry {
 	public final void addActionName(String actionName) {
 		myActionNames.add(actionName);
 	}
-	
+
 	public final ArrayList getActionNames() {
 		return myActionNames;
 	}
-	
+
+	public abstract void onReset();
 	public abstract void onAccept();
-	
+
 	public abstract int actionIndex(String key);
-	
+
 	public abstract void onValueChanged(String key, int index);
-	
+
 	public abstract void onKeySelected(String key);
 }

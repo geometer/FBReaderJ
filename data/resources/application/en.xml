@@ -372,6 +372,6 @@
 		<node name="caption" value="Library"/>
 		<node name="allBooks" value="All Books"/>
 		<node name="booksWithoutTags" value="Books with no Tags"/>
-		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; button."/>
+		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; menu item."/>
 	</node>
 </resources>

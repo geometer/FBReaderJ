@@ -16,6 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
 package org.geometerplus.zlibrary.ui.swing.dialogs;
 
 import java.awt.Component;
@@ -29,17 +30,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.Icon;
-import javax.swing.JCheckBox;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.plaf.ActionMapUIResource;
-import javax.swing.plaf.UIResource;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.plaf.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLBoolean3OptionEntry;
