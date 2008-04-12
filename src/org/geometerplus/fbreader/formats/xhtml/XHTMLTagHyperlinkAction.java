@@ -20,48 +20,49 @@
 package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
+
+import org.geometerplus.fbreader.bookmodel.*;
 
 class XHTMLTagHyperlinkAction extends XHTMLTagAction {
+	private byte[] myHyperlinkStack = new byte[10];
+	private int myHyperlinkStackSize;
+
+	private static boolean isReference(String text) {
+		return
+			text.startsWith("http://") ||
+			text.startsWith("https://") ||
+			text.startsWith("mailto:") ||
+			text.startsWith("ftp://");
+	}
+
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.getModelReader().beginParagraph();
+		final BookReader modelReader = reader.getModelReader();
+		final String href = xmlattributes.getValue("href");
+		if (myHyperlinkStackSize == myHyperlinkStack.length) {
+			myHyperlinkStack = ZLArrayUtils.createCopy(myHyperlinkStack, myHyperlinkStackSize, 2 * myHyperlinkStackSize);
+		}
+		if ((href != null) && (href.length() > 0)) {
+			final String link = (href.charAt(0) == '#') ? (reader.myReferenceName + href) : href;
+			final byte hyperlinkType =
+				isReference(link) ?
+					FBTextKind.EXTERNAL_HYPERLINK :
+					FBTextKind.INTERNAL_HYPERLINK;
+			myHyperlinkStack[myHyperlinkStackSize++] = hyperlinkType;
+			modelReader.addHyperlinkControl(hyperlinkType, link);
+		} else {
+			myHyperlinkStack[myHyperlinkStackSize++] = FBTextKind.REGULAR;
+		}
+		final String name = xmlattributes.getValue("name");
+		if (name != null) {
+			modelReader.addHyperlinkLabel(reader.myReferenceName + "#" + name);
+		}
 	}
 
 	protected void doAtEnd(XHTMLReader reader) {
-		reader.getModelReader().endParagraph();
+		byte kind = myHyperlinkStack[--myHyperlinkStackSize];
+		if (kind != FBTextKind.REGULAR) {
+			reader.getModelReader().addControl(kind, false);
+		}
 	}
 }
-/*
-class XHTMLTagHyperlinkAction : public XHTMLTagAction {
-
-public:
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-
-private:
-	std::stack<FBTextKind> myHyperlinkStack;
-};
-
-void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
-	const char *href = reader.attributeValue(xmlattributes, "href");
-	if (href != 0) {
-		const std::string link = (*href == '#') ? (reader.myReferenceName + href) : href;
-		FBTextKind hyperlinkType = MiscUtil::isReference(link) ? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
-		myHyperlinkStack.push(hyperlinkType);
-		bookReader(reader).addHyperlinkControl(hyperlinkType, link);
-	} else {
-		myHyperlinkStack.push(REGULAR);
-	}
-	const char *name = reader.attributeValue(xmlattributes, "name");
-	if (name != 0) {
-		bookReader(reader).addHyperlinkLabel(reader.myReferenceName + "#" + name);
-	}
-}
-
-void XHTMLTagHyperlinkAction::doAtEnd(XHTMLReader &reader) {
-	FBTextKind kind = myHyperlinkStack.top();
-	if (kind != REGULAR) {
-		bookReader(reader).addControl(kind, false);
-	}
-	myHyperlinkStack.pop();
-}
-*/

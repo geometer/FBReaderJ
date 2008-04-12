@@ -21,25 +21,20 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.fbreader.bookmodel.*;
+
 class XHTMLTagPreAction extends XHTMLTagAction {
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.getModelReader().beginParagraph();
+		reader.myPreformatted = true;
+		final BookReader modelReader = reader.getModelReader();
+		modelReader.beginParagraph();
+		modelReader.addControl(FBTextKind.CODE, true);
 	}
 
 	protected void doAtEnd(XHTMLReader reader) {
-		reader.getModelReader().endParagraph();
+		final BookReader modelReader = reader.getModelReader();
+		modelReader.addControl(FBTextKind.CODE, false);
+		modelReader.endParagraph();
+		reader.myPreformatted = false;
 	}
 }
-/*
-void XHTMLTagPreAction::doAtStart(XHTMLReader &reader, const char**) {
-	reader.myPreformatted = true;
-	bookReader(reader).beginParagraph();
-	bookReader(reader).addControl(CODE, true);
-}
-
-void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
-	bookReader(reader).addControl(CODE, false);
-	bookReader(reader).endParagraph();
-	reader.myPreformatted = false;
-}
-*/

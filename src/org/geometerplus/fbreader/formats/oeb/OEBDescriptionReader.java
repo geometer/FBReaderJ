@@ -45,6 +45,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 		if (!read(fileName)) {
+			System.err.println("HELLO");
 			return false;
 		}
 

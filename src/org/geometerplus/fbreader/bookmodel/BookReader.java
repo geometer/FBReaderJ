@@ -312,4 +312,10 @@ public class BookReader {
 	public final void addImage(String id, ZLImage image) {
 		myBookModel.addImage(id, image);
 	}
+
+	public final void addFixedHSpace(short length) {
+		if (myTextParagraphExists) {
+			myCurrentTextModel.addFixedHSpace(length);
+		}
+	}
 }

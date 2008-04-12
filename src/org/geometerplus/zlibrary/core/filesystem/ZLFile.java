@@ -44,15 +44,13 @@ public class ZLFile {
 	private	int myArchiveType;
 	private	ZLFileInfo myInfo;
 	
-	private final HashMap myForcedFiles = new HashMap();
+	private static final HashMap ourForcedFiles = new HashMap();
 	
-	public HashMap getForcedFiles() {
-		return myForcedFiles;
-	}
-	
+	/*
 	public void putForcedFile(String key, int value) {
 		myForcedFiles.put(key, value);
 	}
+*/
 	
 	public boolean removeFile(String path) {
 		File file = new File(path);
@@ -102,8 +100,7 @@ public class ZLFile {
 		}
 		myNameWithoutExtension = myNameWithExtension;
 
-		HashMap forcedFiles = getForcedFiles();
-		Integer value = (Integer)forcedFiles.get(myPath);
+		Integer value = (Integer)ourForcedFiles.get(myPath);
 		if (value != null) {
 			myArchiveType = value.intValue();
 		} else {
@@ -161,7 +158,7 @@ public class ZLFile {
 	public void forceArchiveType(int type) {
 		if (myArchiveType != type) {
 			myArchiveType = type;
-			putForcedFile(myPath, myArchiveType);
+			ourForcedFiles.put(myPath, myArchiveType);
 		}
 	}
 	

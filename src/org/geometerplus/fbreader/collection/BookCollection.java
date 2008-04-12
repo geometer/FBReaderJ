@@ -49,7 +49,7 @@ public class BookCollection {
 	private	boolean myDoWeakRebuild;
 
 	public BookCollection() {
-		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "/FBooks");
+		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "/Books");
 		ScanSubdirsOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "ScanSubdirs", false);
 		myDoStrongRebuild = true;
 		myDoWeakRebuild = false;

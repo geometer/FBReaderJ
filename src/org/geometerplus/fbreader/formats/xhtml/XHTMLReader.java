@@ -114,7 +114,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 
 	private final BookReader myModelReader;
 	private String myPathPrefix;
-	private String myReferenceName;
+	String myReferenceName;
 	boolean myPreformatted;
 
 	public XHTMLReader(BookReader modelReader) {
@@ -185,15 +185,26 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 				myModelReader.beginParagraph();
 				myModelReader.addControl(FBTextKind.CODE, true);
 			}
-			/*
 			int spaceCounter = 0;
-			while ((spaceCounter < len) && isspace((unsigned char)*text)) {
+cycle:
+			while (spaceCounter < len) {
+				switch (data[start + spaceCounter]) {
+					case 0x08:
+					case 0x09:
+					case 0x0A:
+					case 0x0B:
+					case 0x0C:
+					case 0x0D:
+					case ' ':
+						break;
+					default:
+						break cycle;
+				}
 				++spaceCounter;
 			}
-			myModelReader.addFixedHSpace(spaceCounter);
-			text += spaceCounter;
+			myModelReader.addFixedHSpace((short)spaceCounter);
+			start += spaceCounter;
 			len -= spaceCounter;
-			*/
 		}
 		if (len > 0) {
 			myModelReader.addData(data, start, len);

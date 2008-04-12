@@ -264,10 +264,17 @@ public final class FBReader extends ZLApplication {
 
 	void tryOpenFootnote(String id) {
 		if (myBookModel != null) {
-			ZLTextModel footnoteModel = myBookModel.getFootnoteModel(id);
-			if (footnoteModel != null) {
-				myFootnoteView.setModel(footnoteModel);
-				setMode(ViewMode.FOOTNOTE);
+			BookModel.Label label = myBookModel.getLabel(id);
+			if ((label != null) && (label.Model != null)) {
+				if (label.Model == myBookModel.getBookTextModel()) {
+					myBookTextView.gotoParagraphSafe(label.ParagraphNumber);
+				} else {
+					myFootnoteView.setModel(label.Model);
+					setMode(ViewMode.FOOTNOTE);
+					myFootnoteView.gotoParagraph(label.ParagraphNumber, false);
+				}
+				setHyperlinkCursor(false);
+				refreshWindow();
 			}
 		}
 	}

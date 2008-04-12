@@ -9,7 +9,7 @@ DELAYED	выделение текста мышкой
 DELAYED	прокрутка текста мышкой
 	переход по ссылкам
 DONE		внутренним
-1		внутри той же модели
+DONE		внутри той же модели
 DONE		внешним (вызов браузера)
 DONE			swing
 DONE			android
@@ -36,7 +36,7 @@ DONE	избавиться от многократных вычислений (ZL
 DONE	fb2 (сделать чтение описания книги)
 DELAYED	chm
 2	html
-0	oeb/epub
+DONE	oeb/epub
 DELAYED	openreader
 DELAYED	ztxt
 2	palmdoc

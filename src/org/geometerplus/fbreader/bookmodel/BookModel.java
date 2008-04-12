@@ -46,7 +46,7 @@ public final class BookModel {
 	
 	public class Label {
 		public final int ParagraphNumber;
-		final ZLTextModel Model;
+		public final ZLTextModel Model;
 		
 		Label(ZLTextModel model, int paragraphNumber) {
 			ParagraphNumber = paragraphNumber;
@@ -79,7 +79,7 @@ public final class BookModel {
 		return myContentsModel;
 	}
 	
-	public ZLTextPlainModelImpl getFootnoteModel(String id) {
+	ZLTextPlainModelImpl getFootnoteModel(String id) {
 		final HashMap footnotes = myFootnotes;
 		ZLTextPlainModelImpl model = (ZLTextPlainModelImpl)footnotes.get(id);
 		if (model == null) {

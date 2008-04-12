@@ -108,6 +108,19 @@ public class BookTextView extends FBView {
 		getApplication().refreshWindow();
 	}
 
+	void gotoParagraphSafe(int paragraphNumber) {
+		preparePaintInfo();
+		final ZLTextWordCursor cursor = getStartCursor();
+		if (cursor != null) {
+			final Position position = new Position(cursor);
+			gotoParagraph(paragraphNumber, false);
+			preparePaintInfo();
+			if (!position.equalsToCursor(getStartCursor())) {
+				savePosition(position);
+			}
+		}
+	}
+
 	public boolean _onStylusPress(int x, int y) {
 		ZLTextElementArea area = getElementByCoordinates(x, y);
 		if (area != null) {
