@@ -2,7 +2,7 @@
 <FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>О программе FBReaderJ</book-title> <lang>ru</lang></title-info></description>
 <body>
 <title><p>О программе FBReaderJ &FBReaderVersion;</p></title>
-<p>FBReaderJ &#8211; программа для чтения электронных книг, работающая на платформе <a l:href="http://www.android.com/">Android</a>. Она представляет из себя клон программы <a l:href="http://www.fbreader.org/">FBReader</a>, написанный на Java вместо C++. FBReaderJ позволяет читать книги в разных форматах: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. Список поддерживаемых форматов увеличится в новых версиях. Файлы можно читать напрямую из архивов <code>zip</code>, <code>tar</code> и <code>gzip</code>.</p>
+<p>FBReaderJ &#8211; программа для чтения электронных книг, работающая на платформе <a l:href="http://www.android.com/">Android</a>. Она представляет из себя клон программы <a l:href="http://www.fbreader.org/">FBReader</a>, написанный на Java теми же авторами. FBReaderJ позволяет читать книги в разных форматах: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. В новых версиях будут добавлены остальые форматы, поддерживаемые оригинальным FBReader. Файлы можно читать напрямую из архивов <code>zip</code>, <code>tar</code> и <code>gzip</code>.</p>
 <p>Вы можете настроить FBReaderJ, чтобы читать так, как удобнее именно вам. Цвета, шрифты, настройки клавиш и многое другое можно поменять в <code>диалоге настроек</code>.</p>
 <p>FBReaderJ распространяется свободно, включая исходные тексты, под лицензией <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
 <empty-line/>
