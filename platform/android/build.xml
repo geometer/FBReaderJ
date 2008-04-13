@@ -5,7 +5,6 @@
 	<property name="sdk-folder" value="/Users/geometer/android-sdk_m5-rc15_mac-x86" />
 	<property name="android-tools" value="${sdk-folder}/tools" />
 	<property name="project-dir" value="/Users/geometer/src/projects/FBReaderJ" />
-	<property name="version" value="0.1" />
 
 <!--
 	<property name="sdk-folder" value="/home/grigory/distrib/android_sdk_linux_m3-rc20a" />
@@ -31,7 +30,7 @@
 	<property name="intermediate-dex" value="${outdir}/${dex-file}" />
 
 	<!-- The final package file to generate -->
-	<property name="out-package" value="${outdir}/${ant.project.name}-${version}.apk" />
+	<property name="out-package" value="${outdir}/${ant.project.name}.apk" />
 
 	<!-- Tools -->
 	<property name="aapt" value="${android-tools}/aapt" />
