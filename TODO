@@ -35,7 +35,7 @@ DONE	избавиться от многократных вычислений (ZL
 форматы:
 DONE	fb2 (сделать чтение описания книги)
 DELAYED	chm
-DELAYED	html
+3	html
 DONE	oeb/epub
 DELAYED	openreader
 DELAYED	ztxt
