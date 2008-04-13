@@ -4,7 +4,7 @@
 <title><p>About FBReaderJ &FBReaderVersion;</p></title>
 <p>FBReaderJ is an e-book reader for the <a l:href="http://www.android.com/">Android platform</a>. It is a clone of the <a l:href="http://www.fbreader.org/">FBReader book reader</a> written in Java by the same authors. FBReaderJ supports several e-book formats: <code>oeb</code>, <code>epub</code>, <code>fb2</code>.  In future releases the list will be extended to support the same formats as the original FBReader. Direct reading from <code>zip</code>, <code>tar</code> and <code>gzip</code> archives is supported.</p>
 <p>You can configure FBReaderJ to read books with a pleasure. Colors, fonts, key bindings and many other properties can be changed in the <code>Preferences Dialog</code>.</p>
-<p>FBReader is distributed under the terms of the <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<p>FBReaderJ is distributed under the terms of the <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
 <empty-line/>
 <subtitle><p>How To Start</p></subtitle>
 <p>FBReaderJ automatically adds <code>epub</code>, <code>oeb</code> and <code>fb2</code> books found in directories listed in the <code>Book Path</code> option. So, first of all, you need to set this option. Open the <code>Preferences Dialog</code> (open menu and select <code>Preferences...</code> item, or just press <code>O</code> key), select the top item (<code>Library</code>) and for the <code>Book Path</code> option specify a colon separated list of directories where FBReaderJ should look for <code>*.epub</code>, <code>*.oebzip</code>, <code>*.fb2</code> or archive files.</p>
