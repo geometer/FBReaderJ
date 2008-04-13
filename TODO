@@ -14,7 +14,7 @@ DONE		внешним (вызов браузера)
 DONE			swing
 DONE			android
 DONE			переносы
-2		оптимизировать место в памяти
+DELAYED		оптимизировать место в памяти
 	position indicator
 DONE		отрисовка
 DONE		навигация
@@ -23,7 +23,7 @@ DONE		взаимодействие с деревом
 DELAYED		засечки для пунктов из оглавления
 DELAYED		часы
 DELAYED		количество прочитанных страниц
-3	обработка неразрывных пробелов
+DELAYED	обработка неразрывных пробелов
 DONE	undo/redo position stack
 DELAYED	обработка китайских текстов
 DELAYED	desktop: менять курсор над ссылкой
@@ -35,7 +35,7 @@ DONE	избавиться от многократных вычислений (ZL
 форматы:
 DONE	fb2 (сделать чтение описания книги)
 DELAYED	chm
-2	html
+DELAYED	html
 DONE	oeb/epub
 DELAYED	openreader
 DELAYED	ztxt

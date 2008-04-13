@@ -27,7 +27,6 @@ import org.geometerplus.fbreader.formats.pdb.PdbUtil.PdbHeader;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class PdbStream extends InputStream {
-	
 	public PdbStream(ZLFile file) {
 		myBuffer = null;
 	}
@@ -118,7 +117,7 @@ public abstract class PdbStream extends InputStream {
 
 	protected abstract boolean fillBuffer();
 
-	protected   InputStream myBase;
+	protected InputStream myBase;
 	protected	int myOffset;
 	protected	PdbHeader myHeader;
 	protected	byte[] myBuffer;

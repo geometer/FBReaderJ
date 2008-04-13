@@ -49,7 +49,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private boolean myUnorderedListIsStarted = false;
 	private int myOLCounter = 0;
 	private byte[] myControls = new byte[10];
-	private byte myControlsQuantity = 0;
+	private byte myControlsNumber = 0;
 	
 	public HtmlReader(BookModel model) {
 		super(model);
@@ -100,23 +100,23 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 
 	private void openControl(byte control) {
 		addControl(control, true);
-		if (++myControlsQuantity > myControls.length) {
+		if (++myControlsNumber > myControls.length) {
 			byte[] temp = ZLArrayUtils.createCopy(myControls, 0, myControls.length);
-			myControls = new byte[2 * myControlsQuantity];
-			for (int i = 0; i < myControlsQuantity - 1; i++) {
+			myControls = new byte[2 * myControlsNumber];
+			for (int i = 0; i < myControlsNumber - 1; i++) {
 				myControls[i] = temp[i];
 			}
 		}
-		myControls[myControlsQuantity - 1] = control;
+		myControls[myControlsNumber - 1] = control;
 	}
 	
 	private void closeControl(byte control) {
-		for (int i = 0; i < myControlsQuantity; i++) {
+		for (int i = 0; i < myControlsNumber; i++) {
 			addControl(myControls[i], false);
 		}
 		boolean flag = false;
-		int removedControl = myControlsQuantity;
-		for (int i = 0; i < myControlsQuantity; i++) {
+		int removedControl = myControlsNumber;
+		for (int i = 0; i < myControlsNumber; i++) {
 			if (!flag && (myControls[i] == control)) {
 				flag = true;
 				removedControl = i;
@@ -124,11 +124,11 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			}
 			addControl(myControls[i], true);
 		}
-		if (removedControl == myControlsQuantity) {
+		if (removedControl == myControlsNumber) {
 			return;
 		}
-		--myControlsQuantity;
-		for (int i = removedControl; i < myControlsQuantity; i++) {
+		--myControlsNumber;
+		for (int i = removedControl; i < myControlsNumber; i++) {
 			myControls[i] = myControls[i + 1];
 		}
 	}
@@ -309,10 +309,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 						myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
 					}
 					addHyperlinkControl(myHyperlinkType, ref);
-					myControls[myControlsQuantity] = myHyperlinkType;
-					myControlsQuantity ++;
+					myControls[myControlsNumber] = myHyperlinkType;
+					myControlsNumber++;
 					//openControl(myHyperlinkType);
-					//System.out.println("open 37 - " + myControlsQuantity);
+					//System.out.println("open 37 - " + myControlsNumber);
 				} else {
 					//myHyperlinkType = FBTextKind.FOOTNOTE;
 					//openControl(myHyperlinkType);

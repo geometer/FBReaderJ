@@ -168,5 +168,4 @@ public class PluckerTextStream extends PdbStream {
 	private short myCompressionVersion;
 	private	byte[] myFullBuffer;
 	private	int myRecordIndex;
-
 }
