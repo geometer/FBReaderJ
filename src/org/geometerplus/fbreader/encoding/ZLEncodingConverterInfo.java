@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ZLEncodingConverterInfo {
+	private String myName = "";
+	private	String myVisibleName = "";
+	private	ArrayList/*<String>*/ myAliases = new ArrayList();
+	
 	public ZLEncodingConverterInfo(String name, String region) {
 		myName = name;
 		myVisibleName = region + " (" + name + ")";
@@ -61,19 +65,15 @@ public class ZLEncodingConverterInfo {
 		ZLEncodingCollection collection = ZLEncodingCollection.instance();
 		ArrayList<ZLEncodingConverterProvider>  providers = collection.providers();
 		for (Iterator it = providers.iterator(); it.hasNext();) {
+			final ZLEncodingConverterProvider privider = (ZLEncodingConverterProvider)it.next();
 			for (Iterator jt = myAliases.iterator(); jt.hasNext(); ) {
-				if (((ZLEncodingConverterProvider)it.next()).providesConverter((String)jt.next())) {
+				if (privider.providesConverter((String)jt.next())) {
 					return true;
 				}
 			}
 		}
 		return false;	
 	}
-
-	private String myName = "";
-	private	String myVisibleName = "";
-	private	ArrayList<String> myAliases = new ArrayList();
-
 	//private ZLEncodingConverterInfo(const ZLEncodingConverterInfo&);
 	//private	ZLEncodingConverterInfo &operator=(const ZLEncodingConverterInfo&);
 }

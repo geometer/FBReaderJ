@@ -19,6 +19,20 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.fbreader.encoding.ZLEncodingCollection;
+import org.geometerplus.fbreader.encoding.ZLEncodingConverter;
+import org.geometerplus.fbreader.encoding.ZLEncodingConverterInfo;
+
 public class EncodedTextReader {
-	
+	private ZLEncodingConverter myConverter;
+	//?static
+	public EncodedTextReader(final String encoding) {
+		ZLEncodingCollection collection = ZLEncodingCollection.instance();
+		ZLEncodingConverterInfo info = collection.info(encoding);
+		myConverter = (info != null) ? info.createConverter() : collection.defaultConverter();
+	}
+
+	public ZLEncodingConverter getConverter() {
+		return myConverter;
+	}
 }

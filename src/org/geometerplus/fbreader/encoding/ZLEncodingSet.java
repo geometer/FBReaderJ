@@ -22,6 +22,9 @@ package org.geometerplus.fbreader.encoding;
 import java.util.ArrayList;
 
 public class ZLEncodingSet {
+	private String myName = "";
+	private	ArrayList/*<ZLEncodingConverterInfo>*/ myInfos = new ArrayList();
+	
 	public ZLEncodingSet(String name) {
 		
 	}
@@ -36,7 +39,4 @@ public class ZLEncodingSet {
 	public	ArrayList/*<ZLEncodingConverterInfo>*/ infos() {
 		return myInfos;
 	}
-
-	private String myName = "";
-	private	ArrayList/*<ZLEncodingConverterInfo>*/ myInfos = new ArrayList();
 }

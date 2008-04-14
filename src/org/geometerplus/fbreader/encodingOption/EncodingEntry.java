@@ -51,11 +51,15 @@ public class EncodingEntry extends ZLComboOptionEntry {
 		}
 
 		final ArrayList/*<ZLEncodingSet>*/ sets = ZLEncodingCollection.instance().sets();
+		
+		System.out.println("sets size = " + sets.size());
+		
 		for (int i = 0; i < sets.size(); i++) {
 			ZLEncodingSet es = (ZLEncodingSet) sets.get(i);
 			final ArrayList/*<ZLEncodingConverterInfo>*/ infos = es.infos();
+	//		System.out.println(es.name());
 			mySetNames.add(es.name());
-			ArrayList/*<String>*/ names = (ArrayList) myValues.get(es.name());
+			ArrayList/*<String>*/ names = new ArrayList();
 			for (int j = 0; j < infos.size(); j++) {
 				ZLEncodingConverterInfo eci = (ZLEncodingConverterInfo) infos.get(j);
 				if (eci.name().equals(value)) {
@@ -65,9 +69,10 @@ public class EncodingEntry extends ZLComboOptionEntry {
 				names.add(eci.visibleName());
 				myValueByName.put(eci.visibleName(), eci.name());
 			}
+			myValues.put(es.name(), names);
 		}
-
-		if (myInitialSetName.length() == 0) {
+		//TODO:
+		if (myInitialSetName.length() == 0 && !mySetNames.isEmpty()) {
 			myInitialSetName = (String) mySetNames.get(0);
 		}
 	}

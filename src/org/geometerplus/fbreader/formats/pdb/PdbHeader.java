@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class PdbHeader {
 	static public String DocName;
-	static public short Flags;
+	static public int Flags;
 	static public String Id;
 	static public int[] Offsets;
 
@@ -35,7 +35,7 @@ public class PdbHeader {
 			return false;
 		}
 		DocName = new String(buffer);
-		Flags = PdbUtil.readShort(stream);
+		Flags = PdbUtil.readUnsignedShort(stream);
 
 		stream.skip(26);
 		
@@ -46,7 +46,7 @@ public class PdbHeader {
 
 		stream.skip(8);
 
-		short numRecords = PdbUtil.readShort(stream);
+		int numRecords = PdbUtil.readUnsignedShort(stream);
 		if (numRecords <= 0) {
 			return false;
 		}
