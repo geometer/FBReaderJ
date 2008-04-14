@@ -24,23 +24,20 @@ import java.io.InputStream;
 
 import org.geometerplus.fbreader.description.BookDescriptionUtil;
 import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.plucker.PluckerTextStream;
 import org.geometerplus.fbreader.option.FBOptions;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-public abstract  class PdbPlugin extends FormatPlugin {
-
-	protected PdbPlugin() {
-		super();
-	}
-
-	public  static String fileType(final ZLFile file) {
-		final String extension = file.getExtension().toLowerCase();//ZLUnicodeUtil.toLower(file.getExtension());
+public abstract class PdbPlugin extends FormatPlugin {
+	protected static String fileType(final ZLFile file) {
+		final String extension = file.getExtension().toLowerCase().intern();
 		if ((extension != "prc") && (extension != "pdb") && (extension != "mobi")) {
-			return "";
+			return null;
 		}
 
 		String fileName = file.getPath();
+		System.err.println("fileName = " + fileName);
 		int index = fileName.indexOf(':');
 		ZLFile baseFile = (index == -1) ? file : new ZLFile(fileName.substring(0, index));
 		boolean upToDate = BookDescriptionUtil.checkInfo(baseFile);
@@ -48,21 +45,20 @@ public abstract  class PdbPlugin extends FormatPlugin {
 		ZLStringOption palmTypeOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
 		if ((palmType.length() != 8) || !upToDate) {
-			InputStream stream = null;
 			byte[] id = new byte[8];
 			try {
-				stream = file.getInputStream();
-				if (stream == null || !((PdbStream)stream).open()) {
-					return "";
+				InputStream stream = file.getInputStream();
+				if (stream == null) {
+					return null;
 				}
 				stream.skip(60);
 				stream.read(id, 0, 8);
 				stream.close();
-		    } catch (IOException e) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-		    }
-		    palmType = new String(id).substring(8);
+			}
+			palmType = new String(id);
 			if (!upToDate) {
 				BookDescriptionUtil.saveInfo(baseFile);
 			}

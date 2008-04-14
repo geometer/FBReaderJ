@@ -32,11 +32,12 @@ public class PluckerPlugin extends PdbPlugin {
 		return false;
 	}
 	
-	public	boolean acceptsFile(ZLFile file) {		
-		return PdbPlugin.fileType(file).equals("DataPlkr");
+	public boolean acceptsFile(ZLFile file) {		
+		System.err.println("fileType = " + fileType(file));
+		return "DataPlkr".equals(fileType(file));
 	}
 	
-	public	boolean readDescription(String path, BookDescription description) {
+	public boolean readDescription(String path, BookDescription description) {
 		ZLFile file = new ZLFile(path);
 
 		InputStream stream = null;
@@ -68,6 +69,4 @@ public class PluckerPlugin extends PdbPlugin {
 	public	String getIconName() {
 		return "plucker";
 	}
-
-
 }

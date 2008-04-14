@@ -25,49 +25,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReader;
-import org.geometerplus.fbreader.bookmodel.FBTextKind;
-import org.geometerplus.fbreader.formats.pdb.PdbStream;
-import org.geometerplus.fbreader.formats.pdb.PdbUtil;
-import org.geometerplus.fbreader.formats.pdb.PdbUtil.PdbHeader;
+import org.geometerplus.fbreader.bookmodel.*;
+import org.geometerplus.fbreader.formats.pdb.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
-import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
-import org.geometerplus.zlibrary.text.model.impl.ZLTextForcedControlEntry;
+import org.geometerplus.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.text.model.impl.*;
 
 public class PluckerBookReader extends BookReader {
-	
 	public PluckerBookReader(String filePath, BookModel model, String encoding){
-		 super(model);
-		 //, EncodedTextReader = encoding, 
-		 myFilePath = filePath; 
-		 myFont = FontType.FT_REGULAR;
-	     myCharBuffer = new char[65535];
-	     myForcedEntry = null;
-
+		super(model);
+		//, EncodedTextReader = encoding, 
+		myFilePath = filePath; 
+		myFont = FontType.FT_REGULAR;
+		myCharBuffer = new char[65535];
+		myForcedEntry = null;
 	}
 
 	public	boolean readDocument() throws IOException {
-		myStream = (PdbStream)new ZLFile(myFilePath).getInputStream();
-		if (myStream == null /*|| !myStream.open()*/) {
+		final PdbStream stream = new PluckerTextStream(new ZLFile(myFilePath));
+		myStream = stream;
+		if (!stream.open()) {
 			return false;
 		}
 
 		PdbHeader header = new PdbHeader();
-		if (!header.read(myStream)) {
-			myStream.close();
+		if (!header.read(stream)) {
+			stream.close();
 			return false;
 		}
 
 		setMainTextModel();
 		myFont = FontType.FT_REGULAR;
 
-		for (Iterator it = header.Offsets.iterator(); it.hasNext(); ) {
+		for (int i = 0; i < header.Offsets.length; ++i) {
 			int currentOffset = ((PdbStream)myStream).offset();
-			Integer pit = (Integer)it.next();
+			int pit = header.Offsets[i];
 			if (currentOffset > pit) {
 				break;
 			}
@@ -77,7 +70,7 @@ public class PluckerBookReader extends BookReader {
 			if (((PdbStream)myStream).offset() != pit) {
 				break;
 			}
-			int recordSize = ((pit != header.Offsets.size() - 1) ? (Integer)it.next() : ((PdbStream)myStream).sizeOfOpened()) - pit;
+			int recordSize = 25;//((pit != header.Offsets.size() - 1) ? (Integer)it.next() : ((PdbStream)myStream).sizeOfOpened()) - pit;
 			readRecord(recordSize);
 		}
 		myStream.close();
@@ -103,28 +96,28 @@ public class PluckerBookReader extends BookReader {
 	}
 
 	private class FontType {
-			public static final int FT_REGULAR = 0;
-			public static final int FT_H1 = 1;
-			public static final int FT_H2 = 2;
-			public static final int FT_H3 = 3;
-			public static final int FT_H4 = 4;
-			public static final int FT_H5 = 5;
-			public static final int FT_H6 = 6;
-			public static final int FT_BOLD = 7;
-			public static final int FT_TT = 8;
-			public static final int FT_SMALL = 9;
-			public static final int FT_SUB = 10;
-			public static final int FT_SUP = 11;
-		};
+		public static final int FT_REGULAR = 0;
+		public static final int FT_H1 = 1;
+		public static final int FT_H2 = 2;
+		public static final int FT_H3 = 3;
+		public static final int FT_H4 = 4;
+		public static final int FT_H5 = 5;
+		public static final int FT_H6 = 6;
+		public static final int FT_BOLD = 7;
+		public static final int FT_TT = 8;
+		public static final int FT_SMALL = 9;
+		public static final int FT_SUB = 10;
+		public static final int FT_SUP = 11;
+	};
 
 	private	void readRecord(int recordSize) throws IOException {
-		short uid = (short)PdbUtil.readUnsignedShort(myStream);
+		short uid = PdbUtil.readShort(myStream);
 		if (uid == 1) {
-			myCompressionVersion = (short)PdbUtil.readUnsignedShort(myStream );
+			myCompressionVersion = PdbUtil.readShort(myStream );
 		} else {
-			short paragraphs = (short)PdbUtil.readUnsignedShort(myStream);
+			short paragraphs = PdbUtil.readShort(myStream);
 
-			short size = (short)PdbUtil.readUnsignedShort(myStream);
+			short size = PdbUtil.readShort(myStream);
             //TODO ??????  
 			int type = (int)myStream.read();
 
@@ -136,7 +129,7 @@ public class PluckerBookReader extends BookReader {
 				{
 					ArrayList/*<Integer>*/ pars = new ArrayList();
 					for (int i = 0; i < paragraphs; ++i) {
-						short pSize = (short)PdbUtil.readUnsignedShort(myStream);
+						short pSize = PdbUtil.readShort(myStream);
 						pars.add(pSize);
 						myStream.skip(2);
 					}
@@ -200,7 +193,7 @@ public class PluckerBookReader extends BookReader {
 					/*PluckerMultiImage image = new PluckerMultiImage(rows, columns, getModel().getImageMap());
 					for (int i = 0; i < size / 2 - 2; ++i) {
 						short us = (short)myStream.read();
-						PdbUtil.readUnsignedShort(myStream, us);
+						PdbUtil.readShort(myStream, us);
 						image.addId(fromNumber(us));
 					}
 					addImage(fromNumber(uid), image);

@@ -29,6 +29,7 @@ import org.geometerplus.fbreader.description.BookDescription.WritableBookDescrip
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
 import org.geometerplus.fbreader.formats.html.HtmlPlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
+import org.geometerplus.fbreader.formats.plucker.PluckerPlugin;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
@@ -129,10 +130,10 @@ public abstract class FormatPlugin {
 			if (ourInstance == null) {
 				ourInstance = new PluginCollection();
 				ourInstance.myPlugins.add(new FB2Plugin());
+				ourInstance.myPlugins.add(new PluckerPlugin());
 				//ourInstance->myPlugins.push_back(new DocBookPlugin());
 				//ourInstance.myPlugins.add(new HtmlPlugin());
 				/*ourInstance.myPlugins.add(new TxtPlugin());
-				ourInstance.myPlugins.add(new PluckerPlugin());
 				ourInstance.myPlugins.add(new PalmDocPlugin());
 				ourInstance.myPlugins.add(new MobipocketPlugin());
 				ourInstance.myPlugins.add(new ZTXTPlugin());

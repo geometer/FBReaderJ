@@ -37,12 +37,12 @@ public class PluckerTextStream extends PdbStream {
 		return 0;
 	}
 	
-	public	boolean open() throws IOException {
+	public boolean open() throws IOException {
 		if (!super.open()) {
 			return false;
 		}
 
-		myCompressionVersion = (short)PdbUtil.readUnsignedShort(myBase);
+		myCompressionVersion = PdbUtil.readShort(myBase);
 
 		myBuffer = new byte[65536];
 		myFullBuffer = new byte[65536];
@@ -61,18 +61,20 @@ public class PluckerTextStream extends PdbStream {
 
 	protected boolean fillBuffer() {
 		while (myBufferOffset == myBufferLength) {
-			if (myRecordIndex + 1 > myHeader.Offsets.size() - 1) {
+			if (myRecordIndex + 1 > myHeader.Offsets.length - 1) {
 				return false;
 			}
 			++myRecordIndex;
-			int currentOffset = (Integer)myHeader.Offsets.get(myRecordIndex);
+			int currentOffset = myHeader.Offsets[myRecordIndex];
+			/*
 			if (currentOffset < ((PdbStream)myBase).offset()) {
 				return false;
 			}
-			//((PdbStream)myBase).seek(currentOffset, true);
+			*/
+			//myBase.skip(currentOffset - offset());
 			int nextOffset =
-				(myRecordIndex + 1 < myHeader.Offsets.size()) ?
-						(Integer)myHeader.Offsets.get(myRecordIndex + 1) : ((PdbStream)myBase).sizeOfOpened();
+				(myRecordIndex + 1 < myHeader.Offsets.length) ?
+						myHeader.Offsets[myRecordIndex + 1] : ((PdbStream)myBase).sizeOfOpened();
 			if (nextOffset < currentOffset) {
 				return false;
 			}
@@ -89,23 +91,19 @@ public class PluckerTextStream extends PdbStream {
 	private void processRecord(int recordSize) throws IOException {
 		myBase.skip(2);
 
-		short paragraphs;
-		paragraphs = (short)PdbUtil.readUnsignedShort(myBase);
-
-		short size = (short)PdbUtil.readUnsignedShort(myBase);
+		short paragraphs = PdbUtil.readShort(myBase);
+		short size = PdbUtil.readShort(myBase);
 		
-		char type = 0; 
-		//myBase.read((char*)&type, 0, 1);
+		char type = (char)myBase.read(); 
 		if (type > 1) { // this record is not text record
 			return;
 		}
 
 		myBase.skip(1);
 
-		ArrayList/*<Integer>*/ pars = new ArrayList();
+		final short[] pars = new short[paragraphs];
 		for (int i = 0; i < paragraphs; ++i) {
-			short pSize = (short)PdbUtil.readUnsignedShort(myBase);
-			pars.add(pSize);
+			pars[i] = PdbUtil.readShort(myBase);
 			myBase.skip(2);
 		}
 
@@ -127,9 +125,9 @@ public class PluckerTextStream extends PdbStream {
 			int start = 0;
 			int end = 0;
 
-			for (Iterator it = pars.iterator(); it.hasNext();) {
+			for (int i = 0; i < paragraphs; ++i) {
 				start = end;
-				end = start + (Integer)it.next();
+				end = start + pars[i];
 				if (end > myFullBuffer[size]) {
 					break;
 				}

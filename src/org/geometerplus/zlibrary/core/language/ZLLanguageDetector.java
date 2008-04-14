@@ -28,6 +28,10 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageMatcher.ZLWordBasedMatc
 import org.geometerplus.zlibrary.core.util.ZLUnicodeUtil;
 
 public class ZLLanguageDetector {
+	private ArrayList myUtf8Matchers = new ArrayList();
+	private	ArrayList myNonUtf8Matchers = new ArrayList();
+	//private	ArrayList<ZLChineseMatcher> myChineseMatchers;
+
 	// 0: no break
 	// 1: break and skip
 	// 2: skip word
@@ -61,17 +65,17 @@ public class ZLLanguageDetector {
 		};
 
 	public ZLLanguageDetector() {
-		ZLDir dir = ZLLanguageList.patternsDirectory();
+		final ZLDir dir = ZLLanguageList.patternsDirectory();
 		if (dir != null) {
-			ArrayList/*<String>*/ fileNames = new ArrayList();
-			fileNames = dir.collectFiles();
-			for (Iterator it = fileNames.iterator(); it.hasNext(); ) {
-				String itstr = (String)it.next();
-				final int index = itstr.indexOf('_');
+			final ArrayList fileNames = dir.collectFiles();
+			final int fileNamesLen = fileNames.size();
+			for (int i = 0; i < fileNamesLen; ++i) {
+				final String name = (String)fileNames.get(i);
+				final int index = name.indexOf('_');
 				if (index != -1) {
-					final String language = itstr.substring(0, index);
-					final String encoding = itstr.substring(index + 1);
-					ZLWordBasedMatcher matcher = new ZLLanguagePatternBasedMatcher(dir.getItemPath(itstr), new LanguageInfo(language, encoding));
+					final String language = name.substring(0, index);
+					final String encoding = name.substring(index + 1);
+					ZLWordBasedMatcher matcher = new ZLLanguagePatternBasedMatcher(dir.getItemPath(name), new LanguageInfo(language, encoding));
 					if (encoding == ZLLanguageMatcher.UTF8_ENCODING_NAME) {
 						myUtf8Matchers.add(matcher);
 					} else if (encoding == "US-ASCII") {
@@ -188,8 +192,4 @@ public class ZLLanguageDetector {
 		}
 		return info;
 	}
-
-	private ArrayList<ZLWordBasedMatcher> myUtf8Matchers;
-	private	ArrayList<ZLWordBasedMatcher> myNonUtf8Matchers;
-	//private	ArrayList<ZLChineseMatcher> myChineseMatchers;
 }

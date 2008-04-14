@@ -23,30 +23,45 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.geometerplus.fbreader.formats.pdb.PdbUtil.PdbHeader;
+import org.geometerplus.fbreader.formats.pdb.PdbUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class PdbStream extends InputStream {
+	protected final InputStream myBase;
+	private	int myOffset;
+	protected	final PdbHeader myHeader = new PdbHeader();
+	protected	byte[] myBuffer;
+
+	protected	short myBufferLength;
+	protected	short myBufferOffset;
+
 	public PdbStream(ZLFile file) {
-		myBuffer = null;
+		InputStream base;
+		try {
+			base = file.getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+			base = null;
+		}
+		myBase = base;
 	}
 	
-	public  int read(byte[] buffer,int offset, int maxSize) {
-        int realSize = 0;
-        while (realSize < maxSize) {
-             if (!fillBuffer()) {
-                  break;
-             }
-             int size = Math.min((maxSize - realSize), (myBufferLength - myBufferOffset));
-             if (size > 0) {
-                  System.arraycopy(myBuffer, myBufferOffset, buffer, offset + realSize, size);
-                  realSize += size;
-                  myBufferOffset += size;
-             }
-        }
-        myOffset += realSize;
-        return realSize;
-   }
+	public int read(byte[] buffer,int offset, int maxSize) {
+		int realSize = 0;
+		while (realSize < maxSize) {
+			if (!fillBuffer()) {
+				break;
+			}
+			int size = Math.min((maxSize - realSize), (myBufferLength - myBufferOffset));
+			if (size > 0) {
+				System.arraycopy(myBuffer, myBufferOffset, buffer, offset + realSize, size);
+				realSize += size;
+				myBufferOffset += size;
+			}
+		}
+		myOffset += realSize;
+		return realSize;
+	}
 	/*public	int read(byte[] buffer,int offset, int maxSize) {
 		int realSize = 0;
 		while (realSize < maxSize) {
@@ -69,13 +84,12 @@ public abstract class PdbStream extends InputStream {
 		return realSize;
 	}*/
 	
-	public	boolean open() throws IOException {
-		close();
-		if (myBase==null /*|| !myBase.open()*/ || !myHeader.read(myBase)) {
+	public boolean open() throws IOException {
+		if ((myBase == null) || !myHeader.read(myBase)) {
 			return false;
 		}
 
-		myBase.skip(((Integer)myHeader.Offsets.get(0))/*, true*/);
+		myBase.skip((myHeader.Offsets[0])/*, true*/);
 
 		myBufferLength = 0;
 		myBufferOffset = 0;
@@ -85,7 +99,7 @@ public abstract class PdbStream extends InputStream {
 		return true;
 	}
 	
-	public  void close() throws IOException {
+	public void close() throws IOException {
 		if (myBase != null) {
 				myBase.close();
 		}
@@ -116,12 +130,4 @@ public abstract class PdbStream extends InputStream {
 	}
 
 	protected abstract boolean fillBuffer();
-
-	protected InputStream myBase;
-	protected	int myOffset;
-	protected	PdbHeader myHeader;
-	protected	byte[] myBuffer;
-
-	protected	short myBufferLength;
-	protected	short myBufferOffset;
 }
