@@ -19,21 +19,19 @@
 
 package org.geometerplus.fbreader.formats.pdb;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.geometerplus.fbreader.formats.pdb.PdbUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class PdbStream extends InputStream {
 	protected final InputStream myBase;
-	private	int myOffset;
-	protected	final PdbHeader myHeader = new PdbHeader();
-	protected	byte[] myBuffer;
+	private int myOffset;
+	public final PdbHeader myHeader = new PdbHeader();
+	protected byte[] myBuffer;
 
-	protected	short myBufferLength;
-	protected	short myBufferOffset;
+	protected short myBufferLength;
+	protected short myBufferOffset;
 
 	public PdbStream(ZLFile file) {
 		InputStream base;
@@ -62,7 +60,7 @@ public abstract class PdbStream extends InputStream {
 		myOffset += realSize;
 		return realSize;
 	}
-	/*public	int read(byte[] buffer,int offset, int maxSize) {
+	/*public int read(byte[] buffer,int offset, int maxSize) {
 		int realSize = 0;
 		while (realSize < maxSize) {
 			if (!fillBuffer()) {
@@ -89,7 +87,7 @@ public abstract class PdbStream extends InputStream {
 			return false;
 		}
 
-		myBase.skip((myHeader.Offsets[0])/*, true*/);
+		myBase.skip(myHeader.Offsets[0] - 78 - 8 * myHeader.Offsets.length);
 
 		myBufferLength = 0;
 		myBufferOffset = 0;
@@ -108,9 +106,9 @@ public abstract class PdbStream extends InputStream {
 		}
 	}
 
-	public	void skip(int offset) throws IOException {
+	public void skip(int offset) throws IOException {
 		if (offset > 0) {
-			read(null,0, offset);
+			read(null, 0, offset);
 		} else if (offset < 0) {
 			offset += this.offset();
 			open();
@@ -120,11 +118,11 @@ public abstract class PdbStream extends InputStream {
 		}
 	}
 	
-	public	int offset() {
+	public int offset() {
 		return myOffset;
 	}
 	
-	public	int sizeOfOpened() {
+	public int sizeOfOpened() {
 		// TODO: implement
 		return 0;
 	}

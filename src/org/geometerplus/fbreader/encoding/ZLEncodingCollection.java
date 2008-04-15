@@ -149,8 +149,6 @@ public class ZLEncodingCollection {
 		}
 
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			System.out.println("reading");
-			
 			if (GROUP.equals(tag)) {
 				final String name = attributes.getValue(NAME);
 				if (name != null) {

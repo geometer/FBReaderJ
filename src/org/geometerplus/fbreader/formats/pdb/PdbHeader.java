@@ -32,29 +32,34 @@ public class PdbHeader {
 	public boolean read(InputStream stream) throws IOException {
 		final byte[] buffer = new byte[32];
 		if (stream.read(buffer, 0, 32) != 32) {
+			System.err.println("way 0");
 			return false;
 		}
 		DocName = new String(buffer);
-		Flags = PdbUtil.readUnsignedShort(stream);
+		Flags = PdbUtil.readShort(stream);
 
 		stream.skip(26);
 		
 		if (stream.read(buffer, 0, 8) != 8) {
+			System.err.println("way 1");
 			return false;
 		}
 		Id = new String(buffer, 0, 8);
 
 		stream.skip(8);
 
-		int numRecords = PdbUtil.readUnsignedShort(stream);
+		int numRecords = PdbUtil.readShort(stream);
 		if (numRecords <= 0) {
+			System.err.println(numRecords);
+			System.err.println("way 2");
 			return false;
 		}
 		Offsets = new int[numRecords];
 
 		for (int i = 0; i < numRecords; ++i) {
-			Offsets[i] = stream.read();
+			Offsets[i] = PdbUtil.readInt(stream);
 			if (stream.skip(4) != 4) {
+			System.err.println("way 3");
 				return false;
 			}
 		}

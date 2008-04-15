@@ -28,6 +28,10 @@ import org.geometerplus.fbreader.formats.pdb.PdbUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerTextStream extends PdbStream {
+	private short myCompressionVersion;
+	private	byte[] myFullBuffer;
+	private	int myRecordIndex;
+
 	public PluckerTextStream(ZLFile file) {
 		super(file);
 		myFullBuffer = null;
@@ -66,15 +70,13 @@ public class PluckerTextStream extends PdbStream {
 			}
 			++myRecordIndex;
 			int currentOffset = myHeader.Offsets[myRecordIndex];
-			/*
-			if (currentOffset < ((PdbStream)myBase).offset()) {
-				return false;
-			}
-			*/
-			//myBase.skip(currentOffset - offset());
+			//if (currentOffset < myBase.offset()) {
+			//	return false;
+			//}
+			//((PdbStream)myBase).seek(currentOffset, true);
 			int nextOffset =
 				(myRecordIndex + 1 < myHeader.Offsets.length) ?
-						myHeader.Offsets[myRecordIndex + 1] : ((PdbStream)myBase).sizeOfOpened();
+						myHeader.Offsets[myRecordIndex + 1] : 0;//myBase.sizeOfOpened();
 			if (nextOffset < currentOffset) {
 				return false;
 			}
@@ -162,8 +164,4 @@ public class PluckerTextStream extends PdbStream {
 			myBufferLength += end - textStart;
 		}
 	}
-
-	private short myCompressionVersion;
-	private	byte[] myFullBuffer;
-	private	int myRecordIndex;
 }

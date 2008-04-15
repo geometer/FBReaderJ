@@ -24,8 +24,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.zip.DataFormatException;
+import java.util.zip.Inflater;
 
 import org.geometerplus.fbreader.bookmodel.*;
+import org.geometerplus.fbreader.encoding.*;
+import org.geometerplus.fbreader.formats.EncodedTextReader;
 import org.geometerplus.fbreader.formats.pdb.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -33,44 +37,64 @@ import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.model.impl.*;
 
 public class PluckerBookReader extends BookReader {
+	private final String myFilePath;
+	private PdbInputStream myStream;
+	private	int myFont;
+	private	char[] myCharBuffer;
+	private	String myConvertedTextBuffer;
+	private	boolean myParagraphStarted = false;
+	private	boolean myBufferIsEmpty;
+	private	ZLTextForcedControlEntry myForcedEntry;
+	private	final ArrayList/*<std::pair<FBTextKind,bool> >*/ myDelayedControls = new ArrayList();
+	private	final ArrayList/*<std::string> */myDelayedHyperlinks = new ArrayList();
+	private	short myCompressionVersion;
+	private	char myBytesToSkip;
+
+	private	final ArrayList/*<std::pair<int, int> >*/ myReferencedParagraphs = new ArrayList();
+	private	final HashMap/*<int, std::vector<int> >*/ myParagraphMap = new HashMap();
+	private	ArrayList/*<Integer>*/ myParagraphVector = new ArrayList(); //на всякий случай
+	private	boolean myParagraphStored;
+	
+	private final ZLEncodingConverter myConverter;
+	
 	public PluckerBookReader(String filePath, BookModel model, String encoding){
-		super(model);
-		//, EncodedTextReader = encoding, 
-		myFilePath = filePath; 
-		myFont = FontType.FT_REGULAR;
-		myCharBuffer = new char[65535];
-		myForcedEntry = null;
+		 super(model);
+		 myConverter = new EncodedTextReader(encoding).getConverter(); 
+		 myFilePath = filePath; 
+		 System.out.println(filePath + "  " + encoding);
+		 myFont = FontType.FT_REGULAR;
+	     myCharBuffer = new char[65535];
+	     myForcedEntry = null;
+
 	}
 
 	public	boolean readDocument() throws IOException {
-		final PdbStream stream = new PluckerTextStream(new ZLFile(myFilePath));
-		myStream = stream;
-		if (!stream.open()) {
-			return false;
-		}
+		System.out.println("reading document");
+		myStream = new PdbInputStream(new ZLFile(myFilePath));
 
 		PdbHeader header = new PdbHeader();
-		if (!header.read(stream)) {
-			stream.close();
+		if (!header.read(myStream)) {
+			myStream.close();
+			System.out.println("reading stream null");
 			return false;
 		}
 
 		setMainTextModel();
 		myFont = FontType.FT_REGULAR;
 
-		for (int i = 0; i < header.Offsets.length; ++i) {
-			int currentOffset = ((PdbStream)myStream).offset();
-			int pit = header.Offsets[i];
+		for (int index = 0; index < header.Offsets.length; ++index) {
+			int currentOffset = myStream.offset();
+			int pit = header.Offsets[index];
 			if (currentOffset > pit) {
 				break;
 			}
 			//myStream.seek(pit - currentOffset, false);
 			myStream.skip(pit - currentOffset);
 			
-			if (((PdbStream)myStream).offset() != pit) {
+			if (myStream.offset() != pit) {
 				break;
 			}
-			int recordSize = 25;//((pit != header.Offsets.size() - 1) ? (Integer)it.next() : ((PdbStream)myStream).sizeOfOpened()) - pit;
+			int recordSize = ((index != header.Offsets.length - 1) ? header.Offsets[index + 1] : myStream.sizeOfOpened()) - pit;
 			readRecord(recordSize);
 		}
 		myStream.close();
@@ -96,59 +120,88 @@ public class PluckerBookReader extends BookReader {
 	}
 
 	private class FontType {
-		public static final int FT_REGULAR = 0;
-		public static final int FT_H1 = 1;
-		public static final int FT_H2 = 2;
-		public static final int FT_H3 = 3;
-		public static final int FT_H4 = 4;
-		public static final int FT_H5 = 5;
-		public static final int FT_H6 = 6;
-		public static final int FT_BOLD = 7;
-		public static final int FT_TT = 8;
-		public static final int FT_SMALL = 9;
-		public static final int FT_SUB = 10;
-		public static final int FT_SUP = 11;
-	};
+			public static final int FT_REGULAR = 0;
+			public static final int FT_H1 = 1;
+			public static final int FT_H2 = 2;
+			public static final int FT_H3 = 3;
+			public static final int FT_H4 = 4;
+			public static final int FT_H5 = 5;
+			public static final int FT_H6 = 6;
+			public static final int FT_BOLD = 7;
+			public static final int FT_TT = 8;
+			public static final int FT_SMALL = 9;
+			public static final int FT_SUB = 10;
+			public static final int FT_SUP = 11;
+		};
 
 	private	void readRecord(int recordSize) throws IOException {
-		short uid = PdbUtil.readShort(myStream);
+		System.out.println("reading record");
+		int uid = PdbUtil.readShort(myStream);
 		if (uid == 1) {
 			myCompressionVersion = PdbUtil.readShort(myStream );
 		} else {
-			short paragraphs = PdbUtil.readShort(myStream);
+			int paragraphs = PdbUtil.readShort(myStream);
+			System.out.println("par "+paragraphs);
 
-			short size = PdbUtil.readShort(myStream);
+			int size = PdbUtil.readShort(myStream);
             //TODO ??????  
-			int type = (int)myStream.read();
+			int type = myStream.read();
 
-			int flags = (int)myStream.read();
+			int flags = myStream.read();
 
+			System.out.println("type " + type);
+			System.out.println("Compression " + myCompressionVersion);
 			switch (type) {
 				case 0: // text (TODO: found sample file and test this code)
 				case 1: // compressed text
 				{
 					ArrayList/*<Integer>*/ pars = new ArrayList();
 					for (int i = 0; i < paragraphs; ++i) {
-						short pSize = PdbUtil.readShort(myStream);
+						int pSize = PdbUtil.readShort(myStream);
 						pars.add(pSize);
 						myStream.skip(2);
 					}
 
 					boolean doProcess = false;
-					if (type == 0) {
-						
-						doProcess = myStream.read(myCharBuffer.toString().getBytes(), 0, (int)size) == size;
+					if (type == 0) {//?
+						byte[] buf = new byte[size];
+						doProcess = myStream.read(buf, 0, (int)size) == size;
+						if (doProcess) {
+							myCharBuffer = new String(buf).toCharArray();
+						}
 					} else if (myCompressionVersion == 1) {
-						//doProcess =
-							//DocDecompressor().decompress(myStream, myCharBuffer, recordSize - 8 - 4 * paragraphs, size) == size;
+						byte[] buf = new byte[size];
+						doProcess =
+							DocDecompressor.decompress(myStream, buf, recordSize - 8 - 4 * paragraphs) == size;
+						if (doProcess) {
+							myCharBuffer = new String(buf).toCharArray();
+						}
 					} else if (myCompressionVersion == 2) {
-						myStream.skip(2);
+			//			myStream.skip(2);
+						System.out.println("input size = " + (recordSize - 10 - 4 * paragraphs));
+						System.out.println("size = " + size);
+						byte input [] = new byte[(int) (recordSize - 10 - 4 * paragraphs)];
+						final int inputSize = myStream.read(input);
+						System.out.println("inputsize = " + inputSize);
+						Inflater decompressor = new Inflater();
+						decompressor.setInput(input, 0, inputSize);
+						byte output [] = new byte[30000];
+						try {
+							doProcess = decompressor.inflate(output) == size;
+							decompressor.end();
+							myCharBuffer = new String(output, 0, size).toCharArray();
+						} catch (DataFormatException e) {
+							// TODO Auto-generated catch block
+						//	e.printStackTrace();
+							System.out.println(e.getMessage());
+						}
 						//doProcess =
 							//ZLZDecompressor(recordSize - 10 - 4 * paragraphs).
 								//decompress(myStream, myCharBuffer, size) == size;
 					}
 					if (doProcess) {
 						addHyperlinkLabel(fromNumber(uid));
+						myParagraphMap.put(uid, new ArrayList());
 						myParagraphVector = (ArrayList)myParagraphMap.get(uid);
 						processTextRecord(size, pars);
 						if ((flags & 0x1) == 0) {
@@ -206,14 +259,14 @@ public class PluckerBookReader extends BookReader {
 		}	
 	}
 	
-    private	void processTextRecord(int size, ArrayList<Integer> pars) {
+    private	void processTextRecord(int size, ArrayList/*<Integer>*/ pars) {
     	int start = 0;
     	int end = 0;
 
     	for (Iterator it = pars.iterator(); it.hasNext();) {
     		start = end;
     		end = start + (Integer)it.next();
-    		if (end > myCharBuffer[size]) {
+    		if (end > size) {
     			return;
     		}
     		myParagraphStored = false;
@@ -238,8 +291,8 @@ public class PluckerBookReader extends BookReader {
     			functionFlag = true;
     			if (ptr > textStart) {
     				safeBeginParagraph();
-    				myConvertedTextBuffer = "";//.erase();
-    				//myConverter.convert(myConvertedTextBuffer, textStart, ptr);
+    	//			myConvertedTextBuffer = "";//.erase();
+    				myConvertedTextBuffer = myConverter.convert(data, textStart, ptr);
     				addData(myConvertedTextBuffer.toCharArray());
     				myBufferIsEmpty = false;
     			}
@@ -261,15 +314,15 @@ public class PluckerBookReader extends BookReader {
     			if (data[ptr] == 0xA0) {
     				data[ptr] = 0x20;
     			}
-    			if (!myParagraphStarted && (textStart == ptr) /*&& isspace(data[ptr])*/) {
+    			if (!myParagraphStarted && (textStart == ptr) && (data[ptr] == ' ')) {
     				++textStart;
     			}
     		}
     	}
     	if (end > textStart) {
     		safeBeginParagraph();
-    		myConvertedTextBuffer = "";//erase();
-    		//myConverter.convert(myConvertedTextBuffer, textStart, end);
+    	//	myConvertedTextBuffer = "";//erase();
+    		myConvertedTextBuffer = myConverter.convert(data, textStart, end);
     		addData(myConvertedTextBuffer.toCharArray());
     		myBufferIsEmpty = false;
     	}
@@ -425,17 +478,19 @@ public class PluckerBookReader extends BookReader {
     	if (myParagraphStarted) {
     		addHyperlinkControl(FBTextKind.INTERNAL_HYPERLINK, id);
     	} else {
-    		myDelayedHyperlinks.add(myDelayedHyperlinks.size()-1, (id));
+    		myDelayedHyperlinks.add(id);
     	}
     }
     
     private void safeBeginParagraph() {
+    	System.out.println("safe begin par ");
     	if (!myParagraphStarted) {
     		myParagraphStarted = true;
     		myBufferIsEmpty = true;
+    		System.out.println("Calling begin text par");
     		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
     		if (!myParagraphStored) {
-    			myParagraphVector.add(myParagraphVector.size()-1, getModel().getBookTextModel().getParagraphsNumber() - 1);
+    			myParagraphVector.add(getModel().getBookTextModel().getParagraphsNumber() - 1);
     			myParagraphStored = true;
     		}
     		for (Iterator it = myDelayedControls.iterator(); it.hasNext(); ) {
@@ -454,11 +509,13 @@ public class PluckerBookReader extends BookReader {
     	}
     }
     private void safeEndParagraph() {
+   // 	System.out.println("safe end par ");
     	if (myParagraphStarted) {
     		if (myBufferIsEmpty) {
     			final String SPACE = " ";
     			addData(SPACE.toCharArray());
     		}
+    		System.out.println("Calling end par");
     		endParagraph();
     		myParagraphStarted = false;
     	}
@@ -495,24 +552,6 @@ public class PluckerBookReader extends BookReader {
     		exitTitle();
     	}
     }
-
-	private String myFilePath;
-	private	InputStream myStream;
-	private	int myFont;
-	private	char[] myCharBuffer;
-	private	String myConvertedTextBuffer;
-	private	boolean myParagraphStarted;
-	private	boolean myBufferIsEmpty;
-	private	ZLTextForcedControlEntry myForcedEntry;
-	private	ArrayList/*<std::pair<FBTextKind,bool> >*/ myDelayedControls;
-	private	ArrayList/*<std::string> */myDelayedHyperlinks;
-	private	short myCompressionVersion;
-	private	char myBytesToSkip;
-
-	private	ArrayList/*<std::pair<int, int> >*/ myReferencedParagraphs;
-	private	HashMap/*<int, std::vector<int> >*/ myParagraphMap;
-	private	ArrayList<Integer> myParagraphVector;
-	private	boolean myParagraphStored;
 	
 	static private class Pair {
 		public Object myFirst;

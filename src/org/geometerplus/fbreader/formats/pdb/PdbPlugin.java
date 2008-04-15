@@ -37,7 +37,6 @@ public abstract class PdbPlugin extends FormatPlugin {
 		}
 
 		String fileName = file.getPath();
-		System.err.println("fileName = " + fileName);
 		int index = fileName.indexOf(':');
 		ZLFile baseFile = (index == -1) ? file : new ZLFile(fileName.substring(0, index));
 		boolean upToDate = BookDescriptionUtil.checkInfo(baseFile);
@@ -47,7 +46,7 @@ public abstract class PdbPlugin extends FormatPlugin {
 		if ((palmType.length() != 8) || !upToDate) {
 			byte[] id = new byte[8];
 			try {
-				InputStream stream = file.getInputStream();
+				final InputStream stream = file.getInputStream();
 				if (stream == null) {
 					return null;
 				}

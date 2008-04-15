@@ -24,7 +24,7 @@ import java.io.InputStream;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.formats.pdb.PdbPlugin;
+import org.geometerplus.fbreader.formats.pdb.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerPlugin extends PdbPlugin {
@@ -33,25 +33,24 @@ public class PluckerPlugin extends PdbPlugin {
 	}
 	
 	public boolean acceptsFile(ZLFile file) {		
-		System.err.println("fileType = " + fileType(file));
 		return "DataPlkr".equals(fileType(file));
 	}
 	
 	public boolean readDescription(String path, BookDescription description) {
 		ZLFile file = new ZLFile(path);
 
-		InputStream stream = null;
 		try {
-			stream = file.getInputStream();
-			detectEncodingAndLanguage(description, stream);
+			PdbStream stream = new PluckerTextStream(file);
+			if (stream.open()) {
+				//detectEncodingAndLanguage(description, stream);
+				stream.close();
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
-		if (description.getEncoding().length() == 0) {
-			return false;
-		}
+		//if (description.getEncoding().length() == 0) {
+		//	return false;
+		//}
 
 		return true;
 	}

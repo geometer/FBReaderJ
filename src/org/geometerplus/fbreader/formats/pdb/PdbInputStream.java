@@ -7,11 +7,11 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PdbInputStream extends InputStream {
 	private final InputStream myBase;
-	private long myOffset = 0;
-	private final long mySize;
+	private int myOffset = 0;
+	private final int mySize;
 	
 	public PdbInputStream(ZLFile file) throws IOException {
-		mySize = file.size();
+		mySize = (int)file.size();
 		myBase = file.getInputStream();
 	}
 	
@@ -53,15 +53,11 @@ public class PdbInputStream extends InputStream {
 		super.reset();
 	}
 
-	public long skip(long n) throws IOException {
-		return super.skip(n);
-	}
-
-	public long offset() {
+	public int offset() {
 		return myOffset;
 	}
 	
-	public long sizeOfOpened() {
+	public int sizeOfOpened() {
 		return mySize - myOffset;
 	}
 }

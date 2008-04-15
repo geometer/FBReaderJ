@@ -21,43 +21,28 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 public class PdbUtil {
 	public static short readShort(InputStream stream) {
-		byte[] tmp = new byte[2];
+		final byte[] tmp = new byte[2];
 		try {
 			stream.read(tmp, 0, 2);
 		} catch (IOException e) {
 			return -1;
 		}
-		return (short)(tmp[1] + (tmp[0] << 8));
+		return (short)((tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8));
 	}
 
-	public static long readUnsignedLong(InputStream stream) {
-		byte []readBuffer = new byte[8];
-		try {
-			stream.read(readBuffer, 0, 8);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return (((long)readBuffer[0] << 56) +
-                ((long)(readBuffer[1] & 255) << 48) +
-          ((long)(readBuffer[2] & 255) << 40) +
-                ((long)(readBuffer[3] & 255) << 32) +
-                ((long)(readBuffer[4] & 255) << 24) +
-                ((readBuffer[5] & 255) << 16) +
-                ((readBuffer[6] & 255) <<  8) +
-                ((readBuffer[7] & 255) <<  0));
-		
-		/*byte []tmp = new byte[4];
+	public static int readInt(InputStream stream) {
+		final byte[] tmp = new byte[4];
 		try {
 			stream.read(tmp, 0, 4);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return -1;
 		}
-		return tmp[3] + tmp[2]*256 +tmp[1] * 256^2 +tmp[0] * 256^3;*/
+		return  (tmp[0] << 24) +
+					 ((tmp[1] & 0xFF) << 16) +
+					 ((tmp[2] & 0xFF) << 8) +
+						(tmp[3] & 0xFF);
 	}
 }
