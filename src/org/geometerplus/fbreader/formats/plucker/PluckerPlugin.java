@@ -42,15 +42,15 @@ public class PluckerPlugin extends PdbPlugin {
 		try {
 			PdbStream stream = new PluckerTextStream(file);
 			if (stream.open()) {
-				//detectEncodingAndLanguage(description, stream);
+				detectEncodingAndLanguage(description, stream);
 				stream.close();
 			}
 		} catch (IOException e) {
 		}
 		
-		//if (description.getEncoding().length() == 0) {
-		//	return false;
-		//}
+		if (description.getEncoding().length() == 0) {
+			return false;
+		}
 
 		return true;
 	}

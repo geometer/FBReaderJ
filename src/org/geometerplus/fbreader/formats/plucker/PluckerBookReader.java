@@ -58,17 +58,16 @@ public class PluckerBookReader extends BookReader {
 	private final ZLEncodingConverter myConverter;
 	
 	public PluckerBookReader(String filePath, BookModel model, String encoding){
-		 super(model);
-		 myConverter = new EncodedTextReader(encoding).getConverter(); 
-		 myFilePath = filePath; 
-		 System.out.println(filePath + "  " + encoding);
-		 myFont = FontType.FT_REGULAR;
-	     myCharBuffer = new char[65535];
-	     myForcedEntry = null;
-
+		super(model);
+		myConverter = new EncodedTextReader(encoding).getConverter(); 
+		myFilePath = filePath; 
+		System.out.println(filePath + "  " + encoding);
+		myFont = FontType.FT_REGULAR;
+		myCharBuffer = new char[65535];
+		myForcedEntry = null;
 	}
 
-	public	boolean readDocument() throws IOException {
+	public boolean readDocument() throws IOException {
 		System.out.println("reading document");
 		myStream = new PdbInputStream(new ZLFile(myFilePath));
 
@@ -334,130 +333,129 @@ public class PluckerBookReader extends BookReader {
     }
     
     private	void processTextFunction(char[] ptr, int cur) {
-    	switch (ptr[cur]) {
-		case 0x08:
-			safeAddControl(FBTextKind.INTERNAL_HYPERLINK, false);
-			break;
-		case 0x0A:
-			safeAddHyperlinkControl(fromNumber(twoBytes(ptr, cur+ 1)));
-			break;
-		case 0x0C:
-		{
-			int sectionNum = twoBytes(ptr, cur + 1);
-			int paragraphNum = twoBytes(ptr, cur + 3);
-			safeAddHyperlinkControl(fromNumber(sectionNum) + '#' + fromNumber(paragraphNum));
-			myReferencedParagraphs.add(new Pair(sectionNum, paragraphNum));
-			break;
-		}
-		case 0x11:
-			changeFont((ptr[cur + 1]));
-			break;
-		case 0x1A:
-			safeBeginParagraph();
-			//addImageReference(fromNumber(twoBytes(ptr, cur + 1)));
-			break;
-		case 0x22:
-			if (!myParagraphStarted) {
-				if (myForcedEntry == null) {
-					myForcedEntry = ZLModelFactory.createForcedControlEntry();
+			switch (ptr[cur]) {
+				case 0x08:
+					safeAddControl(FBTextKind.INTERNAL_HYPERLINK, false);
+					break;
+				case 0x0A:
+					safeAddHyperlinkControl(fromNumber(twoBytes(ptr, cur+ 1)));
+					break;
+				case 0x0C:
+				{
+					int sectionNum = twoBytes(ptr, cur + 1);
+					int paragraphNum = twoBytes(ptr, cur + 3);
+					safeAddHyperlinkControl(fromNumber(sectionNum) + '#' + fromNumber(paragraphNum));
+					myReferencedParagraphs.add(new Pair(sectionNum, paragraphNum));
+					break;
 				}
-				myForcedEntry.setLeftIndent((short)ptr[cur + 1]);
-				myForcedEntry.setRightIndent((short)ptr[cur + 2]);
-			}
-			break;
-		case 0x29:
-			if (!myParagraphStarted) {
-				if (myForcedEntry == null) {
-					myForcedEntry = ZLModelFactory.createForcedControlEntry();
+				case 0x11:
+					changeFont((ptr[cur + 1]));
+					break;
+				case 0x1A:
+					safeBeginParagraph();
+					//addImageReference(fromNumber(twoBytes(ptr, cur + 1)));
+					break;
+				case 0x22:
+					if (!myParagraphStarted) {
+						if (myForcedEntry == null) {
+							myForcedEntry = ZLModelFactory.createForcedControlEntry();
+						}
+						myForcedEntry.setLeftIndent((short)ptr[cur + 1]);
+						myForcedEntry.setRightIndent((short)ptr[cur + 2]);
+					}
+					break;
+				case 0x29:
+					if (!myParagraphStarted) {
+						if (myForcedEntry == null) {
+							myForcedEntry = ZLModelFactory.createForcedControlEntry();
+						}
+						switch (ptr[cur + 1]) {
+							case 0: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_LEFT); break;
+							case 1: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_RIGHT); break;
+							case 2: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_CENTER); break;
+							case 3: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_JUSTIFY); break;
+						}
+					}
+					break;
+				case 0x33: // just break line instead of horizontal rule (TODO: draw horizontal rule?)
+					safeEndParagraph();
+					break;
+				case 0x38:
+					safeEndParagraph();
+					break;
+				case 0x40: 
+					safeAddControl(FBTextKind.EMPHASIS, true);
+					break;
+				case 0x48:
+					safeAddControl(FBTextKind.EMPHASIS, false);
+					break;
+				case 0x53: // color setting is ignored
+					break;
+				case 0x5C:
+					//addImageReference(fromNumber(twoBytes(ptr, cur + 3)));
+					break;
+				case 0x60: // underlined text is ignored
+					break;
+				case 0x68: // underlined text is ignored
+					break;
+				case 0x70: // strike-through text is ignored
+					break;
+				case 0x78: // strike-through text is ignored
+					break;
+				case 0x83: 
+				{
+					safeBeginParagraph();
+					addData(new char[] { (char)twoBytes(ptr, cur + 2) });
+					myBufferIsEmpty = false;
+					myBytesToSkip = ptr[cur+1];
+					break;
 				}
-				switch (ptr[cur + 1]) {
-					case 0: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_LEFT); break;
-					case 1: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_RIGHT); break;
-					case 2: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_CENTER); break;
-					case 3: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_JUSTIFY); break;
-				}
-			}
-			break;
-		case 0x33: // just break line instead of horizontal rule (TODO: draw horizontal rule?)
-			safeEndParagraph();
-			break;
-		case 0x38:
-			safeEndParagraph();
-			break;
-		case 0x40: 
-			safeAddControl(FBTextKind.EMPHASIS, true);
-			break;
-		case 0x48:
-			safeAddControl(FBTextKind.EMPHASIS, false);
-			break;
-		case 0x53: // color setting is ignored
-			break;
-		case 0x5C:
-			//addImageReference(fromNumber(twoBytes(ptr, cur + 3)));
-			break;
-		case 0x60: // underlined text is ignored
-			break;
-		case 0x68: // underlined text is ignored
-			break;
-		case 0x70: // strike-through text is ignored
-			break;
-		case 0x78: // strike-through text is ignored
-			break;
-		case 0x83: 
-		{
-			char[] utf8 = new char[4];
-			int len = 0;//ZLUnicodeUtil.ucs2ToUtf8(utf8, twoBytes(ptr, cur + 2));
-			safeBeginParagraph();
-			addData(new String(utf8).substring(len).toCharArray());
-			myBufferIsEmpty = false;
-			myBytesToSkip = ptr[cur+1];
-			break;
-		}
-		case 0x85: // TODO: process 4-byte unicode character
-			break;
-		case 0x8E: // custom font operations are ignored
-		case 0x8C:
-		case 0x8A:
-		case 0x88:
-			break;
-		case 0x90: // TODO: add table processing
-		case 0x92: // TODO: process table
-		case 0x97: // TODO: process table
-			break;
-		default: // this should be impossible
-			//std::cerr << "Oops... function #" << (int)(unsigned char)*ptr << "\n";
-			break;
+				case 0x85: // TODO: process 4-byte unicode character
+					break;
+				case 0x8E: // custom font operations are ignored
+				case 0x8C:
+				case 0x8A:
+				case 0x88:
+					break;
+				case 0x90: // TODO: add table processing
+				case 0x92: // TODO: process table
+				case 0x97: // TODO: process table
+					break;
+				default: // this should be impossible
+					//std::cerr << "Oops... function #" << (int)(unsigned char)*ptr << "\n";
+					break;
 	}	
     }
     
     private	void setFont(int font, boolean start) {
-    	switch (font) {
-		case FontType.FT_REGULAR:
-			break;
-		case FontType.FT_H1:
-		case FontType.FT_H2:
-		case FontType.FT_H3:
-		case FontType.FT_H4:
-		case FontType.FT_H5:
-		case FontType.FT_H6:
-			processHeader(font, start);
-			break;
-		case FontType.FT_BOLD:
-			safeAddControl(FBTextKind.BOLD, start);
-			break;
-		case FontType.FT_TT:
-			safeAddControl(FBTextKind.CODE, start);
-			break;
-		case FontType.FT_SMALL:
-			break;
-		case FontType.FT_SUB:
-			safeAddControl(FBTextKind.SUB, start);
-			break;
-		case FontType.FT_SUP:
-			safeAddControl(FBTextKind.SUP, start);
-			break;
+			switch (font) {
+				case FontType.FT_REGULAR:
+					break;
+				case FontType.FT_H1:
+				case FontType.FT_H2:
+				case FontType.FT_H3:
+				case FontType.FT_H4:
+				case FontType.FT_H5:
+				case FontType.FT_H6:
+					processHeader(font, start);
+					break;
+				case FontType.FT_BOLD:
+					safeAddControl(FBTextKind.BOLD, start);
+					break;
+				case FontType.FT_TT:
+					safeAddControl(FBTextKind.CODE, start);
+					break;
+				case FontType.FT_SMALL:
+					break;
+				case FontType.FT_SUB:
+					safeAddControl(FBTextKind.SUB, start);
+					break;
+				case FontType.FT_SUP:
+					safeAddControl(FBTextKind.SUP, start);
+					break;
 	    }
     }
+
     private	void changeFont(int font) {
     	if (myFont == font) {
     		return;
@@ -561,7 +559,7 @@ public class PluckerBookReader extends BookReader {
 			this.mySecond = second;
 		}
 	}
-	//TODO
+
 	static private int twoBytes(char[] ptr, int offset) {
 		return 256 * ptr[offset] + ptr[offset+1];
 	}
@@ -572,4 +570,4 @@ public class PluckerBookReader extends BookReader {
 		//ZLStringUtil.appendNumber(str, num);
 		return str;
 	}
-};
+}

@@ -79,7 +79,7 @@ loop:
 						if (sourceIndex + 1 > compressedSize) {
 							break loop;
 						}
-						int N = 256 * token + sourceBuffer[sourceIndex++];
+						int N = 256 * (token & 0xFF) + (sourceBuffer[sourceIndex++] & 0xFF);
 						int copyLength = (N & 7) + 3;
 						if (targetIndex + copyLength > maxUncompressedSize) {
 							break loop;
