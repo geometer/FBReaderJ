@@ -55,7 +55,7 @@ public abstract class DocDecompressor {
 loop:
 			while ((sourceIndex < compressedSize) && (targetIndex < maxUncompressedSize)) {
 				token = sourceBuffer[sourceIndex++];
-				switch (TOKEN_CODE[token]) {
+				switch (TOKEN_CODE[token & 0xFF]) {
 					case 0:
 						targetBuffer[targetIndex++] = token;
 						break;
