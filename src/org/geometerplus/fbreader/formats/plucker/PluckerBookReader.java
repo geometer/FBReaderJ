@@ -68,13 +68,11 @@ public class PluckerBookReader extends BookReader {
 	}
 
 	public boolean readDocument() throws IOException {
-		System.out.println("reading document");
 		myStream = new PdbInputStream(new ZLFile(myFilePath));
 
 		PdbHeader header = new PdbHeader();
 		if (!header.read(myStream)) {
 			myStream.close();
-			System.out.println("reading stream null");
 			return false;
 		}
 
@@ -107,7 +105,7 @@ public class PluckerBookReader extends BookReader {
 				for(int k = second; k < list.size(); ++k) {
 					if ((Integer)list.get(k) != -1) {
 						//addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer)list.get(k));
-						addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second)+ (Integer)list.get(k));
+						addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer)list.get(k));
 						break;						
 					}
 				}
@@ -134,13 +132,11 @@ public class PluckerBookReader extends BookReader {
 		};
 
 	private	void readRecord(int recordSize) throws IOException {
-		System.out.println("reading record");
 		int uid = PdbUtil.readShort(myStream);
 		if (uid == 1) {
 			myCompressionVersion = PdbUtil.readShort(myStream );
 		} else {
 			int paragraphs = PdbUtil.readShort(myStream);
-			System.out.println("par "+paragraphs);
 
 			int size = PdbUtil.readShort(myStream);
             //TODO ??????  
@@ -148,8 +144,6 @@ public class PluckerBookReader extends BookReader {
 
 			int flags = myStream.read();
 
-			System.out.println("type " + type);
-			System.out.println("Compression " + myCompressionVersion);
 			switch (type) {
 				case 0: // text (TODO: found sample file and test this code)
 				case 1: // compressed text
@@ -176,15 +170,11 @@ public class PluckerBookReader extends BookReader {
 							myCharBuffer = new String(buf).toCharArray();
 						}
 					} else if (myCompressionVersion == 2) {
-			//			myStream.skip(2);
-						System.out.println("input size = " + (recordSize - 10 - 4 * paragraphs));
-						System.out.println("size = " + size);
 						byte input [] = new byte[(int) (recordSize - 10 - 4 * paragraphs)];
 						final int inputSize = myStream.read(input);
-						System.out.println("inputsize = " + inputSize);
 						Inflater decompressor = new Inflater();
 						decompressor.setInput(input, 0, inputSize);
-						byte output [] = new byte[30000];
+						byte output [] = new byte[size];
 						try {
 							doProcess = decompressor.inflate(output) == size;
 							decompressor.end();
@@ -204,7 +194,8 @@ public class PluckerBookReader extends BookReader {
 						myParagraphVector = (ArrayList)myParagraphMap.get(uid);
 						processTextRecord(size, pars);
 						if ((flags & 0x1) == 0) {
-							//insertEndOfTextParagraph();
+				//			System.out.println("insert endoftext");
+							insertEndOfTextParagraph();
 						}
 					}
 					break;
@@ -215,6 +206,7 @@ public class PluckerBookReader extends BookReader {
 					final String mime = "image/palm";
 					ZLImage image = null;
 					if (type == 2) {
+						System.out.println("type2");
 						//image = new ZLFileImage(mime, myFilePath, ((PdbStream)myStream).offset(), recordSize - 8);
 					} else if (myCompressionVersion == 1) {
 						//image = new DocCompressedFileImage(mime, myFilePath, myStream->offset(), recordSize - 8);
@@ -229,7 +221,7 @@ public class PluckerBookReader extends BookReader {
 				case 9: // category record is ignored
 					break;
 				case 10:
-					short typeCode = (short)myStream.read();
+					short typeCode = PdbUtil.readShort(myStream);
 					break;
 				case 11: // style sheet record is ignored
 					break;
@@ -240,8 +232,8 @@ public class PluckerBookReader extends BookReader {
 					break;
 				case 15: // multiimage
 				{
-					short columns = (short)myStream.read();
-					short rows = (short)myStream.read();
+					short columns = PdbUtil.readShort(myStream);
+					short rows = PdbUtil.readShort(myStream);
 					/*PluckerMultiImage image = new PluckerMultiImage(rows, columns, getModel().getImageMap());
 					for (int i = 0; i < size / 2 - 2; ++i) {
 						short us = (short)myStream.read();
@@ -481,11 +473,9 @@ public class PluckerBookReader extends BookReader {
     }
     
     private void safeBeginParagraph() {
-    	System.out.println("safe begin par ");
     	if (!myParagraphStarted) {
     		myParagraphStarted = true;
     		myBufferIsEmpty = true;
-    		System.out.println("Calling begin text par");
     		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
     		if (!myParagraphStored) {
     			myParagraphVector.add(getModel().getBookTextModel().getParagraphsNumber() - 1);
@@ -506,14 +496,13 @@ public class PluckerBookReader extends BookReader {
     		myDelayedHyperlinks.clear();
     	}
     }
+    
     private void safeEndParagraph() {
-   // 	System.out.println("safe end par ");
     	if (myParagraphStarted) {
     		if (myBufferIsEmpty) {
     			final String SPACE = " ";
     			addData(SPACE.toCharArray());
     		}
-    		System.out.println("Calling end par");
     		endParagraph();
     		myParagraphStarted = false;
     	}

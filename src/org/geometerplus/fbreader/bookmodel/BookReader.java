@@ -141,6 +141,10 @@ public class BookReader {
 		insertEndParagraph(ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
 	
+	public final void insertEndOfTextParagraph() {
+		insertEndParagraph(ZLTextParagraph.Kind.END_OF_TEXT_PARAGRAPH);
+	}
+	
 	public final void unsetCurrentTextModel() {
 		myCurrentTextModel = null;
 	}
@@ -210,6 +214,10 @@ public class BookReader {
 			}
 			myBookModel.addHyperlinkLabel(label, textModel, paragraphNumber);
 		}
+	}
+	
+	public final void addHyperlinkLabel(String label, int paragraphNumber) {
+		myBookModel.addHyperlinkLabel(label, myCurrentTextModel, paragraphNumber);
 	}
 	
 	public final void addContentsData(char[] data) {
