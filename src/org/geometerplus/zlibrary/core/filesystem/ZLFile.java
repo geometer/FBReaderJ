@@ -66,7 +66,7 @@ public class ZLFile {
 	private static ZLFileInfo getFileInfo(String path) {
 		ZLFileInfo info = new ZLFileInfo();
 		File file = new File(path);
-		info.Exists = file.exists();
+		info.Exists = file.exists() || ZLFSUtil.getRootDirectoryPath().equals(path);;
 		info.Size = file.length();
 		info.MTime = file.lastModified();
 		info.IsDirectory = file.isDirectory() || ZLFSUtil.getRootDirectoryPath().equals(path);
