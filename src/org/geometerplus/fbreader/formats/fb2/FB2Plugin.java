@@ -38,7 +38,7 @@ public class FB2Plugin extends FormatPlugin {
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
-		return new FB2Reader(model).readBook(description.getFileName());
+		return new FB2Reader(model).readBook(description.FileName);
 	}
 	
 	public String getIconName() {

@@ -27,17 +27,17 @@ class ShowBookInfoDialogAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return fbreader().getMode() == FBReader.ViewMode.BOOK_TEXT;
+		return Reader.getMode() == FBReader.ViewMode.BOOK_TEXT;
 	}
 
 	public void run() {
-		final BookCollection collection = fbreader().getCollectionView().getCollection();
-		final String fileName = fbreader().getBookTextView().getFileName();
+		final BookCollection collection = Reader.CollectionView.Collection;
+		final String fileName = Reader.BookTextView.getFileName();
 		Runnable action = new Runnable() {
 			public void run() {
-				fbreader().openFile(fileName);
+				Reader.openFile(fileName);
 				collection.rebuild(false);
-				fbreader().refreshWindow();
+				Reader.refreshWindow();
 			}
 		};
 		new BookInfoDialog(collection, fileName, action).getDialog().run();

@@ -234,7 +234,7 @@ public class PluckerBookReader extends BookReader {
 				{
 					short columns = PdbUtil.readShort(myStream);
 					short rows = PdbUtil.readShort(myStream);
-					/*PluckerMultiImage image = new PluckerMultiImage(rows, columns, getModel().getImageMap());
+					/*PluckerMultiImage image = new PluckerMultiImage(rows, columns, Model.getImageMap());
 					for (int i = 0; i < size / 2 - 2; ++i) {
 						short us = (short)myStream.read();
 						PdbUtil.readShort(myStream, us);
@@ -478,7 +478,7 @@ public class PluckerBookReader extends BookReader {
     		myBufferIsEmpty = true;
     		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
     		if (!myParagraphStored) {
-    			myParagraphVector.add(getModel().getBookTextModel().getParagraphsNumber() - 1);
+    			myParagraphVector.add(Model.BookTextModel.getParagraphsNumber() - 1);
     			myParagraphStored = true;
     		}
     		for (Iterator it = myDelayedControls.iterator(); it.hasNext(); ) {

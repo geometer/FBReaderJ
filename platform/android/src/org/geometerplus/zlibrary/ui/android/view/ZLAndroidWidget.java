@@ -140,7 +140,7 @@ public class ZLAndroidWidget extends View {
 		if (keyName.equals("<Menu>")) {
 			return false;
 		}
-		myViewWidget.getView().getApplication().doActionByKey(keyName);
+		myViewWidget.getView().Application.doActionByKey(keyName);
 		return true;
 	}
 

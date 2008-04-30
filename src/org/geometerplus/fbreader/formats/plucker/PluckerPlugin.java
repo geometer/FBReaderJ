@@ -57,7 +57,7 @@ public class PluckerPlugin extends PdbPlugin {
 	
 	public	boolean readModel(BookDescription description, BookModel model)  {
 		try {
-			return new PluckerBookReader(description.getFileName(), model, description.getEncoding()).readDocument();
+			return new PluckerBookReader(description.FileName, model, description.getEncoding()).readDocument();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

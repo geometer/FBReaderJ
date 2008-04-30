@@ -18,10 +18,7 @@
  */
 
 package org.geometerplus.fbreader.optionsDialog;
-import org.geometerplus.fbreader.encoding.ZLEncodingCollection;
-import org.geometerplus.fbreader.encodingOption.*;
-import org.geometerplus.fbreader.fbreader.*;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
+
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.language.ZLLanguageList;
 import org.geometerplus.zlibrary.core.optionEntries.*;
@@ -30,19 +27,25 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.style.*;
 
+import org.geometerplus.fbreader.encoding.ZLEncodingCollection;
+import org.geometerplus.fbreader.encodingOption.*;
+import org.geometerplus.fbreader.collection.BookCollection;
+import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
+
 public class OptionsDialog {
 	private ZLOptionsDialog myDialog;
 	
 	public OptionsDialog(FBReader fbreader) {
-		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().baseStyle();
+		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().baseStyle();
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
-		ZLDialogContent libraryTab = myDialog.createTab("Library");
-		CollectionView collectionView = fbreader.getCollectionView();
-		libraryTab.addOption("bookPath", collectionView.getCollection().PathOption);
-		libraryTab.addOption("lookInSubdirectories", collectionView.getCollection().ScanSubdirsOption);
-		RecentBooksView recentBooksView = (RecentBooksView) fbreader.getRecentBooksView();
-		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(recentBooksView.lastBooks().MaxListSizeOption, 1));
+		final ZLDialogContent libraryTab = myDialog.createTab("Library");
+		final CollectionView collectionView = fbreader.CollectionView;
+		final BookCollection collection = collectionView.Collection;
+		libraryTab.addOption("bookPath", collection.PathOption);
+		libraryTab.addOption("lookInSubdirectories", collection.ScanSubdirsOption);
+		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(fbreader.RecentBooksView.lastBooks().MaxListSizeOption, 1));
 		//ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
 		//ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
 		//showTagsEntry.addDependentEntry(showAllBooksTagEntry);
@@ -50,7 +53,7 @@ public class OptionsDialog {
 		//libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
 		//showTagsEntry.onStateChanged(showTagsEntry.initialState());
 		
-		ZLDialogContent encodingTab = myDialog.createTab("Language");
+		final ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
 		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
 //		EncodingEntry encodingEntry = new EncodingEntry(PluginCollection.instance().DefaultEncodingOption);
@@ -61,8 +64,8 @@ public class OptionsDialog {
 
 		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
 				
-		//ZLDialogContent selectionTab = myDialog.createTab("Selection");
-		//selectionTab.addOption("enableSelection", FBView.selectionOption());
+		final ZLDialogContent selectionTab = myDialog.createTab("Selection");
+		selectionTab.addOption("enableSelection", FBView.selectionOption());
 		
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
 		marginTab.addOptions(
@@ -76,17 +79,17 @@ public class OptionsDialog {
 		
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
-		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getContext());
+		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.Context);
 		
 		createIndicatorTab(fbreader);
 		
-		ZLDialogContent rotationTab = myDialog.createTab("Rotation");
+		final ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
 		
-		ZLDialogContent colorsTab = myDialog.createTab("Colors");
+		final ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
 		final ZLResource resource = colorsTab.getResource(colorKey);
-		ZLColorOptionBuilder builder = new ZLColorOptionBuilder();
+		final ZLColorOptionBuilder builder = new ZLColorOptionBuilder();
 		final String BACKGROUND = resource.getResource("background").getValue();
 		builder.addOption(BACKGROUND, baseStyle.BackgroundColorOption);
 		//builder.addOption(resource.getResource("selectionBackground").getValue(), baseStyle.SelectionBackgroundColorOption);
@@ -100,13 +103,12 @@ public class OptionsDialog {
 		colorsTab.addOption(colorKey, builder.comboEntry());
 		colorsTab.addOption("", builder.colorEntry());
 		
-		
-		
 		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
 		
-		ZLDialogContent webTab = myDialog.createTab("Web");
+		final ZLDialogContent webTab = myDialog.createTab("Web");
 		webTab.addOption("defaultText",
-				new ZLToggleBooleanOptionEntry(fbreader.getBookTextView().OpenInBrowserOption));	
+			new ZLToggleBooleanOptionEntry(fbreader.BookTextView.OpenInBrowserOption)
+		);
 	}
 	
 	private void createIndicatorTab(FBReader fbreader) {
@@ -142,7 +144,7 @@ public class OptionsDialog {
 		//showTimeEntry.addDependentEntry(fontSizeEntry);
 
 		//ZLOptionEntry tocMarksEntry =
-		//	new ZLSimpleBooleanOptionEntry(fbreader.getBookTextView().ShowTOCMarksOption);
+		//	new ZLSimpleBooleanOptionEntry(fbreader.BookTextView.ShowTOCMarksOption);
 		//indicatorTab.addOption("tocMarks", tocMarksEntry);
 		//showIndicatorEntry.addDependentEntry(tocMarksEntry);
 
@@ -170,7 +172,7 @@ public class OptionsDialog {
 		public void run() {
 			myFBReader.grabAllKeys(myFBReader.KeyboardControlOption.getValue());
 			myFBReader.clearTextCaches();
-			myFBReader.getCollectionView().synchronizeModel();
+			myFBReader.CollectionView.synchronizeModel();
 			myFBReader.refreshWindow();
 		}
 	}
@@ -276,5 +278,4 @@ public class OptionsDialog {
 			);
 		}	
 	}
-	
 }

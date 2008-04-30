@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -32,7 +31,7 @@ import org.geometerplus.fbreader.collection.*;
 import org.geometerplus.fbreader.description.*;
 
 public class CollectionView extends FBView {
-	private final BookCollection myCollection = new BookCollection();
+	public final BookCollection Collection = new BookCollection();
 	private boolean myTreeStateIsFrozen;
 	private boolean myUpdateModel;
 	private boolean myShowTags;
@@ -47,7 +46,7 @@ public class CollectionView extends FBView {
 	public CollectionView(FBReader reader, ZLPaintContext context) {
 		super(reader, context);
 		myUpdateModel = true;
-		setModel(new CollectionModel(this, myCollection));
+		setModel(new CollectionModel(this, Collection));
 		myShowTags = ShowTagsOption.getValue();
 		myShowAllBooksList = ShowAllBooksTagOption.getValue();
 	}
@@ -77,13 +76,13 @@ public class CollectionView extends FBView {
 			if (imageId == CollectionModel.BookInfoImageId) {
 				Runnable action = new Runnable() {
 					public void run() {
-						myCollection.rebuild(false);
+						Collection.rebuild(false);
 						myUpdateModel = true;
 						selectBook(book);
-						repaintView();
+						Application.refreshWindow();
 					}
 				};
-				new BookInfoDialog(myCollection, book.getFileName(), action).getDialog().run();
+				new BookInfoDialog(Collection, book.FileName, action).getDialog().run();
 				return true;
 			} else if (imageId == CollectionModel.RemoveBookImageId) {
 				String boxKey = "removeBookBox";
@@ -101,7 +100,7 @@ public class CollectionView extends FBView {
 					public void run() {
 						CollectionModel cModel = collectionModel();
           
-						new BookList().removeFileName(book.getFileName());
+						new BookList().removeFileName(book.FileName);
 						cModel.removeBook(book);
           
 						if (cModel.getParagraphsNumber() == 0) {
@@ -117,7 +116,7 @@ public class CollectionView extends FBView {
 							gotoParagraph(index, false);
 						}
 						rebuildPaintInfo(true);
-						getApplication().refreshWindow();
+						Application.refreshWindow();
 					}
 				};
 				ZLDialogManager.getInstance().showQuestionBox(
@@ -138,8 +137,9 @@ public class CollectionView extends FBView {
 
 		final BookDescription book = collectionModel().bookByParagraphNumber(index);
 		if (book != null) {
-			getFBReader().openBook(book);
-			getFBReader().showBookTextView();
+			final FBReader fbreader = (FBReader)Application;
+			fbreader.openBook(book);
+			fbreader.showBookTextView();
 			return true;
 		}
 
@@ -164,13 +164,13 @@ public class CollectionView extends FBView {
 	}
 	
 	public void updateModel() {
-		myCollection.rebuild(true);
+		Collection.rebuild(true);
 		myUpdateModel = true;
-		myCollection.authors();
+		Collection.authors();
 	}
 	
 	public void synchronizeModel() {
-		if (myCollection.synchronize()) {
+		if (Collection.synchronize()) {
 	   	System.out.println("synchronizeModel");
 			updateModel();
 		}
@@ -190,10 +190,6 @@ public class CollectionView extends FBView {
 			gotoParagraph(toSelect, false);
 			scrollPage(false, ZLTextView.ScrollingMode.SCROLL_PERCENTAGE, 40);
 		}
-	}
-
-	public BookCollection getCollection() {
-		return myCollection;
 	}
 
 	private CollectionModel collectionModel() {

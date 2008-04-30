@@ -29,7 +29,7 @@ class AddBookAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return fbreader().getMode() != FBReader.ViewMode.FOOTNOTE;
+		return Reader.getMode() != FBReader.ViewMode.FOOTNOTE;
 	}
 
 	public void run() {
@@ -40,15 +40,15 @@ class AddBookAction extends FBAction {
 				if (description == null) {
 					return;
 				}
-				final BookCollection collection = fbreader().getCollectionView().getCollection();
-				final String fileName = description.getFileName();
-				Runnable action = new Runnable() {
+				final BookCollection collection = Reader.CollectionView.Collection;
+				final String fileName = description.FileName;
+				final Runnable action = new Runnable() {
 					public void run() {
-						fbreader().openFile(fileName);
+						Reader.openFile(fileName);
 						collection.rebuild(false);
 						new BookList().addFileName(fileName);
-						fbreader().setMode(FBReader.ViewMode.BOOK_TEXT);
-						fbreader().refreshWindow();
+						Reader.setMode(FBReader.ViewMode.BOOK_TEXT);
+						Reader.refreshWindow();
 					}
 				};
 				new BookInfoDialog(collection, fileName, action).getDialog().run();

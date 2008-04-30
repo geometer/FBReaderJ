@@ -25,14 +25,14 @@ class RedoAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return fbreader().getMode() == FBReader.ViewMode.BOOK_TEXT;
+		return Reader.getMode() == FBReader.ViewMode.BOOK_TEXT;
 	}
 
 	public boolean isEnabled() {
-		return isVisible() && fbreader().getBookTextView().canRedoPageMove();
+		return isVisible() && Reader.BookTextView.canRedoPageMove();
 	}
 
 	public void run() {
-		fbreader().getBookTextView().redoPageMove();
+		Reader.BookTextView.redoPageMove();
 	}
 }

@@ -51,7 +51,7 @@ class ScrollingAction extends FBAction {
 				value = myOptions.PercentToScrollOption.getValue();
 				break;
 		}
-		fbreader().getTextView().scrollPage(myForward, mode, value);
-		fbreader().refreshWindow();
+		Reader.getTextView().scrollPage(myForward, mode, value);
+		Reader.refreshWindow();
 	}		
 }

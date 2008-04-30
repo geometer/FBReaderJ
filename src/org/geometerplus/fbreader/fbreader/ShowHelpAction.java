@@ -27,9 +27,8 @@ class ShowHelpAction extends FBAction {
 	}
 		
 	public void run() {
-		//fbreader().openBook(fbreader().getHelpFileName());
-		fbreader().openBook(BookDescription.getDescription(fbreader().getHelpFileName()));
-		
-		fbreader().refreshWindow();
+		//Reader.openBook(Reader.getHelpFileName());
+		Reader.openBook(BookDescription.getDescription(Reader.getHelpFileName()));
+		Reader.refreshWindow();
 	}
 }

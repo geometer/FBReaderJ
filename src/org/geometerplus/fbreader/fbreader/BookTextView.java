@@ -105,7 +105,7 @@ public class BookTextView extends FBView {
 		if (!position.equalsToCursor(getStartCursor())) {
 			savePosition(position);
 		}
-		getApplication().refreshWindow();
+		Application.refreshWindow();
 	}
 
 	void gotoParagraphSafe(int paragraphNumber) {
@@ -159,7 +159,7 @@ public class BookTextView extends FBView {
 							return true;
 						case FBTextKind.FOOTNOTE:
 						case FBTextKind.INTERNAL_HYPERLINK:
-							getFBReader().tryOpenFootnote(id);
+							((FBReader)Application).tryOpenFootnote(id);
 							return true;
 					}
 				}
@@ -213,7 +213,7 @@ public class BookTextView extends FBView {
 
 	void undoPageMove() {
 		gotoPosition((Position)myPositionStack.get(--myCurrentPointInStack));
-		getFBReader().refreshWindow();
+		((FBReader)Application).refreshWindow();
 	}
 
 	boolean canRedoPageMove() {
@@ -222,6 +222,6 @@ public class BookTextView extends FBView {
 
 	void redoPageMove() {
 		gotoPosition((Position)myPositionStack.get(++myCurrentPointInStack));
-		getFBReader().refreshWindow();
+		((FBReader)Application).refreshWindow();
 	}
 }

@@ -22,25 +22,17 @@ package org.geometerplus.zlibrary.core.view;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 abstract public class ZLView {
-	private ZLApplication myApplication;
-	private ZLPaintContext myContext;
+	public final ZLApplication Application;
+	public final ZLPaintContext Context;
 
 	public ZLView(ZLApplication application, ZLPaintContext context) {
-		myApplication = application;
-		myContext = context;
-	}
-
-	void setPaintContext(ZLPaintContext context) {
-		myContext = context;
+		Application = application;
+		Context = context;
 	}
 
 	abstract public String getCaption();
 
 	abstract public void paint();
-
-	public ZLPaintContext getContext() {
-		return myContext;
-	}
 
 	public boolean onStylusPress(int x, int y) {
 		return false;
@@ -60,13 +52,5 @@ abstract public class ZLView {
 
 	public boolean onFingerTap(int x, int y) {
 		return false;
-	}
-
-	public ZLApplication getApplication() {
-		return myApplication;
-	}
-	
-	public void repaintView() {
-		myApplication.refreshWindow();
 	}
 }

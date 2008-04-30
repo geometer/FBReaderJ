@@ -89,7 +89,7 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 		final int tocLen = toc.size();
 		for (int i = 0; i < tocLen; ++i) {
 			final Reference ref = (Reference)toc.get(i);
-			final BookModel.Label label = myModelReader.getModel().getLabel(ref.HRef);
+			final BookModel.Label label = myModelReader.Model.getLabel(ref.HRef);
 			if (label != null) {
 				final int index = label.ParagraphNumber;
 				if (index != -1) {

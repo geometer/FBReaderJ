@@ -35,7 +35,7 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
       g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 			final ZLView view = getView();
-			final ZLSwingPaintContext context = (ZLSwingPaintContext)view.getContext();
+			final ZLSwingPaintContext context = (ZLSwingPaintContext)view.Context;
 			final Dimension size = getSize();
 			final int rotation = getRotation();
 			context.setRotation(rotation);

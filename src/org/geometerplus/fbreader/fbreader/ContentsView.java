@@ -41,8 +41,8 @@ class ContentsView extends FBView {
 		final ZLTextTreeParagraph paragraph = contentsModel.getTreeParagraph(index);
 		final int reference = contentsModel.getReference(paragraph);
 
-		FBReader fbreader = (FBReader)getApplication();
-		fbreader.getBookTextView().gotoPosition(reference, 0, 0);
+		final FBReader fbreader = (FBReader)Application;
+		fbreader.BookTextView.gotoPosition(reference, 0, 0);
 		fbreader.setMode(FBReader.ViewMode.BOOK_TEXT);
 
 		return true;
@@ -54,7 +54,8 @@ class ContentsView extends FBView {
 	}
 
 	int currentTextViewParagraph(boolean includeStart) {
-		final ZLTextWordCursor cursor = getFBReader().getBookTextView().getStartCursor();
+		final FBReader fbreader = (FBReader)Application;
+		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
 		if (!cursor.isNull()) {
 			int reference = cursor.getParagraphCursor().getIndex();
 			boolean startOfParagraph = cursor.getWordNumber() == 0;

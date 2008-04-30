@@ -70,7 +70,7 @@ public class OEBPlugin extends FormatPlugin {
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
-		final String path = getOpfFileName(description.getFileName());
+		final String path = getOpfFileName(description.FileName);
 		if (path == null) {
 			return false;
 		}

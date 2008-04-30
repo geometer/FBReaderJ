@@ -58,7 +58,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	public boolean read() {
 		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.getInstance()
 				.createHtmlProcessor();
-		return processor.read(this, getModel().getFileName());
+		return processor.read(this, Model.Description.FileName);
 	}
 
 	boolean readBook(String fileName) {
@@ -279,7 +279,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 
 			case HtmlTag.BODY:
 				++myBodyCounter;
-				//myParagraphsBeforeBodyNumber = getModel().getBookTextModel()
+				//myParagraphsBeforeBodyNumber = Model.BookTextModel
 					//	.getParagraphsNumber();
 				if ((myBodyCounter == 1)
 						|| (attributes.getValue("name") == null)) {
@@ -328,7 +328,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					if (":\\".equals(ref.substring(1, 3))) {
 						addImage(ref, new ZLFileImage("image/auto", ref, 0));
 					} else {
-						String fileName = getModel().getFileName();
+						String fileName = Model.Description.FileName;
 						addImage(ref, new ZLFileImage("image/auto", 
 								fileName.substring(0, fileName.lastIndexOf('\\') + 1) + ref, 0));
 					}

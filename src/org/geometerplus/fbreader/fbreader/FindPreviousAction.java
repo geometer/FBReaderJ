@@ -27,11 +27,11 @@ class FindPreviousAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		ZLTextView view = fbreader().getTextView();
+		ZLTextView view = Reader.getTextView();
 		return (view != null) && view.canFindPrevious();
 	}
 
 	public void run() {
-		fbreader().getTextView().findPrevious();
+		Reader.getTextView().findPrevious();
 	}
 }

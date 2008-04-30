@@ -136,7 +136,7 @@ public class BookCollection {
 				final int numberOfBooks = books.size();
 				for (int j = 0; j < numberOfBooks; ++j) {
 					final BookDescription description = (BookDescription)books.get(j);
-					final String fileName = description.getFileName();
+					final String fileName = description.FileName;
 					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
 						fileNames.add(fileName);
 					}
@@ -302,7 +302,7 @@ public class BookCollection {
 			
 		public	void addBook(String fileName) {
 			for (int i = 0; i < myBooks.size(); i++) {
-				if (((BookDescription)(myBooks.get(i))).getFileName().equals(fileName)) {
+				if (((BookDescription)(myBooks.get(i))).FileName.equals(fileName)) {
 					myBooks.remove(myBooks.get(i));
 					break;
 				}
@@ -329,7 +329,7 @@ public class BookCollection {
 			for (int i = 0; i < size; ++i) {
 				String num = BOOK;
 				num += i;
-				new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, num, "").setValue(((BookDescription)myBooks.get(i)).getFileName());
+				new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, num, "").setValue(((BookDescription)myBooks.get(i)).FileName);
 			}
 		}
 	}

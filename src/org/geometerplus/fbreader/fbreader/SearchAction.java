@@ -53,7 +53,7 @@ class SearchAction extends FBAction {
 	}
 
 	public void run() {
-		final ZLTextView textView = fbreader().getTextView();	
+		final ZLTextView textView = Reader.getTextView();	
 		final ZLDialog searchDialog = ZLDialogManager.getInstance().createDialog("textSearchDialog");
 	
 		searchDialog.addOption("text", new SearchPatternEntry(this));

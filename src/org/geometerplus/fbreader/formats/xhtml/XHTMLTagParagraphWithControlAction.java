@@ -33,7 +33,7 @@ class XHTMLTagParagraphWithControlAction extends XHTMLTagAction {
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		final BookReader modelReader = reader.getModelReader();
 		if ((myControl == FBTextKind.TITLE) &&
-				(modelReader.getModel().getBookTextModel().getParagraphsNumber() > 1)) {
+				(modelReader.Model.BookTextModel.getParagraphsNumber() > 1)) {
 			modelReader.insertEndOfSectionParagraph();
 		}
 		modelReader.pushKind(myControl);

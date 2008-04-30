@@ -23,18 +23,19 @@ import java.io.*;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.collection.BookCollection;
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.collection.BookCollection;
+import org.geometerplus.fbreader.description.BookDescription;
 
 public final class FBReader extends ZLApplication {
 	static interface ViewMode {
@@ -96,11 +97,11 @@ public final class FBReader extends ZLApplication {
 	private int myMode = ViewMode.UNDEFINED;
 	private int myPreviousMode = ViewMode.BOOK_TEXT;
 
-	private final BookTextView myBookTextView;
-	private final ContentsView myContentsView;
-	private final FootnoteView myFootnoteView;
-	private final CollectionView myCollectionView;
-	private final RecentBooksView myRecentBooksView;
+	public final BookTextView BookTextView;
+	public final ContentsView ContentsView;
+	public final FootnoteView FootnoteView;
+	public final CollectionView CollectionView;
+	public final RecentBooksView RecentBooksView;
 
 	private BookModel myBookModel;
 	private final String myArg0;
@@ -155,11 +156,11 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 
-		myBookTextView = new BookTextView(this, getContext());
-		myContentsView = new ContentsView(this, getContext());
-		myFootnoteView = new FootnoteView(this, getContext());
-		myCollectionView = new CollectionView(this, getContext());
-		myRecentBooksView = new RecentBooksView(this, getContext());
+		BookTextView = new BookTextView(this, Context);
+		ContentsView = new ContentsView(this, Context);
+		FootnoteView = new FootnoteView(this, Context);
+		CollectionView = new CollectionView(this, Context);
+		RecentBooksView = new RecentBooksView(this, Context);
 
 		setMode(ViewMode.BOOK_TEXT);
 	}
@@ -227,27 +228,27 @@ public final class FBReader extends ZLApplication {
 
 		switch (mode) {
 			case ViewMode.BOOK_TEXT:
-				setView(myBookTextView);
+				setView(BookTextView);
 				break;
 			case ViewMode.CONTENTS:
-				myContentsView.gotoReference();
-				setView(myContentsView);
+				ContentsView.gotoReference();
+				setView(ContentsView);
 				break;
 			case ViewMode.FOOTNOTE:
-				setView(myFootnoteView);
+				setView(FootnoteView);
 				break;
 			case ViewMode.RECENT_BOOKS:
-				myRecentBooksView.rebuild();
-				setView(myRecentBooksView);
+				RecentBooksView.rebuild();
+				setView(RecentBooksView);
 				break;
 			case ViewMode.BOOK_COLLECTION:
 				Runnable action = new Runnable() {
 					public void run() {
-						myCollectionView.updateModel();
+						CollectionView.updateModel();
 						if (myBookModel != null) {
-							myCollectionView.selectBook(myBookModel.getDescription());
+							CollectionView.selectBook(myBookModel.Description);
 						}
-						setView(myCollectionView);
+						setView(CollectionView);
 					}
 				};
 				ZLDialogManager.getInstance().wait("loadingBookList", action);
@@ -266,12 +267,12 @@ public final class FBReader extends ZLApplication {
 		if (myBookModel != null) {
 			BookModel.Label label = myBookModel.getLabel(id);
 			if ((label != null) && (label.Model != null)) {
-				if (label.Model == myBookModel.getBookTextModel()) {
-					myBookTextView.gotoParagraphSafe(label.ParagraphNumber);
+				if (label.Model == myBookModel.BookTextModel) {
+					BookTextView.gotoParagraphSafe(label.ParagraphNumber);
 				} else {
-					myFootnoteView.setModel(label.Model);
+					FootnoteView.setModel(label.Model);
 					setMode(ViewMode.FOOTNOTE);
-					myFootnoteView.gotoParagraph(label.ParagraphNumber, false);
+					FootnoteView.gotoParagraph(label.ParagraphNumber, false);
 				}
 				setHyperlinkCursor(false);
 				refreshWindow();
@@ -279,39 +280,33 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	public BookTextView getBookTextView() {
-		return myBookTextView;
-	}
-
 	public void clearTextCaches() {
-		myBookTextView.clearCaches();
-		myContentsView.clearCaches();
+		BookTextView.clearCaches();
+		ContentsView.clearCaches();
+		FootnoteView.clearCaches();
+		CollectionView.clearCaches();
+		RecentBooksView.clearCaches();
 	}
 	
 	void openBookInternal(BookDescription description) {
 		if (description != null) {
-			BookTextView bookTextView = myBookTextView;
-			ContentsView contentsView = myContentsView;
-			FootnoteView footnoteView = myFootnoteView;
-			RecentBooksView recentBooksView = myRecentBooksView;
-
-			bookTextView.saveState();
-			bookTextView.setModel(null, "");
-			bookTextView.setContentsModel(null);
-			contentsView.setModel(null);
+			BookTextView.saveState();
+			BookTextView.setModel(null, "");
+			BookTextView.setContentsModel(null);
+			ContentsView.setModel(null);
 
 			myBookModel = new BookModel(description);
-			final String fileName = description.getFileName();
+			final String fileName = description.FileName;
 			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());
-			bookTextView.setModel(myBookModel.getBookTextModel(), fileName);
-			bookTextView.setCaption(description.getTitle());
-			bookTextView.setContentsModel(myBookModel.getContentsModel());
-			footnoteView.setModel(null);
-			footnoteView.setCaption(description.getTitle());
-			contentsView.setModel(myBookModel.getContentsModel());
-			contentsView.setCaption(description.getTitle());
-			recentBooksView.lastBooks().addBook(fileName);
+			BookTextView.setModel(myBookModel.BookTextModel, fileName);
+			BookTextView.setCaption(description.getTitle());
+			BookTextView.setContentsModel(myBookModel.ContentsModel);
+			FootnoteView.setModel(null);
+			FootnoteView.setCaption(description.getTitle());
+			ContentsView.setModel(myBookModel.ContentsModel);
+			ContentsView.setCaption(description.getTitle());
+			RecentBooksView.lastBooks().addBook(fileName);
 		}
 		resetWindowCaption();
 		refreshWindow();
@@ -319,14 +314,6 @@ public final class FBReader extends ZLApplication {
 	
 	void showBookTextView() {
 		setMode(ViewMode.BOOK_TEXT);
-	}
-
-	public ContentsView getContentsView() {
-		return myContentsView;
-	}
-	
-	public CollectionView getCollectionView() {
-		return myCollectionView;
 	}
 	
 	private class OpenBookRunnable implements Runnable {
@@ -341,10 +328,6 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	public RecentBooksView getRecentBooksView() {
-		return myRecentBooksView;
-	}
-
 	@Override
 	public void openFile(String fileName) {
 		BookDescription description = BookDescription.getDescription(fileName);
@@ -355,8 +338,8 @@ public final class FBReader extends ZLApplication {
 	}
 
 	protected void onQuit() {
-		if (myBookTextView != null) {
-			myBookTextView.saveState();
+		if (BookTextView != null) {
+			BookTextView.saveState();
 		}
 	}
 }

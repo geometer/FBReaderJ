@@ -51,22 +51,22 @@ public abstract class FBView extends ZLTextViewImpl {
 	}
 
 	public final boolean onStylusPress(int x, int y) {
-		if (super.onStylusPress(x, y)) {
+		if (super.onStylusPress(x, y) || _onStylusPress(x, y)) {
 			return true;
 		}
-		if (_onStylusPress(x, y)) {
-			return true;
-		}
-		if (getFBReader().EnableTapScrollingOption.getValue()) {
-			if (2 * y < getContext().getHeight()) {
-				getFBReader().doAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD);
+
+		final FBReader fbreader = (FBReader)Application;
+		if (fbreader.EnableTapScrollingOption.getValue()) {
+			if (2 * y < Context.getHeight()) {
+				fbreader.doAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD);
 			} else {
-				getFBReader().doAction(ActionCode.FINGER_TAP_SCROLL_FORWARD);
+				fbreader.doAction(ActionCode.FINGER_TAP_SCROLL_FORWARD);
 			}
 			return true;
-		} else {
-			return false;
 		}
+
+		activateSelection(x, y);
+		return true;
 	}
 
 	public static final ZLIntegerRangeOption getLeftMarginOption() {
@@ -109,10 +109,6 @@ public abstract class FBView extends ZLTextViewImpl {
 		return getBottomMarginOption().getValue();
 	}
 
-	FBReader getFBReader() {
-		return (FBReader)getApplication();
-	}
-	
 	public String getCaption() {
 		return myCaption;
 	}
@@ -137,5 +133,9 @@ public abstract class FBView extends ZLTextViewImpl {
 			ourIndicatorInfo = new FBIndicatorInfo();
 		}
 		return ourIndicatorInfo;
+	}
+
+	protected boolean isSelectionEnabled() {
+		return selectionOption().getValue();
 	}
 }

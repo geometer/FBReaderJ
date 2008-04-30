@@ -57,8 +57,9 @@ public class RecentBooksView extends FBView {
 			return false;
 		}
 
-		getFBReader().openBook((BookDescription)books.get(index));
-		getFBReader().showBookTextView();
+		final FBReader fbreader = (FBReader)Application;
+		fbreader.openBook((BookDescription)books.get(index));
+		fbreader.showBookTextView();
 		return true;
 	}
 

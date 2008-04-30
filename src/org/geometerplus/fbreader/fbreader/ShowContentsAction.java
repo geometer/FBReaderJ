@@ -25,16 +25,16 @@ class ShowContentsAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		switch (fbreader().getMode()) {
+		switch (Reader.getMode()) {
 			case FBReader.ViewMode.BOOK_TEXT:
 			case FBReader.ViewMode.FOOTNOTE:
-				return !fbreader().getContentsView().isEmpty();
+				return !Reader.ContentsView.isEmpty();
 			default:
 				return false;
 		}
 	}
 
 	public void run() {
-		fbreader().setMode(FBReader.ViewMode.CONTENTS);
+		Reader.setMode(FBReader.ViewMode.CONTENTS);
 	}
 }

@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
+	private final ZLTextSelectionModel mySelectionModel;
 
 	protected class Position {
 		public int ParagraphIndex;
@@ -101,6 +102,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
 		super(application, context);
 		resetTextStyle();
+ 		mySelectionModel = new ZLTextSelectionModel(this, application);
 	}
 
 	public void setModel(ZLTextModel model) {
@@ -138,7 +140,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			myTextStyle = style;
 			myWordHeight = -1;
 		}
-		getContext().setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic());
+		Context.setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic());
 	}
 
 	private void resetTextStyle() {
@@ -182,12 +184,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			int wordHeight = myWordHeight;
 			if (wordHeight == -1) {
 				final ZLTextStyle textStyle = myTextStyle;
-				wordHeight = (int)(getContext().getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
+				wordHeight = (int)(Context.getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
 				myWordHeight = wordHeight;
 			}
 			return wordHeight;
 		} else if (element instanceof ZLTextImageElement) {
-			final ZLPaintContext context = getContext();
+			final ZLPaintContext context = Context;
 			return context.imageHeight(((ZLTextImageElement)element).ImageData) + 
 				Math.max(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
 		}
@@ -202,11 +204,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private int getTextAreaHeight() {
-		return getContext().getHeight() - getTopMargin() - getBottomMargin() - getIndicatorInfo().getFullHeight();
+		return Context.getHeight() - getTopMargin() - getBottomMargin() - getIndicatorInfo().getFullHeight();
 	}
 
 	private int getBottomLine() {
-		return getContext().getHeight() - getBottomMargin() - getIndicatorInfo().getFullHeight();
+		return Context.getHeight() - getBottomMargin() - getIndicatorInfo().getFullHeight();
 	}
 
 	private static int getWordWidth(ZLPaintContext context, ZLTextWord word, int start) {
@@ -312,7 +314,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			if (!position.equalsToCursor(myStartCursor)) {
 				savePosition(position);
 			}
-			getApplication().refreshWindow();
+			Application.refreshWindow();
 		}
 	}
 
@@ -335,7 +337,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			gotoMark(wholeText ? 
 				(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
 				(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
-			getApplication().refreshWindow();
+			Application.refreshWindow();
 		}
 	}
 
@@ -367,7 +369,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myTreeNodeMap.clear();
 
 		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		context.clear(baseStyle.BackgroundColorOption.getValue());
 
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
@@ -538,7 +540,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		context.setColor(myTextStyle.getColor());	
 		if ((start == 0) && (length == -1)) {
 			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
@@ -562,7 +564,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		context.setColor(myTextStyle.getColor());
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
@@ -605,7 +607,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	private void buildInfos(final ZLTextWordCursor start, final ZLTextWordCursor result) {
 		result.setCursor(start);
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		int textAreaHeight = getTextAreaHeight();
 		myLineInfos.clear();
 		int counter = 0;
@@ -785,7 +787,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				final ZLTextWord word = (ZLTextWord)element;
 				newWidth -= getWordWidth(context, word, currentCharNumber);
 				int spaceLeft = maxWidth - newWidth;
-				if ((word.Length > 3) && (spaceLeft > 2 * getContext().getSpaceWidth())) {
+				if ((word.Length > 3) && (spaceLeft > 2 * Context.getSpaceWidth())) {
 					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.getInstance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
@@ -839,7 +841,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private void prepareTextLine(ZLTextLineInfo info) {
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
 
 		setTextStyle(info.StartStyle);
@@ -985,7 +987,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private int getViewWidth() {
-		return Math.max(getContext().getWidth() - getLeftMargin() - getRightMargin(), 1);
+		return Math.max(Context.getWidth() - getLeftMargin() - getRightMargin(), 1);
 	}
 
 	protected synchronized void preparePaintInfo() {
@@ -1211,7 +1213,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private int paragraphSize(ZLTextWordCursor cursor, boolean beforeCurrentPosition, int unit) {
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
 		final int endWordNumber =
 			beforeCurrentPosition ? cursor.getWordNumber() : paragraphCursor.getParagraphLength();
@@ -1233,7 +1235,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private void skip(ZLTextWordCursor cursor, int unit, int size) {
-		final ZLPaintContext context = getContext();
+		final ZLPaintContext context = Context;
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
 		final int endWordNumber = paragraphCursor.getParagraphLength();
 
@@ -1314,7 +1316,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
 		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive() && !myStartCursor.isNull()) {
-			final ZLPaintContext context = getContext();
+			final ZLPaintContext context = Context;
 			final int yBottom = context.getHeight() - getBottomMargin() - 1;
 			final int yTop = yBottom - indicatorInfo.getHeight() + 1;
 			final int xLeft = getLeftMargin();
@@ -1353,7 +1355,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				if (!position.equalsToCursor(myStartCursor)) {
 					savePosition(position);
 				}
-				getApplication().refreshWindow();
+				Application.refreshWindow();
 				myTreeStateIsFrozen = false;
 				return true;
 			}
@@ -1390,10 +1392,19 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					preparePaintInfo();
 				}
 				*/
-				getApplication().refreshWindow();
+				Application.refreshWindow();
 				return true;
 			}
 		}
 		return false;
+	}
+
+	protected abstract boolean isSelectionEnabled();
+
+	protected void activateSelection(int x, int y) {
+		if (isSelectionEnabled()) {
+			mySelectionModel.activate(x, y);
+			Application.refreshWindow();
+		}
 	}
 }

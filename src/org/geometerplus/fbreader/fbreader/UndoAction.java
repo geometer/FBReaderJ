@@ -29,15 +29,15 @@ class UndoAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		return fbreader().getMode() != FBReader.ViewMode.BOOK_TEXT ||
-					 fbreader().getBookTextView().canUndoPageMove();
+		return Reader.getMode() != FBReader.ViewMode.BOOK_TEXT ||
+					 Reader.BookTextView.canUndoPageMove();
 	}
 
 	public void run() {
-		if (fbreader().getMode() == FBReader.ViewMode.BOOK_TEXT) {
-			fbreader().getBookTextView().undoPageMove();
+		if (Reader.getMode() == FBReader.ViewMode.BOOK_TEXT) {
+			Reader.BookTextView.undoPageMove();
 		} else {
-			fbreader().restorePreviousMode();
+			Reader.restorePreviousMode();
 		}
 	}
 }

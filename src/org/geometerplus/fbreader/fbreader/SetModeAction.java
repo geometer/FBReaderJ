@@ -27,11 +27,11 @@ class SetModeAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return (fbreader().getMode() & myVisibleInModes) != 0;
+		return (Reader.getMode() & myVisibleInModes) != 0;
 	}
 
 	public void run() {
-		fbreader().setMode(myModeToSet);
+		Reader.setMode(myModeToSet);
 	}
 
 	private final int myModeToSet;

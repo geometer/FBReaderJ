@@ -66,7 +66,8 @@ public abstract class ZLApplication {
 	public final ZLIntegerRangeOption KeyDelayOption =
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
 	
-	private final ZLPaintContext myContext;
+	public final ZLPaintContext Context;
+
 	protected ZLViewWidget myViewWidget;
 	private ZLApplicationWindow myWindow;
 	private ZLView myInitialView;
@@ -78,7 +79,7 @@ public abstract class ZLApplication {
 	//private ZLMessageHandler myPresentWindowHandler;
 
 	protected ZLApplication() {
-		myContext = ZLibrary.getInstance().createPaintContext();
+		Context = ZLibrary.getInstance().createPaintContext();
 		
 		if (ConfigAutoSavingOption.getValue()) {
 			//ZLOption.startAutoSave(ConfigAutoSaveTimeoutOption.getValue());
@@ -134,10 +135,6 @@ public abstract class ZLApplication {
 		}
 		myWindow.init();
 		setView(myInitialView);
-	}
-
-	public final ZLPaintContext getContext() {
-		return myContext;
 	}
 
 	public final void refreshWindow() {
@@ -602,14 +599,14 @@ public abstract class ZLApplication {
 				myMenubar = new Menubar();
 			}
 			final ArrayList stack = mySubmenuStack;
-			Menu menu = stack.isEmpty() ? myMenubar : (Menu)stack.get(stack.size() - 1);
+			final Menu menu = stack.isEmpty() ? myMenubar : (Menu)stack.get(stack.size() - 1);
 			if (ITEM == tag) {
-				String id = attributes.getValue("id");
+				final String id = attributes.getValue("id");
 				if (id != null) {
 					menu.addItem(id);
 				}
 			} else if (SUBMENU == tag) {
-				String id = attributes.getValue("id");
+				final String id = attributes.getValue("id");
 				if (id != null) {
 					stack.add(menu.addSubmenu(id));
 				}

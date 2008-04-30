@@ -27,11 +27,11 @@ class FindNextAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		ZLTextView view = fbreader().getTextView();
+		ZLTextView view = Reader.getTextView();
 		return (view != null) && view.canFindNext();
 	}
 
 	public void run() {
-		fbreader().getTextView().findNext();
+		Reader.getTextView().findNext();
 	}
 }

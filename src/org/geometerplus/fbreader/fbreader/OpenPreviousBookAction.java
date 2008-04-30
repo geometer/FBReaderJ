@@ -29,18 +29,18 @@ class OpenPreviousBookAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		switch (fbreader().getMode()) {
+		switch (Reader.getMode()) {
 			case FBReader.ViewMode.BOOK_TEXT:
 			case FBReader.ViewMode.CONTENTS:
-				return fbreader().getRecentBooksView().lastBooks().books().size() > 1;
+				return Reader.RecentBooksView.lastBooks().books().size() > 1;
 			default:
 				return false;
 		}
 	}
 
 	public void run() {
-		ArrayList books = fbreader().getRecentBooksView().lastBooks().books();
-		fbreader().openBook((BookDescription)books.get(1));
-		fbreader().refreshWindow();
+		final ArrayList books = Reader.RecentBooksView.lastBooks().books();
+		Reader.openBook((BookDescription)books.get(1));
+		Reader.refreshWindow();
 	}
 }

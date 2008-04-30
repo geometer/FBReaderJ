@@ -35,13 +35,13 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
 
 public final class BookModel {
-	private final ZLTextPlainModelImpl myBookTextModel = new ZLTextPlainModelImpl(65536);
-	private final ContentsModel myContentsModel = new ContentsModel();
+	public final BookDescription Description;
+	public final ZLTextPlainModelImpl BookTextModel = new ZLTextPlainModelImpl(65536);
+	public final ContentsModel ContentsModel = new ContentsModel();
+
 	private final HashMap myFootnotes = new HashMap();
 	private final HashMap myInternalHyperlinks = new HashMap();
 
-	private final BookDescription myDescription;
-	
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	public class Label {
@@ -55,30 +55,14 @@ public final class BookModel {
 	}
 	
 	public BookModel(final BookDescription description) {
-		myDescription = description;
-		ZLFile file = new ZLFile(description.getFileName());
+		Description = description;
+		ZLFile file = new ZLFile(description.FileName);
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
 		if (plugin != null) {
 			plugin.readModel(description, this);
 		}
 	}
 
-	public String getFileName() {
-		return myDescription.getFileName();
-	}
-	
-	public BookDescription getDescription() { 
-		return myDescription; 
-	}
-
-	public ZLTextPlainModelImpl getBookTextModel() {
-		return myBookTextModel;
-	}
-	
-	public ContentsModel getContentsModel() {
-		return myContentsModel;
-	}
-	
 	ZLTextPlainModelImpl getFootnoteModel(String id) {
 		final HashMap footnotes = myFootnotes;
 		ZLTextPlainModelImpl model = (ZLTextPlainModelImpl)footnotes.get(id);

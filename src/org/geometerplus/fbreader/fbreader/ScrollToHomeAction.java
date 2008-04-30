@@ -25,7 +25,7 @@ class ScrollToHomeAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return fbreader().getMode() == FBReader.ViewMode.BOOK_TEXT;
+		return Reader.getMode() == FBReader.ViewMode.BOOK_TEXT;
 	}
 
 	public boolean isEnabled() {
@@ -33,6 +33,6 @@ class ScrollToHomeAction extends FBAction {
 	}
 
 	public void run() {
-		fbreader().getBookTextView().scrollToHome();
+		Reader.BookTextView.scrollToHome();
 	}
 }

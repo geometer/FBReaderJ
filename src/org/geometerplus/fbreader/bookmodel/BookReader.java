@@ -30,7 +30,8 @@ import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
 import org.geometerplus.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 
 public class BookReader {
-	private final BookModel myBookModel;
+	public final BookModel Model;
+
 	private ZLTextPlainModelImpl myCurrentTextModel = null;
 	
 	private boolean myTextParagraphExists = false;
@@ -55,7 +56,7 @@ public class BookReader {
 	private final char[] PERIOD = "...".toCharArray();
 	
 	public BookReader(BookModel model) {
-		myBookModel = model;
+		Model = model;
 	}
 	
 	private final void flushTextBufferToParagraph() {
@@ -158,11 +159,11 @@ public class BookReader {
 	}
 	
 	public final void setMainTextModel() {
-		myCurrentTextModel = myBookModel.getBookTextModel();
+		myCurrentTextModel = Model.BookTextModel;
 	}
 	
 	public final void setFootnoteTextModel(String id) {
-		myCurrentTextModel = myBookModel.getFootnoteModel(id);
+		myCurrentTextModel = Model.getFootnoteModel(id);
 	}
 	
 	public final void addData(char[] data) {
@@ -212,12 +213,12 @@ public class BookReader {
 			if (myTextParagraphExists) {
 				--paragraphNumber;
 			}
-			myBookModel.addHyperlinkLabel(label, textModel, paragraphNumber);
+			Model.addHyperlinkLabel(label, textModel, paragraphNumber);
 		}
 	}
 	
 	public final void addHyperlinkLabel(String label, int paragraphNumber) {
-		myBookModel.addHyperlinkLabel(label, myCurrentTextModel, paragraphNumber);
+		Model.addHyperlinkLabel(label, myCurrentTextModel, paragraphNumber);
 	}
 	
 	public final void addContentsData(char[] data) {
@@ -233,8 +234,8 @@ public class BookReader {
 	public final void beginContentsParagraph(int referenceNumber) {
 		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		final ArrayList tocStack = myTOCStack;
-		if (textModel == myBookModel.getBookTextModel()) {
-			ContentsModel contentsModel = myBookModel.getContentsModel();
+		if (textModel == Model.BookTextModel) {
+			ContentsModel contentsModel = Model.ContentsModel;
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
 			}
@@ -260,7 +261,7 @@ public class BookReader {
 	public final void endContentsParagraph() {
 		final ArrayList tocStack = myTOCStack;
 		if (!tocStack.isEmpty()) {
-			ContentsModel contentsModel = myBookModel.getContentsModel();
+			final ContentsModel contentsModel = Model.ContentsModel;
 			final ZLTextBuffer contentsBuffer = myContentsBuffer;
 			if (!contentsBuffer.isEmpty()) {
 				contentsModel.addText(contentsBuffer);
@@ -276,7 +277,7 @@ public class BookReader {
 	}
 
 	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
-		ContentsModel contentsModel = myBookModel.getContentsModel();
+		final ContentsModel contentsModel = Model.ContentsModel;
 		if (contentsParagraphNumber < contentsModel.getParagraphsNumber()) {
 			contentsModel.setReference(
 				contentsModel.getTreeParagraph(contentsParagraphNumber), referenceNumber
@@ -296,21 +297,17 @@ public class BookReader {
 		beginContentsParagraph(-1);
 	}
 	
-	public final BookModel getModel() {
-		return myBookModel;
-	}
-
 	public final void addImageReference(String ref, short offset) {
 		final ZLTextPlainModelImpl textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {
 				flushTextBufferToParagraph();
-				textModel.addImage(ref, myBookModel.getImageMap(), offset);
+				textModel.addImage(ref, Model.getImageMap(), offset);
 			} else {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				textModel.addControl(FBTextKind.IMAGE, true);
-				textModel.addImage(ref, myBookModel.getImageMap(), offset);
+				textModel.addImage(ref, Model.getImageMap(), offset);
 				textModel.addControl(FBTextKind.IMAGE, false);
 				endParagraph();
 			}
@@ -318,7 +315,7 @@ public class BookReader {
 	}
 
 	public final void addImage(String id, ZLImage image) {
-		myBookModel.addImage(id, image);
+		Model.addImage(id, image);
 	}
 
 	public final void addFixedHSpace(short length) {

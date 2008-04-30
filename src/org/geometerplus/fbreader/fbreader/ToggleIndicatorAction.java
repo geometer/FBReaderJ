@@ -27,8 +27,8 @@ class ToggleIndicatorAction extends FBAction {
 	}
 
 	public void run() {
-		ZLBooleanOption option = ((FBIndicatorInfo)fbreader().getTextView().getIndicatorInfo()).ShowOption;
+		ZLBooleanOption option = (FBView.getIndicatorInfoStatic()).ShowOption;
 		option.setValue(!option.getValue());
-		fbreader().refreshWindow();
+		Reader.refreshWindow();
 	}
 }

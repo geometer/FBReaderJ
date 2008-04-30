@@ -23,6 +23,8 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 class ChangeFontSizeAction extends FBAction {
+	private final int myDelta;
+
 	ChangeFontSizeAction(FBReader fbreader, int delta) {
 		super(fbreader);
 		myDelta = delta;
@@ -32,9 +34,7 @@ class ChangeFontSizeAction extends FBAction {
 		ZLIntegerRangeOption option =
 			ZLTextStyleCollection.getInstance().getBaseStyle().FontSizeOption;
 		option.setValue(option.getValue() + myDelta);
-		fbreader().clearTextCaches();
-		fbreader().refreshWindow();
+		Reader.clearTextCaches();
+		Reader.refreshWindow();
 	}
-
-	private int myDelta;
 }

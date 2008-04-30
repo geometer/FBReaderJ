@@ -27,6 +27,6 @@ class ShowOptionsDialogAction extends FBAction {
 	}
 
 	protected void run() {
-		new OptionsDialog(fbreader()).getDialog().run();
+		new OptionsDialog(Reader).getDialog().run();
 	}
 }

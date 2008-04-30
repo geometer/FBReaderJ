@@ -22,10 +22,7 @@ package org.geometerplus.fbreader.description;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.fbreader.description.Author.MultiAuthor;
-import org.geometerplus.fbreader.description.Author.SingleAuthor;
 import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
 import org.geometerplus.fbreader.option.FBOptions;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
@@ -33,11 +30,12 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public class BookDescription {
+	public final String FileName;
+
 	private Author myAuthor;
 	private	String myTitle = "";
 	private	String mySequenceName = "";
 	private	int myNumberInSequence = 0;
-	private	final String myFileName;
 	private	String myLanguage = "";
 	private	String myEncoding = "";
 	private final static HashMap ourDescriptions = new HashMap();
@@ -65,7 +63,7 @@ public class BookDescription {
 		}
 		if (!checkFile || BookDescriptionUtil.checkInfo(file)) {
 			BookInfo info = new BookInfo(fileName);
-			description.myAuthor = SingleAuthor.create(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
+			description.myAuthor = Author.SingleAuthor.create(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
 			description.myTitle = info.TitleOption.getValue();
 			description.mySequenceName = info.SequenceNameOption.getValue();
 			description.myNumberInSequence = info.NumberInSequenceOption.getValue();
@@ -82,7 +80,7 @@ public class BookDescription {
 		}
 		ZLFile bookFile = new ZLFile(fileName);
 		
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile, false);
+		FormatPlugin plugin = FormatPlugin.PluginCollection.instance().getPlugin(bookFile, false);
 		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
 			return null;
 		}
@@ -92,7 +90,7 @@ public class BookDescription {
 		}
 		Author author = description.myAuthor;
 		if (author == null || author.getDisplayName().length() == 0) {
-			description.myAuthor = SingleAuthor.create();
+			description.myAuthor = Author.SingleAuthor.create();
 		}
 		if (description.myEncoding.length() == 0) {
 			description.myEncoding = "auto";
@@ -113,7 +111,7 @@ public class BookDescription {
 
 
 	private BookDescription(String fileName) {
-		myFileName = fileName;
+		FileName = fileName;
 		myAuthor = null;
 		myNumberInSequence = 0;
 	}
@@ -132,10 +130,6 @@ public class BookDescription {
 	
 	public int getNumberInSequence() {
 		return myNumberInSequence; 
-	}
-	
-	public String getFileName() {
-		return myFileName; 
 	}
 	
 	public String getLanguage() {
@@ -247,15 +241,15 @@ public class BookDescription {
 					strippedName = strippedName.substring(0, index + 1) + ' ' + strippedKey;
 				}
 			}
-			Author author = SingleAuthor.create(strippedName, strippedKey);
+			Author author = Author.SingleAuthor.create(strippedName, strippedKey);
 			
 			if (myDescription.myAuthor == null) {
 				myDescription.myAuthor = author;
 			} else {
 				if (myDescription.myAuthor.isSingle()) {
-					myDescription.myAuthor = MultiAuthor.create(myDescription.myAuthor);
+					myDescription.myAuthor = Author.MultiAuthor.create(myDescription.myAuthor);
 				}
-				((MultiAuthor)myDescription.myAuthor).addAuthor(author);
+				((Author.MultiAuthor)myDescription.myAuthor).addAuthor(author);
 			}
 		}
 		
@@ -292,7 +286,7 @@ public class BookDescription {
 		}
 		
 		public String getFileName() {
-			return myDescription.myFileName; 
+			return myDescription.FileName; 
 		}
 		
 		public String getLanguage() {
