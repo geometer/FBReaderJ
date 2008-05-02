@@ -73,7 +73,7 @@ public abstract class ZLTextParagraphCursor {
 						if (image != null) {
 							ZLImageData data = ZLImageManager.getInstance().getImageData(image);
 							if (data != null) {
-								elements.add(new ZLTextImageElement(imageEntry.getId(), data));
+								elements.add(new ZLTextImageElement(imageEntry.Id, data));
 							}
 						}
 						break;

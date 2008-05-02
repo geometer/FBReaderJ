@@ -19,21 +19,14 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-/**
- * класс целочисленная опция.
- * 
- * @author Администратор
- * 
- */
 public final class ZLIntegerOption extends ZLOption {
 	private final int myDefaultValue;
 	private int myValue;
 
-	public ZLIntegerOption(String category, String group, String optionName,
-			int defaultValue) {
+	public ZLIntegerOption(String category, String group, String optionName, int defaultValue) {
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
-		myValue = myDefaultValue;
+		myValue = defaultValue;
 	}
 
 	public void changeName(String optionName) {
@@ -62,11 +55,10 @@ public final class ZLIntegerOption extends ZLOption {
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue == myDefaultValue) {
-			// System.out.println(optionName() + " is unset");
+		if (value == myDefaultValue) {
 			unsetConfigValue();
 		} else {
-			setConfigValue("" + myValue);
+			setConfigValue("" + value);
 		}
 	}
 }

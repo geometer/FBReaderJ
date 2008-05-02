@@ -19,38 +19,27 @@
 
 package org.geometerplus.zlibrary.ui.swing.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.geometerplus.zlibrary.core.dialogs.ZLStringOptionEntry;
-import org.geometerplus.zlibrary.core.dialogs.ZLTextOptionEntry;
+import org.geometerplus.zlibrary.core.dialogs.*;
 
 public class ZLStringOptionView extends ZLSwingOptionView {
 	private JLabel myLabel;
 	private JTextField myTextField;
 	private JPanel myPanel;
 	
-	public ZLStringOptionView(String name, ZLStringOptionEntry option,
-			ZLSwingDialogContent tab, GridBagLayout layout) {
+	public ZLStringOptionView(String name, ZLStringOptionEntry option, ZLSwingDialogContent tab, GridBagLayout layout) {
 		super(name, option, tab, layout);
 	}
 
 	protected void _onAccept() {
-		((ZLStringOptionEntry) myOption).onAccept(myTextField.getText());
+		((ZLStringOptionEntry)myOption).onAccept(myTextField.getText());
 	}
 
 	protected void createItem() {
-		myTextField = new JTextField(((ZLTextOptionEntry) myOption).initialValue());
+		myTextField = new JTextField(((ZLStringOptionEntry)myOption).initialValue());
 		myTextField.setCaretPosition(0);
 		myTextField.setMargin(new Insets(0, 5, 0, 0));
 		myTextField.addKeyListener(new MyKeyListener());
@@ -93,16 +82,15 @@ public class ZLStringOptionView extends ZLSwingOptionView {
 	}
 
 	public void reset() {
-		myTextField.setText(((ZLStringOptionEntry) myOption).initialValue());
+		myTextField.setText(((ZLStringOptionEntry)myOption).initialValue());
 	}
 	
 	private class MyKeyListener extends KeyAdapter {
 		public void keyTyped(KeyEvent e) {
-			ZLStringOptionEntry o = (ZLStringOptionEntry) myOption;
+			ZLStringOptionEntry o = (ZLStringOptionEntry)myOption;
 			if (o.useOnValueEdited()) {
 				o.onValueEdited(myTextField.getText());
 			}
 		}
 	}
-
 }

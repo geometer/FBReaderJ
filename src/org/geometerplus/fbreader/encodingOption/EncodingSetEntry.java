@@ -44,5 +44,4 @@ public class EncodingSetEntry extends ZLComboOptionEntry {
 		myEncodingEntry.myInitialSetName = (String) getValues().get(index);
 		myEncodingEntry.resetView();
 	}
-
 }

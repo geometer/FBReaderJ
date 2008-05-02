@@ -20,9 +20,9 @@
 package org.geometerplus.zlibrary.text.model.impl;
 
 public class ZLTextMark {
-	public int ParagraphNumber;
-	public int Offset;
-	public int Length;
+	public final int ParagraphNumber;
+	public final int Offset;
+	public final int Length;
 
 	public ZLTextMark() {
 		ParagraphNumber = -1;
@@ -43,19 +43,8 @@ public class ZLTextMark {
 	}
 
 	public int compareTo(ZLTextMark mark) {
-		if (ParagraphNumber == mark.ParagraphNumber) {
-			if (Offset == mark.Offset) {
-				return 0;
-			} else if (Offset < mark.Offset) {
-				return -1;
-			} else {
-				return 1;
-			}
-		} else if (ParagraphNumber < mark.ParagraphNumber) {
-			return -1;
-		} else {
-			return 1;
-		}
+		final int diff = ParagraphNumber - mark.ParagraphNumber;
+		return (diff != 0) ? diff : Offset - mark.Offset;
 	}
 
 	public String toString() {

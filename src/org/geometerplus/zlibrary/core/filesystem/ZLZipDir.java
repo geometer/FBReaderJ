@@ -59,10 +59,10 @@ public class ZLZipDir extends ZLDir {
 			return EMPTY;
 		}
 		Enumeration/*ZipEntry*/ en = zf.entries();
-        while(en.hasMoreElements()) {
-        	ZipEntry entry = (ZipEntry)en.nextElement();
-        	newdirs.add(entry.getName());
-        }
+		while (en.hasMoreElements()) {
+			ZipEntry entry = (ZipEntry)en.nextElement();
+			newdirs.add(entry.getName());
+		}
 		return newdirs;
-	};
+	}
 }

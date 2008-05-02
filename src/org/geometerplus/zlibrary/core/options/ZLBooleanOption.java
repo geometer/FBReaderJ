@@ -26,7 +26,7 @@ public final class ZLBooleanOption extends ZLOption implements ZLSimpleOption {
 	public ZLBooleanOption(String category, String group, String optionName, boolean defaultValue) {
 		super(category, group, optionName);
 		myDefaultValue = defaultValue;
-		myValue = myDefaultValue;
+		myValue = defaultValue;
 	}
 
 	public int getType() {
@@ -54,11 +54,10 @@ public final class ZLBooleanOption extends ZLOption implements ZLSimpleOption {
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue == myDefaultValue) {
+		if (value == myDefaultValue) {
 			unsetConfigValue();
-			// System.out.println("unsett" + myValue);
 		} else {
-			setConfigValue(myValue ? "true" : "false");
+			setConfigValue(value ? "true" : "false");
 		}
 	}
 }

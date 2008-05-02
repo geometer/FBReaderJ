@@ -32,9 +32,7 @@
 	</target>
 
 	<target name="compile" depends="prepare">
-		<wtkbuild srcdir="${src.path}" destdir="${bin.dir}">
-			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
-		</wtkbuild>
+		<wtkbuild srcdir="${src.path}" destdir="${bin.dir}" />
 	</target>
 
 	<target name="package" depends="compile">

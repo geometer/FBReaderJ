@@ -20,21 +20,22 @@
 package org.geometerplus.zlibrary.core.util;
 
 public class ZLSearchPattern {
-	/*package*/ boolean IgnoreCase;
-	/*package*/ String LowerCasePattern;
-	/*package*/ String UpperCasePattern;
+	final boolean IgnoreCase;
+	final char[] LowerCasePattern;
+	final char[] UpperCasePattern;
 
-	public ZLSearchPattern(final String pattern, boolean ignoreCase) {
+	public ZLSearchPattern(String pattern, boolean ignoreCase) {
 		IgnoreCase = ignoreCase;
 		if (IgnoreCase) {
-			LowerCasePattern = pattern.toLowerCase();
-			UpperCasePattern = pattern.toUpperCase();
+			LowerCasePattern = pattern.toLowerCase().toCharArray();
+			UpperCasePattern = pattern.toUpperCase().toCharArray();
 		} else {
-			LowerCasePattern = pattern;
+			LowerCasePattern = pattern.toCharArray();
+			UpperCasePattern = null;
 		}
 	}
-	
+
 	public int getLength() {
-		return LowerCasePattern.length();
+		return LowerCasePattern.length;
 	}
 }

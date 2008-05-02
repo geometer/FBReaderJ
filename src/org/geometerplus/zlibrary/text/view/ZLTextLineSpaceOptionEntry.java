@@ -29,17 +29,17 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class ZLTextLineSpaceOptionEntry extends ZLComboOptionEntry {
 	private static final String KEY_UNCHANGED = "unchanged";
-	private static final ArrayList/*<std::string>*/ ourAllValues = new ArrayList();
-	private static final ArrayList/*<std::string>*/ ourAllValuesPlusBase = new ArrayList();
+	private static final ArrayList ourAllValues = new ArrayList();
+	private static final ArrayList ourAllValuesPlusBase = new ArrayList();
+
+	private final ZLIntegerOption myOption;
 	private final ZLResource myResource;
-	private ZLIntegerOption myOption;
-	private boolean myAllowBase;
+	private final boolean myAllowBase;
 	
-	public ZLTextLineSpaceOptionEntry(ZLIntegerOption option, final ZLResource resource,
-			boolean allowBase) {
-		myAllowBase = allowBase;
-		myResource = resource;
+	public ZLTextLineSpaceOptionEntry(ZLIntegerOption option, final ZLResource resource, boolean allowBase) {
 		myOption = option;
+		myResource = resource;
+		myAllowBase = allowBase;
 		if (ourAllValuesPlusBase.size() == 0) {
 			for (int i = 5; i <= 20; ++i) {
 				ourAllValues.add("" + (char)(i / 10 + '0') + '.' + (char)(i % 10 + '0'));
@@ -74,5 +74,4 @@ public class ZLTextLineSpaceOptionEntry extends ZLComboOptionEntry {
 			}
 		}
 	}
-
 }

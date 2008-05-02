@@ -32,59 +32,52 @@ public class ZLTextAlignmentOptionEntry extends ZLComboOptionEntry {
 	private static final String KEY_JUSTIFY = "justify";
 	private static final String KEY_UNCHANGED = "unchanged";
 	
-	private static final ArrayList/*<String>*/ ourValues4 = new ArrayList();
-	private static final ArrayList/*<String>*/ ourValues5 = new ArrayList();
+	private static final ArrayList ourValues4 = new ArrayList();
+	private static final ArrayList ourValues5 = new ArrayList();
+
 	private	final ZLResource myResource;
-	private	ZLIntegerOption myOption;
-	private	boolean myAllowUndefined;
-	
-	private ArrayList values4() {
-		if (ourValues4.size() == 0) {
-			ourValues4.add(myResource.getResource(KEY_LEFT).getValue());
-			ourValues4.add(myResource.getResource(KEY_RIGHT).getValue());
-			ourValues4.add(myResource.getResource(KEY_CENTER).getValue());
-			ourValues4.add(myResource.getResource(KEY_JUSTIFY).getValue());
-		}
-		return ourValues4;
-	}
-	
-	private ArrayList values5() {
-		if (ourValues5.size() == 0) {
-			ourValues5.add(myResource.getResource(KEY_UNCHANGED).getValue());
-			ourValues5.add(myResource.getResource(KEY_LEFT).getValue());
-			ourValues5.add(myResource.getResource(KEY_RIGHT).getValue());
-			ourValues5.add(myResource.getResource(KEY_CENTER).getValue());
-			ourValues5.add(myResource.getResource(KEY_JUSTIFY).getValue());
-		}
-		return ourValues5;
-	}
+	private	final ZLIntegerOption myOption;
+	private	final boolean myAllowUndefined;
 		
-	public ZLTextAlignmentOptionEntry(ZLIntegerOption option, final ZLResource resource,
-			boolean allowUndefined) {
+	public ZLTextAlignmentOptionEntry(ZLIntegerOption option, final ZLResource resource, boolean allowUndefined) {
 		myAllowUndefined = allowUndefined;
 		myOption = option;
 		myResource = resource;
+		if (ourValues5.isEmpty()) {
+			ourValues5.add(resource.getResource(KEY_UNCHANGED).getValue());
+			String value = resource.getResource(KEY_LEFT).getValue();
+			ourValues5.add(value);
+			ourValues4.add(value);
+			value = resource.getResource(KEY_RIGHT).getValue();
+			ourValues5.add(value);
+			ourValues4.add(value);
+			value = resource.getResource(KEY_CENTER).getValue();
+			ourValues5.add(value);
+			ourValues4.add(value);
+			value = resource.getResource(KEY_JUSTIFY).getValue();
+			ourValues5.add(value);
+			ourValues4.add(value);
+		}
 	}	
 		
 	public ArrayList getValues() {
-		return myAllowUndefined ? values5() : values4();
+		return myAllowUndefined ? ourValues5 : ourValues4;
 	}
 
 	public String initialValue() {
 		int value = myOption.getValue();
-		if (value >= values5().size()) {
+		if ((value < 0) || (value >= 5)) {
 			value = 0;
 		}
-		return (String) values5().get(value);
+		return (String)ourValues5.get(value);
 	}
 
 	public void onAccept(String value) {
-		for (int i = 0; i < values5().size(); ++i) {
-			if (values5().get(i).equals(value)) {
+		for (int i = 0; i < 5; ++i) {
+			if (ourValues5.get(i).equals(value)) {
 				myOption.setValue(i);
 				break;
 			}
 		}
 	}
-
 }

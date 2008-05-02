@@ -79,13 +79,13 @@ class CollectionModel extends ZLTextTreeModelImpl {
 			createParagraph(null);
 			insertText(FBTextKind.REGULAR, ZLResource.resource("library").getResource("noBooks").getValue());
 		} else {
-			String currentSequenceName = "";
+			String currentSeriesName = "";
 			ZLTextTreeParagraph sequenceParagraph;
 			for (int i = 0; i < authors.size(); i++) {
 				Author it = (Author)authors.get(i);
 				final ArrayList/*<BookDescription>*/ books = myCollection.books(it);
 				if (!books.isEmpty()) {
-					currentSequenceName = "";
+					currentSeriesName = "";
 					sequenceParagraph = null;
                     //todo 
 					ZLTextTreeParagraph authorParagraph = createParagraph(null);
@@ -93,12 +93,12 @@ class CollectionModel extends ZLTextTreeModelImpl {
 					//insertImage(AuthorInfoImageId);
 					for (int j = 0; j < books.size(); j++) {
 						BookDescription jt = (BookDescription)books.get(j);
-						final String sequenceName = jt.getSequenceName();
+						final String sequenceName = jt.getSeriesName();
 						if (sequenceName.length() == 0) {
-							currentSequenceName = "";
+							currentSeriesName = "";
 							sequenceParagraph = null;
-						} else if (sequenceName != currentSequenceName) {
-							currentSequenceName = sequenceName;
+						} else if (sequenceName != currentSeriesName) {
+							currentSeriesName = sequenceName;
 							sequenceParagraph = createParagraph(authorParagraph);
 							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
 							//insertImage(SeriesOrderImageId);
@@ -147,7 +147,7 @@ class CollectionModel extends ZLTextTreeModelImpl {
 
 		ZLTextTreeParagraph paragraph = getTreeParagraph(index);
 		int count = 1;
-		for (ZLTextTreeParagraph parent = paragraph.getParent(); (parent != null) && (parent.getChildren().size() == 1); parent = parent.getParent()) {
+		for (ZLTextTreeParagraph parent = paragraph.getParent(); (parent != null) && (parent.childNumber() == 1); parent = parent.getParent()) {
 			++count;
 		}
     

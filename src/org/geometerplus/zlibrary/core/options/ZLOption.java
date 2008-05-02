@@ -47,42 +47,11 @@ public abstract class ZLOption {
 		myGroup = group.intern();
 		myOptionName = optionName.intern();
 		myIsSynchronized = false;
-
-		/*
-		 * String value = myConfig.getValue(group, name, null);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * if ((value != null)) { && (КАТЕГОРИИ НЕ РАВНЫ)
-		 * myConfig.setValue(group, name, value, category); }
-		 */
 	}
 
 	protected void changeName(String optionName) {
 		myOptionName = optionName.intern();
 		myIsSynchronized = false;
-	}
-
-	/**
-	 * @return имя опции. вероятно нужно будет во view
-	 */
-	public String getName() {
-		return myOptionName;
-	}
-
-	/**
-	 * @return "группу" опции. вероятно нужно будет во view
-	 */
-	public String getGroup() {
-		return myGroup;
-	}
-
-	/**
-	 * @return "категорию" опции. вероятно нужно будет во view
-	 */
-	public String getCategory() {
-		return myCategory;
 	}
 
 	protected final String getConfigValue(String defaultValue) {

@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.core.dialogs.ZLBooleanOptionEntry;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 public class ZLSimpleBooleanOptionEntry extends ZLBooleanOptionEntry {
-	private ZLBooleanOption myOption;
+	private final ZLBooleanOption myOption;
 	
 	public ZLSimpleBooleanOptionEntry(ZLBooleanOption option) {
 		myOption = option;

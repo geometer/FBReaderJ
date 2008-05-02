@@ -40,7 +40,7 @@ class ItemView extends LinearLayout {
 		myNode = node;
 
 		final ImageView imageView = new ImageView(context);
-		String iconName = node.pixmapName();
+		final String iconName = node.PixmapName;
 		Drawable icon = (Drawable)ourIconMap.get(iconName);
 		if (icon == null) {
 			try {
@@ -59,7 +59,7 @@ class ItemView extends LinearLayout {
 		final TextView textView = new TextView(context);
 		textView.setPadding(0, 2, 0, 0);
 		textView.setTextSize(18);
-		textView.setText(node.displayName());
+		textView.setText(node.DisplayName);
 		addView(textView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}
 

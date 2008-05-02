@@ -59,6 +59,6 @@ public class ZLModelFactory {
 
 	//entries
 	static public ZLTextForcedControlEntry createForcedControlEntry() {
-		return new ZLTextForcedControlEntryImpl();
+		return new ZLTextForcedControlEntry();
 	}
 }

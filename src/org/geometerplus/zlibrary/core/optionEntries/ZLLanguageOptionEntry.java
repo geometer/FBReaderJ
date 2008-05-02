@@ -19,32 +19,35 @@
 
 package org.geometerplus.zlibrary.core.optionEntries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLComboOptionEntry;
 import org.geometerplus.zlibrary.core.language.ZLLanguageList;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 public class ZLLanguageOptionEntry extends ZLComboOptionEntry {
-	public ZLLanguageOptionEntry(ZLStringOption languageOption, ArrayList/*<String>*/ languageCodes) {
+	private final ArrayList myValues = new ArrayList();
+	private	final TreeMap myValuesToCodes = new TreeMap();
+	private	String myInitialValue;
+	private	ZLStringOption myLanguageOption;
+
+	public ZLLanguageOptionEntry(ZLStringOption languageOption, ArrayList languageCodes) {
 		myLanguageOption = languageOption;
-		String initialCode = myLanguageOption.getValue();
-		for (Iterator it = languageCodes.iterator(); it.hasNext(); ) {
-			String itstr = (String)it.next();
-			String name = ZLLanguageList.languageName(itstr);
-			myValuesToCodes.put(name, itstr);
-			if (initialCode.equals(itstr)) {
+		final String initialCode = myLanguageOption.getValue();
+		final int len = languageCodes.size();
+		for (int i = 0; i < len; ++i) {
+			final String code = (String)languageCodes.get(i);
+			final String name = ZLLanguageList.languageName(code);
+			myValuesToCodes.put(name, code);
+			if (initialCode.equals(code)) {
 				myInitialValue = name;
 			}
 		}
 		for (Iterator it = myValuesToCodes.keySet().iterator(); it.hasNext(); ) {
 			myValues.add(it.next());
 		}
-		String otherCode = "other";
-		String otherName = ZLLanguageList.languageName(otherCode);
+		final String otherCode = "other";
+		final String otherName = ZLLanguageList.languageName(otherCode);
 		myValues.add(otherName);
 		myValuesToCodes.put(otherName,otherCode);
 		if ((myInitialValue == null) || (myInitialValue.length() == 0)) {
@@ -52,20 +55,15 @@ public class ZLLanguageOptionEntry extends ZLComboOptionEntry {
 		}
 	}
 
-	public	String initialValue() {
+	public String initialValue() {
 		return myInitialValue;
 	}
 	
-	public	ArrayList/*<String>*/ getValues() {
+	public ArrayList getValues() {
 		return myValues;
 	}
 	
-	public	void onAccept(String value) {
+	public void onAccept(String value) {
 		myLanguageOption.setValue((String)myValuesToCodes.get(value));
 	}
-
-	private final ArrayList/*<String>*/ myValues = new ArrayList();
-	private	final HashMap/*<String,String>*/ myValuesToCodes = new HashMap();
-	private	String myInitialValue;
-	private	ZLStringOption myLanguageOption;
 }

@@ -22,9 +22,7 @@ package org.geometerplus.zlibrary.text.model.impl;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
-import org.geometerplus.zlibrary.text.model.ZLTextTreeModel;
-import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
+import org.geometerplus.zlibrary.text.model.*;
 
 public class ZLTextTreeModelImpl extends ZLTextModelImpl implements ZLTextTreeModel {
 	private final ArrayList myParagraphs = new ArrayList();

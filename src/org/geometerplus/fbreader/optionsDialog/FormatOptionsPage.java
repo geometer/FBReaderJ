@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.text.view.style.ZLTextFullStyleDecoration;
 
 import static org.geometerplus.fbreader.bookmodel.FBTextKind.*;
 
-public class FormatOptionsPage extends OptionsPage {
+class FormatOptionsPage extends OptionsPage {
 	private static final String KEY_STYLE = "style";
 	private static final String KEY_BASE = "Base";
 
@@ -52,8 +52,8 @@ public class FormatOptionsPage extends OptionsPage {
 
 		ZLTextStyleCollection collection = ZLTextStyleCollection.getInstance();
 		byte styles[] = { REGULAR, TITLE, SECTION_TITLE, SUBTITLE, H1, H2, H3, H4, H5, H6, ANNOTATION, EPIGRAPH, PREFORMATTED, AUTHOR,/* DATEKIND,*/ POEM_TITLE, STANZA, VERSE };
-		final int STYLES_NUMBER = styles.length;
-		for (int i = 0; i < STYLES_NUMBER; ++i) {
+		final int stylesNumber = styles.length;
+		for (int i = 0; i < stylesNumber; ++i) {
 			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration != null) {
 				myComboEntry.addValue(styleResource.getResource(decoration.getName()).getValue());
@@ -78,7 +78,7 @@ public class FormatOptionsPage extends OptionsPage {
 			);
 		}
 
-		for (int i = 0; i < STYLES_NUMBER; ++i) {
+		for (int i = 0; i < stylesNumber; ++i) {
 			ZLTextStyleDecoration d = collection.getDecoration(styles[i]);
 			if ((d != null) && (d.isFullDecoration())) {
 				ZLTextFullStyleDecoration decoration = (ZLTextFullStyleDecoration) d;

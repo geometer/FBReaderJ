@@ -112,11 +112,11 @@ public final class FBReader extends ZLApplication {
 
 	public FBReader(String[] args) {
 		myArg0 = (args.length > 0) ? args[0] : null;
-		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(this, true));
-		addAction(ActionCode.FULLSCREEN_ON, new ZLApplication.FullscreenAction(this, false));
+		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(true));
+		addAction(ActionCode.FULLSCREEN_ON, new ZLApplication.FullscreenAction(false));
 		addAction(ActionCode.QUIT, new QuitAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
-		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction(this));
+		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction());
 
 		addAction(ActionCode.UNDO, new UndoAction(this));
 		addAction(ActionCode.REDO, new RedoAction(this));

@@ -26,10 +26,10 @@ import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextBaseStyle implements ZLTextStyle {
-	private final String CATEGORY = ZLOption.LOOK_AND_FEEL_CATEGORY;
-	private final String COLORS = "Colors";
-	private final String GROUP = "Style";
-	private final String OPTIONS = "Options";
+	private static final String CATEGORY = ZLOption.LOOK_AND_FEEL_CATEGORY;
+	private static final String COLORS = "Colors";
+	private static final String GROUP = "Style";
+	private static final String OPTIONS = "Options";
 
 	public final ZLColorOption BackgroundColorOption =
 		new ZLColorOption(CATEGORY, COLORS, "Background", new ZLColor(255, 255, 255));

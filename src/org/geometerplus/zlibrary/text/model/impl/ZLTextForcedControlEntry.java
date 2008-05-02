@@ -19,18 +19,57 @@
 
 package org.geometerplus.zlibrary.text.model.impl;
 
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
-public interface ZLTextForcedControlEntry extends ZLTextParagraph.Entry {
-	boolean isLeftIndentSupported();
-	short getLeftIndent();
-	void setLeftIndent(short leftIndent);
+public class ZLTextForcedControlEntry {
+	private final static int SUPPORTS_LEFT_INDENT = 1 << 0;
+	private final static int SUPPORTS_RIGHT_INDENT = 1 << 1;
+	private final static int SUPPORTS_ALIGNMENT_TYPE = 1 << 2;
+	
+	private int myMask;
+	private short myLeftIndent;
+	private short myRightIndent;
+	private byte myAlignmentType;
+		
+	ZLTextForcedControlEntry() {
+	}
 
-	boolean isRightIndentSupported();
-	short getRightIndent();
-	void setRightIndent(short rightIndent);
+	public boolean isLeftIndentSupported() {
+		return (myMask & SUPPORTS_LEFT_INDENT) == SUPPORTS_LEFT_INDENT;
+	}
+	
+	public short getLeftIndent() {
+		return myLeftIndent;
+	};
+	
+	public void setLeftIndent(short leftIndent) {
+		myMask |= SUPPORTS_LEFT_INDENT;
+		myLeftIndent = leftIndent;
+	}
+	
+	public boolean isRightIndentSupported() {
+		return (myMask & SUPPORTS_RIGHT_INDENT) == SUPPORTS_RIGHT_INDENT;
+	}
+	
+	public short getRightIndent() {
+		return myRightIndent;
+	}
+	
+	public void setRightIndent(short rightIndent) {
+		myMask |= SUPPORTS_RIGHT_INDENT;
+		myRightIndent = rightIndent;
+	}
 
-	boolean isAlignmentTypeSupported();
-	byte getAlignmentType();
-	void setAlignmentType(byte alignmentType);
+	public boolean isAlignmentTypeSupported() {
+		return (myMask & SUPPORTS_ALIGNMENT_TYPE) == SUPPORTS_ALIGNMENT_TYPE;
+	}
+	
+	public byte getAlignmentType() {
+		return myAlignmentType;
+	}
+	
+	public void setAlignmentType(byte alignmentType) {
+		myMask |= SUPPORTS_ALIGNMENT_TYPE;
+		myAlignmentType = alignmentType;
+	}
 }

@@ -19,9 +19,6 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
-
 public interface ZLTextTreeParagraph extends ZLTextParagraph {
 	boolean isOpen();
 	void open(boolean o);
@@ -32,8 +29,8 @@ public interface ZLTextTreeParagraph extends ZLTextParagraph {
 	ZLTextTreeParagraph getParent();
 
 	boolean hasChildren();
+	int childNumber();
 	boolean isLastChild();
-	ArrayList getChildren();
 	int getFullSize();	
 
 	void removeFromParent();

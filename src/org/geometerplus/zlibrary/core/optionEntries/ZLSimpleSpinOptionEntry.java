@@ -23,12 +23,12 @@ import org.geometerplus.zlibrary.core.dialogs.ZLSpinOptionEntry;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
 public class ZLSimpleSpinOptionEntry extends ZLSpinOptionEntry {
-	private int myStep;
-	private ZLIntegerRangeOption myOption;
+	private final ZLIntegerRangeOption myOption;
+	private final int myStep;
 	
 	public ZLSimpleSpinOptionEntry(ZLIntegerRangeOption option, int step) {
-		myStep = step;
 		myOption = option;
+		myStep = step;
 	}
 	
 	public int getStep() {
@@ -40,11 +40,11 @@ public class ZLSimpleSpinOptionEntry extends ZLSpinOptionEntry {
 	}
 
 	public int maxValue() {
-		return myOption.getMaxValue();
+		return myOption.MaxValue;
 	}
 
 	public int minValue() {
-		return myOption.getMinValue();
+		return myOption.MinValue;
 	}
 
 	public void onAccept(int value) {

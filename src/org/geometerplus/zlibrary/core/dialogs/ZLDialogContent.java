@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.options.*;
 
 public abstract class ZLDialogContent {
 	private final ZLResource myResource;
-	private final ArrayList myViews = new ArrayList();
+	protected final ArrayList Views = new ArrayList();
 	
 	private static ZLOptionEntry createEntryByOption(ZLSimpleOption option) {
 		switch (option.getType()) {
@@ -44,10 +44,6 @@ public abstract class ZLDialogContent {
 		default:
 			return null;
 		}
-	}
-
-	protected ArrayList getViews() {
-		return myViews;
 	}
 	
 	protected ZLDialogContent(ZLResource resource) {
@@ -93,22 +89,22 @@ public abstract class ZLDialogContent {
 	}
 
 	final void accept() {
-		final int size = myViews.size();
+		final int size = Views.size();
 		for (int i = 0; i < size; i++) {
-			((ZLOptionView)myViews.get(i)).onAccept();
+			((ZLOptionView)Views.get(i)).onAccept();
 		}
 	}
 
 	final void reset() {
-		final int size = myViews.size();
+		final int size = Views.size();
 		for (int i = 0; i < size; i++) {
-			((ZLOptionView)myViews.get(i)).reset();
+			((ZLOptionView)Views.get(i)).reset();
 		}
 	}
 
 	protected final void addView(ZLOptionView view) {
 		if (view != null) {
-			myViews.add(view);
+			Views.add(view);
 		}
 	}
 }

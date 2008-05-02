@@ -29,7 +29,6 @@ public class ZLTextStyleCollection {
 	private static ZLTextStyleCollection ourInstance = null;
 	
 	private ZLTextBaseStyle myBaseStyle;
-	private ZLTextPositionIndicatorStyle myIndicatorStyle;
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 	
 	private ZLTextStyleCollection() {
@@ -52,10 +51,6 @@ public class ZLTextStyleCollection {
 	
 	public ZLTextBaseStyle getBaseStyle() {
 		return myBaseStyle;
-	}
-	
-	public ZLTextPositionIndicatorStyle getIndicatorStyle() {
-		return myIndicatorStyle;
 	}
 	
 	public ZLTextStyleDecoration getDecoration(byte kind) {

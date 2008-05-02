@@ -19,27 +19,27 @@
 
 package org.geometerplus.zlibrary.core.optionEntries;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLComboOptionEntry;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public class ZLFontFamilyOptionEntry extends ZLComboOptionEntry {
-	private ZLStringOption myOption;
+	private final ZLStringOption myOption;
 	private final ZLPaintContext myContext;
 	
-	public ZLFontFamilyOptionEntry(ZLStringOption option, final ZLPaintContext context) {
+	public ZLFontFamilyOptionEntry(ZLStringOption option, ZLPaintContext context) {
 		myOption = option;
 		myContext = context;
 		String value = option.getValue();
-		if (value != null && !value.equals("")) {
+		if (value != null && (value.length() > 0)) {
 			option.setValue(myContext.realFontFamilyName(value));
 		}	
 	}
 
 	public ArrayList getValues() {
-		return (ArrayList) myContext.fontFamilies();
+		return myContext.fontFamilies();
 	}
 
 	public String initialValue() {
@@ -49,5 +49,4 @@ public class ZLFontFamilyOptionEntry extends ZLComboOptionEntry {
 	public void onAccept(String value) {
 		myOption.setValue(value);
 	}
-
 }

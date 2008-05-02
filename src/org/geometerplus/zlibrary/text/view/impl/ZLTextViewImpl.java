@@ -94,7 +94,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	private boolean myTreeStateIsFrozen = false;
 
-	private final ZLTextRectangularAreaVector myTextElementMap
+	final ZLTextRectangularAreaVector myTextElementMap
 		= new ZLTextRectangularAreaVector();
 	private final ZLTextRectangularAreaVector myTreeNodeMap
 		= new ZLTextRectangularAreaVector();
@@ -511,7 +511,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		for (int wordNumber = info.RealStartWordNumber; wordNumber != endWordNumber; ++wordNumber, charNumber = 0) {
 			final ZLTextElement element = paragraph.getElement(wordNumber);
 			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
-				ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.getArea(index++);
+				final ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.getArea(index++);
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
 				}
@@ -519,9 +519,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				final int y = area.YEnd - getElementDescent(context, element) - myTextStyle.getVerticalShift();
 				context.moveXTo(x);
 				if (element instanceof ZLTextWord) {
-					drawWord(x, y, (ZLTextWord) element, charNumber, -1, false);
+					drawWord(x, y, (ZLTextWord)element, charNumber, -1, false);
 				} else {
-					context.drawImage(x, y, ((ZLTextImageElement) element).ImageData);
+					context.drawImage(x, y, ((ZLTextImageElement)element).ImageData);
 				}
 			}
 		}
@@ -673,9 +673,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (isFirstLine) {
 			ZLTextElement element = paragraphCursor.getElement(currentWordIndex);
 			while (element instanceof ZLTextControlElement) {
-				if (element instanceof ZLTextControlElement) {
-					applyControl((ZLTextControlElement) element);
-				}
+				applyControl((ZLTextControlElement)element);
 				++currentWordIndex;
 				currentCharNumber = 0;
 				if (currentWordIndex == endIndex) {
@@ -744,7 +742,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (element instanceof ZLTextControlElement) {
-				applyControl((ZLTextControlElement) element);
+				applyControl((ZLTextControlElement)element);
 			} else if (element instanceof ZLTextImageElement) {
 				wordOccurred = true;
 				isVisible = true;
@@ -894,7 +892,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			} else if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(context, element);
-				final int length = (element instanceof ZLTextWord) ? ((ZLTextWord) element).Length : 0;
+				final int length = (element instanceof ZLTextWord) ? ((ZLTextWord)element).Length : 0;
 				myTextElementMap.add(new ZLTextElementArea(paragraphNumber, wordNumber, charNumber, 
 					length, false, changeStyle, myTextStyle, element, x, x + width - 1, y - height + 1, y + descent));
 				changeStyle = false;

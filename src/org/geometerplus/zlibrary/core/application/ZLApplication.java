@@ -275,42 +275,35 @@ public abstract class ZLApplication {
 		abstract protected void run();
 	}
 
-	//full screen action
-	protected static class FullscreenAction extends ZLAction {
-		private final ZLApplication myApplication;
+	protected class FullscreenAction extends ZLAction {
 		private	final boolean myIsToggle;
 
-		public FullscreenAction(ZLApplication application, boolean toggle) {
-			myApplication = application;
+		public FullscreenAction(boolean toggle) {
 			myIsToggle = toggle;
 		}
 		
 		public boolean isVisible() {
-			return myIsToggle || !myApplication.isFullscreen();
+			return myIsToggle || !isFullscreen();
 		}
 		
 		public void run() {
-			myApplication.setFullscreen(!myApplication.isFullscreen());
+			setFullscreen(!isFullscreen());
 		}
 	}
 
-	//rotation action
-	protected static final class RotationAction extends ZLAction {
-		private ZLApplication myApplication;
-
-		public RotationAction(ZLApplication application) {
-			myApplication = application;
+	protected final class RotationAction extends ZLAction {
+		public RotationAction() {
 		}
-		
+
 		public boolean isVisible() {
-			return (myApplication.myViewWidget != null) &&
-			 ((myApplication.RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0) ||
-				(myApplication.myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
+			return (myViewWidget != null) &&
+			 ((RotationAngleOption.getValue() != ZLViewWidget.Angle.DEGREES0) ||
+				(myViewWidget.getRotation() != ZLViewWidget.Angle.DEGREES0));
 		}
 		
 		public void run() {
-			int optionValue = myApplication.RotationAngleOption.getValue();
-			int oldAngle = myApplication.myViewWidget.getRotation();
+			int optionValue = RotationAngleOption.getValue();
+			int oldAngle = myViewWidget.getRotation();
 			int newAngle = ZLViewWidget.Angle.DEGREES0;
 			if (optionValue == -1) {
 				newAngle = (oldAngle + 90) % 360;
@@ -318,9 +311,9 @@ public abstract class ZLApplication {
 				newAngle = (oldAngle == ZLViewWidget.Angle.DEGREES0) ?
 					optionValue : ZLViewWidget.Angle.DEGREES0;
 			}
-			myApplication.myViewWidget.rotate(newAngle);
-			myApplication.AngleStateOption.setValue(newAngle);
-			myApplication.refreshWindow();		
+			myViewWidget.rotate(newAngle);
+			AngleStateOption.setValue(newAngle);
+			refreshWindow();		
 		}
 	}
 	
@@ -492,20 +485,12 @@ public abstract class ZLApplication {
 	//MenuBar
 	public static final class Menubar extends Menu {
 		public static final class PlainItem implements Item {
-			private final String myName;
-			private final String myActionId;
+			public final String Name;
+			public final String ActionId;
 
 			public PlainItem(String name, String actionId) {
-				myName = name;
-				myActionId = actionId;
-			}
-
-			public String getName() {
-				return myName;
-			}
-			
-			public String getActionId() {
-				return myActionId;
+				Name = name;
+				ActionId = actionId;
 			}
 		};
 

@@ -99,9 +99,9 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 					if (name != null) {
 						String sequenceName = name;
 						sequenceName.trim();
-						myDescription.setSequenceName(sequenceName);
+						myDescription.setSeriesName(sequenceName);
 						String number = attributes.getValue("number");
-						myDescription.setNumberInSequence((number != null) ? Integer.parseInt(number) : 0);
+						myDescription.setNumberInSeries((number != null) ? Integer.parseInt(number) : 0);
 					}
 				}
 				break;
@@ -179,14 +179,6 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 			}
 		}
 	}
-
-	//------------------------------------------------
-	
-	//private boolean myInterrupted;
-		
-	//public void interrupt() {
-	//	myInterrupted = true;
-	//}
 
 	public boolean readDocument(String fileName) {
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();

@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.encoding.ZLEncodingCollection;
 import org.geometerplus.fbreader.encodingOption.*;
 import org.geometerplus.fbreader.collection.BookCollection;
 import org.geometerplus.fbreader.fbreader.*;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class OptionsDialog {
 	private ZLOptionsDialog myDialog;

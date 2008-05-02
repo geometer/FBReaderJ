@@ -70,6 +70,10 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 		return (myChildren != null) && !myChildren.isEmpty();
 	}
 
+	public int childNumber() {
+		return (myChildren != null) ? myChildren.size() : 0;
+	}
+
 	public boolean isLastChild() {
 		if (myParent == null) {
 			return false;
@@ -96,10 +100,6 @@ final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTex
 		}
 	}
 	
-	public ArrayList getChildren() {
-		return myChildren;
-	}
-
 	private void addChild(ZLTextTreeParagraph child) {
 		if (myChildren == null) {
 			myChildren = new ArrayList();

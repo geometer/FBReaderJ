@@ -85,22 +85,11 @@ final class Base64EncodedImage implements ZLImage {
 			data[dataPos++] = (byte) (((n1 & 0xf) << 4) | ((n2 >> 2) & 0xf));
 			data[dataPos++] = (byte) (n2 << 6 | n3);
 		}
-/*		if (number[2] == 64) {
-			byte [] tmp = new byte[newLength - 2];
-			System.arraycopy(myData, 0, tmp, 0, newLength - 2);
-			myData = tmp;
-		} else if (number[3] == 64) {
-			byte [] tmp = new byte[newLength - 1];
-			System.arraycopy(myData, 0, tmp, 0, newLength - 1);
-			myData = tmp;
-		}
-			
-*/			
 		myData = data;
 		myEncodedData = null;
 	}
 	
-	public byte [] byteData() {
+	public byte[] byteData() {
 		decode();
 		return myData;
 	}

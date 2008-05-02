@@ -19,21 +19,15 @@
 
 package org.geometerplus.fbreader.formats;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.description.BookDescription.WritableBookDescription;
-import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
-import org.geometerplus.fbreader.formats.html.HtmlPlugin;
-import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
-import org.geometerplus.fbreader.formats.plucker.PluckerPlugin;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
-import org.geometerplus.zlibrary.core.options.*;
 
 public abstract class FormatPlugin {
 	public abstract boolean providesMetaInfo();
@@ -113,62 +107,7 @@ public abstract class FormatPlugin {
 
 	}*/
 	
-	
 	static class FormatInfoPage {
 		protected FormatInfoPage() {}
-	};
-
-	public static class PluginCollection {
-
-		private static PluginCollection ourInstance;
-		private final ArrayList myPlugins = new ArrayList();
-		public ZLStringOption DefaultLanguageOption;
-		public ZLStringOption DefaultEncodingOption;
-		public ZLBooleanOption LanguageAutoDetectOption;
-		
-		public static PluginCollection instance() {
-			if (ourInstance == null) {
-				ourInstance = new PluginCollection();
-				ourInstance.myPlugins.add(new FB2Plugin());
-				ourInstance.myPlugins.add(new PluckerPlugin());
-				//ourInstance->myPlugins.push_back(new DocBookPlugin());
-				//ourInstance.myPlugins.add(new HtmlPlugin());
-				/*ourInstance.myPlugins.add(new TxtPlugin());
-				ourInstance.myPlugins.add(new PalmDocPlugin());
-				ourInstance.myPlugins.add(new MobipocketPlugin());
-				ourInstance.myPlugins.add(new ZTXTPlugin());
-				ourInstance.myPlugins.add(new TcrPlugin());
-				ourInstance.myPlugins.add(new CHMPlugin());
-				*/
-				ourInstance.myPlugins.add(new OEBPlugin());
-				//ourInstance.myPlugins.add(new RtfPlugin());
-				//ourInstance.myPlugins.add(new OpenReaderPlugin());
-			}
-			return ourInstance;
-		}
-		
-		public static void deleteInstance() {
-			if (ourInstance != null) {
-				ourInstance = null;
-			}
-		}
-
-		private PluginCollection() {
-			LanguageAutoDetectOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Format", "AutoDetect", true);
-			DefaultLanguageOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", "en"); 
-			DefaultEncodingOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultEncoding", "windows-1252");
-		}
-			
-		public FormatPlugin getPlugin(ZLFile file, boolean strong) {
-			final ArrayList plugins = myPlugins;
-			final int numberOfPlugins = plugins.size();
-			for (int i = 0; i < numberOfPlugins; ++i) {
-				FormatPlugin fp = (FormatPlugin)plugins.get(i);
-				if ((!strong || fp.providesMetaInfo()) && fp.acceptsFile(file)) {
-					return fp;
-				}
-			}
-			return null;
-		}
 	}
 }

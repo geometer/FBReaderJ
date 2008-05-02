@@ -104,5 +104,4 @@ public class EncodingEntry extends ZLComboOptionEntry {
 	public void onValueSelected(int index) {
 		myInitialValues.put(myInitialSetName, getValues().get(index));
 	}
-
 }

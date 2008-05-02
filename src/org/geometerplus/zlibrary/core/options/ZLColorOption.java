@@ -68,10 +68,10 @@ public final class ZLColorOption extends ZLOption {
 				myValue = colorValue;
 			}
 			myIsSynchronized = true;
-			if (myValue.equals(myDefaultValue)) {
+			if (colorValue.equals(myDefaultValue)) {
 				unsetConfigValue();
 			} else {
-				setConfigValue("" + myValue.getIntValue());
+				setConfigValue("" + colorValue.getIntValue());
 			}
 		}
 	}

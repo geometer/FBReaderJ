@@ -23,7 +23,7 @@ public abstract class ZLOptionView {
 	protected final String myName;
 	protected final ZLOptionEntry myOption;
 	private boolean myInitialized;
-	
+
 	protected ZLOptionView(String name, ZLOptionEntry option) {
 		myName = name;
 		myOption = option;
@@ -55,10 +55,10 @@ public abstract class ZLOptionView {
 			}
 		}
 	}
-	
+
 	protected abstract void hide();
 	protected abstract void show();
-		
+
 	public final void onAccept() {
 		if (myInitialized) {
 			_onAccept();

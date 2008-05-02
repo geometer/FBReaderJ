@@ -19,11 +19,6 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-/**
- * класс строковая опция.
- * 
- * @author Администратор
- */
 public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
 	private final String myDefaultValue;
 	private String myValue;

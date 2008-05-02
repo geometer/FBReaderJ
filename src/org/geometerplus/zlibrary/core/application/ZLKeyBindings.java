@@ -69,10 +69,10 @@ public final class ZLKeyBindings {
 			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
 		for (int i = 0; i < size; ++i) {
 			keyOption.changeName(BINDED_KEY + i);
-			String keyValue = keyOption.getValue();
+			final String keyValue = keyOption.getValue();
 			if (keyValue.length() != 0) {
 				actionOption.changeName(BINDED_ACTION + i);
-				String actionValue = actionOption.getValue();
+				final String actionValue = actionOption.getValue();
 				if (actionValue.length() != 0) {
 					bindKey(keyValue, actionValue);
 				}
@@ -94,9 +94,9 @@ public final class ZLKeyBindings {
 		final ZLStringOption actionOption =
 			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
 		for (Iterator it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
-			final String key = (String) it.next();
-			String originalValue = (String) keymap.get(key);
-			String value = (String) myBindingsMap.get(key);
+			final String key = (String)it.next();
+			final String originalValue = (String)keymap.get(key);
+			final String value = (String)myBindingsMap.get(key);
 			if (!value.equals(originalValue)) {
 				keyOption.changeName(BINDED_KEY + counter);
 				actionOption.changeName(BINDED_ACTION + counter);
@@ -107,5 +107,4 @@ public final class ZLKeyBindings {
 		}
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
 	}
-	
 }

@@ -47,7 +47,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			myMenuStack.pop();
 		}
 		protected void processItem(ZLApplication.Menubar.PlainItem item) {
-			Menu.Item menuItem = myMenuStack.peek().add(0, myItemCount++, item.getName());
+			Menu.Item menuItem = myMenuStack.peek().add(0, myItemCount++, item.Name);
 			menuItem.setClickListener(myMenuListener);
 			myMenuItemMap.put(menuItem, item);
 		}
@@ -59,7 +59,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final Menu.OnClickListener myMenuListener =
 		new Menu.OnClickListener() {
 			public boolean onClick(Menu.Item item) {
-				getApplication().doAction(myMenuItemMap.get(item).getActionId());
+				getApplication().doAction(myMenuItemMap.get(item).ActionId);
 				return true;
 			}
 		};
@@ -76,7 +76,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	protected void refresh() {
 		super.refresh();
 		for (Map.Entry<Menu.Item,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
-			final String actionId = entry.getValue().getActionId();
+			final String actionId = entry.getValue().ActionId;
 			final ZLApplication application = getApplication();
 			entry.getKey().setShown(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}

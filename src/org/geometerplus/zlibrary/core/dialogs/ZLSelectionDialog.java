@@ -23,6 +23,12 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 public abstract class ZLSelectionDialog {
+	public final static int UPDATE_NONE = 0;
+	public final static int UPDATE_STATE = 1;
+	public final static int UPDATE_LIST = 2;
+	public final static int UPDATE_SELECTION = 4;
+	public final static int UPDATE_ALL = UPDATE_STATE | UPDATE_LIST | UPDATE_SELECTION;
+
 	private final ZLTreeHandler myHandler;
 
 	protected ZLSelectionDialog(ZLTreeHandler myHandler) {
@@ -54,24 +60,24 @@ public abstract class ZLSelectionDialog {
 		if (node == null) {
 			return;
 		}
-		if (node.isFolder()) {
+		if (node.IsFolder) {
 			myHandler.changeFolder(node);
 			update();
 		} else if (myHandler.isOpenHandler()) {
-			if (((ZLTreeOpenHandler) myHandler).accept(node)) {
+			if (((ZLTreeOpenHandler)myHandler).accept(node)) {
 				exitDialog();
 			} else {
 				update();
 			}
 		} else {
-			((ZLTreeSaveHandler) myHandler).processNode(node);
+			((ZLTreeSaveHandler)myHandler).processNode(node);
 			update();
 		}
 	}
 	
 	protected void runState(String state) {
 		if (!myHandler.isOpenHandler()) {
-			if (((ZLTreeSaveHandler) myHandler).accept(state)) {
+			if (((ZLTreeSaveHandler)myHandler).accept(state)) {
 				exitDialog();
 			}
 		}
@@ -79,13 +85,13 @@ public abstract class ZLSelectionDialog {
 	
 	protected void update() {
 		int info = handler().updateInfo();
-		if ((info & UpdateType.UPDATE_STATE) != 0) {
+		if ((info & UPDATE_STATE) != 0) {
 			updateStateLine();
 		}
-		if ((info & UpdateType.UPDATE_LIST) != 0) {
+		if ((info & UPDATE_LIST) != 0) {
 			updateList();
 		}
-		if ((info & UpdateType.UPDATE_SELECTION) != 0) {
+		if ((info & UPDATE_SELECTION) != 0) {
 			updateSelection();
 		}
 		myHandler.resetUpdateInfo();

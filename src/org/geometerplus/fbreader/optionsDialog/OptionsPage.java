@@ -19,17 +19,16 @@
 
 package org.geometerplus.fbreader.optionsDialog;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
+import org.geometerplus.zlibrary.core.dialogs.*;
 
-public class OptionsPage {
+class OptionsPage {
 	private final LinkedHashMap /*<ZLOptionEntry, String>*/ myEntries = new LinkedHashMap();
 	protected ComboOptionEntry myComboEntry;
 	
-	protected OptionsPage() {}
+	protected OptionsPage() {
+	}
 
 	protected void registerEntry(ZLDialogContent tab, final String entryKey, ZLOptionEntry entry, final String name) {
 		if (entry != null) {
@@ -55,5 +54,4 @@ public class OptionsPage {
 	LinkedHashMap getEntries() {
 		return myEntries;
 	}
-			
 }

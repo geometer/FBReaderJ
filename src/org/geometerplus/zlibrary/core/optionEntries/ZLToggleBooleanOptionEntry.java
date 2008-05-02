@@ -19,14 +19,14 @@
 
 package org.geometerplus.zlibrary.core.optionEntries;
 
-import java.util.ArrayList;
-import org.geometerplus.zlibrary.core.util.*;
+import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 public class ZLToggleBooleanOptionEntry extends ZLSimpleBooleanOptionEntry {
-	private final ArrayList/*<ZLOptionEntry>*/ myDependentEntries = new ArrayList();
+	private final ArrayList myDependentEntries = new ArrayList();
 	
 	public ZLToggleBooleanOptionEntry(ZLBooleanOption option) {
 		super(option);

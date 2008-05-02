@@ -15,15 +15,11 @@
 	</target>
 
 	<target name="depend" depends="prepare">
-		<depend srcdir="${src.path}" destdir="${bin.dir}" cache="${cache.dir}" closure="yes">
-			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
-		</depend>
+		<depend srcdir="${src.path}" destdir="${bin.dir}" cache="${cache.dir}" closure="yes" />
 	</target>
 
 	<target name="compile" depends="depend">
-		<javac srcdir="${src.path}" destdir="${bin.dir}">
-			<exclude name="org/geometerplus/zlibrary/core/xml/sax/**"/>
-		</javac>
+		<javac srcdir="${src.path}" destdir="${bin.dir}" />
 	</target>
 
 	<target name="buildJar" depends="compile">

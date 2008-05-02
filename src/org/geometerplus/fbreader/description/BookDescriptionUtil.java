@@ -23,7 +23,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.fbreader.description.BookDescription.BookInfo;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.option.FBOptions;
 import org.geometerplus.zlibrary.core.filesystem.ZLDir;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -53,10 +53,11 @@ public class BookDescriptionUtil {
 			resetZipInfo(zipFile);
 			entriesNumber = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), ENTRIES_NUMBER, -1).getValue();
 		}
+		final ZLStringOption entryOption =
+			new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), "", "");
 		for (int i = 0; i < entriesNumber; ++i) {
-			String optionName = ENTRY;
-			optionName += i;
-			String entry = new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), optionName, "").getValue();
+			entryOption.changeName(ENTRY + i);
+			final String entry = entryOption.getValue();
 			if (entry.length() != 0) {
 				entries.add(entry);
 			}
@@ -69,17 +70,18 @@ public class BookDescriptionUtil {
 
 		ZLDir zipDir = zipFile.getDirectory();
 		if (zipDir != null) {
-			String zipPrefix = zipFile.getPath() + ':';
+			final String zipPrefix = zipFile.getPath() + ':';
 			int counter = 0;
 			final ArrayList entries = zipDir.collectFiles();
 			final int size = entries.size();
 			for (int i = 0; i < size; ++i) { 
 				String entry = (String)entries.get(i);
+				final ZLStringOption entryOption =
+					new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), "", "");
 				if (PluginCollection.instance().getPlugin(new ZLFile(entry), true) != null) {
-					String optionName = ENTRY;
-					optionName += counter;
-					String fullName = zipPrefix + entry;
-					new ZLStringOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), optionName, "").setValue(fullName);
+					final String fullName = zipPrefix + entry;
+					entryOption.changeName(ENTRY + counter);
+					entryOption.setValue(fullName);
 					new BookInfo(fullName).reset();
 					++counter;
 				}
@@ -87,5 +89,4 @@ public class BookDescriptionUtil {
 			new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), ENTRIES_NUMBER, -1).setValue(counter);
 		}
 	}
-	
 }

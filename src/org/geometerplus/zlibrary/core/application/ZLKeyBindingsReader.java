@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
-	private HashMap myKeymap;
+	private final HashMap myKeymap;
 	
 	public ZLKeyBindingsReader(HashMap keymap) {
 		myKeymap = keymap; 
@@ -35,8 +35,8 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 		
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if ("binding".equals(tag)) {
-			String key = attributes.getValue("key");
-			String actionId = attributes.getValue("action");
+			final String key = attributes.getValue("key");
+			final String actionId = attributes.getValue("action");
 			if ((key != null) && (actionId != null)) {
 				myKeymap.put(key, actionId);
 			}

@@ -25,6 +25,6 @@ public abstract class ZLTreeSaveHandler extends ZLTreeHandler {
 	}
 
 	public abstract void processNode(ZLTreeNode node);
-	
+
 	public abstract boolean accept(String state);
 }

@@ -62,7 +62,7 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 
 	private ArrayList getAndroidViews() {
 		if (myAndroidViews.isEmpty()) {
-			final ArrayList views = getViews();
+			final ArrayList views = Views;
 			final int len = views.size();
 			for (int i = 0; i < len; ++i) {
 				final ZLAndroidOptionView v = (ZLAndroidOptionView)views.get(i);

@@ -21,13 +21,13 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
+
+import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.formats.*;
 
 public class FBFileHandler extends ZLTreeOpenHandler {
 	private final ZLStringOption DirectoryOption =
@@ -42,7 +42,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	private final static String FOLDER_ICON = "folder";
 	private final static String ZIP_FOLDER_ICON = "zipfolder";
 	private final static String UPFOLDER_ICON = "upfolder";
-	private final static HashMap pluginIcons = new HashMap(); // <FormatPlugin, String>
+	private final static HashMap pluginIcons = new HashMap();
 	
 	public FBFileHandler() {
 		myIsUpToDate = false;
@@ -61,7 +61,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	}
 	
 	protected boolean accept(ZLTreeNode node) {
-		final String name = myDir.getItemPath(node.id());
+		final String name = myDir.getItemPath(node.Id);
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(name), false);
 		final String message = (plugin == null) ? "Unknown File Format" : plugin.tryOpen(name);
 		if (message.length() != 0) {
@@ -77,7 +77,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	public void changeFolder(ZLTreeNode node) {
 		// TODO Auto-generated method stub
 		// id != null
-		ZLDir dir = new ZLFile(myDir.getItemPath(node.id())).getDirectory();
+		ZLDir dir = new ZLFile(myDir.getItemPath(node.Id)).getDirectory();
 		if (dir != null) {
 			final String selectedId = myDir.getName();
 			myDir = dir;
@@ -85,17 +85,17 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 			myIsUpToDate = false;
 			mySubnodes.clear();
 			mySelectedIndex = 0;
-			if ("..".equals(node.id())) {
+			if ("..".equals(node.Id)) {
 				final ArrayList subnodes = this.subnodes();
 				final int size = subnodes.size();
 				for (int index = 0; index < size; index++) {
-					if (((ZLTreeNode) subnodes.get(index)).id().equals(selectedId)) {
+					if (((ZLTreeNode)subnodes.get(index)).Id.equals(selectedId)) {
 						mySelectedIndex = index;
 						break;
 					}
 				} 
 			}
-			addUpdateInfo(UpdateType.UPDATE_ALL);
+			addUpdateInfo(ZLSelectionDialog.UPDATE_ALL);
 		}
 	}
 
@@ -163,12 +163,12 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 	
 	private static class ZLTreeNodeComparator implements Comparator {
 		public int compare(Object o1, Object o2) {	
-			if (((ZLTreeNode) o1).isFolder() == ((ZLTreeNode) o2).isFolder()) {
-				return ((ZLTreeNode) o1).displayName().toLowerCase().compareTo(((ZLTreeNode) o2).displayName().toLowerCase());
-			} else if (((ZLTreeNode) o1).isFolder()) {
-				return -1;
+			final ZLTreeNode node1 = (ZLTreeNode)o1;
+			final ZLTreeNode node2 = (ZLTreeNode)o2;
+			if (node1.IsFolder == node2.IsFolder) {
+				return node1.DisplayName.compareToIgnoreCase(node2.DisplayName);
 			} else {
-				return 1;
+				return node1.IsFolder ? -1 : 1;
 			}
 		}		
 	}

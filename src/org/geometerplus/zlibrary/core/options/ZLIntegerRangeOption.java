@@ -19,34 +19,24 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-/**
- * класс ранжированная целочисленная опция. есть верхний и нижний пределы,
- * которые тут же и указываются.
- * 
- * @author Администратор
- * 
- */
 public final class ZLIntegerRangeOption extends ZLOption {
-	private final int myMinValue;
-	private final int myMaxValue;
+	public final int MinValue;
+	public final int MaxValue;
 
 	private final int myDefaultValue;
 	private int myValue;
 
 	public ZLIntegerRangeOption(String category, String group, String optionName, int minValue, int maxValue, int defaultValue) {
 		super(category, group, optionName);
-		myMinValue = minValue;
-		myMaxValue = maxValue;
-		myDefaultValue = Math.max(myMinValue, Math.min(myMaxValue, defaultValue));
-		myValue = myDefaultValue;
-	}
-
-	public int getMinValue() {
-		return myMinValue;
-	}
-
-	public int getMaxValue() {
-		return myMaxValue;
+		MinValue = minValue;
+		MaxValue = maxValue;
+		if (defaultValue < MinValue) {
+			defaultValue = MinValue;
+		} else if (defaultValue > MaxValue) {
+			defaultValue = MaxValue;
+		}
+		myDefaultValue = defaultValue;
+		myValue = defaultValue;
 	}
 
 	public int getValue() {
@@ -55,10 +45,10 @@ public final class ZLIntegerRangeOption extends ZLOption {
 			if (value != null) {
 				try {
 					int intValue = Integer.parseInt(value);
-					if (intValue < myMinValue) {
-						intValue = myMinValue;
-					} else if (intValue > myMaxValue) {
-						intValue = myMaxValue;
+					if (intValue < MinValue) {
+						intValue = MinValue;
+					} else if (intValue > MaxValue) {
+						intValue = MaxValue;
 					}
 					myValue = intValue;
 				} catch (NumberFormatException e) {
@@ -71,16 +61,20 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	}
 
 	public void setValue(int value) {
-		value = Math.max(myMinValue, Math.min(myMaxValue, value));
+		if (value < MinValue) {
+			value = MinValue;
+		} else if (value > MaxValue) {
+			value = MaxValue;
+		}
 		if (myIsSynchronized && (myValue == value)) {
 			return;
 		}
 		myValue = value;
 		myIsSynchronized = true;
-		if (myValue == myDefaultValue) {
+		if (value == myDefaultValue) {
 			unsetConfigValue();
 		} else {
-			setConfigValue("" + myValue);
+			setConfigValue("" + value);
 		}
 	}
 }

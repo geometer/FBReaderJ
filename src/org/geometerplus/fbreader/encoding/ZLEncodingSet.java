@@ -28,6 +28,7 @@ public class ZLEncodingSet {
 	public ZLEncodingSet(String name) {
 		
 	}
+
 	public	void addInfo(ZLEncodingConverterInfo info) {
 		myInfos.add(info);
 	}

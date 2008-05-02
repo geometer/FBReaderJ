@@ -19,15 +19,12 @@
 
 package org.geometerplus.zlibrary.core.optionEntries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLColorOption;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLColorOptionEntry;
-import org.geometerplus.zlibrary.core.dialogs.ZLComboOptionEntry;
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
+import org.geometerplus.zlibrary.core.dialogs.*;
 
 public class ZLColorOptionBuilder {
 	private ZLColorOptionsData myData;

@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.core.dialogs.ZLStringOptionEntry;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public class ZLSimpleStringOptionEntry extends ZLStringOptionEntry {
-	private ZLStringOption myOption;
+	private final ZLStringOption myOption;
 	
 	public ZLSimpleStringOptionEntry(ZLStringOption option) {
 		myOption = option;

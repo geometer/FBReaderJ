@@ -23,10 +23,11 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 public abstract class ZLOrderOptionEntry extends ZLOptionEntry {
-	private final ArrayList/*<String>*/ myValues = new ArrayList();
-	
-	public ZLOrderOptionEntry() {}
-	
+	private final ArrayList myValues = new ArrayList();
+
+	public ZLOrderOptionEntry() {
+	}
+
 	public int getKind() {
 		return ZLOptionKind.ORDER;
 	}

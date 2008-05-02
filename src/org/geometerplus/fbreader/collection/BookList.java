@@ -22,25 +22,24 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 public class BookList {
 	private final static String GROUP = "BookList";
-	static final String BOOK = "Book";
-	static final String SIZE = "Size";
-	private final ArrayList/*String*/ myFileNames = new ArrayList();
+	private static final String BOOK = "Book";
+	private static final String SIZE = "Size";
+
+	private final ArrayList myFileNames = new ArrayList();
 	
 	public BookList() {
-		int size = new ZLIntegerOption(ZLOption.STATE_CATEGORY, GROUP, SIZE, 0).getValue();
-		for (int i = 0; i < size; ++i) {
-			String optionName = BOOK;
-			optionName += i;
-			ZLStringOption bookOption = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, optionName, "");
-			final String fileName = bookOption.getValue();
-			if ((fileName.length() != 0) && !myFileNames.contains(fileName)) {
-				myFileNames.add(fileName);
+		final int len = new ZLIntegerOption(ZLOption.STATE_CATEGORY, GROUP, SIZE, 0).getValue();
+		final ArrayList fileNames = myFileNames;
+		final ZLStringOption bookOption = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, "", "");
+		for (int i = 0; i < len; ++i) {
+			bookOption.changeName(BOOK + i);
+			final String name = bookOption.getValue();
+			if ((name.length() != 0) && !fileNames.contains(name)) {
+				fileNames.add(name);
 			}
 		}
 	}
@@ -61,14 +60,15 @@ public class BookList {
 		save();
 	}
 	
-	private void  save() {
-		new ZLIntegerOption(ZLOption.STATE_CATEGORY, GROUP, SIZE, 0).setValue(myFileNames.size());
-		int i = 0;
-		for (Iterator it = myFileNames.iterator(); it.hasNext(); ++i) {
-			String optionName = BOOK;
-			optionName += i;
-			new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, optionName, "").setValue((String)it.next());
+	private void save() {
+		final ArrayList fileNames = myFileNames;
+		final int len = fileNames.size();
+		new ZLIntegerOption(ZLOption.STATE_CATEGORY, GROUP, SIZE, 0).setValue(len);
+		final ZLStringOption bookOption =
+			new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, "", "");
+		for (int i = 0; i < len; ++i) {	
+			bookOption.changeName(BOOK + i);
+			bookOption.setValue((String)fileNames.get(i));
 		}
 	}
 }
-

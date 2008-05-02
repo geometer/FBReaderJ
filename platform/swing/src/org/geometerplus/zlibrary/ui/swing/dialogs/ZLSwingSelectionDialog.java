@@ -26,16 +26,13 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLSelectionDialog;
-import org.geometerplus.zlibrary.core.dialogs.ZLTreeHandler;
-import org.geometerplus.zlibrary.core.dialogs.ZLTreeNode;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
+import org.geometerplus.zlibrary.core.dialogs.*;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.ui.swing.util.ZLSwingIconUtil;
 
 class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	private static final String OPTION_GROUP_NAME = "OpenFileDialog";
-	private static final HashMap ourIcons = new HashMap(); // <string, ImageIcon>
+	private static final HashMap ourIcons = new HashMap();
 	private static final String ourIconDirectory = "icons/filetree/";
 
 	private final JDialog myDialog;
@@ -137,8 +134,8 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	}
 	
 	private static ImageIcon getIcon(ZLTreeNode node) {
-		final String pixmapName = node.pixmapName();
-		ImageIcon icon = (ImageIcon) ourIcons.get(pixmapName);
+		final String pixmapName = node.PixmapName;
+		ImageIcon icon = (ImageIcon)ourIcons.get(pixmapName);
 		if (icon == null) {
 			icon = ZLSwingIconUtil.getIcon(ourIconDirectory + pixmapName + ".png");
 			ourIcons.put(pixmapName, icon);
@@ -147,9 +144,9 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 	}
 	
 	private void changeFolder(int index) {
-		ZLTreeNode node = (ZLTreeNode) handler().subnodes().get(index);
-		myReturnValue = !node.isFolder();
-        runNode(node);
+		ZLTreeNode node = (ZLTreeNode)handler().subnodes().get(index);
+		myReturnValue = !node.IsFolder;
+		runNode(node);
 	}
 	
 	private class MyMouseListener extends MouseInputAdapter {
@@ -186,14 +183,14 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 		
 		public void actionPerformed(ActionEvent e) {
 			myReturnValue = true;
-			runNode((ZLTreeNode) handler().subnodes().get(myList.getSelectedIndex())); 
+			runNode((ZLTreeNode)handler().subnodes().get(myList.getSelectedIndex())); 
 		}
 	}
 	
 	private class SelectionListener implements ListSelectionListener {
 		public void valueChanged(ListSelectionEvent e) {
 			int index = myList.getSelectedIndex();
-			myOKAction.setEnabled(index != -1 && !((ZLTreeNode) handler().subnodes().get(index)).isFolder());
+			myOKAction.setEnabled(index != -1 && !((ZLTreeNode)handler().subnodes().get(index)).IsFolder);
 		}		
 	}
 	
@@ -206,9 +203,9 @@ class ZLSwingSelectionDialog extends ZLSelectionDialog {
 			boolean isSelected,      // is the cell selected
 			boolean cellHasFocus)    // the list and the cell have the focus
 		{
-			String s = ((ZLTreeNode) value).displayName();
-			setText(s);
-			setIcon(ZLSwingSelectionDialog.getIcon((ZLTreeNode) value));
+			final ZLTreeNode node = (ZLTreeNode)value;
+			setText(node.DisplayName);
+			setIcon(ZLSwingSelectionDialog.getIcon(node));
 			if (isSelected) {
 				setBackground(list.getSelectionBackground());
 				setForeground(list.getSelectionForeground());

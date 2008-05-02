@@ -26,7 +26,7 @@ public abstract class ZLTreeHandler {
 	private int myUpdateInfo;
 	
 	protected ZLTreeHandler() {
-		myUpdateInfo = UpdateType.UPDATE_ALL;
+		myUpdateInfo = ZLSelectionDialog.UPDATE_ALL;
 	}
 	
 	protected void addUpdateInfo(int info) {
@@ -38,7 +38,7 @@ public abstract class ZLTreeHandler {
 	}
 	
 	public void resetUpdateInfo() {
-		myUpdateInfo = UpdateType.UPDATE_NONE;
+		myUpdateInfo = ZLSelectionDialog.UPDATE_NONE;
 	}
 	
 	public abstract boolean isOpenHandler();

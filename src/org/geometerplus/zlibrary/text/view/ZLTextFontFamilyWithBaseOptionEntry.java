@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public class ZLTextFontFamilyWithBaseOptionEntry extends ZLFontFamilyOptionEntry {
-	private static final String KEY_UNCHANGED = "unchanged";
-	private static final ArrayList /*<std::string>*/ ourAllFamilies = new ArrayList();
+	private static final ArrayList ourAllFamilies = new ArrayList();
+
 	private final ZLResource myResource;
 		
 	public ZLTextFontFamilyWithBaseOptionEntry(ZLStringOption option, ZLPaintContext context, ZLResource resource) {
@@ -39,7 +39,7 @@ public class ZLTextFontFamilyWithBaseOptionEntry extends ZLFontFamilyOptionEntry
 	public ArrayList getValues() {
 		if (ourAllFamilies.size() == 0) {
 			final ArrayList families = super.getValues();
-			ourAllFamilies.add(myResource.getResource(KEY_UNCHANGED).getValue());
+			ourAllFamilies.add(myResource.getResource("unchanged").getValue());
 			ourAllFamilies.addAll(families);
 		}
 		return ourAllFamilies;
@@ -47,7 +47,7 @@ public class ZLTextFontFamilyWithBaseOptionEntry extends ZLFontFamilyOptionEntry
 
 	public String initialValue() {
 		final String value = super.initialValue();
-		return (value == null || value.equals("")) ? (String) (getValues().get(0)) : value;
+		return ((value == null) || (value.length() == 0)) ? (String)(getValues().get(0)) : value;
 	}
 
 	public void onAccept(String value) {

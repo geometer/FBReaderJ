@@ -20,16 +20,18 @@
 package org.geometerplus.zlibrary.core.language;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLDir;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class ZLLanguageList {
+public abstract class ZLLanguageList {
 	private static ArrayList ourLanguageCodes = new ArrayList();
+
+	private ZLLanguageList() {
+	}
 	
 	public static ArrayList languageCodes() {
 		if (ourLanguageCodes.isEmpty()) {
@@ -65,6 +67,4 @@ public class ZLLanguageList {
 		String dirName = ZLibrary.JAR_DATA_PREFIX + "data/languagePatterns.tar";
 		return new ZLFile(dirName).getDirectory();
 	}
-
-	private ZLLanguageList() {}
 }

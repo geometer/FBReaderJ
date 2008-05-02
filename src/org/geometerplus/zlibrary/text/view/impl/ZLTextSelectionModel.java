@@ -22,6 +22,21 @@ package org.geometerplus.zlibrary.text.view.impl;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 class ZLTextSelectionModel {
+	private final static class BoundElement {
+		boolean Exists;
+		int ParagraphNumber;
+		int TextElementNumber;
+		int CharNumber;
+
+		//bool operator == (const BoundElement &element) const;
+		//bool operator != (const BoundElement &element) const;
+	};
+
+	private final static class Bound {
+		final BoundElement Before = new BoundElement();
+		final BoundElement After = new BoundElement();
+	};
+
 	private final ZLTextViewImpl myView;
 	private final ZLApplication myApplication;
 
@@ -30,13 +45,26 @@ class ZLTextSelectionModel {
 	private boolean myDoUpdate;
 	private boolean myTextIsUpToDate = true;
 
+	private final Bound myFirstBound = new Bound();
+	private final Bound mySecondBound = new Bound();
+
 	ZLTextSelectionModel(ZLTextViewImpl view, ZLApplication application) {
 		myView = view;
 		myApplication = application;
 	}
 
 	void activate(int x, int y) {
-		// TODO: implement
+		if (myView.myTextElementMap.isEmpty()) {
+			return;
+		}
+
+		myIsActive = true;
+		myIsEmpty = false;
+		//setBound(myFirstBound, x, y);
+		//mySecondBound = myFirstBound;
+		//myCursor.clear();
+		//myText.erase();
+		myTextIsUpToDate = true;
 	}
 
 	boolean extendTo(int x, int y) {
@@ -66,13 +94,7 @@ class ZLTextSelectionModel {
 		return false;
 	}
 
-	class BoundElement {
-		boolean Exists;
-		int ParagraphNumber;
-		int TextElementNumber;
-		int CharNumber;
-
-		//bool operator == (const BoundElement &element) const;
-		//bool operator != (const BoundElement &element) const;
-	};
+	private void setBound(Bound bound, int x, int y) {
+		// TODO: implement
+	}
 }

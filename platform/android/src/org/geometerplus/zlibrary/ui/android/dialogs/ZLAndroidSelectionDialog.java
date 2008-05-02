@@ -118,7 +118,7 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 					final ItemView view = (ItemView)getSelectedView();
 					if (view != null) {
 						final ZLTreeNode node = view.getNode();
-						myReturnValue = !node.isFolder();
+						myReturnValue = !node.IsFolder;
         		runNode(view.getNode());
 					}
 					return false;
@@ -132,7 +132,7 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 			final int y = (int)event.getY();
 			final ZLTreeNode node = (ZLTreeNode)getAdapter().getItem(pointToPosition(x, y));
 			if (node != null) {
-				myReturnValue = !node.isFolder();
+				myReturnValue = !node.IsFolder;
 				runNode(node);
 			}
 			return false;

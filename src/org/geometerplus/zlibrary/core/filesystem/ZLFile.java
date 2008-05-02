@@ -27,14 +27,14 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public class ZLFile {
-	public class ArchiveType {
-		public static final int	NONE = 0;
-		public static final int	GZIP = 0x0001;
-		public static final int	BZIP2 = 0x0002;
-		public static final int	COMPRESSED = 0x00ff;
-		public static final int	ZIP = 0x0100;
-		public static final int	TAR = 0x0200;
-		public static final int	ARCHIVE = 0xff00;
+	public interface ArchiveType {
+		int	NONE = 0;
+		int	GZIP = 0x0001;
+		int	BZIP2 = 0x0002;
+		int	COMPRESSED = 0x00ff;
+		int	ZIP = 0x0100;
+		int	TAR = 0x0200;
+		int	ARCHIVE = 0xff00;
 	};
 	
 	private final String myPath;
@@ -45,12 +45,6 @@ public class ZLFile {
 	private	ZLFileInfo myInfo;
 	
 	private static final HashMap ourForcedFiles = new HashMap();
-	
-	/*
-	public void putForcedFile(String key, int value) {
-		myForcedFiles.put(key, value);
-	}
-*/
 	
 	public boolean removeFile(String path) {
 		File file = new File(path);
@@ -163,7 +157,7 @@ public class ZLFile {
 	}
 	
 	public boolean isCompressed() {
-		 return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
+		return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
 	}
 	
 	public boolean isDirectory() {

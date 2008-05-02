@@ -23,16 +23,11 @@ import java.io.*;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.fbreader.description.Author;
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.description.BookDescriptionUtil;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
-import org.geometerplus.zlibrary.core.filesystem.ZLDir;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.options.*;
+
+import org.geometerplus.fbreader.description.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookCollection {
 	public final ZLStringOption PathOption;
@@ -209,13 +204,13 @@ public class BookCollection {
 				continue;
 			}
 
+			final PluginCollection collection = PluginCollection.instance();
 			final ArrayList files = dir.collectFiles();
-
 			final int numberOfFiles = files.size();
 			for (int j = 0; j < numberOfFiles; ++j) {
 				String fileName = dir.getItemPath((String)files.get(j));
 				ZLFile file = new ZLFile(fileName);
-				if (PluginCollection.instance().getPlugin(file, true) != null) {
+				if (collection.getPlugin(file, true) != null) {
 					if (!bookFileNames.contains(fileName)) {
 						bookFileNames.add(fileName);
 					}
@@ -255,12 +250,12 @@ public class BookCollection {
 		books.add(description);
 	}
 	
-	private class DescriptionComparator implements Comparator {
+	private static class DescriptionComparator implements Comparator {
 		public int compare(Object descr1, Object descr2) {
 			BookDescription d1 = (BookDescription)descr1;
 			BookDescription d2 = (BookDescription)descr2;
-			String sequenceName1 = d1.getSequenceName();
-			String sequenceName2 = d2.getSequenceName();
+			String sequenceName1 = d1.getSeriesName();
+			String sequenceName2 = d2.getSeriesName();
 				
 			if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
 				return d1.getTitle().compareTo(d2.getTitle());
@@ -274,7 +269,7 @@ public class BookCollection {
 			if (!sequenceName1.equals(sequenceName2)) {
 				return sequenceName1.compareTo(sequenceName2);
 			}
-			return (d1.getNumberInSequence() - d2.getNumberInSequence());
+			return d1.getNumberInSeries() - d2.getNumberInSeries();
 		}
 	}
 	

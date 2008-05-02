@@ -22,20 +22,19 @@ package org.geometerplus.fbreader.description;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.option.FBOptions;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
+
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.option.FBOptions;
 
 public class BookDescription {
 	public final String FileName;
 
 	private Author myAuthor;
 	private	String myTitle = "";
-	private	String mySequenceName = "";
-	private	int myNumberInSequence = 0;
+	private	String mySeriesName = "";
+	private	int myNumberInSeries = 0;
 	private	String myLanguage = "";
 	private	String myEncoding = "";
 	private final static HashMap ourDescriptions = new HashMap();
@@ -65,8 +64,8 @@ public class BookDescription {
 			BookInfo info = new BookInfo(fileName);
 			description.myAuthor = Author.SingleAuthor.create(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
 			description.myTitle = info.TitleOption.getValue();
-			description.mySequenceName = info.SequenceNameOption.getValue();
-			description.myNumberInSequence = info.NumberInSequenceOption.getValue();
+			description.mySeriesName = info.SeriesNameOption.getValue();
+			description.myNumberInSeries = info.NumberInSeriesOption.getValue();
 			description.myLanguage = info.LanguageOption.getValue();
 			description.myEncoding = info.EncodingOption.getValue();
 			if (info.isFull()) {
@@ -80,7 +79,7 @@ public class BookDescription {
 		}
 		ZLFile bookFile = new ZLFile(fileName);
 		
-		FormatPlugin plugin = FormatPlugin.PluginCollection.instance().getPlugin(bookFile, false);
+		FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile, false);
 		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
 			return null;
 		}
@@ -100,11 +99,10 @@ public class BookDescription {
 			info.AuthorDisplayNameOption.setValue(description.myAuthor.getDisplayName());
 			info.AuthorSortKeyOption.setValue(description.myAuthor.getSortKey());
 			info.TitleOption.setValue(description.myTitle);
-			info.SequenceNameOption.setValue(description.mySequenceName);
-			info.NumberInSequenceOption.setValue(description.myNumberInSequence);
+			info.SeriesNameOption.setValue(description.mySeriesName);
+			info.NumberInSeriesOption.setValue(description.myNumberInSeries);
 			info.LanguageOption.setValue(description.myLanguage);
 			info.EncodingOption.setValue(description.myEncoding);
-			info.IsSequenceDefinedOption.setValue(true);
 		}
 		return description;
 	}
@@ -113,7 +111,7 @@ public class BookDescription {
 	private BookDescription(String fileName) {
 		FileName = fileName;
 		myAuthor = null;
-		myNumberInSequence = 0;
+		myNumberInSeries = 0;
 	}
 
 	public Author getAuthor() {
@@ -124,12 +122,12 @@ public class BookDescription {
 		return myTitle;
 	}
 	
-	public String getSequenceName() {
-		return mySequenceName;
+	public String getSeriesName() {
+		return mySeriesName;
 	}
 	
-	public int getNumberInSequence() {
-		return myNumberInSequence; 
+	public int getNumberInSeries() {
+		return myNumberInSeries; 
 	}
 	
 	public String getLanguage() {
@@ -143,70 +141,41 @@ public class BookDescription {
 	
 	
 	public static class BookInfo {
-		// This option is used to fix problem with missing sequence-related options
-		// in config in versions < 0.7.4k
-		// It makes no sense if old fbreader was never used on your device.
-		private final ZLBooleanOption IsSequenceDefinedOption;
-
 		public BookInfo(String fileName) {
 			AuthorDisplayNameOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "AuthorDisplayName", EMPTY);
 			AuthorSortKeyOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "AuthorSortKey", EMPTY);
 			TitleOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Title", EMPTY);
-			SequenceNameOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Sequence", EMPTY);
-			NumberInSequenceOption = new ZLIntegerRangeOption(FBOptions.BOOKS_CATEGORY, fileName, "Number in seq", 0, 100, 0);
+			SeriesNameOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Sequence", EMPTY);
+			NumberInSeriesOption = new ZLIntegerRangeOption(FBOptions.BOOKS_CATEGORY, fileName, "Number in seq", 0, 100, 0);
 			LanguageOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Language", UNKNOWN);
 			EncodingOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, fileName, "Encoding", EMPTY);
-			IsSequenceDefinedOption = new ZLBooleanOption(FBOptions.BOOKS_CATEGORY, fileName, "SequenceDefined", new ZLFile(fileName).getExtension().equals("fb2")); 
-			
 		}
 	
 		public boolean isFull() {
 			return
-			((AuthorDisplayNameOption.getValue().length() != 0) &&
-			(AuthorSortKeyOption.getValue().length() != 0) &&
-			(TitleOption.getValue().length() != 0) &&
-			(EncodingOption.getValue().length() != 0) &&
-			IsSequenceDefinedOption.getValue());
+				(AuthorDisplayNameOption.getValue().length() != 0) &&
+				(AuthorSortKeyOption.getValue().length() != 0) &&
+				(TitleOption.getValue().length() != 0) &&
+				(EncodingOption.getValue().length() != 0);
 		}
 		
 		void reset() {
 			AuthorDisplayNameOption.setValue(EMPTY);
 			AuthorSortKeyOption.setValue(EMPTY);
 			TitleOption.setValue(EMPTY);
-			SequenceNameOption.setValue(EMPTY);
-			NumberInSequenceOption.setValue(0);
+			SeriesNameOption.setValue(EMPTY);
+			NumberInSeriesOption.setValue(0);
 			LanguageOption.setValue(UNKNOWN);
 			EncodingOption.setValue(EMPTY);
 		}
 
-		private final ZLStringOption AuthorDisplayNameOption;
-		private final ZLStringOption AuthorSortKeyOption;
-		private final ZLStringOption TitleOption;
-		private final ZLStringOption SequenceNameOption;
-		private final ZLIntegerRangeOption NumberInSequenceOption;
+		public final ZLStringOption AuthorDisplayNameOption;
+		public final ZLStringOption AuthorSortKeyOption;
+		public final ZLStringOption TitleOption;
+		public final ZLStringOption SeriesNameOption;
+		public final ZLIntegerRangeOption NumberInSeriesOption;
 		public final ZLStringOption LanguageOption;
 		public final ZLStringOption EncodingOption;
-
-		public ZLStringOption getAuthorSortKeyOption() {
-			return AuthorSortKeyOption;
-		}
-
-		public ZLStringOption getAuthorDisplayNameOption() {
-			return AuthorDisplayNameOption;
-		}
-
-		public ZLStringOption getSequenceNameOption() {
-			return SequenceNameOption;
-		}
-
-		public ZLStringOption getTitleOption() {
-			return TitleOption;
-		}
-
-		public ZLIntegerRangeOption getNumberInSequenceOption() {
-			return NumberInSequenceOption;
-		}
-
 	}
 	
 	static public class WritableBookDescription  {
@@ -269,20 +238,20 @@ public class BookDescription {
 			myDescription.myTitle = title;
 		}
 		
-		public String getSequenceName() {
-			return myDescription.mySequenceName;
+		public String getSeriesName() {
+			return myDescription.mySeriesName;
 		}
 		
-		public void setSequenceName(String sequenceName) {
-			myDescription.mySequenceName = sequenceName;
+		public void setSeriesName(String sequenceName) {
+			myDescription.mySeriesName = sequenceName;
 		}
 		
-		public int getNumberInSequence() {
-			return myDescription.myNumberInSequence;
+		public int getNumberInSeries() {
+			return myDescription.myNumberInSeries;
 		}
 		
-		public void setNumberInSequence(int numberInSequence) {
-			myDescription.myNumberInSequence = numberInSequence;
+		public void setNumberInSeries(int numberInSeries) {
+			myDescription.myNumberInSeries = numberInSeries;
 		}
 		
 		public String getFileName() {

@@ -31,8 +31,7 @@ import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
 import org.geometerplus.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 
 import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.FormatPlugin.PluginCollection;
+import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
 	public final BookDescription Description;

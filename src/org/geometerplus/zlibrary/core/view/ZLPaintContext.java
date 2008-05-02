@@ -165,7 +165,7 @@ abstract public class ZLPaintContext {
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 	abstract public void drawFilledCircle(int x, int y, int r);
 
-	public List fontFamilies() {
+	public ArrayList fontFamilies() {
 		if (myFamilies.isEmpty()) {
 			fillFamiliesList(myFamilies);
 		}
@@ -175,5 +175,3 @@ abstract public class ZLPaintContext {
 	abstract public String realFontFamilyName(String fontFamily);
 	abstract protected void fillFamiliesList(ArrayList families);
 }
-
-
