@@ -211,7 +211,7 @@ public class BookCollection {
 			}	
 		}
 
-		Collections.sort(myBooks, new DescriptionComparator());
+		Collections.sort(myBooks);
 		return true;
 	}
 
@@ -274,50 +274,6 @@ public class BookCollection {
 		}
 
 		return myAuthors;
-	}
-
-	private static class DescriptionComparator implements Comparator {
-		public int compare(Object descr1, Object descr2) {
-			final BookDescription d1 = (BookDescription)descr1;
-			final BookDescription d2 = (BookDescription)descr2;
-
-			final Author a1 = d1.getAuthor();
-			final Author a2 = d2.getAuthor();
-
-			{
-				final int result = a1.getSortKey().compareTo(a2.getSortKey());
-				if (result != 0) {
-					return result;
-				}
-			}
-
-			{
-				final int result = a1.getDisplayName().compareTo(a2.getDisplayName());
-				if (result != 0) {
-					return result;
-				}
-			}
-
-			final String seriesName1 = d1.getSeriesName();
-			final String seriesName2 = d2.getSeriesName();
-
-			if ((seriesName1.length() == 0) && (seriesName2.length() == 0)) {
-				return d1.getTitle().compareTo(d2.getTitle());
-			}
-			if (seriesName1.length() == 0) {
-				return d1.getTitle().compareTo(seriesName2);
-			}
-			if (seriesName2.length() == 0) {
-				return seriesName1.compareTo(d2.getTitle());
-			}
-			{
-				final int result = seriesName1.compareTo(seriesName2);
-				if (result != 0) {
-					return result;
-				}
-			}
-			return d1.getNumberInSeries() - d2.getNumberInSeries();
-		}
 	}
 
 	static public class LastOpenedBooks {

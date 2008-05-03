@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.option.FBOptions;
 
-public class BookDescription {
+public class BookDescription implements Comparable {
 	public final String FileName;
 
 	private Author myAuthor;
@@ -176,6 +176,47 @@ public class BookDescription {
 		public final ZLIntegerRangeOption NumberInSeriesOption;
 		public final ZLStringOption LanguageOption;
 		public final ZLStringOption EncodingOption;
+	}
+
+	public int compareTo(Object o) {
+		final BookDescription d = (BookDescription)o;
+
+		final Author a1 = getAuthor();
+		final Author a2 = d.getAuthor();
+
+		{
+			final int result = a1.getSortKey().compareTo(a2.getSortKey());
+			if (result != 0) {
+				return result;
+			}
+		}
+
+		{
+			final int result = a1.getDisplayName().compareTo(a2.getDisplayName());
+			if (result != 0) {
+				return result;
+			}
+		}
+
+		final String seriesName1 = getSeriesName();
+		final String seriesName2 = d.getSeriesName();
+
+		if ((seriesName1.length() == 0) && (seriesName2.length() == 0)) {
+			return getTitle().compareTo(d.getTitle());
+		}
+		if (seriesName1.length() == 0) {
+			return getTitle().compareTo(seriesName2);
+		}
+		if (seriesName2.length() == 0) {
+			return seriesName1.compareTo(d.getTitle());
+		}
+		{
+			final int result = seriesName1.compareTo(seriesName2);
+			if (result != 0) {
+				return result;
+			}
+		}
+		return getNumberInSeries() - d.getNumberInSeries();
 	}
 	
 	static public class WritableBookDescription  {
