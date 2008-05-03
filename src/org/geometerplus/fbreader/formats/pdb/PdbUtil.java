@@ -19,20 +19,23 @@
 
 package org.geometerplus.fbreader.formats.pdb;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class PdbUtil {
-	public static short readShort(InputStream stream) {
+	public static int readShort(InputStream stream) {
 		final byte[] tmp = new byte[2];
 		try {
 			stream.read(tmp, 0, 2);
 		} catch (IOException e) {
 			return -1;
 		}
-		return (short)((tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8));
+	//	int i = ((tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8));
+	//	if (i > Short.MAX_VALUE)
+	//	System.out.println("i = " + i);
+		return ((tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8));
 	}
 
+	//? long
 	public static int readInt(InputStream stream) {
 		final byte[] tmp = new byte[4];
 		try {
