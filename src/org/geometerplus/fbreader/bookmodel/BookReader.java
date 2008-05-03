@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
 import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
+import org.geometerplus.zlibrary.text.model.impl.ZLTextForcedControlEntry;
 import org.geometerplus.zlibrary.text.model.impl.ZLTextPlainModelImpl;
 
 public class BookReader {
@@ -75,6 +76,13 @@ public class BookReader {
 		}
 		if (!start && (myHyperlinkReference.length() != 0) && (kind == myHyperlinkKind)) {
 			myHyperlinkReference = "";
+		}
+	}
+	
+	public final void addControl(ZLTextForcedControlEntry entry) {
+		if (myTextParagraphExists) {
+			flushTextBufferToParagraph();
+			myCurrentTextModel.addControl(entry);
 		}
 	}
 	
