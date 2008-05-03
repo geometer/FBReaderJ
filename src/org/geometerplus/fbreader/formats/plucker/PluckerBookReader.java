@@ -20,21 +20,28 @@
 package org.geometerplus.fbreader.formats.plucker;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import org.geometerplus.fbreader.bookmodel.*;
-import org.geometerplus.fbreader.encoding.*;
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReader;
+import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.encoding.ZLEncodingConverter;
 import org.geometerplus.fbreader.formats.EncodedTextReader;
-import org.geometerplus.fbreader.formats.pdb.*;
+import org.geometerplus.fbreader.formats.pdb.DocDecompressor;
+import org.geometerplus.fbreader.formats.pdb.PdbHeader;
+import org.geometerplus.fbreader.formats.pdb.PdbInputStream;
+import org.geometerplus.fbreader.formats.pdb.PdbUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.text.model.*;
-import org.geometerplus.zlibrary.text.model.impl.*;
+import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
+import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
+import org.geometerplus.zlibrary.text.model.impl.ZLTextForcedControlEntry;
 
 public class PluckerBookReader extends BookReader {
 	private final String myFilePath;
@@ -52,7 +59,7 @@ public class PluckerBookReader extends BookReader {
 
 	private	final ArrayList/*<std::pair<int, int> >*/ myReferencedParagraphs = new ArrayList();
 	private	final HashMap/*<int, std::vector<int> >*/ myParagraphMap = new HashMap();
-	private	ArrayList/*<Integer>*/ myParagraphVector = new ArrayList(); //на всякий случай
+	private	ArrayList/*<Integer>*/ myParagraphVector = new ArrayList(); //пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	private	boolean myParagraphStored;
 	
 	private final ZLEncodingConverter myConverter;
@@ -134,7 +141,7 @@ public class PluckerBookReader extends BookReader {
 	private	void readRecord(int recordSize) throws IOException {
 		int uid = PdbUtil.readShort(myStream);
 		if (uid == 1) {
-			myCompressionVersion = PdbUtil.readShort(myStream );
+			myCompressionVersion = (short) PdbUtil.readShort(myStream );
 		} else {
 			int paragraphs = PdbUtil.readShort(myStream);
 
@@ -207,7 +214,7 @@ public class PluckerBookReader extends BookReader {
 					ZLImage image = null;
 					if (type == 2) {
 						System.out.println("type2");
-						//image = new ZLFileImage(mime, myFilePath, ((PdbStream)myStream).offset(), recordSize - 8);
+						image = new ZLFileImage(mime, myFilePath, myStream.offset());
 					} else if (myCompressionVersion == 1) {
 						//image = new DocCompressedFileImage(mime, myFilePath, myStream->offset(), recordSize - 8);
 					} else if (myCompressionVersion == 2) {
@@ -221,7 +228,7 @@ public class PluckerBookReader extends BookReader {
 				case 9: // category record is ignored
 					break;
 				case 10:
-					short typeCode = PdbUtil.readShort(myStream);
+					short typeCode = (short) PdbUtil.readShort(myStream);
 					break;
 				case 11: // style sheet record is ignored
 					break;
@@ -232,8 +239,8 @@ public class PluckerBookReader extends BookReader {
 					break;
 				case 15: // multiimage
 				{
-					short columns = PdbUtil.readShort(myStream);
-					short rows = PdbUtil.readShort(myStream);
+					short columns = (short) PdbUtil.readShort(myStream);
+					short rows = (short) PdbUtil.readShort(myStream);
 					/*PluckerMultiImage image = new PluckerMultiImage(rows, columns, Model.getImageMap());
 					for (int i = 0; i < size / 2 - 2; ++i) {
 						short us = (short)myStream.read();
@@ -345,7 +352,8 @@ public class PluckerBookReader extends BookReader {
 					break;
 				case 0x1A:
 					safeBeginParagraph();
-					//addImageReference(fromNumber(twoBytes(ptr, cur + 1)));
+					System.out.println("image ref");
+					addImageReference(fromNumber(twoBytes(ptr, cur + 1)), (short) 0);
 					break;
 				case 0x22:
 					if (!myParagraphStarted) {
@@ -384,7 +392,8 @@ public class PluckerBookReader extends BookReader {
 				case 0x53: // color setting is ignored
 					break;
 				case 0x5C:
-					//addImageReference(fromNumber(twoBytes(ptr, cur + 3)));
+					System.out.println("image ref");
+					addImageReference(fromNumber(twoBytes(ptr, cur + 3)), (short) 0);
 					break;
 				case 0x60: // underlined text is ignored
 					break;
@@ -486,7 +495,7 @@ public class PluckerBookReader extends BookReader {
     			addControl((Byte)pit.myFirst, (Boolean)pit.mySecond);
     		}
     		if (myForcedEntry != null) {
-    			//addControl(myForcedEntry);
+    	//		addControl(myForcedEntry);
     		} else {
     			addControl(FBTextKind.REGULAR, true);
     		}

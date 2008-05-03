@@ -20,8 +20,6 @@
 package org.geometerplus.fbreader.formats.plucker;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.geometerplus.fbreader.formats.pdb.PdbStream;
 import org.geometerplus.fbreader.formats.pdb.PdbUtil;
@@ -46,7 +44,7 @@ public class PluckerTextStream extends PdbStream {
 			return false;
 		}
 
-		myCompressionVersion = PdbUtil.readShort(myBase);
+		myCompressionVersion = (short) PdbUtil.readShort(myBase);
 
 		myBuffer = new byte[65536];
 		myFullBuffer = new byte[65536];
@@ -93,8 +91,8 @@ public class PluckerTextStream extends PdbStream {
 	private void processRecord(int recordSize) throws IOException {
 		myBase.skip(2);
 
-		short paragraphs = PdbUtil.readShort(myBase);
-		short size = PdbUtil.readShort(myBase);
+		int paragraphs = PdbUtil.readShort(myBase);
+		int size = PdbUtil.readShort(myBase);
 		
 		char type = (char)myBase.read(); 
 		if (type > 1) { // this record is not text record
@@ -103,7 +101,7 @@ public class PluckerTextStream extends PdbStream {
 
 		myBase.skip(1);
 
-		final short[] pars = new short[paragraphs];
+		final int[] pars = new int[paragraphs];
 		for (int i = 0; i < paragraphs; ++i) {
 			pars[i] = PdbUtil.readShort(myBase);
 			myBase.skip(2);
@@ -111,6 +109,7 @@ public class PluckerTextStream extends PdbStream {
 
 		boolean doProcess = false;
 		if (type == 0) {
+			System.out.println(size);
 			doProcess = myBase.read(myFullBuffer, 0, size) == size;
 		} else if (myCompressionVersion == 1) {
 			//doProcess =

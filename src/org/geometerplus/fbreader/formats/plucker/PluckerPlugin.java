@@ -20,11 +20,11 @@
 package org.geometerplus.fbreader.formats.plucker;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.formats.pdb.*;
+import org.geometerplus.fbreader.formats.pdb.PdbPlugin;
+import org.geometerplus.fbreader.formats.pdb.PdbStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerPlugin extends PdbPlugin {
