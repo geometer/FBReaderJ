@@ -31,7 +31,6 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookCollection {
 /*
-	void collectSeriesNames(AuthorPtr author, std::set<std::string> &list) const;
 	void removeTag(const std::string &tag, bool includeSubTags);
 	void renameTag(const std::string &from, const std::string &to, bool includeSubTags);
 	void cloneTag(const std::string &from, const std::string &to, bool includeSubTags);
@@ -274,6 +273,52 @@ public class BookCollection {
 		}
 
 		return myAuthors;
+	}
+
+	private static Author _author(ArrayList books, int index) {
+		return ((BookDescription)books.get(index)).getAuthor();
+	}
+
+	public void collectSeriesNames(Author author, HashSet set) {
+		synchronize();
+		final ArrayList books = myBooks;
+		if (books.isEmpty()) {
+			return;
+		}
+		int leftIndex = 0;
+		if (author.compareTo(_author(books, leftIndex)) < 0) {
+			return;
+		}
+		int rightIndex = books.size() - 1;
+		if (author.compareTo(_author(books, rightIndex)) > 0) {
+			return;
+		}
+		while (rightIndex > leftIndex) {
+			int middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
+			final Author middleAuthor = _author(books, middleIndex);
+			final int result = author.compareTo(middleAuthor);
+			if (result > 0) {
+				leftIndex = middleIndex + 1;
+			} else if (result < 0) {
+				rightIndex = middleIndex;
+			} else {
+				for (int i = middleIndex; i >= 0; --i) {
+					BookDescription book = (BookDescription)books.get(i);
+					if (!author.equals(book.getAuthor())) {
+						break;
+					}
+					set.add(book.getSeriesName());
+				}
+				for (int i = middleIndex + 1; i <= rightIndex; ++i) {
+					BookDescription book = (BookDescription)books.get(i);
+					if (!author.equals(book.getAuthor())) {
+						break;
+					}
+					set.add(book.getSeriesName());
+				}
+				break;
+			}
+		}
 	}
 
 	static public class LastOpenedBooks {

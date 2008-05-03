@@ -47,7 +47,6 @@ public class BookInfoDialog {
 	private ZLSpinOptionEntry myBookNumberEntry;
 	//private FormatInfoPage myFormatInfoPage;
 	
-	
 	public BookInfoDialog(BookCollection collection, String fileName, Runnable actionOnAccept) {
 		myCollection = collection;
 		myBookInfo = new BookDescription.BookInfo(fileName);
@@ -192,21 +191,11 @@ public class BookInfoDialog {
 			valuesSet.add(initialValue());
 			valuesSet.add("");
 			if (myOriginalAuthor != null) {
-				/*
-				final ArrayList books = myCollection.books(myOriginalAuthor);
-				for (int i = 0; i < books.size(); i++) {
-					valuesSet.add(((BookDescription) books.get(i)).getSeriesName());
-				}
-				*/
+				myCollection.collectSeriesNames(myOriginalAuthor, valuesSet);
 			}
 			Author currentAuthor = myAuthorDisplayNameEntry.myCurrentAuthor;
 			if (currentAuthor != null && (currentAuthor != myOriginalAuthor)) {
-				/*
-				final ArrayList books = myCollection.books(currentAuthor);
-				for (int i = 0; i < books.size(); i++) {
-					valuesSet.add(((BookDescription)books.get(i)).getSeriesName());
-				}
-				*/
+				myCollection.collectSeriesNames(currentAuthor, valuesSet);
 			}
 			myValues.addAll(valuesSet);
 			return myValues;
