@@ -30,42 +30,35 @@ import org.geometerplus.fbreader.description.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookCollection {
-	public final ZLStringOption PathOption;
-	public final ZLBooleanOption ScanSubdirsOption;
-	private final static String OPTIONS = "Options";
+/*
+	void collectSeriesNames(AuthorPtr author, std::set<std::string> &list) const;
+	void removeTag(const std::string &tag, bool includeSubTags);
+	void renameTag(const std::string &from, const std::string &to, bool includeSubTags);
+	void cloneTag(const std::string &from, const std::string &to, bool includeSubTags);
+	void addTagToAllBooks(const std::string &to);
+	void addTagToBooksWithNoTags(const std::string &to);
+	bool hasBooks(const std::string &tag) const;
+	bool hasSubtags(const std::string &tag) const;
+*/
+	public final ZLStringOption PathOption =
+		new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Options", "BookPath", "/Books");
+	public final ZLBooleanOption ScanSubdirsOption =
+		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "ScanSubdirs", false);
 
-	private final ArrayList/*Author*/ myAuthors = new ArrayList();
-	private	HashMap/*<Author, ArrayList<Description>>*/ myCollection = new HashMap();
-	private	final ArrayList myExternalBooks = new ArrayList();
+	private final ArrayList myBooks = new ArrayList();
+	private final ArrayList myAuthors = new ArrayList();
+	private	final HashSet myExternalBooks = new HashSet();
 
 	private	String myPath;
 	private	boolean myScanSubdirs;
-	private	boolean myDoStrongRebuild;
+	private	boolean myDoStrongRebuild = true;
 	private	boolean myDoWeakRebuild;
 
-	public BookCollection() {
-		PathOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "BookPath", "/Books");
-		ScanSubdirsOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, OPTIONS, "ScanSubdirs", false);
-		myDoStrongRebuild = true;
-		myDoWeakRebuild = false;
-	}
-	
-	private void addExternalBook(BookDescription bookDescription) {
-		if (!myExternalBooks.contains(bookDescription)) {
-			myExternalBooks.add(bookDescription);
-		}
+	public ArrayList books() {
+		synchronize();
+		return myBooks;
 	}
 
-	public ArrayList authors() {
-		synchronize();
-		return myAuthors;
-	}
-	
-	public ArrayList books(Author author) {
-		synchronize();
-		return (ArrayList)myCollection.get(author);
-	}
-	
 	public boolean isBookExternal(BookDescription description) {
 		synchronize();
 		return myExternalBooks.contains(description);
@@ -78,124 +71,46 @@ public class BookCollection {
 			myDoWeakRebuild = true;
 		}
 	}
-	
-	public	boolean synchronize() {
-		boolean doStrongRebuild =
-			myDoStrongRebuild ||
-			(myScanSubdirs != ScanSubdirsOption.getValue()) ||
-			(myPath != PathOption.getValue());
 
-		if (!doStrongRebuild && !myDoWeakRebuild) {
-			return false;
-		}
+	private HashSet collectBookFileNames() {
+		final HashSet dirs = collectDirNames();
+		final HashSet bookFileNames = new HashSet();
 
-		myPath = PathOption.getValue();
-		myScanSubdirs = ScanSubdirsOption.getValue();
-		myDoWeakRebuild = false;
-		myDoStrongRebuild = false;
-		
-		if (doStrongRebuild) {
-			myAuthors.clear();
-			myCollection.clear();
-			myExternalBooks.clear();
-
-			final ArrayList fileNamesSet = collectBookFileNames();
-			final int sizeOfSet = fileNamesSet.size();
-			for (int i = 0; i < sizeOfSet; ++i) {
-				addDescription(BookDescription.getDescription((String)fileNamesSet.get(i)));
+		for (Iterator it = dirs.iterator(); it.hasNext(); ) {
+			final ZLDir dir = new ZLFile((String)it.next()).getDirectory();
+			if (dir == null) {
+				continue;
 			}
-			
-			final ArrayList bookListFileNames = new BookList().fileNames();
-			final int sizeOfList = bookListFileNames.size();
-			for (int i = 0; i < sizeOfList; ++i) {
-				final String fileName = (String)bookListFileNames.get(i);
-				if (!fileNamesSet.contains(fileName)) {
-					BookDescription description = BookDescription.getDescription(fileName);
-					if (description != null) {
-						addDescription(description);
-						addExternalBook(description);
+			final ArrayList files = dir.collectFiles();
+			if (files.isEmpty()) {
+				continue;
+			}
+			final int len = files.size();
+			for (int i = 0; i < len; ++i) {
+				final String fileName = dir.getItemPath((String)files.get(i));
+				final ZLFile file = new ZLFile(fileName);
+				if (PluginCollection.instance().getPlugin(file, true) != null) {
+					bookFileNames.add(fileName);
+				} else if (file.getExtension().equals("zip")) {
+					if (!BookDescriptionUtil.checkInfo(file)) {
+						BookDescriptionUtil.resetZipInfo(file);
+						BookDescriptionUtil.saveInfo(file);
 					}
-				}
-			}
-		} else {
-			//System.out.println("strange code form BookCollection");
-			// something strange :(
-			final BookList bookList = new BookList();
-			final ArrayList bookListSet = bookList.fileNames();
-			final ArrayList fileNames = new ArrayList();
-
-//		TEMPORARY COMMENTED FOR J2ME COMPILABILITY
-			final ArrayList list = new ArrayList(myCollection.keySet());
-			for (int i = 0; i < list.size(); ++i) {
-				final ArrayList books = (ArrayList)myCollection.get(list.get(i));
-				final int numberOfBooks = books.size();
-				for (int j = 0; j < numberOfBooks; ++j) {
-					final BookDescription description = (BookDescription)books.get(j);
-					final String fileName = description.FileName;
-					if (!myExternalBooks.contains(description) || bookListSet.contains(fileName)) {
-						fileNames.add(fileName);
-					}
-				}
-			}
-
-			myCollection.clear();
-			myAuthors.clear();
-			final int fileNamesSize = fileNames.size();
-			for (int i = 0; i < fileNamesSize; ++i) {
-				addDescription(BookDescription.getDescription((String)fileNames.get(i), false));
-			}		
-		}
-		
-		if (myAuthors != null) {
-			Collections.sort(myAuthors, new Author.AuthorComparator());
-		}
-		DescriptionComparator descriptionComparator = new DescriptionComparator();
-		for (Iterator it = myCollection.keySet().iterator(); it.hasNext();) {
-			ArrayList list = (ArrayList)myCollection.get(it.next());
-			if (list != null) {
-				Collections.sort(list, descriptionComparator);
-			}
-		}
-		return true;
-	}
-		
-	private ArrayList collectDirNames() {
-		ArrayList nameQueue = new ArrayList();
-		ArrayList nameSet = new ArrayList();
-		
-		String path = myPath;
-		int pos = path.indexOf(File.pathSeparator);
-		while (pos != -1) {
-			nameQueue.add(path.substring(0, pos));
-			path = path.substring(0, pos + 1);
-			pos = path.indexOf(File.pathSeparator);
-		}
-		if (path.length() != 0) {
-			nameQueue.add(path);
-		}
-
-		while (!nameQueue.isEmpty()) {
-			String name = (String)nameQueue.get(0);
-			nameQueue.remove(0);
-			if (!nameSet.contains(name)) {
-				if (myScanSubdirs) {
-					ZLDir dir = new ZLFile(name).getDirectory();
-					if (dir != null) {
-						ArrayList subdirs = dir.collectSubDirs();
-						for (int i = 0; i < subdirs.size(); ++i) {
-							nameQueue.add(dir.getItemPath((String)subdirs.get(i)));
+					final ArrayList zipEntries = new ArrayList();
+					BookDescriptionUtil.listZipEntries(file, zipEntries);
+					final int zipEntriesLen = zipEntries.size();
+					for (int j = 0; j < zipEntriesLen; ++j) {
+						final String entryName = (String)zipEntries.get(j);
+						if (!bookFileNames.contains(entryName)) {
+							bookFileNames.add(entryName);
 						}
 					}
 				}
-				nameSet.add(name);
 			}
 		}
-		return nameSet;
-	}
-	
-	private ArrayList collectBookFileNames() {
+
+		/*
 		final ArrayList bookFileNames = new ArrayList();
-		final ArrayList dirs = collectDirNames();
 		final int numberOfDirs = dirs.size();
 		for (int i = 0; i < numberOfDirs; ++i) {
 			final String dirfile = (String)dirs.get(i);
@@ -232,47 +147,179 @@ public class BookCollection {
 				}
 			}
 		}
+		*/
 		return bookFileNames;
 	}
 
-	private void addDescription(BookDescription description) {
-		if (description == null) {
-			return;
+	public	boolean synchronize() {
+		boolean doStrongRebuild =
+			myDoStrongRebuild ||
+			(myScanSubdirs != ScanSubdirsOption.getValue()) ||
+			(myPath != PathOption.getValue());
+
+		if (!doStrongRebuild && !myDoWeakRebuild) {
+			return false;
 		}
 
-		final Author author = description.getAuthor();
-		ArrayList books = (ArrayList)myCollection.get(author);
-		if (books == null) {
-			books = new ArrayList();
-			myCollection.put(author, books);
-			myAuthors.add(author);
+		myPath = PathOption.getValue();
+		myScanSubdirs = ScanSubdirsOption.getValue();
+		myDoWeakRebuild = false;
+		myDoStrongRebuild = false;
+
+		if (doStrongRebuild) {
+			myBooks.clear();
+			myAuthors.clear();
+			myExternalBooks.clear();
+
+			final HashSet fileNamesSet = collectBookFileNames();
+			for (Iterator it = fileNamesSet.iterator(); it.hasNext(); ) {
+				addDescription(BookDescription.getDescription((String)it.next()));
+			}
+
+			final ArrayList bookListFileNames = new BookList().fileNames();
+			final int sizeOfList = bookListFileNames.size();
+			for (int i = 0; i < sizeOfList; ++i) {
+				final String fileName = (String)bookListFileNames.get(i);
+				if (!fileNamesSet.contains(fileName)) {
+					BookDescription description = BookDescription.getDescription(fileName);
+					if (description != null) {
+						addDescription(description);
+						myExternalBooks.add(description);
+					}
+				}
+			}
+		} else {
+			final BookList bookList = new BookList();
+			final ArrayList bookListFileNames = bookList.fileNames();
+			final ArrayList fileNames = new ArrayList();
+
+			final ArrayList books = myBooks;
+			final int booksLen = books.size();
+			for (int i = 0; i < booksLen; ++i) {
+				final BookDescription book = (BookDescription)books.get(i);
+				final String bookFileName = book.FileName;
+				if (!myExternalBooks.contains(book) || bookListFileNames.contains(bookFileName)) {
+					fileNames.add(bookFileName);
+				}
+			}
+			myBooks.clear();
+			myAuthors.clear();
+
+			final int fileNamesLen = fileNames.size();
+			for (int i = 0; i < fileNamesLen; ++i) {
+				addDescription(BookDescription.getDescription((String)fileNames.get(i), false));
+			}	
 		}
-		books.add(description);
+
+		Collections.sort(myBooks, new DescriptionComparator());
+		return true;
 	}
-	
+
+	private HashSet collectDirNames() {
+		ArrayList nameQueue = new ArrayList();
+		HashSet nameSet = new HashSet();
+
+		String path = myPath;
+		int pos = path.indexOf(File.pathSeparator);
+		while (pos != -1) {
+			nameQueue.add(path.substring(0, pos));
+			path = path.substring(0, pos + 1);
+			pos = path.indexOf(File.pathSeparator);
+		}
+		if (path.length() != 0) {
+			nameQueue.add(path);
+		}
+
+		while (!nameQueue.isEmpty()) {
+			String name = (String)nameQueue.get(0);
+			nameQueue.remove(0);
+			if (!nameSet.contains(name)) {
+				if (myScanSubdirs) {
+					ZLDir dir = new ZLFile(name).getDirectory();
+					if (dir != null) {
+						ArrayList subdirs = dir.collectSubDirs();
+						for (int i = 0; i < subdirs.size(); ++i) {
+							nameQueue.add(dir.getItemPath((String)subdirs.get(i)));
+						}
+					}
+				}
+				nameSet.add(name);
+			}
+		}
+		return nameSet;
+	}
+
+	private void addDescription(BookDescription description) {
+		if (description != null) {
+			myBooks.add(description);
+		}
+	}
+
+	public ArrayList authors() {
+		synchronize();
+		if (myAuthors.isEmpty() && !myBooks.isEmpty()) {
+			final ArrayList books = myBooks;
+			final ArrayList authors = myAuthors;
+			final int len = books.size();
+			Author author = null;
+			for (int i = 0; i < len; ++i) {
+				Author newAuthor = ((BookDescription)books.get(i)).getAuthor();
+				if ((author == null) ||
+						(author.getSortKey() != newAuthor.getSortKey()) ||
+						(author.getDisplayName() != newAuthor.getDisplayName())) {
+					author = newAuthor;
+					authors.add(author);
+				}
+			}
+		}
+
+		return myAuthors;
+	}
+
 	private static class DescriptionComparator implements Comparator {
 		public int compare(Object descr1, Object descr2) {
-			BookDescription d1 = (BookDescription)descr1;
-			BookDescription d2 = (BookDescription)descr2;
-			String sequenceName1 = d1.getSeriesName();
-			String sequenceName2 = d2.getSeriesName();
-				
-			if ((sequenceName1.length() == 0) && (sequenceName2.length() == 0)) {
+			final BookDescription d1 = (BookDescription)descr1;
+			final BookDescription d2 = (BookDescription)descr2;
+
+			final Author a1 = d1.getAuthor();
+			final Author a2 = d2.getAuthor();
+
+			{
+				final int result = a1.getSortKey().compareTo(a2.getSortKey());
+				if (result != 0) {
+					return result;
+				}
+			}
+
+			{
+				final int result = a1.getDisplayName().compareTo(a2.getDisplayName());
+				if (result != 0) {
+					return result;
+				}
+			}
+
+			final String seriesName1 = d1.getSeriesName();
+			final String seriesName2 = d2.getSeriesName();
+
+			if ((seriesName1.length() == 0) && (seriesName2.length() == 0)) {
 				return d1.getTitle().compareTo(d2.getTitle());
 			}
-			if (sequenceName1.length() == 0) {
-				return d1.getTitle().compareTo(sequenceName2);
+			if (seriesName1.length() == 0) {
+				return d1.getTitle().compareTo(seriesName2);
 			}
-			if (sequenceName2.length() == 0) {
-				return sequenceName1.compareTo(d2.getTitle());
+			if (seriesName2.length() == 0) {
+				return seriesName1.compareTo(d2.getTitle());
 			}
-			if (!sequenceName1.equals(sequenceName2)) {
-				return sequenceName1.compareTo(sequenceName2);
+			{
+				final int result = seriesName1.compareTo(seriesName2);
+				if (result != 0) {
+					return result;
+				}
 			}
 			return d1.getNumberInSeries() - d2.getNumberInSeries();
 		}
 	}
-	
+
 	static public class LastOpenedBooks {
 		public ZLIntegerRangeOption MaxListSizeOption;
 		static private final String GROUP = "LastOpenedBooks";
@@ -294,7 +341,7 @@ public class BookCollection {
 				}
 			}
 		}
-			
+
 		public	void addBook(String fileName) {
 			for (int i = 0; i < myBooks.size(); i++) {
 				if (((BookDescription)(myBooks.get(i))).FileName.equals(fileName)) {
@@ -302,23 +349,23 @@ public class BookCollection {
 					break;
 				}
 			}
-			
+
 			BookDescription description = BookDescription.getDescription(fileName);
 			if (description != null) {
 				myBooks.add(0, description);
 			}
-			
+
 			final int maxSize = MaxListSizeOption.getValue();
 			while (myBooks.size() > maxSize) {
 				myBooks.remove(myBooks.size() - 1);
 			}
 			save();
 		}
-		
+
 		public	ArrayList/*BookDescription*/ books() {
 			return myBooks;
 		}
-		
+
 		public void save() {
 			int size = Math.min(MaxListSizeOption.getValue(), myBooks.size());
 			for (int i = 0; i < size; ++i) {

@@ -192,17 +192,21 @@ public class BookInfoDialog {
 			valuesSet.add(initialValue());
 			valuesSet.add("");
 			if (myOriginalAuthor != null) {
+				/*
 				final ArrayList books = myCollection.books(myOriginalAuthor);
 				for (int i = 0; i < books.size(); i++) {
 					valuesSet.add(((BookDescription) books.get(i)).getSeriesName());
 				}
+				*/
 			}
 			Author currentAuthor = myAuthorDisplayNameEntry.myCurrentAuthor;
 			if (currentAuthor != null && (currentAuthor != myOriginalAuthor)) {
+				/*
 				final ArrayList books = myCollection.books(currentAuthor);
 				for (int i = 0; i < books.size(); i++) {
 					valuesSet.add(((BookDescription)books.get(i)).getSeriesName());
 				}
+				*/
 			}
 			myValues.addAll(valuesSet);
 			return myValues;

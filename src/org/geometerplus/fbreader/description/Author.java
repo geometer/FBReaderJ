@@ -26,23 +26,6 @@ public abstract class Author {
 	public abstract String getDisplayName();
 	public abstract String getSortKey();
 	public abstract boolean isSingle();	
-
-	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-
-		if (!(o instanceof Author)) {
-			return false;
-		}
-
-		Author author = (Author)o;
-		return getSortKey().equals(author.getSortKey()) && getDisplayName().equals(author.getDisplayName());
-	}
-
-	public int hashCode() {
-		return getSortKey().hashCode() + getDisplayName().hashCode();
-	}
 	
 	static class SingleAuthor extends Author {
 		private final String myDisplayName;
@@ -123,11 +106,18 @@ public abstract class Author {
 		}
 	}
 
-	static public class AuthorComparator implements Comparator {
-		public int compare(Object aobj1, Object aobj2) {
-			final Author a1 = (Author)aobj1;
-			final Author a2 = (Author)aobj2;
-			return a1.getSortKey().compareTo(a2.getSortKey());
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
 		}
+		if (!(o instanceof Author)) {
+			return false;
+		}
+		Author a = (Author)o;
+		return getSortKey().equals(a.getSortKey()) && getDisplayName().equals(a.getDisplayName());
+	}
+
+	public int hashCode() {
+		return getSortKey().hashCode() + getDisplayName().hashCode();
 	}
 }
