@@ -304,7 +304,7 @@ public class BookDescription implements Comparable {
 		}
 		
 		public void setLanguage(String language) {
-			this.myDescription.myLanguage = language;
+			myDescription.myLanguage = language;
 		}
 		
 		public String getEncoding() {
@@ -312,7 +312,7 @@ public class BookDescription implements Comparable {
 		}
 		
 		public void setEncoding(String encoding) {
-			this.myDescription.myEncoding = encoding;
+			myDescription.myEncoding = encoding;
 		}
 	};
 }
