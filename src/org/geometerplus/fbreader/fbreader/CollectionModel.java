@@ -45,7 +45,7 @@ class CollectionModel extends ZLTextTreeModelImpl {
 
 	private final ZLImageMap myImageMap = new ZLImageMap();
 	private final HashMap myParagraphToBook = new HashMap();
-	private HashMap myBookToParagraphNumber = new HashMap();
+	private final HashMap myBookToParagraphNumber = new HashMap();
 
 	public CollectionModel(CollectionView view, BookCollection collection) {
 		myView = view;
@@ -132,53 +132,6 @@ class CollectionModel extends ZLTextTreeModelImpl {
 			//myBookToParagraph[description].push_back(paragraphsNumber() - 1);
 		}
 	}
-
-//	private void build1() {
-//		final ArrayList/*<Author>*/ authors = myCollection.authors();
-//
-//		if (authors.isEmpty()) {
-//			createParagraph(null);
-//			insertText(FBTextKind.REGULAR, ZLResource.resource("library").getResource("noBooks").getValue());
-//		} else {
-//			String currentSeriesName = "";
-//			ZLTextTreeParagraph sequenceParagraph;
-//			for (int i = 0; i < authors.size(); i++) {
-//				Author it = (Author)authors.get(i);
-//				final ArrayList/*<BookDescription>*/ books = myCollection.books(it);
-//				if (!books.isEmpty()) {
-//					currentSeriesName = "";
-//					sequenceParagraph = null;
-//                    //todo 
-//					ZLTextTreeParagraph authorParagraph = createParagraph(null);
-//					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, it.getDisplayName());
-//					//insertImage(AuthorInfoImageId);
-//					for (int j = 0; j < books.size(); j++) {
-//						BookDescription jt = (BookDescription)books.get(j);
-//						final String sequenceName = jt.getSeriesName();
-//						if (sequenceName.length() == 0) {
-//							currentSeriesName = "";
-//							sequenceParagraph = null;
-//						} else if (sequenceName != currentSeriesName) {
-//							currentSeriesName = sequenceName;
-//							sequenceParagraph = createParagraph(authorParagraph);
-//							insertText(FBTextKind.LIBRARY_BOOK_ENTRY, sequenceName);
-//							//insertImage(SeriesOrderImageId);
-//						}
-//						ZLTextTreeParagraph bookParagraph = createParagraph(
-//							(sequenceParagraph == null) ? authorParagraph : sequenceParagraph
-//						);
-//						insertText(FBTextKind.LIBRARY_BOOK_ENTRY, jt.getTitle());
-//						insertImage(BookInfoImageId);
-//						if (myCollection.isBookExternal(jt)) {
-//							insertImage(RemoveBookImageId);
-//						}
-//						myParagraphToBook.put(bookParagraph, jt);
-//						myBookToParagraphNumber.put(jt, getParagraphsNumber() - 1);
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	public void update() {
 		myParagraphToBook.clear();
