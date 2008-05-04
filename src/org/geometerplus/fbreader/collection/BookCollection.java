@@ -292,12 +292,31 @@ public class BookCollection {
 		// TODO: implement
 	}
 
-	public void addTagToAllBooks(String to) {
-		// TODO: implement
+	public void addTagToAllBooks(String tag) {
+		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(tag);
+		if (checkedName.length() != 0) {
+			synchronize();
+			final ArrayList books = myBooks;
+			final int len = books.size();
+			for (int i = 0; i < len; ++i) {
+				new BookDescription.WritableBookDescription((BookDescription)books.get(i)).addTag(checkedName, false);
+			}
+		}
 	}
 
-	public void addTagToBooksWithNoTags(String to) {
-		// TODO: implement
+	public void addTagToBooksWithNoTags(String tag) {
+		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(tag);
+		if (checkedName.length() != 0) {
+			synchronize();
+			final ArrayList books = myBooks;
+			final int len = books.size();
+			for (int i = 0; i < len; ++i) {
+				BookDescription description = (BookDescription)books.get(i);
+				if (description.getTags().isEmpty()) {
+					new BookDescription.WritableBookDescription(description).addTag(checkedName, false);
+				}
+			}
+		}
 	}
 
 	public boolean hasBooks(String tag) {
