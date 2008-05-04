@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -239,6 +239,58 @@ public class CollectionView extends FBView {
 		final boolean editNotClone = tag != SpecialTagAllBooks;
 		final boolean includeSubtags = !tagIsSpecial && Collection.hasSubtags(tag);
 		// TODO: implement
+
+		final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
+
+		final String editOrCloneKey = "editOrClone";
+		final EditOrCloneEntry editOrCloneEntry = new EditOrCloneEntry(dialog.getResource(editOrCloneKey), editNotClone);
+		editOrCloneEntry.setActive(!tagIsSpecial);
+		dialog.addOption(editOrCloneKey, editOrCloneEntry);
+
+		/*
+		std::set<std::string> tagSet;
+		const Books &books = myCollection.books();
+		for (Books::const_iterator it = books.begin(); it != books.end(); ++it) {
+			const std::vector<std::string> &bookTags = (*it)->tags();
+			tagSet.insert(bookTags.begin(), bookTags.end());
+		}
+		std::set<std::string> fullTagSet = tagSet;
+		for (std::set<std::string>::const_iterator it = tagSet.begin(); it != tagSet.end(); ++it) {
+			for (int index = 0;;) {
+				index = it->find('/', index);
+				if (index == -1) {
+					break;
+				}
+				fullTagSet.insert(it->substr(0, index++));
+			}
+		}
+		std::vector<std::string> names;
+		if (fullTagSet.find(tagValue) == fullTagSet.end()) {
+			names.push_back(tagValue);
+		}
+		names.insert(names.end(), fullTagSet.begin(), fullTagSet.end());
+		TagNameEntry *tagNameEntry = new TagNameEntry(names, tagValue);
+		dialog->addOption(ZLResourceKey("name"), tagNameEntry);
+
+		IncludeSubtagsEntry *includeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
+		if (showIncludeSubtagsEntry) {
+			if (!hasBooks) {
+				includeSubtagsEntry->setActive(false);
+			}
+			dialog->addOption(ZLResourceKey("includeSubtags"), includeSubtagsEntry);
+		}
+
+		dialog->addButton(ZLDialogManager::OK_BUTTON, true);
+		dialog->addButton(ZLDialogManager::CANCEL_BUTTON, false);
+
+		if (dialog->run()) {
+			dialog->acceptValues();
+			return true;
+		} else {
+			return false;
+		}
+		*/
+		dialog.run();
 	}
 
 	public void paint() {
@@ -294,5 +346,35 @@ public class CollectionView extends FBView {
 
 	private CollectionModel getCollectionModel() {
 		return (CollectionModel)getModel();
+	}
+}
+
+class EditOrCloneEntry extends ZLChoiceOptionEntry {
+	private final ZLResource myResource;
+	private boolean myEditNotClone;
+
+	public EditOrCloneEntry(ZLResource resource, boolean editNotClone) {
+		myResource = resource;
+		myEditNotClone = editNotClone;
+	}
+
+	public String getText(int index) {
+		return (index == 0) ? myResource.getResource("edit").getValue() : myResource.getResource("clone").getValue();
+	}
+
+	public int choiceNumber() {
+		return 2;
+	}
+
+	public int initialCheckedIndex() {
+		return myEditNotClone ? 0 : 1;
+	}
+
+	public void onAccept(int index) {
+		myEditNotClone = (index == 0);
+	}
+
+	public boolean getEditNotClone() {
+		return myEditNotClone;
 	}
 }

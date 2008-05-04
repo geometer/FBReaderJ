@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.options.ZLSimpleOption;
 public abstract class ZLDialog {
 	protected ZLDialogContent myTab;	
 
-	public ZLResource resource(final String key) {
+	public ZLResource getResource(final String key) {
 		return myTab.getResource(key);
 	}
 
