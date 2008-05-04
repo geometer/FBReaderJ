@@ -155,14 +155,24 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
-					myImageEntry = (ZLImageEntry)myEntries.get((int)data[dataOffset++]);
+				{
+					final int entryAddress =
+						((int)data[dataOffset++] << 16) +
+						(int)data[dataOffset++];
+					myImageEntry = (ZLImageEntry)myEntries.get(entryAddress);
 					break;
+				}
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
 				case ZLTextParagraph.Entry.FORCED_CONTROL:
+				{
+					final int entryAddress =
+						((int)data[dataOffset++] << 16) +
+						(int)data[dataOffset++];
 					//entry = myEntries.get((int)code);
 					break;
+				}
 			}
 			++myCounter;
 			myDataOffset = dataOffset;
@@ -263,11 +273,13 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}
 	
 	public final void addImage(String id, ZLImageMap imageMap, short vOffset) {
-		final char[] block = getDataBlock(2);
+		final char[] block = getDataBlock(3);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		final ArrayList entries = myEntries;
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
-		block[myBlockOffset++] = (char)entries.size();
+		final int entryAddress = myEntries.size();
+		block[myBlockOffset++] = (char)(entryAddress >> 16);
+		block[myBlockOffset++] = (char)entryAddress;
 		entries.add(new ZLImageEntry(imageMap, id, vOffset));
 	}
 	
@@ -398,11 +410,13 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
+					dataOffset += 2;
+					break;
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					++dataOffset;
 					break;
 				case ZLTextParagraph.Entry.FORCED_CONTROL:
-					//entry = myEntries.get((int)code);
+					dataOffset += 2;
 					break;
 			}
 		}

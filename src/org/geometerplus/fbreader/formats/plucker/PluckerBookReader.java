@@ -495,7 +495,7 @@ public class PluckerBookReader extends BookReader {
     			addControl((Byte)pit.myFirst, (Boolean)pit.mySecond);
     		}
     		if (myForcedEntry != null) {
-    	//		addControl(myForcedEntry);
+    			addControl(myForcedEntry);
     		} else {
     			addControl(FBTextKind.REGULAR, true);
     		}
