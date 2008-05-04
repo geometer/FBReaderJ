@@ -28,8 +28,9 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 	private final BookDescription.WritableBookDescription myDescription;
 
 	private String myDCMetadataTag;
-	private String myTitleTag = "";
-	private String myAuthorTag = "";
+	private String myTitleTag;
+	private String myAuthorTag;
+	private String mySubjectTag;
 
 	private final ArrayList myAuthorList = new ArrayList();
 	private final ArrayList myAuthorList2 = new ArrayList();
@@ -38,14 +39,13 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 		myDescription = new BookDescription.WritableBookDescription(description);
 		myDescription.clearAuthor();
 		myDescription.setTitle("");
-		//myDescription.removeAllTags();
+		myDescription.removeAllTags();
 	}
 
 	boolean readDescription(String fileName) {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 		if (!read(fileName)) {
-			System.err.println("HELLO");
 			return false;
 		}
 
@@ -62,7 +62,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 	private static final int READ_AUTHOR = 1;
 	private static final int READ_AUTHOR2 = 2;
 	private static final int READ_TITLE = 3;
-	//private static final int READ_SUBJECT = 4;
+	private static final int READ_SUBJECT = 4;
 	private int myReadState;
 	private boolean myReadMetaData;
 
@@ -73,14 +73,16 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 	}
 
 	public void namespaceListChangedHandler(HashMap namespaces) {
-		myTitleTag = "";
-		myAuthorTag = "";
+		myTitleTag = null;
+		myAuthorTag = null;
+		mySubjectTag = null;
 		for (Object o : namespaces.keySet()) {
 			final String id = (String)o;
 			if (id.startsWith("http://purl.org/dc/elements")) {
 				final String name = (String)namespaces.get(id);
 				myTitleTag = (name + ":title").intern();
 				myAuthorTag = (name + ":creator").intern();
+				mySubjectTag = (name + ":subject").intern();
 				break;
 			}
 		}
@@ -101,12 +103,8 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 				} else if (role.equals("aut")) {
 					myReadState = READ_AUTHOR;
 				}
-			/*
-			} else if (ZLStringUtil::stringEndsWith(tag, SUBJECT_TAG)) {
-				if (isDublinCoreNamespace(tag.substring(0, tag.length() - SUBJECT_TAG.length()))) {
-					myReadState = READ_SUBJECT;
-				}
-			*/
+			} else if (tag == mySubjectTag) {
+				myReadState = READ_SUBJECT;
 			}
 		}
 		return false;
@@ -119,7 +117,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 			case READ_AUTHOR:
 			case READ_AUTHOR2:
 			case READ_TITLE:
-			//case READ_SUBJECT:
+			case READ_SUBJECT:
 				myBuffer.append(data, start, len);
 				break;
 		}
@@ -133,14 +131,19 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 
 		final String bufferContent = myBuffer.toString().trim();
 		if (bufferContent.length() != 0) {
-			if (myReadState == READ_TITLE) {
-				myDescription.setTitle(bufferContent);
-			} else if (myReadState == READ_AUTHOR) {
-				myAuthorList.add(bufferContent);
-			} else if (myReadState == READ_AUTHOR2) {
-				myAuthorList2.add(bufferContent);
-			//} else if (myReadState == READ_SUBJECT) {
-			//	myDescription.addTag(bufferContent);
+			switch (myReadState) {
+				case READ_TITLE:
+					myDescription.setTitle(bufferContent);
+					break;
+				case READ_AUTHOR:
+					myAuthorList.add(bufferContent);
+					break;
+				case READ_AUTHOR2:
+					myAuthorList2.add(bufferContent);
+					break;
+				case READ_SUBJECT:
+					myDescription.addTag(bufferContent, true);
+					break;
 			}
 		}
 		myBuffer.delete(0, myBuffer.length());

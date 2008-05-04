@@ -78,14 +78,14 @@ public class BookInfoDialog {
 		commonTab.addOption("encoding", myEncodingEntry);
 
 		ZLDialogContent seriesTab = myDialog.createTab("Series");
-		
 		seriesTab.addOption("seriesTitle", mySeriesTitleEntry);
 		seriesTab.addOption("bookNumber", myBookNumberEntry);
-
 		mySeriesTitleEntry.onValueEdited(mySeriesTitleEntry.initialValue());
+
+		ZLDialogContent tagsTab = myDialog.createTab("Tags");
+		tagsTab.addOption("tags", myBookInfo.TagsOption);
 		
-		
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(fileName), false);
+		//FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(fileName), false);
 		//if (plugin != null) {
 			//myFormatInfoPage = plugin.createInfoPage(myDialog, fileName);
 		//}

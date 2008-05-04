@@ -30,15 +30,6 @@ import org.geometerplus.fbreader.description.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookCollection {
-/*
-	void removeTag(const std::string &tag, bool includeSubTags);
-	void renameTag(const std::string &from, const std::string &to, bool includeSubTags);
-	void cloneTag(const std::string &from, const std::string &to, bool includeSubTags);
-	void addTagToAllBooks(const std::string &to);
-	void addTagToBooksWithNoTags(const std::string &to);
-	bool hasBooks(const std::string &tag) const;
-	bool hasSubtags(const std::string &tag) const;
-*/
 	public final ZLStringOption PathOption =
 		new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Options", "BookPath", "/Books");
 	public final ZLBooleanOption ScanSubdirsOption =
@@ -108,45 +99,6 @@ public class BookCollection {
 			}
 		}
 
-		/*
-		final ArrayList bookFileNames = new ArrayList();
-		final int numberOfDirs = dirs.size();
-		for (int i = 0; i < numberOfDirs; ++i) {
-			final String dirfile = (String)dirs.get(i);
-			final ZLDir dir = new ZLFile(dirfile).getDirectory();
-			if (dir == null) {
-				continue;
-			}
-
-			final PluginCollection collection = PluginCollection.instance();
-			final ArrayList files = dir.collectFiles();
-			final int numberOfFiles = files.size();
-			for (int j = 0; j < numberOfFiles; ++j) {
-				String fileName = dir.getItemPath((String)files.get(j));
-				ZLFile file = new ZLFile(fileName);
-				if (collection.getPlugin(file, true) != null) {
-					if (!bookFileNames.contains(fileName)) {
-						bookFileNames.add(fileName);
-					}
-				// TODO: zip -> any archive
-				} else if (file.getExtension().equals("zip")) {
-					if (!BookDescriptionUtil.checkInfo(file)) {
-						BookDescriptionUtil.resetZipInfo(file);
-						BookDescriptionUtil.saveInfo(file);
-					}
-					final ArrayList zipEntries = new ArrayList();
-					BookDescriptionUtil.listZipEntries(file, zipEntries);
-					final int numberOfZipEntries = zipEntries.size();
-					for (int k = 0; k < numberOfZipEntries; ++k) {
-						String str = (String)zipEntries.get(k);
-						if (!bookFileNames.contains(str)) {
-							bookFileNames.add(str);
-						}
-					}
-				}
-			}
-		}
-		*/
 		return bookFileNames;
 	}
 
@@ -321,19 +273,80 @@ public class BookCollection {
 		}
 	}
 
+	public void removeTag(String tag, boolean includeSubTags) {
+		synchronize();
+		System.err.println("removeTag(" + tag + ", " + includeSubTags + ")");
+		final ArrayList books = myBooks;
+		final int len = books.size();
+		for (int i = 0; i < len; ++i) {
+			new BookDescription.WritableBookDescription(
+				(BookDescription)books.get(i)
+			).removeTag(tag, includeSubTags);
+		}
+	}
+
+	public void renameTag(String from, String to, boolean includeSubTags) {
+		// TODO: implement
+	}
+
+	public void cloneTag(String from, String to, boolean includeSubTags) {
+		// TODO: implement
+	}
+
+	public void addTagToAllBooks(String to) {
+		// TODO: implement
+	}
+
+	public void addTagToBooksWithNoTags(String to) {
+		// TODO: implement
+	}
+
+	public boolean hasBooks(String tag) {
+		synchronize();
+		final ArrayList books = myBooks;
+		final int len = books.size();
+		for (int i = 0; i < len; ++i) {
+			final ArrayList tags = ((BookDescription)books.get(i)).getTags();
+			final int tagsLen = tags.size();
+			for (int j  = 0; j < tagsLen; ++j) {
+				if (tag.equals(tags.get(j))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean hasSubtags(String tag) {
+		synchronize();
+		final String prefix = tag + '/';
+		final ArrayList books = myBooks;
+		final int len = books.size();
+		for (int i = 0; i < len; ++i) {
+			final ArrayList tags = ((BookDescription)books.get(i)).getTags();
+			final int tagsLen = tags.size();
+			for (int j  = 0; j < tagsLen; ++j) {
+				if (((String)tags.get(j)).startsWith(prefix)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	static public class LastOpenedBooks {
 		public ZLIntegerRangeOption MaxListSizeOption;
 		static private final String GROUP = "LastOpenedBooks";
 		static private final String BOOK = "Book";
-		private final ArrayList/*BookDescription*/ myBooks = new ArrayList();
+		private final ArrayList myBooks = new ArrayList();
 
 		public LastOpenedBooks() {
 			MaxListSizeOption = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, GROUP, "MaxSize", 1, 100, 10);
 			final int size = MaxListSizeOption.getValue();
+			final ZLStringOption option = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, "", "");
 			for (int i = 0; i < size; ++i) {
-				String num = BOOK;
-				num += i;
-				String name = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, num, "").getValue();
+				option.changeName(BOOK + i);
+				String name = option.getValue();
 				if (name.length() != 0) {
 					BookDescription description = BookDescription.getDescription(name);
 					if (description != null) {
@@ -363,16 +376,16 @@ public class BookCollection {
 			save();
 		}
 
-		public	ArrayList/*BookDescription*/ books() {
+		public ArrayList books() {
 			return myBooks;
 		}
 
 		public void save() {
+			final ZLStringOption option = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, "", "");
 			int size = Math.min(MaxListSizeOption.getValue(), myBooks.size());
 			for (int i = 0; i < size; ++i) {
-				String num = BOOK;
-				num += i;
-				new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, num, "").setValue(((BookDescription)myBooks.get(i)).FileName);
+				option.changeName(BOOK + i);
+				option.setValue(((BookDescription)myBooks.get(i)).FileName);
 			}
 		}
 	}

@@ -19,30 +19,36 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.xml.*;
+
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.description.BookDescription.WritableBookDescription;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessorFactory;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class FB2DescriptionReader extends ZLXMLReaderAdapter {
+	private final static int READ_NOTHING = 0;
+	private final static int READ_SOMETHING = 1;
+	private final static int READ_TITLE = 2;
+	private final static int READ_AUTHOR = 3;
+	private final static int READ_AUTHOR_NAME_0 = 4;
+	private final static int READ_AUTHOR_NAME_1 = 5;
+	private final static int READ_AUTHOR_NAME_2 = 6;
+	private final static int READ_LANGUAGE = 7;
+	private final static int READ_GENRE = 8;
+
 	private WritableBookDescription myDescription;
-	private	boolean myReadSomething;
-	private	boolean myReadTitle;
-	private	boolean myReadAuthor;
-	private	boolean[] myReadAuthorName = new boolean[3];
-	private	boolean myReadLanguage;
-	private	String[] myAuthorNames = new String[3];
+	private int myReadState = READ_NOTHING;
+
+	private	final String[] myAuthorNames = new String[3];
+	private final StringBuilder myGenreBuffer = new StringBuilder();
 
 	public FB2DescriptionReader(BookDescription description) {
 		myDescription = new WritableBookDescription(description);
 		myDescription.clearAuthor();
 		myDescription.setTitle("");
 		myDescription.setLanguage("");
-		myAuthorNames[0] = "";
-		myAuthorNames[1] = "";
-		myAuthorNames[2] = "";
+		myDescription.removeAllTags();
 	}
 	
 	public boolean dontCacheAttributeValues() {
@@ -50,16 +56,12 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 	}
 	
 	public boolean readDescription(String fileName) {
-		myReadSomething = false;
-		myReadTitle = false;
-		myReadAuthor = false;
-		myReadLanguage = false;
-		for (int i = 0; i < 3; ++i) {
-			myReadAuthorName[i] = false;
-		}
+		myReadState = READ_NOTHING;
+		myAuthorNames[0] = "";
+		myAuthorNames[1] = "";
+		myAuthorNames[2] = "";
+		myGenreBuffer.delete(0, myGenreBuffer.length());
 		return readDocument(fileName);
-		//TODO!!
-		//return true;
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
@@ -67,34 +69,45 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 			case FB2Tag.BODY:
 				return true;
 			case FB2Tag.TITLE_INFO:
-				myReadSomething = true;
+				myReadState = READ_SOMETHING;
 				break;
 			case FB2Tag.BOOK_TITLE:
-				myReadTitle = true;
+				if (myReadState == READ_SOMETHING) {
+					myReadState = READ_TITLE;
+				}
+				break;
+			case FB2Tag.GENRE:
+				if (myReadState == READ_SOMETHING) {
+					myReadState = READ_GENRE;
+				}
 				break;
 			case FB2Tag.AUTHOR:
-				myReadAuthor = true;
+				if (myReadState == READ_SOMETHING) {
+					myReadState = READ_AUTHOR;
+				}
 				break;
 			case FB2Tag.LANG:
-				myReadLanguage = true;
+				if (myReadState == READ_SOMETHING) {
+					myReadState = READ_LANGUAGE;
+				}
 				break;
 			case FB2Tag.FIRST_NAME:
-				if (myReadAuthor) {
-					myReadAuthorName[0] = true;
+				if (myReadState == READ_AUTHOR) {
+					myReadState = READ_AUTHOR_NAME_0;
 				}
 				break;
 			case FB2Tag.MIDDLE_NAME:
-				if (myReadAuthor) {
-					myReadAuthorName[1] = true;
+				if (myReadState == READ_AUTHOR) {
+					myReadState = READ_AUTHOR_NAME_1;
 				}
 				break;
 			case FB2Tag.LAST_NAME:
-				if (myReadAuthor) {
-					myReadAuthorName[2] = true;
+				if (myReadState == READ_AUTHOR) {
+					myReadState = READ_AUTHOR_NAME_2;
 				}
 				break;
 			case FB2Tag.SEQUENCE:
-				if (myReadSomething) {
+				if (myReadState == READ_SOMETHING) {
 					String name = attributes.getValue("name");
 					if (name != null) {
 						String sequenceName = name;
@@ -112,16 +125,36 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 	public boolean endElementHandler(String tag) {
 		switch (FB2Tag.getTagByName(tag)) {
 			case FB2Tag.TITLE_INFO:
-				myReadSomething = false;
+				myReadState = READ_NOTHING;
 				break;
 			case FB2Tag.BOOK_TITLE:
-				myReadTitle = false;
+				if (myReadState == READ_TITLE) {
+					myReadState = READ_SOMETHING;
+				}
+				break;
+			case FB2Tag.GENRE:
+				if (myReadState == READ_GENRE) {
+					final String genre = myGenreBuffer.toString().trim();
+					myGenreBuffer.delete(0, myGenreBuffer.length());
+					if (genre.length() > 0) {
+						final ArrayList tags = FB2TagManager.humanReadableTags(genre);
+						if (tags != null) {
+							final int len = tags.size();
+							for (int i = 0; i < len; ++i) {
+								myDescription.addTag((String)tags.get(i), false);
+							}
+						} else {
+							myDescription.addTag(genre, true);
+						}
+					}
+					myReadState = READ_SOMETHING;
+				}
 				break;
 			case FB2Tag.AUTHOR:
-				if (myReadSomething) {
-					myAuthorNames[0].trim();
-						myAuthorNames[1].trim();
-					myAuthorNames[2].trim();
+				if (myReadState == READ_AUTHOR) {
+					myAuthorNames[0] = myAuthorNames[0].trim();
+					myAuthorNames[1] = myAuthorNames[1].trim();
+					myAuthorNames[2] = myAuthorNames[2].trim();
 					String fullName = myAuthorNames[0];
 					if (fullName.length() != 0 && myAuthorNames[1].length() != 0) {
 						fullName += ' ';
@@ -135,20 +168,28 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 					myAuthorNames[0] = "";
 					myAuthorNames[1] = "";
 					myAuthorNames[2] = "";
-					myReadAuthor = false;
+					myReadState = READ_SOMETHING;
 				}
 				break;
 			case FB2Tag.LANG:
-				myReadLanguage = false;
+				if (myReadState == READ_LANGUAGE) {
+					myReadState = READ_SOMETHING;
+				}
 				break;
 			case FB2Tag.FIRST_NAME:
-				myReadAuthorName[0] = false;
+				if (myReadState == READ_AUTHOR_NAME_0) {
+					myReadState = READ_AUTHOR;
+				}
 				break;
 			case FB2Tag.MIDDLE_NAME:
-				myReadAuthorName[1] = false;
+				if (myReadState == READ_AUTHOR_NAME_1) {
+					myReadState = READ_AUTHOR;
+				}
 				break;
 			case FB2Tag.LAST_NAME:
-				myReadAuthorName[2] = false;
+				if (myReadState == READ_AUTHOR_NAME_2) {
+					myReadState = READ_AUTHOR;
+				}
 				break;
 			default:
 				break;
@@ -156,27 +197,26 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 	
-	public void characterDataHandler(char[] ch, int start, int length) {
-		//TODO + length -- remove
-		final String text = new String(ch).substring(start, start + length);
-		//for (int i = 0 ; i < ch.length; i++) {
-		//	System.out.print(ch[i]);
-		//}
-		//System.out.println();
-		//System.out.println("characterDataHandler---" +text + "	start=" + start + "	lenght="+length);
-		if (myReadSomething) {
-			if (myReadTitle) {
-				myDescription.setTitle(myDescription.getTitle()+text);//.append(text, len);
-			} else if (myReadLanguage) {
-				myDescription.setLanguage(myDescription.getLanguage()+text);
-			} else {
-				for (int i = 0; i < 3; ++i) {
-					if (myReadAuthorName[i]) {
-						myAuthorNames[i] += text;
-						break;
-					}
-				}
-			}
+	public void characterDataHandler(char[] data, int start, int length) {
+		switch (myReadState) {
+			case READ_TITLE:
+				myDescription.setTitle(myDescription.getTitle() + new String(data, start, length));
+				break;
+			case READ_LANGUAGE:
+				myDescription.setLanguage(myDescription.getLanguage() + new String(data, start, length));
+				break;
+			case READ_AUTHOR_NAME_0:
+				myAuthorNames[0] += new String(data, start, length);
+				break;
+			case READ_AUTHOR_NAME_1:
+				myAuthorNames[1] += new String(data, start, length);
+				break;
+			case READ_AUTHOR_NAME_2:
+				myAuthorNames[2] += new String(data, start, length);
+				break;
+			case READ_GENRE:
+				myGenreBuffer.append(data, start, length);
+				break;
 		}
 	}
 

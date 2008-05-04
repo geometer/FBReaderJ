@@ -45,7 +45,8 @@ class CollectionModel extends ZLTextTreeModelImpl {
 
 	private final ZLImageMap myImageMap = new ZLImageMap();
 	private final HashMap myParagraphToBook = new HashMap();
-	private final HashMap myBookToParagraphNumber = new HashMap();
+	private final HashMap myParagraphToTag = new HashMap();
+	private final HashMap myBookToParagraph = new HashMap();
 
 	public CollectionModel(CollectionView view, BookCollection collection) {
 		myView = view;
@@ -60,16 +61,22 @@ class CollectionModel extends ZLTextTreeModelImpl {
 		myImageMap.put(RemoveTagImageId, new ZLFileImage("image/png", prefix + "tree-removetag.png", 0));
 	}
 
-	public BookDescription bookByParagraphNumber(int num) {
-		if ((num < 0) || ((int)getParagraphsNumber() <= num)) {
+	BookDescription getBookByParagraphIndex(int index) {
+		if ((index < 0) || ((int)getParagraphsNumber() <= index)) {
 			return null;
 		}
-		return (BookDescription)myParagraphToBook.get(getParagraph(num));
+		return (BookDescription)myParagraphToBook.get(getParagraph(index));
 	}
 
-	public int paragraphNumberByBook(BookDescription book) {
-		Integer num = (Integer)myBookToParagraphNumber.get(book);
-		return (num != null) ? num.intValue() : -1;
+	String getTagByParagraphIndex(int index) {
+		if ((index < 0) || ((int)getParagraphsNumber() <= index)) {
+			return null;
+		}
+		return (String)myParagraphToTag.get(getParagraph(index));
+	}
+
+	ArrayList paragraphIndicesByBook(BookDescription book) {
+		return (ArrayList)myBookToParagraph.get(book);
 	}
 
 	private void build() {
@@ -77,11 +84,111 @@ class CollectionModel extends ZLTextTreeModelImpl {
 			createParagraph(null);
 			insertText(FBTextKind.REGULAR, ZLResource.resource("library").getResource("noBooks").getValue());
 		} else {
-			//if (myView.ShowTagsOption.value()) {
-				//buildWithTags();
-			//} else {
+			if (myView.ShowTagsOption.getValue()) {
+				buildWithTags();
+			} else {
 				buildWithoutTags();
-			//}
+			}
+		}
+	}
+
+	private void buildWithTags() {
+		final ZLResource resource = ZLResource.resource("library");
+		final ArrayList books = myCollection.books();
+
+		if (myView.ShowAllBooksTagOption.getValue()) {
+			final ZLTextTreeParagraph allBooksParagraph = createParagraph(null);
+			insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, resource.getResource("allBooks").getValue());
+			insertImage(TagInfoImageId);
+			myParagraphToTag.put(allBooksParagraph, CollectionView.SpecialTagAllBooks);
+			addBooks(books, allBooksParagraph);
+		}
+
+		final TreeMap tagMap = new TreeMap();
+		final ArrayList booksWithoutTags = new ArrayList();
+		final int len = books.size();
+		for (int i = 0; i < len; ++i) {
+			final BookDescription description = (BookDescription)books.get(i);
+			final ArrayList bookTags = description.getTags();
+			if (bookTags.isEmpty()) {
+				booksWithoutTags.add(description);
+			} else {
+				final int bookTagsLen = bookTags.size();
+				for (int j = 0; j < bookTagsLen; ++j) {
+					Object tg = bookTags.get(j);
+					ArrayList list = (ArrayList)tagMap.get(tg);
+					if (list == null) {
+						list = new ArrayList();
+						tagMap.put(tg, list);
+					}
+					list.add(description);
+				}
+			}
+		}
+
+		if (!booksWithoutTags.isEmpty()) {
+			final ZLTextTreeParagraph booksWithoutTagsParagraph = createParagraph(null);
+			insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, resource.getResource("booksWithoutTags").getValue());
+			insertImage(TagInfoImageId);
+			myParagraphToTag.put(booksWithoutTagsParagraph, CollectionView.SpecialTagNoTagsBooks);
+			addBooks(booksWithoutTags, booksWithoutTagsParagraph);
+		}
+
+		final ArrayList tagStack = new ArrayList();
+		final HashMap paragraphToTagMap = new HashMap();
+		ZLTextTreeParagraph tagParagraph = null;
+		for (Iterator it = tagMap.entrySet().iterator(); it.hasNext(); ) {
+			final Map.Entry entry = (Map.Entry)it.next();
+			final String fullTagName = (String)entry.getKey();
+			boolean useExistingTagStack = true;
+			for (int index = 0, depth = 0; index != -1; ++depth) {
+				final int newIndex = fullTagName.indexOf('/', index);
+				String subTag;
+				if (newIndex != -1) {
+					subTag = fullTagName.substring(index, newIndex);
+					index = newIndex + 1;
+				} else {
+					subTag = fullTagName.substring(index);
+					index = -1;
+				}
+
+				if (useExistingTagStack) {
+					if (tagStack.size() == depth) {
+						useExistingTagStack = false;
+					} else if (!subTag.equals(tagStack.get(depth))) {
+						for (int i = tagStack.size() - depth; i > 0; --i) {
+							final String tg = (String)paragraphToTagMap.get(tagParagraph);
+							if (tg != null) {
+								final ArrayList list = (ArrayList)tagMap.get(tg);
+								if (list != null) {
+									addBooks(list, tagParagraph);
+								}
+							}
+							tagParagraph = tagParagraph.getParent();
+						}
+						for (int i = tagStack.size() - 1; i >= depth; --i) {
+							tagStack.remove(i);
+						}
+						useExistingTagStack = false;
+					}
+				}
+				if (!useExistingTagStack) {
+					tagStack.add(subTag);
+					tagParagraph = createParagraph(tagParagraph);
+					myParagraphToTag.put(tagParagraph, (newIndex != -1) ? fullTagName.substring(0, newIndex) : fullTagName);
+					insertText(FBTextKind.LIBRARY_AUTHOR_ENTRY, subTag);
+					insertImage(TagInfoImageId);
+					insertImage(RemoveTagImageId);
+				}
+			}
+			paragraphToTagMap.put(tagParagraph, fullTagName);
+		}
+		while (tagParagraph != null) {
+			final String tg = (String)paragraphToTagMap.get(tagParagraph);
+			if (tg != null) {
+				addBooks((ArrayList)tagMap.get(tg), tagParagraph);
+			}
+			tagParagraph = tagParagraph.getParent();
 		}
 	}
 
@@ -128,14 +235,19 @@ class CollectionModel extends ZLTextTreeModelImpl {
 				insertImage(RemoveBookImageId);
 			}
 			myParagraphToBook.put(bookParagraph, description);
-			myBookToParagraphNumber.put(description, getParagraphsNumber() - 1);
-			//myBookToParagraph[description].push_back(paragraphsNumber() - 1);
+			ArrayList numbers = (ArrayList)myBookToParagraph.get(description);
+			if (numbers == null) {
+				numbers = new ArrayList();
+				myBookToParagraph.put(description, numbers);
+			}
+			numbers.add(getParagraphsNumber() - 1);
 		}
 	}
 
 	public void update() {
 		myParagraphToBook.clear();
-		myBookToParagraphNumber.clear();
+		myParagraphToTag.clear();
+		myBookToParagraph.clear();
 		super.clear();
 		build();
 	}
@@ -151,37 +263,39 @@ class CollectionModel extends ZLTextTreeModelImpl {
 	}
 
 	void removeBook(BookDescription book) {
-//		removeAllMarks();
-//
-//		int index = paragraphNumberByBook(book);
-//		if (index == 0) {
-//			return;
-//		}
-//		myBookToParagraphNumber.remove(book);
-//
-//		ZLTextTreeParagraph paragraph = getTreeParagraph(index);
-//		int count = 1;
-//		for (ZLTextTreeParagraph parent = paragraph.getParent(); (parent != null) && (parent.childNumber() == 1); parent = parent.getParent()) {
-//			++count;
-//		}
-//    
-//		if (count > index) {
-//			count = index;
-//		}
-//    
-//		HashMap newMap = new HashMap();
-//		for (Object b : myBookToParagraphNumber.keySet()) {
-//			Integer i = (Integer)myBookToParagraphNumber.get(b);
-//			if (i.intValue() < index) {
-//				newMap.put(b, i);
-//			} else {
-//				newMap.put(b, i.intValue() - count);
-//			}
-//		}
-//		myBookToParagraphNumber = newMap;
-//
-//		for (; count > 0; --count) {
-//			removeParagraph(index--);
-//		}
+		final ArrayList indices = (ArrayList)paragraphIndicesByBook(book);
+		if (indices == null) {
+			return;
+		}
+		myBookToParagraph.remove(book);
+		final int len = indices.size();
+		for (int i = len - 1; i >= 0; --i) {
+			int index = ((Integer)indices.get(i)).intValue();
+			ZLTextTreeParagraph paragraph = getTreeParagraph(index);
+			int count = 1;
+			for (ZLTextTreeParagraph parent = paragraph.getParent(); (parent != null) && (parent.childNumber() == 1); parent = parent.getParent()) {
+				++count;
+			}
+
+			if (count > index) {
+				count = index;
+			}
+
+			for (Iterator it = myBookToParagraph.entrySet().iterator(); it.hasNext(); ) {
+				final Map.Entry entry = (Map.Entry)it.next();
+				final ArrayList list = (ArrayList)entry.getValue();
+				final int listLen = list.size();
+				for (int j = 0; j < listLen; ++j) {
+					final int v = ((Integer)list.get(j)).intValue();
+					if (v >= index) {
+						list.set(i, v - count);
+					}
+				}
+			}
+    
+			for (; count > 0; --count) {
+				removeParagraph(index--);
+			}
+		}
 	}
 }

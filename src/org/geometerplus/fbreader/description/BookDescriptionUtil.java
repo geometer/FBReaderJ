@@ -89,4 +89,29 @@ public class BookDescriptionUtil {
 			new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, zipFile.getPath(), ENTRIES_NUMBER, -1).setValue(counter);
 		}
 	}
+
+	public static String removeWhiteSpacesFromTag(String tag) {
+		int index = tag.indexOf('/');
+		if (index == -1) {
+			return tag.trim();
+		} else {
+			final StringBuilder result = new StringBuilder();
+			int index0 = 0;
+			while (true) {
+				String subtag = (index == -1) ? tag.substring(index0).trim() : tag.substring(index0, index).trim();
+				if (subtag.length() > 0) {
+					if (result.length() > 0) {
+						result.append("/");
+					}
+					result.append(subtag);
+				}
+				if (index == -1) {
+					break;
+				}
+				index0 = index + 1;
+				index = tag.indexOf('/', index0);
+			}
+			return result.toString();
+		}
+	}
 }

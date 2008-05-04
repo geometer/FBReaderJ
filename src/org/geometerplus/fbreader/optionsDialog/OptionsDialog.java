@@ -46,12 +46,12 @@ public class OptionsDialog {
 		libraryTab.addOption("bookPath", collection.PathOption);
 		libraryTab.addOption("lookInSubdirectories", collection.ScanSubdirsOption);
 		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(fbreader.RecentBooksView.lastBooks().MaxListSizeOption, 1));
-		//ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
-		//ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
-		//showTagsEntry.addDependentEntry(showAllBooksTagEntry);
-		//libraryTab.addOption("showTags", showTagsEntry);
-		//libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
-		//showTagsEntry.onStateChanged(showTagsEntry.initialState());
+		ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
+		ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
+		showTagsEntry.addDependentEntry(showAllBooksTagEntry);
+		libraryTab.addOption("showTags", showTagsEntry);
+		libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
+		showTagsEntry.onStateChanged(showTagsEntry.initialState());
 		
 		final ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
