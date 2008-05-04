@@ -275,7 +275,6 @@ public class BookCollection {
 
 	public void removeTag(String tag, boolean includeSubTags) {
 		synchronize();
-		System.err.println("removeTag(" + tag + ", " + includeSubTags + ")");
 		final ArrayList books = myBooks;
 		final int len = books.size();
 		for (int i = 0; i < len; ++i) {

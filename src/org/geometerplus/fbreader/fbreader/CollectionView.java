@@ -256,6 +256,7 @@ public class CollectionView extends FBView {
 		Collection.rebuild(true);
 		myUpdateModel = true;
 		Collection.authors();
+		clearCaches();
 	}
 	
 	public void synchronizeModel() {
