@@ -233,6 +233,12 @@ public class CollectionView extends FBView {
 		if (tag == null) {
 			return;
 		}
+
+		final boolean tagIsSpecial = (tag == SpecialTagAllBooks) || (tag == SpecialTagNoTagsBooks);
+		final String tagValue = tagIsSpecial ? "" : tag;
+		final boolean editNotClone = tag != SpecialTagAllBooks;
+		final boolean includeSubtags = !tagIsSpecial && Collection.hasSubtags(tag);
+		// TODO: implement
 	}
 
 	public void paint() {

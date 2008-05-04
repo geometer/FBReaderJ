@@ -285,11 +285,27 @@ public class BookCollection {
 	}
 
 	public void renameTag(String from, String to, boolean includeSubTags) {
-		// TODO: implement
+		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(to);
+		if ((checkedName.length() > 0) && !checkedName.equals(from)) {
+			synchronize();
+			final ArrayList books = myBooks;
+			final int len = books.size();
+			for (int i = 0; i < len; ++i) {
+				new BookDescription.WritableBookDescription((BookDescription)books.get(i)).renameTag(from, checkedName, includeSubTags);
+			}
+		}
 	}
 
 	public void cloneTag(String from, String to, boolean includeSubTags) {
-		// TODO: implement
+		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(to);
+		if ((checkedName.length() > 0) && !checkedName.equals(from)) {
+			synchronize();
+			final ArrayList books = myBooks;
+			final int len = books.size();
+			for (int i = 0; i < len; ++i) {
+				new BookDescription.WritableBookDescription((BookDescription)books.get(i)).cloneTag(from, checkedName, includeSubTags);
+			}
+		}
 	}
 
 	public void addTagToAllBooks(String tag) {
