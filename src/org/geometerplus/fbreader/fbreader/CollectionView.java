@@ -229,16 +229,18 @@ public class CollectionView extends FBView {
 	}
 
 	private void editTagInfo(int paragraphIndex) {
-		final String tag = getCollectionModel().getTagByParagraphIndex(paragraphIndex);
+		String tag = getCollectionModel().getTagByParagraphIndex(paragraphIndex);
 		if (tag == null) {
 			return;
 		}
 
 		final boolean tagIsSpecial = (tag == SpecialTagAllBooks) || (tag == SpecialTagNoTagsBooks);
-		final String tagValue = tagIsSpecial ? "" : tag;
+		if (tagIsSpecial) {
+			tag = "";
+		}
 		final boolean editNotClone = tag != SpecialTagAllBooks;
 		final boolean includeSubtags = !tagIsSpecial && Collection.hasSubtags(tag);
-		// TODO: implement
+		final boolean hasBooks = Collection.hasBooks(tag);
 
 		final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
 
@@ -247,49 +249,44 @@ public class CollectionView extends FBView {
 		editOrCloneEntry.setActive(!tagIsSpecial);
 		dialog.addOption(editOrCloneKey, editOrCloneEntry);
 
-		/*
-		std::set<std::string> tagSet;
-		const Books &books = myCollection.books();
-		for (Books::const_iterator it = books.begin(); it != books.end(); ++it) {
-			const std::vector<std::string> &bookTags = (*it)->tags();
-			tagSet.insert(bookTags.begin(), bookTags.end());
+		final TreeSet tagSet = new TreeSet();
+		final ArrayList books = Collection.books();
+		final int len = books.size();
+		for (int i = 0; i < len; ++i) {
+			tagSet.addAll(((BookDescription)books.get(i)).getTags());
 		}
-		std::set<std::string> fullTagSet = tagSet;
-		for (std::set<std::string>::const_iterator it = tagSet.begin(); it != tagSet.end(); ++it) {
+		final TreeSet fullTagSet = new TreeSet(tagSet);
+		for (Iterator it = tagSet.iterator(); it.hasNext(); ) {
+			final String value = (String)it.next();
 			for (int index = 0;;) {
-				index = it->find('/', index);
+				index = value.indexOf('/', index);
 				if (index == -1) {
 					break;
 				}
-				fullTagSet.insert(it->substr(0, index++));
+				fullTagSet.add(value.substring(0, index++));
 			}
 		}
-		std::vector<std::string> names;
-		if (fullTagSet.find(tagValue) == fullTagSet.end()) {
-			names.push_back(tagValue);
+		final ArrayList names = new ArrayList();
+		if (!fullTagSet.contains(tag)) {
+			names.add(tag);
 		}
-		names.insert(names.end(), fullTagSet.begin(), fullTagSet.end());
-		TagNameEntry *tagNameEntry = new TagNameEntry(names, tagValue);
-		dialog->addOption(ZLResourceKey("name"), tagNameEntry);
+		names.addAll(fullTagSet);
 
-		IncludeSubtagsEntry *includeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
-		if (showIncludeSubtagsEntry) {
+		final TagNameEntry tagNameEntry = new TagNameEntry(names, tag);
+		dialog.addOption("name", tagNameEntry);
+
+		IncludeSubtagsEntry includeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
+		if (includeSubtags) {
 			if (!hasBooks) {
-				includeSubtagsEntry->setActive(false);
+				includeSubtagsEntry.setActive(false);
 			}
-			dialog->addOption(ZLResourceKey("includeSubtags"), includeSubtagsEntry);
+			dialog.addOption("includeSubtags", includeSubtagsEntry);
 		}
 
-		dialog->addButton(ZLDialogManager::OK_BUTTON, true);
-		dialog->addButton(ZLDialogManager::CANCEL_BUTTON, false);
+		// TODO: add actions, add loop
+		dialog.addButton(ZLDialogManager.OK_BUTTON, null);
+		dialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
 
-		if (dialog->run()) {
-			dialog->acceptValues();
-			return true;
-		} else {
-			return false;
-		}
-		*/
 		dialog.run();
 	}
 
@@ -349,7 +346,7 @@ public class CollectionView extends FBView {
 	}
 }
 
-class EditOrCloneEntry extends ZLChoiceOptionEntry {
+final class EditOrCloneEntry extends ZLChoiceOptionEntry {
 	private final ZLResource myResource;
 	private boolean myEditNotClone;
 
@@ -376,5 +373,44 @@ class EditOrCloneEntry extends ZLChoiceOptionEntry {
 
 	public boolean getEditNotClone() {
 		return myEditNotClone;
+	}
+}
+
+final class TagNameEntry extends ZLComboOptionEntry {
+	private final ArrayList myValuesList;
+	private String myValue;
+
+	public TagNameEntry(ArrayList valuesList, String initialValue) {
+		super(true);
+		myValuesList = valuesList;
+		myValue = initialValue;
+	}
+
+	public String initialValue() {
+		return myValue;
+	}
+
+	public ArrayList getValues() {
+		return myValuesList;
+	}
+
+	public void onAccept(String value) {
+		myValue = value;
+	}
+}
+
+final class IncludeSubtagsEntry extends ZLBooleanOptionEntry {
+	private boolean myValue;
+
+	public IncludeSubtagsEntry(boolean initialValue) {
+		myValue = initialValue;
+	}
+
+	public boolean initialState() {
+		return myValue;
+	}
+
+	public void onAccept(boolean state) {
+		myValue = state;
 	}
 }
