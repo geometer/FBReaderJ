@@ -391,11 +391,63 @@ public class BookDescription implements Comparable {
 		}
 
 		public void renameTag(String from, String to, boolean includeSubTags) {
-			// TODO: implement
+			final ArrayList tags = myDescription.myTags;
+			if (includeSubTags) {
+				final String prefix = from + '/';
+				final HashSet tagSet = new HashSet();
+				boolean changed = false;
+				final int len = tags.size();
+				for (int i = 0; i < len; ++i) {
+					final String value = (String)tags.get(i);
+					if (from.equals(value)) {
+						tagSet.add(to);
+						changed = true;
+					} else if (value.startsWith(prefix)) {
+						tagSet.add(to + '/' + value.substring(prefix.length()));
+						changed = true;
+					} else {
+						tagSet.add(value);
+					}
+				}
+				if (changed) {
+					tags.clear();
+					tags.addAll(tagSet);
+					myDescription.saveTags();
+				}
+			} else {
+				if (tags.remove(from) && !tags.contains(to)) {
+					tags.add(to);
+					myDescription.saveTags();
+				}
+			}
 		}
 
 		public void cloneTag(String from, String to, boolean includeSubTags) {
-			// TODO: implement
+			final ArrayList tags = myDescription.myTags;
+			if (includeSubTags) {
+				final String prefix = from + '/';
+				final HashSet tagSet = new HashSet();
+				final int len = tags.size();
+				for (int i = 0; i < len; ++i) {
+					final String value = (String)tags.get(i);
+					if (value.equals(from)) {
+						tagSet.add(to);
+					} else if (value.startsWith(prefix)) {
+						tagSet.add(to + '/' + value.substring(prefix.length()));
+					}
+				}
+				if (!tagSet.isEmpty()) {
+					tagSet.addAll(tags);
+					tags.clear();
+					tags.addAll(tagSet);
+					myDescription.saveTags();
+				}
+			} else {
+				if (tags.contains(from) && !tags.contains(to)) {
+					tags.add(to);
+					myDescription.saveTags();
+				}
+			}
 		}
 
 		public void removeAllTags() {

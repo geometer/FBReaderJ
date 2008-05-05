@@ -263,63 +263,7 @@ public class CollectionView extends FBView {
 		}
 		names.addAll(fullTagSet);
 
-		final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
-
-		final String editOrCloneKey = "editOrClone";
-		final EditOrCloneEntry editOrCloneEntry = new EditOrCloneEntry(dialog.getResource(editOrCloneKey), editNotClone);
-		editOrCloneEntry.setActive(!tagIsSpecial);
-		dialog.addOption(editOrCloneKey, editOrCloneEntry);
-
-		final TagNameEntry tagNameEntry = new TagNameEntry(names, tag);
-		dialog.addOption("name", tagNameEntry);
-
-		final IncludeSubtagsEntry includeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
-		if (includeSubtags) {
-			if (!hasBooks) {
-				includeSubtagsEntry.setActive(false);
-			}
-			dialog.addOption("includeSubtags", includeSubtagsEntry);
-		}
-
-		final Runnable rerunDialogAction = new Runnable() {
-			public void run() {
-				dialog.run();
-			}
-		};
-
-		final Runnable acceptAction = new Runnable() {
-			public void run() {
-				dialog.acceptValues();
-				final String tagValue = tagNameEntry.initialValue().trim();
-				if (tagValue.length() == 0) {
-					ZLDialogManager.getInstance().showErrorBox("tagMustBeNonEmpty", rerunDialogAction);
-					return;
-				}
-				if (tagValue.indexOf(',') != -1) {
-					ZLDialogManager.getInstance().showErrorBox("tagMustNotContainComma", rerunDialogAction);
-					return;
-				}
-				if (tagValue.equals(tag)) {
-					return;
-				}
-				getCollectionModel().removeAllMarks();
-				if (tag == SpecialTagAllBooks) {
-					Collection.addTagToAllBooks(tagValue);
-				} else if (tag == SpecialTagNoTagsBooks) {
-					Collection.addTagToBooksWithNoTags(tagValue);
-				} else if (editOrCloneEntry.getEditNotClone()) {
-					Collection.renameTag(tag, tagValue, includeSubtagsEntry.initialState());
-				} else {
-					Collection.cloneTag(tag, tagValue, includeSubtagsEntry.initialState());
-				}
-				updateModel();
-				Application.refreshWindow();
-			}
-		};
-		dialog.addButton(ZLDialogManager.OK_BUTTON, acceptAction);
-		dialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
-
-		dialog.run();
+		new EditTagDialog(names, tag, tagIsSpecial, includeSubtags, hasBooks, editNotClone).run();
 	}
 
 	public void paint() {
@@ -376,6 +320,78 @@ public class CollectionView extends FBView {
 	private CollectionModel getCollectionModel() {
 		return (CollectionModel)getModel();
 	}
+
+	final private class EditTagDialog implements Runnable {
+		private final static String EDIT_OR_CLONE_KEY = "editOrClone";
+
+		private final String myTag;
+		private final boolean myIncludeSubtags;
+		private final EditOrCloneEntry myEditOrCloneEntry;
+		private final TagNameEntry myTagNameEntry;
+		private final IncludeSubtagsEntry myIncludeSubtagsEntry;
+
+		public EditTagDialog(ArrayList names, String tag, boolean tagIsSpecial, boolean includeSubtags, boolean hasBooks, boolean editNotClone) {
+			myTag = tag;
+			myIncludeSubtags = includeSubtags;
+
+			final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
+
+			myEditOrCloneEntry = new EditOrCloneEntry(dialog.getResource(EDIT_OR_CLONE_KEY), editNotClone);
+			myEditOrCloneEntry.setActive(!tagIsSpecial);
+	  
+			myTagNameEntry = new TagNameEntry(names, tag);
+
+			myIncludeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
+			if (includeSubtags && !hasBooks) {
+				myIncludeSubtagsEntry.setActive(false);
+			}
+		}
+
+		public void run() {
+			final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
+	  
+			dialog.addOption(EDIT_OR_CLONE_KEY, myEditOrCloneEntry);
+			dialog.addOption("name", myTagNameEntry);
+			if (myIncludeSubtags) {
+				dialog.addOption("includeSubtags", myIncludeSubtagsEntry);
+			}
+
+			final Runnable acceptAction = new Runnable() {
+				public void run() {
+					dialog.acceptValues();
+					final String tagValue = myTagNameEntry.initialValue().trim();
+					if (tagValue.length() == 0) {
+						ZLDialogManager.getInstance().showErrorBox("tagMustBeNonEmpty", EditTagDialog.this);
+						return;
+					}
+					if (tagValue.indexOf(',') != -1) {
+						ZLDialogManager.getInstance().showErrorBox("tagMustNotContainComma", EditTagDialog.this);
+						return;
+					}
+					if (tagValue.equals(myTag)) {
+						return;
+					}
+					getCollectionModel().removeAllMarks();
+					if (myTag == SpecialTagAllBooks) {
+						Collection.addTagToAllBooks(tagValue);
+					} else if (myTag == SpecialTagNoTagsBooks) {
+						Collection.addTagToBooksWithNoTags(tagValue);
+					} else if (myEditOrCloneEntry.getEditNotClone()) {
+						Collection.renameTag(myTag, tagValue, myIncludeSubtagsEntry.initialState());
+					} else {
+						Collection.cloneTag(myTag, tagValue, myIncludeSubtagsEntry.initialState());
+					}
+					updateModel();
+					Application.refreshWindow();
+				}
+			};
+
+			dialog.addButton(ZLDialogManager.OK_BUTTON, acceptAction);
+			dialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
+
+			dialog.run();
+		}
+	}
 }
 
 final class EditOrCloneEntry extends ZLChoiceOptionEntry {
@@ -411,6 +427,7 @@ final class EditOrCloneEntry extends ZLChoiceOptionEntry {
 final class TagNameEntry extends ZLComboOptionEntry {
 	private final ArrayList myValuesList;
 	private String myValue;
+	private boolean myAddedManualValue;
 
 	public TagNameEntry(ArrayList valuesList, String initialValue) {
 		super(true);
@@ -428,6 +445,14 @@ final class TagNameEntry extends ZLComboOptionEntry {
 
 	public void onAccept(String value) {
 		myValue = value;
+		if (!myValuesList.contains(value)) {
+			if (myAddedManualValue) {
+				myValuesList.set(0, value);
+			} else {
+				myAddedManualValue = true;
+				myValuesList.add(0, value);
+			}
+		}
 	}
 }
 
