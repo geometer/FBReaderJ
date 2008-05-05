@@ -26,7 +26,8 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLChoiceOptionEntry;
 
 class ZLAndroidChoiceOptionView extends ZLAndroidOptionView {
-	RadioGroup myGroup;
+	private RadioGroup myGroup;
+	private RadioButton myButtons[];
 
 	protected ZLAndroidChoiceOptionView(ZLAndroidDialogContent tab, String name, ZLChoiceOptionEntry option) {
 		super(tab, name, option);
@@ -39,8 +40,10 @@ class ZLAndroidChoiceOptionView extends ZLAndroidOptionView {
 
 		final ZLChoiceOptionEntry choiceEntry = (ZLChoiceOptionEntry)myOption;
 		final int choiceNumber = choiceEntry.choiceNumber();
-		for (int i = 0; i < choiceNumber; i++) {
+		myButtons = new RadioButton[choiceNumber];
+		for (int i = 0; i < choiceNumber; ++i) {
 			final RadioButton button = new RadioButton(context);
+			myButtons[i] = button;
 			button.setId(i + 1);
 			button.setText(choiceEntry.getText(i));
 			myGroup.addView(button, new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
@@ -59,5 +62,13 @@ class ZLAndroidChoiceOptionView extends ZLAndroidOptionView {
 
 	protected void _onAccept() {
 		((ZLChoiceOptionEntry)myOption).onAccept(myGroup.getCheckedRadioButtonId() - 1);
+	}
+
+	protected void _setActive(boolean active) {
+		myGroup.setEnabled(active);
+		final RadioButton[] buttons = myButtons;
+		for (int i = buttons.length - 1; i >= 0; --i) {
+			buttons[i].setEnabled(active);
+		}
 	}
 }

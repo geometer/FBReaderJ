@@ -63,4 +63,8 @@ class ZLAndroidBooleanOptionView extends ZLAndroidOptionView {
 	protected void _onAccept() {
 		((ZLBooleanOptionEntry)myOption).onAccept(myCheckBox.isChecked());
 	}
+
+	protected void _setActive(boolean active) {
+		myCheckBox.setEnabled(active);
+	}
 }

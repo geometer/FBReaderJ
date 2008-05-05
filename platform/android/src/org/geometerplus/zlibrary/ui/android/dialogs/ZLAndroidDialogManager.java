@@ -47,11 +47,11 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	}
 
 	private void showAlert(int iconId, String key, String message) {
-		AlertDialog.show(myActivity, null, iconId, message, getButtonText(OK_BUTTON), null, true, null);
+		AlertDialog.show(myActivity, null, iconId, message, getButtonText(OK_BUTTON).replaceAll("&", ""), null, true, null);
 	}
 
 	public void showErrorBox(String key, String message, final Runnable action) {
-		AlertDialog.show(myActivity, null, 0, message, getButtonText(OK_BUTTON),
+		AlertDialog.show(myActivity, null, 0, message, getButtonText(OK_BUTTON).replaceAll("&", ""),
 			new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					action.run();
@@ -91,6 +91,15 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 
 	public void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2) {
 		final AlertListener al = new AlertListener(action0, action1, action2);
+		if (button0 != null) {
+			button0.replaceAll("&", "");
+		}
+		if (button1 != null) {
+			button1.replaceAll("&", "");
+		}
+		if (button2 != null) {
+			button2.replaceAll("&", "");
+		}
 		AlertDialog.show(myActivity, null, 0, message, button0, al, button1, al, button2, al, true, null);
 	}
 
