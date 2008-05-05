@@ -40,8 +40,11 @@ public class ZLSwingDialogManager extends ZLDialogManager {
 		new ZLSwingSelectionDialog(myApplicationWindow.getFrame(), getDialogTitle(key), handler, actionOnAccept).run();
 	}
 
-	public void showErrorBox(String key, String message) {
+	public void showErrorBox(String key, String message, Runnable action) {
 		JOptionPane.showMessageDialog(myApplicationWindow.getFrame(), message, getDialogTitle(key), 1, null);
+		if (action != null) {
+			action.run();
+		}
 	}
 
 	public void showInformationBox(String key, String message) {

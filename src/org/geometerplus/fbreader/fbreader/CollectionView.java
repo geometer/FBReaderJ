@@ -240,13 +240,6 @@ public class CollectionView extends FBView {
 		final boolean includeSubtags = !tagIsSpecial && Collection.hasSubtags(tag);
 		final boolean hasBooks = Collection.hasBooks(tag);
 
-		final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
-
-		final String editOrCloneKey = "editOrClone";
-		final EditOrCloneEntry editOrCloneEntry = new EditOrCloneEntry(dialog.getResource(editOrCloneKey), editNotClone);
-		editOrCloneEntry.setActive(!tagIsSpecial);
-		dialog.addOption(editOrCloneKey, editOrCloneEntry);
-
 		final TreeSet tagSet = new TreeSet();
 		final ArrayList books = Collection.books();
 		final int len = books.size();
@@ -270,6 +263,13 @@ public class CollectionView extends FBView {
 		}
 		names.addAll(fullTagSet);
 
+		final ZLDialog dialog = ZLDialogManager.getInstance().createDialog("editTagInfoDialog");
+
+		final String editOrCloneKey = "editOrClone";
+		final EditOrCloneEntry editOrCloneEntry = new EditOrCloneEntry(dialog.getResource(editOrCloneKey), editNotClone);
+		editOrCloneEntry.setActive(!tagIsSpecial);
+		dialog.addOption(editOrCloneKey, editOrCloneEntry);
+
 		final TagNameEntry tagNameEntry = new TagNameEntry(names, tag);
 		dialog.addOption("name", tagNameEntry);
 
@@ -281,16 +281,22 @@ public class CollectionView extends FBView {
 			dialog.addOption("includeSubtags", includeSubtagsEntry);
 		}
 
+		final Runnable rerunDialogAction = new Runnable() {
+			public void run() {
+				dialog.run();
+			}
+		};
+
 		final Runnable acceptAction = new Runnable() {
 			public void run() {
 				dialog.acceptValues();
 				final String tagValue = tagNameEntry.initialValue().trim();
 				if (tagValue.length() == 0) {
-					// TODO
+					ZLDialogManager.getInstance().showErrorBox("tagMustBeNonEmpty", rerunDialogAction);
 					return;
 				}
 				if (tagValue.indexOf(',') != -1) {
-					// TODO
+					ZLDialogManager.getInstance().showErrorBox("tagMustNotContainComma", rerunDialogAction);
 					return;
 				}
 				if (tagValue.equals(tag)) {

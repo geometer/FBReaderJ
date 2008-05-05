@@ -51,10 +51,10 @@ public abstract class ZLDialogManager {
 		showInformationBox(key, getDialogMessage(key));
 	}
 	
-	public abstract void showErrorBox(String key, String message);
+	public abstract void showErrorBox(String key, String message, Runnable action);
 	
-	public final void showErrorBox(String key) {
-		showErrorBox(key, getDialogMessage(key));
+	public final void showErrorBox(String key, Runnable action) {
+		showErrorBox(key, getDialogMessage(key), action);
 	}
 	
 	public abstract void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2);

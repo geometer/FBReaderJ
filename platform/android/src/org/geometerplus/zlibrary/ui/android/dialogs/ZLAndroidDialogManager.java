@@ -42,16 +42,22 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		new ZLAndroidSelectionDialog(myActivity, getDialogTitle(key), handler, actionOnAccept).run();
 	}
 
-	public void showErrorBox(String key, String message) {
-		showAlert(0, key, message);
-	}
-
 	public void showInformationBox(String key, String message) {
 		showAlert(0, key, message);
 	}
 
 	private void showAlert(int iconId, String key, String message) {
 		AlertDialog.show(myActivity, null, iconId, message, getButtonText(OK_BUTTON), null, true, null);
+	}
+
+	public void showErrorBox(String key, String message, final Runnable action) {
+		AlertDialog.show(myActivity, null, 0, message, getButtonText(OK_BUTTON),
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					action.run();
+				}
+			},
+		true, null);
 	}
 
 	private static class AlertListener implements DialogInterface.OnClickListener {

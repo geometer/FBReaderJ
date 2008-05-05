@@ -67,7 +67,7 @@ public class FBFileHandler extends ZLTreeOpenHandler {
 		if (message.length() != 0) {
 			final String boxKey = "openBookErrorBox";
 			ZLDialogManager.getInstance().showErrorBox(boxKey,
-				ZLDialogManager.getDialogMessage(boxKey) + " " + message);
+				ZLDialogManager.getDialogMessage(boxKey) + " " + message, null);
 			return false;
 		}
 		myDescription = BookDescription.getDescription(name);
