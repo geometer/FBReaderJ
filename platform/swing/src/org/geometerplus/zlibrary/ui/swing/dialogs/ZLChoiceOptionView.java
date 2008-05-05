@@ -19,15 +19,10 @@
 
 package org.geometerplus.zlibrary.ui.swing.dialogs;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
+import java.util.*;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLChoiceOptionEntry;
@@ -47,7 +42,10 @@ public class ZLChoiceOptionView extends ZLSwingOptionView {
 	}
 
 	protected void _setActive(boolean active) {
-		// TODO: implement
+		for (Enumeration buttons = myButtonGroup.getElements(); buttons.hasMoreElements(); ) {
+			((JRadioButton)buttons.nextElement()).setEnabled(active);
+		}
+		// TODO: make border grayed
 		myButtonPanel.setEnabled(active);
 	}
 
