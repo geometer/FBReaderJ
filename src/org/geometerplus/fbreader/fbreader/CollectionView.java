@@ -229,15 +229,13 @@ public class CollectionView extends FBView {
 	}
 
 	private void editTagInfo(int paragraphIndex) {
-		String tag = getCollectionModel().getTagByParagraphIndex(paragraphIndex);
+		final String tag = getCollectionModel().getTagByParagraphIndex(paragraphIndex);
 		if (tag == null) {
 			return;
 		}
 
 		final boolean tagIsSpecial = (tag == SpecialTagAllBooks) || (tag == SpecialTagNoTagsBooks);
-		if (tagIsSpecial) {
-			tag = "";
-		}
+		final String tagDisplayName = tagIsSpecial ? "" : tag;
 		final boolean editNotClone = tag != SpecialTagAllBooks;
 		final boolean includeSubtags = !tagIsSpecial && Collection.hasSubtags(tag);
 		final boolean hasBooks = Collection.hasBooks(tag);
@@ -267,15 +265,15 @@ public class CollectionView extends FBView {
 			}
 		}
 		final ArrayList names = new ArrayList();
-		if (!fullTagSet.contains(tag)) {
-			names.add(tag);
+		if (!fullTagSet.contains(tagDisplayName)) {
+			names.add(tagDisplayName);
 		}
 		names.addAll(fullTagSet);
 
 		final TagNameEntry tagNameEntry = new TagNameEntry(names, tag);
 		dialog.addOption("name", tagNameEntry);
 
-		IncludeSubtagsEntry includeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
+		final IncludeSubtagsEntry includeSubtagsEntry = new IncludeSubtagsEntry(includeSubtags);
 		if (includeSubtags) {
 			if (!hasBooks) {
 				includeSubtagsEntry.setActive(false);
@@ -283,8 +281,36 @@ public class CollectionView extends FBView {
 			dialog.addOption("includeSubtags", includeSubtagsEntry);
 		}
 
-		// TODO: add actions, add loop
-		dialog.addButton(ZLDialogManager.OK_BUTTON, null);
+		final Runnable acceptAction = new Runnable() {
+			public void run() {
+				dialog.acceptValues();
+				final String tagValue = tagNameEntry.initialValue().trim();
+				if (tagValue.length() == 0) {
+					// TODO
+					return;
+				}
+				if (tagValue.indexOf(',') != -1) {
+					// TODO
+					return;
+				}
+				if (tagValue.equals(tag)) {
+					return;
+				}
+				getCollectionModel().removeAllMarks();
+				if (tag == SpecialTagAllBooks) {
+					Collection.addTagToAllBooks(tagValue);
+				} else if (tag == SpecialTagNoTagsBooks) {
+					Collection.addTagToBooksWithNoTags(tagValue);
+				} else if (editOrCloneEntry.getEditNotClone()) {
+					Collection.renameTag(tag, tagValue, includeSubtagsEntry.initialState());
+				} else {
+					Collection.cloneTag(tag, tagValue, includeSubtagsEntry.initialState());
+				}
+				updateModel();
+				Application.refreshWindow();
+			}
+		};
+		dialog.addButton(ZLDialogManager.OK_BUTTON, acceptAction);
 		dialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
 
 		dialog.run();
