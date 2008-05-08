@@ -101,7 +101,7 @@ DONE		собирать книги, лежащие в указанных ката
 
 представления:
 DONE	CollectionView
-DELAYED	теги
+DONE	теги
 DONE	RecentBooksView
 DONE	FootnoteView
 DONE	не показывать ContentsView, если оглавление пустое
@@ -179,4 +179,4 @@ DONE при нажатии на кнопку выхода (в swing) и на Esc
 	bzip2 support
 	config autosaving (every 30 seconds)
 	go to page dialog
-	book tags support
+DONE	book tags support

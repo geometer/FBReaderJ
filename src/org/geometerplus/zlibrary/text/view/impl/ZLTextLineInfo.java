@@ -26,14 +26,14 @@ final class ZLTextLineInfo {
 		final boolean IsLeaf;
 		final boolean IsOpen;
 		final boolean IsFirstLine;
-		final int ParagraphNumber;
+		final int ParagraphIndex;
 		final boolean[] VerticalLinesStack;
 
-		TreeNodeInfo(boolean isLeaf, boolean isOpen, boolean isFirstLine, int paragraphNumber, boolean[] stack) {
+		TreeNodeInfo(boolean isLeaf, boolean isOpen, boolean isFirstLine, int paragraphIndex, boolean[] stack) {
 			IsLeaf = isLeaf;
 			IsOpen = isOpen;
 			IsFirstLine = isFirstLine;
-			ParagraphNumber = paragraphNumber;
+			ParagraphIndex = paragraphIndex;
 			VerticalLinesStack = stack;
 		}
 	};
@@ -42,12 +42,12 @@ final class ZLTextLineInfo {
 	final ZLTextParagraphCursor ParagraphCursor;
 	final int ParagraphCursorLength;
 
-	final int StartWordNumber;
-	final int StartCharNumber;
-	int RealStartWordNumber;
-	int RealStartCharNumber;
-	int EndWordNumber;
-	int EndCharNumber;
+	final int StartWordIndex;
+	final int StartCharIndex;
+	int RealStartWordIndex;
+	int RealStartCharIndex;
+	int EndWordIndex;
+	int EndCharIndex;
 
 	boolean IsVisible;
 	int LeftIndent;
@@ -58,33 +58,33 @@ final class ZLTextLineInfo {
 	int SpaceCounter;
 	ZLTextStyle StartStyle;
 
-	ZLTextLineInfo(ZLTextParagraphCursor paragraphCursor, int wordNumber, int charNumber, ZLTextStyle style) {
+	ZLTextLineInfo(ZLTextParagraphCursor paragraphCursor, int wordIndex, int charIndex, ZLTextStyle style) {
 		ParagraphCursor = paragraphCursor;
 		ParagraphCursorLength = paragraphCursor.getParagraphLength();
 
-		StartWordNumber = wordNumber;
-		StartCharNumber = charNumber;
-		RealStartWordNumber = wordNumber;
-		RealStartCharNumber = charNumber;
-		EndWordNumber = wordNumber;
-		EndCharNumber = charNumber;
+		StartWordIndex = wordIndex;
+		StartCharIndex = charIndex;
+		RealStartWordIndex = wordIndex;
+		RealStartCharIndex = charIndex;
+		EndWordIndex = wordIndex;
+		EndCharIndex = charIndex;
 
 		StartStyle = style;
 	}
 
 	boolean isEndOfParagraph() {
-		return EndWordNumber == ParagraphCursorLength;
+		return EndWordIndex == ParagraphCursorLength;
 	}
 
 	public boolean equals(Object o) {
 		ZLTextLineInfo info = (ZLTextLineInfo)o;
 		return
 			(ParagraphCursor == info.ParagraphCursor) &&
-			(StartWordNumber == info.StartWordNumber) &&
-			(StartCharNumber == info.StartCharNumber);
+			(StartWordIndex == info.StartWordIndex) &&
+			(StartCharIndex == info.StartCharIndex);
 	}
 
 	public int hashCode() {
-		return ParagraphCursor.hashCode() + StartWordNumber + 239 * StartCharNumber;
+		return ParagraphCursor.hashCode() + StartWordIndex + 239 * StartCharIndex;
 	}
 }

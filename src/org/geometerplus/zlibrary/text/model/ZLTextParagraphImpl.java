@@ -17,24 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model.impl;
+package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
-
-public final class ZLImageEntry {
-	private final ZLImageMap myImageMap;
-	public final String Id;
-	public final short VOffset;
-
-	ZLImageEntry(ZLImageMap imageMap, String id, short vOffset) {
-		myImageMap = imageMap;
-		Id = id;
-		VOffset = vOffset;
-	}
+class ZLTextParagraphImpl implements ZLTextParagraph {
+	private final ZLTextModelImpl myModel;
+	private final int myIndex;
 	
-	public ZLImage getImage() {
-		return myImageMap.getImage(Id);
+	ZLTextParagraphImpl(ZLTextModelImpl model, int index) {
+		myModel = model;
+		myIndex = index;
+	}
+
+	ZLTextParagraphImpl(ZLTextModelImpl model) {
+		this(model, model.getParagraphsNumber());
+	}
+
+	public EntryIterator iterator() {
+		return myModel.new EntryIteratorImpl(myIndex);
+	}
+
+	public byte getKind() {
+		return Kind.TEXT_PARAGRAPH;
 	}
 }

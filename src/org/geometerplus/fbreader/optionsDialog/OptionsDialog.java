@@ -96,7 +96,7 @@ public class OptionsDialog {
 		builder.addOption(resource.getResource("text").getValue(), baseStyle.RegularTextColorOption);
 		builder.addOption(resource.getResource("internalLink").getValue(), baseStyle.InternalHyperlinkTextColorOption);
 		builder.addOption(resource.getResource("externalLink").getValue(), baseStyle.ExternalHyperlinkTextColorOption);
-		builder.addOption(resource.getResource("highlighted").getValue(), baseStyle.SelectedTextColorOption);
+		builder.addOption(resource.getResource("highlighted").getValue(), baseStyle.HighlightedTextColorOption);
 		builder.addOption(resource.getResource("treeLines").getValue(), baseStyle.TreeLinesColorOption);
 		builder.addOption(resource.getResource("indicator").getValue(), FBView.getIndicatorInfoStatic().ColorOption);
 		builder.setInitial(BACKGROUND);

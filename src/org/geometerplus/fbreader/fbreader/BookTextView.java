@@ -38,9 +38,9 @@ public class BookTextView extends FBView {
 
 	private static final int MAX_UNDO_STACK_SIZE = 20;
 	
-	private ZLIntegerOption myParagraphNumberOption;
-	private ZLIntegerOption myWordNumberOption;
-	private ZLIntegerOption myCharNumberOption;
+	private ZLIntegerOption myParagraphIndexOption;
+	private ZLIntegerOption myWordIndexOption;
+	private ZLIntegerOption myCharIndexOption;
 	private ZLTextModel myContentsModel;
 
 	private ArrayList myPositionStack = new ArrayList();
@@ -87,35 +87,35 @@ public class BookTextView extends FBView {
 	protected synchronized void preparePaintInfo() {
 		super.preparePaintInfo();
 		if (myPositionStack.isEmpty()) {
-			myPositionStack.add(new Position(getStartCursor()));
+			myPositionStack.add(new Position(StartCursor));
 		} else {
-			((Position)myPositionStack.get(myCurrentPointInStack)).set(getStartCursor());
+			((Position)myPositionStack.get(myCurrentPointInStack)).set(StartCursor);
 		}
 	}
 
 	void scrollToHome() {
-		final ZLTextWordCursor cursor = getStartCursor();
-		if (!cursor.isNull() && cursor.isStartOfParagraph() && cursor.getParagraphCursor().getIndex() == 0) {
+		final ZLTextWordCursor cursor = StartCursor;
+		if (!cursor.isNull() && cursor.isStartOfParagraph() && cursor.getParagraphCursor().Index == 0) {
 			return;
 		}
 		final Position position = new Position(cursor);
 		gotoParagraph(0, false);
 		gotoPosition(0, 0, 0);
 		preparePaintInfo();
-		if (!position.equalsToCursor(getStartCursor())) {
+		if (!position.equalsToCursor(StartCursor)) {
 			savePosition(position);
 		}
 		Application.refreshWindow();
 	}
 
-	void gotoParagraphSafe(int paragraphNumber) {
+	void gotoParagraphSafe(int paragraphIndex) {
 		preparePaintInfo();
-		final ZLTextWordCursor cursor = getStartCursor();
+		final ZLTextWordCursor cursor = StartCursor;
 		if (cursor != null) {
 			final Position position = new Position(cursor);
-			gotoParagraph(paragraphNumber, false);
+			gotoParagraph(paragraphIndex, false);
 			preparePaintInfo();
-			if (!position.equalsToCursor(getStartCursor())) {
+			if (!position.equalsToCursor(StartCursor)) {
 				savePosition(position);
 			}
 		}
@@ -127,13 +127,13 @@ public class BookTextView extends FBView {
 			ZLTextElement element = area.Element;
 			if ((element instanceof ZLTextImageElement) ||
 					(element instanceof ZLTextWord)) {
-				final ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
-				cursor.moveToParagraph(area.ParagraphNumber);
+				final ZLTextWordCursor cursor = new ZLTextWordCursor(StartCursor);
+				cursor.moveToParagraph(area.ParagraphIndex);
 				cursor.moveToParagraphStart();
-				final int elementNumber = area.TextElementNumber;
+				final int elementIndex = area.TextElementIndex;
 				byte hyperlinkKind = FBTextKind.REGULAR;
 				String id = null;
-				for (int i = 0; i < elementNumber; ++i) {
+				for (int i = 0; i < elementIndex; ++i) {
 					ZLTextElement e = cursor.getElement();
 					if (e instanceof ZLTextControlElement) {
 						if (e instanceof ZLTextHyperlinkControlElement) {

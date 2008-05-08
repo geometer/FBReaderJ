@@ -55,10 +55,10 @@ class ContentsView extends FBView {
 
 	int currentTextViewParagraph(boolean includeStart) {
 		final FBReader fbreader = (FBReader)Application;
-		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
+		final ZLTextWordCursor cursor = fbreader.BookTextView.StartCursor;
 		if (!cursor.isNull()) {
-			int reference = cursor.getParagraphCursor().getIndex();
-			boolean startOfParagraph = cursor.getWordNumber() == 0;
+			int reference = cursor.getParagraphCursor().Index;
+			boolean startOfParagraph = cursor.getWordIndex() == 0;
 			if (cursor.isEndOfParagraph()) {
 				++reference;
 				startOfParagraph = true;

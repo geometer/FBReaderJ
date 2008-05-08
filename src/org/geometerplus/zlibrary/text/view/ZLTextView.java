@@ -19,8 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.view.*;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;

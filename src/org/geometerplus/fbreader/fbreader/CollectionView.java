@@ -62,9 +62,9 @@ public class CollectionView extends FBView {
 	public boolean _onStylusPress(int x, int y) {
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
-			ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
-			cursor.moveToParagraph(imageArea.ParagraphNumber);
-			cursor.moveTo(imageArea.TextElementNumber, 0);
+			ZLTextWordCursor cursor = new ZLTextWordCursor(StartCursor);
+			cursor.moveToParagraph(imageArea.ParagraphIndex);
+			cursor.moveTo(imageArea.TextElementIndex, 0);
 			final ZLTextElement element = cursor.getElement();
 			if (!(element instanceof ZLTextImageElement)) {
 				return false;
@@ -73,16 +73,16 @@ public class CollectionView extends FBView {
 
 			final String imageId = imageElement.Id;
 			if (imageId == CollectionModel.BookInfoImageId) {
-				editBookInfo(imageArea.ParagraphNumber);
+				editBookInfo(imageArea.ParagraphIndex);
 				return true;
 			} else if (imageId == CollectionModel.RemoveBookImageId) {
-				removeBook(imageArea.ParagraphNumber);
+				removeBook(imageArea.ParagraphIndex);
 				return true;
 			} else if (imageId == CollectionModel.RemoveTagImageId) {
-				removeTag(imageArea.ParagraphNumber);
+				removeTag(imageArea.ParagraphIndex);
 				return true;
 			} else if (imageId == CollectionModel.TagInfoImageId) {
-				editTagInfo(imageArea.ParagraphNumber);
+				editTagInfo(imageArea.ParagraphIndex);
 				return true;
 			}
 			return false;
@@ -150,7 +150,7 @@ public class CollectionView extends FBView {
 				if (cModel.getParagraphsNumber() == 0) {
 					gotoParagraph(0, false);
 				} else {
-					int index = getStartCursor().getParagraphCursor().getIndex();
+					int index = StartCursor.getParagraphCursor().Index;
 					if (index >= cModel.getParagraphsNumber()) {
 						index = cModel.getParagraphsNumber() - 1;
 					}

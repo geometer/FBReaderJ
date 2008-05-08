@@ -17,16 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model.impl;
+package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
-import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
-import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 
 abstract class ZLTextModelImpl implements ZLTextModel {
 	private final ArrayList myEntries = new ArrayList();

@@ -17,28 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model.impl;
+package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+public class ZLTextMark {
+	public final int ParagraphIndex;
+	public final int Offset;
+	public final int Length;
 
-class ZLTextParagraphImpl implements ZLTextParagraph {
-	private final ZLTextModelImpl myModel;
-	private final int myIndex;
-	
-	ZLTextParagraphImpl(ZLTextModelImpl model, int index) {
-		myModel = model;
-		myIndex = index;
+	public ZLTextMark() {
+		ParagraphIndex = -1;
+		Offset = -1;
+		Length = -1;
 	}
 
-	ZLTextParagraphImpl(ZLTextModelImpl model) {
-		this(model, model.getParagraphsNumber());
+	public ZLTextMark(int paragraphIndex, int offset, int length) {
+		ParagraphIndex = paragraphIndex;
+		Offset = offset;
+		Length = length;
 	}
 
-	public EntryIterator iterator() {
-		return myModel.new EntryIteratorImpl(myIndex);
+	public ZLTextMark(final ZLTextMark mark) {
+		ParagraphIndex = mark.ParagraphIndex;
+		Offset = mark.Offset;
+		Length = mark.Length;
 	}
 
-	public byte getKind() {
-		return Kind.TEXT_PARAGRAPH;
+	public int compareTo(ZLTextMark mark) {
+		final int diff = ParagraphIndex - mark.ParagraphIndex;
+		return (diff != 0) ? diff : Offset - mark.Offset;
+	}
+
+	public String toString() {
+		return (ParagraphIndex + " " + Offset + " " + Length);
 	}
 }

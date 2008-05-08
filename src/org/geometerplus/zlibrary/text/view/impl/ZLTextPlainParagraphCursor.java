@@ -28,14 +28,14 @@ class ZLTextPlainParagraphCursor extends ZLTextParagraphCursor {
 	}	
 
 	public boolean isLast() {
-		return (myIndex + 1 == myModel.getParagraphsNumber());
+		return (Index + 1 == myModel.getParagraphsNumber());
 	}
 
 	public ZLTextParagraphCursor previous() {
-		return isFirst() ? null : cursor(myModel, myIndex - 1);
+		return isFirst() ? null : cursor(myModel, Index - 1);
 	}
 
 	public ZLTextParagraphCursor next() {
-		return isLast() ? null : cursor(myModel, myIndex + 1);
+		return isLast() ? null : cursor(myModel, Index + 1);
 	}
 }

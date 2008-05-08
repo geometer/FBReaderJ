@@ -17,11 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model.impl;
+package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
-import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
 
 final class ZLTextTreeParagraphImpl extends ZLTextParagraphImpl implements ZLTextTreeParagraph {
 	private boolean myIsOpen;

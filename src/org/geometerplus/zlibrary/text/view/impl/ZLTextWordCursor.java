@@ -19,14 +19,12 @@
 
 package org.geometerplus.zlibrary.text.view.impl;
 
-//import java.util.*;
-
-import org.geometerplus.zlibrary.text.model.impl.ZLTextMark;
+import org.geometerplus.zlibrary.text.model.ZLTextMark;
 
 public final class ZLTextWordCursor {
 	private ZLTextParagraphCursor myParagraphCursor;
-	private int myWordNumber;
-	private int myCharNumber;
+	private int myWordIndex;
+	private int myCharIndex;
 
 	public ZLTextWordCursor() {
 	}
@@ -37,8 +35,8 @@ public final class ZLTextWordCursor {
 
 	public void setCursor(ZLTextWordCursor cursor) {
 		myParagraphCursor = cursor.myParagraphCursor;
-		myWordNumber = cursor.myWordNumber;
-		myCharNumber = cursor.myCharNumber;
+		myWordIndex = cursor.myWordIndex;
+		myCharIndex = cursor.myCharIndex;
 	}
 
 	public ZLTextWordCursor(ZLTextParagraphCursor paragraphCursor) {
@@ -47,8 +45,8 @@ public final class ZLTextWordCursor {
 
 	public void setCursor(ZLTextParagraphCursor paragraphCursor) {
 		myParagraphCursor = paragraphCursor;
-		myWordNumber = 0;
-		myCharNumber = 0;
+		myWordIndex = 0;
+		myCharIndex = 0;
 	}
 
 	public boolean isNull() {
@@ -56,29 +54,29 @@ public final class ZLTextWordCursor {
 	}
 
 	public boolean equalsToCursor(ZLTextWordCursor cursor) {
-		return (myWordNumber == cursor.myWordNumber) && (myCharNumber == cursor.myCharNumber) && (myParagraphCursor.getIndex() == cursor.myParagraphCursor.getIndex());
+		return (myWordIndex == cursor.myWordIndex) && (myCharIndex == cursor.myCharIndex) && (myParagraphCursor.Index == cursor.myParagraphCursor.Index);
 	}
 
 	public boolean isStartOfParagraph() {
-		return (myWordNumber == 0 && myCharNumber == 0);
+		return (myWordIndex == 0 && myCharIndex == 0);
 	}
 
-	/*Why don't we check here whether myCharNumber is in the end of the word or not?*/
+	/*Why don't we check here whether myCharIndex is in the end of the word or not?*/
 
 	public boolean isEndOfParagraph() {
-		return myWordNumber == myParagraphCursor.getParagraphLength();
+		return myWordIndex == myParagraphCursor.getParagraphLength();
 	}
 
-	public int getWordNumber() {
-		return myWordNumber;
+	public int getWordIndex() {
+		return myWordIndex;
 	}
 
-	public int getCharNumber() {
-		return myCharNumber;
+	public int getCharIndex() {
+		return myCharIndex;
 	}
 
 	public ZLTextElement getElement() {
-		return myParagraphCursor.getElement(myWordNumber);
+		return myParagraphCursor.getElement(myWordIndex);
 	}
 
 	public ZLTextParagraphCursor getParagraphCursor() {
@@ -91,24 +89,24 @@ public final class ZLTextWordCursor {
 		}
 		final ZLTextParagraphCursor paragraph = myParagraphCursor;
 		int paragraphLength = paragraph.getParagraphLength();
-		int wordNumber = myWordNumber;
-		while ((wordNumber != paragraphLength) && (!(paragraph.getElement(wordNumber) instanceof ZLTextWord))) {
-			wordNumber++;
+		int wordIndex = myWordIndex;
+		while ((wordIndex != paragraphLength) && (!(paragraph.getElement(wordIndex) instanceof ZLTextWord))) {
+			wordIndex++;
 		}
-		if (wordNumber != paragraphLength) {
-			return new ZLTextMark(paragraph.getIndex(), ((ZLTextWord) paragraph.getElement(wordNumber)).getParagraphOffset(), 0);
+		if (wordIndex != paragraphLength) {
+			return new ZLTextMark(paragraph.Index, ((ZLTextWord) paragraph.getElement(wordIndex)).getParagraphOffset(), 0);
 		}
-		return new ZLTextMark(paragraph.getIndex() + 1, 0, 0);
+		return new ZLTextMark(paragraph.Index + 1, 0, 0);
 	}
 	
 	public void nextWord() {
-		myWordNumber++;
-		myCharNumber = 0;
+		myWordIndex++;
+		myCharIndex = 0;
 	}
 
 	public void previousWord() {
-		myWordNumber--;
-		myCharNumber = 0;
+		myWordIndex--;
+		myCharIndex = 0;
 	}
 
 	public boolean nextParagraph() {
@@ -135,52 +133,52 @@ public final class ZLTextWordCursor {
 
 	public void moveToParagraphStart() {
 		if (!isNull()) {
-			myWordNumber = 0;
-			myCharNumber = 0;
+			myWordIndex = 0;
+			myCharIndex = 0;
 		}
 	}
 
 	public void moveToParagraphEnd() {
 		if (!isNull()) {
-			myWordNumber = myParagraphCursor.getParagraphLength();
-			myCharNumber = 0;
+			myWordIndex = myParagraphCursor.getParagraphLength();
+			myCharIndex = 0;
 		}
 	}
 
-	public void moveToParagraph(int paragraphNumber) {
-		if (!isNull() && (paragraphNumber != myParagraphCursor.getIndex())) {
-			myParagraphCursor = ZLTextParagraphCursor.cursor(myParagraphCursor.myModel, paragraphNumber);
+	public void moveToParagraph(int paragraphIndex) {
+		if (!isNull() && (paragraphIndex != myParagraphCursor.Index)) {
+			myParagraphCursor = ZLTextParagraphCursor.cursor(myParagraphCursor.myModel, paragraphIndex);
 			moveToParagraphStart();
 		}		
 	}
 
-	public void moveTo(int wordNumber, int charNumber) {
+	public void moveTo(int wordIndex, int charIndex) {
 		if (!isNull()) {
-			if (wordNumber == 0 && charNumber == 0) {
-				myWordNumber = 0;
-				myCharNumber = 0;
+			if (wordIndex == 0 && charIndex == 0) {
+				myWordIndex = 0;
+				myCharIndex = 0;
 			} else {
-				wordNumber = Math.max(0, wordNumber);
+				wordIndex = Math.max(0, wordIndex);
 				int size = myParagraphCursor.getParagraphLength();
-				if (wordNumber > size) {
-					myWordNumber = size;
-					myCharNumber = 0;
+				if (wordIndex > size) {
+					myWordIndex = size;
+					myCharIndex = 0;
 				} else {
-					myWordNumber = wordNumber;
-					setCharNumber(charNumber);
+					myWordIndex = wordIndex;
+					setCharIndex(charIndex);
 				}
 			}
 		}
 	}
 
-	public void setCharNumber(int charNumber) {
-		charNumber = Math.max(0, charNumber);
-		myCharNumber = 0;
-		if (charNumber > 0) {
-			ZLTextElement element = myParagraphCursor.getElement(myWordNumber);
+	public void setCharIndex(int charIndex) {
+		charIndex = Math.max(0, charIndex);
+		myCharIndex = 0;
+		if (charIndex > 0) {
+			ZLTextElement element = myParagraphCursor.getElement(myWordIndex);
 			if (element instanceof ZLTextWord) {
-				if (charNumber <= ((ZLTextWord)element).Length) {
-					myCharNumber = charNumber;
+				if (charIndex <= ((ZLTextWord)element).Length) {
+					myCharIndex = charIndex;
 				}
 			}
 		}
@@ -188,15 +186,15 @@ public final class ZLTextWordCursor {
 
 	public void reset() {
 		myParagraphCursor = null;
-		myWordNumber = 0;
-		myCharNumber = 0;
+		myWordIndex = 0;
+		myCharIndex = 0;
 	}
 
 	public void rebuild() {
 		if (!isNull()) {
 			myParagraphCursor.clear();
 			myParagraphCursor.fill();
-			moveTo(myWordNumber, myCharNumber);
+			moveTo(myWordIndex, myCharIndex);
 		}
 	}
 }

@@ -19,6 +19,35 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-public interface ZLTextPlainModel extends ZLTextModel {
-	void createParagraph(byte kind);
+import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
+
+public final class ZLTextPlainModel extends ZLTextModelImpl {
+	private byte[] myParagraphKinds = new byte[INITIAL_CAPACITY];
+
+	public ZLTextPlainModel(int dataBlockSize) {
+		super(dataBlockSize);
+	}
+
+	public int getParagraphsNumber() {
+		return myParagraphsNumber;
+	}
+
+	public ZLTextParagraph getParagraph(int index) {
+		final byte kind = myParagraphKinds[index];
+		return (kind == ZLTextParagraph.Kind.TEXT_PARAGRAPH) ?
+			new ZLTextParagraphImpl(this, index) :
+			new ZLTextSpecialParagraphImpl(kind, this, index);
+	}
+
+	void extend() {
+		super.extend();
+		final int size = myParagraphKinds.length;
+		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size << 1);
+	}
+
+	public void createParagraph(byte kind) {
+		final int index = myParagraphsNumber;
+		createParagraph();
+		myParagraphKinds[index] = kind;
+	}
 }

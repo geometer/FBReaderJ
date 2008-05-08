@@ -28,10 +28,10 @@ final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {
 
 	public boolean isLast() {
 		final ZLTextTreeModel model = (ZLTextTreeModel)myModel;
-		if (myIndex + 1 == model.getParagraphsNumber()) {
+		if (Index + 1 == model.getParagraphsNumber()) {
 			return true;
 		}
-		ZLTextTreeParagraph current = model.getTreeParagraph(myIndex);
+		ZLTextTreeParagraph current = model.getTreeParagraph(Index);
 		if (current.isOpen() && current.hasChildren()) {
 			return false;
 		}
@@ -52,8 +52,8 @@ final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {
 		}
 
 		final ZLTextTreeModel model = (ZLTextTreeModel)myModel;
-		final ZLTextTreeParagraph parent = model.getTreeParagraph(myIndex).getParent();
-		int index = myIndex - 1;
+		final ZLTextTreeParagraph parent = model.getTreeParagraph(Index).getParent();
+		int index = Index - 1;
 		ZLTextTreeParagraph newTreeParagraph = model.getTreeParagraph(index);
 		if (newTreeParagraph != parent) {
 			ZLTextTreeParagraph lastNotOpen = newTreeParagraph;
@@ -72,12 +72,12 @@ final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {
 	public ZLTextParagraphCursor next() {
 		final ZLTextTreeModel model = (ZLTextTreeModel)myModel;
 
-		if (myIndex + 1 == model.getParagraphsNumber()) {
+		if (Index + 1 == model.getParagraphsNumber()) {
 			return null;
 		}
-		ZLTextTreeParagraph current = model.getTreeParagraph(myIndex);
+		ZLTextTreeParagraph current = model.getTreeParagraph(Index);
 		if (current.hasChildren() && current.isOpen()) {
-			return cursor(model, myIndex + 1);
+			return cursor(model, Index + 1);
 		}
 
 		ZLTextTreeParagraph parent = current.getParent();
@@ -86,7 +86,7 @@ final class ZLTextTreeParagraphCursor extends ZLTextParagraphCursor {
 			parent = current.getParent();
 		}
 		if (parent != null) {
-			int index = myIndex + 1;
+			int index = Index + 1;
 			while (model.getTreeParagraph(index).getParent() != parent) {
 				++index;
 			}

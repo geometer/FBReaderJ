@@ -29,8 +29,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListener, MouseMotionListener {
 	@SuppressWarnings("serial")
 	private class Panel extends JPanel {
-		public void paint(Graphics g) {
-			super.paint(g);
+		public void paintComponent(Graphics g) {
 			Graphics2D g2d = (Graphics2D)g;
       g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -81,40 +80,42 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 	public void mouseClicked(MouseEvent e) {
 	}
 
-	public void mousePressed(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
+	private boolean myMouseIsPressed;
+
+	private int x(MouseEvent e) {
 		switch (getRotation()) {
 			case Angle.DEGREES0:
-				break;
+			default:
+				return e.getX();
 			case Angle.DEGREES90:
-			{
-				final Dimension size = myPanel.getSize();
-				int swap = x;
-				x = size.height - y - 1;
-				y = swap;
-				break;
-			}
+				return myPanel.getSize().height - e.getY() - 1;
 			case Angle.DEGREES180:
-			{
-				final Dimension size = myPanel.getSize();
-				x = size.width - x - 1;
-				y = size.height - y - 1;
-				break;
-			}
+				return myPanel.getSize().height - e.getX() - 1;
 			case Angle.DEGREES270:
-			{
-				final Dimension size = myPanel.getSize();
-				int swap = size.width - x - 1;
-				x = y;
-				y = swap;
-				break;
-			}
+				return e.getY();
 		}
-		getView().onStylusPress(x, y);
+	}
+
+	private int y(MouseEvent e) {
+		switch (getRotation()) {
+			case Angle.DEGREES0:
+			default:
+				return e.getY();
+			case Angle.DEGREES90:
+				return e.getX();
+			case Angle.DEGREES180:
+				return myPanel.getSize().height - e.getY() - 1;
+			case Angle.DEGREES270:
+				return myPanel.getSize().height - e.getX() - 1;
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {
+		getView().onStylusPress(x(e), y(e));
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		getView().onStylusRelease(x(e), y(e));
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -124,9 +125,11 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 	}
 
 	public void mouseDragged(MouseEvent e) {
+		getView().onStylusMovePressed(x(e), y(e));
 	}
 
 	public void mouseMoved(MouseEvent e) {
+		getView().onStylusMove(x(e), y(e));
 	}
 
 	public JPanel getPanel() {

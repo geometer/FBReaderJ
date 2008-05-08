@@ -35,7 +35,7 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		new ZLColorOption(CATEGORY, COLORS, "Background", new ZLColor(255, 255, 255));
 	public final ZLColorOption SelectionBackgroundColorOption =
 		new ZLColorOption(CATEGORY, COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
-	public final ZLColorOption SelectedTextColorOption =
+	public final ZLColorOption HighlightedTextColorOption =
 		new ZLColorOption(CATEGORY, COLORS, "SelectedText", new ZLColor(60, 139, 255));
 	public final ZLColorOption RegularTextColorOption =
 		new ZLColorOption(CATEGORY, COLORS, "Text", new ZLColor(0, 0, 0));

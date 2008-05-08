@@ -23,9 +23,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
-import org.geometerplus.zlibrary.text.model.ZLTextPlainModel;
-import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
+import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.collection.BookCollection;
@@ -65,9 +63,8 @@ public class RecentBooksView extends FBView {
 
 	public void paint() {
 		if (getModel() == null) {
-			//TODO
-			ZLTextPlainModel recentBooksModel = ZLModelFactory.createPlainModel(1024);;
-			final ArrayList/*<BookDescription>*/ books = myLastBooks.books();
+			final ZLTextPlainModel recentBooksModel = new ZLTextPlainModel(1024);;
+			final ArrayList books = myLastBooks.books();
 			for (int i = 0 ; i < books.size(); i++) {
 				BookDescription it = (BookDescription)books.get(i);
 				recentBooksModel.createParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
@@ -79,7 +76,6 @@ public class RecentBooksView extends FBView {
 				recentBooksModel.addText(it.getTitle().toCharArray());
 			}
 			setModel(recentBooksModel);
-			//setModel(recentBooksModel, LIBRARY);
 		}
 		super.paint();
 	}

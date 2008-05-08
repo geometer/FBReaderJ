@@ -17,9 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model.impl;
-
-import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
+package org.geometerplus.zlibrary.text.model;
 
 public class ZLTextForcedControlEntry {
 	private final static int SUPPORTS_LEFT_INDENT = 1 << 0;
@@ -31,7 +29,7 @@ public class ZLTextForcedControlEntry {
 	private short myRightIndent;
 	private byte myAlignmentType;
 		
-	ZLTextForcedControlEntry() {
+	public ZLTextForcedControlEntry() {
 	}
 
 	public boolean isLeftIndentSupported() {

@@ -20,28 +20,17 @@
 package org.geometerplus.fbreader.formats.plucker;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.zip.DataFormatException;
-import java.util.zip.Inflater;
+import java.util.*;
+import java.util.zip.*;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReader;
-import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.text.model.*;
+
+import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.encoding.ZLEncodingConverter;
 import org.geometerplus.fbreader.formats.EncodedTextReader;
-import org.geometerplus.fbreader.formats.pdb.DocDecompressor;
-import org.geometerplus.fbreader.formats.pdb.PdbHeader;
-import org.geometerplus.fbreader.formats.pdb.PdbInputStream;
-import org.geometerplus.fbreader.formats.pdb.PdbUtil;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
-import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
-import org.geometerplus.zlibrary.text.model.impl.ZLTextForcedControlEntry;
+import org.geometerplus.fbreader.formats.pdb.*;
 
 public class PluckerBookReader extends BookReader {
 	private final String myFilePath;
@@ -358,7 +347,7 @@ public class PluckerBookReader extends BookReader {
 				case 0x22:
 					if (!myParagraphStarted) {
 						if (myForcedEntry == null) {
-							myForcedEntry = ZLModelFactory.createForcedControlEntry();
+							myForcedEntry = new ZLTextForcedControlEntry();
 						}
 						myForcedEntry.setLeftIndent((short)ptr[cur + 1]);
 						myForcedEntry.setRightIndent((short)ptr[cur + 2]);
@@ -367,7 +356,7 @@ public class PluckerBookReader extends BookReader {
 				case 0x29:
 					if (!myParagraphStarted) {
 						if (myForcedEntry == null) {
-							myForcedEntry = ZLModelFactory.createForcedControlEntry();
+							myForcedEntry = new ZLTextForcedControlEntry();
 						}
 						switch (ptr[cur + 1]) {
 							case 0: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_LEFT); break;

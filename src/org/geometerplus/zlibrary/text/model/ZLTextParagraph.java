@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.text.model.impl.ZLImageEntry;
-
 public interface ZLTextParagraph {
 	interface Entry {
 		byte TEXT = 1;

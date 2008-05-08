@@ -19,20 +19,46 @@
 
 package org.geometerplus.zlibrary.text.view.impl;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
+final class ZLTextRectangularAreaVector {
+	private ZLTextRectangularArea[] myData = new ZLTextRectangularArea[10];
+	private int myLength;	
 
-final class ZLTextRectangularAreaVector extends ArrayList {
-	ZLTextRectangularArea getArea(int index) {
-		return (ZLTextRectangularArea)super.get(index);
+	public boolean isEmpty() {
+		return myLength == 0;
+	}
+
+	public int size() {
+		return myLength;
+	}
+
+	public void add(ZLTextRectangularArea area) {
+		final int index = myLength++;
+		if (index == myData.length) {
+			ZLTextRectangularArea[] extended = new ZLTextRectangularArea[2 * index];
+			System.arraycopy(myData, 0, extended, 0, index);
+			myData = extended;
+		}
+		myData[index] = area;
+	}
+
+	public void clear() {
+		final ZLTextRectangularArea[] data = myData;
+		for (int i = myLength - 1; i >= 0; --i) {
+			data[i] = null;
+		}
+		myLength = 0;
+	}
+
+	ZLTextRectangularArea get(int index) {
+		return myData[index];
 	}
 
 	ZLTextRectangularArea binarySearch(int x, int y) {
 		int left = 0;
-		int right = size();
+		int right = myLength;
 		while (left < right) {
 			final int middle = (left + right) / 2;
-			final ZLTextRectangularArea candidate = (ZLTextRectangularArea)get(middle);
+			final ZLTextRectangularArea candidate = myData[middle];
 			if (candidate.YStart > y) {
 				right = middle;
 			} else if (candidate.YEnd < y) {
@@ -50,10 +76,10 @@ final class ZLTextRectangularAreaVector extends ArrayList {
 
 	ZLTextRectangularArea binarySearch(int y) {
 		int left = 0;
-		int right = size();
+		int right = myLength;
 		while (left < right) {
 			final int middle = (left + right) / 2;
-			final ZLTextRectangularArea candidate = (ZLTextRectangularArea)get(middle);
+			final ZLTextRectangularArea candidate = myData[middle];
 			if (candidate.YStart > y) {
 				right = middle;
 			} else if (candidate.YEnd < y) {

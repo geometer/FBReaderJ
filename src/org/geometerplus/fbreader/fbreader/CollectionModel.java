@@ -26,13 +26,12 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
-import org.geometerplus.zlibrary.text.model.impl.ZLTextTreeModelImpl;
 
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.collection.*;
 import org.geometerplus.fbreader.description.*;
 
-class CollectionModel extends ZLTextTreeModelImpl {
+class CollectionModel extends ZLTextTreeModel {
 	static final String RemoveBookImageId = "removeBook";
 	static final String BookInfoImageId = "bookInfo";
 	static final String AuthorInfoImageId = "authorInfo";

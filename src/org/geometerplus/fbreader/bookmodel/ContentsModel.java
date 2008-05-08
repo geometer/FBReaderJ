@@ -22,11 +22,9 @@ package org.geometerplus.fbreader.bookmodel;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.model.ZLTextTreeModel;
-import org.geometerplus.zlibrary.text.model.ZLTextTreeParagraph;
-import org.geometerplus.zlibrary.text.model.impl.ZLTextTreeModelImpl;
+import org.geometerplus.zlibrary.text.model.*;
 
-public class ContentsModel extends ZLTextTreeModelImpl implements ZLTextTreeModel{
+public class ContentsModel extends ZLTextTreeModel {
 	private final HashMap myReferenceByParagraph = new HashMap();
 	
 	public int getReference(ZLTextTreeParagraph paragraph) {

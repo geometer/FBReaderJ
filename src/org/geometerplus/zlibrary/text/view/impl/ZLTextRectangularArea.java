@@ -34,4 +34,8 @@ class ZLTextRectangularArea {
 		YStart = yStart;
 		YEnd = yEnd;
 	}
+
+	boolean contains(int x, int y) {
+		return (y >= YStart) && (y <= YEnd) && (x >= XStart) && (x <= XEnd);
+	}
 }

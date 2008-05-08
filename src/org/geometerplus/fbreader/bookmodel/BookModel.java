@@ -22,20 +22,16 @@ package org.geometerplus.fbreader.bookmodel;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
+import org.geometerplus.zlibrary.core.image.*;
 
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
-import org.geometerplus.zlibrary.text.model.impl.ZLModelFactory;
-import org.geometerplus.zlibrary.text.model.impl.ZLTextPlainModelImpl;
+import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
 	public final BookDescription Description;
-	public final ZLTextPlainModelImpl BookTextModel = new ZLTextPlainModelImpl(65536);
+	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536);
 	public final ContentsModel ContentsModel = new ContentsModel();
 
 	private final HashMap myFootnotes = new HashMap();
@@ -62,11 +58,11 @@ public final class BookModel {
 		}
 	}
 
-	ZLTextPlainModelImpl getFootnoteModel(String id) {
+	ZLTextPlainModel getFootnoteModel(String id) {
 		final HashMap footnotes = myFootnotes;
-		ZLTextPlainModelImpl model = (ZLTextPlainModelImpl)footnotes.get(id);
+		ZLTextPlainModel model = (ZLTextPlainModel)footnotes.get(id);
 		if (model == null) {
-			model = new ZLTextPlainModelImpl(4096); 
+			model = new ZLTextPlainModel(4096); 
 			footnotes.put(id, model); 
 		}
 		return model;

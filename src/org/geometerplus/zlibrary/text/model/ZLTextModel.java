@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
-import org.geometerplus.zlibrary.text.model.impl.ZLTextForcedControlEntry;
-import org.geometerplus.zlibrary.text.model.impl.ZLTextMark;
-
 public interface ZLTextModel {
 	int getParagraphsNumber();
 	ZLTextParagraph getParagraph(int index);
