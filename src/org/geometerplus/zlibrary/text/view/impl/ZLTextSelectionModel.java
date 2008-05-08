@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.text.view.impl;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 final class ZLTextSelectionModel {
 	final static class BoundElement {
@@ -145,11 +146,11 @@ final class ZLTextSelectionModel {
 		myStoredY = y;
 
 		if (!mySecondBound.Before.Exists) {
-			//startSelectionScrolling(false);
+			startSelectionScrolling(false);
 		} else if (!mySecondBound.After.Exists) {
-			//startSelectionScrolling(true);
+			startSelectionScrolling(true);
 		} else {
-			//stopSelectionScrolling();
+			stopSelectionScrolling();
 		}
 
 		if (!oldRange.Left.equalsTo(newRange.Left) || !oldRange.Right.equalsTo(newRange.Right)) {
@@ -173,13 +174,13 @@ final class ZLTextSelectionModel {
 	}
 
 	void deactivate() {
-		//stopSelectionScrolling();
+		stopSelectionScrolling();
 		myIsActive = false;
 		myDoUpdate = false;
 	}
 
 	void clear() {
-		//stopSelectionScrolling();
+		stopSelectionScrolling();
 		myIsEmpty = true;
 		myIsActive = false;
 		myDoUpdate = false;
@@ -269,5 +270,27 @@ final class ZLTextSelectionModel {
 			bound.Before.Exists = true;
 			bound.After.Exists = false;
 		}
+	}
+
+	private final Timer myTimer = new Timer();
+	private TimerTask myScrollingTask;
+
+	private void startSelectionScrolling(final boolean forward) {
+		stopSelectionScrolling();
+		myScrollingTask = new TimerTask() {
+			public void run() {
+				myView.scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myDoUpdate = true;
+				myView.Application.refreshWindow();
+			}
+		};
+		myTimer.schedule(myScrollingTask, 200, 400);
+	}
+
+	private void stopSelectionScrolling() {
+		if (myScrollingTask != null) {
+			myScrollingTask.cancel();
+		}
+		myScrollingTask = null;
 	}
 }

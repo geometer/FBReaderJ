@@ -40,7 +40,7 @@ public class PluginCollection {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
 			ourInstance.myPlugins.add(new FB2Plugin());
-			ourInstance.myPlugins.add(new PluckerPlugin());
+			//ourInstance.myPlugins.add(new PluckerPlugin());
 			//ourInstance->myPlugins.push_back(new DocBookPlugin());
 			//ourInstance.myPlugins.add(new HtmlPlugin());
 			/*ourInstance.myPlugins.add(new TxtPlugin());

@@ -360,7 +360,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
-	public void paint() {
+	public synchronized void paint() {
 		//android.os.Debug.startMethodTracing("/tmp/paint");
 		preparePaintInfo();
 
