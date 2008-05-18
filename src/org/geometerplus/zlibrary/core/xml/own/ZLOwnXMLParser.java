@@ -38,6 +38,7 @@ final class ZLOwnXMLParser {
 	private static final byte COMMENT = 6;
 	private static final byte LANGLE = 7;
 	private static final byte WS_AFTER_START_TAG_NAME = 8;
+	private static final byte WS_AFTER_ATTRIBUTE_VALUE = 9;
 	//private static final byte WS_AFTER_END_TAG_NAME = 9;
 	private static final byte WAIT_EQUALS = 10;
 	private static final byte WAIT_ATTRIBUTE_VALUE = 11;
@@ -339,25 +340,49 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+						case WS_AFTER_ATTRIBUTE_VALUE:
+							switch (buffer[++i]) {
+								case 0x0008:
+								case 0x0009:
+								case 0x000A:
+								case 0x000B:
+								case 0x000C:
+								case 0x000D:
+								case ' ':
+									state = WS_AFTER_START_TAG_NAME;
+									break;
+								case '/':
+								case '>':
+									state = WS_AFTER_START_TAG_NAME;
+									--i;
+									break;
+								case '"':
+									attributeValue.append(buffer, i - 1, 1);
+									break mainSwitchLabel;
+								default:
+									state = ATTRIBUTE_VALUE;
+									break mainSwitchLabel;
+							}
+							final String aName = convertToString(strings, attributeName);
+							if (processNamespaces && aName.startsWith("xmlns:")) {
+								if (currentNamespaceMap == null) {
+									currentNamespaceMap = new HashMap(oldNamespaceMap);
+								}
+								currentNamespaceMap.put(attributeValue.toString(), aName.substring(6));
+								attributeValue.clear();
+							} else if (dontCacheAttributeValues) {
+								attributes.put(aName, attributeValue.toString());
+								attributeValue.clear();
+							} else {
+								attributes.put(aName, convertToString(strings, attributeValue));
+							}
+							break;
 						case ATTRIBUTE_VALUE:
 							while (true) {
 								switch (buffer[++i]) {
 									case '"':
 										attributeValue.append(buffer, startPosition, i - startPosition);
-										state = WS_AFTER_START_TAG_NAME;
-										final String aName = convertToString(strings, attributeName);
-										if (processNamespaces && aName.startsWith("xmlns:")) {
-											if (currentNamespaceMap == null) {
-												currentNamespaceMap = new HashMap(oldNamespaceMap);
-											}
-											currentNamespaceMap.put(attributeValue.toString(), aName.substring(6));
-											attributeValue.clear();
-										} else if (dontCacheAttributeValues) {
-											attributes.put(aName, attributeValue.toString());
-											attributeValue.clear();
-										} else {
-											attributes.put(aName, convertToString(strings, attributeValue));
-										}
+										state = WS_AFTER_ATTRIBUTE_VALUE;
 										break mainSwitchLabel;
 									case '&':
 										attributeValue.append(buffer, startPosition, i - startPosition);

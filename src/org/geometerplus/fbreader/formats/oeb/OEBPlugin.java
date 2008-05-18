@@ -40,7 +40,7 @@ public class OEBPlugin extends FormatPlugin {
 
 	private String getOpfFileName(String oebFileName) {
 		final ZLFile oebFile = new ZLFile(oebFileName);
-		if (oebFile.getExtension() == "opf") {
+		if (oebFile.getExtension().equals("opf")) {
 			return oebFileName;
 		}
 
@@ -63,6 +63,7 @@ public class OEBPlugin extends FormatPlugin {
 
 	public boolean readDescription(String path, BookDescription description) {
 		path = getOpfFileName(path);
+		System.err.println("path = " + path);
 		if (path == null) {
 			return false;
 		}
