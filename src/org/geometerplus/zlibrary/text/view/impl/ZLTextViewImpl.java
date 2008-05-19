@@ -352,8 +352,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	protected void savePosition(Position position) {
 	}
 	
-	//?
 	protected final void savePosition(Position position, ZLTextWordCursor cursor) {
+		//TODO: придумать какое-то разумное условие, чтобы позиции сохранились
+		// при переходе к другой модели, или как-то запихать в курсор номер модели
 		if (!position.equalsToCursor(cursor)) {
 			savePosition(position);
 		}
