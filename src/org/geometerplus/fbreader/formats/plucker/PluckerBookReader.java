@@ -190,8 +190,9 @@ public class PluckerBookReader extends BookReader {
 						myParagraphVector = (ArrayList)myParagraphMap.get(uid);
 						processTextRecord(size, pars);
 						if ((flags & 0x1) == 0) {
-				//			System.out.println("insert endoftext");
-							insertEndOfTextParagraph();
+							System.out.println("setting new text model");
+//							insertEndOfTextParagraph();
+							setNewTextModel();
 						}
 					}
 					break;
@@ -202,8 +203,8 @@ public class PluckerBookReader extends BookReader {
 					final String mime = "image/palm";
 					ZLImage image = null;
 					if (type == 2) {
-						System.out.println("type2");
-						image = new ZLFileImage(mime, myFilePath, myStream.offset());
+		//				System.out.println("type2");
+			//			image = new PluckerFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 1) {
 						//image = new DocCompressedFileImage(mime, myFilePath, myStream->offset(), recordSize - 8);
 					} else if (myCompressionVersion == 2) {
@@ -341,7 +342,7 @@ public class PluckerBookReader extends BookReader {
 					break;
 				case 0x1A:
 					safeBeginParagraph();
-					System.out.println("image ref");
+			//		System.out.println("image ref");
 					addImageReference(fromNumber(twoBytes(ptr, cur + 1)), (short) 0);
 					break;
 				case 0x22:
@@ -381,7 +382,7 @@ public class PluckerBookReader extends BookReader {
 				case 0x53: // color setting is ignored
 					break;
 				case 0x5C:
-					System.out.println("image ref");
+		//			System.out.println("image ref");
 					addImageReference(fromNumber(twoBytes(ptr, cur + 3)), (short) 0);
 					break;
 				case 0x60: // underlined text is ignored

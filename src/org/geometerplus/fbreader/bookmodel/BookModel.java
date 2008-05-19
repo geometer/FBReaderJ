@@ -36,6 +36,7 @@ public final class BookModel {
 
 	private final HashMap myFootnotes = new HashMap();
 	private final HashMap myInternalHyperlinks = new HashMap();
+	private final ArrayList myBookTextModels;
 
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
@@ -43,13 +44,18 @@ public final class BookModel {
 		public final int ParagraphNumber;
 		public final ZLTextModel Model;
 		
+		public final int ModelNumber;
+		
 		Label(ZLTextModel model, int paragraphNumber) {
 			ParagraphNumber = paragraphNumber;
 			Model = model;
+			ModelNumber = myBookTextModels.indexOf(model);
 		}
 	}
 	
 	public BookModel(final BookDescription description) {
+		myBookTextModels = new ArrayList();
+		myBookTextModels.add(BookTextModel);
 		Description = description;
 		ZLFile file = new ZLFile(description.FileName);
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
@@ -91,5 +97,16 @@ public final class BookModel {
 
 	void addImage(String id, ZLImage image) {
 		myImageMap.put(id, image);
+	}
+	
+	//
+	public ZLTextPlainModel addBookTextModel() {
+		ZLTextPlainModel bookTextModel = new ZLTextPlainModel(65536);
+		myBookTextModels.add(bookTextModel);
+		return bookTextModel;
+	}
+	
+	public ArrayList getBookTextModels() {
+		return myBookTextModels;
 	}
 }

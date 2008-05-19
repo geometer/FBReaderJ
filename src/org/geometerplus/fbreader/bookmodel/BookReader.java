@@ -145,10 +145,10 @@ public class BookReader {
 		insertEndParagraph(ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
 	
-	public final void insertEndOfTextParagraph() {
+/*	public final void insertEndOfTextParagraph() {
 		insertEndParagraph(ZLTextParagraph.Kind.END_OF_TEXT_PARAGRAPH);
 	}
-	
+*/	
 	public final void unsetCurrentTextModel() {
 		myCurrentTextModel = null;
 	}
@@ -325,5 +325,10 @@ public class BookReader {
 		if (myTextParagraphExists) {
 			myCurrentTextModel.addFixedHSpace(length);
 		}
+	}
+	
+	//
+	public final void setNewTextModel() {
+		myCurrentTextModel = Model.addBookTextModel();
 	}
 }

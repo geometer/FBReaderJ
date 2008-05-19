@@ -25,6 +25,8 @@ public final class ZLTextWordCursor {
 	private ZLTextParagraphCursor myParagraphCursor;
 	private int myWordIndex;
 	private int myCharIndex;
+	
+//	private int myModelIndex;
 
 	public ZLTextWordCursor() {
 	}
@@ -197,4 +199,13 @@ public final class ZLTextWordCursor {
 			moveTo(myWordIndex, myCharIndex);
 		}
 	}
+
+/*	public int getModelIndex() {
+		return myModelIndex;
+	}
+
+	public void setModelIndex(int modelIndex) {
+		myModelIndex = modelIndex;
+	}
+	*/
 }

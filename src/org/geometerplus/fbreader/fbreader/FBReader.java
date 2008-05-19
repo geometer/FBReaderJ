@@ -267,7 +267,9 @@ public final class FBReader extends ZLApplication {
 		if (myBookModel != null) {
 			BookModel.Label label = myBookModel.getLabel(id);
 			if ((label != null) && (label.Model != null)) {
-				if (label.Model == myBookModel.BookTextModel) {
+		//		if (label.Model == myBookModel.BookTextModel) {
+				if (label.ModelNumber != -1) {	
+					BookTextView.setModel(label.ModelNumber);
 					BookTextView.gotoParagraphSafe(label.ParagraphNumber);
 				} else {
 					FootnoteView.setModel(label.Model);
@@ -291,7 +293,7 @@ public final class FBReader extends ZLApplication {
 	void openBookInternal(BookDescription description) {
 		if (description != null) {
 			BookTextView.saveState();
-			BookTextView.setModel(null, "");
+			BookTextView.setModels(null, "");
 			BookTextView.setContentsModel(null);
 			ContentsView.setModel(null);
 
@@ -299,7 +301,8 @@ public final class FBReader extends ZLApplication {
 			final String fileName = description.FileName;
 			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());
-			BookTextView.setModel(myBookModel.BookTextModel, fileName);
+	//		BookTextView.setModel(myBookModel.BookTextModel, fileName);
+			BookTextView.setModels(myBookModel.getBookTextModels(), fileName);
 			BookTextView.setCaption(description.getTitle());
 			BookTextView.setContentsModel(myBookModel.ContentsModel);
 			FootnoteView.setModel(null);

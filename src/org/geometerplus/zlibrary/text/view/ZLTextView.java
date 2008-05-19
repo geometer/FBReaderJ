@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import java.util.*;
+import org.geometerplus.zlibrary.core.util.*;
+
 import org.geometerplus.zlibrary.core.view.*;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
@@ -36,7 +39,15 @@ public abstract class ZLTextView extends ZLView {
 		super(application, context);
 	}
 
-	public abstract void setModel(ZLTextModel model);
+	public final void setModel(ZLTextModel model) {
+		final ArrayList list = new ArrayList(1);
+		list.add(model);
+		setModels(list, 0);
+	}
+	
+	public abstract void setModel(int modelNumber);
+	
+	public abstract void setModels(ArrayList/*<ZLTextModel>*/ model, int current);
 
 	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
 

@@ -25,6 +25,9 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public class ZLFileImage implements ZLImage {
+	private final String myPath;
+	private final int myOffset;
+	
 	public ZLFileImage(String mimeType, String path, int offset) {
 		myPath = path;
 		myOffset = offset;
@@ -53,9 +56,7 @@ public class ZLFileImage implements ZLImage {
 			return buffer;
 		} catch (IOException e) {
 		}
+		
 		return new byte[0];
 	}
-
-	private final String myPath;
-	private final int myOffset;
 }
