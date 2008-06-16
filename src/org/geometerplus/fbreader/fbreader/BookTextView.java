@@ -214,9 +214,12 @@ public class BookTextView extends FBView {
 		new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, BUFFER_SIZE, 0).setValue(myPositionStack.size());
 		new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, POSITION_IN_BUFFER, 0).setValue(myCurrentPointInStack);
 
+		final ZLIntegerOption option = new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, "", 0);
 		for (int i = 0; i < myPositionStack.size(); ++i) {
 			Position position = (Position)myPositionStack.get(i);
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_PREFIX + i, 0).setValue(position.ParagraphIndex);
+			option.changeName(PARAGRAPH_PREFIX + i);
+			option.setValue(position.ParagraphIndex);
+			//new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_PREFIX + i, 0).setValue(position.ParagraphIndex);
 			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, WORD_PREFIX + i, 0).setValue(position.WordIndex);
 			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, CHAR_PREFIX + i, 0).setValue(position.CharIndex);
 			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, MODEL_PREFIX + i, 0).setValue(position.ModelIndex);

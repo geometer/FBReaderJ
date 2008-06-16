@@ -156,6 +156,8 @@ public class PluckerBookReader extends BookReader {
 						byte[] buf = new byte[size];
 						doProcess = myStream.read(buf, 0, (int)size) == size;
 						if (doProcess) {
+							// TODO: use encoding!!!!
+							// TODO: don't create any new objects!!!!
 							myCharBuffer = new String(buf).toCharArray();
 						}
 					} else if (myCompressionVersion == 1) {

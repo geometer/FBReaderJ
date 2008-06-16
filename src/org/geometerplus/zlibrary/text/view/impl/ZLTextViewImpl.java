@@ -34,12 +34,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private ArrayList/*<ZLTextModel>*/ myModels;
 	private final ZLTextSelectionModel mySelectionModel;
 
-	protected class Position {
+	protected static class Position {
 		public int ParagraphIndex;
 		public int WordIndex;
 		public int CharIndex;
 		public int ModelIndex;
 
+		// TODO: move model index to the start of argument list
 		public Position(int paragraphIndex, int wordIndex, int charIndex, int modelIndex) {
 			ParagraphIndex = paragraphIndex;
 			WordIndex = wordIndex;
@@ -47,7 +48,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			ModelIndex = modelIndex;
 		}
 
+		// TODO: remove
 		public Position(ZLTextWordCursor cursor) {
+			this(0, cursor);
+		}
+
+		public Position(int modelIndex, ZLTextWordCursor cursor) {
+			ModelIndex = modelIndex;
 			set(cursor);
 		}
 
@@ -57,8 +64,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				WordIndex = cursor.getWordIndex();
 				CharIndex = cursor.getCharIndex();
 			}
-			ModelIndex = myCurrentModelIndex;
-	//		System.out.println("creating position " + myCurrentModelIndex);
 		}
 
 		public boolean equalsToCursor(ZLTextWordCursor cursor) {
@@ -68,7 +73,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				(CharIndex == cursor.getCharIndex());
 		//		(ModelIndex == cursor.getModelIndex());
 		} 
-		
 	}
 
 	private interface SizeUnit {
@@ -141,6 +145,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 	
+	// TODO => setModelIndex(int modelIndex)
 	public void setModel(int modelNumber) {
 		if ((modelNumber != myCurrentModelIndex) && (modelNumber >= 0) &&
 				(modelNumber < myModels.size())) {
@@ -352,10 +357,15 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	protected void savePosition(Position position) {
 	}
 	
-	protected final void savePosition(Position position, ZLTextWordCursor cursor) {
+	// TODO: remove
+	protected final void savePosition(Position position, ZLTextWordCursor cursorToCheck) {
+		savePosition(position, 0, cursorToCheck);
+	}
+
+	protected final void savePosition(Position position, int modelIndexToCheck, ZLTextWordCursor cursorToCheck) {
 		//TODO: придумать какое-то разумное условие, чтобы позиции сохранились
 		// при переходе к другой модели, или как-то запихать в курсор номер модели
-		if (!position.equalsToCursor(cursor)) {
+		if ((position.ModelIndex != modelIndexToCheck) || !position.equalsToCursor(cursorToCheck)) {
 			savePosition(position);
 		}
 	}
