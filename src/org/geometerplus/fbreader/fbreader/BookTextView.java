@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.awt.font.TextMeasurer;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
