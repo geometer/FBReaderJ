@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
-	protected int myCurrentModelIndex; //?
+	protected int myCurrentModelIndex;
 	private ArrayList/*<ZLTextModel>*/ myModels;
 	private final ZLTextSelectionModel mySelectionModel;
 
@@ -40,17 +40,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		public int CharIndex;
 		public int ModelIndex;
 
-		// TODO: move model index to the start of argument list
-		public Position(int paragraphIndex, int wordIndex, int charIndex, int modelIndex) {
+		public Position(int modelIndex, int paragraphIndex, int wordIndex, int charIndex) {
 			ParagraphIndex = paragraphIndex;
 			WordIndex = wordIndex;
 			CharIndex = charIndex;
 			ModelIndex = modelIndex;
-		}
-
-		// TODO: remove
-		public Position(ZLTextWordCursor cursor) {
-			this(0, cursor);
 		}
 
 		public Position(int modelIndex, ZLTextWordCursor cursor) {
@@ -71,7 +65,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				(ParagraphIndex == cursor.getParagraphCursor().Index) &&
 				(WordIndex == cursor.getWordIndex()) &&
 				(CharIndex == cursor.getCharIndex());
-		//		(ModelIndex == cursor.getModelIndex());
 		} 
 	}
 
@@ -119,7 +112,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void setModels(ArrayList models, int current) {
-		System.out.println(current);
 		myModels = (models != null) ? models : new ArrayList();
 		myModel = (current >= 0 && current < myModels.size()) ?
 				(ZLTextModel) myModels.get(current) : null;
@@ -139,25 +131,26 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				StartCursor.setCursor(ZLTextParagraphCursor.cursor(myModel, 0));
 				EndCursor.reset();
 				myPaintState = PaintState.START_IS_KNOWN;
-				
-	//			StartCursor.setModelIndex(myCurrentModelIndex);
 			}
 		}
 	}
 	
-	// TODO => setModelIndex(int modelIndex)
-	public void setModel(int modelNumber) {
-		if ((modelNumber != myCurrentModelIndex) && (modelNumber >= 0) &&
-				(modelNumber < myModels.size())) {
-			myModel = (ZLTextModel) myModels.get(modelNumber);
-			myCurrentModelIndex = modelNumber;
-			System.out.println("setting model number " + modelNumber);
+	public void setModelIndex(int modelIndex) {
+		if ((modelIndex != myCurrentModelIndex) && (modelIndex >= 0) &&
+				(modelIndex < myModels.size())) {
+			myModel = (ZLTextModel) myModels.get(modelIndex);
+			myCurrentModelIndex = modelIndex;
 			setModelInternal();
 		}
 	}
 	
 	protected ZLTextModel getModel() {
 		return myModel;
+	}
+	
+	protected int getParagraphsNumber(int modelIndex) {
+		return (modelIndex >= 0 && modelIndex < myModels.size()) ?
+				((ZLTextModel) myModels.get(modelIndex)).getParagraphsNumber() : 0;
 	}
 	
 	public void highlightParagraph(int paragraphIndex) {
@@ -327,7 +320,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (StartCursor.isNull()) {
 			return;
 		}
-		final Position position = new Position(StartCursor);
+		final Position position = new Position(myCurrentModelIndex, StartCursor);
 		if ((StartCursor.getParagraphCursor().Index != mark.ParagraphIndex) || (StartCursor.getPosition().compareTo(mark) > 0)) {
 			doRepaint = true;
 			gotoParagraph(mark.ParagraphIndex, false);
@@ -349,7 +342,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				savePosition(position);
 			}
 		*/	
-			savePosition(position, StartCursor);
+			savePosition(position, myCurrentModelIndex, StartCursor);
 			Application.refreshWindow();
 		}
 	}
@@ -357,16 +350,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	protected void savePosition(Position position) {
 	}
 	
-	// TODO: remove
-	protected final void savePosition(Position position, ZLTextWordCursor cursorToCheck) {
-		savePosition(position, 0, cursorToCheck);
-	}
-
 	protected final void savePosition(Position position, int modelIndexToCheck, ZLTextWordCursor cursorToCheck) {
-		//TODO: придумать какое-то разумное условие, чтобы позиции сохранились
-		// при переходе к другой модели, или как-то запихать в курсор номер модели
+//		System.out.println("trying to save " + position.ModelIndex + " " + position.ParagraphIndex);
 		if ((position.ModelIndex != modelIndexToCheck) || !position.equalsToCursor(cursorToCheck)) {
 			savePosition(position);
+	//		System.out.println("saved");
 		}
 	}
 	
@@ -1071,7 +1059,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public final void gotoPosition(Position position) {
-		gotoPosition(position.ParagraphIndex, position.WordIndex, position.CharIndex, position.ModelIndex);
+		gotoPosition(position.ModelIndex, position.ParagraphIndex, position.WordIndex, position.CharIndex);
 	}
 
 	public final void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
@@ -1088,8 +1076,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myPaintState = PaintState.START_IS_KNOWN;
 	}
 	
-	public final void gotoPosition(int paragraphIndex, int wordIndex, int charIndex, int modelIndex) {
-		setModel(modelIndex);
+	public final void gotoPosition(int modelIndex, int paragraphIndex, int wordIndex, int charIndex) {
+		setModelIndex(modelIndex);
 		gotoPosition(paragraphIndex, wordIndex, charIndex);
 	}
 
@@ -1457,7 +1445,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myModel == null) {
 			return false;
 		}
-
 		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
 		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive() && !StartCursor.isNull()) {
 			final ZLPaintContext context = Context;
@@ -1466,7 +1453,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			final int xLeft = getLeftMargin();
 			final int xRight = context.getWidth() - getRightMargin() - 1;
 			if ((x > xLeft) && (x < xRight) && (y > yTop) && (y < yBottom)) {
-				Position position = new Position(StartCursor);
+				Position position = new Position(myCurrentModelIndex, StartCursor);
 				myTreeStateIsFrozen = true;
 				final int[] textSizeVector = myTextSize;
 				final int value = textSizeVector[textSizeVector.length - 1] * (x - xLeft) / (xRight - xLeft - 1);
@@ -1496,11 +1483,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				if (StartCursor.isNull()) {
 					preparePaintInfo();
 				}
-			/*	if (!position.equalsToCursor(StartCursor)) {
-					savePosition(position);
-				}
-			*/
-				savePosition(position, StartCursor);
+				savePosition(position, myCurrentModelIndex, StartCursor);
 				Application.refreshWindow();
 				myTreeStateIsFrozen = false;
 				return true;

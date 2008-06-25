@@ -331,4 +331,8 @@ public class BookReader {
 	public final void setNewTextModel() {
 		myCurrentTextModel = Model.addBookTextModel();
 	}
+	
+	public final void addHyperlinkLabel(String label, int modelNumber, int paragraphNumber) {
+		Model.addHyperlinkLabel(label, (ZLTextModel) Model.getBookTextModels().get(modelNumber), paragraphNumber);
+	}
 }

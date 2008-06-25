@@ -41,15 +41,15 @@ public final class BookModel {
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	public class Label {
-		public final int ParagraphNumber;
+		public final int ParagraphIndex;
 		public final ZLTextModel Model;
 		
-		public final int ModelNumber;
+		public final int ModelIndex;
 		
 		Label(ZLTextModel model, int paragraphNumber) {
-			ParagraphNumber = paragraphNumber;
+			ParagraphIndex = paragraphNumber;
 			Model = model;
-			ModelNumber = myBookTextModels.indexOf(model);
+			ModelIndex = myBookTextModels.indexOf(model);
 		}
 	}
 	
@@ -86,7 +86,7 @@ public final class BookModel {
 	public ZLTextParagraph getParagraphByLink(String link) {
 		Label label = (Label)myInternalHyperlinks.get(link);
 		if (label != null) {
-			return label.Model.getParagraph(label.ParagraphNumber);
+			return label.Model.getParagraph(label.ParagraphIndex);
 		}
 		return null;
 	}

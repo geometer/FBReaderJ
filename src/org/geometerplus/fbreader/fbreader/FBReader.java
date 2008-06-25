@@ -268,13 +268,12 @@ public final class FBReader extends ZLApplication {
 			BookModel.Label label = myBookModel.getLabel(id);
 			if ((label != null) && (label.Model != null)) {
 		//		if (label.Model == myBookModel.BookTextModel) {
-				if (label.ModelNumber != -1) {	
-					BookTextView.setModel(label.ModelNumber);
-					BookTextView.gotoParagraphSafe(label.ParagraphNumber);
+				if (label.ModelIndex != -1) {	
+					BookTextView.gotoParagraphSafe(label.ModelIndex, label.ParagraphIndex);
 				} else {
 					FootnoteView.setModel(label.Model);
 					setMode(ViewMode.FOOTNOTE);
-					FootnoteView.gotoParagraph(label.ParagraphNumber, false);
+					FootnoteView.gotoParagraph(label.ParagraphIndex, false);
 				}
 				setHyperlinkCursor(false);
 				refreshWindow();

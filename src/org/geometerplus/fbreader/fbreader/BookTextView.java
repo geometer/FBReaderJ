@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.awt.font.TextMeasurer;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -35,7 +36,7 @@ public class BookTextView extends FBView {
 	private static final String PARAGRAPH_PREFIX = "Paragraph_";
 	private static final String WORD_PREFIX = "Word_";
 	private static final String CHAR_PREFIX = "Char_";
-	private static final String MODEL_PREFIX = "Model_";
+//	private static final String MODEL_PREFIX = "Model_";
 
 	private static final int MAX_UNDO_STACK_SIZE = 20;
 	
@@ -71,17 +72,32 @@ public class BookTextView extends FBView {
 		final int stackSize = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, fileName, BUFFER_SIZE, 0, MAX_UNDO_STACK_SIZE, 0).getValue();
 		myCurrentPointInStack = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, fileName, POSITION_IN_BUFFER, 0, (stackSize == 0) ? 0 : (stackSize - 1), 0).getValue();
 
-		for (int i = 0; i < stackSize; ++i) {
-			myPositionStack.add(new Position(
-				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, PARAGRAPH_PREFIX + i, 0).getValue(),
-				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, WORD_PREFIX + i, 0).getValue(),
-				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, CHAR_PREFIX + i, 0).getValue(),
-				new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, MODEL_PREFIX + i, 0).getValue()
-			));
+		if (models != null) {
+			final ZLIntegerOption option = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "", 0);
+			final int size = models.size();
+			for (int i = 0; i < stackSize; ++i) {
+		//		option.changeName(MODEL_PREFIX + i);
+		//		final int modelIndex = option.getValue();
+				option.changeName(PARAGRAPH_PREFIX + i);
+				int paragraphIndex = option.getValue();
+				int modelIndex = -1;
+				int paragraphsNumber = 0;
+				while (paragraphIndex >= 0 && paragraphsNumber != 1) {
+					modelIndex++;
+					paragraphsNumber = modelIndex >= 0 && modelIndex < size ? 
+							((ZLTextModel) models.get(modelIndex)).getParagraphsNumber() + 1 : 1;
+					paragraphIndex -= paragraphsNumber;
+				}
+				paragraphIndex += paragraphsNumber;
+				option.changeName(WORD_PREFIX + i);
+				final int wordIndex = option.getValue();
+				option.changeName(CHAR_PREFIX + i);
+				final int charIndex = option.getValue();
+				myPositionStack.add(new Position(modelIndex, paragraphIndex,
+						wordIndex, charIndex));
+			}
 		}
-
 		if (!myPositionStack.isEmpty()) {
-			System.out.println("stack is not empty");
 			super.setModels(models, ((Position)myPositionStack.get(myCurrentPointInStack)).ModelIndex);
 		} else {
 			super.setModels(models, 0);
@@ -94,11 +110,13 @@ public class BookTextView extends FBView {
 	protected synchronized void preparePaintInfo() {
 		super.preparePaintInfo();
 		if (myPositionStack.isEmpty()) {
-			myPositionStack.add(new Position(StartCursor));
+			myPositionStack.add(new Position(myCurrentModelIndex, StartCursor));
 		} else {
 			((Position)myPositionStack.get(myCurrentPointInStack)).set(StartCursor);
-			Position position = (Position)myPositionStack.get(myCurrentPointInStack);
-			System.out.println("current position " + position.ModelIndex + " , " + position.ParagraphIndex);
+			((Position)myPositionStack.get(myCurrentPointInStack)).ModelIndex = myCurrentModelIndex;
+
+		//	Position position = (Position)myPositionStack.get(myCurrentPointInStack);
+		//	System.out.println("current position " + position.ModelIndex + " , " + position.ParagraphIndex);
 		}
 	}
 
@@ -108,34 +126,41 @@ public class BookTextView extends FBView {
 				&& myCurrentModelIndex == 0) {
 			return;
 		}
-		setModel(0);
-		final Position position = new Position(cursor);
+		final int modelIndexToCheck = myCurrentModelIndex;
+		setModelIndex(0);
+		final Position position = new Position(modelIndexToCheck, cursor);
 		gotoParagraph(0, false);
 		gotoPosition(0, 0, 0);
 		preparePaintInfo();
-/*		if (!position.equalsToCursor(StartCursor)) {
-			savePosition(position);
-		}
-	*/	
-		savePosition(position, StartCursor);
+		savePosition(position, 0, StartCursor);
 		Application.refreshWindow();
 	}
 
+	//TODO: remove
 	void gotoParagraphSafe(int paragraphIndex) {
+//		gotoParagraphSafe(paragraphIndex, myCurrentModelIndex);
 		preparePaintInfo();
 		final ZLTextWordCursor cursor = StartCursor;
 		if (cursor != null) {
-			final Position position = new Position(cursor);
+			final Position position = new Position(myCurrentModelIndex, cursor);
 			gotoParagraph(paragraphIndex, false);
 			preparePaintInfo();
-	/*		if (!position.equalsToCursor(StartCursor)) {
-				savePosition(position);
-			}
-	*/
-			savePosition(position, StartCursor);
+			savePosition(position, myCurrentModelIndex, StartCursor);
 		}
 	}
 
+	void gotoParagraphSafe(int modelIndex, int paragraphIndex) {
+		preparePaintInfo();
+		final ZLTextWordCursor cursor = StartCursor;
+		if (cursor != null) {
+			final Position position = new Position(myCurrentModelIndex, cursor);
+			setModelIndex(modelIndex);
+			gotoParagraph(paragraphIndex, false);
+			preparePaintInfo();
+			savePosition(position, modelIndex, StartCursor);
+		}
+	}
+	
 	public boolean _onStylusPress(int x, int y) {
 		ZLTextElementArea area = getElementByCoordinates(x, y);
 		if (area != null) {
@@ -202,6 +227,12 @@ public class BookTextView extends FBView {
 			myPositionStack.remove(0);
 		}
 		myCurrentPointInStack = myPositionStack.size() - 1;
+		
+		for (Object p : myPositionStack) {
+			System.out.print(((Position) p).ModelIndex + ","
+					+ ((Position) p).ParagraphIndex + "; ");
+		}
+		System.out.println("current position " + myCurrentPointInStack);
 	}
 
 	public void saveState() {
@@ -218,12 +249,21 @@ public class BookTextView extends FBView {
 		for (int i = 0; i < myPositionStack.size(); ++i) {
 			Position position = (Position)myPositionStack.get(i);
 			option.changeName(PARAGRAPH_PREFIX + i);
-			option.setValue(position.ParagraphIndex);
-			//new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, PARAGRAPH_PREFIX + i, 0).setValue(position.ParagraphIndex);
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, WORD_PREFIX + i, 0).setValue(position.WordIndex);
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, CHAR_PREFIX + i, 0).setValue(position.CharIndex);
-			new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, MODEL_PREFIX + i, 0).setValue(position.ModelIndex);
-			System.out.println("saving model index " + position.ModelIndex);
+			int paragraphIndex = position.ParagraphIndex + position.ModelIndex;
+			for (int j = 0; j < position.ModelIndex; j++) {
+				paragraphIndex += getParagraphsNumber(j);
+			}
+			
+			option.setValue(paragraphIndex);
+			
+			option.changeName(CHAR_PREFIX + i);
+			option.setValue(position.CharIndex);
+			
+			option.changeName(WORD_PREFIX + i);
+			option.setValue(position.WordIndex);
+			
+//			option.changeName(MODEL_PREFIX + i);
+//			option.setValue(position.ModelIndex);
 		}
 	}
 
@@ -234,6 +274,12 @@ public class BookTextView extends FBView {
 	void undoPageMove() {
 		gotoPosition((Position)myPositionStack.get(--myCurrentPointInStack));
 		((FBReader)Application).refreshWindow();
+		
+		for (Object p : myPositionStack) {
+			System.out.print(((Position) p).ModelIndex + ","
+					+ ((Position) p).ParagraphIndex + "; ");
+		}
+		System.out.println("current position " + myCurrentPointInStack);
 	}
 
 	boolean canRedoPageMove() {
@@ -243,6 +289,12 @@ public class BookTextView extends FBView {
 	void redoPageMove() {
 		gotoPosition((Position)myPositionStack.get(++myCurrentPointInStack));
 		((FBReader)Application).refreshWindow();
+		
+		for (Object p : myPositionStack) {
+			System.out.print(((Position) p).ModelIndex + ","
+					+ ((Position) p).ParagraphIndex + "; ");
+		}
+		System.out.println("current position " + myCurrentPointInStack);
 	}
 
 }

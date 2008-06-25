@@ -45,7 +45,7 @@ public abstract class ZLTextView extends ZLView {
 		setModels(list, 0);
 	}
 	
-	public abstract void setModel(int modelNumber);
+	public abstract void setModelIndex(int modelIndex);
 	
 	public abstract void setModels(ArrayList/*<ZLTextModel>*/ model, int current);
 

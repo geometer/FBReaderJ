@@ -47,8 +47,8 @@ public class PluckerBookReader extends BookReader {
 	private	char myBytesToSkip;
 
 	private	final ArrayList/*<std::pair<int, int> >*/ myReferencedParagraphs = new ArrayList();
-	private	final HashMap/*<int, std::vector<int> >*/ myParagraphMap = new HashMap();
-	private	ArrayList/*<Integer>*/ myParagraphVector = new ArrayList(); //�� ������ ������
+	private	final HashMap/*<int, std::vector<int> >*/ myParagraphMap = new HashMap(); /*<int, vector<pair<int, int>>>*/
+	private	ArrayList/*<Integer, Integer>*/ myParagraphVector = new ArrayList(); //�� ������ ������
 	private	boolean myParagraphStored;
 	
 	private final ZLEncodingConverter myConverter;
@@ -99,9 +99,10 @@ public class PluckerBookReader extends BookReader {
 			ArrayList/*<Integer>*/ list = (ArrayList)myParagraphMap.get(first);
 			if (list != null) {
 				for(int k = second; k < list.size(); ++k) {
-					if ((Integer)list.get(k) != -1) {
+					if (((Integer) ((Pair)list.get(k)).myFirst) != -1) {
 						//addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer)list.get(k));
-						addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer)list.get(k));
+						final Pair p = (Pair)list.get(k);
+						addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer) p.mySecond, (Integer) p.myFirst);
 						break;						
 					}
 				}
@@ -192,7 +193,6 @@ public class PluckerBookReader extends BookReader {
 						myParagraphVector = (ArrayList)myParagraphMap.get(uid);
 						processTextRecord(size, pars);
 						if ((flags & 0x1) == 0) {
-							System.out.println("setting new text model");
 //							insertEndOfTextParagraph();
 							setNewTextModel();
 						}
@@ -262,7 +262,7 @@ public class PluckerBookReader extends BookReader {
     		myParagraphStored = false;
     		processTextParagraph(myCharBuffer, start, end);
     		if (!myParagraphStored) {
-    			myParagraphVector.add(-1);
+    			myParagraphVector.add(new Pair(-1, -1));
     		}
     	}
     }
@@ -479,7 +479,8 @@ public class PluckerBookReader extends BookReader {
     		myBufferIsEmpty = true;
     		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
     		if (!myParagraphStored) {
-    			myParagraphVector.add(Model.BookTextModel.getParagraphsNumber() - 1);
+    			final ArrayList models = Model.getBookTextModels();
+    			myParagraphVector.add(new Pair(((ZLTextPlainModel) models.get(models.size()-1)/*BookTextModel*/).getParagraphsNumber() - 1, models.size() - 1));
     			myParagraphStored = true;
     		}
     		for (Iterator it = myDelayedControls.iterator(); it.hasNext(); ) {
