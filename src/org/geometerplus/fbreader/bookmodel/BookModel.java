@@ -46,8 +46,8 @@ public final class BookModel {
 		
 		public final int ModelIndex;
 		
-		Label(ZLTextModel model, int paragraphNumber) {
-			ParagraphIndex = paragraphNumber;
+		Label(ZLTextModel model, int paragraphIndex) {
+			ParagraphIndex = paragraphIndex;
 			Model = model;
 			ModelIndex = myBookTextModels.indexOf(model);
 		}

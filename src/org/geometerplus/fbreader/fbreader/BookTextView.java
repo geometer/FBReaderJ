@@ -148,6 +148,10 @@ public class BookTextView extends FBView {
 		}
 	}
 
+	public void gotoParagraphSafe(ZLTextModel model, int paragraphIndex) {
+		gotoParagraphSafe(getModelList().indexOf(model), paragraphIndex);
+	}
+	
 	void gotoParagraphSafe(int modelIndex, int paragraphIndex) {
 		preparePaintInfo();
 		final ZLTextWordCursor cursor = StartCursor;
@@ -249,8 +253,9 @@ public class BookTextView extends FBView {
 			Position position = (Position)myPositionStack.get(i);
 			option.changeName(PARAGRAPH_PREFIX + i);
 			int paragraphIndex = position.ParagraphIndex + position.ModelIndex;
+			final ArrayList models = getModelList();
 			for (int j = 0; j < position.ModelIndex; j++) {
-				paragraphIndex += getParagraphsNumber(j);
+				paragraphIndex += ((ZLTextModel) models.get(j)).getParagraphsNumber();
 			}
 			
 			option.setValue(paragraphIndex);

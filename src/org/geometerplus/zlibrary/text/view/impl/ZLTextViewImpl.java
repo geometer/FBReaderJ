@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.text.view.style.*;
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
 	protected int myCurrentModelIndex;
-	private ArrayList/*<ZLTextModel>*/ myModels;
+	private ArrayList/*<ZLTextModel>*/ myModelList;
 	private final ZLTextSelectionModel mySelectionModel;
 
 	protected static class Position {
@@ -112,9 +112,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void setModels(ArrayList models, int current) {
-		myModels = (models != null) ? models : new ArrayList();
-		myModel = (current >= 0 && current < myModels.size()) ?
-				(ZLTextModel) myModels.get(current) : null;
+		myModelList = (models != null) ? models : new ArrayList();
+		myModel = (current >= 0 && current < myModelList.size()) ?
+				(ZLTextModel) myModelList.get(current) : null;
 		myCurrentModelIndex = current;
 		setModelInternal();
 	}
@@ -137,20 +137,20 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	
 	public void setModelIndex(int modelIndex) {
 		if ((modelIndex != myCurrentModelIndex) && (modelIndex >= 0) &&
-				(modelIndex < myModels.size())) {
-			myModel = (ZLTextModel) myModels.get(modelIndex);
+				(modelIndex < myModelList.size())) {
+			myModel = (ZLTextModel) myModelList.get(modelIndex);
 			myCurrentModelIndex = modelIndex;
 			setModelInternal();
 		}
 	}
 	
-	protected ZLTextModel getModel() {
+	//TODO: visibility
+	public ZLTextModel getModel() {
 		return myModel;
 	}
 	
-	protected int getParagraphsNumber(int modelIndex) {
-		return (modelIndex >= 0 && modelIndex < myModels.size()) ?
-				((ZLTextModel) myModels.get(modelIndex)).getParagraphsNumber() : 0;
+	protected ArrayList getModelList() {
+		return myModelList;
 	}
 	
 	public void highlightParagraph(int paragraphIndex) {

@@ -39,12 +39,11 @@ class ContentsView extends FBView {
 
 		final ContentsModel contentsModel = (ContentsModel)getModel();
 		final ZLTextTreeParagraph paragraph = contentsModel.getTreeParagraph(index);
-		final int reference = contentsModel.getReference(paragraph);
+		final ContentsModel.Reference reference = contentsModel.getReference(paragraph);
 
 		final FBReader fbreader = (FBReader)Application;
 	//	fbreader.BookTextView.gotoPosition(reference, 0, 0);
-		//TODO add model number
-		fbreader.BookTextView.gotoParagraphSafe(reference);
+		fbreader.BookTextView.gotoParagraphSafe(reference.Model, reference.ParagraphIndex);
 		fbreader.setMode(FBReader.ViewMode.BOOK_TEXT);
 
 		return true;
@@ -67,12 +66,14 @@ class ContentsView extends FBView {
 			}
 			final int length = getModel().getParagraphsNumber();
 			final ContentsModel contentsModel = (ContentsModel)getModel();
+			final ZLTextModel currentModel = (ZLTextModel) fbreader.BookTextView.getModel();
 			for (int i = 1; i < length; ++i) {
-				final int contentsReference =
+				final ContentsModel.Reference contentsReference =
 					contentsModel.getReference(contentsModel.getTreeParagraph(i));
-				if ((contentsReference > reference) ||
+				if ((contentsReference.Model == currentModel)
+						&& ((contentsReference.ParagraphIndex > reference) ||
 						(!includeStart && startOfParagraph
-							 && (contentsReference == reference))) {
+							 && (contentsReference.ParagraphIndex == reference)))) {
 					return i - 1;
 				}
 			}

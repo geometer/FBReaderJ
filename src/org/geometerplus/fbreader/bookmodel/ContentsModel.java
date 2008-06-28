@@ -27,12 +27,23 @@ import org.geometerplus.zlibrary.text.model.*;
 public class ContentsModel extends ZLTextTreeModel {
 	private final HashMap myReferenceByParagraph = new HashMap();
 	
-	public int getReference(ZLTextTreeParagraph paragraph) {
-		Integer num = (Integer)myReferenceByParagraph.get(paragraph);
-		return (num != null) ? num.intValue() : -1;
+	public Reference getReference(ZLTextTreeParagraph paragraph) {
+		return (Reference) myReferenceByParagraph.get(paragraph);
+	//	return (num != null) ? num.intValue() : -1;
 	}
 	
-	public void setReference(ZLTextTreeParagraph paragraph, int reference) {
-		myReferenceByParagraph.put(paragraph, reference);
+	public void setReference(ZLTextTreeParagraph paragraph, ZLTextModel model, int reference) {
+		myReferenceByParagraph.put(paragraph, new Reference(reference, model));
 	}
+	
+	public static class Reference {
+		public final int ParagraphIndex;
+		public final ZLTextModel Model;
+		
+		public Reference(final int paragraphIndex, final ZLTextModel model) {
+			ParagraphIndex = paragraphIndex;
+			Model = model;
+		}
+	}
+
 }

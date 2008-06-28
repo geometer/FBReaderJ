@@ -235,9 +235,13 @@ public class BookReader {
 	}
 	
 	public final void beginContentsParagraph(int referenceNumber) {
+		beginContentsParagraph(Model.BookTextModel, referenceNumber);
+	}
+
+	public final void beginContentsParagraph(ZLTextModel bookTextModel, int referenceNumber) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
 		final ArrayList tocStack = myTOCStack;
-		if (textModel == Model.BookTextModel) {
+		if (textModel == bookTextModel) {
 			ContentsModel contentsModel = Model.ContentsModel;
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
@@ -254,13 +258,13 @@ public class BookReader {
 			}
 			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
 			contentsModel.addControl(FBTextKind.CONTENTS_TABLE_ENTRY, true);
-			contentsModel.setReference(para, referenceNumber);
+			contentsModel.setReference(para, myCurrentTextModel, referenceNumber);
 			tocStack.add(para);
 			myLastTOCParagraphIsEmpty = true;
 			myContentsParagraphExists = true;
 		}
 	}
-
+	
 	public final void endContentsParagraph() {
 		final ArrayList tocStack = myTOCStack;
 		if (!tocStack.isEmpty()) {
@@ -280,10 +284,14 @@ public class BookReader {
 	}
 
 	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
+		setReference(contentsParagraphNumber, myCurrentTextModel, referenceNumber);
+	}
+	
+	public final void setReference(int contentsParagraphNumber, ZLTextModel textModel, int referenceNumber) {
 		final ContentsModel contentsModel = Model.ContentsModel;
 		if (contentsParagraphNumber < contentsModel.getParagraphsNumber()) {
 			contentsModel.setReference(
-				contentsModel.getTreeParagraph(contentsParagraphNumber), referenceNumber
+				contentsModel.getTreeParagraph(contentsParagraphNumber), textModel, referenceNumber
 			);
 		}
 	}
