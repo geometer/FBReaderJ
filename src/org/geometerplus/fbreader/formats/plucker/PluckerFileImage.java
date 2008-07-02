@@ -19,25 +19,17 @@ public class PluckerFileImage extends ZLSingleImage {
 	}
 
 	public byte[] byteData() {
-		System.out.println("byteData: ");
-		System.out.println("path: " + myPath);
-		System.out.println("Offset: " + myOffset);
 		final InputStream stream = ZLibrary.getInstance().getInputStream(myPath);
 		
 		if (stream == null) {
-			System.out.println("Stream == null");
 			return new byte[0];
 		}
-		byte[] buffer;
 		try {
 			stream.skip(myOffset);
-			buffer = new byte[mySize];
-			final int size = stream.read(buffer, 0, mySize);
-			System.out.println("DataSize: " + size + " " + mySize);
+			byte [] buffer = new byte[mySize];
+			stream.read(buffer, 0, mySize);
 			return buffer;
-		} catch (IOException e) {
-			System.out.println("ioexception");
-		}
+		} catch (IOException e) {}
 		
 		return new byte[0];
 	}

@@ -205,17 +205,16 @@ public class PluckerBookReader extends BookReader {
 					final String mime = "image/palm";
 					ZLImage image = null;
 					if (type == 2) {
-						System.out.println("type2 offset " + myStream.offset());
+						System.out.println("non-compressed image");
 						image = new PluckerFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 1) {
-						System.out.println("DocCompressedImage offset " + myStream.offset());
-						//image = new DocCompressedFileImage(mime, myFilePath, myStream->offset(), recordSize - 8);
+						System.out.println("DocCompressedImage");
+						image = new DocCompressedFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 2) {
-						System.out.println("ZCompressedImage offset " + myStream.offset());
-						//image = new ZCompressedFileImage(mime, myFilePath, myStream->offset() + 2, recordSize - 10);
+						System.out.println("ZCompressedImage");
+						image = new ZCompressedFileImage(mime, myFilePath, myStream.offset() + 2, recordSize - 10);
 					}
 					if (image != null) {
-						System.out.println("image != null");
 						addImage(fromNumber(uid), image);
 					}
 					break;
@@ -236,6 +235,7 @@ public class PluckerBookReader extends BookReader {
 				{
 					short columns = (short) PdbUtil.readShort(myStream);
 					short rows = (short) PdbUtil.readShort(myStream);
+					System.out.println("multiimage");
 					/*PluckerMultiImage image = new PluckerMultiImage(rows, columns, Model.getImageMap());
 					for (int i = 0; i < size / 2 - 2; ++i) {
 						short us = (short)myStream.read();

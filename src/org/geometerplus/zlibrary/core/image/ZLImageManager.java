@@ -59,7 +59,6 @@ public abstract class ZLImageManager {
 			Flags = uShort(byteData, 6);
 			BitsPerPixel = byteData[8];
 			CompressionType = (byte) (((Flags & 0x8000) != 0) ? byteData[13] : 0xFF);
-			System.out.println("Width = " + Width + " Height = " + Height + " Compression " + CompressionType);
 		}
 	}
 	

@@ -20,14 +20,15 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
-final class Base64EncodedImage implements ZLImage {
+final class Base64EncodedImage extends ZLSingleImage {
 	private ZLTextBuffer myEncodedData = new ZLTextBuffer();
 	private byte[] myData;
 	
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
+		super(contentType);
 	}
 
 	private static byte decodeByte(char encodedChar) {
