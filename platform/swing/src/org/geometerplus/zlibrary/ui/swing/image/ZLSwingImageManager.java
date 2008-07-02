@@ -34,7 +34,6 @@ import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 public final class ZLSwingImageManager extends ZLImageManager {
 	public ZLSwingImageData getImageData(ZLImage image) {
 		if (image instanceof ZLSingleImage) {
-			System.out.println("MimeType " + ((ZLSingleImage) image).mimeType());
 			if ("image/palm".equals(((ZLSingleImage) image).mimeType())) {
 				return new ZLSwingImageData(
 						convertFromPalmImageFormat(((ZLSingleImage) image).byteData()));
@@ -47,7 +46,6 @@ public final class ZLSwingImageManager extends ZLImageManager {
 			}
 		} else {
 			//TODO
-			System.out.println("non-single");
 			return null;
 		}
 	}
@@ -139,7 +137,7 @@ public final class ZLSwingImageManager extends ZLImageManager {
 								}
 							}
 						}
-						System.out.println("Bits per pix " + header.BitsPerPixel);
+				//		System.out.println("Bits per pix " + header.BitsPerPixel);
 						return image;
 					}
 					break;
