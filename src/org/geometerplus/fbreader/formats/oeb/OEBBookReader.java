@@ -157,7 +157,7 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 				if ((type != null) && (COVER_IMAGE.equals(type))) {
 					myModelReader.setMainTextModel();
 					myModelReader.addImageReference(href, (short)0);
-					myModelReader.addImage(href, new ZLFileImage("image/auto", myFilePrefix + href, 0));
+					myModelReader.addImage(href, new ZLFileImage("image/auto", myFilePrefix + href));
 				}
 			}
 		} else if ((myState == READ_TOUR) && (SITE == tag)) {

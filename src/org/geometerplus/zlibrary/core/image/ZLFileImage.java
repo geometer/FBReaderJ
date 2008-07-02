@@ -24,13 +24,12 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
-public class ZLFileImage implements ZLImage {
+public class ZLFileImage extends ZLSingleImage {
 	private final String myPath;
-	private final int myOffset;
 	
-	public ZLFileImage(String mimeType, String path, int offset) {
+	public ZLFileImage(String mimeType, String path) {
+		super(mimeType);
 		myPath = path;
-		myOffset = offset;
 	}
 
 	public byte [] byteData() {

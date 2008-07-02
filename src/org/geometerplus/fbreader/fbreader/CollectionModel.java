@@ -52,12 +52,12 @@ class CollectionModel extends ZLTextTreeModel {
 		myCollection = collection;
 
 		String prefix = ZLibrary.JAR_DATA_PREFIX + "icons/booktree/";
-		myImageMap.put(RemoveBookImageId, new ZLFileImage("image/png", prefix + "tree-remove.png", 0));
-		myImageMap.put(BookInfoImageId, new ZLFileImage("image/png", prefix + "tree-bookinfo.png", 0));
-		myImageMap.put(AuthorInfoImageId, new ZLFileImage("image/png", prefix + "tree-authorinfo.png", 0));
-		myImageMap.put(SeriesOrderImageId, new ZLFileImage("image/png", prefix + "tree-order.png", 0));
-		myImageMap.put(TagInfoImageId, new ZLFileImage("image/png", prefix + "tree-taginfo.png", 0));
-		myImageMap.put(RemoveTagImageId, new ZLFileImage("image/png", prefix + "tree-removetag.png", 0));
+		myImageMap.put(RemoveBookImageId, new ZLFileImage("image/png", prefix + "tree-remove.png"));
+		myImageMap.put(BookInfoImageId, new ZLFileImage("image/png", prefix + "tree-bookinfo.png"));
+		myImageMap.put(AuthorInfoImageId, new ZLFileImage("image/png", prefix + "tree-authorinfo.png"));
+		myImageMap.put(SeriesOrderImageId, new ZLFileImage("image/png", prefix + "tree-order.png"));
+		myImageMap.put(TagInfoImageId, new ZLFileImage("image/png", prefix + "tree-taginfo.png"));
+		myImageMap.put(RemoveTagImageId, new ZLFileImage("image/png", prefix + "tree-removetag.png"));
 	}
 
 	BookDescription getBookByParagraphIndex(int index) {

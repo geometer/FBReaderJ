@@ -205,14 +205,17 @@ public class PluckerBookReader extends BookReader {
 					final String mime = "image/palm";
 					ZLImage image = null;
 					if (type == 2) {
-		//				System.out.println("type2");
-			//			image = new PluckerFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
+						System.out.println("type2 offset " + myStream.offset());
+						image = new PluckerFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 1) {
+						System.out.println("DocCompressedImage offset " + myStream.offset());
 						//image = new DocCompressedFileImage(mime, myFilePath, myStream->offset(), recordSize - 8);
 					} else if (myCompressionVersion == 2) {
+						System.out.println("ZCompressedImage offset " + myStream.offset());
 						//image = new ZCompressedFileImage(mime, myFilePath, myStream->offset() + 2, recordSize - 10);
 					}
 					if (image != null) {
+						System.out.println("image != null");
 						addImage(fromNumber(uid), image);
 					}
 					break;
