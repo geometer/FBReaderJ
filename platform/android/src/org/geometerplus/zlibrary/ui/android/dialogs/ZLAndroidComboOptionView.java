@@ -33,24 +33,25 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 		super(tab, name, option);
 	}
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
+	void addAndroidViews() {
+		final Context context = myTab.getContext();
 		if (myName != null) {
-			myLabel = new TextView(context);
-			myLabel.setText(myName);
-			myLabel.setPadding(0, 12, 0, 12);
-			myLabel.setTextSize(18);
+			if (myLabel == null) {
+				myLabel = new TextView(context);
+				myLabel.setText(myName);
+				myLabel.setPadding(0, 12, 0, 12);
+				myLabel.setTextSize(18);
+			}
+			myTab.addAndroidView(myLabel, false);
 		}
 
-		mySpinner = new Spinner(context);
-		final ComboAdapter adapter = new ComboAdapter();
-		mySpinner.setAdapter(adapter);
-		mySpinner.setOnItemSelectedListener(adapter);
-		mySpinner.setSelection(initialIndex((ZLComboOptionEntry)myOption));
-	}
-
-	void addAndroidViews() {
-		myTab.addAndroidView(myLabel, false);
+		if (mySpinner == null) {
+			mySpinner = new Spinner(context);
+			final ComboAdapter adapter = new ComboAdapter();
+			mySpinner.setAdapter(adapter);
+			mySpinner.setOnItemSelectedListener(adapter);
+			mySpinner.setSelection(initialIndex((ZLComboOptionEntry)myOption));
+		}
 		myTab.addAndroidView(mySpinner, true);
 	}
 
@@ -68,9 +69,13 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void _onAccept() {
-		final EditText editor = ((ComboAdapter)mySpinner.getAdapter()).myEditor;
-		if (editor != null) {
-			((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
+		if (mySpinner != null) {
+			final EditText editor = ((ComboAdapter)mySpinner.getAdapter()).myEditor;
+			if (editor != null) {
+				((ZLComboOptionEntry)myOption).onAccept(editor.getText().toString());
+			}
+			myLabel = null;
+			mySpinner = null;
 		}
 	}
 
@@ -92,23 +97,26 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 				textView.setTextSize(20);
 				textView.setText((String)getItem(position));
 				convertView = textView;
+			} else {
+				((TextView)convertView).setText((String)getItem(position));
 			}
 			return convertView;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final ZLComboOptionEntry comboEntry = (ZLComboOptionEntry)myOption;
-			if (convertView == null) {
+			if (convertView != null) {
+				myEditor = (EditText)convertView;
+			} else {
 				myEditor = new EditText(parent.getContext()) {
 					protected boolean getDefaultEditable() {
 						return comboEntry.isEditable();
 					}
 				};
 				myEditor.setSingleLine(true);
-				myEditor.setText((String)getItem(position), TextView.BufferType.EDITABLE);
-				convertView = myEditor;
 			}
-			return convertView;
+			myEditor.setText((String)getItem(position), TextView.BufferType.EDITABLE);
+			return myEditor;
 		}
 
 		public int getCount() {

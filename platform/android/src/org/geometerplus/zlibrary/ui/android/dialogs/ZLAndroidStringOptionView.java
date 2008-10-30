@@ -32,26 +32,28 @@ class ZLAndroidStringOptionView extends ZLAndroidOptionView {
 		super(tab, name, option);
 	}
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
-		if (myName != null) {
-			myLabel = new TextView(context);
-			myLabel.setText(myName);
-			myLabel.setPadding(0, 12, 0, 12);
-			myLabel.setTextSize(18);
-		}
-		final ZLStringOptionEntry stringEntry = (ZLStringOptionEntry)myOption;
-		myEditor = new EditText(context) {
-			protected boolean getDefaultEditable() {
-				return stringEntry.isActive();
-			}
-		};
-		myEditor.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		myEditor.setText(stringEntry.initialValue());
-	}
-
 	void addAndroidViews() {
-		myTab.addAndroidView(myLabel, false);
+		final Context context = myTab.getContext();
+		if (myName != null) {
+			if (myLabel == null) {
+				myLabel = new TextView(context);
+				myLabel.setText(myName);
+				myLabel.setPadding(0, 12, 0, 12);
+				myLabel.setTextSize(18);
+			}
+			myTab.addAndroidView(myLabel, false);
+		}
+
+		final ZLStringOptionEntry stringEntry = (ZLStringOptionEntry)myOption;
+		if (myEditor == null) {
+			myEditor = new EditText(context) {
+				protected boolean getDefaultEditable() {
+					return stringEntry.isActive();
+				}
+			};
+		}
+		myEditor.setText(stringEntry.initialValue());
+
 		myTab.addAndroidView(myEditor, true);
 	}
 
@@ -63,6 +65,10 @@ class ZLAndroidStringOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void _onAccept() {
-		((ZLStringOptionEntry)myOption).onAccept(myEditor.getText().toString());
+		if (myEditor != null) {
+			((ZLStringOptionEntry)myOption).onAccept(myEditor.getText().toString());
+			myLabel = null;
+			myEditor = null;
+		}
 	}
 }

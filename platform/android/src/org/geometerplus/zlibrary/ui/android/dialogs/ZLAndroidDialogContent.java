@@ -30,34 +30,25 @@ import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
 class ZLAndroidDialogContent extends ZLDialogContent {
-	private final ListView myListView;
-	private final View myMainView;
+	private Context myContext;
+	protected ListView myListView;
 
-	private final ArrayList myAndroidViews = new ArrayList();
+	final ArrayList myAndroidViews = new ArrayList();
 	private boolean[] mySelectableMarks = new boolean[10];
 
-	ZLAndroidDialogContent(Context context, ZLResource resource, View header, View footer) {
+	ZLAndroidDialogContent(Context context, ZLResource resource) {
 		super(resource);
+		myContext = context;
+	}
+
+	protected void createListView(Context context) {
+		myContext = context;
 		myListView = new ListView(context);	
-		if ((header != null) || (footer != null)) {
-			LinearLayout layout = new LinearLayout(context);
-			layout.setOrientation(LinearLayout.VERTICAL);
-			if (header != null) {
-				layout.addView(header, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			}
-			layout.addView(myListView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			if (footer != null) {
-				layout.addView(footer, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			}
-			myMainView = layout;
-		} else {
-			myMainView = myListView;
-		}
 		myListView.setAdapter(new ViewAdapter());
 	}
 
-	View getView() {
-		return myMainView;
+	Context getContext() {
+		return myContext;
 	}
 
 	private ArrayList getAndroidViews() {

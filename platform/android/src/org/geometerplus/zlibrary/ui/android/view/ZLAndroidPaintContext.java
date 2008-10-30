@@ -46,8 +46,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	ZLAndroidPaintContext() {
 		myPaint = new Paint();
-		myPaint.setLinearText(true);
+		myPaint.setLinearText(false);
 		myPaint.setAntiAlias(true);
+		myPaint.setSubpixelText(false);
 	}
 
 	void setSize(int w, int h) {
@@ -147,18 +148,18 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	public int imageWidth(ZLImageData imageData) {
 		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
-		return (bitmap != null) ? bitmap.width() : 0;
+		return (bitmap != null) ? bitmap.getWidth() : 0;
 	}
 
 	public int imageHeight(ZLImageData imageData) {
 		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
-		return (bitmap != null) ? bitmap.height() : 0;
+		return (bitmap != null) ? bitmap.getHeight() : 0;
 	}
 
 	public void drawImage(int x, int y, ZLImageData imageData) {
 		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
 		if (bitmap != null) {
-			myCanvas.drawBitmap(bitmap, x, y - bitmap.height(), myPaint);
+			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myPaint);
 		}
 	}
 

@@ -65,7 +65,7 @@
 		<delete file="FBReaderJ.jad"/>
 		<delete dir="platform/android/res/raw"/>
 		<delete dir="platform/android/res/drawable"/>
-		<delete file="platform/android/src/org/geometerplus/zlibrary/ui/android/library/R.java"/>
+		<delete file="platform/android/src/org/geometerplus/zlibrary/ui/android/R.java"/>
 	</target>
 
 	<target name="sources-archive" depends="clean">

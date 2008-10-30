@@ -216,10 +216,23 @@ public class ZLFile {
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
 			InputStream base = baseFile.getInputStream();
 			if (base != null) {
-				if ( 0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
+				if (0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
+					/*
 					ZipFile zf = new ZipFile(myPath.substring(0, index));
 					ZipEntry entry = zf.getEntry (myPath.substring(index+1));
 					stream = zf.getInputStream (entry);
+					*/
+					final ZipInputStream zipStream = new ZipInputStream(base);
+					final String entryName = myPath.substring(index + 1);
+					while (true) {
+						ZipEntry entry = zipStream.getNextEntry();
+						if (entry == null) {
+							break;
+						} else if (entryName.equals(entry.getName())) {
+							stream = zipStream;
+							break;
+						}
+					}
 				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
 					stream = new ZLTarInputStream(base, myPath.substring(index + 1));
 				}

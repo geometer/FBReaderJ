@@ -167,11 +167,14 @@ mainSwitchLabel:
 											value = value.substring(1, len - 1);
 											if (value.startsWith("&#") && value.endsWith(";")) {
 												try {
-													int number;
+													int number = 0;
 													if (value.charAt(2) == 'x') {
 														number = Integer.parseInt(value.substring(3, len - 3), 16);
 													} else {
-														number = Integer.parseInt(value.substring(2, len - 3));
+														for (int j = 2; j < len - 3; ++j) {
+															number *= 10;
+															number += value.charAt(j) - 48;
+														}
 													}
 													entityMap.put(name, new char[] { (char)number });
 												} catch (NumberFormatException e) {

@@ -142,6 +142,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return read(pathPrefix + fileName);
 	}
 
+	/*
 	public boolean readFile(String pathPrefix, InputStream stream, String referenceName) {
 		myModelReader.addHyperlinkLabel(referenceName);
 
@@ -154,6 +155,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 
 		return read(stream);
 	}
+	*/
 
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		String id = attributes.getValue("id");

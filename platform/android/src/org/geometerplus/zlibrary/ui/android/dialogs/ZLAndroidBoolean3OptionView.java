@@ -35,24 +35,25 @@ class ZLAndroidBoolean3OptionView extends ZLAndroidOptionView {
 		super(tab, name, option);
 	}
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
+	void addAndroidViews() {
+		final Context context = myTab.getContext();
 		if (myName != null) {
-			myLabel = new TextView(context);
-			myLabel.setText(myName);
-			myLabel.setPadding(0, 12, 0, 12);
-			myLabel.setTextSize(18);
+			if (myLabel == null) {
+				myLabel = new TextView(context);
+				myLabel.setText(myName);
+				myLabel.setPadding(0, 12, 0, 12);
+				myLabel.setTextSize(18);
+			}
+			myTab.addAndroidView(myLabel, false);
 		}
 
-		mySpinner = new Spinner(context);
-		final ComboAdapter adapter = new ComboAdapter();
-		mySpinner.setAdapter(adapter);
-		mySpinner.setOnItemSelectedListener(adapter);
-		mySpinner.setSelection(((ZLBoolean3OptionEntry)myOption).initialState());
-	}
-
-	void addAndroidViews() {
-		myTab.addAndroidView(myLabel, false);
+		if (mySpinner == null) {
+			mySpinner = new Spinner(context);
+			final ComboAdapter adapter = new ComboAdapter();
+			mySpinner.setAdapter(adapter);
+			mySpinner.setOnItemSelectedListener(adapter);
+			mySpinner.setSelection(((ZLBoolean3OptionEntry)myOption).initialState());
+		}
 		myTab.addAndroidView(mySpinner, true);
 	}
 
@@ -68,9 +69,11 @@ class ZLAndroidBoolean3OptionView extends ZLAndroidOptionView {
 	}
 
 	protected void _onAccept() {
-		int index = mySpinner.getSelectedItemPosition();
-		if (index != -1) {
-			((ZLBoolean3OptionEntry)myOption).onAccept(index);
+		if (mySpinner != null) {
+			int index = mySpinner.getSelectedItemPosition();
+			if (index != -1) {
+				((ZLBoolean3OptionEntry)myOption).onAccept(index);
+			}
 		}
 	}
 
@@ -97,16 +100,18 @@ class ZLAndroidBoolean3OptionView extends ZLAndroidOptionView {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
+			EditText editor;
 			if (convertView == null) {
-				EditText editor = new EditText(parent.getContext()) {
+				editor = (EditText)convertView;
+			} else {
+				editor = new EditText(parent.getContext()) {
 					protected boolean getDefaultEditable() {
 						return false;
 					}
 				};
-				editor.setText((String)getItem(position));
-				return editor;
 			}
-			return convertView;
+			editor.setText((String)getItem(position));
+			return editor;
 		}
 
 		public int getCount() {

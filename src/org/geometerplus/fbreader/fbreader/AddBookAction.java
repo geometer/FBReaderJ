@@ -51,7 +51,8 @@ class AddBookAction extends FBAction {
 						Reader.refreshWindow();
 					}
 				};
-				new BookInfoDialog(collection, fileName, action).getDialog().run();
+				//new BookInfoDialog(collection, fileName, action).getDialog().run();
+				action.run();
 			}
 		};
 		ZLDialogManager.getInstance().runSelectionDialog("addFileDialog", handler, actionOnAccept);

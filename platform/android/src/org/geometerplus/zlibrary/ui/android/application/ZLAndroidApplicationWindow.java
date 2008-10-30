@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.ui.android.application;
 import java.util.*;
 
 import android.view.Menu;
+import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
@@ -30,8 +31,8 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidViewWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
-	private final HashMap<Menu.Item,ZLApplication.Menubar.PlainItem> myMenuItemMap =
-		new HashMap<Menu.Item,ZLApplication.Menubar.PlainItem>();
+	private final HashMap<MenuItem,ZLApplication.Menubar.PlainItem> myMenuItemMap =
+		new HashMap<MenuItem,ZLApplication.Menubar.PlainItem>();
 
 	private class MenuBuilder extends ZLApplication.MenuVisitor {
 		private int myItemCount = Menu.FIRST;
@@ -41,14 +42,14 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			myMenuStack.push(menu);
 		}
 		protected void processSubmenuBeforeItems(ZLApplication.Menubar.Submenu submenu) {
-			myMenuStack.push(myMenuStack.peek().addSubMenu(0, myItemCount++, submenu.getMenuName()));	
+			myMenuStack.push(myMenuStack.peek().addSubMenu(0, myItemCount++, Menu.NONE, submenu.getMenuName()));	
 		}
 		protected void processSubmenuAfterItems(ZLApplication.Menubar.Submenu submenu) {
 			myMenuStack.pop();
 		}
 		protected void processItem(ZLApplication.Menubar.PlainItem item) {
-			Menu.Item menuItem = myMenuStack.peek().add(0, myItemCount++, item.Name);
-			menuItem.setClickListener(myMenuListener);
+			MenuItem menuItem = myMenuStack.peek().add(0, myItemCount++, Menu.NONE, item.Name);
+			menuItem.setOnMenuItemClickListener(myMenuListener);
 			myMenuItemMap.put(menuItem, item);
 		}
 		protected void processSepartor(ZLApplication.Menubar.Separator separator) {
@@ -56,9 +57,9 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
-	private final Menu.OnClickListener myMenuListener =
-		new Menu.OnClickListener() {
-			public boolean onClick(Menu.Item item) {
+	private final MenuItem.OnMenuItemClickListener myMenuListener =
+		new MenuItem.OnMenuItemClickListener() {
+			public boolean onMenuItemClick(MenuItem item) {
 				getApplication().doAction(myMenuItemMap.get(item).ActionId);
 				return true;
 			}
@@ -75,10 +76,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	protected void refresh() {
 		super.refresh();
-		for (Map.Entry<Menu.Item,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
+		for (Map.Entry<MenuItem,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue().ActionId;
 			final ZLApplication application = getApplication();
-			entry.getKey().setShown(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}
 	}
 

@@ -155,33 +155,36 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 		}
 	};
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
-
-		LinearLayout layout = new LinearLayout(context);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		layout.setPadding(0, 6, 0, 0);
-
-		final ZLColorOptionEntry colorOption = (ZLColorOptionEntry)myOption;
-		final ZLColor color = colorOption.initialColor();
-
-		final ZLResource resource = ZLResource.resource(ZLAndroidDialogManager.COLOR_KEY);
-		myRedView = new ComponentView(context, resource.getResource("red").getValue(), color.Red);
-		myRedView.setPadding(0, 6, 0, 0);
-		myGreenView = new ComponentView(context, resource.getResource("green").getValue(), color.Green);
-		myBlueView = new ComponentView(context, resource.getResource("blue").getValue(), color.Blue);
-		myColorArea = new View(context);
-		myColorArea.setBackgroundColor(0xFF000000 + (color.Red << 16) + (color.Green << 8) + color.Blue);
-
-		layout.addView(myColorArea, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		layout.addView(myRedView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		layout.addView(myGreenView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		layout.addView(myBlueView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-		myContainer = layout;
-	}
-
 	void addAndroidViews() {
+		if (myContainer == null) {
+			final Context context = myTab.getContext();
+    
+			LinearLayout layout = new LinearLayout(context);
+			layout.setOrientation(LinearLayout.HORIZONTAL);
+			layout.setPadding(0, 6, 0, 0);
+    
+			final ZLColorOptionEntry colorOption = (ZLColorOptionEntry)myOption;
+			final ZLColor color = colorOption.initialColor();
+    
+			final ZLResource resource = ZLResource.resource(ZLAndroidDialogManager.COLOR_KEY);
+			myRedView = new ComponentView(context, resource.getResource("red").getValue(), color.Red);
+			myGreenView = new ComponentView(context, resource.getResource("green").getValue(), color.Green);
+			myBlueView = new ComponentView(context, resource.getResource("blue").getValue(), color.Blue);
+    
+			layout.setOrientation(LinearLayout.VERTICAL);
+			layout.addView(myRedView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			layout.addView(myGreenView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			layout.addView(myBlueView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+    
+			myColorArea = new View(context);
+			layout.setPadding(20, 0, 20, 0);
+			myColorArea.setMinimumHeight(60);
+			myColorArea.setBackgroundColor(0xFF000000 + (color.Red << 16) + (color.Green << 8) + color.Blue);
+			layout.addView(myColorArea, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.FILL_PARENT));
+    
+			myContainer = layout;
+		}
+
 		myTab.addAndroidView(myContainer, true);
 	}
 
@@ -197,27 +200,33 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void reset() {
-		if (myColorArea == null) {
-			return;
+		if (myContainer != null) {
+			final ZLColorOptionEntry colorOption = (ZLColorOptionEntry)myOption;
+			final ZLColor color = colorOption.getColor();
+			colorOption.onReset(new ZLColor(
+				myRedView.getComponentValue(),
+				myGreenView.getComponentValue(),
+				myBlueView.getComponentValue()
+			));
+			myRedView.setComponentValue(color.Red);
+			myGreenView.setComponentValue(color.Green);
+			myBlueView.setComponentValue(color.Blue);
+			myColorArea.setBackgroundColor(0xFF000000 + (color.Red << 16) + (color.Green << 8) + color.Blue);
 		}
-		final ZLColorOptionEntry colorOption = (ZLColorOptionEntry)myOption;
-		final ZLColor color = colorOption.getColor();
-		colorOption.onReset(new ZLColor(
-			myRedView.getComponentValue(),
-			myGreenView.getComponentValue(),
-			myBlueView.getComponentValue()
-		));
-		myRedView.setComponentValue(color.Red);
-		myGreenView.setComponentValue(color.Green);
-		myBlueView.setComponentValue(color.Blue);
-		myColorArea.setBackgroundColor(0xFF000000 + (color.Red << 16) + (color.Green << 8) + color.Blue);
 	}
 
 	protected void _onAccept() {
-		((ZLColorOptionEntry)myOption).onAccept(new ZLColor(
-			myRedView.getComponentValue(),
-			myGreenView.getComponentValue(),
-			myBlueView.getComponentValue()
-		));
+		if (myContainer != null) {
+			((ZLColorOptionEntry)myOption).onAccept(new ZLColor(
+				myRedView.getComponentValue(),
+				myGreenView.getComponentValue(),
+				myBlueView.getComponentValue()
+			));
+			myContainer = null;
+			myColorArea = null;
+			myRedView = null;
+			myGreenView = null;
+			myBlueView = null;
+		}
 	}
 }

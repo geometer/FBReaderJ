@@ -30,16 +30,12 @@ public class ZLSQLiteConfigManager extends ZLConfigManager {
 	private SQLiteDatabase myDatabase;
 
 	public ZLSQLiteConfigManager(Activity activity, String applicationName) {
-		try {
-			myDatabase = activity.openDatabase(applicationName, null);
-		} catch (FileNotFoundException e) {
-			try {
-				myDatabase = activity.createDatabase(applicationName, 0, Activity.MODE_PRIVATE, null);
-				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
-			} catch (FileNotFoundException e2) {
-			}
-		}
+		myDatabase = activity.openOrCreateDatabase(applicationName + ".db", Activity.MODE_PRIVATE, null);
 		if (myDatabase != null) {
+			try {
+				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+			} catch (Exception e) {
+			}
 			setConfig(new ZLSQLiteConfig(myDatabase));
 		}
 	}

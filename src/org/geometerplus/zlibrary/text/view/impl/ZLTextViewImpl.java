@@ -114,12 +114,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public void setModels(ArrayList models, int current) {
 		myModelList = (models != null) ? models : new ArrayList();
 		myModel = (current >= 0 && current < myModelList.size()) ?
-				(ZLTextModel) myModelList.get(current) : null;
+			(ZLTextModel)myModelList.get(current) : null;
 		myCurrentModelIndex = current;
 		setModelInternal();
 	}
 
 	private void setModelInternal() {
+		ZLTextParagraphCursorCache.clear();
+
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
@@ -138,7 +140,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public void setModelIndex(int modelIndex) {
 		if ((modelIndex != myCurrentModelIndex) && (modelIndex >= 0) &&
 				(modelIndex < myModelList.size())) {
-			myModel = (ZLTextModel) myModelList.get(modelIndex);
+			myModel = (ZLTextModel)myModelList.get(modelIndex);
 			myCurrentModelIndex = modelIndex;
 			setModelInternal();
 		}
@@ -1316,27 +1318,29 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	protected void rebuildPaintInfo(boolean strong) {
-		if (myPaintState == PaintState.NOTHING_TO_PAINT) {
-			return;
+		if (strong) {
+			ZLTextParagraphCursorCache.clear();
 		}
 
-		myLineInfos.clear();
-		if (!StartCursor.isNull()) {
-			if (strong) {
-				ZLTextParagraphCursorCache.clear();
-				StartCursor.rebuild();
-				myLineInfoCache.clear();
+		if (myPaintState != PaintState.NOTHING_TO_PAINT) {
+			myLineInfos.clear();
+			if (!StartCursor.isNull()) {
+				if (strong) {
+					StartCursor.rebuild();
+				}
+				EndCursor.reset();
+				myPaintState = PaintState.START_IS_KNOWN;
+			} else if (!EndCursor.isNull()) {
+				if (strong) {
+					EndCursor.rebuild();
+				}
+				StartCursor.reset();
+				myPaintState = PaintState.END_IS_KNOWN;
 			}
-			EndCursor.reset();
-			myPaintState = PaintState.START_IS_KNOWN;
-		} else if (!EndCursor.isNull()) {
-			if (strong) {
-				ZLTextParagraphCursorCache.clear();
-				EndCursor.rebuild();
-				myLineInfoCache.clear();
-			}
-			StartCursor.reset();
-			myPaintState = PaintState.END_IS_KNOWN;
+		}
+
+		if (strong) {
+			myLineInfoCache.clear();
 		}
 	}
 

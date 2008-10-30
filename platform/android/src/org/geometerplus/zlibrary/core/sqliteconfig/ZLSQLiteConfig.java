@@ -40,10 +40,10 @@ class ZLSQLiteConfig implements ZLConfig {
 	private final String[] ourSelectionArgs = new String[0];
 
 	public String getValue(String group, String name, String defaultValue) {
-		Cursor cursor = myDatabase.query(true, ourTableName, ourColumns, "groupName='" + group + "' AND name='" + name + "'", ourSelectionArgs, null, null, null);
+		Cursor cursor = myDatabase.query(true, ourTableName, ourColumns, "groupName='" + group + "' AND name='" + name + "'", ourSelectionArgs, null, null, null, null);
 		String answer = defaultValue;
-		if (cursor.count() != 0) {
-			cursor.first();
+		if (cursor.getCount() != 0) {
+			cursor.moveToFirst();
 			answer = cursor.getString(0);
 		}
 		cursor.close();

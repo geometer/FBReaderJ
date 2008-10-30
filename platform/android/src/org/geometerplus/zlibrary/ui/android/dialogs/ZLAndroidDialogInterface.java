@@ -19,40 +19,7 @@
 
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
-import android.view.View;
-
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionView;
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
-
-abstract class ZLAndroidOptionView extends ZLOptionView {
-	ZLAndroidDialogContent myTab;
-	private boolean myIsVisible;
-
-	protected ZLAndroidOptionView(ZLAndroidDialogContent tab, String name, ZLOptionEntry option) {
-		super(name, option);
-		myTab = tab;
-	}
-
-	final boolean isVisible() {
-		return myIsVisible;
-	}
-
-	protected final void show() {
-		myIsVisible = true;
-		myTab.invalidateView();
-	}
-
-	protected final void hide() {
-		myIsVisible = false;
-		myTab.invalidateView();
-	}
-
-	protected void _setActive(boolean active) {
-		// TODO: implement
-	}
-
-	protected final void createItem() {
-	}
-
-	abstract void addAndroidViews();
+interface ZLAndroidDialogInterface {
+	void setActivity(DialogActivity activity);
+	void endActivity();
 }

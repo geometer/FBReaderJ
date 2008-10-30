@@ -30,10 +30,6 @@ public class ZLJ2MEViewWidget extends ZLViewWidget {
 		canvas.setViewWidget(this);
 	}
 
-	public void trackStylus(boolean track) {
-		// TODO: implement
-	}
-
 	public void repaint() {
 		myCanvas.repaint();
 	}

@@ -24,8 +24,7 @@ import android.os.Bundle;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-
-import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class ZLAndroidActivity extends Activity {
 	public void onCreate(Bundle icicle) {

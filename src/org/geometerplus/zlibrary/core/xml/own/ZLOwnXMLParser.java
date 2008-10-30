@@ -61,7 +61,7 @@ final class ZLOwnXMLParser {
 	private final ZLXMLReader myXMLReader;
 	private final boolean myProcessNamespaces;
 
-	private final char[] myBuffer = new char[8192];
+	private final char[] myBuffer = new char[65536];
 
 	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream) throws IOException {
 		myXMLReader = xmlReader;
@@ -114,25 +114,32 @@ final class ZLOwnXMLParser {
 		return value;
 	}
 
-	public void doIt() throws IOException {
-		final HashMap entityMap = new HashMap();
-		entityMap.put("amp", new char[] { '&' });
-		entityMap.put("apos", new char[] { '\'' });
-		entityMap.put("gt", new char[] { '>' });
-		entityMap.put("lt", new char[] { '<' });
-		entityMap.put("quot", new char[] { '\"' });
+	private static HashMap ourDTDMaps = new HashMap();
 
-		final ZLXMLReader xmlReader = myXMLReader;
-
-		final ArrayList dtdList = xmlReader.externalDTDs();
-		final int dtdListSize = dtdList.size();
-		for (int i = 0; i < dtdListSize; ++i) {
-			InputStream stream = new ZLFile((String)dtdList.get(i)).getInputStream();
-			if (stream != null) {
-				new ZLOwnDTDParser().doIt(stream, entityMap);
+	private static HashMap getDTDMap(ArrayList dtdList) throws IOException {
+		HashMap entityMap = (HashMap)ourDTDMaps.get(dtdList);
+		if (entityMap == null) {
+			entityMap = new HashMap();
+			entityMap.put("amp", new char[] { '&' });
+			entityMap.put("apos", new char[] { '\'' });
+			entityMap.put("gt", new char[] { '>' });
+			entityMap.put("lt", new char[] { '<' });
+			entityMap.put("quot", new char[] { '\"' });
+			final int dtdListSize = dtdList.size();
+			for (int i = 0; i < dtdListSize; ++i) {
+				InputStream stream = new ZLFile((String)dtdList.get(i)).getInputStream();
+				if (stream != null) {
+					new ZLOwnDTDParser().doIt(stream, entityMap);
+				}
 			}
+			ourDTDMaps.put(dtdList, entityMap);
 		}
+		return entityMap;
+	}
 
+	public void doIt() throws IOException {
+		final ZLXMLReader xmlReader = myXMLReader;
+		final HashMap entityMap = getDTDMap(xmlReader.externalDTDs());
 		final InputStreamReader streamReader = myStreamReader;
 		final boolean processNamespaces = myProcessNamespaces;
 		HashMap oldNamespaceMap = processNamespaces ? new HashMap() : null;
@@ -400,7 +407,7 @@ mainSwitchLabel:
 										state = savedState;
 										startPosition = i + 1;
 										final char[] value = getEntityValue(entityMap, convertToString(strings, entityName));
-										if (value != null) {
+										if ((value != null) && (value.length != 0)) {
 											switch (state) {
 												case ATTRIBUTE_VALUE:
 													attributeValue.append(value, 0, value.length);
@@ -511,23 +518,25 @@ mainSwitchLabel:
 					}
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
-				switch (state) {
-					case START_TAG:
-					//case END_TAG:
-						tagName.append(buffer, startPosition, count - startPosition);
-						break;
-					case ATTRIBUTE_NAME:
-						attributeName.append(buffer, startPosition, count - startPosition);
-						break;
-					case ATTRIBUTE_VALUE:
-						attributeValue.append(buffer, startPosition, count - startPosition);
-						break;
-					case ENTITY_REF:
-						entityName.append(buffer, startPosition, count - startPosition);
-						break;
-					case TEXT:
-						xmlReader.characterDataHandler(buffer, startPosition, count - startPosition);
-						break;
+				if (count > startPosition) {
+					switch (state) {
+						case START_TAG:
+						//case END_TAG:
+							tagName.append(buffer, startPosition, count - startPosition);
+							break;
+						case ATTRIBUTE_NAME:
+							attributeName.append(buffer, startPosition, count - startPosition);
+							break;
+						case ATTRIBUTE_VALUE:
+							attributeValue.append(buffer, startPosition, count - startPosition);
+							break;
+						case ENTITY_REF:
+							entityName.append(buffer, startPosition, count - startPosition);
+							break;
+						case TEXT:
+							xmlReader.characterDataHandler(buffer, startPosition, count - startPosition);
+							break;
+					}
 				}
 			}
 		}

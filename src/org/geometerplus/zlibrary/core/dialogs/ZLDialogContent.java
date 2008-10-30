@@ -88,7 +88,7 @@ public abstract class ZLDialogContent {
 		addOptions(key0, createEntryByOption(option0), key1, createEntryByOption(option1));
 	}
 
-	final void accept() {
+	protected final void accept() {
 		final int size = Views.size();
 		for (int i = 0; i < size; i++) {
 			((ZLOptionView)Views.get(i)).onAccept();

@@ -42,8 +42,6 @@ abstract public class ZLViewWidget {
 		return myView;
 	}
 
-	abstract public void trackStylus(boolean track);
-
 	public final void rotate(int rotation) {
 		myRotation = rotation;
 	}

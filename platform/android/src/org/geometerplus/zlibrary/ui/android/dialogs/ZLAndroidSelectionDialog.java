@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import android.content.Context;
-import android.app.Dialog;
+import android.app.Activity;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
@@ -29,37 +29,41 @@ import org.geometerplus.zlibrary.core.dialogs.ZLSelectionDialog;
 import org.geometerplus.zlibrary.core.dialogs.ZLTreeHandler;
 import org.geometerplus.zlibrary.core.dialogs.ZLTreeNode;
 
-class ZLAndroidSelectionDialog extends ZLSelectionDialog {
+class ZLAndroidSelectionDialog extends ZLSelectionDialog implements ZLAndroidDialogInterface {
+	private final String myCaption;
 	private boolean myReturnValue = false;
 	private final Runnable myActionOnAccept;
-	private final TextView myHeader;
-	private final SelectionView mySelectionView;
-	private final AndroidDialog myDialog;
+	private final Context myContext;
+	private SelectionView mySelectionView;
 	
 	protected ZLAndroidSelectionDialog(Context context, String caption, ZLTreeHandler handler, Runnable actionOnAccept) {
 		super(handler);
+		myCaption = caption;
 		myActionOnAccept = actionOnAccept;
-		myHeader = new TextView(context);
-		myHeader.setPadding(0, 5, 5, 0);
-		myHeader.setTextSize(18);
-		mySelectionView = new SelectionView(context);
-		LinearLayout layout = new LinearLayout(context);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		layout.addView(myHeader, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		layout.addView(mySelectionView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		myDialog = new AndroidDialog(context, layout, caption);
+		myContext = context;
+	}
+
+	public void setActivity(DialogActivity activity) {
+		mySelectionView = new SelectionView(activity);
+		activity.setContentView(mySelectionView);
 		update();
 	}
 
-	protected void exitDialog() {
-		myDialog.dismiss();
-		if (myReturnValue) {
-			new Handler().post(myActionOnAccept);
+	public void endActivity() {
+	}
+
+	protected void runNode(ZLTreeNode node) {
+		if (node != null) {
+			myReturnValue = !node.IsFolder;
+			super.runNode(node);
 		}
 	}
 
-	public void run() {
-		myDialog.show();
+	protected void exitDialog() {
+		((Activity)mySelectionView.getContext()).finish();
+		if (myReturnValue) {
+			new Handler().post(myActionOnAccept);
+		}
 	}
 
 	protected void selectItem(int index) {
@@ -72,16 +76,38 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 	}
 
 	protected void updateStateLine() {
-		myHeader.setText(handler().stateDisplayName());
+		((Activity)mySelectionView.getContext()).setTitle(myCaption + handler().stateDisplayName());
 	}
 	
+	private class SelectionView extends ListView implements AdapterView.OnItemClickListener {
+		public SelectionView(Context context) {
+			super(context);
+			setFocusable(true);
+			setOnItemClickListener(this);
+		}
+
+		public boolean onKeyUp(int keyCode, KeyEvent event) {
+			switch (keyCode) {
+				case KeyEvent.KEYCODE_DPAD_CENTER:
+				case KeyEvent.KEYCODE_ENTER:
+					final ItemView view = (ItemView)getSelectedView();
+					if (view != null) {
+        		runNode(view.getNode());
+					}
+					return false;
+				default:	
+					return super.onKeyUp(keyCode, event);
+			}
+		}
+
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			runNode((ZLTreeNode)getAdapter().getItem(position));
+		}
+	}
+
 	private class SelectionViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = new ItemView(myDialog.getContext(), (ZLTreeNode)getItem(position));
-			}
-
-			return convertView;
+			return new ItemView(myContext, (ZLTreeNode)getItem(position));
 		}
 
 		public boolean areAllItemsSelectable() {
@@ -102,40 +128,6 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog {
 
 		public long getItemId(int position) {
 			return position;
-		}
-	}
-
-	private class SelectionView extends ListView {
-		public SelectionView(Context context) {
-			super(context);
-			setFocusable(true);
-		}
-
-		public boolean onKeyUp(int keyCode, KeyEvent event) {
-			switch (keyCode) {
-				case KeyEvent.KEYCODE_DPAD_CENTER:
-				case KeyEvent.KEYCODE_NEWLINE:
-					final ItemView view = (ItemView)getSelectedView();
-					if (view != null) {
-						final ZLTreeNode node = view.getNode();
-						myReturnValue = !node.IsFolder;
-        		runNode(view.getNode());
-					}
-					return false;
-				default:	
-					return super.onKeyUp(keyCode, event);
-			}
-		}
-
-		public boolean onTouchEvent(MotionEvent event) {
-			final int x = (int)event.getX();
-			final int y = (int)event.getY();
-			final ZLTreeNode node = (ZLTreeNode)getAdapter().getItem(pointToPosition(x, y));
-			if (node != null) {
-				myReturnValue = !node.IsFolder;
-				runNode(node);
-			}
-			return false;
 		}
 	}
 }

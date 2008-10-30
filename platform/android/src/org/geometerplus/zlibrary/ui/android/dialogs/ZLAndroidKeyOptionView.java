@@ -48,38 +48,40 @@ class ZLAndroidKeyOptionView extends ZLAndroidOptionView {
 		keyEntry.onKeySelected(keyName);
 	}
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
+	void addAndroidViews() {
+		final Context context = myTab.getContext();
 
-		myLabel = new TextView(context);
-		myLabel.setText(ZLResource.resource("keyOptionView").getResource("actionFor").getValue());
-		myLabel.setPadding(0, 12, 0, 12);
-		myLabel.setTextSize(18);
+		if (myLabel == null) {
+			myLabel = new TextView(context);
+			myLabel.setText(ZLResource.resource("keyOptionView").getResource("actionFor").getValue());
+			myLabel.setPadding(0, 12, 0, 12);
+			myLabel.setTextSize(18);
+		}
+		myTab.addAndroidView(myLabel, false);
 
 		final ZLKeyOptionEntry keyEntry = (ZLKeyOptionEntry)myOption;
 
-		myEditor = new EditText(context) {
-			protected boolean getDefaultEditable() {
-				return false;
-			}
-
-			public boolean onKeyDown(int keyCode, KeyEvent event) {
-				setKeyName(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
-				return true;
-			}
-		};
-		myEditor.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-		mySpinner = new Spinner(context);
-		final ComboAdapter adapter = new ComboAdapter(keyEntry.getActionNames());
-		mySpinner.setAdapter(adapter);
-		mySpinner.setOnItemSelectedListener(adapter);
-	}
-
-	void addAndroidViews() {
-		myTab.addAndroidView(myLabel, false);
+		if (myEditor == null) {
+			myEditor = new EditText(context) {
+				protected boolean getDefaultEditable() {
+					return false;
+				}
+    
+				public boolean onKeyDown(int keyCode, KeyEvent event) {
+					setKeyName(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
+					return true;
+				}
+			};
+		}
 		myTab.addAndroidView(myEditor, true);
+
 		if (myEditor.getText().length() > 0) {
+			if (mySpinner == null) {
+				mySpinner = new Spinner(context);
+				final ComboAdapter adapter = new ComboAdapter(keyEntry.getActionNames());
+				mySpinner.setAdapter(adapter);
+				mySpinner.setOnItemSelectedListener(adapter);
+			}
 			myTab.addAndroidView(mySpinner, true);
 		}
 	}
@@ -94,6 +96,9 @@ class ZLAndroidKeyOptionView extends ZLAndroidOptionView {
 
 	protected void _onAccept() {
 		((ZLKeyOptionEntry)myOption).onAccept();
+		myLabel = null;
+		myEditor = null;
+		mySpinner = null;
 	}
 
 	private class ComboAdapter extends BaseAdapter implements Spinner.OnItemSelectedListener {
@@ -123,16 +128,18 @@ class ZLAndroidKeyOptionView extends ZLAndroidOptionView {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				EditText editor = new EditText(parent.getContext()) {
+			EditText editor;
+			if (convertView != null) {
+				editor = (EditText)convertView;
+			}	else {
+				editor = new EditText(parent.getContext()) {
 					protected boolean getDefaultEditable() {
 						return false;
 					}
 				};
-				editor.setText((String)getItem(position));
-				return editor;
 			}
-			return convertView;
+			editor.setText((String)getItem(position));
+			return editor;
 		}
 
 		public int getCount() {

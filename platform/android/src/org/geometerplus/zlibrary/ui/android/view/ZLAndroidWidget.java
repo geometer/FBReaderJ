@@ -35,13 +35,18 @@ public class ZLAndroidWidget extends View {
 	private final ZLAndroidPaintContext myPaintContext = new ZLAndroidPaintContext();
 	private ZLAndroidViewWidget myViewWidget;
 
-	public ZLAndroidWidget(Context context, AttributeSet attrs, Map inflateParams, int defStyle) {
-		super(context, attrs, inflateParams, defStyle);
+	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
 		setFocusable(true);
 	}
 
-	public ZLAndroidWidget(Context context, AttributeSet attrs, Map inflateParams) {
-		super(context, attrs, inflateParams);
+	public ZLAndroidWidget(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		setFocusable(true);
+	}
+
+	public ZLAndroidWidget(Context context) {
+		super(context);
 		setFocusable(true);
 	}
 

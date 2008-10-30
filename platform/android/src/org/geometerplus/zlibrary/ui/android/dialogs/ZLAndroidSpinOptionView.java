@@ -49,64 +49,65 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 		}
 	}
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
+	void addAndroidViews() {
+		final Context context = myTab.getContext();
 		if (myName != null) {
-			myLabel = new TextView(context);
-			myLabel.setText(myName);
-			myLabel.setPadding(0, 12, 0, 12);
-			myLabel.setTextSize(18);
+			if (myLabel == null) {
+				myLabel = new TextView(context);
+				myLabel.setText(myName);
+				myLabel.setPadding(0, 12, 0, 12);
+				myLabel.setTextSize(18);
+			}
+			myTab.addAndroidView(myLabel, false);
 		}
 
-		LinearLayout layout = new LinearLayout(context);
-		layout.setOrientation(LinearLayout.HORIZONTAL);
-		layout.setHorizontalGravity(0x05);
-
-		final ZLSpinOptionEntry spinOption = (ZLSpinOptionEntry)myOption;
-		final int min = spinOption.minValue();
-		final int max = spinOption.maxValue();
-		final int value = spinOption.initialValue();
-
-		Button minusButton = new Button(context) {
-			public boolean onTouchEvent(MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					setValue(myValue - 1);
+		if (mySpinView == null) {
+			LinearLayout layout = new LinearLayout(context);
+			layout.setOrientation(LinearLayout.HORIZONTAL);
+			layout.setHorizontalGravity(0x05);
+    
+			final ZLSpinOptionEntry spinOption = (ZLSpinOptionEntry)myOption;
+			final int min = spinOption.minValue();
+			final int max = spinOption.maxValue();
+			final int value = spinOption.initialValue();
+    
+			Button minusButton = new Button(context) {
+				public boolean onTouchEvent(MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+						setValue(myValue - 1);
+					}
+					return true;
 				}
-				return true;
-			}
-		};
-		minusButton.setText("-");
-		minusButton.setTextSize(24);
-		myMinusButton = minusButton;
-
-		TextView data = new TextView(context);
-		data.setPadding(0, 12, 0, 12);
-		data.setTextSize(20);
-		myDataView = data;
-
-		Button plusButton = new Button(context) {
-			public boolean onTouchEvent(MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					setValue(myValue + 1);
+			};
+			minusButton.setText("-");
+			minusButton.setTextSize(24);
+			myMinusButton = minusButton;
+    
+			TextView data = new TextView(context);
+			data.setPadding(0, 12, 0, 12);
+			data.setTextSize(20);
+			myDataView = data;
+    
+			Button plusButton = new Button(context) {
+				public boolean onTouchEvent(MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+						setValue(myValue + 1);
+					}
+					return true;
 				}
-				return true;
-			}
-		};
-		plusButton.setText("+");
-		plusButton.setTextSize(24);
-		myPlusButton = plusButton;
-
-		setValue(((ZLSpinOptionEntry)myOption).initialValue());
-
-		layout.addView(minusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
-		layout.addView(data, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		layout.addView(plusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-		mySpinView = layout;
-	}
-
-	void addAndroidViews() {
-		myTab.addAndroidView(myLabel, false);
+			};
+			plusButton.setText("+");
+			plusButton.setTextSize(24);
+			myPlusButton = plusButton;
+    
+			setValue(((ZLSpinOptionEntry)myOption).initialValue());
+    
+			layout.addView(minusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
+			layout.addView(data, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			layout.addView(plusButton, new LinearLayout.LayoutParams(40, LinearLayout.LayoutParams.WRAP_CONTENT));
+    
+			mySpinView = layout;
+		}
 		myTab.addAndroidView(mySpinView, true);
 	}
 
@@ -117,6 +118,13 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void _onAccept() {
-		((ZLSpinOptionEntry)myOption).onAccept(myValue);
+		if (mySpinView != null) {
+			((ZLSpinOptionEntry)myOption).onAccept(myValue);
+			myLabel = null;
+			mySpinView = null;
+			myDataView = null;
+			myMinusButton = null;
+			myPlusButton = null;
+		}
 	}
 }

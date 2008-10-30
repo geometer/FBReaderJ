@@ -290,13 +290,18 @@ public final class FBReader extends ZLApplication {
 	}
 	
 	void openBookInternal(BookDescription description) {
+		clearTextCaches();
+
 		if (description != null) {
 			BookTextView.saveState();
 			BookTextView.setModels(null, "");
 			BookTextView.setContentsModel(null);
 			ContentsView.setModel(null);
 
+			myBookModel = null;
+			//android.os.Debug.startMethodTracing("/data/anr/loading");
 			myBookModel = new BookModel(description);
+			//android.os.Debug.stopMethodTracing();
 			final String fileName = description.FileName;
 			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());

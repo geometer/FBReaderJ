@@ -33,42 +33,49 @@ class ZLAndroidChoiceOptionView extends ZLAndroidOptionView {
 		super(tab, name, option);
 	}
 
-	protected void createItem() {
-		final Context context = myTab.getView().getContext();
-		myGroup = new RadioGroup(context);
-		myGroup.setOrientation(RadioGroup.VERTICAL);
-
-		final ZLChoiceOptionEntry choiceEntry = (ZLChoiceOptionEntry)myOption;
-		final int choiceNumber = choiceEntry.choiceNumber();
-		myButtons = new RadioButton[choiceNumber];
-		for (int i = 0; i < choiceNumber; ++i) {
-			final RadioButton button = new RadioButton(context);
-			myButtons[i] = button;
-			button.setId(i + 1);
-			button.setText(choiceEntry.getText(i));
-			myGroup.addView(button, new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
-		}
-		myGroup.check(choiceEntry.initialCheckedIndex() + 1);
-	}
-
 	void addAndroidViews() {
+		if (myGroup == null) {
+			final Context context = myTab.getContext();
+			myGroup = new RadioGroup(context);
+			myGroup.setOrientation(RadioGroup.VERTICAL);
+    
+			final ZLChoiceOptionEntry choiceEntry = (ZLChoiceOptionEntry)myOption;
+			final int choiceNumber = choiceEntry.choiceNumber();
+			myButtons = new RadioButton[choiceNumber];
+			for (int i = 0; i < choiceNumber; ++i) {
+				final RadioButton button = new RadioButton(context);
+				myButtons[i] = button;
+				button.setId(i + 1);
+				button.setText(choiceEntry.getText(i));
+				myGroup.addView(button, new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
+			}
+			myGroup.check(choiceEntry.initialCheckedIndex() + 1);
+		}
 		myTab.addAndroidView(myGroup, true);
 	}
 
 	protected void reset() {
-		final ZLChoiceOptionEntry choiceEntry = (ZLChoiceOptionEntry)myOption;
-		myGroup.check(choiceEntry.initialCheckedIndex() + 1);
+		if (myGroup != null) {
+			final ZLChoiceOptionEntry choiceEntry = (ZLChoiceOptionEntry)myOption;
+			myGroup.check(choiceEntry.initialCheckedIndex() + 1);
+		}
 	}
 
 	protected void _onAccept() {
-		((ZLChoiceOptionEntry)myOption).onAccept(myGroup.getCheckedRadioButtonId() - 1);
+		if (myGroup != null) {
+			((ZLChoiceOptionEntry)myOption).onAccept(myGroup.getCheckedRadioButtonId() - 1);
+			myGroup = null;
+			myButtons = null;
+		}
 	}
 
 	protected void _setActive(boolean active) {
-		myGroup.setEnabled(active);
-		final RadioButton[] buttons = myButtons;
-		for (int i = buttons.length - 1; i >= 0; --i) {
-			buttons[i].setEnabled(active);
+		if (myGroup != null) {
+			myGroup.setEnabled(active);
+			final RadioButton[] buttons = myButtons;
+			for (int i = buttons.length - 1; i >= 0; --i) {
+				buttons[i].setEnabled(active);
+			}
 		}
 	}
 }

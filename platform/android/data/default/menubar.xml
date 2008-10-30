@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menubar>
-	<item id="bookInfo"/>
-	<item id="toc"/>
+	<submenu id="preferences">
+		<item id="preferences"/>
+		<item id="bookInfo"/>
+	</submenu>
 	<submenu id="library">
 		<item id="showLibrary"/>
 		<item id="previousBook"/>
@@ -10,6 +12,7 @@
 		<item id="showHelp"/>
 	</submenu>
 	<submenu id="navigate">
+		<item id="toc"/>
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>
 		<item id="gotoSectionEnd"/>
@@ -30,8 +33,7 @@
 	</submenu>
 	<submenu id="view">
 		<item id="rotate"/>
-		<item id="toggleFullscreen"/>
+		<!--item id="toggleFullscreen"/-->
 		<item id="toggleIndicator"/>
 	</submenu>
-	<item id="preferences"/>
 </menubar>

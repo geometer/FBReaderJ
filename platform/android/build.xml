@@ -2,7 +2,7 @@
 <project name="FBReaderJ" default="package">
 	
 	<!-- property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc37a" / -->
-	<property name="sdk-folder" value="/Users/geometer/android-sdk_m5-rc15_mac-x86" />
+	<property name="sdk-folder" value="/Users/geometer/android-sdk-mac_x86-1.0_r1" />
 	<property name="android-tools" value="${sdk-folder}/tools" />
 	<property name="project-dir" value="/Users/geometer/src/projects/FBReaderJ" />
 
@@ -31,12 +31,13 @@
 
 	<!-- The final package file to generate -->
 	<property name="out-package" value="${outdir}/${ant.project.name}.apk" />
+	<property name="resources-package" value="${outdir}/${ant.project.name}.ap_" />
 
 	<!-- Tools -->
 	<property name="aapt" value="${android-tools}/aapt" />
 	<property name="dx" value="${android-tools}/dx" />
 	<property name="adb" value="${android-tools}/adb" />
-	<property name="zip" value="zip" />
+	<property name="apk-builder" value="${android-tools}/apkbuilder" />
 	<property name="android-jar" value="${sdk-folder}/android.jar" />
 
 	<!-- Rules -->
@@ -56,7 +57,7 @@
 	<target name="resource-src" depends="dirs, raw-resources">
 		<echo>Generating R.java...</echo>
 		<exec executable="${aapt}" failonerror="true">
-			<arg value="compile" />
+			<arg value="p" />
 			<arg value="-m" />
 			<arg value="-J" />
 			<arg value="src" />
@@ -84,7 +85,6 @@
 			<arg value="-JXmx384M" />
 			<arg value="--dex" />
 			<arg value="--output=${intermediate-dex}" />
-			<arg value="--locals=full" />
 			<arg value="--positions=lines" />
 			<arg path="${outdir-classes}" />
 		</exec>
@@ -95,7 +95,6 @@
 		<exec executable="${aapt}" failonerror="true">
 			<arg value="package" />
 			<arg value="-f" />
-			<arg value="-c" />
 			<arg value="-M" />
 			<arg value="AndroidManifest.xml" />
 			<arg value="-S" />
@@ -103,7 +102,8 @@
 			<!-- No assets directory -->
 			<arg value="-I" />
 			<arg value="${android-jar}" />
-			<arg value="${out-package}" />
+			<arg value="-F" />
+			<arg value="${resources-package}" />
 		</exec>
 	</target>
 
@@ -118,10 +118,16 @@
 	<!-- Put the project's .dex files into the output package file. -->
 	<target name="package-dex" depends="dex, package-res">
 		<echo>Packaging dex...</echo>
-		<exec executable="${zip}" failonerror="true">
-			<arg value="-qj" />
+		<exec executable="${apk-builder}" failonerror="true">
 			<arg value="${out-package}" />
+			<arg value="-z" />
+			<arg value="${resources-package}" />
+			<arg value="-f" />
 			<arg value="${intermediate-dex}" />
+			<arg value="-rf" />
+			<arg value="src" />
+			<arg value="-rf" />
+			<arg value="../../src" />
 		</exec>
 	</target>
 
@@ -132,6 +138,7 @@
 		<echo>Installing to emulator...</echo>
 		<exec executable="${adb}" failonerror="true">
 			<arg value="install"/>
+			<arg value="-r"/>
 			<arg value="${out-package}"/>
 		</exec>
 	</target>

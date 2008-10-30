@@ -108,8 +108,6 @@ public final class ZLAndroidKeyUtil {
 				return "<Call>";
 			case KeyEvent.KEYCODE_CAMERA:
 				return "<Camera>";
-			case KeyEvent.KEYCODE_CAP:
-				return "<Cap>";
 			case KeyEvent.KEYCODE_CLEAR:
 				return "<Clear>";
 			case KeyEvent.KEYCODE_COMMA:
@@ -128,30 +126,38 @@ public final class ZLAndroidKeyUtil {
 				return "<PadUp>";
 			case KeyEvent.KEYCODE_ENDCALL:
 				return "<EndCall>";
+			case KeyEvent.KEYCODE_ENTER:
+				return "<Enter>";
 			case KeyEvent.KEYCODE_ENVELOPE:
 				return "<Envelope>";
 			case KeyEvent.KEYCODE_EQUALS:
 				return "<=>";
 			case KeyEvent.KEYCODE_EXPLORER:
 				return "<Explorer>";
-			case KeyEvent.KEYCODE_GRAVE:
+			case KeyEvent.KEYCODE_FOCUS:
 				return "<??? 0>";
-			case KeyEvent.KEYCODE_HEADSETHOOK:
+			case KeyEvent.KEYCODE_GRAVE:
 				return "<??? 1>";
+			case KeyEvent.KEYCODE_HEADSETHOOK:
+				return "<??? 2>";
 			case KeyEvent.KEYCODE_HOME:
 				return "<Home>";
 			case KeyEvent.KEYCODE_LEFT_BRACKET:
 				return "<(>";
+			case KeyEvent.KEYCODE_MENU:
+				return "<Menu>";
 			case KeyEvent.KEYCODE_MINUS:
 				return "<->";
-			case KeyEvent.KEYCODE_NEWLINE:
-				return "<Return>";
+			case KeyEvent.KEYCODE_NOTIFICATION:
+				return "<??? 3>";
 			case KeyEvent.KEYCODE_NUM:
 				return "<Num>";
 			case KeyEvent.KEYCODE_PERIOD:
-				return "<??? 2>";
+				return "<??? 4>";
+			case KeyEvent.KEYCODE_PLUS:
+				return "<+>";
 			case KeyEvent.KEYCODE_POUND:
-				return "<??? 3>";
+				return "<??? 5>";
 			case KeyEvent.KEYCODE_POWER:
 				return "<Power>";
 			case KeyEvent.KEYCODE_RIGHT_BRACKET:
@@ -161,9 +167,9 @@ public final class ZLAndroidKeyUtil {
 			case KeyEvent.KEYCODE_SLASH:
 				return "</>";
 			case KeyEvent.KEYCODE_SOFT_LEFT:
-				return "<Menu>";
+				return "<??? 6>";
 			case KeyEvent.KEYCODE_SOFT_RIGHT:
-				return "<??? 4>";
+				return "<??? 7>";
 			case KeyEvent.KEYCODE_SPACE:
 				return "<Space>";
 			case KeyEvent.KEYCODE_STAR:

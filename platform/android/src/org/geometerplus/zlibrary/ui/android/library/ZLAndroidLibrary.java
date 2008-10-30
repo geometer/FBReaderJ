@@ -21,17 +21,17 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.*;
 
-import android.content.Resources;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-//import org.geometerplus.zlibrary.core.xml.sax.ZLSaxXMLProcessorFactory;
 import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfigManager;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
@@ -60,7 +60,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	protected InputStream getFileInputStream(String fileName) {
 		try {
-			return new BufferedInputStream(new FileInputStream(fileName));
+			//return new BufferedInputStream(new FileInputStream(fileName), 16384);
+			return new FileInputStream(fileName);
 		} catch (FileNotFoundException e) {
 			return null;
 		}
@@ -91,7 +92,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public void openInBrowser(String reference) {
-		Intent intent = new Intent(Intent.VIEW_ACTION);
+		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse(reference));
 		myActivity.startActivity(intent);
 	}
@@ -99,7 +100,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	void run(ZLAndroidActivity activity) {
 		myActivity = activity;
 
-		//new ZLSaxXMLProcessorFactory();
 		new ZLOwnXMLProcessorFactory();
 		loadProperties();
 		new ZLSQLiteConfigManager(activity, getApplicationName());

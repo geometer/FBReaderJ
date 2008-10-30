@@ -73,10 +73,6 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 		myPanel.repaint();
 	}
 
-	public void trackStylus(boolean track) {
-		// TODO: implement
-	}
-
 	public void mouseClicked(MouseEvent e) {
 	}
 

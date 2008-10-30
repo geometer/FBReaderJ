@@ -17,42 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.dialogs;
+package org.geometerplus.zlibrary.ui.android.library;
 
-import android.view.View;
+import java.util.HashMap;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionView;
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
+import android.app.Application;
 
-abstract class ZLAndroidOptionView extends ZLOptionView {
-	ZLAndroidDialogContent myTab;
-	private boolean myIsVisible;
-
-	protected ZLAndroidOptionView(ZLAndroidDialogContent tab, String name, ZLOptionEntry option) {
-		super(name, option);
-		myTab = tab;
+public class ZLAndroidApplication extends Application {
+	public void onCreate() {
 	}
 
-	final boolean isVisible() {
-		return myIsVisible;
+	public void onTerminate() {
 	}
 
-	protected final void show() {
-		myIsVisible = true;
-		myTab.invalidateView();
+	public void putData(Object key, Object value) {
+		myData.put(key, value);
 	}
 
-	protected final void hide() {
-		myIsVisible = false;
-		myTab.invalidateView();
+	public void removeData(Object key) {
+		myData.remove(key);
 	}
 
-	protected void _setActive(boolean active) {
-		// TODO: implement
+	public Object getData(Object key) {
+		return myData.get(key);
 	}
 
-	protected final void createItem() {
-	}
-
-	abstract void addAndroidViews();
+	private final HashMap myData = new HashMap();
 }

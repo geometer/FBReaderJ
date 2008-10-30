@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <node name="menu">
-	  <node name="bookInfo" value="Book Info..."/>
-	  <node name="toc" value="Table of Contents"/>
+		<node name="preferences" value="Preferences">
+			<node name="preferences" value="FBReader..."/>
+	  	<node name="bookInfo" value="Current Book..."/>
+		</node>
 		<node name="library" value="Library">
 			<node name="showLibrary" value="Open"/>
 			<node name="previousBook" value="Previous Book"/>
@@ -11,6 +13,7 @@
 			<node name="showHelp" value="About FBReader"/>
 		</node>
 		<node name="navigate" value="Navigate">
+	  	<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
 			<node name="gotoPageNumber" value="Go to Page..."/>
 			<node name="gotoSectionStart" value="Go to Start of Text Section"/>
@@ -35,7 +38,6 @@
 			<node name="toggleFullscreen" value="Full Screen"/>
 			<node name="toggleIndicator" value="Toggle Indicator"/>
 		</node>
-		<node name="preferences" value="Preferences..."/>
 		<node name="quit" value="Close"/>
 	</node>
 	<node name="toolbar">
@@ -266,7 +268,7 @@
 			</node>
 		</node>
 		<node name="addFileDialog">
-			<node name="title" value="FBReader - Add Book to the Library"/>
+			<node name="title" value="Add Book: "/>
 		</node>
 		<node name="textSearchDialog">
 			<node name="title" value="Text Search"/>

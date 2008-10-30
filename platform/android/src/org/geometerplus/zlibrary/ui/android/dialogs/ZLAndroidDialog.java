@@ -38,8 +38,8 @@ class ZLAndroidDialog extends ZLDialog {
 		myFooter = new LinearLayout(context);
 		myFooter.setOrientation(LinearLayout.HORIZONTAL);
 		myFooter.setHorizontalGravity(0x01);
-		ZLAndroidDialogContent tab =
-			new ZLAndroidDialogContent(context, resource, null, myFooter);
+		ZLAndroidDialogContentWithFooter tab =
+			new ZLAndroidDialogContentWithFooter(context, resource, myFooter);
 		myTab = tab;
 		myDialog = new AndroidDialog(context, tab.getView(), resource.getResource(ZLDialogManager.DIALOG_TITLE).getValue());
 	}

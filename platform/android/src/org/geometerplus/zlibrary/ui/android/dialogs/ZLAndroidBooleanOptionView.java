@@ -31,24 +31,23 @@ class ZLAndroidBooleanOptionView extends ZLAndroidOptionView {
 		super(tab, name, option);
 	}
 
-	protected void createItem() {
-		final ZLBooleanOptionEntry booleanEntry = (ZLBooleanOptionEntry)myOption;
-		CheckBox checkBox = new CheckBox(myTab.getView().getContext()) {
-			public boolean onTouchEvent(MotionEvent event) {
-				final boolean checked = isChecked();
-				final boolean code = super.onTouchEvent(event);
-				if (checked != isChecked()) {
-					booleanEntry.onStateChanged(!checked);
-				}
-				return code;
-			}
-		};
-		checkBox.setText(myName);	
-		checkBox.setChecked(booleanEntry.initialState());
-		myCheckBox = checkBox;
-	}
-
 	void addAndroidViews() {
+		if (myCheckBox == null) {
+			final ZLBooleanOptionEntry booleanEntry = (ZLBooleanOptionEntry)myOption;
+			myCheckBox = new CheckBox(myTab.getContext()) {
+				public boolean onTouchEvent(MotionEvent event) {
+					final boolean checked = isChecked();
+					final boolean code = super.onTouchEvent(event);
+					if (checked != isChecked()) {
+						booleanEntry.onStateChanged(!checked);
+					}
+					return code;
+				}
+			};
+			myCheckBox.setText(myName);	
+			myCheckBox.setChecked(booleanEntry.initialState());
+		}
+
 		myTab.addAndroidView(myCheckBox, true);
 	}
 
@@ -61,10 +60,14 @@ class ZLAndroidBooleanOptionView extends ZLAndroidOptionView {
 	}
 
 	protected void _onAccept() {
-		((ZLBooleanOptionEntry)myOption).onAccept(myCheckBox.isChecked());
+		if (myCheckBox != null) {
+			((ZLBooleanOptionEntry)myOption).onAccept(myCheckBox.isChecked());
+		}
 	}
 
 	protected void _setActive(boolean active) {
-		myCheckBox.setEnabled(active);
+		if (myCheckBox != null) {
+			myCheckBox.setEnabled(active);
+		}
 	}
 }

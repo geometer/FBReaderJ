@@ -84,7 +84,7 @@ public class BookTextView extends FBView {
 				while (paragraphIndex >= 0 && paragraphsNumber != 1) {
 					modelIndex++;
 					paragraphsNumber = modelIndex >= 0 && modelIndex < size ? 
-							((ZLTextModel) models.get(modelIndex)).getParagraphsNumber() + 1 : 1;
+							((ZLTextModel)models.get(modelIndex)).getParagraphsNumber() + 1 : 1;
 					paragraphIndex -= paragraphsNumber;
 				}
 				paragraphIndex += paragraphsNumber;
@@ -255,7 +255,7 @@ public class BookTextView extends FBView {
 			int paragraphIndex = position.ParagraphIndex + position.ModelIndex;
 			final ArrayList models = getModelList();
 			for (int j = 0; j < position.ModelIndex; j++) {
-				paragraphIndex += ((ZLTextModel) models.get(j)).getParagraphsNumber();
+				paragraphIndex += ((ZLTextModel)models.get(j)).getParagraphsNumber();
 			}
 			
 			option.setValue(paragraphIndex);

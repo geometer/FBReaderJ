@@ -27,7 +27,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLTreeNode;
 
-import org.geometerplus.zlibrary.ui.android.library.R;
+import org.geometerplus.zlibrary.ui.android.R;
 
 class ItemView extends LinearLayout {
 	static private final HashMap ourIconMap = new HashMap();

@@ -177,12 +177,6 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void trackStylus(boolean track) {
-		if (myViewWidget != null) {
-			myViewWidget.trackStylus(track);
-		}
-	}
-
 	public final void setHyperlinkCursor(boolean hyperlink) {
 		if (myWindow != null) {
 			//myWindow.setHyperlinkCursor(hyperlink);
