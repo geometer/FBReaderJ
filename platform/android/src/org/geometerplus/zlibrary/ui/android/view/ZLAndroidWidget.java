@@ -28,11 +28,11 @@ import android.util.AttributeSet;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View {
-	private final ZLAndroidPaintContext myPaintContext = new ZLAndroidPaintContext();
 	private ZLAndroidViewWidget myViewWidget;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
@@ -51,7 +51,7 @@ public class ZLAndroidWidget extends View {
 	}
 
 	public ZLAndroidPaintContext getPaintContext() {
-		return myPaintContext;
+		return ZLAndroidPaintContext.Instance();
 	}
 
 	void setViewWidget(ZLAndroidViewWidget viewWidget) {
@@ -63,7 +63,7 @@ public class ZLAndroidWidget extends View {
 		if (myViewWidget == null) {
 			return;
 		}
-		ZLView view = myViewWidget.getView();
+		ZLView view = ZLApplication.Instance().getCurrentView();
 		if (view == null) {
 			return;
 		}
@@ -71,29 +71,33 @@ public class ZLAndroidWidget extends View {
 		final int w = getWidth();
 		final int h = getHeight();
 
-		myPaintContext.beginPaint(canvas);
-		long start = System.currentTimeMillis();
+		ZLAndroidPaintContext.Instance().beginPaint(canvas);
 		final int rotation = myViewWidget.getRotation();
-		myPaintContext.setRotation(rotation);
+		ZLAndroidPaintContext.Instance().setRotation(rotation);
 		switch (rotation) {
 			case ZLViewWidget.Angle.DEGREES0:
-				myPaintContext.setSize(w, h);
+				ZLAndroidPaintContext.Instance().setSize(w, h);
 				break;
 			case ZLViewWidget.Angle.DEGREES90:
-				myPaintContext.setSize(h, w);
+				ZLAndroidPaintContext.Instance().setSize(h, w);
 				canvas.rotate(270, h / 2, h / 2);
 				break;
 			case ZLViewWidget.Angle.DEGREES180:
-				myPaintContext.setSize(w, h);
+				ZLAndroidPaintContext.Instance().setSize(w, h);
 				canvas.rotate(180, w / 2, h / 2);
 				break;
 			case ZLViewWidget.Angle.DEGREES270:
-				myPaintContext.setSize(h, w);
+				ZLAndroidPaintContext.Instance().setSize(h, w);
 				canvas.rotate(90, w / 2, w / 2);
 				break;
 		}
 		view.paint();
-		myPaintContext.endPaint();
+		ZLAndroidPaintContext.Instance().endPaint();
+	}
+
+	public boolean onTrackballEvent(MotionEvent event) {
+		ZLApplication.Instance().getCurrentView().onTrackballRotated((int)(10 * event.getX()), (int)(10 * event.getY()));
+		return true;
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -124,7 +128,7 @@ public class ZLAndroidWidget extends View {
 			}
 		}
 
-		ZLView view = myViewWidget.getView();
+		ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
 				view.onStylusRelease(x, y);
@@ -145,7 +149,7 @@ public class ZLAndroidWidget extends View {
 		if (keyName.equals("<Menu>")) {
 			return false;
 		}
-		myViewWidget.getView().Application.doActionByKey(keyName);
+		ZLApplication.Instance().doActionByKey(keyName);
 		return true;
 	}
 

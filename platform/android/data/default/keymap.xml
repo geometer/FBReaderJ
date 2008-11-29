@@ -2,18 +2,15 @@
 <keymap>
 	<binding key="&lt;L&gt;" action="showLibrary"/>
 	<binding key="&lt;O&gt;" action="preferences"/>
-	<binding key="&lt;PadLeft&gt;" action="smallScrollBackward"/>
-	<binding key="&lt;PadRight&gt;" action="smallScrollForward"/>
 	<binding key="&lt;C&gt;" action="toc"/>
 	<binding key="&lt;F&gt;" action="search"/>
 	<binding key="&lt;P&gt;" action="findPrevious"/>
 	<binding key="&lt;N&gt;" action="findNext"/>
-	<binding key="&lt;PadDown&gt;" action="largeScrollForward"/>
-	<binding key="&lt;PadUp&gt;" action="largeScrollBackward"/>
+	<binding key="&lt;VolumeDown&gt;" action="touchScrollForward"/>
+	<binding key="&lt;VolumeUp&gt;" action="touchScrollBackward"/>
 	<binding key="&lt;Ctrl&gt;+&lt;Home&gt;" action="gotoHome"/>
 	<binding key="&lt;Home&gt;" action="gotoSectionStart"/>
 	<binding key="&lt;End&gt;" action="gotoSectionEnd"/>
-	<binding key="&lt;Back&gt;" action="cancel"/>
 	<binding key="&lt;=&gt;" action="increaseFont"/>
 	<binding key="&lt;-&gt;" action="decreaseFont"/>
 	<binding key="&lt;D&gt;" action="toggleIndicator"/>
@@ -22,6 +19,7 @@
 	<binding key="&lt;I&gt;" action="bookInfo"/>
 	<binding key="&lt;R&gt;" action="rotate"/>
 	<binding key="&lt;Z&gt;" action="showRecent"/>
+	<binding key="&lt;Back&gt;" action="cancel"/>
 	<binding key="&lt;Ctrl&gt;+&lt;DownArrow&gt;" action="nextTOCSection"/>
 	<binding key="&lt;Ctrl&gt;+&lt;UpArrow&gt;" action="previousTOCSection"/>
 	<binding key="&lt;Ctrl&gt;+&lt;C&gt;" action="copyToClipboard"/>

@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.options;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
-import org.geometerplus.zlibrary.core.config.ZLConfigManager;
 
 public abstract class ZLOption {
 	public static final String LOOK_AND_FEEL_CATEGORY = "ui";
@@ -55,20 +54,20 @@ public abstract class ZLOption {
 	}
 
 	protected final String getConfigValue(String defaultValue) {
-		ZLConfig config = ZLConfigManager.getConfig();
+		ZLConfig config = ZLConfig.Instance();
 		return (config != null) ?
 			config.getValue(myGroup, myOptionName, defaultValue) : defaultValue;
 	}
 
 	protected final void setConfigValue(String value) {
-		ZLConfig config = ZLConfigManager.getConfig();
+		ZLConfig config = ZLConfig.Instance();
 		if (config != null) {
 			config.setValue(myGroup, myOptionName, value, myCategory);
 		}
 	}
 
 	protected final void unsetConfigValue() {
-		ZLConfig config = ZLConfigManager.getConfig();
+		ZLConfig config = ZLConfig.Instance();
 		if (config != null) {
 			config.unsetValue(myGroup, myOptionName);
 		}

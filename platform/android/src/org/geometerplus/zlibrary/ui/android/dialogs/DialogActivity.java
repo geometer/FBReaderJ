@@ -34,7 +34,6 @@ public class DialogActivity extends Activity {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		myDialog = (ZLAndroidDialogInterface)application.getData(DIALOG_KEY);
 		myDialog.setActivity(this);
-		application.removeData(DIALOG_KEY);
 	}
 
 	protected void onDestroy() {

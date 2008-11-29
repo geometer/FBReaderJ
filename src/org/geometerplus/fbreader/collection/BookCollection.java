@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookCollection {
 	public final ZLStringOption PathOption =
-		new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Options", "BookPath", "/Books");
+		new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Options", "BookPath", "/sdcard");
 	public final ZLBooleanOption ScanSubdirsOption =
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "ScanSubdirs", false);
 

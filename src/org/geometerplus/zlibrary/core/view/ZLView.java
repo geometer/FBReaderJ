@@ -50,7 +50,7 @@ abstract public class ZLView {
 		return false;
 	}
 
-	public boolean onFingerTap(int x, int y) {
+	public boolean onTrackballRotated(int diffX, int diffY) {
 		return false;
 	}
 }

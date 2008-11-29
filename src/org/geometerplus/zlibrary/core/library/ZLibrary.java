@@ -32,7 +32,7 @@ public abstract class ZLibrary {
 	public static final String JAR_DATA_PREFIX = "#JAR#://";
 	private final HashMap myProperties = new HashMap();
 
-	public static ZLibrary getInstance() {
+	public static ZLibrary Instance() {
 		return ourImplementation;
 	}
 		
@@ -45,7 +45,6 @@ public abstract class ZLibrary {
 	public final String getApplicationName() {
 		return (String)myProperties.get("applicationName");
 	}
-	
 
 	protected final Class getApplicationClass() {
 		try {
@@ -69,7 +68,7 @@ public abstract class ZLibrary {
 	abstract protected InputStream getResourceInputStream(String fileName);
 	abstract protected InputStream getFileInputStream(String fileName);
 
-	abstract public ZLPaintContext createPaintContext();
+	abstract public ZLPaintContext getPaintContext();
 	abstract public void openInBrowser(String reference);
 
 	protected final void loadProperties() {

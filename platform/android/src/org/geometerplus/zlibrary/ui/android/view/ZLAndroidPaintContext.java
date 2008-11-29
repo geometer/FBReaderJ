@@ -42,9 +42,18 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private boolean myReversedX;
 	private boolean myReversedY;
 
+	static ZLAndroidPaintContext Instance() {
+		if (ourInstance == null) {
+			ourInstance = new ZLAndroidPaintContext();
+		}
+		return ourInstance;
+	}
+
+	private static ZLAndroidPaintContext ourInstance;
+
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
-	ZLAndroidPaintContext() {
+	private ZLAndroidPaintContext() {
 		myPaint = new Paint();
 		myPaint.setLinearText(false);
 		myPaint.setAntiAlias(true);

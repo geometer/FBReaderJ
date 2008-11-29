@@ -33,9 +33,13 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.*;
 
 public class ZLAndroidDialogManager extends ZLDialogManager {
-	private final Activity myActivity;
+	private Activity myActivity;
 	
 	public ZLAndroidDialogManager(Activity activity) {
+		setActivity(activity);
+	}
+
+	public void setActivity(Activity activity) {
 		myActivity = activity;
 	}
 	
@@ -147,7 +151,7 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 
 	public ZLAndroidApplicationWindow createApplicationWindow(ZLApplication application) {
 		// TODO: implement
-		//myApplicationWindow = new ZLAndroidApplicationWindow(application);
+		//myApplicationWindow = new ZLAndroidApplicationWindow(activity);
 		//return myApplicationWindow;
 		return null;
 	}

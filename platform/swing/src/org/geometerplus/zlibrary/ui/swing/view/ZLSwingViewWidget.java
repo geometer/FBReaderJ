@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListener, MouseMotionListener {
 	@SuppressWarnings("serial")
@@ -33,7 +34,7 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 			Graphics2D g2d = (Graphics2D)g;
       g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-			final ZLView view = getView();
+			final ZLView view = ZLApplication.Instance().getCurrentView();
 			final ZLSwingPaintContext context = (ZLSwingPaintContext)view.Context;
 			final Dimension size = getSize();
 			final int rotation = getRotation();
@@ -107,11 +108,11 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 	}
 
 	public void mousePressed(MouseEvent e) {
-		getView().onStylusPress(x(e), y(e));
+		ZLApplication.Instance().getCurrentView().onStylusPress(x(e), y(e));
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		getView().onStylusRelease(x(e), y(e));
+		ZLApplication.Instance().getCurrentView().onStylusRelease(x(e), y(e));
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -121,11 +122,11 @@ public final class ZLSwingViewWidget extends ZLViewWidget implements MouseListen
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		getView().onStylusMovePressed(x(e), y(e));
+		ZLApplication.Instance().getCurrentView().onStylusMovePressed(x(e), y(e));
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		getView().onStylusMove(x(e), y(e));
+		ZLApplication.Instance().getCurrentView().onStylusMove(x(e), y(e));
 	}
 
 	public JPanel getPanel() {

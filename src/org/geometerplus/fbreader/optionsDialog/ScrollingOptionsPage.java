@@ -30,16 +30,9 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 public class ScrollingOptionsPage {
-	private ScrollingEntries myLargeScrollingEntries;
-	private ScrollingEntries mySmallScrollingEntries;
-	private ScrollingEntries myMouseScrollingEntries;
-	private ScrollingEntries myTapScrollingEntries;
+	private ScrollingEntries myTouchScrollingEntries;
+	private ScrollingEntries myTrackballScrollingEntries;
 
-	private final boolean myIsMousePresented =
-		new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "MousePresented", false).getValue();
-	private final boolean myHasTouchScreen =
-		new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "TouchScreenPresented", true).getValue();
-	
 	public ScrollingOptionsPage(ZLDialogContent dialogTab, FBReader fbreader) {
 		final String optionsForKey = "optionsFor";
 		ZLComboOptionEntry mainEntry = new ScrollingTypeEntry(dialogTab.getResource(optionsForKey), fbreader);
@@ -52,47 +45,24 @@ public class ScrollingOptionsPage {
 		ScrollingModeEntry.ourScrollPercentageString = modeResource.getResource("scrollPercentage").getValue();
 		ScrollingModeEntry.ourDisableString = modeResource.getResource("disable").getValue();
 
-		myLargeScrollingEntries = new ScrollingEntries(fbreader, fbreader.LargeScrollingOptions);
-		mySmallScrollingEntries = new ScrollingEntries(fbreader, fbreader.SmallScrollingOptions);
-
-		if (myIsMousePresented) {
-			myMouseScrollingEntries = new ScrollingEntries(fbreader, fbreader.MouseScrollingOptions);
-		}
-		if (myHasTouchScreen) {
-			myTapScrollingEntries = new ScrollingEntries(fbreader, fbreader.FingerTapScrollingOptions);
-		}
+		myTouchScrollingEntries = new ScrollingEntries(fbreader, fbreader.TouchScrollingOptions);
+		myTrackballScrollingEntries = new ScrollingEntries(fbreader, fbreader.TrackballScrollingOptions);
 
 		mainEntry.onStringValueSelected(mainEntry.initialValue());
 
-		myLargeScrollingEntries.connect(dialogTab);
-		mySmallScrollingEntries.connect(dialogTab);
-		if (myIsMousePresented) {
-			myMouseScrollingEntries.connect(dialogTab);
-		}
-		if (myHasTouchScreen) {
-			myTapScrollingEntries.connect(dialogTab);
-		}
+		myTouchScrollingEntries.connect(dialogTab);
+		myTrackballScrollingEntries.connect(dialogTab);
 	}
 
 	
 	private static class ScrollingEntries {
-		private ZLBooleanOptionEntry myFingerOnlyEntry;
-		private final ZLSpinOptionEntry myDelayEntry;
 		private final ZLComboOptionEntry myModeEntry;
 		private final ZLSpinOptionEntry myLinesToKeepEntry;
 		private final ZLSpinOptionEntry myLinesToScrollEntry;
 		private final ZLSpinOptionEntry myPercentToScrollEntry;
 
 		public ScrollingEntries(FBReader fbreader, ScrollingOptions options) {
-			final boolean isTapOption = fbreader.FingerTapScrollingOptions.equals(options);
-			final boolean isFingerTapDetectionSupported = 
-				new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "FingerTapDetectable", false).getValue();
-			if (isTapOption && isFingerTapDetectionSupported) {
-				myFingerOnlyEntry = new ZLSimpleBooleanOptionEntry(fbreader.TapScrollingOnFingerOnlyOption);
-			}
-			
-			myDelayEntry = new ZLSimpleSpinOptionEntry(options.DelayOption, 50);
-			myModeEntry = new ScrollingModeEntry(fbreader, this, options.ModeOption, isTapOption);
+			myModeEntry = new ScrollingModeEntry(fbreader, this, options.ModeOption);
 			myLinesToKeepEntry = new ZLSimpleSpinOptionEntry(options.LinesToKeepOption, 1);
 			myLinesToScrollEntry = new ZLSimpleSpinOptionEntry(options.LinesToScrollOption, 1);
 			myPercentToScrollEntry = new ZLSimpleSpinOptionEntry(options.PercentToScrollOption, 5);
@@ -100,22 +70,14 @@ public class ScrollingOptionsPage {
 		}
 		
 		void connect(ZLDialogContent dialogTab) {
-			//dialogTab.addOption("delay", myDelayEntry);
 			dialogTab.addOption("mode", myModeEntry);
 			dialogTab.addOption("linesToKeep", myLinesToKeepEntry);
 			dialogTab.addOption("linesToScroll", myLinesToScrollEntry);
 			dialogTab.addOption("percentToScroll", myPercentToScrollEntry);
-			if (myFingerOnlyEntry != null) {
-				dialogTab.addOption("fingerOnly", myFingerOnlyEntry);
-			}
 		}
 		
 		void show(boolean visible) {
-			if (myDelayEntry != null) {
-				if (myFingerOnlyEntry != null) {
-					myFingerOnlyEntry.setVisible(visible);
-				}
-				myDelayEntry.setVisible(visible);
+			if (myModeEntry != null) {
 				myModeEntry.setVisible(visible);
 				if (visible) {
 					((ScrollingModeEntry)myModeEntry).onMadeVisible();
@@ -130,10 +92,8 @@ public class ScrollingOptionsPage {
 
 	
 	private class ScrollingTypeEntry extends ZLComboOptionEntry {
-		private final String myLargeScrollingString;
-		private final String mySmallScrollingString;
-		private final String myMouseScrollingString;
-		private final String myTapScrollingString;
+		private final String myTouchScrollingString;
+		private final String myTrackballScrollingString;
 		
 		private final ZLResource myResource;
 		private final FBReader myFBReader;
@@ -143,33 +103,17 @@ public class ScrollingOptionsPage {
 			myResource = resource;
 			myFBReader = fbreader;
 			
-			myLargeScrollingString = resource.getResource("large").getValue();
-			mySmallScrollingString = resource.getResource("small").getValue();
-			myMouseScrollingString = resource.getResource("mouse").getValue();
-			myTapScrollingString = resource.getResource("tap").getValue();
+			myTouchScrollingString = resource.getResource("touch").getValue();
+			myTrackballScrollingString = resource.getResource("trackball").getValue();
 
-			myValues.add(myLargeScrollingString);
-			myValues.add(mySmallScrollingString);
-
-			if (myIsMousePresented) {
-				myValues.add(myMouseScrollingString);
-			}
-			if (myHasTouchScreen) {
-				myValues.add(myTapScrollingString);
-			}
+			myValues.add(myTouchScrollingString);
+			myValues.add(myTrackballScrollingString);
 		}
 		
 		public void onValueSelected(int index) {
 			final String selectedValue = (String) getValues().get(index);
-			myLargeScrollingEntries.show(myLargeScrollingString.equals(selectedValue));
-			mySmallScrollingEntries.show(mySmallScrollingString.equals(selectedValue));
-
-			if (myIsMousePresented) {
-				myMouseScrollingEntries.show(myMouseScrollingString.equals(selectedValue));
-			}
-			if (myHasTouchScreen) {
-				myTapScrollingEntries.show(myTapScrollingString.equals(selectedValue));
-			}
+			myTouchScrollingEntries.show(myTouchScrollingString.equals(selectedValue));
+			myTrackballScrollingEntries.show(myTrackballScrollingString.equals(selectedValue));
 		}
 
 		public ArrayList getValues() {
@@ -177,7 +121,7 @@ public class ScrollingOptionsPage {
 		}
 
 		public String initialValue() {
-			return myLargeScrollingString;
+			return myTouchScrollingString;
 		}
 
 		public void onAccept(String value) {}
@@ -196,7 +140,6 @@ public class ScrollingOptionsPage {
 		private ZLIntegerOption myOption;
 		private final ArrayList/*<String>*/ myValues = new ArrayList();
 		private int myCurrentIndex;
-		private boolean myIsTapOption;
 
 		private static String nameByCode(int code) {
 			switch (code) {
@@ -224,7 +167,7 @@ public class ScrollingOptionsPage {
 			return ZLTextView.ScrollingMode.NO_OVERLAPPING;
 		}
 			
-		public ScrollingModeEntry(FBReader fbreader, ScrollingOptionsPage.ScrollingEntries entries, ZLIntegerOption option, boolean isTapOption) {
+		public ScrollingModeEntry(FBReader fbreader, ScrollingOptionsPage.ScrollingEntries entries, ZLIntegerOption option) {
 			myEntries = entries;
 			myFBReader = fbreader;
 			myOption = option;
@@ -232,20 +175,11 @@ public class ScrollingOptionsPage {
 			myValues.add(ourKeepLinesString);
 			myValues.add(ourScrollLinesString);
 			myValues.add(ourScrollPercentageString);
-			myIsTapOption = isTapOption;
-			if (isTapOption) {
-				myValues.add(ourDisableString);
-			}
 		}
-
 		
 		public void onValueSelected(int index) {
 			myCurrentIndex = index;
 			final String selectedValue = (String) getValues().get(index);
-			if (myEntries.myFingerOnlyEntry != null) {
-				myEntries.myFingerOnlyEntry.setVisible(!ourDisableString.equals(selectedValue));
-			}
-			myEntries.myDelayEntry.setVisible(!ourDisableString.equals(selectedValue));
 			myEntries.myLinesToKeepEntry.setVisible(ourKeepLinesString.equals(selectedValue));
 			myEntries.myLinesToScrollEntry.setVisible(ourScrollLinesString.equals(selectedValue));
 			myEntries.myPercentToScrollEntry.setVisible(ourScrollPercentageString.equals(selectedValue));
@@ -260,23 +194,11 @@ public class ScrollingOptionsPage {
 		}
 
 		public String initialValue() {
-			if (myIsTapOption && !myFBReader.EnableTapScrollingOption.getValue()) {
-				return ourDisableString;
-			}
 			return nameByCode(myOption.getValue());
 		}
 
 		public void onAccept(String value) {
-			if (myIsTapOption) {
-				if (ourDisableString.equals(value)) {
-					myFBReader.EnableTapScrollingOption.setValue(false);
-				} else {
-					myFBReader.EnableTapScrollingOption.setValue(true);
-					myOption.setValue(codeByName(value));
-				}
-			} else {
-				myOption.setValue(codeByName(value));
-			}
+			myOption.setValue(codeByName(value));
 		}
 	}
 }

@@ -25,16 +25,19 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 public class ZLAndroidViewWidget extends ZLViewWidget {
-	private final ZLAndroidWidget myWidget = 
-		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget();
-
 	public ZLAndroidViewWidget(int initialAngle) {
 		super(initialAngle);
-		myWidget.setViewWidget(this);
+
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.setViewWidget(this);
 	}
 
 	public void repaint() {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.setViewWidget(this);
 		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
-		myWidget.postInvalidate();
+		widget.postInvalidate();
 	}
 }

@@ -108,7 +108,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public void closeInternal() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).finish();
+		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
 	}
 
 	//public void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item) {

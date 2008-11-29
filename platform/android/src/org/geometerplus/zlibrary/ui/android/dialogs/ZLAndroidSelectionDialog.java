@@ -46,6 +46,7 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog implements ZLAndroidDia
 	public void setActivity(DialogActivity activity) {
 		mySelectionView = new SelectionView(activity);
 		activity.setContentView(mySelectionView);
+		invalidateAll();
 		update();
 	}
 
@@ -107,7 +108,7 @@ class ZLAndroidSelectionDialog extends ZLSelectionDialog implements ZLAndroidDia
 
 	private class SelectionViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
-			return new ItemView(myContext, (ZLTreeNode)getItem(position));
+			return new ItemView(parent.getContext(), (ZLTreeNode)getItem(position));
 		}
 
 		public boolean areAllItemsSelectable() {

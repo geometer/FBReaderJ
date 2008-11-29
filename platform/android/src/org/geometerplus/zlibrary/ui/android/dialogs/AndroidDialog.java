@@ -42,6 +42,6 @@ final class AndroidDialog extends Dialog {
 	}
 
 	protected void onStop() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.getInstance()).getWidget().requestFocus();
+		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget().requestFocus();
 	}
 }

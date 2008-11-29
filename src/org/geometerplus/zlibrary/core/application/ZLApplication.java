@@ -28,13 +28,18 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public abstract class ZLApplication {
+	public static ZLApplication Instance() {
+		return ourInstance;
+	}
+
+	private static ZLApplication ourInstance;
+
 	private static final String MouseScrollUpKey = "<MouseScrollDown>";
 	private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
@@ -66,11 +71,9 @@ public abstract class ZLApplication {
 	public final ZLIntegerRangeOption KeyDelayOption =
 		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
 	
-	public final ZLPaintContext Context;
-
 	protected ZLViewWidget myViewWidget;
 	private ZLApplicationWindow myWindow;
-	private ZLView myInitialView;
+	private ZLView myView;
 
 	private final HashMap myIdToActionMap = new HashMap();
 	private Toolbar myToolbar;
@@ -79,7 +82,7 @@ public abstract class ZLApplication {
 	//private ZLMessageHandler myPresentWindowHandler;
 
 	protected ZLApplication() {
-		Context = ZLibrary.getInstance().createPaintContext();
+		ourInstance = this;
 		
 		if (ConfigAutoSavingOption.getValue()) {
 			//ZLOption.startAutoSave(ConfigAutoSaveTimeoutOption.getValue());
@@ -102,18 +105,16 @@ public abstract class ZLApplication {
 
 	protected final void setView(ZLView view) {
 		if (view != null) {
+			myView = view;
 			if (myViewWidget != null) {
-				myViewWidget.setView(view);
 				resetWindowCaption();
 				refreshWindow();
-			} else {
-				myInitialView = view;
 			}
 		}
 	}
 
-	protected final ZLView getCurrentView() {
-		return (myViewWidget != null) ? myViewWidget.getView() : null;
+	public final ZLView getCurrentView() {
+		return myView;
 	}
 
 	public final void quit() {
@@ -134,7 +135,7 @@ public abstract class ZLApplication {
 			grabAllKeys(true);
 		}
 		myWindow.init();
-		setView(myInitialView);
+		setView(myView);
 	}
 
 	public final void refreshWindow() {
@@ -148,11 +149,10 @@ public abstract class ZLApplication {
 
 	protected final void resetWindowCaption() {
 		if (myWindow != null) {
-			ZLView view = getCurrentView();
-			if (view != null) {
-				myWindow.setCaption(ZLibrary.getInstance().getApplicationName() + " - " + view.getCaption());
+			if (myView != null) {
+				myWindow.setCaption(ZLibrary.Instance().getApplicationName() + " - " + myView.getCaption());
 			} else {
-				myWindow.setCaption(ZLibrary.getInstance().getApplicationName());
+				myWindow.setCaption(ZLibrary.Instance().getApplicationName());
 			}
 		}
 	}

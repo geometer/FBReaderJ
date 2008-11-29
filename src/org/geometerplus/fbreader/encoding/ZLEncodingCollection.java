@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.config.ZLConfigManager;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLOption;
@@ -63,7 +63,7 @@ public class ZLEncodingCollection {
 	}
 	
 	public	static boolean useWindows1252Hack() {
-		return ZLConfigManager.getInstance() != null/*.isInitialised()*/ && useWindows1252HackOption().getValue();
+		return ZLConfig.Instance() != null/*.isInitialised()*/ && useWindows1252HackOption().getValue();
 	}
 
 

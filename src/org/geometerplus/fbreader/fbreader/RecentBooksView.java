@@ -47,7 +47,11 @@ public class RecentBooksView extends FBView {
 		setModel(null);//, LIBRARY);
 	}
 	
-	public boolean _onStylusPress(int x, int y) {
+	public boolean onStylusRelease(int x, int y) {
+		if (super.onStylusRelease(x, y)) {
+			return false;
+		}
+
 		final ArrayList/*<BookDescription>*/ books = myLastBooks.books();
 
 		int index = getParagraphIndexByCoordinate(y);

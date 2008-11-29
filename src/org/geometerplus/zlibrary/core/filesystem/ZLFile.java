@@ -211,7 +211,7 @@ public class ZLFile {
 		InputStream stream = null;
 		int index = ZLFSUtil.findArchiveFileNameDelimiter(myPath);
 		if (index == -1) {
-			stream = ZLibrary.getInstance().getInputStream(myPath);
+			stream = ZLibrary.Instance().getInputStream(myPath);
 		} else {
 			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
 			InputStream base = baseFile.getInputStream();

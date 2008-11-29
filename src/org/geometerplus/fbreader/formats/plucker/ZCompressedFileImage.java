@@ -22,7 +22,7 @@ public class ZCompressedFileImage extends ZLSingleImage {
 	}
 
 	public byte[] byteData() {
-final InputStream stream = ZLibrary.getInstance().getInputStream(myPath);
+final InputStream stream = ZLibrary.Instance().getInputStream(myPath);
 		
 		if (stream == null) {
 			return new byte[0];

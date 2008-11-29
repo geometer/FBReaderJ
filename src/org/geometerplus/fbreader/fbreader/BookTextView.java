@@ -164,7 +164,11 @@ public class BookTextView extends FBView {
 		}
 	}
 	
-	public boolean _onStylusPress(int x, int y) {
+	public boolean onStylusRelease(int x, int y) {
+		if (super.onStylusRelease(x, y)) {
+			return false;
+		}
+
 		ZLTextElementArea area = getElementByCoordinates(x, y);
 		if (area != null) {
 			ZLTextElement element = area.Element;
@@ -197,7 +201,7 @@ public class BookTextView extends FBView {
 					switch (hyperlinkKind) {
 						case FBTextKind.EXTERNAL_HYPERLINK:
 							if (OpenInBrowserOption.getValue()) {
-								ZLibrary.getInstance().openInBrowser(id);
+								ZLibrary.Instance().openInBrowser(id);
 							}
 							return true;
 						case FBTextKind.FOOTNOTE:

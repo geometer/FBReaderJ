@@ -31,7 +31,11 @@ class ContentsView extends FBView {
 		super(fbreader, context);
 	}
 
-	public boolean _onStylusPress(int x, int y) {
+	public boolean onStylusRelease(int x, int y) {
+		if (super.onStylusRelease(x, y)) {
+			return false;
+		}
+
 		final int index = getParagraphIndexByCoordinate(y);
 		if (index == -1) {
 			return false;

@@ -46,26 +46,57 @@ public abstract class FBView extends ZLTextViewImpl {
 		super(fbreader, context);
 	}
 
-	protected boolean _onStylusPress(int x, int y) {
+	private int myStartX;
+	private int myStartY;
+	private boolean myTouchIsProcessed;
+
+	public boolean onStylusPress(int x, int y) {
+		if (super.onStylusPress(x, y)) {
+			return true;
+		}
+
+		myStartX = x;
+		myStartY = y;
+		myTouchIsProcessed = false;
+
+		//activateSelection(x, y);
+		return true;
+	}
+
+	public boolean onStylusMovePressed(int x, int y) {
+		if (super.onStylusMovePressed(x, y) || myTouchIsProcessed) {
+			return true;
+		}
+
+		final int diffY = y - myStartY;
+		if (Math.abs(diffY) * 5 >= Context.getHeight()) {
+			if (diffY > 0) {
+				Application.doAction(ActionCode.TOUCH_SCROLL_BACKWARD);
+			} else {
+				Application.doAction(ActionCode.TOUCH_SCROLL_FORWARD);
+			}
+			myTouchIsProcessed = true;
+			return true;
+		}
+
 		return false;
 	}
 
-	public final boolean onStylusPress(int x, int y) {
-		if (super.onStylusPress(x, y) || _onStylusPress(x, y)) {
+	public boolean onStylusRelease(int x, int y) {
+		if (super.onStylusRelease(x, y)) {
 			return true;
 		}
 
-		final FBReader fbreader = (FBReader)Application;
-		if (fbreader.EnableTapScrollingOption.getValue()) {
-			if (2 * y < Context.getHeight()) {
-				fbreader.doAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD);
-			} else {
-				fbreader.doAction(ActionCode.FINGER_TAP_SCROLL_FORWARD);
-			}
-			return true;
-		}
+		//activateSelection(x, y);
+		return myTouchIsProcessed;
+	}
 
-		activateSelection(x, y);
+	public boolean onTrackballRotated(int diffX, int diffY) {
+		if (diffY > 0) {
+			Application.doAction(ActionCode.TRACKBALL_SCROLL_FORWARD);
+		} else if (diffY < 0) {
+			Application.doAction(ActionCode.TRACKBALL_SCROLL_BACKWARD);
+		}
 		return true;
 	}
 

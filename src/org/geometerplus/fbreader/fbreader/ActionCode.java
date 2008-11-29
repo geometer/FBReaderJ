@@ -28,12 +28,10 @@ public interface ActionCode {
 	String SEARCH = "search";
 	String FIND_PREVIOUS = "findPrevious";
 	String FIND_NEXT = "findNext";
-	String LARGE_SCROLL_FORWARD = "largeScrollForward";
-	String LARGE_SCROLL_BACKWARD = "largeScrollBackward";
-	String SMALL_SCROLL_FORWARD = "smallScrollForward";
-	String SMALL_SCROLL_BACKWARD = "smallScrollBackward";
-	String MOUSE_SCROLL_FORWARD = "mouseScrollForward";
-	String MOUSE_SCROLL_BACKWARD = "mouseScrollBackward";
+	String TOUCH_SCROLL_FORWARD = "touchScrollForward";
+	String TOUCH_SCROLL_BACKWARD = "touchScrollBackward";
+	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";
+	String TRACKBALL_SCROLL_BACKWARD = "trackballScrollBackward";
 	String SCROLL_TO_HOME = "gotoHome";
 	String SCROLL_TO_START_OF_TEXT = "gotoSectionStart";
 	String SCROLL_TO_END_OF_TEXT = "gotoSectionEnd";
@@ -50,8 +48,6 @@ public interface ActionCode {
 	String SHOW_LAST_BOOKS = "showRecent";
 	String QUIT = "quit";
 	String OPEN_PREVIOUS_BOOK = "previousBook";
-	String FINGER_TAP_SCROLL_FORWARD = "tapScrollForward";
-	String FINGER_TAP_SCROLL_BACKWARD = "tapScrollBackward";
 	String GOTO_NEXT_TOC_SECTION = "nextTOCSection";
 	String GOTO_PREVIOUS_TOC_SECTION = "previousTOCSection";
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";

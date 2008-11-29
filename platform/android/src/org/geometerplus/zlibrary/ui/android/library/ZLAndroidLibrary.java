@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfigManager;
+import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
@@ -42,8 +42,39 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
 	private ZLAndroidApplicationWindow myMainWindow;
 	private ZLAndroidWidget myWidget;
+	private final ZLAndroidDialogManager myDialogManager;
 
-	public ZLAndroidPaintContext createPaintContext() {
+	ZLAndroidLibrary(ZLAndroidActivity activity) {
+		myActivity = activity;
+
+		new ZLOwnXMLProcessorFactory();
+		loadProperties();
+		new ZLSQLiteConfig(activity.getApplication(), getApplicationName());
+		new ZLAndroidImageManager();
+		myDialogManager = new ZLAndroidDialogManager(activity);
+
+		try {
+			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
+			myMainWindow = new ZLAndroidApplicationWindow(application);
+			application.initWindow();
+		} catch (Exception e) {
+			finish();
+		}
+	}
+
+	void setActivity(ZLAndroidActivity activity) {
+		myActivity = activity;
+		myDialogManager.setActivity(activity);
+		myWidget = null;
+	}
+
+	public void finish() {
+		if (myActivity != null) {
+			myActivity.finish();
+		}
+	}
+
+	public ZLAndroidPaintContext getPaintContext() {
 		return getWidget().getPaintContext();
 	}
 
@@ -80,38 +111,9 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myActivity.getResources().openRawResource(resourceId);
 	}
 
-	public static void shutdown() {
-		ZLSQLiteConfigManager.release();
-	}
-
-	public void finish() {
-		shutdown();
-		if (myActivity != null) {
-			myActivity.finish();
-		}
-	}
-
 	public void openInBrowser(String reference) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse(reference));
 		myActivity.startActivity(intent);
-	}
-
-	void run(ZLAndroidActivity activity) {
-		myActivity = activity;
-
-		new ZLOwnXMLProcessorFactory();
-		loadProperties();
-		new ZLSQLiteConfigManager(activity, getApplicationName());
-		new ZLAndroidImageManager();
-		new ZLAndroidDialogManager(activity);
-
-		try {
-			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
-			myMainWindow = new ZLAndroidApplicationWindow(application);
-			application.initWindow();
-		} catch (Exception e) {
-			finish();
-		}
 	}
 }

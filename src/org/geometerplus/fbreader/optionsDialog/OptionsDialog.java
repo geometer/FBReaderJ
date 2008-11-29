@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.optionsDialog;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.language.ZLLanguageList;
 import org.geometerplus.zlibrary.core.optionEntries.*;
@@ -79,7 +80,7 @@ public class OptionsDialog {
 		
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
-		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.Context);
+		new StyleOptionsPage(myDialog.createTab("Styles"), ZLibrary.Instance().getPaintContext());
 		
 		createIndicatorTab(fbreader);
 		

@@ -31,7 +31,7 @@ public abstract class ZLXMLProcessor {
 	public boolean read(ZLXMLReader xmlReader, String fileName) {
 		InputStream stream = null;
 		if (fileName.lastIndexOf(ZLibrary.JAR_DATA_PREFIX) != -1) {
-			stream = ZLibrary.getInstance().getInputStream(fileName);
+			stream = ZLibrary.Instance().getInputStream(fileName);
 		} else {
 			try {
 				stream = (new ZLFile(fileName)).getInputStream();

@@ -19,8 +19,9 @@
 
 package org.geometerplus.zlibrary.core.view;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+
 abstract public class ZLViewWidget {
-	private ZLView myView;
 	private int myRotation;
 
 	public interface Angle {
@@ -32,14 +33,6 @@ abstract public class ZLViewWidget {
 
 	protected ZLViewWidget(int initialAngle) {
 		myRotation = initialAngle;
-	}
-
-	public final void setView(ZLView view) {
-		myView = view;
-	}
-
-	public final ZLView getView() {
-		return myView;
 	}
 
 	public final void rotate(int rotation) {

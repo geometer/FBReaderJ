@@ -111,10 +111,6 @@ public class KeyBindingsPage {
 			addAction(ActionCode.SCROLL_TO_END_OF_TEXT);
 			addAction(ActionCode.GOTO_NEXT_TOC_SECTION);
 			addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION);
-			addAction(ActionCode.LARGE_SCROLL_FORWARD);
-			addAction(ActionCode.LARGE_SCROLL_BACKWARD);
-			addAction(ActionCode.SMALL_SCROLL_FORWARD);
-			addAction(ActionCode.SMALL_SCROLL_BACKWARD);
 			addAction(ActionCode.UNDO);
 			addAction(ActionCode.REDO);
 

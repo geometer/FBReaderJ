@@ -59,7 +59,11 @@ public class CollectionView extends FBView {
 		return ZLResource.resource("library").getResource("caption").getValue();
 	}
 
-	public boolean _onStylusPress(int x, int y) {
+	public boolean onStylusRelease(int x, int y) {
+		if (super.onStylusRelease(x, y)) {
+			return false;
+		}
+
 		ZLTextElementArea imageArea = getElementByCoordinates(x, y);
 		if ((imageArea != null) && (imageArea.Element instanceof ZLTextImageElement)) {
 			ZLTextWordCursor cursor = new ZLTextWordCursor(StartCursor);

@@ -91,12 +91,9 @@
 				</node>
 				<node name="Scrolling" value="Scrolling">
 					<node name="optionsFor" value="Options for">
-						<node name="large" value="Large Scrollings"/>
-						<node name="small" value="Small Scrollings"/>
-						<node name="mouse" value="Mouse Scrollings"/>
-						<node name="tap" value="Tap Scrollings"/>
+						<node name="touch" value="Touch Scrollings"/>
+						<node name="trackball" value="Trackball Scrollings"/>
 					</node>
-					<node name="delay" value="Delay between Scrollings, msecs"/>
 					<node name="mode" value="Scrolling Mode">
 						<node name="noOverlapping" value="No Overlapping"/>
 						<node name="keepLines" value="Keep Lines"/>

@@ -83,6 +83,10 @@ public abstract class ZLSelectionDialog {
 		}
 	}
 	
+	protected void invalidateAll() {
+		handler().invalidateUpdateInfo();
+	}
+
 	protected void update() {
 		int info = handler().updateInfo();
 		if ((info & UPDATE_STATE) != 0) {
@@ -94,7 +98,7 @@ public abstract class ZLSelectionDialog {
 		if ((info & UPDATE_SELECTION) != 0) {
 			updateSelection();
 		}
-		myHandler.resetUpdateInfo();
+		handler().resetUpdateInfo();
 	}
 	
 	protected abstract void exitDialog();

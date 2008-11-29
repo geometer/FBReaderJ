@@ -53,12 +53,12 @@ class ItemView extends LinearLayout {
 		if (icon != null) {
 			imageView.setImageDrawable(icon);
 		}
-		imageView.setPadding(0, 2, 5, 0);
+		imageView.setPadding(5, 16, 10, 13);
 		addView(imageView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		final TextView textView = new TextView(context);
-		textView.setPadding(0, 2, 0, 0);
-		textView.setTextSize(18);
+		textView.setPadding(0, 17, 0, 0);
+		textView.setTextSize(20);
 		textView.setText(node.DisplayName);
 		addView(textView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}

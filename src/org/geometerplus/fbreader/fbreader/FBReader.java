@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -54,19 +55,10 @@ public final class FBReader extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption = 
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "KeysOptions", "UseSeparateBindings", false);
 
-	public final ScrollingOptions LargeScrollingOptions =
-		new ScrollingOptions("LargeScrolling", 250, ZLTextView.ScrollingMode.NO_OVERLAPPING);
-	public final ScrollingOptions SmallScrollingOptions =
-		new ScrollingOptions("SmallScrolling", 50, ZLTextView.ScrollingMode.SCROLL_LINES);
-	public final ScrollingOptions MouseScrollingOptions =
-		new ScrollingOptions("MouseScrolling", 0, ZLTextView.ScrollingMode.SCROLL_LINES);
-	public final ScrollingOptions FingerTapScrollingOptions =
-		new ScrollingOptions("FingerTapScrolling", 0, ZLTextView.ScrollingMode.NO_OVERLAPPING);
-
-	public final ZLBooleanOption EnableTapScrollingOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "TapScrolling", "Enabled", true);
-	public final ZLBooleanOption TapScrollingOnFingerOnlyOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "TapScrolling", "FingerOnly", true);
+	public final ScrollingOptions TouchScrollingOptions =
+		new ScrollingOptions("TouchScrolling", ZLTextView.ScrollingMode.NO_OVERLAPPING);
+	public final ScrollingOptions TrackballScrollingOptions =
+		new ScrollingOptions("TrackballScrolling", ZLTextView.ScrollingMode.SCROLL_LINES);
 	
 	private String myHelpFileName;
 	
@@ -75,7 +67,7 @@ public final class FBReader extends ZLApplication {
 			myHelpFileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2";
 			InputStream testStream = null;
 			try {
-				testStream = ZLibrary.getInstance().getInputStream(myHelpFileName);
+				testStream = ZLibrary.Instance().getInputStream(myHelpFileName);
 				testStream.close();
 			} catch (Exception e) {
 			}
@@ -138,14 +130,10 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
-		addAction(ActionCode.LARGE_SCROLL_FORWARD, new ScrollingAction(this, LargeScrollingOptions, true));
-		addAction(ActionCode.LARGE_SCROLL_BACKWARD, new ScrollingAction(this, LargeScrollingOptions, false));
-		addAction(ActionCode.SMALL_SCROLL_FORWARD, new ScrollingAction(this, SmallScrollingOptions, true));
-		addAction(ActionCode.SMALL_SCROLL_BACKWARD, new ScrollingAction(this, SmallScrollingOptions, false));
-		addAction(ActionCode.MOUSE_SCROLL_FORWARD, new ScrollingAction(this, MouseScrollingOptions, true));
-		addAction(ActionCode.MOUSE_SCROLL_BACKWARD, new ScrollingAction(this, MouseScrollingOptions, false));
-		addAction(ActionCode.FINGER_TAP_SCROLL_FORWARD, new ScrollingAction(this, FingerTapScrollingOptions, true));
-		addAction(ActionCode.FINGER_TAP_SCROLL_BACKWARD, new ScrollingAction(this, FingerTapScrollingOptions, false));
+		addAction(ActionCode.TOUCH_SCROLL_FORWARD, new ScrollingAction(this, TouchScrollingOptions, true));
+		addAction(ActionCode.TOUCH_SCROLL_BACKWARD, new ScrollingAction(this, TouchScrollingOptions, false));
+		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new ScrollingAction(this, TrackballScrollingOptions, true));
+		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new ScrollingAction(this, TrackballScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
 		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new ToggleIndicatorAction(this));
 		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new OpenPreviousBookAction(this));
@@ -156,11 +144,12 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 
-		BookTextView = new BookTextView(this, Context);
-		ContentsView = new ContentsView(this, Context);
-		FootnoteView = new FootnoteView(this, Context);
-		CollectionView = new CollectionView(this, Context);
-		RecentBooksView = new RecentBooksView(this, Context);
+		ZLPaintContext context = ZLibrary.Instance().getPaintContext();
+		BookTextView = new BookTextView(this, context);
+		ContentsView = new ContentsView(this, context);
+		FootnoteView = new FootnoteView(this, context);
+		CollectionView = new CollectionView(this, context);
+		RecentBooksView = new RecentBooksView(this, context);
 
 		setMode(ViewMode.BOOK_TEXT);
 	}

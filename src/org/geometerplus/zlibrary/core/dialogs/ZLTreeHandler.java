@@ -37,6 +37,10 @@ public abstract class ZLTreeHandler {
 		return myUpdateInfo;
 	}
 	
+	public void invalidateUpdateInfo() {
+		myUpdateInfo = ZLSelectionDialog.UPDATE_ALL;
+	}
+	
 	public void resetUpdateInfo() {
 		myUpdateInfo = ZLSelectionDialog.UPDATE_NONE;
 	}

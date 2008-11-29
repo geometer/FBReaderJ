@@ -25,9 +25,11 @@ import android.app.Application;
 
 public class ZLAndroidApplication extends Application {
 	public void onCreate() {
+		super.onCreate();
 	}
 
 	public void onTerminate() {
+		super.onTerminate();
 	}
 
 	public void putData(Object key, Object value) {
