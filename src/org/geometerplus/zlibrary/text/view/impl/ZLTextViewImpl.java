@@ -402,8 +402,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public synchronized void paint() {
 		//android.os.Debug.startMethodTracing("/tmp/paint");
-		preparePaintInfo();
-
 		myTextElementMap.clear();
 		myTreeNodeMap.clear();
 
@@ -412,6 +410,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		context.clear(baseStyle.BackgroundColorOption.getValue());
 
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+			return;
+		}
+
+		preparePaintInfo();
+
+		if (StartCursor.isNull() || EndCursor.isNull()) {
 			return;
 		}
 

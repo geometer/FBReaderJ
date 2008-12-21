@@ -222,8 +222,15 @@ public class ZLFile {
 					ZipEntry entry = zf.getEntry (myPath.substring(index+1));
 					stream = zf.getInputStream (entry);
 					*/
-					final ZipInputStream zipStream = new ZipInputStream(base);
+					final org.amse.ys.zip.ZipInputStream zipStream = new org.amse.ys.zip.ZipInputStream(myPath.substring(0, index));
+					//final ZipInputStream zipStream = new ZipInputStream(base);
 					final String entryName = myPath.substring(index + 1);
+					try {
+						zipStream.openFile(entryName);
+						stream = zipStream;
+					} catch (org.amse.ys.zip.WrongZipFormatException e) {
+					}
+					/*
 					while (true) {
 						ZipEntry entry = zipStream.getNextEntry();
 						if (entry == null) {
@@ -233,6 +240,7 @@ public class ZLFile {
 							break;
 						}
 					}
+					*/
 				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
 					stream = new ZLTarInputStream(base, myPath.substring(index + 1));
 				}

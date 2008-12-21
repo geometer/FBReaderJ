@@ -25,7 +25,7 @@ import android.os.Bundle;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 public class DialogActivity extends Activity {
-	public static final Object DIALOG_KEY = new Object();
+	static final Object DIALOG_KEY = new Object();
 
 	private ZLAndroidDialogInterface myDialog;
 

@@ -116,6 +116,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	//}
 
 	public void setFullscreen(boolean fullscreen) {
+		android.util.Log.w("ZLAndroidApplicationWindow", "setFullscreen " + fullscreen);
 		// TODO: implement
 	}
 

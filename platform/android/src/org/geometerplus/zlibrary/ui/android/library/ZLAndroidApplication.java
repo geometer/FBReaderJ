@@ -22,10 +22,35 @@ package org.geometerplus.zlibrary.ui.android.library;
 import java.util.HashMap;
 
 import android.app.Application;
+//import android.hardware.SensorManager;
+//import android.hardware.SensorListener;
 
 public class ZLAndroidApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
+		android.webkit.MimeTypeMap map = android.webkit.MimeTypeMap.getSingleton();
+		android.util.Log.w("epub", "" + map.hasExtension("epub"));
+		android.util.Log.w("oeb", "" + map.hasExtension("oeb"));
+		android.util.Log.w("fb2", "" + map.hasExtension("fb2"));
+		android.util.Log.w("fb2.zip", "" + map.hasExtension("fb2.zip"));
+		/*
+		SensorManager sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+		sensorManager.registerListener(new SensorListener() {
+			public void onAccuracyChanged(int sensor, int accuracy) {
+				android.util.Log.w("onAccuracyChanged", "" + sensor + ": " + accuracy);
+			}
+
+			public void onSensorChanged(int sensor, float[] values) {
+				String sValues = "";
+				for (float v : values) {
+					sValues += v;
+					sValues += ';';
+				}
+				android.util.Log.w("onSensorChanged", "" + sensor + ": " + sValues);
+			}
+		//}, SensorManager.SENSOR_ORIENTATION | SensorManager.SENSOR_ACCELEROMETER);
+		}, SensorManager.SENSOR_ACCELEROMETER);
+		*/
 	}
 
 	public void onTerminate() {

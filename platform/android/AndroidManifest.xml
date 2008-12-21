@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android">
 	<application android:name=".library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
-		<activity android:name=".library.ZLAndroidActivity" android:label="FBReader">
+		<activity android:name=".library.ZLAndroidActivity" android:label="FBReader" android:screenOrientation="sensor">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+			<!--intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="application/epub" />
+			</intent-filter-->
 		</activity>
-		<activity android:name=".dialogs.DialogActivity" android:label="Dialog">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-			</intent-filter>
-		</activity>
+		<activity android:name=".dialogs.DialogActivity" android:label="" />
+		<activity android:name=".dialogs.OptionsActivity" android:label="" />
 	</application>
 </manifest> 

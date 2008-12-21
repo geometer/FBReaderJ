@@ -33,7 +33,7 @@
 	</submenu>
 	<submenu id="view">
 		<item id="rotate"/>
-		<!--item id="toggleFullscreen"/-->
+		<item id="toggleFullscreen"/>
 		<item id="toggleIndicator"/>
 	</submenu>
 </menubar>

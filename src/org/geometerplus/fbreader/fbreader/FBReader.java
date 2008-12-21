@@ -320,7 +320,9 @@ public final class FBReader extends ZLApplication {
 		}
 		
 		public void run() { 
+			final long start = System.currentTimeMillis();
 			openBookInternal(myDescription); 
+			android.util.Log.w("openBook", "" + (System.currentTimeMillis() - start));
 		}
 	}
 
