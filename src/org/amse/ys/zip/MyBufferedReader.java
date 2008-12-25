@@ -45,9 +45,21 @@ final class MyBufferedReader extends InputStream {
     }
 
     public void skip(int n) throws IOException {
-        for (int i = 0; i < n; i++) {
-            read();    
-        }        
+	myCurrentPosition += n;
+	while (n > 0) {
+	    if (myBytesReady > n) {
+		myBytesReady -= n;
+		myPositionInBuffer += n;
+		n = 0;
+	    } else {
+		n -= myBytesReady;
+               	myPositionInBuffer = 0;
+               	myBytesReady = myFile.read(myBuffer);
+		if (myBytesReady <= 0) {
+		    break;
+		}
+            }        
+        }
     }
 
     public void backSkip(int n) {

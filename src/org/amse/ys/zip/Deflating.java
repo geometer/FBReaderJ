@@ -94,13 +94,13 @@ public class Deflating extends Decompressor {
 	while (i < len) {
 	    int toRead = Math.min(MAX_LEN, len - i);
             while (available < toRead) {
+        	if (myState == ST_END_OF_FILE) {
+        	    break;
+        	}
         	if (myState == ST_HEADER) {
         	    readHeader();
         	}            
         	available += pushNextSymbolToDictionary();            
-        	if (myState == ST_END_OF_FILE) {
-        	    break;
-        	}
 	    }
 	    if (available == 0) {
 		break;
@@ -133,8 +133,7 @@ public class Deflating extends Decompressor {
 
     private int pushNextSymbolToDictionary() throws IOException {
         if (myState == ST_NO_COMPRESSION) {
-            // TODO check, whether correct
-            myOutputBuffer.writeByte((byte)myStream.read());
+            myOutputBuffer.writeByte((byte)readIntegerByBit(8));
             myReadInBlock++;
             if (myCurrentBlockLength == myReadInBlock) {
                 if (myTheBlockIsFinal) {
@@ -149,7 +148,7 @@ public class Deflating extends Decompressor {
             int length;
             switch (currentHuffmanCode) {
 		default:
-            	    myOutputBuffer.writeByte((byte)currentHuffmanCode);
+		    myOutputBuffer.writeByte((byte)currentHuffmanCode);
 		    return 1;
                 case 256:  
                     myState = myTheBlockIsFinal ? ST_END_OF_FILE : ST_HEADER;
@@ -192,10 +191,10 @@ public class Deflating extends Decompressor {
                 case 282:  
                 case 283:  
                 case 284:  
-                    length = ((currentHuffmanCode - 281) << 5) + 115 + readIntegerByBit(5);
+                    length = ((currentHuffmanCode - 281) << 5) + 131 + readIntegerByBit(5);
                     break;
                 case 285:  
-                    length = 285;
+                    length = 258;
                     break;
             }
 
@@ -204,6 +203,7 @@ public class Deflating extends Decompressor {
             final int distance;
             if (huffmanCode <= 3) {
                 distance = huffmanCode + 1;
+                
             } else if (huffmanCode <= 29) {
                 final int extraBits = (huffmanCode / 2) - 1;
                 int previousCode = (1 << (huffmanCode / 2));
@@ -249,7 +249,9 @@ public class Deflating extends Decompressor {
         case 0:
             myState = ST_NO_COMPRESSION;
             readIntegerByBit(5);            
-            myCurrentBlockLength = readIntegerByBit(32);
+            myCurrentBlockLength = readIntegerByBit(16);
+            readIntegerByBit(16);
+            myReadInBlock = 0;
             break;
         case 1:
             myState = ST_FIXED_CODES;

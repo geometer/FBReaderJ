@@ -364,7 +364,9 @@ mainSwitchLabel:
 									--i;
 									break;
 								case '"':
-									attributeValue.append(buffer, i - 1, 1);
+									if (i != 0) {
+										attributeValue.append(buffer, i - 1, 1);
+									}
 									break mainSwitchLabel;
 								default:
 									state = ATTRIBUTE_VALUE;
