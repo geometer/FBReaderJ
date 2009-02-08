@@ -92,10 +92,10 @@ public final class ZLTextWordCursor {
 		final ZLTextParagraphCursor paragraph = myParagraphCursor;
 		int paragraphLength = paragraph.getParagraphLength();
 		int wordIndex = myWordIndex;
-		while ((wordIndex != paragraphLength) && (!(paragraph.getElement(wordIndex) instanceof ZLTextWord))) {
+		while ((wordIndex < paragraphLength) && (!(paragraph.getElement(wordIndex) instanceof ZLTextWord))) {
 			wordIndex++;
 		}
-		if (wordIndex != paragraphLength) {
+		if (wordIndex < paragraphLength) {
 			return new ZLTextMark(paragraph.Index, ((ZLTextWord) paragraph.getElement(wordIndex)).getParagraphOffset(), 0);
 		}
 		return new ZLTextMark(paragraph.Index + 1, 0, 0);

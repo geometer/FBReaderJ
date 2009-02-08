@@ -42,10 +42,6 @@ public class KeyBindingsPage {
 		dialogTab.addOption("separate", useSeparateBindingsEntry);
 		dialogTab.addOption("orientation", orientationEntry);
 		dialogTab.addOption("action", keyEntry);//?
-		ZLOptionEntry exitOnCancelEntry = new ZLSimpleBooleanOptionEntry(fbreader.QuitOnCancelOption);
-		keyEntry.setExitOnCancelEntry(exitOnCancelEntry);
-		dialogTab.addOption("quitOnCancel", exitOnCancelEntry);
-		exitOnCancelEntry.setVisible(false);
 		useSeparateBindingsEntry.onStateChanged(useSeparateBindingsEntry.initialState());
 		//dialogTab.addOption("keyDelay", new ZLSimpleSpinOptionEntry(fbreader.KeyDelayOption, 50));
 	}

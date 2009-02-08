@@ -49,9 +49,6 @@ public final class FBReader extends ZLApplication {
 		int RECENT_BOOKS = 1 << 5;
 	};
 
-	public final ZLBooleanOption QuitOnCancelOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Options", "QuitOnCancel", true);
-	
 	public final ZLBooleanOption UseSeparateBindingsOption = 
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "KeysOptions", "UseSeparateBindings", false);
 
@@ -320,9 +317,9 @@ public final class FBReader extends ZLApplication {
 		}
 		
 		public void run() { 
-			final long start = System.currentTimeMillis();
+			//final long start = System.currentTimeMillis();
 			openBookInternal(myDescription); 
-			android.util.Log.w("openBook", "" + (System.currentTimeMillis() - start));
+			//android.util.Log.w("openBook", "" + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -335,9 +332,10 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	protected void onQuit() {
+	public boolean closeWindow() {
 		if (BookTextView != null) {
 			BookTextView.saveState();
 		}
+		return super.closeWindow();
 	}
 }

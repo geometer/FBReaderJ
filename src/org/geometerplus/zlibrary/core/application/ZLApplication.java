@@ -117,14 +117,6 @@ public abstract class ZLApplication {
 		return myView;
 	}
 
-	public final void quit() {
-		if (myWindow != null) {
-			myWindow.close();
-		}
-	}
-
-	abstract protected void onQuit();
-
 	final void setWindow(ZLApplicationWindow window) {
 		myWindow = window;
 	}
@@ -219,8 +211,10 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public boolean closeView() {
-		quit();
+	public boolean closeWindow() {
+		if (myWindow != null) {
+			myWindow.close();
+		}
 		return true;
 	}
 	

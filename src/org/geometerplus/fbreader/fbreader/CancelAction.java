@@ -29,8 +29,8 @@ class CancelAction extends FBAction {
 			Reader.restorePreviousMode();
 		} else if (Reader.isFullscreen()) {
 			Reader.setFullscreen(false);
-		} else if (Reader.QuitOnCancelOption.getValue()) {
-			Reader.quit();
+		} else {
+			Reader.closeWindow();
 		}
 	}
 }

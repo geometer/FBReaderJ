@@ -189,7 +189,11 @@ public abstract class ZLTextParagraphCursor {
 	abstract ZLTextParagraphCursor next();
 	
 	final ZLTextElement getElement(int index) {
-		return (ZLTextElement)myElements.get(index);
+		try {
+			return (ZLTextElement)myElements.get(index);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	ZLTextParagraph getParagraph() {

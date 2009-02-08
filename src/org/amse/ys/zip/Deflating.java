@@ -248,7 +248,7 @@ public class Deflating extends Decompressor {
         switch (kindOfBlock) {
         case 0:
             myState = ST_NO_COMPRESSION;
-            readIntegerByBit(5);            
+            readIntegerByBit(myBitsInBuffer % 8);            
             myCurrentBlockLength = readIntegerByBit(16);
             readIntegerByBit(16);
             myReadInBlock = 0;

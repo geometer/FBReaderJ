@@ -22,47 +22,39 @@ package org.geometerplus.zlibrary.core.sqliteconfig;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public final class ZLSQLiteConfig extends ZLConfig {
-	private final Context myContext;
-	private final String myName;
-	private SQLiteDatabase myDatabase;
+	private final SQLiteOpenHelper myOpenHelper;
 
 	public ZLSQLiteConfig(Context context, String name) {
-		myContext = context;
-		myName = name;
-	}
-
-	private SQLiteDatabase database() {
-		if (myDatabase == null) {
-			myDatabase = myContext.openOrCreateDatabase(myName + ".db", Context.MODE_PRIVATE, null);
-			try {
-				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
-			} catch (Exception e) {
+		myOpenHelper = new SQLiteOpenHelper(context, name, null, 1) {
+			public void onCreate(SQLiteDatabase database) {
+				database.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name))");
 			}
-		}
-		return myDatabase;
+
+			public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+			}
+		};
 	}
 
 	public void shutdown() {
-		if (myDatabase != null) {
-			myDatabase.close();
-			myDatabase = null;
-		}
+		myOpenHelper.close();
 	}
 
 	public void removeGroup(String name) {
-		database().execSQL("DELETE FROM config WHERE groupName='" + name + "'");
+		myOpenHelper.getWritableDatabase().delete(ourTableName, "groupName = ?", new String[] { name });
 	}
 
 	private final String ourTableName = "config";
 	private final String[] ourColumns = new String[] { "value" };
-	private final String[] ourSelectionArgs = new String[0];
 
 	public String getValue(String group, String name, String defaultValue) {
-		Cursor cursor = database().query(true, ourTableName, ourColumns, "groupName='" + group + "' AND name='" + name + "'", ourSelectionArgs, null, null, null, null);
+		Cursor cursor = myOpenHelper.getReadableDatabase().query(
+				true, ourTableName, ourColumns, "groupName = ? AND name = ?", 
+				new String[] { group, name }, null, null, null, null);
 		String answer = defaultValue;
 		if (cursor.getCount() != 0) {
 			cursor.moveToFirst();
@@ -73,10 +65,12 @@ public final class ZLSQLiteConfig extends ZLConfig {
 	}
 
 	public void setValue(String group, String name, String value, String category) {
-		database().execSQL("INSERT OR REPLACE INTO config (groupName, name, value) VALUES ('" + group + "', '" + name + "', '" + value + "')");
+		myOpenHelper.getWritableDatabase().execSQL(
+				"INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)",
+				new String[] { group, name, value });
 	}
 
 	public void unsetValue(String group, String name) {
-		database().execSQL("DELETE FROM config WHERE groupName='" + group + "' AND name='" + name + "'");
+		myOpenHelper.getWritableDatabase().delete(ourTableName, "groupName = ? AND name = ?", new String[] { group, name });
 	}
 }

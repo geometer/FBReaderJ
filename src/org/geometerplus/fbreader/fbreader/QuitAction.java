@@ -25,6 +25,6 @@ class QuitAction extends FBAction {
 	}
 		
 	public void run() {
-		Reader.closeView();
+		Reader.closeWindow();
 	}		
 }

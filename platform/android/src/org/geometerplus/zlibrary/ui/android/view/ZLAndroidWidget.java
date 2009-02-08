@@ -35,19 +35,25 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 public class ZLAndroidWidget extends View {
 	private ZLAndroidViewWidget myViewWidget;
 
+	private void _init() {
+		//setFocusable(true);
+		setVerticalScrollBarEnabled(true);
+		setVerticalFadingEdgeEnabled(true);
+	}
+
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setFocusable(true);
+		_init();
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setFocusable(true);
+		_init();
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
-		setFocusable(true);
+		_init();
 	}
 
 	public ZLAndroidPaintContext getPaintContext() {
