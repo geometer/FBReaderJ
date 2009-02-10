@@ -3,7 +3,7 @@
 	<uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:name=".library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
-		<activity android:name=".library.ZLAndroidActivity" android:label="" android:screenOrientation="sensor">
+		<activity android:name=".library.ZLAndroidActivity" android:label="FBReader" android:screenOrientation="sensor">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
