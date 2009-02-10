@@ -22,11 +22,9 @@ package org.geometerplus.zlibrary.core.view;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 abstract public class ZLView {
-	public final ZLApplication Application;
 	public final ZLPaintContext Context;
 
-	public ZLView(ZLApplication application, ZLPaintContext context) {
-		Application = application;
+	public ZLView(ZLPaintContext context) {
 		Context = context;
 	}
 
@@ -52,5 +50,12 @@ abstract public class ZLView {
 
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		return false;
+	}
+
+	final public void setVerticalScrollbarParameters(int full, int from, int to) {
+		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
+		if (viewWidget != null) {
+			viewWidget.setVerticalScrollbarParameters(full, from, to);
+		}
 	}
 }

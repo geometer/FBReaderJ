@@ -30,8 +30,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 public class ZLAndroidActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//getWindow().setFlags(WindowManager.LayoutParams.NO_STATUS_BAR_FLAG, WindowManager.LayoutParams.NO_STATUS_BAR_FLAG);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		if (getLibrary() == null) {
 			new ZLAndroidLibrary(this);
@@ -42,7 +41,7 @@ public class ZLAndroidActivity extends Activity {
 	}
 
 	public void onPause() {
-		ZLApplication.Instance().closeWindow();
+		ZLApplication.Instance().onWindowClosing();
 		ZLConfig.Instance().shutdown();
 		super.onPause();
 	}

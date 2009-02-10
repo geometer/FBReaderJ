@@ -40,4 +40,8 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
 		widget.postInvalidate();
 	}
+
+	protected void setVerticalScrollbarParameters(int full, int from, int to) {
+		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget().setVerticalScrollbarParameters(full, from, to);
+	}
 }

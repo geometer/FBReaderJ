@@ -39,6 +39,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private int myWidth;
 	private int myHeight;
+	private int myScrollbarWidth;
+
 	private boolean myReversedX;
 	private boolean myReversedY;
 
@@ -60,9 +62,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myPaint.setSubpixelText(false);
 	}
 
-	void setSize(int w, int h) {
-		myWidth = w;
-		myHeight = h;
+	void setSize(int width, int height, int scrollbarWidth) {
+		myWidth = width - scrollbarWidth;
+		myHeight = height;
+		myScrollbarWidth = scrollbarWidth;
 	}
 
 	void setRotation(int rotation) {
@@ -99,7 +102,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 		myColor = color;
 		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
-		myCanvas.drawRect(0, 0, myWidth, myHeight, myPaint);
+		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myPaint);
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {

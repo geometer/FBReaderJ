@@ -22,37 +22,49 @@ package org.geometerplus.zlibrary.core.sqliteconfig;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public final class ZLSQLiteConfig extends ZLConfig {
-	private final SQLiteOpenHelper myOpenHelper;
+	private final Context myContext;
+	private final String myName;
+	private SQLiteDatabase myDatabase;
 
 	public ZLSQLiteConfig(Context context, String name) {
-		myOpenHelper = new SQLiteOpenHelper(context, name, null, 1) {
-			public void onCreate(SQLiteDatabase database) {
-				database.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name))");
-			}
+		myContext = context;
+		myName = name;
+	}
 
-			public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+	private SQLiteDatabase database() {
+		if (myDatabase == null) {
+			myDatabase = myContext.openOrCreateDatabase(myName + ".db", Context.MODE_PRIVATE, null);
+			if (myDatabase.getVersion() == 0) {
+				try {
+					myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+				} catch (Exception e) {
+				}
+				myDatabase.setVersion(1);
 			}
-		};
+		}
+		return myDatabase;
 	}
 
 	public void shutdown() {
-		myOpenHelper.close();
+		if (myDatabase != null) {
+			myDatabase.close();
+			myDatabase = null;
+		}
 	}
 
 	public void removeGroup(String name) {
-		myOpenHelper.getWritableDatabase().delete(ourTableName, "groupName = ?", new String[] { name });
+		database().delete(ourTableName, "groupName = ?", new String[] { name });
 	}
 
 	private final String ourTableName = "config";
 	private final String[] ourColumns = new String[] { "value" };
 
 	public String getValue(String group, String name, String defaultValue) {
-		Cursor cursor = myOpenHelper.getReadableDatabase().query(
+		Cursor cursor = database().query(
 				true, ourTableName, ourColumns, "groupName = ? AND name = ?", 
 				new String[] { group, name }, null, null, null, null);
 		String answer = defaultValue;
@@ -65,12 +77,12 @@ public final class ZLSQLiteConfig extends ZLConfig {
 	}
 
 	public void setValue(String group, String name, String value, String category) {
-		myOpenHelper.getWritableDatabase().execSQL(
+		database().execSQL(
 				"INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)",
 				new String[] { group, name, value });
 	}
 
 	public void unsetValue(String group, String name) {
-		myOpenHelper.getWritableDatabase().delete(ourTableName, "groupName = ? AND name = ?", new String[] { group, name });
+		database().delete(ourTableName, "groupName = ? AND name = ?", new String[] { group, name });
 	}
 }

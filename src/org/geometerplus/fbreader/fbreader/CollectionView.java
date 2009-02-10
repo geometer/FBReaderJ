@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.impl.*;
@@ -47,8 +48,8 @@ public class CollectionView extends FBView {
 	private boolean myShowTags;
 	private boolean myShowAllBooksList;
 
-	public CollectionView(FBReader reader, ZLPaintContext context) {
-		super(reader, context);
+	public CollectionView(ZLPaintContext context) {
+		super(context);
 		myUpdateModel = true;
 		setModel(new CollectionModel(this, Collection));
 		myShowTags = ShowTagsOption.getValue();
@@ -99,7 +100,7 @@ public class CollectionView extends FBView {
 
 		final BookDescription book = getCollectionModel().getBookByParagraphIndex(index);
 		if (book != null) {
-			final FBReader fbreader = (FBReader)Application;
+			final FBReader fbreader = (FBReader)ZLApplication.Instance();
 			fbreader.openBook(book);
 			fbreader.showBookTextView();
 			return true;
@@ -119,7 +120,7 @@ public class CollectionView extends FBView {
 				Collection.rebuild(false);
 				myUpdateModel = true;
 				selectBook(book);
-				Application.refreshWindow();
+				ZLApplication.Instance().refreshWindow();
 			}
 		};
 		new BookInfoDialog(Collection, book.FileName, action).getDialog().run();
@@ -164,7 +165,7 @@ public class CollectionView extends FBView {
 					gotoParagraph(index, false);
 				}
 				rebuildPaintInfo(true);
-				Application.refreshWindow();
+				ZLApplication.Instance().refreshWindow();
 			}
 		};
 		ZLDialogManager.getInstance().showQuestionBox(
@@ -198,7 +199,7 @@ public class CollectionView extends FBView {
 				getCollectionModel().removeAllMarks();
 				Collection.removeTag(tag, false);
 				updateModel();
-				Application.refreshWindow();
+				ZLApplication.Instance().refreshWindow();
 			}
 		};
 		final Runnable removeSubTree = new Runnable() {
@@ -206,7 +207,7 @@ public class CollectionView extends FBView {
 				getCollectionModel().removeAllMarks();
 				Collection.removeTag(tag, true);
 				updateModel();
-				Application.refreshWindow();
+				ZLApplication.Instance().refreshWindow();
 			}
 		};
 		if (Collection.hasSubtags(tag)) {
@@ -386,7 +387,7 @@ public class CollectionView extends FBView {
 						Collection.cloneTag(myTag, tagValue, myIncludeSubtagsEntry.initialState());
 					}
 					updateModel();
-					Application.refreshWindow();
+					ZLApplication.Instance().refreshWindow();
 				}
 			};
 

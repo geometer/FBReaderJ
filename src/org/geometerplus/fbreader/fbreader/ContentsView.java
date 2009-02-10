@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.impl.ZLTextWordCursor;
@@ -27,8 +28,8 @@ import org.geometerplus.zlibrary.text.view.impl.ZLTextWordCursor;
 import org.geometerplus.fbreader.bookmodel.ContentsModel;
 
 class ContentsView extends FBView {
-	ContentsView(FBReader fbreader, ZLPaintContext context) {
-		super(fbreader, context);
+	ContentsView(ZLPaintContext context) {
+		super(context);
 	}
 
 	public boolean onStylusRelease(int x, int y) {
@@ -45,7 +46,7 @@ class ContentsView extends FBView {
 		final ZLTextTreeParagraph paragraph = contentsModel.getTreeParagraph(index);
 		final ContentsModel.Reference reference = contentsModel.getReference(paragraph);
 
-		final FBReader fbreader = (FBReader)Application;
+		final FBReader fbreader = (FBReader)ZLApplication.Instance();
 	//	fbreader.BookTextView.gotoPosition(reference, 0, 0);
 		fbreader.BookTextView.gotoParagraphSafe(reference.Model, reference.ParagraphIndex);
 		fbreader.setMode(FBReader.ViewMode.BOOK_TEXT);
@@ -59,7 +60,7 @@ class ContentsView extends FBView {
 	}
 
 	int currentTextViewParagraph(boolean includeStart) {
-		final FBReader fbreader = (FBReader)Application;
+		final FBReader fbreader = (FBReader)ZLApplication.Instance();
 		final ZLTextWordCursor cursor = fbreader.BookTextView.StartCursor;
 		if (!cursor.isNull()) {
 			int reference = cursor.getParagraphCursor().Index;

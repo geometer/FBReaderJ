@@ -123,7 +123,6 @@ public class KeyBindingsPage {
 			// look
 			addAction(ActionCode.INCREASE_FONT);
 			addAction(ActionCode.DECREASE_FONT);
-			addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR);
 			addAction(ActionCode.TOGGLE_FULLSCREEN);
 			addAction(ActionCode.FULLSCREEN_ON);
 			addAction(ActionCode.ROTATE_SCREEN);

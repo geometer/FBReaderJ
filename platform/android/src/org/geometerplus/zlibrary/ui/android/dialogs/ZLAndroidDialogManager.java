@@ -175,7 +175,10 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		final ProgressDialog progress = ProgressDialog.show(myActivity, null, getWaitMessageText(key), true, false);
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
-				progress.dismiss();
+				try {
+					progress.dismiss();
+				} catch (Exception e) {
+				}
 			}
 		};
 		new Thread(new Runnable() {

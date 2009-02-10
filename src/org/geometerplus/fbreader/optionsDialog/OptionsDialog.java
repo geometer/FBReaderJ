@@ -82,8 +82,6 @@ public class OptionsDialog {
 			
 		new StyleOptionsPage(myDialog.createTab("Styles"), ZLibrary.Instance().getPaintContext());
 		
-		createIndicatorTab(fbreader);
-		
 		final ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
 		
@@ -99,7 +97,6 @@ public class OptionsDialog {
 		builder.addOption(resource.getResource("externalLink").getValue(), baseStyle.ExternalHyperlinkTextColorOption);
 		builder.addOption(resource.getResource("highlighted").getValue(), baseStyle.HighlightedTextColorOption);
 		builder.addOption(resource.getResource("treeLines").getValue(), baseStyle.TreeLinesColorOption);
-		builder.addOption(resource.getResource("indicator").getValue(), FBView.getIndicatorInfoStatic().ColorOption);
 		builder.setInitial(BACKGROUND);
 		colorsTab.addOption(colorKey, builder.comboEntry());
 		colorsTab.addOption("", builder.colorEntry());
@@ -110,53 +107,6 @@ public class OptionsDialog {
 		webTab.addOption("defaultText",
 			new ZLToggleBooleanOptionEntry(fbreader.BookTextView.OpenInBrowserOption)
 		);
-	}
-	
-	private void createIndicatorTab(FBReader fbreader) {
-		ZLDialogContent indicatorTab = myDialog.createTab("Indicator");
-		FBIndicatorInfo indicatorInfo = FBView.getIndicatorInfoStatic();
-		ZLToggleBooleanOptionEntry showIndicatorEntry =
-			new ZLToggleBooleanOptionEntry(indicatorInfo.ShowOption);
-		indicatorTab.addOption("show", showIndicatorEntry);
-
-		ZLOptionEntry heightEntry =
-			new ZLSimpleSpinOptionEntry(indicatorInfo.HeightOption, 1);
-		ZLOptionEntry offsetEntry =
-			new ZLSimpleSpinOptionEntry(indicatorInfo.OffsetOption, 1);
-		indicatorTab.addOptions("height", heightEntry, "offset", offsetEntry);
-		showIndicatorEntry.addDependentEntry(heightEntry);
-		showIndicatorEntry.addDependentEntry(offsetEntry);
-
-		//StateOptionEntry showTextPositionEntry =
-		//	new StateOptionEntry(indicatorInfo.ShowTextPositionOption);
-		//indicatorTab.addOption("pageNumber", showTextPositionEntry);
-		//showIndicatorEntry.addDependentEntry(showTextPositionEntry);
-
-		//StateOptionEntry showTimeEntry =
-		//	new StateOptionEntry(indicatorInfo.ShowTimeOption);
-		//indicatorTab.addOption("time", showTimeEntry);
-		//showIndicatorEntry.addDependentEntry(showTimeEntry);
-
-		//SpecialFontSizeEntry fontSizeEntry =
-		//	new SpecialFontSizeEntry(indicatorInfo.FontSizeOption, 2, showTextPositionEntry, showTimeEntry);
-		//indicatorTab.addOption("fontSize", fontSizeEntry);
-		//showIndicatorEntry.addDependentEntry(fontSizeEntry);
-		//showTextPositionEntry.addDependentEntry(fontSizeEntry);
-		//showTimeEntry.addDependentEntry(fontSizeEntry);
-
-		//ZLOptionEntry tocMarksEntry =
-		//	new ZLSimpleBooleanOptionEntry(fbreader.BookTextView.ShowTOCMarksOption);
-		//indicatorTab.addOption("tocMarks", tocMarksEntry);
-		//showIndicatorEntry.addDependentEntry(tocMarksEntry);
-
-		ZLOptionEntry navigationEntry =
-			new ZLSimpleBooleanOptionEntry(indicatorInfo.IsSensitiveOption);
-		indicatorTab.addOption("navigation", navigationEntry);
-		showIndicatorEntry.addDependentEntry(navigationEntry);
-
-		showIndicatorEntry.onStateChanged(showIndicatorEntry.initialState());
-		//showTextPositionEntry.onStateChanged(showTextPositionEntry.initialState());
-		//showTimeEntry.onStateChanged(showTimeEntry.initialState());
 	}
 	
 	public ZLOptionsDialog getDialog() {

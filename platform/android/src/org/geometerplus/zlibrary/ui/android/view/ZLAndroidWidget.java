@@ -35,25 +35,16 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 public class ZLAndroidWidget extends View {
 	private ZLAndroidViewWidget myViewWidget;
 
-	private void _init() {
-		//setFocusable(true);
-		setVerticalScrollBarEnabled(true);
-		setVerticalFadingEdgeEnabled(true);
-	}
-
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		_init();
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		_init();
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
-		_init();
 	}
 
 	public ZLAndroidPaintContext getPaintContext() {
@@ -80,20 +71,21 @@ public class ZLAndroidWidget extends View {
 		ZLAndroidPaintContext.Instance().beginPaint(canvas);
 		final int rotation = myViewWidget.getRotation();
 		ZLAndroidPaintContext.Instance().setRotation(rotation);
+		final int scrollbarWidth = getVerticalScrollbarWidth();
 		switch (rotation) {
 			case ZLViewWidget.Angle.DEGREES0:
-				ZLAndroidPaintContext.Instance().setSize(w, h);
+				ZLAndroidPaintContext.Instance().setSize(w, h, scrollbarWidth);
 				break;
 			case ZLViewWidget.Angle.DEGREES90:
-				ZLAndroidPaintContext.Instance().setSize(h, w);
+				ZLAndroidPaintContext.Instance().setSize(h, w, scrollbarWidth);
 				canvas.rotate(270, h / 2, h / 2);
 				break;
 			case ZLViewWidget.Angle.DEGREES180:
-				ZLAndroidPaintContext.Instance().setSize(w, h);
+				ZLAndroidPaintContext.Instance().setSize(w, h, scrollbarWidth);
 				canvas.rotate(180, w / 2, h / 2);
 				break;
 			case ZLViewWidget.Angle.DEGREES270:
-				ZLAndroidPaintContext.Instance().setSize(h, w);
+				ZLAndroidPaintContext.Instance().setSize(h, w, scrollbarWidth);
 				canvas.rotate(90, w / 2, w / 2);
 				break;
 		}
@@ -152,7 +144,7 @@ public class ZLAndroidWidget extends View {
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-		if (keyName.equals("<Menu>")) {
+		if (keyName.equals("<Menu>") || keyName.equals("<Call>")) {
 			return false;
 		}
 		ZLApplication.Instance().doActionByKey(keyName);
@@ -161,9 +153,44 @@ public class ZLAndroidWidget extends View {
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-		if (keyName.equals("<Menu>")) {
+		if (keyName.equals("<Menu>") || keyName.equals("<Call>")) {
 			return false;
 		}
 		return true;
+	}
+
+	private int myScrollBarRange;
+	private int myScrollBarOffset;
+	private int myScrollBarThumbSize;
+
+	void setVerticalScrollbarParameters(int full, int from, int to) {
+		if (full < 0) {
+			full = 0;
+		}
+		if (from < 0) {
+			from = 0;
+		} else if (from >= full) {
+			from = full - 1;
+		}
+		if (to <= from) {
+			to = from + 1;
+		} else if (to > full) {
+			to = full;
+		}
+		myScrollBarRange = full;
+		myScrollBarOffset = from;
+		myScrollBarThumbSize = to - from;
+	}
+
+	protected int computeVerticalScrollExtent() {
+		return myScrollBarThumbSize;
+	}
+
+	protected int computeVerticalScrollOffset() {
+		return myScrollBarOffset;
+	}
+
+	protected int computeVerticalScrollRange() {
+		return myScrollBarRange;
 	}
 }

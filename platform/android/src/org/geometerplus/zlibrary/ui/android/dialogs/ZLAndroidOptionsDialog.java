@@ -23,13 +23,11 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogInterface {
 	private final String myCaption;
@@ -91,21 +89,16 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 	}
 	
 	protected void runInternal() {
-		((ZLAndroidApplication)myMainActivity.getApplication()).putData(
-			OptionsActivity.DIALOG_KEY, this
-		);
-		Intent intent = new Intent();
-		intent.setClass(myMainActivity, OptionsActivity.class);
-		myMainActivity.startActivity(intent);
-		//ZLAndroidDialogManager.runDialog(myMainActivity, this);
+		ZLAndroidDialogManager.runDialog(myMainActivity, this);
 	}
 
 	public ZLDialogContent createTab(String key) {
-		//final Context context = myMainActivity;
+		final Context context = myMainActivity;
+
+		final int index = myTabs.size();
 
 		final ZLDialogContent tab =
-			//new ZLAndroidDialogContentAsInterface(context, getTabResource(key));
-			new ZLAndroidOptionsTab(getTabResource(key));
+			new ZLAndroidDialogContentAsInterface(context, getTabResource(key));
 		myTabs.add(tab);
 		return tab;
 	}
@@ -141,10 +134,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			gotoTab(position);
 		}
-	}
-
-	ArrayList tabs() {
-		return myTabs;
 	}
 
 	private class TabListAdapter extends BaseAdapter {

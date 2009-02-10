@@ -23,7 +23,6 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.view.*;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 
@@ -35,8 +34,8 @@ public abstract class ZLTextView extends ZLView {
 		int SCROLL_PERCENTAGE = 3;
 	};
 
-	public ZLTextView(ZLApplication application, ZLPaintContext context) {
-		super(application, context);
+	public ZLTextView(ZLPaintContext context) {
+		super(context);
 	}
 
 	public final void setModel(ZLTextModel model) {
@@ -62,6 +61,4 @@ public abstract class ZLTextView extends ZLView {
 	public abstract int getRightMargin();
 	public abstract int getTopMargin();
 	public abstract int getBottomMargin();
-
-	public abstract ZLTextIndicatorInfo getIndicatorInfo();
 }

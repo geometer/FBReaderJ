@@ -23,6 +23,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
@@ -34,8 +35,8 @@ public class RecentBooksView extends FBView {
 
 	private BookCollection.LastOpenedBooks myLastBooks = new BookCollection.LastOpenedBooks();
 
-	public RecentBooksView(FBReader reader, ZLPaintContext context) {
-		super(reader, context);	
+	public RecentBooksView(ZLPaintContext context) {
+		super(context);	
 	}
 	
 	public String getCaption() {
@@ -59,7 +60,7 @@ public class RecentBooksView extends FBView {
 			return false;
 		}
 
-		final FBReader fbreader = (FBReader)Application;
+		final FBReader fbreader = (FBReader)ZLApplication.Instance();
 		fbreader.openBook((BookDescription)books.get(index));
 		fbreader.showBookTextView();
 		return true;

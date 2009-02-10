@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -54,8 +55,8 @@ public class BookTextView extends FBView {
 	public final ZLBooleanOption OpenInBrowserOption =
 		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Web Browser", "Enabled", true);
 	
-	BookTextView(FBReader fbreader, ZLPaintContext context) {
-		super(fbreader, context);
+	BookTextView(ZLPaintContext context) {
+		super(context);
 		ShowTOCMarksOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Indicator", "ShowTOCMarks", false);
 	}
 	
@@ -132,7 +133,7 @@ public class BookTextView extends FBView {
 		gotoPosition(0, 0, 0);
 		preparePaintInfo();
 		savePosition(position, 0, StartCursor);
-		Application.refreshWindow();
+		ZLApplication.Instance().refreshWindow();
 	}
 
 	//TODO: remove
@@ -206,7 +207,7 @@ public class BookTextView extends FBView {
 							return true;
 						case FBTextKind.FOOTNOTE:
 						case FBTextKind.INTERNAL_HYPERLINK:
-							((FBReader)Application).tryOpenFootnote(id);
+							((FBReader)ZLApplication.Instance()).tryOpenFootnote(id);
 							return true;
 					}
 				}
@@ -281,7 +282,7 @@ public class BookTextView extends FBView {
 
 	void undoPageMove() {
 		gotoPosition((Position)myPositionStack.get(--myCurrentPointInStack));
-		((FBReader)Application).refreshWindow();
+		ZLApplication.Instance().refreshWindow();
 		
 		for (Object p : myPositionStack) {
 			System.out.print(((Position) p).ModelIndex + ","
@@ -296,7 +297,7 @@ public class BookTextView extends FBView {
 
 	void redoPageMove() {
 		gotoPosition((Position)myPositionStack.get(++myCurrentPointInStack));
-		((FBReader)Application).refreshWindow();
+		ZLApplication.Instance().refreshWindow();
 		
 		for (Object p : myPositionStack) {
 			System.out.print(((Position) p).ModelIndex + ","

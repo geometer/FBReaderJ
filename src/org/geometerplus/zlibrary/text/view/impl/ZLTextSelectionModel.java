@@ -99,7 +99,6 @@ final class ZLTextSelectionModel {
 	};
 
 	private final ZLTextViewImpl myView;
-	private final ZLApplication myApplication;
 
 	private boolean myIsActive;
 	private boolean myIsEmpty = true;
@@ -115,9 +114,8 @@ final class ZLTextSelectionModel {
 	private final HashSet myCursors = new HashSet();
 	private final StringBuilder myText = new StringBuilder();
 
-	ZLTextSelectionModel(ZLTextViewImpl view, ZLApplication application) {
+	ZLTextSelectionModel(ZLTextViewImpl view) {
 		myView = view;
-		myApplication = application;
 	}
 
 	void activate(int x, int y) {
@@ -281,7 +279,7 @@ final class ZLTextSelectionModel {
 			public void run() {
 				myView.scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myDoUpdate = true;
-				myView.Application.refreshWindow();
+				ZLApplication.Instance().refreshWindow();
 			}
 		};
 		myTimer.schedule(myScrollingTask, 200, 400);

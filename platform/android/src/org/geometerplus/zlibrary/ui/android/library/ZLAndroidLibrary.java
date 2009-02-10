@@ -58,7 +58,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} catch (Exception e) {
-			pause();
+			finish();
 		}
 	}
 
@@ -68,7 +68,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myWidget = null;
 	}
 
-	public void pause() {
+	public void finish() {
 		if ((myActivity != null) && !myActivity.isFinishing()) {
 			myActivity.finish();
 		}

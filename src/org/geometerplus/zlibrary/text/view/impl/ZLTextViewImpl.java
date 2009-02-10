@@ -105,10 +105,10 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private final ZLTextRectangularAreaVector myTreeNodeMap
 		= new ZLTextRectangularAreaVector();
 
-	public ZLTextViewImpl(ZLApplication application, ZLPaintContext context) {
-		super(application, context);
+	public ZLTextViewImpl(ZLPaintContext context) {
+		super(context);
 		resetTextStyle();
- 		mySelectionModel = new ZLTextSelectionModel(this, application);
+ 		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
 	public void setModels(ArrayList models, int current) {
@@ -229,11 +229,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private int getTextAreaHeight() {
-		return Context.getHeight() - getTopMargin() - getBottomMargin() - getIndicatorInfo().getFullHeight();
+		return Context.getHeight() - getTopMargin() - getBottomMargin();
 	}
 
 	private int getBottomLine() {
-		return Context.getHeight() - getBottomMargin() - getIndicatorInfo().getFullHeight();
+		return Context.getHeight() - getBottomMargin();
 	}
 
 	static int getWordWidth(ZLPaintContext context, ZLTextWord word, int start) {
@@ -345,7 +345,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		*/	
 			savePosition(position, myCurrentModelIndex, StartCursor);
-			Application.refreshWindow();
+			ZLApplication.Instance().refreshWindow();
 		}
 	}
 
@@ -376,7 +376,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			gotoMark(wholeText ? 
 				(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
 				(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
-			Application.refreshWindow();
+			ZLApplication.Instance().refreshWindow();
 		}
 	}
 
@@ -419,6 +419,17 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			return;
 		}
 
+		{
+			final int fullScrollBarSize = myTextSize[myTextSize.length - 1];
+			final int scrollBarStart = sizeOfTextBeforeCursor(StartCursor);
+			final int scrollBarEnd = sizeOfTextBeforeCursor(EndCursor);
+			setVerticalScrollbarParameters(
+				fullScrollBarSize,
+				scrollBarStart,
+				(scrollBarEnd != -1) ? scrollBarEnd : fullScrollBarSize
+			);
+		}
+
 		final ZLTextLineInfoVector lineInfos = myLineInfos;
 		final int lineInfosSize = lineInfos.size();
 		final int[] labels = new int[lineInfosSize + 1];
@@ -435,48 +446,24 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
 		}
 		//android.os.Debug.stopMethodTracing();
+	}
 
-		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
-		if (indicatorInfo.isVisible()) {
-			final int yBottom = context.getHeight() - getBottomMargin() - 1;
-			final int yTop = yBottom - indicatorInfo.getHeight() + 1;
-			final int xLeft = getLeftMargin();
-			final int xRight = context.getWidth() - getRightMargin() - 1;
-			context.setColor(baseStyle.getColor());
-			context.drawLine(xLeft, yBottom, xRight, yBottom);
-			context.drawLine(xLeft, yTop, xRight, yTop);
-			context.drawLine(xLeft, yBottom, xLeft, yTop);
-			context.drawLine(xRight, yBottom, xRight, yTop);
-			final long fullWidth = xRight - xLeft - 2;
-			long width = fullWidth;
-
-			final ZLTextWordCursor wordCursor = new ZLTextWordCursor(EndCursor);
-			if (!wordCursor.isEndOfParagraph() || wordCursor.nextParagraph()) {
-				final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
-				final int paragraphIndex = paragraphCursor.Index;
-				final int[] textSizeVector = myTextSize;
-				int fullTextSize = textSizeVector[textSizeVector.length - 1];
-				if (fullTextSize > 0) {
-					int textSizeBeforeCursor = textSizeVector[paragraphIndex];
-					final int paragraphLength = paragraphCursor.getParagraphLength();
-					if (paragraphLength > 0) {
-						textSizeBeforeCursor +=
-							(textSizeVector[paragraphIndex + 1] - textSizeBeforeCursor)
-							* wordCursor.getWordIndex()
-							/ paragraphLength;
-					}
-					width = fullWidth * textSizeBeforeCursor / fullTextSize;
-					if (width < 0) {
-						width = 0;
-					}
-					if (width > fullWidth) {
-						width = fullWidth;
-					}
-				}
-			}
-			context.setFillColor(indicatorInfo.getColor());
-			context.fillRectangle(xLeft + 1, yTop + 1, xLeft + 1 + (int)width, yBottom - 1);
+	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
+		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
+			return -1;
 		}
+		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final int paragraphIndex = paragraphCursor.Index;
+		int sizeOfText = myTextSize[paragraphIndex];
+		final int paragraphLength = paragraphCursor.getParagraphLength();
+		if (paragraphLength > 0) {
+			sizeOfText +=
+				(myTextSize[paragraphIndex + 1] - sizeOfText)
+				* cursor.getWordIndex()
+				/ paragraphLength;
+		}
+		return sizeOfText;
 	}
 
 	private void drawTreeLines(ZLPaintContext context, ZLTextLineInfo.TreeNodeInfo info, int height, int vSpaceAfter) {
@@ -1453,50 +1440,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myModel == null) {
 			return false;
 		}
-		ZLTextIndicatorInfo indicatorInfo = getIndicatorInfo();
-		if (indicatorInfo.isVisible() && indicatorInfo.isSensitive() && !StartCursor.isNull()) {
-			final ZLPaintContext context = Context;
-			final int yBottom = context.getHeight() - getBottomMargin() - 1;
-			final int yTop = yBottom - indicatorInfo.getHeight() + 1;
-			final int xLeft = getLeftMargin();
-			final int xRight = context.getWidth() - getRightMargin() - 1;
-			if ((x > xLeft) && (x < xRight) && (y > yTop) && (y < yBottom)) {
-				Position position = new Position(myCurrentModelIndex, StartCursor);
-				myTreeStateIsFrozen = true;
-				final int[] textSizeVector = myTextSize;
-				final int value = textSizeVector[textSizeVector.length - 1] * (x - xLeft) / (xRight - xLeft - 1);
-				final int paragraphIndex = lowerBound(textSizeVector, value);
-				gotoParagraph(paragraphIndex, true);
-				preparePaintInfo();
-				final int endCursorIndex = EndCursor.getParagraphCursor().Index;
-				if (endCursorIndex == paragraphIndex) {
-					final int paragraphLength = 
-						EndCursor.getParagraphCursor().getParagraphLength();
-					int wordCounter = paragraphLength
-						* (value - textSizeVector[paragraphIndex])
-						/ (textSizeVector[paragraphIndex + 1] - textSizeVector[paragraphIndex]);
-					if (wordCounter > 0) {
-						if (wordCounter == paragraphLength) {
-							EndCursor.nextParagraph();
-						} else {
-							wordCounter -= EndCursor.getWordIndex();
-							while (wordCounter-- > 0) {
-								EndCursor.nextWord();
-							}
-						}
-						StartCursor.reset();
-						rebuildPaintInfo(false);
-					}
-				}
-				if (StartCursor.isNull()) {
-					preparePaintInfo();
-				}
-				savePosition(position, myCurrentModelIndex, StartCursor);
-				Application.refreshWindow();
-				myTreeStateIsFrozen = false;
-				return true;
-			}
-		}
 
 		if (myModel instanceof ZLTextTreeModel) {
 			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
@@ -1529,7 +1472,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					preparePaintInfo();
 				}
 				*/
-				Application.refreshWindow();
+				ZLApplication.Instance().refreshWindow();
 				return true;
 			}
 		}
@@ -1539,7 +1482,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public boolean onStylusMovePressed(int x, int y) {
 		if (mySelectionModel.extendTo(x, y)) {
 			//copySelectedTextToClipboard(ZLDialogManager::CLIPBOARD_SELECTION);
-			Application.refreshWindow();
+			ZLApplication.Instance().refreshWindow();
 			return true;
 		}
 		return false;
@@ -1555,7 +1498,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	protected void activateSelection(int x, int y) {
 		if (isSelectionEnabled()) {
 			mySelectionModel.activate(x, y);
-			Application.refreshWindow();
+			ZLApplication.Instance().refreshWindow();
 		}
 	}
 

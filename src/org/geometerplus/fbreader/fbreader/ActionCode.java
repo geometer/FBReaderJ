@@ -38,7 +38,6 @@ public interface ActionCode {
 	String CANCEL = "cancel";
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
-	String SHOW_HIDE_POSITION_INDICATOR = "toggleIndicator";
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";
 	String FULLSCREEN_ON = "onFullscreen";
 	String ADD_BOOK = "addBook";

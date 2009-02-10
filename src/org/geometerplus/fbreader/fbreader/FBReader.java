@@ -132,7 +132,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new ScrollingAction(this, TrackballScrollingOptions, true));
 		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new ScrollingAction(this, TrackballScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
-		addAction(ActionCode.SHOW_HIDE_POSITION_INDICATOR, new ToggleIndicatorAction(this));
 		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new OpenPreviousBookAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
@@ -142,11 +141,11 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 
 		ZLPaintContext context = ZLibrary.Instance().getPaintContext();
-		BookTextView = new BookTextView(this, context);
-		ContentsView = new ContentsView(this, context);
-		FootnoteView = new FootnoteView(this, context);
-		CollectionView = new CollectionView(this, context);
-		RecentBooksView = new RecentBooksView(this, context);
+		BookTextView = new BookTextView(context);
+		ContentsView = new ContentsView(context);
+		FootnoteView = new FootnoteView(context);
+		CollectionView = new CollectionView(context);
+		RecentBooksView = new RecentBooksView(context);
 
 		setMode(ViewMode.BOOK_TEXT);
 	}
@@ -332,10 +331,9 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	public boolean closeWindow() {
+	public void onWindowClosing() {
 		if (BookTextView != null) {
 			BookTextView.saveState();
 		}
-		return super.closeWindow();
 	}
 }

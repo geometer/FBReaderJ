@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.view.*;
@@ -32,8 +33,6 @@ public abstract class FBView extends ZLTextViewImpl {
 	
 	private static ZLBooleanOption ourSelectionOption;
 
-	private static FBIndicatorInfo ourIndicatorInfo;
-
 	private String myCaption;
 	
 	private static ZLIntegerRangeOption createMarginOption(String name, int defaultValue) {
@@ -42,8 +41,8 @@ public abstract class FBView extends ZLTextViewImpl {
 		);
 	}
 
-	FBView(FBReader fbreader, ZLPaintContext context) {
-		super(fbreader, context);
+	FBView(ZLPaintContext context) {
+		super(context);
 	}
 
 	private int myStartX;
@@ -71,9 +70,9 @@ public abstract class FBView extends ZLTextViewImpl {
 		final int diffY = y - myStartY;
 		if (Math.abs(diffY) * 5 >= Context.getHeight()) {
 			if (diffY > 0) {
-				Application.doAction(ActionCode.TOUCH_SCROLL_BACKWARD);
+				ZLApplication.Instance().doAction(ActionCode.TOUCH_SCROLL_BACKWARD);
 			} else {
-				Application.doAction(ActionCode.TOUCH_SCROLL_FORWARD);
+				ZLApplication.Instance().doAction(ActionCode.TOUCH_SCROLL_FORWARD);
 			}
 			myTouchIsProcessed = true;
 			return true;
@@ -93,9 +92,9 @@ public abstract class FBView extends ZLTextViewImpl {
 
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		if (diffY > 0) {
-			Application.doAction(ActionCode.TRACKBALL_SCROLL_FORWARD);
+			ZLApplication.Instance().doAction(ActionCode.TRACKBALL_SCROLL_FORWARD);
 		} else if (diffY < 0) {
-			Application.doAction(ActionCode.TRACKBALL_SCROLL_BACKWARD);
+			ZLApplication.Instance().doAction(ActionCode.TRACKBALL_SCROLL_BACKWARD);
 		}
 		return true;
 	}
@@ -153,17 +152,6 @@ public abstract class FBView extends ZLTextViewImpl {
 			ourSelectionOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "IsSelectionEnabled", true);
 		}
 		return ourSelectionOption;
-	}
-
-	public ZLTextIndicatorInfo getIndicatorInfo() {
-		return getIndicatorInfoStatic();
-	}
-	
-	public static FBIndicatorInfo getIndicatorInfoStatic() {
-		if (ourIndicatorInfo == null) {
-			ourIndicatorInfo = new FBIndicatorInfo();
-		}
-		return ourIndicatorInfo;
 	}
 
 	protected boolean isSelectionEnabled() {

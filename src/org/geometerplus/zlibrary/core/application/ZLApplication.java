@@ -117,6 +117,10 @@ public abstract class ZLApplication {
 		return myView;
 	}
 
+	public final ZLViewWidget getViewWidget() {
+		return myViewWidget;
+	}
+
 	final void setWindow(ZLApplicationWindow window) {
 		myWindow = window;
 	}
@@ -212,12 +216,16 @@ public abstract class ZLApplication {
 	}
 
 	public boolean closeWindow() {
+		onWindowClosing();
 		if (myWindow != null) {
 			myWindow.close();
 		}
 		return true;
 	}
-	
+
+	public void onWindowClosing() {
+	}
+
 	public void openFile(String fileName) {
 		// TODO: implement or change to abstract
 	}
