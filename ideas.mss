@@ -52,3 +52,9 @@ New Library view:
 
     -- network page is a bit different
         (needs to be designed)
+
+Submit bug report directly from the application :)
+
+(Until it's implemented globally) Check for updates
+
+Automatic text orientation to be done configurable
