@@ -1,0 +1,6 @@
+How to Build for Android
+------------------------
+
+Just execute::
+
+    ant -f platform/android/build.xml package
