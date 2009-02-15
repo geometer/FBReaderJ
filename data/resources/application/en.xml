@@ -313,8 +313,9 @@
 			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol"/>
 		</node>
 		<node name="waitMessage">
-			<node name="loadingBook" value="Loading book. Please, wait..."/>
-			<node name="loadingBookList" value="Loading book list. Please, wait..."/>
+			<node name="downloadingFile" value="Downloading book %s"/>
+			<node name="loadingBook" value="Opening book. Please, wait..."/>
+			<node name="loadingBookList" value="Openin library. Please, wait..."/>
 			<node name="migrate" value="Upgrading to the new version. Please, wait..."/>
 		</node>
 	</node>

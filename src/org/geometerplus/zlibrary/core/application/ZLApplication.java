@@ -144,13 +144,6 @@ public abstract class ZLApplication {
 	}
 
 	protected final void resetWindowCaption() {
-		if (myWindow != null) {
-			if (myView != null) {
-				myWindow.setCaption(ZLibrary.Instance().getApplicationName() + " - " + myView.getCaption());
-			} else {
-				myWindow.setCaption(ZLibrary.Instance().getApplicationName());
-			}
-		}
 	}
 	
 	public final void setFullscreen(boolean fullscreen) {

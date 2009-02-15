@@ -42,10 +42,6 @@ public abstract class ZLibrary {
 		ourImplementation = this;
 	}
 
-	public final String getApplicationName() {
-		return (String)myProperties.get("applicationName");
-	}
-
 	protected final Class getApplicationClass() {
 		try {
 			Class clazz = Class.forName((String)myProperties.get("applicationClass"));
@@ -70,15 +66,4 @@ public abstract class ZLibrary {
 
 	abstract public ZLPaintContext getPaintContext();
 	abstract public void openInBrowser(String reference);
-
-	protected final void loadProperties() {
-		new ZLXMLReaderAdapter() {
-			public boolean startElementHandler(String tag, ZLStringMap attributes) {
-				if (tag.equals("property")) {
-					myProperties.put(attributes.getValue("name"), attributes.getValue("value"));
-				}
-				return false;
-			}
-		}.read(JAR_DATA_PREFIX + "data/application.xml");
-	}
 }
