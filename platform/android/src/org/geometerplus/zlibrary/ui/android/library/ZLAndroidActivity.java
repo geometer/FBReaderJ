@@ -25,19 +25,24 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
-import org.geometerplus.zlibrary.ui.android.R;
 
-public class ZLAndroidActivity extends Activity {
+import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
+
+public abstract class ZLAndroidActivity extends Activity {
+	protected abstract ZLApplication createApplication();
+
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
-		if (getLibrary() == null) {
-			new ZLAndroidLibrary(this);
-		} else {
-			getLibrary().setActivity(this);
-			ZLApplication.Instance().refreshWindow();
+		getLibrary().setActivity(this);
+		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
+			ZLApplication application = createApplication();
+			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
+			application.initWindow();
 		}
+		ZLApplication.Instance().refreshWindow();
 	}
 
 	public void onPause() {
@@ -52,7 +57,7 @@ public class ZLAndroidActivity extends Activity {
 
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		getLibrary().getMainWindow().buildMenu(menu);
+		((ZLAndroidApplication)getApplication()).myMainWindow.buildMenu(menu);
 		return true;
 	}
 

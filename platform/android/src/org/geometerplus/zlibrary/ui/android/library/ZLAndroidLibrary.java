@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.*;
 
+import android.app.Application;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,43 +29,23 @@ import android.net.Uri;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
-import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
-	private ZLAndroidApplicationWindow myMainWindow;
+	private final Application myApplication;
 	private ZLAndroidWidget myWidget;
-	private final ZLAndroidDialogManager myDialogManager;
 
-	ZLAndroidLibrary(ZLAndroidActivity activity) {
-		myActivity = activity;
-
-		new ZLOwnXMLProcessorFactory();
-		loadProperties();
-		new ZLSQLiteConfig(activity.getApplication(), getApplicationName());
-		new ZLAndroidImageManager();
-		myDialogManager = new ZLAndroidDialogManager(activity);
-
-		try {
-			ZLApplication application = (ZLApplication)getApplicationClass().newInstance();
-			myMainWindow = new ZLAndroidApplicationWindow(application);
-			application.initWindow();
-		} catch (Exception e) {
-			finish();
-		}
+	ZLAndroidLibrary(Application application) {
+		myApplication = application;
 	}
 
 	void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
-		myDialogManager.setActivity(activity);
+		((ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance()).setActivity(activity);
 		myWidget = null;
 	}
 
@@ -78,10 +59,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return getWidget().getPaintContext();
 	}
 
-	ZLAndroidApplicationWindow getMainWindow() {
-		return myMainWindow;
-	}
-
 	public ZLAndroidWidget getWidget() {
 		if (myWidget == null) {
 			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.zlandroidactivity);
@@ -91,7 +68,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	protected InputStream getFileInputStream(String fileName) {
 		try {
-			//return new BufferedInputStream(new FileInputStream(fileName), 16384);
 			return new FileInputStream(fileName);
 		} catch (FileNotFoundException e) {
 			return null;
@@ -108,7 +84,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		} catch (IllegalAccessException e) {
 			return null;
 		}
-		return myActivity.getResources().openRawResource(resourceId);
+		return myApplication.getResources().openRawResource(resourceId);
 	}
 
 	public void openInBrowser(String reference) {

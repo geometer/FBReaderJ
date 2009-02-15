@@ -22,19 +22,24 @@ package org.geometerplus.zlibrary.ui.android.library;
 import java.util.HashMap;
 
 import android.app.Application;
-//import android.hardware.SensorManager;
-//import android.hardware.SensorListener;
+
+import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
+
+import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public class ZLAndroidApplication extends Application {
+	ZLAndroidApplicationWindow myMainWindow;
+
 	public void onCreate() {
 		super.onCreate();
-		/*
-		android.webkit.MimeTypeMap map = android.webkit.MimeTypeMap.getSingleton();
-		android.util.Log.w("epub", "" + map.hasExtension("epub"));
-		android.util.Log.w("oeb", "" + map.hasExtension("oeb"));
-		android.util.Log.w("fb2", "" + map.hasExtension("fb2"));
-		android.util.Log.w("fb2.zip", "" + map.hasExtension("fb2.zip"));
-		*/
+		new ZLOwnXMLProcessorFactory();
+		new ZLSQLiteConfig(this);
+		new ZLAndroidImageManager();
+		new ZLAndroidDialogManager();
+		new ZLAndroidLibrary(this);
 	}
 
 	public void onTerminate() {

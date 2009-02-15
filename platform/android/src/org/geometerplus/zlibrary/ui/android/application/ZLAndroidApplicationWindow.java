@@ -111,10 +111,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
 	}
 
-	//public void setToggleButtonState(ZLApplication.Toolbar.ButtonItem item) {
-		// TODO: implement
-	//}
-
 	public void setFullscreen(boolean fullscreen) {
 		//getWindow().setFlags(WindowManager.LayoutParams.FULL_SCREEN, WindowManager.LayoutParams.FULL_SCREEN);
 		android.util.Log.w("ZLAndroidApplicationWindow", "setFullscreen " + fullscreen);

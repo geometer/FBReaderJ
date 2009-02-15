@@ -27,22 +27,17 @@ import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public final class ZLSQLiteConfig extends ZLConfig {
 	private final Context myContext;
-	private final String myName;
 	private SQLiteDatabase myDatabase;
 
-	public ZLSQLiteConfig(Context context, String name) {
+	public ZLSQLiteConfig(Context context) {
 		myContext = context;
-		myName = name;
 	}
 
 	private SQLiteDatabase database() {
 		if (myDatabase == null) {
-			myDatabase = myContext.openOrCreateDatabase(myName + ".db", Context.MODE_PRIVATE, null);
+			myDatabase = myContext.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
 			if (myDatabase.getVersion() == 0) {
-				try {
-					myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
-				} catch (Exception e) {
-				}
+				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
 				myDatabase.setVersion(1);
 			}
 		}

@@ -35,8 +35,7 @@ import org.geometerplus.zlibrary.ui.android.*;
 public class ZLAndroidDialogManager extends ZLDialogManager {
 	private Activity myActivity;
 	
-	public ZLAndroidDialogManager(Activity activity) {
-		setActivity(activity);
+	public ZLAndroidDialogManager() {
 	}
 
 	public void setActivity(Activity activity) {
