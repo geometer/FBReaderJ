@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android">
-	<uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="1" android:versionName="0.3.0">
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:name=".library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
-		<activity android:name=".library.ZLAndroidActivity" android:label="FBReader" android:screenOrientation="sensor">
+	<application android:name="org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
+		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:icon="@drawable/fbreader" android:label="FBReader" android:screenOrientation="sensor">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-			<!--intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:mimeType="application/epub" />
-			</intent-filter-->
 		</activity>
-		<activity android:name=".dialogs.DialogActivity" android:label="" />
-		<activity android:name=".dialogs.OptionsActivity" android:label="" />
+		<activity android:name="org.geometerplus.android.fbreader.BookDownloader" android:theme="@android:style/Theme.Dialog">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="http" />
+				<data android:host="*" />
+				<data android:pathPattern=".*\\.epub" />
+				<data android:pathPattern=".*\\.fb2" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:mimeType="*/*" android:scheme="http" android:pathPattern=".*\\.fb2\\.zip" />
+			</intent-filter>
+		</activity>
+		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.DialogActivity" android:label="" />
+		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.OptionsActivity" android:label="" />
 	</application>
 </manifest> 
