@@ -2,7 +2,7 @@ package org.amse.ys.zip;
 
 import java.io.*;
 
-public class Deflating extends Decompressor {
+public class DeflatingDecompressor extends Decompressor {
     private static final int ST_HEADER = 1;
     private static final int ST_NO_COMPRESSION = 2;
     private static final int ST_FIXED_CODES = 3;
@@ -11,7 +11,7 @@ public class Deflating extends Decompressor {
 
     // common variables
     private final LocalFileHeader myHeader;
-    private final MyBufferedReader myStream;
+    private final MyBufferedInputStream myStream;
     private int myState;
     private int myTotalLength;
     private int myBytesRead;
@@ -75,7 +75,7 @@ public class Deflating extends Decompressor {
         return result;
     }
 
-    public Deflating(MyBufferedReader is, LocalFileHeader header) {
+    public DeflatingDecompressor(MyBufferedInputStream is, LocalFileHeader header) {
         super();
         myHeader = header;
         myStream = is;
@@ -89,31 +89,31 @@ public class Deflating extends Decompressor {
     private static final int MAX_LEN = CircularBuffer.DICTIONARY_LENGTH / 2;
 
     public int read(byte b[], int off, int len) throws IOException, WrongZipFormatException {
-	int i = 0;
-	int available = myOutputBuffer.available();
-	while (i < len) {
-	    int toRead = Math.min(MAX_LEN, len - i);
+        int i = 0;
+        int available = myOutputBuffer.available();
+        while (i < len) {
+            int toRead = Math.min(MAX_LEN, len - i);
             while (available < toRead) {
-        	if (myState == ST_END_OF_FILE) {
-        	    break;
-        	}
-        	if (myState == ST_HEADER) {
-        	    readHeader();
-        	}            
-        	available += pushNextSymbolToDictionary();            
-	    }
-	    if (available == 0) {
-		break;
-	    }
-	    if (toRead > available) {
-		toRead = available;
-	    }
-	    myOutputBuffer.read(b, off + i, toRead);
-	    i += toRead;
-	    available -= toRead;
+                if (myState == ST_END_OF_FILE) {
+                    break;
+                }
+                if (myState == ST_HEADER) {
+                    readHeader();
+                }            
+                available += pushNextSymbolToDictionary();            
+            }
+            if (available == 0) {
+                break;
+            }
+            if (toRead > available) {
+                toRead = available;
+            }
+            myOutputBuffer.read(b, off + i, toRead);
+            i += toRead;
+            available -= toRead;
         }
         myCurrentPosition += i;
-	return (i > 0) ? i : -1;
+        return (i > 0) ? i : -1;
     }
 
     public int read() throws IOException, WrongZipFormatException {
@@ -142,17 +142,17 @@ public class Deflating extends Decompressor {
                     myState = ST_HEADER;
                 }
             }
-	    return 1;
+            return 1;
         } else {
             int currentHuffmanCode = readHuffmanCode(myHuffmanCodes);
             int length;
             switch (currentHuffmanCode) {
-		default:
-		    myOutputBuffer.writeByte((byte)currentHuffmanCode);
-		    return 1;
+                default:
+                    myOutputBuffer.writeByte((byte)currentHuffmanCode);
+                    return 1;
                 case 256:  
                     myState = myTheBlockIsFinal ? ST_END_OF_FILE : ST_HEADER;
-		    return 0;
+                    return 0;
                 case 257:  
                 case 258:  
                 case 259:  
@@ -215,13 +215,13 @@ public class Deflating extends Decompressor {
                 throw new RuntimeException("distance code > 29 found");
             }
             myOutputBuffer.repeat(length, distance);
-	    return length;
+            return length;
         }
     }
 
     private int readHuffmanCode(int[] table) throws IOException {
-	int bitsInBuffer = myBitsInBuffer;
-	int buffer = myTempInt;
+        int bitsInBuffer = myBitsInBuffer;
+        int buffer = myTempInt;
 
         while (bitsInBuffer <= 16) {
             buffer += myStream.read() << bitsInBuffer;
@@ -233,7 +233,7 @@ public class Deflating extends Decompressor {
 
         final int len = tmp >> 16;
         myTempInt = buffer >>> len;
-	myBitsInBuffer = bitsInBuffer - len;
+        myBitsInBuffer = bitsInBuffer - len;
 
         return tmp & 0x0FFFF;
     }

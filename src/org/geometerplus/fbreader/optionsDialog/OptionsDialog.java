@@ -41,19 +41,6 @@ public class OptionsDialog {
 		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().baseStyle();
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
-		final ZLDialogContent libraryTab = myDialog.createTab("Library");
-		final CollectionView collectionView = fbreader.CollectionView;
-		final BookCollection collection = collectionView.Collection;
-		libraryTab.addOption("bookPath", collection.PathOption);
-		libraryTab.addOption("lookInSubdirectories", collection.ScanSubdirsOption);
-		libraryTab.addOption("recentListSize", new ZLSimpleSpinOptionEntry(fbreader.RecentBooksView.lastBooks().MaxListSizeOption, 1));
-		ZLToggleBooleanOptionEntry showTagsEntry = new ZLToggleBooleanOptionEntry(collectionView.ShowTagsOption);
-		ZLOptionEntry showAllBooksTagEntry = new ZLSimpleBooleanOptionEntry(collectionView.ShowAllBooksTagOption);
-		showTagsEntry.addDependentEntry(showAllBooksTagEntry);
-		libraryTab.addOption("showTags", showTagsEntry);
-		libraryTab.addOption("showAllBooksList", showAllBooksTagEntry);
-		showTagsEntry.onStateChanged(showTagsEntry.initialState());
-		
 		final ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
 		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
@@ -123,7 +110,6 @@ public class OptionsDialog {
 		public void run() {
 			myFBReader.grabAllKeys(myFBReader.KeyboardControlOption.getValue());
 			myFBReader.clearTextCaches();
-			myFBReader.CollectionView.synchronizeModel();
 			myFBReader.refreshWindow();
 		}
 	}

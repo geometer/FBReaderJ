@@ -51,8 +51,8 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		activity.startActivity(intent);
 	}
 
-	public void runSelectionDialog(String key, ZLTreeHandler handler, Runnable actionOnAccept) {
-		runDialog(myActivity, new ZLAndroidSelectionDialog(myActivity, getDialogTitle(key), handler, actionOnAccept));
+	public void runActivity(Class activityClass) {
+		myActivity.startActivity(new Intent(myActivity, activityClass));
 	}
 
 	public void showInformationBox(String key, String message) {

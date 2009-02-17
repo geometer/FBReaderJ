@@ -43,8 +43,6 @@ public abstract class ZLDialogManager {
 		return ourInstance;
 	} 
 	
-	public abstract void runSelectionDialog(String key, ZLTreeHandler handler, Runnable actionOnAccept);
-
 	public abstract void showInformationBox(String key, String message);
 
 	public final void showInformationBox(String key) {

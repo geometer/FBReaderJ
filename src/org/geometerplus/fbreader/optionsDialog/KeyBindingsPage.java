@@ -96,9 +96,7 @@ public class KeyBindingsPage {
 			addAction(ZLApplication.NoAction);
 
 			// switch view
-			addAction(ActionCode.SHOW_COLLECTION);
-			addAction(ActionCode.SHOW_LAST_BOOKS);
-			addAction(ActionCode.OPEN_PREVIOUS_BOOK);
+			addAction(ActionCode.SHOW_LIBRARY);
 			addAction(ActionCode.SHOW_CONTENTS);
 
 			// navigation
@@ -130,7 +128,6 @@ public class KeyBindingsPage {
 			// dialogs
 			addAction(ActionCode.SHOW_OPTIONS);
 			addAction(ActionCode.SHOW_BOOK_INFO);
-			addAction(ActionCode.ADD_BOOK);
 
 			// quit
 			addAction(ActionCode.CANCEL);

@@ -5,8 +5,8 @@
 			<node name="preferences" value="FBReader..."/>
 	  	<node name="bookInfo" value="Current Book..."/>
 		</node>
-		<node name="library" value="Library">
-			<node name="showLibrary" value="Open"/>
+		<node name="showLibrary" value="Library"/>
+		<node name="library" value="Library Old">
 			<node name="previousBook" value="Previous Book"/>
 			<node name="showRecent" value="Recent"/>
 			<node name="addBook" value="Add Book..."/>
@@ -315,7 +315,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>
 			<node name="loadingBook" value="Opening book. Please, wait..."/>
-			<node name="loadingBookList" value="Openin library. Please, wait..."/>
+			<node name="loadingBookList" value="Opening library. Please, wait..."/>
 			<node name="migrate" value="Upgrading to the new version. Please, wait..."/>
 		</node>
 	</node>

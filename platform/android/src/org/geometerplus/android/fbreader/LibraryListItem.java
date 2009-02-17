@@ -17,12 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.android.fbreader;
 
-public abstract class ZLTreeOpenHandler extends ZLTreeHandler {
-	public boolean isOpenHandler() {
-		return true;
-	}
-
-	protected abstract boolean accept(ZLTreeNode node);
+interface LibraryListItem {
+	String getTopText();
+	String getBottomText();
+	void run();
 }

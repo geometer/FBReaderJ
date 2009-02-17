@@ -219,9 +219,7 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public void openFile(String fileName) {
-		// TODO: implement or change to abstract
-	}
+	public abstract boolean openFile(String fileName);
 
 	public final void presentWindow() {
 		if (myWindow != null) {

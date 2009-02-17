@@ -17,30 +17,43 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import java.util.ArrayList;
+import android.widget.ListView;
 
+import org.geometerplus.fbreader.description.Author;
 import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.fbreader.FBReader;
 
-class OpenPreviousBookAction extends FBAction {
-	OpenPreviousBookAction(FBReader fbreader) {
-		super(fbreader);
+class SeriesItem implements LibraryListItem {
+	private final ListView myView;
+	private final Author myAuthor;
+	private final String mySeries;
+	private String myBookList = "";
+
+	SeriesItem(ListView view, Author author, String series) {
+		myView = view;
+		myAuthor = author;
+		mySeries = series;
 	}
 
-	public boolean isVisible() {
-		switch (Reader.getMode()) {
-			case FBReader.ViewMode.BOOK_TEXT:
-			case FBReader.ViewMode.CONTENTS:
-				return Reader.RecentBooksView.lastBooks().books().size() > 1;
-			default:
-				return false;
+	void addBook(BookDescription book) {
+		if (myBookList.length() > 0) {
+			myBookList += ",  ";
 		}
+		myBookList += book.getTitle();
+	}
+
+	public String getTopText() {
+		return mySeries;
+	}
+
+	public String getBottomText() {
+		return myBookList;
 	}
 
 	public void run() {
-		final ArrayList books = Reader.RecentBooksView.lastBooks().books();
-		Reader.openBook((BookDescription)books.get(1));
-		Reader.refreshWindow();
+		LibraryTabUtil.setSeriesBookList(myView, myAuthor, mySeries);
+		myView.invalidate();
 	}
 }

@@ -41,7 +41,7 @@ public class BookDescription implements Comparable {
 	private	String myLanguage = "";
 	private	String myEncoding = "";
 	private final static HashMap ourDescriptions = new HashMap();
-	private final ArrayList myTags = new ArrayList();
+	private final ArrayList<String> myTags = new ArrayList<String>();
 
 	public static BookDescription getDescription(String fileName) {
 		return getDescription(fileName, true); 
@@ -150,11 +150,11 @@ public class BookDescription implements Comparable {
 		return myEncoding;
 	}
 
-	public ArrayList getTags() {
-		return myTags;
+	public List<String> getTags() {
+		return Collections.unmodifiableList(myTags);
 	}
 
-  private boolean addTag(String tag, boolean check) {
+	private boolean addTag(String tag, boolean check) {
 		if (check) {
 			tag = BookDescriptionUtil.removeWhiteSpacesFromTag(tag);
 		}
@@ -171,19 +171,19 @@ public class BookDescription implements Comparable {
 	}
 
   private void saveTags(ZLStringOption tagsOption) {
-		final ArrayList tags = myTags;
+		final ArrayList<String> tags = myTags;
 		if (tags.isEmpty()) {
 			tagsOption.setValue("");
 		} else {
 			final StringBuilder tagString = new StringBuilder();
 			tagString.append(tags.get(0));
-			final	int len = tags.size();
+			final int len = tags.size();
 			for (int i = 1; i < len; ++i) {
 				tagString.append(",");
 				tagString.append(tags.get(i));
 			}
-  		tagsOption.setValue(tagString.toString());
-    }
+			tagsOption.setValue(tagString.toString());
+		}
 	}
 
 	public static class BookInfo {
@@ -280,7 +280,7 @@ public class BookDescription implements Comparable {
 			String strippedKey = sortKey;
 			strippedKey.trim();
 			if (strippedKey.length() == 0) {
-				int index = strippedName.indexOf(' ');
+				int index = strippedName.lastIndexOf(' ');
 				if (index == -1) {
 					strippedKey = strippedName;
 				} else {
@@ -362,14 +362,14 @@ public class BookDescription implements Comparable {
 		}
 
 		public void removeTag(String tag, boolean includeSubTags) {
-			final ArrayList tags = myDescription.myTags;
+			final ArrayList<String> tags = myDescription.myTags;
 			if (includeSubTags) {
 				final String prefix = tag + '/';
 				boolean changed = false;
 				final int len = tags.size();
 				ArrayList toRemove = null;
 				for (int i = 0; i < len; ++i) {
-					String current = (String)tags.get(i);
+					String current = tags.get(i);
 					if (current.equals(tag) || current.startsWith(prefix)) {
 						if (toRemove == null) {
 							toRemove = new ArrayList();
@@ -391,14 +391,14 @@ public class BookDescription implements Comparable {
 		}
 
 		public void renameTag(String from, String to, boolean includeSubTags) {
-			final ArrayList tags = myDescription.myTags;
+			final ArrayList<String> tags = myDescription.myTags;
 			if (includeSubTags) {
 				final String prefix = from + '/';
 				final HashSet tagSet = new HashSet();
 				boolean changed = false;
 				final int len = tags.size();
 				for (int i = 0; i < len; ++i) {
-					final String value = (String)tags.get(i);
+					final String value = tags.get(i);
 					if (from.equals(value)) {
 						tagSet.add(to);
 						changed = true;
@@ -423,13 +423,13 @@ public class BookDescription implements Comparable {
 		}
 
 		public void cloneTag(String from, String to, boolean includeSubTags) {
-			final ArrayList tags = myDescription.myTags;
+			final ArrayList<String> tags = myDescription.myTags;
 			if (includeSubTags) {
 				final String prefix = from + '/';
 				final HashSet tagSet = new HashSet();
 				final int len = tags.size();
 				for (int i = 0; i < len; ++i) {
-					final String value = (String)tags.get(i);
+					final String value = tags.get(i);
 					if (value.equals(from)) {
 						tagSet.add(to);
 					} else if (value.startsWith(prefix)) {

@@ -1,15 +1,14 @@
 #!/usr/bin/python
 
-import os;
-import shutil;
+import os, sys, shutil;
 
-raw_res_dir = "res/raw"
-drawable_res_dir = "res/drawable"
-data_dir_common = "../../data"
-application_icons_dir_common = "../../icons/application"
-filetree_icons_dir_android = "icons/filetree"
-booktree_icons_dir_common = "../../icons/booktree"
-data_dir_android = "data"
+project_dir = sys.argv[1]
+platform_dir = project_dir + "/platform/android"
+raw_res_dir = platform_dir + "/res/raw"
+drawable_res_dir = platform_dir + "/res/drawable"
+data_dir_common = project_dir + "/data"
+application_icons_dir_common = project_dir + "/icons/application"
+data_dir_android = platform_dir + "/data"
 
 print os.getcwd()
 
@@ -35,6 +34,4 @@ clean_res_dir(raw_res_dir)
 clean_res_dir(drawable_res_dir)
 process_data_dir("data__", data_dir_common, raw_res_dir)
 process_data_dir("data__", data_dir_android, raw_res_dir)
-process_data_dir("filetree__", filetree_icons_dir_android, drawable_res_dir, 0)
-process_data_dir("icons__booktree__", booktree_icons_dir_common, raw_res_dir)
 shutil.copyfile(application_icons_dir_common + "/48x48.png", drawable_res_dir + "/fbreader.png")

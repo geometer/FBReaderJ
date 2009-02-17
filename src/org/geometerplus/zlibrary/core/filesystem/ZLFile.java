@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.filesystem;
 
 import java.io.*;
 import java.util.*;
-import java.util.zip.*;
+import org.amse.ys.zip.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -62,7 +62,6 @@ public class ZLFile {
 		File file = new File(path);
 		info.Exists = file.exists() || ZLFSUtil.getRootDirectoryPath().equals(path);;
 		info.Size = file.length();
-		info.MTime = file.lastModified();
 		info.IsDirectory = file.isDirectory() || ZLFSUtil.getRootDirectoryPath().equals(path);
 		return info;
 	}
@@ -135,12 +134,6 @@ public class ZLFile {
 		if (myInfo == null) 
 			fillInfo(); 
 		return myInfo.Exists;
-	}
-	
-	public long getMTime() {
-		if (myInfo == null) 
-			fillInfo(); 
-		return myInfo.MTime; 
 	}
 	
 	public long size() {
@@ -217,19 +210,13 @@ public class ZLFile {
 			InputStream base = baseFile.getInputStream();
 			if (base != null) {
 				if (0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
-					/*
 					ZipFile zf = new ZipFile(myPath.substring(0, index));
-					ZipEntry entry = zf.getEntry (myPath.substring(index+1));
-					stream = zf.getInputStream (entry);
+					/*
+					ZipEntry entry = zf.getEntry(myPath.substring(index+1));
+					stream = zf.getInputStream(entry);
 					*/
-					final org.amse.ys.zip.ZipInputStream zipStream = new org.amse.ys.zip.ZipInputStream(myPath.substring(0, index));
-					//final ZipInputStream zipStream = new ZipInputStream(base);
 					final String entryName = myPath.substring(index + 1);
-					try {
-						zipStream.openFile(entryName);
-						stream = zipStream;
-					} catch (org.amse.ys.zip.WrongZipFormatException e) {
-					}
+					stream = zf.getInputStream(entryName);
 					/*
 					while (true) {
 						ZipEntry entry = zipStream.getNextEntry();
@@ -249,7 +236,7 @@ public class ZLFile {
 
 		if (stream != null) {
 			if (0 != (myArchiveType & ArchiveType.GZIP)) {
-				return new GZIPInputStream(stream, 8192);
+				return new java.util.zip.GZIPInputStream(stream, 8192);
 			}
 			//if (0 != (myArchiveType & ArchiveType.BZIP2)) {
 				//return new ZLBzip2InputStream(stream);

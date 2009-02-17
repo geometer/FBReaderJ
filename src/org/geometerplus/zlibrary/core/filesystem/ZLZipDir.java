@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.filesystem;
 
 import java.io.*;
 import java.util.*;
-import java.util.zip.*;
+import org.amse.ys.zip.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 public class ZLZipDir extends ZLDir {
@@ -42,27 +42,34 @@ public class ZLZipDir extends ZLDir {
 	};
 	
 	public ArrayList/*<String>*/ collectFiles() {		
-		File[] dirs = myFile.listFiles();
-		ArrayList/*<String>*/ newdirs  = new ArrayList();
-		
 		ZipFile zf = null;
 		try {
-			zf = new ZipFile(myFile);
-		} catch (ZipException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			zf = new ZipFile(myFile.getCanonicalPath());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 		}
-		if ((zf == null) || (zf.entries() == null)) {		
+		if (zf == null) {		
 			return EMPTY;
 		}
-		Enumeration/*ZipEntry*/ en = zf.entries();
-		while (en.hasMoreElements()) {
-			ZipEntry entry = (ZipEntry)en.nextElement();
-			newdirs.add(entry.getName());
+
+		ArrayList fileNames  = new ArrayList();
+		for (LocalFileHeader header : zf.headers()) {
+			fileNames.add(header.FileName);
 		}
-		return newdirs;
+		return fileNames;
+		
+//		try {
+//			zf = new ZipFile(myFile);
+//		} catch (ZipException e) {
+//		} catch (IOException e) {
+//		}
+//		if ((zf == null) || (zf.entries() == null)) {		
+//			return EMPTY;
+//		}
+//		Enumeration/*ZipEntry*/ en = zf.entries();
+//		while (en.hasMoreElements()) {
+//			ZipEntry entry = (ZipEntry)en.nextElement();
+//			fileNames.add(entry.getName());
+//		}
+//		return fileNames;
 	}
 }

@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 public interface ActionCode {
-	String SHOW_COLLECTION = "showLibrary";
+	String SHOW_LIBRARY = "showLibrary";
 	String SHOW_OPTIONS = "preferences";
 	String UNDO = "undo";
 	String REDO = "redo";
@@ -40,13 +40,10 @@ public interface ActionCode {
 	String DECREASE_FONT = "decreaseFont";
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";
 	String FULLSCREEN_ON = "onFullscreen";
-	String ADD_BOOK = "addBook";
 	String SHOW_BOOK_INFO = "bookInfo";
 	String SHOW_HELP = "showHelp";
 	String ROTATE_SCREEN = "rotate";
-	String SHOW_LAST_BOOKS = "showRecent";
 	String QUIT = "quit";
-	String OPEN_PREVIOUS_BOOK = "previousBook";
 	String GOTO_NEXT_TOC_SECTION = "nextTOCSection";
 	String GOTO_PREVIOUS_TOC_SECTION = "previousTOCSection";
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";

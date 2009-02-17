@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -36,6 +37,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.collection.BookCollection;
+import org.geometerplus.fbreader.collection.RecentBooks;
 import org.geometerplus.fbreader.description.BookDescription;
 
 public final class FBReader extends ZLApplication {
@@ -44,9 +46,6 @@ public final class FBReader extends ZLApplication {
 		int BOOK_TEXT = 1 << 0;
 		int FOOTNOTE = 1 << 1;
 		int CONTENTS = 1 << 2;
-		int BOOKMARKS = 1 << 3;
-		int BOOK_COLLECTION = 1 << 4;
-		int RECENT_BOOKS = 1 << 5;
 	};
 
 	public final ZLBooleanOption UseSeparateBindingsOption = 
@@ -89,15 +88,9 @@ public final class FBReader extends ZLApplication {
 	public final BookTextView BookTextView;
 	public final ContentsView ContentsView;
 	public final FootnoteView FootnoteView;
-	public final CollectionView CollectionView;
-	public final RecentBooksView RecentBooksView;
 
 	private BookModel myBookModel;
 	private final String myArg0;
-
-	public FBReader() {
-		this(new String[0]);
-	}
 
 	public FBReader(String[] args) {
 		myArg0 = (args.length > 0) ? args[0] : null;
@@ -113,12 +106,10 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
-		addAction(ActionCode.SHOW_COLLECTION, new SetModeAction(this, ViewMode.BOOK_COLLECTION, ViewMode.BOOK_TEXT | ViewMode.CONTENTS | ViewMode.RECENT_BOOKS));
-		addAction(ActionCode.SHOW_LAST_BOOKS, new SetModeAction(this, ViewMode.RECENT_BOOKS, ViewMode.BOOK_TEXT | ViewMode.CONTENTS));
+		addAction(ActionCode.SHOW_LIBRARY, new ShowLibrary(this));
 		addAction(ActionCode.SHOW_OPTIONS, new ShowOptionsDialogAction(this));
 		addAction(ActionCode.SHOW_CONTENTS, new ShowContentsAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoDialogAction(this));
-		addAction(ActionCode.ADD_BOOK, new AddBookAction(this));
 		
 		addAction(ActionCode.SEARCH, new SearchAction(this));
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
@@ -132,7 +123,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new ScrollingAction(this, TrackballScrollingOptions, true));
 		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new ScrollingAction(this, TrackballScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
-		addAction(ActionCode.OPEN_PREVIOUS_BOOK, new OpenPreviousBookAction(this));
 		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
 		addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new DummyAction(this));
@@ -144,8 +134,6 @@ public final class FBReader extends ZLApplication {
 		BookTextView = new BookTextView(context);
 		ContentsView = new ContentsView(context);
 		FootnoteView = new FootnoteView(context);
-		CollectionView = new CollectionView(context);
-		RecentBooksView = new RecentBooksView(context);
 
 		setMode(ViewMode.BOOK_TEXT);
 	}
@@ -160,15 +148,9 @@ public final class FBReader extends ZLApplication {
 			} catch (IOException e) {
 			}
 		}
-		BookDescription description = BookDescription.getDescription(fileName);   
-		if (description == null) {
-			description = BookDescription.getDescription(myBookNameOption.getValue());
+		if (!openFile(fileName) && !openFile(myBookNameOption.getValue())) {
+			openFile(getHelpFileName());
 		}
-		if (description == null) {
-			description = BookDescription.getDescription(getHelpFileName());
-		}
-		openBook(description);
-		refreshWindow();
 	}
 	
 	public void openBook(BookDescription bookDescription) {
@@ -222,22 +204,6 @@ public final class FBReader extends ZLApplication {
 			case ViewMode.FOOTNOTE:
 				setView(FootnoteView);
 				break;
-			case ViewMode.RECENT_BOOKS:
-				RecentBooksView.rebuild();
-				setView(RecentBooksView);
-				break;
-			case ViewMode.BOOK_COLLECTION:
-				Runnable action = new Runnable() {
-					public void run() {
-						CollectionView.updateModel();
-						if (myBookModel != null) {
-							CollectionView.selectBook(myBookModel.Description);
-						}
-						setView(CollectionView);
-					}
-				};
-				ZLDialogManager.getInstance().wait("loadingBookList", action);
-				break;
 			default:
 				break;
 		}
@@ -270,8 +236,6 @@ public final class FBReader extends ZLApplication {
 		BookTextView.clearCaches();
 		ContentsView.clearCaches();
 		FootnoteView.clearCaches();
-		CollectionView.clearCaches();
-		RecentBooksView.clearCaches();
 	}
 	
 	void openBookInternal(BookDescription description) {
@@ -298,7 +262,7 @@ public final class FBReader extends ZLApplication {
 			FootnoteView.setCaption(description.getTitle());
 			ContentsView.setModel(myBookModel.ContentsModel);
 			ContentsView.setCaption(description.getTitle());
-			RecentBooksView.lastBooks().addBook(fileName);
+			RecentBooks.Instance().addBook(fileName);
 		}
 		resetWindowCaption();
 		refreshWindow();
@@ -323,11 +287,34 @@ public final class FBReader extends ZLApplication {
 	}
 
 	@Override
-	public void openFile(String fileName) {
+	public boolean openFile(String fileName) {
+		if (fileName == null) {
+			return false;
+		}
 		BookDescription description = BookDescription.getDescription(fileName);
+		if (description == null) {
+			final ZLFile file = new ZLFile(fileName);
+			if (file.isArchive()) {
+				final ZLDir directory = file.getDirectory();
+				if (directory != null) {
+					final ArrayList items = directory.collectFiles();
+					final int size = items.size();
+					for (int i = 0; i < size; ++i) {
+						final String itemFileName = directory.getItemPath((String)items.get(i));
+						description = BookDescription.getDescription(itemFileName);
+						if (description != null) {
+							break;
+						}
+					}
+				}
+			}
+		}
 		if (description != null) {
 			openBook(description);
 			refreshWindow();
+			return true;
+		} else {
+			return false;
 		}
 	}
 

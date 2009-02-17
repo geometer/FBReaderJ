@@ -21,23 +21,33 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.fbreader.collection.BookCollection;
 
-class ShowBookInfoDialogAction extends FBAction {
-	ShowBookInfoDialogAction(FBReader fbreader) {
+import org.geometerplus.android.fbreader.LibraryTabActivity;
+
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+class ShowLibrary extends FBAction {
+	ShowLibrary(FBReader fbreader) {
 		super(fbreader);
 	}
 
-	public boolean isVisible() {
-		return Reader.getMode() == FBReader.ViewMode.BOOK_TEXT;
-	}
-
 	public void run() {
-		final String fileName = Reader.BookTextView.getFileName();
+		final ZLAndroidDialogManager dialogManager =
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
 		Runnable action = new Runnable() {
 			public void run() {
-				Reader.openFile(fileName);
-				Reader.refreshWindow();
+				BookCollection collection = BookCollection.Instance();
+				collection.rebuild();
+				collection.synchronize();
+				// TODO: select current book (author?)
+				/*
+				if (myBookModel != null) {
+					CollectionView.selectBook(myBookModel.Description);
+				}
+				*/
+				//setView(CollectionView);
+				dialogManager.runActivity(LibraryTabActivity.class);
 			}
 		};
-		new BookInfoDialog(fileName, action).getDialog().run();
+		dialogManager.wait("loadingBookList", action);
 	}
 }

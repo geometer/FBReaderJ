@@ -47,8 +47,8 @@ public class BookInfoDialog {
 	private ZLSpinOptionEntry myBookNumberEntry;
 	//private FormatInfoPage myFormatInfoPage;
 	
-	public BookInfoDialog(BookCollection collection, String fileName, Runnable actionOnAccept) {
-		myCollection = collection;
+	public BookInfoDialog(String fileName, Runnable actionOnAccept) {
+		myCollection = BookCollection.Instance();
 		myBookInfo = new BookDescription.BookInfo(fileName);
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog", actionOnAccept, null, false);
 		
@@ -121,9 +121,8 @@ public class BookInfoDialog {
 			if (myValues.size() == 0) {
 				final String initial = initialValue();
 				boolean addInitial = true;
-				final ArrayList authors = myCollection.authors();
-				for (int i = 0; i < authors.size(); i++) {
-					final String name = ((Author) authors.get(i)).getDisplayName(); 
+				for (Author author : myCollection.authors()) {
+					final String name = author.getDisplayName(); 
 					if (addInitial && (name != null && name.equals(initial))) {
 						addInitial = false;
 					}
@@ -145,9 +144,9 @@ public class BookInfoDialog {
 		}
 
 		public void onValueSelected(int index) {
-			final ArrayList authors = myCollection.authors();
+			final Collection<Author> authors = myCollection.authors();
 			if (index < authors.size()) {
-				myCurrentAuthor = (Author)authors.get(index);
+				myCurrentAuthor = new ArrayList<Author>(authors).get(index);
 			}
 			myAuthorSortKeyEntry.resetView();
 			mySeriesTitleEntry.resetView();
@@ -160,11 +159,9 @@ public class BookInfoDialog {
 		
 		public SeriesTitleEntry() {
 			super(true);
-			final ArrayList authors = myCollection.authors();
 			final String authorName = myBookInfo.AuthorDisplayNameOption.getValue();
 			final String authorKey = myBookInfo.AuthorSortKeyOption.getValue();
-			for (int i = 0; i < authors.size(); i++) {
-				final Author author = (Author) authors.get(i);
+			for (Author author : myCollection.authors()) {
 				if ((authorName != null && authorName.equals(author.getDisplayName())) &&
 						(authorKey != null && authorKey.equals(author.getSortKey()))) {
 					myOriginalAuthor = author;

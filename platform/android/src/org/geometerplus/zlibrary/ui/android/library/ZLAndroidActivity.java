@@ -19,8 +19,10 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
+import android.net.Uri;
 import android.app.Activity;
 import android.os.Bundle;
+import android.content.Intent;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -30,17 +32,25 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract ZLApplication createApplication();
+	protected abstract ZLApplication createApplication(String fileName);
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		getLibrary().setActivity(this);
+
+		final Intent intent = getIntent();
+		final Uri uri = intent.getData();
+		final String fileToOpen = (uri != null) ? uri.getPath() : null;
+		intent.setData(null);
+
 		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
-			ZLApplication application = createApplication();
+			ZLApplication application = createApplication(fileToOpen);
 			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
+		} else if (fileToOpen != null) {
+			ZLApplication.Instance().openFile(fileToOpen);
 		}
 		ZLApplication.Instance().refreshWindow();
 	}

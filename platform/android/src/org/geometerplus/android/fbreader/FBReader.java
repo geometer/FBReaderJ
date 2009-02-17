@@ -24,7 +24,8 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 
 public class FBReader extends ZLAndroidActivity {
-	protected ZLApplication createApplication() {
-		return new org.geometerplus.fbreader.fbreader.FBReader();
+	protected ZLApplication createApplication(String fileName) {
+		String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
+		return new org.geometerplus.fbreader.fbreader.FBReader(args);
 	}
 }
