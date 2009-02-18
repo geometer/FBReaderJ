@@ -18,6 +18,7 @@
 				<data android:scheme="http" />
 				<data android:host="*" />
 				<data android:pathPattern=".*\\.epub" />
+				<data android:pathPattern=".*\\.oeb" />
 				<data android:pathPattern=".*\\.fb2" />
 			</intent-filter>
 			<intent-filter>
