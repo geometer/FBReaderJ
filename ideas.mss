@@ -58,3 +58,7 @@ Submit bug report directly from the application :)
 (Until it's implemented globally) Check for updates
 
 Automatic text orientation to be done configurable
+
+Process +/- volume control differently.  Options:
+    -- increase/decrease font size?
+    -- page up/down
