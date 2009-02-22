@@ -38,6 +38,14 @@ public abstract class ZLXMLProcessor {
 			} catch (IOException e) {
 			}
 		}
-		return (stream != null) ? read(xmlReader, stream) : false;
+		if (stream == null) {
+			return false;
+		}
+		boolean code = read(xmlReader, stream);
+		try {
+			stream.close();
+		} catch (IOException e) {
+		}
+		return code;
 	}
 }

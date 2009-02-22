@@ -34,6 +34,7 @@ public class BookDescription implements Comparable {
 
 	public final String FileName;
 
+	//private final TreeSet<Author> myAuthors = new TreeSet<Author>();
 	private Author myAuthor;
 	private	String myTitle = "";
 	private	String mySeriesName = "";
@@ -63,7 +64,7 @@ public class BookDescription implements Comparable {
 		}
 		if (!checkFile || BookDescriptionUtil.checkInfo(file)) {
 			BookInfo info = new BookInfo(fileName);
-			description.myAuthor = Author.SingleAuthor.create(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
+			description.myAuthor = new Author(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
 			description.myTitle = info.TitleOption.getValue();
 			description.mySeriesName = info.SeriesNameOption.getValue();
 			description.myNumberInSeries = info.NumberInSeriesOption.getValue();
@@ -72,14 +73,14 @@ public class BookDescription implements Comparable {
 			description.myTags.clear();
 			final String tagList = info.TagsOption.getValue();
 			if (tagList.length() > 0) {
-			int index = 0;
-			do {
-				final int newIndex = tagList.indexOf(',', index);
-				final String tagName = (newIndex == -1) ? tagList.substring(index) : tagList.substring(index, newIndex);
-				description.addTag(tagName, true);
-				index = newIndex + 1;
-			} while (index != 0);
-		}
+				int index = 0;
+				do {
+					final int newIndex = tagList.indexOf(',', index);
+					final String tagName = (newIndex == -1) ? tagList.substring(index) : tagList.substring(index, newIndex);
+					description.addTag(tagName, true);
+					index = newIndex + 1;
+				} while (index != 0);
+			}
 
 			if (info.isFull()) {
 				return description;
@@ -101,16 +102,16 @@ public class BookDescription implements Comparable {
 			description.myTitle = bookFile.getName(true);
 		}
 		Author author = description.myAuthor;
-		if (author == null || author.getDisplayName().length() == 0) {
-			description.myAuthor = Author.SingleAuthor.create();
+		if (author == null || author.DisplayName.length() == 0) {
+			description.myAuthor = new Author();
 		}
 		if (description.myEncoding.length() == 0) {
 			description.myEncoding = "auto";
 		}
 		{
 			BookInfo info = new BookInfo(fileName);
-			info.AuthorDisplayNameOption.setValue(description.myAuthor.getDisplayName());
-			info.AuthorSortKeyOption.setValue(description.myAuthor.getSortKey());
+			info.AuthorDisplayNameOption.setValue(description.myAuthor.DisplayName);
+			info.AuthorSortKeyOption.setValue(description.myAuthor.SortKey);
 			info.TitleOption.setValue(description.myTitle);
 			info.SeriesNameOption.setValue(description.mySeriesName);
 			info.NumberInSeriesOption.setValue(description.myNumberInSeries);
@@ -291,15 +292,12 @@ public class BookDescription implements Comparable {
 					strippedName = strippedName.substring(0, index + 1) + ' ' + strippedKey;
 				}
 			}
-			Author author = Author.SingleAuthor.create(strippedName, strippedKey);
+			Author author = new Author(strippedName, strippedKey);
 
 			if (myDescription.myAuthor == null) {
 				myDescription.myAuthor = author;
 			} else {
-				if (myDescription.myAuthor.isSingle()) {
-					myDescription.myAuthor = Author.MultiAuthor.create(myDescription.myAuthor);
-				}
-				((Author.MultiAuthor)myDescription.myAuthor).addAuthor(author);
+				// TODO: implement
 			}
 		}
 

@@ -22,88 +22,17 @@ package org.geometerplus.fbreader.description;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-public abstract class Author implements Comparable {
-	public abstract String getDisplayName();
-	public abstract String getSortKey();
-	public abstract boolean isSingle();	
-	
-	static class SingleAuthor extends Author {
-		private final String myDisplayName;
-		private final String mySortKey;
+public final class Author implements Comparable<Author> {
+	public final String DisplayName;
+	public final String SortKey;
 
-		public static Author create(String displayName, String sortKey) {
-			return new SingleAuthor(displayName, sortKey);
-		}
-		
-		public static Author create() {
-			return create("Unknown Author", "___");
-		}
-		
-		private SingleAuthor(String displayName, String sortKey) {
-			myDisplayName = displayName;
-			mySortKey = sortKey.toLowerCase();
-		}
-
-		public String getDisplayName() {
-			return myDisplayName;
-		}
-		
-		public String getSortKey() {
-			return mySortKey;
-		}
-		
-		public	boolean isSingle() {
-			return true;
-		}
+	Author(String displayName, String sortKey) {
+		DisplayName = displayName;
+		SortKey = sortKey;
 	}
-	
-	static class MultiAuthor extends Author {
-		private final ArrayList myAuthors = new ArrayList();
-		private String myDisplayName;
-		private	String mySortKey;
-
-		public static Author create(Author author) {
-			return new MultiAuthor(author); 
-		}
-						
-		private MultiAuthor(Author author) {
-			addAuthor(author); 
-		}
-
-		public void addAuthor(Author author) {
-			myAuthors.add(author);
-			myDisplayName = ""; 
-			mySortKey = "";
-		}
 		
-		public String getDisplayName() {
-			if ((myDisplayName.length() == 0) && (myAuthors.size() != 0)) {
-				myDisplayName = ((Author)myAuthors.get(0)).getDisplayName();
-				for (int i = 1; i < myAuthors.size(); ++i) {
-					myDisplayName += ", ";
-					myDisplayName += ((Author)myAuthors.get(i)).getDisplayName();
-				}
-			}
-			return myDisplayName;
-		}
-		
-		public String getSortKey() {
-			if ((mySortKey.length() == 0) && (myAuthors.size() != 0)) {
-				mySortKey = ((Author)myAuthors.get(0)).getSortKey();
-				for (int i = 1; i < myAuthors.size(); ++i) {
-					String key = ((Author)myAuthors.get(i)).getSortKey();
-					//key < mySortKey
-					if (key.compareTo(mySortKey) < 0) {
-						mySortKey = key;
-					}
-				}
-			}
-			return mySortKey;
-		}
-		
-		public boolean isSingle() {
-			return false;
-		}
+	Author() {
+		this("Unknown Author", "___");
 	}
 
 	public boolean equals(Object o) {
@@ -114,21 +43,19 @@ public abstract class Author implements Comparable {
 			return false;
 		}
 		Author a = (Author)o;
-		return getSortKey().equals(a.getSortKey()) && getDisplayName().equals(a.getDisplayName());
+		return SortKey.equals(a.SortKey) && DisplayName.equals(a.DisplayName);
 	}
 
 	public int hashCode() {
-		return getSortKey().hashCode() + getDisplayName().hashCode();
+		return SortKey.hashCode() + DisplayName.hashCode();
 	}
 
-	public int compareTo(Object o) {
-		final Author a = (Author)o;
-
-		final int result = getSortKey().compareTo(a.getSortKey());
+	public int compareTo(Author a) {
+		final int result = SortKey.compareTo(a.SortKey);
 		if (result != 0) {
 			return result;
 		}
 
-		return a.getDisplayName().compareTo(getDisplayName());
+		return DisplayName.compareTo(a.DisplayName);
 	}
 }

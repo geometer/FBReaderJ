@@ -101,7 +101,7 @@ public class BookInfoDialog {
 			Author currentAuthor = myAuthorDisplayNameEntry.myCurrentAuthor;
 			return currentAuthor == null ?
 				myBookInfo.AuthorSortKeyOption.getValue() :
-				currentAuthor.getSortKey();
+				currentAuthor.SortKey;
 		}
 
 		public void onAccept(String value) {
@@ -122,8 +122,8 @@ public class BookInfoDialog {
 				final String initial = initialValue();
 				boolean addInitial = true;
 				for (Author author : myCollection.authors()) {
-					final String name = author.getDisplayName(); 
-					if (addInitial && (name != null && name.equals(initial))) {
+					final String name = author.DisplayName; 
+					if (addInitial && name.equals(initial)) {
 						addInitial = false;
 					}
 					myValues.add(name);
@@ -162,8 +162,8 @@ public class BookInfoDialog {
 			final String authorName = myBookInfo.AuthorDisplayNameOption.getValue();
 			final String authorKey = myBookInfo.AuthorSortKeyOption.getValue();
 			for (Author author : myCollection.authors()) {
-				if ((authorName != null && authorName.equals(author.getDisplayName())) &&
-						(authorKey != null && authorKey.equals(author.getSortKey()))) {
+				if ((authorName != null && authorName.equals(author.DisplayName)) &&
+						(authorKey != null && authorKey.equals(author.SortKey))) {
 					myOriginalAuthor = author;
 					break;
 				}

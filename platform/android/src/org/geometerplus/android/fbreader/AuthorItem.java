@@ -35,7 +35,7 @@ class AuthorItem implements LibraryListItem {
 	}
 
 	public String getTopText() {
-		return myAuthor.getDisplayName();
+		return myAuthor.DisplayName;
 	}
 
 	public String getBottomText() {

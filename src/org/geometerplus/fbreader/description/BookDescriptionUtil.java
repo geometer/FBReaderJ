@@ -35,7 +35,6 @@ public class BookDescriptionUtil {
 	private static final String ENTRY = "Entry";
 	private static final String ENTRIES_NUMBER = "EntriesNumber";
 
-	
 	public static boolean checkInfo(ZLFile file) {
 		ZLIntegerOption op = new ZLIntegerOption(FBOptions.BOOKS_CATEGORY, file.getPath(), SIZE, -1);
 		return op.getValue() == (int)file.size();

@@ -251,5 +251,6 @@ mainSwitchLabel:
 				}
 			}
 		}
+		streamReader.close();
 	}
 }
