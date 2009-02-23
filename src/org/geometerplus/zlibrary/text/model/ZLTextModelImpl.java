@@ -32,9 +32,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	private int[] myParagraphLengths = new int[INITIAL_CAPACITY];
 	int myParagraphsNumber;
 
-	private final ArrayList myData = new ArrayList(1024);
-	private final ArrayList myMarks = new ArrayList();
-	private final int myDataBlockSize;
+	private final CharStorage myStorage;
+	private final ArrayList<ZLTextMark> myMarks = new ArrayList<ZLTextMark>();
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
 
@@ -113,14 +112,14 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 		public void next() {
 			int dataOffset = myDataOffset;
-			if (dataOffset == myDataBlockSize) {
-				++myDataIndex;
+			char[] data = myStorage.block(myDataIndex);
+			if (dataOffset == data.length) {
+				data = myStorage.block(++myDataIndex);
 				dataOffset = 0;
 			}
-			char[] data = (char[])myData.get(myDataIndex);
 			byte type = (byte)data[dataOffset];
 			if (type == 0) {
-				data = (char[])myData.get(++myDataIndex);
+				data = myStorage.block(++myDataIndex);
 				dataOffset = 0;
 				type = (byte)data[0];
 			}
@@ -175,8 +174,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		}
 	}
 
-	ZLTextModelImpl(int dataBlockSize) {
-		myDataBlockSize = dataBlockSize;
+	ZLTextModelImpl(CharStorage storage) {
+		myStorage = storage;
 	}
 
 	void extend() {
@@ -193,7 +192,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 			extend();
 			startEntryIndices = myStartEntryIndices;
 		}
-		final int dataSize = myData.size();
+		final int dataSize = myStorage.size();
 		startEntryIndices[index] = (dataSize == 0) ? 0 : (dataSize - 1);
 		myStartEntryOffsets[index] = myBlockOffset;
 		myParagraphLengths[index] = 0;
@@ -202,12 +201,10 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	private final char[] getDataBlock(int minimumLength) {
 		char[] block = myCurrentDataBlock;
 		if ((block == null) || (minimumLength > block.length - myBlockOffset)) {
-			int blockSize = myDataBlockSize;
-			if (minimumLength > blockSize) {
-				blockSize = minimumLength;
+			if (block != null) {
+				myStorage.freezeLastBlock();
 			}
-			block = new char[blockSize];
-			myData.add(block);
+			block = myStorage.createNewBlock(minimumLength);
 			myCurrentDataBlock = block;
 			myBlockOffset = 0;
 		}
@@ -288,17 +285,17 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}	
 
 	public ZLTextMark getFirstMark() {
-		return myMarks.size() == 0 ? new ZLTextMark() : (ZLTextMark) myMarks.get(0);
+		return myMarks.size() == 0 ? new ZLTextMark() : myMarks.get(0);
 	}
 	
 	public ZLTextMark getLastMark() {
-		return myMarks.size() == 0 ? new ZLTextMark() : (ZLTextMark) myMarks.get(myMarks.size() - 1);
+		return myMarks.size() == 0 ? new ZLTextMark() : myMarks.get(myMarks.size() - 1);
 	}
 
 	public ZLTextMark getNextMark(ZLTextMark position) {
 		ZLTextMark mark = null;
 		for (int i = 0; i < myMarks.size(); i++) {
-			ZLTextMark current = (ZLTextMark) myMarks.get(i);
+			ZLTextMark current = myMarks.get(i);
 			if (current.compareTo(position) > 0) {
 				if ((mark == null) || (mark.compareTo(current) > 0)) {
 					mark = current;
@@ -311,7 +308,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	public ZLTextMark getPreviousMark(ZLTextMark position) {
 		ZLTextMark mark = null;
 		for (int i = 0; i < myMarks.size(); i++) {
-			ZLTextMark current = (ZLTextMark) myMarks.get(i);
+			ZLTextMark current = myMarks.get(i);
 			if (current.compareTo(position) < 0) {
 				if ((mark == null) || (mark.compareTo(current) < 0)) {
 					mark = current;
@@ -356,7 +353,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	protected void clear() {
 		myParagraphsNumber = 0;
 		myEntries.clear();
-		myData.clear();
+		myStorage.clear();
 		myMarks.clear();
 		myCurrentDataBlock = null;
 		myBlockOffset = 0;
@@ -376,16 +373,16 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		int textLength = 0;
 		int dataIndex = myStartEntryIndices[index];
 		int dataOffset = myStartEntryOffsets[index];
-		char[] data = (char[])myData.get(dataIndex);
+		char[] data = myStorage.block(dataIndex);
 
 		for (int len = myParagraphLengths[index]; len > 0; --len) {
-			if (dataOffset == myDataBlockSize) {
-				data = (char[])myData.get(++dataIndex);
+			if (dataOffset == data.length) {
+				data = myStorage.block(++dataIndex);
 				dataOffset = 0;
 			}
 			byte type = (byte)data[dataOffset];
 			if (type == 0) {
-				data = (char[])myData.get(++dataIndex);
+				data = myStorage.block(++dataIndex);
 				dataOffset = 0;
 				type = (byte)data[0];
 			}

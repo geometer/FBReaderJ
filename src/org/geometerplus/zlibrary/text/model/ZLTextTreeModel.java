@@ -27,7 +27,7 @@ public class ZLTextTreeModel extends ZLTextModelImpl {
 	private final ZLTextTreeParagraphImpl myRoot;
 	
 	public ZLTextTreeModel() {
-		super(4096);
+		super(new SimpleCharStorage(4096));
 		myRoot = new ZLTextTreeParagraphImpl(null, this);
 		myRoot.open(true);
 	}

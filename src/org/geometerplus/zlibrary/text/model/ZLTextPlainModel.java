@@ -25,7 +25,7 @@ public final class ZLTextPlainModel extends ZLTextModelImpl {
 	private byte[] myParagraphKinds = new byte[INITIAL_CAPACITY];
 
 	public ZLTextPlainModel(int dataBlockSize) {
-		super(dataBlockSize);
+		super(new CachedCharStorage(dataBlockSize, "/sdcard/Books/.FBReaderCache"));
 	}
 
 	public int getParagraphsNumber() {
