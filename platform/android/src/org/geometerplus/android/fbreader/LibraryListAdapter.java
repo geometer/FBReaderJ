@@ -81,7 +81,6 @@ final class LibraryListAdapter extends BaseAdapter implements AdapterView.OnItem
 	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		android.util.Log.w("onItemClick", "position " + position + " id " + id);
 		getItem(position).run();
 	}
 

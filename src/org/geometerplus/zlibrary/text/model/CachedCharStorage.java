@@ -53,7 +53,6 @@ final class CachedCharStorage implements CharStorage {
 				if (size < 0) {
 					throw new CachedCharStorageException("Error during reading " + myFileNamePrefix + index);
 				}
-				android.util.Log.w("file size = ", "" + size);
 				block = new char[size / 2];
 				InputStreamReader reader =
 					new InputStreamReader(
