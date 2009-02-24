@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -395,9 +395,11 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	private static ArrayList ourExternalDTDs = new ArrayList();
 
 	public ArrayList externalDTDs() {
+		/*
 		if (ourExternalDTDs.isEmpty()) {
 			ourExternalDTDs.add(ZLibrary.JAR_DATA_PREFIX + "data/formats/fb2/FBReaderVersion.ent");
 		}
+		*/
 		return ourExternalDTDs;
 	}
 }

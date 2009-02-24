@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,9 +26,15 @@ import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReader;
 
 public class ZLOwnXMLProcessor extends ZLXMLProcessor {
+	private int myBufferSize = 65536;
+	
+	public void setBufferSize(int bufferSize) {
+		myBufferSize = bufferSize;
+	}
+
 	public boolean read(ZLXMLReader reader, InputStream stream) {
 		try {
-			ZLOwnXMLParser parser = new ZLOwnXMLParser(reader, stream);
+			ZLOwnXMLParser parser = new ZLOwnXMLParser(reader, stream, myBufferSize);
 			reader.startDocumentHandler();
 			parser.doIt();
 			reader.endDocumentHandler();

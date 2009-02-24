@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@ import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
 	public final BookDescription Description;
-	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536);
+	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache");
 	public final ContentsModel ContentsModel = new ContentsModel();
 
-	private final HashMap myFootnotes = new HashMap();
+	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
 	private final HashMap myInternalHyperlinks = new HashMap();
 	private final ArrayList myBookTextModels;
 
@@ -65,8 +65,8 @@ public final class BookModel {
 	}
 
 	ZLTextPlainModel getFootnoteModel(String id) {
-		final HashMap footnotes = myFootnotes;
-		ZLTextPlainModel model = (ZLTextPlainModel)footnotes.get(id);
+		final HashMap<String,ZLTextPlainModel> footnotes = myFootnotes;
+		ZLTextPlainModel model = footnotes.get(id);
 		if (model == null) {
 			model = new ZLTextPlainModel(4096); 
 			footnotes.put(id, model); 
@@ -99,9 +99,8 @@ public final class BookModel {
 		myImageMap.put(id, image);
 	}
 	
-	//
 	public ZLTextPlainModel addBookTextModel() {
-		ZLTextPlainModel bookTextModel = new ZLTextPlainModel(65536);
+		ZLTextPlainModel bookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache" + myBookTextModels.size());
 		myBookTextModels.add(bookTextModel);
 		return bookTextModel;
 	}

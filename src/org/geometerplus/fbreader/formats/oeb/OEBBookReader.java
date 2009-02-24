@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
+import org.geometerplus.fbreader.constants.XMLNamespace;
 
 class Reference {
 	public final String Title;
@@ -38,14 +39,16 @@ class Reference {
 	}
 }
 
-class OEBBookReader extends ZLXMLReaderAdapter {
+class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private final BookReader myModelReader;
 	private final HashMap myIdToHref = new HashMap();
 	private final ArrayList myHtmlFileNames = new ArrayList();
 	private final ArrayList myTourTOC = new ArrayList();
 	private final ArrayList myGuideTOC = new ArrayList();
 
+	private String myOPFSchemePrefix;
 	private String myFilePrefix;
+	private String myNCXTOCFileName;
 
 	OEBBookReader(BookModel model) {
 		myModelReader = new BookReader(model);
@@ -68,6 +71,7 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 
 		myIdToHref.clear();
 		myHtmlFileNames.clear();
+		myNCXTOCFileName = null;
 		myTourTOC.clear();
 		myGuideTOC.clear();
 		myState = READ_NONE;
@@ -85,6 +89,18 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 			new XHTMLReader(myModelReader).readFile(myFilePrefix, name, name);
 		}
 
+		generateTOC();
+
+		return true;
+	}
+
+	private void generateTOC() {
+		if (myNCXTOCFileName != null) {
+			//NCXReader ncxReader = new NCXReader(myModelReader);
+			//if (ncxReader.read(myFilePrefix + myNCXTOCFileName)) {
+			//}
+		}
+
 		final ArrayList toc = myTourTOC.isEmpty() ? myGuideTOC : myTourTOC;
 		final int tocLen = toc.size();
 		for (int i = 0; i < tocLen; ++i) {
@@ -99,8 +115,6 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 				}
 			}
 		}
-
-		return true;
 	}
 
 	private static final String MANIFEST = "manifest";
@@ -123,10 +137,15 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 	private int myState;
 
 	public boolean startElementHandler(String tag, ZLStringMap xmlattributes) {
-		tag = tag.toLowerCase().intern();
+		tag = tag.toLowerCase();
+		if ((myOPFSchemePrefix != null) && tag.startsWith(myOPFSchemePrefix)) {
+			tag = tag.substring(myOPFSchemePrefix.length());
+		}
+		tag = tag.intern();
 		if (MANIFEST == tag) {
 			myState = READ_MANIFEST;
 		} else if (SPINE == tag) {
+			myNCXTOCFileName = xmlattributes.getValue("toc");
 			myState = READ_SPINE;
 		} else if (GUIDE == tag) {
 			myState = READ_GUIDE;
@@ -171,10 +190,27 @@ class OEBBookReader extends ZLXMLReaderAdapter {
 	}
 
 	public boolean endElementHandler(String tag) {
-		tag = tag.toLowerCase().intern();
+		tag = tag.toLowerCase();
+		if ((myOPFSchemePrefix != null) && tag.startsWith(myOPFSchemePrefix)) {
+			tag = tag.substring(myOPFSchemePrefix.length());
+		}
+		tag = tag.intern();
 		if ((MANIFEST == tag) || (SPINE == tag) || (GUIDE == tag) || (TOUR == tag)) {
 			myState = READ_NONE;
 		}
 		return false;
+	}
+
+	public boolean processNamespaces() {
+		return true;
+	}
+
+	public void namespaceListChangedHandler(HashMap namespaces) {
+		myOPFSchemePrefix = null;
+		for (Object o : namespaces.keySet()) {
+			if (OpenPackagingFormat.equals(o)) {
+				myOPFSchemePrefix = namespaces.get(o) + ":";
+			}
+		}
 	}
 }

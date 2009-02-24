@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,11 +33,18 @@ final class CachedCharStorageException extends RuntimeException {
 final class CachedCharStorage implements CharStorage {
 	private final int myBlockSize;
 	private final ArrayList<WeakReference<char[]> > myArray = new ArrayList<WeakReference<char[]> >(1024);
-	private final String myFileNamePrefix;
+	private final String myDirectoryName;
+	private final String myFileExtension;
 
-	CachedCharStorage(int blockSize, String fileNamePrefix) {
+	private String fileName(int index) {
+		return myDirectoryName + index + myFileExtension;
+	}
+
+	CachedCharStorage(int blockSize, String directoryName, String fileExtension) {
 		myBlockSize = blockSize;
-		myFileNamePrefix = fileNamePrefix;
+		myDirectoryName = directoryName + '/';
+		myFileExtension = '.' + fileExtension;
+		new File(directoryName).mkdirs();
 	}
 
 	public int size() {
@@ -48,10 +55,10 @@ final class CachedCharStorage implements CharStorage {
 		char[] block = myArray.get(index).get();
 		if (block == null) {
 			try {
-				File file = new File(myFileNamePrefix + index);
+				File file = new File(fileName(index));
 				int size = (int)file.length();
 				if (size < 0) {
-					throw new CachedCharStorageException("Error during reading " + myFileNamePrefix + index);
+					throw new CachedCharStorageException("Error during reading " + fileName(index));
 				}
 				block = new char[size / 2];
 				InputStreamReader reader =
@@ -60,13 +67,13 @@ final class CachedCharStorage implements CharStorage {
 						"UTF-16LE"
 					);
 				if (reader.read(block) != block.length) {
-					throw new CachedCharStorageException("Error during reading " + myFileNamePrefix + index);
+					throw new CachedCharStorageException("Error during reading " + fileName(index));
 				}
 				reader.close();
 			} catch (FileNotFoundException e) {
-				throw new CachedCharStorageException("Error during reading " + myFileNamePrefix + index);
+				throw new CachedCharStorageException("Error during reading " + fileName(index));
 			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during reading " + myFileNamePrefix + index);
+				throw new CachedCharStorageException("Error during reading " + fileName(index));
 			}
 			myArray.set(index, new WeakReference<char[]>(block));
 		}
@@ -93,13 +100,13 @@ final class CachedCharStorage implements CharStorage {
 			try {
 				OutputStreamWriter writer =
 					new OutputStreamWriter(
-						new FileOutputStream(myFileNamePrefix + index),
+						new FileOutputStream(fileName(index)),
 						"UTF-16LE"
 					);
 				writer.write(block);
 				writer.close();
 			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during writing " + myFileNamePrefix + index);
+				throw new CachedCharStorageException("Error during writing " + fileName(index));
 			}
 		}
 	}

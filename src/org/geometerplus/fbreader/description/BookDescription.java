@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ public class BookDescription implements Comparable {
 			ourDescriptions.put(fileName, description);
 		}
 		if (!checkFile || BookDescriptionUtil.checkInfo(file)) {
+		//if (false) {
 			BookInfo info = new BookInfo(fileName);
 			description.myAuthor = new Author(info.AuthorDisplayNameOption.getValue(), info.AuthorSortKeyOption.getValue());
 			description.myTitle = info.TitleOption.getValue();

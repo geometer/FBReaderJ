@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,18 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.constants.XMLNamespace;
 
-class OEBDescriptionReader extends ZLXMLReaderAdapter {
+class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private final BookDescription.WritableBookDescription myDescription;
 
-	private String myDCMetadataTag;
+	private String myDCMetadataTag = "dc-metadata";
+	private String myMetadataTag = "metadata";
+	private String myMetadataTagRealName;
 	private String myTitleTag;
 	private String myAuthorTag;
 	private String mySubjectTag;
+	private String myLanguageTag;
 
 	private final ArrayList myAuthorList = new ArrayList();
 	private final ArrayList myAuthorList2 = new ArrayList();
@@ -45,7 +49,10 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 	boolean readDescription(String fileName) {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
-		if (!read(fileName)) {
+
+		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
+		processor.setBufferSize(2048);
+		if (!processor.read(this, fileName)) {
 			return false;
 		}
 
@@ -63,6 +70,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 	private static final int READ_AUTHOR2 = 2;
 	private static final int READ_TITLE = 3;
 	private static final int READ_SUBJECT = 4;
+	private static final int READ_LANGUAGE = 5;
 	private int myReadState;
 	private boolean myReadMetaData;
 
@@ -76,22 +84,27 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 		myTitleTag = null;
 		myAuthorTag = null;
 		mySubjectTag = null;
+		myLanguageTag = null;
+		myMetadataTag = "metadata";
 		for (Object o : namespaces.keySet()) {
 			final String id = (String)o;
-			if (id.startsWith("http://purl.org/dc/elements")) {
+			if (id.startsWith(DublinCorePrefix) || id.startsWith(DublinCoreLegacyPrefix)) {
 				final String name = (String)namespaces.get(id);
 				myTitleTag = (name + ":title").intern();
 				myAuthorTag = (name + ":creator").intern();
 				mySubjectTag = (name + ":subject").intern();
-				break;
+				myLanguageTag = (name + ":language").intern();
+			} else if (id.equals(OpenPackagingFormat)) {
+				final String name = (String)namespaces.get(id);
+				myMetadataTag = (name + ":metadata").intern();
 			}
 		}
 	}
 
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
-		if ((tag == "metadata") || (tag == "dc-metadata")) {
-			myDCMetadataTag = tag;
+		if ((tag == myMetadataTag) || (tag == myDCMetadataTag)) {
+			myMetadataTagRealName = tag;
 			myReadMetaData = true;
 		} else if (myReadMetaData) {
 			if (tag == myTitleTag) {
@@ -105,6 +118,8 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 				}
 			} else if (tag == mySubjectTag) {
 				myReadState = READ_SUBJECT;
+			} else if (tag == myLanguageTag) {
+				myReadState = READ_LANGUAGE;
 			}
 		}
 		return false;
@@ -118,6 +133,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 			case READ_AUTHOR2:
 			case READ_TITLE:
 			case READ_SUBJECT:
+			case READ_LANGUAGE:
 				myBuffer.append(data, start, len);
 				break;
 		}
@@ -125,11 +141,11 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 
 	public boolean endElementHandler(String tag) {
 		tag = tag.toLowerCase();
-		if (myDCMetadataTag.equals(tag)) {
+		if (tag.equals(myMetadataTagRealName)) {
 			return true;
 		}
 
-		final String bufferContent = myBuffer.toString().trim();
+		String bufferContent = myBuffer.toString().trim();
 		if (bufferContent.length() != 0) {
 			switch (myReadState) {
 				case READ_TITLE:
@@ -143,6 +159,19 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter {
 					break;
 				case READ_SUBJECT:
 					myDescription.addTag(bufferContent, true);
+					break;
+				case READ_LANGUAGE:
+					{
+						int index = bufferContent.indexOf('_');
+						if (index >= 0) {
+							bufferContent = bufferContent.substring(0, index);
+						}
+						index = bufferContent.indexOf('-');
+						if (index >= 0) {
+							bufferContent = bufferContent.substring(0, index);
+						}
+						myDescription.setLanguage("cz".equals(bufferContent) ? "cs" : bufferContent);
+					}
 					break;
 			}
 		}

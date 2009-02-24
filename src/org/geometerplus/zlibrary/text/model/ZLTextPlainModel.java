@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,12 @@ import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 public final class ZLTextPlainModel extends ZLTextModelImpl {
 	private byte[] myParagraphKinds = new byte[INITIAL_CAPACITY];
 
+	public ZLTextPlainModel(int dataBlockSize, String directoryName, String extension) {
+		super(new CachedCharStorage(dataBlockSize, directoryName, extension));
+	}
+
 	public ZLTextPlainModel(int dataBlockSize) {
-		super(new CachedCharStorage(dataBlockSize, "/sdcard/Books/.FBReaderCache"));
+		super(new SimpleCharStorage(dataBlockSize));
 	}
 
 	public int getParagraphsNumber() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -61,14 +62,15 @@ final class ZLOwnXMLParser {
 	private final ZLXMLReader myXMLReader;
 	private final boolean myProcessNamespaces;
 
-	private final char[] myBuffer = new char[65536];
+	private final char[] myBuffer;
 
-	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream) throws IOException {
+	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream, int bufferSize) throws IOException {
 		myXMLReader = xmlReader;
 		myProcessNamespaces = xmlReader.processNamespaces();
 
 		String encoding = "utf-8";
-		final char[] buffer = myBuffer;
+		final char[] buffer = new char[bufferSize];
+		myBuffer = buffer;
 		int len;
 		for (len = 0; len < 256; ++len) {
 			char c = (char)stream.read();
@@ -125,6 +127,7 @@ final class ZLOwnXMLParser {
 			entityMap.put("gt", new char[] { '>' });
 			entityMap.put("lt", new char[] { '<' });
 			entityMap.put("quot", new char[] { '\"' });
+			//entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
 			final int dtdListSize = dtdList.size();
 			for (int i = 0; i < dtdListSize; ++i) {
 				InputStream stream = new ZLFile((String)dtdList.get(i)).getInputStream();

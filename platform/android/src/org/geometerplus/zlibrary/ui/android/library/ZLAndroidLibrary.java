@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,4 +92,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		intent.setData(Uri.parse(reference));
 		myActivity.startActivity(intent);
 	}
+
+	//public String getVersionName() {
+	//	return myApplication.getResources().getString(android.R.attr.versionName);
+	//}
 }
