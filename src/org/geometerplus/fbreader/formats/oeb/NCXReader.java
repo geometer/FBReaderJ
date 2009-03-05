@@ -69,6 +69,14 @@ class NCXReader extends ZLXMLReaderAdapter {
 
 	private static final String ATTRIBUTE_PLAYORDER = "playOrder";
 
+	private int atoi(String number) {
+		try {
+			return Integer.parseInt(number);
+		} catch (NumberFormatException e) {
+			return 0;
+		}
+	}
+
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		switch (myReadState) {
@@ -79,12 +87,30 @@ class NCXReader extends ZLXMLReaderAdapter {
 				break;
 			case READ_MAP:
 				if (tag == TAG_NAVPOINT) {
-					String order = attributes.getValue(ATTRIBUTE_PLAYORDER);
+					final String order = attributes.getValue(ATTRIBUTE_PLAYORDER);
+					final int index = (order != null) ? atoi(order) : myPlayIndex++;
+					myPointStack.add(new NavPoint(index, myPointStack.size()));
+					myReadState = READ_POINT;
 				}
 				break;
 			case READ_POINT:
+				if (tag == TAG_NAVPOINT) {
+					final String order = attributes.getValue(ATTRIBUTE_PLAYORDER);
+					final int index = (order != null) ? atoi(order) : myPlayIndex++;
+					myPointStack.add(new NavPoint(index, myPointStack.size()));
+				} else if (tag == TAG_NAVLABEL) {
+					myReadState = READ_LABEL;
+				} else if (tag == TAG_CONTENT) {
+					final int size = myPointStack.size();
+					if (size > 0) {
+						myPointStack.get(size - 1).ContentHRef = attributes.getValue("src");
+					}
+				}
 				break;
 			case READ_LABEL:
+				if (TAG_TEXT == tag) {
+					myReadState = READ_TEXT;
+				}
 				break;
 			case READ_TEXT:
 				break;
@@ -93,9 +119,44 @@ class NCXReader extends ZLXMLReaderAdapter {
 	}
 	
 	public boolean endElementHandler(String tag) {
+		switch (myReadState) {
+			case READ_NONE:
+				break;
+			case READ_MAP:
+				if (TAG_NAVMAP == tag) {
+					myReadState = READ_NONE;
+				}
+				break;
+			case READ_POINT:
+				if (TAG_NAVPOINT == tag) {
+					/*
+					if (myPointStack.back().Text.empty()) {
+						myPointStack.back().Text = "...";
+					}
+					myNavigationMap[myPointStack.back().Order] = myPointStack.back();
+					myPointStack.pop_back();
+					myReadState = myPointStack.empty() ? READ_MAP : READ_POINT;
+					*/
+				}
+			case READ_LABEL:
+				if (TAG_NAVLABEL == tag) {
+					myReadState = READ_POINT;
+				}
+				break;
+			case READ_TEXT:
+				if (TAG_TEXT == tag) {
+					myReadState = READ_LABEL;
+				}
+				break;
+		}
 		return false;
 	}
 	
 	public void characterDataHandler(char[] ch, int start, int length) {
+		if (myReadState == READ_TEXT) {
+			final ArrayList<NavPoint> stack = myPointStack;
+			final NavPoint last = stack.get(stack.size() - 1);
+			//last.Text = .append(text, len);
+		}
 	}
 }
