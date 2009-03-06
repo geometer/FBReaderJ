@@ -39,7 +39,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	public static void fillTagTable() {
 		if (ourTagActions.isEmpty()) {
 			//addAction("html", new XHTMLTagAction());
-			addAction("body", new XHTMLTagParagraphAction());
+			addAction("body", new XHTMLTagBodyAction());
 			//addAction("title", new XHTMLTagAction());
 			//addAction("meta", new XHTMLTagAction());
 			//addAction("script", new XHTMLTagAction());
@@ -116,6 +116,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	private String myPathPrefix;
 	String myReferenceName;
 	boolean myPreformatted;
+	boolean myInsideBody;
 
 	public XHTMLReader(BookReader modelReader) {
 		myModelReader = modelReader;
@@ -138,6 +139,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		myReferenceName = referenceName;
 
 		myPreformatted = false;
+		myInsideBody = false;
 
 		return read(pathPrefix + fileName);
 	}
@@ -209,6 +211,9 @@ cycle:
 			len -= spaceCounter;
 		}
 		if (len > 0) {
+			if (myInsideBody && !myModelReader.paragraphIsOpen()) {
+				myModelReader.beginParagraph();
+			}
 			myModelReader.addData(data, start, len);
 		}
 	}

@@ -8,9 +8,9 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.LibraryTabActivity">
+		<activity android:name="org.geometerplus.android.fbreader.LibraryTabActivity" android:configChanges="orientation">
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.BookDownloader" android:theme="@android:style/Theme.Dialog" android:screenOrientation="sensor">
+		<activity android:name="org.geometerplus.android.fbreader.BookDownloader" android:theme="@android:style/Theme.Dialog" android:screenOrientation="sensor" android:configChanges="orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -28,7 +28,7 @@
 				<data android:mimeType="*/*" android:scheme="http" android:pathPattern=".*\\.fb2\\.zip" />
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.DialogActivity" android:label="" />
+		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.DialogActivity" android:label="" android:configChanges="orientation"/>
 		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.OptionsActivity" android:label="" />
 	</application>
 </manifest> 
