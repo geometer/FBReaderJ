@@ -33,9 +33,7 @@ public class OEBPlugin extends FormatPlugin {
 	
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension().intern();
-		return (extension == "opf") ||
-					 (extension == "oebzip") ||
-					 (extension == "epub");
+		return (extension == "opf") || (extension == "oebzip") || (extension == "epub");
 	}
 
 	private String getOpfFileName(String oebFileName) {

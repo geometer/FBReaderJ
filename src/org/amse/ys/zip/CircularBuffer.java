@@ -4,14 +4,15 @@ final class CircularBuffer {
     static final int DICTIONARY_LENGTH = (1 << 15);
     private static final int DICTIONARY_MASK = DICTIONARY_LENGTH - 1;
 
-    private final byte[] myBuffer;
+    private final byte[] myBuffer = new byte[DICTIONARY_LENGTH];
     private int myBytesReady; // number of bytes can be read
     private int myCurrentPosition; // the next byte to read is
                            // myDictionary[myCurrentPosition]
 
-    public CircularBuffer() {
-        myBuffer = new byte[DICTIONARY_LENGTH];
-    }
+	void reset() {
+		myBytesReady = 0;
+		myCurrentPosition = 0;
+	}
 
     public int available() {
         return myBytesReady;

@@ -37,79 +37,81 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	}
 
 	public static void fillTagTable() {
-		if (ourTagActions.isEmpty()) {
-			//addAction("html", new XHTMLTagAction());
-			addAction("body", new XHTMLTagBodyAction());
-			//addAction("title", new XHTMLTagAction());
-			//addAction("meta", new XHTMLTagAction());
-			//addAction("script", new XHTMLTagAction());
-
-			//addAction("font", new XHTMLTagAction());
-			//addAction("style", new XHTMLTagAction());
-
-			addAction("p", new XHTMLTagParagraphAction());
-			addAction("h1", new XHTMLTagParagraphWithControlAction(FBTextKind.H1));
-			addAction("h2", new XHTMLTagParagraphWithControlAction(FBTextKind.H2));
-			addAction("h3", new XHTMLTagParagraphWithControlAction(FBTextKind.H3));
-			addAction("h4", new XHTMLTagParagraphWithControlAction(FBTextKind.H4));
-			addAction("h5", new XHTMLTagParagraphWithControlAction(FBTextKind.H5));
-			addAction("h6", new XHTMLTagParagraphWithControlAction(FBTextKind.H6));
-
-			//addAction("ol", new XHTMLTagAction());
-			//addAction("ul", new XHTMLTagAction());
-			//addAction("dl", new XHTMLTagAction());
-			addAction("li", new XHTMLTagItemAction());
-
-			addAction("strong", new XHTMLTagControlAction(FBTextKind.STRONG));
-			addAction("b", new XHTMLTagControlAction(FBTextKind.BOLD));
-			addAction("em", new XHTMLTagControlAction(FBTextKind.EMPHASIS));
-			addAction("i", new XHTMLTagControlAction(FBTextKind.ITALIC));
-			final XHTMLTagAction codeControlAction = new XHTMLTagControlAction(FBTextKind.CODE);
-			addAction("code", codeControlAction);
-			addAction("tt", codeControlAction);
-			addAction("kbd", codeControlAction);
-			addAction("var", codeControlAction);
-			addAction("samp", codeControlAction);
-			addAction("cite", new XHTMLTagControlAction(FBTextKind.CITE));
-			addAction("sub", new XHTMLTagControlAction(FBTextKind.SUB));
-			addAction("sup", new XHTMLTagControlAction(FBTextKind.SUP));
-			addAction("dd", new XHTMLTagControlAction(FBTextKind.DEFINITION_DESCRIPTION));
-			addAction("dfn", new XHTMLTagControlAction(FBTextKind.DEFINITION));
-			addAction("strike", new XHTMLTagControlAction(FBTextKind.STRIKETHROUGH));
-
-			addAction("a", new XHTMLTagHyperlinkAction());
-
-			addAction("img", new XHTMLTagImageAction("src"));
-			addAction("object", new XHTMLTagImageAction("data"));
-
-			//addAction("area", new XHTMLTagAction());
-			//addAction("map", new XHTMLTagAction());
-
-			//addAction("base", new XHTMLTagAction());
-			//addAction("blockquote", new XHTMLTagAction());
-			addAction("br", new XHTMLTagRestartParagraphAction());
-			//addAction("center", new XHTMLTagAction());
-			addAction("div", new XHTMLTagParagraphAction());
-			//addAction("dt", new XHTMLTagAction());
-			//addAction("head", new XHTMLTagAction());
-			//addAction("hr", new XHTMLTagAction());
-			//addAction("link", new XHTMLTagAction());
-			//addAction("param", new XHTMLTagAction());
-			//addAction("q", new XHTMLTagAction());
-			//addAction("s", new XHTMLTagAction());
-
-			addAction("pre", new XHTMLTagPreAction());
-			//addAction("big", new XHTMLTagAction());
-			//addAction("small", new XHTMLTagAction());
-			//addAction("u", new XHTMLTagAction());
-
-			//addAction("table", new XHTMLTagAction());
-			addAction("td", new XHTMLTagParagraphAction());
-			addAction("th", new XHTMLTagParagraphAction());
-			//addAction("tr", new XHTMLTagAction());
-			//addAction("caption", new XHTMLTagAction());
-			//addAction("span", new XHTMLTagAction());
+		if (!ourTagActions.isEmpty()) {
+			return;
 		}
+
+		//addAction("html", new XHTMLTagAction());
+		addAction("body", new XHTMLTagBodyAction());
+		//addAction("title", new XHTMLTagAction());
+		//addAction("meta", new XHTMLTagAction());
+		//addAction("script", new XHTMLTagAction());
+
+		//addAction("font", new XHTMLTagAction());
+		//addAction("style", new XHTMLTagAction());
+
+		addAction("p", new XHTMLTagParagraphAction());
+		addAction("h1", new XHTMLTagParagraphWithControlAction(FBTextKind.H1));
+		addAction("h2", new XHTMLTagParagraphWithControlAction(FBTextKind.H2));
+		addAction("h3", new XHTMLTagParagraphWithControlAction(FBTextKind.H3));
+		addAction("h4", new XHTMLTagParagraphWithControlAction(FBTextKind.H4));
+		addAction("h5", new XHTMLTagParagraphWithControlAction(FBTextKind.H5));
+		addAction("h6", new XHTMLTagParagraphWithControlAction(FBTextKind.H6));
+
+		//addAction("ol", new XHTMLTagAction());
+		//addAction("ul", new XHTMLTagAction());
+		//addAction("dl", new XHTMLTagAction());
+		addAction("li", new XHTMLTagItemAction());
+
+		addAction("strong", new XHTMLTagControlAction(FBTextKind.STRONG));
+		addAction("b", new XHTMLTagControlAction(FBTextKind.BOLD));
+		addAction("em", new XHTMLTagControlAction(FBTextKind.EMPHASIS));
+		addAction("i", new XHTMLTagControlAction(FBTextKind.ITALIC));
+		final XHTMLTagAction codeControlAction = new XHTMLTagControlAction(FBTextKind.CODE);
+		addAction("code", codeControlAction);
+		addAction("tt", codeControlAction);
+		addAction("kbd", codeControlAction);
+		addAction("var", codeControlAction);
+		addAction("samp", codeControlAction);
+		addAction("cite", new XHTMLTagControlAction(FBTextKind.CITE));
+		addAction("sub", new XHTMLTagControlAction(FBTextKind.SUB));
+		addAction("sup", new XHTMLTagControlAction(FBTextKind.SUP));
+		addAction("dd", new XHTMLTagControlAction(FBTextKind.DEFINITION_DESCRIPTION));
+		addAction("dfn", new XHTMLTagControlAction(FBTextKind.DEFINITION));
+		addAction("strike", new XHTMLTagControlAction(FBTextKind.STRIKETHROUGH));
+
+		addAction("a", new XHTMLTagHyperlinkAction());
+
+		addAction("img", new XHTMLTagImageAction("src"));
+		addAction("object", new XHTMLTagImageAction("data"));
+
+		//addAction("area", new XHTMLTagAction());
+		//addAction("map", new XHTMLTagAction());
+
+		//addAction("base", new XHTMLTagAction());
+		//addAction("blockquote", new XHTMLTagAction());
+		addAction("br", new XHTMLTagRestartParagraphAction());
+		//addAction("center", new XHTMLTagAction());
+		addAction("div", new XHTMLTagParagraphAction());
+		//addAction("dt", new XHTMLTagAction());
+		//addAction("head", new XHTMLTagAction());
+		//addAction("hr", new XHTMLTagAction());
+		//addAction("link", new XHTMLTagAction());
+		//addAction("param", new XHTMLTagAction());
+		//addAction("q", new XHTMLTagAction());
+		//addAction("s", new XHTMLTagAction());
+
+		addAction("pre", new XHTMLTagPreAction());
+		//addAction("big", new XHTMLTagAction());
+		//addAction("small", new XHTMLTagAction());
+		//addAction("u", new XHTMLTagAction());
+
+		//addAction("table", new XHTMLTagAction());
+		addAction("td", new XHTMLTagParagraphAction());
+		addAction("th", new XHTMLTagParagraphAction());
+		//addAction("tr", new XHTMLTagAction());
+		//addAction("caption", new XHTMLTagAction());
+		//addAction("span", new XHTMLTagAction());
 	}
 
 	private final BookReader myModelReader;

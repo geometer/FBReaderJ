@@ -10,31 +10,52 @@ public class DeflatingDecompressor extends Decompressor {
     private static final int ST_END_OF_FILE = 5;
 
     // common variables
-    private final LocalFileHeader myHeader;
-    private final MyBufferedInputStream myStream;
+    private MyBufferedInputStream myStream;
+    private LocalFileHeader myHeader;
     private int myState;
     private int myTotalLength;
     private int myBytesRead;
     private int myCurrentPosition;
-    private boolean myTheBlockIsFinal = false;
+    private boolean myTheBlockIsFinal;
 
     // for bit reader
     private int myBitsInBuffer;
     private int myTempInt; // should contain 16 bit available for reading
 
     // output buffer
-    private final CircularBuffer myOutputBuffer;
+    private final CircularBuffer myOutputBuffer = new CircularBuffer();
 
     // for no compression method
     private int myCurrentBlockLength;
     private int myReadInBlock;
 
     // for Huffman codes
-    private int[] myHuffmanCodes;
-    private int[] myDistanceCodes;
+    private final int[] myHuffmanCodes = new int[1 << 15];
+    private final int[] myDistanceCodes = new int[1 << 15];
+    private final int[] myAuxCodes = new int[1 << 15];
+
+    public DeflatingDecompressor(MyBufferedInputStream inputStream, LocalFileHeader header) {
+        super();
+        reset(inputStream, header);
+    }
+
+    void reset(MyBufferedInputStream inputStream, LocalFileHeader header) {
+        myStream = inputStream;
+        myHeader = header;
+        myTotalLength = header.getCompressedSize();
+        myBytesRead = 0;
+        myCurrentPosition = 0;
+        myTheBlockIsFinal = false;
+        myState = ST_HEADER;
+        myOutputBuffer.reset();
+        myBitsInBuffer = 0;
+        myTempInt = 0;
+        myCurrentBlockLength = 0;
+        myReadInBlock = 0;
+    }
 
     public int available() {
-        return (myHeader.getUncompressedSize() - myCurrentPosition);
+        return myHeader.getUncompressedSize() - myCurrentPosition;
     }
     
     private void ensure16BitsInBuffer() throws IOException {
@@ -73,17 +94,6 @@ public class DeflatingDecompressor extends Decompressor {
         myTempInt >>>= length;
         myBitsInBuffer -= length;
         return result;
-    }
-
-    public DeflatingDecompressor(MyBufferedInputStream is, LocalFileHeader header) {
-        super();
-        myHeader = header;
-        myStream = is;
-        myBitsInBuffer = 0;
-        myOutputBuffer = new CircularBuffer();
-        myTotalLength = header.getCompressedSize();
-        myBytesRead = 0;
-        myState = ST_HEADER;
     }
 
     private static final int MAX_LEN = CircularBuffer.DICTIONARY_LENGTH / 2;
@@ -255,8 +265,8 @@ public class DeflatingDecompressor extends Decompressor {
             break;
         case 1:
             myState = ST_FIXED_CODES;
-            myHuffmanCodes = CodeBuilder.buildFixedHuffmanCodes().buildTable();
-            myDistanceCodes = CodeBuilder.buildFixedDistanceCodes().buildTable();
+            CodeBuilder.buildFixedHuffmanCodes(myHuffmanCodes);
+            CodeBuilder.buildFixedDistanceCodes(myDistanceCodes);
             break;
         case 2:
             myState = ST_DYNAMIC_CODES;
@@ -288,12 +298,12 @@ public class DeflatingDecompressor extends Decompressor {
                     readIntegerByBit(3));
         }
 
-        final int[] distHuffmanCodes = headerReadingCoder.buildTable();
+        headerReadingCoder.buildTable(myAuxCodes);
         
         CodeBuilder usualCodeBuilder = new CodeBuilder(288);
         int previousNumber = 0;
         for (int i = 0; i < (numberOfLiteralCodes + 257); i++) {
-            int currentHuffmanCode = readHuffmanCode(distHuffmanCodes);
+            int currentHuffmanCode = readHuffmanCode(myAuxCodes);
             //headersFound++;
             if (currentHuffmanCode <= 15) {
                 usualCodeBuilder.addCodeLength(i, currentHuffmanCode);
@@ -326,13 +336,13 @@ public class DeflatingDecompressor extends Decompressor {
             }
         }
         // we can build huffman codes for charset
-        myHuffmanCodes = usualCodeBuilder.buildTable();
+        usualCodeBuilder.buildTable(myHuffmanCodes);
 
         // building distance codes
         CodeBuilder distanceCodeBuilder = new CodeBuilder(32);
         previousNumber = 0;
         for (int i = 0; i < (numberOfDistanceCodes + 1); i++) {
-            int currentHuffmanCode = readHuffmanCode(distHuffmanCodes);
+            int currentHuffmanCode = readHuffmanCode(myAuxCodes);
             //headersFound++;
             if (currentHuffmanCode <= 15) {
                 distanceCodeBuilder.addCodeLength(i, currentHuffmanCode);
@@ -364,6 +374,6 @@ public class DeflatingDecompressor extends Decompressor {
                 i += (repeatNumber - 1);
             }
         }
-        myDistanceCodes = distanceCodeBuilder.buildTable();
+        distanceCodeBuilder.buildTable(myDistanceCodes);
     }
 }

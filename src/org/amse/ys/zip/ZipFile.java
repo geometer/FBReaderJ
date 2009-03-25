@@ -1,13 +1,14 @@
 package org.amse.ys.zip;
 
 import java.io.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.TreeMap;
 
 public class ZipFile {
     private final String myFileName;
-    private final ArrayList<LocalFileHeader> myFileHeaders = new ArrayList<LocalFileHeader>();
+    private final TreeMap<String,LocalFileHeader> myFileHeaders = new TreeMap<String,LocalFileHeader>();
     private final MyBufferedInputStream myBaseStream;
 
     private boolean myAllFilesAreRead;
@@ -17,13 +18,13 @@ public class ZipFile {
         myBaseStream = new MyBufferedInputStream(myFileName);
     }
 
-    public List<LocalFileHeader> headers() {
+    public Collection<LocalFileHeader> headers() {
         try {
             readAllHeaders();
         } catch (IOException e) {
         } catch (WrongZipFormatException e) {
         }
-        return Collections.unmodifiableList(myFileHeaders);
+        return myFileHeaders.values();
     }
 
     private boolean readFileHeader(String fileToFind) throws IOException {
@@ -39,20 +40,16 @@ public class ZipFile {
 
         final String fileName = myBaseStream.readString(fileNameSize);
         myBaseStream.skip(extraField);
-        myFileHeaders.add(new LocalFileHeader(version2extract, generalFlag,
+        LocalFileHeader header = new LocalFileHeader(version2extract, generalFlag,
                 compressionMethod, compressedSize, uncompressedSize,
-                myBaseStream.offset(), fileName));
-        if (fileName.equals(fileToFind)) {
-            return true;
-        }
-        if ((generalFlag & 8) == 0) {
+                myBaseStream.offset(), fileName);
+        myFileHeaders.put(fileName, header);
+        if (header.sizeIsKnown()) {
             myBaseStream.skip(compressedSize);
         } else {
-            System.out
-                    .println("Warning: flag 3 is set! Trying to find header.");
-            findAndReadDescriptor();
+            findAndReadDescriptor(header);
         }
-        return false;
+        return fileName.equals(fileToFind);
     }
 
     private void readAllHeaders() throws IOException, WrongZipFormatException {
@@ -60,6 +57,9 @@ public class ZipFile {
             return;
         }
         myAllFilesAreRead = true;
+
+        myBaseStream.reset();
+        myFileHeaders.clear();
 
         while (true) {
             int header = myBaseStream.read4Bytes();
@@ -80,8 +80,7 @@ public class ZipFile {
     /**
      * Finds descriptor of the last header and installs sizes of files
      */
-    private void findAndReadDescriptor() throws IOException {
-        byte[] tempArray = new byte[12];
+    private void findAndReadDescriptor(LocalFileHeader header) throws IOException {
         while (true) {
             int signature = 0;
             do {
@@ -90,23 +89,13 @@ public class ZipFile {
                     throw new IOException(
                             "readFileHeaders. Unexpected end of file when looking for DataDescriptor");
                 }
-                signature = ((signature << 8) & (0x0ffffffff))
-                        + (byte) nextByte;
+                signature = ((signature << 8) & (0x0FFFFFFFF)) + (byte) nextByte;
             } while (signature != LocalFileHeader.DATA_DESCRIPTOR_SIGNATURE);
-            myBaseStream.read(tempArray);
-            int compressedSize =
-                ((tempArray[7] & 0xff) << 24) +
-                ((tempArray[6] & 0xff) << 16) +
-                ((tempArray[5] & 0xff) << 8) +
-                (tempArray[4] & 0xff);
-            int uncompressedSize =
-                ((tempArray[11] & 0xff) << 24) +
-                ((tempArray[10] & 0xff) << 16) +
-                ((tempArray[9] & 0xff) << 8) +
-                (tempArray[8] & 0xff);
-            LocalFileHeader lastHeader = myFileHeaders.get(myFileHeaders.size() - 1);
-            if ((myBaseStream.offset() - lastHeader.OffsetOfLocalData - 16) == compressedSize) {
-                lastHeader.setSizes(compressedSize, uncompressedSize);
+			myBaseStream.skip(4);
+			int compressedSize = myBaseStream.read4Bytes();
+			int uncompressedSize = myBaseStream.read4Bytes();
+            if ((myBaseStream.offset() - header.OffsetOfLocalData - 16) == compressedSize) {
+                header.setSizes(compressedSize, uncompressedSize);
                 break;
             } else {
                 myBaseStream.backSkip(12);
@@ -115,29 +104,35 @@ public class ZipFile {
         }
     }
 
+	private final Queue<MyBufferedInputStream> myStoredStreams = new LinkedList<MyBufferedInputStream>();
+
+	synchronized void storeBaseStream(MyBufferedInputStream baseStream) {
+		myStoredStreams.add(baseStream);	
+	}
+
+    synchronized private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException, WrongZipFormatException {
+        MyBufferedInputStream baseStream =
+			myStoredStreams.isEmpty() ?
+				new MyBufferedInputStream(myFileName) :
+				myStoredStreams.poll();
+        return new ZipInputStream(this, baseStream, header);
+    }
+
     public InputStream getInputStream(String entryName) throws IOException {
         if (!myFileHeaders.isEmpty()) {
             // trying to find in already ready array
             int i;
             final int listSize = myFileHeaders.size();
-			LocalFileHeader header = null;
-            for (i = 0; i < listSize; i++) {
-				header = myFileHeaders.get(i);
-                if (header.FileName.equals(entryName)) {
-					try {
-                    	return new ZipInputStream(myFileName, header);
-					} catch (WrongZipFormatException e) {
-						return null;
-					}
+            LocalFileHeader header = myFileHeaders.get(entryName);
+            if (header != null) {
+                try {
+                    return createZipInputStream(header);
+                } catch (WrongZipFormatException e) {
+                    return null;
                 }
             }
             if (myAllFilesAreRead) {
                 return null;
-            }
-            if (header.sizeIsKnown()) {
-                myBaseStream.setPosition(header.OffsetOfLocalData + header.getCompressedSize());
-            } else {
-                findAndReadDescriptor();
             }
         }
         // ready to read fileheader
@@ -153,13 +148,12 @@ public class ZipFile {
                 }
             }
         } while (!readFileHeader(entryName));
-		LocalFileHeader header = myFileHeaders.get(myFileHeaders.size() - 1);
-        if (header.FileName.equals(entryName)) {
-			try {
-            	return new ZipInputStream(myFileName, header);
-			} catch (WrongZipFormatException e) {
-				return null;
-			}
+        LocalFileHeader header = myFileHeaders.get(entryName);
+        if (header != null) {
+            try {
+                return createZipInputStream(header);
+            } catch (WrongZipFormatException e) {
+            }
         }
         return null;
     }

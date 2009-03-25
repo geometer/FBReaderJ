@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ZipInputStream extends InputStream {
+class ZipInputStream extends InputStream {
+	private final ZipFile myParent;
     private final MyBufferedInputStream myBaseStream;
     private final LocalFileHeader myHeader;
     private final Decompressor myDecompressor;
+	private boolean myIsClosed;
 
-    public ZipInputStream(String fileName, LocalFileHeader header) throws IOException, WrongZipFormatException {
-        if (!header.sizeIsKnown()) {
-            throw new RuntimeException("Reading of files with flag 3 is not implemented yet");
-        }
-        myBaseStream = new MyBufferedInputStream(fileName);
-        myBaseStream.setPosition(header.OffsetOfLocalData);
+    public ZipInputStream(ZipFile parent, MyBufferedInputStream baseStream, LocalFileHeader header) throws IOException, WrongZipFormatException {
+		myParent = parent;
+        myBaseStream = baseStream;
+        baseStream.setPosition(header.OffsetOfLocalData);
         myHeader = header;
         myDecompressor = Decompressor.init(myBaseStream, header);
     }
@@ -50,6 +50,10 @@ public class ZipInputStream extends InputStream {
     }
 
     public void close() throws IOException {
-        myBaseStream.close();
+		if (!myIsClosed) {
+			myIsClosed = true;
+			myParent.storeBaseStream(myBaseStream);
+			Decompressor.storeDecompressor(myDecompressor);
+		}
     }
 }

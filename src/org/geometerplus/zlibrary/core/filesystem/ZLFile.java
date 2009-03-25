@@ -45,6 +45,7 @@ public class ZLFile {
 	private	ZLFileInfo myInfo;
 	
 	private static final HashMap ourForcedFiles = new HashMap();
+	private static HashMap<String,ZipFile> ourZipFileMap = new HashMap<String,ZipFile>();
 	
 	public boolean removeFile(String path) {
 		File file = new File(path);
@@ -148,7 +149,7 @@ public class ZLFile {
 			ourForcedFiles.put(myPath, myArchiveType);
 		}
 	}
-	
+
 	public boolean isCompressed() {
 		return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
 	}
@@ -196,8 +197,6 @@ public class ZLFile {
 		return path;
 	}
     
-	//private static HashMap<String,ZipFile> ourZipFileMap = new HashMap<String,ZipFile>();
-
 	public InputStream getInputStream() throws IOException {
 		if (isDirectory()) {
 			return null;
@@ -213,10 +212,13 @@ public class ZLFile {
 			if (base != null) {
 				if (0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
 					final String baseFileName = myPath.substring(0, index);
-					ZipFile zf = null;//ourZipFileMap.get(baseFileName);
-					if (zf == null) {
-						zf = new ZipFile(baseFileName);
-						//ourZipFileMap.put(baseFileName, zf);
+					ZipFile zf;
+					synchronized (ourZipFileMap) {
+						zf = ourZipFileMap.get(baseFileName);
+						if (zf == null) {
+							zf = new ZipFile(baseFileName);
+							ourZipFileMap.put(baseFileName, zf);
+						}
 					}
 					/*
 					ZipEntry entry = zf.getEntry(myPath.substring(index+1));

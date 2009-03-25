@@ -59,12 +59,10 @@ public class LocalFileHeader {
     }
 
     void setSizes(int compressedSize, int uncompressedSize) {
-        if (mySizeIsKnown) {
-            throw new RuntimeException(
-                    "Was attempt to change file sizes with use of setSizes");
+        if (!mySizeIsKnown) {
+            myCompressedSize = compressedSize;
+            myUncompressedSize = uncompressedSize;
+            mySizeIsKnown = true;
         }
-        myCompressedSize = compressedSize;
-        myUncompressedSize = uncompressedSize;
-        mySizeIsKnown = true;
     }
 }

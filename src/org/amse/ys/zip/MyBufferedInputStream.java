@@ -10,10 +10,10 @@ final class MyBufferedInputStream extends InputStream {
     int myPositionInBuffer;
     private int myCurrentPosition;
     
-    public MyBufferedInputStream(String s, int arraySize) throws IOException {
-        myFileName = s;
-        myFileInputStream = new FileInputStream(s);
-        myBuffer = new byte[arraySize];
+    public MyBufferedInputStream(String fileName, int bufferSize) throws IOException {
+        myFileName = fileName;
+        myFileInputStream = new FileInputStream(fileName);
+        myBuffer = new byte[bufferSize];
         myBytesReady = 0;
         myPositionInBuffer = 0;
     }
@@ -44,7 +44,7 @@ final class MyBufferedInputStream extends InputStream {
             }
         }        
         myBytesReady--;        
-        return (myBuffer[myPositionInBuffer++] & 255);        
+        return myBuffer[myPositionInBuffer++] & 255;        
     }
 
     int read2Bytes() throws IOException {
@@ -113,5 +113,4 @@ final class MyBufferedInputStream extends InputStream {
         myFileInputStream.close();
         myBytesReady = 0;
     }
-
 }
