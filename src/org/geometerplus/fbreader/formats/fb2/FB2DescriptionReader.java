@@ -222,7 +222,7 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 
 	public boolean readDocument(String fileName) {
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
-		processor.setBufferSize(2048);
+		processor.setBufferSize(512);
 		return processor.read(this, fileName);
 	}
 }

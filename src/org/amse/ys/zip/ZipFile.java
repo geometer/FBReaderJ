@@ -120,9 +120,6 @@ public class ZipFile {
 
     public InputStream getInputStream(String entryName) throws IOException {
         if (!myFileHeaders.isEmpty()) {
-            // trying to find in already ready array
-            int i;
-            final int listSize = myFileHeaders.size();
             LocalFileHeader header = myFileHeaders.get(entryName);
             if (header != null) {
                 try {

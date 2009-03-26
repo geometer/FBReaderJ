@@ -25,6 +25,10 @@ final class ZLMutableString {
 	private char[] myData;
 	private int myLength;
 
+	static private int COUNT;
+	static private int COUNT1;
+	static private int COUNT2;
+
 	ZLMutableString(int len) {
 		myData = new char[len];
 	}

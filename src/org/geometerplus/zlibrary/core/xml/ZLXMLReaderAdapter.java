@@ -63,7 +63,8 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 	public void namespaceListChangedHandler(HashMap namespaces) {
 	}
 
+	private static final ArrayList EMPTY_LIST = new ArrayList();
 	public ArrayList externalDTDs() {
-		return new ArrayList();
+		return EMPTY_LIST;
 	}
 }

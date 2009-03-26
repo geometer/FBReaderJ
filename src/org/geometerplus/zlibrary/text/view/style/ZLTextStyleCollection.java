@@ -64,6 +64,10 @@ public class ZLTextStyleCollection {
 	private static class TextStyleReader extends ZLXMLReaderAdapter {
 		private ZLTextStyleCollection myCollection;
 
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
+
 		private static int intValue(ZLStringMap attributes, String name, int defaultValue) {
 			int i = defaultValue;
 			String value = attributes.getValue(name);
@@ -78,7 +82,7 @@ public class ZLTextStyleCollection {
 		}
 
 		private static boolean booleanValue(ZLStringMap attributes, String name) {
-			return "true" == attributes.getValue(name);
+			return "true".equals(attributes.getValue(name));
 		}
 
 		private static int b3Value(ZLStringMap attributes, String name) {

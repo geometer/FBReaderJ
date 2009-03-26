@@ -29,6 +29,10 @@ import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	private final HashMap myKeymap;
 	
+	public boolean dontCacheAttributeValues() {
+		return true;
+	}
+
 	public ZLKeyBindingsReader(HashMap keymap) {
 		myKeymap = keymap; 
 	}

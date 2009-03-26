@@ -230,4 +230,8 @@ cycle:
 		}
 		return ourExternalDTDs;
 	}
+
+	public boolean dontCacheAttributeValues() {
+		return true;
+	}
 }

@@ -544,6 +544,10 @@ public abstract class ZLApplication {
 		private static final String BUTTON = "button";
 		private static final String SEPARATOR = "separator";
 
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
+
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if (myToolbar == null) {
 				myToolbar = new Toolbar();
@@ -565,6 +569,10 @@ public abstract class ZLApplication {
 		private static final String SUBMENU = "submenu";
 
 		private final ArrayList mySubmenuStack = new ArrayList();
+
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
 
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if (myMenubar == null) {

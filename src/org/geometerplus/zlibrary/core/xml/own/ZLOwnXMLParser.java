@@ -48,13 +48,13 @@ final class ZLOwnXMLParser {
 	private static final byte ATTRIBUTE_VALUE = 14;
 	private static final byte ENTITY_REF = 15;
 
-	private static String convertToString(HashMap strings, ZLMutableString contatiner) {
-		String s = (String)strings.get(contatiner);
+	private static String convertToString(HashMap strings, ZLMutableString container) {
+		String s = (String)strings.get(container);
 		if (s == null) {
-			s = contatiner.toString();
-			strings.put(new ZLMutableString(contatiner), s);
+			s = container.toString();
+			strings.put(new ZLMutableString(container), s);
 		}
-		contatiner.clear();
+		container.clear();
 		return s;
 	}
 
@@ -62,14 +62,58 @@ final class ZLOwnXMLParser {
 	private final ZLXMLReader myXMLReader;
 	private final boolean myProcessNamespaces;
 
+	private static HashMap<Integer,Queue<char[]>> ourBufferPool = new HashMap<Integer,Queue<char[]>>();
+	private static Queue<ZLMutableString> ourStringPool = new LinkedList<ZLMutableString>();
+
+	private static synchronized char[] getBuffer(int bufferSize) {
+		Queue<char[]> queue = ourBufferPool.get(bufferSize);
+		if (queue != null) {
+			char[] buffer = queue.poll();
+			if (buffer != null) {
+				return buffer;
+			}
+		}
+		return new char[bufferSize];
+	}
+
+	private static synchronized void storeBuffer(char[] buffer) {
+		Queue<char[]> queue = ourBufferPool.get(buffer.length);
+		if (queue == null) {
+			queue = new LinkedList<char[]>();
+			ourBufferPool.put(buffer.length, queue);
+		}
+		queue.add(buffer);
+	}
+
+	private static synchronized ZLMutableString getMutableString() {
+		ZLMutableString string = ourStringPool.poll();
+		return (string != null) ? string : new ZLMutableString();
+	}
+
+	private static synchronized void storeString(ZLMutableString string) {
+		ourStringPool.add(string);
+	}
+
 	private final char[] myBuffer;
+	private final ZLMutableString myTagName = getMutableString();
+	private final ZLMutableString myAttributeName = getMutableString();
+	private final ZLMutableString myAttributeValue = getMutableString();
+	private final ZLMutableString myEntityName = getMutableString();
+
+	void finish() {
+		storeBuffer(myBuffer);
+		storeString(myTagName);
+		storeString(myAttributeName);
+		storeString(myAttributeValue);
+		storeString(myEntityName);
+	}
 
 	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream, int bufferSize) throws IOException {
 		myXMLReader = xmlReader;
 		myProcessNamespaces = xmlReader.processNamespaces();
 
 		String encoding = "utf-8";
-		final char[] buffer = new char[bufferSize];
+		final char[] buffer = getBuffer(bufferSize);
 		myBuffer = buffer;
 		int len;
 		for (len = 0; len < 256; ++len) {
@@ -140,7 +184,9 @@ final class ZLOwnXMLParser {
 		return entityMap;
 	}
 
-	public void doIt() throws IOException {
+	private final static HashMap ourStringMap = new HashMap();
+
+	void doIt() throws IOException {
 		final ZLXMLReader xmlReader = myXMLReader;
 		final HashMap entityMap = getDTDMap(xmlReader.externalDTDs());
 		final InputStreamReader streamReader = myStreamReader;
@@ -149,12 +195,12 @@ final class ZLOwnXMLParser {
 		HashMap currentNamespaceMap = null;
 		final ArrayList namespaceMapStack = new ArrayList();
 		char[] buffer = myBuffer;
-		final ZLMutableString tagName = new ZLMutableString();
-		final ZLMutableString attributeName = new ZLMutableString();
-		final ZLMutableString attributeValue = new ZLMutableString();
+		final ZLMutableString tagName = myTagName;
+		final ZLMutableString attributeName = myAttributeName;
+		final ZLMutableString attributeValue = myAttributeValue;
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
-		final ZLMutableString entityName = new ZLMutableString();
-		final HashMap strings = new HashMap();
+		final ZLMutableString entityName = myEntityName;
+		final HashMap strings = ourStringMap;//new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
 		String[] tagStack = new String[10];
 		int tagStackSize = 0;
@@ -167,12 +213,15 @@ final class ZLOwnXMLParser {
 				streamReader.close();
 				return;
 			}
-			if (count < buffer.length) {
-				buffer = ZLArrayUtils.createCopy(buffer, count, count);
-			}
 			int startPosition = 0;
+			if (count < buffer.length) {
+				//buffer = ZLArrayUtils.createCopy(buffer, count, count);
+				startPosition = buffer.length - count;
+				System.arraycopy(buffer, 0, buffer, startPosition, count);
+				count = buffer.length;
+			}
 			try {
-				for (int i = -1;;) {
+				for (int i = startPosition - 1;;) {
 mainSwitchLabel:
 					switch (state) {
 						case START_DOCUMENT:

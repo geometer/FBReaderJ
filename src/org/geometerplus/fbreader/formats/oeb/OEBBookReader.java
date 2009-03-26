@@ -86,6 +86,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		final int len = myHtmlFileNames.size();
 		for (int i = 0; i < len; ++i) {
 			final String name = (String)myHtmlFileNames.get(i);
+			//System.out.println("parsing " + name);
 			new XHTMLReader(myModelReader).readFile(myFilePrefix, name, name);
 		}
 
@@ -212,5 +213,9 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				myOPFSchemePrefix = namespaces.get(o) + ":";
 			}
 		}
+	}
+
+	public boolean dontCacheAttributeValues() {
+		return true;
 	}
 }
