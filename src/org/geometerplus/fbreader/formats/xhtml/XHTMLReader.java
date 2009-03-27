@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.bookmodel.*;
+import org.geometerplus.fbreader.formats.util.MiscUtil;
 
 public class XHTMLReader extends ZLXMLReaderAdapter {
 	private static final HashMap ourTagActions = new HashMap();
@@ -132,18 +133,18 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return myPathPrefix;
 	}
 
-	public boolean readFile(String pathPrefix, String fileName, String referenceName) {
+	public boolean readFile(String filePath, String referenceName) {
 		myModelReader.addHyperlinkLabel(referenceName);
 
 		fillTagTable();
 
-		myPathPrefix = pathPrefix;
+		myPathPrefix = MiscUtil.htmlDirectoryPrefix(filePath);
 		myReferenceName = referenceName;
 
 		myPreformatted = false;
 		myInsideBody = false;
 
-		return read(pathPrefix + fileName);
+		return read(filePath);
 	}
 
 	/*

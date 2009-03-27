@@ -8,15 +8,13 @@ import java.util.Collections;
 class ZipInputStream extends InputStream {
 	private final ZipFile myParent;
     private final MyBufferedInputStream myBaseStream;
-    private final LocalFileHeader myHeader;
     private final Decompressor myDecompressor;
 	private boolean myIsClosed;
 
-    public ZipInputStream(ZipFile parent, MyBufferedInputStream baseStream, LocalFileHeader header) throws IOException, WrongZipFormatException {
+    public ZipInputStream(ZipFile parent, LocalFileHeader header) throws IOException, WrongZipFormatException {
 		myParent = parent;
-        myBaseStream = baseStream;
-        baseStream.setPosition(header.OffsetOfLocalData);
-        myHeader = header;
+        myBaseStream = parent.getBaseStream();
+        myBaseStream.setPosition(header.OffsetOfLocalData);
         myDecompressor = Decompressor.init(myBaseStream, header);
     }
 

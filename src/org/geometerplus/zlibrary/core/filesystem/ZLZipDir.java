@@ -36,7 +36,7 @@ public class ZLZipDir extends ZLDir {
 		return ":";
 	};
 	
-	private static ArrayList EMPTY = new ArrayList();
+	private static final ArrayList EMPTY = new ArrayList();
 	public ArrayList collectSubDirs() {
 		return EMPTY;
 	};
@@ -44,7 +44,7 @@ public class ZLZipDir extends ZLDir {
 	public ArrayList/*<String>*/ collectFiles() {		
 		ZipFile zf = null;
 		try {
-			zf = new ZipFile(myFile.getCanonicalPath());
+			zf = ZLFile.getZipFile(myFile.getCanonicalPath());
 		} catch (IOException e) {
 		}
 		if (zf == null) {		

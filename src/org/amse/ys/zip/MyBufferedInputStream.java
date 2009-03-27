@@ -30,10 +30,6 @@ final class MyBufferedInputStream extends InputStream {
         return myCurrentPosition;
     }
 
-    public void reset() throws IOException {
-        setPosition(0);
-    }
-
     public int read() throws IOException {        
         myCurrentPosition++;
         if (myBytesReady == 0) {
@@ -77,19 +73,21 @@ final class MyBufferedInputStream extends InputStream {
 
     public void skip(int n) throws IOException {
         myCurrentPosition += n;
-        while (n > 0) {
-            if (myBytesReady > n) {
-                myBytesReady -= n;
-                myPositionInBuffer += n;
-                n = 0;
-            } else {
-                n -= myBytesReady;
-                myPositionInBuffer = 0;
-                myBytesReady = myFileInputStream.read(myBuffer);
-                if (myBytesReady <= 0) {
+        if (myBytesReady >= n) {
+            myBytesReady -= n;
+            myPositionInBuffer += n;
+        } else {
+			n -= myBytesReady;
+            myBytesReady = 0;
+
+            n -= myFileInputStream.skip(n);
+            while (n > 0) {
+                int skipped = myFileInputStream.read(myBuffer, 0, n);
+                if (skipped <= 0) {
                     break;
                 }
-            }        
+                n -= skipped;
+            }
         }
     }
 

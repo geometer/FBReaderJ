@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
+import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.fbreader.constants.XMLNamespace;
 
 class Reference {
@@ -54,20 +55,8 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader = new BookReader(model);
 	}
 
-	private static String htmlDirectoryPrefix(String fileName) {
-		ZLFile file = new ZLFile(fileName);
-		String shortName = file.getName(false);
-		String path = file.getPath();
-		int index = -1;
-		if ((path.length() > shortName.length()) &&
-				(path.charAt(path.length() - shortName.length() - 1) == ':')) {
-			index = shortName.lastIndexOf('/');
-		}
-		return path.substring(0, path.length() - shortName.length() + index + 1);
-	}
-	
 	boolean readBook(String fileName) {
-		myFilePrefix = htmlDirectoryPrefix(fileName);
+		myFilePrefix = MiscUtil.htmlDirectoryPrefix(fileName);
 
 		myIdToHref.clear();
 		myHtmlFileNames.clear();
@@ -86,8 +75,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		final int len = myHtmlFileNames.size();
 		for (int i = 0; i < len; ++i) {
 			final String name = (String)myHtmlFileNames.get(i);
-			//System.out.println("parsing " + name);
-			new XHTMLReader(myModelReader).readFile(myFilePrefix, name, name);
+			new XHTMLReader(myModelReader).readFile(myFilePrefix + name, name);
 		}
 
 		generateTOC();

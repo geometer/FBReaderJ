@@ -4,18 +4,16 @@ import java.io.*;
 import java.util.Collection;
 import java.util.Queue;
 import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
-public class ZipFile {
+public final class ZipFile {
     private final String myFileName;
-    private final TreeMap<String,LocalFileHeader> myFileHeaders = new TreeMap<String,LocalFileHeader>();
-    private final MyBufferedInputStream myBaseStream;
+    private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>();
 
     private boolean myAllFilesAreRead;
 
-    public ZipFile(String fileName) throws IOException {
+    public ZipFile(String fileName) {
         myFileName = fileName;
-        myBaseStream = new MyBufferedInputStream(myFileName);
     }
 
     public Collection<LocalFileHeader> headers() {
@@ -27,27 +25,27 @@ public class ZipFile {
         return myFileHeaders.values();
     }
 
-    private boolean readFileHeader(String fileToFind) throws IOException {
-        int version2extract = myBaseStream.read2Bytes();
-        int generalFlag = myBaseStream.read2Bytes();
-        int compressionMethod = myBaseStream.read2Bytes();
-        myBaseStream.skip(8);
+    private boolean readFileHeader(MyBufferedInputStream baseStream, String fileToFind) throws IOException {
+        int version2extract = baseStream.read2Bytes();
+        int generalFlag = baseStream.read2Bytes();
+        int compressionMethod = baseStream.read2Bytes();
+        baseStream.skip(8);
 
-        int compressedSize = myBaseStream.read4Bytes();
-        int uncompressedSize = myBaseStream.read4Bytes();
-        int fileNameSize = myBaseStream.read2Bytes();
-        int extraField = myBaseStream.read2Bytes();
+        int compressedSize = baseStream.read4Bytes();
+        int uncompressedSize = baseStream.read4Bytes();
+        int fileNameSize = baseStream.read2Bytes();
+        int extraField = baseStream.read2Bytes();
 
-        final String fileName = myBaseStream.readString(fileNameSize);
-        myBaseStream.skip(extraField);
+        final String fileName = baseStream.readString(fileNameSize);
+        baseStream.skip(extraField);
         LocalFileHeader header = new LocalFileHeader(version2extract, generalFlag,
                 compressionMethod, compressedSize, uncompressedSize,
-                myBaseStream.offset(), fileName);
+                baseStream.offset(), fileName);
         myFileHeaders.put(fileName, header);
         if (header.sizeIsKnown()) {
-            myBaseStream.skip(compressedSize);
+            baseStream.skip(compressedSize);
         } else {
-            findAndReadDescriptor(header);
+            findAndReadDescriptor(baseStream, header);
         }
         return fileName.equals(fileToFind);
     }
@@ -58,47 +56,51 @@ public class ZipFile {
         }
         myAllFilesAreRead = true;
 
-        myBaseStream.reset();
+		MyBufferedInputStream baseStream = getBaseStream();
+        baseStream.setPosition(0);
         myFileHeaders.clear();
 
-        while (true) {
-            int header = myBaseStream.read4Bytes();
-            if (header != LocalFileHeader.FILE_HEADER_SIGNATURE) {
-                if (header == LocalFileHeader.FOLDER_HEADER_SIGNATURE) {
-                    break; // central directory, no more files
-                } else {
-                    throw new WrongZipFormatException(
-                            "readHeaders. Wrong signature found = " + header
-                                    + " at position " + myBaseStream.offset());
+		try {
+            while (true) {
+                int header = baseStream.read4Bytes();
+                if (header != LocalFileHeader.FILE_HEADER_SIGNATURE) {
+                    if (header == LocalFileHeader.FOLDER_HEADER_SIGNATURE) {
+                        break; // central directory, no more files
+                    } else {
+                        throw new WrongZipFormatException(
+                                "readHeaders. Wrong signature found = " + header
+                                        + " at position " + baseStream.offset());
+                    }
                 }
+                readFileHeader(baseStream, null);
             }
-            readFileHeader(null);
-        }
-        myBaseStream.reset();
+        } finally {
+			storeBaseStream(baseStream);
+		}
     }
 
     /**
      * Finds descriptor of the last header and installs sizes of files
      */
-    private void findAndReadDescriptor(LocalFileHeader header) throws IOException {
+    private void findAndReadDescriptor(MyBufferedInputStream baseStream, LocalFileHeader header) throws IOException {
         while (true) {
             int signature = 0;
             do {
-                int nextByte = myBaseStream.read();
+                int nextByte = baseStream.read();
                 if (nextByte < 0) {
                     throw new IOException(
                             "readFileHeaders. Unexpected end of file when looking for DataDescriptor");
                 }
                 signature = ((signature << 8) & (0x0FFFFFFFF)) + (byte) nextByte;
             } while (signature != LocalFileHeader.DATA_DESCRIPTOR_SIGNATURE);
-			myBaseStream.skip(4);
-			int compressedSize = myBaseStream.read4Bytes();
-			int uncompressedSize = myBaseStream.read4Bytes();
-            if ((myBaseStream.offset() - header.OffsetOfLocalData - 16) == compressedSize) {
+			baseStream.skip(4);
+			int compressedSize = baseStream.read4Bytes();
+			int uncompressedSize = baseStream.read4Bytes();
+            if ((baseStream.offset() - header.OffsetOfLocalData - 16) == compressedSize) {
                 header.setSizes(compressedSize, uncompressedSize);
                 break;
             } else {
-                myBaseStream.backSkip(12);
+                baseStream.backSkip(12);
                 continue;
             }
         }
@@ -110,12 +112,13 @@ public class ZipFile {
 		myStoredStreams.add(baseStream);	
 	}
 
-    synchronized private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException, WrongZipFormatException {
-        MyBufferedInputStream baseStream =
-			myStoredStreams.isEmpty() ?
-				new MyBufferedInputStream(myFileName) :
-				myStoredStreams.poll();
-        return new ZipInputStream(this, baseStream, header);
+	synchronized MyBufferedInputStream getBaseStream() throws IOException {
+        MyBufferedInputStream baseStream = myStoredStreams.poll();
+		return (baseStream != null) ? baseStream : new MyBufferedInputStream(myFileName);
+	}
+
+    private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException, WrongZipFormatException {
+        return new ZipInputStream(this, header);
     }
 
     public InputStream getInputStream(String entryName) throws IOException {
@@ -133,25 +136,31 @@ public class ZipFile {
             }
         }
         // ready to read fileheader
-        do {
-            int signature = myBaseStream.read4Bytes();
-            if (signature != LocalFileHeader.FILE_HEADER_SIGNATURE) {
-                if (signature == LocalFileHeader.FOLDER_HEADER_SIGNATURE) {
-                    break; // central directory, no more files
-                } else {
-                    throw new IOException(
-                            "Wrong signature " + signature
-                                    + " found at position " + myBaseStream.offset());
+		MyBufferedInputStream baseStream = getBaseStream();
+		baseStream.setPosition(0);
+		try {
+            do {
+                int signature = baseStream.read4Bytes();
+                if (signature != LocalFileHeader.FILE_HEADER_SIGNATURE) {
+                    if (signature == LocalFileHeader.FOLDER_HEADER_SIGNATURE) {
+                        break; // central directory, no more files
+                    } else {
+                        throw new IOException(
+                                "Wrong signature " + signature
+                                        + " found at position " + baseStream.offset());
+                    }
+                }
+            } while (!readFileHeader(baseStream, entryName));
+            LocalFileHeader header = myFileHeaders.get(entryName);
+            if (header != null) {
+                try {
+                    return createZipInputStream(header);
+                } catch (WrongZipFormatException e) {
                 }
             }
-        } while (!readFileHeader(entryName));
-        LocalFileHeader header = myFileHeaders.get(entryName);
-        if (header != null) {
-            try {
-                return createZipInputStream(header);
-            } catch (WrongZipFormatException e) {
-            }
-        }
+		} finally {
+			storeBaseStream(baseStream);
+		}
         return null;
     }
 }
