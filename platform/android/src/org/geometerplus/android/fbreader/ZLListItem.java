@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
-interface LibraryListItem {
+interface ZLListItem {
 	String getTopText();
 	String getBottomText();
 	void run();

@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.collection.RecentBooks;
 
 class LibraryTabUtil {
 	static void setAuthorList(ListView view, Author selectedAuthor) {
-		final LibraryListAdapter adapter = new LibraryListAdapter(view.getContext());
+		final ZLListAdapter adapter = new ZLListAdapter(view.getContext());
 		int selectedIndex = -1;
 		int count = 0;
 		for (final Author author : BookCollection.Instance().authors()) {
@@ -45,7 +45,7 @@ class LibraryTabUtil {
 	}
 
 	static void setTagList(ListView view, String selectedTag) {
-		final LibraryListAdapter adapter = new LibraryListAdapter(view.getContext());
+		final ZLListAdapter adapter = new ZLListAdapter(view.getContext());
 		int selectedIndex = -1;
 		int count = 0;
 		if (!BookCollection.Instance().booksByTag(null).isEmpty()) {
@@ -69,8 +69,8 @@ class LibraryTabUtil {
 	}
 
 	static void setBookList(final ListView view, final Author author, String selectedSeries) {
-		LibraryListAdapter adapter =
-			new LibraryListAdapter(
+		ZLListAdapter adapter =
+			new ZLListAdapter(
 				view.getContext(),
 				new Runnable() {
 					public void run() {
@@ -106,8 +106,8 @@ class LibraryTabUtil {
 	}
 
 	static void setBookList(final ListView view, final String tag) {
-		LibraryListAdapter adapter =
-			new LibraryListAdapter(
+		ZLListAdapter adapter =
+			new ZLListAdapter(
 				view.getContext(),
 				new Runnable() {
 					public void run() {
@@ -122,7 +122,7 @@ class LibraryTabUtil {
 	}
 
 	static void setRecentBooksList(final ListView view) {
-		LibraryListAdapter adapter = new LibraryListAdapter(view.getContext());
+		ZLListAdapter adapter = new ZLListAdapter(view.getContext());
 		for (BookDescription book : RecentBooks.Instance().books()) {
 			adapter.addItem(new BookItem(book));
 		}
@@ -130,8 +130,8 @@ class LibraryTabUtil {
 	}
 
 	static void setSeriesBookList(final ListView view, final Author author, final String series) {
-		LibraryListAdapter adapter =
-			new LibraryListAdapter(
+		ZLListAdapter adapter =
+			new ZLListAdapter(
 				view.getContext(),
 				new Runnable() {
 					public void run() {
@@ -147,7 +147,7 @@ class LibraryTabUtil {
 		setAdapter(view, adapter);
 	}
 
-	private static void setAdapter(ListView view, LibraryListAdapter adapter) {
+	private static void setAdapter(ListView view, ZLListAdapter adapter) {
 		view.setAdapter(adapter);
 		view.setOnKeyListener(adapter);
 		view.setOnItemClickListener(adapter);

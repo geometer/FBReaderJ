@@ -24,7 +24,7 @@ import android.widget.ListView;
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.collection.BookCollection;
 
-class TagItem implements LibraryListItem {
+class TagItem implements ZLListItem {
 	private final ListView myView;
 	private final String myTag;
 

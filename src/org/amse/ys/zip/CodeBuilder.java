@@ -15,11 +15,16 @@ public class CodeBuilder {
 
     public void buildTable(int[] table) {
 		final int arrayLength = myLengthArray.length;
+		int maxCodeLength = 0;
 
         // counting number of codes for definite length
         int[] b1_count = new int[MAX_HUFFMAN_CODE_LENGTH + 1];
-        for (int i = 0; i < arrayLength; i++) {            
-                b1_count[myLengthArray[i]]++;            
+        for (int i = 0; i < arrayLength; ++i) {            
+			final int l = myLengthArray[i];
+            ++b1_count[l];
+			if (maxCodeLength < l) {
+				maxCodeLength = l;
+			}
         }
         b1_count[0] = 0;
 
@@ -42,31 +47,43 @@ public class CodeBuilder {
                     revertedCode >>= 1;
                 }
                 final int value = (codeLength << 16) + i;
-                for (int j = 0; j < (1 << (15 - codeLength)); ++j) {
-                    table[(j << codeLength) + c] = value;
+				final int num = 1 << maxCodeLength;
+				final int step = 1 << codeLength;
+                for (; c < num; c += step) {
+                    table[c] = value;
                 }
             }
         }
+
+		for (int i = maxCodeLength; i < 15; ++i) {
+			System.arraycopy(table, 0, table, 1 << i, 1 << i);
+		}
     }
 
-    public void buildTable(int[] codeArray, int[] table) {
+    private void buildTable(int[] codeArray, int[] table, int maxCodeLength) {
         final int length = codeArray.length;
 
         for (int i = 0; i < length; i++) {
             final int codeLength = myLengthArray[i];
             if (codeLength > 0) {
                 int revertedCode = codeArray[i];
-                int code = 0;
+                int c = 0;
                 for (int j = 0; j < codeLength; ++j) {
-                    code = (code << 1) + (revertedCode & 1);
+                    c = (c << 1) + (revertedCode & 1);
                     revertedCode >>= 1;
                 }
                 final int value = (codeLength << 16) + i;
-                for (int j = 0; j < (1 << (15 - codeLength)); ++j) {
-                    table[(j << codeLength) + code] = value;
+				final int num = 1 << maxCodeLength;
+				final int step = 1 << codeLength;
+                for (; c < num; c += step) {
+                    table[c] = value;
                 }
             }
         }
+
+		for (int i = maxCodeLength; i < 15; ++i) {
+			System.arraycopy(table, 0, table, 1 << i, 1 << i);
+		}
     }
 
     public static void buildFixedHuffmanCodes(int[] table) {
@@ -88,7 +105,7 @@ public class CodeBuilder {
             builder.myLengthArray[i] = 8;
             codeArray[i] = 192 + i - 280;
         }
-        builder.buildTable(codeArray, table);
+        builder.buildTable(codeArray, table, 9);
     }
 
     public static void buildFixedDistanceCodes(int[] table) {
@@ -98,6 +115,6 @@ public class CodeBuilder {
             codeArray[i] = i;
             builder.myLengthArray[i] = 5;
         }
-        builder.buildTable(codeArray, table);
+        builder.buildTable(codeArray, table, 5);
     }
 }

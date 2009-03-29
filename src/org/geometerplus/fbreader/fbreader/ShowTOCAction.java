@@ -19,8 +19,12 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class ShowContentsAction extends FBAction {
-	ShowContentsAction(FBReader fbreader) {
+import org.geometerplus.android.fbreader.TOCActivity;
+
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+class ShowTOCAction extends FBAction {
+	ShowTOCAction(FBReader fbreader) {
 		super(fbreader);
 	}
 
@@ -35,6 +39,9 @@ class ShowContentsAction extends FBAction {
 	}
 
 	public void run() {
-		Reader.setMode(FBReader.ViewMode.CONTENTS);
+		final ZLAndroidDialogManager dialogManager =
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
+		dialogManager.runActivity(TOCActivity.class);
+		//Reader.setMode(FBReader.ViewMode.CONTENTS);
 	}
 }

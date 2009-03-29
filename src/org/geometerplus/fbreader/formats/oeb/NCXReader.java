@@ -29,14 +29,8 @@ class NCXReader extends ZLXMLReaderAdapter {
 	static class NavPoint {
 		final int Order;
 		final int Level;
-		String Text;
-		String ContentHRef;
-
-		/*
-		NavPoint() {
-			this(-1, -1);
-		}
-		*/
+		String Text = "";
+		String ContentHRef = "";
 
 		NavPoint(int order, int level) {
 			Order = order;
@@ -45,8 +39,8 @@ class NCXReader extends ZLXMLReaderAdapter {
 	}
 
 	private final BookReader myModelReader;
-	private HashMap<Integer,NavPoint> myNavigationMap;
-	private ArrayList<NavPoint> myPointStack;
+	private final TreeMap<Integer,NavPoint> myNavigationMap = new TreeMap<Integer,NavPoint>();
+	private final ArrayList<NavPoint> myPointStack = new ArrayList<NavPoint>();
 
 	private static final int READ_NONE = 0;
 	private static final int READ_MAP = 1;
@@ -59,6 +53,10 @@ class NCXReader extends ZLXMLReaderAdapter {
 
 	NCXReader(BookReader modelReader) {
 		myModelReader = modelReader;
+	}
+
+	Map<Integer,NavPoint> navigationMap() {
+		return myNavigationMap;
 	}
 
 	private static final String TAG_NAVMAP = "navmap";
@@ -77,6 +75,7 @@ class NCXReader extends ZLXMLReaderAdapter {
 		}
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		switch (myReadState) {
@@ -118,7 +117,9 @@ class NCXReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 	
+	@Override
 	public boolean endElementHandler(String tag) {
+		tag = tag.toLowerCase().intern();
 		switch (myReadState) {
 			case READ_NONE:
 				break;
@@ -129,14 +130,13 @@ class NCXReader extends ZLXMLReaderAdapter {
 				break;
 			case READ_POINT:
 				if (TAG_NAVPOINT == tag) {
-					/*
-					if (myPointStack.back().Text.empty()) {
-						myPointStack.back().Text = "...";
+					NavPoint last = myPointStack.get(myPointStack.size() - 1);
+					if (last.Text.length() == 0) {
+						last.Text = "...";
 					}
-					myNavigationMap[myPointStack.back().Order] = myPointStack.back();
-					myPointStack.pop_back();
-					myReadState = myPointStack.empty() ? READ_MAP : READ_POINT;
-					*/
+					myNavigationMap.put(last.Order, last);
+					myPointStack.remove(myPointStack.size() - 1);
+					myReadState = (myPointStack.isEmpty()) ? READ_MAP : READ_POINT;
 				}
 			case READ_LABEL:
 				if (TAG_NAVLABEL == tag) {
@@ -152,11 +152,17 @@ class NCXReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 	
+	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (myReadState == READ_TEXT) {
 			final ArrayList<NavPoint> stack = myPointStack;
 			final NavPoint last = stack.get(stack.size() - 1);
-			//last.Text = .append(text, len);
+			last.Text += new String(ch, start, length);
 		}
+	}
+
+	@Override
+	public boolean dontCacheAttributeValues() {
+		return true;
 	}
 }

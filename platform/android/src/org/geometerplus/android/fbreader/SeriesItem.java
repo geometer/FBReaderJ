@@ -25,7 +25,7 @@ import org.geometerplus.fbreader.description.Author;
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.fbreader.FBReader;
 
-class SeriesItem implements LibraryListItem {
+class SeriesItem implements ZLListItem {
 	private final ListView myView;
 	private final Author myAuthor;
 	private final String mySeries;

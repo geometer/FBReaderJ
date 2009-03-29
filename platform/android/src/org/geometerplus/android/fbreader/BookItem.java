@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader;
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.fbreader.FBReader;
 
-class BookItem implements LibraryListItem {
+class BookItem implements ZLListItem {
 	private final BookDescription myBook;
 
 	BookItem(BookDescription book) {

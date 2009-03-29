@@ -33,21 +33,21 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-final class LibraryListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
+final class ZLListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
 	private final Context myContext;
-	private final ArrayList<LibraryListItem> myItems = new ArrayList<LibraryListItem>();
+	private final ArrayList<ZLListItem> myItems = new ArrayList<ZLListItem>();
 	private final Runnable myCancelAction;
 
-	LibraryListAdapter(Context context, Runnable cancelAction) {
+	ZLListAdapter(Context context, Runnable cancelAction) {
 		myContext = context;
 		myCancelAction = cancelAction;
 	}
 
-	LibraryListAdapter(Context context) {
+	ZLListAdapter(Context context) {
 		this(context, null);
 	}
 
-	void addItem(LibraryListItem item) {
+	void addItem(ZLListItem item) {
 		myItems.add(item);
 	}
 
@@ -63,7 +63,7 @@ final class LibraryListAdapter extends BaseAdapter implements AdapterView.OnItem
 		return true;
 	}
 
-	public LibraryListItem getItem(final int position) {
+	public ZLListItem getItem(final int position) {
 		return myItems.get(position);
 	}
 
@@ -74,7 +74,7 @@ final class LibraryListAdapter extends BaseAdapter implements AdapterView.OnItem
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(myContext).inflate(R.layout.library_list_item, parent, false);
-		final LibraryListItem item = getItem(position);
+		final ZLListItem item = getItem(position);
 		((TextView)view.findViewById(R.id.library_list_item_top)).setText(item.getTopText());
 		((TextView)view.findViewById(R.id.library_list_item_bottom)).setText(item.getBottomText());
 		return view;
@@ -90,7 +90,7 @@ final class LibraryListAdapter extends BaseAdapter implements AdapterView.OnItem
 				switch (keyCode) {
 					case KeyEvent.KEYCODE_DPAD_CENTER:
 					case KeyEvent.KEYCODE_ENTER:
-						((LibraryListItem)((ListView)view).getSelectedItem()).run();
+						((ZLListItem)((ListView)view).getSelectedItem()).run();
 						return true;
 					case KeyEvent.KEYCODE_BACK:
 						return true;

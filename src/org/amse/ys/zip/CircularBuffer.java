@@ -9,33 +9,28 @@ final class CircularBuffer {
     private int myCurrentPosition; // the next byte to read is
                            // myDictionary[myCurrentPosition]
 
-	void reset() {
-		myBytesReady = 0;
-		myCurrentPosition = 0;
-	}
+        void reset() {
+                myBytesReady = 0;
+                myCurrentPosition = 0;
+        }
 
     public int available() {
         return myBytesReady;
     }
 
     public void read(byte[] buffer, int offset, int length) {
-	int from = myCurrentPosition;
-	if (from + length > DICTIONARY_LENGTH) {
-	    final int firstPart = DICTIONARY_LENGTH - from;
-	    final int secondPart = length - firstPart;
-	    System.arraycopy(myBuffer, from, buffer, offset, firstPart);
-	    System.arraycopy(myBuffer, 0, buffer, offset + firstPart, secondPart);
-	    myCurrentPosition = secondPart;
-	} else {
-	    System.arraycopy(myBuffer, from, buffer, offset, length);
-	    myCurrentPosition = from + length;
-	}
-	myBytesReady -= length;
-	/*
-	while (len-- > 0) {
-            buffer[offset++] = read();
-	}
-	*/
+        int from = myCurrentPosition;
+        if (from + length > DICTIONARY_LENGTH) {
+            final int firstPart = DICTIONARY_LENGTH - from;
+            final int secondPart = length - firstPart;
+            System.arraycopy(myBuffer, from, buffer, offset, firstPart);
+            System.arraycopy(myBuffer, 0, buffer, offset + firstPart, secondPart);
+            myCurrentPosition = secondPart;
+        } else {
+            System.arraycopy(myBuffer, from, buffer, offset, length);
+            myCurrentPosition = from + length;
+        }
+        myBytesReady -= length;
     }
 
     public byte read() {

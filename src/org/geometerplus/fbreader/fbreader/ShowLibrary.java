@@ -35,11 +35,9 @@ class ShowLibrary extends FBAction {
 			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
 		Runnable action = new Runnable() {
 			public void run() {
-				//android.os.Debug.startMethodTracing("/sdcard/library.trace");
 				BookCollection collection = BookCollection.Instance();
 				collection.rebuild();
 				collection.synchronize();
-				//android.os.Debug.stopMethodTracing();
 				// TODO: select current book (author?)
 				/*
 				if (myBookModel != null) {

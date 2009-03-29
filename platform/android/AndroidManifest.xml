@@ -10,6 +10,8 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.LibraryTabActivity" android:configChanges="orientation">
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation">
+		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.BookDownloader" android:theme="@android:style/Theme.Dialog" android:screenOrientation="sensor" android:configChanges="orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />

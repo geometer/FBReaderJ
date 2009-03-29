@@ -253,9 +253,7 @@ public class DeflatingDecompressor extends Decompressor {
             throw new RuntimeException("unexpected case of readheader call");
         }
         myTheBlockIsFinal = (getBit() != 0);
-        int kindOfBlock;
-        kindOfBlock = readIntegerByBit(2);
-        switch (kindOfBlock) {
+        switch (readIntegerByBit(2)) {
         case 0:
             myState = ST_NO_COMPRESSION;
             readIntegerByBit(myBitsInBuffer % 8);            

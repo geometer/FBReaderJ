@@ -41,11 +41,13 @@ class Reference {
 }
 
 class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
+	private static final char[] Dots = new char[] {'.', '.', '.'};
+
 	private final BookReader myModelReader;
-	private final HashMap myIdToHref = new HashMap();
-	private final ArrayList myHtmlFileNames = new ArrayList();
-	private final ArrayList myTourTOC = new ArrayList();
-	private final ArrayList myGuideTOC = new ArrayList();
+	private final HashMap<String,String> myIdToHref = new HashMap<String,String>();
+	private final ArrayList<String> myHtmlFileNames = new ArrayList<String>();
+	private final ArrayList<Reference> myTourTOC = new ArrayList<Reference>();
+	private final ArrayList<Reference> myGuideTOC = new ArrayList<Reference>();
 
 	private String myOPFSchemePrefix;
 	private String myFilePrefix;
@@ -72,9 +74,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader.setMainTextModel();
 		myModelReader.pushKind(FBTextKind.REGULAR);
 
-		final int len = myHtmlFileNames.size();
-		for (int i = 0; i < len; ++i) {
-			final String name = (String)myHtmlFileNames.get(i);
+		for (String name : myHtmlFileNames) {
 			new XHTMLReader(myModelReader).readFile(myFilePrefix + name, name);
 		}
 
@@ -85,15 +85,34 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 
 	private void generateTOC() {
 		if (myNCXTOCFileName != null) {
-			//NCXReader ncxReader = new NCXReader(myModelReader);
-			//if (ncxReader.read(myFilePrefix + myNCXTOCFileName)) {
-			//}
+			NCXReader ncxReader = new NCXReader(myModelReader);
+			if (ncxReader.read(myFilePrefix + myNCXTOCFileName)) {
+				final Map<Integer,NCXReader.NavPoint> navigationMap = ncxReader.navigationMap();
+				if (!navigationMap.isEmpty()) {
+					int level = 0;
+					for (NCXReader.NavPoint point : navigationMap.values()) {
+						int index = myModelReader.Model.getLabel(point.ContentHRef).ParagraphIndex;
+						while (level > point.Level) {
+							myModelReader.endContentsParagraph();
+							--level;
+						}
+						while (++level <= point.Level) {
+							myModelReader.beginContentsParagraph(-2);
+							myModelReader.addContentsData(Dots);
+						}
+						myModelReader.beginContentsParagraph(index);
+						myModelReader.addContentsData(point.Text.toCharArray());
+					}
+					while (level > 0) {
+						myModelReader.endContentsParagraph();
+						--level;
+					}
+					return;
+				}
+			}
 		}
 
-		final ArrayList toc = myTourTOC.isEmpty() ? myGuideTOC : myTourTOC;
-		final int tocLen = toc.size();
-		for (int i = 0; i < tocLen; ++i) {
-			final Reference ref = (Reference)toc.get(i);
+		for (Reference ref : myTourTOC.isEmpty() ? myGuideTOC : myTourTOC) {
 			final BookModel.Label label = myModelReader.Model.getLabel(ref.HRef);
 			if (label != null) {
 				final int index = label.ParagraphIndex;
@@ -134,7 +153,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		if (MANIFEST == tag) {
 			myState = READ_MANIFEST;
 		} else if (SPINE == tag) {
-			myNCXTOCFileName = xmlattributes.getValue("toc");
+			myNCXTOCFileName = myIdToHref.get(xmlattributes.getValue("toc"));
 			myState = READ_SPINE;
 		} else if (GUIDE == tag) {
 			myState = READ_GUIDE;
@@ -149,7 +168,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		} else if ((myState == READ_SPINE) && (ITEMREF == tag)) {
 			final String id = xmlattributes.getValue("idref");
 			if (id != null) {
-				final String fileName = (String)myIdToHref.get(id);
+				final String fileName = myIdToHref.get(id);
 				if (fileName != null) {
 					myHtmlFileNames.add(fileName);
 				}
