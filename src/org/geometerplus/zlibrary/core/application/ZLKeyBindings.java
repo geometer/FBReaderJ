@@ -26,7 +26,6 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public final class ZLKeyBindings {
@@ -62,11 +61,11 @@ public final class ZLKeyBindings {
 	
 	private	void loadCustomBindings() {
 		final int size =
-			new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
+			new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
 		final ZLStringOption keyOption =
-			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
+			new ZLStringOption(myName, "", "");
 		final ZLStringOption actionOption =
-			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
+			new ZLStringOption(myName, "", "");
 		for (int i = 0; i < size; ++i) {
 			keyOption.changeName(BINDED_KEY + i);
 			final String keyValue = keyOption.getValue();
@@ -90,9 +89,9 @@ public final class ZLKeyBindings {
 		
 		int counter = 0;
 		final ZLStringOption keyOption =
-			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
+			new ZLStringOption(myName, "", "");
 		final ZLStringOption actionOption =
-			new ZLStringOption(ZLOption.CONFIG_CATEGORY, myName, "", "");
+			new ZLStringOption(myName, "", "");
 		for (Iterator it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
 			final String key = (String)it.next();
 			final String originalValue = (String)keymap.get(key);
@@ -105,6 +104,6 @@ public final class ZLKeyBindings {
 				++counter;
 			}
 		}
-		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
+		new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
 	}
 }

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <node name="libraryView">
+    <node name="byAuthor" value="By Author"/>
+    <node name="byTag" value="By Tag"/>
+    <node name="recent" value="Recent"/>
+  </node>
   <node name="menu">
 		<node name="preferences" value="Preferences">
 			<node name="preferences" value="FBReader..."/>
@@ -39,22 +44,6 @@
 			<node name="toggleIndicator" value="Toggle Indicator"/>
 		</node>
 		<node name="quit" value="Close"/>
-	</node>
-	<node name="toolbar">
-		<node name="showLibrary" value="Show Library Tree"/>
-		<node name="showRecent" value="Show Recent Books List"/>
-		<node name="addBook" value="Add File to Library"/>
-		<node name="gotoHome" value="Go to Start of Text"/>
-		<node name="undo" value="Go Back"/>
-		<node name="redo" value="Go Forward"/>
-		<node name="toc" value="Table of Contents"/>
-		<node name="search" value="Text Search"/>
-		<node name="findNext" value="Find Next"/>
-		<node name="findPrevious" value="Find Previous"/>
-		<node name="bookInfo" value="Show Book Info Dialog"/>
-		<node name="preferences" value="Show Preferences Dialog"/>
-		<node name="rotate" value="Rotate Text"/>
-		<node name="showHelp" value="About FBReader"/>
 	</node>
 	<node name="dialog">
 		<node name="button">

@@ -39,13 +39,12 @@ public class ZLTextStyleDecoration {
 
 	public ZLTextStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int verticalShift, int allowHyphenations) {
 		myName = name;
-		final String category = ZLOption.LOOK_AND_FEEL_CATEGORY;
-		FontFamilyOption = new ZLStringOption(category, STYLE, name + ":fontFamily", "");
-		FontSizeDeltaOption = new ZLIntegerRangeOption(category, STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
-		BoldOption = new ZLBoolean3Option(category, STYLE, name + ":bold", bold);
-		ItalicOption = new ZLBoolean3Option(category, STYLE, name + ":italic", italic);
-		VerticalShiftOption = new ZLIntegerOption(category, STYLE, name + ":vShift", verticalShift);
-		AllowHyphenationsOption = new ZLBoolean3Option(category, STYLE, name + ":allowHyphenations", allowHyphenations);
+		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", "");
+		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
+		BoldOption = new ZLBoolean3Option(STYLE, name + ":bold", bold);
+		ItalicOption = new ZLBoolean3Option(STYLE, name + ":italic", italic);
+		VerticalShiftOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalShift);
+		AllowHyphenationsOption = new ZLBoolean3Option(STYLE, name + ":allowHyphenations", allowHyphenations);
 	}
 	
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {

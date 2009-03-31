@@ -17,22 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.config;
+package org.geometerplus.android.fbreader;
 
-public abstract class ZLConfig {
-	public static ZLConfig Instance() {
-		return ourInstance;
+import java.util.ArrayList;
+
+import android.content.Context;
+
+import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.collection.RecentBooks;
+
+final class RecentBooksListAdapter extends ZLListAdapter {
+	final ArrayList<BookDescription> myBooks = RecentBooks.Instance().books();
+	final ZLListItem[] myItems = new ZLListItem[myBooks.size()];
+
+	RecentBooksListAdapter(Context context) {
+		super(context, null);
 	}
 
-	private static ZLConfig ourInstance;
-
-	protected ZLConfig() {
-		ourInstance = this;
+	public int getCount() {
+		return myItems.length;
 	}
 
-	public abstract void shutdown();
-	public abstract String getValue(String group, String name, String defaultValue);
-	public abstract void setValue(String group, String name, String value);
-	public abstract void unsetValue(String group, String name);
-	public abstract void removeGroup(String name);
+	public ZLListItem getItem(final int position) {
+		ZLListItem item = myItems[position];
+		if (item == null) {
+			item = new BookItem(myBooks.get(position));
+			myItems[position] = item;
+		}
+		return item;
+	}
+
+	public int getSelectedIndex() {
+		return -1;
+	}
 }

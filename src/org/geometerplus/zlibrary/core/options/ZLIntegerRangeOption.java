@@ -26,8 +26,8 @@ public final class ZLIntegerRangeOption extends ZLOption {
 	private final int myDefaultValue;
 	private int myValue;
 
-	public ZLIntegerRangeOption(String category, String group, String optionName, int minValue, int maxValue, int defaultValue) {
-		super(category, group, optionName);
+	public ZLIntegerRangeOption(String group, String optionName, int minValue, int maxValue, int defaultValue) {
+		super(group, optionName);
 		MinValue = minValue;
 		MaxValue = maxValue;
 		if (defaultValue < MinValue) {

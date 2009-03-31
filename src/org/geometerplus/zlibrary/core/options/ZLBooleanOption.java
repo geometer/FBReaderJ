@@ -23,8 +23,8 @@ public final class ZLBooleanOption extends ZLOption implements ZLSimpleOption {
 	private final boolean myDefaultValue;
 	private boolean myValue;
 
-	public ZLBooleanOption(String category, String group, String optionName, boolean defaultValue) {
-		super(category, group, optionName);
+	public ZLBooleanOption(String group, String optionName, boolean defaultValue) {
+		super(group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = defaultValue;
 	}

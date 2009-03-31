@@ -36,7 +36,7 @@ public abstract class ZLOptionsDialog {
 		myResource = resource;
 		myExitAction = exitAction;
 		myApplyAction = applyAction;
-		myTabOption = new ZLStringOption(ZLOption.LOOK_AND_FEEL_CATEGORY, resource.Name, "SelectedTab", "");
+		myTabOption = new ZLStringOption(resource.Name, "SelectedTab", "");
 	}
 	
 	protected void acceptTab(ZLDialogContent tab) {

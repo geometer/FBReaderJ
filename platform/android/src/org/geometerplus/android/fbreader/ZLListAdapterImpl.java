@@ -17,10 +17,38 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.option;
+package org.geometerplus.android.fbreader;
 
-public interface FBOptions {
-	String BOOKS_CATEGORY = "books";
-	String SEARCH_CATEGORY = "search";
-	String EXTERNAL_CATEGORY = "external";
+import java.util.ArrayList;
+
+import android.content.Context;
+
+import org.geometerplus.zlibrary.ui.android.R;
+
+final class ZLListAdapterImpl extends ZLListAdapter {
+	private final ArrayList<ZLListItem> myItems = new ArrayList<ZLListItem>();
+
+	ZLListAdapterImpl(Context context, Runnable cancelAction) {
+		super(context, cancelAction);
+	}
+
+	ZLListAdapterImpl(Context context) {
+		this(context, null);
+	}
+
+	void addItem(ZLListItem item) {
+		myItems.add(item);
+	}
+
+	public int getCount() {
+		return myItems.size();
+	}
+
+	public ZLListItem getItem(final int position) {
+		return myItems.get(position);
+	}
+
+	public int getSelectedIndex() {
+		return -1;
+	}
 }

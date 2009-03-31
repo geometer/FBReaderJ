@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <node name="libraryView">
+    <node name="byAuthor" value="По автору"/>
+    <node name="byTag" value="По категории"/>
+    <node name="recent" value="Недавние"/>
+  </node>
   <node name="menu">
 	  <node name="bookInfo" value="Информация о книге..."/>
 	  <node name="toc" value="Содержание"/>
@@ -37,22 +42,6 @@
 		</node>
 		<node name="preferences" value="Настройки..."/>
 		<node name="quit" value="Закрыть"/>
-	</node>
-	<node name="toolbar">
-		<node name="showLibrary" value="Библиотека"/>
-		<node name="showRecent" value="Прочитанные книги"/>
-		<node name="addBook" value="Добавить файл в библиотеку"/>
-		<node name="gotoHome" value="В начало книги"/>
-		<node name="undo" value="Назад"/>
-		<node name="redo" value="Вперед"/>
-		<node name="toc" value="Оглавление"/>
-		<node name="search" value="Поиск"/>
-		<node name="findNext" value="Найти следующий"/>
-		<node name="findPrevious" value="Найти предыдущий"/>
-		<node name="bookInfo" value="Информация о книге"/>
-		<node name="preferences" value="Настройки"/>
-		<node name="rotate" value="Поворот текста"/>
-		<node name="showHelp" value="О программе"/>
 	</node>
 	<node name="dialog">
 		<node name="button">

@@ -25,7 +25,6 @@ import java.io.InputStream;
 import org.geometerplus.fbreader.description.BookDescriptionUtil;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.plucker.PluckerTextStream;
-import org.geometerplus.fbreader.option.FBOptions;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
@@ -41,7 +40,7 @@ public abstract class PdbPlugin extends FormatPlugin {
 		ZLFile baseFile = (index == -1) ? file : new ZLFile(fileName.substring(0, index));
 		boolean upToDate = BookDescriptionUtil.checkInfo(baseFile);
 
-		ZLStringOption palmTypeOption = new ZLStringOption(FBOptions.BOOKS_CATEGORY, file.getPath(), "PalmType", "");
+		ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
 		if ((palmType.length() != 8) || !upToDate) {
 			byte[] id = new byte[8];

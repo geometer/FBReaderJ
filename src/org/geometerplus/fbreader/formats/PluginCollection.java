@@ -64,9 +64,9 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		LanguageAutoDetectOption = new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Format", "AutoDetect", true);
-		DefaultLanguageOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultLanguage", "en"); 
-		DefaultEncodingOption = new ZLStringOption(ZLOption.CONFIG_CATEGORY, "Format", "DefaultEncoding", "windows-1252");
+		LanguageAutoDetectOption = new ZLBooleanOption("Format", "AutoDetect", true);
+		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en"); 
+		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 	}
 		
 	public FormatPlugin getPlugin(ZLFile file, boolean strong) {

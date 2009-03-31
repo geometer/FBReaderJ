@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 
 public class BookReader {
 	public final BookModel Model;
@@ -45,14 +46,11 @@ public class BookReader {
 	private boolean myInsideTitle = false;
 	private boolean mySectionContainsRegularContents = false;
 	
-	private boolean myContentsParagraphExists = false;
-	private final ArrayList myTOCStack = new ArrayList();
-	private boolean myLastTOCParagraphIsEmpty = false;
+	private ZLTextTree myCurrentContentsTree;
 
-	private final char[] PERIOD = "...".toCharArray();
-	
 	public BookReader(BookModel model) {
 		Model = model;
+		myCurrentContentsTree = model.ContentsTree;
 	}
 	
 	private final void flushTextBufferToParagraph() {
@@ -220,8 +218,8 @@ public class BookReader {
 		}
 	}
 	
-	public final void addHyperlinkLabel(String label, int paragraphNumber) {
-		Model.addHyperlinkLabel(label, myCurrentTextModel, paragraphNumber);
+	public final void addHyperlinkLabel(String label, int paragraphIndex) {
+		Model.addHyperlinkLabel(label, myCurrentTextModel, paragraphIndex);
 	}
 	
 	public final void addContentsData(char[] data) {
@@ -229,7 +227,7 @@ public class BookReader {
 	}
 
 	public final void addContentsData(char[] data, int offset, int length) {
-		if ((length != 0) && !myTOCStack.isEmpty()) {
+		if ((length != 0) && (myCurrentContentsTree != null)) {
 			myContentsBuffer.append(data, offset, length);
 		}
 	}
@@ -240,47 +238,42 @@ public class BookReader {
 
 	public final void beginContentsParagraph(ZLTextModel bookTextModel, int referenceNumber) {
 		final ZLTextPlainModel textModel = myCurrentTextModel;
-		final ArrayList tocStack = myTOCStack;
 		if (textModel == bookTextModel) {
-			ContentsModel contentsModel = Model.ContentsModel;
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
 			}
-			int size = tocStack.size();
-			ZLTextTreeParagraph peek = (size != 0) ? (ZLTextTreeParagraph)tocStack.get(size - 1) : null;
-			final ZLTextBuffer contentsBuffer = myContentsBuffer;
-			if (!contentsBuffer.isEmpty()) {
-				contentsModel.addText(contentsBuffer);
-				contentsBuffer.clear();
-				myLastTOCParagraphIsEmpty = false;
-			} else if (myLastTOCParagraphIsEmpty) {
-				contentsModel.addText(PERIOD);
+			ZLTextTree parentTree = myCurrentContentsTree;
+			if (parentTree.getLevel() > 0) {
+				final ZLTextBuffer contentsBuffer = myContentsBuffer;
+				if (!contentsBuffer.isEmpty()) {
+					parentTree.setText(contentsBuffer.toString());
+					contentsBuffer.clear();
+				} else if (parentTree.getText() == null) {
+					parentTree.setText("...");
+				}
+			} else {
+				myContentsBuffer.clear();
 			}
-			ZLTextTreeParagraph para = contentsModel.createParagraph(peek);
-			contentsModel.addControl(FBTextKind.CONTENTS_TABLE_ENTRY, true);
-			contentsModel.setReference(para, myCurrentTextModel, referenceNumber);
-			tocStack.add(para);
-			myLastTOCParagraphIsEmpty = true;
-			myContentsParagraphExists = true;
+			ZLTextTree tree = parentTree.createSubTree();
+			Model.ContentsTree.setReference(tree, myCurrentTextModel, referenceNumber);
+			myCurrentContentsTree = tree;
 		}
 	}
 	
 	public final void endContentsParagraph() {
-		final ArrayList tocStack = myTOCStack;
-		if (!tocStack.isEmpty()) {
-			final ContentsModel contentsModel = Model.ContentsModel;
-			final ZLTextBuffer contentsBuffer = myContentsBuffer;
-			if (!contentsBuffer.isEmpty()) {
-				contentsModel.addText(contentsBuffer);
-				contentsBuffer.clear();
-				myLastTOCParagraphIsEmpty = false;
-			} else if (myLastTOCParagraphIsEmpty) {
-				contentsModel.addText(PERIOD);
-				myLastTOCParagraphIsEmpty = false;
-			}
-			tocStack.remove(tocStack.size() - 1);
+		final ZLTextTree tree = myCurrentContentsTree;
+		final ZLTextBuffer contentsBuffer = myContentsBuffer;
+		if (tree.getLevel() == 0) {
+			contentsBuffer.clear();
+			return;
 		}
-		myContentsParagraphExists = false;
+		if (!contentsBuffer.isEmpty()) {
+			tree.setText(contentsBuffer.toString());
+			contentsBuffer.clear();
+		} else if (tree.getText() == null) {
+			tree.setText("...");
+		}
+		myCurrentContentsTree = tree.getParent();
 	}
 
 	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
@@ -288,10 +281,10 @@ public class BookReader {
 	}
 	
 	public final void setReference(int contentsParagraphNumber, ZLTextModel textModel, int referenceNumber) {
-		final ContentsModel contentsModel = Model.ContentsModel;
-		if (contentsParagraphNumber < contentsModel.getParagraphsNumber()) {
-			contentsModel.setReference(
-				contentsModel.getTreeParagraph(contentsParagraphNumber), textModel, referenceNumber
+		final ContentsTree contentsTree = Model.ContentsTree;
+		if (contentsParagraphNumber < contentsTree.getSize()) {
+			contentsTree.setReference(
+				contentsTree.getTree(contentsParagraphNumber), textModel, referenceNumber
 			);
 		}
 	}
@@ -301,7 +294,7 @@ public class BookReader {
 	}
 
 	public final boolean contentsParagraphIsOpen() {
-		return myContentsParagraphExists;
+		return myCurrentContentsTree.getLevel() > 0;
 	}
 
 	public final void beginContentsParagraph() {

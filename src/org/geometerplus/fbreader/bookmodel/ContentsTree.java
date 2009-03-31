@@ -22,18 +22,18 @@ package org.geometerplus.fbreader.bookmodel;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 
-public class ContentsModel extends ZLTextTreeModel {
-	private final HashMap myReferenceByParagraph = new HashMap();
+public class ContentsTree extends ZLTextTree {
+	private final HashMap<ZLTextTree,Reference> myReferenceByTree = new HashMap<ZLTextTree,Reference>();
 	
-	public Reference getReference(ZLTextTreeParagraph paragraph) {
-		return (Reference) myReferenceByParagraph.get(paragraph);
-	//	return (num != null) ? num.intValue() : -1;
+	public Reference getReference(ZLTextTree tree) {
+		return myReferenceByTree.get(tree);
 	}
 	
-	public void setReference(ZLTextTreeParagraph paragraph, ZLTextModel model, int reference) {
-		myReferenceByParagraph.put(paragraph, new Reference(reference, model));
+	public void setReference(ZLTextTree tree, ZLTextModel model, int reference) {
+		myReferenceByTree.put(tree, new Reference(reference, model));
 	}
 	
 	public static class Reference {
@@ -45,5 +45,4 @@ public class ContentsModel extends ZLTextTreeModel {
 			Model = model;
 		}
 	}
-
 }

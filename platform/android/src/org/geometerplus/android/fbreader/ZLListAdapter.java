@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +31,8 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-final class ZLListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
+abstract class ZLListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
 	private final Context myContext;
-	private final ArrayList<ZLListItem> myItems = new ArrayList<ZLListItem>();
 	private final Runnable myCancelAction;
 
 	ZLListAdapter(Context context, Runnable cancelAction) {
@@ -43,17 +40,9 @@ final class ZLListAdapter extends BaseAdapter implements AdapterView.OnItemClick
 		myCancelAction = cancelAction;
 	}
 
-	ZLListAdapter(Context context) {
-		this(context, null);
-	}
-
-	void addItem(ZLListItem item) {
-		myItems.add(item);
-	}
-
-	public int getCount() {
-		return myItems.size();
-	}
+	public abstract int getCount();
+	public abstract ZLListItem getItem(final int position);
+	public abstract int getSelectedIndex();
 
 	public boolean areAllItemsEnabled() {
 		return true;
@@ -61,10 +50,6 @@ final class ZLListAdapter extends BaseAdapter implements AdapterView.OnItemClick
 
 	public boolean isEnabled(int position) {
 		return true;
-	}
-
-	public ZLListItem getItem(final int position) {
-		return myItems.get(position);
 	}
 
 	public long getItemId(int position) {

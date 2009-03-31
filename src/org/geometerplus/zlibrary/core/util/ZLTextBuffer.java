@@ -74,4 +74,8 @@ public final class ZLTextBuffer {
 	public void clear() {
 		myDataLength = 0;
 	}
+
+	public String toString() {
+		return new String(myData, 0, myDataLength);
+	}
 }

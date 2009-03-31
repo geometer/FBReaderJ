@@ -27,13 +27,11 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class ZLEncodingCollection {
 	private static ZLEncodingCollection ourInstance;
-	private	static ZLBooleanOption ourUseWindows1252HackOption;
 	
 	private	final ArrayList/*<ZLEncodingSet>*/ mySets = new ArrayList();
 	private	final HashMap/*<String,ZLEncodingConverterInfo>*/ myInfosByName = new HashMap();
@@ -54,19 +52,6 @@ public class ZLEncodingCollection {
 		return ZLibrary.JAR_DATA_PREFIX + "data/encodings/Encodings.xml";
 	}
 	
-	public	static ZLBooleanOption useWindows1252HackOption() {
-		if (ourUseWindows1252HackOption == null) {
-			ourUseWindows1252HackOption =
-				new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Encoding", "UseWindows1252Hack", true);
-		}
-		return ourUseWindows1252HackOption;
-	}
-	
-	public	static boolean useWindows1252Hack() {
-		return ZLConfig.Instance() != null/*.isInitialised()*/ && useWindows1252HackOption().getValue();
-	}
-
-
 	public ArrayList<ZLEncodingSet>  sets() {
 		init();
 		return mySets;
@@ -74,7 +59,7 @@ public class ZLEncodingCollection {
 	public	ZLEncodingConverterInfo info(String name) {
 		init();
 		String lowerCaseName = name.toLowerCase();
-		if (useWindows1252Hack() && (lowerCaseName == "iso-8859-1")) {
+		if (lowerCaseName == "iso-8859-1") {
 			lowerCaseName = "windows-1252";
 		}
 		return (ZLEncodingConverterInfo)myInfosByName.get(lowerCaseName);

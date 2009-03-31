@@ -23,8 +23,8 @@ public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
 	private final String myDefaultValue;
 	private String myValue;
 
-	public ZLStringOption(String category, String group, String optionName, String defaultValue) {
-		super(category, group, optionName);
+	public ZLStringOption(String group, String optionName, String defaultValue) {
+		super(group, optionName);
 		myDefaultValue = (defaultValue != null) ? defaultValue.intern() : "";
 		myValue = myDefaultValue;
 	}

@@ -43,7 +43,6 @@ public class BookTextView extends FBView {
 	private ZLIntegerOption myParagraphIndexOption;
 	private ZLIntegerOption myWordIndexOption;
 	private ZLIntegerOption myCharIndexOption;
-	private ZLTextModel myContentsModel;
 
 	private ArrayList myPositionStack = new ArrayList();
 	private int myCurrentPointInStack;
@@ -53,27 +52,23 @@ public class BookTextView extends FBView {
 	public ZLBooleanOption ShowTOCMarksOption;
 
 	public final ZLBooleanOption OpenInBrowserOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "Web Browser", "Enabled", true);
+		new ZLBooleanOption("Web Browser", "Enabled", true);
 	
 	BookTextView(ZLPaintContext context) {
 		super(context);
-		ShowTOCMarksOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Indicator", "ShowTOCMarks", false);
+		ShowTOCMarksOption = new ZLBooleanOption("Indicator", "ShowTOCMarks", false);
 	}
 	
-	public void setContentsModel(ZLTextModel contentsModel) {
-		myContentsModel = contentsModel;
-	}
-
 	public void setModels(ArrayList/*<ZLTextModel>*/ models, String fileName) {
 		myFileName = fileName;
 
 		myPositionStack.clear();
 
-		final int stackSize = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, fileName, BUFFER_SIZE, 0, MAX_UNDO_STACK_SIZE, 0).getValue();
-		myCurrentPointInStack = new ZLIntegerRangeOption(ZLOption.STATE_CATEGORY, fileName, POSITION_IN_BUFFER, 0, (stackSize == 0) ? 0 : (stackSize - 1), 0).getValue();
+		final int stackSize = new ZLIntegerRangeOption(fileName, BUFFER_SIZE, 0, MAX_UNDO_STACK_SIZE, 0).getValue();
+		myCurrentPointInStack = new ZLIntegerRangeOption(fileName, POSITION_IN_BUFFER, 0, (stackSize == 0) ? 0 : (stackSize - 1), 0).getValue();
 
 		if (models != null) {
-			final ZLIntegerOption option = new ZLIntegerOption(ZLOption.STATE_CATEGORY, fileName, "", 0);
+			final ZLIntegerOption option = new ZLIntegerOption(fileName, "", 0);
 			final int size = models.size();
 			for (int i = 0; i < stackSize; ++i) {
 		//		option.changeName(MODEL_PREFIX + i);
@@ -250,10 +245,10 @@ public class BookTextView extends FBView {
 
 		final String group = getFileName();
 		
-		new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, BUFFER_SIZE, 0).setValue(myPositionStack.size());
-		new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, POSITION_IN_BUFFER, 0).setValue(myCurrentPointInStack);
+		new ZLIntegerOption(group, BUFFER_SIZE, 0).setValue(myPositionStack.size());
+		new ZLIntegerOption(group, POSITION_IN_BUFFER, 0).setValue(myCurrentPointInStack);
 
-		final ZLIntegerOption option = new ZLIntegerOption(ZLOption.STATE_CATEGORY, group, "", 0);
+		final ZLIntegerOption option = new ZLIntegerOption(group, "", 0);
 		for (int i = 0; i < myPositionStack.size(); ++i) {
 			Position position = (Position)myPositionStack.get(i);
 			option.changeName(PARAGRAPH_PREFIX + i);

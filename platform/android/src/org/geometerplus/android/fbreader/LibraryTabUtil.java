@@ -24,53 +24,19 @@ import android.widget.ListView;
 import org.geometerplus.fbreader.description.Author;
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.collection.BookCollection;
-import org.geometerplus.fbreader.collection.RecentBooks;
 
 class LibraryTabUtil {
 	static void setAuthorList(ListView view, Author selectedAuthor) {
-		final ZLListAdapter adapter = new ZLListAdapter(view.getContext());
-		int selectedIndex = -1;
-		int count = 0;
-		for (final Author author : BookCollection.Instance().authors()) {
-			adapter.addItem(new AuthorItem(view, author));
-			if (author.equals(selectedAuthor)) {
-				selectedIndex = count;
-			}
-			++count;
-		}
-		setAdapter(view, adapter);
-		if (selectedIndex >= 0) {
-			view.setSelection(selectedIndex);
-		}
+		setAdapter(view, new AuthorListAdapter(view, selectedAuthor));
 	}
 
 	static void setTagList(ListView view, String selectedTag) {
-		final ZLListAdapter adapter = new ZLListAdapter(view.getContext());
-		int selectedIndex = -1;
-		int count = 0;
-		if (!BookCollection.Instance().booksByTag(null).isEmpty()) {
-			adapter.addItem(new TagItem(view, null));
-			if (selectedTag == null) {
-				selectedIndex = count;
-			}
-			++count;
-		}
-		for (final String tag : BookCollection.Instance().tags()) {
-			adapter.addItem(new TagItem(view, tag));
-			if (tag.equals(selectedTag)) {
-				selectedIndex = count;
-			}
-			++count;
-		}
-		setAdapter(view, adapter);
-		if (selectedIndex >= 0) {
-			view.setSelection(selectedIndex);
-		}
+		setAdapter(view, new TagListAdapter(view, selectedTag));
 	}
 
 	static void setBookList(final ListView view, final Author author, String selectedSeries) {
-		ZLListAdapter adapter =
-			new ZLListAdapter(
+		ZLListAdapterImpl adapter =
+			new ZLListAdapterImpl(
 				view.getContext(),
 				new Runnable() {
 					public void run() {
@@ -106,8 +72,8 @@ class LibraryTabUtil {
 	}
 
 	static void setBookList(final ListView view, final String tag) {
-		ZLListAdapter adapter =
-			new ZLListAdapter(
+		ZLListAdapterImpl adapter =
+			new ZLListAdapterImpl(
 				view.getContext(),
 				new Runnable() {
 					public void run() {
@@ -122,16 +88,12 @@ class LibraryTabUtil {
 	}
 
 	static void setRecentBooksList(final ListView view) {
-		ZLListAdapter adapter = new ZLListAdapter(view.getContext());
-		for (BookDescription book : RecentBooks.Instance().books()) {
-			adapter.addItem(new BookItem(book));
-		}
-		setAdapter(view, adapter);
+		setAdapter(view, new RecentBooksListAdapter(view.getContext()));
 	}
 
 	static void setSeriesBookList(final ListView view, final Author author, final String series) {
-		ZLListAdapter adapter =
-			new ZLListAdapter(
+		ZLListAdapterImpl adapter =
+			new ZLListAdapterImpl(
 				view.getContext(),
 				new Runnable() {
 					public void run() {
@@ -151,5 +113,9 @@ class LibraryTabUtil {
 		view.setAdapter(adapter);
 		view.setOnKeyListener(adapter);
 		view.setOnItemClickListener(adapter);
+		int selectedIndex = adapter.getSelectedIndex();
+		if (selectedIndex >= 0) {
+			view.setSelection(selectedIndex);
+		}
 	}
 }

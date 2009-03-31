@@ -26,7 +26,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.option.FBOptions;
 
 public class BookDescription implements Comparable {
 	private static final String EMPTY = "";
@@ -169,7 +168,7 @@ public class BookDescription implements Comparable {
 	}
 
   private void saveTags() {
-		saveTags(new ZLStringOption(FBOptions.BOOKS_CATEGORY, FileName, "TagList", EMPTY));
+		saveTags(new ZLStringOption(FileName, "TagList", EMPTY));
 	}
 
   private void saveTags(ZLStringOption tagsOption) {
@@ -199,15 +198,14 @@ public class BookDescription implements Comparable {
 		public final ZLStringOption TagsOption;
 
 		public BookInfo(String fileName) {
-			final String category = FBOptions.BOOKS_CATEGORY;
-			AuthorDisplayNameOption = new ZLStringOption(category, fileName, "AuthorDisplayName", EMPTY);
-			AuthorSortKeyOption = new ZLStringOption(category, fileName, "AuthorSortKey", EMPTY);
-			TitleOption = new ZLStringOption(category, fileName, "Title", EMPTY);
-			SeriesNameOption = new ZLStringOption(category, fileName, "Sequence", EMPTY);
-			NumberInSeriesOption = new ZLIntegerRangeOption(category, fileName, "Number in seq", 0, 100, 0);
-			LanguageOption = new ZLStringOption(category, fileName, "Language", UNKNOWN);
-			EncodingOption = new ZLStringOption(category, fileName, "Encoding", EMPTY);
-			TagsOption = new ZLStringOption(category, fileName, "TagList", EMPTY);
+			AuthorDisplayNameOption = new ZLStringOption(fileName, "AuthorDisplayName", EMPTY);
+			AuthorSortKeyOption = new ZLStringOption(fileName, "AuthorSortKey", EMPTY);
+			TitleOption = new ZLStringOption(fileName, "Title", EMPTY);
+			SeriesNameOption = new ZLStringOption(fileName, "Sequence", EMPTY);
+			NumberInSeriesOption = new ZLIntegerRangeOption(fileName, "Number in seq", 0, 100, 0);
+			LanguageOption = new ZLStringOption(fileName, "Language", UNKNOWN);
+			EncodingOption = new ZLStringOption(fileName, "Encoding", EMPTY);
+			TagsOption = new ZLStringOption(fileName, "TagList", EMPTY);
 		}
 
 		public boolean isFull() {

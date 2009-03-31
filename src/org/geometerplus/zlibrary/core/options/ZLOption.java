@@ -22,27 +22,13 @@ package org.geometerplus.zlibrary.core.options;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public abstract class ZLOption {
-	public static final String LOOK_AND_FEEL_CATEGORY = "ui";
-	public static final String CONFIG_CATEGORY = "options";
-	public static final String STATE_CATEGORY = "state";
-	public static final String EMPTY = "";
 	public static final String PLATFORM_GROUP = "PlatformOptions";
 	
-	private final String myCategory;
 	private final String myGroup;
 	private String myOptionName;
 	protected boolean myIsSynchronized;
 
-	/**
-	 * конструктор
-	 * 
-	 * @param config
-	 * @param category
-	 * @param group
-	 * @param optionName
-	 */
-	protected ZLOption(String category, String group, String optionName) {
-		myCategory = category.intern();
+	protected ZLOption(String group, String optionName) {
 		myGroup = group.intern();
 		myOptionName = optionName.intern();
 		myIsSynchronized = false;
@@ -62,7 +48,7 @@ public abstract class ZLOption {
 	protected final void setConfigValue(String value) {
 		ZLConfig config = ZLConfig.Instance();
 		if (config != null) {
-			config.setValue(myGroup, myOptionName, value, myCategory);
+			config.setValue(myGroup, myOptionName, value);
 		}
 	}
 

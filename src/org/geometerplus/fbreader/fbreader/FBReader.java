@@ -45,11 +45,10 @@ public final class FBReader extends ZLApplication {
 		int UNDEFINED = 0;
 		int BOOK_TEXT = 1 << 0;
 		int FOOTNOTE = 1 << 1;
-		int CONTENTS = 1 << 2;
 	};
 
 	public final ZLBooleanOption UseSeparateBindingsOption = 
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, "KeysOptions", "UseSeparateBindings", false);
+		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ScrollingOptions TouchScrollingOptions =
 		new ScrollingOptions("TouchScrolling", ZLTextView.ScrollingMode.NO_OVERLAPPING);
@@ -75,7 +74,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	private final ZLStringOption myBookNameOption =
-		new ZLStringOption(ZLOption.STATE_CATEGORY, "State", "Book", "");
+		new ZLStringOption("State", "Book", "");
 
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
@@ -86,10 +85,9 @@ public final class FBReader extends ZLApplication {
 	private int myPreviousMode = ViewMode.BOOK_TEXT;
 
 	public final BookTextView BookTextView;
-	public final ContentsView ContentsView;
 	public final FootnoteView FootnoteView;
 
-	private BookModel myBookModel;
+	BookModel myBookModel;
 	private final String myArg0;
 
 	public FBReader(String[] args) {
@@ -132,7 +130,6 @@ public final class FBReader extends ZLApplication {
 
 		ZLPaintContext context = ZLibrary.Instance().getPaintContext();
 		BookTextView = new BookTextView(context);
-		ContentsView = new ContentsView(context);
 		FootnoteView = new FootnoteView(context);
 
 		setMode(ViewMode.BOOK_TEXT);
@@ -197,10 +194,6 @@ public final class FBReader extends ZLApplication {
 			case ViewMode.BOOK_TEXT:
 				setView(BookTextView);
 				break;
-			case ViewMode.CONTENTS:
-				ContentsView.gotoReference();
-				setView(ContentsView);
-				break;
 			case ViewMode.FOOTNOTE:
 				setView(FootnoteView);
 				break;
@@ -234,7 +227,6 @@ public final class FBReader extends ZLApplication {
 
 	public void clearTextCaches() {
 		BookTextView.clearCaches();
-		ContentsView.clearCaches();
 		FootnoteView.clearCaches();
 	}
 	
@@ -244,8 +236,6 @@ public final class FBReader extends ZLApplication {
 		if (description != null) {
 			BookTextView.saveState();
 			BookTextView.setModels(null, "");
-			BookTextView.setContentsModel(null);
-			ContentsView.setModel(null);
 
 			myBookModel = null;
 			//android.os.Debug.startMethodTracing("/data/anr/loading");
@@ -257,11 +247,8 @@ public final class FBReader extends ZLApplication {
 	//		BookTextView.setModel(myBookModel.BookTextModel, fileName);
 			BookTextView.setModels(myBookModel.getBookTextModels(), fileName);
 			BookTextView.setCaption(description.getTitle());
-			BookTextView.setContentsModel(myBookModel.ContentsModel);
 			FootnoteView.setModel(null);
 			FootnoteView.setCaption(description.getTitle());
-			ContentsView.setModel(myBookModel.ContentsModel);
-			ContentsView.setCaption(description.getTitle());
 			RecentBooks.Instance().addBook(fileName);
 		}
 		resetWindowCaption();

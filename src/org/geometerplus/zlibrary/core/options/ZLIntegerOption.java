@@ -23,8 +23,8 @@ public final class ZLIntegerOption extends ZLOption {
 	private final int myDefaultValue;
 	private int myValue;
 
-	public ZLIntegerOption(String category, String group, String optionName, int defaultValue) {
-		super(category, group, optionName);
+	public ZLIntegerOption(String group, String optionName, int defaultValue) {
+		super(group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = defaultValue;
 	}

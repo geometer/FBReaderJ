@@ -17,22 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.config;
+package org.geometerplus.android.fbreader;
 
-public abstract class ZLConfig {
-	public static ZLConfig Instance() {
-		return ourInstance;
+import org.geometerplus.zlibrary.core.tree.ZLTextTree;
+
+final class ZLTreeItem {
+	final ZLTextTree Tree;
+
+	ZLTreeItem(ZLTextTree tree) {
+		Tree = tree;
 	}
-
-	private static ZLConfig ourInstance;
-
-	protected ZLConfig() {
-		ourInstance = this;
-	}
-
-	public abstract void shutdown();
-	public abstract String getValue(String group, String name, String defaultValue);
-	public abstract void setValue(String group, String name, String value);
-	public abstract void unsetValue(String group, String name);
-	public abstract void removeGroup(String name);
 }

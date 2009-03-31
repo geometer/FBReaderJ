@@ -48,7 +48,6 @@ public class OptionsDialog {
 //		EncodingSetEntry encodingSetEntry = new EncodingSetEntry(encodingEntry);
 //		encodingTab.addOption("defaultEncodingSet", encodingSetEntry);
 //		encodingTab.addOption("defaultEncoding", encodingEntry);
-		encodingTab.addOption("useWindows1252Hack", new ZLSimpleBooleanOptionEntry(ZLEncodingCollection.useWindows1252HackOption()));
 
 		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
 				

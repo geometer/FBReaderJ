@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.description.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -42,9 +42,11 @@ public final class RecentBooks {
 	}
 
 	private final ArrayList<String> myFileNames = new ArrayList<String>();
+	private final ArrayList<BookDescription> myBooks = new ArrayList<BookDescription>();
+	private boolean myIsFullySynchronized;
 
 	private RecentBooks() {
-		final ZLStringOption option = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, "", "");
+		final ZLStringOption option = new ZLStringOption(GROUP, "", "");
 		for (int count = 0; ; ++count) {
 			option.changeName(BOOK + count);
 			String name = option.getValue();
@@ -55,29 +57,45 @@ public final class RecentBooks {
 		}
 	}
 
-	public	void addBook(String fileName) {
+	public void addBook(String fileName) {
 		myFileNames.remove(fileName);
 		myFileNames.add(0, fileName);
+		myBooks.clear();
 		save();
 	}
 
-	public ArrayList<BookDescription> books() {
-		final ArrayList<BookDescription> bookList = new ArrayList<BookDescription>();	
+	public void rebuild() {
+		if (!myIsFullySynchronized) {
+			myBooks.clear();
+		}
+	}	
+
+	public void synchronize() {
+		if (!myBooks.isEmpty()) {
+			return;
+		}
 		int count = 0;
+		myIsFullySynchronized = true;
 		for (String fileName : myFileNames) {
 			BookDescription description = BookDescription.getDescription(fileName);
 			if (description != null) {
-				bookList.add(description);
+				myBooks.add(description);
+			} else {
+				myIsFullySynchronized = false;
 			}
 			if (++count >= LIST_SIZE) {
 				break;
 			}
 		}
-		return bookList;
+	}
+
+	public ArrayList<BookDescription> books() {
+		synchronize();
+		return myBooks;
 	}
 
 	public void save() {
-		final ZLStringOption option = new ZLStringOption(ZLOption.STATE_CATEGORY, GROUP, "", "");
+		final ZLStringOption option = new ZLStringOption(GROUP, "", "");
 		int count = 0;
 		for (String fileName : myFileNames) {
 			option.changeName(BOOK + count);

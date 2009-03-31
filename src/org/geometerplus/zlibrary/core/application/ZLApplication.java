@@ -26,7 +26,6 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -55,21 +54,21 @@ public abstract class ZLApplication {
 
 	public final ZLIntegerOption RotationAngleOption =
 		// temporary commented while we have no options dialog
-		//new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90);
-		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, ROTATION, ANGLE, -1);
+		//new ZLIntegerOption(ROTATION, ANGLE, ZLViewWidget.Angle.DEGREES90);
+		new ZLIntegerOption(ROTATION, ANGLE, -1);
 	public final ZLIntegerOption AngleStateOption =
-		new ZLIntegerOption(ZLOption.CONFIG_CATEGORY, STATE, ANGLE, ZLViewWidget.Angle.DEGREES0);	
+		new ZLIntegerOption(STATE, ANGLE, ZLViewWidget.Angle.DEGREES0);	
 
 	public final ZLBooleanOption KeyboardControlOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, KEYBOARD, FULL_CONTROL, false);
+		new ZLBooleanOption(KEYBOARD, FULL_CONTROL, false);
 
 	public final ZLBooleanOption ConfigAutoSavingOption =
-		new ZLBooleanOption(ZLOption.CONFIG_CATEGORY, CONFIG, AUTO_SAVE, true);
+		new ZLBooleanOption(CONFIG, AUTO_SAVE, true);
 	public final ZLIntegerRangeOption ConfigAutoSaveTimeoutOption =
-		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, CONFIG, TIMEOUT, 1, 6000, 30);
+		new ZLIntegerRangeOption(CONFIG, TIMEOUT, 1, 6000, 30);
 
 	public final ZLIntegerRangeOption KeyDelayOption =
-		new ZLIntegerRangeOption(ZLOption.CONFIG_CATEGORY, "Options", "KeyDelay", 0, 5000, 250);
+		new ZLIntegerRangeOption("Options", "KeyDelay", 0, 5000, 250);
 	
 	protected ZLViewWidget myViewWidget;
 	private ZLApplicationWindow myWindow;

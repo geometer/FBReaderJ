@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.fbreader.option.FBOptions;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -37,11 +36,11 @@ class SearchAction extends FBAction {
 
 	SearchAction(FBReader fbreader) {
 		super(fbreader);
-		SearchBackwardOption = new ZLBooleanOption(FBOptions.SEARCH_CATEGORY, SEARCH, "Backward", false);
-		SearchIgnoreCaseOption = new ZLBooleanOption(FBOptions.SEARCH_CATEGORY, SEARCH, "IgnoreCase", true);
-		SearchInWholeTextOption = new ZLBooleanOption(FBOptions.SEARCH_CATEGORY, SEARCH, "WholeText", false);
-		SearchThisSectionOnlyOption = new ZLBooleanOption(FBOptions.SEARCH_CATEGORY, SEARCH, "ThisSectionOnly", false);
-		SearchPatternOption = new ZLStringOption(FBOptions.SEARCH_CATEGORY, SEARCH, PATTERN, "");	
+		SearchBackwardOption = new ZLBooleanOption(SEARCH, "Backward", false);
+		SearchIgnoreCaseOption = new ZLBooleanOption(SEARCH, "IgnoreCase", true);
+		SearchInWholeTextOption = new ZLBooleanOption(SEARCH, "WholeText", false);
+		SearchThisSectionOnlyOption = new ZLBooleanOption(SEARCH, "ThisSectionOnly", false);
+		SearchPatternOption = new ZLStringOption(SEARCH, PATTERN, "");	
 	}
 
 	public boolean isVisible() {

@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.fbreader.*;
 public class KeyBindingsPage {
 
 	public KeyBindingsPage(FBReader fbreader, ZLDialogContent dialogTab) {
-		if (new ZLBooleanOption(ZLOption.EMPTY, ZLOption.PLATFORM_GROUP, "FullKeyboardControlSupported", false).getValue()) {
+		if (new ZLBooleanOption(ZLOption.PLATFORM_GROUP, "FullKeyboardControlSupported", false).getValue()) {
 			dialogTab.addOption("grabSystemKeys", new KeyboardControlEntry(fbreader));
 		}
 		MultiKeyOptionEntry keyEntry = new MultiKeyOptionEntry(dialogTab.getResource("action"), fbreader);

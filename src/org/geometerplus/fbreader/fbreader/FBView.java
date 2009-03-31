@@ -37,7 +37,7 @@ public abstract class FBView extends ZLTextViewImpl {
 	
 	private static ZLIntegerRangeOption createMarginOption(String name, int defaultValue) {
 		return new ZLIntegerRangeOption(
-			ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", name, 0, 1000, defaultValue
+			"Options", name, 0, 1000, defaultValue
 		);
 	}
 
@@ -149,7 +149,7 @@ public abstract class FBView extends ZLTextViewImpl {
 
 	public static ZLBooleanOption selectionOption() {
 		if (ourSelectionOption == null) {
-			ourSelectionOption = new ZLBooleanOption(ZLOption.LOOK_AND_FEEL_CATEGORY, "Options", "IsSelectionEnabled", true);
+			ourSelectionOption = new ZLBooleanOption("Options", "IsSelectionEnabled", true);
 		}
 		return ourSelectionOption;
 	}

@@ -71,7 +71,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		return answer;
 	}
 
-	public void setValue(String group, String name, String value, String category) {
+	public void setValue(String group, String name, String value) {
 		database().execSQL(
 				"INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)",
 				new String[] { group, name, value });

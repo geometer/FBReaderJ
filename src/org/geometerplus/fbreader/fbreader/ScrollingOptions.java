@@ -28,10 +28,9 @@ public final class ScrollingOptions {
 	public final ZLIntegerRangeOption PercentToScrollOption;
 
 	public ScrollingOptions(String group, int mode) {
-		final String category = ZLOption.CONFIG_CATEGORY;
-		ModeOption = new ZLIntegerOption(category, group, "Mode", mode);
-		LinesToKeepOption = new ZLIntegerRangeOption(category, group, "LinesToKeep", 1, 100, 1);
-		LinesToScrollOption = new ZLIntegerRangeOption(category, group, "LinesToScroll", 1, 100, 1);
-		PercentToScrollOption = new ZLIntegerRangeOption(category, group, "PercentToScrollOption", 1, 100, 50);
+		ModeOption = new ZLIntegerOption(group, "Mode", mode);
+		LinesToKeepOption = new ZLIntegerRangeOption(group, "LinesToKeep", 1, 100, 1);
+		LinesToScrollOption = new ZLIntegerRangeOption(group, "LinesToScroll", 1, 100, 1);
+		PercentToScrollOption = new ZLIntegerRangeOption(group, "PercentToScrollOption", 1, 100, 50);
 	}
 }

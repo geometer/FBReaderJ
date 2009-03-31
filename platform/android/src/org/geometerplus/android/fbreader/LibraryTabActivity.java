@@ -28,13 +28,25 @@ import android.widget.ListView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.description.Author;
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.collection.BookCollection;
 
 public class LibraryTabActivity extends TabActivity {
 	static LibraryTabActivity ourActivity;
+
+	final ZLStringOption mySelectedTabOption = new ZLStringOption("TabActivity", "SelectedTab", "");
 	
+	private ListView createTab(String tag, int id) {
+		final TabHost host = getTabHost();
+		final String label = ZLResource.resource("libraryView").getResource(tag).getValue();
+		host.addTab(host.newTabSpec(tag).setIndicator(label).setContent(id));
+		return (ListView)findViewById(id);
+	}
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -42,14 +54,13 @@ public class LibraryTabActivity extends TabActivity {
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.library, host.getTabContentView(), true);
 
-		host.addTab(host.newTabSpec("By Author").setIndicator("By Author").setContent(R.id.by_author));
-		host.addTab(host.newTabSpec("By Tag").setIndicator("By Tag").setContent(R.id.by_tag));
-		host.addTab(host.newTabSpec("Recent").setIndicator("Recent").setContent(R.id.recent));
 		//host.addTab(host.newTabSpec("Network").setIndicator("Network").setContent(R.id.network));
 
-		LibraryTabUtil.setAuthorList((ListView)findViewById(R.id.by_author), null);
-		LibraryTabUtil.setTagList((ListView)findViewById(R.id.by_tag), "");
-		LibraryTabUtil.setRecentBooksList((ListView)findViewById(R.id.recent));
+		LibraryTabUtil.setAuthorList(createTab("byAuthor", R.id.by_author), null);
+		LibraryTabUtil.setTagList(createTab("byTag", R.id.by_tag), "");
+		LibraryTabUtil.setRecentBooksList(createTab("recent", R.id.recent));
+
+		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}
 
 	@Override
@@ -62,5 +73,11 @@ public class LibraryTabActivity extends TabActivity {
 	public void onPause() {
 		ourActivity = null;
 		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		mySelectedTabOption.setValue(getTabHost().getCurrentTabTag());
+		super.onStop();
 	}
 }

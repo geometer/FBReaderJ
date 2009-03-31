@@ -34,8 +34,8 @@ public final class ZLColorOption extends ZLOption {
 	private final ZLColor myDefaultValue;
 	private ZLColor myValue;
 
-	public ZLColorOption(String category, String group, String optionName, ZLColor defaultValue) {
-		super(category, group, optionName);
+	public ZLColorOption(String group, String optionName, ZLColor defaultValue) {
+		super(group, optionName);
 		myDefaultValue = (defaultValue != null) ? defaultValue : new ZLColor(0);
 		myValue = myDefaultValue;
 	}

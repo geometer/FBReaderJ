@@ -26,44 +26,43 @@ import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextBaseStyle implements ZLTextStyle {
-	private static final String CATEGORY = ZLOption.LOOK_AND_FEEL_CATEGORY;
 	private static final String COLORS = "Colors";
 	private static final String GROUP = "Style";
 	private static final String OPTIONS = "Options";
 
 	public final ZLColorOption BackgroundColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "Background", new ZLColor(255, 255, 255));
+		new ZLColorOption(COLORS, "Background", new ZLColor(255, 255, 255));
 	public final ZLColorOption SelectionBackgroundColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
+		new ZLColorOption(COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
 	public final ZLColorOption HighlightedTextColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "SelectedText", new ZLColor(60, 139, 255));
+		new ZLColorOption(COLORS, "SelectedText", new ZLColor(60, 139, 255));
 	public final ZLColorOption RegularTextColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "Text", new ZLColor(0, 0, 0));
+		new ZLColorOption(COLORS, "Text", new ZLColor(0, 0, 0));
 	public final ZLColorOption InternalHyperlinkTextColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "Hyperlink", new ZLColor(33, 96, 180));
+		new ZLColorOption(COLORS, "Hyperlink", new ZLColor(33, 96, 180));
 	public final ZLColorOption ExternalHyperlinkTextColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "ExternalHyperlink", new ZLColor(98, 174, 26));
+		new ZLColorOption(COLORS, "ExternalHyperlink", new ZLColor(98, 174, 26));
 	public final ZLColorOption TreeLinesColorOption =
-		new ZLColorOption(CATEGORY, COLORS, "TreeLines", new ZLColor(127, 127, 127));
+		new ZLColorOption(COLORS, "TreeLines", new ZLColor(127, 127, 127));
 
 	public final ZLBooleanOption AutoHyphenationOption =
-		new ZLBooleanOption(CATEGORY, OPTIONS, "AutoHyphenation", true);
+		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);
 
 	public final ZLBooleanOption BoldOption =
-		new ZLBooleanOption(CATEGORY, GROUP, "Base:bold", false);
+		new ZLBooleanOption(GROUP, "Base:bold", false);
 	public final ZLBooleanOption ItalicOption =
-		new ZLBooleanOption(CATEGORY, GROUP, "Base:italic", false);
+		new ZLBooleanOption(GROUP, "Base:italic", false);
 	public final ZLIntegerOption AlignmentOption =
-		new ZLIntegerOption(CATEGORY, GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
+		new ZLIntegerOption(GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
 	public final ZLIntegerOption LineSpacePercentOption =
-		new ZLIntegerOption(CATEGORY, GROUP, "Base:lineSpacingPercent", 120);
+		new ZLIntegerOption(GROUP, "Base:lineSpacingPercent", 120);
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
 	
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
-		FontFamilyOption = new ZLStringOption(CATEGORY, GROUP, "Base:fontFamily", fontFamily);
-		FontSizeOption = new ZLIntegerRangeOption(CATEGORY, GROUP, "Base:fontSize", 0, 72, fontSize);
+		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 0, 72, fontSize);
 	}
 	
 	public String getFontFamily() {
