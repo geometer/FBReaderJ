@@ -22,15 +22,8 @@ package org.geometerplus.android.fbreader;
 import java.util.HashSet;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import android.view.KeyEvent;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ImageView;
+import android.view.*;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 
@@ -146,17 +139,16 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 	}
 
 	public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-		switch (keyEvent.getAction()) {
-			case KeyEvent.ACTION_UP:
-				switch (keyCode) {
-					case KeyEvent.KEYCODE_DPAD_CENTER:
-					case KeyEvent.KEYCODE_ENTER:
-						runTreeItem((ZLTreeItem)((ListView)view).getSelectedItem());
-						return true;
-					case KeyEvent.KEYCODE_BACK:
-						return true;
-				}
-				break;
+		if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+			switch (keyCode) {
+				case KeyEvent.KEYCODE_DPAD_CENTER:
+				case KeyEvent.KEYCODE_ENTER:
+					runTreeItem((ZLTreeItem)((ListView)view).getSelectedItem());
+					return true;
+				case KeyEvent.KEYCODE_BACK:
+					return true;
+			}
+			break;
 		}
 		return false;
 	}

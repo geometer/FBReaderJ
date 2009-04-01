@@ -16,6 +16,7 @@ public class TOCActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		ZLTextTree tree = (ZLTextTree)((ZLAndroidApplication)getApplication()).getData(DATA_KEY);
 
