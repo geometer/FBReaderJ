@@ -148,7 +148,6 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 				case KeyEvent.KEYCODE_BACK:
 					return true;
 			}
-			break;
 		}
 		return false;
 	}

@@ -1,6 +1,7 @@
 package org.geometerplus.android.fbreader;
 
 import android.os.Bundle;
+import android.view.Window;
 import android.view.View;
 import android.content.Context;
 import android.app.ListActivity;
