@@ -19,35 +19,29 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.ArrayList;
-
+import android.view.ContextMenu;
+import android.widget.LinearLayout;
 import android.content.Context;
+import android.util.AttributeSet;
 
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.collection.RecentBooks;
-
-final class RecentBooksListAdapter extends ZLListAdapter {
-	final ArrayList<BookDescription> myBooks = RecentBooks.Instance().books();
-	final ZLListItem[] myItems = new ZLListItem[myBooks.size()];
-
-	RecentBooksListAdapter(Context context) {
-		super(context, null);
+public class TOCTreeItemView extends LinearLayout {
+	public TOCTreeItemView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs);
 	}
 
-	public int getCount() {
-		return myItems.length;
+	public TOCTreeItemView(Context context, AttributeSet attrs) {
+		super(context, attrs);
 	}
 
-	public ZLListItem getItem(final int position) {
-		ZLListItem item = myItems[position];
-		if (item == null) {
-			item = new BookItem(myBooks.get(position));
-			myItems[position] = item;
-		}
-		return item;
+	public TOCTreeItemView(Context context) {
+		super(context);
 	}
 
-	public int getSelectedIndex() {
-		return -1;
+	@Override
+	public void onCreateContextMenu(ContextMenu menu) {
+		System.err.println("onCreateContextMenu");
+		menu.add("Item 0");
+		menu.add("Item 1");
+		menu.add("Item 2");
 	}
 }

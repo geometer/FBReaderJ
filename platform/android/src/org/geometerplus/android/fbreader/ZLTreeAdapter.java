@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
+abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, View.OnKeyListener {
 	private final ListView myParent;
 	private final ZLTextTree myTree;
 	private final ZLTreeItem[] myItems;
@@ -40,6 +40,11 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		myTree = tree;
 		myItems = new ZLTreeItem[tree.getSize() - 1];
 		myOpenItems.add(tree);
+
+		parent.setAdapter(this);
+		parent.setOnKeyListener(this);
+		parent.setOnItemClickListener(this);
+		parent.setOnItemLongClickListener(this);
 	}
 
 	private int getCount(ZLTextTree tree) {
@@ -116,6 +121,23 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runTreeItem((ZLTreeItem)getItem(position));
+	}
+
+	private boolean myContextMenuInProgress;
+
+	public final boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+		if (myContextMenuInProgress) {
+			return false;
+		}
+		System.err.println("onItemLongClick");
+		final ZLTextTree tree = ((ZLTreeItem)getItem(position)).Tree;
+		if (!tree.subTrees().isEmpty()) {
+			myContextMenuInProgress = true;
+			view.showContextMenu();
+			myContextMenuInProgress = false;
+			return true;
+		}
+		return false;
 	}
 
 	public final boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
