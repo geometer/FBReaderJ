@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
+abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnKeyListener {
 	private final ListView myParent;
 	private final ZLTextTree myTree;
 	private final ZLTreeItem[] myItems;
@@ -52,11 +52,11 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 		return count;
 	}
 
-	public int getCount() {
+	public final int getCount() {
 		return getCount(myTree) - 1;
 	}
 
-	private int indexByPosition(int position, ZLTextTree tree) {
+	private final int indexByPosition(int position, ZLTextTree tree) {
 		if (position == 0) {
 			return 0;
 		}
@@ -74,7 +74,7 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	public ZLTreeItem getItem(int position) {
+	public final ZLTreeItem getItem(int position) {
 		final int index = indexByPosition(position + 1, myTree) - 1;
 		ZLTreeItem item = myItems[index];
 		if (item == null) {
@@ -84,43 +84,23 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 		return item;
 	}
 
-	public boolean areAllItemsEnabled() {
+	public final boolean areAllItemsEnabled() {
 		return true;
 	}
 
-	public boolean isEnabled(int position) {
+	public final boolean isEnabled(int position) {
 		return true;
 	}
 
-	public long getItemId(int position) {
+	public final long getItemId(int position) {
 		return indexByPosition(position + 1, myTree);
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		final View view = (convertView != null) ? convertView :
-			LayoutInflater.from(myParent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
-		final ZLTextTree tree = getItem(position).Tree;
-		ImageView image = (ImageView)view.findViewById(R.id.toc_tree_item_icon);
-		if (tree.subTrees().isEmpty()) {
-			image.setImageResource(R.drawable.tree_icon_group_empty);
-		} else {
-			if (myOpenItems.contains(tree)) {
-				image.setImageResource(R.drawable.tree_icon_group_open);
-			} else {
-				image.setImageResource(R.drawable.tree_icon_group_closed);
-			}
-		}
-		image.setPadding(25 * (tree.getLevel() - 1), image.getPaddingTop(), 0, image.getPaddingBottom());
-		TextView text = (TextView)view.findViewById(R.id.toc_tree_item_text);
-		text.setText(tree.getText());
-		return view;
+	private void runTreeItem(ZLTreeItem item) {
+		runTree(item.Tree);
 	}
 
-	private boolean runTreeItem(ZLTreeItem item) {
-		return runTree(item.Tree);
-	}
-
-	private boolean runTree(ZLTextTree tree) {
+	protected boolean runTree(ZLTextTree tree) {
 		if (tree.subTrees().isEmpty()) {
 			return false;
 		}
@@ -134,11 +114,11 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 		return true;
 	}
 
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runTreeItem((ZLTreeItem)getItem(position));
 	}
 
-	public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+	public final boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
 		if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
 			switch (keyCode) {
 				case KeyEvent.KEYCODE_DPAD_CENTER:
@@ -150,5 +130,18 @@ final class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClick
 			}
 		}
 		return false;
+	}
+
+	protected final void setIcon(ImageView imageView, ZLTextTree tree) {
+		if (tree.subTrees().isEmpty()) {
+			imageView.setImageResource(R.drawable.tree_icon_group_empty);
+		} else {
+			if (myOpenItems.contains(tree)) {
+				imageView.setImageResource(R.drawable.tree_icon_group_open);
+			} else {
+				imageView.setImageResource(R.drawable.tree_icon_group_closed);
+			}
+		}
+		imageView.setPadding(25 * (tree.getLevel() - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
 	}
 }

@@ -8,8 +8,8 @@ import android.app.ListActivity;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.fbreader.bookmodel.ContentsTree;
 
 public class TOCActivity extends ListActivity {
 	public final static Object DATA_KEY = new Object();
@@ -19,9 +19,9 @@ public class TOCActivity extends ListActivity {
 		super.onCreate(bundle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		ZLTextTree tree = (ZLTextTree)((ZLAndroidApplication)getApplication()).getData(DATA_KEY);
+		ContentsTree tree = (ContentsTree)((ZLAndroidApplication)getApplication()).getData(DATA_KEY);
 
-		ZLTreeAdapter adapter = new ZLTreeAdapter(getListView(), tree);
+		ZLTreeAdapter adapter = new TOCAdapter(getListView(), tree);
 		getListView().setAdapter(adapter);
 		getListView().setOnKeyListener(adapter);
 		getListView().setOnItemClickListener(adapter);
