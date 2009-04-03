@@ -35,19 +35,42 @@ public final class ZLSQLiteConfig extends ZLConfig {
 
 	private SQLiteDatabase database() {
 		if (myDatabase == null) {
-			myDatabase = myContext.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
-			if (myDatabase.getVersion() == 0) {
-				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
-				myDatabase.setVersion(1);
+			synchronized (this) {
+				if (myDatabase == null) {
+					myDatabase = myContext.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
+					if (myDatabase.getVersion() == 0) {
+						myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+						myDatabase.setVersion(1);
+					}
+				}
 			}
 		}
 		return myDatabase;
 	}
 
+	public synchronized void executeAsATransaction(Runnable actions) {
+		SQLiteDatabase db = database();
+		db.beginTransaction();
+		try {
+			actions.run();
+			database().setTransactionSuccessful();
+		} finally {
+			database().endTransaction();
+		}
+	}
+
 	public void shutdown() {
 		if (myDatabase != null) {
-			myDatabase.close();
-			myDatabase = null;
+			new Thread(new Runnable() {
+				public void run() {
+					synchronized (this) {
+						if (myDatabase != null) {
+							myDatabase.close();
+							myDatabase = null;
+						}
+					}
+				}
+			}).start();
 		}
 	}
 

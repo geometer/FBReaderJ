@@ -21,26 +21,25 @@ package org.geometerplus.zlibrary.core.tree;
 
 import java.util.ArrayList;
 
-public class ZLTextTree {
-	private static final ArrayList<ZLTextTree> ourEmptyList = new ArrayList<ZLTextTree>();
+public abstract class ZLTree<T extends ZLTree> {
+	private static final ArrayList ourEmptyList = new ArrayList();
 
 	private int mySize = 1;
-	private String myText;
-	private final ZLTextTree myParent;
+	private final T myParent;
 	private final int myLevel;
-	private ArrayList<ZLTextTree> mySubTrees;
+	private ArrayList<T> mySubTrees;
 
-	protected ZLTextTree() {
+	protected ZLTree() {
 		myParent = null;
 		myLevel = 0;
 	}
 
-	private ZLTextTree(ZLTextTree parent) {
+	protected ZLTree(T parent) {
 		myParent = parent;
 		myLevel = parent.myLevel + 1;
 	}
 
-	public final ZLTextTree getParent() {
+	public final T getParent() {
 		return myParent;
 	}
 
@@ -52,44 +51,42 @@ public class ZLTextTree {
 		return mySize;
 	}
 
-	public final String getText() {
-		return myText;
+	public final boolean hasChildren() {
+		return mySubTrees != null;
 	}
 
-	public final ArrayList<ZLTextTree> subTrees() {
-		return (mySubTrees != null) ? mySubTrees : ourEmptyList;
+	public final ArrayList<T> subTrees() {
+		return (mySubTrees != null) ? mySubTrees : (ArrayList<T>)ourEmptyList;
 	}
 
-	public final ZLTextTree getTree(int index) {
+	public final T getTree(int index) {
 		if ((index < 0) || (index >= mySize)) {
 			// TODO: throw exception?
 			return null;
 		}
 		if (index == 0) {
-			return this;
+			return (T)this;
 		}
 		--index;
-		for (ZLTextTree subtree : mySubTrees) {
+		for (T subtree : mySubTrees) {
 			if (subtree.mySize <= index) {
 				index -= subtree.mySize;
 			} else {
-				return subtree.getTree(index);
+				return (T)subtree.getTree(index);
 			}
 		}
-		return null;
+		throw new RuntimeException("That's impossible!!!");
 	}
 
-	public final void setText(String text) {
-		myText = text;
-	}
+	protected abstract T createChild();
 
-	public final ZLTextTree createSubTree() {
+	public final T createSubTree() {
 		if (mySubTrees == null) {
-			mySubTrees = new ArrayList<ZLTextTree>();
+			mySubTrees = new ArrayList<T>();
 		}
-		ZLTextTree tree = new ZLTextTree(this);
+		T tree = createChild();
 		mySubTrees.add(tree);
-		for (ZLTextTree parent = this; parent != null; parent = parent.myParent) {
+		for (ZLTree parent = this; parent != null; parent = parent.myParent) {
 			++parent.mySize;
 		}
 		return tree;

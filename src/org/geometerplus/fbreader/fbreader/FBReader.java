@@ -87,7 +87,8 @@ public final class FBReader extends ZLApplication {
 	public final BookTextView BookTextView;
 	public final FootnoteView FootnoteView;
 
-	BookModel myBookModel;
+	public BookModel Model;
+
 	private final String myArg0;
 
 	public FBReader(String[] args) {
@@ -208,10 +209,10 @@ public final class FBReader extends ZLApplication {
 	}
 
 	void tryOpenFootnote(String id) {
-		if (myBookModel != null) {
-			BookModel.Label label = myBookModel.getLabel(id);
+		if (Model != null) {
+			BookModel.Label label = Model.getLabel(id);
 			if ((label != null) && (label.Model != null)) {
-		//		if (label.Model == myBookModel.BookTextModel) {
+		//		if (label.Model == Model.BookTextModel) {
 				if (label.ModelIndex != -1) {	
 					BookTextView.gotoParagraphSafe(label.ModelIndex, label.ParagraphIndex);
 				} else {
@@ -237,15 +238,15 @@ public final class FBReader extends ZLApplication {
 			BookTextView.saveState();
 			BookTextView.setModels(null, "");
 
-			myBookModel = null;
+			Model = null;
 			//android.os.Debug.startMethodTracing("/data/anr/loading");
-			myBookModel = new BookModel(description);
+			Model = new BookModel(description);
 			//android.os.Debug.stopMethodTracing();
 			final String fileName = description.FileName;
 			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());
-	//		BookTextView.setModel(myBookModel.BookTextModel, fileName);
-			BookTextView.setModels(myBookModel.getBookTextModels(), fileName);
+	//		BookTextView.setModel(Model.BookTextModel, fileName);
+			BookTextView.setModels(Model.getBookTextModels(), fileName);
 			BookTextView.setCaption(description.getTitle());
 			FootnoteView.setModel(null);
 			FootnoteView.setCaption(description.getTitle());

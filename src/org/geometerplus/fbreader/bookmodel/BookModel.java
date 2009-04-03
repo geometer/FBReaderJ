@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
 
 import org.geometerplus.zlibrary.text.model.*;
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
 
 import org.geometerplus.fbreader.description.BookDescription;
 import org.geometerplus.fbreader.formats.*;

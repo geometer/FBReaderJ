@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.description.*;
@@ -122,9 +123,13 @@ public class BookCollection {
 			myBooksWithoutTags.clear();
 
 			final HashSet fileNamesSet = collectBookFileNames();
-			for (Iterator it = fileNamesSet.iterator(); it.hasNext(); ) {
-				addDescription(BookDescription.getDescription((String)it.next()));
-			}
+			ZLConfig.Instance().executeAsATransaction(new Runnable() {
+				public void run() {
+					for (Iterator it = fileNamesSet.iterator(); it.hasNext(); ) {
+						addDescription(BookDescription.getDescription((String)it.next()));
+					}
+				}
+			});
 			myDoRebuild = false;
 		}
 	}

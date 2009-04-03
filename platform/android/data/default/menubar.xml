@@ -5,7 +5,6 @@
 		<item id="bookInfo"/>
 	</submenu>
 	<submenu id="navigate">
-		<item id="toc"/>
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>
 		<item id="gotoSectionEnd"/>
@@ -15,6 +14,7 @@
 		<item id="redo"/>
 	</submenu>
 	<item id="showLibrary"/>
+	<item id="toc"/>
 	<submenu id="search">
 		<item id="search"/>
 		<item id="findPrevious"/>

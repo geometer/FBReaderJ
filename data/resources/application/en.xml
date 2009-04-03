@@ -17,6 +17,7 @@
 			<node name="addBook" value="Add Book..."/>
 			<node name="showHelp" value="About FBReader"/>
 		</node>
+	  <node name="toc" value="TOC"/>
 		<node name="navigate" value="Navigate">
 	  	<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>

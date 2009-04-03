@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.description.*;
@@ -74,19 +75,23 @@ public final class RecentBooks {
 		if (!myBooks.isEmpty()) {
 			return;
 		}
-		int count = 0;
 		myIsFullySynchronized = true;
-		for (String fileName : myFileNames) {
-			BookDescription description = BookDescription.getDescription(fileName);
-			if (description != null) {
-				myBooks.add(description);
-			} else {
-				myIsFullySynchronized = false;
+		ZLConfig.Instance().executeAsATransaction(new Runnable() {
+			public void run() {
+				int count = 0;
+				for (String fileName : myFileNames) {
+					BookDescription description = BookDescription.getDescription(fileName);
+					if (description != null) {
+						myBooks.add(description);
+					} else {
+						myIsFullySynchronized = false;
+					}
+					if (++count >= LIST_SIZE) {
+						break;
+					}
+				}
 			}
-			if (++count >= LIST_SIZE) {
-				break;
-			}
-		}
+		});
 	}
 
 	public ArrayList<BookDescription> books() {
@@ -95,14 +100,18 @@ public final class RecentBooks {
 	}
 
 	public void save() {
-		final ZLStringOption option = new ZLStringOption(GROUP, "", "");
-		int count = 0;
-		for (String fileName : myFileNames) {
-			option.changeName(BOOK + count);
-			option.setValue(fileName);
-			++count;
-		}
-		option.changeName(BOOK + count);
-		option.setValue("");
+		ZLConfig.Instance().executeAsATransaction(new Runnable() {
+			public void run() {
+				final ZLStringOption option = new ZLStringOption(GROUP, "", "");
+				int count = 0;
+				for (String fileName : myFileNames) {
+					option.changeName(BOOK + count);
+					option.setValue(fileName);
+					++count;
+				}
+				option.changeName(BOOK + count);
+				option.setValue("");
+			}
+		});
 	}
 }

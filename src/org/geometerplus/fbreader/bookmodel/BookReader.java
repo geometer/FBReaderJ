@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.model.*;
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
+import org.geometerplus.zlibrary.core.tree.ZLStringTree;
 
 public class BookReader {
 	public final BookModel Model;
@@ -46,7 +46,7 @@ public class BookReader {
 	private boolean myInsideTitle = false;
 	private boolean mySectionContainsRegularContents = false;
 	
-	private ZLTextTree myCurrentContentsTree;
+	private ZLStringTree myCurrentContentsTree;
 
 	public BookReader(BookModel model) {
 		Model = model;
@@ -242,7 +242,7 @@ public class BookReader {
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
 			}
-			ZLTextTree parentTree = myCurrentContentsTree;
+			ZLStringTree parentTree = myCurrentContentsTree;
 			if (parentTree.getLevel() > 0) {
 				final ZLTextBuffer contentsBuffer = myContentsBuffer;
 				if (!contentsBuffer.isEmpty()) {
@@ -254,14 +254,14 @@ public class BookReader {
 			} else {
 				myContentsBuffer.clear();
 			}
-			ZLTextTree tree = parentTree.createSubTree();
+			ZLStringTree tree = parentTree.createSubTree();
 			Model.ContentsTree.setReference(tree, myCurrentTextModel, referenceNumber);
 			myCurrentContentsTree = tree;
 		}
 	}
 	
 	public final void endContentsParagraph() {
-		final ZLTextTree tree = myCurrentContentsTree;
+		final ZLStringTree tree = myCurrentContentsTree;
 		final ZLTextBuffer contentsBuffer = myContentsBuffer;
 		if (tree.getLevel() == 0) {
 			contentsBuffer.clear();

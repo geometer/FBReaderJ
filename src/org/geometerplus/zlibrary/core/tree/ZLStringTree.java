@@ -17,14 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.zlibrary.core.tree;
 
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
+import java.util.ArrayList;
 
-final class ZLTreeItem {
-	final ZLTextTree Tree;
+public class ZLStringTree extends ZLTree<ZLStringTree> {
+	private String myText;
 
-	ZLTreeItem(ZLTextTree tree) {
-		Tree = tree;
+	protected ZLStringTree() {
+		super();
+	}
+
+	private ZLStringTree(ZLStringTree parent) {
+		super(parent);
+	}
+
+	public final String getText() {
+		return myText;
+	}
+
+	public final void setText(String text) {
+		myText = text;
+	}
+
+	protected final ZLStringTree createChild() {
+		return new ZLStringTree(this);
 	}
 }

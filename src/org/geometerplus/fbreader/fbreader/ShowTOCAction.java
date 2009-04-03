@@ -19,9 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-//import android.net.Uri;
-//import android.content.Intent;
-
 import org.geometerplus.android.fbreader.TOCActivity;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
@@ -32,20 +29,12 @@ class ShowTOCAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		// TODO: check if contents model is empty
-		//return !Reader.ContentsView.isEmpty();
-		return Reader.myBookModel.ContentsTree.getSize() > 1;
+		return Reader.Model.ContentsTree.hasChildren();
 	}
 
 	public void run() {
 		final ZLAndroidDialogManager dialogManager =
 			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
-		/*
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setDataAndType(Uri.EMPTY, "vnd.android.cursor.dir/album");
-        dialogManager.runActivity(intent);
-		*/
-		// TODO: open tree
-		dialogManager.runActivity(TOCActivity.class, TOCActivity.DATA_KEY, Reader.myBookModel.ContentsTree);
+		dialogManager.runActivity(TOCActivity.class);
 	}
 }

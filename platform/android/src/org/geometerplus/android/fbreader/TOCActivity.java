@@ -29,9 +29,9 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
+import org.geometerplus.zlibrary.core.tree.ZLStringTree;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.bookmodel.ContentsTree;
@@ -39,16 +39,13 @@ import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.fbreader.BookTextView;
 
 public class TOCActivity extends ListActivity {
-	public final static Object DATA_KEY = new Object();
-
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		ContentsTree tree = (ContentsTree)((ZLAndroidApplication)getApplication()).getData(DATA_KEY);
-
-		ZLTreeAdapter adapter = new TOCAdapter(this, tree);
+		final FBReader fbreader = (FBReader)ZLApplication.Instance();
+		ZLTreeAdapter adapter = new TOCAdapter(this, fbreader.Model.ContentsTree);
 		/*
 		int selectedIndex = adapter.getSelectedIndex();
 		if (selectedIndex >= 0) {
@@ -68,17 +65,17 @@ public class TOCActivity extends ListActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
-			final ZLTextTree tree = getItem(position).Tree;
+			final ZLStringTree tree = (ZLStringTree)getItem(position);
 			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
 			return view;
 		}
 
-		protected boolean runTree(ZLTextTree tree) {
-			if (super.runTree(tree)) {
+		protected boolean runTreeItem(ZLTree tree) {
+			if (super.runTreeItem(tree)) {
 				return true;
 			}
-			final ContentsTree.Reference reference = myContentsTree.getReference(tree);
+			final ContentsTree.Reference reference = myContentsTree.getReference((ZLStringTree)tree);
 			final FBReader fbreader = (FBReader)ZLApplication.Instance();
 			fbreader.BookTextView.gotoParagraphSafe(reference.Model, reference.ParagraphIndex);
 			finish();

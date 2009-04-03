@@ -23,16 +23,16 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
+import org.geometerplus.zlibrary.core.tree.ZLStringTree;
 
-public class ContentsTree extends ZLTextTree {
-	private final HashMap<ZLTextTree,Reference> myReferenceByTree = new HashMap<ZLTextTree,Reference>();
+public class ContentsTree extends ZLStringTree {
+	private final HashMap<ZLStringTree,Reference> myReferenceByTree = new HashMap<ZLStringTree,Reference>();
 	
-	public Reference getReference(ZLTextTree tree) {
+	public Reference getReference(ZLStringTree tree) {
 		return myReferenceByTree.get(tree);
 	}
 	
-	public void setReference(ZLTextTree tree, ZLTextModel model, int reference) {
+	public void setReference(ZLStringTree tree, ZLTextModel model, int reference) {
 		myReferenceByTree.put(tree, new Reference(reference, model));
 	}
 	

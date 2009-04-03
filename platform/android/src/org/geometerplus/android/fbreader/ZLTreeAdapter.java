@@ -25,20 +25,34 @@ import android.content.Context;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.tree.ZLTextTree;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, View.OnKeyListener {
 	private final ListView myParent;
-	private final ZLTextTree myTree;
-	private final ZLTreeItem[] myItems;
-	private final HashSet<ZLTextTree> myOpenItems = new HashSet<ZLTextTree>();
+	private final ZLTree myTree;
+	private final ZLTree[] myItems;
+	private final HashSet<ZLTree> myOpenItems = new HashSet<ZLTree>();
 
-	ZLTreeAdapter(ListView parent, ZLTextTree tree) {
+	/*
+	private static int fillTreeArray(ZLTree<?> tree, ZLTree[] array, int offset) {
+		int pos = offset;
+		for (ZLTree subtree : tree.subTrees()) {
+			array[pos++] = subtree;
+			if (subtree.hasChildren()) {
+				pos += fillTreeArray(subtree, array, pos);
+			}
+		}
+		return pos - offset;
+	}
+	*/
+
+	ZLTreeAdapter(ListView parent, ZLTree tree) {
 		myParent = parent;
 		myTree = tree;
-		myItems = new ZLTreeItem[tree.getSize() - 1];
+		myItems = new ZLTree[tree.getSize() - 1];
+		//fillTreeArray(tree, myItems, 0);
 		myOpenItems.add(tree);
 
 		parent.setAdapter(this);
@@ -47,10 +61,10 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		parent.setOnItemLongClickListener(this);
 	}
 
-	private int getCount(ZLTextTree tree) {
+	private int getCount(ZLTree<?> tree) {
 		int count = 1;
 		if (myOpenItems.contains(tree)) {
-			for (ZLTextTree subtree : tree.subTrees()) {
+			for (ZLTree subtree : tree.subTrees()) {
 				count += getCount(subtree);
 			}
 		}
@@ -61,13 +75,13 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return getCount(myTree) - 1;
 	}
 
-	private final int indexByPosition(int position, ZLTextTree tree) {
+	private final int indexByPosition(int position, ZLTree<?> tree) {
 		if (position == 0) {
 			return 0;
 		}
 		--position;
 		int index = 1;
-		for (ZLTextTree subtree : tree.subTrees()) {
+		for (ZLTree subtree : tree.subTrees()) {
 			int count = getCount(subtree);
 			if (count <= position) {
 				position -= count;
@@ -79,11 +93,11 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	public final ZLTreeItem getItem(int position) {
+	public final ZLTree getItem(int position) {
 		final int index = indexByPosition(position + 1, myTree) - 1;
-		ZLTreeItem item = myItems[index];
+		ZLTree item = myItems[index];
 		if (item == null) {
-			item = new ZLTreeItem(myTree.getTree(index + 1));
+			item = myTree.getTree(index + 1);
 			myItems[index] = item;
 		}
 		return item;
@@ -101,12 +115,8 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return indexByPosition(position + 1, myTree);
 	}
 
-	private void runTreeItem(ZLTreeItem item) {
-		runTree(item.Tree);
-	}
-
-	protected boolean runTree(ZLTextTree tree) {
-		if (tree.subTrees().isEmpty()) {
+	protected boolean runTreeItem(ZLTree tree) {
+		if (!tree.hasChildren()) {
 			return false;
 		}
 		if (myOpenItems.contains(tree)) {
@@ -119,19 +129,19 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return true;
 	}
 
-	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		runTreeItem((ZLTreeItem)getItem(position));
+	public final void onItemClick(AdapterView parent, View view, int position, long id) {
+		runTreeItem(getItem(position));
 	}
 
 	private boolean myContextMenuInProgress;
 
-	public final boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+	public final boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
 		if (myContextMenuInProgress) {
 			return false;
 		}
 		System.err.println("onItemLongClick");
-		final ZLTextTree tree = ((ZLTreeItem)getItem(position)).Tree;
-		if (!tree.subTrees().isEmpty()) {
+		final ZLTree tree = getItem(position);
+		if (tree.hasChildren()) {
 			myContextMenuInProgress = true;
 			view.showContextMenu();
 			myContextMenuInProgress = false;
@@ -141,28 +151,37 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-		if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-			switch (keyCode) {
-				case KeyEvent.KEYCODE_DPAD_CENTER:
-				case KeyEvent.KEYCODE_ENTER:
-					runTreeItem((ZLTreeItem)((ListView)view).getSelectedItem());
-					return true;
-				case KeyEvent.KEYCODE_BACK:
-					return true;
-			}
+		switch (keyEvent.getAction()) {
+			case KeyEvent.ACTION_UP:
+				switch (keyCode) {
+					case KeyEvent.KEYCODE_DPAD_CENTER:
+					case KeyEvent.KEYCODE_ENTER:
+						runTreeItem((ZLTree)((ListView)view).getSelectedItem());
+						return true;
+					case KeyEvent.KEYCODE_BACK:
+						return true;
+				}
+				break;
+			case KeyEvent.ACTION_DOWN:
+				switch (keyCode) {
+					case KeyEvent.KEYCODE_DPAD_CENTER:
+					case KeyEvent.KEYCODE_ENTER:
+						return true;
+				}
+				break;
 		}
 		return false;
 	}
 
-	protected final void setIcon(ImageView imageView, ZLTextTree tree) {
-		if (tree.subTrees().isEmpty()) {
-			imageView.setImageResource(R.drawable.tree_icon_group_empty);
-		} else {
+	protected final void setIcon(ImageView imageView, ZLTree tree) {
+		if (tree.hasChildren()) {
 			if (myOpenItems.contains(tree)) {
 				imageView.setImageResource(R.drawable.tree_icon_group_open);
 			} else {
 				imageView.setImageResource(R.drawable.tree_icon_group_closed);
 			}
+		} else {
+			imageView.setImageResource(R.drawable.tree_icon_group_empty);
 		}
 		imageView.setPadding(25 * (tree.getLevel() - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
 	}

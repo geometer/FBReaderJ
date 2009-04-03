@@ -55,17 +55,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		myActivity.startActivity(new Intent(myActivity, activityClass));
 	}
 
-	public void runActivity(Class activityClass, Object key, Object data) {
-		((ZLAndroidApplication)myActivity.getApplication()).putData(key, data);
-		myActivity.startActivity(new Intent(myActivity, activityClass));
-	}
-
-	/*
-	public void runActivity(Intent intent) {
-		myActivity.startActivity(intent);
-	}
-	*/
-
 	public void showInformationBox(String key, String message) {
 		showAlert(0, key, message);
 	}

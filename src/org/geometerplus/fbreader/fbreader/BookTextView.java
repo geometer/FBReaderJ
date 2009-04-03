@@ -26,6 +26,7 @@ import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.impl.*;
@@ -231,14 +232,28 @@ public class BookTextView extends FBView {
 		}
 		myCurrentPointInStack = myPositionStack.size() - 1;
 		
+		/*
 		for (Object p : myPositionStack) {
 			System.out.print(((Position) p).ModelIndex + ","
 					+ ((Position) p).ParagraphIndex + "; ");
 		}
 		System.out.println("current position " + myCurrentPointInStack);
+		*/
 	}
 
-	public void saveState() {
+	void saveState() {
+		new Thread(new Runnable() {
+			public void run() {
+				ZLConfig.Instance().executeAsATransaction(new Runnable() {
+					public void run() {
+						saveStateInternal();
+					}
+				});
+			}
+		}).start();
+	}
+
+	private void saveStateInternal() {
 		if (getModel() == null) {
 			return;
 		}
