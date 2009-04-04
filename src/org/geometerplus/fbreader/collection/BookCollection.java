@@ -41,35 +41,12 @@ public class BookCollection {
 	// TODO: this option is platform-dependent
 	private final String BookDirectory = "/sdcard/Books";
 
-	private final TreeMap<Author,TreeSet<BookDescription>> myAuthorToBookMap =
-		new TreeMap<Author,TreeSet<BookDescription>>();
-	private final TreeMap<String,TreeSet<BookDescription>> myTagsToBookMap =
-		new TreeMap<String,TreeSet<BookDescription>>();
-	private final TreeSet<BookDescription> myBooksWithoutTags = new TreeSet<BookDescription>();
+	private final CollectionTree myCollectionByAuthor = new RootTree();
+	private final CollectionTree myCollectionByTag = new RootTree();
 
 	private	boolean myDoRebuild = true;
 
 	private BookCollection() {
-	}
-
-	public Collection<Author> authors() {
-		synchronize();
-		return myAuthorToBookMap.keySet();
-	}
-
-	public Collection<String> tags() {
-		synchronize();
-		return myTagsToBookMap.keySet();
-	}
-
-	public Collection<BookDescription> booksByAuthor(Author author) {
-		synchronize();
-		return Collections.unmodifiableSet(myAuthorToBookMap.get(author));
-	}
-
-	public Collection<BookDescription> booksByTag(String tag) {
-		synchronize();
-		return Collections.unmodifiableSet((tag != null) ? myTagsToBookMap.get(tag) : myBooksWithoutTags);
 	}
 
 	public void rebuild() {
@@ -116,22 +93,103 @@ public class BookCollection {
 		return bookFileNames;
 	}
 
+	private static class AuthorSeriesPair {
+		private final Author myAuthor;
+		private final String mySeries;
+
+		AuthorSeriesPair(Author author, String series) {
+			myAuthor = author;
+			mySeries = series;
+		}
+
+		public boolean equals(Object object) {
+			if (!(object instanceof AuthorSeriesPair)) {
+				return false;
+			}
+			AuthorSeriesPair pair = (AuthorSeriesPair)object;
+			return myAuthor.equals(pair.myAuthor) && mySeries.equals(pair.mySeries);
+		}
+
+		public int hashCode() {
+			return myAuthor.hashCode() + mySeries.hashCode();
+		}
+	}
+
+	private void build() {
+		final HashSet fileNamesSet = collectBookFileNames();
+		final HashMap<String,TagTree> tagTreeMap = new HashMap<String,TagTree>();
+		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
+		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
+
+		for (Iterator it = fileNamesSet.iterator(); it.hasNext(); ) {
+			final BookDescription description = BookDescription.getDescription((String)it.next());
+
+			final Author author = description.getAuthor();
+			final String series = description.getSeriesName();
+			AuthorTree authorTree = authorTreeMap.get(author);
+			if (authorTree == null) {
+				authorTree = myCollectionByAuthor.createAuthorSubTree(author);
+				authorTreeMap.put(author, authorTree);
+			}
+			if (series.length() == 0) {
+				authorTree.createBookSubTree(description);
+			} else {
+				final AuthorSeriesPair pair = new AuthorSeriesPair(author, series);
+				SeriesTree seriesTree = seriesTreeMap.get(pair);
+				if (seriesTree == null) {
+					seriesTree = authorTree.createSeriesSubTree(series);
+					seriesTreeMap.put(pair, seriesTree);
+				}
+				seriesTree.createBookInSeriesSubTree(description);
+			}
+
+			final List<String> tags = description.getTags();
+			if (!tags.isEmpty()) {
+				for (String tag : description.getTags()) {
+					TagTree tagTree = tagTreeMap.get(tag);
+					if (tagTree == null) {
+						tagTree = myCollectionByTag.createTagSubTree(tag);
+						tagTreeMap.put(tag, tagTree);
+					}
+					tagTree.createBookSubTree(description);	
+				}
+			} else {
+				TagTree tagTree = tagTreeMap.get(null);
+				if (tagTree == null) {
+					tagTree = myCollectionByTag.createTagSubTree(null);
+					tagTreeMap.put(null, tagTree);
+				}
+				tagTree.createBookSubTree(description);	
+			}
+		}
+	}
+
 	public void synchronize() {
 		if (myDoRebuild) {
-			myAuthorToBookMap.clear();
-			myTagsToBookMap.clear();
-			myBooksWithoutTags.clear();
+			myCollectionByAuthor.clear();
+			myCollectionByTag.clear();
 
-			final HashSet fileNamesSet = collectBookFileNames();
 			ZLConfig.Instance().executeAsATransaction(new Runnable() {
 				public void run() {
-					for (Iterator it = fileNamesSet.iterator(); it.hasNext(); ) {
-						addDescription(BookDescription.getDescription((String)it.next()));
-					}
+					build();
 				}
 			});
+
+			myCollectionByAuthor.sortAllChildren();
+			myCollectionByTag.sortAllChildren();
+
 			myDoRebuild = false;
 		}
+	}
+
+	public final CollectionTree collectionByAuthor() {
+		synchronize();
+		return myCollectionByAuthor;
+	}
+
+	public final CollectionTree collectionByTag() {
+		synchronize();
+		return myCollectionByTag;
 	}
 
 	private HashSet collectDirNames() {
@@ -157,38 +215,12 @@ public class BookCollection {
 		return nameSet;
 	}
 
-	private void addDescription(BookDescription description) {
-		if (description != null) {
-			List<String> tags = description.getTags();
-			if (tags.isEmpty()) {
-				myBooksWithoutTags.add(description);
-			} else {
-				for (String tag : tags) {
-					TreeSet<BookDescription> set = myTagsToBookMap.get(tag);
-					if (set == null) {
-						set = new TreeSet<BookDescription>();
-						myTagsToBookMap.put(tag, set);
-					}
-					set.add(description);
-				}
-			}
-
-			final Author author = description.getAuthor();
-			TreeSet<BookDescription> set = myAuthorToBookMap.get(author);
-			if (set == null) {
-				set = new TreeSet<BookDescription>();
-				myAuthorToBookMap.put(author, set);
-			}
-			set.add(description);
-		}
-	}
-
+	/*
 	private static Author _author(ArrayList books, int index) {
 		return ((BookDescription)books.get(index)).getAuthor();
 	}
 
 	public void collectSeriesNames(Author author, HashSet set) {
-		/*
 		synchronize();
 		final ArrayList books = myBooks;
 		if (books.isEmpty()) {
@@ -228,11 +260,9 @@ public class BookCollection {
 				break;
 			}
 		}
-		*/
 	}
 
 	public void removeTag(String tag, boolean includeSubTags) {
-		/*
 		synchronize();
 		final ArrayList books = myBooks;
 		final int len = books.size();
@@ -241,11 +271,9 @@ public class BookCollection {
 				(BookDescription)books.get(i)
 			).removeTag(tag, includeSubTags);
 		}
-		*/
 	}
 
 	public void renameTag(String from, String to, boolean includeSubTags) {
-		/*
 		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(to);
 		if ((checkedName.length() > 0) && !checkedName.equals(from)) {
 			synchronize();
@@ -255,11 +283,9 @@ public class BookCollection {
 				new BookDescription.WritableBookDescription((BookDescription)books.get(i)).renameTag(from, checkedName, includeSubTags);
 			}
 		}
-		*/
 	}
 
 	public void cloneTag(String from, String to, boolean includeSubTags) {
-		/*
 		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(to);
 		if ((checkedName.length() > 0) && !checkedName.equals(from)) {
 			synchronize();
@@ -269,11 +295,9 @@ public class BookCollection {
 				new BookDescription.WritableBookDescription((BookDescription)books.get(i)).cloneTag(from, checkedName, includeSubTags);
 			}
 		}
-		*/
 	}
 
 	public void addTagToAllBooks(String tag) {
-		/*
 		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(tag);
 		if (checkedName.length() != 0) {
 			synchronize();
@@ -283,11 +307,9 @@ public class BookCollection {
 				new BookDescription.WritableBookDescription((BookDescription)books.get(i)).addTag(checkedName, false);
 			}
 		}
-		*/
 	}
 
 	public void addTagToBooksWithNoTags(String tag) {
-		/*
 		final String checkedName = BookDescriptionUtil.removeWhiteSpacesFromTag(tag);
 		if (checkedName.length() != 0) {
 			synchronize();
@@ -300,11 +322,9 @@ public class BookCollection {
 				}
 			}
 		}
-		*/
 	}
 
 	public boolean hasBooks(String tag) {
-		/*
 		synchronize();
 		final ArrayList books = myBooks;
 		final int len = books.size();
@@ -317,12 +337,10 @@ public class BookCollection {
 				}
 			}
 		}
-		*/
 		return false;
 	}
 
 	public boolean hasSubtags(String tag) {
-		/*
 		synchronize();
 		final String prefix = tag + '/';
 		final ArrayList books = myBooks;
@@ -336,7 +354,7 @@ public class BookCollection {
 				}
 			}
 		}
-		*/
 		return false;
 	}
+	*/
 }

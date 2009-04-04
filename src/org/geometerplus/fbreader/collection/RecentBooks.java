@@ -42,8 +42,8 @@ public final class RecentBooks {
 		return ourInstance;
 	}
 
+	private final RootTree myBooks = new RootTree();
 	private final ArrayList<String> myFileNames = new ArrayList<String>();
-	private final ArrayList<BookDescription> myBooks = new ArrayList<BookDescription>();
 	private boolean myIsFullySynchronized;
 
 	private RecentBooks() {
@@ -72,7 +72,7 @@ public final class RecentBooks {
 	}	
 
 	public void synchronize() {
-		if (!myBooks.isEmpty()) {
+		if (myBooks.hasChildren()) {
 			return;
 		}
 		myIsFullySynchronized = true;
@@ -82,7 +82,7 @@ public final class RecentBooks {
 				for (String fileName : myFileNames) {
 					BookDescription description = BookDescription.getDescription(fileName);
 					if (description != null) {
-						myBooks.add(description);
+						myBooks.createBookSubTree(description);
 					} else {
 						myIsFullySynchronized = false;
 					}
@@ -94,7 +94,7 @@ public final class RecentBooks {
 		});
 	}
 
-	public ArrayList<BookDescription> books() {
+	public CollectionTree books() {
 		synchronize();
 		return myBooks;
 	}

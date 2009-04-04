@@ -45,7 +45,7 @@ public class TOCActivity extends ListActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		final FBReader fbreader = (FBReader)ZLApplication.Instance();
-		ZLTreeAdapter adapter = new TOCAdapter(this, fbreader.Model.ContentsTree);
+		new TOCAdapter(fbreader.Model.ContentsTree);
 		/*
 		int selectedIndex = adapter.getSelectedIndex();
 		if (selectedIndex >= 0) {
@@ -57,8 +57,8 @@ public class TOCActivity extends ListActivity {
 	private final class TOCAdapter extends ZLTreeAdapter {
 		private final ContentsTree myContentsTree;
 
-		TOCAdapter(TOCActivity activity, ContentsTree tree) {
-			super(activity.getListView(), tree);
+		TOCAdapter(ContentsTree tree) {
+			super(getListView(), tree);
 			myContentsTree = tree;
 		}
 

@@ -78,17 +78,19 @@ public abstract class ZLTree<T extends ZLTree> {
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	protected abstract T createChild();
-
-	public final T createSubTree() {
+	protected final void addSubTree(T subtree) {
 		if (mySubTrees == null) {
 			mySubTrees = new ArrayList<T>();
 		}
-		T tree = createChild();
-		mySubTrees.add(tree);
+		final int subTreeSize = subtree.getSize();
+		mySubTrees.add(subtree);
 		for (ZLTree parent = this; parent != null; parent = parent.myParent) {
-			++parent.mySize;
+			parent.mySize += subTreeSize;
 		}
-		return tree;
+	}
+
+	public final void clear() {
+		mySubTrees = null;
+		mySize = 1;
 	}
 }

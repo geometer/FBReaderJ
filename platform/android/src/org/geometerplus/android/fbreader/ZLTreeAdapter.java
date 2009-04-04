@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, View.OnKeyListener {
+abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener, View.OnKeyListener {
 	private final ListView myParent;
 	private final ZLTree myTree;
 	private final ZLTree[] myItems;
@@ -58,7 +58,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		parent.setAdapter(this);
 		parent.setOnKeyListener(this);
 		parent.setOnItemClickListener(this);
-		parent.setOnItemLongClickListener(this);
+		parent.setOnCreateContextMenuListener(this);
 	}
 
 	private int getCount(ZLTree<?> tree) {
@@ -135,19 +135,11 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 
 	private boolean myContextMenuInProgress;
 
-	public final boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
-		if (myContextMenuInProgress) {
-			return false;
-		}
-		System.err.println("onItemLongClick");
-		final ZLTree tree = getItem(position);
-		if (tree.hasChildren()) {
-			myContextMenuInProgress = true;
-			view.showContextMenu();
-			myContextMenuInProgress = false;
-			return true;
-		}
-		return false;
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		System.err.println("onCreateContextMenu");
+		menu.add("Item 0");
+		menu.add("Item 1");
+		menu.add("Item 2");
 	}
 
 	public final boolean onKey(View view, int keyCode, KeyEvent keyEvent) {

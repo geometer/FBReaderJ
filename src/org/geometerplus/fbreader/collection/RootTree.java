@@ -17,38 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.collection;
 
-import java.util.ArrayList;
-
-import android.content.Context;
-
-import org.geometerplus.zlibrary.ui.android.R;
-
-final class ZLListAdapterImpl extends ZLListAdapter {
-	private final ArrayList<ZLListItem> myItems = new ArrayList<ZLListItem>();
-
-	ZLListAdapterImpl(Context context, Runnable cancelAction) {
-		super(context, cancelAction);
-	}
-
-	ZLListAdapterImpl(Context context) {
-		this(context, null);
-	}
-
-	void addItem(ZLListItem item) {
-		myItems.add(item);
-	}
-
-	public int getCount() {
-		return myItems.size();
-	}
-
-	public ZLListItem getItem(final int position) {
-		return myItems.get(position);
-	}
-
-	public int getSelectedIndex() {
-		return -1;
+final class RootTree extends CollectionTree {
+	public String getName() {
+		return null;
 	}
 }

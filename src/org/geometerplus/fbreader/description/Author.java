@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.description;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-public final class Author implements Comparable<Author> {
+public final class Author {
 	public final String DisplayName;
 	public final String SortKey;
 
@@ -48,14 +48,5 @@ public final class Author implements Comparable<Author> {
 
 	public int hashCode() {
 		return SortKey.hashCode() + DisplayName.hashCode();
-	}
-
-	public int compareTo(Author a) {
-		final int result = SortKey.compareTo(a.SortKey);
-		if (result != 0) {
-			return result;
-		}
-
-		return DisplayName.compareTo(a.DisplayName);
 	}
 }

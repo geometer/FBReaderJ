@@ -59,7 +59,7 @@ public class HtmlPlugin extends FormatPlugin {
 	public boolean readModel(BookDescription description, BookModel model) {
 		// TODO Auto-generated method stub
 		if (!description.getEncoding().equals(AUTO)) {
-			new BookDescription.BookInfo(description.FileName).EncodingOption.setValue(AUTO);
+			//new BookDescription.BookInfo(description.FileName).EncodingOption.setValue(AUTO);
 		}
 		return new HtmlReader(model).readBook(description.FileName);
 	}

@@ -17,30 +17,29 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.collection;
 
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.description.Author;
 
-class BookItem implements ZLListItem {
-	private final BookDescription myBook;
+public class AuthorTree extends CollectionTree {
+	private final Author myAuthor;
 
-	BookItem(BookDescription book) {
-		myBook = book;
+	AuthorTree(CollectionTree parent, Author author) {
+		super(parent);
+		myAuthor = author;
 	}
 
-	public String getTopText() {
-		return myBook.getTitle();
+	SeriesTree createSeriesSubTree(String series) {
+		SeriesTree tree = new SeriesTree(this, series);
+		addSubTree(tree);
+		return tree;
 	}
 
-	public String getBottomText() {
-		return "";
+	public String getName() {
+		return myAuthor.DisplayName;
 	}
 
-	public void run() {
-		if (LibraryTabActivity.ourActivity != null) {
-			LibraryTabActivity.ourActivity.finish();
-			((FBReader)FBReader.Instance()).openBook(myBook);
-		}
+	protected String getSortKey() {
+		return myAuthor.SortKey;
 	}
 }

@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.encodingOption.EncodingEntry;
 public class BookInfoDialog {
 	private final ZLOptionsDialog myDialog;
 	private final BookCollection myCollection;
-	private final BookDescription.BookInfo myBookInfo;
+//	private final BookDescription.BookInfo myBookInfo;
 //	private FormatInfoPage myFormatInfoPage;
 	
 	private AuthorDisplayNameEntry myAuthorDisplayNameEntry;
@@ -49,25 +49,25 @@ public class BookInfoDialog {
 	
 	public BookInfoDialog(String fileName, Runnable actionOnAccept) {
 		myCollection = BookCollection.Instance();
-		myBookInfo = new BookDescription.BookInfo(fileName);
+		//myBookInfo = new BookDescription.BookInfo(fileName);
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("InfoDialog", actionOnAccept, null, false);
 		
 		ZLDialogContent commonTab = myDialog.createTab("Common");
 		commonTab.addOption("file", new ZLStringInfoEntry(new ZLFile(fileName).getPath()));
-		commonTab.addOption("title", myBookInfo.TitleOption);
+		//commonTab.addOption("title", myBookInfo.TitleOption);
 		
 		myAuthorDisplayNameEntry = new AuthorDisplayNameEntry();
 		myAuthorSortKeyEntry = new AuthorSortKeyEntry();
-		myEncodingEntry = new EncodingEntry(myBookInfo.EncodingOption);
+		//myEncodingEntry = new EncodingEntry(myBookInfo.EncodingOption);
 		myEncodingSetEntry =
 			(!"auto".equals(myEncodingEntry.initialValue())) ?
 			new EncodingSetEntry((EncodingEntry)myEncodingEntry) : null;
 		ArrayList/*<std::string>*/ languageCodes = ZLLanguageList.languageCodes();
 		languageCodes.add("de-traditional");
-		myLanguageEntry = new ZLLanguageOptionEntry(myBookInfo.LanguageOption, languageCodes);
+		//myLanguageEntry = new ZLLanguageOptionEntry(myBookInfo.LanguageOption, languageCodes);
 	
 		mySeriesTitleEntry = new SeriesTitleEntry();
-		myBookNumberEntry = new ZLSimpleSpinOptionEntry(myBookInfo.NumberInSeriesOption, 1);
+		//myBookNumberEntry = new ZLSimpleSpinOptionEntry(myBookInfo.NumberInSeriesOption, 1);
 
 		commonTab.addOption("authorDisplayName", myAuthorDisplayNameEntry);
 		commonTab.addOption("authorSortKey", myAuthorSortKeyEntry);
@@ -83,7 +83,7 @@ public class BookInfoDialog {
 		mySeriesTitleEntry.onValueEdited(mySeriesTitleEntry.initialValue());
 
 		ZLDialogContent tagsTab = myDialog.createTab("Tags");
-		tagsTab.addOption("tags", myBookInfo.TagsOption);
+		//tagsTab.addOption("tags", myBookInfo.TagsOption);
 		
 		//FormatPlugin plugin = PluginCollection.instance().getPlugin(new ZLFile(fileName), false);
 		//if (plugin != null) {
@@ -99,13 +99,13 @@ public class BookInfoDialog {
 	private class AuthorSortKeyEntry extends ZLStringOptionEntry {
 		public String initialValue() {
 			Author currentAuthor = myAuthorDisplayNameEntry.myCurrentAuthor;
-			return currentAuthor == null ?
-				myBookInfo.AuthorSortKeyOption.getValue() :
+			return //currentAuthor == null ?
+				//myBookInfo.AuthorSortKeyOption.getValue() :
 				currentAuthor.SortKey;
 		}
 
 		public void onAccept(String value) {
-			myBookInfo.AuthorSortKeyOption.setValue(value);
+			//myBookInfo.AuthorSortKeyOption.setValue(value);
 		}	
 	}
 	
@@ -121,6 +121,7 @@ public class BookInfoDialog {
 			if (myValues.size() == 0) {
 				final String initial = initialValue();
 				boolean addInitial = true;
+				/*
 				for (Author author : myCollection.authors()) {
 					final String name = author.DisplayName; 
 					if (addInitial && name.equals(initial)) {
@@ -128,6 +129,7 @@ public class BookInfoDialog {
 					}
 					myValues.add(name);
 				}
+				*/
 				if (addInitial) {
 					myValues.add(initial);
 				}
@@ -136,18 +138,20 @@ public class BookInfoDialog {
 		}
 
 		public String initialValue() {
-			return myBookInfo.AuthorDisplayNameOption.getValue();
+			return "";//myBookInfo.AuthorDisplayNameOption.getValue();
 		}
 
 		public void onAccept(String value) {
-			myBookInfo.AuthorDisplayNameOption.setValue(value);
+			//myBookInfo.AuthorDisplayNameOption.setValue(value);
 		}
 
 		public void onValueSelected(int index) {
+			/*
 			final Collection<Author> authors = myCollection.authors();
 			if (index < authors.size()) {
 				myCurrentAuthor = new ArrayList<Author>(authors).get(index);
 			}
+			*/
 			myAuthorSortKeyEntry.resetView();
 			mySeriesTitleEntry.resetView();
 		}	
@@ -159,8 +163,9 @@ public class BookInfoDialog {
 		
 		public SeriesTitleEntry() {
 			super(true);
-			final String authorName = myBookInfo.AuthorDisplayNameOption.getValue();
-			final String authorKey = myBookInfo.AuthorSortKeyOption.getValue();
+			final String authorName = "";//myBookInfo.AuthorDisplayNameOption.getValue();
+			final String authorKey = "";//myBookInfo.AuthorSortKeyOption.getValue();
+			/*
 			for (Author author : myCollection.authors()) {
 				if ((authorName != null && authorName.equals(author.DisplayName)) &&
 						(authorKey != null && authorKey.equals(author.SortKey))) {
@@ -168,6 +173,7 @@ public class BookInfoDialog {
 					break;
 				}
 			}
+			*/
 		}
 		
 		public boolean useOnValueEdited() {
@@ -188,22 +194,22 @@ public class BookInfoDialog {
 			valuesSet.add(initialValue());
 			valuesSet.add("");
 			if (myOriginalAuthor != null) {
-				myCollection.collectSeriesNames(myOriginalAuthor, valuesSet);
+				//myCollection.collectSeriesNames(myOriginalAuthor, valuesSet);
 			}
 			Author currentAuthor = myAuthorDisplayNameEntry.myCurrentAuthor;
 			if (currentAuthor != null && (currentAuthor != myOriginalAuthor)) {
-				myCollection.collectSeriesNames(currentAuthor, valuesSet);
+				//myCollection.collectSeriesNames(currentAuthor, valuesSet);
 			}
 			myValues.addAll(valuesSet);
 			return myValues;
 		}
 
 		public String initialValue() {
-			return myBookInfo.SeriesNameOption.getValue();
+			return "";//myBookInfo.SeriesNameOption.getValue();
 		}
 
 		public void onAccept(String value) {
-			myBookInfo.SeriesNameOption.setValue(value);
+			//myBookInfo.SeriesNameOption.setValue(value);
 		}
 	}
 }

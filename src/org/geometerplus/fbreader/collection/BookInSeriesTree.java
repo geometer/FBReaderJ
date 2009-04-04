@@ -17,37 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
-
-import java.util.ArrayList;
-
-import android.content.Context;
+package org.geometerplus.fbreader.collection;
 
 import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.collection.RecentBooks;
 
-final class RecentBooksListAdapter extends ZLListAdapter {
-	final ArrayList<BookDescription> myBooks = RecentBooks.Instance().books();
-	final ZLListItem[] myItems = new ZLListItem[myBooks.size()];
-
-	RecentBooksListAdapter(Context context) {
-		super(context, null);
+public final class BookInSeriesTree extends BookTree {
+	BookInSeriesTree(CollectionTree parent, BookDescription description) {
+		super(parent, description);
 	}
 
-	public int getCount() {
-		return myItems.length;
-	}
-
-	public ZLListItem getItem(final int position) {
-		ZLListItem item = myItems[position];
-		if (item == null) {
-			item = new BookItem(myBooks.get(position));
-			myItems[position] = item;
+	@Override
+	public int compareTo(CollectionTree tree) {
+		if (tree instanceof BookInSeriesTree) {
+			final int difference = Description.getNumberInSeries() - ((BookTree)tree).Description.getNumberInSeries();
+			if (difference != 0) {
+				return difference;
+			}
 		}
-		return item;
-	}
-
-	public int getSelectedIndex() {
-		return -1;
+		return super.compareTo(tree);
 	}
 }

@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.fbreader.formats.*;
 
-public class BookDescription implements Comparable {
+public class BookDescription {
 	private static final String EMPTY = "";
 	private static final String UNKNOWN = "unknown";
 
@@ -226,37 +226,6 @@ public class BookDescription implements Comparable {
 			EncodingOption.setValue(EMPTY);
 			TagsOption.setValue(EMPTY);
 		}
-	}
-
-	public int compareTo(Object o) {
-		final BookDescription d = (BookDescription)o;
-
-		{
-			final int result = getAuthor().compareTo(d.getAuthor());
-			if (result != 0) {
-				return result;
-			}
-		}
-
-		final String seriesName1 = getSeriesName();
-		final String seriesName2 = d.getSeriesName();
-
-		if ((seriesName1.length() == 0) && (seriesName2.length() == 0)) {
-			return getTitle().compareTo(d.getTitle());
-		}
-		if (seriesName1.length() == 0) {
-			return getTitle().compareTo(seriesName2);
-		}
-		if (seriesName2.length() == 0) {
-			return seriesName1.compareTo(d.getTitle());
-		}
-		{
-			final int result = seriesName1.compareTo(seriesName2);
-			if (result != 0) {
-				return result;
-			}
-		}
-		return getNumberInSeries() - d.getNumberInSeries();
 	}
 
 	static public class WritableBookDescription  {

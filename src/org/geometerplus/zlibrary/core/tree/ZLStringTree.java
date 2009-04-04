@@ -40,7 +40,9 @@ public class ZLStringTree extends ZLTree<ZLStringTree> {
 		myText = text;
 	}
 
-	protected final ZLStringTree createChild() {
-		return new ZLStringTree(this);
+	public final ZLStringTree createSubTree() {
+		ZLStringTree subtree = new ZLStringTree(this);
+		addSubTree(subtree);
+		return subtree;
 	}
 }

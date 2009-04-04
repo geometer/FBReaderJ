@@ -20,87 +20,76 @@
 package org.geometerplus.zlibrary.core.sqliteconfig;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public final class ZLSQLiteConfig extends ZLConfig {
-	private final Context myContext;
-	private SQLiteDatabase myDatabase;
+	private final SQLiteDatabase myDatabase;
+	private final SQLiteStatement myGetValueStatement;
+	private final SQLiteStatement mySetValueStatement;
+	private final SQLiteStatement myUnsetValueStatement;
+	private final SQLiteStatement myDeleteGroupStatement;
 
 	public ZLSQLiteConfig(Context context) {
-		myContext = context;
-	}
-
-	private SQLiteDatabase database() {
-		if (myDatabase == null) {
-			synchronized (this) {
-				if (myDatabase == null) {
-					myDatabase = myContext.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
-					if (myDatabase.getVersion() == 0) {
-						myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
-						myDatabase.setVersion(1);
-					}
-				}
-			}
+		myDatabase = context.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
+		if (myDatabase.getVersion() == 0) {
+			myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+			myDatabase.setVersion(1);
 		}
-		return myDatabase;
+		myGetValueStatement = myDatabase.compileStatement("SELECT value FROM config WHERE groupName = ? AND name = ?");
+		mySetValueStatement = myDatabase.compileStatement("INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)");
+		myUnsetValueStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ? AND name = ?");
+		myDeleteGroupStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ?");
 	}
 
-	public synchronized void executeAsATransaction(Runnable actions) {
-		SQLiteDatabase db = database();
-		db.beginTransaction();
+	public void executeAsATransaction(Runnable actions) {
+		myDatabase.beginTransaction();
 		try {
 			actions.run();
-			database().setTransactionSuccessful();
+			myDatabase.setTransactionSuccessful();
 		} finally {
-			database().endTransaction();
-		}
-	}
-
-	public void shutdown() {
-		if (myDatabase != null) {
-			new Thread(new Runnable() {
-				public void run() {
-					synchronized (this) {
-						if (myDatabase != null) {
-							myDatabase.close();
-							myDatabase = null;
-						}
-					}
-				}
-			}).start();
+			myDatabase.endTransaction();
 		}
 	}
 
 	public void removeGroup(String name) {
-		database().delete(ourTableName, "groupName = ?", new String[] { name });
+		myDeleteGroupStatement.bindString(1, name);
+		try {
+			myDeleteGroupStatement.execute();
+		} catch (SQLException e) {
+		}
 	}
 
-	private final String ourTableName = "config";
-	private final String[] ourColumns = new String[] { "value" };
-
 	public String getValue(String group, String name, String defaultValue) {
-		Cursor cursor = database().query(
-				true, ourTableName, ourColumns, "groupName = ? AND name = ?", 
-				new String[] { group, name }, null, null, null, null);
 		String answer = defaultValue;
-		if (cursor.getCount() != 0) {
-			cursor.moveToFirst();
-			answer = cursor.getString(0);
+		myGetValueStatement.bindString(1, group);
+		myGetValueStatement.bindString(2, name);
+		try {
+			answer = myGetValueStatement.simpleQueryForString();
+		} catch (SQLException e) {
 		}
-		cursor.close();
 		return answer;
 	}
 
 	public void setValue(String group, String name, String value) {
-		database().execSQL(
-				"INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)",
-				new String[] { group, name, value });
+		mySetValueStatement.bindString(1, group);
+		mySetValueStatement.bindString(2, name);
+		mySetValueStatement.bindString(3, value);
+		try {
+			mySetValueStatement.execute();
+		} catch (SQLException e) {
+		}
 	}
 
 	public void unsetValue(String group, String name) {
-		database().delete(ourTableName, "groupName = ? AND name = ?", new String[] { group, name });
+		myUnsetValueStatement.bindString(1, group);
+		myUnsetValueStatement.bindString(2, name);
+		try {
+			myUnsetValueStatement.execute();
+		} catch (SQLException e) {
+		}
 	}
 }

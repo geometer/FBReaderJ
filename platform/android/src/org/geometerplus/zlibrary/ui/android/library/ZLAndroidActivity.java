@@ -57,7 +57,6 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	public void onPause() {
 		ZLApplication.Instance().onWindowClosing();
-		ZLConfig.Instance().shutdown();
 		super.onPause();
 	}
 

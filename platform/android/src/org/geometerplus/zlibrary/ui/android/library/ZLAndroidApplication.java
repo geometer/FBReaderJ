@@ -31,6 +31,16 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public class ZLAndroidApplication extends Application {
+	private static ZLAndroidApplication ourApplication;
+
+	public static ZLAndroidApplication Instance() {
+		return ourApplication;
+	}
+
+	public ZLAndroidApplication() {
+		ourApplication = this;
+	}
+
 	ZLAndroidApplicationWindow myMainWindow;
 
 	public void onCreate() {

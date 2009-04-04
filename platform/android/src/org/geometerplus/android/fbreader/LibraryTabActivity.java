@@ -21,19 +21,18 @@ package org.geometerplus.android.fbreader;
 
 import android.app.TabActivity;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.LayoutInflater;
-import android.widget.TabHost;
-import android.widget.ListView;
+import android.view.*;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.description.Author;
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.collection.BookCollection;
+import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.collection.*;
 
 public class LibraryTabActivity extends TabActivity {
 	static LibraryTabActivity ourActivity;
@@ -56,9 +55,9 @@ public class LibraryTabActivity extends TabActivity {
 
 		//host.addTab(host.newTabSpec("Network").setIndicator("Network").setContent(R.id.network));
 
-		LibraryTabUtil.setAuthorList(createTab("byAuthor", R.id.by_author), null);
-		LibraryTabUtil.setTagList(createTab("byTag", R.id.by_tag), "");
-		LibraryTabUtil.setRecentBooksList(createTab("recent", R.id.recent));
+		new LibraryAdapter(createTab("byAuthor", R.id.by_author), BookCollection.Instance().collectionByAuthor());
+		new LibraryAdapter(createTab("byTag", R.id.by_tag), BookCollection.Instance().collectionByTag());
+		new LibraryAdapter(createTab("recent", R.id.recent), RecentBooks.Instance().books());
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}
@@ -79,5 +78,34 @@ public class LibraryTabActivity extends TabActivity {
 	public void onStop() {
 		mySelectedTabOption.setValue(getTabHost().getCurrentTabTag());
 		super.onStop();
+	}
+
+	private final class LibraryAdapter extends ZLTreeAdapter {
+		private final CollectionTree myCollectionTree;
+
+		LibraryAdapter(ListView view, CollectionTree tree) {
+			super(view, tree);
+			myCollectionTree = tree;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			final View view = (convertView != null) ? convertView :
+				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
+			final CollectionTree tree = (CollectionTree)getItem(position);
+			setIcon((ImageView)view.findViewById(R.id.library_tree_item_icon), tree);
+			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
+			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getChildrenString());
+			return view;
+		}
+
+		protected boolean runTreeItem(ZLTree tree) {
+			if (super.runTreeItem(tree)) {
+				return true;
+			}
+			finish();
+			final FBReader fbreader = (FBReader)ZLApplication.Instance();
+			fbreader.openBook(((BookTree)tree).Description);
+			return true;
+		}
 	}
 }
