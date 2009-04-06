@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import org.geometerplus.fbreader.description.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
 public final class RecentBooks {

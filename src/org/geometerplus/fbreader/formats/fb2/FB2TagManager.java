@@ -25,16 +25,18 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.*;
 
-abstract class FB2TagManager {
-	private static final HashMap ourMap = new HashMap();
+import org.geometerplus.fbreader.collection.Tag;
 
-	static ArrayList humanReadableTags(String id) {
+abstract class FB2TagManager {
+	private static final HashMap<String,ArrayList<Tag>> ourMap = new HashMap<String,ArrayList<Tag>>();
+
+	static ArrayList<Tag> humanReadableTags(String id) {
 		if (ourMap.isEmpty()) {
 			new FB2TagInfoReader().read(
 				ZLibrary.JAR_DATA_PREFIX + "data/formats/fb2/fb2genres.xml"
 			);
 		}
-		return (ArrayList)ourMap.get(id);
+		return ourMap.get(id);
 	}
 
 	private FB2TagManager() {
@@ -42,9 +44,9 @@ abstract class FB2TagManager {
 
 	private static class FB2TagInfoReader extends ZLXMLReaderAdapter {
 		private final String myLanguage;
-		private String myCategoryName;
-		private String mySubCategoryName;
-		private final ArrayList myGenreIds = new ArrayList();
+		private Tag myCategoryTag;
+		private Tag mySubCategoryTag;
+		private final ArrayList<String> myGenreIds = new ArrayList<String>();
 
 		FB2TagInfoReader() {
 			final String language = Locale.getDefault().getLanguage();
@@ -59,17 +61,11 @@ abstract class FB2TagManager {
 				}
 			} else if (tag == "root-descr") {
 				if (myLanguage == attributes.getValue("lang")) {
-					final String name = attributes.getValue("genre-title");
-					if (name != null) {
-						myCategoryName = name.trim();
-					}
+					myCategoryTag = Tag.getTag(null, attributes.getValue("genre-title"));
 				}
 			} else if (tag == "genre-descr") {
 				if (myLanguage == attributes.getValue("lang")) {
-					final String name = attributes.getValue("title");
-					if (name != null) {
-						mySubCategoryName = name.trim();
-					}
+					mySubCategoryTag = Tag.getTag(myCategoryTag, attributes.getValue("title"));
 				}
 			}
 			return false;
@@ -77,24 +73,21 @@ abstract class FB2TagManager {
 
 		public boolean endElementHandler(String tag) {
 			if (tag == "genre") {
-				myCategoryName = null;
-				mySubCategoryName = null;
+				myCategoryTag = null;
+				mySubCategoryTag = null;
 				myGenreIds.clear();
 			} else if (tag == "subgenre") {
-				if ((myCategoryName != null) && (mySubCategoryName != null)) {
-					final String fullTagName = myCategoryName + '/' + mySubCategoryName;
-					final int len = myGenreIds.size();
-					for (int i = 0; i < len; ++i) {
-						final Object id = myGenreIds.get(i);
-						ArrayList list = (ArrayList)ourMap.get(id);
+				if (mySubCategoryTag != null) {
+					for (String id : myGenreIds) {
+						ArrayList<Tag> list = ourMap.get(id);
 						if (list == null) {
-							list = new ArrayList();
+							list = new ArrayList<Tag>();
 							ourMap.put(id, list);
 						}
-						list.add(fullTagName);
+						list.add(mySubCategoryTag);
 					}
 				}
-				mySubCategoryName = null;
+				mySubCategoryTag = null;
 				myGenreIds.clear();
 			}
 			return false;

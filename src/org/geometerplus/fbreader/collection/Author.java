@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.tree;
+package org.geometerplus.fbreader.collection;
 
-import java.util.ArrayList;
+import java.util.*;
+import org.geometerplus.zlibrary.core.util.*;
 
-public class ZLStringTree extends ZLTree<ZLStringTree> {
-	private String myText;
+public final class Author {
+	public final String DisplayName;
+	public final String SortKey;
 
-	protected ZLStringTree() {
-		super();
+	public Author(String displayName, String sortKey) {
+		DisplayName = displayName;
+		SortKey = sortKey;
+	}
+		
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Author)) {
+			return false;
+		}
+		Author a = (Author)o;
+		return SortKey.equals(a.SortKey) && DisplayName.equals(a.DisplayName);
 	}
 
-	private ZLStringTree(ZLStringTree parent) {
-		super(parent);
-	}
-
-	public final String getText() {
-		return myText;
-	}
-
-	public final void setText(String text) {
-		myText = text;
-	}
-
-	public final ZLStringTree createSubTree() {
-		ZLStringTree subtree = new ZLStringTree(this);
-		addSubTree(subtree);
-		return subtree;
+	@Override
+	public int hashCode() {
+		return SortKey.hashCode() + DisplayName.hashCode();
 	}
 }

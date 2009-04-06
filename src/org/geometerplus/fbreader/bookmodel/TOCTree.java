@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,21 +19,42 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.core.tree.ZLStringTree;
 
-public class ContentsTree extends ZLStringTree {
-	private final HashMap<ZLStringTree,Reference> myReferenceByTree = new HashMap<ZLStringTree,Reference>();
-	
-	public Reference getReference(ZLStringTree tree) {
-		return myReferenceByTree.get(tree);
+public class TOCTree extends ZLTree<TOCTree> {
+	private String myText;
+	private Reference myReference;
+
+	protected TOCTree() {
+		super();
+	}
+
+	private TOCTree(TOCTree parent) {
+		super(parent);
+	}
+
+	public final String getText() {
+		return myText;
+	}
+
+	public final void setText(String text) {
+		myText = text;
 	}
 	
-	public void setReference(ZLStringTree tree, ZLTextModel model, int reference) {
-		myReferenceByTree.put(tree, new Reference(reference, model));
+	public Reference getReference() {
+		return myReference;
+	}
+	
+	public void setReference(ZLTextModel model, int reference) {
+		myReference = new Reference(reference, model);
+	}
+
+	public final TOCTree createSubTree() {
+		TOCTree subtree = new TOCTree(this);
+		addSubTree(subtree);
+		return subtree;
 	}
 	
 	public static class Reference {

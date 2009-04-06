@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.collection;
 
-import org.geometerplus.fbreader.description.Author;
-
 public class AuthorTree extends CollectionTree {
 	private final Author myAuthor;
 
@@ -36,10 +34,11 @@ public class AuthorTree extends CollectionTree {
 	}
 
 	public String getName() {
-		return myAuthor.DisplayName;
+		// TODO: use resources
+		return (myAuthor != null) ? myAuthor.DisplayName : "Unknown Author";
 	}
 
 	protected String getSortKey() {
-		return myAuthor.SortKey;
+		return (myAuthor != null) ? myAuthor.SortKey : null;
 	}
 }

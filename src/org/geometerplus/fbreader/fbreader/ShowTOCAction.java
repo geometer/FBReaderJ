@@ -29,7 +29,7 @@ class ShowTOCAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return Reader.Model.ContentsTree.hasChildren();
+		return Reader.Model.TOCTree.hasChildren();
 	}
 
 	public void run() {

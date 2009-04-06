@@ -22,11 +22,11 @@ package org.geometerplus.fbreader.formats.oeb;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
-import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.fbreader.constants.XMLNamespace;
 
 class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
-	private final BookDescription.WritableBookDescription myDescription;
+	private final BookDescription myDescription;
 
 	private String myDCMetadataTag = "dc-metadata";
 	private String myMetadataTag = "metadata";
@@ -36,14 +36,13 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private String mySubjectTag;
 	private String myLanguageTag;
 
-	private final ArrayList myAuthorList = new ArrayList();
-	private final ArrayList myAuthorList2 = new ArrayList();
+	private final ArrayList<String> myAuthorList = new ArrayList<String>();
+	private final ArrayList<String> myAuthorList2 = new ArrayList<String>();
 
 	OEBDescriptionReader(BookDescription description) {
-		myDescription = new BookDescription.WritableBookDescription(description);
-		myDescription.clearAuthor();
-		myDescription.setTitle("");
-		myDescription.removeAllTags();
+		myDescription = description;
+		myDescription.setTitle(null);
+		myDescription.setLanguage(null);
 	}
 
 	boolean readDescription(String fileName) {
@@ -56,10 +55,15 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			return false;
 		}
 
-		final ArrayList authors = myAuthorList.isEmpty() ? myAuthorList2 : myAuthorList;
-		final int len = authors.size();
-		for (int i = 0; i < len; ++i) {
-			myDescription.addAuthor((String)authors.get(i));
+		final ArrayList<String> authors = myAuthorList.isEmpty() ? myAuthorList2 : myAuthorList;
+		for (String a : authors) {
+			final int index = a.indexOf(',');
+			if (index >= 0) {
+				a = a.substring(index + 1).trim() + ' ' + a.substring(0, index).trim();
+			} else {
+				a = a.trim();
+			}
+			myDescription.addAuthor(a);
 		}
 
 		return true;
@@ -158,7 +162,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 					myAuthorList2.add(bufferContent);
 					break;
 				case READ_SUBJECT:
-					myDescription.addTag(bufferContent, true);
+					myDescription.addTag(bufferContent);
 					break;
 				case READ_LANGUAGE:
 					{

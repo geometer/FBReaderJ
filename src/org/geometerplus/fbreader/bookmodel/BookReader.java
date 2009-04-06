@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.model.*;
-import org.geometerplus.zlibrary.core.tree.ZLStringTree;
 
 public class BookReader {
 	public final BookModel Model;
@@ -46,11 +45,11 @@ public class BookReader {
 	private boolean myInsideTitle = false;
 	private boolean mySectionContainsRegularContents = false;
 	
-	private ZLStringTree myCurrentContentsTree;
+	private TOCTree myCurrentContentsTree;
 
 	public BookReader(BookModel model) {
 		Model = model;
-		myCurrentContentsTree = model.ContentsTree;
+		myCurrentContentsTree = model.TOCTree;
 	}
 	
 	private final void flushTextBufferToParagraph() {
@@ -242,7 +241,7 @@ public class BookReader {
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
 			}
-			ZLStringTree parentTree = myCurrentContentsTree;
+			TOCTree parentTree = myCurrentContentsTree;
 			if (parentTree.getLevel() > 0) {
 				final ZLTextBuffer contentsBuffer = myContentsBuffer;
 				if (!contentsBuffer.isEmpty()) {
@@ -254,14 +253,14 @@ public class BookReader {
 			} else {
 				myContentsBuffer.clear();
 			}
-			ZLStringTree tree = parentTree.createSubTree();
-			Model.ContentsTree.setReference(tree, myCurrentTextModel, referenceNumber);
+			TOCTree tree = parentTree.createSubTree();
+			tree.setReference(myCurrentTextModel, referenceNumber);
 			myCurrentContentsTree = tree;
 		}
 	}
 	
 	public final void endContentsParagraph() {
-		final ZLStringTree tree = myCurrentContentsTree;
+		final TOCTree tree = myCurrentContentsTree;
 		final ZLTextBuffer contentsBuffer = myContentsBuffer;
 		if (tree.getLevel() == 0) {
 			contentsBuffer.clear();
@@ -281,10 +280,10 @@ public class BookReader {
 	}
 	
 	public final void setReference(int contentsParagraphNumber, ZLTextModel textModel, int referenceNumber) {
-		final ContentsTree contentsTree = Model.ContentsTree;
+		final TOCTree contentsTree = Model.TOCTree;
 		if (contentsParagraphNumber < contentsTree.getSize()) {
-			contentsTree.setReference(
-				contentsTree.getTree(contentsParagraphNumber), textModel, referenceNumber
+			contentsTree.getTree(contentsParagraphNumber).setReference(
+				textModel, referenceNumber
 			);
 		}
 	}

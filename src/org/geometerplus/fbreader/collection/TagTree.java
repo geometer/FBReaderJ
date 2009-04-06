@@ -20,19 +20,19 @@
 package org.geometerplus.fbreader.collection;
 
 final class TagTree extends CollectionTree {
-	private final String myTag;
+	private final Tag myTag;
 
-	TagTree(CollectionTree parent, String tag) {
+	TagTree(CollectionTree parent, Tag tag) {
 		super(parent);
 		myTag = tag;
 	}
 
 	public String getName() {
 		// TODO: use resources
-		return (myTag != null) ? myTag : "Books with no tags";
+		return (myTag != null) ? myTag.Name : "Books with no tags";
 	}
 
 	protected String getSortKey() {
-		return myTag;
+		return (myTag != null) ? myTag.Name : null;
 	}
 }

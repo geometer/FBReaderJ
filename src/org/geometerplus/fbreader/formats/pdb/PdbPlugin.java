@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.formats.pdb;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.geometerplus.fbreader.description.BookDescriptionUtil;
+import org.geometerplus.fbreader.collection.BookDescriptionUtil;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.plucker.PluckerTextStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;

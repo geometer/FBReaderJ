@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.collection;
 
-import org.geometerplus.fbreader.description.BookDescription;
-
 final class SeriesTree extends CollectionTree {
 	private final String mySeries;
 

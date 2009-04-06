@@ -22,10 +22,8 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
-import org.geometerplus.fbreader.description.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class BookCollection {
@@ -115,51 +113,63 @@ public class BookCollection {
 		}
 	}
 
+	private static final ArrayList ourNullList = new ArrayList(1);
+	static {
+		ourNullList.add(null);
+	}
+
+	private TagTree getTagTree(Tag tag, HashMap<Tag,TagTree> tagTreeMap) {
+		TagTree tagTree = tagTreeMap.get(tag);
+		if (tagTree == null) {
+			CollectionTree parent =
+				((tag != null) && (tag.Parent != null)) ?
+					getTagTree(tag.Parent, tagTreeMap) : myCollectionByTag;
+			tagTree = parent.createTagSubTree(tag);
+			tagTreeMap.put(tag, tagTree);
+		}
+		return tagTree;
+	} 
+
 	private void build() {
 		final HashSet fileNamesSet = collectBookFileNames();
-		final HashMap<String,TagTree> tagTreeMap = new HashMap<String,TagTree>();
+		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 
 		for (Iterator it = fileNamesSet.iterator(); it.hasNext(); ) {
 			final BookDescription description = BookDescription.getDescription((String)it.next());
 
-			final Author author = description.getAuthor();
-			final String series = description.getSeriesName();
-			AuthorTree authorTree = authorTreeMap.get(author);
-			if (authorTree == null) {
-				authorTree = myCollectionByAuthor.createAuthorSubTree(author);
-				authorTreeMap.put(author, authorTree);
+			List<Author> authors = description.authors();
+			if (authors.isEmpty()) {
+				authors = (List<Author>)ourNullList;
 			}
-			if (series.length() == 0) {
-				authorTree.createBookSubTree(description);
-			} else {
-				final AuthorSeriesPair pair = new AuthorSeriesPair(author, series);
-				SeriesTree seriesTree = seriesTreeMap.get(pair);
-				if (seriesTree == null) {
-					seriesTree = authorTree.createSeriesSubTree(series);
-					seriesTreeMap.put(pair, seriesTree);
+			final SeriesInfo seriesInfo = description.getSeriesInfo();
+			for (Author a : authors) {
+				AuthorTree authorTree = authorTreeMap.get(a);
+				if (authorTree == null) {
+					authorTree = myCollectionByAuthor.createAuthorSubTree(a);
+					authorTreeMap.put(a, authorTree);
 				}
-				seriesTree.createBookInSeriesSubTree(description);
+				if (seriesInfo == null) {
+					authorTree.createBookSubTree(description);
+				} else {
+					final String series = seriesInfo.Name;
+					final AuthorSeriesPair pair = new AuthorSeriesPair(a, series);
+					SeriesTree seriesTree = seriesTreeMap.get(pair);
+					if (seriesTree == null) {
+						seriesTree = authorTree.createSeriesSubTree(series);
+						seriesTreeMap.put(pair, seriesTree);
+					}
+					seriesTree.createBookInSeriesSubTree(description);
+				}
 			}
 
-			final List<String> tags = description.getTags();
-			if (!tags.isEmpty()) {
-				for (String tag : description.getTags()) {
-					TagTree tagTree = tagTreeMap.get(tag);
-					if (tagTree == null) {
-						tagTree = myCollectionByTag.createTagSubTree(tag);
-						tagTreeMap.put(tag, tagTree);
-					}
-					tagTree.createBookSubTree(description);	
-				}
-			} else {
-				TagTree tagTree = tagTreeMap.get(null);
-				if (tagTree == null) {
-					tagTree = myCollectionByTag.createTagSubTree(null);
-					tagTreeMap.put(null, tagTree);
-				}
-				tagTree.createBookSubTree(description);	
+			List<Tag> tags = description.tags();
+			if (tags.isEmpty()) {
+				tags = (List<Tag>)ourNullList;
+			}
+			for (Tag t : tags) {
+				getTagTree(t, tagTreeMap).createBookSubTree(description);	
 			}
 		}
 	}
@@ -169,7 +179,7 @@ public class BookCollection {
 			myCollectionByAuthor.clear();
 			myCollectionByTag.clear();
 
-			ZLConfig.Instance().executeAsATransaction(new Runnable() {
+			BooksDatabase.Instance().executeAsATransaction(new Runnable() {
 				public void run() {
 					build();
 				}

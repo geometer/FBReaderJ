@@ -401,7 +401,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public synchronized void paint() {
-		//android.os.Debug.startMethodTracing("/tmp/paint");
 		myTextElementMap.clear();
 		myTreeNodeMap.clear();
 
@@ -445,7 +444,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		for (int i = 0; i < lineInfosSize; ++i) {
 			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
 		}
-		//android.os.Debug.stopMethodTracing();
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {

@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.collection;
 
-import org.geometerplus.fbreader.description.BookDescription;
-
 public class BookTree extends CollectionTree {
 	public final BookDescription Description;
 

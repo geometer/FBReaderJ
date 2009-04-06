@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener, View.OnKeyListener {
+abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
 	private final ZLTree myTree;
 	private final ZLTree[] myItems;
@@ -56,14 +56,52 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		myOpenItems.add(tree);
 
 		parent.setAdapter(this);
-		parent.setOnKeyListener(this);
 		parent.setOnItemClickListener(this);
 		parent.setOnCreateContextMenuListener(this);
 	}
 
+	public final void openTree(ZLTree tree) {
+		if (tree == null) {
+			return;
+		}
+		while (!myOpenItems.contains(tree)) {
+			myOpenItems.add(tree);
+			tree = tree.getParent();
+		}
+	}
+
+	protected final boolean isOpen(ZLTree tree) {
+		return myOpenItems.contains(tree);
+	}
+
+	public final void selectItem(ZLTree tree) {
+		if (tree == null) {
+			return;
+		}
+		openTree(tree.getParent());
+		int index = 0;
+		while (true) {
+			ZLTree<?> parent = tree.getParent();
+			if (parent == null) {
+				break;
+			}
+			for (ZLTree sibling : parent.subTrees()) {
+				if (sibling == tree) {
+					break;
+				}
+				index += getCount(sibling);
+			}
+			tree = parent;
+			++index;
+		}
+		if (index > 0) {
+			myParent.setSelection(index - 1);
+		}
+	}
+
 	private int getCount(ZLTree<?> tree) {
 		int count = 1;
-		if (myOpenItems.contains(tree)) {
+		if (isOpen(tree)) {
 			for (ZLTree subtree : tree.subTrees()) {
 				count += getCount(subtree);
 			}
@@ -119,7 +157,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		if (!tree.hasChildren()) {
 			return false;
 		}
-		if (myOpenItems.contains(tree)) {
+		if (isOpen(tree)) {
 			myOpenItems.remove(tree);
 		} else {
 			myOpenItems.add(tree);
@@ -136,38 +174,13 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	private boolean myContextMenuInProgress;
 
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		System.err.println("onCreateContextMenu");
-		menu.add("Item 0");
-		menu.add("Item 1");
-		menu.add("Item 2");
 	}
 
-	public final boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-		switch (keyEvent.getAction()) {
-			case KeyEvent.ACTION_UP:
-				switch (keyCode) {
-					case KeyEvent.KEYCODE_DPAD_CENTER:
-					case KeyEvent.KEYCODE_ENTER:
-						runTreeItem((ZLTree)((ListView)view).getSelectedItem());
-						return true;
-					case KeyEvent.KEYCODE_BACK:
-						return true;
-				}
-				break;
-			case KeyEvent.ACTION_DOWN:
-				switch (keyCode) {
-					case KeyEvent.KEYCODE_DPAD_CENTER:
-					case KeyEvent.KEYCODE_ENTER:
-						return true;
-				}
-				break;
-		}
-		return false;
-	}
+	public abstract View getView(int position, View convertView, ViewGroup parent);
 
 	protected final void setIcon(ImageView imageView, ZLTree tree) {
 		if (tree.hasChildren()) {
-			if (myOpenItems.contains(tree)) {
+			if (isOpen(tree)) {
 				imageView.setImageResource(R.drawable.tree_icon_group_open);
 			} else {
 				imageView.setImageResource(R.drawable.tree_icon_group_closed);

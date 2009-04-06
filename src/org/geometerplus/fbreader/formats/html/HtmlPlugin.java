@@ -20,8 +20,7 @@
 package org.geometerplus.fbreader.formats.html;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.description.BookDescription.WritableBookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.fb2.FB2DescriptionReader;
 import org.geometerplus.fbreader.formats.fb2.FB2Reader;

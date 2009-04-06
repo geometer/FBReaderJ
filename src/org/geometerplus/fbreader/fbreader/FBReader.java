@@ -38,7 +38,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.collection.BookCollection;
 import org.geometerplus.fbreader.collection.RecentBooks;
-import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 
 public final class FBReader extends ZLApplication {
 	static interface ViewMode {
@@ -108,7 +108,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_LIBRARY, new ShowLibrary(this));
 		addAction(ActionCode.SHOW_OPTIONS, new ShowOptionsDialogAction(this));
 		addAction(ActionCode.SHOW_CONTENTS, new ShowTOCAction(this));
-		addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoDialogAction(this));
 		
 		addAction(ActionCode.SEARCH, new SearchAction(this));
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
@@ -239,13 +238,10 @@ public final class FBReader extends ZLApplication {
 			BookTextView.setModels(null, "");
 
 			Model = null;
-			//android.os.Debug.startMethodTracing("/data/anr/loading");
 			Model = new BookModel(description);
-			//android.os.Debug.stopMethodTracing();
 			final String fileName = description.FileName;
 			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.getInstance().load(description.getLanguage());
-	//		BookTextView.setModel(Model.BookTextModel, fileName);
 			BookTextView.setModels(Model.getBookTextModels(), fileName);
 			BookTextView.setCaption(description.getTitle());
 			FootnoteView.setModel(null);
@@ -268,9 +264,7 @@ public final class FBReader extends ZLApplication {
 		}
 		
 		public void run() { 
-			//final long start = System.currentTimeMillis();
 			openBookInternal(myDescription); 
-			//android.util.Log.w("openBook", "" + (System.currentTimeMillis() - start));
 		}
 	}
 

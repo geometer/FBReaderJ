@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.formats.oeb;
 import java.util.ArrayList;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
@@ -61,7 +61,6 @@ public class OEBPlugin extends FormatPlugin {
 
 	public boolean readDescription(String path, BookDescription description) {
 		path = getOpfFileName(path);
-		System.err.println("path = " + path);
 		if (path == null) {
 			return false;
 		}

@@ -23,8 +23,6 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.description.Author;
 
 public abstract class CollectionTree extends ZLTree<CollectionTree> implements Comparable<CollectionTree> {
 	protected CollectionTree() {
@@ -35,7 +33,7 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 		super(parent);
 	}
 
-	TagTree createTagSubTree(String tag) {
+	TagTree createTagSubTree(Tag tag) {
 		TagTree tree = new TagTree(this, tag);
 		addSubTree(tree);
 		return tree;

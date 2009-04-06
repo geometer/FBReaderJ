@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 
 class ShowHelpAction extends FBAction {
 	ShowHelpAction(FBReader fbreader) {

@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.collection;
 
-import org.geometerplus.fbreader.description.BookDescription;
-
 public final class BookInSeriesTree extends BookTree {
 	BookInSeriesTree(CollectionTree parent, BookDescription description) {
 		super(parent, description);
@@ -29,9 +27,10 @@ public final class BookInSeriesTree extends BookTree {
 	@Override
 	public int compareTo(CollectionTree tree) {
 		if (tree instanceof BookInSeriesTree) {
-			final int difference = Description.getNumberInSeries() - ((BookTree)tree).Description.getNumberInSeries();
+			final long difference =
+				Description.getSeriesInfo().Index - ((BookTree)tree).Description.getSeriesInfo().Index;
 			if (difference != 0) {
-				return difference;
+				return (int)difference;
 			}
 		}
 		return super.compareTo(tree);

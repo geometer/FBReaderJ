@@ -26,13 +26,13 @@ import org.geometerplus.zlibrary.core.image.*;
 
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.description.BookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
 	public final BookDescription Description;
 	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache");
-	public final ContentsTree ContentsTree = new ContentsTree();
+	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
 	private final HashMap myInternalHyperlinks = new HashMap();

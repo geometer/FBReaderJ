@@ -127,7 +127,6 @@ public class KeyBindingsPage {
 
 			// dialogs
 			addAction(ActionCode.SHOW_OPTIONS);
-			addAction(ActionCode.SHOW_BOOK_INFO);
 
 			// quit
 			addAction(ActionCode.CANCEL);

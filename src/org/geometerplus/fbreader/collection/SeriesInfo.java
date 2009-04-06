@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.fbreader.collection;
 
-import org.geometerplus.fbreader.collection.BookCollection;
+public final class SeriesInfo {
+	public final String Name;
+	public final long Index;
 
-class ShowBookInfoDialogAction extends FBAction {
-	ShowBookInfoDialogAction(FBReader fbreader) {
-		super(fbreader);
-	}
-
-	public boolean isVisible() {
-		return Reader.getMode() == FBReader.ViewMode.BOOK_TEXT;
-	}
-
-	public void run() {
-		final String fileName = Reader.BookTextView.getFileName();
-		Runnable action = new Runnable() {
-			public void run() {
-				Reader.openFile(fileName);
-				Reader.refreshWindow();
-			}
-		};
-		new BookInfoDialog(fileName, action).getDialog().run();
+	public SeriesInfo(String name, long index) {
+		Name = name;
+		Index = index;
 	}
 }

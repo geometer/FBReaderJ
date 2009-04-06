@@ -19,21 +19,19 @@
 
 package org.geometerplus.fbreader.formats.html;
 
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.description.BookDescription.WritableBookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
 import org.geometerplus.zlibrary.core.xml.ZLXMLProcessorFactory;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
-
-	private WritableBookDescription myDescription;
+	private final BookDescription myDescription;
 
 	private boolean myReadTitle;
 
 	public HtmlDescriptionReader(BookDescription description) {
-		myDescription = new WritableBookDescription(description);
+		myDescription = description;
 		myDescription.setTitle("");
 	}
 

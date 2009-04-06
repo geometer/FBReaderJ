@@ -23,8 +23,7 @@ import java.io.*;
 import java.util.*;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.description.BookDescription;
-import org.geometerplus.fbreader.description.BookDescription.WritableBookDescription;
+import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
@@ -72,8 +71,8 @@ public abstract class FormatPlugin {
 					}
 				}
 			}
-			new WritableBookDescription(description).setEncoding(encoding);
-			new WritableBookDescription(description).setLanguage(language);
+			description.setEncoding(encoding);
+			description.setLanguage(language);
 		}
 	}
 	//Last working version
@@ -84,24 +83,24 @@ public abstract class FormatPlugin {
 			if (encoding == "unknown") {
 				encoding = "windows-1252";
 			}
-			new WritableBookDescription(description).setEncoding(encoding);
+			description.setEncoding(encoding);
 		}
 
 		if (description.getLanguage() == "") {
 			if ((encoding.equals("US-ASCII")) ||
 					(encoding.equals("ISO-8859-1"))) {
-				new WritableBookDescription(description).setLanguage("en");
+				description.setLanguage("en");
 			} else if ((description.getEncoding().equals("KOI8-R")) ||
 					(encoding.equals("windows-1251")) ||
 					(encoding.equals("ISO-8859-5")) ||
 					(encoding.equals("IBM866"))) {
-				new WritableBookDescription(description).setLanguage("ru");
+				description.setLanguage("ru");
 			} /*else if (
 	                (PluginCollection.instance().DefaultLanguageOption.getValue() == EncodingDetector.Language.CZECH) &&
 					((encoding == "windows-1250") ||
 					 (encoding == "ISO-8859-2") ||
 					 (encoding == "IBM852"))) {
-				new WritableBookDescription(description).setLanguage("cs");
+				description.setLanguage("cs");
 			}*/
 		/*}
 
