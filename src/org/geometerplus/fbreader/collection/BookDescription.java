@@ -26,20 +26,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.formats.*;
 
 public class BookDescription {
-	public final String FileName;
-
-	private long myBookId;
-
-	private String myEncoding;
-	private String myLanguage;
-	private String myTitle;
-	private ArrayList<Author> myAuthors;
-	private ArrayList<Tag> myTags;
-	private SeriesInfo mySeriesInfo;
-
-	private boolean myIsSaved;
-	private boolean myIsChanged;
-
 	private final static HashMap<String,BookDescription> ourDescriptions = new HashMap<String,BookDescription>();
 
 	public static BookDescription getDescription(String fileName) {
@@ -83,6 +69,20 @@ public class BookDescription {
 		description.save();
 		return description;
 	}
+
+	public final String FileName;
+
+	private long myBookId;
+
+	private String myEncoding;
+	private String myLanguage;
+	private String myTitle;
+	private ArrayList<Author> myAuthors;
+	private ArrayList<Tag> myTags;
+	private SeriesInfo mySeriesInfo;
+
+	private boolean myIsSaved;
+	private boolean myIsChanged;
 
 	private BookDescription(String fileName) {
 		FileName = fileName;
