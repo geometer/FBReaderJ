@@ -91,7 +91,8 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				if (!navigationMap.isEmpty()) {
 					int level = 0;
 					for (NCXReader.NavPoint point : navigationMap.values()) {
-						int index = myModelReader.Model.getLabel(point.ContentHRef).ParagraphIndex;
+						final BookModel.Label label = myModelReader.Model.getLabel(point.ContentHRef);
+						int index = (label != null) ? label.ParagraphIndex : -1;
 						while (level > point.Level) {
 							myModelReader.endContentsParagraph();
 							--level;
