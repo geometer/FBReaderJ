@@ -36,17 +36,23 @@ final class ZLOwnXMLParser {
 	private static final byte TEXT = 3;
 	private static final byte IGNORABLE_WHITESPACE = 4;
 	private static final byte PROCESSING_INSTRUCTION = 5;
-	private static final byte COMMENT = 6;
-	private static final byte LANGLE = 7;
-	private static final byte WS_AFTER_START_TAG_NAME = 8;
-	private static final byte WS_AFTER_ATTRIBUTE_VALUE = 9;
-	//private static final byte WS_AFTER_END_TAG_NAME = 9;
-	private static final byte WAIT_EQUALS = 10;
-	private static final byte WAIT_ATTRIBUTE_VALUE = 11;
-	private static final byte SLASH = 12;
-	private static final byte ATTRIBUTE_NAME = 13;
-	private static final byte ATTRIBUTE_VALUE = 14;
-	private static final byte ENTITY_REF = 15;
+	private static final byte COMMENT = 6; // tag of form <!-- -->
+	private static final byte END_OF_COMMENT1 = 7;
+	private static final byte END_OF_COMMENT2 = 8;
+	private static final byte EXCL_TAG = 9; // tag of form <! >
+	private static final byte EXCL_TAG_START = 10;
+	private static final byte Q_TAG = 11; // tag of form <? ?>
+	private static final byte END_OF_Q_TAG = 12;
+	private static final byte LANGLE = 13;
+	private static final byte WS_AFTER_START_TAG_NAME = 14;
+	private static final byte WS_AFTER_ATTRIBUTE_VALUE = 15;
+	//private static final byte WS_AFTER_END_TAG_NAME = 16;
+	private static final byte WAIT_EQUALS = 17;
+	private static final byte WAIT_ATTRIBUTE_VALUE = 18;
+	private static final byte SLASH = 19;
+	private static final byte ATTRIBUTE_NAME = 20;
+	private static final byte ATTRIBUTE_VALUE = 21;
+	private static final byte ENTITY_REF = 22;
 
 	private static String convertToString(HashMap strings, ZLMutableString container) {
 		String s = (String)strings.get(container);
@@ -240,8 +246,10 @@ mainSwitchLabel:
 									startPosition = i + 1;
 									break;
 								case '!':
+									state = EXCL_TAG_START;
+									break;
 								case '?':
-									state = COMMENT;
+									state = Q_TAG;
 									break;
 								default:
 									state = START_TAG;
@@ -249,7 +257,14 @@ mainSwitchLabel:
 									break;
 							}
 							break;
-						case COMMENT:
+						case EXCL_TAG_START:
+							if (buffer[++i] == '-') {
+								state = COMMENT;
+							} else {
+								state = EXCL_TAG;
+							}
+							break;
+						case EXCL_TAG:
 							while (true) {
 								switch (buffer[++i]) {
 									case '>':
@@ -258,6 +273,50 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+						case COMMENT:
+							while (true) {
+								switch (buffer[++i]) {
+									case '-':
+										state = END_OF_COMMENT1;
+										break mainSwitchLabel;
+								}
+							}
+						case END_OF_COMMENT1:
+							if (buffer[++i] == '-') {
+								state = END_OF_COMMENT2;
+							} else {
+								state = COMMENT;
+							}
+							break mainSwitchLabel;
+						case END_OF_COMMENT2:
+							switch (buffer[++i]) {
+								case '>':
+									state = TEXT;
+									startPosition = i + 1;
+									break;
+								case '-':
+									break;
+								default:
+									state = COMMENT;
+									break;
+							}
+							break;
+						case Q_TAG:
+							while (true) {
+								switch (buffer[++i]) {
+									case '?':
+										state = END_OF_Q_TAG;
+										break mainSwitchLabel;
+								}
+							}
+						case END_OF_Q_TAG:
+							if (buffer[++i] == '>') {
+								state = TEXT;
+								startPosition = i + 1;
+							} else {
+								state = Q_TAG;
+							}
+							break mainSwitchLabel;
 						case START_TAG:
 							while (true) {
 								switch (buffer[++i]) {
