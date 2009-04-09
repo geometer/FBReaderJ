@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
@@ -35,13 +35,16 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	}
 
 	public void load(final String language) {
-		if (language.equals(myLanguage)) {
+		if (ZLMiscUtil.equals(language, myLanguage)) {
 			return;
 		}
 		myLanguage = language;
 		unload();
-		final String path = ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern"; 
-		new ZLTextHyphenationReader(this).read(path);
+
+		if (language != null) {
+		  final String path = ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern"; 
+		  new ZLTextHyphenationReader(this).read(path);
+		}
 	}	
 
 	public void unload() {
