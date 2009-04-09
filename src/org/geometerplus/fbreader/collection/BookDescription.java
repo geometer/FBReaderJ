@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.collection;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.formats.*;
@@ -155,7 +156,7 @@ public class BookDescription {
 	}
 
 	public void setTitle(String title) {
-		if (!equals(myTitle, title)) {
+		if (!ZLMiscUtil.equals(myTitle, title)) {
 			myTitle = title;
 			myIsChanged = true;
 		}
@@ -182,7 +183,7 @@ public class BookDescription {
 	}
 
 	public void setLanguage(String language) {
-		if (!equals(myLanguage, language)) {
+		if (!ZLMiscUtil.equals(myLanguage, language)) {
 			myLanguage = language;
 			myIsChanged = true;
 		}
@@ -193,7 +194,7 @@ public class BookDescription {
 	}
 
 	public void setEncoding(String encoding) {
-		if (!equals(myEncoding, encoding)) {
+		if (!ZLMiscUtil.equals(myEncoding, encoding)) {
 			myEncoding = encoding;
 			myIsChanged = true;
 		}
@@ -246,12 +247,4 @@ public class BookDescription {
 		myIsChanged = false;
 		myIsSaved = true;
 	}
-
-	private static boolean equals(Object o0, Object o1) {
-		if (o0 == null) {
-			return o1 == null;
-		}
-		return o0.equals(o1);
-	}
-
 }
