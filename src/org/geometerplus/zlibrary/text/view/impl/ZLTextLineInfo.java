@@ -22,23 +22,6 @@ package org.geometerplus.zlibrary.text.view.impl;
 import org.geometerplus.zlibrary.text.view.*;
 
 final class ZLTextLineInfo {
-	static final class TreeNodeInfo {
-		final boolean IsLeaf;
-		final boolean IsOpen;
-		final boolean IsFirstLine;
-		final int ParagraphIndex;
-		final boolean[] VerticalLinesStack;
-
-		TreeNodeInfo(boolean isLeaf, boolean isOpen, boolean isFirstLine, int paragraphIndex, boolean[] stack) {
-			IsLeaf = isLeaf;
-			IsOpen = isOpen;
-			IsFirstLine = isFirstLine;
-			ParagraphIndex = paragraphIndex;
-			VerticalLinesStack = stack;
-		}
-	};
-	TreeNodeInfo NodeInfo;
-
 	final ZLTextParagraphCursor ParagraphCursor;
 	final int ParagraphCursorLength;
 

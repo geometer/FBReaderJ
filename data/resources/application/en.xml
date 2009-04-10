@@ -42,7 +42,6 @@
 		<node name="view" value="View">
 			<node name="rotate" value="Rotate Screen"/>
 			<node name="toggleFullscreen" value="Full Screen"/>
-			<node name="toggleIndicator" value="Toggle Indicator"/>
 		</node>
 		<node name="quit" value="Close"/>
 	</node>
@@ -67,17 +66,6 @@
 					<node name="defaultLanguage" value="Default Language"/>
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
-					<node name="useWindows1252Hack" value="Use windows-1252 instead of iso-8859-1"/>
-				</node>
-				<node name="Indicator" value="Indicator">
-					<node name="show" value="Show Position Indicator"/>
-					<node name="height" value="Indicator Height"/>
-					<node name="offset" value="Offset from Text"/>
-					<node name="pageNumber" value="Show Position as Numbers"/>
-					<node name="time" value="Show Time"/>
-					<node name="fontSize" value="Font Size"/>
-					<node name="tocMarks" value="Show TOC Marks"/>
-					<node name="navigation" value="Enable Navigation"/>
 				</node>
 				<node name="Scrolling" value="Scrolling">
 					<node name="optionsFor" value="Options for">
@@ -152,8 +140,6 @@
 						<node name="internalLink" value="Internal Hyperlink Text"/>
 						<node name="externalLink" value="External Hyperlink Text"/>
 						<node name="highlighted" value="Highlighted Text"/>
-						<node name="treeLines" value="Tree Lines"/>
-						<node name="indicator" value="Position Indicator"/>
 					</node>
 				</node>
 				<node name="Keys" value="Keys">
@@ -185,7 +171,6 @@
 						<node name="findNext" value="Find Next"/>
 						<node name="increaseFont" value="Increase Font Size"/>
 						<node name="decreaseFont" value="Decrease Font Size"/>
-						<node name="toggleIndicator" value="Toggle Position Indicator"/>
 						<node name="toggleFullscreen" value="Toggle Fullscreen Mode"/>
 						<node name="onFullscreen" value="Switch to Fullscreen Mode"/>
 						<node name="rotate" value="Rotate Screen"/>

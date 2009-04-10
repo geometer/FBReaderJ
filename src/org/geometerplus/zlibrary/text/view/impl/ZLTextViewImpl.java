@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.text.view.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -29,6 +30,10 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.text.view.style.*;
 
 public abstract class ZLTextViewImpl extends ZLTextView {
+	private static final int PREVIOUS_PAGE = -1;
+	private static final int CURRENT_PAGE = 0;
+	private static final int NEXT_PAGE = 1;
+
 	private ZLTextModel myModel;
 	protected int myCurrentModelIndex;
 	private ArrayList/*<ZLTextModel>*/ myModelList;
@@ -90,20 +95,15 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public final ZLTextWordCursor StartCursor = new ZLTextWordCursor();
 	private final ZLTextWordCursor EndCursor = new ZLTextWordCursor();
 
-	private final ZLTextLineInfoVector myLineInfos = new ZLTextLineInfoVector();
-	private final ZLTextLineInfoCache myLineInfoCache = new ZLTextLineInfoCache();
+	private final ArrayList<ZLTextLineInfo> myLineInfos = new ArrayList<ZLTextLineInfo>();
+	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
 	private int[] myTextSize;
 
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 
-	private boolean myTreeStateIsFrozen = false;
-
-	final ZLTextRectangularAreaVector myTextElementMap
-		= new ZLTextRectangularAreaVector();
-	private final ZLTextRectangularAreaVector myTreeNodeMap
-		= new ZLTextRectangularAreaVector();
+	final ZLTextElementAreaVector myTextElementMap = new ZLTextElementAreaVector();
 
 	public ZLTextViewImpl(ZLPaintContext context) {
 		super(context);
@@ -400,9 +400,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
-	public synchronized void paint() {
+	public synchronized void paint(int dx, int dy) {
 		myTextElementMap.clear();
-		myTreeNodeMap.clear();
 
 		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
 		final ZLPaintContext context = Context;
@@ -429,20 +428,24 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			);
 		}
 
-		final ZLTextLineInfoVector lineInfos = myLineInfos;
-		final int lineInfosSize = lineInfos.size();
-		final int[] labels = new int[lineInfosSize + 1];
+		final ArrayList<ZLTextLineInfo> lineInfos = myLineInfos;
+		final int[] labels = new int[lineInfos.size() + 1];
 		context.moveYTo(getTopMargin());
-		for (int i = 0; i < lineInfosSize; ) {
-			prepareTextLine(lineInfos.getInfo(i));
-			labels[++i] = myTextElementMap.size();
+		int index = 0;
+		for (ZLTextLineInfo info : lineInfos) {
+			final int y = Math.min(context.getY() + info.Height, getBottomLine());
+			prepareTextLine(info, y);
+			context.moveY(info.Height + info.Descent + info.VSpaceAfter);
+			labels[++index] = myTextElementMap.size();
 		}
 
 		mySelectionModel.update();
 
 		context.moveYTo(getTopMargin());
-		for (int i = 0; i < lineInfosSize; ++i) {
-			drawTextLine(context, lineInfos.getInfo(i), labels[i], labels[i + 1]);
+		index = 0;
+		for (ZLTextLineInfo info : lineInfos) {
+			drawTextLine(context, info, labels[index], labels[index + 1]);
+			++index;
 		}
 	}
 
@@ -464,78 +467,20 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return sizeOfText;
 	}
 
-	private void drawTreeLines(ZLPaintContext context, ZLTextLineInfo.TreeNodeInfo info, int height, int vSpaceAfter) {
-		context.setColor(ZLTextStyleCollection.getInstance().getBaseStyle().TreeLinesColorOption.getValue());
-
-		int x = context.getX();
-		int y = context.getY();
-
-		final int qstep = (context.getStringHeight() + 2) / 3;
-
-		final boolean[] stack = info.VerticalLinesStack;
-		final int depth = stack.length;
-		for (int i = depth - 1; i >= 0; --i) {
-			if (stack[i]) {
-				context.drawLine(x + 2 * qstep, y + vSpaceAfter, x + 2 * qstep, y - height + 1);
-			}
-			x += 4 * qstep;
-		}
-
-		if (info.IsFirstLine) {
-			if ((depth > 0) && !stack[0]) {
-				context.drawLine(x - 2 * qstep, y - qstep, x - 2 * qstep, y - height + 1);
-			}
-
-			if (info.IsLeaf) {
-				if (depth > 0) {
-					context.drawLine(x - 2 * qstep, y - qstep, x + 3 * qstep, y - qstep);
-				}
-			} else {
-				int space = Math.max(qstep * 2 / 5, 2);
-				if (depth > 0) {
-					context.drawLine(x - 2 * qstep, y - qstep, x + qstep, y - qstep);
-				}
-				final int x0 = x + qstep;
-				final int x1 = x + 3 * qstep;
-				final int y0 = y;
-				final int y1 = y - 2 * qstep;
-				context.drawLine(x0, y0, x0, y1);
-				context.drawLine(x1, y0, x1, y1);
-				context.drawLine(x0, y0, x1, y0);
-				context.drawLine(x0, y1, x1, y1);
-				context.drawLine(x0 + space, y - qstep, x1 - space, y - qstep);
-				if (info.IsOpen) {
-					context.drawLine(x + 2 * qstep, y + vSpaceAfter, x + 2 * qstep, y);
-				} else {
-					context.drawLine(x + 2 * qstep, y0 - space, x + 2 * qstep, y1 + space);
-				}
-				myTreeNodeMap.add(
-					new ZLTextTreeNodeArea(
-						info.ParagraphIndex,
-						x, x + 4 * qstep,
-						y - height + 1, y
-					)
-				);
-			}
-		} else if (!info.IsLeaf && info.IsOpen) {
-			context.drawLine(x + 2 * qstep, y + vSpaceAfter, x + 2 * qstep, y - height + 1);
-		}
-	}
-
 	private ZLTextElementArea findLast(int from, int to, ZLTextSelectionModel.BoundElement bound) {
 		final int boundElementIndex = bound.TextElementIndex;
 		final int boundCharIndex = bound.CharIndex;
-		final ZLTextRectangularAreaVector textAreas = myTextElementMap;
-		ZLTextElementArea elementArea = (ZLTextElementArea)textAreas.get(from);
+		final ZLTextElementAreaVector textAreas = myTextElementMap;
+		ZLTextElementArea elementArea = textAreas.get(from);
 		if ((elementArea.TextElementIndex < boundElementIndex) ||
 				((elementArea.TextElementIndex == boundElementIndex) &&
 				 (elementArea.StartCharIndex <= boundCharIndex))) {
 			for (++from; from < to; ++from) {
-				elementArea = (ZLTextElementArea)textAreas.get(from);
+				elementArea = textAreas.get(from);
 				if ((elementArea.TextElementIndex > boundElementIndex) ||
 						((elementArea.TextElementIndex == boundElementIndex) &&
 						 (elementArea.StartCharIndex > boundCharIndex))) {
-					return (ZLTextElementArea)textAreas.get(from - 1);
+					return textAreas.get(from - 1);
 				}
 			}
 		}
@@ -557,7 +502,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return 0;
 	}
 
-	private void drawTextLine(final ZLPaintContext context, final ZLTextLineInfo info, final int from, final int to) {
+	private void drawTextLine(ZLPaintContext context, ZLTextLineInfo info, int from, int to) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 
 		if (!mySelectionModel.isEmpty() && (from != to)) {
@@ -620,10 +565,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (context.getY() > maxY) {
 			context.moveYTo(maxY);
 		}
-		context.moveXTo(getLeftMargin());	
-		if (info.NodeInfo != null) {
-			drawTreeLines(context, info.NodeInfo, info.Height, info.Descent + info.VSpaceAfter);
-		}
 
 		int index = from;
 		final int endWordIndex = info.EndWordIndex;
@@ -631,13 +572,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		for (int wordIndex = info.RealStartWordIndex; wordIndex != endWordIndex; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
-				final ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.get(index++);
+				final ZLTextElementArea area = myTextElementMap.get(index++);
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
 				}
 				final int x = area.XStart;
 				final int y = area.YEnd - getElementDescent(context, element) - myTextStyle.getVerticalShift();
-				context.moveXTo(x);
 				if (element instanceof ZLTextWord) {
 					drawWord(x, y, (ZLTextWord)element, charIndex, -1, false);
 				} else {
@@ -646,7 +586,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		}
 		if (index != to) {
-			ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.get(index++);
+			ZLTextElementArea area = myTextElementMap.get(index++);
 			if (area.ChangeStyle) {
 				setTextStyle(area.Style);
 			}
@@ -759,7 +699,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextLineInfo processTextLine(final ZLPaintContext context, final ZLTextParagraphCursor paragraphCursor, 
 		final int startIndex, final int startCharIndex, final int endIndex) {
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, myTextStyle);
-		final ZLTextLineInfo cachedInfo = myLineInfoCache.getInfo(info);
+		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
 		if (cachedInfo != null) {
 			applyControls(paragraphCursor, startIndex, cachedInfo.EndWordIndex);
 			return cachedInfo;
@@ -768,27 +708,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		int currentWordIndex = startIndex;
 		int currentCharIndex = startCharIndex;
 		final boolean isFirstLine = (startIndex == 0) && (startCharIndex == 0);
-
-		final ZLTextParagraph para = paragraphCursor.getParagraph();
-		if (para.getKind() == ZLTextParagraph.Kind.TREE_PARAGRAPH) {
-			final ZLTextTreeParagraph treeParagraph = (ZLTextTreeParagraph)para;
-			final int stackLength = treeParagraph.getDepth() - 1;
-			final boolean[] stack = new boolean[stackLength];
-			if (stackLength > 0) {
-				ZLTextTreeParagraph ctp = treeParagraph;
-				for (int index = 0; index < stackLength; ++index) {
-					stack[index] = !ctp.isLastChild();
-					ctp = ctp.getParent();
-				}
-			}
-			info.NodeInfo = new ZLTextLineInfo.TreeNodeInfo(
-				!treeParagraph.hasChildren(),
-				treeParagraph.isOpen(),
-				isFirstLine,
-				paragraphCursor.Index,
-				stack
-			);
-		}
 
 		if (isFirstLine) {
 			ZLTextElement element = paragraphCursor.getElement(currentWordIndex);
@@ -812,11 +731,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (isFirstLine) {
 			info.LeftIndent += myTextStyle.getFirstLineIndentDelta();
 		}	
-		if (info.NodeInfo != null) {
-			info.LeftIndent +=
-				(context.getStringHeight() + 2) / 3 *
-				4 * (info.NodeInfo.VerticalLinesStack.length + 1);
-		}
 		
 		info.Width = info.LeftIndent;
 		
@@ -952,33 +866,32 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}		
 
 		if ((info.EndWordIndex != endIndex) || (endIndex == info.ParagraphCursorLength)) {
-			myLineInfoCache.put(info);
+			myLineInfoCache.put(info, info);
 		}
 
 		return info;	
 	}
 
-	private void prepareTextLine(ZLTextLineInfo info) {
+	private void prepareTextLine(ZLTextLineInfo info, int y) {
 		final ZLPaintContext context = Context;
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
 
 		setTextStyle(info.StartStyle);
-		final int y = Math.min(context.getY() + info.Height, getBottomLine());
 		int spaceCounter = info.SpaceCounter;
 		int fullCorrection = 0;
 		final boolean endOfParagraph = info.isEndOfParagraph();
 		boolean wordOccurred = false;
 		boolean changeStyle = true;
 
-		context.moveXTo(getLeftMargin() + info.LeftIndent);
+		int x = getLeftMargin() + info.LeftIndent;
 		final int maxWidth = context.getWidth() - getLeftMargin() - getRightMargin();
 		switch (myTextStyle.getAlignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT: {
-				context.moveX(maxWidth - myTextStyle.getRightIndent() - info.Width);
+				x += maxWidth - myTextStyle.getRightIndent() - info.Width;
 				break;
 			} 
 			case ZLTextAlignmentType.ALIGN_CENTER: {
-				context.moveX((maxWidth - myTextStyle.getRightIndent() - info.Width) / 2);
+				x += (maxWidth - myTextStyle.getRightIndent() - info.Width) / 2;
 				break;
 			} 
 			case ZLTextAlignmentType.ALIGN_JUSTIFY: {
@@ -999,12 +912,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		int charIndex = info.RealStartCharIndex;
 		for (int wordIndex = info.RealStartWordIndex; wordIndex != endWordIndex; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
-			final int x = context.getX();
 			final int width = getElementWidth(context, element, charIndex);
 			if (element == ZLTextElement.HSpace) {
 				if (wordOccurred && (spaceCounter > 0)) {
 					int correction = fullCorrection / spaceCounter;
-					context.moveX(context.getSpaceWidth() + correction);
+					x += context.getSpaceWidth() + correction;
 					fullCorrection -= correction;
 					wordOccurred = false;
 					--spaceCounter;
@@ -1021,7 +933,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				applyControl((ZLTextControlElement)element);
 				changeStyle = true;
 			}
-			context.moveX(width);
+			x += width;
 		}
 		if (!endOfParagraph) {
 			final int len = info.EndCharIndex;
@@ -1029,15 +941,19 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				final int wordIndex = info.EndWordIndex;
 				final ZLTextWord word = (ZLTextWord)paragraph.getElement(wordIndex);
 				final boolean addHyphenationSign = word.Data[word.Offset + len - 1] != '-';
-				final int x = context.getX();
 				final int width = getWordWidth(context, word, 0, len, addHyphenationSign);
 				final int height = getElementHeight(word);
 				final int descent = context.getDescent();
-				myTextElementMap.add(new ZLTextElementArea(paragraphIndex, wordIndex, 0, len, addHyphenationSign,
-					changeStyle, myTextStyle, word, x, x + width - 1, y - height + 1, y + descent));
+				myTextElementMap.add(
+					new ZLTextElementArea(
+						paragraphIndex, wordIndex, 0,
+						len, addHyphenationSign,
+						changeStyle, myTextStyle, word,
+						x, x + width - 1, y - height + 1, y + descent
+					)
+				);
 			}	
 		}
-		context.moveY(info.Height + info.Descent + info.VSpaceAfter);
 	}
 	
 	public void scrollPage(boolean forward, int scrollingMode, int value) {
@@ -1077,27 +993,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			return;
 		}
 
-		if (myModel instanceof ZLTextTreeModel) {
-			if ((num >= 0) && (num < (int)myModel.getParagraphsNumber())) {
-				ZLTextTreeParagraph tp = (ZLTextTreeParagraph)(myModel).getParagraph(num);
-				if (myTreeStateIsFrozen) {
-					int corrected = num;
-					ZLTextTreeParagraph parent = tp.getParent();
-					while ((corrected > 0) && (parent != null) && !parent.isOpen()) {
-						for (--corrected; ((corrected > 0) && parent != (myModel).getParagraph(corrected)); --corrected);
-						parent = parent.getParent();
-					}
-					if (last && (corrected != num)) {
-						++corrected;
-					}
-					num = corrected;
-				} else {
-					tp.openTree();
-					rebuildPaintInfo(true);
-				}
-			}
-		}
-
 		if (last) {
 			if ((num > 0) && (num <= (int)myModel.getParagraphsNumber())) {
 				moveEndCursor(num);
@@ -1113,7 +1008,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return Math.max(Context.getWidth() - getLeftMargin() - getRightMargin(), 1);
 	}
 
-	protected synchronized void preparePaintInfo() {
+	protected synchronized void preparePaintInfo(/*int page*/) {
 		int newWidth = getViewWidth();
 		int newHeight = getTextAreaHeight();
 		if ((newWidth != myOldWidth) || (newHeight != myOldHeight)) {
@@ -1126,11 +1021,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			return;
 		}
 
-		final ZLTextLineInfoVector infos = myLineInfos;
-		final int infosSize = infos.size();
-		final ZLTextLineInfoCache cache = myLineInfoCache;
-		for (int i = 0; i < infosSize; ++i) {
-			cache.put(infos.getInfo(i));
+		final HashMap<ZLTextLineInfo,ZLTextLineInfo> cache = myLineInfoCache;
+		for (ZLTextLineInfo info : myLineInfos) {
+			cache.put(info, info);
 		}
 
 		switch (myPaintState) {
@@ -1226,10 +1119,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	boolean pageIsEmpty() {
-		final ZLTextLineInfoVector infos = myLineInfos;
-		final int infosSize = infos.size();
-		for (int i = 0; i < infosSize; ++i) {
-			if (infos.getInfo(i).IsVisible) {
+		for (ZLTextLineInfo info : myLineInfos) {
+			if (info.IsVisible) {
 				return false;
 			}
 		}
@@ -1240,11 +1131,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myLineInfos.isEmpty() || (overlappingValue == 0)) {
 			cursor.reset();
 		} else {
-			final ZLTextLineInfoVector infos = myLineInfos;
-			final int size = infos.size();
 			ZLTextLineInfo info = null;
-			for (int i = 0; i < size; ++i) {
-				info = infos.getInfo(i);
+			for (ZLTextLineInfo i : myLineInfos) {
+				info = i;
 				if (info.IsVisible) {
 					--overlappingValue;
 					if (overlappingValue == 0) {
@@ -1261,11 +1150,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myLineInfos.isEmpty() || (overlappingValue == 0)) {
 			cursor.reset();
 		} else {
-			final ZLTextLineInfoVector infos = myLineInfos;
+			final ArrayList<ZLTextLineInfo> infos = myLineInfos;
 			final int size = infos.size();
 			ZLTextLineInfo info = null;
 			for (int i = size - 1; i >= 0; --i) {
-				info = infos.getInfo(i);
+				info = infos.get(i);
 				if (info.IsVisible) {
 					--overlappingValue;
 					if (overlappingValue == 0) {
@@ -1284,11 +1173,9 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		} else {
 			int height = getTextAreaHeight() * percent / 100;
 			boolean visibleLineOccured = false;
-			final ZLTextLineInfoVector infos = myLineInfos;
-			final int size = infos.size();
 			ZLTextLineInfo info = null;
-			for (int i = 0; i < size; ++i) {
-				info = infos.getInfo(i);
+			for (ZLTextLineInfo i : myLineInfos) {
+				info = i;
 				if (info.IsVisible) {
 					visibleLineOccured = true;
 				}
@@ -1409,11 +1296,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
-		return (ZLTextElementArea)myTextElementMap.binarySearch(x, y);
+		return myTextElementMap.binarySearch(x, y);
 	}
 
 	protected int getParagraphIndexByCoordinate(int y) {
-		ZLTextElementArea area = (ZLTextElementArea)myTextElementMap.binarySearch(y);
+		ZLTextElementArea area = myTextElementMap.binarySearch(y);
 		return (area != null) ? area.ParagraphIndex : -1;
 	}
 
@@ -1432,49 +1319,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		}
 		return leftIndex;
-	}
-
-	public boolean onStylusPress(int x, int y) {
-		if (myModel == null) {
-			return false;
-		}
-
-		if (myModel instanceof ZLTextTreeModel) {
-			ZLTextTreeNodeArea nodeArea = (ZLTextTreeNodeArea)myTreeNodeMap.binarySearch(x, y);
-			if (nodeArea != null) {
-				final int index = nodeArea.ParagraphIndex;
-				final ZLTextTreeParagraph paragraph = ((ZLTextTreeModel)myModel).getTreeParagraph(index);
-				paragraph.open(!paragraph.isOpen());
-				rebuildPaintInfo(true);
-				preparePaintInfo();
-				if (paragraph.isOpen()) {
-					int nextParagraphIndex = index + paragraph.getFullSize();
-					int lastParagraphIndex = EndCursor.getParagraphCursor().Index;
-					if (EndCursor.isEndOfParagraph()) {
-						++lastParagraphIndex;
-					}
-					/*
-					if (lastParagraphIndex < nextParagraphIndex) {
-						gotoParagraph(nextParagraphIndex, true);
-						preparePaintInfo();
-					}
-					*/
-				}
-				int firstParagraphIndex = StartCursor.getParagraphCursor().Index;
-				if (StartCursor.isStartOfParagraph()) {
-					--firstParagraphIndex;
-				}
-				/*
-				if (firstParagraphIndex >= paragraphIndex) {
-					gotoParagraph(paragraphIndex);
-					preparePaintInfo();
-				}
-				*/
-				ZLApplication.Instance().refreshWindow();
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public boolean onStylusMovePressed(int x, int y) {

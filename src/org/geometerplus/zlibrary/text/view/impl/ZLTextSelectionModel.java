@@ -207,7 +207,7 @@ final class ZLTextSelectionModel {
 	}
 
 	private void setBound(Bound bound, int x, int y) {
-		final ZLTextRectangularAreaVector areaVector = myView.myTextElementMap;
+		final ZLTextElementAreaVector areaVector = myView.myTextElementMap;
 		if (areaVector.isEmpty()) {
 			return;
 		}
@@ -215,7 +215,7 @@ final class ZLTextSelectionModel {
 		final int areaVectorSize = areaVector.size();
 		// TODO: replace by binary search inside ZLTextElementAreaVector
 		int areaIndex = 0;
-		ZLTextRectangularArea area = null;
+		ZLTextElementArea area = null;
 		for (; areaIndex < areaVectorSize; ++areaIndex) {
 			area = areaVector.get(areaIndex);
 			if ((area.YStart > y) || ((area.YEnd > y) && (area.XEnd > x))) {
@@ -223,7 +223,7 @@ final class ZLTextSelectionModel {
 			}
 		}
 
-		final ZLTextElementArea elementArea = (ZLTextElementArea)area;
+		final ZLTextElementArea elementArea = area;
 		if (areaIndex < areaVectorSize) {
 			bound.After.ParagraphIndex = elementArea.ParagraphIndex;
 			bound.After.TextElementIndex = elementArea.TextElementIndex;
@@ -255,7 +255,7 @@ final class ZLTextSelectionModel {
 			} else if (areaIndex == 0) {
 				bound.Before.Exists = false;
 			} else {
-				final ZLTextElementArea previous = (ZLTextElementArea)areaVector.get(areaIndex - 1);
+				final ZLTextElementArea previous = areaVector.get(areaIndex - 1);
 				bound.Before.ParagraphIndex = previous.ParagraphIndex;
 				bound.Before.TextElementIndex = previous.TextElementIndex;
 				bound.Before.CharIndex = previous.StartCharIndex + previous.Length;

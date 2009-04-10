@@ -149,7 +149,7 @@ public final class ZLTextWordCursor {
 
 	public void moveToParagraph(int paragraphIndex) {
 		if (!isNull() && (paragraphIndex != myParagraphCursor.Index)) {
-			myParagraphCursor = ZLTextParagraphCursor.cursor(myParagraphCursor.myModel, paragraphIndex);
+			myParagraphCursor = ZLTextParagraphCursor.cursor(myParagraphCursor.Model, paragraphIndex);
 			moveToParagraphStart();
 		}		
 	}

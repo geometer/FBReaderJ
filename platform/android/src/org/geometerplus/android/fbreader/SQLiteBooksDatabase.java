@@ -53,15 +53,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void createTables() {
 		myDatabase.beginTransaction();
-		/*
-		myDatabase.execSQL("DROP TABLE Books");
-		myDatabase.execSQL("DROP TABLE Authors");
-		myDatabase.execSQL("DROP TABLE Series");
-		myDatabase.execSQL("DROP TABLE Tags");
-		myDatabase.execSQL("DROP TABLE BookAuthor");
-		myDatabase.execSQL("DROP TABLE BookSeries");
-		myDatabase.execSQL("DROP TABLE BookTag");
-		*/
 		myDatabase.execSQL(
 			"CREATE TABLE Books(" +
 				"book_id INTEGER PRIMARY KEY," +
@@ -91,12 +82,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
 				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"book_index INTEGER)");
+		// TODO: parent->parent_id
 		myDatabase.execSQL(
 			"CREATE TABLE Tags(" +
 				"tag_id INTEGER PRIMARY KEY," +
 				"name TEXT NOT NULL," +
 				"parent INTEGER REFERENCES Tags(tag_id)," +
 				"CONSTRAINT Tags_Unique UNIQUE (name, parent))");
+		// TODO: tag_id, book_id -> NOT NULL
 		myDatabase.execSQL(
 			"CREATE TABLE BookTag(" +
 				"tag_id INTEGER REFERENCES Tags(tag_id)," +
@@ -135,6 +128,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		return id;
+	}
+
+	public void listBooks() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT Authors.name,Authors.sort_key,Books.title,Books.language,Books.encoding,Books.file_name FROM Books LEFT JOIN BookAuthor ON Books.book_id = BookAuthor.book_id LEFT JOIN Authors ON Authors.author_id = BookAuthor.author_id ORDER by Books.file_name", null);
+		while (cursor.moveToNext()) {
+			System.err.println(cursor.getString(0) + ":" + cursor.getString(2));
+		}
+		cursor.close();	
 	}
 
 	private SQLiteStatement myUpdateBookInfoStatement;

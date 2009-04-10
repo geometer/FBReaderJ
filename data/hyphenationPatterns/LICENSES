@@ -1,0 +1,14 @@
+All the pattern files in this archive were created from TeX hyphenation patterns. Original file name is pointed in comments inside a pattern file.
+
+This file contains a list of licences for original files.
+
+GNU General Public License:
+	cs, id
+GNU Lesser General Public License:
+	it
+LaTeX Project Public License:
+	de, de-traditional, el, eo, es, pt, ru, sv, uk
+Public Domain (with some restrictions, see corresponding pattern file for details):
+	en, fr, fi, no
+Unknown:
+	tr

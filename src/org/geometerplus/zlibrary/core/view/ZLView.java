@@ -30,7 +30,7 @@ abstract public class ZLView {
 
 	abstract public String getCaption();
 
-	abstract public void paint();
+	abstract public void paint(int dx, int dy);
 
 	public boolean onStylusPress(int x, int y) {
 		return false;
@@ -56,6 +56,20 @@ abstract public class ZLView {
 		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
 		if (viewWidget != null) {
 			viewWidget.setVerticalScrollbarParameters(full, from, to);
+		}
+	}
+
+	final public void scrollTo(int shift) {
+		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
+		if (viewWidget != null) {
+			viewWidget.scrollTo(shift);
+		}
+	}
+
+	final public void startAutoScrolling(boolean forward) {
+		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
+		if (viewWidget != null) {
+			viewWidget.startAutoScrolling(forward);
 		}
 	}
 }

@@ -25,16 +25,16 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
 
-public abstract class ZLTextParagraphCursor {
+public final class ZLTextParagraphCursor {
 	private static final class Processor {
-		protected final ZLTextParagraph myParagraph;
-		protected final ArrayList myElements;
-		protected int myOffset;
-		protected int myFirstMark;
-		protected int myLastMark;
-		protected final ArrayList myMarks;
+		private final ZLTextParagraph myParagraph;
+		private final ArrayList myElements;
+		private int myOffset;
+		private int myFirstMark;
+		private int myLastMark;
+		private final ArrayList myMarks;
 		
-		protected Processor(ZLTextParagraph paragraph, ArrayList marks, int paragraphIndex, ArrayList elements) {
+		private Processor(ZLTextParagraph paragraph, ArrayList marks, int paragraphIndex, ArrayList elements) {
 			myParagraph = paragraph;
 			myElements = elements;
 			myMarks = marks;
@@ -117,7 +117,7 @@ public abstract class ZLTextParagraphCursor {
 			}
 		}
 		
-		protected final void addWord(char[] data, int offset, int len, int paragraphOffset) {
+		private final void addWord(char[] data, int offset, int len, int paragraphOffset) {
 			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
 			for (int i = myFirstMark; i < myLastMark; ++i) {
 				final ZLTextMark mark = (ZLTextMark)myMarks.get(i);
@@ -127,47 +127,39 @@ public abstract class ZLTextParagraphCursor {
 			}
 			myElements.add(word);		
 		}
-		
 	}
 
-	final public int Index;
-	final protected ZLTextModel myModel;
-	final protected ArrayList myElements = new ArrayList();
+	public final int Index;
+	public final ZLTextModel Model;
+	private final ArrayList myElements = new ArrayList();
 
-	protected ZLTextParagraphCursor(ZLTextModel model, int index) {
-		myModel = model;
-		Index = Math.min(index, myModel.getParagraphsNumber() - 1);
+	private ZLTextParagraphCursor(ZLTextModel model, int index) {
+		Model = model;
+		Index = Math.min(index, Model.getParagraphsNumber() - 1);
 		fill();
 	}
 	
 	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
 		ZLTextParagraphCursor result = ZLTextParagraphCursorCache.get(model, index);
 		if (result == null) {
-			if (model instanceof ZLTextTreeModel) {
-				result = new ZLTextTreeParagraphCursor((ZLTextTreeModel)model, index);
-			} else {
-				result = new ZLTextPlainParagraphCursor(model, index);
-			}
+			result = new ZLTextParagraphCursor(model, index);
 			ZLTextParagraphCursorCache.put(model, index, result);
 		}
 		return result;
 	}
 
-	/*Is it ok to create new instance of Processor here?*/
-
-	protected void fill() {
-		ZLTextParagraph	paragraph = myModel.getParagraph(Index);
+	void fill() {
+		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
-			case ZLTextParagraph.Kind.TREE_PARAGRAPH:
-				new Processor(paragraph, myModel.getMarks(), Index, myElements).fill();
+				new Processor(paragraph, Model.getMarks(), Index, myElements).fill();
 				break;
 			default:
 				break;
 		}
 	}
 	
-	protected void clear() {
+	void clear() {
 		myElements.clear();
 	}
 
@@ -175,18 +167,25 @@ public abstract class ZLTextParagraphCursor {
 		return Index == 0;
 	}
 
-	abstract boolean isLast(); 
+	public boolean isLast() {
+		return (Index + 1 == Model.getParagraphsNumber());
+	}
 	
 	boolean isEndOfSection() {
-		return (myModel.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
+		return (Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
 	}
 	
 	final int getParagraphLength() {
 		return myElements.size();
 	}
 
-	abstract ZLTextParagraphCursor previous();
-	abstract ZLTextParagraphCursor next();
+	public ZLTextParagraphCursor previous() {
+		return isFirst() ? null : cursor(Model, Index - 1);
+	}
+
+	public ZLTextParagraphCursor next() {
+		return isLast() ? null : cursor(Model, Index + 1);
+	}
 	
 	final ZLTextElement getElement(int index) {
 		try {
@@ -197,6 +196,6 @@ public abstract class ZLTextParagraphCursor {
 	}
 
 	ZLTextParagraph getParagraph() {
-		return myModel.getParagraph(Index);	
+		return Model.getParagraph(Index);	
 	}
 }

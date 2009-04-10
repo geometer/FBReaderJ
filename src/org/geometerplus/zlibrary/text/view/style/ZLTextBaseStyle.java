@@ -42,8 +42,6 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		new ZLColorOption(COLORS, "Hyperlink", new ZLColor(33, 96, 180));
 	public final ZLColorOption ExternalHyperlinkTextColorOption =
 		new ZLColorOption(COLORS, "ExternalHyperlink", new ZLColor(98, 174, 26));
-	public final ZLColorOption TreeLinesColorOption =
-		new ZLColorOption(COLORS, "TreeLines", new ZLColor(127, 127, 127));
 
 	public final ZLBooleanOption AutoHyphenationOption =
 		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);

@@ -19,8 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view.impl;
 
-final class ZLTextRectangularAreaVector {
-	private ZLTextRectangularArea[] myData = new ZLTextRectangularArea[10];
+final class ZLTextElementAreaVector {
+	private ZLTextElementArea[] myData = new ZLTextElementArea[10];
 	private int myLength;	
 
 	public boolean isEmpty() {
@@ -31,10 +31,10 @@ final class ZLTextRectangularAreaVector {
 		return myLength;
 	}
 
-	public void add(ZLTextRectangularArea area) {
+	public void add(ZLTextElementArea area) {
 		final int index = myLength++;
 		if (index == myData.length) {
-			ZLTextRectangularArea[] extended = new ZLTextRectangularArea[2 * index];
+			ZLTextElementArea[] extended = new ZLTextElementArea[2 * index];
 			System.arraycopy(myData, 0, extended, 0, index);
 			myData = extended;
 		}
@@ -42,23 +42,23 @@ final class ZLTextRectangularAreaVector {
 	}
 
 	public void clear() {
-		final ZLTextRectangularArea[] data = myData;
+		final ZLTextElementArea[] data = myData;
 		for (int i = myLength - 1; i >= 0; --i) {
 			data[i] = null;
 		}
 		myLength = 0;
 	}
 
-	ZLTextRectangularArea get(int index) {
+	ZLTextElementArea get(int index) {
 		return myData[index];
 	}
 
-	ZLTextRectangularArea binarySearch(int x, int y) {
+	ZLTextElementArea binarySearch(int x, int y) {
 		int left = 0;
 		int right = myLength;
 		while (left < right) {
 			final int middle = (left + right) / 2;
-			final ZLTextRectangularArea candidate = myData[middle];
+			final ZLTextElementArea candidate = myData[middle];
 			if (candidate.YStart > y) {
 				right = middle;
 			} else if (candidate.YEnd < y) {
@@ -74,12 +74,12 @@ final class ZLTextRectangularAreaVector {
 		return null;
 	}
 
-	ZLTextRectangularArea binarySearch(int y) {
+	ZLTextElementArea binarySearch(int y) {
 		int left = 0;
 		int right = myLength;
 		while (left < right) {
 			final int middle = (left + right) / 2;
-			final ZLTextRectangularArea candidate = myData[middle];
+			final ZLTextElementArea candidate = myData[middle];
 			if (candidate.YStart > y) {
 				right = middle;
 			} else if (candidate.YEnd < y) {

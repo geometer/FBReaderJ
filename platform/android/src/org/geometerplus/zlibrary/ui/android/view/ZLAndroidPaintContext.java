@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private Canvas myCanvas;
-	private final Paint myPaint;
+	final Paint Paint;
 	private ZLColor myColor = new ZLColor(0, 0, 0);
 	private ZLColor myFillColor = new ZLColor(0, 0, 0);
 
@@ -56,10 +56,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
 	private ZLAndroidPaintContext() {
-		myPaint = new Paint();
-		myPaint.setLinearText(false);
-		myPaint.setAntiAlias(true);
-		myPaint.setSubpixelText(false);
+		Paint = new Paint();
+		Paint.setLinearText(false);
+		Paint.setAntiAlias(true);
+		Paint.setSubpixelText(false);
 	}
 
 	void setSize(int width, int height, int scrollbarWidth) {
@@ -101,13 +101,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void clear(ZLColor color) {
 		// TODO: implement
 		myColor = color;
-		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
-		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myPaint);
+		Paint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, Paint);
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
-		final Paint paint = myPaint;
+		final Paint paint = Paint;
 		Typeface[] typefaces = myTypefaces.get(family);
 		if (typefaces == null) {
 			typefaces = new Typeface[4];
@@ -126,7 +126,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: use style
 		if (!myColor.equals(color)) {
 			myColor = color;
-			myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+			Paint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
 		}
 	}
 
@@ -143,19 +143,19 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 	
 	public int getStringWidth(char[] string, int offset, int length) {
-		return (int)(myPaint.measureText(string, offset, length) + 0.5f);
+		return (int)(Paint.measureText(string, offset, length) + 0.5f);
 	}
 	protected int getSpaceWidthInternal() {
-		return (int)(myPaint.measureText(" ", 0, 1) + 0.5f);
+		return (int)(Paint.measureText(" ", 0, 1) + 0.5f);
 	}
 	protected int getStringHeightInternal() {
-		return (int)(myPaint.getTextSize() + 0.5f);
+		return (int)(Paint.getTextSize() + 0.5f);
 	}
 	protected int getDescentInternal() {
-		return (int)(myPaint.descent() + 0.5f);
+		return (int)(Paint.descent() + 0.5f);
 	}
 	public void drawString(int x, int y, char[] string, int offset, int length) {
-		myCanvas.drawText(string, offset, length, x, y, myPaint);
+		myCanvas.drawText(string, offset, length, x, y, Paint);
 	}
 
 	public int imageWidth(ZLImageData imageData) {
@@ -171,7 +171,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void drawImage(int x, int y, ZLImageData imageData) {
 		Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap();
 		if (bitmap != null) {
-			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myPaint);
+			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), Paint);
 		}
 	}
 
@@ -184,7 +184,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			++y0;
 			++y1;
 		}
-		final Paint paint = myPaint;
+		final Paint paint = Paint;
 		final Canvas canvas = myCanvas;
 		paint.setAntiAlias(false);
 		canvas.drawLine(x0, y0, x1, y1, paint);
@@ -195,7 +195,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
 		ZLColor color = myFillColor;
-		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		Paint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
 		if (x1 < x0) {
 			int swap = x1;
 			x1 = x0;
@@ -206,9 +206,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			y1 = y0;
 			y0 = swap;
 		}
-		myCanvas.drawRect(x0, y0, x1 + 1, y1 + 1, myPaint);
+		myCanvas.drawRect(x0, y0, x1 + 1, y1 + 1, Paint);
 		color = myColor;
-		myPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		Paint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
 	}
 	public void drawFilledCircle(int x, int y, int r) {
 		// TODO: implement

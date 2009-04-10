@@ -21,7 +21,12 @@ package org.geometerplus.zlibrary.text.view.impl;
 
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
-public class ZLTextElementArea extends ZLTextRectangularArea { 
+public class ZLTextElementArea { 
+	final int XStart;	
+	final int XEnd;	
+	final int YStart;	
+	final int YEnd;	
+	
 	public final int ParagraphIndex;
 	public final int TextElementIndex;
 	final int StartCharIndex;	
@@ -32,7 +37,11 @@ public class ZLTextElementArea extends ZLTextRectangularArea {
 	public final ZLTextElement Element;
 
 	ZLTextElementArea(int paragraphIndex, int textElementIndex, int startCharIndex, int length, boolean addHyphenationSign, boolean changeStyle, ZLTextStyle style, ZLTextElement element, int xStart, int xEnd, int yStart, int yEnd) {
-		super(xStart, xEnd, yStart, yEnd);
+		XStart = xStart;
+		XEnd = xEnd;
+		YStart = yStart;
+		YEnd = yEnd;
+
 		ParagraphIndex = paragraphIndex;
 		TextElementIndex = textElementIndex;
 		StartCharIndex = startCharIndex;
@@ -41,5 +50,9 @@ public class ZLTextElementArea extends ZLTextRectangularArea {
 		ChangeStyle = changeStyle;
 		Style = style;
 		Element = element;
+	}
+
+	boolean contains(int x, int y) {
+		return (y >= YStart) && (y <= YEnd) && (x >= XStart) && (x <= XEnd);
 	}
 }

@@ -39,7 +39,6 @@
 		<node name="view" value="Изображение">
 			<node name="rotate" value="Повернуть"/>
 			<node name="toggleFullscreen" value="На весь экран"/>
-			<node name="toggleIndicator" value="Индикатор позиции"/>
 		</node>
 		<node name="preferences" value="Настройки..."/>
 		<node name="quit" value="Закрыть"/>
@@ -65,17 +64,6 @@
 					<node name="defaultLanguage" value="Язык по умолчанию"/>
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
-					<node name="useWindows1252Hack" value="Использовать windows-1252 вместо iso-8859-1"/>
-				</node>
-				<node name="Indicator" value="Индикатор">
-					<node name="show" value="Показывать индикатор"/>
-					<node name="height" value="Высота индикатора"/>
-					<node name="offset" value="Отступ от текста"/>
-					<node name="pageNumber" value="Показывать номера страниц"/>
-					<node name="time" value="Показывать текущее время"/>
-					<node name="fontSize" value="Размер шрифта"/>
-					<node name="tocMarks" value="Показывать пометки начала глав"/>
-					<node name="navigation" value="Реагировать на нажатия"/>
 				</node>
 				<node name="Scrolling" value="Перелистывание">
 					<node name="optionsFor" value="Настройки перелистывания">
@@ -153,8 +141,6 @@
 						<node name="internalLink" value="ссылки"/>
 						<node name="externalLink" value="внешней ссылки"/>
 						<node name="highlighted" value="подсвеченного текста"/>
-						<node name="treeLines" value="линий"/>
-						<node name="indicator" value="индикатора"/>
 					</node>
 				</node>
 				<node name="Keys" value="Клавиши">
@@ -186,7 +172,6 @@
 						<node name="findNext" value="Искать вперед"/>
 						<node name="increaseFont" value="Увеличить размер шрифта"/>
 						<node name="decreaseFont" value="Уменьшить размер шрифта"/>
-						<node name="toggleIndicator" value="Показать/спрятать индикатор"/>
 						<node name="toggleFullscreen" value="Включить/выключить полноэкранный режим"/>
 						<node name="onFullscreen" value="Включить полноэкранный режим"/>
 						<node name="rotate" value="Повернуть текст"/>

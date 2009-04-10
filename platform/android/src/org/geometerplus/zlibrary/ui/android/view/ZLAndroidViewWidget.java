@@ -33,6 +33,20 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 		widget.setViewWidget(this);
 	}
 
+	protected void scrollTo(int shift) {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.setViewWidget(this);
+		widget.scrollTo(shift);
+	}
+
+	protected void startAutoScrolling(boolean forward) {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.setViewWidget(this);
+		widget.startAutoScrolling(forward);
+	}
+
 	public void repaint() {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();

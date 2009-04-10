@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 abstract public class ZLPaintContext {
-	private int myX = 0;
 	private int myY = 0;
 
 	private final ArrayList myFamilies = new ArrayList();
@@ -51,20 +50,8 @@ abstract public class ZLPaintContext {
 	private boolean myFontIsBold;
 	private boolean myFontIsItalic;
 
-	public final int getX() {
-		return myX;
-	}
-	
 	public final int getY() {
 		return myY;
-	}
-
-	public final void moveXTo(int x) {
-		myX = x;
-	}
-	
-	public final void moveX(int deltaX) {
-		myX += deltaX;
 	}
 
 	public final void moveYTo(int y) {

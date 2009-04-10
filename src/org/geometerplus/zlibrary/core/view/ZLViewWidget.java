@@ -45,6 +45,8 @@ abstract public class ZLViewWidget {
 
 	// TODO: change to protected
 	abstract public void repaint();
+	abstract protected void scrollTo(int shift);
+	abstract protected void startAutoScrolling(boolean forward);
 
 	abstract protected void setVerticalScrollbarParameters(int full, int from, int to);
 }
