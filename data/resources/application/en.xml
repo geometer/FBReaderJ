@@ -193,17 +193,6 @@
 					<node name="choice" value="Integrate with"/>
 					<node name="singleClickOpen" value="Open by Single Click"/>
 				</node>
-				<node name="Web" value="Web">
-					<node name="enableIntegration" value="Open External Links in %s"/>
-					<node name="defaultText" value="Open External Links in Browser"/>
-					<node name="choice" value="Use Browser"/>
-					<node name="command" value="Command to Execute"/>
-				</node>
-				<node name="Maemo" value="Maemo">
-					<node name="keyActionOnRelease" value="Action on Key Release, not on Key Press"/>
-					<node name="minStylusPressure" value="Minimal Stylus Pressure"/>
-					<node name="maxStylusPressure" value="Maximal Stylus Pressure"/>
-				</node>
 			</node>
 		</node>
 		<node name="InfoDialog">

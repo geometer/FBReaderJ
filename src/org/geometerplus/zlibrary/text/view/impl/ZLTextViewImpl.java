@@ -36,7 +36,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	private ZLTextModel myModel;
 	protected int myCurrentModelIndex;
-	private ArrayList/*<ZLTextModel>*/ myModelList;
+	private ArrayList<ZLTextModel> myModelList;
 	private final ZLTextSelectionModel mySelectionModel;
 
 	protected static class Position {
@@ -111,8 +111,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
  		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
-	public void setModels(ArrayList models, int current) {
-		myModelList = (models != null) ? models : new ArrayList();
+	public void setModels(ArrayList<ZLTextModel> models, int current) {
+		myModelList = (models != null) ? models : new ArrayList<ZLTextModel>();
 		myModel = (current >= 0 && current < myModelList.size()) ?
 			(ZLTextModel)myModelList.get(current) : null;
 		myCurrentModelIndex = current;
@@ -151,7 +151,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		return myModel;
 	}
 	
-	protected ArrayList getModelList() {
+	protected ArrayList<ZLTextModel> getModelList() {
 		return myModelList;
 	}
 	

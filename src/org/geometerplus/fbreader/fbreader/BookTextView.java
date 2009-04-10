@@ -50,17 +50,11 @@ public class BookTextView extends FBView {
 
 	private String myFileName;
 
-	public ZLBooleanOption ShowTOCMarksOption;
-
-	public final ZLBooleanOption OpenInBrowserOption =
-		new ZLBooleanOption("Web Browser", "Enabled", true);
-	
 	BookTextView(ZLPaintContext context) {
 		super(context);
-		ShowTOCMarksOption = new ZLBooleanOption("Indicator", "ShowTOCMarks", false);
 	}
 	
-	public void setModels(ArrayList/*<ZLTextModel>*/ models, String fileName) {
+	public void setModels(ArrayList<ZLTextModel> models, String fileName) {
 		myFileName = fileName;
 
 		myPositionStack.clear();
@@ -89,8 +83,7 @@ public class BookTextView extends FBView {
 				final int wordIndex = option.getValue();
 				option.changeName(CHAR_PREFIX + i);
 				final int charIndex = option.getValue();
-				myPositionStack.add(new Position(modelIndex, paragraphIndex,
-						wordIndex, charIndex));
+				myPositionStack.add(new Position(modelIndex, paragraphIndex, wordIndex, charIndex));
 			}
 		}
 		if (!myPositionStack.isEmpty()) {
@@ -197,9 +190,7 @@ public class BookTextView extends FBView {
 				if (id != null) {
 					switch (hyperlinkKind) {
 						case FBTextKind.EXTERNAL_HYPERLINK:
-							if (OpenInBrowserOption.getValue()) {
-								ZLibrary.Instance().openInBrowser(id);
-							}
+							ZLibrary.Instance().openInBrowser(id);
 							return true;
 						case FBTextKind.FOOTNOTE:
 						case FBTextKind.INTERNAL_HYPERLINK:

@@ -36,9 +36,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	SQLiteBooksDatabase() {
 		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
-		if (myDatabase.getVersion() == 0) {
-			createTables();
+		switch (myDatabase.getVersion()) {
+			case 0:
+				createTables();
+			case 1:
+				updateTables1();
 		}
+		myDatabase.setVersion(2);
 	}
 
 	public void executeAsATransaction(Runnable actions) {
@@ -49,56 +53,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		} finally {
 			myDatabase.endTransaction();
 		}
-	}
-
-	private void createTables() {
-		myDatabase.beginTransaction();
-		myDatabase.execSQL(
-			"CREATE TABLE Books(" +
-				"book_id INTEGER PRIMARY KEY," +
-				"encoding TEXT," +
-				"language TEXT," +
-				"title TEXT NOT NULL," +
-				"file_name TEXT UNIQUE NOT NULL)");
-		myDatabase.execSQL(
-			"CREATE TABLE Authors(" +
-				"author_id INTEGER PRIMARY KEY," +
-				"name TEXT NOT NULL," +
-				"sort_key TEXT NOT NULL," +
-				"CONSTRAINT Authors_Unique UNIQUE (name, sort_key))");
-		myDatabase.execSQL(
-			"CREATE TABLE BookAuthor(" +
-				"author_id INTEGER NOT NULL REFERENCES Authors(author_id)," +
-				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
-				"author_index INTEGER NOT NULL," +
-				"CONSTRAINT BookAuthor_Unique0 UNIQUE (author_id, book_id)," +
-				"CONSTRAINT BookAuthor_Unique1 UNIQUE (book_id, author_index))");
-		myDatabase.execSQL(
-			"CREATE TABLE Series(" +
-				"series_id INTEGER PRIMARY KEY," +
-				"name TEXT UNIQUE NOT NULL)");
-		myDatabase.execSQL(
-			"CREATE TABLE BookSeries(" +
-				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
-				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
-				"book_index INTEGER)");
-		// TODO: parent->parent_id
-		myDatabase.execSQL(
-			"CREATE TABLE Tags(" +
-				"tag_id INTEGER PRIMARY KEY," +
-				"name TEXT NOT NULL," +
-				"parent INTEGER REFERENCES Tags(tag_id)," +
-				"CONSTRAINT Tags_Unique UNIQUE (name, parent))");
-		// TODO: tag_id, book_id -> NOT NULL
-		myDatabase.execSQL(
-			"CREATE TABLE BookTag(" +
-				"tag_id INTEGER REFERENCES Tags(tag_id)," +
-				"book_id INTEGER REFERENCES Books(book_id)," +
-				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
-		myDatabase.setTransactionSuccessful();
-		myDatabase.endTransaction();
-								
-		myDatabase.setVersion(1);
 	}
 
 	private static void bindString(SQLiteStatement statement, int index, String value) {
@@ -220,10 +174,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private long getTagId(Tag tag) {
 		if (myGetTagIdStatement == null) {
 			myGetTagIdStatement = myDatabase.compileStatement(
-				"SELECT tag_id FROM Tags WHERE parent = ? AND name = ?"
+				"SELECT tag_id FROM Tags WHERE parent_id = ? AND name = ?"
 			);
 			myCreateTagIdStatement = myDatabase.compileStatement(
-				"INSERT INTO Tags (parent,name) VALUES (?,?)"
+				"INSERT INTO Tags (parent_id,name) VALUES (?,?)"
 			);
 		}	
 		{
@@ -270,7 +224,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private Tag getTagById(long id) {
 		Tag tag = myTagById.get(id);
 		if (tag == null) {
-			final Cursor cursor = myDatabase.rawQuery("SELECT parent,name FROM Tags WHERE tag_id = ?", new String[] { "" + id });
+			final Cursor cursor = myDatabase.rawQuery("SELECT parent_id,name FROM Tags WHERE tag_id = ?", new String[] { "" + id });
 			if (cursor.moveToNext()) {
 				final Tag parent = cursor.isNull(0) ? null : getTagById(cursor.getLong(0));
 				tag = Tag.getTag(parent, cursor.getString(1));
@@ -366,5 +320,77 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			});
 		} catch (SQLException e) {
 		}
+	}
+
+	private void createTables() {
+		myDatabase.beginTransaction();
+		myDatabase.execSQL(
+			"CREATE TABLE Books(" +
+				"book_id INTEGER PRIMARY KEY," +
+				"encoding TEXT," +
+				"language TEXT," +
+				"title TEXT NOT NULL," +
+				"file_name TEXT UNIQUE NOT NULL)");
+		myDatabase.execSQL(
+			"CREATE TABLE Authors(" +
+				"author_id INTEGER PRIMARY KEY," +
+				"name TEXT NOT NULL," +
+				"sort_key TEXT NOT NULL," +
+				"CONSTRAINT Authors_Unique UNIQUE (name, sort_key))");
+		myDatabase.execSQL(
+			"CREATE TABLE BookAuthor(" +
+				"author_id INTEGER NOT NULL REFERENCES Authors(author_id)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"author_index INTEGER NOT NULL," +
+				"CONSTRAINT BookAuthor_Unique0 UNIQUE (author_id, book_id)," +
+				"CONSTRAINT BookAuthor_Unique1 UNIQUE (book_id, author_index))");
+		myDatabase.execSQL(
+			"CREATE TABLE Series(" +
+				"series_id INTEGER PRIMARY KEY," +
+				"name TEXT UNIQUE NOT NULL)");
+		myDatabase.execSQL(
+			"CREATE TABLE BookSeries(" +
+				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"book_index INTEGER)");
+		myDatabase.execSQL(
+			"CREATE TABLE Tags(" +
+				"tag_id INTEGER PRIMARY KEY," +
+				"name TEXT NOT NULL," +
+				"parent INTEGER REFERENCES Tags(tag_id)," +
+				"CONSTRAINT Tags_Unique UNIQUE (name, parent))");
+		myDatabase.execSQL(
+			"CREATE TABLE BookTag(" +
+				"tag_id INTEGER REFERENCES Tags(tag_id)," +
+				"book_id INTEGER REFERENCES Books(book_id)," +
+				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
+		myDatabase.setTransactionSuccessful();
+		myDatabase.endTransaction();
+	}
+
+	private void updateTables1() {
+		myDatabase.beginTransaction();
+
+		myDatabase.execSQL("ALTER TABLE Tags RENAME TO Tags_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE Tags(" +
+				"tag_id INTEGER PRIMARY KEY," +
+				"name TEXT NOT NULL," +
+				"parent_id INTEGER REFERENCES Tags(tag_id)," +
+				"CONSTRAINT Tags_Unique UNIQUE (name, parent_id))");
+		myDatabase.execSQL("INSERT INTO Tags (tag_id,name,parent_id) SELECT tag_id,name,parent FROM Tags_Obsolete");
+		myDatabase.execSQL("DROP TABLE Tags_Obsolete");
+
+		myDatabase.execSQL("ALTER TABLE BookTag RENAME TO BookTag_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE BookTag(" +
+				"tag_id INTEGER NOT NULL REFERENCES Tags(tag_id)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
+		myDatabase.execSQL("INSERT INTO BookTag (tag_id,book_id) SELECT tag_id,book_id FROM BookTag_Obsolete");
+		myDatabase.execSQL("DROP TABLE BookTag_Obsolete");
+
+		myDatabase.setTransactionSuccessful();
+		myDatabase.endTransaction();
 	}
 }

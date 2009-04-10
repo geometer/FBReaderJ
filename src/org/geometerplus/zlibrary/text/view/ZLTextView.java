@@ -39,14 +39,14 @@ public abstract class ZLTextView extends ZLView {
 	}
 
 	public final void setModel(ZLTextModel model) {
-		final ArrayList list = new ArrayList(1);
+		final ArrayList<ZLTextModel> list = new ArrayList<ZLTextModel>(1);
 		list.add(model);
 		setModels(list, 0);
 	}
 	
 	public abstract void setModelIndex(int modelIndex);
 	
-	public abstract void setModels(ArrayList/*<ZLTextModel>*/ model, int current);
+	public abstract void setModels(ArrayList<ZLTextModel> model, int current);
 
 	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
 

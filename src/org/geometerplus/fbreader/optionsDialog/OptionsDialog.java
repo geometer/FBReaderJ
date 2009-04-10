@@ -87,11 +87,6 @@ public class OptionsDialog {
 		colorsTab.addOption("", builder.colorEntry());
 		
 		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
-		
-		final ZLDialogContent webTab = myDialog.createTab("Web");
-		webTab.addOption("defaultText",
-			new ZLToggleBooleanOptionEntry(fbreader.BookTextView.OpenInBrowserOption)
-		);
 	}
 	
 	public ZLOptionsDialog getDialog() {

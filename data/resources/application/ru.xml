@@ -194,17 +194,6 @@
 					<node name="choice" value="Использовать"/>
 					<node name="singleClickOpen" value="Открывать словарь по нажатию на слово"/>
 				</node>
-				<node name="Web" value="Web">
-					<node name="enableIntegration" value="Открывать внешние ссылки в %s"/>
-					<node name="defaultText" value="Открывать внешние ссылки в браузере"/>
-					<node name="choice" value="Браузер"/>
-					<node name="command" value="Выполнять команду"/>
-				</node>
-				<node name="Maemo" value="Maemo">
-					<node name="keyActionOnRelease" value="Реагировать на отпускание клавиши, а не на нажатие"/>
-					<node name="minStylusPressure" value="Минимальное давление стилуса"/>
-					<node name="maxStylusPressure" value="Максимальное давление стилуса"/>
-				</node>
 			</node>
 		</node>
 		<node name="InfoDialog">
