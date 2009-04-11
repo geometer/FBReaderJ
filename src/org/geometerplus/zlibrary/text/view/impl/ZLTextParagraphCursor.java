@@ -163,7 +163,7 @@ public final class ZLTextParagraphCursor {
 		myElements.clear();
 	}
 
-	boolean isFirst() {
+	public boolean isFirst() {
 		return Index == 0;
 	}
 

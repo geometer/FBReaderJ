@@ -48,7 +48,7 @@ public class TOCActivity extends ListActivity {
 		final FBReader fbreader = (FBReader)ZLApplication.Instance();
 		final TOCTree root = fbreader.Model.TOCTree;
 		myAdapter = new TOCAdapter(root);
-		final ZLTextWordCursor cursor = fbreader.BookTextView.StartCursor;
+		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
 		int index = cursor.getParagraphCursor().Index;	
 		if (cursor.isEndOfParagraph()) {
 			++index;

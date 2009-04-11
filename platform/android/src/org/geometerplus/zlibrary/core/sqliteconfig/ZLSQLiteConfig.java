@@ -45,7 +45,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		myDeleteGroupStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ?");
 	}
 
-	public void executeAsATransaction(Runnable actions) {
+	synchronized public void executeAsATransaction(Runnable actions) {
 		myDatabase.beginTransaction();
 		try {
 			actions.run();
@@ -55,7 +55,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		}
 	}
 
-	public void removeGroup(String name) {
+	synchronized public void removeGroup(String name) {
 		myDeleteGroupStatement.bindString(1, name);
 		try {
 			myDeleteGroupStatement.execute();
@@ -63,7 +63,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		}
 	}
 
-	public String getValue(String group, String name, String defaultValue) {
+	synchronized public String getValue(String group, String name, String defaultValue) {
 		String answer = defaultValue;
 		myGetValueStatement.bindString(1, group);
 		myGetValueStatement.bindString(2, name);
@@ -74,7 +74,8 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		return answer;
 	}
 
-	public void setValue(String group, String name, String value) {
+	synchronized public void setValue(String group, String name, String value) {
+		//System.err.println("g/n/v:" + group + ':' + name + ':' + value);
 		mySetValueStatement.bindString(1, group);
 		mySetValueStatement.bindString(2, name);
 		mySetValueStatement.bindString(3, value);
@@ -84,7 +85,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		}
 	}
 
-	public void unsetValue(String group, String name) {
+	synchronized public void unsetValue(String group, String name) {
 		myUnsetValueStatement.bindString(1, group);
 		myUnsetValueStatement.bindString(2, name);
 		try {

@@ -31,6 +31,7 @@ abstract public class ZLView {
 	abstract public String getCaption();
 
 	abstract public void paint(int dx, int dy);
+	abstract public void onScrollingFinished(int dx, int dy);
 
 	public boolean onStylusPress(int x, int y) {
 		return false;

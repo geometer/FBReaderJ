@@ -47,7 +47,7 @@ public abstract class FBView extends ZLTextViewImpl {
 
 	private int myStartX;
 	private int myStartY;
-	private boolean myTouchIsProcessed;
+	private boolean myScrollingIsActive;
 
 	public boolean onStylusPress(int x, int y) {
 		if (super.onStylusPress(x, y)) {
@@ -56,38 +56,65 @@ public abstract class FBView extends ZLTextViewImpl {
 
 		myStartX = x;
 		myStartY = y;
-		myTouchIsProcessed = false;
+		myScrollingIsActive = true;
 
 		//activateSelection(x, y);
 		return true;
 	}
 
 	public boolean onStylusMovePressed(int x, int y) {
-		if (super.onStylusMovePressed(x, y) || myTouchIsProcessed) {
+		if (super.onStylusMovePressed(x, y)) {
 			return true;
 		}
 
-		final int diffY = y - myStartY;
-		if (Math.abs(diffY) * 5 >= Context.getHeight()) {
+		if (myScrollingIsActive) {
+			final int diffY = y - myStartY;
+			boolean doScroll = true;
 			if (diffY > 0) {
-				ZLApplication.Instance().doAction(ActionCode.TOUCH_SCROLL_BACKWARD);
-			} else {
-				ZLApplication.Instance().doAction(ActionCode.TOUCH_SCROLL_FORWARD);
+				ZLTextWordCursor cursor = getStartCursor();
+				doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
+			} else if (diffY < 0) {
+				ZLTextWordCursor cursor = getEndCursor();
+				doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
 			}
-			myTouchIsProcessed = true;
-			return true;
+			if (doScroll) {
+				scrollTo(diffY);
+				return true;
+			}
 		}
 
 		return false;
 	}
 
 	public boolean onStylusRelease(int x, int y) {
+		boolean scrollingWasActive = myScrollingIsActive;
+		myScrollingIsActive = false;
+
 		if (super.onStylusRelease(x, y)) {
 			return true;
 		}
 
+		if (scrollingWasActive) {
+			final int diffY = y - myStartY;
+			boolean doScroll = false;
+			if (diffY > 0) {
+				ZLTextWordCursor cursor = getStartCursor();
+				doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
+			} else if (diffY < 0) {
+				ZLTextWordCursor cursor = getEndCursor();
+				doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
+			}
+			if (doScroll) {
+				final int h = Context.getHeight();
+				final int w = Context.getWidth();
+				final int minDiff = (h > w) ? h / 4 : h / 3;
+				startAutoScrolling(Math.abs(diffY) >= minDiff);
+				return true;
+			}
+		}
+
 		//activateSelection(x, y);
-		return myTouchIsProcessed;
+		return false;
 	}
 
 	public boolean onTrackballRotated(int diffX, int diffY) {

@@ -63,8 +63,33 @@ public class ZLAndroidWidget extends View {
 		myViewWidget = viewWidget;
 	}
 
-	public void onDraw(final Canvas canvas) {
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		if (myScreenIsTouched) {
+			final ZLView view = ZLApplication.Instance().getCurrentView();
+			view.onStylusRelease(myTouchX, myTouchY);
+			myScrollingInProgress = false;
+			myScrollingShift = 0;
+			myScreenIsTouched = false;
+		}
+	}
+
+	@Override
+	protected void onDraw(final Canvas canvas) {
 		super.onDraw(canvas);
+
+		final int w = getWidth();
+		final int h = getHeight();
+
+		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
+			myMainBitmap = null;
+		}
+		if (myMainBitmap == null) {
+			myMainBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			mySecondaryBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			mySecondaryBitmapIsUpToDate = false;
+			drawOnBitmap(myMainBitmap);
+		}
 
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			onDrawInScrolling(canvas);
@@ -102,14 +127,16 @@ public class ZLAndroidWidget extends View {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;
 				mySecondaryBitmap = swap;
+				mySecondaryBitmapIsUpToDate = false;
+				ZLApplication.Instance().getCurrentView().onScrollingFinished(0, (myScrollingBound < 0) ? 1 : -1);
 			}
-			mySecondaryBitmapIsUpToDate = false;
 			myScrollingInProgress = false;
 			myScrollingShift = 0;
 		} else {
 			if (shift < 0) {
 				shift += h;
 			}
+			// TODO: set color
 			canvas.drawLine(0, shift, w, shift, context.Paint);
 			if (myScrollingInProgress) {
 				postInvalidate();
@@ -121,8 +148,12 @@ public class ZLAndroidWidget extends View {
 		if (myMainBitmap == null) {
 			return;
 		}
-		drawOnBitmap(mySecondaryBitmap);
+		if (((shift > 0) && (myScrollingShift <= 0)) ||
+			((shift < 0) && (myScrollingShift >= 0))) {
+			mySecondaryBitmapIsUpToDate = false;
+		}
 		myScrollingShift = shift;
+		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
 	}
 
@@ -179,31 +210,26 @@ public class ZLAndroidWidget extends View {
 				canvas.rotate(90, w / 2, w / 2);
 				break;
 		}
-		int dy = (bitmap == myMainBitmap) ? 0 : ((myScrollingShift > 0) ? 1 : 0);
+		int dy = (bitmap == myMainBitmap) ? 0 : ((myScrollingShift > 0) ? -1 : 1);
 		view.paint(0, dy);
 		context.endPaint();
 	}
 
 	private void onDrawStatic(Canvas canvas) {
-		final int w = getWidth();
-		final int h = getHeight();
-
-		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
-			myMainBitmap = null;
-		}
-		if (myMainBitmap == null) {
-			myMainBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-			mySecondaryBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-		}
 		drawOnBitmap(myMainBitmap);
 		canvas.drawBitmap(myMainBitmap, 0, 0, ZLAndroidPaintContext.Instance().Paint);
 	}
 
+	@Override
 	public boolean onTrackballEvent(MotionEvent event) {
 		ZLApplication.Instance().getCurrentView().onTrackballRotated((int)(10 * event.getX()), (int)(10 * event.getY()));
 		return true;
 	}
 
+	private boolean myScreenIsTouched;
+	private int myTouchX;
+	private int myTouchY;
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int x = (int)event.getX();
 		int y = (int)event.getY();
@@ -231,14 +257,18 @@ public class ZLAndroidWidget extends View {
 				break;
 			}
 		}
+		myTouchX = x;
+		myTouchY = y;
 
-		ZLView view = ZLApplication.Instance().getCurrentView();
+		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
 				view.onStylusRelease(x, y);
+				myScreenIsTouched = false;
 				break;
 			case MotionEvent.ACTION_DOWN:
 				view.onStylusPress(x, y);
+				myScreenIsTouched = true;
 				break;
 			case MotionEvent.ACTION_MOVE:
 				view.onStylusMovePressed(x, y);
