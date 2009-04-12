@@ -30,8 +30,14 @@ abstract public class ZLView {
 
 	abstract public String getCaption();
 
-	abstract public void paint(int dx, int dy);
-	abstract public void onScrollingFinished(int dx, int dy);
+	public static final int PAGE_CENTRAL = 0;
+	public static final int PAGE_LEFT = 1;
+	public static final int PAGE_RIGHT = 2;
+	public static final int PAGE_TOP = 3;
+	public static final int PAGE_BOTTOM = 4;
+
+	abstract public void paint(int viewPage);
+	abstract public void onScrollingFinished(int viewPage);
 
 	public boolean onStylusPress(int x, int y) {
 		return false;
@@ -53,24 +59,21 @@ abstract public class ZLView {
 		return false;
 	}
 
-	final public void setVerticalScrollbarParameters(int full, int from, int to) {
+	public abstract int getScrollbarFullSize();
+	public abstract int getScrollbarThumbPosition(int viewPage);
+	public abstract int getScrollbarThumbLength(int viewPage);
+
+	final public void scrollTo(int viewPage, int shift) {
 		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
 		if (viewWidget != null) {
-			viewWidget.setVerticalScrollbarParameters(full, from, to);
+			viewWidget.scrollTo(viewPage, shift);
 		}
 	}
 
-	final public void scrollTo(int shift) {
+	public void startAutoScrolling(int viewPage) {
 		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
 		if (viewWidget != null) {
-			viewWidget.scrollTo(shift);
-		}
-	}
-
-	final public void startAutoScrolling(boolean forward) {
-		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
-		if (viewWidget != null) {
-			viewWidget.startAutoScrolling(forward);
+			viewWidget.startAutoScrolling(viewPage);
 		}
 	}
 }

@@ -32,9 +32,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.net.Uri;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 //import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -47,7 +49,11 @@ public class BookDownloader extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		//((ZLAndroidDialogManager)ZLDialogManager.getInstance()).setActivity(this);
+		setRequestedOrientation(
+			ZLAndroidApplication.Instance().AutoOrientationOption.getValue() ?
+				ActivityInfo.SCREEN_ORIENTATION_SENSOR :
+				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
+		);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.downloader);

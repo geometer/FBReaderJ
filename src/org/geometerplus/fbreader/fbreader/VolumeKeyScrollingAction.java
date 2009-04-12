@@ -17,34 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.view;
+package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-abstract public class ZLViewWidget {
-	private int myRotation;
+class VolumeKeyScrollingAction extends FBAction {
+	private final boolean myForward;
 
-	public interface Angle {
-		int DEGREES0 = 0;
-		int DEGREES90 = 90;
-		int DEGREES180 = 180;
-		int DEGREES270 = 270;
-	};
-
-	protected ZLViewWidget(int initialAngle) {
-		myRotation = initialAngle;
+	VolumeKeyScrollingAction(FBReader fbreader, boolean forward) {
+		super(fbreader);
+		myForward = forward;
+	}
+		
+	public boolean isEnabled() {
+		return ScrollingPreferences.Instance().VolumeKeysOption.getValue();
 	}
 
-	public final void rotate(int rotation) {
-		myRotation = rotation;
-	}
-
-	public final int getRotation() {
-		return myRotation;
-	}
-
-	// TODO: change to protected
-	abstract public void repaint();
-	abstract protected void scrollTo(int viewPage, int shift);
-	abstract protected void startAutoScrolling(int viewPage);
+	public void run() {
+		Reader.getTextView().doScrollPage(myForward);
+	}		
 }

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import android.app.Application;
 
 import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
@@ -32,6 +33,9 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public class ZLAndroidApplication extends Application {
 	private static ZLAndroidApplication ourApplication;
+
+	public final ZLBooleanOption AutoOrientationOption = new ZLBooleanOption("LookNFeel", "AutoOrientation", true);
+	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", true);
 
 	public static ZLAndroidApplication Instance() {
 		return ourApplication;

@@ -33,18 +33,18 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 		widget.setViewWidget(this);
 	}
 
-	protected void scrollTo(int shift) {
+	protected void scrollTo(int viewPage, int shift) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 		widget.setViewWidget(this);
-		widget.scrollTo(shift);
+		widget.scrollToPage(viewPage, shift);
 	}
 
-	protected void startAutoScrolling(boolean forward) {
+	protected void startAutoScrolling(int viewPage) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 		widget.setViewWidget(this);
-		widget.startAutoScrolling(forward);
+		widget.startAutoScrolling(viewPage);
 	}
 
 	public void repaint() {
@@ -53,9 +53,5 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 		widget.setViewWidget(this);
 		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
 		widget.postInvalidate();
-	}
-
-	protected void setVerticalScrollbarParameters(int full, int from, int to) {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget().setVerticalScrollbarParameters(full, from, to);
 	}
 }

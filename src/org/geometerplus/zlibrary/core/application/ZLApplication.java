@@ -191,20 +191,17 @@ public abstract class ZLApplication {
 			action.checkAndRun();
 		}
 	}
+
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
 	
-	public final void doActionByKey(String key) {		
+	public final boolean doActionByKey(String key) {		
 		String actionId = keyBindings().getBinding(key);
 		if (actionId != null) {
 			ZLAction a = getAction(keyBindings().getBinding(key));
-			if ((a != null)){// &&
-					//(!a.useKeyDelay() /*||
-					 //(myLastKeyActionTime.millisecondsTo(ZLTime()) >= KeyDelayOption.getValue())*/)) {
-				a.checkAndRun();
-				//myLastKeyActionTime = ZLTime();
-			}
+			return (a != null) && a.checkAndRun();
 		}
+		return false;
 	}
 
 	public boolean closeWindow() {
@@ -248,10 +245,12 @@ public abstract class ZLApplication {
 			return isVisible();
 		}
 		
-		public final void checkAndRun() {
+		public final boolean checkAndRun() {
 			if (isEnabled()) {
 				run();
+				return true;
 			}
+			return false;
 		}
 		
 		public boolean useKeyDelay() {

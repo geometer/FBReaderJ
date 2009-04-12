@@ -96,15 +96,12 @@ public class BookTextView extends FBView {
 		}
 	}
 
-	protected void onPreparePaintInfo() {
+	protected void onPaintInfoPrepared() {
 		if (myPositionStack.isEmpty()) {
 			myPositionStack.add(new Position(myCurrentModelIndex, getStartCursor()));
 		} else {
 			((Position)myPositionStack.get(myCurrentPointInStack)).set(getStartCursor());
 			((Position)myPositionStack.get(myCurrentPointInStack)).ModelIndex = myCurrentModelIndex;
-
-		//	Position position = (Position)myPositionStack.get(myCurrentPointInStack);
-		//	System.out.println("current position " + position.ModelIndex + " , " + position.ParagraphIndex);
 		}
 	}
 
@@ -153,11 +150,7 @@ public class BookTextView extends FBView {
 		}
 	}
 	
-	public boolean onStylusRelease(int x, int y) {
-		if (super.onStylusRelease(x, y)) {
-			return false;
-		}
-
+	public boolean onStylusPress(int x, int y) {
 		ZLTextElementArea area = getElementByCoordinates(x, y);
 		if (area != null) {
 			ZLTextElement element = area.Element;
@@ -199,7 +192,8 @@ public class BookTextView extends FBView {
 				}
 			}
 		}
-		return false;
+
+		return super.onStylusPress(x, y);
 	}
 	
 	public String getFileName() {

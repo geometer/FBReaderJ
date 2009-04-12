@@ -6,6 +6,7 @@
     <node name="recent" value="Недавние"/>
   </node>
   <node name="menu">
+		<node name="preferences" value="Настройки"/>
 	  <node name="bookInfo" value="Информация о книге..."/>
 	  <node name="toc" value="Содержание"/>
 		<node name="library" value="Библиотека">

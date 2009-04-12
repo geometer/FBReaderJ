@@ -21,15 +21,16 @@ package org.geometerplus.fbreader.fbreader;
 
 public interface ActionCode {
 	String SHOW_LIBRARY = "showLibrary";
-	String SHOW_OPTIONS = "preferences";
+	String SHOW_OPTIONS = "preferences-old";
+	String SHOW_PREFERENCES = "preferences";
 	String UNDO = "undo";
 	String REDO = "redo";
 	String SHOW_CONTENTS = "toc";
 	String SEARCH = "search";
 	String FIND_PREVIOUS = "findPrevious";
 	String FIND_NEXT = "findNext";
-	String TOUCH_SCROLL_FORWARD = "touchScrollForward";
-	String TOUCH_SCROLL_BACKWARD = "touchScrollBackward";
+	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
+	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
 	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";
 	String TRACKBALL_SCROLL_BACKWARD = "trackballScrollBackward";
 	String SCROLL_TO_HOME = "gotoHome";

@@ -115,13 +115,7 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 				);
 				break;
 			case ZLOptionKind.KEY:
-				view = new ZLAndroidKeyOptionView(
-					this, name, (ZLKeyOptionEntry)option
-				);
-				break;
 			case ZLOptionKind.ORDER:
-				// TODO: implement
-				break;
 			case ZLOptionKind.MULTILINE:
 				// TODO: implement
 				break;

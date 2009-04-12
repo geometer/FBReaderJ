@@ -6,10 +6,8 @@
     <node name="recent" value="Recent"/>
   </node>
   <node name="menu">
-		<node name="preferences" value="Preferences">
-			<node name="preferences" value="FBReader..."/>
-	  	<node name="bookInfo" value="Current Book..."/>
-		</node>
+		<node name="preferences-old" value="Settings (Old)"/>
+		<node name="preferences" value="Settings"/>
 		<node name="showLibrary" value="Library"/>
 		<node name="library" value="Library Old">
 			<node name="previousBook" value="Previous Book"/>
@@ -46,6 +44,36 @@
 		<node name="quit" value="Close"/>
 	</node>
 	<node name="dialog">
+		<node name="Preferences">
+			<node name="LookNFeel" value="Look &amp; Feel">
+				<node name="autoOrientation" value="Auto orientation">
+					<node name="summaryOn" value="The display will rotate when user moves the device"/>
+					<node name="summaryOff" value="The display will not rotate when user moves the device"/>
+				</node>
+				<node name="showStatusBar" value="Show status bar">
+					<node name="summaryOn" value="The status bar will be shown in reading mode"/>
+					<node name="summaryOff" value="The status bar will be hidden in reading mode"/>
+				</node>
+			</node>
+			<node name="Scrolling" value="Scrolling">
+				<node name="flick" value="Flick scrolling">
+					<node name="summaryOn" value="Pages will be scrolled by finger flick"/>
+					<node name="summaryOff" value="Pages will be scrolled by finger tap"/>
+				</node>
+				<node name="volumeKeys" value="Volume keys scrolling">
+					<node name="summaryOn" value="Volume keys will be used for scrolling"/>
+					<node name="summaryOff" value="Volume keys will be used as usual"/>
+				</node>
+				<node name="animated" value="Animated scrolling">
+					<node name="summaryOn" value="Pages will be scrolled smoothly"/>
+					<node name="summaryOff" value="Pages will be scrolled instantly"/>
+				</node>
+				<node name="horizontal" value="Horizontal scrolling">
+					<node name="summaryOn" value="Scroll pages horizontally"/>
+					<node name="summaryOff" value="Scroll pages vertically"/>
+				</node>
+			</node>
+		</node>
 		<node name="button">
 			<node name="go" value="&amp;Go!"/>
 			<node name="thisOnly" value="This only"/>

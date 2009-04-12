@@ -50,8 +50,6 @@ public final class FBReader extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption = 
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
-	public final ScrollingOptions TouchScrollingOptions =
-		new ScrollingOptions("TouchScrolling", ZLTextView.ScrollingMode.NO_OVERLAPPING);
 	public final ScrollingOptions TrackballScrollingOptions =
 		new ScrollingOptions("TrackballScrolling", ZLTextView.ScrollingMode.SCROLL_LINES);
 	
@@ -107,6 +105,7 @@ public final class FBReader extends ZLApplication {
 
 		addAction(ActionCode.SHOW_LIBRARY, new ShowLibrary(this));
 		addAction(ActionCode.SHOW_OPTIONS, new ShowOptionsDialogAction(this));
+		addAction(ActionCode.SHOW_PREFERENCES, new PreferencesAction(this));
 		addAction(ActionCode.SHOW_CONTENTS, new ShowTOCAction(this));
 		
 		addAction(ActionCode.SEARCH, new SearchAction(this));
@@ -116,8 +115,8 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
-		addAction(ActionCode.TOUCH_SCROLL_FORWARD, new ScrollingAction(this, TouchScrollingOptions, true));
-		addAction(ActionCode.TOUCH_SCROLL_BACKWARD, new ScrollingAction(this, TouchScrollingOptions, false));
+		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
+		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));
 		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new ScrollingAction(this, TrackballScrollingOptions, true));
 		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new ScrollingAction(this, TrackballScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
@@ -174,8 +173,8 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	ZLTextView getTextView() {
-		return (ZLTextView)getCurrentView();
+	FBView getTextView() {
+		return (FBView)getCurrentView();
 	}
 
 	int getMode() {

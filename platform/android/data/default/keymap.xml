@@ -6,8 +6,8 @@
 	<binding key="&lt;F&gt;" action="search"/>
 	<binding key="&lt;P&gt;" action="findPrevious"/>
 	<binding key="&lt;N&gt;" action="findNext"/>
-	<binding key="&lt;VolumeDown&gt;" action="touchScrollForward"/>
-	<binding key="&lt;VolumeUp&gt;" action="touchScrollBackward"/>
+	<binding key="&lt;VolumeDown&gt;" action="volumeKeyScrollForward"/>
+	<binding key="&lt;VolumeUp&gt;" action="volumeKeyScrollBackward"/>
 	<binding key="&lt;Ctrl&gt;+&lt;Home&gt;" action="gotoHome"/>
 	<binding key="&lt;Home&gt;" action="gotoSectionStart"/>
 	<binding key="&lt;End&gt;" action="gotoSectionEnd"/>

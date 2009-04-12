@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menubar>
-	<submenu id="preferences">
-		<item id="preferences"/>
-		<item id="bookInfo"/>
-	</submenu>
+	<item id="preferences"/>
+	<item id="preferences-old"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>

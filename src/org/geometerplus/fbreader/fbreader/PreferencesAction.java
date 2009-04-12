@@ -17,34 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.view;
+package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.android.fbreader.preferences.PreferenceActivity;
 
-abstract public class ZLViewWidget {
-	private int myRotation;
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
-	public interface Angle {
-		int DEGREES0 = 0;
-		int DEGREES90 = 90;
-		int DEGREES180 = 180;
-		int DEGREES270 = 270;
-	};
-
-	protected ZLViewWidget(int initialAngle) {
-		myRotation = initialAngle;
+class PreferencesAction extends FBAction {
+	PreferencesAction(FBReader fbreader) {
+		super(fbreader);
 	}
 
-	public final void rotate(int rotation) {
-		myRotation = rotation;
+	public void run() {
+		final ZLAndroidDialogManager dialogManager =
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
+		dialogManager.runActivity(PreferenceActivity.class);
 	}
-
-	public final int getRotation() {
-		return myRotation;
-	}
-
-	// TODO: change to protected
-	abstract public void repaint();
-	abstract protected void scrollTo(int viewPage, int shift);
-	abstract protected void startAutoScrolling(int viewPage);
 }

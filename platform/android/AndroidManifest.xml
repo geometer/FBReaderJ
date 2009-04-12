@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="304" android:versionName="0.3.4">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="400" android:versionName="0.4.0">
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:name="org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
-		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:icon="@drawable/fbreader" android:label="FBReader" android:screenOrientation="sensor" android:configChanges="orientation|keyboardHidden">
+		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:icon="@drawable/fbreader" android:label="FBReader" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -12,7 +12,9 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden">
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.BookDownloader" android:theme="@android:style/Theme.Dialog" android:screenOrientation="sensor" android:configChanges="orientation|keyboardHidden">
+		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:configChanges="orientation|keyboardHidden">
+		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.BookDownloader" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />

@@ -49,8 +49,6 @@ public class OptionsDialog {
 //		encodingTab.addOption("defaultEncodingSet", encodingSetEntry);
 //		encodingTab.addOption("defaultEncoding", encodingEntry);
 
-		new ScrollingOptionsPage(myDialog.createTab("Scrolling"), fbreader);
-				
 		final ZLDialogContent selectionTab = myDialog.createTab("Selection");
 		selectionTab.addOption("enableSelection", FBView.selectionOption());
 		
@@ -85,8 +83,6 @@ public class OptionsDialog {
 		builder.setInitial(BACKGROUND);
 		colorsTab.addOption(colorKey, builder.comboEntry());
 		colorsTab.addOption("", builder.colorEntry());
-		
-		new KeyBindingsPage(fbreader, myDialog.createTab("Keys"));
 	}
 	
 	public ZLOptionsDialog getDialog() {

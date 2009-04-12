@@ -19,11 +19,47 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.WindowManager;
+import android.content.pm.ActivityInfo;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 public class FBReader extends ZLAndroidActivity {
+	private int myFullScreenFlag;
+
+	@Override
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+		myFullScreenFlag = 
+			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
+		);
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+
+		final int fullScreenFlag = 
+			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+		if (fullScreenFlag != myFullScreenFlag) {
+			startActivity(new Intent(this, this.getClass()));
+			finish();
+		}
+		setRequestedOrientation(
+			application.AutoOrientationOption.getValue() ?
+				ActivityInfo.SCREEN_ORIENTATION_SENSOR :
+				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
+		);
+	}
+
 	protected ZLApplication createApplication(String fileName) {
 		String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
 		ZLApplication application = new org.geometerplus.fbreader.fbreader.FBReader(args);

@@ -385,34 +385,74 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
-	public synchronized void onScrollingFinished(int dx, int dy) {
-		if ((dx < 0) || (dy < 0)) {
-			ZLTextPage swap = myNextPage;
-			myNextPage = myCurrentPage;
-			myCurrentPage = myPreviousPage;
-			myPreviousPage = swap;
-			myPreviousPage.reset();
-			if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
-				preparePaintInfo(myNextPage);
-				myCurrentPage.EndCursor.setCursor(myNextPage.StartCursor);
-				myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+	private volatile boolean myScrollingIsActive;
+	protected boolean isScrollingActive() {
+		return myScrollingIsActive;
+	}
+	protected void setScrollingActive(boolean active) {
+		myScrollingIsActive = active;
+	}
+
+	public final synchronized void startAutoScrolling(int viewPage) {
+		if (isScrollingActive()) {
+			return;
+		}
+
+		setScrollingActive(true);
+		super.startAutoScrolling(viewPage);
+	}
+
+	public final synchronized void onScrollingFinished(int viewPage) {
+		setScrollingActive(false);
+		switch (viewPage) {
+			case PAGE_CENTRAL:
+				break;
+			case PAGE_LEFT:
+			case PAGE_TOP:
+			{
+				ZLTextPage swap = myNextPage;
+				myNextPage = myCurrentPage;
+				myCurrentPage = myPreviousPage;
+				myPreviousPage = swap;
+				myPreviousPage.reset();
+				if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myNextPage);
+					myCurrentPage.EndCursor.setCursor(myNextPage.StartCursor);
+					myCurrentPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+				} else if (!myCurrentPage.EndCursor.isNull() &&
+						   !myNextPage.StartCursor.isNull() &&
+						   !myCurrentPage.EndCursor.equalsToCursor(myNextPage.StartCursor)) {
+					myNextPage.reset();
+					myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
+					myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
+				if (myCurrentPage.PaintState == PaintStateEnum.READY) {
+					onPaintInfoPrepared();
+				}
+				break;
 			}
-		} else if ((dx > 0) || (dy > 0)) {
-			ZLTextPage swap = myPreviousPage;
-			myPreviousPage = myCurrentPage;
-			myCurrentPage = myNextPage;
-			myNextPage = swap;
-			myNextPage.reset();
-			if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
-				preparePaintInfo(myPreviousPage);
-				myCurrentPage.StartCursor.setCursor(myPreviousPage.EndCursor);
-				myCurrentPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+			case PAGE_RIGHT:
+			case PAGE_BOTTOM:
+			{
+				ZLTextPage swap = myPreviousPage;
+				myPreviousPage = myCurrentPage;
+				myCurrentPage = myNextPage;
+				myNextPage = swap;
+				myNextPage.reset();
+				if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myPreviousPage);
+					myCurrentPage.StartCursor.setCursor(myNextPage.EndCursor);
+					myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
+				if (myCurrentPage.PaintState == PaintStateEnum.READY) {
+					onPaintInfoPrepared();
+				}
+				break;
 			}
 		}
 	}
 
-	public synchronized void paint(int dx, int dy) {
-		System.err.println("paint " + dx + ' ' + dy);
+	public synchronized void paint(int viewPage) {
 		myTextElementMap.clear();
 
 		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
@@ -424,39 +464,34 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 
 		ZLTextPage page;
-		if ((dx < 0) || (dy < 0)) {
-			page = myPreviousPage;
-			if (myPreviousPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
-				preparePaintInfo(myCurrentPage);
-				myPreviousPage.EndCursor.setCursor(myCurrentPage.StartCursor);
-				myPreviousPage.PaintState = PaintStateEnum.END_IS_KNOWN;
-			}
-		} else if ((dx > 0) || (dy > 0)) {
-			page = myNextPage;
-			if (myNextPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
-				preparePaintInfo(myCurrentPage);
-				myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
-				myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
-			}
-		} else {
-			page = myCurrentPage;
+		switch (viewPage) {
+			default:
+			case PAGE_CENTRAL:
+				page = myCurrentPage;
+				break;
+			case PAGE_TOP:
+			case PAGE_LEFT:
+				page = myPreviousPage;
+				if (myPreviousPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myCurrentPage);
+					myPreviousPage.EndCursor.setCursor(myCurrentPage.StartCursor);
+					myPreviousPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+				}
+				break;
+			case PAGE_BOTTOM:
+			case PAGE_RIGHT:
+				page = myNextPage;
+				if (myNextPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myCurrentPage);
+					myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
+					myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
 		}
 
 		preparePaintInfo(page);
 
 		if (page.StartCursor.isNull() || page.EndCursor.isNull()) {
 			return;
-		}
-
-		{
-			final int fullScrollBarSize = myTextSize[myTextSize.length - 1];
-			final int scrollBarStart = sizeOfTextBeforeCursor(page.StartCursor);
-			final int scrollBarEnd = sizeOfTextBeforeCursor(page.EndCursor);
-			setVerticalScrollbarParameters(
-				fullScrollBarSize,
-				scrollBarStart,
-				(scrollBarEnd != -1) ? scrollBarEnd : fullScrollBarSize
-			);
 		}
 
 		final ArrayList<ZLTextLineInfo> lineInfos = page.LineInfos;
@@ -478,6 +513,53 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			drawTextLine(context, info, labels[index], labels[index + 1]);
 			++index;
 		}
+	}
+
+	private ZLTextPage getPage(int viewPage) {
+		switch (viewPage) {
+			default:
+			case PAGE_CENTRAL:
+				return myCurrentPage;
+			case PAGE_TOP:
+			case PAGE_LEFT:
+				return myPreviousPage;
+			case PAGE_BOTTOM:
+			case PAGE_RIGHT:
+				return myNextPage;
+		}
+	}
+
+	public final int getScrollbarFullSize() {
+		if ((myTextSize == null) || (myTextSize.length == 0)) {
+			return 1;
+		}
+		return myTextSize[myTextSize.length - 1];
+	}
+
+	public final int getScrollbarThumbPosition(int viewPage) {
+		if ((myTextSize == null) || (myTextSize.length == 0)) {
+			return 0;
+		}
+		ZLTextPage page = getPage(viewPage);
+		preparePaintInfo(page);
+		return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
+	}
+
+	public final int getScrollbarThumbLength(int viewPage) {
+		if ((myTextSize == null) || (myTextSize.length == 0)) {
+			return 0;
+		}
+		ZLTextPage page = getPage(viewPage);
+		preparePaintInfo(page);
+		int start = sizeOfTextBeforeCursor(page.StartCursor);
+		if (start == -1) {
+			start = 0;
+		}
+		int end = sizeOfTextBeforeCursor(page.EndCursor);
+		if (end == -1) {
+			end = myTextSize[myTextSize.length - 1];
+		}
+		return Math.max(1, end - start);
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
@@ -987,7 +1069,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 	
-	public void scrollPage(boolean forward, int scrollingMode, int value) {
+	public synchronized final void scrollPage(boolean forward, int scrollingMode, int value) {
+		if (isScrollingActive()) {
+			return;
+		}
+
 		preparePaintInfo(myCurrentPage);
 		myPreviousPage.reset();
 		myNextPage.reset();
@@ -1054,12 +1140,22 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			page.OldHeight = newHeight;
 			if (page.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 				page.LineInfos.clear();
-				if (!page.StartCursor.isNull()) {
-					page.EndCursor.reset();
-					page.PaintState = PaintStateEnum.START_IS_KNOWN;
-				} else if (!page.EndCursor.isNull()) {
-					page.StartCursor.reset();
-					page.PaintState = PaintStateEnum.END_IS_KNOWN;
+				if (page == myPreviousPage) {
+					if (!page.EndCursor.isNull()) {
+						page.StartCursor.reset();
+						page.PaintState = PaintStateEnum.END_IS_KNOWN;
+					} else if (!page.StartCursor.isNull()) {
+						page.EndCursor.reset();
+						page.PaintState = PaintStateEnum.START_IS_KNOWN;
+					}
+				} else {
+					if (!page.StartCursor.isNull()) {
+						page.EndCursor.reset();
+						page.PaintState = PaintStateEnum.START_IS_KNOWN;
+					} else if (!page.EndCursor.isNull()) {
+						page.StartCursor.reset();
+						page.PaintState = PaintStateEnum.END_IS_KNOWN;
+					}
 				}
 			}
 		}
@@ -1168,11 +1264,11 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (page == myCurrentPage) {
 			myPreviousPage.reset();
 			myNextPage.reset();
-			onPreparePaintInfo();
+			onPaintInfoPrepared();
 		}
 	}
 
-	protected void onPreparePaintInfo() {
+	protected void onPaintInfoPrepared() {
 	}
 
 	public void clearCaches() {
@@ -1303,7 +1399,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public boolean onStylusMovePressed(int x, int y) {
 		if (mySelectionModel.extendTo(x, y)) {
-			//copySelectedTextToClipboard(ZLDialogManager::CLIPBOARD_SELECTION);
 			ZLApplication.Instance().refreshWindow();
 			return true;
 		}
@@ -1323,5 +1418,4 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			ZLApplication.Instance().refreshWindow();
 		}
 	}
-
 }
