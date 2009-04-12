@@ -52,6 +52,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	}
 
 	boolean readBook(String fileName) {
+		Base64EncodedImage.resetCounter();
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
 		return processor.read(this, fileName);
 	}
@@ -182,7 +183,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			
 			case FB2Tag.BINARY:
 				if (myCurrentImage != null) {
-					myCurrentImage.trimToSize();
+					myCurrentImage.close();
 					myCurrentImage = null;
 				}
 				break;	

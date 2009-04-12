@@ -19,35 +19,50 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
-import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
+import java.io.*;
+
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
 final class Base64EncodedImage extends ZLSingleImage {
-	private ZLTextBuffer myEncodedData = new ZLTextBuffer();
-	private byte[] myData;
+	private static final String DIRECTORY_NAME = "/sdcard/Books/.FBReader";
+
+	private static int ourCounter;
+
+	static void resetCounter() {
+		ourCounter = 0;
+	}
+
+	private final String myFileName;
+	private OutputStreamWriter myStreamWriter;
 	
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
 		super(contentType);
+		new File(DIRECTORY_NAME).mkdirs();
+		myFileName = DIRECTORY_NAME + "/image" + ourCounter++;
+		try {
+			myStreamWriter = new OutputStreamWriter(new FileOutputStream(myFileName), "UTF-8");
+		} catch (IOException e) {
+		}
 	}
 
-	private static byte decodeByte(char encodedChar) {
-		switch (encodedChar) {
+	private static byte decodeByte(byte encodedByte) {
+		switch (encodedByte) {
 			case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
 			case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
 			case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
 			case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
 			case 'Y': case 'Z':
-				return (byte)(encodedChar - 'A');
+				return (byte)(encodedByte - 'A');
 			case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
 			case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
 			case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
 			case 's': case 't': case 'u': case 'v': case 'w': case 'x':
 			case 'y': case 'z':
-				return (byte)(encodedChar - 'a' + 26);
+				return (byte)(encodedByte - 'a' + 26);
 			case '0': case '1': case '2': case '3': case '4':
 			case '5': case '6': case '7': case '8': case '9':
-				return (byte)(encodedChar - '0' + 52);
+				return (byte)(encodedByte - '0' + 52);
 			case '+':
 				return 62;
 			case '/':
@@ -58,17 +73,27 @@ final class Base64EncodedImage extends ZLSingleImage {
 		return -1;
 	}
 
-	private void decode() {
-		if ((myEncodedData == null) || (myData != null)) {
-			return;
+	public byte[] byteData() {
+		int dataLength;
+		FileInputStream stream;
+		try {
+			File file = new File(myFileName);
+			dataLength = (int)file.length();
+			stream = new FileInputStream(file);
+		} catch (IOException e) {
+			return null;
 		}
 
-		final char[] encodedData = myEncodedData.getData();
-		final int dataLength = myEncodedData.getLength();
-		
-		final int newLength = dataLength * 3 / 4;
-		final byte[] data = new byte[newLength];
-		for (int pos = 0, dataPos = 0; pos < dataLength; ) {
+		final byte[] encodedData = new byte[dataLength];
+		try {
+			dataLength = stream.read(encodedData);
+		} catch (IOException e) {
+			return null;
+		}
+
+		final byte[] data = new byte[dataLength * 3 / 4 + 1];
+		int dataPos = 0;
+		for (int pos = 0; pos < dataLength; ) {
 			byte n0 = -1, n1 = -1, n2 = -1, n3 = -1;
 			while ((pos < dataLength) && (n0 == -1)) {
 				n0 = decodeByte(encodedData[pos++]);
@@ -86,20 +111,22 @@ final class Base64EncodedImage extends ZLSingleImage {
 			data[dataPos++] = (byte) (((n1 & 0xf) << 4) | ((n2 >> 2) & 0xf));
 			data[dataPos++] = (byte) (n2 << 6 | n3);
 		}
-		myData = data;
-		myEncodedData = null;
-	}
-	
-	public byte[] byteData() {
-		decode();
-		return myData;
+		return data;
 	}
 	
 	void addData(char[] data, int offset, int length) {
-		myEncodedData.append(data, offset, length);
+		if (myStreamWriter != null) {
+			try {
+				myStreamWriter.write(data, offset, length);
+			} catch (IOException e) {
+			}
+		}
 	}
 
-	void trimToSize() {
-		myEncodedData.trimToSize();
+	void close() {
+		try {
+			myStreamWriter.close();
+		} catch (IOException e) {
+		}
 	}
 }
