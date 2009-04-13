@@ -50,7 +50,7 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init() {
-		final Category commonCategory = new Category("Common");
+		final Category commonCategory = new Category(null);
 		final BookDescription description = ((FBReader)FBReader.Instance()).Model.Description;
 		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.getResource(), "title", description));
 	}

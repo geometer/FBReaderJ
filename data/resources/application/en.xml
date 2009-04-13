@@ -40,11 +40,9 @@
 	</node>
 	<node name="dialog">
 		<node name="BookInfo">
-			<node name="Common" value="Common">
-				<node name="title" value="Title"/>
-				<node name="language" value="Language"/>
-				<node name="encoding" value="Encoding"/>
-			</node>
+			<node name="title" value="Title"/>
+			<node name="language" value="Language"/>
+			<node name="encoding" value="Encoding"/>
 		</node>
 		<node name="Preferences">
 			<node name="LookNFeel" value="Look &amp; Feel">

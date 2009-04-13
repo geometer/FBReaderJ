@@ -32,13 +32,18 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 	protected class Category {
 		private final ZLResource myResource;
-		private final PreferenceCategory myCategory;
+		private final PreferenceGroup myGroup;
 
 		Category(String resourceKey) {
-			myResource = ZLPreferenceActivity.this.myResource.getResource(resourceKey);
-			myCategory = new PreferenceCategory(ZLPreferenceActivity.this);
-			myCategory.setTitle(myResource.getValue());
-			myScreen.addPreference(myCategory);
+			if (resourceKey != null) {
+				myResource = ZLPreferenceActivity.this.myResource.getResource(resourceKey);
+				myGroup = new PreferenceCategory(ZLPreferenceActivity.this);
+				myGroup.setTitle(myResource.getValue());
+				myScreen.addPreference(myGroup);
+			} else {
+				myResource = ZLPreferenceActivity.this.myResource;
+				myGroup = myScreen;
+			}
 		}
 
 		ZLResource getResource() {
@@ -46,14 +51,14 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		}
 
 		void addPreference(ZLStringPreference preference) {
-			myCategory.addPreference(preference);
+			myGroup.addPreference(preference);
 			myPreferences.add(preference);
 		}
 
 		void addOption(ZLBooleanOption option, String resourceKey) {
 			ZLBooleanPreference preference =
 				new ZLBooleanPreference(ZLPreferenceActivity.this, option, myResource, resourceKey);
-			myCategory.addPreference(preference);
+			myGroup.addPreference(preference);
 			myPreferences.add(preference);
 		}
 	}
