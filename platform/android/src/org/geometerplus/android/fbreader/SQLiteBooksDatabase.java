@@ -97,7 +97,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	public void updateBookInfo(long bookId, String encoding, String language, String title) {
 		if (myUpdateBookInfoStatement == null) {
 			myUpdateBookInfoStatement = myDatabase.compileStatement(
-				"UPDATE Books SET encoding = ? language = ? title = ? WHERE book_id = ?"
+				"UPDATE Books SET encoding = ?, language = ?, title = ? WHERE book_id = ?"
 			);
 		}
 		bindString(myUpdateBookInfoStatement, 1, encoding);

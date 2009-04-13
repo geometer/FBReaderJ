@@ -32,18 +32,17 @@ class BookTitlePreference extends ZLStringPreference {
 	BookTitlePreference(Context context, ZLResource rootResource, String resourceKey, BookDescription description) {
 		super(context, rootResource, resourceKey);
 		myDescription = description;
-
-		// TODO:
-		setSummary(description.getTitle());
-		setText(description.getTitle());
+		setValue(description.getTitle());
 	}
 
 	public void accept() {
-		// TODO: implement
+		//myDescription.setTitle(getEditText().getText().toString());
 	}
 }
 
 public class BookInfoActivity extends ZLPreferenceActivity {
+	private BookDescription myDescription;
+
 	public BookInfoActivity() {
 		super("BookInfo");
 	}
@@ -51,7 +50,13 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category commonCategory = new Category(null);
-		final BookDescription description = ((FBReader)FBReader.Instance()).Model.Description;
-		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.getResource(), "title", description));
+		myDescription = ((FBReader)FBReader.Instance()).Model.Description;
+		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.getResource(), "title", myDescription));
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		myDescription.save();
 	}
 }

@@ -220,7 +220,7 @@ public class BookDescription {
 		addTag(Tag.getTag(null, tagName));
 	}
 
-	private void save() {
+	public void save() {
 		if (!myIsChanged) {
 			return;
 		}

@@ -31,4 +31,16 @@ abstract class ZLStringPreference extends EditTextPreference implements ZLPrefer
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
 	}
+
+	protected void setValue(String text) {
+		setSummary(text);
+		setText(text);
+	}
+
+	@Override
+	protected void onDialogClosed(boolean result) {
+		if (result) {
+			setValue(getEditText().getText().toString());
+		}
+	}
 }
