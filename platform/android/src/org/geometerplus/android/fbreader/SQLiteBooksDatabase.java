@@ -45,7 +45,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.setVersion(2);
 	}
 
-	public void executeAsATransaction(Runnable actions) {
+	protected void executeAsATransaction(Runnable actions) {
 		myDatabase.beginTransaction();
 		try {
 			actions.run();
@@ -66,7 +66,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private static final String BOOKS_TABLE = "Books";
 	private static final String[] BOOKS_COLUMNS = { "book_id", "encoding", "language", "title" };
 	private static final String FILE_NAME_CONDITION = "file_name = ?";
-	public long loadBook(BookDescription description) {
+	protected long loadBook(BookDescription description) {
 		final Cursor cursor = myDatabase.query(
 			BOOKS_TABLE,
 			BOOKS_COLUMNS,
@@ -84,7 +84,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return id;
 	}
 
-	public void listBooks() {
+	protected void listBooks() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT Authors.name,Authors.sort_key,Books.title,Books.language,Books.encoding,Books.file_name FROM Books LEFT JOIN BookAuthor ON Books.book_id = BookAuthor.book_id LEFT JOIN Authors ON Authors.author_id = BookAuthor.author_id ORDER by Books.file_name", null);
 		while (cursor.moveToNext()) {
@@ -94,7 +94,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myUpdateBookInfoStatement;
-	public void updateBookInfo(long bookId, String encoding, String language, String title) {
+	protected void updateBookInfo(long bookId, String encoding, String language, String title) {
 		if (myUpdateBookInfoStatement == null) {
 			myUpdateBookInfoStatement = myDatabase.compileStatement(
 				"UPDATE Books SET encoding = ?, language = ?, title = ? WHERE book_id = ?"
@@ -108,7 +108,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myInsertBookInfoStatement;
-	public long insertBookInfo(String fileName, String encoding, String language, String title) {
+	protected long insertBookInfo(String fileName, String encoding, String language, String title) {
 		if (myInsertBookInfoStatement == null) {
 			myInsertBookInfoStatement = myDatabase.compileStatement(
 				"INSERT INTO Books (encoding,language,title,file_name) VALUES (?,?,?,?)"
@@ -121,10 +121,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return myInsertBookInfoStatement.executeInsert();
 	}
 
+	private SQLiteStatement myDeleteBookAuthorsStatement;
+	protected void deleteAllBookAuthors(long bookId) {
+		if (myDeleteBookAuthorsStatement == null) {
+			myDeleteBookAuthorsStatement = myDatabase.compileStatement(
+				"DELETE FROM BookAuthor WHERE book_id = ?"
+			);
+			myDeleteBookAuthorsStatement.bindLong(1, bookId);
+			myDeleteBookAuthorsStatement.execute();
+		}
+	}
+
 	private SQLiteStatement myGetAuthorIdStatement;
 	private SQLiteStatement myInsertAuthorStatement;
 	private SQLiteStatement myInsertBookAuthorStatement;
-	public void saveBookAuthorInfo(long bookId, long index, Author author) {
+	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
 		if (myGetAuthorIdStatement == null) {
 			myGetAuthorIdStatement = myDatabase.compileStatement(
 				"SELECT author_id FROM Authors WHERE name = ? AND sort_key = ?"
@@ -153,7 +164,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myInsertBookAuthorStatement.execute();
 	}
 
-	public ArrayList<Author> loadAuthors(long bookId) {
+	protected ArrayList<Author> loadAuthors(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
 			return null;
@@ -210,7 +221,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myInsertBookTagStatement;
-	public void saveBookTagInfo(long bookId, Tag tag) {
+	protected void saveBookTagInfo(long bookId, Tag tag) {
 		if (myInsertBookTagStatement == null) {
 			myInsertBookTagStatement = myDatabase.compileStatement(
 				"INSERT INTO BookTag (book_id,tag_id) VALUES (?,?)"
@@ -236,7 +247,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return tag;
 	}
 
-	public ArrayList<Tag> loadTags(long bookId) {
+	protected ArrayList<Tag> loadTags(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
 			return null;
@@ -249,11 +260,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
+	private SQLiteStatement myDeleteBookTagsStatement;
+	protected void deleteAllBookTags(long bookId) {
+		if (myDeleteBookTagsStatement == null) {
+			myDeleteBookTagsStatement = myDatabase.compileStatement(
+				"DELETE FROM BookTag WHERE book_id = ?"
+			);
+			myDeleteBookTagsStatement.bindLong(1, bookId);
+			myDeleteBookTagsStatement.execute();
+		}
+	}
+
 	private SQLiteStatement myGetSeriesIdStatement;
 	private SQLiteStatement myInsertSeriesStatement;
 	private SQLiteStatement myInsertBookSeriesStatement;
 	private SQLiteStatement myDeleteBookSeriesStatement;
-	public void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
+	protected void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
 		if (myGetSeriesIdStatement == null) {
 			myGetSeriesIdStatement = myDatabase.compileStatement(
 				"SELECT series_id FROM Series WHERE name = ?"
@@ -288,7 +310,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	public SeriesInfo loadSeriesInfo(long bookId) {
+	protected SeriesInfo loadSeriesInfo(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
@@ -300,7 +322,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myResetBookInfoStatement;
 	private final static String myBookIdWhereClause = "book_id = ?";
-	public void resetBookInfo(String fileName) {
+	protected void resetBookInfo(String fileName) {
 		if (myResetBookInfoStatement == null) {
 			myResetBookInfoStatement = myDatabase.compileStatement(
 				"SELECT book_id FROM Books WHERE file_name = ?"

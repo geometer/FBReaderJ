@@ -234,9 +234,11 @@ public class BookDescription {
 				}
             
 				long index = 0;
+				database.deleteAllBookAuthors(myBookId);
 				for (Author author : authors()) {
 					database.saveBookAuthorInfo(myBookId, index++, author);
 				}
+				database.deleteAllBookTags(myBookId);
 				for (Tag tag : tags()) {
 					database.saveBookTagInfo(myBookId, tag);
 				}

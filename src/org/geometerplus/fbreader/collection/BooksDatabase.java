@@ -32,15 +32,17 @@ public abstract class BooksDatabase {
 		ourInstance = this;
 	}
 
-	public abstract void executeAsATransaction(Runnable actions);
-	public abstract long loadBook(BookDescription description);
-	public abstract ArrayList<Author> loadAuthors(long bookId);
-	public abstract ArrayList<Tag> loadTags(long bookId);
-	public abstract SeriesInfo loadSeriesInfo(long bookId);
-	public abstract void updateBookInfo(long bookId, String encoding, String language, String title);
-	public abstract long insertBookInfo(String fileName, String encoding, String language, String title);
-	public abstract void saveBookAuthorInfo(long bookId, long index, Author author);
-	public abstract void saveBookTagInfo(long bookId, Tag tag);
-	public abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
-	public abstract void resetBookInfo(String fileName);
+	protected abstract void executeAsATransaction(Runnable actions);
+	protected abstract long loadBook(BookDescription description);
+	protected abstract ArrayList<Author> loadAuthors(long bookId);
+	protected abstract ArrayList<Tag> loadTags(long bookId);
+	protected abstract SeriesInfo loadSeriesInfo(long bookId);
+	protected abstract void updateBookInfo(long bookId, String encoding, String language, String title);
+	protected abstract long insertBookInfo(String fileName, String encoding, String language, String title);
+	protected abstract void deleteAllBookAuthors(long bookId);
+	protected abstract void saveBookAuthorInfo(long bookId, long index, Author author);
+	protected abstract void deleteAllBookTags(long bookId);
+	protected abstract void saveBookTagInfo(long bookId, Tag tag);
+	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
+	protected abstract void resetBookInfo(String fileName);
 }

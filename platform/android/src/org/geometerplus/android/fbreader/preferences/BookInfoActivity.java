@@ -36,7 +36,7 @@ class BookTitlePreference extends ZLStringPreference {
 	}
 
 	public void accept() {
-		//myDescription.setTitle(getEditText().getText().toString());
+		myDescription.setTitle(getValue());
 	}
 }
 
