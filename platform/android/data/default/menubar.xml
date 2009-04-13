@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menubar>
-	<item id="preferences"/>
-	<item id="preferences-old"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>
@@ -11,11 +9,14 @@
 		<item id="undo"/>
 		<item id="redo"/>
 	</submenu>
-	<item id="showLibrary"/>
+	<item id="library"/>
 	<item id="toc"/>
 	<submenu id="search">
 		<item id="search"/>
 		<item id="findPrevious"/>
 		<item id="findNext"/>
 	</submenu>
+	<item id="bookInfo"/>
+	<item id="preferences"/>
+	<item id="preferences-old"/>
 </menubar>

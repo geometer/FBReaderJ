@@ -8,13 +8,8 @@
   <node name="menu">
 		<node name="preferences-old" value="Settings (Old)"/>
 		<node name="preferences" value="Settings"/>
-		<node name="showLibrary" value="Library"/>
-		<node name="library" value="Library Old">
-			<node name="previousBook" value="Previous Book"/>
-			<node name="showRecent" value="Recent"/>
-			<node name="addBook" value="Add Book..."/>
-			<node name="showHelp" value="About FBReader"/>
-		</node>
+		<node name="bookInfo" value="Book Info"/>
+		<node name="library" value="Library"/>
 	  <node name="toc" value="TOC"/>
 		<node name="navigate" value="Navigate">
 	  	<node name="toc" value="Table of Contents"/>
@@ -32,7 +27,7 @@
 			<node name="openInDictionary" value="Open in Dictionary"/>
 			<node name="clearSelection" value="Clear"/>
 		</node>
-		<node name="search" value="Find">
+		<node name="search" value="Search">
 			<node name="search" value="Find Text..."/>
 			<node name="findNext" value="Find Next"/>
 			<node name="findPrevious" value="Find Previous"/>
@@ -44,6 +39,13 @@
 		<node name="quit" value="Close"/>
 	</node>
 	<node name="dialog">
+		<node name="BookInfo">
+			<node name="Common" value="Common">
+				<node name="title" value="Title"/>
+				<node name="language" value="Language"/>
+				<node name="encoding" value="Encoding"/>
+			</node>
+		</node>
 		<node name="Preferences">
 			<node name="LookNFeel" value="Look &amp; Feel">
 				<node name="autoOrientation" value="Auto orientation">

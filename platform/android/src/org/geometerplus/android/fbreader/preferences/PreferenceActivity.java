@@ -19,46 +19,16 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.ArrayList;
-
-import android.os.Bundle;
-import android.preference.*;
-
-import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.fbreader.fbreader.ScrollingPreferences;
 
-public class PreferenceActivity extends android.preference.PreferenceActivity {
-	private final ZLResource myResource = ZLResource.resource("dialog").getResource("Preferences");
-	private final ArrayList<ZLPreference> myPreferences = new ArrayList<ZLPreference>();
-
-	private class Category {
-		private final ZLResource myResource;
-		private final PreferenceCategory myCategory;
-
-		Category(String resourceKey) {
-			myResource = PreferenceActivity.this.myResource.getResource(resourceKey);
-			myCategory = new PreferenceCategory(PreferenceActivity.this);
-			myCategory.setTitle(myResource.getValue());
-			myScreen.addPreference(myCategory);
-		}
-
-		void addOption(ZLBooleanOption option, String resourceKey) {
-			ZLBooleanPreference preference =
-				new ZLBooleanPreference(PreferenceActivity.this, option, myResource, resourceKey);
-			myCategory.addPreference(preference);
-			myPreferences.add(preference);
-		}
+public class PreferenceActivity extends ZLPreferenceActivity {
+	public PreferenceActivity() {
+		super("Preferences");
 	}
 
-	private PreferenceScreen myScreen;
-
 	@Override
-	protected void onCreate(Bundle bundle) {
-		super.onCreate(bundle);
-		myScreen = getPreferenceManager().createPreferenceScreen(this);
-
+	protected void init() {
 		final Category lookNFeelCategory = new Category("LookNFeel");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
@@ -69,15 +39,5 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 		scrollingCategory.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
-
-		setPreferenceScreen(myScreen);
-	}
-
-	@Override
-	protected void onPause() {
-		for (ZLPreference preference : myPreferences) {
-			preference.accept();
-		}
-		super.onPause();
 	}
 }
