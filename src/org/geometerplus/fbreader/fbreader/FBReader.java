@@ -241,7 +241,7 @@ public final class FBReader extends ZLApplication {
 			Model = new BookModel(description);
 			final String fileName = description.FileName;
 			myBookNameOption.setValue(fileName);
-			ZLTextHyphenator.getInstance().load(description.getLanguage());
+			ZLTextHyphenator.Instance().load(description.getLanguage());
 			BookTextView.setModels(Model.getBookTextModels(), fileName);
 			BookTextView.setCaption(description.getTitle());
 			FootnoteView.setModel(null);

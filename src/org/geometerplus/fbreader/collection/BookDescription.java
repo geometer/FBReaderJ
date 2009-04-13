@@ -220,9 +220,9 @@ public class BookDescription {
 		addTag(Tag.getTag(null, tagName));
 	}
 
-	public void save() {
+	public boolean save() {
 		if (!myIsChanged) {
-			return;
+			return false;
 		}
 		final BooksDatabase database = BooksDatabase.Instance();
 		database.executeAsATransaction(new Runnable() {
@@ -248,5 +248,6 @@ public class BookDescription {
 
 		myIsChanged = false;
 		myIsSaved = true;
+		return true;
 	}
 }

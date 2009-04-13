@@ -28,15 +28,14 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class ZLLanguageList {
-	private static ArrayList ourLanguageCodes = new ArrayList();
+	private static ArrayList<String> ourLanguageCodes = new ArrayList();
 
 	private ZLLanguageList() {
 	}
 	
-	public static ArrayList languageCodes() {
+	public static List<String> languageCodes() {
 		if (ourLanguageCodes.isEmpty()) {
 			TreeSet codes = new TreeSet();
-			codes.add("zh");
 			ZLDir dir = patternsDirectory();
 			if (dir != null) {
 				final ArrayList fileNames = dir.collectFiles();
@@ -56,10 +55,10 @@ public abstract class ZLLanguageList {
 			ourLanguageCodes.addAll(codes);
 		}
 
-		return ourLanguageCodes;
+		return Collections.unmodifiableList(ourLanguageCodes);
 	}
 	
-	public	static String languageName(String code) {
+	public static String languageName(String code) {
 		return ZLResource.resource("language").getResource(code).getValue();
 	}
 

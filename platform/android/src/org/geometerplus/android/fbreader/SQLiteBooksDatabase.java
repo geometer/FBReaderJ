@@ -127,9 +127,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			myDeleteBookAuthorsStatement = myDatabase.compileStatement(
 				"DELETE FROM BookAuthor WHERE book_id = ?"
 			);
-			myDeleteBookAuthorsStatement.bindLong(1, bookId);
-			myDeleteBookAuthorsStatement.execute();
 		}
+		myDeleteBookAuthorsStatement.bindLong(1, bookId);
+		myDeleteBookAuthorsStatement.execute();
 	}
 
 	private SQLiteStatement myGetAuthorIdStatement;
@@ -220,6 +220,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return id;
 	}
 
+	private SQLiteStatement myDeleteBookTagsStatement;
+	protected void deleteAllBookTags(long bookId) {
+		if (myDeleteBookTagsStatement == null) {
+			myDeleteBookTagsStatement = myDatabase.compileStatement(
+				"DELETE FROM BookTag WHERE book_id = ?"
+			);
+		}
+		myDeleteBookTagsStatement.bindLong(1, bookId);
+		myDeleteBookTagsStatement.execute();
+	}
+
 	private SQLiteStatement myInsertBookTagStatement;
 	protected void saveBookTagInfo(long bookId, Tag tag) {
 		if (myInsertBookTagStatement == null) {
@@ -258,17 +269,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		} while (cursor.moveToNext());
 		cursor.close();	
 		return list;
-	}
-
-	private SQLiteStatement myDeleteBookTagsStatement;
-	protected void deleteAllBookTags(long bookId) {
-		if (myDeleteBookTagsStatement == null) {
-			myDeleteBookTagsStatement = myDatabase.compileStatement(
-				"DELETE FROM BookTag WHERE book_id = ?"
-			);
-			myDeleteBookTagsStatement.bindLong(1, bookId);
-			myDeleteBookTagsStatement.execute();
-		}
 	}
 
 	private SQLiteStatement myGetSeriesIdStatement;

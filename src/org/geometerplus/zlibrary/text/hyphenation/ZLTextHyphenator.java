@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.text.view.impl.ZLTextWord;
 public abstract class ZLTextHyphenator {
 	protected static ZLTextHyphenator ourInstance;
 	
-	public static ZLTextHyphenator getInstance() {
+	public static ZLTextHyphenator Instance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLTextTeXHyphenator();
 		}

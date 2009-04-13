@@ -43,7 +43,7 @@ public class OptionsDialog {
 
 		final ZLDialogContent encodingTab = myDialog.createTab("Language");
 		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
-		encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
+		//encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
 //		EncodingEntry encodingEntry = new EncodingEntry(PluginCollection.instance().DefaultEncodingOption);
 //		EncodingSetEntry encodingSetEntry = new EncodingSetEntry(encodingEntry);
 //		encodingTab.addOption("defaultEncodingSet", encodingSetEntry);

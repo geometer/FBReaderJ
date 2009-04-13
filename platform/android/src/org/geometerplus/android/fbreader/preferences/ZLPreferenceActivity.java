@@ -55,6 +55,11 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			myPreferences.add(preference);
 		}
 
+		void addPreference(ZLStringListPreference preference) {
+			myGroup.addPreference(preference);
+			myPreferences.add(preference);
+		}
+
 		void addOption(ZLBooleanOption option, String resourceKey) {
 			ZLBooleanPreference preference =
 				new ZLBooleanPreference(ZLPreferenceActivity.this, option, myResource, resourceKey);

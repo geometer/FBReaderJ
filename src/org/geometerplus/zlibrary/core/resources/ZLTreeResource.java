@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.resources;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -48,8 +47,8 @@ final class ZLTreeResource extends ZLResource {
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
 		ResourceTreeReader reader = new ResourceTreeReader();
-		reader.readDocument(ourRoot, ourZLibraryDirectory + fileName);
-		reader.readDocument(ourRoot, ourApplicationDirectory + fileName);
+		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/zlibrary/" + fileName);
+		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/application/" + fileName);
 	}
 
 	private	ZLTreeResource(String name, String value) {
@@ -83,7 +82,7 @@ final class ZLTreeResource extends ZLResource {
 		
 	private static class ResourceTreeReader extends ZLXMLReaderAdapter {
 		private static final String NODE = "node"; 
-		private final ArrayList myStack = new ArrayList();
+		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 		
 		public void readDocument(ZLTreeResource root, String fileName) {
 			myStack.clear();
@@ -96,12 +95,12 @@ final class ZLTreeResource extends ZLResource {
 		}
 
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			final ArrayList stack = myStack;
+			final ArrayList<ZLTreeResource> stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				String name = attributes.getValue("name");
 				if (name != null) {
 					String value = attributes.getValue("value");
-					ZLTreeResource peek = (ZLTreeResource)stack.get(stack.size() - 1);
+					ZLTreeResource peek = stack.get(stack.size() - 1);
 					ZLTreeResource node;
 					HashMap children = peek.myChildren;
 					if (children == null) {

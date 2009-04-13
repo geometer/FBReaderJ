@@ -28,6 +28,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -109,9 +110,9 @@ public class TOCActivity extends ListActivity {
 			final TOCTree tree = (TOCTree)getItem(position);
 			if (tree.hasChildren()) {
 				menu.setHeaderTitle(tree.getText());
-				// TODO: use resources
-				menu.add(0, PROCESS_TREE_ITEM_ID, 0, isOpen(tree) ? "Collapse tree" : "Expand tree");
-				menu.add(0, READ_BOOK_ITEM_ID, 0, "Read book text");
+				final ZLResource resource = ZLResource.resource("tocView");
+				menu.add(0, PROCESS_TREE_ITEM_ID, 0, resource.getResource(isOpen(tree) ? "collapseTree" : "expandTree").getValue());
+				menu.add(0, READ_BOOK_ITEM_ID, 0, resource.getResource("readText").getValue());
 			}
 		}
 

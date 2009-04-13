@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.collection;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 final class TagTree extends CollectionTree {
 	private final Tag myTag;
 
@@ -28,8 +30,10 @@ final class TagTree extends CollectionTree {
 	}
 
 	public String getName() {
-		// TODO: use resources
-		return (myTag != null) ? myTag.Name : "Books with no tags";
+		return
+			(myTag != null) ?
+				myTag.Name :
+				ZLResource.resource("library").getResource("booksWithNoTags").getValue();
 	}
 
 	protected String getSortKey() {

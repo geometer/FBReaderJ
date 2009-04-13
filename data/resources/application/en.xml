@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+	<node name="library">
+		<node name="unknownAuthor" value="Unknown author"/>
+		<node name="booksWithNoTags" value="Books with no tags"/>
+  </node>
   <node name="libraryView">
     <node name="byAuthor" value="By Author"/>
     <node name="byTag" value="By Tag"/>
     <node name="recent" value="Recent"/>
+  </node>
+  <node name="tocView">
+    <node name="expandTree" value="Expand tree"/>
+    <node name="collapseTree" value="Collapse tree"/>
+    <node name="readText" value="Read book text"/>
   </node>
   <node name="menu">
 		<node name="preferences-old" value="Settings (Old)"/>
@@ -40,13 +49,14 @@
 	</node>
 	<node name="dialog">
 		<node name="BookInfo">
+			<node name="fileName" value="File name"/>
 			<node name="title" value="Title"/>
 			<node name="language" value="Language"/>
 			<node name="encoding" value="Encoding"/>
 		</node>
 		<node name="Preferences">
 			<node name="LookNFeel" value="Look &amp; Feel">
-				<node name="autoOrientation" value="Auto orientation">
+				<node name="autoOrientation" value="Automatic rotation">
 					<node name="summaryOn" value="The display will rotate when user moves the device"/>
 					<node name="summaryOff" value="The display will not rotate when user moves the device"/>
 				</node>
@@ -170,51 +180,6 @@
 						<node name="highlighted" value="Highlighted Text"/>
 					</node>
 				</node>
-				<node name="Keys" value="Keys">
-					<node name="grabSystemKeys" value="Grab System Keys"/>
-					<node name="separate" value="Keybindings Depend on Orientation"/>
-					<node name="orientation" value="Orientation"/>
-					<node name="action">
-						<node name="none" value="None"/>
-						<node name="showLibrary" value="Show Library"/>
-						<node name="showRecent" value="Show Recent Books"/>
-						<node name="previousBook" value="Open Previous Book"/>
-						<node name="toc" value="Show Table of Contents"/>
-						<node name="gotoHome" value="Go to Home"/>
-						<node name="gotoSectionStart" value="Go to Start of Section"/>
-						<node name="gotoSectionEnd" value="Go to End of Section"/>
-						<node name="nextTOCSection" value="Go to Next TOC Section"/>
-						<node name="previousTOCSection" value="Go to Previous TOC Section"/>
-						<node name="largeScrollForward" value="Large Scroll Forward"/>
-						<node name="largeScrollBackward" value="Large Scroll Backward"/>
-						<node name="smallScrollForward" value="Small Scroll Forward"/>
-						<node name="smallScrollBackward" value="Small Scroll Backward"/>
-						<node name="undo" value="Undo"/>
-						<node name="redo" value="Redo"/>
-						<node name="copyToClipboard" value="Copy Selected Text to Clipboard"/>
-						<node name="openInDictionary" value="Open Selected Text in Dictionary"/>
-						<node name="clearSelection" value="Clear Selection"/>
-						<node name="search" value="Search"/>
-						<node name="findPrevious" value="Find Previous"/>
-						<node name="findNext" value="Find Next"/>
-						<node name="increaseFont" value="Increase Font Size"/>
-						<node name="decreaseFont" value="Decrease Font Size"/>
-						<node name="toggleFullscreen" value="Toggle Fullscreen Mode"/>
-						<node name="onFullscreen" value="Switch to Fullscreen Mode"/>
-						<node name="rotate" value="Rotate Screen"/>
-						<node name="preferences" value="Show Options Dialog"/>
-						<node name="bookInfo" value="Show Book Info Dialog"/>
-						<node name="addBook" value="Add Book"/>
-						<node name="cancel" value="Cancel"/>
-						<node name="quit" value="Quit"/>
-					</node>
-					<node name="quitOnCancel" value="Quit Application on Cancel"/>
-					<node name="keyDelay" value="Delay Between Accepted Key Pressings"/>
-				</node>
-				<node name="Config" value="Config">
-					<node name="autoSave" value="Save State Automatically"/>
-					<node name="timeout" value="Timeout between Savings, seconds"/>
-				</node>
 				<node name="Dictionary" value="Dictionary">
 					<node name="enableIntegration" value="Enable Integration with %s"/>
 					<node name="defaultText" value="Enable Integration with Dictionary"/>
@@ -222,42 +187,6 @@
 					<node name="singleClickOpen" value="Open by Single Click"/>
 				</node>
 			</node>
-		</node>
-		<node name="InfoDialog">
-			<node name="title" value="FBReader - Book Info"/>
-			<node name="tab">
-				<node name="Common" value="Common">
-					<node name="file" value="File"/>
-					<node name="title" value="Title"/>
-					<node name="authorDisplayName" value="Author (Display Name)"/>
-					<node name="authorSortKey" value="Author (Sort Key)"/>
-					<node name="language" value="Language"/>
-					<node name="encodingSet" value="Encoding Set"/>
-					<node name="encoding" value="Encoding"/>
-				</node>
-				<node name="Series" value="Series">
-					<node name="seriesTitle" value="Series Title"/>
-					<node name="bookNumber" value="Book Number"/>
-				</node>
-				<node name="Tags" value="Tags">
-					<node name="tags" value="Tag List"/>
-				</node>
-				<node name="Text" value="Text">
-					<node name="breakType" value="Break Paragraph at"/>
-					<node name="ignoreIndent" value="Ignore Indent Less than"/>
-					<node name="buildTOC" value="Build Table of Contents"/>
-					<node name="emptyLines" value="Empty Lines Before New Section"/>
-				</node>
-				<node name="&lt;PRE&gt;" value="&lt;PRE&gt;">
-					<node name="breakType" value="Break Paragraph at"/>
-					<node name="ignoreIndent" value="Ignore Indent Less than"/>
-					<node name="buildTOC" value="Build Table of Contents"/>
-					<node name="emptyLines" value="Empty Lines Before New Section"/>
-				</node>
-			</node>
-		</node>
-		<node name="addFileDialog">
-			<node name="title" value="Add Book: "/>
 		</node>
 		<node name="textSearchDialog">
 			<node name="title" value="Text Search"/>

@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.collection;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 public class AuthorTree extends CollectionTree {
 	private final Author myAuthor;
 
@@ -34,8 +36,10 @@ public class AuthorTree extends CollectionTree {
 	}
 
 	public String getName() {
-		// TODO: use resources
-		return (myAuthor != null) ? myAuthor.DisplayName : "Unknown Author";
+		return
+			(myAuthor != null) ?
+				myAuthor.DisplayName :
+				ZLResource.resource("library").getResource("unknownAuthor").getValue();
 	}
 
 	protected String getSortKey() {

@@ -933,7 +933,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				newWidth -= getWordWidth(context, word, currentCharIndex);
 				int spaceLeft = maxWidth - newWidth;
 				if ((word.Length > 3) && (spaceLeft > 2 * Context.getSpaceWidth())) {
-					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.getInstance().getInfo(word);
+					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
 					for(; hyphenationPosition > 0; hyphenationPosition--) {

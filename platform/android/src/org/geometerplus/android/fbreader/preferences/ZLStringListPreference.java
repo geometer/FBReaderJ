@@ -20,35 +20,39 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
-import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-abstract class ZLStringPreference extends EditTextPreference implements ZLPreference {
-	private String myValue;
-
-	ZLStringPreference(Context context, ZLResource rootResource, String resourceKey) {
+abstract class ZLStringListPreference extends ListPreference implements ZLPreference {
+	ZLStringListPreference(Context context, ZLResource rootResource, String resourceKey) {
 		super(context);
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
 	}
 
-	protected final void setValue(String value) {
-		setSummary(value);
-		setText(value);
-		myValue = value;
+	protected final void setLists(String[] values, String[] texts) {
+		assert(values.length == texts.length);
+		setEntries(texts);
+		setEntryValues(values);
 	}
 
-	protected final String getValue() {
-		return myValue;
+	protected final boolean setInitialValue(String value) {
+		final int index = findIndexOfValue(value);
+		if (index >= 0) {
+			setValueIndex(index);
+			setSummary(getEntry());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	protected void onDialogClosed(boolean result) {
-		if (result) {
-			setValue(getEditText().getText().toString());
-		}
 		super.onDialogClosed(result);
+		if (result) {
+			setSummary(getEntry());
+		}
 	}
 }

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+	<node name="library">
+		<node name="unknownAuthor" value="Автор не указан"/>
+		<node name="booksWithNoTags" value="Книги вне категорий"/>
+  </node>
   <node name="libraryView">
-    <node name="byAuthor" value="По автору"/>
-    <node name="byTag" value="По категории"/>
+    <node name="byAuthor" value="Авторы"/>
+    <node name="byTag" value="Категории"/>
     <node name="recent" value="Недавние"/>
+  </node>
+  <node name="tocView">
+    <node name="expandTree" value="Развернуть ветвь дерева"/>
+    <node name="collapseTree" value="Свернуть ветвь дерева"/>
+    <node name="readText" value="Читать главу"/>
   </node>
   <node name="menu">
 		<node name="preferences" value="Настройки"/>
-	  <node name="bookInfo" value="Информация о книге..."/>
-	  <node name="toc" value="Содержание"/>
-		<node name="library" value="Библиотека">
-			<node name="showLibrary" value="Открыть библиотеку"/>
-			<node name="previousBook" value="Предыдущая книга"/>
-			<node name="showRecent" value="Прочитанные книги"/>
-			<node name="addBook" value="Добавить файл..."/>
-			<node name="showHelp" value="О программе FBReader"/>
-		</node>
+	  <node name="bookInfo" value="О книге"/>
+	  <node name="toc" value="Оглавление"/>
+		<node name="library" value="Библиотека"/>
 		<node name="navigate" value="Переход">
 	  	<node name="toc" value="Содержание"/>
 			<node name="gotoHome" value="В начало книги"/>
@@ -45,6 +48,42 @@
 		<node name="quit" value="Закрыть"/>
 	</node>
 	<node name="dialog">
+		<node name="BookInfo">
+			<node name="fileName" value="Файл"/>
+			<node name="title" value="Название"/>
+			<node name="language" value="Язык"/>
+			<node name="encoding" value="Кодировка"/>
+		</node>
+		<node name="Preferences">
+			<node name="LookNFeel" value="Внешний вид">
+				<node name="autoOrientation" value="Автоматический поворот">
+					<node name="summaryOn" value="Изображение поворачивается при повороте устройства"/>
+					<node name="summaryOff" value="Изображение не поворачивается при повороте устройства"/>
+				</node>
+				<node name="showStatusBar" value="Показывать строку состояния">
+					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
+					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
+				</node>
+			</node>
+			<node name="Scrolling" value="Перелистывание страниц">
+				<node name="flick" value="Листать движением пальца">
+					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
+					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
+				</node>
+				<node name="volumeKeys" value="Использовать клавиши настройки звука">
+					<node name="summaryOn" value="Клавиши увеличения/уменьшения звука перелистывают страницы"/>
+					<node name="summaryOff" value="Клавиши увеличения/уменьшения звука работают как обычно"/>
+				</node>
+				<node name="animated" value="Постепенное перелистывание">
+					<node name="summaryOn" value="Страница перелистывается постепенно"/>
+					<node name="summaryOff" value="Страница перелистывается мгновенно"/>
+				</node>
+				<node name="horizontal" value="Горизонтальное перелистывание">
+					<node name="summaryOn" value="При листании страница движется по горизонтали"/>
+					<node name="summaryOff" value="При листании страница движется по вертикали"/>
+				</node>
+			</node>
+		</node>
 		<node name="button">
 			<node name="go" value="&amp;Искать"/>
 			<node name="thisOnly" value="Только эту"/>
@@ -144,51 +183,6 @@
 						<node name="highlighted" value="подсвеченного текста"/>
 					</node>
 				</node>
-				<node name="Keys" value="Клавиши">
-					<node name="grabSystemKeys" value="Перехватывать системные клавиши"/>
-					<node name="separate" value="Свои настройки для каждой ориентации текста"/>
-					<node name="orientation" value="Ориентация"/>
-					<node name="action">
-						<node name="none" value="Никакого действия"/>
-						<node name="showLibrary" value="Показать библиотеку"/>
-						<node name="showRecent" value="Показать прочитанные книги"/>
-						<node name="previousBook" value="Открыть предыдущую книгу"/>
-						<node name="toc" value="Показать оглавление"/>
-						<node name="gotoHome" value="Перейти в начало текста"/>
-						<node name="gotoSectionStart" value="Перейти в начало раздела"/>
-						<node name="gotoSectionEnd" value="Перейти в конец раздела"/>
-						<node name="nextTOCSection" value="Перейти к следующей главе"/>
-						<node name="previousTOCSection" value="Перейти к предыдущей главе"/>
-						<node name="largeScrollForward" value="Прокрутить вперед (на большое расстояние)"/>
-						<node name="largeScrollBackward" value="Прокрутить назад (на большое расстояние)"/>
-						<node name="smallScrollForward" value="Прокрутить вперед (на небольшое расстояние)"/>
-						<node name="smallScrollBackward" value="Прокрутить назад (на небольшое расстояние)"/>
-						<node name="undo" value="Отменить переход"/>
-						<node name="redo" value="Повторить переход"/>
-						<node name="copyToClipboard" value="Скопировать помеченный текст в буфер"/>
-						<node name="openInDictionary" value="Открыть помеченный текст в словаре"/>
-						<node name="clearSelection" value="Убрать пометку"/>
-						<node name="search" value="Показать диалог поиска"/>
-						<node name="findPrevious" value="Искать назад"/>
-						<node name="findNext" value="Искать вперед"/>
-						<node name="increaseFont" value="Увеличить размер шрифта"/>
-						<node name="decreaseFont" value="Уменьшить размер шрифта"/>
-						<node name="toggleFullscreen" value="Включить/выключить полноэкранный режим"/>
-						<node name="onFullscreen" value="Включить полноэкранный режим"/>
-						<node name="rotate" value="Повернуть текст"/>
-						<node name="preferences" value="Показать диалог настроек"/>
-						<node name="bookInfo" value="Показать информацию о книге"/>
-						<node name="addBook" value="Добавить файл в библиотеку"/>
-						<node name="cancel" value="Отменить текущий режим"/>
-						<node name="quit" value="Выйти из программы"/>
-					</node>
-					<node name="quitOnCancel" value="Выходить из программы"/>
-					<node name="keyDelay" value="Задержка между нажатиями на клавиши"/>
-				</node>
-				<node name="Config" value="Настройки">
-					<node name="autoSave" value="Автоматически сохранять состояние"/>
-					<node name="timeout" value="Время между сохранениями, секунды"/>
-				</node>
 				<node name="Dictionary" value="Словари">
 					<node name="enableIntegration" value="Включить интеграцию с %s"/>
 					<node name="defaultText" value="Включить интеграцию со словарем"/>
@@ -196,42 +190,6 @@
 					<node name="singleClickOpen" value="Открывать словарь по нажатию на слово"/>
 				</node>
 			</node>
-		</node>
-		<node name="InfoDialog">
-			<node name="title" value="FBReader - Информация о книге"/>
-			<node name="tab">
-				<node name="Common" value="Основная информация">
-					<node name="file" value="Файл"/>
-					<node name="title" value="Название"/>
-					<node name="authorDisplayName" value="Имя автора"/>
-					<node name="authorSortKey" value="Имя для сортировки"/>
-					<node name="language" value="Язык"/>
-					<node name="encodingSet" value="Набор кодировок"/>
-					<node name="encoding" value="Кодировка"/>
-				</node>
-				<node name="Series" value="Серия">
-					<node name="seriesTitle" value="Название серии"/>
-					<node name="bookNumber" value="Номер книги в серии"/>
-				</node>
-				<node name="Tags" value="Категории">
-					<node name="tags" value="Список категорий"/>
-				</node>
-				<node name="Text" value="Текст">
-					<node name="breakType" value="Новый параграф по"/>
-					<node name="ignoreIndent" value="Игнорировать отступы меньше"/>
-					<node name="buildTOC" value="Строить оглавление"/>
-					<node name="emptyLines" value="Пустых строк между главами"/>
-				</node>
-				<node name="&lt;PRE&gt;" value="&lt;PRE&gt;">
-					<node name="breakType" value="Новый параграф по"/>
-					<node name="ignoreIndent" value="Игнорировать отступы меньше"/>
-					<node name="buildTOC" value="Строить оглавление"/>
-					<node name="emptyLines" value="Пустых строк между главами"/>
-				</node>
-			</node>
-		</node>
-		<node name="addFileDialog">
-			<node name="title" value="FBReader - Добавление книги в библиотеку"/>
 		</node>
 		<node name="textSearchDialog">
 			<node name="title" value="Поиск по тексту"/>
