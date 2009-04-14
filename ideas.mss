@@ -67,3 +67,5 @@ Implement ZLAndroidImageData differently:
     -- lazy load
     -- convert picture into the required size
 
+    (see http://developer.android.com/reference/android/graphics/BitmapFactory.Options.html)
+
