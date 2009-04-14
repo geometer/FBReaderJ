@@ -62,3 +62,8 @@ Automatic text orientation to be done configurable
 Process +/- volume control differently.  Options:
     -- increase/decrease font size?
     -- page up/down
+
+Implement ZLAndroidImageData differently:
+    -- lazy load
+    -- convert picture into the required size
+
