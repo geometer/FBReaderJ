@@ -45,14 +45,17 @@ public class ZLAndroidWidget extends View {
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		setDrawingCacheEnabled(false);
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		setDrawingCacheEnabled(false);
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
+		setDrawingCacheEnabled(false);
 	}
 
 	public ZLAndroidPaintContext getPaintContext() {
@@ -84,6 +87,7 @@ public class ZLAndroidWidget extends View {
 
 		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
 			myMainBitmap = null;
+			mySecondaryBitmap = null;
 		}
 		if (myMainBitmap == null) {
 			myMainBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);

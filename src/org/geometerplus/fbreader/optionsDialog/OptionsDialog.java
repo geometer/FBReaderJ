@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.optionsDialog;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.dialogs.*;
-import org.geometerplus.zlibrary.core.language.ZLLanguageList;
 import org.geometerplus.zlibrary.core.optionEntries.*;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -41,17 +40,6 @@ public class OptionsDialog {
 		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().baseStyle();
 		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
-		final ZLDialogContent encodingTab = myDialog.createTab("Language");
-		encodingTab.addOption("autoDetect", new ZLSimpleBooleanOptionEntry(PluginCollection.instance().LanguageAutoDetectOption));
-		//encodingTab.addOption("defaultLanguage", new ZLLanguageOptionEntry(PluginCollection.instance().DefaultLanguageOption, ZLLanguageList.languageCodes()));
-//		EncodingEntry encodingEntry = new EncodingEntry(PluginCollection.instance().DefaultEncodingOption);
-//		EncodingSetEntry encodingSetEntry = new EncodingSetEntry(encodingEntry);
-//		encodingTab.addOption("defaultEncodingSet", encodingSetEntry);
-//		encodingTab.addOption("defaultEncoding", encodingEntry);
-
-		final ZLDialogContent selectionTab = myDialog.createTab("Selection");
-		selectionTab.addOption("enableSelection", FBView.selectionOption());
-		
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
 		marginTab.addOptions(
 			"left", new ZLSimpleSpinOptionEntry(FBView.getLeftMarginOption(), 1),
@@ -66,8 +54,10 @@ public class OptionsDialog {
 			
 		new StyleOptionsPage(myDialog.createTab("Styles"), ZLibrary.Instance().getPaintContext());
 		
+		/*
 		final ZLDialogContent rotationTab = myDialog.createTab("Rotation");
 		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
+		*/
 		
 		final ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
@@ -101,76 +91,6 @@ public class OptionsDialog {
 			myFBReader.clearTextCaches();
 			myFBReader.refreshWindow();
 		}
-	}
-	
-	private static class RotationTypeEntry extends ZLChoiceOptionEntry {
-		private final ZLResource myResource;
-		private ZLIntegerOption myAngleOption;
-		
-		public RotationTypeEntry(ZLResource resource, ZLIntegerOption angleOption) {
-			myAngleOption = angleOption;
-			myResource = resource;
-		}
-		
-		public int choiceNumber() {
-			return 5;
-		}
-
-		public String getText(int index) {
-			final String keyName;
-			switch (index) {
-				case 1:
-					keyName = "counterclockwise";
-					break;
-				case 2:
-					keyName = "180";
-					break;
-				case 3:
-					keyName = "clockwise";
-					break;
-				case 4:
-					keyName = "cycle";
-					break;
-				default:
-					keyName = "disabled";
-					break;
-			}
-			return myResource.getResource(keyName).getValue();
-		}
-
-		public int initialCheckedIndex() {
-			switch (myAngleOption.getValue()) {
-			default:
-				return 0;
-			case ZLViewWidget.Angle.DEGREES90:
-				return 1;
-			case ZLViewWidget.Angle.DEGREES180:
-				return 2;
-			case ZLViewWidget.Angle.DEGREES270:
-				return 3;
-			case -1:
-				return 4;
-			}
-		}
-
-		public void onAccept(int index) {
-			int angle = ZLViewWidget.Angle.DEGREES0;
-			switch (index) {
-				case 1:
-					angle = ZLViewWidget.Angle.DEGREES90;
-					break;
-				case 2:
-					angle = ZLViewWidget.Angle.DEGREES180;
-					break;
-				case 3:
-					angle = ZLViewWidget.Angle.DEGREES270;
-					break;
-				case 4:
-					angle = -1;
-					break;
-			}
-			myAngleOption.setValue(angle);
-		}	
 	}
 	
 	private static class StateOptionEntry extends ZLToggleBooleanOptionEntry {
