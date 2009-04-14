@@ -31,7 +31,11 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 				return null;
 			}
 			byte[] array = singleImage.byteData();
-			return new ZLAndroidImageData(BitmapFactory.decodeByteArray(array, 0, array.length));
+			try {
+				return new ZLAndroidImageData(BitmapFactory.decodeByteArray(array, 0, array.length));
+			} catch (OutOfMemoryError e) {
+				return null;
+			}
 		} else {
 			//TODO
 			return null;
