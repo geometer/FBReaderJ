@@ -20,9 +20,9 @@
 package org.geometerplus.fbreader.collection;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
 
@@ -49,6 +49,15 @@ public class BookCollection {
 
 	public void rebuild() {
 		myDoRebuild = true;
+	}
+
+	public String getHelpFileName() {
+		final String fileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2";
+		if (new ZLFile(fileName).exists()) {
+			return fileName;
+		}
+
+		return ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.en.fb2";
 	}
 
 	private HashSet collectBookFileNames() {
@@ -88,6 +97,7 @@ public class BookCollection {
 			}
 		}
 
+		bookFileNames.add(getHelpFileName());
 		return bookFileNames;
 	}
 

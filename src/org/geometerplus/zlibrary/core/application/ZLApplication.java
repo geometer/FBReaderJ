@@ -145,16 +145,6 @@ public abstract class ZLApplication {
 	protected final void resetWindowCaption() {
 	}
 	
-	public final void setFullscreen(boolean fullscreen) {
-		if (myWindow != null) {
-			myWindow.setFullscreen(fullscreen);
-		}
-	}
-	
-	public final boolean isFullscreen() {
-		return (myWindow != null) && myWindow.isFullscreen();
-	}
-	
 	protected final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
 	}
@@ -258,22 +248,6 @@ public abstract class ZLApplication {
 		}
 		
 		abstract protected void run();
-	}
-
-	protected class FullscreenAction extends ZLAction {
-		private	final boolean myIsToggle;
-
-		public FullscreenAction(boolean toggle) {
-			myIsToggle = toggle;
-		}
-		
-		public boolean isVisible() {
-			return myIsToggle || !isFullscreen();
-		}
-		
-		public void run() {
-			setFullscreen(!isFullscreen());
-		}
 	}
 
 	protected final class RotationAction extends ZLAction {

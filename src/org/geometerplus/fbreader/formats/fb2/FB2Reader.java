@@ -396,11 +396,9 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	private static ArrayList ourExternalDTDs = new ArrayList();
 
 	public ArrayList externalDTDs() {
-		/*
 		if (ourExternalDTDs.isEmpty()) {
 			ourExternalDTDs.add(ZLibrary.JAR_DATA_PREFIX + "data/formats/fb2/FBReaderVersion.ent");
 		}
-		*/
 		return ourExternalDTDs;
 	}
 }

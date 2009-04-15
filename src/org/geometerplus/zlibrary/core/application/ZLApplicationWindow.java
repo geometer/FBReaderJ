@@ -155,17 +155,6 @@ abstract public class ZLApplicationWindow {
 			}
 		}
 	}
-	// TODO: change to pure virtual
-	//virtual void present() {}
 
-//*/
 	abstract protected void close();
-	abstract protected void setCaption(String caption);
-	abstract protected void setFullscreen(boolean fullscreen);
-	abstract protected boolean isFullscreen();
-
-/*
-	virtual void grabAllKeys(bool grab) = 0;
-	virtual void setHyperlinkCursor(bool) {}
-*/
 }

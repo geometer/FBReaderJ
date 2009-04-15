@@ -53,24 +53,6 @@ public final class FBReader extends ZLApplication {
 	public final ScrollingOptions TrackballScrollingOptions =
 		new ScrollingOptions("TrackballScrolling", ZLTextView.ScrollingMode.SCROLL_LINES);
 	
-	private String myHelpFileName;
-	
-	String getHelpFileName() {
-		if (myHelpFileName == null) {
-			myHelpFileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2";
-			InputStream testStream = null;
-			try {
-				testStream = ZLibrary.Instance().getInputStream(myHelpFileName);
-				testStream.close();
-			} catch (Exception e) {
-			}
-			if (testStream == null) {
-				myHelpFileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.en.fb2";
-			}
-		}
-		return myHelpFileName;
-	}
-
 	private final ZLStringOption myBookNameOption =
 		new ZLStringOption("State", "Book", "");
 
@@ -91,10 +73,7 @@ public final class FBReader extends ZLApplication {
 
 	public FBReader(String[] args) {
 		myArg0 = (args.length > 0) ? args[0] : null;
-		addAction(ActionCode.TOGGLE_FULLSCREEN, new ZLApplication.FullscreenAction(true));
-		addAction(ActionCode.FULLSCREEN_ON, new ZLApplication.FullscreenAction(false));
 		addAction(ActionCode.QUIT, new QuitAction(this));
-		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction());
 
 		addAction(ActionCode.UNDO, new UndoAction(this));
@@ -121,7 +100,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new ScrollingAction(this, TrackballScrollingOptions, true));
 		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new ScrollingAction(this, TrackballScrollingOptions, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
-		addAction(ActionCode.SHOW_HELP, new ShowHelpAction(this));
 		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
 		addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new DummyAction(this));
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
@@ -146,7 +124,7 @@ public final class FBReader extends ZLApplication {
 			}
 		}
 		if (!openFile(fileName) && !openFile(myBookNameOption.getValue())) {
-			openFile(getHelpFileName());
+			openFile(BookCollection.Instance().getHelpFileName());
 		}
 	}
 	

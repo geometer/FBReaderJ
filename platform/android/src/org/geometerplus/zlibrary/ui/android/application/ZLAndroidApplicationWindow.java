@@ -87,11 +87,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
-	public void setCaption(String caption) {
-		// TODO: implement
-		//myFrame.setTitle(caption);
-	}
-
 	protected ZLAndroidViewWidget createViewWidget() {
 		// TODO: implement
 		ZLAndroidViewWidget viewWidget =
@@ -109,16 +104,5 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	public void close() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
-	}
-
-	public void setFullscreen(boolean fullscreen) {
-		//getWindow().setFlags(WindowManager.LayoutParams.FULL_SCREEN, WindowManager.LayoutParams.FULL_SCREEN);
-		android.util.Log.w("ZLAndroidApplicationWindow", "setFullscreen " + fullscreen);
-		// TODO: implement
-	}
-
-	public boolean isFullscreen() {
-		// TODO: implement
-		return false;
 	}
 }
