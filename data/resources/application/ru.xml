@@ -20,7 +20,6 @@
 	  <node name="toc" value="Оглавление"/>
 		<node name="library" value="Библиотека"/>
 		<node name="navigate" value="Переход">
-	  	<node name="toc" value="Содержание"/>
 			<node name="gotoHome" value="В начало книги"/>
 			<node name="gotoPageNumber" value="На страницу..."/>
 			<node name="gotoSectionStart" value="В начало раздела"/>
@@ -44,8 +43,6 @@
 			<node name="rotate" value="Повернуть"/>
 			<node name="toggleFullscreen" value="На весь экран"/>
 		</node>
-		<node name="preferences" value="Настройки..."/>
-		<node name="quit" value="Закрыть"/>
 	</node>
 	<node name="dialog">
 		<node name="BookInfo">
