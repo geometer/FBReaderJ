@@ -48,11 +48,17 @@ public abstract class FBView extends ZLTextViewImpl {
 	final void doScrollPage(boolean forward) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		if (preferences.AnimateOption.getValue()) {
-			final int viewPage =
-				preferences.HorizontalOption.getValue() ?
-					(forward ? PAGE_RIGHT : PAGE_LEFT) :
-					(forward ? PAGE_BOTTOM : PAGE_TOP);
-			startAutoScrolling(viewPage);
+			if (forward) {
+				ZLTextWordCursor cursor = getEndCursor();
+				if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
+					startAutoScrolling(preferences.HorizontalOption.getValue() ? PAGE_RIGHT : PAGE_BOTTOM);
+				}
+			} else {
+				ZLTextWordCursor cursor = getStartCursor();
+				if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
+					startAutoScrolling(preferences.HorizontalOption.getValue() ? PAGE_LEFT : PAGE_TOP);
+				}
+			}
 		} else {
 			scrollPage(forward, ZLTextView.ScrollingMode.NO_OVERLAPPING, 0);
 			ZLApplication.Instance().refreshWindow();

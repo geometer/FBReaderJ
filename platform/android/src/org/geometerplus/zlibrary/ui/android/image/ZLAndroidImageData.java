@@ -20,17 +20,49 @@
 package org.geometerplus.zlibrary.ui.android.image;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 public final class ZLAndroidImageData implements ZLImageData {
+	private byte[] myArray;
 	private Bitmap myBitmap;
+	private int myRealWidth;
+	private int myRealHeight;
+	private int myLastRequestedWidth;
+	private int myLastRequestedHeight;
 
-	ZLAndroidImageData(Bitmap bitmap) {
-		myBitmap = bitmap;
+	ZLAndroidImageData(byte[] array) {
+		myArray = array;
 	}
 
-	public Bitmap getBitmap() {
+	public Bitmap getBitmap(int maxWidth, int maxHeight) {
+		if ((maxWidth == 0) || (maxHeight == 0)) {
+			return null;
+		}
+		if ((maxWidth != myLastRequestedWidth) || (maxHeight != myLastRequestedHeight)) {
+			myBitmap = null;
+			myLastRequestedWidth = maxWidth;
+			myLastRequestedHeight = maxHeight;
+			try {
+				final BitmapFactory.Options options = new BitmapFactory.Options();
+				if (myRealWidth == 0) {
+					options.inJustDecodeBounds = true;
+					BitmapFactory.decodeByteArray(myArray, 0, myArray.length, options);
+					myRealWidth = options.outWidth;
+					myRealHeight = options.outHeight;
+				}
+				options.inJustDecodeBounds = false;
+				int coefficient = 1;
+				while ((myRealHeight > maxHeight * coefficient) ||
+					   (myRealWidth > maxWidth *coefficient)) {
+					coefficient *= 2;
+				}
+				options.inSampleSize = coefficient;
+				myBitmap = BitmapFactory.decodeByteArray(myArray, 0, myArray.length, options);
+			} catch (OutOfMemoryError e) {
+			}
+		}
 		return myBitmap;
 	}
 }

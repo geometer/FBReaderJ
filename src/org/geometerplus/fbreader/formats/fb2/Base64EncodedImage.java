@@ -32,16 +32,17 @@ final class Base64EncodedImage extends ZLSingleImage {
 		ourCounter = 0;
 	}
 
-	private final String myFileName;
+	private final int myFileNumber;
 	private OutputStreamWriter myStreamWriter;
+	private boolean myIsDecoded;
 	
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
 		super(contentType);
 		new File(DIRECTORY_NAME).mkdirs();
-		myFileName = DIRECTORY_NAME + "/image" + ourCounter++;
+		myFileNumber = ourCounter++;
 		try {
-			myStreamWriter = new OutputStreamWriter(new FileOutputStream(myFileName), "UTF-8");
+			myStreamWriter = new OutputStreamWriter(new FileOutputStream(DIRECTORY_NAME + "/image" + myFileNumber), "UTF-8");
 		} catch (IOException e) {
 		}
 	}
@@ -74,22 +75,37 @@ final class Base64EncodedImage extends ZLSingleImage {
 	}
 
 	public byte[] byteData() {
-		int dataLength;
-		FileInputStream stream;
 		try {
-			File file = new File(myFileName);
-			dataLength = (int)file.length();
-			stream = new FileInputStream(file);
+			decode();
+			final File file = new File(DIRECTORY_NAME + "/dimage" + myFileNumber);
+			final byte[] data = new byte[(int)file.length()];
+			final FileInputStream stream = new FileInputStream(file);
+			stream.read(data);
+			stream.close();
+			return data;
 		} catch (IOException e) {
 			return null;
 		}
+	}
+	
+	private void decode() throws IOException {
+		if (myIsDecoded) {
+			return;
+		}
+		myIsDecoded = true;
 
-		final byte[] encodedData = new byte[dataLength];
-		try {
-			dataLength = stream.read(encodedData);
-		} catch (IOException e) {
-			return null;
-		}
+		int dataLength;
+		byte[] encodedData;
+		FileOutputStream outputStream;
+		
+		final File file = new File(DIRECTORY_NAME + "/image" + myFileNumber);
+		outputStream = new FileOutputStream(DIRECTORY_NAME + "/dimage" + myFileNumber);
+		dataLength = (int)file.length();
+		final FileInputStream inputStream = new FileInputStream(file);
+		encodedData = new byte[dataLength];
+		inputStream.read(encodedData);
+		inputStream.close();
+		file.delete();
 
 		final byte[] data = new byte[dataLength * 3 / 4 + 1];
 		int dataPos = 0;
@@ -107,11 +123,12 @@ final class Base64EncodedImage extends ZLSingleImage {
 			while ((pos < dataLength) && (n3 == -1)) {
 				n3 = decodeByte(encodedData[pos++]);
 			}
-			data[dataPos++] = (byte) (n0 << 2 | n1 >> 4);
-			data[dataPos++] = (byte) (((n1 & 0xf) << 4) | ((n2 >> 2) & 0xf));
-			data[dataPos++] = (byte) (n2 << 6 | n3);
+			data[dataPos++] = (byte)(n0 << 2 | n1 >> 4);
+			data[dataPos++] = (byte)(((n1 & 0xf) << 4) | ((n2 >> 2) & 0xf));
+			data[dataPos++] = (byte)(n2 << 6 | n3);
 		}
-		return data;
+		outputStream.write(data, 0, dataPos);
+		outputStream.close();
 	}
 	
 	void addData(char[] data, int offset, int length) {

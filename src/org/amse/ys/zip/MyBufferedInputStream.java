@@ -82,7 +82,7 @@ final class MyBufferedInputStream extends InputStream {
 
             n -= myFileInputStream.skip(n);
             while (n > 0) {
-                int skipped = myFileInputStream.read(myBuffer, 0, n);
+                int skipped = myFileInputStream.read(myBuffer, 0, Math.min(n, myBuffer.length));
                 if (skipped <= 0) {
                     break;
                 }

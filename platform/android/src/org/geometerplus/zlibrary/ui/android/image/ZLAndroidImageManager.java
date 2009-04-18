@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import android.graphics.BitmapFactory;
-
 import org.geometerplus.zlibrary.core.image.*;
 
 public final class ZLAndroidImageManager extends ZLImageManager {
@@ -30,12 +28,13 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			if ("image/palm".equals(singleImage.mimeType())) {
 				return null;
 			}
+			System.err.println("array decoding + " + System.currentTimeMillis());
 			byte[] array = singleImage.byteData();
-			try {
-				return new ZLAndroidImageData(BitmapFactory.decodeByteArray(array, 0, array.length));
-			} catch (OutOfMemoryError e) {
+			System.err.println("array decoding - " + System.currentTimeMillis());
+			if (array == null) {
 				return null;
 			}
+			return new ZLAndroidImageData(array);
 		} else {
 			//TODO
 			return null;

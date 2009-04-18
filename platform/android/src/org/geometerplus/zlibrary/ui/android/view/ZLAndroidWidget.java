@@ -88,10 +88,13 @@ public class ZLAndroidWidget extends View {
 		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
 			myMainBitmap = null;
 			mySecondaryBitmap = null;
+			System.gc();
+			System.gc();
+			System.gc();
 		}
 		if (myMainBitmap == null) {
-			myMainBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-			mySecondaryBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			myMainBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
+			mySecondaryBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
 			mySecondaryBitmapIsUpToDate = false;
 			drawOnBitmap(myMainBitmap);
 		}
