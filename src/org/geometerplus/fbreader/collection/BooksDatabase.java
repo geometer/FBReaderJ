@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.collection;
 
+import java.util.Map;
 import java.util.ArrayList;
 
 public abstract class BooksDatabase {
@@ -32,6 +33,23 @@ public abstract class BooksDatabase {
 		ourInstance = this;
 	}
 
+	protected BookDescription createDescription(long bookId, String fileName, String title, String encoding, String language) {
+		return new BookDescription(bookId, fileName, title, encoding, language);
+	}
+
+	protected void addAuthor(BookDescription description, Author author) {
+		description.addAuthorWithNoCheck(author);
+	}
+
+	protected void addTag(BookDescription description, Tag tag) {
+		description.addTagWithNoCheck(tag);
+	}
+
+	protected void setSeriesInfo(BookDescription description, String series, long index) {
+		description.setSeriesInfoWithNoCheck(series, index);
+	}
+
+	protected abstract Map<String,BookDescription> listBooks();
 	protected abstract void executeAsATransaction(Runnable actions);
 	protected abstract long loadBook(BookDescription description);
 	protected abstract ArrayList<Author> loadAuthors(long bookId);

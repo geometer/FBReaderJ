@@ -32,11 +32,6 @@ class ZLTarDir extends ZLDir {
 		return ":";
 	};
 	
-	private static ArrayList EMPTY = new ArrayList();
-	public ArrayList collectSubDirs() {
-		return EMPTY;
-	};
-	
 	public ArrayList collectFiles() {		
 		ArrayList names = new ArrayList();
 

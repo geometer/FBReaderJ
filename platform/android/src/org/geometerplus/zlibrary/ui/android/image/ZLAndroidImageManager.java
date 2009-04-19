@@ -28,9 +28,7 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			if ("image/palm".equals(singleImage.mimeType())) {
 				return null;
 			}
-			System.err.println("array decoding + " + System.currentTimeMillis());
 			byte[] array = singleImage.byteData();
-			System.err.println("array decoding - " + System.currentTimeMillis());
 			if (array == null) {
 				return null;
 			}

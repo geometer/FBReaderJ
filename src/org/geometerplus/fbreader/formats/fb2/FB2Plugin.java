@@ -25,10 +25,6 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class FB2Plugin extends FormatPlugin {
-	public boolean providesMetaInfo() {
-		 return true;
-	}
-	
 	public boolean acceptsFile(ZLFile file) {
 		return "fb2".equals(file.getExtension());
 	}
@@ -39,9 +35,5 @@ public class FB2Plugin extends FormatPlugin {
 	
 	public boolean readModel(BookDescription description, BookModel model) {
 		return new FB2Reader(model).readBook(description.FileName);
-	}
-	
-	public String getIconName() {
-		return "fb2";
 	}
 }

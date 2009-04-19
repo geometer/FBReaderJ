@@ -13,7 +13,7 @@ public class NoCompressionDecompressor extends Decompressor {
         myStream = is;
     }
 
-    public int read(byte b[], int off, int len) throws IOException, WrongZipFormatException {
+    public int read(byte b[], int off, int len) throws IOException {
         int i = 0;
         for (; i < len; ++i) {
             int value = read();
@@ -25,7 +25,7 @@ public class NoCompressionDecompressor extends Decompressor {
         return (i > 0) ? i : -1;
     }
 
-    public int read() throws IOException, WrongZipFormatException {
+    public int read() throws IOException {
         if (myCurrentPosition < myHeader.getCompressedSize()) {
             myCurrentPosition++;
             return myStream.read();

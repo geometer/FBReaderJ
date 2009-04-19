@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,8 +42,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				createTables();
 			case 1:
 				updateTables1();
+			case 2:
+				updateTables2();
 		}
-		myDatabase.setVersion(2);
+		myDatabase.setVersion(3);
 	}
 
 	protected void executeAsATransaction(Runnable actions) {
@@ -84,13 +87,79 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return id;
 	}
 
-	protected void listBooks() {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT Authors.name,Authors.sort_key,Books.title,Books.language,Books.encoding,Books.file_name FROM Books LEFT JOIN BookAuthor ON Books.book_id = BookAuthor.book_id LEFT JOIN Authors ON Authors.author_id = BookAuthor.author_id ORDER by Books.file_name", null);
+	protected Map<String,BookDescription> listBooks() {
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id,file_name,title,encoding,language FROM Books", null
+		);
+		final int count = cursor.getCount();
+		final HashMap<Long,BookDescription> booksById = new HashMap<Long,BookDescription>(count);
+		final HashMap<String,BookDescription> booksByFilename = new HashMap<String,BookDescription>(count);
 		while (cursor.moveToNext()) {
-			System.err.println(cursor.getString(0) + ":" + cursor.getString(2));
+			final long id = cursor.getLong(0);
+			final String fileName = cursor.getString(1);
+			final BookDescription description = createDescription(
+				id, fileName, cursor.getString(2), cursor.getString(3), cursor.getString(4)
+			);
+			booksById.put(id, description);
+			booksByFilename.put(fileName, description);
 		}
-		cursor.close();	
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT author_id,name,sort_key FROM Authors", null
+		);
+		final HashMap<Long,Author> authorsById = new HashMap<Long,Author>(cursor.getCount());
+		while (cursor.moveToNext()) {
+			authorsById.put(cursor.getLong(0), new Author(cursor.getString(1), cursor.getString(2)));
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
+		);
+		while (cursor.moveToNext()) {
+			BookDescription book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				Author author = authorsById.get(cursor.getLong(1));
+				if (author != null) {
+					addAuthor(book, author);
+				}
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery("SELECT book_id,tag_id FROM BookTag", null);
+		while (cursor.moveToNext()) {
+			BookDescription book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				addTag(book, getTagById(cursor.getLong(1)));
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT series_id,name FROM Series", null
+		);
+		final HashMap<Long,String> seriesById = new HashMap<Long,String>(cursor.getCount());
+		while (cursor.moveToNext()) {
+			seriesById.put(cursor.getLong(0), cursor.getString(1));
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id,series_id,book_index FROM BookSeries", null
+		);
+		while (cursor.moveToNext()) {
+			BookDescription book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				String series = seriesById.get(cursor.getLong(1));
+				if (series != null) {
+					setSeriesInfo(book, series, cursor.getLong(2));
+				}
+			}
+		}
+		cursor.close();
+		return booksByFilename;
 	}
 
 	private SQLiteStatement myUpdateBookInfoStatement;
@@ -169,7 +238,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (!cursor.moveToNext()) {
 			return null;
 		}
-		ArrayList<Author> list = new ArrayList<Author>(cursor.getCount());
+		final ArrayList<Author> list = new ArrayList<Author>(cursor.getCount());
 		do {
 			list.add(new Author(cursor.getString(0), cursor.getString(1)));
 		} while (cursor.moveToNext());
@@ -411,6 +480,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
 		myDatabase.execSQL("INSERT INTO BookTag (tag_id,book_id) SELECT tag_id,book_id FROM BookTag_Obsolete");
 		myDatabase.execSQL("DROP TABLE BookTag_Obsolete");
+
+		myDatabase.setTransactionSuccessful();
+		myDatabase.endTransaction();
+	}
+
+	private void updateTables2() {
+		myDatabase.beginTransaction();
+
+		myDatabase.execSQL("CREATE INDEX BookAuthor_BookIndex ON BookAuthor (book_id)");
+		myDatabase.execSQL("CREATE INDEX BookTag_BookIndex ON BookTag (book_id)");
+		myDatabase.execSQL("CREATE INDEX BookSeries_BookIndex ON BookSeries (book_id)");
 
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();

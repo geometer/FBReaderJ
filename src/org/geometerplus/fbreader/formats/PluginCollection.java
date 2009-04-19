@@ -31,7 +31,8 @@ import org.geometerplus.fbreader.formats.plucker.PluckerPlugin;
 
 public class PluginCollection {
 	private static PluginCollection ourInstance;
-	private final ArrayList myPlugins = new ArrayList();
+
+	private final ArrayList<FormatPlugin> myPlugins = new ArrayList<FormatPlugin>();
 	public ZLStringOption DefaultLanguageOption;
 	public ZLStringOption DefaultEncodingOption;
 	public ZLBooleanOption LanguageAutoDetectOption;
@@ -40,7 +41,7 @@ public class PluginCollection {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
 			ourInstance.myPlugins.add(new FB2Plugin());
-			ourInstance.myPlugins.add(new PluckerPlugin());
+			//ourInstance.myPlugins.add(new PluckerPlugin());
 			//ourInstance->myPlugins.push_back(new DocBookPlugin());
 			//ourInstance.myPlugins.add(new HtmlPlugin());
 			/*ourInstance.myPlugins.add(new TxtPlugin());
@@ -69,13 +70,10 @@ public class PluginCollection {
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 	}
 		
-	public FormatPlugin getPlugin(ZLFile file, boolean strong) {
-		final ArrayList plugins = myPlugins;
-		final int numberOfPlugins = plugins.size();
-		for (int i = 0; i < numberOfPlugins; ++i) {
-			FormatPlugin fp = (FormatPlugin)plugins.get(i);
-			if ((!strong || fp.providesMetaInfo()) && fp.acceptsFile(file)) {
-				return fp;
+	public FormatPlugin getPlugin(ZLFile file) {
+		for (FormatPlugin plugin : myPlugins) {
+			if (plugin.acceptsFile(file)) {
+				return plugin;
 			}
 		}
 		return null;

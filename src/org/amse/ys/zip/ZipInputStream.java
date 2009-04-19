@@ -11,7 +11,7 @@ class ZipInputStream extends InputStream {
     private final Decompressor myDecompressor;
 	private boolean myIsClosed;
 
-    public ZipInputStream(ZipFile parent, LocalFileHeader header) throws IOException, WrongZipFormatException {
+    public ZipInputStream(ZipFile parent, LocalFileHeader header) throws IOException {
 		myParent = parent;
         myBaseStream = parent.getBaseStream();
         myBaseStream.setPosition(header.OffsetOfLocalData);
@@ -32,19 +32,11 @@ class ZipInputStream extends InputStream {
             return 0;
         }
 
-        try {
-            return myDecompressor.read(b, off, len);
-        } catch (WrongZipFormatException e) {
-            throw new IOException("when reading occured exception " + e.getMessage());
-        }
+        return myDecompressor.read(b, off, len);
     }
 
     public int read() throws IOException {
-        try {
-            return myDecompressor.read();
-        } catch (WrongZipFormatException e) {
-            throw new IOException("when reading occured exception " + e.getMessage());
-        }
+        return myDecompressor.read();
     }
 
     public void close() throws IOException {

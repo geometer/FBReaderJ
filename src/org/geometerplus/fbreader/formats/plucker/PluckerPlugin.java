@@ -28,10 +28,6 @@ import org.geometerplus.fbreader.formats.pdb.PdbStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerPlugin extends PdbPlugin {
-	public boolean providesMetaInfo() {
-		return false;
-	}
-	
 	public boolean acceptsFile(ZLFile file) {		
 		return "DataPlkr".equals(fileType(file));
 	}
@@ -63,9 +59,5 @@ public class PluckerPlugin extends PdbPlugin {
 			e.printStackTrace();
 		}
 		return false;
-	}
-	
-	public	String getIconName() {
-		return "plucker";
 	}
 }

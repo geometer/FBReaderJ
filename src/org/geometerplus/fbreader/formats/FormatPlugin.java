@@ -29,13 +29,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
 
 public abstract class FormatPlugin {
-	public abstract boolean providesMetaInfo();
 	public abstract boolean acceptsFile(ZLFile file);
-	public abstract String getIconName();
-	
-	public String tryOpen(String path) {
-		return "";
-	}
 	
 	public abstract	boolean readDescription(String path, BookDescription description);
 	public abstract boolean readModel(BookDescription description, BookModel model);

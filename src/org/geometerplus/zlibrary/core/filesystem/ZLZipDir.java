@@ -37,9 +37,6 @@ public class ZLZipDir extends ZLDir {
 	};
 	
 	private static final ArrayList EMPTY = new ArrayList();
-	public ArrayList collectSubDirs() {
-		return EMPTY;
-	};
 	
 	public ArrayList/*<String>*/ collectFiles() {		
 		ZipFile zf = null;

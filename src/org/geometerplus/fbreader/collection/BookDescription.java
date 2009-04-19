@@ -27,27 +27,32 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.formats.*;
 
 public class BookDescription {
-	private final static HashMap<String,BookDescription> ourDescriptions = new HashMap<String,BookDescription>();
-
 	public static BookDescription getDescription(String fileName) {
-		return getDescription(fileName, true); 
-	} 
+		return getDescription(fileName, null, null, true);
+	}
 
-	public static BookDescription getDescription(String fileName, boolean checkFile) {
+	static BookDescription getDescription(String fileName, ZLFile file, BookDescription description, boolean readFromDB) {
 		if (fileName == null) {
 			return null;
 		}
-		String physicalFileName = new ZLFile(fileName).getPhysicalFilePath();
-		ZLFile file = new ZLFile(physicalFileName);
-		if (checkFile && !file.exists()) {
-			return null;
+
+		final ZLFile bookFile = new ZLFile(fileName);
+		String physicalFileName;
+		if (file == null) {
+			physicalFileName = bookFile.getPhysicalFilePath();
+			file = new ZLFile(physicalFileName);
+			if (!file.exists()) {
+				return null;
+			}
+		} else {
+			physicalFileName = file.getPath();
 		}
-		BookDescription description = ourDescriptions.get(fileName);
+
 		if (description == null) {
-			description = new BookDescription(fileName);
-			ourDescriptions.put(fileName, description);
+			description = new BookDescription(fileName, readFromDB);
 		}
-		if ((!checkFile || BookDescriptionUtil.checkInfo(file)) && description.isSaved()) {
+
+		if (BookDescriptionUtil.checkInfo(file) && description.myIsSaved) {
 			return description;
 		}
 
@@ -56,9 +61,7 @@ public class BookDescription {
 		}
 		BookDescriptionUtil.saveInfo(file);
 
-		ZLFile bookFile = new ZLFile(fileName);
-
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile, false);
+		final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
 		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
 			return null;
 		}
@@ -67,7 +70,6 @@ public class BookDescription {
 		if ((title == null) || (title.length() == 0)) {
 			description.setTitle(bookFile.getName(true));
 		}
-		description.save();
 		return description;
 	}
 
@@ -78,32 +80,46 @@ public class BookDescription {
 	private String myEncoding;
 	private String myLanguage;
 	private String myTitle;
-	private ArrayList<Author> myAuthors;
+	private List<Author> myAuthors;
 	private ArrayList<Tag> myTags;
 	private SeriesInfo mySeriesInfo;
 
 	private boolean myIsSaved;
-	private boolean myIsChanged;
 
-	private BookDescription(String fileName) {
+	BookDescription(long bookId, String fileName, String title, String encoding, String language) {
+		myBookId = bookId;
 		FileName = fileName;
-		final BooksDatabase database = BooksDatabase.Instance();
-		myBookId = database.loadBook(this);
-		if (myBookId >= 0) {
-			myAuthors = database.loadAuthors(myBookId);
-			myTags = database.loadTags(myBookId);
-			mySeriesInfo = database.loadSeriesInfo(myBookId);
-			myIsSaved = true;
-			myIsChanged = false;
-		}
+		myTitle = title;
+		myEncoding = encoding;
+		myLanguage = language;
+		myIsSaved = true;
 	}
 
-	public boolean isSaved() {
-		return myIsSaved;
+	private BookDescription(String fileName, boolean createFromDatabase) {
+		FileName = fileName;
+		if (createFromDatabase) {
+			final BooksDatabase database = BooksDatabase.Instance();
+			myBookId = database.loadBook(this);
+			if (myBookId >= 0) {
+				myAuthors = database.loadAuthors(myBookId);
+				myTags = database.loadTags(myBookId);
+				mySeriesInfo = database.loadSeriesInfo(myBookId);
+				myIsSaved = true;
+			}
+		} else {
+			myBookId = -1;
+		}
 	}
 
 	public List<Author> authors() {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
+	}
+
+	void addAuthorWithNoCheck(Author author) {
+		if (myAuthors == null) {
+			myAuthors = new ArrayList<Author>();
+		}
+		myAuthors.add(author);
 	}
 
 	private void addAuthor(Author author) {
@@ -113,12 +129,10 @@ public class BookDescription {
 		if (myAuthors == null) {
 			myAuthors = new ArrayList<Author>();
 			myAuthors.add(author);
-			myIsChanged = true;
-		} else {
-			if (!myAuthors.contains(author)) {
-				myAuthors.add(author);
-				myIsChanged = true;
-			}
+			myIsSaved = false;
+		} else if (!myAuthors.contains(author)) {
+			myAuthors.add(author);
+			myIsSaved = false;
 		}
 	}
 
@@ -151,6 +165,10 @@ public class BookDescription {
 		addAuthor(new Author(strippedName, strippedKey));
 	}
 
+	public long getBookId() {
+		return myBookId;
+	}
+
 	public String getTitle() {
 		return myTitle;
 	}
@@ -158,7 +176,7 @@ public class BookDescription {
 	public void setTitle(String title) {
 		if (!ZLMiscUtil.equals(myTitle, title)) {
 			myTitle = title;
-			myIsChanged = true;
+			myIsSaved = false;
 		}
 	}
 
@@ -166,15 +184,22 @@ public class BookDescription {
 		return mySeriesInfo;
 	}
 
+	void setSeriesInfoWithNoCheck(String name, long index) {
+		mySeriesInfo = new SeriesInfo(name, index);
+	}
+
 	public void setSeriesInfo(String name, long index) {
 		if (mySeriesInfo == null) {
 			if (name != null) {
 				mySeriesInfo = new SeriesInfo(name, index);
+				myIsSaved = false;
 			}
 		} else if (name == null) {
 			mySeriesInfo = null;
+			myIsSaved = false;
 		} else if (!mySeriesInfo.Name.equals(name) || (mySeriesInfo.Index != index)) {
 			mySeriesInfo = new SeriesInfo(name, index);
+			myIsSaved = false;
 		}
 	}
 
@@ -185,7 +210,7 @@ public class BookDescription {
 	public void setLanguage(String language) {
 		if (!ZLMiscUtil.equals(myLanguage, language)) {
 			myLanguage = language;
-			myIsChanged = true;
+			myIsSaved = false;
 		}
 	}
 
@@ -196,12 +221,19 @@ public class BookDescription {
 	public void setEncoding(String encoding) {
 		if (!ZLMiscUtil.equals(myEncoding, encoding)) {
 			myEncoding = encoding;
-			myIsChanged = true;
+			myIsSaved = false;
 		}
 	}
 
 	public List<Tag> tags() {
 		return (myTags != null) ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
+	}
+
+	void addTagWithNoCheck(Tag tag) {
+		if (myTags == null) {
+			myTags = new ArrayList<Tag>();
+		}
+		myTags.add(tag);
 	}
 
 	public void addTag(Tag tag) {
@@ -211,7 +243,7 @@ public class BookDescription {
 			}
 			if (!myTags.contains(tag)) {
 				myTags.add(tag);
-				myIsChanged = true;
+				myIsSaved = false;
 			}
 		}
 	}
@@ -221,7 +253,7 @@ public class BookDescription {
 	}
 
 	public boolean save() {
-		if (!myIsChanged) {
+		if (myIsSaved) {
 			return false;
 		}
 		final BooksDatabase database = BooksDatabase.Instance();
@@ -246,7 +278,6 @@ public class BookDescription {
 			}
 		});
 
-		myIsChanged = false;
 		myIsSaved = true;
 		return true;
 	}

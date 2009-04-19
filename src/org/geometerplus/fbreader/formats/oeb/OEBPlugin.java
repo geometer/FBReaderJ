@@ -27,10 +27,6 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 public class OEBPlugin extends FormatPlugin {
-	public boolean providesMetaInfo() {
-		 return true;
-	}
-	
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension().intern();
 		return (extension == "opf") || (extension == "oebzip") || (extension == "epub");
@@ -73,9 +69,5 @@ public class OEBPlugin extends FormatPlugin {
 			return false;
 		}
 		return new OEBBookReader(model).readBook(path);
-	}
-	
-	public String getIconName() {
-		return "oeb";
 	}
 }

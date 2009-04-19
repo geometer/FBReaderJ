@@ -84,7 +84,6 @@ public abstract class ZLDir {
 	}
 
 
-	abstract public ArrayList collectSubDirs();
 	abstract public ArrayList collectFiles();
 	abstract protected String getDelimiter();
 }

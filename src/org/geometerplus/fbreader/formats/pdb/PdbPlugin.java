@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.formats.pdb;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.geometerplus.fbreader.collection.BookDescriptionUtil;
+//import org.geometerplus.fbreader.collection.BookDescriptionUtil;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.plucker.PluckerTextStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -38,7 +38,7 @@ public abstract class PdbPlugin extends FormatPlugin {
 		String fileName = file.getPath();
 		int index = fileName.indexOf(':');
 		ZLFile baseFile = (index == -1) ? file : new ZLFile(fileName.substring(0, index));
-		boolean upToDate = BookDescriptionUtil.checkInfo(baseFile);
+		boolean upToDate = true;//BookDescriptionUtil.checkInfo(baseFile);
 
 		ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
@@ -58,18 +58,10 @@ public abstract class PdbPlugin extends FormatPlugin {
 			}
 			palmType = new String(id);
 			if (!upToDate) {
-				BookDescriptionUtil.saveInfo(baseFile);
+				//BookDescriptionUtil.saveInfo(baseFile);
 			}
 			palmTypeOption.setValue(palmType);
 		}
 		return palmType;
-	}
-	
-	public	String getIconName() {
-		return "pdb";
-	}
-	
-	public boolean providesMetaInfo() {
-		return false;
 	}
 }

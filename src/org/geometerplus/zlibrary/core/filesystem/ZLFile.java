@@ -40,7 +40,7 @@ public class ZLFile {
 	private final String myPath;
 	private final String myNameWithExtension;
 	private String myNameWithoutExtension;
-	private final String myExtension;
+	private String myExtension;
 	private	int myArchiveType;
 	private	ZLFileInfo myInfo;
 	
@@ -88,6 +88,16 @@ public class ZLFile {
 		}
 	}
 	
+	public ZLFile(File file) {
+		myPath = file.getPath();
+		myInfo = new ZLFileInfo();
+		myInfo.Exists = file.exists();
+		myInfo.Size = file.length();
+		myInfo.IsDirectory = file.isDirectory();
+		myNameWithExtension = file.getName();
+		init();
+	}
+
 	public ZLFile(String path) {
 		if (path.startsWith(ZLibrary.JAR_DATA_PREFIX)) {
 			myInfo = new ZLFileInfo();
@@ -95,7 +105,7 @@ public class ZLFile {
 			myPath = path;
 			myNameWithExtension = path;
 		} else {
-			myPath = ZLFSUtil.normalize(path);		
+			myPath = path;
 			int index = ZLFSUtil.findLastFileNameDelimiter(myPath);
 			if (index < myPath.length() - 1) {
 				myNameWithExtension = myPath.substring(index + 1);
@@ -103,6 +113,10 @@ public class ZLFile {
 				myNameWithExtension = myPath;
 			}
 		}
+		init();
+	}
+
+	private void init() {
 		myNameWithoutExtension = myNameWithExtension;
 
 		Integer value = (Integer)ourForcedFiles.get(myPath);
@@ -127,7 +141,7 @@ public class ZLFile {
 				myArchiveType = myArchiveType | ArchiveType.ZIP;
 			} else if (lowerCaseName.endsWith(".tar")) {
 				myArchiveType = myArchiveType | ArchiveType.TAR;
-			} else if (lowerCaseName.endsWith(".tgz") || lowerCaseName.endsWith(".ipk")) {
+			} else if (lowerCaseName.endsWith(".tgz")) {
 				//nothing to-do myNameWithoutExtension = myNameWithoutExtension.substr(0, myNameWithoutExtension.length() - 3) + "tar";
 				myArchiveType = myArchiveType | ArchiveType.TAR | ArchiveType.GZIP;
 			}

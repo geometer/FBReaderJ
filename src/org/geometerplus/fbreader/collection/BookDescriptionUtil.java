@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
 
-public class BookDescriptionUtil {
+class BookDescriptionUtil {
 	private static final String SIZE = "Size";
 	private static final String ENTRY = "Entry";
 	private static final String ENTRIES_NUMBER = "EntriesNumber";
@@ -43,21 +43,22 @@ public class BookDescriptionUtil {
 		new ZLIntegerOption(file.getPath(), SIZE, -1).setValue((int)file.size());		
 	}
 	
-	public static void listZipEntries(ZLFile zipFile, ArrayList entries) {
+	private static final ArrayList<String> EMPTY = new ArrayList<String>();
+	public static ArrayList<String> listZipEntries(ZLFile zipFile) {
 		int entriesNumber = new ZLIntegerOption(zipFile.getPath(), ENTRIES_NUMBER, -1).getValue();
-		if (entriesNumber == -1) {
-			resetZipInfo(zipFile);
-			entriesNumber = new ZLIntegerOption(zipFile.getPath(), ENTRIES_NUMBER, -1).getValue();
+		if (entriesNumber <= 0) {
+			return EMPTY;
 		}
-		final ZLStringOption entryOption =
-			new ZLStringOption(zipFile.getPath(), "", "");
+		final ZLStringOption entryOption = new ZLStringOption(zipFile.getPath(), "", "");
+		final ArrayList<String> zipEntries = new ArrayList<String>(entriesNumber);
 		for (int i = 0; i < entriesNumber; ++i) {
 			entryOption.changeName(ENTRY + i);
 			final String entry = entryOption.getValue();
 			if (entry.length() != 0) {
-				entries.add(entry);
+				zipEntries.add(entry);
 			}
 		}
+		return zipEntries;
 	}
 	
 	public static void resetZipInfo(ZLFile zipFile) {
@@ -73,7 +74,7 @@ public class BookDescriptionUtil {
 				String entry = (String)entries.get(i);
 				final ZLStringOption entryOption =
 					new ZLStringOption(zipFile.getPath(), "", "");
-				if (PluginCollection.instance().getPlugin(new ZLFile(entry), true) != null) {
+				if (PluginCollection.instance().getPlugin(new ZLFile(entry)) != null) {
 					final String fullName = zipPrefix + entry;
 					entryOption.changeName(ENTRY + counter);
 					entryOption.setValue(fullName);

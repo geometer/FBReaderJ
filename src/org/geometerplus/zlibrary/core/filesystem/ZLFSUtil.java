@@ -26,19 +26,6 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 abstract class ZLFSUtil {
-	static String normalize(String path) {
-		if (getRootDirectoryPath().equals(path)) {
-			return path;
-		}
-		try {
-			path = new File(path).getCanonicalPath();
-		} catch (IOException e) {
-		}
-		return path;
-	}
-
-	//public OutputStream createOutputStream(String path);
-	
 	static ZLDir getRootDirectory() {
 		return new ZLFSDir(getRootDirectoryPath());
 	}
@@ -67,10 +54,7 @@ abstract class ZLFSUtil {
 		if (path.startsWith(ZLibrary.JAR_DATA_PREFIX)) {
 			return (index < ZLibrary.JAR_DATA_PREFIX.length()) ? -1 : index;
 		}
-		if (System.getProperty("os.name").startsWith("Windows")) {
-			return (index == 1) ? -1 : index;
-		}
-		return index;
+		return (index == 1) ? -1 : index;
 	}
 	
 	static int findLastFileNameDelimiter(String path) {

@@ -62,7 +62,7 @@ public class DeflatingDecompressor extends Decompressor {
         do {
             int tmp = myStream.read();
             if (tmp < 0) {
-                throw new RuntimeException("getBit: read after end of file");
+                throw new ZipException("getBit: read after end of file");
             }
             myTempInt += tmp << myBitsInBuffer;
             myBitsInBuffer += 8;
@@ -98,7 +98,7 @@ public class DeflatingDecompressor extends Decompressor {
 
     private static final int MAX_LEN = CircularBuffer.DICTIONARY_LENGTH / 2;
 
-    public int read(byte b[], int off, int len) throws IOException, WrongZipFormatException {
+    public int read(byte b[], int off, int len) throws IOException {
         int i = 0;
         int available = myOutputBuffer.available();
         while (i < len) {
@@ -126,7 +126,7 @@ public class DeflatingDecompressor extends Decompressor {
         return (i > 0) ? i : -1;
     }
 
-    public int read() throws IOException, WrongZipFormatException {
+    public int read() throws IOException {
         myCurrentPosition++;
         
         while (myOutputBuffer.available() == 0) {
@@ -248,7 +248,7 @@ public class DeflatingDecompressor extends Decompressor {
         return tmp & 0x0FFFF;
     }
 
-    private void readHeader() throws IOException, WrongZipFormatException {
+    private void readHeader() throws IOException {
         if ((myState != ST_HEADER) || (myBytesRead >= myTotalLength)) {
             throw new RuntimeException("unexpected case of readheader call");
         }
@@ -271,7 +271,7 @@ public class DeflatingDecompressor extends Decompressor {
             readCodes();
             break;
         case 3:
-            throw new WrongZipFormatException(
+            throw new ZipException(
                     "Code 11 found in header of delflated block. (means error according to specification)");
         }
         

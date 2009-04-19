@@ -37,17 +37,6 @@ public class HtmlPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public String getIconName() {
-		final String ICON_NAME = "html";
-		return ICON_NAME;
-	}
-
-	@Override
-	public boolean providesMetaInfo() {
-		return true;
-	}
-
-	@Override
 	public boolean readDescription(String path, BookDescription description) {
 		return new HtmlDescriptionReader(description).readDescription(path);
         // always true =)

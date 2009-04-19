@@ -32,10 +32,10 @@ final class MyBufferedInputStream extends InputStream {
 
     public int read() throws IOException {        
         myCurrentPosition++;
-        if (myBytesReady == 0) {
+        if (myBytesReady <= 0) {
             myPositionInBuffer = 0;
             myBytesReady = myFileInputStream.read(myBuffer);
-            if (myBytesReady == 0) {
+            if (myBytesReady <= 0) {
                 return -1;
             }
         }        
@@ -77,14 +77,17 @@ final class MyBufferedInputStream extends InputStream {
             myBytesReady -= n;
             myPositionInBuffer += n;
         } else {
-			n -= myBytesReady;
+            n -= myBytesReady;
             myBytesReady = 0;
 
+            if (n > myFileInputStream.available()) {
+                throw new IOException("Not enough bytes to read");
+            }
             n -= myFileInputStream.skip(n);
             while (n > 0) {
                 int skipped = myFileInputStream.read(myBuffer, 0, Math.min(n, myBuffer.length));
                 if (skipped <= 0) {
-                    break;
+                    throw new IOException("Not enough bytes to read");
                 }
                 n -= skipped;
             }

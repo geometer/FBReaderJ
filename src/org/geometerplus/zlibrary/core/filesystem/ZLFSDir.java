@@ -38,26 +38,6 @@ class ZLFSDir extends ZLDir {
 		return File.separator;
 	};
 	
-	public ArrayList collectSubDirs() {
-		File[] dirs = myFile.listFiles();
-		
-		ArrayList/*<String>*/ newdirs  = new ArrayList();
-		
-		if ((dirs == null) && isRoot()) {
-			dirs = File.listRoots();
-			for(int i = 0; i < dirs.length; i++) {			
-				newdirs.add(dirs[i].getPath());
-			}
-		} else if (dirs != null) {
-			for(int i = 0; i < dirs.length; i++) {
-				if (dirs[i].isDirectory()) {
-					newdirs.add(dirs[i].getName());
-				}
-			}
-		}
-		return newdirs;
-	};
-	
 	public ArrayList/*<String>*/ collectFiles() {		
 		File[] dirs = myFile.listFiles();
 		ArrayList/*<String>*/ newdirs  = new ArrayList();

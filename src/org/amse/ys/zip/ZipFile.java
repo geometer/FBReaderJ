@@ -20,7 +20,6 @@ public final class ZipFile {
         try {
             readAllHeaders();
         } catch (IOException e) {
-        } catch (WrongZipFormatException e) {
         }
         return myFileHeaders.values();
     }
@@ -50,7 +49,7 @@ public final class ZipFile {
         return fileName.equals(fileToFind);
     }
 
-    private void readAllHeaders() throws IOException, WrongZipFormatException {
+    private void readAllHeaders() throws IOException {
         if (myAllFilesAreRead) {
             return;
         }
@@ -67,7 +66,7 @@ public final class ZipFile {
                     if (header == LocalFileHeader.FOLDER_HEADER_SIGNATURE) {
                         break; // central directory, no more files
                     } else {
-                        throw new WrongZipFormatException(
+                        throw new ZipException(
                                 "readHeaders. Wrong signature found = " + header
                                         + " at position " + baseStream.offset());
                     }
@@ -88,7 +87,7 @@ public final class ZipFile {
             do {
                 int nextByte = baseStream.read();
                 if (nextByte < 0) {
-                    throw new IOException(
+                    throw new ZipException(
                             "readFileHeaders. Unexpected end of file when looking for DataDescriptor");
                 }
                 signature = ((signature << 8) & (0x0FFFFFFFF)) + (byte) nextByte;
@@ -117,7 +116,7 @@ public final class ZipFile {
 		return (baseStream != null) ? baseStream : new MyBufferedInputStream(myFileName);
 	}
 
-    private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException, WrongZipFormatException {
+    private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException {
         return new ZipInputStream(this, header);
     }
 
@@ -125,11 +124,7 @@ public final class ZipFile {
         if (!myFileHeaders.isEmpty()) {
             LocalFileHeader header = myFileHeaders.get(entryName);
             if (header != null) {
-                try {
-                    return createZipInputStream(header);
-                } catch (WrongZipFormatException e) {
-                    return null;
-                }
+                return createZipInputStream(header);
             }
             if (myAllFilesAreRead) {
                 return null;
@@ -145,7 +140,7 @@ public final class ZipFile {
                     if (signature == LocalFileHeader.FOLDER_HEADER_SIGNATURE) {
                         break; // central directory, no more files
                     } else {
-                        throw new IOException(
+                        throw new ZipException(
                                 "Wrong signature " + signature
                                         + " found at position " + baseStream.offset());
                     }
@@ -155,7 +150,7 @@ public final class ZipFile {
             if (header != null) {
                 try {
                     return createZipInputStream(header);
-                } catch (WrongZipFormatException e) {
+                } catch (ZipException e) {
                 }
             }
 		} finally {

@@ -58,7 +58,7 @@ public final class BookModel {
 		myBookTextModels.add(BookTextModel);
 		Description = description;
 		ZLFile file = new ZLFile(description.FileName);
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(file, false);
+		FormatPlugin plugin = PluginCollection.instance().getPlugin(file);
 		if (plugin != null) {
 			plugin.readModel(description, this);
 		}
