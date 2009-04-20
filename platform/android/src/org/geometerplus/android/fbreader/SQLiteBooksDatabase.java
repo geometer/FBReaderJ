@@ -44,8 +44,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables1();
 			case 2:
 				updateTables2();
+			case 3:
+				updateTables3();
 		}
-		myDatabase.setVersion(3);
+		myDatabase.setVersion(4);
 	}
 
 	protected void executeAsATransaction(Runnable actions) {
@@ -491,6 +493,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("CREATE INDEX BookAuthor_BookIndex ON BookAuthor (book_id)");
 		myDatabase.execSQL("CREATE INDEX BookTag_BookIndex ON BookTag (book_id)");
 		myDatabase.execSQL("CREATE INDEX BookSeries_BookIndex ON BookSeries (book_id)");
+
+		myDatabase.setTransactionSuccessful();
+		myDatabase.endTransaction();
+	}
+
+	private void updateTables3() {
+		myDatabase.beginTransaction();
+
+		myDatabase.execSQL(
+			"CREATE TABLE Files(" +
+				"file_id INTEGER PRIMARY KEY," +
+				"name TEXT NOT NULL," +
+				"parent_id INTEGER REFERENCES Files(file_id)," +
+				"size INTEGER," +
+				"CONSTRAINT Files_Unique UNIQUE (name, parent_id))");
 
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
