@@ -20,8 +20,7 @@
 package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
-
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -49,6 +48,6 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	}
 
 	public void readBindings() {
-		read(ZLibrary.JAR_DATA_PREFIX + "data/default/keymap.xml");
+		read(ZLResourceFile.createResourceFile("data/default/keymap.xml"));
 	}
 }

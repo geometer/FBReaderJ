@@ -20,45 +20,59 @@
 package org.geometerplus.zlibrary.core.filesystem;
 
 import java.io.*;
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
-abstract class ZLFSUtil {
-	static ZLDir getRootDirectory() {
-		return new ZLFSDir(getRootDirectoryPath());
-	}
+public final class ZLPhysicalFile extends ZLFile {
+	private final File myFile;
 	
-	static String getRootDirectoryPath() {
-		return File.listRoots().length == 1 ? File.listRoots()[0].getPath().trim() : "";
-	}
-	
-	static String getParentPath(String path) {
-		File file = new File(path);
-		String parent = file.getParent();
-		if (parent == null) {
-			File [] roots = File.listRoots();
-			for (int i = 0; i < roots.length; i++) {
-				if (roots[i].equals(file)) {
-					parent = getRootDirectoryPath();
-					break;
-				}
-			}
-		}
-		return parent;
+	ZLPhysicalFile(String path) {
+		this(new File(path));
 	}
 
-	static int findArchiveFileNameDelimiter(String path) {
-		int index = path.lastIndexOf(':');
-		return (index == 1) ? -1 : index;
+	public ZLPhysicalFile(File file) {
+		myFile = file;
+		init();
 	}
 	
-	static int findLastFileNameDelimiter(String path) {
-		int index = findArchiveFileNameDelimiter(path);
-		if (index == -1) {
-			index = path.lastIndexOf(File.separatorChar);
-		}
-		return index;
+	public boolean exists() {
+		return myFile.exists();
+	}
+	
+	public long size() {
+		return myFile.length();
+	}	
+	
+	public boolean isDirectory() {
+		return myFile.isDirectory();
+	}
+	
+	public boolean remove() {
+		return myFile.delete();
+	}
+
+	public String getPath() {
+		return myFile.getPath();
+	}
+	
+	public String getNameWithExtension() {
+		return myFile.getName();
+	}
+
+	public ZLFile getParent() {
+		return isDirectory() ? null : new ZLPhysicalFile(myFile.getParent());
+	}
+
+	public ZLPhysicalFile getPhysicalFile() {
+		return this;
+	}
+    
+	public InputStream getInputStream() throws IOException {
+		return new FileInputStream(myFile);
+	}
+
+	protected ZLDir createUnexistingDirectory() {
+		myFile.mkdirs();
+		return new ZLFSDir(getPath());
 	}
 }

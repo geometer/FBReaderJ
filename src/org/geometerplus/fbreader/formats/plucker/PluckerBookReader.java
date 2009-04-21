@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.formats.EncodedTextReader;
 import org.geometerplus.fbreader.formats.pdb.*;
 
 public class PluckerBookReader extends BookReader {
-	private final String myFilePath;
+	private final ZLFile myFile;
 	private PdbInputStream myStream;
 	private	int myFont;
 	private	char[] myCharBuffer;
@@ -53,18 +53,18 @@ public class PluckerBookReader extends BookReader {
 	
 	private final ZLEncodingConverter myConverter;
 	
-	public PluckerBookReader(String filePath, BookModel model, String encoding){
+	public PluckerBookReader(ZLFile file, BookModel model, String encoding){
 		super(model);
 		myConverter = new EncodedTextReader(encoding).getConverter(); 
-		myFilePath = filePath; 
-		System.out.println(filePath + "  " + encoding);
+		myFile = file; 
+		//System.out.println(filePath + "  " + encoding);
 		myFont = FontType.FT_REGULAR;
 		myCharBuffer = new char[65535];
 		myForcedEntry = null;
 	}
 
 	public boolean readDocument() throws IOException {
-		myStream = new PdbInputStream(new ZLFile(myFilePath));
+		myStream = new PdbInputStream(myFile);
 
 		PdbHeader header = new PdbHeader();
 		if (!header.read(myStream)) {
@@ -206,13 +206,13 @@ public class PluckerBookReader extends BookReader {
 					ZLImage image = null;
 					if (type == 2) {
 						System.out.println("non-compressed image");
-						image = new PluckerFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
+						image = new PluckerFileImage(mime, myFile, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 1) {
 						System.out.println("DocCompressedImage");
-						image = new DocCompressedFileImage(mime, myFilePath, myStream.offset(), recordSize - 8);
+						image = new DocCompressedFileImage(mime, myFile, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 2) {
 						System.out.println("ZCompressedImage");
-						image = new ZCompressedFileImage(mime, myFilePath, myStream.offset() + 2, recordSize - 10);
+						image = new ZCompressedFileImage(mime, myFile, myStream.offset() + 2, recordSize - 10);
 					}
 					if (image != null) {
 						addImage(fromNumber(uid), image);

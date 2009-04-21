@@ -23,6 +23,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.formats.html.HtmlTag;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
 import org.geometerplus.zlibrary.core.xml.ZLXMLProcessorFactory;
@@ -58,13 +59,13 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	public boolean read() {
 		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.getInstance()
 				.createHtmlProcessor();
-		return processor.read(this, Model.Description.FileName);
+		return processor.read(this, Model.Description.File);
 	}
 
-	boolean readBook(String fileName) {
+	boolean readBook(ZLFile file) {
 		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.getInstance()
 				.createHtmlProcessor();
-		return processor.read(this, fileName);
+		return processor.read(this, file);
 		// return readDocument(fileName);
 	}
 
@@ -328,7 +329,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					if (":\\".equals(ref.substring(1, 3))) {
 						addImage(ref, new ZLFileImage("image/auto", ref));
 					} else {
-						String fileName = Model.Description.FileName;
+						String fileName = Model.Description.File.getPath();
 						addImage(ref, new ZLFileImage("image/auto", 
 								fileName.substring(0, fileName.lastIndexOf('\\') + 1) + ref));
 					}

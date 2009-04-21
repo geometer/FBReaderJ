@@ -180,7 +180,7 @@ final class ZLOwnXMLParser {
 			//entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
 			final int dtdListSize = dtdList.size();
 			for (int i = 0; i < dtdListSize; ++i) {
-				InputStream stream = new ZLFile((String)dtdList.get(i)).getInputStream();
+				InputStream stream = ZLResourceFile.createResourceFile((String)dtdList.get(i)).getInputStream();
 				if (stream != null) {
 					new ZLOwnDTDParser().doIt(stream, entityMap);
 				}

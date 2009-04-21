@@ -22,9 +22,9 @@ package org.geometerplus.fbreader.encoding;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -48,8 +48,9 @@ public class ZLEncodingCollection {
 		}
 		return ourInstance;
 	}
-	public	static String encodingDescriptionPath() {
-		return ZLibrary.JAR_DATA_PREFIX + "data/encodings/Encodings.xml";
+
+	public static ZLResourceFile encodingDescriptionFile() {
+		return ZLResourceFile.createResourceFile("data/encodings/Encodings.xml");
 	}
 	
 	public ArrayList<ZLEncodingSet>  sets() {
@@ -87,7 +88,7 @@ public class ZLEncodingCollection {
 		if (mySets.isEmpty()) {
 	//		String prefix = encodingDescriptionPath() + File.separator;
 	//		System.out.println("trying to read " + prefix + "Encodings.xml");
-			new ZLEncodingCollectionReader(this).read(encodingDescriptionPath());
+			new ZLEncodingCollectionReader(this).read(encodingDescriptionFile());
 		}
 	}
 	

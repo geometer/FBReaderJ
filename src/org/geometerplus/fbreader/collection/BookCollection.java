@@ -22,10 +22,10 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import java.io.File;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
-import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.formats.*;
 
 public class BookCollection {
 	private static BookCollection ourInstance;
@@ -52,23 +52,39 @@ public class BookCollection {
 		myDoRebuild = true;
 	}
 
-	public String getHelpFileName() {
-		final String fileName = ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2";
-		if (new ZLFile(fileName).exists()) {
-			return fileName;
+	public ZLResourceFile getHelpFile() {
+		final ZLResourceFile file = ZLResourceFile.createResourceFile(
+			"data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
+		);
+		if (file.exists()) {
+			return file;
 		}
 
-		return ZLibrary.JAR_DATA_PREFIX + "data/help/MiniHelp.en.fb2";
+		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
 	private void addDescription(LinkedList<BookDescription> list,
-								ZLFile physicalFile,
-								String fileName,
+								ZLFile bookFile,
 								Map<String,BookDescription> saved) {
-		BookDescription description = BookDescription.getDescription(fileName, physicalFile, saved.get(fileName), false);
-		if (description != null) {
-			list.add(description);
+		BookDescription description = saved.get(bookFile.getPath());
+		boolean doReadMetaInfo = false;
+		if (description == null) {
+			doReadMetaInfo = true;
+			description = new BookDescription(bookFile, false);
 		}
+
+		if (doReadMetaInfo) {
+			final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
+			if ((plugin == null) || !plugin.readDescription(bookFile, description)) {
+				return;
+			}
+			String title = description.getTitle();
+			if ((title == null) || (title.length() == 0)) {
+				description.setTitle(bookFile.getName(true));
+			}
+		}
+
+		list.add(description);
 	}
 
 	private List<BookDescription> collectBookDescriptions() {
@@ -77,7 +93,7 @@ public class BookCollection {
 
 		final Map<String,BookDescription> savedDescriptions = BooksDatabase.Instance().listBooks();
 		final LinkedList<BookDescription> bookDescriptions = new LinkedList<BookDescription>();
-		addDescription(bookDescriptions, null, getHelpFileName(), savedDescriptions);
+		addDescription(bookDescriptions, getHelpFile(), savedDescriptions);
 
 		dirNameQueue.offer(BookDirectory);
 		while (!dirNameQueue.isEmpty()) {
@@ -98,16 +114,17 @@ public class BookCollection {
 				if (i.isDirectory()) {
 					dirNameQueue.add(fileName);
 				} else {
-					final ZLFile file = new ZLFile(i);
+					final ZLPhysicalFile file = new ZLPhysicalFile(i);
 					if (PluginCollection.instance().getPlugin(file) != null) {
-						addDescription(bookDescriptions, null, fileName, savedDescriptions);
+						addDescription(bookDescriptions, file, savedDescriptions);
 					} else if (file.isArchive()) {
 						if (!BookDescriptionUtil.checkInfo(file)) {
 							BookDescriptionUtil.resetZipInfo(file);
 							BookDescriptionUtil.saveInfo(file);
+							// TODO: reset book information for all entries
 						}
 						for (String entryName : BookDescriptionUtil.listZipEntries(file)) {
-							addDescription(bookDescriptions, file, entryName, savedDescriptions);
+							addDescription(bookDescriptions, ZLFile.createFile(entryName), savedDescriptions);
 						}
 					}
 				}

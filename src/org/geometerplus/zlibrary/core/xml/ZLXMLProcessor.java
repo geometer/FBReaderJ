@@ -30,15 +30,11 @@ public abstract class ZLXMLProcessor {
 
 	public abstract boolean read(ZLXMLReader xmlReader, InputStream stream);
 
-	public boolean read(ZLXMLReader xmlReader, String fileName) {
+	public boolean read(ZLXMLReader xmlReader, ZLFile file) {
 		InputStream stream = null;
-		if (fileName.lastIndexOf(ZLibrary.JAR_DATA_PREFIX) != -1) {
-			stream = ZLibrary.Instance().getInputStream(fileName);
-		} else {
-			try {
-				stream = (new ZLFile(fileName)).getInputStream();
-			} catch (IOException e) {
-			}
+		try {
+			stream = file.getInputStream();
+		} catch (IOException e) {
 		}
 		if (stream == null) {
 			return false;

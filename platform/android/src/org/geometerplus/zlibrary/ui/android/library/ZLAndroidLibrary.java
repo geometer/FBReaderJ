@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -66,27 +67,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myWidget;
 	}
 
-	protected InputStream getFileInputStream(String fileName) {
-		try {
-			return new FileInputStream(fileName);
-		} catch (FileNotFoundException e) {
-			return null;
-		}
-	}
-
-	protected InputStream getResourceInputStream(String fileName) {
-		final String fieldName = fileName.replace("/", "__").replace(".", "_").replace("-", "_").toLowerCase();
-		int resourceId;
-		try {
-			resourceId = R.raw.class.getField(fieldName).getInt(null);
-		} catch (NoSuchFieldException e) {
-			return null;
-		} catch (IllegalAccessException e) {
-			return null;
-		}
-		return myApplication.getResources().openRawResource(resourceId);
-	}
-
 	public void openInBrowser(String reference) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse(reference));
@@ -96,4 +76,33 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	//public String getVersionName() {
 	//	return myApplication.getResources().getString(android.R.attr.versionName);
 	//}
+
+	public ZLResourceFile createResourceFile(String path) {
+		return new AndroidResourceFile(path);
+	}
+
+	private final class AndroidResourceFile extends ZLResourceFile {
+		private boolean myExists;
+		private int myResourceId;
+
+		AndroidResourceFile(String path) {
+			super(path);
+			final String fieldName =
+				path.replace("/", "__").replace(".", "_").replace("-", "_").toLowerCase();
+			try {
+				myResourceId = R.raw.class.getField(fieldName).getInt(null);
+				myExists = true;
+			} catch (NoSuchFieldException e) {
+			} catch (IllegalAccessException e) {
+			}
+		}
+
+		public boolean exists() {
+			return myExists;
+		}
+
+		public InputStream getInputStream() {
+			return myExists ? myApplication.getResources().openRawResource(myResourceId) : null;
+		}
+	}
 }

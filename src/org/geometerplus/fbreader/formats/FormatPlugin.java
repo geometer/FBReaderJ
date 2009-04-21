@@ -30,14 +30,10 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
 
 public abstract class FormatPlugin {
 	public abstract boolean acceptsFile(ZLFile file);
-	
-	public abstract	boolean readDescription(String path, BookDescription description);
+	public abstract	boolean readDescription(ZLFile file, BookDescription description);
 	public abstract boolean readModel(BookDescription description, BookModel model);
 	
-	public FormatInfoPage createInfoPage(ZLOptionsDialog d, String str) {
-		return null;
-	}
-
+	/*
 	public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) throws IOException {	
 		String language = description.getLanguage();
 		String encoding = description.getEncoding();
@@ -70,7 +66,7 @@ public abstract class FormatPlugin {
 		}
 	}
 	//Last working version
-	/*public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) {	
+	public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) {	
 		String encoding = description.getEncoding();
 		if (encoding.length() == 0) {
 			encoding = EncodingDetector.detect(stream, PluginCollection.instance().DefaultLanguageOption.getValue());
@@ -99,8 +95,4 @@ public abstract class FormatPlugin {
 		/*}
 
 	}*/
-	
-	static class FormatInfoPage {
-		protected FormatInfoPage() {}
-	}
 }

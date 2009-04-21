@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.core.sqliteconfig;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -43,6 +44,14 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		mySetValueStatement = myDatabase.compileStatement("INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)");
 		myUnsetValueStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ? AND name = ?");
 		myDeleteGroupStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ?");
+
+		/*
+		final Cursor cursor = myDatabase.rawQuery("SELECT groupName,value FROM config WHERE name = ? AND groupName LIKE ?", new String[] { "Size", "/%" });
+		while (cursor.moveToNext()) {
+			System.err.println(cursor.getString(0) + ": " + cursor.getString(1));
+		}
+		cursor.close();
+		*/
 	}
 
 	synchronized public void executeAsATransaction(Runnable actions) {

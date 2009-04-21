@@ -25,26 +25,27 @@ import java.io.InputStream;
 import org.geometerplus.fbreader.formats.pdb.DocDecompressor;
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class DocCompressedFileImage extends ZLSingleImage {
-	private final String myPath;
+	private final ZLFile myFile;
 	private final int myOffset;
 	private final int myCompressedSize;
 	
-	public DocCompressedFileImage(String mimeType, final String path, final int offset, final int compressedSize) {
+	public DocCompressedFileImage(String mimeType, final ZLFile file, final int offset, final int compressedSize) {
 		super(mimeType);
-		myPath = path;
+		myFile = file;
 		myOffset = offset;
 		myCompressedSize = compressedSize;
 	}
 
 	public byte[] byteData() {
-		final InputStream stream = ZLibrary.Instance().getInputStream(myPath);
-		
-		if (stream == null) {
-			return new byte[0];
-		}
 		try {
+			final InputStream stream = myFile.getInputStream();
+			if (stream == null) {
+				return new byte[0];
+			}
+
 			stream.skip(myOffset);
 			byte [] targetBuffer = new byte[65535];
 			final int size = DocDecompressor.decompress(stream, targetBuffer, myCompressedSize);
@@ -58,5 +59,4 @@ public class DocCompressedFileImage extends ZLSingleImage {
 		
 		return new byte[0];
 	}
-
 }

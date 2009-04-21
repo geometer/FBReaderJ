@@ -37,10 +37,8 @@ public class HtmlPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public boolean readDescription(String path, BookDescription description) {
-		return new HtmlDescriptionReader(description).readDescription(path);
-        // always true =)
-		//return true;
+	public boolean readDescription(ZLFile file, BookDescription description) {
+		return new HtmlDescriptionReader(description).readDescription(file);
 	}
 
 	@Override
@@ -49,6 +47,6 @@ public class HtmlPlugin extends FormatPlugin {
 		if (!description.getEncoding().equals(AUTO)) {
 			//new BookDescription.BookInfo(description.FileName).EncodingOption.setValue(AUTO);
 		}
-		return new HtmlReader(model).readBook(description.FileName);
+		return new HtmlReader(model).readBook(description.File);
 	}
 }

@@ -32,13 +32,11 @@ public class PluckerPlugin extends PdbPlugin {
 		return "DataPlkr".equals(fileType(file));
 	}
 	
-	public boolean readDescription(String path, BookDescription description) {
-		ZLFile file = new ZLFile(path);
-
+	public boolean readDescription(ZLFile file, BookDescription description) {
 		try {
 			PdbStream stream = new PluckerTextStream(file);
 			if (stream.open()) {
-				detectEncodingAndLanguage(description, stream);
+				//detectEncodingAndLanguage(description, stream);
 				stream.close();
 			}
 		} catch (IOException e) {
@@ -53,7 +51,7 @@ public class PluckerPlugin extends PdbPlugin {
 	
 	public	boolean readModel(BookDescription description, BookModel model)  {
 		try {
-			return new PluckerBookReader(description.FileName, model, description.getEncoding()).readDocument();
+			return new PluckerBookReader(description.File, model, description.getEncoding()).readDocument();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

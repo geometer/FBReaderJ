@@ -19,26 +19,18 @@
 
 package org.geometerplus.zlibrary.core.html;
 
-import java.io.*;
-import org.geometerplus.zlibrary.core.util.*;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
+import java.io.InputStream;
+import java.io.IOException;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class ZLHtmlProcessor {
 	public abstract boolean read(ZLHtmlReader xmlReader, InputStream stream);
 
-	/*public boolean read(ZLHTMLReader xmlReader, String fileName) {
-		InputStream stream = ZLibrary.Instance().getInputStream(fileName);
-		return (stream != null) ? read(xmlReader, stream) : false;
-	}*/
-	
-	public boolean read(ZLHtmlReader htmlReader, String filename) {
+	public boolean read(ZLHtmlReader htmlReader, ZLFile file) {
 		try {
-			InputStream stream = ZLibrary.Instance().getInputStream(filename);
-			//InputStream stream = new FileInputStream(filename);
+			InputStream stream = file.getInputStream();
 			return (stream != null) ? read(htmlReader, stream) : false;
-		} catch (Exception e) {
-			//System.out.println(e);
-			//e.printStackTrace();
+		} catch (IOException e) {
 		}
 		return false;
 	}

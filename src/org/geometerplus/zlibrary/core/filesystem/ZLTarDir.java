@@ -36,7 +36,7 @@ class ZLTarDir extends ZLDir {
 		ArrayList names = new ArrayList();
 
 		try {
-			InputStream stream = new ZLFile(getPath()).getInputStream();
+			InputStream stream = ZLFile.createFile(getPath()).getInputStream();
 			if (stream != null) {
 				ZLTarHeader header = new ZLTarHeader();
 				while (header.read(stream)) {

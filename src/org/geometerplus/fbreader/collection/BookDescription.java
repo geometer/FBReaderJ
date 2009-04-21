@@ -22,47 +22,42 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.formats.*;
 
 public class BookDescription {
 	public static BookDescription getDescription(String fileName) {
-		return getDescription(fileName, null, null, true);
-	}
-
-	static BookDescription getDescription(String fileName, ZLFile file, BookDescription description, boolean readFromDB) {
 		if (fileName == null) {
 			return null;
 		}
 
-		final ZLFile bookFile = new ZLFile(fileName);
-		String physicalFileName;
-		if (file == null) {
-			physicalFileName = bookFile.getPhysicalFilePath();
-			file = new ZLFile(physicalFileName);
-			if (!file.exists()) {
-				return null;
-			}
-		} else {
-			physicalFileName = file.getPath();
+		return getDescription(ZLFile.createFile(fileName));
+	}
+
+	public static BookDescription getDescription(ZLFile bookFile) {
+		if (bookFile == null) {
+			return null;
 		}
 
-		if (description == null) {
-			description = new BookDescription(fileName, readFromDB);
+		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
+		if ((physicalFile != null) && !physicalFile.exists()) {
+			return null;
 		}
 
-		if (BookDescriptionUtil.checkInfo(file) && description.myIsSaved) {
+		final BookDescription description = new BookDescription(bookFile, true);
+
+		if (BookDescriptionUtil.checkInfo(physicalFile) && description.myIsSaved) {
 			return description;
 		}
 
-		if (physicalFileName != fileName) {
-			BookDescriptionUtil.resetZipInfo(file);
+		if ((physicalFile != null) && (physicalFile != bookFile)) {
+			BookDescriptionUtil.resetZipInfo(physicalFile);
+			BookDescriptionUtil.saveInfo(physicalFile);
 		}
-		BookDescriptionUtil.saveInfo(file);
 
 		final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
-		if ((plugin == null) || !plugin.readDescription(fileName, description)) {
+		if ((plugin == null) || !plugin.readDescription(bookFile, description)) {
 			return null;
 		}
 
@@ -73,7 +68,7 @@ public class BookDescription {
 		return description;
 	}
 
-	public final String FileName;
+	public final ZLFile File;
 
 	private long myBookId;
 
@@ -86,17 +81,17 @@ public class BookDescription {
 
 	private boolean myIsSaved;
 
-	BookDescription(long bookId, String fileName, String title, String encoding, String language) {
+	BookDescription(long bookId, ZLFile file, String title, String encoding, String language) {
 		myBookId = bookId;
-		FileName = fileName;
+		File = file;
 		myTitle = title;
 		myEncoding = encoding;
 		myLanguage = language;
 		myIsSaved = true;
 	}
 
-	private BookDescription(String fileName, boolean createFromDatabase) {
-		FileName = fileName;
+	BookDescription(ZLFile file, boolean createFromDatabase) {
+		File = file;
 		if (createFromDatabase) {
 			final BooksDatabase database = BooksDatabase.Instance();
 			myBookId = database.loadBook(this);
@@ -262,7 +257,7 @@ public class BookDescription {
 				if (myBookId >= 0) {
 					database.updateBookInfo(myBookId, myEncoding, myLanguage, myTitle);
 				} else {
-					myBookId = database.insertBookInfo(FileName, myEncoding, myLanguage, myTitle);
+					myBookId = database.insertBookInfo(File.getPath(), myEncoding, myLanguage, myTitle);
 				}
             
 				long index = 0;

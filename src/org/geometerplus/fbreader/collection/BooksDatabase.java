@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.collection;
 import java.util.Map;
 import java.util.ArrayList;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 public abstract class BooksDatabase {
 	private static BooksDatabase ourInstance;
 
@@ -33,8 +35,8 @@ public abstract class BooksDatabase {
 		ourInstance = this;
 	}
 
-	protected BookDescription createDescription(long bookId, String fileName, String title, String encoding, String language) {
-		return new BookDescription(bookId, fileName, title, encoding, language);
+	protected BookDescription createDescription(long bookId, String filePath, String title, String encoding, String language) {
+		return new BookDescription(bookId, ZLFile.createFile(filePath), title, encoding, language);
 	}
 
 	protected void addAuthor(BookDescription description, Author author) {

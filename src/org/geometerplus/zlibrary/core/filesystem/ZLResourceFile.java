@@ -19,8 +19,45 @@
 
 package org.geometerplus.zlibrary.core.filesystem;
 
-class ZLFileInfo {
-	public boolean Exists;
-	public boolean IsDirectory;
-	public long Size;
+import java.io.*;
+
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+
+public abstract class ZLResourceFile extends ZLFile {
+	public static ZLResourceFile createResourceFile(String path) {
+		return ZLibrary.Instance().createResourceFile(path);
+	}
+
+	private final String myPath;
+	private final String myName;
+	
+	protected ZLResourceFile(String path) {
+		myPath = path;
+		myName = path.substring(path.lastIndexOf('/') + 1);
+		init();
+	}
+	
+	public boolean isDirectory() {
+		return false;
+	}
+	
+	public String getPath() {
+		return myPath;
+	}
+	
+	public String getNameWithExtension() {
+		return myName;
+	}
+
+	public ZLFile getParent() {
+		return null;
+	}
+
+	public ZLPhysicalFile getPhysicalFile() {
+		return null;
+	}
+
+	protected ZLDir createUnexistingDirectory() {
+		return null;
+	}
 }

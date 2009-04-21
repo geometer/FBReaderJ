@@ -67,7 +67,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myGuideTOC.clear();
 		myState = READ_NONE;
 
-		if (!read(fileName)) {
+		if (!read(ZLFile.createFile(fileName))) {
 			return false;
 		}
 
@@ -75,7 +75,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader.pushKind(FBTextKind.REGULAR);
 
 		for (String name : myHtmlFileNames) {
-			new XHTMLReader(myModelReader).readFile(myFilePrefix + name, name);
+			new XHTMLReader(myModelReader).readFile(ZLFile.createFile(myFilePrefix + name), name);
 		}
 
 		generateTOC();
@@ -86,7 +86,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private void generateTOC() {
 		if (myNCXTOCFileName != null) {
 			NCXReader ncxReader = new NCXReader(myModelReader);
-			if (ncxReader.read(myFilePrefix + myNCXTOCFileName)) {
+			if (ncxReader.read(ZLFile.createFile(myFilePrefix + myNCXTOCFileName))) {
 				final Map<Integer,NCXReader.NavPoint> navigationMap = ncxReader.navigationMap();
 				if (!navigationMap.isEmpty()) {
 					int level = 0;

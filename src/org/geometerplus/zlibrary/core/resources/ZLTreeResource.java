@@ -24,6 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.filesystem.*;
 
 final class ZLTreeResource extends ZLResource {
 	public static ZLTreeResource ourRoot;
@@ -47,8 +48,8 @@ final class ZLTreeResource extends ZLResource {
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
 		ResourceTreeReader reader = new ResourceTreeReader();
-		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/zlibrary/" + fileName);
-		reader.readDocument(ourRoot, ZLibrary.JAR_DATA_PREFIX + "data/resources/application/" + fileName);
+		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("data/resources/zlibrary/" + fileName));
+		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("data/resources/application/" + fileName));
 	}
 
 	private	ZLTreeResource(String name, String value) {
@@ -84,10 +85,10 @@ final class ZLTreeResource extends ZLResource {
 		private static final String NODE = "node"; 
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 		
-		public void readDocument(ZLTreeResource root, String fileName) {
+		public void readDocument(ZLTreeResource root, ZLFile file) {
 			myStack.clear();
 			myStack.add(root);
-			read(fileName);
+			read(file);
 		}
 
 		public boolean dontCacheAttributeValues() {

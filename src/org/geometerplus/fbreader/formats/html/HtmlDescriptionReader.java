@@ -19,11 +19,10 @@
 
 package org.geometerplus.fbreader.formats.html;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.xml.*;
+
 import org.geometerplus.fbreader.collection.BookDescription;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessorFactory;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 	private final BookDescription myDescription;
@@ -39,9 +38,9 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 		return true;
 	}
 
-	public boolean readDescription(String fileName) {
+	public boolean readDescription(ZLFile file) {
 		myReadTitle = false;
-		return readDocument(fileName);
+		return readDocument(file);
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
@@ -74,10 +73,10 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 		}
 	}
 
-	public boolean readDocument(String fileName) {
+	public boolean readDocument(ZLFile file) {
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance()
 				.createXMLProcessor();
-		return processor.read(this, fileName);
+		return processor.read(this, file);
 	}
 
 }

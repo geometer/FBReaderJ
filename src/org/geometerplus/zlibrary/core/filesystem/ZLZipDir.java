@@ -41,7 +41,7 @@ public class ZLZipDir extends ZLDir {
 	public ArrayList/*<String>*/ collectFiles() {		
 		ZipFile zf = null;
 		try {
-			zf = ZLFile.getZipFile(myFile.getCanonicalPath());
+			zf = ZLArchiveEntryFile.getZipFile(myFile.getCanonicalPath());
 		} catch (IOException e) {
 		}
 		if (zf == null) {		

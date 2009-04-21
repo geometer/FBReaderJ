@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.collection;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLDir;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
@@ -34,13 +33,16 @@ class BookDescriptionUtil {
 	private static final String ENTRY = "Entry";
 	private static final String ENTRIES_NUMBER = "EntriesNumber";
 
-	public static boolean checkInfo(ZLFile file) {
-		ZLIntegerOption op = new ZLIntegerOption(file.getPath(), SIZE, -1);
-		return op.getValue() == (int)file.size();
+	public static boolean checkInfo(ZLPhysicalFile file) {
+		return
+			(file == null) ||
+			(new ZLIntegerOption(file.getPath(), SIZE, -1).getValue() == (int)file.size());
 	}
 
-	public static void saveInfo(ZLFile file) {
-		new ZLIntegerOption(file.getPath(), SIZE, -1).setValue((int)file.size());		
+	public static void saveInfo(ZLPhysicalFile file) {
+		if (file != null) {
+			new ZLIntegerOption(file.getPath(), SIZE, -1).setValue((int)file.size());		
+		}
 	}
 	
 	private static final ArrayList<String> EMPTY = new ArrayList<String>();
@@ -64,7 +66,7 @@ class BookDescriptionUtil {
 	public static void resetZipInfo(ZLFile zipFile) {
 		//ZLOption.clearGroup(zipFile.path());
 
-		ZLDir zipDir = zipFile.getDirectory();
+		ZLDir zipDir = zipFile.getDirectory(false);
 		if (zipDir != null) {
 			final String zipPrefix = zipFile.getPath() + ':';
 			int counter = 0;
@@ -74,7 +76,7 @@ class BookDescriptionUtil {
 				String entry = (String)entries.get(i);
 				final ZLStringOption entryOption =
 					new ZLStringOption(zipFile.getPath(), "", "");
-				if (PluginCollection.instance().getPlugin(new ZLFile(entry)) != null) {
+				if (PluginCollection.instance().getPlugin(ZLFile.createFile(entry)) != null) {
 					final String fullName = zipPrefix + entry;
 					entryOption.changeName(ENTRY + counter);
 					entryOption.setValue(fullName);

@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -90,8 +91,8 @@ public abstract class ZLApplication {
 		//myPresentWindowHandler = new PresentWindowHandler(this);
 		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
 
-		new ToolbarCreator().read(ZLibrary.JAR_DATA_PREFIX + "data/default/toolbar.xml");
-		new MenubarCreator().read(ZLibrary.JAR_DATA_PREFIX + "data/default/menubar.xml");
+		new ToolbarCreator().read(ZLResourceFile.createResourceFile("data/default/toolbar.xml"));
+		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
 	}
 	
 	final Toolbar getToolbar() {
@@ -205,7 +206,7 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public abstract boolean openFile(String fileName);
+	public abstract boolean openFile(ZLFile file);
 
 	public final void presentWindow() {
 		if (myWindow != null) {

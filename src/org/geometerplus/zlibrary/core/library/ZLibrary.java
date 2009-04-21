@@ -23,13 +23,14 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public abstract class ZLibrary {
-	public static final String JAR_DATA_PREFIX = "#JAR#://";
+	//public static final String JAR_DATA_PREFIX = "#JAR#://";
 	private final HashMap myProperties = new HashMap();
 
 	public static ZLibrary Instance() {
@@ -53,16 +54,7 @@ public abstract class ZLibrary {
 		return null;
 	}
 
-	public final InputStream getInputStream(String fileName) {
-		if (fileName.startsWith(JAR_DATA_PREFIX)) {
-			return getResourceInputStream(fileName.substring(JAR_DATA_PREFIX.length()));
-		} else {
-			return getFileInputStream(fileName);
-		}
-	}
-
-	abstract protected InputStream getResourceInputStream(String fileName);
-	abstract protected InputStream getFileInputStream(String fileName);
+	abstract public ZLResourceFile createResourceFile(String path);
 
 	//abstract public String getVersionName();
 	abstract public ZLPaintContext getPaintContext();

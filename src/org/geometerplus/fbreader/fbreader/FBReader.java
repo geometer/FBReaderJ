@@ -123,8 +123,9 @@ public final class FBReader extends ZLApplication {
 			} catch (IOException e) {
 			}
 		}
-		if (!openFile(fileName) && !openFile(myBookNameOption.getValue())) {
-			openFile(BookCollection.Instance().getHelpFileName());
+		if (!openFile(fileName) &&
+			!openFile(myBookNameOption.getValue())) {
+			openFile(BookCollection.Instance().getHelpFile());
 		}
 	}
 	
@@ -217,7 +218,7 @@ public final class FBReader extends ZLApplication {
 
 			Model = null;
 			Model = new BookModel(description);
-			final String fileName = description.FileName;
+			final String fileName = description.File.getPath();
 			myBookNameOption.setValue(fileName);
 			ZLTextHyphenator.Instance().load(description.getLanguage());
 			BookTextView.setModels(Model.getBookTextModels(), fileName);
@@ -246,16 +247,19 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
+	private boolean openFile(String path) {
+		return openFile(ZLFile.createFile(path));
+	}
+
 	@Override
-	public boolean openFile(String fileName) {
-		if (fileName == null) {
+	public boolean openFile(ZLFile file) {
+		if (file == null) {
 			return false;
 		}
-		BookDescription description = BookDescription.getDescription(fileName);
+		BookDescription description = BookDescription.getDescription(file);
 		if (description == null) {
-			final ZLFile file = new ZLFile(fileName);
 			if (file.isArchive()) {
-				final ZLDir directory = file.getDirectory();
+				final ZLDir directory = file.getDirectory(false);
 				if (directory != null) {
 					final ArrayList items = directory.collectFiles();
 					final int size = items.size();

@@ -23,27 +23,27 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerFileImage extends ZLSingleImage {
-	private final String myPath;
+	private final ZLFile myFile;
 	private final int myOffset;
 	private final int mySize;
 
-	public PluckerFileImage(String mimeType, final String path, final int offset, final int size) {
+	public PluckerFileImage(String mimeType, final ZLFile file, final int offset, final int size) {
 		super(mimeType);
-		myPath = path;
+		myFile = file;
 		myOffset = offset;
 		mySize = size;
 	}
 
 	public byte[] byteData() {
-		final InputStream stream = ZLibrary.Instance().getInputStream(myPath);
-		
-		if (stream == null) {
-			return new byte[0];
-		}
 		try {
+			final InputStream stream = myFile.getInputStream();
+			if (stream == null) {
+				return new byte[0];
+			}
+
 			stream.skip(myOffset);
 			byte [] buffer = new byte[mySize];
 			stream.read(buffer, 0, mySize);
@@ -52,5 +52,4 @@ public class PluckerFileImage extends ZLSingleImage {
 		
 		return new byte[0];
 	}
-
 }

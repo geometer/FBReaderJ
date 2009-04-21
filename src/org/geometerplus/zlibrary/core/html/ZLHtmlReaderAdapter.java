@@ -20,10 +20,11 @@
 package org.geometerplus.zlibrary.core.html;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZLHtmlReaderAdapter implements ZLHtmlReader {
-	public boolean read(String fileName) {
-		return ZLHtmlProcessorFactory.getInstance().createHtmlProcessor().read(this, fileName);
+	public boolean read(ZLFile file) {
+		return ZLHtmlProcessorFactory.getInstance().createHtmlProcessor().read(this, file);
 	}
 	
 	public boolean dontCacheAttributeValues() {

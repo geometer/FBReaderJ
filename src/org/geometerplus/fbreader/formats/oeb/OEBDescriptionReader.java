@@ -21,7 +21,9 @@ package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
+
 import org.geometerplus.fbreader.collection.BookDescription;
 import org.geometerplus.fbreader.constants.XMLNamespace;
 
@@ -45,13 +47,13 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myDescription.setLanguage(null);
 	}
 
-	boolean readDescription(String fileName) {
+	boolean readDescription(ZLFile file) {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
 		processor.setBufferSize(512);
-		if (!processor.read(this, fileName)) {
+		if (!processor.read(this, file)) {
 			return false;
 		}
 

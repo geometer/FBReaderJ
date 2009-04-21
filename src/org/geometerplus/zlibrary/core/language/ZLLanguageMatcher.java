@@ -58,7 +58,7 @@ public abstract class ZLLanguageMatcher {
 		public ZLLanguagePatternBasedMatcher(String fileName, ZLLanguageDetector.LanguageInfo info)  {
 			super(info);
 			try{
-			InputStream dictionaryStream = new ZLFile(fileName).getInputStream();
+			InputStream dictionaryStream = ZLFile.createFile(fileName).getInputStream();
 			if (dictionaryStream == null) {
 				return;
 			}

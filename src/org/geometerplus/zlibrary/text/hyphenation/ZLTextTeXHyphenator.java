@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.text.hyphenation;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	private final HashMap myPatternTable = new HashMap();
@@ -42,8 +43,9 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		unload();
 
 		if (language != null) {
-		  final String path = ZLibrary.JAR_DATA_PREFIX + "data/hyphenationPatterns/" + language + ".pattern"; 
-		  new ZLTextHyphenationReader(this).read(path);
+			new ZLTextHyphenationReader(this).read(ZLResourceFile.createResourceFile(
+		  		"data/hyphenationPatterns/" + language + ".pattern"
+			)); 
 		}
 	}	
 

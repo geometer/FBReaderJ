@@ -32,13 +32,11 @@ public class OEBPlugin extends FormatPlugin {
 		return (extension == "opf") || (extension == "oebzip") || (extension == "epub");
 	}
 
-	private String getOpfFileName(String oebFileName) {
-		final ZLFile oebFile = new ZLFile(oebFileName);
+	private String getOpfFileName(ZLFile oebFile) {
 		if (oebFile.getExtension().equals("opf")) {
-			return oebFileName;
+			return oebFile.getPath();
 		}
 
-		oebFile.forceArchiveType(ZLFile.ArchiveType.ZIP);
 		final ZLDir zipDir = oebFile.getDirectory(false);
 		if (zipDir == null) {
 			return null;
@@ -55,16 +53,16 @@ public class OEBPlugin extends FormatPlugin {
 		return null;
 	}
 
-	public boolean readDescription(String path, BookDescription description) {
-		path = getOpfFileName(path);
+	public boolean readDescription(ZLFile file, BookDescription description) {
+		final String path = getOpfFileName(file);
 		if (path == null) {
 			return false;
 		}
-		return new OEBDescriptionReader(description).readDescription(path);
+		return new OEBDescriptionReader(description).readDescription(ZLFile.createFile(path));
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
-		final String path = getOpfFileName(description.FileName);
+		final String path = getOpfFileName(description.File);
 		if (path == null) {
 			return false;
 		}

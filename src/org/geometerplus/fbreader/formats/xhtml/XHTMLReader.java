@@ -24,6 +24,7 @@ import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
@@ -133,18 +134,18 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return myPathPrefix;
 	}
 
-	public boolean readFile(String filePath, String referenceName) {
+	public boolean readFile(ZLFile file, String referenceName) {
 		myModelReader.addHyperlinkLabel(referenceName);
 
 		fillTagTable();
 
-		myPathPrefix = MiscUtil.htmlDirectoryPrefix(filePath);
+		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file.getPath());
 		myReferenceName = referenceName;
 
 		myPreformatted = false;
 		myInsideBody = false;
 
-		return read(filePath);
+		return read(file);
 	}
 
 	/*
@@ -225,9 +226,9 @@ cycle:
 
 	public ArrayList externalDTDs() {
 		if (ourExternalDTDs.isEmpty()) {
-			ourExternalDTDs.add(ZLibrary.JAR_DATA_PREFIX + "data/formats/xhtml/xhtml-lat1.ent");
-			ourExternalDTDs.add(ZLibrary.JAR_DATA_PREFIX + "data/formats/xhtml/xhtml-special.ent");
-			ourExternalDTDs.add(ZLibrary.JAR_DATA_PREFIX + "data/formats/xhtml/xhtml-symbol.ent");
+			ourExternalDTDs.add("data/formats/xhtml/xhtml-lat1.ent");
+			ourExternalDTDs.add("data/formats/xhtml/xhtml-special.ent");
+			ourExternalDTDs.add("data/formats/xhtml/xhtml-symbol.ent");
 		}
 		return ourExternalDTDs;
 	}

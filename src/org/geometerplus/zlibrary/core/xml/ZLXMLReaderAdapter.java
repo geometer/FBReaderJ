@@ -22,9 +22,11 @@ package org.geometerplus.zlibrary.core.xml;
 import java.util.*;
 import java.io.InputStream;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 public class ZLXMLReaderAdapter implements ZLXMLReader {
-	public boolean read(String fileName) {
-		return ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, fileName);
+	public boolean read(ZLFile file) {
+		return ZLXMLProcessorFactory.getInstance().createXMLProcessor().read(this, file);
 	}
 	
 	public boolean read(InputStream stream) {

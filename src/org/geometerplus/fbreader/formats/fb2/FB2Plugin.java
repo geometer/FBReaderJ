@@ -29,11 +29,11 @@ public class FB2Plugin extends FormatPlugin {
 		return "fb2".equals(file.getExtension());
 	}
 	
-	public boolean readDescription(String path, BookDescription description) {
-		return new FB2DescriptionReader(description).readDescription(path);
+	public boolean readDescription(ZLFile file, BookDescription description) {
+		return new FB2DescriptionReader(description).readDescription(file);
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
-		return new FB2Reader(model).readBook(description.FileName);
+		return new FB2Reader(model).readBook(description.File);
 	}
 }

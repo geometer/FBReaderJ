@@ -30,7 +30,7 @@ public class PdbInputStream extends InputStream {
 	private final int mySize;
 	
 	public PdbInputStream(ZLFile file) throws IOException {
-		mySize = (int)file.size();
+		mySize = 0;//(int)file.size();
 		myBase = file.getInputStream();
 	}
 	

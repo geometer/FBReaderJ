@@ -22,8 +22,7 @@ package org.geometerplus.zlibrary.core.language;
 import java.io.File;
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLDir;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -63,7 +62,6 @@ public abstract class ZLLanguageList {
 	}
 
 	public	static ZLDir patternsDirectory() {
-		String dirName = ZLibrary.JAR_DATA_PREFIX + "data/languagePatterns.tar";
-		return new ZLFile(dirName).getDirectory();
+		return ZLResourceFile.createResourceFile("data/languagePatterns.tar").getDirectory(false);
 	}
 }

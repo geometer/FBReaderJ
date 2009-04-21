@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final Cursor cursor = myDatabase.query(
 			BOOKS_TABLE,
 			BOOKS_COLUMNS,
-			FILE_NAME_CONDITION, new String[] { description.FileName },
+			FILE_NAME_CONDITION, new String[] { description.File.getPath() },
 			null, null, null, null
 		);
 		long id = -1;
