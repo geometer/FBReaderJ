@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.language;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLDir;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.language.ZLLanguageMatcher.ZLLanguagePatternBasedMatcher;
 import org.geometerplus.zlibrary.core.language.ZLLanguageMatcher.ZLWordBasedMatcher;
 import org.geometerplus.zlibrary.core.util.ZLUnicodeUtil;
@@ -64,25 +64,20 @@ public class ZLLanguageDetector {
 		};
 
 	public ZLLanguageDetector() {
-		final ZLDir dir = ZLLanguageList.patternsDirectory();
-		if (dir != null) {
-			final ArrayList fileNames = dir.collectFiles();
-			final int fileNamesLen = fileNames.size();
-			for (int i = 0; i < fileNamesLen; ++i) {
-				final String name = (String)fileNames.get(i);
-				final int index = name.indexOf('_');
-				if (index != -1) {
-					final String language = name.substring(0, index);
-					final String encoding = name.substring(index + 1);
-					ZLWordBasedMatcher matcher = new ZLLanguagePatternBasedMatcher(dir.getItemPath(name), new LanguageInfo(language, encoding));
-					if (encoding == ZLLanguageMatcher.UTF8_ENCODING_NAME) {
-						myUtf8Matchers.add(matcher);
-					} else if (encoding == "US-ASCII") {
-						myUtf8Matchers.add(matcher);
-						myNonUtf8Matchers.add(matcher);
-					} else {
-						myNonUtf8Matchers.add(matcher);
-					}
+		for (ZLFile file : ZLLanguageList.patternsFile().children()) {
+			final String name = file.getName(true);
+			final int index = name.indexOf('_');
+			if (index != -1) {
+				final String language = name.substring(0, index);
+				final String encoding = name.substring(index + 1);
+				ZLWordBasedMatcher matcher = new ZLLanguagePatternBasedMatcher(file, new LanguageInfo(language, encoding));
+				if (encoding == ZLLanguageMatcher.UTF8_ENCODING_NAME) {
+					myUtf8Matchers.add(matcher);
+				} else if (encoding == "US-ASCII") {
+					myUtf8Matchers.add(matcher);
+					myNonUtf8Matchers.add(matcher);
+				} else {
+					myNonUtf8Matchers.add(matcher);
 				}
 			}
 		}

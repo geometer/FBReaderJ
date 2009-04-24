@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.collection;
 
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -36,17 +35,14 @@ public abstract class BooksDatabase {
 	}
 
 	protected BookDescription createDescription(long bookId, String filePath, String title, String encoding, String language) {
-		return new BookDescription(bookId, ZLFile.createFile(filePath), title, encoding, language);
+		return new BookDescription(bookId, ZLFile.createFileByPath(filePath), title, encoding, language);
 	}
-
 	protected void addAuthor(BookDescription description, Author author) {
 		description.addAuthorWithNoCheck(author);
 	}
-
 	protected void addTag(BookDescription description, Tag tag) {
 		description.addTagWithNoCheck(tag);
 	}
-
 	protected void setSeriesInfo(BookDescription description, String series, long index) {
 		description.setSeriesInfoWithNoCheck(series, index);
 	}
@@ -54,8 +50,8 @@ public abstract class BooksDatabase {
 	protected abstract Map<String,BookDescription> listBooks();
 	protected abstract void executeAsATransaction(Runnable actions);
 	protected abstract long loadBook(BookDescription description);
-	protected abstract ArrayList<Author> loadAuthors(long bookId);
-	protected abstract ArrayList<Tag> loadTags(long bookId);
+	protected abstract List<Author> loadAuthors(long bookId);
+	protected abstract List<Tag> loadTags(long bookId);
 	protected abstract SeriesInfo loadSeriesInfo(long bookId);
 	protected abstract void updateBookInfo(long bookId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(String fileName, String encoding, String language, String title);
@@ -65,4 +61,13 @@ public abstract class BooksDatabase {
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
 	protected abstract void resetBookInfo(String fileName);
+
+	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
+		return new FileInfo(name, parent, id);
+	}
+
+	protected abstract Collection<FileInfo> loadFileInfos();
+	protected abstract Collection<FileInfo> loadFileInfos(ZLFile file);
+	protected abstract void removeFileInfo(long fileId);
+	protected abstract void saveFileInfo(FileInfo fileInfo);
 }

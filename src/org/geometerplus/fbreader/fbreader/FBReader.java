@@ -225,7 +225,7 @@ public final class FBReader extends ZLApplication {
 			BookTextView.setCaption(description.getTitle());
 			FootnoteView.setModel(null);
 			FootnoteView.setCaption(description.getTitle());
-			RecentBooks.Instance().addBook(fileName);
+			RecentBooks.Instance().addBook(description.File);
 		}
 		resetWindowCaption();
 		refreshWindow();
@@ -248,7 +248,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	private boolean openFile(String path) {
-		return openFile(ZLFile.createFile(path));
+		return openFile(ZLFile.createFileByPath(path));
 	}
 
 	@Override
@@ -259,16 +259,10 @@ public final class FBReader extends ZLApplication {
 		BookDescription description = BookDescription.getDescription(file);
 		if (description == null) {
 			if (file.isArchive()) {
-				final ZLDir directory = file.getDirectory(false);
-				if (directory != null) {
-					final ArrayList items = directory.collectFiles();
-					final int size = items.size();
-					for (int i = 0; i < size; ++i) {
-						final String itemFileName = directory.getItemPath((String)items.get(i));
-						description = BookDescription.getDescription(itemFileName);
-						if (description != null) {
-							break;
-						}
+				for (ZLFile child : file.children()) {
+					description = BookDescription.getDescription(child);
+					if (description != null) {
+						break;
 					}
 				}
 			}

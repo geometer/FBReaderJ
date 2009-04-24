@@ -19,34 +19,40 @@
 
 package org.geometerplus.zlibrary.core.filesystem;
 
-import java.util.HashMap;
-import java.io.*;
-import org.amse.ys.zip.*;
+import java.util.*;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.filesystem.tar.ZLTarEntryFile;
 
-public final class ZLArchiveEntryFile extends ZLFile {
-	private static HashMap<String,ZipFile> ourZipFileMap = new HashMap<String,ZipFile>();
-
-	static ZipFile getZipFile(String fileName) throws IOException {
-		synchronized (ourZipFileMap) {
-			ZipFile zf = ourZipFileMap.get(fileName);
-			if (zf == null) {
-				zf = new ZipFile(fileName);
-				ourZipFileMap.put(fileName, zf);
-			}
-			return zf;
+public abstract class ZLArchiveEntryFile extends ZLFile {
+	public static ZLArchiveEntryFile createArchiveEntryFile(ZLFile archive, String entryName) {
+		switch (archive.myArchiveType & ArchiveType.ARCHIVE) {
+			case ArchiveType.ZIP: 
+				return new ZLZipEntryFile(archive, entryName);
+			case ArchiveType.TAR: 
+				return new ZLTarEntryFile(archive, entryName);
+			default:
+				return null;
 		}
 	}
 
-	private final ZLFile myParent;
-	private final String myName;
-	private final String myShortName;
+	static List<ZLFile> archiveEntries(ZLFile archive) {
+		switch (archive.myArchiveType & ArchiveType.ARCHIVE) {
+			case ArchiveType.ZIP:
+				return ZLZipEntryFile.archiveEntries(archive);
+			case ArchiveType.TAR:
+				return ZLTarEntryFile.archiveEntries(archive);
+			default:
+				return Collections.emptyList();
+		}
+	}
+
+	protected final ZLFile myParent;
+	protected final String myName;
+	private String myShortName;
 	
-	public ZLArchiveEntryFile(ZLFile parent, String name) {
+	protected ZLArchiveEntryFile(ZLFile parent, String name) {
 		myParent = parent;
 		myName = name;
-		myShortName = name.substring(name.lastIndexOf('/') + 1);
 		init();
 	}
 	
@@ -63,6 +69,15 @@ public final class ZLArchiveEntryFile extends ZLFile {
 	}
 	
 	public String getNameWithExtension() {
+		if (myShortName == null) {
+			final String name = myName;
+			final int index = name.lastIndexOf('/');
+			if (index == -1) {
+				myShortName = name;
+			} else {
+				myShortName = name.substring(index + 1);
+			}
+		}
 		return myShortName;
 	}
 
@@ -76,37 +91,5 @@ public final class ZLArchiveEntryFile extends ZLFile {
 			ancestor = ancestor.getParent();
 		}
 		return (ZLPhysicalFile)ancestor;
-	}
-    
-	public InputStream getInputStream() throws IOException {
-		if (0 != (myParent.myArchiveType & ArchiveType.ZIP)) {
-			ZipFile zf = getZipFile(myParent.getPath());
-			/*
-			ZipEntry entry = zf.getEntry(myPath.substring(index+1));
-			stream = zf.getInputStream(entry);
-			*/
-			return zf.getInputStream(myName);
-			/*
-			while (true) {
-				ZipEntry entry = zipStream.getNextEntry();
-				if (entry == null) {
-					break;
-				} else if (entryName.equals(entry.getName())) {
-					stream = zipStream;
-					break;
-				}
-			}
-			*/
-		} else if (0 != (myParent.myArchiveType & ArchiveType.TAR)) {
-			InputStream base = myParent.getInputStream();
-			if (base != null) {
-				return new ZLTarInputStream(base, myName);
-			}
-		}
-		return null;
-	}
-
-	protected ZLDir createUnexistingDirectory() {
-		return null;
 	}
 }

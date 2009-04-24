@@ -31,7 +31,7 @@ public class TOCTree extends ZLTree<TOCTree> {
 		super();
 	}
 
-	private TOCTree(TOCTree parent) {
+	public TOCTree(TOCTree parent) {
 		super(parent);
 	}
 
@@ -51,12 +51,6 @@ public class TOCTree extends ZLTree<TOCTree> {
 		myReference = new Reference(reference, model);
 	}
 
-	public final TOCTree createSubTree() {
-		TOCTree subtree = new TOCTree(this);
-		addSubTree(subtree);
-		return subtree;
-	}
-	
 	public static class Reference {
 		public final int ParagraphIndex;
 		public final ZLTextModel Model;

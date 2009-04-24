@@ -61,9 +61,9 @@ public class FBReader extends ZLAndroidActivity {
 	}
 
 	protected ZLApplication createApplication(String fileName) {
+		new SQLiteBooksDatabase();
 		String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
 		ZLApplication application = new org.geometerplus.fbreader.fbreader.FBReader(args);
-		new SQLiteBooksDatabase();
 		return application;
 	}
 }

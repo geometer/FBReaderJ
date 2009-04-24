@@ -54,11 +54,10 @@ public abstract class ZLLanguageMatcher {
 	};
 
 	static class ZLLanguagePatternBasedMatcher extends ZLWordBasedMatcher {
-
-		public ZLLanguagePatternBasedMatcher(String fileName, ZLLanguageDetector.LanguageInfo info)  {
+		public ZLLanguagePatternBasedMatcher(ZLFile file, ZLLanguageDetector.LanguageInfo info)  {
 			super(info);
 			try{
-			InputStream dictionaryStream = ZLFile.createFile(fileName).getInputStream();
+			InputStream dictionaryStream = file.getInputStream();
 			if (dictionaryStream == null) {
 				return;
 			}

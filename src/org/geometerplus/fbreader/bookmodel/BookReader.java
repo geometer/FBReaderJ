@@ -242,7 +242,7 @@ public class BookReader {
 				referenceNumber = textModel.getParagraphsNumber();
 			}
 			TOCTree parentTree = myCurrentContentsTree;
-			if (parentTree.getLevel() > 0) {
+			if (parentTree.Level > 0) {
 				final ZLTextBuffer contentsBuffer = myContentsBuffer;
 				if (!contentsBuffer.isEmpty()) {
 					parentTree.setText(contentsBuffer.toString());
@@ -253,7 +253,7 @@ public class BookReader {
 			} else {
 				myContentsBuffer.clear();
 			}
-			TOCTree tree = parentTree.createSubTree();
+			TOCTree tree = new TOCTree(parentTree);
 			tree.setReference(myCurrentTextModel, referenceNumber);
 			myCurrentContentsTree = tree;
 		}
@@ -262,7 +262,7 @@ public class BookReader {
 	public final void endContentsParagraph() {
 		final TOCTree tree = myCurrentContentsTree;
 		final ZLTextBuffer contentsBuffer = myContentsBuffer;
-		if (tree.getLevel() == 0) {
+		if (tree.Level == 0) {
 			contentsBuffer.clear();
 			return;
 		}
@@ -272,7 +272,7 @@ public class BookReader {
 		} else if (tree.getText() == null) {
 			tree.setText("...");
 		}
-		myCurrentContentsTree = tree.getParent();
+		myCurrentContentsTree = tree.Parent;
 	}
 
 	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
@@ -293,7 +293,7 @@ public class BookReader {
 	}
 
 	public final boolean contentsParagraphIsOpen() {
-		return myCurrentContentsTree.getLevel() > 0;
+		return myCurrentContentsTree.Level > 0;
 	}
 
 	public final void beginContentsParagraph() {

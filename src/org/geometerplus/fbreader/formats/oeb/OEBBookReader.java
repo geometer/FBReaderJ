@@ -57,8 +57,8 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader = new BookReader(model);
 	}
 
-	boolean readBook(String fileName) {
-		myFilePrefix = MiscUtil.htmlDirectoryPrefix(fileName);
+	boolean readBook(ZLFile file) {
+		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
 
 		myIdToHref.clear();
 		myHtmlFileNames.clear();
@@ -67,7 +67,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myGuideTOC.clear();
 		myState = READ_NONE;
 
-		if (!read(ZLFile.createFile(fileName))) {
+		if (!read(file)) {
 			return false;
 		}
 
@@ -75,7 +75,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader.pushKind(FBTextKind.REGULAR);
 
 		for (String name : myHtmlFileNames) {
-			new XHTMLReader(myModelReader).readFile(ZLFile.createFile(myFilePrefix + name), name);
+			new XHTMLReader(myModelReader).readFile(ZLFile.createFileByPath(myFilePrefix + name), name);
 		}
 
 		generateTOC();
@@ -86,7 +86,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private void generateTOC() {
 		if (myNCXTOCFileName != null) {
 			NCXReader ncxReader = new NCXReader(myModelReader);
-			if (ncxReader.read(ZLFile.createFile(myFilePrefix + myNCXTOCFileName))) {
+			if (ncxReader.read(ZLFile.createFileByPath(myFilePrefix + myNCXTOCFileName))) {
 				final Map<Integer,NCXReader.NavPoint> navigationMap = ncxReader.navigationMap();
 				if (!navigationMap.isEmpty()) {
 					int level = 0;
@@ -184,8 +184,10 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				}
 				if ((type != null) && (COVER_IMAGE.equals(type))) {
 					myModelReader.setMainTextModel();
-					myModelReader.addImageReference(href, (short)0);
-					myModelReader.addImage(href, new ZLFileImage("image/auto", myFilePrefix + href));
+					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
+					final String imageName = imageFile.getName(false);
+					myModelReader.addImageReference(imageName, (short)0);
+					myModelReader.addImage(imageName, new ZLFileImage("image/auto", imageFile));
 				}
 			}
 		} else if ((myState == READ_TOUR) && (SITE == tag)) {

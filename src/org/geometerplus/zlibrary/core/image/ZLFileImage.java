@@ -27,10 +27,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 public class ZLFileImage extends ZLSingleImage {
 	private final ZLFile myFile;
 	
-	public ZLFileImage(String mimeType, String path) {
-		this(mimeType, ZLFile.createFile(path));
-	}
-
 	public ZLFileImage(String mimeType, ZLFile file) {
 		super(mimeType);
 		myFile = file;

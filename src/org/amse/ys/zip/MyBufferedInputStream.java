@@ -3,23 +3,23 @@ package org.amse.ys.zip;
 import java.io.*;
 
 final class MyBufferedInputStream extends InputStream {
-    private FileInputStream myFileInputStream;
-    private final String myFileName;
+    private final ZipFile.InputStreamHolder myStreamHolder;
+    private InputStream myFileInputStream;
     private final byte[] myBuffer;
     int myBytesReady;
     int myPositionInBuffer;
     private int myCurrentPosition;
     
-    public MyBufferedInputStream(String fileName, int bufferSize) throws IOException {
-        myFileName = fileName;
-        myFileInputStream = new FileInputStream(fileName);
+    public MyBufferedInputStream(ZipFile.InputStreamHolder streamHolder, int bufferSize) throws IOException {
+        myStreamHolder = streamHolder;
+        myFileInputStream = streamHolder.getInputStream();
         myBuffer = new byte[bufferSize];
         myBytesReady = 0;
         myPositionInBuffer = 0;
     }
 
-    public MyBufferedInputStream(String s) throws IOException {
-        this(s, 1 << 10);
+    public MyBufferedInputStream(ZipFile.InputStreamHolder streamHolder) throws IOException {
+        this(streamHolder, 1 << 10);
     }
 
     public int available() throws IOException {
@@ -103,7 +103,7 @@ final class MyBufferedInputStream extends InputStream {
             skip(position - myCurrentPosition);
         } else {
             myFileInputStream.close();
-            myFileInputStream = new FileInputStream(myFileName);
+            myFileInputStream = myStreamHolder.getInputStream();
             myBytesReady = 0;
             skip(position);
         }

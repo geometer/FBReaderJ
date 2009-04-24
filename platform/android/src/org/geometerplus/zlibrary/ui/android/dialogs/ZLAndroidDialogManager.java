@@ -171,6 +171,7 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	}
 
 	public void wait(String key, final Runnable runnable) {
+		System.err.println("wait " + myActivity);
 		final ProgressDialog progress = ProgressDialog.show(myActivity, null, getWaitMessageText(key), true, false);
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {

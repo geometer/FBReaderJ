@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.collection;
 
 import java.util.Collections;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
@@ -34,21 +34,15 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 	}
 
 	TagTree createTagSubTree(Tag tag) {
-		TagTree tree = new TagTree(this, tag);
-		addSubTree(tree);
-		return tree;
+		return new TagTree(this, tag);
 	}
 
 	AuthorTree createAuthorSubTree(Author author) {
-		AuthorTree tree = new AuthorTree(this, author);
-		addSubTree(tree);
-		return tree;
+		return new AuthorTree(this, author);
 	}
 
 	BookTree createBookSubTree(BookDescription book) {
-		BookTree tree = new BookTree(this, book);
-		addSubTree(tree);
-		return tree;
+		return new BookTree(this, book);
 	}
 
 	public abstract String getName();
@@ -90,7 +84,7 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 	}
 
 	public final void sortAllChildren() {
-		ArrayList<CollectionTree> children = subTrees();
+		List<CollectionTree> children = subTrees();
 		if (!children.isEmpty()) {
 			Collections.sort(children);
 			for (CollectionTree tree : children) {

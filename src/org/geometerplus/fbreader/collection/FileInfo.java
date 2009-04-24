@@ -19,19 +19,20 @@
 
 package org.geometerplus.fbreader.collection;
 
-final class SeriesTree extends CollectionTree {
-	private final String mySeries;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
 
-	SeriesTree(CollectionTree parent, String series) {
+public final class FileInfo extends ZLTree<FileInfo> {
+	public final String Name;
+	public long Id;
+	public long FileSize = -1;
+
+	FileInfo(String name, FileInfo parent) {
+		this(name, parent, -1);
+	}
+
+	FileInfo(String name, FileInfo parent, long id) {
 		super(parent);
-		mySeries = series;
-	}
-
-	public String getName() {
-		return mySeries;
-	}
-
-	BookTree createBookInSeriesSubTree(BookDescription book) {
-		return new BookInSeriesTree(this, book);
+		Name = name;
+		Id = id;
 	}
 }

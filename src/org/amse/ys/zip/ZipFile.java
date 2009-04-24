@@ -1,19 +1,36 @@
 package org.amse.ys.zip;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public final class ZipFile {
-    private final String myFileName;
+	public static interface InputStreamHolder {
+		InputStream getInputStream() throws IOException;
+	}
+
+	private static final class FileInputStreamHolder implements InputStreamHolder {
+		private final String myFilePath;
+
+		FileInputStreamHolder(String filePath) {
+			myFilePath = filePath;
+		}
+
+		public InputStream getInputStream() throws IOException {
+			return new FileInputStream(myFilePath);
+		}
+	}
+
+    private final InputStreamHolder myStreamHolder;
     private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>();
 
     private boolean myAllFilesAreRead;
 
-    public ZipFile(String fileName) {
-        myFileName = fileName;
+    public ZipFile(String filePath) {
+		this(new FileInputStreamHolder(filePath));
+    }
+
+    public ZipFile(InputStreamHolder streamHolder) {
+        myStreamHolder = streamHolder;
     }
 
     public Collection<LocalFileHeader> headers() {
@@ -113,7 +130,7 @@ public final class ZipFile {
 
 	synchronized MyBufferedInputStream getBaseStream() throws IOException {
         MyBufferedInputStream baseStream = myStoredStreams.poll();
-		return (baseStream != null) ? baseStream : new MyBufferedInputStream(myFileName);
+		return (baseStream != null) ? baseStream : new MyBufferedInputStream(myStreamHolder);
 	}
 
     private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException {

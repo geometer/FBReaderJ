@@ -32,40 +32,27 @@ public class OEBPlugin extends FormatPlugin {
 		return (extension == "opf") || (extension == "oebzip") || (extension == "epub");
 	}
 
-	private String getOpfFileName(ZLFile oebFile) {
+	private ZLFile getOpfFile(ZLFile oebFile) {
 		if (oebFile.getExtension().equals("opf")) {
-			return oebFile.getPath();
+			return oebFile;
 		}
 
-		final ZLDir zipDir = oebFile.getDirectory(false);
-		if (zipDir == null) {
-			return null;
-		}
-
-		final ArrayList fileNames = zipDir.collectFiles();
-		final int len = fileNames.size();
-		for (int i = 0; i < len; ++i) {
-			final String shortName = (String)fileNames.get(i);
-			if (shortName.endsWith(".opf")) {
-				return zipDir.getItemPath(shortName);
+		for (ZLFile child : oebFile.children()) {
+			if (child.getExtension().equals("opf")) {
+				return child;
 			}
 		}
 		return null;
 	}
 
 	public boolean readDescription(ZLFile file, BookDescription description) {
-		final String path = getOpfFileName(file);
-		if (path == null) {
-			return false;
-		}
-		return new OEBDescriptionReader(description).readDescription(ZLFile.createFile(path));
+		final ZLFile opfFile = getOpfFile(file);
+		return (opfFile != null) ? new OEBDescriptionReader(description).readDescription(opfFile) : false;
 	}
 	
 	public boolean readModel(BookDescription description, BookModel model) {
-		final String path = getOpfFileName(description.File);
-		if (path == null) {
-			return false;
-		}
-		return new OEBBookReader(model).readBook(path);
+		description.File.setCached(true);
+		final ZLFile opfFile = getOpfFile(description.File);
+		return (opfFile != null) ? new OEBBookReader(model).readBook(opfFile) : false;
 	}
 }

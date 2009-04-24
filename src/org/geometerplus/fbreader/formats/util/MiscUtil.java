@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.formats.util;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class MiscUtil {
-	public static String htmlDirectoryPrefix(String fileName) {
-		ZLFile file = ZLFile.createFile(fileName);
+	public static String htmlDirectoryPrefix(ZLFile file) {
 		String shortName = file.getName(false);
 		String path = file.getPath();
 		int index = -1;

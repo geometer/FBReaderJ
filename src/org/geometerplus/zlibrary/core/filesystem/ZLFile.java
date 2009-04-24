@@ -20,12 +20,12 @@
 package org.geometerplus.zlibrary.core.filesystem;
 
 import java.io.*;
-import org.geometerplus.zlibrary.core.util.*;
-
-import org.geometerplus.zlibrary.core.library.ZLibrary;
+import java.util.*;
 
 public abstract class ZLFile {
-	public interface ArchiveType {
+	private final static HashMap<String,ZLFile> ourCachedFiles = new HashMap<String,ZLFile>();
+
+	protected interface ArchiveType {
 		int	NONE = 0;
 		int	GZIP = 0x0001;
 		int	BZIP2 = 0x0002;
@@ -38,7 +38,7 @@ public abstract class ZLFile {
 	private String myNameWithoutExtension;
 	private String myExtension;
 	protected int myArchiveType;
-
+	private boolean myIsCached;
 	protected void init() {
 		final String name = getNameWithExtension();
 		final int index = name.lastIndexOf('.');
@@ -73,16 +73,23 @@ public abstract class ZLFile {
 		myArchiveType = archiveType;
 	}
 	
-	public static ZLFile createFile(String path) {
+	public static ZLFile createFileByPath(String path) {
 		if (path == null) {
 			return null;
 		}
+		ZLFile cached = ourCachedFiles.get(path);
+		if (cached != null) {
+			return cached;
+		}
+
 		if (!path.startsWith("/")) {
 			return ZLResourceFile.createResourceFile(path);
 		}
 		int index = path.lastIndexOf(':');
 		if (index > 1) {
-			return new ZLArchiveEntryFile(createFile(path.substring(0, index)), path.substring(index + 1));
+			return ZLArchiveEntryFile.createArchiveEntryFile(
+				createFileByPath(path.substring(0, index)), path.substring(index + 1)
+			);
 		}
 		return new ZLPhysicalFile(path);
 	}
@@ -157,21 +164,51 @@ public abstract class ZLFile {
 		return stream;
 	}
 	*/
-	
-	public final ZLDir getDirectory(boolean createUnexisting) {
-		if (exists()) {
-			if (isDirectory()) {
-				return new ZLFSDir(getPath());
-			} else if (0 != (myArchiveType & ArchiveType.ZIP)) {
-				return new ZLZipDir(getPath());
-			} else if (0 != (myArchiveType & ArchiveType.TAR)) {
-				return new ZLTarDir(getPath());
-			}
-		} else if (createUnexisting) {
-			return createUnexistingDirectory();
-		}
-		return null;
+
+	protected List<ZLFile> directoryEntries() {
+		return Collections.emptyList();
 	}
 
-	protected abstract ZLDir createUnexistingDirectory();
+	public final List<ZLFile> children() {
+		if (exists()) {
+			if (isDirectory()) {
+				return directoryEntries();
+			} else if (isArchive()) {
+				return ZLArchiveEntryFile.archiveEntries(this);
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public int hashCode() {
+		return getPath().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof ZLFile)) {
+			return false;
+		}
+		return getPath().equals(((ZLFile)o).getPath());
+	}
+
+	protected boolean isCached() {
+		return myIsCached;
+	}
+
+	public void setCached(boolean cached) {
+		myIsCached = cached;
+		if (cached) {
+			ourCachedFiles.put(getPath(), this);
+		} else {
+			ourCachedFiles.remove(getPath());
+			if (0 != (myArchiveType & ArchiveType.ZIP)) {
+				ZLZipEntryFile.removeFromCache(this);
+			}
+		}
+	}
 }

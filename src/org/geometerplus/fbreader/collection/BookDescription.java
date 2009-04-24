@@ -27,14 +27,6 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.fbreader.formats.*;
 
 public class BookDescription {
-	public static BookDescription getDescription(String fileName) {
-		if (fileName == null) {
-			return null;
-		}
-
-		return getDescription(ZLFile.createFile(fileName));
-	}
-
 	public static BookDescription getDescription(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
@@ -47,14 +39,12 @@ public class BookDescription {
 
 		final BookDescription description = new BookDescription(bookFile, true);
 
-		if (BookDescriptionUtil.checkInfo(physicalFile) && description.myIsSaved) {
+		FileInfoSet fileInfos = new FileInfoSet();
+		fileInfos.load(physicalFile);
+		if (fileInfos.check(physicalFile) && description.myIsSaved) {
 			return description;
 		}
-
-		if ((physicalFile != null) && (physicalFile != bookFile)) {
-			BookDescriptionUtil.resetZipInfo(physicalFile);
-			BookDescriptionUtil.saveInfo(physicalFile);
-		}
+		fileInfos.save();
 
 		final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
 		if ((plugin == null) || !plugin.readDescription(bookFile, description)) {
@@ -76,7 +66,7 @@ public class BookDescription {
 	private String myLanguage;
 	private String myTitle;
 	private List<Author> myAuthors;
-	private ArrayList<Tag> myTags;
+	private List<Tag> myTags;
 	private SeriesInfo mySeriesInfo;
 
 	private boolean myIsSaved;

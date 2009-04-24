@@ -66,7 +66,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		}
 		while (!myOpenItems.contains(tree)) {
 			myOpenItems.add(tree);
-			tree = tree.getParent();
+			tree = tree.Parent;
 		}
 	}
 
@@ -78,10 +78,10 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		if (tree == null) {
 			return;
 		}
-		openTree(tree.getParent());
+		openTree(tree.Parent);
 		int index = 0;
 		while (true) {
-			ZLTree<?> parent = tree.getParent();
+			ZLTree<?> parent = tree.Parent;
 			if (parent == null) {
 				break;
 			}
@@ -188,6 +188,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		} else {
 			imageView.setImageResource(R.drawable.tree_icon_group_empty);
 		}
-		imageView.setPadding(25 * (tree.getLevel() - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
+		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
 	}
 }

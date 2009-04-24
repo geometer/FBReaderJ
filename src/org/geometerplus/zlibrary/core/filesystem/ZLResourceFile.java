@@ -56,8 +56,4 @@ public abstract class ZLResourceFile extends ZLFile {
 	public ZLPhysicalFile getPhysicalFile() {
 		return null;
 	}
-
-	protected ZLDir createUnexistingDirectory() {
-		return null;
-	}
 }

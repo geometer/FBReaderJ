@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.core.filesystem;
 
+import java.util.*;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -45,6 +46,7 @@ public final class ZLPhysicalFile extends ZLFile {
 	
 	public boolean isDirectory() {
 		return myFile.isDirectory();
+		//return myFile.length() == 0;
 	}
 	
 	public boolean remove() {
@@ -71,8 +73,16 @@ public final class ZLPhysicalFile extends ZLFile {
 		return new FileInputStream(myFile);
 	}
 
-	protected ZLDir createUnexistingDirectory() {
-		myFile.mkdirs();
-		return new ZLFSDir(getPath());
+	protected List<ZLFile> directoryEntries() {
+		File[] subFiles = myFile.listFiles();
+		if ((subFiles == null) || (subFiles.length == 0)) {
+			return Collections.emptyList();
+		}
+
+		ArrayList<ZLFile> entries  = new ArrayList<ZLFile>(subFiles.length);
+		for (File f : subFiles) {
+			entries.add(new ZLPhysicalFile(f));
+		}
+		return entries;
 	}
 }

@@ -139,7 +139,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 
 		fillTagTable();
 
-		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file.getPath());
+		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myReferenceName = referenceName;
 
 		myPreformatted = false;

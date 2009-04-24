@@ -19,32 +19,26 @@
 
 package org.geometerplus.zlibrary.core.tree;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public abstract class ZLTree<T extends ZLTree> {
-	private static final ArrayList ourEmptyList = new ArrayList();
-
 	private int mySize = 1;
-	private final T myParent;
-	private final int myLevel;
+	public final T Parent;
+	public final int Level;
 	private ArrayList<T> mySubTrees;
 
 	protected ZLTree() {
-		myParent = null;
-		myLevel = 0;
+		this(null);
 	}
 
 	protected ZLTree(T parent) {
-		myParent = parent;
-		myLevel = parent.myLevel + 1;
-	}
-
-	public final T getParent() {
-		return myParent;
-	}
-
-	public final int getLevel() {
-		return myLevel;
+		Parent = parent;
+		if (parent != null) {
+			Level = parent.Level + 1;
+			parent.addSubTree(this);
+		} else {
+			Level = 0;
+		}
 	}
 
 	public final int getSize() {
@@ -55,8 +49,11 @@ public abstract class ZLTree<T extends ZLTree> {
 		return mySubTrees != null;
 	}
 
-	public final ArrayList<T> subTrees() {
-		return (mySubTrees != null) ? mySubTrees : (ArrayList<T>)ourEmptyList;
+	public final List<T> subTrees() {
+		if (mySubTrees == null) {
+			return Collections.emptyList();
+		}
+		return mySubTrees;
 	}
 
 	public final T getTree(int index) {
@@ -78,13 +75,13 @@ public abstract class ZLTree<T extends ZLTree> {
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	protected final void addSubTree(T subtree) {
+	private void addSubTree(T subtree) {
 		if (mySubTrees == null) {
 			mySubTrees = new ArrayList<T>();
 		}
 		final int subTreeSize = subtree.getSize();
 		mySubTrees.add(subtree);
-		for (ZLTree parent = this; parent != null; parent = parent.myParent) {
+		for (ZLTree parent = this; parent != null; parent = parent.Parent) {
 			parent.mySize += subTreeSize;
 		}
 	}

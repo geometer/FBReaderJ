@@ -30,9 +30,7 @@ public class AuthorTree extends CollectionTree {
 	}
 
 	SeriesTree createSeriesSubTree(String series) {
-		SeriesTree tree = new SeriesTree(this, series);
-		addSubTree(tree);
-		return tree;
+		return new SeriesTree(this, series);
 	}
 
 	public String getName() {

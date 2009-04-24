@@ -35,9 +35,7 @@ public abstract class PdbPlugin extends FormatPlugin {
 			return null;
 		}
 
-		String fileName = file.getPath();
-		int index = fileName.indexOf(':');
-		ZLFile baseFile = (index == -1) ? file : ZLFile.createFile(fileName.substring(0, index));
+		ZLFile baseFile = file.getPhysicalFile();
 		boolean upToDate = true;//BookDescriptionUtil.checkInfo(baseFile);
 
 		ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");

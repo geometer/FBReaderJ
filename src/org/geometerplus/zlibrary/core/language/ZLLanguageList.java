@@ -35,18 +35,13 @@ public abstract class ZLLanguageList {
 	public static List<String> languageCodes() {
 		if (ourLanguageCodes.isEmpty()) {
 			TreeSet codes = new TreeSet();
-			ZLDir dir = patternsDirectory();
-			if (dir != null) {
-				final ArrayList fileNames = dir.collectFiles();
-				final int len = fileNames.size();
-				for (int i = 0; i < len; ++i) {
-					String name = (String)fileNames.get(i);
-					final int index = name.indexOf("_");
-					if (index != -1) {
-						String str = name.substring(0, index);
-						if (!codes.contains(str)) {
-						    codes.add(str);
-						}
+			for (ZLFile file : patternsFile().children()) {
+				String name = file.getName(false);
+				final int index = name.indexOf("_");
+				if (index != -1) {
+					String str = name.substring(0, index);
+					if (!codes.contains(str)) {
+					    codes.add(str);
 					}
 				}
 			}
@@ -61,7 +56,7 @@ public abstract class ZLLanguageList {
 		return ZLResource.resource("language").getResource(code).getValue();
 	}
 
-	public	static ZLDir patternsDirectory() {
-		return ZLResourceFile.createResourceFile("data/languagePatterns.tar").getDirectory(false);
+	public	static ZLFile patternsFile() {
+		return ZLResourceFile.createResourceFile("data/languagePatterns.tar");
 	}
 }

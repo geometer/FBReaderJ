@@ -326,13 +326,12 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				String ref = attributes.getValue(mySrcAttribute);
 				if ((ref != null) && (ref.length() != 0)) {
 					addImageReference(ref, (short)0);
-					if (":\\".equals(ref.substring(1, 3))) {
-						addImage(ref, new ZLFileImage("image/auto", ref));
-					} else {
-						String fileName = Model.Description.File.getPath();
-						addImage(ref, new ZLFileImage("image/auto", 
-								fileName.substring(0, fileName.lastIndexOf('\\') + 1) + ref));
+					String filePath = ref;
+					if (!":\\".equals(ref.substring(1, 3))) {
+						filePath = Model.Description.File.getPath();
+						filePath = filePath.substring(0, filePath.lastIndexOf('\\') + 1) + ref;
 					}
+					addImage(ref, new ZLFileImage("image/auto", ZLFile.createFileByPath(filePath)));
 				}
 				break;
 			}

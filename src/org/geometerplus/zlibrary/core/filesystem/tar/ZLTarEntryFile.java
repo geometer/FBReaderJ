@@ -17,31 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.filesystem;
+package org.geometerplus.zlibrary.core.filesystem.tar;
 
-import java.util.ArrayList;
-import java.io.InputStream;
-import java.io.IOException;
+import java.util.*;
+import java.io.*;
 
-class ZLTarDir extends ZLDir {
-	ZLTarDir(String path) {		
-		super(path);
-	}
+import org.geometerplus.zlibrary.core.filesystem.*;
 
-	public String getDelimiter() {
-		return ":";
-	};
-	
-	public ArrayList collectFiles() {		
-		ArrayList names = new ArrayList();
-
+public final class ZLTarEntryFile extends ZLArchiveEntryFile {
+	public static List<ZLFile> archiveEntries(ZLFile archive) {
 		try {
-			InputStream stream = ZLFile.createFile(getPath()).getInputStream();
+			InputStream stream = archive.getInputStream();
 			if (stream != null) {
+				LinkedList<ZLFile> entries = new LinkedList<ZLFile>();
 				ZLTarHeader header = new ZLTarHeader();
 				while (header.read(stream)) {
 					if (header.IsRegularFile) {
-						names.add(header.Name);
+						entries.add(new ZLTarEntryFile(archive, header.Name));
 					}
 					final int lenToSkip = (header.Size + 0x1ff) & -0x200;
 					if (lenToSkip < 0) {
@@ -52,10 +44,23 @@ class ZLTarDir extends ZLDir {
 					}
 					header.erase();
 				}
+				stream.close();
+				return entries;
 			}
 		} catch (IOException e) {
 		}
+		return Collections.emptyList();
+	}
 
-		return names;
-	};
+	public ZLTarEntryFile(ZLFile parent, String name) {
+		super(parent, name);
+	}
+
+	public InputStream getInputStream() throws IOException {
+		InputStream base = myParent.getInputStream();
+		if (base != null) {
+			return new ZLTarInputStream(base, myName);
+		}
+		return null;
+	}
 }

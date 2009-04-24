@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.filesystem;
+package org.geometerplus.zlibrary.core.filesystem.tar;
 
 import java.io.InputStream;
 import java.io.IOException;

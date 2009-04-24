@@ -19,8 +19,8 @@
 
 package org.geometerplus.fbreader.collection;
 
-import java.util.*;
 import java.io.File;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -38,7 +38,7 @@ public class BookCollection {
 	}
 
 	// TODO: this option is platform-dependent
-	private final String BookDirectory = "/sdcard/Books";
+	private final ZLFile BookDirectory = new ZLPhysicalFile(new File("/sdcard/Books"));
 
 	private final CollectionTree myCollectionByAuthor = new RootTree();
 	private final CollectionTree myCollectionByTag = new RootTree();
@@ -63,11 +63,8 @@ public class BookCollection {
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
-	private void addDescription(LinkedList<BookDescription> list,
-								ZLFile bookFile,
-								Map<String,BookDescription> saved) {
+	private static BookDescription getDescription(ZLFile bookFile, Map<String,BookDescription> saved, boolean doReadMetaInfo) {
 		BookDescription description = saved.get(bookFile.getPath());
-		boolean doReadMetaInfo = false;
 		if (description == null) {
 			doReadMetaInfo = true;
 			description = new BookDescription(bookFile, false);
@@ -76,60 +73,88 @@ public class BookCollection {
 		if (doReadMetaInfo) {
 			final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
 			if ((plugin == null) || !plugin.readDescription(bookFile, description)) {
-				return;
+				return null;
 			}
 			String title = description.getTitle();
 			if ((title == null) || (title.length() == 0)) {
 				description.setTitle(bookFile.getName(true));
 			}
 		}
-
-		list.add(description);
+		return description;
 	}
 
-	private List<BookDescription> collectBookDescriptions() {
-		final Queue<String> dirNameQueue = new LinkedList<String>();
-		final HashSet<String> dirNameSet = new HashSet<String>();
-
-		final Map<String,BookDescription> savedDescriptions = BooksDatabase.Instance().listBooks();
-		final LinkedList<BookDescription> bookDescriptions = new LinkedList<BookDescription>();
-		addDescription(bookDescriptions, getHelpFile(), savedDescriptions);
-
-		dirNameQueue.offer(BookDirectory);
-		while (!dirNameQueue.isEmpty()) {
-			String name = dirNameQueue.poll();
-			if (dirNameSet.contains(name)) {
-				continue;
+	private void collectBookDescriptions(
+		ZLFile file,
+		FileInfoSet fileInfos,
+		List<BookDescription> bookDescriptions,
+		Map<String,BookDescription> savedDescriptions,
+		boolean doReadMetaInfo
+	) {
+		BookDescription description = getDescription(file, savedDescriptions, doReadMetaInfo);
+		if (description != null) {
+			bookDescriptions.add(description);
+		} else if (file.isArchive()) {
+			for (ZLFile entry : fileInfos.archiveEntries(file)) {
+				collectBookDescriptions(entry, fileInfos, bookDescriptions, savedDescriptions, doReadMetaInfo);
 			}
-			dirNameSet.add(name);
-			File[] items = new File(name).listFiles();
-			if (items == null) {
-				continue;
-			}
-			for (File i : items) {
-				if (i.getName().startsWith(".")) {
+		}
+	}
+
+	private List<ZLPhysicalFile> collectPhysicalFiles() {
+		final Queue<ZLFile> dirQueue = new LinkedList<ZLFile>();
+		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
+		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
+
+		dirQueue.offer(BookDirectory);
+		while (!dirQueue.isEmpty()) {
+			for (ZLFile file : dirQueue.poll().children()) {
+				if (file.getName(true).startsWith(".")) {
 					continue;
 				}
-				final String fileName = i.getPath();
-				if (i.isDirectory()) {
-					dirNameQueue.add(fileName);
-				} else {
-					final ZLPhysicalFile file = new ZLPhysicalFile(i);
-					if (PluginCollection.instance().getPlugin(file) != null) {
-						addDescription(bookDescriptions, file, savedDescriptions);
-					} else if (file.isArchive()) {
-						if (!BookDescriptionUtil.checkInfo(file)) {
-							BookDescriptionUtil.resetZipInfo(file);
-							BookDescriptionUtil.saveInfo(file);
-							// TODO: reset book information for all entries
-						}
-						for (String entryName : BookDescriptionUtil.listZipEntries(file)) {
-							addDescription(bookDescriptions, ZLFile.createFile(entryName), savedDescriptions);
-						}
+				if (file.isDirectory()) {
+					if (!dirSet.contains(file)) {
+						dirQueue.add(file);
+						dirSet.add(file);
 					}
+				} else {
+					file.setCached(true);
+					fileList.add((ZLPhysicalFile)file);
 				}
 			}
 		}
+		return fileList;
+	}
+
+	private List<BookDescription> collectBookDescriptions() {
+		//android.os.Debug.startMethodTracing("/sdcard/ll0");
+		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
+		//android.os.Debug.stopMethodTracing();
+		System.err.println(physicalFilesList.size() + " files " + System.currentTimeMillis() % 20000);
+		//android.os.Debug.startMethodTracing("/sdcard/ll1");
+		final Map<String,BookDescription> savedDescriptions = BooksDatabase.Instance().listBooks();
+		//android.os.Debug.stopMethodTracing();
+		System.err.println(savedDescriptions.size() + " saved books " + System.currentTimeMillis() % 20000);
+		final LinkedList<BookDescription> bookDescriptions = new LinkedList<BookDescription>();
+
+		//android.os.Debug.startMethodTracing("/sdcard/ll2");
+		FileInfoSet fileInfos = new FileInfoSet();
+		fileInfos.loadAll();
+		//android.os.Debug.stopMethodTracing();
+		System.err.println("file infos have been loaded " + System.currentTimeMillis() % 20000);
+
+		//android.os.Debug.startMethodTracing("/sdcard/ll3");
+		for (ZLPhysicalFile file : physicalFilesList) {
+			collectBookDescriptions(file, fileInfos, bookDescriptions, savedDescriptions, !fileInfos.check(file));
+			file.setCached(false);
+		}
+		bookDescriptions.add(getDescription(getHelpFile(), savedDescriptions, false));
+		//android.os.Debug.stopMethodTracing();
+		System.err.println("descriptions have been synchronized " + System.currentTimeMillis() % 20000);
+
+		//android.os.Debug.startMethodTracing("/sdcard/ll4");
+		fileInfos.save();
+		//android.os.Debug.stopMethodTracing();
+
 		return bookDescriptions;
 	}
 
@@ -173,13 +198,13 @@ public class BookCollection {
 	} 
 
 	private void build() {
-		System.err.println("before build: " + System.currentTimeMillis());
+		System.err.println("before build: " + System.currentTimeMillis() % 20000);
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 
 		final List<BookDescription> allDescriptions = collectBookDescriptions();
-		System.err.println(allDescriptions.size() + " books");
+		System.err.println(allDescriptions.size() + " books " + System.currentTimeMillis() % 20000);
 		for (BookDescription description : allDescriptions) {
 			List<Author> authors = description.authors();
 			if (authors.isEmpty()) {
@@ -222,7 +247,7 @@ public class BookCollection {
 				}
 			}
 		});
-		System.err.println("after build: " + System.currentTimeMillis());
+		System.err.println("after build: " + System.currentTimeMillis() % 20000);
 	}
 
 	public void synchronize() {
