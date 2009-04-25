@@ -46,7 +46,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance()).setActivity(activity);
+		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).setActivity(activity);
 		myWidget = null;
 	}
 

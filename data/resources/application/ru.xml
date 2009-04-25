@@ -34,11 +34,9 @@
 			<node name="openInDictionary" value="Посмотреть в словаре"/>
 			<node name="clearSelection" value="Убрать пометку"/>
 		</node>
-		<node name="search" value="Поиск">
-			<node name="search" value="Искать..."/>
-			<node name="findNext" value="Искать дальше"/>
-			<node name="findPrevious" value="Искать раньше"/>
-		</node>
+		<node name="search" value="Поиск"/>
+		<node name="findNext" value="Искать дальше"/>
+		<node name="findPrevious" value="Искать раньше"/>
 		<node name="view" value="Изображение">
 			<node name="rotate" value="Повернуть"/>
 			<node name="toggleFullscreen" value="На весь экран"/>
@@ -234,9 +232,11 @@
 			<node name="message" value="В названии категории не может быть запятой"/>
 		</node>
 		<node name="waitMessage">
-			<node name="loadingBook" value="Загрузка книги. Подождите, пожалуйста..."/>
-			<node name="loadingBookList" value="Загрузка списка книг. Подождите, пожалуйста..."/>
-			<node name="migrate" value="Переход на новую версию. Подождите, пожалуйста..."/>
+			<node name="downloadingFile" value="Загужается книга %s"/>
+			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста..."/>
+			<node name="loadingBookList" value="Открывается библиотека. Подождите, пожалуйста..."/>
+			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста..."/>
+			<node name="updatingBooksDatabase" value="Обновляется база книг. Подождите, пожалуйста..."/>
 		</node>
 	</node>
 	<node name="style">

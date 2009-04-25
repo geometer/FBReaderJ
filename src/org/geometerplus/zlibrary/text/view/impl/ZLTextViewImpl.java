@@ -153,13 +153,13 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	private void resetTextStyle() {
-		setTextStyle(ZLTextStyleCollection.getInstance().getBaseStyle());
+		setTextStyle(ZLTextStyleCollection.Instance().getBaseStyle());
 	}
 
 	private void applyControl(ZLTextControlElement control) {
 		final ZLTextStyle textStyle = myTextStyle;
 		if (control.IsStart) {
-			ZLTextStyleDecoration decoration = ZLTextStyleCollection.getInstance().getDecoration(control.Kind);
+			ZLTextStyleDecoration decoration = ZLTextStyleCollection.Instance().getDecoration(control.Kind);
 			setTextStyle(decoration.createDecoratedStyle(textStyle));
 		} else {
 			setTextStyle(textStyle.getBase());
@@ -455,7 +455,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	public synchronized void paint(int viewPage) {
 		myTextElementMap.clear();
 
-		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
+		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.Instance().getBaseStyle();
 		final ZLPaintContext context = Context;
 		context.clear(baseStyle.BackgroundColorOption.getValue());
 
@@ -668,7 +668,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 
 			if (left < right) {
-				context.setFillColor(ZLTextStyleCollection.getInstance().getBaseStyle().SelectionBackgroundColorOption.getValue());
+				context.setFillColor(ZLTextStyleCollection.Instance().getBaseStyle().SelectionBackgroundColorOption.getValue());
 				context.fillRectangle(left, top, right, bottom);
 			}
 		}
@@ -763,7 +763,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				}
 
 				if (markStart < length) {
-					context.setColor(ZLTextStyleCollection.getInstance().getBaseStyle().HighlightedTextColorOption.getValue());
+					context.setColor(ZLTextStyleCollection.Instance().getBaseStyle().HighlightedTextColorOption.getValue());
 					int endPos = Math.min(markStart + markLen, length);
 					context.drawString(x, y, str, offset + markStart, endPos - markStart);
 					x += context.getStringWidth(str, offset + markStart, endPos - markStart);
@@ -925,7 +925,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		} while (currentWordIndex != endIndex);
 
 		if ((currentWordIndex != endIndex) 
-			&& (ZLTextStyleCollection.getInstance().getBaseStyle().AutoHyphenationOption.getValue()) 
+			&& (ZLTextStyleCollection.Instance().getBaseStyle().AutoHyphenationOption.getValue()) 
 			&& (myTextStyle.allowHyphenations())) {
 			ZLTextElement element = paragraphCursor.getElement(currentWordIndex);
 			if (element instanceof ZLTextWord) { 

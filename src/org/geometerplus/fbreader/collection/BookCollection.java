@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.fbreader.formats.*;
 
-public class BookCollection {
+public final class BookCollection {
 	private static BookCollection ourInstance;
 
 	public static BookCollection Instance() {
@@ -42,6 +42,7 @@ public class BookCollection {
 
 	private final CollectionTree myCollectionByAuthor = new RootTree();
 	private final CollectionTree myCollectionByTag = new RootTree();
+	private final CollectionTree myRecentBooks = new RootTree();
 
 	private	boolean myDoRebuild = true;
 
@@ -129,18 +130,18 @@ public class BookCollection {
 		//android.os.Debug.startMethodTracing("/sdcard/ll0");
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
 		//android.os.Debug.stopMethodTracing();
-		System.err.println(physicalFilesList.size() + " files " + System.currentTimeMillis() % 20000);
+		//System.err.println(physicalFilesList.size() + " files " + System.currentTimeMillis() % 20000);
 		//android.os.Debug.startMethodTracing("/sdcard/ll1");
 		final Map<String,BookDescription> savedDescriptions = BooksDatabase.Instance().listBooks();
 		//android.os.Debug.stopMethodTracing();
-		System.err.println(savedDescriptions.size() + " saved books " + System.currentTimeMillis() % 20000);
+		//System.err.println(savedDescriptions.size() + " saved books " + System.currentTimeMillis() % 20000);
 		final LinkedList<BookDescription> bookDescriptions = new LinkedList<BookDescription>();
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll2");
 		FileInfoSet fileInfos = new FileInfoSet();
 		fileInfos.loadAll();
 		//android.os.Debug.stopMethodTracing();
-		System.err.println("file infos have been loaded " + System.currentTimeMillis() % 20000);
+		//System.err.println("file infos have been loaded " + System.currentTimeMillis() % 20000);
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll3");
 		for (ZLPhysicalFile file : physicalFilesList) {
@@ -149,7 +150,7 @@ public class BookCollection {
 		}
 		bookDescriptions.add(getDescription(getHelpFile(), savedDescriptions, false));
 		//android.os.Debug.stopMethodTracing();
-		System.err.println("descriptions have been synchronized " + System.currentTimeMillis() % 20000);
+		//System.err.println("descriptions have been synchronized " + System.currentTimeMillis() % 20000);
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll4");
 		fileInfos.save();
@@ -198,14 +199,16 @@ public class BookCollection {
 	} 
 
 	private void build() {
-		System.err.println("before build: " + System.currentTimeMillis() % 20000);
+		//System.err.println("before build: " + System.currentTimeMillis() % 20000);
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 
 		final List<BookDescription> allDescriptions = collectBookDescriptions();
-		System.err.println(allDescriptions.size() + " books " + System.currentTimeMillis() % 20000);
+		final HashMap<Long,BookDescription> bookById = new HashMap<Long,BookDescription>();
+		//System.err.println(allDescriptions.size() + " books " + System.currentTimeMillis() % 20000);
 		for (BookDescription description : allDescriptions) {
+			bookById.put(description.getBookId(), description);
 			List<Author> authors = description.authors();
 			if (authors.isEmpty()) {
 				authors = (List<Author>)ourNullList;
@@ -240,20 +243,29 @@ public class BookCollection {
 			}
 		}
 
-		BooksDatabase.Instance().executeAsATransaction(new Runnable() {
+		final BooksDatabase db = BooksDatabase.Instance();
+		for (long id : db.listRecentBookIds()) {
+			BookDescription description = bookById.get(id);
+			if (description != null) {
+				myRecentBooks.createBookSubTree(description);
+			}
+		}
+
+		db.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (BookDescription description : allDescriptions) {
 					description.save();
 				}
 			}
 		});
-		System.err.println("after build: " + System.currentTimeMillis() % 20000);
+		//System.err.println("after build: " + System.currentTimeMillis() % 20000);
 	}
 
 	public void synchronize() {
 		if (myDoRebuild) {
 			myCollectionByAuthor.clear();
 			myCollectionByTag.clear();
+			myRecentBooks.clear();
 
 			build();
 
@@ -264,13 +276,30 @@ public class BookCollection {
 		}
 	}
 
-	public final CollectionTree collectionByAuthor() {
+	public CollectionTree collectionByAuthor() {
 		synchronize();
 		return myCollectionByAuthor;
 	}
 
-	public final CollectionTree collectionByTag() {
+	public CollectionTree collectionByTag() {
 		synchronize();
 		return myCollectionByTag;
+	}
+
+	public CollectionTree recentBooks() {
+		synchronize();
+		return myRecentBooks;
+	}
+
+	public void addBookToRecentList(BookDescription description) {
+		final BooksDatabase db = BooksDatabase.Instance();
+		final List<Long> ids = db.listRecentBookIds();
+		final Long bookId = description.getBookId();
+		ids.remove(bookId);
+		ids.add(0, bookId);
+		if (ids.size() > 12) {
+			ids.remove(12);
+		} 
+		db.saveRecentBookIds(ids);
 	}
 }

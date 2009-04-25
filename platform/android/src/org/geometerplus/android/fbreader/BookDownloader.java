@@ -99,7 +99,7 @@ public class BookDownloader extends Activity {
 				}
 				// TODO: question box: redownload?
 				/*
-				ZLDialogManager.getInstance().showQuestionBox(
+				ZLDialogManager.Instance().showQuestionBox(
 					"redownloadBox", "Redownload?",
 					"no", null,
 					"yes", null,
@@ -126,9 +126,7 @@ public class BookDownloader extends Activity {
 
 	private void runFBReader(final File file) {
 		finish();
-		final Intent intent = new Intent(this, FBReader.class);
-		intent.setData(Uri.fromFile(file));
-		startActivity(intent);
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, FBReader.class));
 	}
 
 	private void startFileDownload(final String uriString, final File file) {

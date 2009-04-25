@@ -39,7 +39,7 @@ public abstract class ZLDialogManager {
 		ourInstance = this;
 	}
 	
-	public static ZLDialogManager getInstance() {
+	public static ZLDialogManager Instance() {
 		return ourInstance;
 	} 
 	
@@ -68,6 +68,8 @@ public abstract class ZLDialogManager {
 	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton);
 	
 	public abstract void wait(String key, Runnable runnable);
+
+	public abstract void startSearch();
 	
 	public static String getButtonText(String key) {
 		return getResource().getResource("button").getResource(key).getValue();

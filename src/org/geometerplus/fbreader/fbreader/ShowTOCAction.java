@@ -29,12 +29,12 @@ class ShowTOCAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return Reader.Model.TOCTree.hasChildren();
+		return (Reader.Model != null) && Reader.Model.TOCTree.hasChildren();
 	}
 
 	public void run() {
 		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
 		dialogManager.runActivity(TOCActivity.class);
 	}
 }

@@ -206,7 +206,7 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public abstract boolean openFile(ZLFile file);
+	public abstract void openFiles(ZLFile ... files);
 
 	public final void presentWindow() {
 		if (myWindow != null) {

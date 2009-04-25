@@ -11,12 +11,10 @@
 	</submenu>
 	<item id="library"/>
 	<item id="toc"/>
-	<submenu id="search">
-		<item id="search"/>
-		<item id="findPrevious"/>
-		<item id="findNext"/>
-	</submenu>
-	<item id="bookInfo"/>
+	<item id="search"/>
 	<item id="preferences"/>
 	<item id="preferences-old"/>
+	<item id="bookInfo"/>
+	<item id="findPrevious"/>
+	<item id="findNext"/>
 </menubar>

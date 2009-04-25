@@ -57,7 +57,7 @@ public class LibraryTabActivity extends TabActivity {
 
 		new LibraryAdapter(createTab("byAuthor", R.id.by_author), BookCollection.Instance().collectionByAuthor());
 		new LibraryAdapter(createTab("byTag", R.id.by_tag), BookCollection.Instance().collectionByTag());
-		new LibraryAdapter(createTab("recent", R.id.recent), RecentBooks.Instance().books());
+		new LibraryAdapter(createTab("recent", R.id.recent), BookCollection.Instance().recentBooks());
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}

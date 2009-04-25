@@ -15,9 +15,9 @@
     <node name="readText" value="Read book text"/>
   </node>
   <node name="menu">
-		<node name="preferences-old" value="Settings (Old)"/>
+		<node name="preferences-old" value="Settings (old)"/>
 		<node name="preferences" value="Settings"/>
-		<node name="bookInfo" value="Book Info"/>
+		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
 	  <node name="toc" value="TOC"/>
 		<node name="navigate" value="Navigate">
@@ -36,11 +36,9 @@
 			<node name="openInDictionary" value="Open in Dictionary"/>
 			<node name="clearSelection" value="Clear"/>
 		</node>
-		<node name="search" value="Search">
-			<node name="search" value="Find Text..."/>
-			<node name="findNext" value="Find Next"/>
-			<node name="findPrevious" value="Find Previous"/>
-		</node>
+		<node name="search" value="Search"/>
+		<node name="findNext" value="Find next"/>
+		<node name="findPrevious" value="Find previous"/>
 		<node name="view" value="View">
 			<node name="rotate" value="Rotate Screen"/>
 			<node name="toggleFullscreen" value="Full Screen"/>
@@ -237,7 +235,8 @@
 			<node name="downloadingFile" value="Downloading book %s"/>
 			<node name="loadingBook" value="Opening book. Please, wait..."/>
 			<node name="loadingBookList" value="Opening library. Please, wait..."/>
-			<node name="migrate" value="Upgrading to the new version. Please, wait..."/>
+			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
+			<node name="updatingBooksDatabase" value="Updating books database. Please, wait..."/>
 		</node>
 	</node>
 	<node name="style">

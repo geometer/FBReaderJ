@@ -30,7 +30,7 @@ class BookInfoAction extends FBAction {
 
 	public void run() {
 		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
 		dialogManager.runActivity(BookInfoActivity.class);
 	}
 }

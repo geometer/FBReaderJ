@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.html;
 public abstract class ZLHtmlProcessorFactory {
 	private static ZLHtmlProcessorFactory ourInstance;
 
-	public static ZLHtmlProcessorFactory getInstance() {
+	public static ZLHtmlProcessorFactory Instance() {
 		return ourInstance;
 	}
 

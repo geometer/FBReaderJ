@@ -57,7 +57,6 @@ public final class FileInfoSet {
 		for (FileInfo info : infos) {
 			myInfosByPair.put(new Pair(info.Name, info.Parent), info);
 		}
-		System.err.println(myInfosByPair.size() + " infos have been loaded");
 	}
 
 	public void loadAll() {
@@ -69,9 +68,6 @@ public final class FileInfoSet {
 	}
 
 	public void save() {
-		System.err.println("infos " + myInfosByPair.size());
-		System.err.println("to save " + myInfosToSave.size());
-		System.err.println("to remove " + myInfosToRemove.size());
 		final BooksDatabase database = BooksDatabase.Instance();
 		database.executeAsATransaction(new Runnable() {
 			public void run() {

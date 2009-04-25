@@ -57,13 +57,13 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	}
 
 	public boolean read() {
-		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.getInstance()
+		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.Instance()
 				.createHtmlProcessor();
 		return processor.read(this, Model.Description.File);
 	}
 
 	boolean readBook(ZLFile file) {
-		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.getInstance()
+		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.Instance()
 				.createHtmlProcessor();
 		return processor.read(this, file);
 		// return readDocument(fileName);

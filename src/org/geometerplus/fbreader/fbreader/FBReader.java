@@ -37,7 +37,6 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.collection.BookCollection;
-import org.geometerplus.fbreader.collection.RecentBooks;
 import org.geometerplus.fbreader.collection.BookDescription;
 
 public final class FBReader extends ZLApplication {
@@ -82,7 +81,7 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
-		addAction(ActionCode.SHOW_LIBRARY, new ShowLibrary(this));
+		addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this));
 		addAction(ActionCode.SHOW_OPTIONS, new ShowOptionsDialogAction(this));
 		addAction(ActionCode.SHOW_PREFERENCES, new PreferencesAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new BookInfoAction(this));
@@ -115,23 +114,19 @@ public final class FBReader extends ZLApplication {
 		
 	public void initWindow() {
 		super.initWindow();
-		refreshWindow();
-		String fileName = null;
-		if (myArg0 != null) {
-			try {
-				fileName = new File(myArg0).getCanonicalPath();
-			} catch (IOException e) {
-			}
-		}
-		if (!openFile(fileName) &&
-			!openFile(myBookNameOption.getValue())) {
-			openFile(BookCollection.Instance().getHelpFile());
-		}
+		openFiles(
+			ZLFile.createFileByPath(myArg0),
+			ZLFile.createFileByPath(myBookNameOption.getValue()),
+			BookCollection.Instance().getHelpFile()
+		);
 	}
 	
-	public void openBook(BookDescription bookDescription) {
-		OpenBookRunnable runnable = new OpenBookRunnable(bookDescription);
-		ZLDialogManager.getInstance().wait("loadingBook", runnable);
+	public void openBook(final BookDescription bookDescription) {
+		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
+			public void run() { 
+				openBookInternal(bookDescription); 
+			}
+		});
 	}
 
 	public ZLKeyBindings keyBindings() {
@@ -153,7 +148,7 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	FBView getTextView() {
+	public FBView getTextView() {
 		return (FBView)getCurrentView();
 	}
 
@@ -225,7 +220,7 @@ public final class FBReader extends ZLApplication {
 			BookTextView.setCaption(description.getTitle());
 			FootnoteView.setModel(null);
 			FootnoteView.setCaption(description.getTitle());
-			RecentBooks.Instance().addBook(description.File);
+			BookCollection.Instance().addBookToRecentList(description);
 		}
 		resetWindowCaption();
 		refreshWindow();
@@ -235,45 +230,35 @@ public final class FBReader extends ZLApplication {
 		setMode(ViewMode.BOOK_TEXT);
 	}
 	
-	private class OpenBookRunnable implements Runnable {
-		private	BookDescription myDescription;
-
-		public OpenBookRunnable(BookDescription description) { 
-			myDescription = description; 
-		}
-		
-		public void run() { 
-			openBookInternal(myDescription); 
-		}
-	}
-
-	private boolean openFile(String path) {
-		return openFile(ZLFile.createFileByPath(path));
-	}
-
 	@Override
-	public boolean openFile(ZLFile file) {
-		if (file == null) {
-			return false;
-		}
-		BookDescription description = BookDescription.getDescription(file);
-		if (description == null) {
-			if (file.isArchive()) {
-				for (ZLFile child : file.children()) {
-					description = BookDescription.getDescription(child);
+	public void openFiles(final ZLFile ... files) {
+		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
+			public void run() { 
+				BookDescription description = null;
+main:
+				for (ZLFile f : files) {
+					if (f == null) {
+						continue;
+					}
+					description = BookDescription.getDescription(f);
 					if (description != null) {
 						break;
 					}
+					if (f.isArchive()) {
+						for (ZLFile child : f.children()) {
+							description = BookDescription.getDescription(child);
+							if (description != null) {
+								break main;
+							}
+						}
+					}
+				}
+				if (description != null) {
+					openBookInternal(description);
+					refreshWindow();
 				}
 			}
-		}
-		if (description != null) {
-			openBook(description);
-			refreshWindow();
-			return true;
-		} else {
-			return false;
-		}
+		});
 	}
 
 	public void onWindowClosing() {

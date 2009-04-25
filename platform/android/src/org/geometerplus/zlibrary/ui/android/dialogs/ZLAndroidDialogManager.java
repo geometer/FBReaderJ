@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
+import java.util.*;
+
 import android.app.*;
 import android.view.View;
 import android.content.*;
@@ -170,22 +172,62 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		return new ZLAndroidDialog(myActivity, getResource().getResource(key));
 	}
 
-	public void wait(String key, final Runnable runnable) {
-		System.err.println("wait " + myActivity);
-		final ProgressDialog progress = ProgressDialog.show(myActivity, null, getWaitMessageText(key), true, false);
-		final Handler handler = new Handler() {
-			public void handleMessage(Message message) {
-				try {
-					progress.dismiss();
-				} catch (Exception e) {
+	private ProgressDialog myProgress;
+	private static class Pair {
+		final Runnable Action;
+		final String Message;
+
+		Pair(Runnable action, String message) {
+			Action = action;
+			Message = message;
+		}
+	};
+	private final Queue<Pair> myTaskQueue = new LinkedList<Pair>();
+	final Handler myProgressHandler = new Handler() {
+		public void handleMessage(Message message) {
+			try {
+				synchronized (ZLAndroidDialogManager.this) {
+					if (myTaskQueue.isEmpty()) {
+						myProgress.dismiss();
+						myProgress = null;
+					} else {
+						myProgress.setMessage(myTaskQueue.peek().Message);
+					}
+					ZLAndroidDialogManager.this.notify();
 				}
+			} catch (Exception e) {
 			}
-		};
+		}
+	};
+	public void wait(String key, Runnable action) {
+		synchronized (this) {
+			final String message = getWaitMessageText(key);
+			myTaskQueue.offer(new Pair(action, message));
+			if (myProgress == null) {
+				myProgress = ProgressDialog.show(myActivity, null, message, true, false);
+			} else {
+				return;
+			}
+		}
+		final ProgressDialog currentProgress = myProgress;
 		new Thread(new Runnable() {
 			public void run() {
-				runnable.run();
-				handler.sendEmptyMessage(0);
+				while ((myProgress == currentProgress) && !myTaskQueue.isEmpty()) {
+					Pair p = myTaskQueue.poll();
+					p.Action.run();
+					synchronized (ZLAndroidDialogManager.this) {
+						myProgressHandler.sendEmptyMessage(0);
+						try {
+							ZLAndroidDialogManager.this.wait();
+						} catch (InterruptedException e) {
+						}
+					}
+				}
 			}
 		}).start();
+	}
+
+	public void startSearch() {
+		myActivity.onSearchRequested();
 	}
 }

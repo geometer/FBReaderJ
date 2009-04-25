@@ -70,7 +70,7 @@ public final class ZLTextParagraphCursor {
 						final ZLImageEntry imageEntry = it.getImageEntry();
 						final ZLImage image = imageEntry.getImage();
 						if (image != null) {
-							ZLImageData data = ZLImageManager.getInstance().getImageData(image);
+							ZLImageData data = ZLImageManager.Instance().getImageData(image);
 							if (data != null) {
 								elements.add(new ZLTextImageElement(imageEntry.Id, data));
 							}

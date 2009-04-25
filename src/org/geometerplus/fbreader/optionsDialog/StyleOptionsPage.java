@@ -51,7 +51,7 @@ public class StyleOptionsPage extends OptionsPage {
 		myComboEntry = new ComboOptionEntry(this, styleResource.getResource(KEY_BASE).getValue());
 		myComboEntry.addValue(myComboEntry.initialValue());
 
-		ZLTextStyleCollection collection = ZLTextStyleCollection.getInstance();
+		ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		byte styles[] = { REGULAR, TITLE, SECTION_TITLE, SUBTITLE, H1, H2, H3, H4, H5, H6, CONTENTS_TABLE_ENTRY, RECENT_BOOK_LIST, LIBRARY_AUTHOR_ENTRY, LIBRARY_BOOK_ENTRY, ANNOTATION, EPIGRAPH, AUTHOR,/* DATEKIND, */POEM_TITLE, STANZA, VERSE, CITE, INTERNAL_HYPERLINK, EXTERNAL_HYPERLINK, FOOTNOTE, ITALIC, EMPHASIS, BOLD, STRONG, DEFINITION, DEFINITION_DESCRIPTION, PREFORMATTED, CODE };
 		final int STYLES_NUMBER = styles.length;
 		for (int i = 0; i < STYLES_NUMBER; ++i) {

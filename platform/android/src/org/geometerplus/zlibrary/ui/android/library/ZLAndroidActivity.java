@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication(String fileName);
 
+	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -44,20 +45,26 @@ public abstract class ZLAndroidActivity extends Activity {
 		getLibrary().setActivity(this);
 
 		final Intent intent = getIntent();
-		final Uri uri = intent.getData();
-		final String fileToOpen = (uri != null) ? uri.getPath() : null;
-		intent.setData(null);
+		String fileToOpen = null;
+		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			final Uri uri = intent.getData();
+			if (uri != null) {
+				fileToOpen = uri.getPath();
+			}
+			intent.setData(null);
+		}
 
 		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
 			ZLApplication application = createApplication(fileToOpen);
 			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} else if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
+			ZLApplication.Instance().openFiles(new ZLPhysicalFile(new File(fileToOpen)));
 		}
 		ZLApplication.Instance().refreshWindow();
 	}
 
+	@Override
 	public void onPause() {
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
@@ -67,17 +74,20 @@ public abstract class ZLAndroidActivity extends Activity {
 		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		((ZLAndroidApplication)getApplication()).myMainWindow.buildMenu(menu);
 		return true;
 	}
 
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		View view = findViewById(R.id.zlandroidactivity);
 		return (view != null) ? view.onKeyDown(keyCode, event) : true;
 	}
 
+	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		View view = findViewById(R.id.zlandroidactivity);
 		return (view != null) ? view.onKeyUp(keyCode, event) : true;

@@ -43,17 +43,11 @@ class SearchAction extends FBAction {
 		SearchPatternOption = new ZLStringOption(SEARCH, PATTERN, "");	
 	}
 
-	public boolean isVisible() {
-		return true; 
-	}
-
-	public boolean isEnabled() {
-		return true;
-	}
-
 	public void run() {
+		ZLDialogManager.Instance().startSearch();
+		/*
 		final ZLTextView textView = Reader.getTextView();	
-		final ZLDialog searchDialog = ZLDialogManager.getInstance().createDialog("textSearchDialog");
+		final ZLDialog searchDialog = ZLDialogManager.Instance().createDialog("textSearchDialog");
 	
 		searchDialog.addOption("text", new SearchPatternEntry(this));
 		searchDialog.addOption("ignoreCase", SearchIgnoreCaseOption);
@@ -62,7 +56,7 @@ class SearchAction extends FBAction {
 /*		if (textView.hasMultiSectionModel()) {
 			searchDialog.addOption("currentSection", SearchThisSectionOnlyOption);
 		}
-*/
+* /
 		searchDialog.addButton("go", new Runnable() {
 			public void run() {
 				searchDialog.acceptValues();
@@ -81,5 +75,6 @@ class SearchAction extends FBAction {
 		searchDialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
 		
 		searchDialog.run();
+*/
 	}
 }

@@ -66,4 +66,12 @@ public class FBReader extends ZLAndroidActivity {
 		ZLApplication application = new org.geometerplus.fbreader.fbreader.FBReader(args);
 		return application;
 	}
+
+	/*
+	@Override
+	public boolean onSearchRequested() {
+		startSearch("search pattern", true, null, true);
+		return true;
+	}
+	*/
 }

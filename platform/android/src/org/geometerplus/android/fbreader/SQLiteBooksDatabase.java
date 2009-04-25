@@ -29,6 +29,7 @@ import android.database.Cursor;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.collection.*;
@@ -37,7 +38,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private final SQLiteDatabase myDatabase;
 
 	SQLiteBooksDatabase() {
-		System.err.println("+ SQLiteBooksDatabase");
 		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
 	}
@@ -47,7 +47,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (version >= 5) {
 			return;
 		}
-		ZLDialogManager.getInstance().wait("migrating", new Runnable() {
+		ZLDialogManager.Instance().wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
 			public void run() {
 				myDatabase.beginTransaction();
 
@@ -62,12 +62,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables3();
 					case 4:
 						updateTables4();
+					case 5:
+						updateTables5();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
 
 				myDatabase.execSQL("VACUUM");
-				myDatabase.setVersion(4);
+				myDatabase.setVersion(5);
 			}
 		});
 	}
@@ -111,27 +113,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return id;
 	}
 
-	private boolean myCacheIsInitialized;
-	private final HashMap<Tag,Long> myIdByTag = new HashMap<Tag,Long>(50);
-	private final HashMap<Long,Tag> myTagById = new HashMap<Long,Tag>(50);
-	private final HashMap<Long,Author> myAuthorById = new HashMap<Long,Author>(100);
-	private final HashMap<Long,String> mySeriesById = new HashMap<Long,String>(20);
+	private boolean myTagCacheIsInitialized;
+	private final HashMap<Tag,Long> myIdByTag = new HashMap<Tag,Long>();
+	private final HashMap<Long,Tag> myTagById = new HashMap<Long,Tag>();
 
-	private void initCaches() {
-		if (myCacheIsInitialized) {
+	private void initTagCache() {
+		if (myTagCacheIsInitialized) {
 			return;
 		}
-		myCacheIsInitialized = true;
-
-		Cursor cursor = myDatabase.rawQuery(
-			"SELECT author_id,name,sort_key FROM Authors", null
-		);
-		while (cursor.moveToNext()) {
-			myAuthorById.put(cursor.getLong(0), new Author(cursor.getString(1), cursor.getString(2)));
-		}
-		cursor.close();
+		myTagCacheIsInitialized = true;
         
-		cursor = myDatabase.rawQuery("SELECT tag_id,parent_id,name FROM Tags ORDER BY tag_id", null);
+		Cursor cursor = myDatabase.rawQuery("SELECT tag_id,parent_id,name FROM Tags ORDER BY tag_id", null);
 		while (cursor.moveToNext()) {
 			long id = cursor.getLong(0);
 			if (myTagById.get(id) == null) {
@@ -139,14 +131,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				myIdByTag.put(tag, id);
 				myTagById.put(id, tag);
 			}
-		}
-		cursor.close();
-        
-		cursor = myDatabase.rawQuery(
-			"SELECT series_id,name FROM Series", null
-		);
-		while (cursor.moveToNext()) {
-			mySeriesById.put(cursor.getLong(0), cursor.getString(1));
 		}
 		cursor.close();
 	}
@@ -169,7 +153,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 
-		initCaches();
+		initTagCache();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT author_id,name,sort_key FROM Authors", null
+		);
+		final HashMap<Long,Author> authorById = new HashMap<Long,Author>(cursor.getCount());
+		while (cursor.moveToNext()) {
+			authorById.put(cursor.getLong(0), new Author(cursor.getString(1), cursor.getString(2)));
+		}
+		cursor.close();
 
 		cursor = myDatabase.rawQuery(
 			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
@@ -177,7 +170,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		while (cursor.moveToNext()) {
 			BookDescription book = booksById.get(cursor.getLong(0));
 			if (book != null) {
-				Author author = myAuthorById.get(cursor.getLong(1));
+				Author author = authorById.get(cursor.getLong(1));
 				if (author != null) {
 					addAuthor(book, author);
 				}
@@ -195,12 +188,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 
 		cursor = myDatabase.rawQuery(
+			"SELECT series_id,name FROM Series", null
+		);
+		final HashMap<Long,String> seriesById = new HashMap<Long,String>(cursor.getCount());
+		while (cursor.moveToNext()) {
+			seriesById.put(cursor.getLong(0), cursor.getString(1));
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
 			"SELECT book_id,series_id,book_index FROM BookSeries", null
 		);
 		while (cursor.moveToNext()) {
 			BookDescription book = booksById.get(cursor.getLong(0));
 			if (book != null) {
-				String series = mySeriesById.get(cursor.getLong(1));
+				String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
 					setSeriesInfo(book, series, cursor.getLong(2));
 				}
@@ -435,8 +437,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myResetBookInfoStatement;
-	private final static String myBookIdWhereClause = "book_id = ?";
-	protected void resetBookInfo(String fileName) {
+	private long getBookId(String fileName) {
 		if (myResetBookInfoStatement == null) {
 			myResetBookInfoStatement = myDatabase.compileStatement(
 				"SELECT book_id FROM Books WHERE file_name = ?"
@@ -444,7 +445,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		myResetBookInfoStatement.bindString(1, fileName);
 		try {
-			final long bookId = myResetBookInfoStatement.simpleQueryForLong();
+			return myResetBookInfoStatement.simpleQueryForLong();
+		} catch (SQLException e) {
+			return -1;
+		}
+	}
+
+	private final static String myBookIdWhereClause = "book_id = ?";
+	protected void resetBookInfo(String fileName) {
+		final long bookId = getBookId(fileName);
+		if (bookId != -1) {
 			final String[] parameters = { "" + bookId };
 			executeAsATransaction(new Runnable() {
 				public void run() {
@@ -454,7 +464,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 					myDatabase.delete("BookTag", myBookIdWhereClause, parameters);
 				}
 			});
-		} catch (SQLException e) {
 		}
 	}
 
@@ -567,6 +576,36 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return infos;
 	}
 
+	private SQLiteStatement mySaveRecentBookStatement;
+	protected void saveRecentBookIds(final List<Long> ids) {
+		if (mySaveRecentBookStatement == null) {
+			mySaveRecentBookStatement = myDatabase.compileStatement(
+				"INSERT INTO RecentBooks (book_id) VALUES (?)"
+			);
+		}
+		executeAsATransaction(new Runnable() {
+			public void run() {
+				myDatabase.delete("RecentBooks", null, null);
+				for (long id : ids) {
+					mySaveRecentBookStatement.bindLong(1, id);
+					mySaveRecentBookStatement.execute();
+				}
+			}
+		});
+	}
+
+	protected List<Long> listRecentBookIds() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
+		);
+		final LinkedList<Long> ids = new LinkedList<Long>();
+		while (cursor.moveToNext()) {
+			ids.add(cursor.getLong(0));
+		}
+		cursor.close();
+		return ids;
+	}
+
 	private void createTables() {
 		myDatabase.execSQL(
 			"CREATE TABLE Books(" +
@@ -648,8 +687,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables4() {
-		myDatabase.delete("Files", null, null);
-
 		final FileInfoSet fileInfos = new FileInfoSet();
 		fileInfos.loadAll();
 		Cursor cursor = myDatabase.rawQuery(
@@ -660,11 +697,24 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		fileInfos.save();
-        
-		cursor = myDatabase.rawQuery(
-			"SELECT file_id FROM Files", null
-		);
-		System.err.println("saved " + cursor.getCount() + " books");
-		cursor.close();
+
+		myDatabase.execSQL(
+			"CREATE TABLE RecentBooks(" +
+				"book_index INTEGER PRIMARY KEY," +
+				"book_id INTEGER REFERENCES Books(book_id))");
+		final ArrayList<Long> ids = new ArrayList<Long>();
+		for (int i = 0; i < 20; ++i) {
+			final ZLStringOption option = new ZLStringOption("LastOpenedBooks", "Book" + i, "");
+			final String name = option.getValue();
+			option.setValue("");
+			final long bookId = getBookId(name);
+			if (bookId != -1) {
+				ids.add(bookId);
+			}
+		}
+		saveRecentBookIds(ids);
+	}
+
+	private void updateTables5() {
 	}
 }

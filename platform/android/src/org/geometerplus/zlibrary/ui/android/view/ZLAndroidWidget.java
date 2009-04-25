@@ -353,19 +353,24 @@ public class ZLAndroidWidget extends View {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-		if (keyName.equals("<Menu>") || keyName.equals("<Call>")) {
-			return false;
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_CALL:
+			case KeyEvent.KEYCODE_MENU:
+			case KeyEvent.KEYCODE_SEARCH:
+				return false;
 		}
-		return ZLApplication.Instance().doActionByKey(keyName);
+		return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-		if (keyName.equals("<Menu>") || keyName.equals("<Call>")) {
-			return false;
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_CALL:
+			case KeyEvent.KEYCODE_MENU:
+			case KeyEvent.KEYCODE_SEARCH:
+				return false;
+			default:
+				return true;
 		}
-		return true;
 	}
 
 	/*

@@ -20,28 +20,24 @@
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.fbreader.collection.BookCollection;
-import org.geometerplus.fbreader.collection.RecentBooks;
 
 import org.geometerplus.android.fbreader.LibraryTabActivity;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
-class ShowLibrary extends FBAction {
-	ShowLibrary(FBReader fbreader) {
+class ShowLibraryAction extends FBAction {
+	ShowLibraryAction(FBReader fbreader) {
 		super(fbreader);
 	}
 
 	public void run() {
 		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.getInstance();
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
 		Runnable action = new Runnable() {
 			public void run() {
 				BookCollection collection = BookCollection.Instance();
 				collection.rebuild();
 				collection.synchronize();
-				RecentBooks recentBooks = RecentBooks.Instance();
-				recentBooks.rebuild();
-				recentBooks.synchronize();
 				// TODO: select current book (author?)
 				/*
 				if (myBookModel != null) {

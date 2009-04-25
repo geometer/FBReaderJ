@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.image;
 public abstract class ZLImageManager {
 	private static ZLImageManager ourInstance;
 
-	public static ZLImageManager getInstance() {
+	public static ZLImageManager Instance() {
 		return ourInstance;
 	}
 

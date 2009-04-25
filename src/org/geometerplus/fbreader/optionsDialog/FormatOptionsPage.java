@@ -50,7 +50,7 @@ class FormatOptionsPage extends OptionsPage {
 		myComboEntry = new ComboOptionEntry(this, styleResource.getResource(KEY_BASE).getValue());
 		myComboEntry.addValue(myComboEntry.initialValue());
 
-		ZLTextStyleCollection collection = ZLTextStyleCollection.getInstance();
+		ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		byte styles[] = { REGULAR, TITLE, SECTION_TITLE, SUBTITLE, H1, H2, H3, H4, H5, H6, ANNOTATION, EPIGRAPH, PREFORMATTED, AUTHOR,/* DATEKIND,*/ POEM_TITLE, STANZA, VERSE };
 		final int stylesNumber = styles.length;
 		for (int i = 0; i < stylesNumber; ++i) {

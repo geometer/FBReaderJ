@@ -47,7 +47,7 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle implements ZLText
 		if (hyperlinkStyle == HyperlinkStyle.NONE) {
 			return getBase().getColor();
 		}
-		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().getBaseStyle();
+		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.Instance().getBaseStyle();
 		if (hyperlinkStyle == HyperlinkStyle.INTERNAL) {
 			return baseStyle.InternalHyperlinkTextColorOption.getValue();
 		} else {

@@ -36,20 +36,44 @@ public final class ZLSQLiteConfig extends ZLConfig {
 
 	public ZLSQLiteConfig(Context context) {
 		myDatabase = context.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
-		if (myDatabase.getVersion() == 0) {
-			myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
-			myDatabase.setVersion(1);
+		switch (myDatabase.getVersion()) {
+			case 0:
+				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
+				break;
+			case 1:
+				myDatabase.beginTransaction();
+				SQLiteStatement removeStatement = myDatabase.compileStatement(
+					"DELETE FROM config WHERE name = ? AND groupName LIKE ?"
+				);
+				removeStatement.bindString(2, "/%");
+				removeStatement.bindString(1, "Size"); removeStatement.execute();
+				removeStatement.bindString(1, "Title"); removeStatement.execute();
+				removeStatement.bindString(1, "Language"); removeStatement.execute();
+				removeStatement.bindString(1, "Encoding"); removeStatement.execute();
+				removeStatement.bindString(1, "AuthorSortKey"); removeStatement.execute();
+				removeStatement.bindString(1, "AuthorDisplayName"); removeStatement.execute();
+				removeStatement.bindString(1, "EntriesNumber"); removeStatement.execute();
+				removeStatement.bindString(1, "TagList"); removeStatement.execute();
+				removeStatement.bindString(1, "Sequence"); removeStatement.execute();
+				removeStatement.bindString(1, "Number in seq"); removeStatement.execute();
+				myDatabase.execSQL(
+					"DELETE FROM config WHERE name LIKE 'Entry%' AND groupName LIKE '/%'"
+				);
+				myDatabase.setTransactionSuccessful();
+				myDatabase.endTransaction();
+				myDatabase.execSQL("VACUUM");
+				break;
 		}
+		myDatabase.setVersion(2);
 		myGetValueStatement = myDatabase.compileStatement("SELECT value FROM config WHERE groupName = ? AND name = ?");
 		mySetValueStatement = myDatabase.compileStatement("INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)");
 		myUnsetValueStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ? AND name = ?");
 		myDeleteGroupStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ?");
 
-		System.err.println("+ ZLSQLiteConfig");
 		/*
-		final Cursor cursor = myDatabase.rawQuery("SELECT groupName,value FROM config WHERE name = ? AND groupName LIKE ?", new String[] { "Size", "/%" });
+		final Cursor cursor = myDatabase.rawQuery("SELECT name FROM config WHERE groupName LIKE ? GROUP BY name", new String[] { "/%" });
 		while (cursor.moveToNext()) {
-			System.err.println(cursor.getString(0) + ": " + cursor.getString(1));
+			System.err.println(" = " + cursor.getString(0));
 		}
 		cursor.close();
 		*/

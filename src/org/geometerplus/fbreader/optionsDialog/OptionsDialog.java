@@ -37,8 +37,8 @@ public class OptionsDialog {
 	private ZLOptionsDialog myDialog;
 	
 	public OptionsDialog(FBReader fbreader) {
-		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.getInstance().baseStyle();
-		myDialog = ZLDialogManager.getInstance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
+		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.Instance().baseStyle();
+		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
 		marginTab.addOptions(

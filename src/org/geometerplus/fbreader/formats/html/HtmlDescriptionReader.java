@@ -74,7 +74,7 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 	}
 
 	public boolean readDocument(ZLFile file) {
-		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance()
+		final ZLXMLProcessor processor = ZLXMLProcessorFactory.Instance()
 				.createXMLProcessor();
 		return processor.read(this, file);
 	}

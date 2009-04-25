@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZLHtmlReaderAdapter implements ZLHtmlReader {
 	public boolean read(ZLFile file) {
-		return ZLHtmlProcessorFactory.getInstance().createHtmlProcessor().read(this, file);
+		return ZLHtmlProcessorFactory.Instance().createHtmlProcessor().read(this, file);
 	}
 	
 	public boolean dontCacheAttributeValues() {

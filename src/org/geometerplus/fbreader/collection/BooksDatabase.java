@@ -70,4 +70,7 @@ public abstract class BooksDatabase {
 	protected abstract Collection<FileInfo> loadFileInfos(ZLFile file);
 	protected abstract void removeFileInfo(long fileId);
 	protected abstract void saveFileInfo(FileInfo fileInfo);
+
+	protected abstract List<Long> listRecentBookIds();
+	protected abstract void saveRecentBookIds(final List<Long> ids);
 }

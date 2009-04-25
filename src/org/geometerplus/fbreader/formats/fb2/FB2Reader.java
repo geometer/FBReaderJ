@@ -55,7 +55,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 
 	boolean readBook(ZLFile file) {
 		Base64EncodedImage.resetCounter();
-		final ZLXMLProcessor processor = ZLXMLProcessorFactory.getInstance().createXMLProcessor();
+		final ZLXMLProcessor processor = ZLXMLProcessorFactory.Instance().createXMLProcessor();
 		return processor.read(this, file);
 	}
 

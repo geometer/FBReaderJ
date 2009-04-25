@@ -39,7 +39,7 @@ public class ZLTextStyleCollection {
 		}
 	}
 	
-	public static ZLTextStyleCollection getInstance() {
+	public static ZLTextStyleCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLTextStyleCollection();
 		}
