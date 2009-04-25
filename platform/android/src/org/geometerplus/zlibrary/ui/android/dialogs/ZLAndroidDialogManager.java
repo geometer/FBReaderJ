@@ -168,10 +168,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		return new ZLAndroidOptionsDialog(myActivity, getResource().getResource(key), exitAction, applyAction);
 	}
 
-	public ZLDialog createDialog(String key) {
-		return new ZLAndroidDialog(myActivity, getResource().getResource(key));
-	}
-
 	private ProgressDialog myProgress;
 	private static class Pair {
 		final Runnable Action;

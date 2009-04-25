@@ -63,8 +63,6 @@ public abstract class ZLDialogManager {
 	
 	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
 	
-	public abstract ZLDialog createDialog(String key);
-	
 	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton);
 	
 	public abstract void wait(String key, Runnable runnable);
@@ -91,24 +89,3 @@ public abstract class ZLDialogManager {
 		return ZLResource.resource("dialog");
 	}
 }
-
-
-/*
- * 
- * 
-
-public:
-	
-
-	virtual shared_ptr<ZLDialog> createDialog(const ZLResourceKey &key) const = 0;
-	
-	virtual void wait(const ZLResourceKey &key, Runnable &runnable) const = 0;
-
-	interface ClipboardType {
-		CLIPBOARD_MAIN,
-		CLIPBOARD_SELECTION
-	};
-	virtual bool isClipboardSupported(ClipboardType type) const = 0;
-	virtual void setClipboardText(const std::string &text, ClipboardType type) const = 0;
- * 
- */

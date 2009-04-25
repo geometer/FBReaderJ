@@ -24,6 +24,8 @@ import android.app.SearchManager;
 import android.os.Bundle;
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+
 import org.geometerplus.fbreader.fbreader.FBReader;
 
 public class TextSearchActivity extends Activity {
@@ -35,7 +37,11 @@ public class TextSearchActivity extends Activity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final FBReader fbreader = (FBReader)FBReader.Instance();
      		final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			fbreader.getTextView().search(pattern, true, false, false, false);
+			ZLDialogManager.Instance().wait("textSearch", new Runnable() {
+				public void run() {
+					fbreader.getTextView().search(pattern, true, false, false, false);
+				}
+			});
 			fbreader.refreshWindow();
 		}
 		finish();

@@ -19,62 +19,14 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.dialogs.*;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.view.ZLTextView;
+import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
 class SearchAction extends FBAction {
-	public static final String SEARCH = "Search";
-	public static final String PATTERN = "Pattern";
-
-	public ZLBooleanOption SearchBackwardOption;
-	public ZLBooleanOption SearchIgnoreCaseOption;
-	public ZLBooleanOption SearchInWholeTextOption;
-	public ZLBooleanOption SearchThisSectionOnlyOption;
-	public ZLStringOption SearchPatternOption;
-
 	SearchAction(FBReader fbreader) {
 		super(fbreader);
-		SearchBackwardOption = new ZLBooleanOption(SEARCH, "Backward", false);
-		SearchIgnoreCaseOption = new ZLBooleanOption(SEARCH, "IgnoreCase", true);
-		SearchInWholeTextOption = new ZLBooleanOption(SEARCH, "WholeText", false);
-		SearchThisSectionOnlyOption = new ZLBooleanOption(SEARCH, "ThisSectionOnly", false);
-		SearchPatternOption = new ZLStringOption(SEARCH, PATTERN, "");	
 	}
 
 	public void run() {
 		ZLDialogManager.Instance().startSearch();
-		/*
-		final ZLTextView textView = Reader.getTextView();	
-		final ZLDialog searchDialog = ZLDialogManager.Instance().createDialog("textSearchDialog");
-	
-		searchDialog.addOption("text", new SearchPatternEntry(this));
-		searchDialog.addOption("ignoreCase", SearchIgnoreCaseOption);
-		searchDialog.addOption("wholeText", SearchInWholeTextOption);
-		searchDialog.addOption("backward", SearchBackwardOption);
-/*		if (textView.hasMultiSectionModel()) {
-			searchDialog.addOption("currentSection", SearchThisSectionOnlyOption);
-		}
-* /
-		searchDialog.addButton("go", new Runnable() {
-			public void run() {
-				searchDialog.acceptValues();
-				final String pattern = SearchPatternOption.getValue();
-				if (pattern.length() != 0) {
-					textView.search(
-						pattern,
-						SearchIgnoreCaseOption.getValue(),
-						SearchInWholeTextOption.getValue(),
-						SearchBackwardOption.getValue(),
-						SearchThisSectionOnlyOption.getValue()
-					);
-				}
-			}
-		});
-		searchDialog.addButton(ZLDialogManager.CANCEL_BUTTON, null);
-		
-		searchDialog.run();
-*/
 	}
 }

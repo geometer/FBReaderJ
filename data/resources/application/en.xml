@@ -233,6 +233,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>
+			<node name="textSearch" value="Searching. Please, wait..."/>
 			<node name="loadingBook" value="Opening book. Please, wait..."/>
 			<node name="loadingBookList" value="Opening library. Please, wait..."/>
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
