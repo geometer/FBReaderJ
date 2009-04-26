@@ -42,6 +42,8 @@ public abstract class ZLAndroidActivity extends Activity {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
 		getLibrary().setActivity(this);
 
 		final Intent intent = getIntent();
@@ -83,13 +85,13 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		View view = findViewById(R.id.zlandroidactivity);
-		return (view != null) ? view.onKeyDown(keyCode, event) : true;
+		View view = findViewById(R.id.main_view);
+		return ((view != null) && view.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
 	}
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		View view = findViewById(R.id.zlandroidactivity);
-		return (view != null) ? view.onKeyUp(keyCode, event) : true;
+		View view = findViewById(R.id.main_view);
+		return ((view != null) && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
 	}
 }

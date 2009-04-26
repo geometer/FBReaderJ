@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
-class ZLAndroidDialogContent extends ZLDialogContent {
+class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogInterface {
 	private Context myContext;
 	protected ListView myListView;
 
@@ -39,6 +39,17 @@ class ZLAndroidDialogContent extends ZLDialogContent {
 	ZLAndroidDialogContent(Context context, ZLResource resource) {
 		super(resource);
 		myContext = context;
+	}
+
+	public void setActivity(DialogActivity activity) {
+		createListView(activity);
+		activity.setContentView(myListView);
+		activity.setTitle(getDisplayName());
+	}
+
+	public void endActivity() {
+		accept();
+		myAndroidViews.clear();
 	}
 
 	protected void createListView(Context context) {

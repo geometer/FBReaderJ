@@ -98,15 +98,15 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 		final int index = myTabs.size();
 
 		final ZLDialogContent tab =
-			new ZLAndroidDialogContentAsInterface(context, getTabResource(key));
+			new ZLAndroidDialogContent(context, getTabResource(key));
 		myTabs.add(tab);
 		return tab;
 	}
 
 	private void gotoTab(int index) {
 		myTabListView.setSelection(index);
-		final ZLAndroidDialogContentAsInterface tab =
-			(ZLAndroidDialogContentAsInterface)myTabListView.getAdapter().getItem(index);
+		final ZLAndroidDialogContent tab =
+			(ZLAndroidDialogContent)myTabListView.getAdapter().getItem(index);
 		final Activity activity = (Activity)myTabListView.getContext();
 		ZLAndroidDialogManager.runDialog(activity, tab);
 	}

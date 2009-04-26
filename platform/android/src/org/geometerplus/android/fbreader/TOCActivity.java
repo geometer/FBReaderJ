@@ -69,13 +69,6 @@ public class TOCActivity extends ListActivity {
 			treeToSelect = tree;
 		}
 		myAdapter.selectItem(treeToSelect);
-		
-		/*
-		int selectedIndex = adapter.getSelectedIndex();
-		if (selectedIndex >= 0) {
-			view.setSelection(selectedIndex);
-		}
-		*/
 	}
 
 	private static final int PROCESS_TREE_ITEM_ID = 0;
@@ -121,6 +114,7 @@ public class TOCActivity extends ListActivity {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
 			final TOCTree tree = (TOCTree)getItem(position);
+			view.setBackgroundColor((tree == SelectedItem) ? 0xff808080 : 0);
 			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
 			return view;

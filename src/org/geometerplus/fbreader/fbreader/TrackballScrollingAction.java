@@ -17,31 +17,25 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.dialogs;
+package org.geometerplus.fbreader.fbreader;
 
-import android.app.Dialog;
-import android.os.Handler;
-import android.content.Context;
-import android.view.*;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+class TrackballScrollingAction extends FBAction {
+	private final boolean myForward;
 
-final class AndroidDialog extends Dialog {
-	private final View myView;
-	private final String myCaption;
-
-	AndroidDialog(Context context, View view, String caption) {
-		super(context);
-		myView = view;
-		myCaption = caption;
+	TrackballScrollingAction(FBReader fbreader, boolean forward) {
+		super(fbreader);
+		myForward = forward;
+	}
+		
+	public boolean isEnabled() {
+		// TODO: implement
+		return true;
 	}
 
-	protected void onStart() {
-		setContentView(myView);
-		setTitle(myCaption);
-	}
-
-	protected void onStop() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget().requestFocus();
-	}
+	public void run() {
+		Reader.getTextView().scrollPage(myForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+		Reader.refreshWindow();
+	}		
 }

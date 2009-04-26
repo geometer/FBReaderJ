@@ -26,7 +26,6 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -34,14 +33,15 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.collection.*;
 
-public class LibraryTabActivity extends TabActivity {
-	static LibraryTabActivity ourActivity;
+public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+	static LibraryTabActivity Instance;
 
 	final ZLStringOption mySelectedTabOption = new ZLStringOption("TabActivity", "SelectedTab", "");
+	private ZLResource myResource = ZLResource.resource("libraryView");
 	
 	private ListView createTab(String tag, int id) {
 		final TabHost host = getTabHost();
-		final String label = ZLResource.resource("libraryView").getResource(tag).getValue();
+		final String label = myResource.getResource(tag).getValue();
 		host.addTab(host.newTabSpec(tag).setIndicator(label).setContent(id));
 		return (ListView)findViewById(id);
 	}
@@ -50,10 +50,9 @@ public class LibraryTabActivity extends TabActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.library, host.getTabContentView(), true);
-
-		//host.addTab(host.newTabSpec("Network").setIndicator("Network").setContent(R.id.network));
 
 		new LibraryAdapter(createTab("byAuthor", R.id.by_author), BookCollection.Instance().collectionByAuthor());
 		new LibraryAdapter(createTab("byTag", R.id.by_tag), BookCollection.Instance().collectionByTag());
@@ -62,22 +61,65 @@ public class LibraryTabActivity extends TabActivity {
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}
 
+	private LibraryAdapter mySearchResultsAdapter;
+	void showSearchResultsTab(CollectionTree tree) {
+		if (mySearchResultsAdapter == null) {
+			mySearchResultsAdapter =
+				new LibraryAdapter(createTab("searchResults", R.id.search_results), tree);
+		} else {
+			mySearchResultsAdapter.resetTree(tree);
+		}
+		getTabHost().setCurrentTabByTag("searchResults");
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		ourActivity = this;
+		Instance = this;
 	}
 
 	@Override
 	public void onPause() {
-		ourActivity = null;
 		super.onPause();
 	}
 
 	@Override
 	public void onStop() {
 		mySelectedTabOption.setValue(getTabHost().getCurrentTabTag());
+		Instance = null;
+		BookCollection.Instance().clear();
 		super.onStop();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		addMenuItem(menu, 1, "localSearch");
+		addMenuItem(menu, 1, "networkSearch").setEnabled(false);
+		return true;
+	}
+
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey) {
+		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setOnMenuItemClickListener(this);
+		return item;
+	}
+
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+			case 1:
+				return onSearchRequested();
+			default:
+				return true;
+		}
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		final FBReader fbreader = (FBReader)FBReader.Instance();
+		startSearch(fbreader.BookSearchPatternOption.getValue(), true, null, false);
+		return true;
 	}
 
 	private final class LibraryAdapter extends ZLTreeAdapter {
@@ -94,7 +136,7 @@ public class LibraryTabActivity extends TabActivity {
 			final CollectionTree tree = (CollectionTree)getItem(position);
 			setIcon((ImageView)view.findViewById(R.id.library_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getChildrenString());
+			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 			return view;
 		}
 
@@ -103,7 +145,7 @@ public class LibraryTabActivity extends TabActivity {
 				return true;
 			}
 			finish();
-			final FBReader fbreader = (FBReader)ZLApplication.Instance();
+			final FBReader fbreader = (FBReader)FBReader.Instance();
 			fbreader.openBook(((BookTree)tree).Description);
 			return true;
 		}

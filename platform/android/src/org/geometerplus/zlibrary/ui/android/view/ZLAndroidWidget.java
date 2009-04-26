@@ -354,22 +354,29 @@ public class ZLAndroidWidget extends View {
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
-			case KeyEvent.KEYCODE_CALL:
-			case KeyEvent.KEYCODE_MENU:
-			case KeyEvent.KEYCODE_SEARCH:
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+			case KeyEvent.KEYCODE_VOLUME_UP:
+			case KeyEvent.KEYCODE_BACK:
+				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
+				return true;
+			case KeyEvent.KEYCODE_DPAD_UP:
+				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, -1);
+				return true;
+			default:
 				return false;
 		}
-		return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		switch (keyCode) {
-			case KeyEvent.KEYCODE_CALL:
-			case KeyEvent.KEYCODE_MENU:
-			case KeyEvent.KEYCODE_SEARCH:
-				return false;
-			default:
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+			case KeyEvent.KEYCODE_VOLUME_UP:
+			case KeyEvent.KEYCODE_BACK:
 				return true;
+			default:
+				return false;
 		}
 	}
 

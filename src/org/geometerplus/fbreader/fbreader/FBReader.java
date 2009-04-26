@@ -46,12 +46,14 @@ public final class FBReader extends ZLApplication {
 		int FOOTNOTE = 1 << 1;
 	};
 
+	public final ZLStringOption BookSearchPatternOption =
+		new ZLStringOption("BookSearch", "Pattern", "");
+	public final ZLStringOption TextSearchPatternOption =
+		new ZLStringOption("TextSearch", "Pattern", "");
+
 	public final ZLBooleanOption UseSeparateBindingsOption = 
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
-	public final ScrollingOptions TrackballScrollingOptions =
-		new ScrollingOptions("TrackballScrolling", ZLTextView.ScrollingMode.SCROLL_LINES);
-	
 	private final ZLStringOption myBookNameOption =
 		new ZLStringOption("State", "Book", "");
 
@@ -96,8 +98,8 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));
-		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new ScrollingAction(this, TrackballScrollingOptions, true));
-		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new ScrollingAction(this, TrackballScrollingOptions, false));
+		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new TrackballScrollingAction(this, true));
+		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new TrackballScrollingAction(this, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
 		addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
 		addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new DummyAction(this));

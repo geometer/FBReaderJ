@@ -36,7 +36,7 @@ class ShowLibraryAction extends FBAction {
 		Runnable action = new Runnable() {
 			public void run() {
 				BookCollection collection = BookCollection.Instance();
-				collection.rebuild();
+				collection.clear();
 				collection.synchronize();
 				// TODO: select current book (author?)
 				/*

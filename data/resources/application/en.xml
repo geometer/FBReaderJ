@@ -5,9 +5,14 @@
 		<node name="booksWithNoTags" value="Books with no tags"/>
   </node>
   <node name="libraryView">
-    <node name="byAuthor" value="By Author"/>
-    <node name="byTag" value="By Tag"/>
+    <node name="byAuthor" value="By author"/>
+    <node name="byTag" value="By tag"/>
     <node name="recent" value="Recent"/>
+    <node name="searchResults" value="Found"/>
+    <node name="menu">
+			<node name="localSearch" value="Local Search"/>
+			<node name="networkSearch" value="Network Search"/>
+    </node>
   </node>
   <node name="tocView">
     <node name="expandTree" value="Expand tree"/>

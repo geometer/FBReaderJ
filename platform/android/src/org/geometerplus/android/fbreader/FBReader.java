@@ -21,19 +21,24 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.content.pm.ActivityInfo;
+import android.widget.ZoomControls;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 public class FBReader extends ZLAndroidActivity {
+	static FBReader Instance;
+
 	private int myFullScreenFlag;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		myFullScreenFlag = 
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -60,18 +65,24 @@ public class FBReader extends ZLAndroidActivity {
 		);
 	}
 
+	void showZoomControls() {
+		final ZoomControls controls = new ZoomControls(this);
+		controls.setVisibility(View.GONE);
+		controls.setZoomSpeed(0);
+		controls.show();
+	}
+
 	protected ZLApplication createApplication(String fileName) {
 		new SQLiteBooksDatabase();
 		String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
-		ZLApplication application = new org.geometerplus.fbreader.fbreader.FBReader(args);
-		return application;
+		return new org.geometerplus.fbreader.fbreader.FBReader(args);
 	}
 
-	/*
 	@Override
 	public boolean onSearchRequested() {
-		startSearch("search pattern", true, null, true);
+		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
+			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
-	*/
 }

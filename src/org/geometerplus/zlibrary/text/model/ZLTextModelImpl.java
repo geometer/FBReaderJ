@@ -318,7 +318,8 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		return (mark != null) ? mark : new ZLTextMark();
 	}
 
-	public final void search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
+	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
+		int count = 0;
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks.clear();
 		if (startIndex > myParagraphsNumber) {
@@ -339,11 +340,13 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1; 
 						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
 						myMarks.add(new ZLTextMark(index, offset + pos, pattern.getLength()));
+						++count;
 					}
 					offset += textLength;						
 				}				
 			} 
 		}
+		return count;
 	}
 
 	public ArrayList getMarks() {

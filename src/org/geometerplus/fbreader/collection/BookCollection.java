@@ -40,17 +40,25 @@ public final class BookCollection {
 	// TODO: this option is platform-dependent
 	private final ZLFile BookDirectory = new ZLPhysicalFile(new File("/sdcard/Books"));
 
+	private final LinkedList<BookDescription> myBookDescriptions = new LinkedList<BookDescription>();
 	private final CollectionTree myCollectionByAuthor = new RootTree();
 	private final CollectionTree myCollectionByTag = new RootTree();
 	private final CollectionTree myRecentBooks = new RootTree();
+	private final CollectionTree mySearchResult = new RootTree();
 
 	private	boolean myDoRebuild = true;
 
 	private BookCollection() {
 	}
 
-	public void rebuild() {
+	public void clear() {
 		myDoRebuild = true;
+
+		myBookDescriptions.clear();
+		myCollectionByAuthor.clear();
+		myCollectionByTag.clear();
+		myRecentBooks.clear();
+		mySearchResult.clear();
 	}
 
 	public ZLResourceFile getHelpFile() {
@@ -87,16 +95,15 @@ public final class BookCollection {
 	private void collectBookDescriptions(
 		ZLFile file,
 		FileInfoSet fileInfos,
-		List<BookDescription> bookDescriptions,
 		Map<String,BookDescription> savedDescriptions,
 		boolean doReadMetaInfo
 	) {
 		BookDescription description = getDescription(file, savedDescriptions, doReadMetaInfo);
 		if (description != null) {
-			bookDescriptions.add(description);
+			myBookDescriptions.add(description);
 		} else if (file.isArchive()) {
 			for (ZLFile entry : fileInfos.archiveEntries(file)) {
-				collectBookDescriptions(entry, fileInfos, bookDescriptions, savedDescriptions, doReadMetaInfo);
+				collectBookDescriptions(entry, fileInfos, savedDescriptions, doReadMetaInfo);
 			}
 		}
 	}
@@ -126,7 +133,7 @@ public final class BookCollection {
 		return fileList;
 	}
 
-	private List<BookDescription> collectBookDescriptions() {
+	private void collectBookDescriptions() {
 		//android.os.Debug.startMethodTracing("/sdcard/ll0");
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
 		//android.os.Debug.stopMethodTracing();
@@ -135,7 +142,6 @@ public final class BookCollection {
 		final Map<String,BookDescription> savedDescriptions = BooksDatabase.Instance().listBooks();
 		//android.os.Debug.stopMethodTracing();
 		//System.err.println(savedDescriptions.size() + " saved books " + System.currentTimeMillis() % 20000);
-		final LinkedList<BookDescription> bookDescriptions = new LinkedList<BookDescription>();
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll2");
 		FileInfoSet fileInfos = new FileInfoSet();
@@ -145,18 +151,16 @@ public final class BookCollection {
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll3");
 		for (ZLPhysicalFile file : physicalFilesList) {
-			collectBookDescriptions(file, fileInfos, bookDescriptions, savedDescriptions, !fileInfos.check(file));
+			collectBookDescriptions(file, fileInfos, savedDescriptions, !fileInfos.check(file));
 			file.setCached(false);
 		}
-		bookDescriptions.add(getDescription(getHelpFile(), savedDescriptions, false));
+		myBookDescriptions.add(getDescription(getHelpFile(), savedDescriptions, false));
 		//android.os.Debug.stopMethodTracing();
 		//System.err.println("descriptions have been synchronized " + System.currentTimeMillis() % 20000);
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll4");
 		fileInfos.save();
 		//android.os.Debug.stopMethodTracing();
-
-		return bookDescriptions;
 	}
 
 	private static class AuthorSeriesPair {
@@ -203,11 +207,11 @@ public final class BookCollection {
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
-
-		final List<BookDescription> allDescriptions = collectBookDescriptions();
 		final HashMap<Long,BookDescription> bookById = new HashMap<Long,BookDescription>();
-		//System.err.println(allDescriptions.size() + " books " + System.currentTimeMillis() % 20000);
-		for (BookDescription description : allDescriptions) {
+
+		collectBookDescriptions();
+		//System.err.println(myBookDescriptions.size() + " books " + System.currentTimeMillis() % 20000);
+		for (BookDescription description : myBookDescriptions) {
 			bookById.put(description.getBookId(), description);
 			List<Author> authors = description.authors();
 			if (authors.isEmpty()) {
@@ -221,7 +225,7 @@ public final class BookCollection {
 					authorTreeMap.put(a, authorTree);
 				}
 				if (seriesInfo == null) {
-					authorTree.createBookSubTree(description);
+					authorTree.createBookSubTree(description, false);
 				} else {
 					final String series = seriesInfo.Name;
 					final AuthorSeriesPair pair = new AuthorSeriesPair(a, series);
@@ -239,7 +243,7 @@ public final class BookCollection {
 				tags = (List<Tag>)ourNullList;
 			}
 			for (Tag t : tags) {
-				getTagTree(t, tagTreeMap).createBookSubTree(description);	
+				getTagTree(t, tagTreeMap).createBookSubTree(description, true);
 			}
 		}
 
@@ -247,13 +251,13 @@ public final class BookCollection {
 		for (long id : db.listRecentBookIds()) {
 			BookDescription description = bookById.get(id);
 			if (description != null) {
-				myRecentBooks.createBookSubTree(description);
+				myRecentBooks.createBookSubTree(description, true);
 			}
 		}
 
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
-				for (BookDescription description : allDescriptions) {
+				for (BookDescription description : myBookDescriptions) {
 					description.save();
 				}
 			}
@@ -263,10 +267,6 @@ public final class BookCollection {
 
 	public void synchronize() {
 		if (myDoRebuild) {
-			myCollectionByAuthor.clear();
-			myCollectionByTag.clear();
-			myRecentBooks.clear();
-
 			build();
 
 			myCollectionByAuthor.sortAllChildren();
@@ -289,6 +289,21 @@ public final class BookCollection {
 	public CollectionTree recentBooks() {
 		synchronize();
 		return myRecentBooks;
+	}
+
+	public CollectionTree searchBooks(String pattern) {
+		synchronize();
+		mySearchResult.clear();
+		if (pattern != null) {
+			pattern = pattern.toLowerCase();
+			for (BookDescription book : myBookDescriptions) {
+				if (book.matches(pattern)) {
+					mySearchResult.createBookSubTree(book, true);
+				}
+			}
+			mySearchResult.sortAllChildren();
+		}
+		return mySearchResult;
 	}
 
 	public void addBookToRecentList(BookDescription description) {

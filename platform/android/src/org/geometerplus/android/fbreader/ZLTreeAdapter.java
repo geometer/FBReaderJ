@@ -31,28 +31,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
-	private final ZLTree myTree;
-	private final ZLTree[] myItems;
+	private ZLTree myTree;
+	private ZLTree[] myItems;
 	private final HashSet<ZLTree> myOpenItems = new HashSet<ZLTree>();
-
-	/*
-	private static int fillTreeArray(ZLTree<?> tree, ZLTree[] array, int offset) {
-		int pos = offset;
-		for (ZLTree subtree : tree.subTrees()) {
-			array[pos++] = subtree;
-			if (subtree.hasChildren()) {
-				pos += fillTreeArray(subtree, array, pos);
-			}
-		}
-		return pos - offset;
-	}
-	*/
 
 	ZLTreeAdapter(ListView parent, ZLTree tree) {
 		myParent = parent;
 		myTree = tree;
 		myItems = new ZLTree[tree.getSize() - 1];
-		//fillTreeArray(tree, myItems, 0);
 		myOpenItems.add(tree);
 
 		parent.setAdapter(this);
@@ -74,7 +60,9 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return myOpenItems.contains(tree);
 	}
 
+	protected ZLTree SelectedItem;
 	public final void selectItem(ZLTree tree) {
+		SelectedItem = tree;
 		if (tree == null) {
 			return;
 		}
@@ -165,6 +153,15 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		myParent.invalidateViews();
 		myParent.requestLayout();
 		return true;
+	}
+
+	void resetTree(ZLTree tree) {
+		myTree = tree;
+		myItems = new ZLTree[tree.getSize() - 1];
+		myOpenItems.clear();
+		myOpenItems.add(tree);
+		myParent.invalidateViews();
+		myParent.requestLayout();
 	}
 
 	public final void onItemClick(AdapterView parent, View view, int position, long id) {

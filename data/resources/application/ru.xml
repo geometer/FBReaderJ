@@ -8,6 +8,11 @@
     <node name="byAuthor" value="Авторы"/>
     <node name="byTag" value="Категории"/>
     <node name="recent" value="Недавние"/>
+    <node name="searchResults" value="Найдено"/>
+    <node name="menu">
+			<node name="localSearch" value="Поиск"/>
+			<node name="networkSearch" value="Поиск в сети"/>
+    </node>
   </node>
   <node name="tocView">
     <node name="expandTree" value="Развернуть ветвь дерева"/>

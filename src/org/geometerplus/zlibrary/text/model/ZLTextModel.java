@@ -49,5 +49,5 @@ public interface ZLTextModel {
 
 	int getParagraphTextLength(int index);
 	
-	void search(final String text, int startIndex, int endIndex, boolean ignoreCase);
+	int search(final String text, int startIndex, int endIndex, boolean ignoreCase);
 }

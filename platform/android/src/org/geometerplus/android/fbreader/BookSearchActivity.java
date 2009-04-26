@@ -26,26 +26,23 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
-public class TextSearchActivity extends Activity {
+import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.collection.*;
+
+public class BookSearchActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-				(org.geometerplus.fbreader.fbreader.FBReader)
-					org.geometerplus.fbreader.fbreader.FBReader.Instance();
+			final FBReader fbreader = (FBReader)FBReader.Instance();
 	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			fbreader.TextSearchPatternOption.setValue(pattern);
-			ZLDialogManager.Instance().wait("textSearch", new Runnable() {
-				public void run() {
-					int count = fbreader.getTextView().search(pattern, true, false, false, false);
-					if (count != 0) {
-						FBReader.Instance.showZoomControls();
-					}
-				}
-			});
+			fbreader.BookSearchPatternOption.setValue(pattern);
+			CollectionTree tree = BookCollection.Instance().searchBooks(pattern);
+			if (tree.hasChildren()) {
+				LibraryTabActivity.Instance.showSearchResultsTab(tree);
+			}
 		}
 		finish();
 	}

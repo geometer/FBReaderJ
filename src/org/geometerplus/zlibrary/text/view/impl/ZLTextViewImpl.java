@@ -339,26 +339,29 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 	
-	public void search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
+	public int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
 		if (text.length() == 0) {
-			return;
+			return 0;
 		}
 		int startIndex = 0;
 		int endIndex = myModel.getParagraphsNumber();
 		if (thisSectionOnly) {
-			//To be written
+			// TODO: implement
 		}
-		myModel.search(text, startIndex, endIndex, ignoreCase);
+		int count = myModel.search(text, startIndex, endIndex, ignoreCase);
 		myPreviousPage.reset();
 		myNextPage.reset();
 		if (!myCurrentPage.StartCursor.isNull()) {
 			rebuildPaintInfo();
-			ZLTextMark position = myCurrentPage.StartCursor.getPosition();
-			gotoMark(wholeText ? 
-				(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
-				(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
+			if (count > 0) {
+				ZLTextMark position = myCurrentPage.StartCursor.getPosition();
+				gotoMark(wholeText ? 
+					(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
+					(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
+			}
 			ZLApplication.Instance().refreshWindow();
 		}
+		return count;
 	}
 
 	public boolean canFindNext() {

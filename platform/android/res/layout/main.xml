@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/zlandroidactivity"
+	android:id="@+id/root_view"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:focusable="true"
-	android:scrollbars="vertical"
-	android:scrollbarAlwaysDrawVerticalTrack="true"
-/>
+>
+	<org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget
+		android:id="@+id/main_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:focusable="true"
+		android:scrollbars="vertical"
+		android:scrollbarAlwaysDrawVerticalTrack="true"
+	/>
+</RelativeLayout>

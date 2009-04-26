@@ -62,7 +62,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public ZLAndroidWidget getWidget() {
 		if (myWidget == null) {
-			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.zlandroidactivity);
+			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
 		}
 		return myWidget;
 	}

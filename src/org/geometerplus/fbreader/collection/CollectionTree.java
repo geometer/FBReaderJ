@@ -41,8 +41,8 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 		return new AuthorTree(this, author);
 	}
 
-	BookTree createBookSubTree(BookDescription book) {
-		return new BookTree(this, book);
+	BookTree createBookSubTree(BookDescription book, boolean showAuthors) {
+		return new BookTree(this, book, showAuthors);
 	}
 
 	public abstract String getName();
@@ -52,8 +52,7 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 	}
 
 	private String myChildrenString;
-
-	public String getChildrenString() {
+	public String getSecondString() {
 		if (myChildrenString == null) {
 			StringBuilder builder = new StringBuilder();
 			int count = 0;

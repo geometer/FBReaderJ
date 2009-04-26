@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.collection;
 
 public final class BookInSeriesTree extends BookTree {
 	BookInSeriesTree(CollectionTree parent, BookDescription description) {
-		super(parent, description);
+		super(parent, description, false);
 	}
 
 	@Override
