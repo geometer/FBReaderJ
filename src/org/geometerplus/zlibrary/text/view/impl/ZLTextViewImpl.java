@@ -324,7 +324,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			}
 		*/	
 			savePosition(position, myCurrentModelIndex, myCurrentPage.StartCursor);
-			ZLApplication.Instance().refreshWindow();
+			ZLApplication.Instance().repaintView();
 		}
 	}
 
@@ -359,7 +359,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
 					(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
 			}
-			ZLApplication.Instance().refreshWindow();
+			ZLApplication.Instance().repaintView();
 		}
 		return count;
 	}
@@ -386,6 +386,18 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (!start.isNull()) {
 			gotoMark(myModel.getPreviousMark(start.getPosition()));
 		}
+	}
+
+	public void clearFindResults() {
+		if (!findResultsAreEmpty()) {
+			myModel.removeAllMarks();
+			rebuildPaintInfo();
+			ZLApplication.Instance().repaintView();
+		}
+	}
+
+	public boolean findResultsAreEmpty() {
+		return (myModel == null) || myModel.getMarks().isEmpty();
 	}
 
 	private volatile boolean myScrollingIsActive;
@@ -1402,7 +1414,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public boolean onStylusMovePressed(int x, int y) {
 		if (mySelectionModel.extendTo(x, y)) {
-			ZLApplication.Instance().refreshWindow();
+			ZLApplication.Instance().repaintView();
 			return true;
 		}
 		return false;
@@ -1418,7 +1430,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	protected void activateSelection(int x, int y) {
 		if (isSelectionEnabled()) {
 			mySelectionModel.activate(x, y);
-			ZLApplication.Instance().refreshWindow();
+			ZLApplication.Instance().repaintView();
 		}
 	}
 }

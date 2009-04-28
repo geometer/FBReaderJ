@@ -57,6 +57,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		new LibraryAdapter(createTab("byAuthor", R.id.by_author), BookCollection.Instance().collectionByAuthor());
 		new LibraryAdapter(createTab("byTag", R.id.by_tag), BookCollection.Instance().collectionByTag());
 		new LibraryAdapter(createTab("recent", R.id.recent), BookCollection.Instance().recentBooks());
+		findViewById(R.id.search_results).setVisibility(View.GONE);
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}

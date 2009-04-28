@@ -20,30 +20,38 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
-import android.app.SearchManager;
-import android.os.Bundle;
-import android.content.Intent;
-
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.collection.*;
 
-public class BookSearchActivity extends Activity {
-	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+public class BookSearchActivity extends SearchActivity {
+	private CollectionTree myTree;
 
-		final Intent intent = getIntent();
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			final FBReader fbreader = (FBReader)FBReader.Instance();
-	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			fbreader.BookSearchPatternOption.setValue(pattern);
-			CollectionTree tree = BookCollection.Instance().searchBooks(pattern);
-			if (tree.hasChildren()) {
-				LibraryTabActivity.Instance.showSearchResultsTab(tree);
-			}
-		}
-		finish();
+	@Override
+	void onSuccess() {
+		LibraryTabActivity.Instance.showSearchResultsTab(myTree);
+	}
+
+	@Override
+	String getFailureMessageResourceKey() {
+		return "bookNotFound";
+	}
+
+	@Override
+	String getWaitMessageResourceKey() {
+		return "bookSearch";
+	}
+
+	@Override
+	boolean runSearch(final String pattern) {
+		final FBReader fbreader = (FBReader)FBReader.Instance();
+		fbreader.BookSearchPatternOption.setValue(pattern);
+		myTree = BookCollection.Instance().searchBooks(pattern);
+		return myTree.hasChildren();
+	}
+
+	@Override
+	Activity getParentActivity() {
+		return LibraryTabActivity.Instance;
 	}
 }

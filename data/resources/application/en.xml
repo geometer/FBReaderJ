@@ -42,8 +42,6 @@
 			<node name="clearSelection" value="Clear"/>
 		</node>
 		<node name="search" value="Search"/>
-		<node name="findNext" value="Find next"/>
-		<node name="findPrevious" value="Find previous"/>
 		<node name="view" value="View">
 			<node name="rotate" value="Rotate Screen"/>
 			<node name="toggleFullscreen" value="Full Screen"/>
@@ -64,8 +62,8 @@
 					<node name="summaryOff" value="The display will not rotate when user moves the device"/>
 				</node>
 				<node name="showStatusBar" value="Show status bar">
-					<node name="summaryOn" value="The status bar will be shown in reading mode"/>
-					<node name="summaryOff" value="The status bar will be hidden in reading mode"/>
+					<node name="summaryOn" value="Show status bar in reading mode"/>
+					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">
@@ -74,12 +72,12 @@
 					<node name="summaryOff" value="Pages will be scrolled by finger tap"/>
 				</node>
 				<node name="volumeKeys" value="Volume keys scrolling">
-					<node name="summaryOn" value="Volume keys will be used for scrolling"/>
-					<node name="summaryOff" value="Volume keys will be used as usual"/>
+					<node name="summaryOn" value="Use volume keys to scroll"/>
+					<node name="summaryOff" value="Keep volume keys for sound"/>
 				</node>
 				<node name="animated" value="Animated scrolling">
-					<node name="summaryOn" value="Pages will be scrolled smoothly"/>
-					<node name="summaryOff" value="Pages will be scrolled instantly"/>
+					<node name="summaryOn" value="Scroll pages smoother"/>
+					<node name="summaryOff" value="Scroll pages faster"/>
 				</node>
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>
@@ -244,6 +242,10 @@
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
 			<node name="updatingBooksDatabase" value="Updating books database. Please, wait..."/>
 		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="textNotFound" value="There is no suitable text in the book"/>
+		<node name="bookNotFound" value="There are no suitable books in the library"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Base"/>

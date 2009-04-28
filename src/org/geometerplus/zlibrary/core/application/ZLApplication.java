@@ -47,8 +47,6 @@ public abstract class ZLApplication {
 	private static final String ROTATION = "Rotation";
 	private static final String ANGLE = "Angle";
 	private static final String STATE = "State";
-	private static final String KEYBOARD = "Keyboard";
-	private static final String FULL_CONTROL = "FullControl";
 	private static final String CONFIG = "Config";
 	private static final String AUTO_SAVE = "AutoSave";
 	private static final String TIMEOUT = "Timeout";
@@ -59,9 +57,6 @@ public abstract class ZLApplication {
 		new ZLIntegerOption(ROTATION, ANGLE, -1);
 	public final ZLIntegerOption AngleStateOption =
 		new ZLIntegerOption(STATE, ANGLE, ZLViewWidget.Angle.DEGREES0);	
-
-	public final ZLBooleanOption KeyboardControlOption =
-		new ZLBooleanOption(KEYBOARD, FULL_CONTROL, false);
 
 	public final ZLBooleanOption ConfigAutoSavingOption =
 		new ZLBooleanOption(CONFIG, AUTO_SAVE, true);
@@ -76,10 +71,8 @@ public abstract class ZLApplication {
 	private ZLView myView;
 
 	private final HashMap myIdToActionMap = new HashMap();
-	private Toolbar myToolbar;
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
-	//private ZLMessageHandler myPresentWindowHandler;
 
 	protected ZLApplication() {
 		ourInstance = this;
@@ -88,15 +81,7 @@ public abstract class ZLApplication {
 			//ZLOption.startAutoSave(ConfigAutoSaveTimeoutOption.getValue());
 		}
 
-		//myPresentWindowHandler = new PresentWindowHandler(this);
-		//ZLCommunicationManager.instance().registerHandler("present", myPresentWindowHandler);
-
-		new ToolbarCreator().read(ZLResourceFile.createResourceFile("data/default/toolbar.xml"));
 		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
-	}
-	
-	final Toolbar getToolbar() {
-		return myToolbar;
 	}
 
 	final Menubar getMenubar() {
@@ -107,8 +92,7 @@ public abstract class ZLApplication {
 		if (view != null) {
 			myView = view;
 			if (myViewWidget != null) {
-				resetWindowCaption();
-				refreshWindow();
+				repaintView();
 			}
 		}
 	}
@@ -127,39 +111,27 @@ public abstract class ZLApplication {
 
 	public void initWindow() {
 		setViewWidget(myWindow.createViewWidget());
-		if (KeyboardControlOption.getValue()) {
-			grabAllKeys(true);
-		}
 		myWindow.init();
 		setView(myView);
 	}
 
-	public final void refreshWindow() {
+	public final void repaintView() {
 		if (myViewWidget != null) {
 			myViewWidget.repaint();
 		}
+	}
+
+	public final void onRepaintFinished() {
 		if (myWindow != null) {
-			myWindow.refresh();
+			myWindow.refreshMenu();
+		}
+		for (ButtonPanel panel : myPanels) {
+			panel.updateStates();
 		}
 	}
 
-	protected final void resetWindowCaption() {
-	}
-	
 	protected final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
-	}
-
-	public final void grabAllKeys(boolean grab) {
-		if (myWindow != null) {
-			//myWindow.grabAllKeys(grab);
-		}
-	}
-
-	public final void setHyperlinkCursor(boolean hyperlink) {
-		if (myWindow != null) {
-			//myWindow.setHyperlinkCursor(hyperlink);
-		}
 	}
 
 	private final ZLAction getAction(String actionId) {
@@ -207,20 +179,6 @@ public abstract class ZLApplication {
 	}
 
 	public abstract void openFiles(ZLFile ... files);
-
-	public final void presentWindow() {
-		if (myWindow != null) {
-			//myWindow.present();
-		}
-	}
-
-	//public String lastCaller() {
-		//return null;//((PresentWindowHandler)myPresentWindowHandler).lastCaller();
-	//}
-	
-	//public void resetLastCaller() {
-		//((PresentWindowHandler)myPresentWindowHandler).resetLastCaller();
-	//}
 
 	final void setViewWidget(ZLViewWidget viewWidget) {
 		myViewWidget = viewWidget;
@@ -273,134 +231,19 @@ public abstract class ZLApplication {
 			}
 			myViewWidget.rotate(newAngle);
 			AngleStateOption.setValue(newAngle);
-			refreshWindow();		
+			repaintView();		
 		}
 	}
 	
-	//toolbar
-	static public final class Toolbar {
-		private final ArrayList myItems = new ArrayList();
-		private final ZLResource myResource = ZLResource.resource("toolbar");
-
-		private void addButton(String actionId/*, ButtonGroup group*/) {
-			ButtonItem button = new ButtonItem(actionId, myResource.getResource(actionId));
-			myItems.add(button);
-			//button.setButtonGroup(group);
-		}
-		
-		/*
-		ButtonGroup createButtonGroup(int unselectAllButtonsActionId) {
-			return new ButtonGroup(unselectAllButtonsActionId);
-		}
-		
-		public void addOptionEntry(ZLOptionEntry entry) {
-			if (entry != null) {
-				myItems.add(new OptionEntryItem(entry));
-			}
-		}
-		*/
-		
-		public void addSeparator() {
-			myItems.add(new SeparatorItem());
-		}
-
-		int size() {
-			return myItems.size();
-		}
-
-		Item getItem(int index) {
-			return (Item)myItems.get(index);
-		}
-
-		public interface Item {
-		}
-		
-		public final class ButtonItem implements Item {
-			private final String myActionId;
-			private final ZLResource myTooltip;
-			//private ButtonGroup myButtonGroup;
-			
-			public ButtonItem(String actionId, ZLResource tooltip) {
-				myActionId = actionId;
-				myTooltip = tooltip;
-			}
-
-			public String getActionId() {
-				return myActionId;
-			}
-			
-			public String getIconName() {
-				return myActionId;
-			}
-			
-			public String getTooltip() {
-				return myTooltip.hasValue() ? myTooltip.getValue() : null;
-			}
-
-			/*
-			ButtonGroup getButtonGroup() {
-				return myButtonGroup;
-			}
-			
-			boolean isToggleButton() {
-				return myButtonGroup != null;
-			}
-			
-			void press() {
-				if (isToggleButton()) {
-					myButtonGroup.press(this);
-				}
-			}
-			
-			boolean isPressed() {
-				return isToggleButton() && (this == myButtonGroup.PressedItem);
-			}
-
-			private void setButtonGroup(ButtonGroup bg) {
-				if (myButtonGroup != null) {
-					myButtonGroup.Items.remove(this);
-				}
-				
-				myButtonGroup = bg;
-				
-				if (myButtonGroup != null) {
-					myButtonGroup.Items.add(this);
-				}
-			}	
-			*/
-		}
-		
-		public class SeparatorItem implements Item {
-		}
-		
-		/*
-		public class OptionEntryItem implements Item {
-			private ZLOptionEntry myOptionEntry;
-
-			public OptionEntryItem(ZLOptionEntry entry) {
-				myOptionEntry = entry;
-			}
-			
-			public ZLOptionEntry entry() {
-				return myOptionEntry;
-			}
-		}
-
-		public final class ButtonGroup {
-			public final int UnselectAllButtonsActionId;
-			public final ArrayList<ButtonItem> Items = new ArrayList<ButtonItem>();
-			public ButtonItem PressedItem;
-
-			ButtonGroup(int unselectAllButtonsActionId) {
-				UnselectAllButtonsActionId = unselectAllButtonsActionId;
-				PressedItem = null;
-			}
-			
-			void press(ButtonItem item) {
-				PressedItem = item;
-			}
-		}
-		*/
+	static public interface ButtonPanel {
+		void updateStates();
+	}
+	private final HashSet<ButtonPanel> myPanels = new HashSet<ButtonPanel>();
+	public final void registerButtonPanel(ButtonPanel panel) {
+		myPanels.add(panel);
+	}
+	public final void unregisterButtonPanel(ButtonPanel panel) {
+		myPanels.remove(panel);
 	}
 	
 	//Menu
@@ -503,40 +346,6 @@ public abstract class ZLApplication {
 		protected abstract void processSepartor(Menubar.Separator separator);
 	}
 	
-	static public class PresentWindowHandler {//extends ZLMessageHandler {
-		private ZLApplication myApplication;
-		private String myLastCaller;
-
-		//public PresentWindowHandler(ZLApplication application);
-		//public void onMessageReceived(List<String> arguments);
-		//public String lastCaller();
-		//public void resetLastCaller();
-	}
-
-	private class ToolbarCreator extends ZLXMLReaderAdapter {
-		private static final String BUTTON = "button";
-		private static final String SEPARATOR = "separator";
-
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if (myToolbar == null) {
-				myToolbar = new Toolbar();
-			}
-			if (BUTTON == tag) {
-				String id = attributes.getValue("id");
-				if (id != null) {
-					myToolbar.addButton(id);
-				}
-			} else if (SEPARATOR == tag) {
-				myToolbar.addSeparator();
-			}
-			return false;
-		}
-	}
-
 	private class MenubarCreator extends ZLXMLReaderAdapter {
 		private static final String ITEM = "item";
 		private static final String SUBMENU = "submenu";

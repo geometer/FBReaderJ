@@ -118,7 +118,7 @@ public class BookTextView extends FBView {
 		gotoPosition(0, 0, 0);
 		preparePaintInfo();
 		savePosition(position, 0, getStartCursor());
-		ZLApplication.Instance().refreshWindow();
+		ZLApplication.Instance().repaintView();
 	}
 
 	//TODO: remove
@@ -276,13 +276,14 @@ public class BookTextView extends FBView {
 
 	void undoPageMove() {
 		gotoPosition((Position)myPositionStack.get(--myCurrentPointInStack));
-		ZLApplication.Instance().refreshWindow();
-		
+		ZLApplication.Instance().repaintView();
+		/*
 		for (Object p : myPositionStack) {
 			System.out.print(((Position) p).ModelIndex + ","
 					+ ((Position) p).ParagraphIndex + "; ");
 		}
 		System.out.println("current position " + myCurrentPointInStack);
+		*/
 	}
 
 	boolean canRedoPageMove() {
@@ -291,7 +292,7 @@ public class BookTextView extends FBView {
 
 	void redoPageMove() {
 		gotoPosition((Position)myPositionStack.get(++myCurrentPointInStack));
-		ZLApplication.Instance().refreshWindow();
+		ZLApplication.Instance().repaintView();
 		
 		for (Object p : myPositionStack) {
 			System.out.print(((Position) p).ModelIndex + ","

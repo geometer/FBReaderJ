@@ -19,21 +19,26 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.SearchManager;
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.content.pm.ActivityInfo;
-import android.widget.ZoomControls;
+import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class FBReader extends ZLAndroidActivity {
 	static FBReader Instance;
 
 	private int myFullScreenFlag;
+	private TextSearchControls myTextSearchControls;
+	private boolean myRestoreTextSearchControls;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -63,13 +68,51 @@ public class FBReader extends ZLAndroidActivity {
 				ActivityInfo.SCREEN_ORIENTATION_SENSOR :
 				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
 		);
+
+		if (myTextSearchControls == null) {
+			myTextSearchControls = new TextSearchControls(this);
+			myTextSearchControls.Visible = myRestoreTextSearchControls;
+        
+			RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+            p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            root.addView(myTextSearchControls, p);
+		}
 	}
 
-	void showZoomControls() {
-		final ZoomControls controls = new ZoomControls(this);
-		controls.setVisibility(View.GONE);
-		controls.setZoomSpeed(0);
-		controls.show();
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (myTextSearchControls != null) {
+			final org.geometerplus.fbreader.fbreader.FBReader fbreader =
+				(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+			myTextSearchControls.setVisibility(myTextSearchControls.Visible ? View.VISIBLE : View.GONE);
+			fbreader.registerButtonPanel(myTextSearchControls);
+		}
+	}
+
+	@Override
+	public void onStop() {
+		if (myTextSearchControls != null) {
+			ZLApplication.Instance().unregisterButtonPanel(myTextSearchControls);
+			myRestoreTextSearchControls = myTextSearchControls.Visible;
+			myTextSearchControls.hide(false);
+			myTextSearchControls = null;
+		}
+		super.onStop();
+	}
+
+	void showTextSearchControls(boolean show) {
+		if (myTextSearchControls != null) {
+			if (show) {
+				myTextSearchControls.show(true);
+			} else {
+				myTextSearchControls.hide(false);
+			}
+		}
 	}
 
 	protected ZLApplication createApplication(String fileName) {
@@ -80,6 +123,18 @@ public class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public boolean onSearchRequested() {
+		if (myTextSearchControls != null) {
+			final boolean visible = myTextSearchControls.Visible;
+			myTextSearchControls.hide(false);
+			SearchManager manager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
+				public void onCancel() {
+					if ((myTextSearchControls != null) && visible) {
+						myTextSearchControls.show(false);
+					}
+				}
+			});
+		}
 		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
 			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);

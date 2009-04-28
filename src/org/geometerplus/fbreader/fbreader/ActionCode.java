@@ -30,6 +30,7 @@ public interface ActionCode {
 	String SEARCH = "search";
 	String FIND_PREVIOUS = "findPrevious";
 	String FIND_NEXT = "findNext";
+	String CLEAR_FIND_RESULTS = "clearFindResults";
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
 	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";

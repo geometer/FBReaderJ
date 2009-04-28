@@ -103,6 +103,7 @@ public class ZLAndroidWidget extends View {
 			onDrawInScrolling(canvas);
 		} else {
 			onDrawStatic(canvas);
+			ZLApplication.Instance().onRepaintFinished();
 		}
 	}
 
@@ -152,6 +153,7 @@ public class ZLAndroidWidget extends View {
 				mySecondaryBitmap = swap;
 				mySecondaryBitmapIsUpToDate = false;
 				view.onScrollingFinished(myViewPageToScroll);
+				ZLApplication.Instance().onRepaintFinished();
 			} else {
 				view.onScrollingFinished(ZLView.PAGE_CENTRAL);
 			}

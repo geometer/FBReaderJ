@@ -71,11 +71,11 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	public void buildMenu(Menu menu) {
 		new MenuBuilder(menu).processMenu(getApplication());
-		refresh();
+		refreshMenu();
 	}
 
-	protected void refresh() {
-		super.refresh();
+	@Override
+	protected void refreshMenu() {
 		for (Map.Entry<MenuItem,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue().ActionId;
 			final ZLApplication application = getApplication();
@@ -92,14 +92,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		ZLAndroidViewWidget viewWidget =
 			new ZLAndroidViewWidget(getApplication().AngleStateOption.getValue());
 		return viewWidget;
-	}
-
-	public void addToolbarItem(ZLApplication.Toolbar.Item item) {
-		// TODO: implement
-	}
-
-	public void setToolbarItemState(ZLApplication.Toolbar.Item item, boolean visible, boolean enabled) {
-		// TODO: implement
 	}
 
 	public void close() {

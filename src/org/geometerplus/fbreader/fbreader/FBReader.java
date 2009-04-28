@@ -92,6 +92,7 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SEARCH, new SearchAction(this));
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
+		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 		
 		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
 		addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
@@ -195,8 +196,7 @@ public final class FBReader extends ZLApplication {
 					setMode(ViewMode.FOOTNOTE);
 					FootnoteView.gotoParagraph(label.ParagraphIndex, false);
 				}
-				setHyperlinkCursor(false);
-				refreshWindow();
+				repaintView();
 			}
 		}
 	}
@@ -224,8 +224,7 @@ public final class FBReader extends ZLApplication {
 			FootnoteView.setCaption(description.getTitle());
 			BookCollection.Instance().addBookToRecentList(description);
 		}
-		resetWindowCaption();
-		refreshWindow();
+		repaintView();
 	}
 	
 	void showBookTextView() {
@@ -257,7 +256,7 @@ main:
 				}
 				if (description != null) {
 					openBookInternal(description);
-					refreshWindow();
+					repaintView();
 				}
 			}
 		});

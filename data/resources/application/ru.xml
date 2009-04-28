@@ -40,8 +40,6 @@
 			<node name="clearSelection" value="Убрать пометку"/>
 		</node>
 		<node name="search" value="Поиск"/>
-		<node name="findNext" value="Искать дальше"/>
-		<node name="findPrevious" value="Искать раньше"/>
 		<node name="view" value="Изображение">
 			<node name="rotate" value="Повернуть"/>
 			<node name="toggleFullscreen" value="На весь экран"/>
@@ -244,6 +242,10 @@
 			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста..."/>
 			<node name="updatingBooksDatabase" value="Обновляется база книг. Подождите, пожалуйста..."/>
 		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="textNotFound" value="В этой книге нет такого текста"/>
+		<node name="bookNotFound" value="Нет подходящих книг"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="текста по умолчанию"/>

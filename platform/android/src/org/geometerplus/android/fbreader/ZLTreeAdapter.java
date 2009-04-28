@@ -168,8 +168,6 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		runTreeItem(getItem(position));
 	}
 
-	private boolean myContextMenuInProgress;
-
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 	}
 

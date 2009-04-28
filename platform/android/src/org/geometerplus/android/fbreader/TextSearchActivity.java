@@ -20,33 +20,33 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
-import android.app.SearchManager;
-import android.os.Bundle;
-import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-
-public class TextSearchActivity extends Activity {
+public class TextSearchActivity extends SearchActivity {
 	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	void onSuccess() {
+		FBReader.Instance.showTextSearchControls(true);
+	}
 
-		final Intent intent = getIntent();
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-				(org.geometerplus.fbreader.fbreader.FBReader)
-					org.geometerplus.fbreader.fbreader.FBReader.Instance();
-	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			fbreader.TextSearchPatternOption.setValue(pattern);
-			ZLDialogManager.Instance().wait("textSearch", new Runnable() {
-				public void run() {
-					int count = fbreader.getTextView().search(pattern, true, false, false, false);
-					if (count != 0) {
-						FBReader.Instance.showZoomControls();
-					}
-				}
-			});
-		}
-		finish();
+	@Override
+	String getFailureMessageResourceKey() {
+		return "textNotFound";
+	}
+
+	@Override
+	String getWaitMessageResourceKey() {
+		return "textSearch";
+	}
+
+	@Override
+	boolean runSearch(final String pattern) {
+		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
+			(org.geometerplus.fbreader.fbreader.FBReader)org.geometerplus.fbreader.fbreader.FBReader.Instance();
+		fbreader.TextSearchPatternOption.setValue(pattern);
+		return fbreader.getTextView().search(pattern, true, false, false, false) != 0;
+	}
+
+	@Override
+	Activity getParentActivity() {
+		return FBReader.Instance;
 	}
 }

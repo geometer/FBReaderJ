@@ -61,7 +61,7 @@ public abstract class FBView extends ZLTextViewImpl {
 			}
 		} else {
 			scrollPage(forward, ZLTextView.ScrollingMode.NO_OVERLAPPING, 0);
-			ZLApplication.Instance().refreshWindow();
+			ZLApplication.Instance().repaintView();
 		}
 	}
 
@@ -167,7 +167,7 @@ public abstract class FBView extends ZLTextViewImpl {
 					} else {
 						scrollTo(PAGE_CENTRAL, 0);
 						onScrollingFinished(viewPage);
-						ZLApplication.Instance().refreshWindow();
+						ZLApplication.Instance().repaintView();
 						setScrollingActive(false);
 					}
 				}

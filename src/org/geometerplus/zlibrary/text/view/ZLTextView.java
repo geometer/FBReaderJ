@@ -50,11 +50,12 @@ public abstract class ZLTextView extends ZLView {
 	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
 
 	public abstract int search(String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly);
-	
 	public abstract boolean canFindNext();
 	public abstract void findNext();
 	public abstract boolean canFindPrevious();
 	public abstract void findPrevious();
+	public abstract void clearFindResults();
+	public abstract boolean findResultsAreEmpty();
 
 	public abstract int getLeftMargin();
 	public abstract int getRightMargin();

@@ -116,7 +116,7 @@ public final class BookCollection {
 		dirQueue.offer(BookDirectory);
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {
-				if (file.getName(true).startsWith(".")) {
+				if (file.getName(false).startsWith(".")) {
 					continue;
 				}
 				if (file.isDirectory()) {

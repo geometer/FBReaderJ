@@ -87,9 +87,8 @@ public class OptionsDialog {
 		}
 		
 		public void run() {
-			myFBReader.grabAllKeys(myFBReader.KeyboardControlOption.getValue());
 			myFBReader.clearTextCaches();
-			myFBReader.refreshWindow();
+			myFBReader.repaintView();
 		}
 	}
 	

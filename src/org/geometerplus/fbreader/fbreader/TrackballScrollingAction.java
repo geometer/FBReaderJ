@@ -36,6 +36,6 @@ class TrackballScrollingAction extends FBAction {
 
 	public void run() {
 		Reader.getTextView().scrollPage(myForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
-		Reader.refreshWindow();
+		Reader.repaintView();
 	}		
 }

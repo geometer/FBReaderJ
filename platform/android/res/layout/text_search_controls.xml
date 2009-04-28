@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/zoom_plate"
+    android:gravity="bottom"
+    android:paddingLeft="15dip"
+    android:paddingRight="15dip">
+    <ZoomButton android:id="@+id/previous" 
+        android:background="@drawable/text_search_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ZoomButton android:id="@+id/close" 
+        android:background="@drawable/text_search_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ZoomButton android:id="@+id/next" 
+        android:background="@drawable/text_search_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>
