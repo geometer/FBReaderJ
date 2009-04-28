@@ -33,6 +33,10 @@ public class BookSearchActivity extends SearchActivity {
 	}
 
 	@Override
+	void onFailure() {
+	}
+
+	@Override
 	String getFailureMessageResourceKey() {
 		return "bookNotFound";
 	}

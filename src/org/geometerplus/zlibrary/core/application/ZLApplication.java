@@ -94,6 +94,7 @@ public abstract class ZLApplication {
 			if (myViewWidget != null) {
 				repaintView();
 			}
+			onViewChanged();
 		}
 	}
 
@@ -127,6 +128,13 @@ public abstract class ZLApplication {
 		}
 		for (ButtonPanel panel : myPanels) {
 			panel.updateStates();
+		}
+	}
+
+	public final void onViewChanged() {
+		System.err.println("onViewChanged");
+		for (ButtonPanel panel : myPanels) {
+			panel.hide();
 		}
 	}
 
@@ -237,6 +245,7 @@ public abstract class ZLApplication {
 	
 	static public interface ButtonPanel {
 		void updateStates();
+		void hide();
 	}
 	private final HashSet<ButtonPanel> myPanels = new HashSet<ButtonPanel>();
 	public final void registerButtonPanel(ButtonPanel panel) {

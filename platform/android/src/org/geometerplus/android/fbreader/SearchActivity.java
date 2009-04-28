@@ -44,6 +44,7 @@ abstract class SearchActivity extends Activity {
 				public void handleMessage(Message message) {
 					switch (message.what) {
 						case 0:
+							onFailure();
  							myAlertDialog =
 								new AlertDialog.Builder(getParentActivity()).setMessage(
 									ZLResource.resource("errorMessage").getResource(getFailureMessageResourceKey()).getValue()
@@ -80,6 +81,7 @@ abstract class SearchActivity extends Activity {
 
 	abstract boolean runSearch(String pattern);
 	abstract void onSuccess();
+	abstract void onFailure();
 	abstract String getWaitMessageResourceKey();
 	abstract String getFailureMessageResourceKey();
 	abstract Activity getParentActivity();

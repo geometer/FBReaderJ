@@ -210,6 +210,8 @@ public final class FBReader extends ZLApplication {
 		clearTextCaches();
 
 		if (description != null) {
+			onViewChanged();
+
 			BookTextView.saveState();
 			BookTextView.setModels(null, "");
 
@@ -256,7 +258,6 @@ main:
 				}
 				if (description != null) {
 					openBookInternal(description);
-					repaintView();
 				}
 			}
 		});

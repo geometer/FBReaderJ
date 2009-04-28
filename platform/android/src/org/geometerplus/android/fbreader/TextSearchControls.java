@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.os.Handler;
+import android.os.Message;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,13 +33,11 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
-public class TextSearchControls extends LinearLayout implements View.OnClickListener, ZLApplication.ButtonPanel {
+public class TextSearchControls extends LinearLayout implements View.OnClickListener {
 	private final ZoomButton myFindPreviousButton;
 	private final ZoomButton myFindNextButton;
 	private final ZoomButton myCloseButton;
 
-	boolean Visible;
-		
 	public TextSearchControls(Context context) {
 		super(context);
 
@@ -84,23 +84,39 @@ public class TextSearchControls extends LinearLayout implements View.OnClickList
 	public boolean onTouchEvent(MotionEvent event) {
 		return true;
 	}
-	
-	public void show(boolean animate) {
-		if (animate) {
-			fade(View.VISIBLE, 0.0f, 1.0f);
-		} else {
-			setVisibility(View.VISIBLE);
-		}
-		Visible = true;
+
+	private interface VisibilityAction {
+		int SHOW_ANIMATED = 0;
+		int SHOW_INSTANTLY = 1;
+		int HIDE_ANIMATED = 2;
+		int HIDE_INSTANTLY = 3;
 	}
 	
-	public void hide(boolean animate) {
-		if (animate) {
-			fade(View.GONE, 1.0f, 0.0f);
-		} else {
-			setVisibility(View.GONE);
+	private Handler myVisibilityHandler = new Handler() {
+		public void handleMessage(Message message) {
+			switch (message.what) {
+				case VisibilityAction.SHOW_ANIMATED:
+					fade(View.VISIBLE, 0.0f, 1.0f);
+					break;
+				case VisibilityAction.SHOW_INSTANTLY:
+					setVisibility(View.VISIBLE);
+					break;
+				case VisibilityAction.HIDE_ANIMATED:
+					fade(View.GONE, 1.0f, 0.0f);
+					break;
+				case VisibilityAction.HIDE_INSTANTLY:
+					setVisibility(View.GONE);
+					break;
+			}
 		}
-		Visible = false;
+	};
+
+	public void show(boolean animate) {
+		myVisibilityHandler.sendEmptyMessage(animate ? VisibilityAction.SHOW_ANIMATED : VisibilityAction.SHOW_INSTANTLY);
+	}
+
+	public void hide(boolean animate) {
+		myVisibilityHandler.sendEmptyMessage(animate ? VisibilityAction.HIDE_ANIMATED : VisibilityAction.HIDE_INSTANTLY);
 	}
 	
 	private void fade(int visibility, float startAlpha, float endAlpha) {

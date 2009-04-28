@@ -28,6 +28,11 @@ public class TextSearchActivity extends SearchActivity {
 	}
 
 	@Override
+	void onFailure() {
+		FBReader.Instance.showTextSearchControls(false);
+	}
+
+	@Override
 	String getFailureMessageResourceKey() {
 		return "textNotFound";
 	}
