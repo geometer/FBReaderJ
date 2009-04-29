@@ -112,9 +112,16 @@ public class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onStop() {
+	public void onPause() {
 		if (myPanel.TextSearchControls != null) {
 			myPanel.Visible = myPanel.TextSearchControls.getVisibility() == View.VISIBLE;
+		}
+		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		if (myPanel.TextSearchControls != null) {
 			myPanel.TextSearchControls.hide(false);
 			myPanel.TextSearchControls = null;
 		}
