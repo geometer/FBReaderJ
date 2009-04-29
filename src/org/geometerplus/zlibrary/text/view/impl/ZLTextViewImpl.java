@@ -288,11 +288,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public void gotoMark(ZLTextMark mark) {
-		myPreviousPage.reset();
-		myNextPage.reset();
-		if (mark.ParagraphIndex < 0) {
+		if (mark == null) {
 			return;
 		}
+
+		myPreviousPage.reset();
+		myNextPage.reset();
 		boolean doRepaint = false;
 		if (myCurrentPage.StartCursor.isNull()) {
 			doRepaint = true;
@@ -366,7 +367,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public boolean canFindNext() {
 		final ZLTextWordCursor end = myCurrentPage.EndCursor;
-		return !end.isNull() && (myModel != null) && (myModel.getNextMark(end.getPosition()).ParagraphIndex > -1);
+		return !end.isNull() && (myModel != null) && (myModel.getNextMark(end.getPosition()) != null);
 	}
 
 	public void findNext() {
@@ -378,7 +379,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 
 	public boolean canFindPrevious() {
 		final ZLTextWordCursor start = myCurrentPage.StartCursor;
-		return !start.isNull() && (myModel != null) && (myModel.getPreviousMark(start.getPosition()).ParagraphIndex > -1);
+		return !start.isNull() && (myModel != null) && (myModel.getPreviousMark(start.getPosition()) != null);
 	}
 
 	public void findPrevious() {

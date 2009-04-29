@@ -19,16 +19,10 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-public class ZLTextMark {
+public class ZLTextMark implements Comparable<ZLTextMark> {
 	public final int ParagraphIndex;
 	public final int Offset;
 	public final int Length;
-
-	public ZLTextMark() {
-		ParagraphIndex = -1;
-		Offset = -1;
-		Length = -1;
-	}
 
 	public ZLTextMark(int paragraphIndex, int offset, int length) {
 		ParagraphIndex = paragraphIndex;

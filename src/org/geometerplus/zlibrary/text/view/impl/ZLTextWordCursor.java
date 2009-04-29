@@ -85,7 +85,7 @@ public final class ZLTextWordCursor {
 
 	public ZLTextMark getPosition() {
 		if (myParagraphCursor == null) {
-			return new ZLTextMark();
+			return null;
 		}
 		final ZLTextParagraphCursor paragraph = myParagraphCursor;
 		int paragraphLength = paragraph.getParagraphLength();

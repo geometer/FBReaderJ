@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.ArrayList;
+
 import android.os.Handler;
 import android.os.Message;
 import android.content.Context;
@@ -33,10 +35,21 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
+class ActionButton extends ZoomButton {
+	final String ActionId;
+	final boolean IsCloseButton;
+
+	ActionButton(Context context, String actionId, boolean isCloseButton) {
+		super(context);
+		ActionId = actionId;
+		IsCloseButton = isCloseButton;
+		setImageResource(R.drawable.text_search_previous);
+	}
+}
+
 public class TextSearchControls extends LinearLayout implements View.OnClickListener {
-	private final ZoomButton myFindPreviousButton;
-	private final ZoomButton myFindNextButton;
-	private final ZoomButton myCloseButton;
+	private final ArrayList<ActionButton> myButtons = new ArrayList<ActionButton>();
+	private final LinearLayout myPlateLayout;
 
 	public TextSearchControls(Context context) {
 		super(context);
@@ -46,36 +59,25 @@ public class TextSearchControls extends LinearLayout implements View.OnClickList
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.text_search_controls, this, true);
-		//setBackgroundResource(android.R.drawable.zoom_plate);
-		//setPadding(15, 15, 15, 0);
+		myPlateLayout = (LinearLayout)findViewById(R.id.tools_plate);
 
-		myFindPreviousButton = (ZoomButton)findViewById(R.id.previous);
-		//myFindPreviousButton = new ZoomButton(context);
-		//myFindPreviousButton.setImageResource(R.drawable.text_search_previous);
-		myFindPreviousButton.setOnClickListener(this);
-		//addView(myFindPreviousButton);
+		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
+		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
+		addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
+	}
 
-		myCloseButton = (ZoomButton)findViewById(R.id.close);
-		//myCloseButton = new ZoomButton(context);
-		//myCloseButton.setImageResource(R.drawable.text_search_close);
-		myCloseButton.setEnabled(true);
-		myCloseButton.setOnClickListener(this);
-		//addView(myCloseButton);
-
-		myFindNextButton = (ZoomButton)findViewById(R.id.next);
-		//myFindNextButton = new ZoomButton(context);
-		//myFindNextButton.setImageResource(R.drawable.text_search_next);
-		myFindNextButton.setOnClickListener(this);
-		//addView(myFindNextButton);
+	public void addButton(String actionId, boolean isCloseButton, int imageId) {
+		final ActionButton button = new ActionButton(getContext(), actionId, isCloseButton);
+		button.setImageResource(imageId);
+		button.setOnClickListener(this);
+		myPlateLayout.addView(button);
+		myButtons.add(button);
 	}
 
 	public void onClick(View view) {
-		if (view == myFindPreviousButton) {
-			ZLApplication.Instance().doAction(ActionCode.FIND_PREVIOUS);
-		} else if (view == myFindNextButton) {
-			ZLApplication.Instance().doAction(ActionCode.FIND_NEXT);
-		} else {
-			ZLApplication.Instance().doAction(ActionCode.CLEAR_FIND_RESULTS);
+		final ActionButton button = (ActionButton)view;
+		ZLApplication.Instance().doAction(button.ActionId);
+		if (button.IsCloseButton) {
 			hide(true);
 		}
 	}
@@ -128,12 +130,18 @@ public class TextSearchControls extends LinearLayout implements View.OnClickList
 	
 	public void updateStates() {
 		final ZLApplication application = ZLApplication.Instance();
-		myFindNextButton.setEnabled(application.isActionEnabled(ActionCode.FIND_NEXT));
-		myFindPreviousButton.setEnabled(application.isActionEnabled(ActionCode.FIND_PREVIOUS));
+		for (ActionButton button : myButtons) {
+			button.setEnabled(application.isActionEnabled(button.ActionId));
+		}
 	}
 	
 	@Override
 	public boolean hasFocus() {
-		return myFindPreviousButton.hasFocus() || myFindNextButton.hasFocus() || myCloseButton.hasFocus();
+		for (ActionButton button : myButtons) {
+			if (button.hasFocus()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

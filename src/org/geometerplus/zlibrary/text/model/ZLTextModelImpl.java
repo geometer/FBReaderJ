@@ -285,37 +285,43 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 	}	
 
 	public ZLTextMark getFirstMark() {
-		return myMarks.size() == 0 ? new ZLTextMark() : myMarks.get(0);
+		return myMarks.isEmpty() ? null : myMarks.get(0);
 	}
 	
 	public ZLTextMark getLastMark() {
-		return myMarks.size() == 0 ? new ZLTextMark() : myMarks.get(myMarks.size() - 1);
+		return myMarks.isEmpty() ? null : myMarks.get(myMarks.size() - 1);
 	}
 
 	public ZLTextMark getNextMark(ZLTextMark position) {
+		if (position == null) {
+			return null;
+		}
+
 		ZLTextMark mark = null;
-		for (int i = 0; i < myMarks.size(); i++) {
-			ZLTextMark current = myMarks.get(i);
-			if (current.compareTo(position) > 0) {
+		for (ZLTextMark current : myMarks) {
+			if (current.compareTo(position) >= 0) {
 				if ((mark == null) || (mark.compareTo(current) > 0)) {
 					mark = current;
 				}
 			}
 		}
-		return (mark != null) ? mark : new ZLTextMark();	
+		return mark;
 	}
 
 	public ZLTextMark getPreviousMark(ZLTextMark position) {
+		if (position == null) {
+			return null;
+		}
+
 		ZLTextMark mark = null;
-		for (int i = 0; i < myMarks.size(); i++) {
-			ZLTextMark current = myMarks.get(i);
-			if (current.compareTo(position) < 0) {
+		for (ZLTextMark current : myMarks) {
+			if (current.compareTo(position) <= 0) {
 				if ((mark == null) || (mark.compareTo(current) < 0)) {
 					mark = current;
 				}
 			}
 		}
-		return (mark != null) ? mark : new ZLTextMark();
+		return mark;
 	}
 
 	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
