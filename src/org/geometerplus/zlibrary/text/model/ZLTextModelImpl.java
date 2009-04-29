@@ -315,7 +315,7 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 
 		ZLTextMark mark = null;
 		for (ZLTextMark current : myMarks) {
-			if (current.compareTo(position) <= 0) {
+			if (current.compareTo(position) < 0) {
 				if ((mark == null) || (mark.compareTo(current) < 0)) {
 					mark = current;
 				}
