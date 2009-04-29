@@ -33,6 +33,8 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
+
 public class FBReader extends ZLAndroidActivity {
 	static FBReader Instance;
 
@@ -40,18 +42,18 @@ public class FBReader extends ZLAndroidActivity {
 
 	private static class TextSearchButtonPanel implements ZLApplication.ButtonPanel {
 		boolean Visible;
-		TextSearchControls TextSearchControls;
+		ControlPanel ControlPanel;
 
 		public void hide() {
 			Visible = false;
-			if (TextSearchControls != null) {
-				TextSearchControls.hide(false);
+			if (ControlPanel != null) {
+				ControlPanel.hide(false);
 			}
 		}
 
 		public void updateStates() {
-			if (TextSearchControls != null) {
-				TextSearchControls.updateStates();
+			if (ControlPanel != null) {
+				ControlPanel.updateStates();
 			}
 		}
 	}
@@ -90,8 +92,12 @@ public class FBReader extends ZLAndroidActivity {
 				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
 		);
 
-		if (myPanel.TextSearchControls == null) {
-			myPanel.TextSearchControls = new TextSearchControls(this);
+		if (myPanel.ControlPanel == null) {
+			myPanel.ControlPanel = new ControlPanel(this);
+
+			myPanel.ControlPanel.addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
+			myPanel.ControlPanel.addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
+			myPanel.ControlPanel.addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
         
 			RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
             RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
@@ -99,41 +105,41 @@ public class FBReader extends ZLAndroidActivity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
             p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            root.addView(myPanel.TextSearchControls, p);
+            root.addView(myPanel.ControlPanel, p);
 		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (myPanel.TextSearchControls != null) {
-			myPanel.TextSearchControls.setVisibility(myPanel.Visible ? View.VISIBLE : View.GONE);
+		if (myPanel.ControlPanel != null) {
+			myPanel.ControlPanel.setVisibility(myPanel.Visible ? View.VISIBLE : View.GONE);
 		}
 	}
 
 	@Override
 	public void onPause() {
-		if (myPanel.TextSearchControls != null) {
-			myPanel.Visible = myPanel.TextSearchControls.getVisibility() == View.VISIBLE;
+		if (myPanel.ControlPanel != null) {
+			myPanel.Visible = myPanel.ControlPanel.getVisibility() == View.VISIBLE;
 		}
 		super.onPause();
 	}
 
 	@Override
 	public void onStop() {
-		if (myPanel.TextSearchControls != null) {
-			myPanel.TextSearchControls.hide(false);
-			myPanel.TextSearchControls = null;
+		if (myPanel.ControlPanel != null) {
+			myPanel.ControlPanel.hide(false);
+			myPanel.ControlPanel = null;
 		}
 		super.onStop();
 	}
 
 	void showTextSearchControls(boolean show) {
-		if (myPanel.TextSearchControls != null) {
+		if (myPanel.ControlPanel != null) {
 			if (show) {
-				myPanel.TextSearchControls.show(true);
+				myPanel.ControlPanel.show(true);
 			} else {
-				myPanel.TextSearchControls.hide(false);
+				myPanel.ControlPanel.hide(false);
 			}
 		}
 	}
@@ -146,14 +152,14 @@ public class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		if (myPanel.TextSearchControls != null) {
-			final boolean visible = myPanel.TextSearchControls.getVisibility() == View.VISIBLE;
-			myPanel.TextSearchControls.hide(false);
+		if (myPanel.ControlPanel != null) {
+			final boolean visible = myPanel.ControlPanel.getVisibility() == View.VISIBLE;
+			myPanel.ControlPanel.hide(false);
 			SearchManager manager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
 			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 				public void onCancel() {
-					if ((myPanel.TextSearchControls != null) && visible) {
-						myPanel.TextSearchControls.show(false);
+					if ((myPanel.ControlPanel != null) && visible) {
+						myPanel.ControlPanel.show(false);
 					}
 				}
 			});

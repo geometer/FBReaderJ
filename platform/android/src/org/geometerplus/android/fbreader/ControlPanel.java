@@ -33,7 +33,6 @@ import android.widget.*;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.fbreader.fbreader.ActionCode;
 
 class ActionButton extends ZoomButton {
 	final String ActionId;
@@ -43,27 +42,22 @@ class ActionButton extends ZoomButton {
 		super(context);
 		ActionId = actionId;
 		IsCloseButton = isCloseButton;
-		setImageResource(R.drawable.text_search_previous);
 	}
 }
 
-public class TextSearchControls extends LinearLayout implements View.OnClickListener {
+public class ControlPanel extends LinearLayout implements View.OnClickListener {
 	private final ArrayList<ActionButton> myButtons = new ArrayList<ActionButton>();
 	private final LinearLayout myPlateLayout;
 
-	public TextSearchControls(Context context) {
+	public ControlPanel(Context context) {
 		super(context);
 
 		setFocusable(false);
 		
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.text_search_controls, this, true);
+		inflater.inflate(R.layout.control_panel, this, true);
 		myPlateLayout = (LinearLayout)findViewById(R.id.tools_plate);
-
-		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
-		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
-		addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
 	}
 
 	public void addButton(String actionId, boolean isCloseButton, int imageId) {
