@@ -63,10 +63,8 @@ public final class ZLTextWordCursor {
 		return (myWordIndex == 0 && myCharIndex == 0);
 	}
 
-	/*Why don't we check here whether myCharIndex is in the end of the word or not?*/
-
 	public boolean isEndOfParagraph() {
-		return myWordIndex == myParagraphCursor.getParagraphLength();
+		return (myParagraphCursor != null) && (myWordIndex == myParagraphCursor.getParagraphLength());
 	}
 
 	public int getWordIndex() {
