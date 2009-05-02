@@ -26,40 +26,34 @@ import org.geometerplus.zlibrary.core.image.*;
 
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
-	public final BookDescription Description;
+	public final Book Book;
 	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache");
 	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
 	private final HashMap myInternalHyperlinks = new HashMap();
-	private final ArrayList myBookTextModels;
 
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	public class Label {
-		public final int ParagraphIndex;
 		public final ZLTextModel Model;
-		
-		public final int ModelIndex;
+		public final int ParagraphIndex;
 		
 		Label(ZLTextModel model, int paragraphIndex) {
-			ParagraphIndex = paragraphIndex;
 			Model = model;
-			ModelIndex = myBookTextModels.indexOf(model);
+			ParagraphIndex = paragraphIndex;
 		}
 	}
 	
-	public BookModel(final BookDescription description) {
-		myBookTextModels = new ArrayList();
-		myBookTextModels.add(BookTextModel);
-		Description = description;
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(description.File);
+	public BookModel(final Book book) {
+		Book = book;
+		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
 		if (plugin != null) {
-			plugin.readModel(description, this);
+			plugin.readModel(this);
 		}
 	}
 
@@ -96,15 +90,5 @@ public final class BookModel {
 
 	void addImage(String id, ZLImage image) {
 		myImageMap.put(id, image);
-	}
-	
-	public ZLTextPlainModel addBookTextModel() {
-		ZLTextPlainModel bookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache" + myBookTextModels.size());
-		myBookTextModels.add(bookTextModel);
-		return bookTextModel;
-	}
-	
-	public ArrayList getBookTextModels() {
-		return myBookTextModels;
 	}
 }

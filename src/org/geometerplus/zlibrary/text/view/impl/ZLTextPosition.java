@@ -17,26 +17,35 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.zlibrary.text.view.impl;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+public final class ZLTextPosition {
+	public int ParagraphIndex;
+	public int WordIndex;
+	public int CharIndex;
 
-public class FB2Plugin extends FormatPlugin {
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return "fb2".equals(file.getExtension());
+	public ZLTextPosition(int paragraphIndex, int wordIndex, int charIndex) {
+		ParagraphIndex = paragraphIndex;
+		WordIndex = wordIndex;
+		CharIndex = charIndex;
 	}
-	
-	@Override
-	public boolean readMetaInfo(Book book) {
-		return new FB2MetaInfoReader(book).readMetaInfo();
+
+	public ZLTextPosition(ZLTextWordCursor cursor) {
+		set(cursor);
 	}
-	
-	@Override
-	public boolean readModel(BookModel model) {
-		return new FB2Reader(model).readBook();
+
+	public void set(ZLTextWordCursor cursor) {
+		if (!cursor.isNull()) {
+			ParagraphIndex = cursor.getParagraphCursor().Index;
+			WordIndex = cursor.getWordIndex();
+			CharIndex = cursor.getCharIndex();
+		}
 	}
+
+	public boolean equalsToCursor(ZLTextWordCursor cursor) {
+		return
+			(ParagraphIndex == cursor.getParagraphCursor().Index) &&
+			(WordIndex == cursor.getWordIndex()) &&
+			(CharIndex == cursor.getCharIndex());
+	} 
 }

@@ -53,10 +53,10 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
  		super(model);
 	}
 
-	boolean readBook(ZLFile file) {
+	boolean readBook() {
 		Base64EncodedImage.resetCounter();
 		final ZLXMLProcessor processor = ZLXMLProcessorFactory.Instance().createXMLProcessor();
-		return processor.read(this, file);
+		return processor.read(this, Model.Book.File);
 	}
 
 	public void startDocumentHandler() {

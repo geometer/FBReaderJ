@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
 import java.util.*;
 

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
@@ -26,8 +26,8 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.formats.*;
 
-public class BookDescription {
-	public static BookDescription getDescription(ZLFile bookFile) {
+public class Book {
+	public static Book getBook(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
 		}
@@ -37,30 +37,30 @@ public class BookDescription {
 			return null;
 		}
 
-		final BookDescription description = new BookDescription(bookFile, true);
+		final Book book = new Book(bookFile, true);
 
 		FileInfoSet fileInfos = new FileInfoSet();
 		fileInfos.load(physicalFile);
-		if (fileInfos.check(physicalFile) && description.myIsSaved) {
-			return description;
+		if (fileInfos.check(physicalFile) && book.myIsSaved) {
+			return book;
 		}
 		fileInfos.save();
 
 		final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
-		if ((plugin == null) || !plugin.readDescription(bookFile, description)) {
+		if ((plugin == null) || !plugin.readMetaInfo(book)) {
 			return null;
 		}
 
-		String title = description.getTitle();
+		String title = book.getTitle();
 		if ((title == null) || (title.length() == 0)) {
-			description.setTitle(bookFile.getName(true));
+			book.setTitle(bookFile.getName(true));
 		}
-		return description;
+		return book;
 	}
 
 	public final ZLFile File;
 
-	private long myBookId;
+	private long myId;
 
 	private String myEncoding;
 	private String myLanguage;
@@ -71,8 +71,8 @@ public class BookDescription {
 
 	private boolean myIsSaved;
 
-	BookDescription(long bookId, ZLFile file, String title, String encoding, String language) {
-		myBookId = bookId;
+	Book(long id, ZLFile file, String title, String encoding, String language) {
+		myId = id;
 		File = file;
 		myTitle = title;
 		myEncoding = encoding;
@@ -80,19 +80,19 @@ public class BookDescription {
 		myIsSaved = true;
 	}
 
-	BookDescription(ZLFile file, boolean createFromDatabase) {
+	Book(ZLFile file, boolean createFromDatabase) {
 		File = file;
 		if (createFromDatabase) {
 			final BooksDatabase database = BooksDatabase.Instance();
-			myBookId = database.loadBook(this);
-			if (myBookId >= 0) {
-				myAuthors = database.loadAuthors(myBookId);
-				myTags = database.loadTags(myBookId);
-				mySeriesInfo = database.loadSeriesInfo(myBookId);
+			myId = database.loadBook(this);
+			if (myId >= 0) {
+				myAuthors = database.loadAuthors(myId);
+				myTags = database.loadTags(myId);
+				mySeriesInfo = database.loadSeriesInfo(myId);
 				myIsSaved = true;
 			}
 		} else {
-			myBookId = -1;
+			myId = -1;
 		}
 	}
 
@@ -150,8 +150,8 @@ public class BookDescription {
 		addAuthor(new Author(strippedName, strippedKey));
 	}
 
-	public long getBookId() {
-		return myBookId;
+	public long getId() {
+		return myId;
 	}
 
 	public String getTitle() {
@@ -273,22 +273,22 @@ public class BookDescription {
 		final BooksDatabase database = BooksDatabase.Instance();
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
-				if (myBookId >= 0) {
-					database.updateBookInfo(myBookId, myEncoding, myLanguage, myTitle);
+				if (myId >= 0) {
+					database.updateBookInfo(myId, myEncoding, myLanguage, myTitle);
 				} else {
-					myBookId = database.insertBookInfo(File.getPath(), myEncoding, myLanguage, myTitle);
+					myId = database.insertBookInfo(File.getPath(), myEncoding, myLanguage, myTitle);
 				}
             
 				long index = 0;
-				database.deleteAllBookAuthors(myBookId);
+				database.deleteAllBookAuthors(myId);
 				for (Author author : authors()) {
-					database.saveBookAuthorInfo(myBookId, index++, author);
+					database.saveBookAuthorInfo(myId, index++, author);
 				}
-				database.deleteAllBookTags(myBookId);
+				database.deleteAllBookTags(myId);
 				for (Tag tag : tags()) {
-					database.saveBookTagInfo(myBookId, tag);
+					database.saveBookTagInfo(myId, tag);
 				}
-				database.saveBookSeriesInfo(myBookId, mySeriesInfo);
+				database.saveBookSeriesInfo(myId, mySeriesInfo);
 			}
 		});
 

@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.formats.oeb;
 import java.util.ArrayList;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
@@ -45,14 +45,14 @@ public class OEBPlugin extends FormatPlugin {
 		return null;
 	}
 
-	public boolean readDescription(ZLFile file, BookDescription description) {
-		final ZLFile opfFile = getOpfFile(file);
-		return (opfFile != null) ? new OEBDescriptionReader(description).readDescription(opfFile) : false;
+	public boolean readMetaInfo(Book book) {
+		final ZLFile opfFile = getOpfFile(book.File);
+		return (opfFile != null) ? new OEBMetaInfoReader(book).readMetaInfo(opfFile) : false;
 	}
 	
-	public boolean readModel(BookDescription description, BookModel model) {
-		description.File.setCached(true);
-		final ZLFile opfFile = getOpfFile(description.File);
+	public boolean readModel(BookModel model) {
+		model.Book.File.setCached(true);
+		final ZLFile opfFile = getOpfFile(model.Book.File);
 		return (opfFile != null) ? new OEBBookReader(model).readBook(opfFile) : false;
 	}
 }

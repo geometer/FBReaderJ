@@ -56,17 +56,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		super(model);
 	}
 
-	public boolean read() {
+	boolean readBook() {
 		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.Instance()
 				.createHtmlProcessor();
-		return processor.read(this, Model.Description.File);
-	}
-
-	boolean readBook(ZLFile file) {
-		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.Instance()
-				.createHtmlProcessor();
-		return processor.read(this, file);
-		// return readDocument(fileName);
+		return processor.read(this, Model.Book.File);
 	}
 
 	public void startDocumentHandler() {
@@ -328,7 +321,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					addImageReference(ref, (short)0);
 					String filePath = ref;
 					if (!":\\".equals(ref.substring(1, 3))) {
-						filePath = Model.Description.File.getPath();
+						filePath = Model.Book.File.getPath();
 						filePath = filePath.substring(0, filePath.lastIndexOf('\\') + 1) + ref;
 					}
 					addImage(ref, new ZLFileImage("image/auto", ZLFile.createFileByPath(filePath)));

@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.os.*;
 import android.app.*;
 import android.content.Intent;
+import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
@@ -40,21 +41,14 @@ abstract class SearchActivity extends Activity {
 				}
 			};
 			final Handler failureHandler = new Handler() {
-				private AlertDialog myAlertDialog;
 				public void handleMessage(Message message) {
-					switch (message.what) {
-						case 0:
-							onFailure();
- 							myAlertDialog =
-								new AlertDialog.Builder(getParentActivity()).setMessage(
-									ZLResource.resource("errorMessage").getResource(getFailureMessageResourceKey()).getValue()
-								).create();
-							myAlertDialog.show();
-							break;
-						case 1:
-							myAlertDialog.dismiss();
-							break;
-					}
+					Toast.makeText(
+						getParentActivity(),
+						ZLResource.resource("errorMessage").getResource(
+							getFailureMessageResourceKey()
+						).getValue(),
+						Toast.LENGTH_SHORT
+					).show();
 				}
 			};
 			ZLDialogManager.Instance().wait(getWaitMessageResourceKey(), new Runnable() {
@@ -63,15 +57,6 @@ abstract class SearchActivity extends Activity {
 						successHandler.sendEmptyMessage(0);
 					} else {
 						failureHandler.sendEmptyMessage(0);
-						new Thread(new Runnable() {
-							public synchronized void run() {
-								try {
-									wait(3000);
-								} catch (InterruptedException e) {
-								}
-								failureHandler.sendEmptyMessage(1);
-							}
-						}).start();
 					}
 				}
 			});

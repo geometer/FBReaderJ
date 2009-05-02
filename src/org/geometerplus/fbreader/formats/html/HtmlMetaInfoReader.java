@@ -22,25 +22,25 @@ package org.geometerplus.fbreader.formats.html;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 
-public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
-	private final BookDescription myDescription;
+public class HtmlMetaInfoReader extends ZLXMLReaderAdapter {
+	private final Book myBook;
 
 	private boolean myReadTitle;
 
-	public HtmlDescriptionReader(BookDescription description) {
-		myDescription = description;
-		myDescription.setTitle("");
+	public HtmlMetaInfoReader(Book book) {
+		myBook = book;
+		myBook.setTitle("");
 	}
 
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
 
-	public boolean readDescription(ZLFile file) {
+	public boolean readMetaInfo() {
 		myReadTitle = false;
-		return readDocument(file);
+		return readDocument(myBook.File);
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
@@ -69,7 +69,7 @@ public class HtmlDescriptionReader extends ZLXMLReaderAdapter {
 		// TODO + length -- remove
 		final String text = new String(ch).substring(start, start + length);
 		if (myReadTitle) {
-			myDescription.setTitle(myDescription.getTitle() + text);
+			myBook.setTitle(myBook.getTitle() + text);
 		}
 	}
 

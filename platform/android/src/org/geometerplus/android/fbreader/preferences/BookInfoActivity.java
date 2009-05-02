@@ -30,28 +30,28 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageList;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.fbreader.FBReader;
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 
 class BookTitlePreference extends ZLStringPreference {
-	private final BookDescription myDescription;
+	private final Book myBook;
 
-	BookTitlePreference(Context context, ZLResource rootResource, String resourceKey, BookDescription description) {
+	BookTitlePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
-		myDescription = description;
-		setValue(description.getTitle());
+		myBook = book;
+		setValue(book.getTitle());
 	}
 
 	public void accept() {
-		myDescription.setTitle(getValue());
+		myBook.setTitle(getValue());
 	}
 }
 
 class LanguagePreference extends ZLStringListPreference {
-	private final BookDescription myDescription;
+	private final Book myBook;
 
-	LanguagePreference(Context context, ZLResource rootResource, String resourceKey, BookDescription description) {
+	LanguagePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
-		myDescription = description;
+		myBook = book;
 		final TreeMap<String,String> map = new TreeMap<String,String>();
 		for (String code : ZLLanguageList.languageCodes()) {
 			map.put(ZLLanguageList.languageName(code), code);
@@ -68,7 +68,7 @@ class LanguagePreference extends ZLStringListPreference {
 		codes[size] = "other";
 		names[size] = ZLLanguageList.languageName(codes[size]);
 		setLists(codes, names);
-		String language = myDescription.getLanguage();
+		String language = myBook.getLanguage();
 		if (language == null) {
 			language = "other";
 		}
@@ -79,12 +79,12 @@ class LanguagePreference extends ZLStringListPreference {
 
 	public void accept() {
 		final String value = getValue();
-		myDescription.setLanguage((value.length() != 0) ? value : null);
+		myBook.setLanguage((value.length() != 0) ? value : null);
 	}
 }
 
 public class BookInfoActivity extends ZLPreferenceActivity {
-	private BookDescription myDescription;
+	private Book myBook;
 
 	public BookInfoActivity() {
 		super("BookInfo");
@@ -93,17 +93,17 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category commonCategory = new Category(null);
-		myDescription = ((FBReader)FBReader.Instance()).Model.Description;
-		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.getResource(), "title", myDescription));
-		commonCategory.addPreference(new LanguagePreference(this, commonCategory.getResource(), "language", myDescription));
+		myBook = ((FBReader)FBReader.Instance()).Model.Book;
+		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.getResource(), "title", myBook));
+		commonCategory.addPreference(new LanguagePreference(this, commonCategory.getResource(), "language", myBook));
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (myDescription.save()) {
+		if (myBook.save()) {
 			((FBReader)FBReader.Instance()).clearTextCaches();
-			ZLTextHyphenator.Instance().load(myDescription.getLanguage());
+			ZLTextHyphenator.Instance().load(myBook.getLanguage());
 		}
 	}
 }

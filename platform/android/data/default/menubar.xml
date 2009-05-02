@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menubar>
+	<item id="library"/>
+	<item id="toc"/>
+	<item id="bookmarks"/>
+	<item id="search"/>
+	<item id="preferences"/>
+	<item id="preferences-old"/>
+	<item id="bookInfo"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>
@@ -9,10 +16,4 @@
 		<item id="undo"/>
 		<item id="redo"/>
 	</submenu>
-	<item id="library"/>
-	<item id="toc"/>
-	<item id="search"/>
-	<item id="preferences"/>
-	<item id="preferences-old"/>
-	<item id="bookInfo"/>
 </menubar>

@@ -24,10 +24,10 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.collection.BookDescription;
-import org.geometerplus.fbreader.collection.Tag;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Tag;
 
-public class FB2DescriptionReader extends ZLXMLReaderAdapter {
+public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 	private final static int READ_NOTHING = 0;
 	private final static int READ_SOMETHING = 1;
 	private final static int READ_TITLE = 2;
@@ -38,29 +38,29 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 	private final static int READ_LANGUAGE = 7;
 	private final static int READ_GENRE = 8;
 
-	private final BookDescription myDescription;
+	private final Book myBook;
 	private int myReadState = READ_NOTHING;
 
 	private	final String[] myAuthorNames = new String[3];
 	private final StringBuilder myBuffer = new StringBuilder();
 
-	public FB2DescriptionReader(BookDescription description) {
-		myDescription = description;
-		myDescription.setTitle(null);
-		myDescription.setLanguage(null);
+	public FB2MetaInfoReader(Book book) {
+		myBook = book;
+		myBook.setTitle(null);
+		myBook.setLanguage(null);
 	}
 	
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
 	
-	public boolean readDescription(ZLFile file) {
+	public boolean readMetaInfo() {
 		myReadState = READ_NOTHING;
 		myAuthorNames[0] = "";
 		myAuthorNames[1] = "";
 		myAuthorNames[2] = "";
 		myBuffer.delete(0, myBuffer.length());
-		return readDocument(file);
+		return readDocument(myBook.File);
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
@@ -112,7 +112,7 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 						name.trim();
 						if (name.length() != 0) {
 							String index = attributes.getValue("number");
-							myDescription.setSeriesInfo(name, (index != null) ? Integer.parseInt(index) : 0);
+							myBook.setSeriesInfo(name, (index != null) ? Integer.parseInt(index) : 0);
 						}
 					}
 				}
@@ -128,7 +128,7 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 				break;
 			case FB2Tag.BOOK_TITLE:
 				if (myReadState == READ_TITLE) {
-					myDescription.setTitle(myBuffer.toString().trim());
+					myBook.setTitle(myBuffer.toString().trim());
 					myReadState = READ_SOMETHING;
 				}
 				break;
@@ -139,10 +139,10 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 						final ArrayList<Tag> tags = FB2TagManager.humanReadableTags(genre);
 						if (tags != null) {
 							for (Tag t : tags) {
-								myDescription.addTag(t);
+								myBook.addTag(t);
 							}
 						} else {
-							myDescription.addTag(genre);
+							myBook.addTag(genre);
 						}
 					}
 					myReadState = READ_SOMETHING;
@@ -162,7 +162,7 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 						fullName += ' ';
 					}
 					fullName += myAuthorNames[2];
-					myDescription.addAuthor(fullName, myAuthorNames[2]);
+					myBook.addAuthor(fullName, myAuthorNames[2]);
 					myAuthorNames[0] = "";
 					myAuthorNames[1] = "";
 					myAuthorNames[2] = "";
@@ -171,7 +171,7 @@ public class FB2DescriptionReader extends ZLXMLReaderAdapter {
 				break;
 			case FB2Tag.LANG:
 				if (myReadState == READ_LANGUAGE) {
-					myDescription.setLanguage(myBuffer.toString().trim());
+					myBook.setLanguage(myBuffer.toString().trim());
 					myReadState = READ_SOMETHING;
 				}
 				break;

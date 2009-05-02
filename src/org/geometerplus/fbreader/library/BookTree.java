@@ -17,26 +17,41 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+public class BookTree extends LibraryTree {
+	public final Book Book;
+	private final boolean myShowAuthors;
 
-final class TagTree extends CollectionTree {
-	private final Tag myTag;
-
-	TagTree(CollectionTree parent, Tag tag) {
+	BookTree(LibraryTree parent, Book book, boolean showAuthors) {
 		super(parent);
-		myTag = tag;
+		Book = book;
+		myShowAuthors = showAuthors;
 	}
 
 	public String getName() {
-		return
-			(myTag != null) ?
-				myTag.Name :
-				ZLResource.resource("library").getResource("booksWithNoTags").getValue();
+		return Book.getTitle();
 	}
 
-	protected String getSortKey() {
-		return (myTag != null) ? myTag.Name : null;
+	private String myAuthorsString;
+	public String getSecondString() {
+		if (!myShowAuthors) {
+			return super.getSecondString();
+		}
+		if (myAuthorsString == null) {
+			StringBuilder builder = new StringBuilder();
+			int count = 0;
+			for (Author author : Book.authors()) {
+				if (count++ > 0) {
+					builder.append(",  ");
+				}
+				builder.append(author.DisplayName);
+				if (count == 5) {
+					break;
+				}
+			}
+			myAuthorsString = builder.toString();
+		}
+		return myAuthorsString;
 	}
 }

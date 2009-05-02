@@ -17,12 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
-final class SeriesTree extends CollectionTree {
+final class SeriesTree extends LibraryTree {
 	private final String mySeries;
 
-	SeriesTree(CollectionTree parent, String series) {
+	SeriesTree(LibraryTree parent, String series) {
 		super(parent);
 		mySeries = series;
 	}
@@ -31,7 +31,7 @@ final class SeriesTree extends CollectionTree {
 		return mySeries;
 	}
 
-	BookTree createBookInSeriesSubTree(BookDescription book) {
+	BookTree createBookInSeriesSubTree(Book book) {
 		return new BookInSeriesTree(this, book);
 	}
 }

@@ -17,14 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
-public final class SeriesInfo {
-	public final String Name;
-	public final long Index;
-
-	public SeriesInfo(String name, long index) {
-		Name = name;
-		Index = index;
+final class RootTree extends LibraryTree {
+	public String getName() {
+		return null;
 	}
 }

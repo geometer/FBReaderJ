@@ -23,20 +23,20 @@ import java.io.*;
 import java.util.*;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
 
 public abstract class FormatPlugin {
 	public abstract boolean acceptsFile(ZLFile file);
-	public abstract	boolean readDescription(ZLFile file, BookDescription description);
-	public abstract boolean readModel(BookDescription description, BookModel model);
+	public abstract	boolean readMetaInfo(Book book);
+	public abstract boolean readModel(BookModel model);
 	
 	/*
-	public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) throws IOException {	
-		String language = description.getLanguage();
-		String encoding = description.getEncoding();
+	public static void detectEncodingAndLanguage(Book book, InputStream stream) throws IOException {	
+		String language = book.getLanguage();
+		String encoding = book.getEncoding();
 		if (encoding.length() == 0 || language.length() == 0) {
 			PluginCollection collection = PluginCollection.instance();
 			if (language.length() == 0) {
@@ -61,36 +61,36 @@ public abstract class FormatPlugin {
 					}
 				}
 			}
-			description.setEncoding(encoding);
-			description.setLanguage(language);
+			book.setEncoding(encoding);
+			book.setLanguage(language);
 		}
 	}
 	//Last working version
-	public static void detectEncodingAndLanguage(BookDescription description, InputStream stream) {	
-		String encoding = description.getEncoding();
+	public static void detectEncodingAndLanguage(Book book, InputStream stream) {	
+		String encoding = book.getEncoding();
 		if (encoding.length() == 0) {
 			encoding = EncodingDetector.detect(stream, PluginCollection.instance().DefaultLanguageOption.getValue());
 			if (encoding == "unknown") {
 				encoding = "windows-1252";
 			}
-			description.setEncoding(encoding);
+			book.setEncoding(encoding);
 		}
 
-		if (description.getLanguage() == "") {
+		if (book.getLanguage() == "") {
 			if ((encoding.equals("US-ASCII")) ||
 					(encoding.equals("ISO-8859-1"))) {
-				description.setLanguage("en");
-			} else if ((description.getEncoding().equals("KOI8-R")) ||
+				book.setLanguage("en");
+			} else if ((book.getEncoding().equals("KOI8-R")) ||
 					(encoding.equals("windows-1251")) ||
 					(encoding.equals("ISO-8859-5")) ||
 					(encoding.equals("IBM866"))) {
-				description.setLanguage("ru");
+				book.setLanguage("ru");
 			} /*else if (
 	                (PluginCollection.instance().DefaultLanguageOption.getValue() == EncodingDetector.Language.CZECH) &&
 					((encoding == "windows-1250") ||
 					 (encoding == "ISO-8859-2") ||
 					 (encoding == "IBM852"))) {
-				description.setLanguage("cs");
+				book.setLanguage("cs");
 			}*/
 		/*}
 

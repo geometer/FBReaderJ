@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.android.fbreader.BookmarksActivity;
 
-public class AuthorTree extends CollectionTree {
-	private final Author myAuthor;
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
-	AuthorTree(CollectionTree parent, Author author) {
-		super(parent);
-		myAuthor = author;
+class ShowBookmarksAction extends FBAction {
+	ShowBookmarksAction(FBReader fbreader) {
+		super(fbreader);
 	}
 
-	SeriesTree createSeriesSubTree(String series) {
-		return new SeriesTree(this, series);
-	}
-
-	public String getName() {
-		return
-			(myAuthor != null) ?
-				myAuthor.DisplayName :
-				ZLResource.resource("library").getResource("unknownAuthor").getValue();
-	}
-
-	protected String getSortKey() {
-		return (myAuthor != null) ? myAuthor.SortKey : null;
+	public void run() {
+		final ZLAndroidDialogManager dialogManager =
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
+		dialogManager.runActivity(BookmarksActivity.class);
 	}
 }

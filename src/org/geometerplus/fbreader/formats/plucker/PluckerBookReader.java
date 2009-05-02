@@ -102,7 +102,7 @@ public class PluckerBookReader extends BookReader {
 					if (((Integer) ((Pair)list.get(k)).myFirst) != -1) {
 						//addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer)list.get(k));
 						final Pair p = (Pair)list.get(k);
-						addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer) p.mySecond, (Integer) p.myFirst);
+						//addHyperlinkLabel(fromNumber(first) + '#' + fromNumber(second), (Integer) p.mySecond, (Integer) p.myFirst);
 						break;						
 					}
 				}
@@ -194,7 +194,7 @@ public class PluckerBookReader extends BookReader {
 						processTextRecord(size, pars);
 						if ((flags & 0x1) == 0) {
 //							insertEndOfTextParagraph();
-							setNewTextModel();
+							//setNewTextModel();
 						}
 					}
 					break;
@@ -482,8 +482,8 @@ public class PluckerBookReader extends BookReader {
     		myBufferIsEmpty = true;
     		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
     		if (!myParagraphStored) {
-    			final ArrayList models = Model.getBookTextModels();
-    			myParagraphVector.add(new Pair(((ZLTextPlainModel) models.get(models.size()-1)/*BookTextModel*/).getParagraphsNumber() - 1, models.size() - 1));
+    			//final ArrayList models = Model.getBookTextModels();
+    			//myParagraphVector.add(new Pair(((ZLTextPlainModel) models.get(models.size()-1)/*BookTextModel*/).getParagraphsNumber() - 1, models.size() - 1));
     			myParagraphStored = true;
     		}
     		for (Iterator it = myDelayedControls.iterator(); it.hasNext(); ) {

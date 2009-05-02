@@ -17,41 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
-public class BookTree extends CollectionTree {
-	public final BookDescription Description;
-	private final boolean myShowAuthors;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-	BookTree(CollectionTree parent, BookDescription description, boolean showAuthors) {
+public class AuthorTree extends LibraryTree {
+	private final Author myAuthor;
+
+	AuthorTree(LibraryTree parent, Author author) {
 		super(parent);
-		Description = description;
-		myShowAuthors = showAuthors;
+		myAuthor = author;
+	}
+
+	SeriesTree createSeriesSubTree(String series) {
+		return new SeriesTree(this, series);
 	}
 
 	public String getName() {
-		return Description.getTitle();
+		return
+			(myAuthor != null) ?
+				myAuthor.DisplayName :
+				ZLResource.resource("library").getResource("unknownAuthor").getValue();
 	}
 
-	private String myAuthorsString;
-	public String getSecondString() {
-		if (!myShowAuthors) {
-			return super.getSecondString();
-		}
-		if (myAuthorsString == null) {
-			StringBuilder builder = new StringBuilder();
-			int count = 0;
-			for (Author author : Description.authors()) {
-				if (count++ > 0) {
-					builder.append(",  ");
-				}
-				builder.append(author.DisplayName);
-				if (count == 5) {
-					break;
-				}
-			}
-			myAuthorsString = builder.toString();
-		}
-		return myAuthorsString;
+	protected String getSortKey() {
+		return (myAuthor != null) ? myAuthor.SortKey : null;
 	}
 }

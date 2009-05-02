@@ -17,22 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.tree.ZLTree;
-
-public final class FileInfo extends ZLTree<FileInfo> {
-	public final String Name;
-	public long Id;
-	public long FileSize = -1;
-
-	FileInfo(String name, FileInfo parent) {
-		this(name, parent, -1);
+public final class BookInSeriesTree extends BookTree {
+	BookInSeriesTree(LibraryTree parent, Book book) {
+		super(parent, book, false);
 	}
 
-	FileInfo(String name, FileInfo parent, long id) {
-		super(parent);
-		Name = name;
-		Id = id;
+	@Override
+	public int compareTo(LibraryTree tree) {
+		if (tree instanceof BookInSeriesTree) {
+			final long difference =
+				Book.getSeriesInfo().Index - ((BookTree)tree).Book.getSeriesInfo().Index;
+			if (difference != 0) {
+				return (int)difference;
+			}
+		}
+		return super.compareTo(tree);
 	}
 }

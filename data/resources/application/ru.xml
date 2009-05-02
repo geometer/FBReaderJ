@@ -19,6 +19,12 @@
     <node name="collapseTree" value="Свернуть ветвь дерева"/>
     <node name="readText" value="Читать главу"/>
   </node>
+  <node name="bookmarksView">
+    <node name="new" value="Добавить закладку"/>
+    <node name="open" value="Открыть"/>
+    <node name="edit" value="Изменить"/>
+    <node name="delete" value="Стереть"/>
+  </node>
   <node name="menu">
 		<node name="preferences" value="Настройки"/>
 	  <node name="bookInfo" value="О книге"/>
@@ -44,6 +50,7 @@
 			<node name="rotate" value="Повернуть"/>
 			<node name="toggleFullscreen" value="На весь экран"/>
 		</node>
+		<node name="bookmarks" value="Закладки"/>
 	</node>
 	<node name="dialog">
 		<node name="BookInfo">

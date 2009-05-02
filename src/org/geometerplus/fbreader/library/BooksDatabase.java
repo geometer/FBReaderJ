@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
@@ -34,22 +34,22 @@ public abstract class BooksDatabase {
 		ourInstance = this;
 	}
 
-	protected BookDescription createDescription(long bookId, String filePath, String title, String encoding, String language) {
-		return new BookDescription(bookId, ZLFile.createFileByPath(filePath), title, encoding, language);
+	protected Book createBook(long id, String filePath, String title, String encoding, String language) {
+		return new Book(id, ZLFile.createFileByPath(filePath), title, encoding, language);
 	}
-	protected void addAuthor(BookDescription description, Author author) {
-		description.addAuthorWithNoCheck(author);
+	protected void addAuthor(Book book, Author author) {
+		book.addAuthorWithNoCheck(author);
 	}
-	protected void addTag(BookDescription description, Tag tag) {
-		description.addTagWithNoCheck(tag);
+	protected void addTag(Book book, Tag tag) {
+		book.addTagWithNoCheck(tag);
 	}
-	protected void setSeriesInfo(BookDescription description, String series, long index) {
-		description.setSeriesInfoWithNoCheck(series, index);
+	protected void setSeriesInfo(Book book, String series, long index) {
+		book.setSeriesInfoWithNoCheck(series, index);
 	}
 
-	protected abstract Map<String,BookDescription> listBooks();
+	protected abstract Map<String,Book> listBooks();
 	protected abstract void executeAsATransaction(Runnable actions);
-	protected abstract long loadBook(BookDescription description);
+	protected abstract long loadBook(Book book);
 	protected abstract List<Author> loadAuthors(long bookId);
 	protected abstract List<Tag> loadTags(long bookId);
 	protected abstract SeriesInfo loadSeriesInfo(long bookId);
@@ -73,4 +73,11 @@ public abstract class BooksDatabase {
 
 	protected abstract List<Long> listRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
+
+	protected Bookmark createBookmark(String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, int paragraphIndex, int wordIndex, int charIndex) {
+		return new Bookmark(text, creationDate, modificationDate, accessDate, accessCounter, paragraphIndex, wordIndex, charIndex);
+	}
+
+	protected abstract void listBookmarks(long bookId, List<Bookmark> list);
+	protected abstract void saveBookmarks(long bookId, List<Bookmark> list);
 }

@@ -17,19 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
-public abstract class CollectionTree extends ZLTree<CollectionTree> implements Comparable<CollectionTree> {
-	protected CollectionTree() {
+public abstract class LibraryTree extends ZLTree<LibraryTree> implements Comparable<LibraryTree> {
+	protected LibraryTree() {
 		super();
 	}
 
-	protected CollectionTree(CollectionTree parent) {
+	protected LibraryTree(LibraryTree parent) {
 		super(parent);
 	}
 
@@ -41,7 +41,7 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 		return new AuthorTree(this, author);
 	}
 
-	BookTree createBookSubTree(BookDescription book, boolean showAuthors) {
+	BookTree createBookSubTree(Book book, boolean showAuthors) {
 		return new BookTree(this, book, showAuthors);
 	}
 
@@ -56,7 +56,7 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 		if (myChildrenString == null) {
 			StringBuilder builder = new StringBuilder();
 			int count = 0;
-			for (CollectionTree subtree : subTrees()) {
+			for (LibraryTree subtree : subTrees()) {
 				if (count++ > 0) {
 					builder.append(",  ");
 				}
@@ -70,7 +70,7 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 		return myChildrenString;
 	}
 
-	public int compareTo(CollectionTree ct) {
+	public int compareTo(LibraryTree ct) {
 		final String key0 = getSortKey();
 		final String key1 = ct.getSortKey();
 		if (key0 == null) {
@@ -83,10 +83,10 @@ public abstract class CollectionTree extends ZLTree<CollectionTree> implements C
 	}
 
 	public final void sortAllChildren() {
-		List<CollectionTree> children = subTrees();
+		List<LibraryTree> children = subTrees();
 		if (!children.isEmpty()) {
 			Collections.sort(children);
-			for (CollectionTree tree : children) {
+			for (LibraryTree tree : children) {
 				tree.sortAllChildren();
 			}
 		}

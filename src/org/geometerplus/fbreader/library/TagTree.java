@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.collection;
+package org.geometerplus.fbreader.library;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public final class Author {
-	public final String DisplayName;
-	public final String SortKey;
+final class TagTree extends LibraryTree {
+	private final Tag myTag;
 
-	public Author(String displayName, String sortKey) {
-		DisplayName = displayName;
-		SortKey = sortKey;
-	}
-		
-	@Override
-	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-		if (!(o instanceof Author)) {
-			return false;
-		}
-		Author a = (Author)o;
-		return SortKey.equals(a.SortKey) && DisplayName.equals(a.DisplayName);
+	TagTree(LibraryTree parent, Tag tag) {
+		super(parent);
+		myTag = tag;
 	}
 
-	@Override
-	public int hashCode() {
-		return SortKey.hashCode() + DisplayName.hashCode();
+	public String getName() {
+		return
+			(myTag != null) ?
+				myTag.Name :
+				ZLResource.resource("library").getResource("booksWithNoTags").getValue();
+	}
+
+	protected String getSortKey() {
+		return (myTag != null) ? myTag.Name : null;
 	}
 }

@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.collection.Tag;
+import org.geometerplus.fbreader.library.Tag;
 
 abstract class FB2TagManager {
 	private static final HashMap<String,ArrayList<Tag>> ourMap = new HashMap<String,ArrayList<Tag>>();

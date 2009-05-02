@@ -22,10 +22,10 @@ package org.geometerplus.android.fbreader;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.fbreader.FBReader;
-import org.geometerplus.fbreader.collection.*;
+import org.geometerplus.fbreader.library.*;
 
 public class BookSearchActivity extends SearchActivity {
-	private CollectionTree myTree;
+	private LibraryTree myTree;
 
 	@Override
 	void onSuccess() {
@@ -50,7 +50,7 @@ public class BookSearchActivity extends SearchActivity {
 	boolean runSearch(final String pattern) {
 		final FBReader fbreader = (FBReader)FBReader.Instance();
 		fbreader.BookSearchPatternOption.setValue(pattern);
-		myTree = BookCollection.Instance().searchBooks(pattern);
+		myTree = Library.Instance().searchBooks(pattern);
 		return myTree.hasChildren();
 	}
 

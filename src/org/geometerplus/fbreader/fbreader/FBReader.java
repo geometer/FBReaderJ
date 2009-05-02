@@ -36,8 +36,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.collection.BookCollection;
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.Book;
 
 public final class FBReader extends ZLApplication {
 	static interface ViewMode {
@@ -88,6 +88,7 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_PREFERENCES, new PreferencesAction(this));
 		addAction(ActionCode.SHOW_BOOK_INFO, new BookInfoAction(this));
 		addAction(ActionCode.SHOW_CONTENTS, new ShowTOCAction(this));
+		addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this));
 		
 		addAction(ActionCode.SEARCH, new SearchAction(this));
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
@@ -120,14 +121,14 @@ public final class FBReader extends ZLApplication {
 		openFiles(
 			ZLFile.createFileByPath(myArg0),
 			ZLFile.createFileByPath(myBookNameOption.getValue()),
-			BookCollection.Instance().getHelpFile()
+			Library.Instance().getHelpFile()
 		);
 	}
 	
-	public void openBook(final BookDescription bookDescription) {
+	public void openBook(final Book book) {
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
 			public void run() { 
-				openBookInternal(bookDescription); 
+				openBookInternal(book); 
 			}
 		});
 	}
@@ -188,9 +189,8 @@ public final class FBReader extends ZLApplication {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if ((label != null) && (label.Model != null)) {
-		//		if (label.Model == Model.BookTextModel) {
-				if (label.ModelIndex != -1) {	
-					BookTextView.gotoParagraphSafe(label.ModelIndex, label.ParagraphIndex);
+				if (label.Model == Model.BookTextModel) {
+					BookTextView.gotoParagraphSafe(label.ParagraphIndex);
 				} else {
 					FootnoteView.setModel(label.Model);
 					setMode(ViewMode.FOOTNOTE);
@@ -206,25 +206,25 @@ public final class FBReader extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 	
-	void openBookInternal(BookDescription description) {
+	void openBookInternal(Book book) {
 		clearTextCaches();
 
-		if (description != null) {
+		if (book != null) {
 			onViewChanged();
 
 			BookTextView.saveState();
-			BookTextView.setModels(null, "");
+			BookTextView.setModel(null, "");
 
 			Model = null;
-			Model = new BookModel(description);
-			final String fileName = description.File.getPath();
+			Model = new BookModel(book);
+			final String fileName = book.File.getPath();
 			myBookNameOption.setValue(fileName);
-			ZLTextHyphenator.Instance().load(description.getLanguage());
-			BookTextView.setModels(Model.getBookTextModels(), fileName);
-			BookTextView.setCaption(description.getTitle());
+			ZLTextHyphenator.Instance().load(book.getLanguage());
+			BookTextView.setModel(Model.BookTextModel, fileName);
+			BookTextView.setCaption(book.getTitle());
 			FootnoteView.setModel(null);
-			FootnoteView.setCaption(description.getTitle());
-			BookCollection.Instance().addBookToRecentList(description);
+			FootnoteView.setCaption(book.getTitle());
+			Library.Instance().addBookToRecentList(book);
 		}
 		repaintView();
 	}
@@ -237,27 +237,27 @@ public final class FBReader extends ZLApplication {
 	public void openFiles(final ZLFile ... files) {
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
 			public void run() { 
-				BookDescription description = null;
+				Book book = null;
 main:
 				for (ZLFile f : files) {
 					if (f == null) {
 						continue;
 					}
-					description = BookDescription.getDescription(f);
-					if (description != null) {
+					book = Book.getBook(f);
+					if (book != null) {
 						break;
 					}
 					if (f.isArchive()) {
 						for (ZLFile child : f.children()) {
-							description = BookDescription.getDescription(child);
-							if (description != null) {
+							book = Book.getBook(child);
+							if (book != null) {
 								break main;
 							}
 						}
 					}
 				}
-				if (description != null) {
-					openBookInternal(description);
+				if (book != null) {
+					openBookInternal(book);
 				}
 			}
 		});

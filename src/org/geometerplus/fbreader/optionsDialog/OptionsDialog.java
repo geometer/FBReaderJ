@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.fbreader.encoding.ZLEncodingCollection;
 import org.geometerplus.fbreader.encodingOption.*;
-import org.geometerplus.fbreader.collection.BookCollection;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 

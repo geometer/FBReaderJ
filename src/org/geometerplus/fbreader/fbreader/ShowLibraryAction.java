@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.fbreader.collection.BookCollection;
+import org.geometerplus.fbreader.library.Library;
 
 import org.geometerplus.android.fbreader.LibraryTabActivity;
 
@@ -35,9 +35,9 @@ class ShowLibraryAction extends FBAction {
 			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
 		Runnable action = new Runnable() {
 			public void run() {
-				BookCollection collection = BookCollection.Instance();
-				collection.clear();
-				collection.synchronize();
+				Library library = Library.Instance();
+				library.clear();
+				library.synchronize();
 				// TODO: select current book (author?)
 				/*
 				if (myBookModel != null) {

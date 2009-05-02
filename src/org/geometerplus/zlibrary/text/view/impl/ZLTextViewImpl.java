@@ -31,43 +31,7 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 public abstract class ZLTextViewImpl extends ZLTextView {
 	private ZLTextModel myModel;
-	protected int myCurrentModelIndex;
-	private ArrayList<ZLTextModel> myModelList;
 	private final ZLTextSelectionModel mySelectionModel;
-
-	protected static class Position {
-		public int ParagraphIndex;
-		public int WordIndex;
-		public int CharIndex;
-		public int ModelIndex;
-
-		public Position(int modelIndex, int paragraphIndex, int wordIndex, int charIndex) {
-			ParagraphIndex = paragraphIndex;
-			WordIndex = wordIndex;
-			CharIndex = charIndex;
-			ModelIndex = modelIndex;
-		}
-
-		public Position(int modelIndex, ZLTextWordCursor cursor) {
-			ModelIndex = modelIndex;
-			set(cursor);
-		}
-
-		public void set(ZLTextWordCursor cursor) {
-			if (!cursor.isNull()) {
-				ParagraphIndex = cursor.getParagraphCursor().Index;
-				WordIndex = cursor.getWordIndex();
-				CharIndex = cursor.getCharIndex();
-			}
-		}
-
-		public boolean equalsToCursor(ZLTextWordCursor cursor) {
-			return
-				(ParagraphIndex == cursor.getParagraphCursor().Index) &&
-				(WordIndex == cursor.getWordIndex()) &&
-				(CharIndex == cursor.getCharIndex());
-		} 
-	}
 
 	private interface SizeUnit {
 		int PIXEL_UNIT = 0;
@@ -95,17 +59,10 @@ public abstract class ZLTextViewImpl extends ZLTextView {
  		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
-	public void setModels(ArrayList<ZLTextModel> models, int current) {
-		myModelList = (models != null) ? models : new ArrayList<ZLTextModel>();
-		myModel = (current >= 0 && current < myModelList.size()) ?
-			(ZLTextModel)myModelList.get(current) : null;
-		myCurrentModelIndex = current;
-		setModelInternal();
-	}
-
-	private void setModelInternal() {
+	public final void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
 
+		myModel = model;
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
@@ -121,22 +78,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 	
-	public void setModelIndex(int modelIndex) {
-		if ((modelIndex != myCurrentModelIndex) && (modelIndex >= 0) &&
-				(modelIndex < myModelList.size())) {
-			myModel = (ZLTextModel)myModelList.get(modelIndex);
-			myCurrentModelIndex = modelIndex;
-			setModelInternal();
-		}
-	}
-	
-	//TODO: visibility
 	public ZLTextModel getModel() {
 		return myModel;
-	}
-	
-	protected ArrayList<ZLTextModel> getModelList() {
-		return myModelList;
 	}
 	
 	public void highlightParagraph(int paragraphIndex) {
@@ -302,7 +245,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (myCurrentPage.StartCursor.isNull()) {
 			return;
 		}
-		final Position position = new Position(myCurrentModelIndex, myCurrentPage.StartCursor);
+		final ZLTextPosition position = new ZLTextPosition(myCurrentPage.StartCursor);
 		if ((myCurrentPage.StartCursor.getParagraphCursor().Index != mark.ParagraphIndex) || (myCurrentPage.StartCursor.getPosition().compareTo(mark) > 0)) {
 			doRepaint = true;
 			gotoParagraph(mark.ParagraphIndex, false);
@@ -324,19 +267,17 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 				savePosition(position);
 			}
 		*/	
-			savePosition(position, myCurrentModelIndex, myCurrentPage.StartCursor);
+			savePosition(position, myCurrentPage.StartCursor);
 			ZLApplication.Instance().repaintView();
 		}
 	}
 
-	protected void savePosition(Position position) {
+	protected void savePosition(ZLTextPosition position) {
 	}
 	
-	protected final void savePosition(Position position, int modelIndexToCheck, ZLTextWordCursor cursorToCheck) {
-//		System.out.println("trying to save " + position.ModelIndex + " " + position.ParagraphIndex);
-		if ((position.ModelIndex != modelIndexToCheck) || !position.equalsToCursor(cursorToCheck)) {
+	protected final void savePosition(ZLTextPosition position, ZLTextWordCursor cursorToCheck) {
+		if (!position.equalsToCursor(cursorToCheck)) {
 			savePosition(position);
-	//		System.out.println("saved");
 		}
 	}
 	
@@ -1100,8 +1041,8 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		}
 	}
 
-	public final void gotoPosition(Position position) {
-		gotoPosition(position.ModelIndex, position.ParagraphIndex, position.WordIndex, position.CharIndex);
+	public final void gotoPosition(ZLTextPosition position) {
+		gotoPosition(position.ParagraphIndex, position.WordIndex, position.CharIndex);
 	}
 
 	public final void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
@@ -1115,11 +1056,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
 		myPreviousPage.reset();
 		myNextPage.reset();
-	}
-	
-	public final void gotoPosition(int modelIndex, int paragraphIndex, int wordIndex, int charIndex) {
-		setModelIndex(modelIndex);
-		gotoPosition(paragraphIndex, wordIndex, charIndex);
 	}
 
 	public void gotoParagraph(int num, boolean last) {

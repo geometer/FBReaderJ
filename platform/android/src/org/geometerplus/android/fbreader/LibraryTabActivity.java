@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.fbreader.FBReader;
-import org.geometerplus.fbreader.collection.*;
+import org.geometerplus.fbreader.library.*;
 
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	static LibraryTabActivity Instance;
@@ -54,16 +54,16 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.library, host.getTabContentView(), true);
 
-		new LibraryAdapter(createTab("byAuthor", R.id.by_author), BookCollection.Instance().collectionByAuthor());
-		new LibraryAdapter(createTab("byTag", R.id.by_tag), BookCollection.Instance().collectionByTag());
-		new LibraryAdapter(createTab("recent", R.id.recent), BookCollection.Instance().recentBooks());
+		new LibraryAdapter(createTab("byAuthor", R.id.by_author), Library.Instance().byAuthor());
+		new LibraryAdapter(createTab("byTag", R.id.by_tag), Library.Instance().byTag());
+		new LibraryAdapter(createTab("recent", R.id.recent), Library.Instance().recentBooks());
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}
 
 	private LibraryAdapter mySearchResultsAdapter;
-	void showSearchResultsTab(CollectionTree tree) {
+	void showSearchResultsTab(LibraryTree tree) {
 		if (mySearchResultsAdapter == null) {
 			mySearchResultsAdapter =
 				new LibraryAdapter(createTab("searchResults", R.id.search_results), tree);
@@ -88,7 +88,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	public void onStop() {
 		mySelectedTabOption.setValue(getTabHost().getCurrentTabTag());
 		Instance = null;
-		BookCollection.Instance().clear();
+		Library.Instance().clear();
 		super.onStop();
 	}
 
@@ -124,17 +124,17 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	}
 
 	private final class LibraryAdapter extends ZLTreeAdapter {
-		private final CollectionTree myCollectionTree;
+		private final LibraryTree myLibraryTree;
 
-		LibraryAdapter(ListView view, CollectionTree tree) {
+		LibraryAdapter(ListView view, LibraryTree tree) {
 			super(view, tree);
-			myCollectionTree = tree;
+			myLibraryTree = tree;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-			final CollectionTree tree = (CollectionTree)getItem(position);
+			final LibraryTree tree = (LibraryTree)getItem(position);
 			setIcon((ImageView)view.findViewById(R.id.library_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
@@ -147,7 +147,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 			finish();
 			final FBReader fbreader = (FBReader)FBReader.Instance();
-			fbreader.openBook(((BookTree)tree).Description);
+			fbreader.openBook(((BookTree)tree).Book);
 			return true;
 		}
 	}

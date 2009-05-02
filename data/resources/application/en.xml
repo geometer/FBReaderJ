@@ -19,6 +19,12 @@
     <node name="collapseTree" value="Collapse tree"/>
     <node name="readText" value="Read book text"/>
   </node>
+  <node name="bookmarksView">
+    <node name="new" value="New bookmark"/>
+    <node name="open" value="Open"/>
+    <node name="edit" value="Edit"/>
+    <node name="delete" value="Delete"/>
+  </node>
   <node name="menu">
 		<node name="preferences-old" value="Settings (old)"/>
 		<node name="preferences" value="Settings"/>
@@ -46,7 +52,7 @@
 			<node name="rotate" value="Rotate Screen"/>
 			<node name="toggleFullscreen" value="Full Screen"/>
 		</node>
-		<node name="quit" value="Close"/>
+		<node name="bookmarks" value="Bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="BookInfo">

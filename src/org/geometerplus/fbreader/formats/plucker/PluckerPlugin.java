@@ -22,36 +22,39 @@ package org.geometerplus.fbreader.formats.plucker;
 import java.io.IOException;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.pdb.PdbPlugin;
 import org.geometerplus.fbreader.formats.pdb.PdbStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerPlugin extends PdbPlugin {
+	@Override
 	public boolean acceptsFile(ZLFile file) {		
 		return "DataPlkr".equals(fileType(file));
 	}
 	
-	public boolean readDescription(ZLFile file, BookDescription description) {
+	@Override
+	public boolean readMetaInfo(Book book) {
 		try {
-			PdbStream stream = new PluckerTextStream(file);
+			PdbStream stream = new PluckerTextStream(book.File);
 			if (stream.open()) {
-				//detectEncodingAndLanguage(description, stream);
+				//detectEncodingAndLanguage(book, stream);
 				stream.close();
 			}
 		} catch (IOException e) {
 		}
 		
-		if (description.getEncoding().length() == 0) {
+		if (book.getEncoding().length() == 0) {
 			return false;
 		}
 
 		return true;
 	}
 	
-	public	boolean readModel(BookDescription description, BookModel model)  {
+	@Override
+	public boolean readModel(BookModel model)  {
 		try {
-			return new PluckerBookReader(description.File, model, description.getEncoding()).readDocument();
+			return new PluckerBookReader(model.Book.File, model, model.Book.getEncoding()).readDocument();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

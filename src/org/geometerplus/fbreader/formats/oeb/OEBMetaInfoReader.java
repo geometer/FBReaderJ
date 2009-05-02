@@ -24,11 +24,11 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.collection.BookDescription;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.constants.XMLNamespace;
 
-class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
-	private final BookDescription myDescription;
+class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
+	private final Book myBook;
 
 	private String myDCMetadataTag = "dc-metadata";
 	private String myMetadataTag = "metadata";
@@ -41,13 +41,13 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private final ArrayList<String> myAuthorList = new ArrayList<String>();
 	private final ArrayList<String> myAuthorList2 = new ArrayList<String>();
 
-	OEBDescriptionReader(BookDescription description) {
-		myDescription = description;
-		myDescription.setTitle(null);
-		myDescription.setLanguage(null);
+	OEBMetaInfoReader(Book book) {
+		myBook = book;
+		myBook.setTitle(null);
+		myBook.setLanguage(null);
 	}
 
-	boolean readDescription(ZLFile file) {
+	boolean readMetaInfo(ZLFile file) {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 
@@ -65,7 +65,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			} else {
 				a = a.trim();
 			}
-			myDescription.addAuthor(a);
+			myBook.addAuthor(a);
 		}
 
 		return true;
@@ -155,7 +155,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		if (bufferContent.length() != 0) {
 			switch (myReadState) {
 				case READ_TITLE:
-					myDescription.setTitle(bufferContent);
+					myBook.setTitle(bufferContent);
 					break;
 				case READ_AUTHOR:
 					myAuthorList.add(bufferContent);
@@ -164,7 +164,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 					myAuthorList2.add(bufferContent);
 					break;
 				case READ_SUBJECT:
-					myDescription.addTag(bufferContent);
+					myBook.addTag(bufferContent);
 					break;
 				case READ_LANGUAGE:
 					{
@@ -176,7 +176,7 @@ class OEBDescriptionReader extends ZLXMLReaderAdapter implements XMLNamespace {
 						if (index >= 0) {
 							bufferContent = bufferContent.substring(0, index);
 						}
-						myDescription.setLanguage("cz".equals(bufferContent) ? "cs" : bufferContent);
+						myBook.setLanguage("cz".equals(bufferContent) ? "cs" : bufferContent);
 					}
 					break;
 			}

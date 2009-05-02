@@ -132,7 +132,6 @@ public abstract class ZLApplication {
 	}
 
 	public final void onViewChanged() {
-		System.err.println("onViewChanged");
 		for (ButtonPanel panel : myPanels) {
 			panel.hide();
 		}

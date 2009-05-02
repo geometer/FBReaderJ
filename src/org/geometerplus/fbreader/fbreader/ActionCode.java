@@ -27,6 +27,7 @@ public interface ActionCode {
 	String UNDO = "undo";
 	String REDO = "redo";
 	String SHOW_CONTENTS = "toc";
+	String SHOW_BOOKMARKS = "bookmarks";
 	String SEARCH = "search";
 	String FIND_PREVIOUS = "findPrevious";
 	String FIND_NEXT = "findNext";
