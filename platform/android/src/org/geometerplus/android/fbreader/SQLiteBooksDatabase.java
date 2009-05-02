@@ -480,6 +480,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 					myDatabase.delete("BookAuthor", myBookIdWhereClause, parameters);
 					myDatabase.delete("BookSeries", myBookIdWhereClause, parameters);
 					myDatabase.delete("BookTag", myBookIdWhereClause, parameters);
+					myDatabase.delete("Bookmarks", myBookIdWhereClause, parameters);
 				}
 			});
 		}
