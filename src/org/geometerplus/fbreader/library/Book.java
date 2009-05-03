@@ -267,28 +267,23 @@ public class Book {
 		addTag(Tag.getTag(null, tagName));
 	}
 
-	private boolean matchesIgnoreCase(String text, String lowerCasePattern) {
-		return (text.length() >= lowerCasePattern.length()) &&
-			   (text.toLowerCase().indexOf(lowerCasePattern) >= 0);
-	}
-
 	boolean matches(String pattern) {
-		if ((myTitle != null) && matchesIgnoreCase(myTitle, pattern)) {
+		if ((myTitle != null) && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
-		if ((mySeriesInfo != null) && matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
+		if ((mySeriesInfo != null) && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
 			for (Author author : myAuthors) {
-				if (matchesIgnoreCase(author.DisplayName, pattern)) {
+				if (ZLMiscUtil.matchesIgnoreCase(author.DisplayName, pattern)) {
 					return true;
 				}
 			}
 		}
 		if (myTags != null) {
 			for (Tag tag : myTags) {
-				if (matchesIgnoreCase(tag.Name, pattern)) {
+				if (ZLMiscUtil.matchesIgnoreCase(tag.Name, pattern)) {
 					return true;
 				}
 			}

@@ -19,17 +19,20 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.LinkedList;
+
 import android.app.Activity;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.library.*;
 
-public class BookSearchActivity extends SearchActivity {
-	private LibraryTree myTree;
+public class BookmarkSearchActivity extends SearchActivity {
+	private final LinkedList<Bookmark> myBookmarks = new LinkedList<Bookmark>();
 
 	@Override
 	void onSuccess() {
-		LibraryTabActivity.Instance.showSearchResultsTab(myTree);
+		BookmarksActivity.Instance.showSearchResultsTab(myBookmarks);
 	}
 
 	@Override
@@ -38,7 +41,7 @@ public class BookSearchActivity extends SearchActivity {
 
 	@Override
 	String getFailureMessageResourceKey() {
-		return "bookNotFound";
+		return "bookmarkNotFound";
 	}
 
 	@Override
@@ -47,15 +50,21 @@ public class BookSearchActivity extends SearchActivity {
 	}
 
 	@Override
-	boolean runSearch(final String pattern) {
+	boolean runSearch(String pattern) {
 		final FBReader fbreader = (FBReader)FBReader.Instance();
-		fbreader.BookSearchPatternOption.setValue(pattern);
-		myTree = Library.Instance().searchBooks(pattern);
-		return myTree.hasChildren();
+		fbreader.BookmarkSearchPatternOption.setValue(pattern);
+		pattern = pattern.toLowerCase();
+		myBookmarks.clear();
+		for (Bookmark bookmark : BookmarksActivity.Instance.AllBooksBookmarks) {
+			if (ZLMiscUtil.matchesIgnoreCase(bookmark.getText(), pattern)) {
+				myBookmarks.add(bookmark);
+			}
+		}	
+		return !myBookmarks.isEmpty();
 	}
 
 	@Override
 	Activity getParentActivity() {
-		return LibraryTabActivity.Instance;
+		return BookmarksActivity.Instance;
 	}
 }

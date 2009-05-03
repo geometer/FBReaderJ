@@ -20,10 +20,16 @@
     <node name="readText" value="Читать главу"/>
   </node>
   <node name="bookmarksView">
+    <node name="thisBook" value="Эта книга"/>
+    <node name="allBooks" value="Все книги"/>
+    <node name="searchResults" value="Найдено"/>
     <node name="new" value="Добавить закладку"/>
     <node name="open" value="Открыть"/>
     <node name="edit" value="Изменить"/>
     <node name="delete" value="Стереть"/>
+    <node name="menu">
+			<node name="search" value="Поиск"/>
+    </node>
   </node>
   <node name="menu">
 		<node name="preferences" value="Настройки"/>
@@ -243,7 +249,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Загужается книга %s"/>
-			<node name="textSearch" value="Идет поиск. Подождите, пожалуйста..."/>
+			<node name="search" value="Идет поиск. Подождите, пожалуйста..."/>
 			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста..."/>
 			<node name="loadingBookList" value="Открывается библиотека. Подождите, пожалуйста..."/>
 			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста..."/>
@@ -253,6 +259,7 @@
 	<node name="errorMessage">
 		<node name="textNotFound" value="В этой книге нет такого текста"/>
 		<node name="bookNotFound" value="Нет подходящих книг"/>
+		<node name="bookmarkNotFound" value="Нет подходящих закладок"/>
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
 	</node>
 	<node name="style">

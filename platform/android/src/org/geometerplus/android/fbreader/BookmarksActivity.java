@@ -38,12 +38,14 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.library.*;
 
-public class BookmarksActivity extends TabActivity {
+public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+	static BookmarksActivity Instance;
+
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
 
-	private List<Bookmark> myAllBooksBookmarks;
+	List<Bookmark> AllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList();
 	private final List<Bookmark> mySearchResults = new LinkedList();
 
@@ -70,10 +72,10 @@ public class BookmarksActivity extends TabActivity {
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
-		myAllBooksBookmarks = Bookmark.bookmarks();
-		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
+		AllBooksBookmarks = Bookmark.bookmarks();
+		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
 		final long bookId = ((FBReader)FBReader.Instance()).Model.Book.getId();
-		for (Bookmark bookmark : myAllBooksBookmarks) {
+		for (Bookmark bookmark : AllBooksBookmarks) {
 			if (bookmark.getBookId() == bookId) {
 				myThisBookBookmarks.add(bookmark);
 			}
@@ -83,17 +85,68 @@ public class BookmarksActivity extends TabActivity {
 		new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
 
 		myAllBooksView = createTab("allBooks", R.id.all_books);
-		new BookmarksAdapter(myAllBooksView, myAllBooksBookmarks, false);
+		new BookmarksAdapter(myAllBooksView, AllBooksBookmarks, false);
 
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		Instance = this;
+	}
+
+	@Override
 	public void onPause() {
-		for (Bookmark bookmark : myAllBooksBookmarks) {
+		for (Bookmark bookmark : AllBooksBookmarks) {
 			bookmark.save();
 		}
 		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		Instance = null;
+		super.onStop();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(
+			0, 1, Menu.NONE,
+			myResource.getResource("menu").getResource("search").getValue()
+		).setOnMenuItemClickListener(this);
+		return true;
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		final FBReader fbreader = (FBReader)FBReader.Instance();
+		startSearch(fbreader.BookmarkSearchPatternOption.getValue(), true, null, false);
+		return true;
+	}
+
+	void showSearchResultsTab(LinkedList<Bookmark> results) {
+		if (mySearchResultsView == null) {
+			mySearchResultsView = createTab("searchResults", R.id.search_results);
+			new BookmarksAdapter(mySearchResultsView, mySearchResults, false);
+		} else {
+			mySearchResults.clear();
+		}
+		mySearchResults.addAll(results);
+		mySearchResultsView.invalidateViews();
+		mySearchResultsView.requestLayout();
+		getTabHost().setCurrentTabByTag("searchResults");
+	}
+
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+			case 1:
+				return onSearchRequested();
+			default:
+				return true;
+		}
 	}
 
 	private void invalidateAllViews() {
@@ -101,6 +154,10 @@ public class BookmarksActivity extends TabActivity {
 		myThisBookView.requestLayout();
 		myAllBooksView.invalidateViews();
 		myAllBooksView.requestLayout();
+		if (mySearchResultsView != null) {
+			mySearchResultsView.invalidateViews();
+			mySearchResultsView.requestLayout();
+		}
 	}
 
 	@Override
@@ -118,7 +175,8 @@ public class BookmarksActivity extends TabActivity {
 			case DELETE_ITEM_ID:
 				bookmark.delete();
 				myThisBookBookmarks.remove(bookmark);
-				myAllBooksBookmarks.remove(bookmark);
+				AllBooksBookmarks.remove(bookmark);
+				mySearchResults.remove(bookmark);
 				invalidateAllViews();
 				return true;
 		}
@@ -159,7 +217,7 @@ mainLoop:
 		// TODO: text edit dialog
 		final Bookmark bookmark = new Bookmark(fbreader.Model.Book, builder.toString(), position);
 		myThisBookBookmarks.add(0, bookmark);
-		myAllBooksBookmarks.add(0, bookmark);
+		AllBooksBookmarks.add(0, bookmark);
 		invalidateAllViews();
 	}
 

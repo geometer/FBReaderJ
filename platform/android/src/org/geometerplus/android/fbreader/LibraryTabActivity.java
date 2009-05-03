@@ -96,7 +96,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, 1, "localSearch");
-		addMenuItem(menu, 1, "networkSearch").setEnabled(false);
+		addMenuItem(menu, 2, "networkSearch").setEnabled(false);
 		return true;
 	}
 

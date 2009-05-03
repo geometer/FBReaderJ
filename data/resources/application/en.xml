@@ -27,6 +27,9 @@
     <node name="open" value="Open"/>
     <node name="edit" value="Edit"/>
     <node name="delete" value="Delete"/>
+    <node name="menu">
+			<node name="search" value="Search"/>
+    </node>
   </node>
   <node name="menu">
 		<node name="preferences-old" value="Settings (old)"/>
@@ -245,7 +248,7 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>
-			<node name="textSearch" value="Searching. Please, wait..."/>
+			<node name="search" value="Searching. Please, wait..."/>
 			<node name="loadingBook" value="Opening book. Please, wait..."/>
 			<node name="loadingBookList" value="Opening library. Please, wait..."/>
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
@@ -255,6 +258,7 @@
 	<node name="errorMessage">
 		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>
 		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
+		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
 	</node>
 	<node name="style">

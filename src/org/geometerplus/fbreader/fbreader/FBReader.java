@@ -51,6 +51,8 @@ public final class FBReader extends ZLApplication {
 		new ZLStringOption("BookSearch", "Pattern", "");
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
+	public final ZLStringOption BookmarkSearchPatternOption =
+		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	public final ZLBooleanOption UseSeparateBindingsOption = 
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);

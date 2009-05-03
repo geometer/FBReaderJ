@@ -39,7 +39,7 @@ public class TextSearchActivity extends SearchActivity {
 
 	@Override
 	String getWaitMessageResourceKey() {
-		return "textSearch";
+		return "search";
 	}
 
 	@Override
