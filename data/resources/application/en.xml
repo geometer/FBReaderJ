@@ -97,11 +97,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="button">
-			<node name="go" value="&amp;Go!"/>
-			<node name="thisOnly" value="This only"/>
-			<node name="withSubtags" value="With subtags"/>
-		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Options"/>
 			<node name="tab">
@@ -117,23 +112,6 @@
 					<node name="defaultLanguage" value="Default Language"/>
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
-				</node>
-				<node name="Scrolling" value="Scrolling">
-					<node name="optionsFor" value="Options for">
-						<node name="touch" value="Touch Scrollings"/>
-						<node name="trackball" value="Trackball Scrollings"/>
-					</node>
-					<node name="mode" value="Scrolling Mode">
-						<node name="noOverlapping" value="No Overlapping"/>
-						<node name="keepLines" value="Keep Lines"/>
-						<node name="scrollLines" value="Scroll Lines"/>
-						<node name="scrollPercentage" value="Scroll Percentage"/>
-						<node name="disable" value="Disable"/>
-					</node>
-					<node name="linesToKeep" value="Lines to Keep"/>
-					<node name="linesToScroll" value="Lines to Scroll"/>
-					<node name="percentToScroll" value="Percent to Scroll"/>
-					<node name="fingerOnly" value="Scroll on Finger Tap Only"/>
 				</node>
 				<node name="Selection" value="Selection">
 					<node name="enableSelection" value="Enable Text Selection"/>
@@ -193,34 +171,7 @@
 						<node name="highlighted" value="Highlighted Text"/>
 					</node>
 				</node>
-				<node name="Dictionary" value="Dictionary">
-					<node name="enableIntegration" value="Enable Integration with %s"/>
-					<node name="defaultText" value="Enable Integration with Dictionary"/>
-					<node name="choice" value="Integrate with"/>
-					<node name="singleClickOpen" value="Open by Single Click"/>
-				</node>
 			</node>
-		</node>
-		<node name="textSearchDialog">
-			<node name="title" value="Text Search"/>
-			<node name="text" value=""/>
-			<node name="ignoreCase" value="&amp;Ignore case"/>
-			<node name="wholeText" value="In w&amp;hole text"/>
-			<node name="backward" value="&amp;Backward"/>
-			<node name="currentSection" value="&amp;This section only"/>
-		</node>
-		<node name="gotoPageDialog">
-			<node name="title" value="Go To Page"/>
-			<node name="pageNumber" value="Go to Page Number"/>
-		</node>
-		<node name="editTagInfoDialog">
-			<node name="title" value="Edit/Clone Tag"/>
-			<node name="editOrClone" value="Action">
-				<node name="edit" value="Rename Tag"/>
-				<node name="clone" value="Clone Tag"/>
-			</node>
-			<node name="name" value="Tag Name"/>
-			<node name="includeSubtags" value="Include Subtags"/>
 		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Remove Book"/>

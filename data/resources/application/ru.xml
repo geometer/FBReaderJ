@@ -95,11 +95,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="button">
-			<node name="go" value="&amp;Искать"/>
-			<node name="thisOnly" value="Только эту"/>
-			<node name="withSubtags" value="С подкатегориями"/>
-		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Настройки"/>
 			<node name="tab">
@@ -115,26 +110,6 @@
 					<node name="defaultLanguage" value="Язык по умолчанию"/>
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
-				</node>
-				<node name="Scrolling" value="Перелистывание">
-					<node name="optionsFor" value="Настройки перелистывания">
-						<node name="large" value="на большое расстояние"/>
-						<node name="small" value="на небольшое расстояние"/>
-						<node name="mouse" value="колесом мышки"/>
-						<node name="tap" value="нажатием на экран"/>
-					</node>
-					<node name="delay" value="Задержка, миллисекунды"/>
-					<node name="mode" value="Перелистывание">
-						<node name="noOverlapping" value="без перекрытия"/>
-						<node name="keepLines" value="перекрывает несколько строк"/>
-						<node name="scrollLines" value="сдвигает несколько строк"/>
-						<node name="scrollPercentage" value="сдвигает часть текста"/>
-						<node name="disable" value="выключено"/>
-					</node>
-					<node name="linesToKeep" value="Сколько строк перекрывать"/>
-					<node name="linesToScroll" value="Сколько строк сдвигать"/>
-					<node name="percentToScroll" value="Сколько процентов сдвигать"/>
-					<node name="fingerOnly" value="Только при нажатии пальцем"/>
 				</node>
 				<node name="Selection" value="Пометка">
 					<node name="enableSelection" value="Разрешить помечать текст"/>
@@ -194,34 +169,7 @@
 						<node name="highlighted" value="подсвеченного текста"/>
 					</node>
 				</node>
-				<node name="Dictionary" value="Словари">
-					<node name="enableIntegration" value="Включить интеграцию с %s"/>
-					<node name="defaultText" value="Включить интеграцию со словарем"/>
-					<node name="choice" value="Использовать"/>
-					<node name="singleClickOpen" value="Открывать словарь по нажатию на слово"/>
-				</node>
 			</node>
-		</node>
-		<node name="textSearchDialog">
-			<node name="title" value="Поиск по тексту"/>
-			<node name="text" value=""/>
-			<node name="ignoreCase" value="Игнорировать регистр букв"/>
-			<node name="wholeText" value="С начала текста"/>
-			<node name="backward" value="Назад"/>
-			<node name="currentSection" value="Только в этом разделе"/>
-		</node>
-		<node name="gotoPageDialog">
-			<node name="title" value="Перейти на страницу"/>
-			<node name="pageNumber" value="Номер страницы"/>
-		</node>
-		<node name="editTagInfoDialog">
-			<node name="title" value="Редактирование/копирование категории"/>
-			<node name="editOrClone" value="Действие">
-				<node name="edit" value="Редактирование"/>
-				<node name="clone" value="Копирование"/>
-			</node>
-			<node name="name" value="Название"/>
-			<node name="includeSubtags" value="Включая подкатегории"/>
 		</node>
 		<node name="removeBookBox">
 			<node name="title" value="Удаление книги"/>
