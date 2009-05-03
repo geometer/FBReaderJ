@@ -21,10 +21,10 @@ package org.geometerplus.android.fbreader;
 
 import java.util.*;
 
-import android.os.Bundle;
+import android.os.*;
 import android.view.*;
 import android.widget.*;
-import android.content.Context;
+import android.content.*;
 import android.app.TabActivity;
 import android.graphics.drawable.Drawable;
 
@@ -170,6 +170,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				gotoBookmark(bookmark);
 				return true;
 			case EDIT_ITEM_ID:
+        		final Intent intent = new Intent(this, BookmarkEditActivity.class);
+        		startActivityForResult(intent, 1);
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:
