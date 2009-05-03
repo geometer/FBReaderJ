@@ -25,8 +25,8 @@
     <node name="searchResults" value="Найдено"/>
     <node name="new" value="Добавить закладку"/>
     <node name="open" value="Открыть"/>
-    <node name="edit" value="Изменить"/>
-    <node name="delete" value="Стереть"/>
+    <node name="edit" value="Поправить закладку"/>
+    <node name="delete" value="Стереть закладку"/>
     <node name="menu">
 			<node name="search" value="Поиск"/>
     </node>

@@ -25,8 +25,8 @@
     <node name="searchResults" value="Found"/>
     <node name="new" value="New bookmark"/>
     <node name="open" value="Open"/>
-    <node name="edit" value="Edit"/>
-    <node name="delete" value="Delete"/>
+    <node name="edit" value="Edit bookmark"/>
+    <node name="delete" value="Delete bookmark"/>
     <node name="menu">
 			<node name="search" value="Search"/>
     </node>
