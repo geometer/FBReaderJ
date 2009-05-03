@@ -95,7 +95,7 @@ final class ZLOwnHtmlParser {
 			if (index > 0) {
 				int startIndex;
 				for (startIndex = description.indexOf("=", index) + 1; 
-					!CharacterUtil.isLetter(description.charAt(startIndex));
+					!Character.isLetter(description.charAt(startIndex));
 					startIndex++) {
 				}
 				if (startIndex > 0) {

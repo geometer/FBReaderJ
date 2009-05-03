@@ -20,6 +20,9 @@
     <node name="readText" value="Read book text"/>
   </node>
   <node name="bookmarksView">
+    <node name="thisBook" value="This book"/>
+    <node name="allBooks" value="All books"/>
+    <node name="searchResults" value="Found"/>
     <node name="new" value="New bookmark"/>
     <node name="open" value="Open"/>
     <node name="edit" value="Edit"/>
@@ -250,8 +253,9 @@
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="textNotFound" value="There is no suitable text in the book"/>
-		<node name="bookNotFound" value="There are no suitable books in the library"/>
+		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>
+		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
+		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Base"/>

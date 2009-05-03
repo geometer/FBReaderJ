@@ -253,6 +253,7 @@
 	<node name="errorMessage">
 		<node name="textNotFound" value="В этой книге нет такого текста"/>
 		<node name="bookNotFound" value="Нет подходящих книг"/>
+		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="текста по умолчанию"/>

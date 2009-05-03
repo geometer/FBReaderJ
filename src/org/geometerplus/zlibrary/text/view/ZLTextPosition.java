@@ -17,9 +17,11 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
-public final class ZLTextPosition {
+import org.geometerplus.zlibrary.text.view.impl.ZLTextWordCursor;
+
+public final class ZLTextPosition implements Comparable<ZLTextPosition> {
 	public int ParagraphIndex;
 	public int WordIndex;
 	public int CharIndex;
@@ -47,5 +49,15 @@ public final class ZLTextPosition {
 			(ParagraphIndex == cursor.getParagraphCursor().Index) &&
 			(WordIndex == cursor.getWordIndex()) &&
 			(CharIndex == cursor.getCharIndex());
-	} 
+	}
+
+	public int compareTo(ZLTextPosition position) {
+		if (ParagraphIndex != position.ParagraphIndex) {
+			return ParagraphIndex - position.ParagraphIndex;
+		}
+		if (WordIndex != position.WordIndex) {
+			return WordIndex - position.WordIndex;
+		}
+		return CharIndex - position.CharIndex;
+	}
 }

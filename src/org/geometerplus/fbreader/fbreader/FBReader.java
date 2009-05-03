@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -125,10 +126,10 @@ public final class FBReader extends ZLApplication {
 		);
 	}
 	
-	public void openBook(final Book book) {
+	public void openBook(final Book book, final ZLTextPosition position) {
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
 			public void run() { 
-				openBookInternal(book); 
+				openBookInternal(book, position); 
 			}
 		});
 	}
@@ -206,7 +207,7 @@ public final class FBReader extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 	
-	void openBookInternal(Book book) {
+	void openBookInternal(Book book, ZLTextPosition position) {
 		clearTextCaches();
 
 		if (book != null) {
@@ -222,6 +223,9 @@ public final class FBReader extends ZLApplication {
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.BookTextModel, fileName);
 			BookTextView.setCaption(book.getTitle());
+			if (position != null) {
+				BookTextView.gotoPosition(position);
+			}
 			FootnoteView.setModel(null);
 			FootnoteView.setCaption(book.getTitle());
 			Library.Instance().addBookToRecentList(book);
@@ -243,13 +247,13 @@ main:
 					if (f == null) {
 						continue;
 					}
-					book = Book.getBook(f);
+					book = Book.getByFile(f);
 					if (book != null) {
 						break;
 					}
 					if (f.isArchive()) {
 						for (ZLFile child : f.children()) {
-							book = Book.getBook(child);
+							book = Book.getByFile(child);
 							if (book != null) {
 								break main;
 							}
@@ -257,7 +261,7 @@ main:
 					}
 				}
 				if (book != null) {
-					openBookInternal(book);
+					openBookInternal(book, null);
 				}
 			}
 		});

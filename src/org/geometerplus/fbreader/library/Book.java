@@ -27,7 +27,32 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.fbreader.formats.*;
 
 public class Book {
-	public static Book getBook(ZLFile bookFile) {
+	public static Book getById(long bookId) {
+		final Book book = BooksDatabase.Instance().loadBook(bookId);
+		if (book == null) {
+			return null;
+		}
+		book.loadLists();
+
+		final ZLPhysicalFile physicalFile = book.File.getPhysicalFile();
+		if (physicalFile == null) {
+			return book;
+		}
+		if (!physicalFile.exists()) {
+			return null;
+		}
+
+		FileInfoSet fileInfos = new FileInfoSet();
+		fileInfos.load(physicalFile);
+		if (fileInfos.check(physicalFile)) {
+			return book;
+		}
+		fileInfos.save();
+
+		return book.readMetaInfo() ? book : null;
+	}
+
+	public static Book getByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
 		}
@@ -37,25 +62,22 @@ public class Book {
 			return null;
 		}
 
-		final Book book = new Book(bookFile, true);
+		Book book = BooksDatabase.Instance().loadBook(bookFile.getPath());
+		if (book != null) {
+			book.loadLists();
+		}
 
 		FileInfoSet fileInfos = new FileInfoSet();
 		fileInfos.load(physicalFile);
-		if (fileInfos.check(physicalFile) && book.myIsSaved) {
+		if (fileInfos.check(physicalFile) && (book != null)) {
 			return book;
 		}
 		fileInfos.save();
 
-		final FormatPlugin plugin = PluginCollection.instance().getPlugin(bookFile);
-		if ((plugin == null) || !plugin.readMetaInfo(book)) {
-			return null;
+		if (book == null) {
+			book = new Book(bookFile);
 		}
-
-		String title = book.getTitle();
-		if ((title == null) || (title.length() == 0)) {
-			book.setTitle(bookFile.getName(true));
-		}
-		return book;
+		return book.readMetaInfo() ? book : null;
 	}
 
 	public final ZLFile File;
@@ -80,20 +102,28 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	Book(ZLFile file, boolean createFromDatabase) {
+	Book(ZLFile file) {
+		myId = -1;
 		File = file;
-		if (createFromDatabase) {
-			final BooksDatabase database = BooksDatabase.Instance();
-			myId = database.loadBook(this);
-			if (myId >= 0) {
-				myAuthors = database.loadAuthors(myId);
-				myTags = database.loadTags(myId);
-				mySeriesInfo = database.loadSeriesInfo(myId);
-				myIsSaved = true;
-			}
-		} else {
-			myId = -1;
+	}
+
+	boolean readMetaInfo() {
+		final FormatPlugin plugin = PluginCollection.instance().getPlugin(File);
+		if ((plugin == null) || !plugin.readMetaInfo(this)) {
+			return false;
 		}
+		if ((myTitle == null) || (myTitle.length() == 0)) {
+			setTitle(File.getName(true));
+		}
+		return true;
+	}
+
+	private void loadLists() {
+		final BooksDatabase database = BooksDatabase.Instance();
+		myAuthors = database.loadAuthors(myId);
+		myTags = database.loadTags(myId);
+		mySeriesInfo = database.loadSeriesInfo(myId);
+		myIsSaved = true;
 	}
 
 	public List<Author> authors() {

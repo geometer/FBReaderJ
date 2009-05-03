@@ -39,6 +39,8 @@ public abstract class ZLTextView extends ZLView {
 
 	public abstract void setModel(ZLTextModel model);
 
+	public abstract void gotoPosition(ZLTextPosition position);
+
 	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
 
 	public abstract int search(String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly);

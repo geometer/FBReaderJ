@@ -49,7 +49,8 @@ public abstract class BooksDatabase {
 
 	protected abstract Map<String,Book> listBooks();
 	protected abstract void executeAsATransaction(Runnable actions);
-	protected abstract long loadBook(Book book);
+	protected abstract Book loadBook(long bookId);
+	protected abstract Book loadBook(String fileName);
 	protected abstract List<Author> loadAuthors(long bookId);
 	protected abstract List<Tag> loadTags(long bookId);
 	protected abstract SeriesInfo loadSeriesInfo(long bookId);
@@ -74,10 +75,12 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> listRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected Bookmark createBookmark(String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, int paragraphIndex, int wordIndex, int charIndex) {
-		return new Bookmark(text, creationDate, modificationDate, accessDate, accessCounter, paragraphIndex, wordIndex, charIndex);
+	protected Bookmark createBookmark(long id, long bookId, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, int paragraphIndex, int wordIndex, int charIndex) {
+		return new Bookmark(id, bookId, text, creationDate, modificationDate, accessDate, accessCounter, paragraphIndex, wordIndex, charIndex);
 	}
 
-	protected abstract void listBookmarks(long bookId, List<Bookmark> list);
-	protected abstract void saveBookmarks(long bookId, List<Bookmark> list);
+	protected abstract List<Bookmark> listBookmarks(long bookId);
+	protected abstract List<Bookmark> listAllBookmarks();
+	protected abstract long saveBookmark(Bookmark bookmark);
+	protected abstract void deleteBookmark(Bookmark bookmark);
 }

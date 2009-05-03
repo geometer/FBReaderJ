@@ -30,7 +30,7 @@ import android.database.Cursor;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.text.view.impl.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.library.*;
@@ -110,25 +110,28 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return new Date(cursor.getLong(index));
 	}
 
-	private static final String BOOKS_TABLE = "Books";
-	private static final String[] BOOKS_COLUMNS = { "book_id", "encoding", "language", "title" };
-	private static final String FILE_NAME_CONDITION = "file_name = ?";
-	protected long loadBook(Book book) {
-		final Cursor cursor = myDatabase.query(
-			BOOKS_TABLE,
-			BOOKS_COLUMNS,
-			FILE_NAME_CONDITION, new String[] { book.File.getPath() },
-			null, null, null, null
-		);
-		long id = -1;
+	protected Book loadBook(long bookId) {
+		Book book = null;
+		final Cursor cursor = myDatabase.rawQuery("SELECT file_name,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
-			id = cursor.getLong(0);
-			book.setEncoding(cursor.getString(1));
-			book.setLanguage(cursor.getString(2));
-			book.setTitle(cursor.getString(3));
+			book = createBook(
+				bookId, cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)
+			);
 		}
 		cursor.close();
-		return id;
+		return book;
+	}
+
+	protected Book loadBook(String fileName) {
+		Book book = null;
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,title,encoding,language FROM Books WHERE file_name = ?", new String[] { fileName });
+		if (cursor.moveToNext()) {
+			book = createBook(
+				cursor.getLong(0), fileName, cursor.getString(1), cursor.getString(2), cursor.getString(3)
+			);
+		}
+		cursor.close();
+		return book;
 	}
 
 	private boolean myTagCacheIsInitialized;
@@ -625,39 +628,102 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	private SQLiteStatement myDeleteBookmarksStatement;
+	protected List<Bookmark> listBookmarks(long bookId) {
+		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT bookmark_id,book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char FROM Bookmarks WHERE book_id = ?", new String[] { "" + bookId }
+		);
+		while (cursor.moveToNext()) {
+			list.add(createBookmark(
+				cursor.getLong(0),
+				cursor.getLong(1),
+				cursor.getString(2),
+				getDate(cursor, 3),
+				getDate(cursor, 4),
+				getDate(cursor, 5),
+				(int)cursor.getLong(6),
+				(int)cursor.getLong(7),
+				(int)cursor.getLong(8),
+				(int)cursor.getLong(9)
+			));
+		}
+		cursor.close();
+		return list;
+	}
+
+	protected List<Bookmark> listAllBookmarks() {
+		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT bookmark_id,book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char FROM Bookmarks", null
+		);
+		while (cursor.moveToNext()) {
+			list.add(createBookmark(
+				cursor.getLong(0),
+				cursor.getLong(1),
+				cursor.getString(2),
+				getDate(cursor, 3),
+				getDate(cursor, 4),
+				getDate(cursor, 5),
+				(int)cursor.getLong(6),
+				(int)cursor.getLong(7),
+				(int)cursor.getLong(8),
+				(int)cursor.getLong(9)
+			));
+		}
+		cursor.close();
+		return list;
+	}
+
 	private SQLiteStatement myInsertBookmarkStatement;
-	protected void saveBookmarks(final long bookId, final List<Bookmark> list) {
-		if (myDeleteBookmarksStatement == null) {
-			myDeleteBookmarksStatement = myDatabase.compileStatement(
-				"DELETE FROM Bookmarks WHERE book_id = ?"
-			);
-			myInsertBookmarkStatement = myDatabase.compileStatement(
-				"INSERT INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?)"
+	private SQLiteStatement myUpdateBookmarkStatement;
+	protected long saveBookmark(Bookmark bookmark) {
+		SQLiteStatement statement;
+		if (bookmark.getId() == -1) {
+			if (myInsertBookmarkStatement == null) {
+				myInsertBookmarkStatement = myDatabase.compileStatement(
+					"INSERT INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?)"
+				);
+			}
+			statement = myInsertBookmarkStatement;
+		} else {
+			if (myUpdateBookmarkStatement == null) {
+				myUpdateBookmarkStatement = myDatabase.compileStatement(
+					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, paragraph = ?, word = ?, char = ? WHERE bookmark_id = ?"
+				);
+			}
+			statement = myUpdateBookmarkStatement;
+		}
+
+		statement.bindLong(1, bookmark.getBookId());
+		statement.bindString(2, bookmark.getText());
+		bindDate(statement, 3, bookmark.getTime(Bookmark.CREATION));
+		bindDate(statement, 4, bookmark.getTime(Bookmark.MODIFICATION));
+		bindDate(statement, 5, bookmark.getTime(Bookmark.ACCESS));
+		statement.bindLong(6, bookmark.getAccessCount());
+		final ZLTextPosition position = bookmark.getPosition();
+		statement.bindLong(7, position.ParagraphIndex);
+		statement.bindLong(8, position.WordIndex);
+		statement.bindLong(9, position.CharIndex);
+
+		if (statement == myInsertBookmarkStatement) {
+			return statement.executeInsert();
+		} else {
+			final long id = bookmark.getId();
+			statement.bindLong(10, id);
+			statement.execute();
+			return id;
+		}
+	}
+
+	private SQLiteStatement myDeleteBookmarkStatement;
+	protected void deleteBookmark(Bookmark bookmark) {
+		if (myDeleteBookmarkStatement == null) {
+			myDeleteBookmarkStatement = myDatabase.compileStatement(
+				"DELETE FROM Bookmarks WHERE bookmark_id = ?"
 			);
 		}
-		executeAsATransaction(new Runnable() {
-			public void run() {
-				myDeleteBookmarksStatement.bindLong(1, bookId);
-				myDeleteBookmarksStatement.execute();
-				if (list.isEmpty()) {
-					return;
-				}
-				myInsertBookmarkStatement.bindLong(1, bookId);
-				for (Bookmark bookmark : list) {
-					myInsertBookmarkStatement.bindString(2, bookmark.getText());
-					bindDate(myInsertBookmarkStatement, 3, bookmark.getTime(Bookmark.CREATION));
-					bindDate(myInsertBookmarkStatement, 4, bookmark.getTime(Bookmark.MODIFICATION));
-					bindDate(myInsertBookmarkStatement, 5, bookmark.getTime(Bookmark.ACCESS));
-					myInsertBookmarkStatement.bindLong(6, bookmark.getAccessCount());
-					final ZLTextPosition position = bookmark.getPosition();
-					myInsertBookmarkStatement.bindLong(7, position.ParagraphIndex);
-					myInsertBookmarkStatement.bindLong(8, position.WordIndex);
-					myInsertBookmarkStatement.bindLong(9, position.CharIndex);
-					myInsertBookmarkStatement.execute();
-				}
-			}
-		});
+		myDeleteBookmarkStatement.bindLong(1, bookmark.getId());
+		myDeleteBookmarkStatement.execute();
 	}
 
 	private void createTables() {
@@ -772,6 +838,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables5() {
 		myDatabase.execSQL(
 			"CREATE TABLE Bookmarks(" +
+				"bookmark_id INTEGER PRIMARY KEY," +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"bookmark_text TEXT NOT NULL," +
 				"creation_time INTEGER NOT NULL," +
@@ -784,24 +851,5 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables6() {
-	}
-
-	protected void listBookmarks(long bookId, List<Bookmark> list) {
-		Cursor cursor = myDatabase.rawQuery(
-			"SELECT bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char FROM Bookmarks WHERE book_id = ?", new String[] { "" + bookId }
-		);
-		while (cursor.moveToNext()) {
-			list.add(createBookmark(
-				cursor.getString(0),
-				getDate(cursor, 1),
-				getDate(cursor, 2),
-				getDate(cursor, 3),
-				(int)cursor.getLong(4),
-				(int)cursor.getLong(5),
-				(int)cursor.getLong(6),
-				(int)cursor.getLong(7)
-			));
-		}
-		cursor.close();
 	}
 }

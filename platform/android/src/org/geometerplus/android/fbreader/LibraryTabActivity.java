@@ -37,8 +37,8 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	static LibraryTabActivity Instance;
 
 	final ZLStringOption mySelectedTabOption = new ZLStringOption("TabActivity", "SelectedTab", "");
-	private ZLResource myResource = ZLResource.resource("libraryView");
-	
+	private final ZLResource myResource = ZLResource.resource("libraryView");
+
 	private ListView createTab(String tag, int id) {
 		final TabHost host = getTabHost();
 		final String label = myResource.getResource(tag).getValue();
@@ -147,7 +147,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 			finish();
 			final FBReader fbreader = (FBReader)FBReader.Instance();
-			fbreader.openBook(((BookTree)tree).Book);
+			fbreader.openBook(((BookTree)tree).Book, null);
 			return true;
 		}
 	}

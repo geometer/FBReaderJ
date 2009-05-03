@@ -25,8 +25,6 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
-import org.geometerplus.fbreader.formats.*;
-
 public final class Library {
 	private static Library ourInstance;
 
@@ -76,18 +74,11 @@ public final class Library {
 		Book book = saved.get(bookFile.getPath());
 		if (book == null) {
 			doReadMetaInfo = true;
-			book = new Book(bookFile, false);
+			book = new Book(bookFile);
 		}
 
-		if (doReadMetaInfo) {
-			final FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
-			if ((plugin == null) || !plugin.readMetaInfo(book)) {
-				return null;
-			}
-			String title = book.getTitle();
-			if ((title == null) || (title.length() == 0)) {
-				book.setTitle(bookFile.getName(true));
-			}
+		if (doReadMetaInfo && !book.readMetaInfo()) {
+			return null;
 		}
 		return book;
 	}
