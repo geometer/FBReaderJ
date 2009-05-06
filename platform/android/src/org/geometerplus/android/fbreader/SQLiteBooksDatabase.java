@@ -30,6 +30,8 @@ import android.database.Cursor;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
@@ -41,6 +43,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	SQLiteBooksDatabase() {
 		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
+	}
+
+	protected void executeAsATransaction(Runnable actions) {
+		myDatabase.beginTransaction();
+		try {
+			actions.run();
+			myDatabase.setTransactionSuccessful();
+		} finally {
+			myDatabase.endTransaction();
+		}
 	}
 
 	private void migrate() {
@@ -75,16 +87,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				myDatabase.setVersion(6);
 			}
 		});
-	}
-
-	protected void executeAsATransaction(Runnable actions) {
-		myDatabase.beginTransaction();
-		try {
-			actions.run();
-			myDatabase.setTransactionSuccessful();
-		} finally {
-			myDatabase.endTransaction();
-		}
 	}
 
 	private static void bindString(SQLiteStatement statement, int index, String value) {
@@ -484,6 +486,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 					myDatabase.delete("BookSeries", myBookIdWhereClause, parameters);
 					myDatabase.delete("BookTag", myBookIdWhereClause, parameters);
 					myDatabase.delete("Bookmarks", myBookIdWhereClause, parameters);
+					myDatabase.delete("BookState", myBookIdWhereClause, parameters);
 				}
 			});
 		}
@@ -631,20 +634,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected List<Bookmark> listBookmarks(long bookId) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT bookmark_id,book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char FROM Bookmarks WHERE book_id = ?", new String[] { "" + bookId }
+			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE book_id = ?", new String[] { "" + bookId }
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
 				cursor.getLong(0),
 				cursor.getLong(1),
 				cursor.getString(2),
-				getDate(cursor, 3),
+				cursor.getString(3),
 				getDate(cursor, 4),
 				getDate(cursor, 5),
-				(int)cursor.getLong(6),
+				getDate(cursor, 6),
 				(int)cursor.getLong(7),
 				(int)cursor.getLong(8),
-				(int)cursor.getLong(9)
+				(int)cursor.getLong(9),
+				(int)cursor.getLong(10)
 			));
 		}
 		cursor.close();
@@ -653,21 +657,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected List<Bookmark> listAllBookmarks() {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
+		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT bookmark_id,book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char FROM Bookmarks", null
+			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id", null
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
 				cursor.getLong(0),
 				cursor.getLong(1),
 				cursor.getString(2),
-				getDate(cursor, 3),
+				cursor.getString(3),
 				getDate(cursor, 4),
 				getDate(cursor, 5),
-				(int)cursor.getLong(6),
+				getDate(cursor, 6),
 				(int)cursor.getLong(7),
 				(int)cursor.getLong(8),
-				(int)cursor.getLong(9)
+				(int)cursor.getLong(9),
+				(int)cursor.getLong(10)
 			));
 		}
 		cursor.close();
@@ -724,6 +730,32 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		myDeleteBookmarkStatement.bindLong(1, bookmark.getId());
 		myDeleteBookmarkStatement.execute();
+	}
+
+	protected ZLTextPosition getStoredPosition(long bookId) {
+		ZLTextPosition position = null;
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT paragraph,word,char FROM BookState WHERE book_id = " + bookId, null
+		);
+		if (cursor.moveToNext()) {
+			position = new ZLTextPosition((int)cursor.getLong(0), (int)cursor.getLong(1), (int)cursor.getLong(2));
+		}
+		cursor.close();
+		return position;
+	}
+
+	private SQLiteStatement myStorePositionStatement;
+	protected void storePosition(long bookId, ZLTextPosition position) {
+		if (myStorePositionStatement == null) {
+			myStorePositionStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)"
+			);
+		}
+		myStorePositionStatement.bindLong(1, bookId);
+		myStorePositionStatement.bindLong(2, position.ParagraphIndex);
+		myStorePositionStatement.bindLong(3, position.WordIndex);
+		myStorePositionStatement.bindLong(4, position.CharIndex);
+		myStorePositionStatement.execute();
 	}
 
 	private void createTables() {
@@ -848,6 +880,34 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"paragraph INTEGER NOT NULL," +
 				"word INTEGER NOT NULL," +
 				"char INTEGER NOT NULL)");
+
+		myDatabase.execSQL(
+			"CREATE TABLE BookState(" +
+				"book_id INTEGER UNIQUE NOT NULL REFERENCES Books(book_id)," +
+				"paragraph INTEGER NOT NULL," +
+				"word INTEGER NOT NULL," +
+				"char INTEGER NOT NULL)");
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id,file_name FROM Books", null
+		);
+		final SQLiteStatement statement = myDatabase.compileStatement("INSERT INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)");
+		while (cursor.moveToNext()) {
+			final long bookId = cursor.getLong(0);
+			final String fileName = cursor.getString(1);
+			final int position = new ZLIntegerOption(fileName, "PositionInBuffer", 0).getValue();
+			final int paragraph = new ZLIntegerOption(fileName, "Paragraph_" + position, 0).getValue();
+			final int word = new ZLIntegerOption(fileName, "Word_" + position, 0).getValue();
+			final int chr = new ZLIntegerOption(fileName, "Char_" + position, 0).getValue();
+			if ((paragraph != 0) || (word != 0) || (chr != 0)) {
+				statement.bindLong(1, bookId);
+				statement.bindLong(2, paragraph);
+				statement.bindLong(3, word);
+				statement.bindLong(4, chr);
+				statement.execute();
+			}
+			ZLConfig.Instance().removeGroup(fileName);
+		}
+		cursor.close();
 	}
 
 	private void updateTables6() {

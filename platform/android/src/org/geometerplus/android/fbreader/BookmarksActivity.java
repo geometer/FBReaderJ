@@ -74,15 +74,21 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		AllBooksBookmarks = Bookmark.bookmarks();
 		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
-		final long bookId = ((FBReader)FBReader.Instance()).Model.Book.getId();
-		for (Bookmark bookmark : AllBooksBookmarks) {
-			if (bookmark.getBookId() == bookId) {
-				myThisBookBookmarks.add(bookmark);
-			}
-		}
+		final FBReader fbreader = (FBReader)FBReader.Instance();
 
-		myThisBookView = createTab("thisBook", R.id.this_book);
-		new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
+		if (fbreader.Model != null) {
+			final long bookId = fbreader.Model.Book.getId();
+			for (Bookmark bookmark : AllBooksBookmarks) {
+				if (bookmark.getBookId() == bookId) {
+					myThisBookBookmarks.add(bookmark);
+				}
+			}
+        
+			myThisBookView = createTab("thisBook", R.id.this_book);
+			new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
+		} else {
+			findViewById(R.id.this_book).setVisibility(View.GONE);
+		}
 
 		myAllBooksView = createTab("allBooks", R.id.all_books);
 		new BookmarksAdapter(myAllBooksView, AllBooksBookmarks, false);
@@ -196,25 +202,52 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		final ZLTextPosition position = new ZLTextPosition(cursor);
 		final StringBuilder builder = new StringBuilder();
-		int wordCounter = 0;
+		final StringBuilder sentenceBuilder = new StringBuilder();
 		cursor = new ZLTextWordCursor(cursor);
 
+		int wordCounter = 0;
+		int sentenceCounter = 0;
+		int storedWordCounter = 0;
+		boolean lineIsNonEmpty = false;
 mainLoop:
-		do {
-			for (; !cursor.isEndOfParagraph(); cursor.nextWord()) {
-				final ZLTextElement element = cursor.getElement();
-				if (element instanceof ZLTextWord) {
-					final ZLTextWord word = (ZLTextWord)element;
-					if (builder.length() > 0) {
-						builder.append(" ");
-					}
-					builder.append(word.Data, word.Offset, word.Length);
-					if (++wordCounter >= 10) {
-						break mainLoop;
-					}
+		while ((wordCounter < 20) && (sentenceCounter < 3)) {
+			while (cursor.isEndOfParagraph()) {
+				if (!cursor.nextParagraph()) {
+					break mainLoop;
+				}
+				if (sentenceBuilder.length() > 0) {
+					builder.append(sentenceBuilder);
+					builder.append("\n");
+					sentenceBuilder.delete(0, sentenceBuilder.length());
+					++sentenceCounter;
+					storedWordCounter = wordCounter;
+					lineIsNonEmpty = false;
 				}
 			}
-		} while ((builder.length() == 0) && cursor.nextParagraph());
+			final ZLTextElement element = cursor.getElement();
+			if (element instanceof ZLTextWord) {
+				final ZLTextWord word = (ZLTextWord)element;
+				if (lineIsNonEmpty) {
+					sentenceBuilder.append(" ");
+				}
+				sentenceBuilder.append(word.Data, word.Offset, word.Length);
+				++wordCounter;
+				lineIsNonEmpty = true;
+				switch (word.Data[word.Offset + word.Length - 1]) {
+					case '.':
+					case '!':
+					case '?':
+						builder.append(sentenceBuilder);
+						sentenceBuilder.delete(0, sentenceBuilder.length());
+						++sentenceCounter;
+						storedWordCounter = wordCounter;
+				}
+			}
+			cursor.nextWord();
+		}
+		if (storedWordCounter < 4) {
+			builder.append(sentenceBuilder);
+		}
 
 		// TODO: text edit dialog
 		final Bookmark bookmark = new Bookmark(fbreader.Model.Book, builder.toString(), position);
@@ -227,7 +260,7 @@ mainLoop:
 		bookmark.onOpen();
 		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final long bookId = bookmark.getBookId();
-		if (fbreader.Model.Book.getId() != bookId) {
+		if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != bookId)) {
 			final Book book = Book.getById(bookId);
 			if (book != null) {
 				finish();
@@ -247,11 +280,11 @@ mainLoop:
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 		private final List<Bookmark> myBookmarks;
-		private final boolean myShowAddBookmarkButton;
+		private final boolean myCurrentBook;
 
-		BookmarksAdapter(ListView listView, List<Bookmark> bookmarks, boolean showAddBookmarkButton) {
+		BookmarksAdapter(ListView listView, List<Bookmark> bookmarks, boolean currentBook) {
 			myBookmarks = bookmarks;
-			myShowAddBookmarkButton = showAddBookmarkButton;
+			myCurrentBook = currentBook;
 			listView.setAdapter(this);
 			listView.setOnItemClickListener(this);
 			listView.setOnCreateContextMenuListener(this);
@@ -259,11 +292,11 @@ mainLoop:
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			if (position > 0) {
+			if (getItem(position) != null) {
 				menu.setHeaderTitle(getItem(position).getText());
 				final ZLResource resource = ZLResource.resource("bookmarksView");
 				menu.add(0, OPEN_ITEM_ID, 0, resource.getResource("open").getValue());
-				menu.add(0, EDIT_ITEM_ID, 0, resource.getResource("edit").getValue());
+				//menu.add(0, EDIT_ITEM_ID, 0, resource.getResource("edit").getValue());
 				menu.add(0, DELETE_ITEM_ID, 0, resource.getResource("delete").getValue());
 			}
 		}
@@ -271,7 +304,27 @@ mainLoop:
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
+			final ImageView imageView = (ImageView)view.findViewById(R.id.bookmark_item_icon);
+			final TextView textView = (TextView)view.findViewById(R.id.bookmark_item_text);
+			final TextView bookTitleView = (TextView)view.findViewById(R.id.bookmark_item_booktitle);
+
 			final Bookmark bookmark = getItem(position);
+			if (bookmark == null) {
+				imageView.setVisibility(View.VISIBLE);
+				imageView.setImageResource(R.drawable.tree_icon_plus);
+				textView.setText(ZLResource.resource("bookmarksView").getResource("new").getValue());
+				bookTitleView.setVisibility(View.GONE);
+			} else {
+				imageView.setVisibility(View.GONE);
+				textView.setText(bookmark.getText());
+				if (myCurrentBook) {
+					bookTitleView.setVisibility(View.GONE);
+				} else {
+					bookTitleView.setVisibility(View.VISIBLE);
+					bookTitleView.setText(bookmark.getBookTitle());
+				}
+			}
+			/*
 			((ImageView)view.findViewById(R.id.bookmark_item_icon)).setImageResource(
 				(bookmark != null) ? R.drawable.tree_icon_strut : R.drawable.tree_icon_plus
 			);
@@ -280,6 +333,7 @@ mainLoop:
 					bookmark.getText() :
 					ZLResource.resource("bookmarksView").getResource("new").getValue()
 			);
+			*/
 			return view;
 		}
 
@@ -296,14 +350,14 @@ mainLoop:
 		}
 	
 		public final Bookmark getItem(int position) {
-			if (myShowAddBookmarkButton) {
+			if (myCurrentBook) {
 				--position;
 			}
 			return (position >= 0) ? myBookmarks.get(position) : null;
 		}
 
 		public final int getCount() {
-			return myShowAddBookmarkButton ? myBookmarks.size() + 1 : myBookmarks.size();
+			return myCurrentBook ? myBookmarks.size() + 1 : myBookmarks.size();
 		}
 
 		public final void onItemClick(AdapterView parent, View view, int position, long id) {

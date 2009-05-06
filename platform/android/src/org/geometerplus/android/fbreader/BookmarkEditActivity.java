@@ -28,16 +28,27 @@ import android.content.Context;
 import org.geometerplus.zlibrary.ui.android.R;
 
 class SimpleContainer extends ViewGroup {
-	private final View myChild;
+	private final View myEditText;
+	private final Button myOkButton;
+	private final Button myCancelButton;
 
-	SimpleContainer(Context context, View child) {
+	SimpleContainer(Context context) {
 		super(context);
-		myChild = child;
-		addView(child);
+		myEditText = new EditText(context);
+		myOkButton = new Button(context);
+		myOkButton.setText("ok");
+		myCancelButton = new Button(context);
+		myCancelButton.setText("cancel");
+		addView(myOkButton);
+		addView(myCancelButton);
+		addView(myEditText);
 	}
 
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-		myChild.layout(left + 5, top + 5, right - 5, bottom - 5);
+		final int buttonHeight = Math.max(54, Math.max(myOkButton.getHeight(), myCancelButton.getHeight()));
+		myEditText.layout(left + 8, top + 8, right - 8, bottom - buttonHeight - 16);
+		myOkButton.layout(left + 8, bottom - buttonHeight - 8, (left + right) / 2 - 4, bottom - 8);
+		myCancelButton.layout((left + right) / 2 + 4, bottom - buttonHeight - 8, right - 8, bottom - 8);
 	}
 }
 
@@ -46,21 +57,7 @@ public class BookmarkEditActivity extends Activity {
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		final LinearLayout v = new LinearLayout(this);
-		v.setOrientation(LinearLayout.VERTICAL);
-		v.addView(new EditText(this));
-		/*
-		final LinearLayout h = new LinearLayout(this);
-		v.addView(h);
-		final Button okButton = new Button(this);
-		okButton.setText("ok");
-		h.addView(okButton);
-		final Button cancelButton = new Button(this);
-		cancelButton.setText("cancel");
-		h.addView(cancelButton);
-		*/
-		final SimpleContainer container = new SimpleContainer(this, v);
-		//final SimpleContainer container = new SimpleContainer(this, new EditText(this));
+		final SimpleContainer container = new SimpleContainer(this);
 		setContentView(container);
 	}
 }

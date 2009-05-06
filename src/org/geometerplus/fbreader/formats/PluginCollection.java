@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
 import org.geometerplus.fbreader.formats.html.HtmlPlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
-import org.geometerplus.fbreader.formats.plucker.PluckerPlugin;
+import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
 
 public class PluginCollection {
 	private static PluginCollection ourInstance;
@@ -44,13 +44,12 @@ public class PluginCollection {
 			//ourInstance.myPlugins.add(new PluckerPlugin());
 			//ourInstance->myPlugins.push_back(new DocBookPlugin());
 			//ourInstance.myPlugins.add(new HtmlPlugin());
-			/*ourInstance.myPlugins.add(new TxtPlugin());
-			ourInstance.myPlugins.add(new PalmDocPlugin());
+			//ourInstance.myPlugins.add(new TxtPlugin());
+			//ourInstance.myPlugins.add(new PalmDocPlugin());
 			ourInstance.myPlugins.add(new MobipocketPlugin());
-			ourInstance.myPlugins.add(new ZTXTPlugin());
-			ourInstance.myPlugins.add(new TcrPlugin());
-			ourInstance.myPlugins.add(new CHMPlugin());
-			*/
+			//ourInstance.myPlugins.add(new ZTXTPlugin());
+			//ourInstance.myPlugins.add(new TcrPlugin());
+			//ourInstance.myPlugins.add(new CHMPlugin());
 			ourInstance.myPlugins.add(new OEBPlugin());
 			//ourInstance.myPlugins.add(new RtfPlugin());
 			//ourInstance.myPlugins.add(new OpenReaderPlugin());

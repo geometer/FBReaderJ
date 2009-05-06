@@ -30,6 +30,18 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
+	public static BookModel createModel(Book book) {
+		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
+		if (plugin == null) {
+			return null;
+		}
+		BookModel model = new BookModel(book);
+		if (plugin.readModel(model)) {
+			return model;
+		}
+		return null;
+	}
+
 	public final Book Book;
 	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache");
 	public final TOCTree TOCTree = new TOCTree();
@@ -49,12 +61,8 @@ public final class BookModel {
 		}
 	}
 	
-	public BookModel(final Book book) {
+	private BookModel(Book book) {
 		Book = book;
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
-		if (plugin != null) {
-			plugin.readModel(this);
-		}
 	}
 
 	ZLTextPlainModel getFootnoteModel(String id) {

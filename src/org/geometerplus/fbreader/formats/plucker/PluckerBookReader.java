@@ -28,8 +28,6 @@ import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.bookmodel.*;
-import org.geometerplus.fbreader.encoding.ZLEncodingConverter;
-import org.geometerplus.fbreader.formats.EncodedTextReader;
 import org.geometerplus.fbreader.formats.pdb.*;
 
 public class PluckerBookReader extends BookReader {
@@ -51,11 +49,9 @@ public class PluckerBookReader extends BookReader {
 	private	ArrayList/*<Integer, Integer>*/ myParagraphVector = new ArrayList(); //�� ������ ������
 	private	boolean myParagraphStored;
 	
-	private final ZLEncodingConverter myConverter;
-	
 	public PluckerBookReader(ZLFile file, BookModel model, String encoding){
 		super(model);
-		myConverter = new EncodedTextReader(encoding).getConverter(); 
+		//myConverter = new EncodedTextReader(encoding).getConverter(); 
 		myFile = file; 
 		//System.out.println(filePath + "  " + encoding);
 		myFont = FontType.FT_REGULAR;
@@ -63,34 +59,34 @@ public class PluckerBookReader extends BookReader {
 		myForcedEntry = null;
 	}
 
-	public boolean readDocument() throws IOException {
-		myStream = new PdbInputStream(myFile);
-
-		PdbHeader header = new PdbHeader();
-		if (!header.read(myStream)) {
+	public boolean readDocument() {
+		try {
+			myStream = new PdbInputStream(myFile);
+        
+			PdbHeader header = new PdbHeader(myStream);
+        
+			setMainTextModel();
+			myFont = FontType.FT_REGULAR;
+        
+			for (int index = 0; index < header.Offsets.length; ++index) {
+				int currentOffset = myStream.offset();
+				int pit = header.Offsets[index];
+				if (currentOffset > pit) {
+					break;
+				}
+				//myStream.seek(pit - currentOffset, false);
+				myStream.skip(pit - currentOffset);
+				
+				if (myStream.offset() != pit) {
+					break;
+				}
+				int recordSize = ((index != header.Offsets.length - 1) ? header.Offsets[index + 1] : myStream.sizeOfOpened()) - pit;
+				readRecord(recordSize);
+			}
 			myStream.close();
+		} catch (IOException e) {
 			return false;
 		}
-
-		setMainTextModel();
-		myFont = FontType.FT_REGULAR;
-
-		for (int index = 0; index < header.Offsets.length; ++index) {
-			int currentOffset = myStream.offset();
-			int pit = header.Offsets[index];
-			if (currentOffset > pit) {
-				break;
-			}
-			//myStream.seek(pit - currentOffset, false);
-			myStream.skip(pit - currentOffset);
-			
-			if (myStream.offset() != pit) {
-				break;
-			}
-			int recordSize = ((index != header.Offsets.length - 1) ? header.Offsets[index + 1] : myStream.sizeOfOpened()) - pit;
-			readRecord(recordSize);
-		}
-		myStream.close();
 
 		for (Iterator it = myReferencedParagraphs.iterator(); it.hasNext();) {
 			Pair pair = (Pair)it.next();
@@ -285,7 +281,7 @@ public class PluckerBookReader extends BookReader {
     			if (ptr > textStart) {
     				safeBeginParagraph();
     	//			myConvertedTextBuffer = "";//.erase();
-    				myConvertedTextBuffer = myConverter.convert(data, textStart, ptr);
+    				myConvertedTextBuffer = "";//myConverter.convert(data, textStart, ptr);
     				addData(myConvertedTextBuffer.toCharArray());
     				myBufferIsEmpty = false;
     			}
@@ -315,7 +311,7 @@ public class PluckerBookReader extends BookReader {
     	if (end > textStart) {
     		safeBeginParagraph();
     	//	myConvertedTextBuffer = "";//erase();
-    		myConvertedTextBuffer = myConverter.convert(data, textStart, end);
+    		myConvertedTextBuffer = "";//myConverter.convert(data, textStart, end);
     		addData(myConvertedTextBuffer.toCharArray());
     		myBufferIsEmpty = false;
     	}

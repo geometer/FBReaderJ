@@ -30,7 +30,7 @@ public class PluckerTextStream extends PdbStream {
 	private	byte[] myFullBuffer;
 	private	int myRecordIndex;
 
-	public PluckerTextStream(ZLFile file) {
+	public PluckerTextStream(ZLFile file) throws IOException {
 		super(file);
 		myFullBuffer = null;
 	}
@@ -40,9 +40,9 @@ public class PluckerTextStream extends PdbStream {
 	}
 	
 	public boolean open() throws IOException {
-		if (!super.open()) {
-			return false;
-		}
+		//if (!super.open()) {
+		//	return false;
+		//}
 
 		myCompressionVersion = (short) PdbUtil.readShort(myBase);
 

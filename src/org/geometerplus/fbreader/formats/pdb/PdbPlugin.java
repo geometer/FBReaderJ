@@ -22,25 +22,25 @@ package org.geometerplus.fbreader.formats.pdb;
 import java.io.IOException;
 import java.io.InputStream;
 
-//import org.geometerplus.fbreader.collection.BookDescriptionUtil;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.plucker.PluckerTextStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
+import org.geometerplus.fbreader.formats.FormatPlugin;
+
 public abstract class PdbPlugin extends FormatPlugin {
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		final String extension = file.getExtension();
+		return (extension == "prc") || (extension == "pdb") || (extension == "mobi");
+	}
+
 	protected static String fileType(final ZLFile file) {
-		final String extension = file.getExtension().toLowerCase().intern();
-		if ((extension != "prc") && (extension != "pdb") && (extension != "mobi")) {
-			return null;
-		}
-
 		ZLFile baseFile = file.getPhysicalFile();
-		boolean upToDate = true;//BookDescriptionUtil.checkInfo(baseFile);
 
+		// TODO: use database instead of option (?)
 		ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
-		if ((palmType.length() != 8) || !upToDate) {
+		if (palmType.length() != 8) {
 			byte[] id = new byte[8];
 			try {
 				final InputStream stream = file.getInputStream();
@@ -48,18 +48,13 @@ public abstract class PdbPlugin extends FormatPlugin {
 					return null;
 				}
 				stream.skip(60);
-				stream.read(id, 0, 8);
+				stream.read(id);
 				stream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			palmType = new String(id);
-			if (!upToDate) {
-				//BookDescriptionUtil.saveInfo(baseFile);
-			}
+			palmType = new String(id).intern();
 			palmTypeOption.setValue(palmType);
 		}
-		return palmType;
+		return palmType.intern();
 	}
 }

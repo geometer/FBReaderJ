@@ -34,7 +34,8 @@ public class Bookmark {
 	}
 
 	private long myId;
-	private long myBookId;
+	private final long myBookId;
+	private final String myBookTitle;
 	private String myText;
 	private final Date myCreationDate;
 	private Date myModificationDate;
@@ -45,9 +46,10 @@ public class Bookmark {
 
 	private boolean myIsChanged;
 
-	Bookmark(long id, long bookId, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, int paragraphIndex, int wordIndex, int charIndex) {
+	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, int paragraphIndex, int wordIndex, int charIndex) {
 		myId = id;
 		myBookId = bookId;
+		myBookTitle = bookTitle;
 		myText = text;
 		myCreationDate = creationDate;
 		myModificationDate = modificationDate;
@@ -66,6 +68,7 @@ public class Bookmark {
 	public Bookmark(Book book, String text, ZLTextPosition position) {
 		myId = -1;
 		myBookId = book.getId();
+		myBookTitle = book.getTitle();
 		myText = text;
 		myCreationDate = new Date();
 		myPosition = position;
@@ -82,6 +85,10 @@ public class Bookmark {
 
 	public String getText() {
 		return myText;
+	}
+
+	public String getBookTitle() {
+		return myBookTitle;
 	}
 
 	public ZLTextPosition getPosition() {

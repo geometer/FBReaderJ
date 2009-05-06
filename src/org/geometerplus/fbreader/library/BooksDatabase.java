@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 public abstract class BooksDatabase {
 	private static BooksDatabase ourInstance;
 
@@ -75,12 +77,15 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> listRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected Bookmark createBookmark(long id, long bookId, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, int paragraphIndex, int wordIndex, int charIndex) {
-		return new Bookmark(id, bookId, text, creationDate, modificationDate, accessDate, accessCounter, paragraphIndex, wordIndex, charIndex);
+	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, int paragraphIndex, int wordIndex, int charIndex) {
+		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, paragraphIndex, wordIndex, charIndex);
 	}
 
 	protected abstract List<Bookmark> listBookmarks(long bookId);
 	protected abstract List<Bookmark> listAllBookmarks();
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
+
+	protected abstract ZLTextPosition getStoredPosition(long bookId);
+	protected abstract void storePosition(long bookId, ZLTextPosition position);
 }

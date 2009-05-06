@@ -24,8 +24,6 @@ public interface ActionCode {
 	String SHOW_OPTIONS = "preferences-old";
 	String SHOW_PREFERENCES = "preferences";
 	String SHOW_BOOK_INFO = "bookInfo";
-	String UNDO = "undo";
-	String REDO = "redo";
 	String SHOW_CONTENTS = "toc";
 	String SHOW_BOOKMARKS = "bookmarks";
 	String SEARCH = "search";

@@ -33,8 +33,6 @@ public abstract class FBView extends ZLTextViewImpl {
 	
 	private static ZLBooleanOption ourSelectionOption;
 
-	private String myCaption;
-	
 	private static ZLIntegerRangeOption createMarginOption(String name, int defaultValue) {
 		return new ZLIntegerRangeOption(
 			"Options", name, 0, 1000, defaultValue
@@ -224,14 +222,6 @@ public abstract class FBView extends ZLTextViewImpl {
 	}
 	public int getBottomMargin() {
 		return getBottomMarginOption().getValue();
-	}
-
-	public String getCaption() {
-		return myCaption;
-	}
-
-	void setCaption(String caption) {
-		myCaption = caption;
 	}
 
 	public static ZLBooleanOption selectionOption() {

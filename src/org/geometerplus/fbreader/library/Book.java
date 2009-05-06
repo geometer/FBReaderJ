@@ -24,6 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 import org.geometerplus.fbreader.formats.*;
 
 public class Book {
@@ -77,7 +79,11 @@ public class Book {
 		if (book == null) {
 			book = new Book(bookFile);
 		}
-		return book.readMetaInfo() ? book : null;
+		if (book.readMetaInfo()) {
+			book.save();
+			return book;
+		}
+		return null;
 	}
 
 	public final ZLFile File;
@@ -319,5 +325,15 @@ public class Book {
 
 		myIsSaved = true;
 		return true;
+	}
+
+	public ZLTextPosition getStoredPosition() {
+		return BooksDatabase.Instance().getStoredPosition(myId);
+	}
+
+	public void storePosition(ZLTextPosition position) {
+		if (myId != -1) {
+			BooksDatabase.Instance().storePosition(myId, position);
+		}
 	}
 }

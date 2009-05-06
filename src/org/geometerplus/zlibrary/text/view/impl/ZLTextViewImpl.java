@@ -263,24 +263,10 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 			if (myCurrentPage.StartCursor.isNull()) {
 				preparePaintInfo(myCurrentPage);
 			}
-	/*		if (!position.equalsToCursor(myCurrentPage.StartCursor)) {
-				savePosition(position);
-			}
-		*/	
-			savePosition(position, myCurrentPage.StartCursor);
 			ZLApplication.Instance().repaintView();
 		}
 	}
 
-	protected void savePosition(ZLTextPosition position) {
-	}
-	
-	protected final void savePosition(ZLTextPosition position, ZLTextWordCursor cursorToCheck) {
-		if (!position.equalsToCursor(cursorToCheck)) {
-			savePosition(position);
-		}
-	}
-	
 	public int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
 		if (text.length() == 0) {
 			return 0;
@@ -383,9 +369,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
 					myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
 				}
-				if (myCurrentPage.PaintState == PaintStateEnum.READY) {
-					onPaintInfoPrepared();
-				}
 				break;
 			}
 			case PAGE_RIGHT:
@@ -400,9 +383,6 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 					preparePaintInfo(myPreviousPage);
 					myCurrentPage.StartCursor.setCursor(myNextPage.EndCursor);
 					myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
-				}
-				if (myCurrentPage.PaintState == PaintStateEnum.READY) {
-					onPaintInfoPrepared();
 				}
 				break;
 			}
@@ -487,14 +467,14 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public final int getScrollbarFullSize() {
-		if ((myTextSize == null) || (myTextSize.length == 0)) {
+		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
 			return 1;
 		}
 		return myTextSize[myTextSize.length - 1];
 	}
 
 	public final int getScrollbarThumbPosition(int viewPage) {
-		if ((myTextSize == null) || (myTextSize.length == 0)) {
+		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
 			return 0;
 		}
 		ZLTextPage page = getPage(viewPage);
@@ -503,7 +483,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public final int getScrollbarThumbLength(int viewPage) {
-		if ((myTextSize == null) || (myTextSize.length == 0)) {
+		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
 			return 0;
 		}
 		ZLTextPage page = getPage(viewPage);
@@ -1042,10 +1022,12 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 	}
 
 	public final void gotoPosition(ZLTextPosition position) {
-		gotoPosition(position.ParagraphIndex, position.WordIndex, position.CharIndex);
+		if (position != null) {
+			gotoPosition(position.ParagraphIndex, position.WordIndex, position.CharIndex);
+		}
 	}
 
-	public final void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
+	private void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
 		final int maxParagraphIndex = myModel.getParagraphsNumber() - 1;
 		if (paragraphIndex > maxParagraphIndex) {
 			paragraphIndex = maxParagraphIndex;
@@ -1216,11 +1198,7 @@ public abstract class ZLTextViewImpl extends ZLTextView {
 		if (page == myCurrentPage) {
 			myPreviousPage.reset();
 			myNextPage.reset();
-			onPaintInfoPrepared();
 		}
-	}
-
-	protected void onPaintInfoPrepared() {
 	}
 
 	public void clearCaches() {

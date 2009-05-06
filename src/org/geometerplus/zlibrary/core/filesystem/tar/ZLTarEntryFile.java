@@ -56,11 +56,13 @@ public final class ZLTarEntryFile extends ZLArchiveEntryFile {
 		super(parent, name);
 	}
 
+	@Override
+	public long size() {
+		throw new RuntimeException("Not implemented yet.");
+	}
+
+	@Override
 	public InputStream getInputStream() throws IOException {
-		InputStream base = myParent.getInputStream();
-		if (base != null) {
-			return new ZLTarInputStream(base, myName);
-		}
-		return null;
+		return new ZLTarInputStream(myParent.getInputStream(), myName);
 	}
 }

@@ -68,7 +68,8 @@ public class BookDownloader extends Activity {
 			ourFileName = path.get(path.size() - 1);
 			if (!ourFileName.endsWith(".fb2.zip") &&
 				!ourFileName.endsWith(".fb2") &&
-				!ourFileName.endsWith(".epub")) {
+				!ourFileName.endsWith(".epub") &&
+				!ourFileName.endsWith(".mobi")) {
 				startNextMatchingActivity(intent);
 				finish();
 				return;
@@ -126,6 +127,10 @@ public class BookDownloader extends Activity {
 
 	private void runFBReader(final File file) {
 		finish();
+		final Activity oldActivity = org.geometerplus.android.fbreader.FBReader.Instance;
+		if (oldActivity != null) {
+			oldActivity.finish();
+		}
 		startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, FBReader.class));
 	}
 

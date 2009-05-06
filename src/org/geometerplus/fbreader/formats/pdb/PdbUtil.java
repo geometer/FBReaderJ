@@ -21,31 +21,28 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.*;
 
-public class PdbUtil {
-	public static int readShort(InputStream stream) {
-		final byte[] tmp = new byte[2];
-		try {
-			stream.read(tmp, 0, 2);
-		} catch (IOException e) {
-			return -1;
+public abstract class PdbUtil {
+	public static void skip(InputStream stream, int numBytes) throws IOException {
+		numBytes -= stream.skip(numBytes);
+		for (; numBytes > 0; --numBytes) {
+			if (stream.read() == -1) {
+				throw new IOException("Unexpected end of stream");
+			}
 		}
-	//	int i = ((tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8));
-	//	if (i > Short.MAX_VALUE)
-	//	System.out.println("i = " + i);
-		return ((tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8));
 	}
 
-	//? long
-	public static int readInt(InputStream stream) {
+	public static int readShort(InputStream stream) throws IOException {
+		final byte[] tmp = new byte[2];
+		stream.read(tmp, 0, 2);
+		return (tmp[1] & 0xFF) + ((tmp[0] & 0xFF) << 8);
+	}
+
+	public static long readInt(InputStream stream) throws IOException {
 		final byte[] tmp = new byte[4];
-		try {
-			stream.read(tmp, 0, 4);
-		} catch (IOException e) {
-			return -1;
-		}
-		return  (tmp[0] << 24) +
-					 ((tmp[1] & 0xFF) << 16) +
-					 ((tmp[2] & 0xFF) << 8) +
-						(tmp[3] & 0xFF);
+		stream.read(tmp, 0, 4);
+		return (((long)(tmp[0] & 0xFF)) << 24) +
+			  + ((tmp[1] & 0xFF) << 16) +
+			  + ((tmp[2] & 0xFF) << 8) +
+			  + (tmp[3] & 0xFF);
 	}
 }

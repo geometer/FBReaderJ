@@ -70,23 +70,11 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		myUnsetValueStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ? AND name = ?");
 		myDeleteGroupStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ?");
 
-		/*
 		final Cursor cursor = myDatabase.rawQuery("SELECT name FROM config WHERE groupName LIKE ? GROUP BY name", new String[] { "/%" });
 		while (cursor.moveToNext()) {
 			System.err.println(" = " + cursor.getString(0));
 		}
 		cursor.close();
-		*/
-	}
-
-	synchronized public void executeAsATransaction(Runnable actions) {
-		myDatabase.beginTransaction();
-		try {
-			actions.run();
-			myDatabase.setTransactionSuccessful();
-		} finally {
-			myDatabase.endTransaction();
-		}
 	}
 
 	synchronized public void removeGroup(String name) {

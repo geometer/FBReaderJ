@@ -36,7 +36,7 @@ public class PluckerPlugin extends PdbPlugin {
 	@Override
 	public boolean readMetaInfo(Book book) {
 		try {
-			PdbStream stream = new PluckerTextStream(book.File);
+			PluckerTextStream stream = new PluckerTextStream(book.File);
 			if (stream.open()) {
 				//detectEncodingAndLanguage(book, stream);
 				stream.close();
@@ -53,12 +53,6 @@ public class PluckerPlugin extends PdbPlugin {
 	
 	@Override
 	public boolean readModel(BookModel model)  {
-		try {
-			return new PluckerBookReader(model.Book.File, model, model.Book.getEncoding()).readDocument();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
+		return new PluckerBookReader(model.Book.File, model, model.Book.getEncoding()).readDocument();
 	}
 }

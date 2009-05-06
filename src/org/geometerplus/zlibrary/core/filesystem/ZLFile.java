@@ -94,6 +94,7 @@ public abstract class ZLFile {
 		return new ZLPhysicalFile(path);
 	}
 
+	public abstract long size();
 	public abstract boolean exists();
 	public abstract boolean isDirectory();
 	public abstract String getPath();
@@ -117,53 +118,6 @@ public abstract class ZLFile {
 	public final String getExtension() {
 		return myExtension;
 	}
-
-    /*
-	public InputStream getInputStream() throws IOException {
-		InputStream stream = null;
-		int index = ZLFSUtil.findArchiveFileNameDelimiter(myPath);
-		if (index == -1) {
-			stream = ZLibrary.Instance().getInputStream(myPath);
-		} else {
-			ZLFile baseFile = new ZLFile(myPath.substring(0, index));
-			InputStream base = baseFile.getInputStream();
-			if (base != null) {
-				if (0 != (baseFile.myArchiveType & ArchiveType.ZIP)) {
-					ZipFile zf = getZipFile(myPath.substring(0, index));
-					/*
-					ZipEntry entry = zf.getEntry(myPath.substring(index+1));
-					stream = zf.getInputStream(entry);
-					* /
-					final String entryName = myPath.substring(index + 1);
-					stream = zf.getInputStream(entryName);
-					/*
-					while (true) {
-						ZipEntry entry = zipStream.getNextEntry();
-						if (entry == null) {
-							break;
-						} else if (entryName.equals(entry.getName())) {
-							stream = zipStream;
-							break;
-						}
-					}
-					* /
-				} else if (0 != (baseFile.myArchiveType & ArchiveType.TAR)) {
-					stream = new ZLTarInputStream(base, myPath.substring(index + 1));
-				}
-			}
-		}
-
-		if (stream != null) {
-			if (0 != (myArchiveType & ArchiveType.GZIP)) {
-				return new java.util.zip.GZIPInputStream(stream, 8192);
-			}
-			//if (0 != (myArchiveType & ArchiveType.BZIP2)) {
-				//return new ZLBzip2InputStream(stream);
-			//}
-		}
-		return stream;
-	}
-	*/
 
 	protected List<ZLFile> directoryEntries() {
 		return Collections.emptyList();

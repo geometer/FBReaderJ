@@ -17,27 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.encoding;
+package org.geometerplus.fbreader.formats.pdb;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
-public class ZLEncodingSet {
-	private String myName = "";
-	private	ArrayList/*<ZLEncodingConverterInfo>*/ myInfos = new ArrayList();
-	
-	public ZLEncodingSet(String name) {
-		
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
+class MobipocketStream extends PdbStream {
+	private final long myFileSize;
+	private final boolean myIsCompressed;
+
+	MobipocketStream(ZLFile file) throws IOException {
+		super(file);
+		myFileSize = file.size();
+
+		final int version = PdbUtil.readShort(myBase);
+		switch (version) {
+			case 1:
+				myIsCompressed = false;
+				break;
+			case 2:
+				myIsCompressed = true;
+				break;
+			default:
+				throw new IOException("Unsupported compression type: " + version);
+		}
+		PdbUtil.skip(myBase, 6);
+		// TODO: implement
 	}
 
-	public	void addInfo(ZLEncodingConverterInfo info) {
-		myInfos.add(info);
-	}
-
-	public	String name() {
-		return myName;
-	}
-	
-	public	ArrayList/*<ZLEncodingConverterInfo>*/ infos() {
-		return myInfos;
+	protected boolean fillBuffer() {
+		// TODO: implement
+		return false;
 	}
 }

@@ -28,6 +28,10 @@ class BookInfoAction extends FBAction {
 		super(fbreader);
 	}
 
+	public boolean isVisible() {
+		return Reader.Model != null;
+	}
+
 	public void run() {
 		final ZLAndroidDialogManager dialogManager =
 			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();

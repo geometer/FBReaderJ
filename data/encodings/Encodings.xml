@@ -221,10 +221,14 @@
 	</group>
 	<group name="Unicode">
 		<encoding region="Unicode" name="UTF-8">
+			<code number="65001"/>
 		</encoding>
 		<encoding region="Unicode" name="UTF-7">
+			<code number="65000"/>
 		</encoding>
 		<encoding region="Unicode" name="UTF-16">
+		</encoding>
+		<encoding region="Unicode" name="UTF-16BE">
 		</encoding>
 	</group>
 </known-encodings>

@@ -26,6 +26,10 @@ class SearchAction extends FBAction {
 		super(fbreader);
 	}
 
+	public boolean isVisible() {
+		return Reader.Model != null;
+	}
+
 	public void run() {
 		ZLDialogManager.Instance().startSearch();
 	}

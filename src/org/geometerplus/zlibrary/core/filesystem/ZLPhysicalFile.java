@@ -36,39 +36,46 @@ public final class ZLPhysicalFile extends ZLFile {
 		init();
 	}
 	
+	@Override
 	public boolean exists() {
 		return myFile.exists();
 	}
 	
+	@Override
 	public long size() {
 		return myFile.length();
 	}	
 	
+	@Override
 	public boolean isDirectory() {
 		return myFile.isDirectory();
-		//return myFile.length() == 0;
 	}
 	
 	public boolean remove() {
 		return myFile.delete();
 	}
 
+	@Override
 	public String getPath() {
 		return myFile.getPath();
 	}
 	
+	@Override
 	public String getNameWithExtension() {
 		return myFile.getName();
 	}
 
+	@Override
 	public ZLFile getParent() {
 		return isDirectory() ? null : new ZLPhysicalFile(myFile.getParent());
 	}
 
+	@Override
 	public ZLPhysicalFile getPhysicalFile() {
 		return this;
 	}
     
+	@Override
 	public InputStream getInputStream() throws IOException {
 		return new FileInputStream(myFile);
 	}

@@ -29,11 +29,6 @@ public final class ZLIntegerOption extends ZLOption {
 		myValue = defaultValue;
 	}
 
-	public void changeName(String optionName) {
-		super.changeName(optionName);
-		myValue = myDefaultValue;
-	}
-
 	public int getValue() {
 		if (!myIsSynchronized) {
 			String value = getConfigValue(null);

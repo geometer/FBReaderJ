@@ -50,6 +50,7 @@
 				<data android:pathPattern=".*\\.epub" />
 				<data android:pathPattern=".*\\.oeb" />
 				<data android:pathPattern=".*\\.fb2" />
+				<data android:pathPattern=".*\\.mobi" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />

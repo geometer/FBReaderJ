@@ -80,9 +80,6 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.QUIT, new QuitAction(this));
 		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction());
 
-		addAction(ActionCode.UNDO, new UndoAction(this));
-		addAction(ActionCode.REDO, new RedoAction(this));
-
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
@@ -215,22 +212,24 @@ public final class FBReader extends ZLApplication {
 		if (book != null) {
 			onViewChanged();
 
-			BookTextView.saveState();
-			BookTextView.setModel(null, "");
+			if (Model != null) {
+				Model.Book.storePosition(new ZLTextPosition(BookTextView.getStartCursor()));
+			}
+			BookTextView.setModel(null);
+			FootnoteView.setModel(null);
 
 			Model = null;
-			Model = new BookModel(book);
-			final String fileName = book.File.getPath();
-			myBookNameOption.setValue(fileName);
-			ZLTextHyphenator.Instance().load(book.getLanguage());
-			BookTextView.setModel(Model.BookTextModel, fileName);
-			BookTextView.setCaption(book.getTitle());
-			if (position != null) {
-				BookTextView.gotoPosition(position);
+			System.gc();
+			System.gc();
+			Model = BookModel.createModel(book);
+			if (Model != null) {
+				final String fileName = book.File.getPath();
+				myBookNameOption.setValue(fileName);
+				ZLTextHyphenator.Instance().load(book.getLanguage());
+				BookTextView.setModel(Model.BookTextModel);
+				BookTextView.gotoPosition((position != null) ? position : book.getStoredPosition());
+				Library.Instance().addBookToRecentList(book);
 			}
-			FootnoteView.setModel(null);
-			FootnoteView.setCaption(book.getTitle());
-			Library.Instance().addBookToRecentList(book);
 		}
 		repaintView();
 	}
@@ -270,8 +269,8 @@ main:
 	}
 
 	public void onWindowClosing() {
-		if (BookTextView != null) {
-			BookTextView.saveState();
+		if ((Model != null) && (BookTextView != null)) {
+			Model.Book.storePosition(new ZLTextPosition(BookTextView.getStartCursor()));
 		}
 	}
 }

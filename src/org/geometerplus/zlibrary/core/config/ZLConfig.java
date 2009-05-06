@@ -30,8 +30,6 @@ public abstract class ZLConfig {
 		ourInstance = this;
 	}
 
-	public abstract void executeAsATransaction(Runnable actions);
-
 	public abstract String getValue(String group, String name, String defaultValue);
 	public abstract void setValue(String group, String name, String value);
 	public abstract void unsetValue(String group, String name);

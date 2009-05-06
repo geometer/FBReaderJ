@@ -23,6 +23,7 @@ import java.io.*;
 
 import android.app.Application;
 import android.content.res.Resources;
+import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -97,12 +98,36 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			}
 		}
 
+		@Override
 		public boolean exists() {
 			return myExists;
 		}
 
-		public InputStream getInputStream() {
-			return myExists ? myApplication.getResources().openRawResource(myResourceId) : null;
+		@Override
+		public long size() {
+			try {
+				AssetFileDescriptor descriptor =
+					myApplication.getResources().openRawResourceFd(myResourceId);
+				long length = descriptor.getLength();
+				descriptor.close();
+				return length;
+			} catch (IOException e) {
+				return 0;
+			} catch (Resources.NotFoundException e) {
+				return 0;
+			} 
+		}
+
+		@Override
+		public InputStream getInputStream() throws IOException {
+			if (!myExists) {
+				throw new IOException("No such file: " + getPath());
+			}
+			try {
+				return myApplication.getResources().openRawResource(myResourceId);
+			} catch (Resources.NotFoundException e) {
+				throw new IOException(e.getMessage());
+			}
 		}
 	}
 }

@@ -56,18 +56,22 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 		init();
 	}
 	
+	@Override
 	public boolean exists() {
 		return myParent.exists();
 	}
 	
+	@Override
 	public boolean isDirectory() {
 		return false;
 	}
 	
+	@Override
 	public String getPath() {
 		return myParent.getPath() + ":" + myName;
 	}
 	
+	@Override
 	public String getNameWithExtension() {
 		if (myShortName == null) {
 			final String name = myName;
@@ -81,10 +85,12 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 		return myShortName;
 	}
 
+	@Override
 	public ZLFile getParent() {
 		return myParent;
 	}
 
+	@Override
 	public ZLPhysicalFile getPhysicalFile() {
 		ZLFile ancestor = myParent;
 		while ((ancestor != null) && !(ancestor instanceof ZLPhysicalFile)) {

@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 public class PdbHeader {
 	static public String DocName;
@@ -29,41 +28,36 @@ public class PdbHeader {
 	static public String Id;
 	static public int[] Offsets;
 
-	public boolean read(InputStream stream) throws IOException {
+	public PdbHeader(InputStream stream) throws IOException {
 		final byte[] buffer = new byte[32];
 		if (stream.read(buffer, 0, 32) != 32) {
-			System.err.println("way 0");
-			return false;
+			throw new IOException("PdbHeader: cannot reader document name");
 		}
 		DocName = new String(buffer);
 		Flags = PdbUtil.readShort(stream);
 
-		stream.skip(26);
+		PdbUtil.skip(stream, 26);
 		
 		if (stream.read(buffer, 0, 8) != 8) {
-			System.err.println("way 1");
-			return false;
+			throw new IOException("PdbHeader: cannot reader palm id");
 		}
 		Id = new String(buffer, 0, 8);
 
-		stream.skip(8);
+		PdbUtil.skip(stream, 8);
 
 		int numRecords = PdbUtil.readShort(stream);
 		if (numRecords <= 0) {
-			System.err.println(numRecords);
-			System.err.println("way 2");
-			return false;
+			throw new IOException("PdbHeader: record number = " + numRecords);
 		}
 		Offsets = new int[numRecords];
 
 		for (int i = 0; i < numRecords; ++i) {
-			Offsets[i] = PdbUtil.readInt(stream);
-			if (stream.skip(4) != 4) {
-			System.err.println("way 3");
-				return false;
-			}
+			Offsets[i] = (int)PdbUtil.readInt(stream);
+			PdbUtil.skip(stream, 4);
 		}
+	}
 
-		return true;
+	public final int length() {
+		return 78 + Offsets.length * 8;
 	}
 }

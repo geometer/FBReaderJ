@@ -54,9 +54,9 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.library, host.getTabContentView(), true);
 
-		new LibraryAdapter(createTab("byAuthor", R.id.by_author), Library.Instance().byAuthor());
-		new LibraryAdapter(createTab("byTag", R.id.by_tag), Library.Instance().byTag());
-		new LibraryAdapter(createTab("recent", R.id.recent), Library.Instance().recentBooks());
+		new LibraryAdapter(createTab("byAuthor", R.id.by_author), Library.Instance().byAuthor(), false);
+		new LibraryAdapter(createTab("byTag", R.id.by_tag), Library.Instance().byTag(), false);
+		new LibraryAdapter(createTab("recent", R.id.recent), Library.Instance().recentBooks(), true);
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
@@ -66,7 +66,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	void showSearchResultsTab(LibraryTree tree) {
 		if (mySearchResultsAdapter == null) {
 			mySearchResultsAdapter =
-				new LibraryAdapter(createTab("searchResults", R.id.search_results), tree);
+				new LibraryAdapter(createTab("searchResults", R.id.search_results), tree, true);
 		} else {
 			mySearchResultsAdapter.resetTree(tree);
 		}
@@ -125,17 +125,24 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 
 	private final class LibraryAdapter extends ZLTreeAdapter {
 		private final LibraryTree myLibraryTree;
+		private final boolean myIsFlat;
 
-		LibraryAdapter(ListView view, LibraryTree tree) {
+		LibraryAdapter(ListView view, LibraryTree tree, boolean isFlat) {
 			super(view, tree);
 			myLibraryTree = tree;
+			myIsFlat = isFlat;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 			final LibraryTree tree = (LibraryTree)getItem(position);
-			setIcon((ImageView)view.findViewById(R.id.library_tree_item_icon), tree);
+			final ImageView iconView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
+			if (myIsFlat) {
+				iconView.setVisibility(View.GONE);
+			} else {
+				setIcon(iconView, tree);
+			}
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 			return view;
@@ -147,7 +154,10 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 			finish();
 			final FBReader fbreader = (FBReader)FBReader.Instance();
-			fbreader.openBook(((BookTree)tree).Book, null);
+			final Book book = ((BookTree)tree).Book;
+			if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != book.getId())) {
+				fbreader.openBook(book, null);
+			}
 			return true;
 		}
 	}

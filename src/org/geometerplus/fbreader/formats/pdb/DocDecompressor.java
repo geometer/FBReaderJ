@@ -50,7 +50,6 @@ public abstract class DocDecompressor {
 
 		if (stream.read(sourceBuffer, 0, compressedSize) == compressedSize) {
 			byte token;
-			int shiftedIndex;
 
 loop:
 			while ((sourceIndex < compressedSize) && (targetIndex < maxUncompressedSize)) {
@@ -61,7 +60,7 @@ loop:
 						break;
 					case 1:
 						if ((sourceIndex + token > compressedSize) ||
-								(targetIndex + token > maxUncompressedSize)) {
+							(targetIndex + token > maxUncompressedSize)) {
 							break loop;
 						}
 						System.arraycopy(sourceBuffer, sourceIndex, targetBuffer, targetIndex, token);
@@ -79,17 +78,17 @@ loop:
 						if (sourceIndex + 1 > compressedSize) {
 							break loop;
 						}
-						int N = 256 * (token & 0xFF) + (sourceBuffer[sourceIndex++] & 0xFF);
-						int copyLength = (N & 7) + 3;
+						final int N = ((token & 0xFF) << 16) + (sourceBuffer[sourceIndex++] & 0xFF);
+						final int copyLength = (N & 7) + 3;
 						if (targetIndex + copyLength > maxUncompressedSize) {
 							break loop;
 						}
-						shiftedIndex = targetIndex - (N & 0x3fff) / 8;
-						if (shiftedIndex >= 0) {
-							for (int i = 0; i < copyLength; i++) {
-								targetBuffer[targetIndex++] = targetBuffer[shiftedIndex++];
-							}
+						final int srcIndex = targetIndex - (N & 0x3fff) / 8;
+						if (srcIndex < 0) {
+							break;
 						}
+						System.arraycopy(targetBuffer, srcIndex, targetBuffer, targetIndex, copyLength);
+						targetIndex += copyLength;
 						break;
 				}
 			}

@@ -27,8 +27,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.style.*;
 
-import org.geometerplus.fbreader.encoding.ZLEncodingCollection;
-import org.geometerplus.fbreader.encodingOption.*;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
