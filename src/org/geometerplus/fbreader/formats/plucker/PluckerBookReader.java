@@ -24,6 +24,7 @@ import java.util.*;
 import java.util.zip.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLInputStreamWithOffset;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
 
@@ -32,7 +33,8 @@ import org.geometerplus.fbreader.formats.pdb.*;
 
 public class PluckerBookReader extends BookReader {
 	private final ZLFile myFile;
-	private PdbInputStream myStream;
+	private final int myFileSize;
+	private ZLInputStreamWithOffset myStream;
 	private	int myFont;
 	private	char[] myCharBuffer;
 	private	String myConvertedTextBuffer;
@@ -53,6 +55,7 @@ public class PluckerBookReader extends BookReader {
 		super(model);
 		//myConverter = new EncodedTextReader(encoding).getConverter(); 
 		myFile = file; 
+		myFileSize = (int)file.size();
 		//System.out.println(filePath + "  " + encoding);
 		myFont = FontType.FT_REGULAR;
 		myCharBuffer = new char[65535];
@@ -61,7 +64,7 @@ public class PluckerBookReader extends BookReader {
 
 	public boolean readDocument() {
 		try {
-			myStream = new PdbInputStream(myFile);
+			myStream = new ZLInputStreamWithOffset(myFile.getInputStream());
         
 			PdbHeader header = new PdbHeader(myStream);
         
@@ -80,7 +83,7 @@ public class PluckerBookReader extends BookReader {
 				if (myStream.offset() != pit) {
 					break;
 				}
-				int recordSize = ((index != header.Offsets.length - 1) ? header.Offsets[index + 1] : myStream.sizeOfOpened()) - pit;
+				int recordSize = ((index != header.Offsets.length - 1) ? header.Offsets[index + 1] : myFileSize) - pit;
 				readRecord(recordSize);
 			}
 			myStream.close();

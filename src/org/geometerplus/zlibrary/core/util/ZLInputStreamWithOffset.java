@@ -17,66 +17,66 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.pdb;
+package org.geometerplus.zlibrary.core.util;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-public class PdbInputStream extends InputStream {
-	private final InputStream myBase;
+public class ZLInputStreamWithOffset extends InputStream {
+	private final InputStream myDecoratedStream;
 	private int myOffset = 0;
-	private final int mySize;
 	
-	public PdbInputStream(ZLFile file) throws IOException {
-		mySize = 0;//(int)file.size();
-		myBase = file.getInputStream();
+	public ZLInputStreamWithOffset(InputStream stream) {
+		myDecoratedStream = stream;
 	}
 	
+	public int available() throws IOException {
+		return myDecoratedStream.available();
+	}
+
+	public long skip(long n) throws IOException {
+		final long shift = myDecoratedStream.skip(n);
+		if (shift > 0) {
+			myOffset += (int)shift;
+		}
+		return shift;
+	}
+
 	public int read() throws IOException {
-		int result = myBase.read();
+		int result = myDecoratedStream.read();
 		if (result != -1) {
-			myOffset ++;
+			++myOffset;
 		}
 		return result;
 	}
 
-	public int available() throws IOException {
-		return super.available();
-	}
-
 	public void close() throws IOException {
 		myOffset = 0;
-		super.close();
-	}
-
-	public synchronized void mark(int readlimit) {
-		super.mark(readlimit);
-	}
-
-	public boolean markSupported() {
-		return super.markSupported();
+		myDecoratedStream.close();
 	}
 
 	public int read(byte[] b, int off, int len) throws IOException {
-		return super.read(b, off, len);
+		final int shift = myDecoratedStream.read(b, off, len);
+		if (shift > 0) {
+			myOffset += shift;
+		}
+		return shift;
 	}
 
 	public int read(byte[] b) throws IOException {
-		return super.read(b);
+		final int shift = myDecoratedStream.read(b);
+		if (shift > 0) {
+			myOffset += shift;
+		}
+		return shift;
 	}
 
-	public synchronized void reset() throws IOException {
-//		myOffset = 0;
-		super.reset();
+	public void reset() throws IOException {
+		myOffset = 0;
+		myDecoratedStream.reset();
 	}
 
 	public int offset() {
 		return myOffset;
-	}
-	
-	public int sizeOfOpened() {
-		return mySize - myOffset;
 	}
 }

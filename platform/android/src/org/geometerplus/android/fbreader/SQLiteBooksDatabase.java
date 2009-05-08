@@ -286,7 +286,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"INSERT INTO Authors (name,sort_key) VALUES (?,?)"
 			);
 			myInsertBookAuthorStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookAuthor (book_id,author_id,author_index) VALUES (?,?,?)"
+				"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index) VALUES (?,?,?)"
 			);
 		}
 

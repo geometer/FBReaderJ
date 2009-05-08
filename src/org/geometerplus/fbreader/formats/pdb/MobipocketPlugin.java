@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,10 +48,10 @@ public class MobipocketPlugin extends PdbPlugin {
 			PdbUtil.skip(stream, 4);
 			final int encodingCode = (int)PdbUtil.readInt(stream);
 			String encodingName = ZLEncodingCollection.Instance().getEncodingName(encodingCode);
-			book.setEncoding(encodingName);
 			if (encodingName == null) {
 				encodingName = "utf-8";
 			}
+			book.setEncoding(encodingName);
 			PdbUtil.skip(stream, 52);
 			final int fullNameOffset = (int)PdbUtil.readInt(stream);
 			final int fullNameLength = (int)PdbUtil.readInt(stream);
@@ -123,6 +123,10 @@ public class MobipocketPlugin extends PdbPlugin {
 
 	@Override
 	public boolean readModel(BookModel model) {
-		return false;
+		try {
+			return new MobipocketHtmlBookReader(model).readBook();
+		} catch (IOException e) {
+			return false;
+		}
 	}
 }

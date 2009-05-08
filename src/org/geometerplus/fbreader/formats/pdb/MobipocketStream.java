@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,9 @@ import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-class MobipocketStream extends PdbStream {
-	private final long myFileSize;
-	private final boolean myIsCompressed;
-
+class MobipocketStream extends PalmDocLikeStream {
 	MobipocketStream(ZLFile file) throws IOException {
 		super(file);
-		myFileSize = file.size();
 
 		final int version = PdbUtil.readShort(myBase);
 		switch (version) {
@@ -43,11 +39,12 @@ class MobipocketStream extends PdbStream {
 				throw new IOException("Unsupported compression type: " + version);
 		}
 		PdbUtil.skip(myBase, 6);
-		// TODO: implement
-	}
-
-	protected boolean fillBuffer() {
-		// TODO: implement
-		return false;
+		myMaxRecordIndex = Math.min(PdbUtil.readShort(myBase), myHeader.Offsets.length - 1);
+		final int maxRecordSize = PdbUtil.readShort(myBase);
+		if (maxRecordSize == 0) {
+			throw new IOException("The records are too short");
+		}
+		myBuffer = new byte[maxRecordSize];
+		myRecordIndex = 0;
 	}
 }

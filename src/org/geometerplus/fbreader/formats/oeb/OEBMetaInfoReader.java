@@ -51,9 +51,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 
-		final ZLXMLProcessor processor = ZLXMLProcessorFactory.Instance().createXMLProcessor();
-		processor.setBufferSize(512);
-		if (!processor.read(this, file)) {
+		if (!ZLXMLProcessor.read(this, file, 512)) {
 			return false;
 		}
 

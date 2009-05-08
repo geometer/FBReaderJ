@@ -182,6 +182,10 @@ public class BookReader {
 		}	
 	}
 	
+	public final void addDataFinal(char[] data) {
+		addDataFinal(data, 0, data.length);
+	}
+
 	public final void addDataFinal(char[] data, int offset, int length) {
 		if (myBufferIsNotEmpty) {
 			addData(data, offset, length);

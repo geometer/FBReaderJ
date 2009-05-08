@@ -21,17 +21,17 @@ package org.geometerplus.zlibrary.core.html;
 
 import java.io.InputStream;
 import java.io.IOException;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class ZLHtmlProcessor {
-	public abstract boolean read(ZLHtmlReader xmlReader, InputStream stream);
-
-	public boolean read(ZLHtmlReader htmlReader, ZLFile file) {
+	public static boolean read(ZLHtmlReader reader, InputStream stream) {
 		try {
-			InputStream stream = file.getInputStream();
-			return (stream != null) ? read(htmlReader, stream) : false;
+			ZLHtmlParser parser = new ZLHtmlParser(reader, stream);
+			reader.startDocumentHandler();
+			parser.doIt();
+			reader.endDocumentHandler();
 		} catch (IOException e) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 }

@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.html;
 
+import java.io.IOException;
+
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
@@ -40,10 +42,10 @@ public class HtmlPlugin extends FormatPlugin {
 
 	@Override
 	public boolean readModel(BookModel model) {
-		// TODO Auto-generated method stub
-		if (!model.Book.getEncoding().equals(AUTO)) {
-			//new Book.BookInfo(book.FileName).EncodingOption.setValue(AUTO);
+		try {
+			return new HtmlReader(model).readBook();
+		} catch (IOException e) {
+			return false;
 		}
-		return new HtmlReader(model).readBook();
 	}
 }

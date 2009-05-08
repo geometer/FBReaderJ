@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.html.own;
+package org.geometerplus.zlibrary.core.xml;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 

@@ -55,8 +55,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 
 	boolean readBook() {
 		Base64EncodedImage.resetCounter();
-		final ZLXMLProcessor processor = ZLXMLProcessorFactory.Instance().createXMLProcessor();
-		return processor.read(this, Model.Book.File);
+		return ZLXMLProcessor.read(this, Model.Book.File);
 	}
 
 	public void startDocumentHandler() {
@@ -395,9 +394,9 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		}
 	}
 
-	private static ArrayList ourExternalDTDs = new ArrayList();
+	private static ArrayList<String> ourExternalDTDs = new ArrayList<String>();
 
-	public ArrayList externalDTDs() {
+	public List<String> externalDTDs() {
 		if (ourExternalDTDs.isEmpty()) {
 			ourExternalDTDs.add("data/formats/fb2/FBReaderVersion.ent");
 		}

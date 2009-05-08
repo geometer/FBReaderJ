@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.xml.own;
+package org.geometerplus.zlibrary.core.xml;
 
 import java.io.*;
 import java.util.*;
@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReader;
 
-final class ZLOwnXMLParser {
+final class ZLXMLParser {
 	private static final byte START_DOCUMENT = 0;
 	private static final byte START_TAG = 1;
 	private static final byte END_TAG = 2;
@@ -54,7 +54,7 @@ final class ZLOwnXMLParser {
 	private static final byte ATTRIBUTE_VALUE = 21;
 	private static final byte ENTITY_REF = 22;
 
-	private static String convertToString(HashMap strings, ZLMutableString container) {
+	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString container) {
 		String s = (String)strings.get(container);
 		if (s == null) {
 			s = container.toString();
@@ -114,7 +114,7 @@ final class ZLOwnXMLParser {
 		storeString(myEntityName);
 	}
 
-	public ZLOwnXMLParser(ZLXMLReader xmlReader, InputStream stream, int bufferSize) throws IOException {
+	public ZLXMLParser(ZLXMLReader xmlReader, InputStream stream, int bufferSize) throws IOException {
 		myXMLReader = xmlReader;
 		myProcessNamespaces = xmlReader.processNamespaces();
 
@@ -146,7 +146,7 @@ final class ZLOwnXMLParser {
 		myStreamReader = new InputStreamReader(stream, encoding);
 	}
 
-	private static char[] getEntityValue(HashMap entityMap, String name) {
+	private static char[] getEntityValue(HashMap<String,char[]> entityMap, String name) {
 		char[] value = (char[])entityMap.get(name);
 		if (value == null) {
 			if ((name.length() > 0) && (name.charAt(0) == '#')) {
@@ -166,23 +166,22 @@ final class ZLOwnXMLParser {
 		return value;
 	}
 
-	private static HashMap ourDTDMaps = new HashMap();
+	private static HashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = new HashMap();
 
-	private static HashMap getDTDMap(ArrayList dtdList) throws IOException {
-		HashMap entityMap = (HashMap)ourDTDMaps.get(dtdList);
+	private static HashMap<String,char[]> getDTDMap(List<String> dtdList) throws IOException {
+		HashMap<String,char[]> entityMap = ourDTDMaps.get(dtdList);
 		if (entityMap == null) {
-			entityMap = new HashMap();
+			entityMap = new HashMap<String,char[]>();
 			entityMap.put("amp", new char[] { '&' });
 			entityMap.put("apos", new char[] { '\'' });
 			entityMap.put("gt", new char[] { '>' });
 			entityMap.put("lt", new char[] { '<' });
 			entityMap.put("quot", new char[] { '\"' });
 			//entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
-			final int dtdListSize = dtdList.size();
-			for (int i = 0; i < dtdListSize; ++i) {
-				InputStream stream = ZLResourceFile.createResourceFile((String)dtdList.get(i)).getInputStream();
+			for (String fileName : dtdList) {
+				final InputStream stream = ZLResourceFile.createResourceFile(fileName).getInputStream();
 				if (stream != null) {
-					new ZLOwnDTDParser().doIt(stream, entityMap);
+					new ZLDTDParser().doIt(stream, entityMap);
 				}
 			}
 			ourDTDMaps.put(dtdList, entityMap);
@@ -194,7 +193,7 @@ final class ZLOwnXMLParser {
 
 	void doIt() throws IOException {
 		final ZLXMLReader xmlReader = myXMLReader;
-		final HashMap entityMap = getDTDMap(xmlReader.externalDTDs());
+		final HashMap<String,char[]> entityMap = getDTDMap(xmlReader.externalDTDs());
 		final InputStreamReader streamReader = myStreamReader;
 		final boolean processNamespaces = myProcessNamespaces;
 		HashMap oldNamespaceMap = processNamespaces ? new HashMap() : null;
@@ -206,7 +205,7 @@ final class ZLOwnXMLParser {
 		final ZLMutableString attributeValue = myAttributeValue;
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final ZLMutableString entityName = myEntityName;
-		final HashMap strings = ourStringMap;//new HashMap();
+		final HashMap<ZLMutableString,String> strings = ourStringMap;//new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
 		String[] tagStack = new String[10];
 		int tagStackSize = 0;

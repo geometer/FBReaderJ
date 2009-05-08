@@ -17,35 +17,33 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.xml.own;
+package org.geometerplus.zlibrary.core.html;
+
+import java.io.UnsupportedEncodingException;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
-final class ZLMutableString {
-	private char[] myData;
+public final class ZLByteBuffer {
+	private byte[] myData;
 	private int myLength;
 
-	static private int COUNT;
-	static private int COUNT1;
-	static private int COUNT2;
-
-	ZLMutableString(int len) {
-		myData = new char[len];
+	ZLByteBuffer(int len) {
+		myData = new byte[len];
 	}
 
-	ZLMutableString() {
+	ZLByteBuffer() {
 		this(20);
 	}
 
-	ZLMutableString(ZLMutableString container) {
+	ZLByteBuffer(ZLByteBuffer container) {
 		final int len = container.myLength;
 		myData = ZLArrayUtils.createCopy(container.myData, len, len);
 		myLength = len;
 	}
 
-	public void append(char[] buffer, int offset, int count) {
+	public void append(byte[] buffer, int offset, int count) {
 		final int len = myLength;
-		char[] data = myData;
+		byte[] data = myData;
 		final int newLength = len + count;
 		if (data.length < newLength) {
 			data = ZLArrayUtils.createCopy(data, len, newLength);
@@ -60,13 +58,13 @@ final class ZLMutableString {
 	}
 
 	public boolean equals(Object o) {
-		final ZLMutableString container = (ZLMutableString)o;
+		final ZLByteBuffer container = (ZLByteBuffer)o;
 		final int len = myLength;
 		if (len != container.myLength) {
 			return false;
 		}
-		final char[] data0 = myData;
-		final char[] data1 = container.myData;
+		final byte[] data0 = myData;
+		final byte[] data1 = container.myData;
 		for (int i = len; --i >= 0; ) {
 			if (data0[i] != data1[i]) {
 				return false;
@@ -77,7 +75,7 @@ final class ZLMutableString {
 
 	public int hashCode() {
 		final int len = myLength;
-		final char[] data = myData;
+		final byte[] data = myData;
 		int code = len * 31;
 		if (len > 1) {
 			code += data[0];
@@ -93,7 +91,24 @@ final class ZLMutableString {
 		return code;
 	}
 
-	public String toString() {
-		return new String(myData, 0, myLength).intern();
+	public byte[] data() {
+		return myData;
+	}
+
+	public int length() {
+		return myLength;
+	}
+
+	public boolean equalsToLCString(String lcPattern) {
+		return (myLength == lcPattern.length()) &&
+				lcPattern.equals(new String(myData, 0, myLength).toLowerCase());
+	} 
+
+	public String toString(String encoding) {
+		try {
+			return new String(myData, 0, myLength, encoding);
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 }

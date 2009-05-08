@@ -23,9 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLInputStreamWithOffset;
 
 public abstract class PdbStream extends InputStream {
-	protected final InputStream myBase;
+	protected final ZLInputStreamWithOffset myBase;
 	public PdbHeader myHeader;
 	protected byte[] myBuffer;
 
@@ -33,7 +34,7 @@ public abstract class PdbStream extends InputStream {
 	protected short myBufferOffset;
 
 	public PdbStream(ZLFile file) throws IOException {
-		myBase = file.getInputStream();
+		myBase = new ZLInputStreamWithOffset(file.getInputStream());
 
 		myHeader = new PdbHeader(myBase);
 
@@ -50,20 +51,22 @@ public abstract class PdbStream extends InputStream {
 		return myBuffer[myBufferOffset++];
 	}
 
-	public int read(byte[] buffer,int offset, int maxSize) {
+	public int read(byte[] buffer, int offset, int maxSize) {
 		int realSize = 0;
 		while (realSize < maxSize) {
 			if (!fillBuffer()) {
 				break;
 			}
-			int size = Math.min((maxSize - realSize), (myBufferLength - myBufferOffset));
+			int size = Math.min(maxSize - realSize, myBufferLength - myBufferOffset);
 			if (size > 0) {
-				System.arraycopy(myBuffer, myBufferOffset, buffer, offset + realSize, size);
+				if (buffer != null) {
+					System.arraycopy(myBuffer, myBufferOffset, buffer, offset + realSize, size);
+				}
 				realSize += size;
 				myBufferOffset += size;
 			}
 		}
-		return realSize;
+		return (realSize > 0) ? realSize : -1;
 	}
 	
 	public void close() throws IOException {

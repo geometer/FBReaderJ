@@ -19,29 +19,46 @@
 
 package org.geometerplus.fbreader.formats.html;
 
+import java.io.*;
+
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
-import org.geometerplus.fbreader.formats.html.HtmlTag;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessorFactory;
-import org.geometerplus.zlibrary.core.html.ZLHtmlProcessor;
-import org.geometerplus.zlibrary.core.html.ZLHtmlProcessorFactory;
-import org.geometerplus.zlibrary.core.html.ZLHtmlReader;
+import org.geometerplus.zlibrary.core.html.*;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 
 public class HtmlReader extends BookReader implements ZLHtmlReader {
+	private final byte[] myStyleTable = new byte[HtmlTag.TAG_NUMBER];
+	{
+		myStyleTable[HtmlTag.H1] = FBTextKind.H1;
+		myStyleTable[HtmlTag.H2] = FBTextKind.H2;
+		myStyleTable[HtmlTag.H3] = FBTextKind.H3;
+		myStyleTable[HtmlTag.H4] = FBTextKind.H4;
+		myStyleTable[HtmlTag.H5] = FBTextKind.H5;
+		myStyleTable[HtmlTag.H6] = FBTextKind.H6;
+		myStyleTable[HtmlTag.B] = FBTextKind.BOLD;
+		myStyleTable[HtmlTag.SUB] = FBTextKind.SUB;
+		myStyleTable[HtmlTag.SUP] = FBTextKind.SUP;
+		myStyleTable[HtmlTag.S] = FBTextKind.STRIKETHROUGH;
+		myStyleTable[HtmlTag.PRE] = FBTextKind.PREFORMATTED;
+		myStyleTable[HtmlTag.EM] = FBTextKind.EMPHASIS;
+		myStyleTable[HtmlTag.DFN] = FBTextKind.DEFINITION;
+		myStyleTable[HtmlTag.CITE] = FBTextKind.CITE;
+		myStyleTable[HtmlTag.CODE] = FBTextKind.CODE;
+		myStyleTable[HtmlTag.STRONG] = FBTextKind.STRONG;
+		myStyleTable[HtmlTag.I] = FBTextKind.ITALIC;
+	}
+
+	private final String myEncoding;
 
 	private boolean myInsideTitle = false;
 	private int myBodyCounter = 0;
 	private boolean myReadMainText = false;
 	private boolean mySectionStarted = false;
 	private byte myHyperlinkType;
-	//private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 	private final char[] SPACE = { ' ' };
 	private String myHrefAttribute = "href";
 	private String mySrcAttribute = "src";
@@ -54,12 +71,15 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	
 	public HtmlReader(BookModel model) {
 		super(model);
+		myEncoding = model.Book.getEncoding();
 	}
 
-	boolean readBook() {
-		final ZLHtmlProcessor processor = ZLHtmlProcessorFactory.Instance()
-				.createHtmlProcessor();
-		return processor.read(this, Model.Book.File);
+	public boolean readBook() throws IOException {
+		return ZLHtmlProcessor.read(this, getInputStream());
+	}
+
+	public InputStream getInputStream() throws IOException {
+		return Model.Book.File.getInputStream();
 	}
 
 	public void startDocumentHandler() {
@@ -69,27 +89,24 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		unsetCurrentTextModel();
 	}
 
-	public boolean dontCacheAttributeValues() {
-		return true;
+	public void byteDataHandler(byte[] ch, int start, int length) {
+		if (length != 0) {
+			try {
+				addData(new String(ch, start, length, myEncoding).toCharArray());
+			} catch (UnsupportedEncodingException e) {
+			}
+			//addData(new String(ch, myEncoding).toCharArray(), start, length);
+		}
 	}
 
-	public void characterDataHandler(char[] ch, int start, int length) {
-		if (length == 0) {
-			return;
+	public void byteDataHandlerFinal(byte[] ch, int start, int length) {
+		if (length != 0) {
+			try {
+				addDataFinal(new String(ch, start, length, myEncoding).toCharArray());
+			} catch (UnsupportedEncodingException e) {
+			}
+			//addDataFinal(ch, start, length);
 		}
-		// final Base64EncodedImage image = myCurrentImage;
-		// if (image != null) {
-		// image.addData(ch, start, length);
-		// } else {
-		addData(ch, start, length);
-		// }
-	}
-
-	public void characterDataHandlerFinal(char[] ch, int start, int length) {
-		if (length == 0) {
-			return;
-		}
-		addDataFinal(ch, start, length);
 	}
 
 	private void openControl(byte control) {
@@ -132,49 +149,27 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 	
-	public void endElementHandler(String tagName) {
-		switch (HtmlTag.getTagByName(tagName)) {
-			
+	public void endElementHandler(ZLByteBuffer tagName) {
+		final byte tag = HtmlTag.getTagByName(tagName.toString(myEncoding));
+		switch (tag) {
 			case HtmlTag.SCRIPT:
 			case HtmlTag.SELECT:
 			case HtmlTag.STYLE:
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.P:
 				startNewParagraph();
 				break;
 
 			case HtmlTag.H1:
-				closeControl(FBTextKind.H1);
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.H2:
-				closeControl(FBTextKind.H2);
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.H3:
-				closeControl(FBTextKind.H3);
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.H4:
-				closeControl(FBTextKind.H4);
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.H5:
-				closeControl(FBTextKind.H5);
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.H6:
-				closeControl(FBTextKind.H6);
+			case HtmlTag.PRE:
+				closeControl(myStyleTable[tag]);
 				startNewParagraph();
 				break;
-				
+
 			case HtmlTag.A:
 				closeControl(myHyperlinkType);
 				break;
@@ -188,48 +183,16 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 				
 			case HtmlTag.B:
-				closeControl(FBTextKind.BOLD);
-				break;
-				
 			case HtmlTag.S:
-				closeControl(FBTextKind.STRIKETHROUGH);
-				break;
-				
 			case HtmlTag.SUB:
-				closeControl(FBTextKind.SUB);
-				break;
-				
 			case HtmlTag.SUP:
-				closeControl(FBTextKind.SUP);
-				break;
-				
-			case HtmlTag.PRE:
-				closeControl(FBTextKind.PREFORMATTED);
-				startNewParagraph();
-				break;
-				
 			case HtmlTag.EM:
-				closeControl(FBTextKind.EMPHASIS);
-				break;
-				
 			case HtmlTag.DFN:
-				closeControl(FBTextKind.DEFINITION);
-				break;
-				
 			case HtmlTag.CITE:
-				closeControl(FBTextKind.CITE);
-				break;
-				
 			case HtmlTag.CODE:
-				closeControl(FBTextKind.CODE);
-				break;
-				
 			case HtmlTag.STRONG:
-				closeControl(FBTextKind.STRONG);
-				break;
-				
 			case HtmlTag.I:
-				closeControl(FBTextKind.ITALIC);
+				closeControl(myStyleTable[tag]);
 				break;
 
 			case HtmlTag.OL:
@@ -246,29 +209,18 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 
-	public void startElementHandler(String tagName, ZLStringMap attributes) {
-		String id = attributes.getValue("id");
+	public void startElementHandler(ZLByteBuffer tagName, ZLHtmlAttributeMap attributes) {
+		String id = attributes.getStringValue("id", myEncoding);
 		if (id != null) {
 			if (!myReadMainText) {
 				setFootnoteTextModel(id);
 			}
 			addHyperlinkLabel(id);
 		}
-		switch (HtmlTag.getTagByName(tagName)) {
+
+		final byte tag = HtmlTag.getTagByName(tagName.toString(myEncoding));
+		switch (tag) {
 			case HtmlTag.HTML:
-				final int attibutesNumber = attributes.getSize();
-				for (int i = 0; i < attibutesNumber; ++i) {
-					final String key = attributes.getKey(i);
-					if (key.startsWith("xmlns:")) {
-						final String value = attributes.getValue(key);
-						if (value.endsWith("/xlink")) {
-							myHrefAttribute = (key.substring(6) + "href")
-									.intern();
-							break;
-						}
-					}
-					//System.out.println(key);
-				}
 				break;
 
 			case HtmlTag.BODY:
@@ -294,7 +246,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.A:{
-				String ref = attributes.getValue(myHrefAttribute);
+				String ref = attributes.getStringValue(myHrefAttribute, myEncoding);
 				if ((ref != null) && (ref.length() != 0)) {
 					if (ref.charAt(0) == '#') {
 						myHyperlinkType = FBTextKind.FOOTNOTE;
@@ -305,18 +257,12 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					addHyperlinkControl(myHyperlinkType, ref);
 					myControls[myControlsNumber] = myHyperlinkType;
 					myControlsNumber++;
-					//openControl(myHyperlinkType);
-					//System.out.println("open 37 - " + myControlsNumber);
-				} else {
-					//myHyperlinkType = FBTextKind.FOOTNOTE;
-					//openControl(myHyperlinkType);
-					//addControl(myHyperlinkType, true);
 				}
 				break;
 			}
 			
 			case HtmlTag.IMG: {
-				String ref = attributes.getValue(mySrcAttribute);
+				String ref = attributes.getStringValue(mySrcAttribute, myEncoding);
 				if ((ref != null) && (ref.length() != 0)) {
 					addImageReference(ref, (short)0);
 					String filePath = ref;
@@ -330,77 +276,27 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			}
 			
 			case HtmlTag.B:
-				openControl(FBTextKind.BOLD);
-				break;
-				
 			case HtmlTag.S:
-				openControl(FBTextKind.STRIKETHROUGH);
-				break;
-				
 			case HtmlTag.SUB:
-				openControl(FBTextKind.SUB);
-				break;
-				
 			case HtmlTag.SUP:
-				openControl(FBTextKind.SUP);
-				break;
-				
 			case HtmlTag.PRE:
-				openControl(FBTextKind.PREFORMATTED);
-				break;
-				
 			case HtmlTag.STRONG:
-				openControl(FBTextKind.STRONG);
-				break;
-				
 			case HtmlTag.CODE:
-				openControl(FBTextKind.CODE);
-				break;
-				
 			case HtmlTag.EM:
-				openControl(FBTextKind.EMPHASIS);
-				break;
-				
 			case HtmlTag.CITE:
-				openControl(FBTextKind.CITE);
-				break;
-				
 			case HtmlTag.DFN:
-				openControl(FBTextKind.DEFINITION);
-				break;
-				
 			case HtmlTag.I:
-				openControl(FBTextKind.ITALIC);
+				openControl(myStyleTable[tag]);
 				break;
 				
 			case HtmlTag.H1:
-				startNewParagraph();
-				openControl(FBTextKind.H1);
-				break;
-				
 			case HtmlTag.H2:
-				startNewParagraph();
-				openControl(FBTextKind.H2);
-				break;
-				
 			case HtmlTag.H3:
-				startNewParagraph();
-				openControl(FBTextKind.H3);
-				break;
-				
 			case HtmlTag.H4:
-				startNewParagraph();
-				openControl(FBTextKind.H4);
-				break;
-				
 			case HtmlTag.H5:
-				startNewParagraph();
-				openControl(FBTextKind.H5);
-				break;
-				
 			case HtmlTag.H6:
 				startNewParagraph();
-				openControl(FBTextKind.H6);
+				openControl(myStyleTable[tag]);
 				break;
 				
 			case HtmlTag.OL:

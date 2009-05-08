@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class PdbHeader {
-	static public String DocName;
-	static public int Flags;
-	static public String Id;
-	static public int[] Offsets;
+	public final String DocName;
+	public final int Flags;
+	public final String Id;
+	public final int[] Offsets;
 
 	public PdbHeader(InputStream stream) throws IOException {
 		final byte[] buffer = new byte[32];

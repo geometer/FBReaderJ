@@ -222,9 +222,9 @@ cycle:
 		}
 	}
 
-	private static ArrayList ourExternalDTDs = new ArrayList();
+	private static ArrayList<String> ourExternalDTDs = new ArrayList<String>();
 
-	public ArrayList externalDTDs() {
+	public List<String> externalDTDs() {
 		if (ourExternalDTDs.isEmpty()) {
 			ourExternalDTDs.add("data/formats/xhtml/xhtml-lat1.ent");
 			ourExternalDTDs.add("data/formats/xhtml/xhtml-special.ent");

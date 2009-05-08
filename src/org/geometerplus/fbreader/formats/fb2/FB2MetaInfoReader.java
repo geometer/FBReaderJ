@@ -217,8 +217,6 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 	}
 
 	public boolean readDocument(ZLFile file) {
-		final ZLXMLProcessor processor = ZLXMLProcessorFactory.Instance().createXMLProcessor();
-		processor.setBufferSize(512);
-		return processor.read(this, file);
+		return ZLXMLProcessor.read(this, file, 512);
 	}
 }

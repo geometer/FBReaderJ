@@ -26,11 +26,41 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLXMLProcessor {
-	public abstract void setBufferSize(int bufferSize);
+	/*
+	private final int myBufferSize;
 
-	public abstract boolean read(ZLXMLReader xmlReader, InputStream stream);
+	public ZLXMLProcessor() {
+		this(65536);
+	}
 
-	public boolean read(ZLXMLReader xmlReader, ZLFile file) {
+	public ZLXMLProcessor(int bufferSize) {
+		myBufferSize = bufferSize;
+	}
+	*/
+
+	public static boolean read(ZLXMLReader reader, InputStream stream, int bufferSize) {
+		ZLXMLParser parser = null;
+		try {
+			parser = new ZLXMLParser(reader, stream, bufferSize);
+			reader.startDocumentHandler();
+			parser.doIt();
+			reader.endDocumentHandler();
+		} catch (IOException e) {
+			//System.out.println(e);
+			return false;
+		} finally {
+			if (parser != null) {
+				parser.finish();
+			}
+		}
+		return true;
+	}
+
+	public static boolean read(ZLXMLReader xmlReader, ZLFile file) {
+		return read(xmlReader, file, 65536);
+	}
+
+	public static boolean read(ZLXMLReader xmlReader, ZLFile file, int bufferSize) {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();
@@ -39,7 +69,7 @@ public abstract class ZLXMLProcessor {
 		if (stream == null) {
 			return false;
 		}
-		boolean code = read(xmlReader, stream);
+		boolean code = read(xmlReader, stream, bufferSize);
 		try {
 			stream.close();
 		} catch (IOException e) {

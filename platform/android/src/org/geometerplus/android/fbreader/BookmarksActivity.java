@@ -209,6 +209,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		int sentenceCounter = 0;
 		int storedWordCounter = 0;
 		boolean lineIsNonEmpty = false;
+		boolean appendLineBreak = false;
 mainLoop:
 		while ((wordCounter < 20) && (sentenceCounter < 3)) {
 			while (cursor.isEndOfParagraph()) {
@@ -216,13 +217,16 @@ mainLoop:
 					break mainLoop;
 				}
 				if (sentenceBuilder.length() > 0) {
+					if (appendLineBreak) {
+						builder.append("\n");
+					}
 					builder.append(sentenceBuilder);
-					builder.append("\n");
 					sentenceBuilder.delete(0, sentenceBuilder.length());
 					++sentenceCounter;
 					storedWordCounter = wordCounter;
-					lineIsNonEmpty = false;
 				}
+				lineIsNonEmpty = false;
+				appendLineBreak = true;
 			}
 			final ZLTextElement element = cursor.getElement();
 			if (element instanceof ZLTextWord) {
@@ -237,6 +241,10 @@ mainLoop:
 					case '.':
 					case '!':
 					case '?':
+						if (appendLineBreak) {
+							builder.append("\n");
+							appendLineBreak = false;
+						}
 						builder.append(sentenceBuilder);
 						sentenceBuilder.delete(0, sentenceBuilder.length());
 						++sentenceCounter;

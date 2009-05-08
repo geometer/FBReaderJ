@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.xml.own;
+package org.geometerplus.zlibrary.core.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
-final class ZLOwnDTDParser {
+final class ZLDTDParser {
 	private static final byte IGNORABLE_WHITESPACE = 0;
 	private static final byte LANGLE = 1;
 	private static final byte TAG_PREFIX = 2;

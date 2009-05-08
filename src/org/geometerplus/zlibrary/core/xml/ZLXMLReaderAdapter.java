@@ -26,11 +26,11 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZLXMLReaderAdapter implements ZLXMLReader {
 	public boolean read(ZLFile file) {
-		return ZLXMLProcessorFactory.Instance().createXMLProcessor().read(this, file);
+		return ZLXMLProcessor.read(this, file);
 	}
 	
 	public boolean read(InputStream stream) {
-		return ZLXMLProcessorFactory.Instance().createXMLProcessor().read(this, stream);
+		return ZLXMLProcessor.read(this, stream, 65536);
 	}
 	
 	public boolean dontCacheAttributeValues() {
@@ -65,8 +65,7 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 	public void namespaceListChangedHandler(HashMap namespaces) {
 	}
 
-	private static final ArrayList EMPTY_LIST = new ArrayList();
-	public ArrayList externalDTDs() {
-		return EMPTY_LIST;
+	public List<String> externalDTDs() {
+		return Collections.emptyList();
 	}
 }

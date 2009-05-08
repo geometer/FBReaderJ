@@ -23,7 +23,6 @@ import java.util.HashMap;
 
 import android.app.Application;
 
-import org.geometerplus.zlibrary.core.xml.own.ZLOwnXMLProcessorFactory;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 
@@ -49,7 +48,6 @@ public class ZLAndroidApplication extends Application {
 
 	public void onCreate() {
 		super.onCreate();
-		new ZLOwnXMLProcessorFactory();
 		new ZLSQLiteConfig(this);
 		new ZLAndroidImageManager();
 		new ZLAndroidDialogManager();
