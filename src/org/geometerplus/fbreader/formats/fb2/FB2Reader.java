@@ -76,7 +76,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		if (image != null) {
 			image.addData(ch, start, length);
 		} else {
-			addData(ch, start, length);
+			addData(ch, start, length, false);
 		}		
 	}
 
@@ -88,7 +88,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		if (image != null) {
 			image.addData(ch, start, length);
 		} else {
-			addDataFinal(ch, start, length);
+			addData(ch, start, length, true);
 		}		
 	}
 

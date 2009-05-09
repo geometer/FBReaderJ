@@ -226,10 +226,6 @@ abstract class ZLTextModelImpl implements ZLTextModel {
 		addText(text, 0, text.length);
 	}
 
-	public final void addText(ZLTextBuffer buffer) {
-		addText(buffer.getData(), 0, buffer.getLength());
-	}
-
 	public final void addText(char[] text, int offset, int length) {
 		char[] block = getDataBlock(3 + length);
 		++myParagraphLengths[myParagraphsNumber - 1];

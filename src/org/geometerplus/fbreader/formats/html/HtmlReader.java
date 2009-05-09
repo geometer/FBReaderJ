@@ -19,7 +19,9 @@
 
 package org.geometerplus.fbreader.formats.html;
 
+import java.util.HashMap;
 import java.io.*;
+import java.nio.charset.*;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReader;
@@ -29,6 +31,9 @@ import org.geometerplus.zlibrary.core.html.*;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+
+import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
+import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 
 public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private final byte[] myStyleTable = new byte[HtmlTag.TAG_NUMBER];
@@ -52,11 +57,9 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		myStyleTable[HtmlTag.I] = FBTextKind.ITALIC;
 	}
 
-	private final String myEncoding;
+	private final CharsetDecoder myAttributeDecoder;
 
 	private boolean myInsideTitle = false;
-	private int myBodyCounter = 0;
-	private boolean myReadMainText = false;
 	private boolean mySectionStarted = false;
 	private byte myHyperlinkType;
 	private final char[] SPACE = { ' ' };
@@ -69,9 +72,19 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private byte[] myControls = new byte[10];
 	private byte myControlsNumber = 0;
 	
-	public HtmlReader(BookModel model) {
+	public HtmlReader(BookModel model) throws UnsupportedEncodingException {
 		super(model);
-		myEncoding = model.Book.getEncoding();
+		try {	
+			String encoding = model.Book.getEncoding();
+			myAttributeDecoder = Charset.forName(encoding).newDecoder()
+				.onMalformedInput(CodingErrorAction.REPLACE)
+				.onUnmappableCharacter(CodingErrorAction.REPLACE);
+			setByteDecoder(Charset.forName(encoding).newDecoder()
+				.onMalformedInput(CodingErrorAction.REPLACE)
+				.onUnmappableCharacter(CodingErrorAction.REPLACE));
+		} catch (UnsupportedCharsetException e) {
+			throw new UnsupportedEncodingException(e.getMessage());
+		}
 	}
 
 	public boolean readBook() throws IOException {
@@ -89,36 +102,47 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		unsetCurrentTextModel();
 	}
 
-	public void byteDataHandler(byte[] ch, int start, int length) {
-		if (length != 0) {
-			try {
-				addData(new String(ch, start, length, myEncoding).toCharArray());
-			} catch (UnsupportedEncodingException e) {
-			}
-			//addData(new String(ch, myEncoding).toCharArray(), start, length);
-		}
+	public void byteDataHandler(byte[] data, int start, int length) {
+		addByteData(data, start, length, false);
 	}
 
-	public void byteDataHandlerFinal(byte[] ch, int start, int length) {
-		if (length != 0) {
-			try {
-				addDataFinal(new String(ch, start, length, myEncoding).toCharArray());
-			} catch (UnsupportedEncodingException e) {
-			}
-			//addDataFinal(ch, start, length);
+	public void byteDataHandlerFinal(byte[] data, int start, int length) {
+		addByteData(data, start, length, true);
+	}
+
+	private HashMap<String,char[]> myEntityMap;
+	public void entityDataHandler(String entity) {
+		if (myEntityMap == null) {
+			myEntityMap = new HashMap<String,char[]>(ZLXMLProcessor.getEntityMap(XHTMLReader.xhtmlDTDs()));
 		}
+		char[] data = myEntityMap.get(entity);
+		if (data == null) {
+			if ((entity.length() > 0) && (entity.charAt(0) == '#')) {
+				try {
+					int number;
+					if (entity.charAt(1) == 'x') {
+						number = Integer.parseInt(entity.substring(2), 16);
+					} else {
+						number = Integer.parseInt(entity.substring(1));
+					}
+					data = new char[] { (char)number };
+				} catch (NumberFormatException e) {
+				}
+			}
+			if (data == null) {
+				data = new char[0];
+			}
+			myEntityMap.put(entity, data);
+		}
+		addData(data);
 	}
 
 	private void openControl(byte control) {
 		addControl(control, true);
-		if (++myControlsNumber > myControls.length) {
-			byte[] temp = ZLArrayUtils.createCopy(myControls, 0, myControls.length);
-			myControls = new byte[2 * myControlsNumber];
-			for (int i = 0; i < myControlsNumber - 1; i++) {
-				myControls[i] = temp[i];
-			}
+		if (myControlsNumber == myControls.length) {
+			myControls = ZLArrayUtils.createCopy(myControls, myControlsNumber, 2 * myControlsNumber);
 		}
-		myControls[myControlsNumber - 1] = control;
+		myControls[myControlsNumber++] = control;
 	}
 	
 	private void closeControl(byte control) {
@@ -149,8 +173,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 	
-	public void endElementHandler(ZLByteBuffer tagName) {
-		final byte tag = HtmlTag.getTagByName(tagName.toString(myEncoding));
+	public void endElementHandler(String tagName) {
+		final byte tag = HtmlTag.getTagByName(tagName);
 		switch (tag) {
 			case HtmlTag.SCRIPT:
 			case HtmlTag.SELECT:
@@ -175,7 +199,6 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.BODY:
-				myReadMainText = false;
 				break;
 
 			case HtmlTag.HTML:
@@ -209,29 +232,14 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 
-	public void startElementHandler(ZLByteBuffer tagName, ZLHtmlAttributeMap attributes) {
-		String id = attributes.getStringValue("id", myEncoding);
-		if (id != null) {
-			if (!myReadMainText) {
-				setFootnoteTextModel(id);
-			}
-			addHyperlinkLabel(id);
-		}
-
-		final byte tag = HtmlTag.getTagByName(tagName.toString(myEncoding));
+	public void startElementHandler(String tagName, ZLHtmlAttributeMap attributes) {
+		final byte tag = HtmlTag.getTagByName(tagName);
 		switch (tag) {
 			case HtmlTag.HTML:
 				break;
 
 			case HtmlTag.BODY:
-				++myBodyCounter;
-				//myParagraphsBeforeBodyNumber = Model.BookTextModel
-					//	.getParagraphsNumber();
-				if ((myBodyCounter == 1)
-						|| (attributes.getValue("name") == null)) {
-					setMainTextModel();
-					myReadMainText = true;
-				}
+				setMainTextModel();
 				pushKind(FBTextKind.REGULAR);
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
@@ -246,7 +254,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.A:{
-				String ref = attributes.getStringValue(myHrefAttribute, myEncoding);
+				String ref = attributes.getStringValue(myHrefAttribute, myAttributeDecoder);
 				if ((ref != null) && (ref.length() != 0)) {
 					if (ref.charAt(0) == '#') {
 						myHyperlinkType = FBTextKind.FOOTNOTE;
@@ -262,7 +270,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			}
 			
 			case HtmlTag.IMG: {
-				String ref = attributes.getStringValue(mySrcAttribute, myEncoding);
+				String ref = attributes.getStringValue(mySrcAttribute, myAttributeDecoder);
 				if ((ref != null) && (ref.length() != 0)) {
 					addImageReference(ref, (short)0);
 					String filePath = ref;
@@ -311,10 +319,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				startNewParagraph();
 				if (myOrderedListIsStarted) {
 					char[] number = (new Integer(++myOLCounter)).toString().toCharArray();
-					addDataFinal(number, 0, number.length);
-					addDataFinal(new char[] {'.', ' '}, 0, 2);
+					addData(number);
+					addData(new char[] {'.', ' '});
 				} else {
-					addDataFinal(new char[] {'*', ' '}, 0, 2);
+					addData(new char[] {'*', ' '});
 				}
 				break;
 				

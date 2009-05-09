@@ -19,7 +19,9 @@
 
 package org.geometerplus.zlibrary.core.html;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharsetDecoder;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
@@ -51,10 +53,12 @@ public final class ZLByteBuffer {
 		}
 		System.arraycopy(buffer, offset, data, len, count);
 		myLength = newLength;
+		myStringValue = null;
 	}
 
 	public void clear() {
 		myLength = 0;
+		myStringValue = null;
 	}
 
 	public boolean equals(Object o) {
@@ -91,24 +95,32 @@ public final class ZLByteBuffer {
 		return code;
 	}
 
-	public byte[] data() {
-		return myData;
-	}
-
-	public int length() {
-		return myLength;
-	}
-
 	public boolean equalsToLCString(String lcPattern) {
 		return (myLength == lcPattern.length()) &&
 				lcPattern.equals(new String(myData, 0, myLength).toLowerCase());
 	} 
 
-	public String toString(String encoding) {
-		try {
-			return new String(myData, 0, myLength, encoding);
-		} catch (UnsupportedEncodingException e) {
-			return "";
+	private static final Object myConverterLock = new Object();
+	private static char[] myConverterBuffer = new char[20];
+	private String myStringValue;
+	public String toString(CharsetDecoder decoder) {
+		if (myStringValue == null) {
+			synchronized (myConverterLock) {
+				if (myConverterBuffer.length < myLength) {
+					myConverterBuffer = new char[myLength];
+				}
+				ByteBuffer byteBuffer = ByteBuffer.wrap(myData, 0, myLength);
+				CharBuffer charBuffer = CharBuffer.wrap(myConverterBuffer);
+				decoder.decode(byteBuffer, charBuffer, true);
+				myStringValue = new String(myConverterBuffer, 0, charBuffer.position());
+			}
 		}
+		return myStringValue;
+	}
+	public String toString() {
+		if (myStringValue == null) {
+			myStringValue = new String(myData, 0, myLength);
+		}
+		return myStringValue;
 	}
 }

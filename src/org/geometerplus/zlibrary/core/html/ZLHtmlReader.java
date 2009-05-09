@@ -23,8 +23,9 @@ public interface ZLHtmlReader {
 	public void startDocumentHandler();
 	public void endDocumentHandler();
 
-	public void startElementHandler(ZLByteBuffer tag, ZLHtmlAttributeMap attributes);
-	public void endElementHandler(ZLByteBuffer tag);
+	public void startElementHandler(String tag, ZLHtmlAttributeMap attributes);
+	public void endElementHandler(String tag);
 	public void byteDataHandler(byte[] ch, int start, int length);
 	public void byteDataHandlerFinal(byte[] ch, int start, int length);
+	public void entityDataHandler(String entity);
 }

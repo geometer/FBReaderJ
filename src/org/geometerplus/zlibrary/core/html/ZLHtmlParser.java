@@ -46,6 +46,7 @@ final class ZLHtmlParser {
 	private static final byte COMMENT_MINUS = 17;
 	private static final byte D_ATTRIBUTE_VALUE = 18;
 	private static final byte SCRIPT = 19;
+	private static final byte ENTITY_REF = 20;
 	
 	private static ZLByteBuffer unique(HashMap<ZLByteBuffer,ZLByteBuffer> strings, ZLByteBuffer container) {
 		ZLByteBuffer s = strings.get(container);
@@ -72,16 +73,15 @@ final class ZLHtmlParser {
 		final ZLByteBuffer tagName = new ZLByteBuffer();
 		final ZLByteBuffer attributeName = new ZLByteBuffer();
 		final ZLByteBuffer attributeValue = new ZLByteBuffer();
+		final ZLByteBuffer entityName = new ZLByteBuffer();
 		final HashMap<ZLByteBuffer,ZLByteBuffer> strings = new HashMap<ZLByteBuffer,ZLByteBuffer>();
 		final ZLHtmlAttributeMap attributes = new ZLHtmlAttributeMap();
 		boolean scriptOpened = false;
 		boolean html = false;
 		
 		byte state = START_DOCUMENT;
-		int CNT = 0;
-		while (++CNT < 300) {
-			int count = stream.read(buffer);
-			System.err.println(CNT + ":" + count);
+		while (true) {
+			final int count = stream.read(buffer);
 			if (count <= 0) {
 				return;
 			}
@@ -417,6 +417,25 @@ mainSwitchLabel:
 										}
 										state = LANGLE;
 										break mainSwitchLabel;
+									case '&':
+										if (i > startPosition) {
+											htmlReader.byteDataHandler(buffer, startPosition, i - startPosition);
+										}
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
+						case ENTITY_REF:
+							while (true) {
+								switch (buffer[++i]) {
+									case ';':
+										entityName.append(buffer, startPosition, i - startPosition);
+										state = TEXT;
+										startPosition = i + 1;
+										htmlReader.entityDataHandler(unique(strings, entityName).toString());
+										entityName.clear();
+										break mainSwitchLabel;
 								}
 							}
 					}
@@ -437,23 +456,27 @@ mainSwitchLabel:
 					case TEXT:
 						htmlReader.byteDataHandler(buffer, startPosition, count - startPosition);
 						break;
+					case ENTITY_REF:
+						entityName.append(buffer, startPosition, count - startPosition);
+						break;
 				}
 			}
 		}
 	}
 
 	private static void processFullTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName, ZLHtmlAttributeMap attributes) {
-		htmlReader.startElementHandler(tagName, attributes);
-		htmlReader.endElementHandler(tagName);
+		String stringTagName = tagName.toString();
+		htmlReader.startElementHandler(stringTagName, attributes);
+		htmlReader.endElementHandler(stringTagName);
 		attributes.clear();
 	}
 
 	private static void processStartTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName, ZLHtmlAttributeMap attributes) {
-		htmlReader.startElementHandler(tagName, attributes);
+		htmlReader.startElementHandler(tagName.toString(), attributes);
 		attributes.clear();
 	}
 
 	private static void processEndTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName) {
-		htmlReader.endElementHandler(tagName);
+		htmlReader.endElementHandler(tagName.toString());
 	}
 }

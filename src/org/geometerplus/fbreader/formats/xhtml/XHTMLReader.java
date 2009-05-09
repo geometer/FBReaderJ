@@ -218,19 +218,23 @@ cycle:
 			if (myInsideBody && !myModelReader.paragraphIsOpen()) {
 				myModelReader.beginParagraph();
 			}
-			myModelReader.addData(data, start, len);
+			myModelReader.addData(data, start, len, false);
 		}
 	}
 
 	private static ArrayList<String> ourExternalDTDs = new ArrayList<String>();
 
-	public List<String> externalDTDs() {
+	public static List<String> xhtmlDTDs() {
 		if (ourExternalDTDs.isEmpty()) {
 			ourExternalDTDs.add("data/formats/xhtml/xhtml-lat1.ent");
 			ourExternalDTDs.add("data/formats/xhtml/xhtml-special.ent");
 			ourExternalDTDs.add("data/formats/xhtml/xhtml-symbol.ent");
 		}
 		return ourExternalDTDs;
+	}
+
+	public List<String> externalDTDs() {
+		return xhtmlDTDs();
 	}
 
 	public boolean dontCacheAttributeValues() {

@@ -22,6 +22,10 @@ package org.geometerplus.fbreader.bookmodel;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharsetDecoder;
+
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.model.*;
 
@@ -32,9 +36,9 @@ public class BookReader {
 	
 	private boolean myTextParagraphExists = false;
 	
-	private final ZLTextBuffer myBuffer = new ZLTextBuffer();
-	private boolean myBufferIsNotEmpty = false;
-	private final ZLTextBuffer myContentsBuffer = new ZLTextBuffer();
+	private char[] myTextBuffer = new char[4096];
+	private int myTextBufferLength;
+	private StringBuilder myContentsBuffer = new StringBuilder();
 
 	private byte[] myKindStack = new byte[20];
 	private int myKindStackSize;
@@ -47,17 +51,24 @@ public class BookReader {
 	
 	private TOCTree myCurrentContentsTree;
 
+	private CharsetDecoder myByteDecoder;
+
 	public BookReader(BookModel model) {
 		Model = model;
 		myCurrentContentsTree = model.TOCTree;
 	}
+
+	public final void setByteDecoder(CharsetDecoder decoder) {
+		myByteDecoder = decoder;
+	}
 	
 	private final void flushTextBufferToParagraph() {
-		if (myBufferIsNotEmpty) {
-			final ZLTextBuffer buffer = myBuffer;
-			myCurrentTextModel.addText(buffer);
-			buffer.clear();
-			myBufferIsNotEmpty = false;
+		if (myTextBufferLength > 0) {
+			myCurrentTextModel.addText(myTextBuffer, 0, myTextBufferLength);
+			myTextBufferLength = 0;
+			if (myByteDecoder != null) {
+				myByteDecoder.reset();
+			}
 		}
 	}
 	
@@ -167,38 +178,89 @@ public class BookReader {
 	}
 	
 	public final void addData(char[] data) {
-		addData(data, 0, data.length);
+		addData(data, 0, data.length, false);
 	}
 
-	public final void addData(char[] data, int offset, int length) {
-		if (myTextParagraphExists) {
-			myBuffer.append(data, offset, length);
-			myBufferIsNotEmpty = true;
-			if (!myInsideTitle) {
-				mySectionContainsRegularContents = true;
-			} else {
-				addContentsData(data, offset, length);
-			}
-		}	
-	}
-	
-	public final void addDataFinal(char[] data) {
-		addDataFinal(data, 0, data.length);
-	}
-
-	public final void addDataFinal(char[] data, int offset, int length) {
-		if (myBufferIsNotEmpty) {
-			addData(data, offset, length);
+	public final void addData(char[] data, int offset, int length, boolean direct) {
+		if (!myTextParagraphExists) {
+			return;
+		}
+		if (direct && (myTextBufferLength == 0) && !myInsideTitle) {
+			myCurrentTextModel.addText(data, offset, length);
 		} else {
-			if (myTextParagraphExists) {
-				myCurrentTextModel.addText(data, offset, length);
-				if (!myInsideTitle) {
-					mySectionContainsRegularContents = true;
-				} else {
-					addContentsData(data, offset, length);
+			final int oldLength = myTextBufferLength;
+			final int newLength = oldLength + length;
+			if (myTextBuffer.length < newLength) {
+				myTextBuffer = ZLArrayUtils.createCopy(myTextBuffer, oldLength, newLength);
+			}
+			System.arraycopy(data, offset, myTextBuffer, oldLength, length);
+			myTextBufferLength = newLength;
+			if (myInsideTitle) {
+				addContentsData(myTextBuffer, oldLength, length);
+			}
+		}
+		if (!myInsideTitle) {
+			mySectionContainsRegularContents = true;
+		}
+	}
+
+	private char[] myCharBuffer = new char[8192];
+	private byte[] myUnderflowByteBuffer = new byte[4];
+	private char[] myUnderflowCharBuffer = new char[1];
+	private int myUnderflowLength;
+
+	public final void addByteData(byte[] data, int start, int length, boolean endOfInput) {
+		if (!myTextParagraphExists || (length == 0)) {
+			return;
+		}
+
+		final int oldLength = myTextBufferLength;
+		if (myTextBuffer.length < oldLength + length) {
+			myTextBuffer = ZLArrayUtils.createCopy(myTextBuffer, oldLength, oldLength + length);
+		}
+
+		if (myUnderflowLength > 0) {
+			int l = myUnderflowLength;
+			final CharBuffer ucb = CharBuffer.wrap(myUnderflowCharBuffer);
+			while (length-- > 0) {
+				myUnderflowByteBuffer[l++] = data[start++];
+				final ByteBuffer ubb = ByteBuffer.wrap(myUnderflowByteBuffer);
+				myByteDecoder.decode(ubb, ucb, false);
+				if (ucb.position() == 1) {
+					addData(myUnderflowCharBuffer);
+					myUnderflowLength = 0;
 				}
-			}	
-		}	
+			}
+			if (length == 0) {
+				myUnderflowLength = l;
+				return;
+			}
+		}
+
+		char[] charBuffer = myCharBuffer;
+		if (length > charBuffer.length) {
+			charBuffer = new char[length];
+			myCharBuffer = charBuffer;
+		}
+		ByteBuffer bb = ByteBuffer.wrap(data, start, length);
+		CharBuffer cb = CharBuffer.wrap(charBuffer);
+		//CharBuffer cb = CharBuffer.wrap(myTextBuffer, myTextBufferLength, length);
+		myByteDecoder.decode(bb, cb, endOfInput);
+		//myTextBufferLength += cb.position();
+		if (endOfInput) {
+			myByteDecoder.reset();
+		}
+		int rem = bb.remaining();
+		if (rem > 0) {
+			for (int i = 0, j = start + length - rem; i < rem;) {
+				myUnderflowByteBuffer[i++] = data[j++];
+			}
+			myUnderflowLength = rem;
+		}
+		final int position = cb.position();
+		if (position > 0) {
+			addData(charBuffer, 0, position, endOfInput);
+		}
 	}
 	
 	public final void addHyperlinkControl(byte kind, String label) {
@@ -247,15 +309,14 @@ public class BookReader {
 			}
 			TOCTree parentTree = myCurrentContentsTree;
 			if (parentTree.Level > 0) {
-				final ZLTextBuffer contentsBuffer = myContentsBuffer;
-				if (!contentsBuffer.isEmpty()) {
-					parentTree.setText(contentsBuffer.toString());
-					contentsBuffer.clear();
+				if (myContentsBuffer.length() > 0) {
+					parentTree.setText(myContentsBuffer.toString());
+					myContentsBuffer.delete(0, myContentsBuffer.length());
 				} else if (parentTree.getText() == null) {
 					parentTree.setText("...");
 				}
 			} else {
-				myContentsBuffer.clear();
+				myContentsBuffer.delete(0, myContentsBuffer.length());
 			}
 			TOCTree tree = new TOCTree(parentTree);
 			tree.setReference(myCurrentTextModel, referenceNumber);
@@ -265,14 +326,13 @@ public class BookReader {
 	
 	public final void endContentsParagraph() {
 		final TOCTree tree = myCurrentContentsTree;
-		final ZLTextBuffer contentsBuffer = myContentsBuffer;
 		if (tree.Level == 0) {
-			contentsBuffer.clear();
+			myContentsBuffer.delete(0, myContentsBuffer.length());
 			return;
 		}
-		if (!contentsBuffer.isEmpty()) {
-			tree.setText(contentsBuffer.toString());
-			contentsBuffer.clear();
+		if (myContentsBuffer.length() > 0) {
+			tree.setText(myContentsBuffer.toString());
+			myContentsBuffer.delete(0, myContentsBuffer.length());
 		} else if (tree.getText() == null) {
 			tree.setText("...");
 		}

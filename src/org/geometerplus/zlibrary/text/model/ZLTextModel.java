@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.ArrayList;
 
-import org.geometerplus.zlibrary.core.util.ZLTextBuffer;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public interface ZLTextModel {
@@ -31,7 +30,6 @@ public interface ZLTextModel {
 	void addControl(byte textKind, boolean isStart);
 	void addText(char[] text);
 	void addText(char[] text, int offset, int length);
-	void addText(ZLTextBuffer buffer);
 
 	void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, String label);

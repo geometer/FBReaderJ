@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.html;
 
+import java.nio.charset.CharsetDecoder;
+
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
 // optimized partially implemented map ZLByteBuffer -> ZLByteBuffer
@@ -60,9 +62,9 @@ public final class ZLHtmlAttributeMap {
 		return null;
 	}
 
-	public String getStringValue(String lcPattern, String encoding) {
+	public String getStringValue(String lcPattern, CharsetDecoder decoder) {
 		final ZLByteBuffer buffer = getValue(lcPattern);
-		return (buffer != null) ? buffer.toString(encoding) : null;
+		return (buffer != null) ? buffer.toString(decoder) : null;
 	}
 
 	public int getSize() {

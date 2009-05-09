@@ -19,24 +19,20 @@
 
 package org.geometerplus.zlibrary.core.xml;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.*;
+import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLXMLProcessor {
-	/*
-	private final int myBufferSize;
-
-	public ZLXMLProcessor() {
-		this(65536);
+	public static Map<String,char[]> getEntityMap(List<String> dtdList) {
+		try {
+			return ZLXMLParser.getDTDMap(dtdList);
+		} catch (IOException e) {
+			return Collections.emptyMap();
+		}
 	}
-
-	public ZLXMLProcessor(int bufferSize) {
-		myBufferSize = bufferSize;
-	}
-	*/
 
 	public static boolean read(ZLXMLReader reader, InputStream stream, int bufferSize) {
 		ZLXMLParser parser = null;

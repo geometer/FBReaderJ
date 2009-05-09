@@ -168,7 +168,7 @@ final class ZLXMLParser {
 
 	private static HashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = new HashMap();
 
-	private static HashMap<String,char[]> getDTDMap(List<String> dtdList) throws IOException {
+	static HashMap<String,char[]> getDTDMap(List<String> dtdList) throws IOException {
 		HashMap<String,char[]> entityMap = ourDTDMaps.get(dtdList);
 		if (entityMap == null) {
 			entityMap = new HashMap<String,char[]>();
