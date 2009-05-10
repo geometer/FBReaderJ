@@ -118,10 +118,12 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(
+		final MenuItem item = menu.add(
 			0, 1, Menu.NONE,
 			myResource.getResource("menu").getResource("search").getValue()
-		).setOnMenuItemClickListener(this);
+		);
+		item.setOnMenuItemClickListener(this);
+		item.setIcon(R.drawable.menu_icon_search);
 		return true;
 	}
 

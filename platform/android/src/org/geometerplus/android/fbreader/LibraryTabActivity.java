@@ -95,15 +95,16 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, 1, "localSearch");
-		addMenuItem(menu, 2, "networkSearch").setEnabled(false);
+		addMenuItem(menu, 1, "localSearch", R.drawable.menu_icon_search);
+		addMenuItem(menu, 2, "networkSearch", R.drawable.menu_icon_networksearch).setEnabled(false);
 		return true;
 	}
 
-	private MenuItem addMenuItem(Menu menu, int index, String resourceKey) {
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
 		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
+		item.setIcon(iconId);
 		return item;
 	}
 

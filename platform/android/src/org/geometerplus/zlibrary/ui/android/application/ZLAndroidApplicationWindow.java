@@ -30,6 +30,8 @@ import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidViewWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
+import org.geometerplus.zlibrary.ui.android.R;
+
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final HashMap<MenuItem,ZLApplication.Menubar.PlainItem> myMenuItemMap =
 		new HashMap<MenuItem,ZLApplication.Menubar.PlainItem>();
@@ -49,6 +51,12 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 		protected void processItem(ZLApplication.Menubar.PlainItem item) {
 			MenuItem menuItem = myMenuStack.peek().add(0, myItemCount++, Menu.NONE, item.Name);
+			try {
+				final String fieldName = "menu_icon_" + item.ActionId.toLowerCase();
+				menuItem.setIcon(R.drawable.class.getField(fieldName).getInt(null));
+			} catch (NoSuchFieldException e) {
+			} catch (IllegalAccessException e) {
+			}
 			menuItem.setOnMenuItemClickListener(myMenuListener);
 			myMenuItemMap.put(menuItem, item);
 		}

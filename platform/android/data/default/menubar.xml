@@ -5,8 +5,8 @@
 	<item id="bookmarks"/>
 	<item id="search"/>
 	<item id="preferences"/>
-	<item id="preferences-old"/>
 	<item id="bookInfo"/>
+	<item id="preferences-old"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>
