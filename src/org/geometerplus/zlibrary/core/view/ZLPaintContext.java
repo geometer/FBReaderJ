@@ -25,8 +25,6 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 abstract public class ZLPaintContext {
-	private int myY = 0;
-
 	private final ArrayList myFamilies = new ArrayList();
 
 	public interface LineStyle {
@@ -49,18 +47,6 @@ abstract public class ZLPaintContext {
 	private int myFontSize;
 	private boolean myFontIsBold;
 	private boolean myFontIsItalic;
-
-	public final int getY() {
-		return myY;
-	}
-
-	public final void moveYTo(int y) {
-		myY = y;
-	}
-	
-	public final void moveY(int deltaY) {
-		myY += deltaY;
-	}
 
 	public final void resetFont() {
 		myResetFont = true;

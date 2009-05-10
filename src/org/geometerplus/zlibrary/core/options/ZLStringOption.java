@@ -29,11 +29,6 @@ public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
 		myValue = myDefaultValue;
 	}
 
-	public void changeName(String optionName) {
-		super.changeName(optionName);
-		myValue = myDefaultValue;
-	}
-
 	public int getType() {
 		return Type.STRING;
 	}

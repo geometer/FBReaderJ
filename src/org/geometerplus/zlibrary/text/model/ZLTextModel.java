@@ -27,6 +27,8 @@ public interface ZLTextModel {
 	int getParagraphsNumber();
 	ZLTextParagraph getParagraph(int index);
 
+	void createParagraph(byte kind);
+
 	void addControl(byte textKind, boolean isStart);
 	void addText(char[] text);
 	void addText(char[] text, int offset, int length);
@@ -36,7 +38,6 @@ public interface ZLTextModel {
 	void addImage(String id, ZLImageMap imageMap, short vOffset);
 	void addFixedHSpace(short length);
 
-	void selectParagraph(int index);
 	void removeAllMarks();
 	ZLTextMark getFirstMark();
 	ZLTextMark getLastMark();

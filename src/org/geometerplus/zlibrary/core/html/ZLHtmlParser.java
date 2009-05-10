@@ -413,7 +413,7 @@ mainSwitchLabel:
 								switch (buffer[++i]) {
 									case '<':
 										if (i > startPosition) {
-											htmlReader.byteDataHandlerFinal(buffer, startPosition, i - startPosition);
+											htmlReader.byteDataHandler(buffer, startPosition, i - startPosition);
 										}
 										state = LANGLE;
 										break mainSwitchLabel;

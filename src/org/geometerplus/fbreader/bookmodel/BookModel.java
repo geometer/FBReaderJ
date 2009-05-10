@@ -43,10 +43,10 @@ public final class BookModel {
 	}
 
 	public final Book Book;
-	public final ZLTextPlainModel BookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache");
+	public final ZLTextModel BookTextModel = new ZLTextPlainModel(65536, "/sdcard/Books/.FBReader", "cache");
 	public final TOCTree TOCTree = new TOCTree();
 
-	private final HashMap<String,ZLTextPlainModel> myFootnotes = new HashMap<String,ZLTextPlainModel>();
+	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 	private final HashMap myInternalHyperlinks = new HashMap();
 
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
@@ -65,9 +65,9 @@ public final class BookModel {
 		Book = book;
 	}
 
-	ZLTextPlainModel getFootnoteModel(String id) {
-		final HashMap<String,ZLTextPlainModel> footnotes = myFootnotes;
-		ZLTextPlainModel model = footnotes.get(id);
+	ZLTextModel getFootnoteModel(String id) {
+		final HashMap<String,ZLTextModel> footnotes = myFootnotes;
+		ZLTextModel model = footnotes.get(id);
 		if (model == null) {
 			model = new ZLTextPlainModel(4096); 
 			footnotes.put(id, model); 

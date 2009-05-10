@@ -103,11 +103,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	}
 
 	public void byteDataHandler(byte[] data, int start, int length) {
-		addByteData(data, start, length, false);
-	}
-
-	public void byteDataHandlerFinal(byte[] data, int start, int length) {
-		addByteData(data, start, length, true);
+		addByteData(data, start, length);
 	}
 
 	private HashMap<String,char[]> myEntityMap;

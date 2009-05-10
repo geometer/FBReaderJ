@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
 public final class ZLTextHyperlinkControlElement extends ZLTextControlElement {
 	public final String Label;

@@ -29,8 +29,7 @@ import android.app.TabActivity;
 import android.graphics.drawable.Drawable;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-import org.geometerplus.zlibrary.text.view.impl.*;
+import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -214,6 +213,9 @@ mainLoop:
 		while ((wordCounter < 20) && (sentenceCounter < 3)) {
 			while (cursor.isEndOfParagraph()) {
 				if (!cursor.nextParagraph()) {
+					break mainLoop;
+				}
+				if ((builder.length() > 0) && cursor.getParagraphCursor().isEndOfSection()) {
 					break mainLoop;
 				}
 				if (sentenceBuilder.length() > 0) {

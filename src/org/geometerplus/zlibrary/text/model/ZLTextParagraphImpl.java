@@ -20,16 +20,12 @@
 package org.geometerplus.zlibrary.text.model;
 
 class ZLTextParagraphImpl implements ZLTextParagraph {
-	private final ZLTextModelImpl myModel;
+	private final ZLTextPlainModel myModel;
 	private final int myIndex;
 	
-	ZLTextParagraphImpl(ZLTextModelImpl model, int index) {
+	ZLTextParagraphImpl(ZLTextPlainModel model, int index) {
 		myModel = model;
 		myIndex = index;
-	}
-
-	ZLTextParagraphImpl(ZLTextModelImpl model) {
-		this(model, model.getParagraphsNumber());
 	}
 
 	public EntryIterator iterator() {

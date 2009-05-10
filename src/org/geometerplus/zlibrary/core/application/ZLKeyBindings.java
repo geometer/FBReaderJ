@@ -62,16 +62,11 @@ public final class ZLKeyBindings {
 	private	void loadCustomBindings() {
 		final int size =
 			new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
-		final ZLStringOption keyOption =
-			new ZLStringOption(myName, "", "");
-		final ZLStringOption actionOption =
-			new ZLStringOption(myName, "", "");
 		for (int i = 0; i < size; ++i) {
-			keyOption.changeName(BINDED_KEY + i);
-			final String keyValue = keyOption.getValue();
+			final String keyValue = new ZLStringOption(myName, BINDED_KEY + i, "").getValue();
 			if (keyValue.length() != 0) {
-				actionOption.changeName(BINDED_ACTION + i);
-				final String actionValue = actionOption.getValue();
+				final String actionValue =
+					new ZLStringOption(myName, BINDED_ACTION + i, "").getValue();
 				if (actionValue.length() != 0) {
 					bindKey(keyValue, actionValue);
 				}
@@ -88,19 +83,13 @@ public final class ZLKeyBindings {
 		new ZLKeyBindingsReader(keymap).readBindings();
 		
 		int counter = 0;
-		final ZLStringOption keyOption =
-			new ZLStringOption(myName, "", "");
-		final ZLStringOption actionOption =
-			new ZLStringOption(myName, "", "");
 		for (Iterator it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
 			final String key = (String)it.next();
 			final String originalValue = (String)keymap.get(key);
 			final String value = (String)myBindingsMap.get(key);
 			if (!value.equals(originalValue)) {
-				keyOption.changeName(BINDED_KEY + counter);
-				actionOption.changeName(BINDED_ACTION + counter);
-				keyOption.setValue(key);
-				actionOption.setValue(value);
+				new ZLStringOption(myName, BINDED_KEY + counter, "").setValue(key);
+				new ZLStringOption(myName, BINDED_ACTION + counter, "").setValue(value);
 				++counter;
 			}
 		}

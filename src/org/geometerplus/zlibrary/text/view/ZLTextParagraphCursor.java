@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
@@ -171,11 +171,11 @@ public final class ZLTextParagraphCursor {
 		return (Index + 1 == Model.getParagraphsNumber());
 	}
 	
-	boolean isEndOfSection() {
+	public boolean isEndOfSection() {
 		return (Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
 	}
 	
-	final int getParagraphLength() {
+	int getParagraphLength() {
 		return myElements.size();
 	}
 
@@ -187,7 +187,7 @@ public final class ZLTextParagraphCursor {
 		return isLast() ? null : cursor(Model, Index + 1);
 	}
 	
-	final ZLTextElement getElement(int index) {
+	ZLTextElement getElement(int index) {
 		try {
 			return (ZLTextElement)myElements.get(index);
 		} catch (IndexOutOfBoundsException e) {

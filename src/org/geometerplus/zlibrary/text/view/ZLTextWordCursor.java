@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.text.model.ZLTextMark;
 

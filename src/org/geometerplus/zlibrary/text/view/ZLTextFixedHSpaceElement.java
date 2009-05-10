@@ -17,13 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
-interface PaintStateEnum {
-	int NOTHING_TO_PAINT = 0;
-	int READY = 1;
-	int START_IS_KNOWN = 2;
-	int END_IS_KNOWN = 3;
-	int TO_SCROLL_FORWARD = 4;
-	int TO_SCROLL_BACKWARD = 5;
-};
+public class ZLTextFixedHSpaceElement extends ZLTextElement {
+	private final static ZLTextElement[] ourCollection = new ZLTextElement[20];
+
+	public static ZLTextElement getElement(short length) {
+		if (length < 20) {
+			ZLTextElement cached = ourCollection[length];
+			if (cached == null) {
+				cached = new ZLTextFixedHSpaceElement(length);
+				ourCollection[length] = cached;
+			}
+			return cached;
+		}	else {
+			return new ZLTextFixedHSpaceElement(length);
+		}
+	}
+
+	public final short Length;
+
+	private ZLTextFixedHSpaceElement(short length) {
+		Length = length;
+	}
+}

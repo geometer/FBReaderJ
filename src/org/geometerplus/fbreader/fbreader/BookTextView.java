@@ -29,8 +29,7 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-import org.geometerplus.zlibrary.text.view.impl.*;
+import org.geometerplus.zlibrary.text.view.*;
 
 public class BookTextView extends FBView {
 	BookTextView(ZLPaintContext context) {

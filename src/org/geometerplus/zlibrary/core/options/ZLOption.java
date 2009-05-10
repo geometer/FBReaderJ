@@ -25,16 +25,11 @@ public abstract class ZLOption {
 	public static final String PLATFORM_GROUP = "PlatformOptions";
 	
 	private final String myGroup;
-	private String myOptionName;
+	private final String myOptionName;
 	protected boolean myIsSynchronized;
 
 	protected ZLOption(String group, String optionName) {
 		myGroup = group.intern();
-		myOptionName = optionName.intern();
-		myIsSynchronized = false;
-	}
-
-	protected void changeName(String optionName) {
 		myOptionName = optionName.intern();
 		myIsSynchronized = false;
 	}

@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.text.model.*;
 public class BookReader {
 	public final BookModel Model;
 
-	private ZLTextPlainModel myCurrentTextModel = null;
+	private ZLTextModel myCurrentTextModel = null;
 	
 	private boolean myTextParagraphExists = false;
 	
@@ -111,7 +111,7 @@ public class BookReader {
 	}
 
 	public final void beginParagraph(byte kind) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			textModel.createParagraph(kind);
 			final byte[] stack = myKindStack;
@@ -139,7 +139,7 @@ public class BookReader {
 	}
 	
 	private final void insertEndParagraph(byte kind) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextModel textModel = myCurrentTextModel;
 		if ((textModel != null) && mySectionContainsRegularContents) {
 			int size = textModel.getParagraphsNumber();
 			if ((size > 0) && (textModel.getParagraph(size-1).getKind() != kind)) {
@@ -204,12 +204,10 @@ public class BookReader {
 		}
 	}
 
-	private char[] myCharBuffer = new char[8192];
 	private byte[] myUnderflowByteBuffer = new byte[4];
-	private char[] myUnderflowCharBuffer = new char[1];
 	private int myUnderflowLength;
 
-	public final void addByteData(byte[] data, int start, int length, boolean endOfInput) {
+	public final void addByteData(byte[] data, int start, int length) {
 		if (!myTextParagraphExists || (length == 0)) {
 			return;
 		}
@@ -218,17 +216,17 @@ public class BookReader {
 		if (myTextBuffer.length < oldLength + length) {
 			myTextBuffer = ZLArrayUtils.createCopy(myTextBuffer, oldLength, oldLength + length);
 		}
+		final CharBuffer cb = CharBuffer.wrap(myTextBuffer, myTextBufferLength, length);
 
 		if (myUnderflowLength > 0) {
 			int l = myUnderflowLength;
-			final CharBuffer ucb = CharBuffer.wrap(myUnderflowCharBuffer);
 			while (length-- > 0) {
 				myUnderflowByteBuffer[l++] = data[start++];
 				final ByteBuffer ubb = ByteBuffer.wrap(myUnderflowByteBuffer);
-				myByteDecoder.decode(ubb, ucb, false);
-				if (ucb.position() == 1) {
-					addData(myUnderflowCharBuffer);
+				myByteDecoder.decode(ubb, cb, false);
+				if (cb.position() != oldLength) {
 					myUnderflowLength = 0;
+					break;
 				}
 			}
 			if (length == 0) {
@@ -237,19 +235,9 @@ public class BookReader {
 			}
 		}
 
-		char[] charBuffer = myCharBuffer;
-		if (length > charBuffer.length) {
-			charBuffer = new char[length];
-			myCharBuffer = charBuffer;
-		}
 		ByteBuffer bb = ByteBuffer.wrap(data, start, length);
-		CharBuffer cb = CharBuffer.wrap(charBuffer);
-		//CharBuffer cb = CharBuffer.wrap(myTextBuffer, myTextBufferLength, length);
-		myByteDecoder.decode(bb, cb, endOfInput);
-		//myTextBufferLength += cb.position();
-		if (endOfInput) {
-			myByteDecoder.reset();
-		}
+		myByteDecoder.decode(bb, cb, false);
+		myTextBufferLength = cb.position();
 		int rem = bb.remaining();
 		if (rem > 0) {
 			for (int i = 0, j = start + length - rem; i < rem;) {
@@ -257,9 +245,11 @@ public class BookReader {
 			}
 			myUnderflowLength = rem;
 		}
-		final int position = cb.position();
-		if (position > 0) {
-			addData(charBuffer, 0, position, endOfInput);
+
+		if (myInsideTitle) {
+			addContentsData(myTextBuffer, oldLength, myTextBufferLength - oldLength);
+		} else {
+			mySectionContainsRegularContents = true;
 		}
 	}
 	
@@ -273,7 +263,7 @@ public class BookReader {
 	}
 	
 	public final void addHyperlinkLabel(String label) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			int paragraphNumber = textModel.getParagraphsNumber();
 			if (myTextParagraphExists) {
@@ -302,7 +292,7 @@ public class BookReader {
 	}
 
 	public final void beginContentsParagraph(ZLTextModel bookTextModel, int referenceNumber) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextModel textModel = myCurrentTextModel;
 		if (textModel == bookTextModel) {
 			if (referenceNumber == -1) {
 				referenceNumber = textModel.getParagraphsNumber();
@@ -365,7 +355,7 @@ public class BookReader {
 	}
 	
 	public final void addImageReference(String ref, short offset) {
-		final ZLTextPlainModel textModel = myCurrentTextModel;
+		final ZLTextModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {

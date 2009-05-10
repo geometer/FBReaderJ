@@ -22,12 +22,7 @@ package org.geometerplus.zlibrary.text.model;
 class ZLTextSpecialParagraphImpl extends ZLTextParagraphImpl {
 	private final byte myKind;
 
-	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model) {
-		super(model);
-		myKind = kind;
-	}
-
-	ZLTextSpecialParagraphImpl(byte kind, ZLTextModelImpl model, int offset) {
+	ZLTextSpecialParagraphImpl(byte kind, ZLTextPlainModel model, int offset) {
 		super(model, offset);
 		myKind = kind;
 	}

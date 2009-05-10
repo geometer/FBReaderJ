@@ -19,13 +19,16 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.geometerplus.zlibrary.core.view.*;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.text.hyphenation.*;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-
-public abstract class ZLTextView extends ZLView {
+public abstract class ZLTextView extends ZLTextViewBase {
 	public interface ScrollingMode {
 		int NO_OVERLAPPING = 0;
 		int KEEP_LINES = 1;
@@ -33,26 +36,1099 @@ public abstract class ZLTextView extends ZLView {
 		int SCROLL_PERCENTAGE = 3;
 	};
 
+	private ZLTextModel myModel;
+	private final ZLTextSelectionModel mySelectionModel;
+
+	private interface SizeUnit {
+		int PIXEL_UNIT = 0;
+		int LINE_UNIT = 1;
+	};
+
+	private int myScrollingMode;
+	private int myOverlappingValue;
+
+	private ZLTextPage myPreviousPage = new ZLTextPage();
+	ZLTextPage myCurrentPage = new ZLTextPage();
+	private ZLTextPage myNextPage = new ZLTextPage();
+
+	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
+
+	private int[] myTextSize;
+
 	public ZLTextView(ZLPaintContext context) {
 		super(context);
+ 		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
-	public abstract void setModel(ZLTextModel model);
+	public final void setModel(ZLTextModel model) {
+		ZLTextParagraphCursorCache.clear();
 
-	public abstract void gotoPosition(ZLTextPosition position);
+		myModel = model;
+		if (myModel != null) {
+			final int paragraphsNumber = myModel.getParagraphsNumber();
+			if (paragraphsNumber > 0) {
+				myTextSize = new int[paragraphsNumber + 1];
+				myTextSize[0] = 0;
+				for (int i = 0; i < paragraphsNumber; ++i) {
+					myTextSize[i + 1] = myTextSize[i] + myModel.getParagraphTextLength(i);
+				}
+				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
+				myPreviousPage.reset();
+				myNextPage.reset();
+			}
+		}
+	}
+	
+	public ZLTextModel getModel() {
+		return myModel;
+	}
+	
+	private void moveStartCursor(int paragraphIndex) {
+		moveStartCursor(paragraphIndex, 0, 0);
+	}
+		
+	private void moveStartCursor(int paragraphIndex, int wordIndex, int charIndex) {
+		myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
+		myPreviousPage.reset();
+		myNextPage.reset();
+	}
 
-	public abstract void scrollPage(boolean forward, int scrollingMode, int value);
+	private void moveEndCursor(int paragraphIndex) {
+		moveEndCursor(paragraphIndex, 0, 0);
+	}
 
-	public abstract int search(String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly);
-	public abstract boolean canFindNext();
-	public abstract void findNext();
-	public abstract boolean canFindPrevious();
-	public abstract void findPrevious();
-	public abstract void clearFindResults();
-	public abstract boolean findResultsAreEmpty();
+	private void moveEndCursor(int paragraphIndex, int wordIndex, int charIndex) {
+		myCurrentPage.moveEndCursor(paragraphIndex, wordIndex, charIndex);
+		myPreviousPage.reset();
+		myNextPage.reset();
+	}
 
-	public abstract int getLeftMargin();
-	public abstract int getRightMargin();
-	public abstract int getTopMargin();
-	public abstract int getBottomMargin();
+	public ZLTextWordCursor getStartCursor() {
+		if (myCurrentPage.StartCursor.isNull()) {
+			preparePaintInfo(myCurrentPage);
+		}
+		return myCurrentPage.StartCursor;
+	}
+
+	public ZLTextWordCursor getEndCursor() {
+		if (myCurrentPage.EndCursor.isNull()) {
+			preparePaintInfo(myCurrentPage);
+		}
+		return myCurrentPage.EndCursor;
+	}
+
+	public void gotoMark(ZLTextMark mark) {
+		if (mark == null) {
+			return;
+		}
+
+		myPreviousPage.reset();
+		myNextPage.reset();
+		boolean doRepaint = false;
+		if (myCurrentPage.StartCursor.isNull()) {
+			doRepaint = true;
+			preparePaintInfo(myCurrentPage);
+		}
+		if (myCurrentPage.StartCursor.isNull()) {
+			return;
+		}
+		final ZLTextPosition position = new ZLTextPosition(myCurrentPage.StartCursor);
+		if ((myCurrentPage.StartCursor.getParagraphCursor().Index != mark.ParagraphIndex) || (myCurrentPage.StartCursor.getPosition().compareTo(mark) > 0)) {
+			doRepaint = true;
+			gotoParagraph(mark.ParagraphIndex, false);
+			preparePaintInfo(myCurrentPage);
+		}
+		if (myCurrentPage.EndCursor.isNull()) {
+			preparePaintInfo(myCurrentPage);
+		}
+		while (mark.compareTo(myCurrentPage.EndCursor.getPosition()) > 0) { 
+			doRepaint = true;
+			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			preparePaintInfo(myCurrentPage);
+		}
+		if (doRepaint) {
+			if (myCurrentPage.StartCursor.isNull()) {
+				preparePaintInfo(myCurrentPage);
+			}
+			ZLApplication.Instance().repaintView();
+		}
+	}
+
+	public int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
+		if (text.length() == 0) {
+			return 0;
+		}
+		int startIndex = 0;
+		int endIndex = myModel.getParagraphsNumber();
+		if (thisSectionOnly) {
+			// TODO: implement
+		}
+		int count = myModel.search(text, startIndex, endIndex, ignoreCase);
+		myPreviousPage.reset();
+		myNextPage.reset();
+		if (!myCurrentPage.StartCursor.isNull()) {
+			rebuildPaintInfo();
+			if (count > 0) {
+				ZLTextMark position = myCurrentPage.StartCursor.getPosition();
+				gotoMark(wholeText ? 
+					(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
+					(backward ? myModel.getPreviousMark(position) : myModel.getNextMark(position)));
+			}
+			ZLApplication.Instance().repaintView();
+		}
+		return count;
+	}
+
+	public boolean canFindNext() {
+		final ZLTextWordCursor end = myCurrentPage.EndCursor;
+		return !end.isNull() && (myModel != null) && (myModel.getNextMark(end.getPosition()) != null);
+	}
+
+	public void findNext() {
+		final ZLTextWordCursor end = myCurrentPage.EndCursor;
+		if (!end.isNull()) {
+			gotoMark(myModel.getNextMark(end.getPosition()));
+		}
+	}
+
+	public boolean canFindPrevious() {
+		final ZLTextWordCursor start = myCurrentPage.StartCursor;
+		return !start.isNull() && (myModel != null) && (myModel.getPreviousMark(start.getPosition()) != null);
+	}
+
+	public void findPrevious() {
+		final ZLTextWordCursor start = myCurrentPage.StartCursor;
+		if (!start.isNull()) {
+			gotoMark(myModel.getPreviousMark(start.getPosition()));
+		}
+	}
+
+	public void clearFindResults() {
+		if (!findResultsAreEmpty()) {
+			myModel.removeAllMarks();
+			rebuildPaintInfo();
+			ZLApplication.Instance().repaintView();
+		}
+	}
+
+	public boolean findResultsAreEmpty() {
+		return (myModel == null) || myModel.getMarks().isEmpty();
+	}
+
+	private volatile boolean myScrollingIsActive;
+	protected boolean isScrollingActive() {
+		return myScrollingIsActive;
+	}
+	protected void setScrollingActive(boolean active) {
+		myScrollingIsActive = active;
+	}
+
+	public final synchronized void startAutoScrolling(int viewPage) {
+		if (isScrollingActive()) {
+			return;
+		}
+
+		setScrollingActive(true);
+		super.startAutoScrolling(viewPage);
+	}
+
+	public final synchronized void onScrollingFinished(int viewPage) {
+		setScrollingActive(false);
+		switch (viewPage) {
+			case PAGE_CENTRAL:
+				break;
+			case PAGE_LEFT:
+			case PAGE_TOP:
+			{
+				ZLTextPage swap = myNextPage;
+				myNextPage = myCurrentPage;
+				myCurrentPage = myPreviousPage;
+				myPreviousPage = swap;
+				myPreviousPage.reset();
+				if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myNextPage);
+					myCurrentPage.EndCursor.setCursor(myNextPage.StartCursor);
+					myCurrentPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+				} else if (!myCurrentPage.EndCursor.isNull() &&
+						   !myNextPage.StartCursor.isNull() &&
+						   !myCurrentPage.EndCursor.equalsToCursor(myNextPage.StartCursor)) {
+					myNextPage.reset();
+					myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
+					myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
+				break;
+			}
+			case PAGE_RIGHT:
+			case PAGE_BOTTOM:
+			{
+				ZLTextPage swap = myPreviousPage;
+				myPreviousPage = myCurrentPage;
+				myCurrentPage = myNextPage;
+				myNextPage = swap;
+				myNextPage.reset();
+				if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myPreviousPage);
+					myCurrentPage.StartCursor.setCursor(myNextPage.EndCursor);
+					myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
+				break;
+			}
+		}
+	}
+
+	public synchronized void paint(int viewPage) {
+		Context.clear(ZLTextStyleCollection.Instance().getBaseStyle().BackgroundColorOption.getValue());
+
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+			return;
+		}
+
+		ZLTextPage page;
+		switch (viewPage) {
+			default:
+			case PAGE_CENTRAL:
+				page = myCurrentPage;
+				break;
+			case PAGE_TOP:
+			case PAGE_LEFT:
+				page = myPreviousPage;
+				if (myPreviousPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myCurrentPage);
+					myPreviousPage.EndCursor.setCursor(myCurrentPage.StartCursor);
+					myPreviousPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+				}
+				break;
+			case PAGE_BOTTOM:
+			case PAGE_RIGHT:
+				page = myNextPage;
+				if (myNextPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
+					preparePaintInfo(myCurrentPage);
+					myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
+					myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
+		}
+
+		page.TextElementMap.clear();
+
+		preparePaintInfo(page);
+
+		if (page.StartCursor.isNull() || page.EndCursor.isNull()) {
+			return;
+		}
+
+		final ArrayList<ZLTextLineInfo> lineInfos = page.LineInfos;
+		final int[] labels = new int[lineInfos.size() + 1];
+		int y = getTopMargin();
+		int index = 0;
+		for (ZLTextLineInfo info : lineInfos) {
+			prepareTextLine(page, info, y);
+			y += info.Height + info.Descent + info.VSpaceAfter;
+			labels[++index] = page.TextElementMap.size();
+		}
+
+		if (page == myCurrentPage) {
+			mySelectionModel.update();
+		}
+
+		y = getTopMargin();
+		index = 0;
+		for (ZLTextLineInfo info : lineInfos) {
+			drawTextLine(page, info, labels[index], labels[index + 1], y);
+			y += info.Height + info.Descent + info.VSpaceAfter;
+			++index;
+		}
+	}
+
+	private ZLTextPage getPage(int viewPage) {
+		switch (viewPage) {
+			default:
+			case PAGE_CENTRAL:
+				return myCurrentPage;
+			case PAGE_TOP:
+			case PAGE_LEFT:
+				return myPreviousPage;
+			case PAGE_BOTTOM:
+			case PAGE_RIGHT:
+				return myNextPage;
+		}
+	}
+
+	public final int getScrollbarFullSize() {
+		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+			return 1;
+		}
+		return myTextSize[myTextSize.length - 1];
+	}
+
+	public final int getScrollbarThumbPosition(int viewPage) {
+		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+			return 0;
+		}
+		ZLTextPage page = getPage(viewPage);
+		preparePaintInfo(page);
+		return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
+	}
+
+	public final int getScrollbarThumbLength(int viewPage) {
+		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+			return 0;
+		}
+		ZLTextPage page = getPage(viewPage);
+		preparePaintInfo(page);
+		int start = sizeOfTextBeforeCursor(page.StartCursor);
+		if (start == -1) {
+			start = 0;
+		}
+		int end = sizeOfTextBeforeCursor(page.EndCursor);
+		if (end == -1) {
+			end = myTextSize[myTextSize.length - 1];
+		}
+		return Math.max(1, end - start);
+	}
+
+	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
+		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
+			return -1;
+		}
+		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final int paragraphIndex = paragraphCursor.Index;
+		int sizeOfText = myTextSize[paragraphIndex];
+		final int paragraphLength = paragraphCursor.getParagraphLength();
+		if (paragraphLength > 0) {
+			sizeOfText +=
+				(myTextSize[paragraphIndex + 1] - sizeOfText)
+				* cursor.getWordIndex()
+				/ paragraphLength;
+		}
+		return sizeOfText;
+	}
+
+	private int getAreaLength(ZLTextParagraphCursor paragraph, ZLTextElementArea area, int toCharIndex) {
+		setTextStyle(area.Style);
+		final ZLTextWord word = (ZLTextWord)paragraph.getElement(area.TextElementIndex);
+		int length = toCharIndex - area.StartCharIndex;
+		boolean selectHyphenationSign = false;
+		if (length >= area.Length) {
+			selectHyphenationSign = area.AddHyphenationSign;
+			length = area.Length;
+		}
+		if (length > 0) {
+			return getWordWidth(word, area.StartCharIndex, length, selectHyphenationSign);
+		}
+		return 0;
+	}
+
+	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
+		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
+		final ZLPaintContext context = Context;
+
+		if ((page == myCurrentPage) && !mySelectionModel.isEmpty() && (from != to)) {
+			final int paragraphIndex = paragraph.Index;
+			final ZLTextSelectionModel.Range range = mySelectionModel.getRange();
+			final ZLTextSelectionModel.BoundElement lBound = range.Left;
+			final ZLTextSelectionModel.BoundElement rBound = range.Right;
+
+			int left = getRightLine();
+			if (paragraphIndex > lBound.ParagraphIndex) {
+				left = getLeftMargin();
+			} else if (paragraphIndex == lBound.ParagraphIndex) {
+				final int boundElementIndex = lBound.TextElementIndex;
+				if (info.StartWordIndex > boundElementIndex) {
+					left = getLeftMargin();
+				} else if ((info.EndWordIndex > boundElementIndex) ||
+									 ((info.EndWordIndex == boundElementIndex) &&
+										(info.EndCharIndex >= lBound.CharIndex))) {
+					final ZLTextElementArea elementArea = page.findLast(from, to, lBound);
+					left = elementArea.XStart;
+					if (elementArea.Element instanceof ZLTextWord) {
+						left += getAreaLength(paragraph, elementArea, lBound.CharIndex);
+					}
+				}
+			}
+
+			final int top = y + 1;
+			int bottom = y + info.Height + info.Descent;
+			int right = getLeftMargin();
+			if (paragraphIndex < rBound.ParagraphIndex) {
+				right = getRightLine();
+				bottom += info.VSpaceAfter;
+			} else if (paragraphIndex == rBound.ParagraphIndex) {
+				final int boundElementIndex = rBound.TextElementIndex;
+				if ((info.EndWordIndex < boundElementIndex) ||
+						((info.EndWordIndex == boundElementIndex) &&
+						 (info.EndCharIndex < rBound.CharIndex))) {
+					right = getRightLine();
+					bottom += info.VSpaceAfter;
+				} else if ((info.StartWordIndex < boundElementIndex) ||
+									 ((info.StartWordIndex == boundElementIndex) &&
+										(info.StartCharIndex <= rBound.CharIndex))) {
+					final ZLTextElementArea elementArea = page.findLast(from, to, rBound);
+					if (elementArea.Element instanceof ZLTextWord) {
+						right = elementArea.XStart + getAreaLength(paragraph, elementArea, rBound.CharIndex) - 1;
+					} else {
+						right = elementArea.XEnd;
+					}
+				}
+			}
+
+			if (left < right) {
+				context.setFillColor(ZLTextStyleCollection.Instance().getBaseStyle().SelectionBackgroundColorOption.getValue());
+				context.fillRectangle(left, top, right, bottom);
+			}
+		}
+
+		int index = from;
+		final int endWordIndex = info.EndWordIndex;
+		int charIndex = info.RealStartCharIndex;
+		for (int wordIndex = info.RealStartWordIndex; wordIndex != endWordIndex; ++wordIndex, charIndex = 0) {
+			final ZLTextElement element = paragraph.getElement(wordIndex);
+			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
+				final ZLTextElementArea area = page.TextElementMap.get(index++);
+				if (area.ChangeStyle) {
+					setTextStyle(area.Style);
+				}
+				final int areaX = area.XStart;
+				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalShift();
+				if (element instanceof ZLTextWord) {
+					drawWord(areaX, areaY, (ZLTextWord)element, charIndex, -1, false);
+				} else {
+					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
+				}
+			}
+		}
+		if (index != to) {
+			ZLTextElementArea area = page.TextElementMap.get(index++);
+			if (area.ChangeStyle) {
+				setTextStyle(area.Style);
+			}
+			int len = info.EndCharIndex;
+			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndWordIndex);
+			drawWord(
+				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalShift(),
+				word, 0, len, area.AddHyphenationSign
+			);
+		}
+	}
+
+	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
+		result.setCursor(start);
+		int textAreaHeight = getTextAreaHeight();
+		page.LineInfos.clear();
+		int counter = 0;
+		do {
+			resetTextStyle();
+			final ZLTextParagraphCursor paragraphCursor = result.getParagraphCursor();
+			final int wordIndex = result.getWordIndex();
+			applyControls(paragraphCursor, 0, wordIndex);	
+			ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, wordIndex, result.getCharIndex(), getTextStyle());
+			final int endIndex = info.ParagraphCursorLength;
+			while (info.EndWordIndex != endIndex) {
+				info = processTextLine(paragraphCursor, info.EndWordIndex, info.EndCharIndex, endIndex);
+				textAreaHeight -= info.Height + info.Descent;
+				if ((textAreaHeight < 0) && (counter > 0)) {
+					break;
+				}
+				textAreaHeight -= info.VSpaceAfter;
+				result.moveTo(info.EndWordIndex, info.EndCharIndex);
+				page.LineInfos.add(info);
+				if (textAreaHeight < 0) {
+					break;
+				}
+				counter++;
+			}
+		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && (textAreaHeight >= 0));
+		resetTextStyle();
+	}
+
+	private ZLTextLineInfo processTextLine(ZLTextParagraphCursor paragraphCursor, 
+		final int startIndex, final int startCharIndex, final int endIndex) {
+		final ZLPaintContext context = Context;
+		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
+		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
+		if (cachedInfo != null) {
+			applyControls(paragraphCursor, startIndex, cachedInfo.EndWordIndex);
+			return cachedInfo;
+		}
+
+		int currentWordIndex = startIndex;
+		int currentCharIndex = startCharIndex;
+		final boolean isFirstLine = (startIndex == 0) && (startCharIndex == 0);
+
+		if (isFirstLine) {
+			ZLTextElement element = paragraphCursor.getElement(currentWordIndex);
+			while (element instanceof ZLTextControlElement) {
+				applyControl((ZLTextControlElement)element);
+				++currentWordIndex;
+				currentCharIndex = 0;
+				if (currentWordIndex == endIndex) {
+					break;
+				}
+				element = paragraphCursor.getElement(currentWordIndex);
+			}
+			info.StartStyle = getTextStyle();
+			info.RealStartWordIndex = currentWordIndex;
+			info.RealStartCharIndex = currentCharIndex;
+		}	
+
+		ZLTextStyle storedStyle = getTextStyle();		
+		
+		info.LeftIndent = getTextStyle().getLeftIndent();	
+		if (isFirstLine) {
+			info.LeftIndent += getTextStyle().getFirstLineIndentDelta();
+		}	
+		
+		info.Width = info.LeftIndent;
+		
+		if (info.RealStartWordIndex == endIndex) {
+			info.EndWordIndex = info.RealStartWordIndex;
+			info.EndCharIndex = info.RealStartCharIndex;
+			return info;
+		}
+
+		int newWidth = info.Width;
+		int newHeight = info.Height;
+		int newDescent = info.Descent;
+		int maxWidth = getTextAreaWidth() - getTextStyle().getRightIndent();
+		boolean wordOccurred = false;
+		boolean isVisible = false;
+		int lastSpaceWidth = 0;
+		int internalSpaceCounter = 0;
+		boolean removeLastSpace = false;
+
+		do {
+			ZLTextElement element = paragraphCursor.getElement(currentWordIndex); 
+			newWidth += getElementWidth(element, currentCharIndex);
+			{
+				final int eltHeight = getElementHeight(element);
+				if (newHeight < eltHeight) {
+					newHeight = eltHeight;
+				}
+			}
+			{
+				final int eltDescent = getElementDescent(element);
+				if (newDescent < eltDescent) {
+					newDescent = eltDescent;
+				}
+			}
+			if (element == ZLTextElement.HSpace) {
+				if (wordOccurred) {
+					wordOccurred = false;
+					internalSpaceCounter++;
+					lastSpaceWidth = context.getSpaceWidth();
+					newWidth += lastSpaceWidth;
+				}
+			} else if (element instanceof ZLTextWord) {
+				wordOccurred = true;
+				isVisible = true;
+			} else if (element instanceof ZLTextControlElement) {
+				applyControl((ZLTextControlElement)element);
+			} else if (element instanceof ZLTextImageElement) {
+				wordOccurred = true;
+				isVisible = true;
+			}			
+			if ((newWidth > maxWidth) && (info.EndWordIndex != startIndex)) {
+				break;
+			}
+			ZLTextElement previousElement = element;
+			++currentWordIndex;
+			currentCharIndex = 0;
+			boolean allowBreak = currentWordIndex == endIndex;
+			if (!allowBreak) {
+				element = paragraphCursor.getElement(currentWordIndex); 
+				allowBreak = (((!(element instanceof ZLTextWord)) || (previousElement instanceof ZLTextWord)) && 
+						!(element instanceof ZLTextImageElement) && 
+						!(element instanceof ZLTextControlElement));
+			}
+			if (allowBreak) {
+				info.IsVisible = isVisible;
+				info.Width = newWidth;
+				if (info.Height < newHeight) {
+					info.Height = newHeight;
+				}
+				if (info.Descent < newDescent) {
+					info.Descent = newDescent;
+				}
+				info.EndWordIndex = currentWordIndex;
+				info.EndCharIndex = currentCharIndex;
+				info.SpaceCounter = internalSpaceCounter;
+				storedStyle = getTextStyle();
+				removeLastSpace = !wordOccurred && (internalSpaceCounter > 0);
+			}	
+		} while (currentWordIndex != endIndex);
+
+		if ((currentWordIndex != endIndex) 
+			&& (ZLTextStyleCollection.Instance().getBaseStyle().AutoHyphenationOption.getValue()) 
+			&& (getTextStyle().allowHyphenations())) {
+			ZLTextElement element = paragraphCursor.getElement(currentWordIndex);
+			if (element instanceof ZLTextWord) { 
+				final ZLTextWord word = (ZLTextWord)element;
+				newWidth -= getWordWidth(word, currentCharIndex);
+				int spaceLeft = maxWidth - newWidth;
+				if ((word.Length > 3) && (spaceLeft > 2 * Context.getSpaceWidth())) {
+					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
+					int hyphenationPosition = word.Length - 1;
+					int subwordWidth = 0;
+					for(; hyphenationPosition > 0; hyphenationPosition--) {
+						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
+							subwordWidth = getWordWidth(word, 0, hyphenationPosition, 
+								word.Data[word.Offset + hyphenationPosition - 1] != '-');
+							if (subwordWidth <= spaceLeft) {
+								break;
+							}
+						}
+					}
+					if (hyphenationPosition > 0) {
+						info.IsVisible = true;
+						info.Width = newWidth + subwordWidth;
+						if (info.Height < newHeight) {
+							info.Height = newHeight;
+						}
+						if (info.Descent < newDescent) {
+							info.Descent = newDescent;
+						}
+						info.EndWordIndex = currentWordIndex;
+						info.EndCharIndex = hyphenationPosition;
+						info.SpaceCounter = internalSpaceCounter;
+						storedStyle = getTextStyle();
+						removeLastSpace = false;
+					}
+				}
+			}
+		}
+		
+		if (removeLastSpace) {
+			info.Width -= lastSpaceWidth;
+			info.SpaceCounter--;
+		}
+
+		setTextStyle(storedStyle);
+
+		if (isFirstLine) {
+			info.Height += info.StartStyle.getSpaceBefore();
+		}
+		if (info.isEndOfParagraph()) {
+			info.VSpaceAfter = getTextStyle().getSpaceAfter();
+		}		
+
+		if ((info.EndWordIndex != endIndex) || (endIndex == info.ParagraphCursorLength)) {
+			myLineInfoCache.put(info, info);
+		}
+
+		return info;	
+	}
+
+	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
+		y = Math.min(y + info.Height, getBottomLine());
+
+		final ZLPaintContext context = Context;
+		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
+
+		setTextStyle(info.StartStyle);
+		int spaceCounter = info.SpaceCounter;
+		int fullCorrection = 0;
+		final boolean endOfParagraph = info.isEndOfParagraph();
+		boolean wordOccurred = false;
+		boolean changeStyle = true;
+
+		int x = getLeftMargin() + info.LeftIndent;
+		final int maxWidth = getTextAreaWidth();
+		switch (getTextStyle().getAlignment()) {
+			case ZLTextAlignmentType.ALIGN_RIGHT:
+				x += maxWidth - getTextStyle().getRightIndent() - info.Width;
+				break;
+			case ZLTextAlignmentType.ALIGN_CENTER:
+				x += (maxWidth - getTextStyle().getRightIndent() - info.Width) / 2;
+				break;
+			case ZLTextAlignmentType.ALIGN_JUSTIFY:
+				if (!endOfParagraph && (paragraphCursor.getElement(info.EndWordIndex) != ZLTextElement.AfterParagraph)) {
+					fullCorrection = maxWidth - getTextStyle().getRightIndent() - info.Width;
+				}
+				break;
+			case ZLTextAlignmentType.ALIGN_LEFT: 
+			case ZLTextAlignmentType.ALIGN_UNDEFINED:
+				break;
+		}
+	
+		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
+		final int paragraphIndex = paragraph.Index;
+		final int endWordIndex = info.EndWordIndex;
+		int charIndex = info.RealStartCharIndex;
+		for (int wordIndex = info.RealStartWordIndex; wordIndex != endWordIndex; ++wordIndex, charIndex = 0) {
+			final ZLTextElement element = paragraph.getElement(wordIndex);
+			final int width = getElementWidth(element, charIndex);
+			if (element == ZLTextElement.HSpace) {
+				if (wordOccurred && (spaceCounter > 0)) {
+					int correction = fullCorrection / spaceCounter;
+					x += context.getSpaceWidth() + correction;
+					fullCorrection -= correction;
+					wordOccurred = false;
+					--spaceCounter;
+				}	
+			} else if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
+				final int height = getElementHeight(element);
+				final int descent = getElementDescent(element);
+				final int length = (element instanceof ZLTextWord) ? ((ZLTextWord)element).Length : 0;
+				page.TextElementMap.add(new ZLTextElementArea(paragraphIndex, wordIndex, charIndex, 
+					length - charIndex, false, changeStyle, getTextStyle(), element, x, x + width - 1, y - height + 1, y + descent));
+				changeStyle = false;
+				wordOccurred = true;
+			} else if (element instanceof ZLTextControlElement) {
+				applyControl((ZLTextControlElement)element);
+				changeStyle = true;
+			}
+			x += width;
+		}
+		if (!endOfParagraph) {
+			final int len = info.EndCharIndex;
+			if (len > 0) {
+				final int wordIndex = info.EndWordIndex;
+				final ZLTextWord word = (ZLTextWord)paragraph.getElement(wordIndex);
+				final boolean addHyphenationSign = word.Data[word.Offset + len - 1] != '-';
+				final int width = getWordWidth(word, 0, len, addHyphenationSign);
+				final int height = getElementHeight(word);
+				final int descent = context.getDescent();
+				page.TextElementMap.add(
+					new ZLTextElementArea(
+						paragraphIndex, wordIndex, 0,
+						len, addHyphenationSign,
+						changeStyle, getTextStyle(), word,
+						x, x + width - 1, y - height + 1, y + descent
+					)
+				);
+			}	
+		}
+	}
+	
+	public synchronized final void scrollPage(boolean forward, int scrollingMode, int value) {
+		if (isScrollingActive()) {
+			return;
+		}
+
+		preparePaintInfo(myCurrentPage);
+		myPreviousPage.reset();
+		myNextPage.reset();
+		if (myCurrentPage.PaintState == PaintStateEnum.READY) {
+			myCurrentPage.PaintState = forward ? PaintStateEnum.TO_SCROLL_FORWARD : PaintStateEnum.TO_SCROLL_BACKWARD;
+			myScrollingMode = scrollingMode;
+			myOverlappingValue = value;
+		}
+	}
+
+	public final void gotoPosition(ZLTextPosition position) {
+		if (position != null) {
+			gotoPosition(position.ParagraphIndex, position.WordIndex, position.CharIndex);
+		}
+	}
+
+	private void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
+		final int maxParagraphIndex = myModel.getParagraphsNumber() - 1;
+		if (paragraphIndex > maxParagraphIndex) {
+			paragraphIndex = maxParagraphIndex;
+		}
+		if (paragraphIndex < 0) {
+			paragraphIndex = 0;
+		}
+		myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
+		myPreviousPage.reset();
+		myNextPage.reset();
+	}
+
+	public void gotoParagraph(int num, boolean last) {
+		if (myModel == null) {
+			return;
+		}
+
+		if (last) {
+			if ((num > 0) && (num <= (int)myModel.getParagraphsNumber())) {
+				moveEndCursor(num);
+			}
+		} else {
+			if ((num >= 0) && (num < (int)myModel.getParagraphsNumber())) {
+				moveStartCursor(num);
+			}
+		}
+	}
+
+	protected synchronized void preparePaintInfo() {
+		myPreviousPage.reset();
+		myNextPage.reset();
+		preparePaintInfo(myCurrentPage);
+	}
+
+	private synchronized void preparePaintInfo(ZLTextPage page) {
+		int newWidth = getTextAreaWidth();
+		int newHeight = getTextAreaHeight();
+		if ((newWidth != page.OldWidth) || (newHeight != page.OldHeight)) {
+			page.OldWidth = newWidth;
+			page.OldHeight = newHeight;
+			if (page.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
+				page.LineInfos.clear();
+				if (page == myPreviousPage) {
+					if (!page.EndCursor.isNull()) {
+						page.StartCursor.reset();
+						page.PaintState = PaintStateEnum.END_IS_KNOWN;
+					} else if (!page.StartCursor.isNull()) {
+						page.EndCursor.reset();
+						page.PaintState = PaintStateEnum.START_IS_KNOWN;
+					}
+				} else {
+					if (!page.StartCursor.isNull()) {
+						page.EndCursor.reset();
+						page.PaintState = PaintStateEnum.START_IS_KNOWN;
+					} else if (!page.EndCursor.isNull()) {
+						page.StartCursor.reset();
+						page.PaintState = PaintStateEnum.END_IS_KNOWN;
+					}
+				}
+			}
+		}
+
+		if ((page.PaintState == PaintStateEnum.NOTHING_TO_PAINT) || (page.PaintState == PaintStateEnum.READY)) {
+			return;
+		}
+
+		final HashMap<ZLTextLineInfo,ZLTextLineInfo> cache = myLineInfoCache;
+		for (ZLTextLineInfo info : page.LineInfos) {
+			cache.put(info, info);
+		}
+
+		switch (page.PaintState) {
+			default:
+				break;
+			case PaintStateEnum.TO_SCROLL_FORWARD:
+				if (!page.EndCursor.getParagraphCursor().isLast() || !page.EndCursor.isEndOfParagraph()) {
+					final ZLTextWordCursor startCursor = new ZLTextWordCursor();
+					switch (myScrollingMode) {
+						case ScrollingMode.NO_OVERLAPPING:
+							break;
+						case ScrollingMode.KEEP_LINES:
+							page.findLineFromEnd(startCursor, myOverlappingValue);
+							break;
+						case ScrollingMode.SCROLL_LINES:
+							page.findLineFromStart(startCursor, myOverlappingValue);
+							if (startCursor.isEndOfParagraph()) {
+								startCursor.nextParagraph();
+							}
+							break;
+						case ScrollingMode.SCROLL_PERCENTAGE:
+							page.findPercentFromStart(startCursor, getTextAreaHeight(), myOverlappingValue);
+							break;
+					}
+				
+					if (!startCursor.isNull() && startCursor.equalsToCursor(page.StartCursor)) {
+						page.findLineFromStart(startCursor, 1);
+					}
+
+					if (!startCursor.isNull()) {
+						final ZLTextWordCursor endCursor = new ZLTextWordCursor();
+						buildInfos(page, startCursor, endCursor);
+						if (!page.isEmptyPage() && ((myScrollingMode != ScrollingMode.KEEP_LINES) || (!endCursor.equalsToCursor(page.EndCursor)))) {
+							page.StartCursor.setCursor(startCursor);
+							page.EndCursor.setCursor(endCursor);
+							break;
+						}
+					}
+
+					page.StartCursor.setCursor(page.EndCursor);
+					buildInfos(page, page.StartCursor, page.EndCursor);
+				}
+				break;
+			case PaintStateEnum.TO_SCROLL_BACKWARD:
+				if (!page.StartCursor.getParagraphCursor().isFirst() || !page.StartCursor.isStartOfParagraph()) {
+					switch (myScrollingMode) {
+						case ScrollingMode.NO_OVERLAPPING:
+							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+							break;
+						case ScrollingMode.KEEP_LINES:
+						{
+							ZLTextWordCursor endCursor = new ZLTextWordCursor();
+							page.findLineFromStart(endCursor, myOverlappingValue);
+							if (!endCursor.isNull() && endCursor.equalsToCursor(page.EndCursor)) {
+								page.findLineFromEnd(endCursor, 1);
+							}
+							if (!endCursor.isNull()) {
+								ZLTextWordCursor startCursor = findStart(endCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight());
+								if (startCursor.equalsToCursor(page.StartCursor)) {
+									page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+								} else {
+									page.StartCursor.setCursor(startCursor);
+								}
+							} else {
+								page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+							}
+							break;
+						}
+						case ScrollingMode.SCROLL_LINES:
+							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.LINE_UNIT, myOverlappingValue));
+							break;
+						case ScrollingMode.SCROLL_PERCENTAGE:
+							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight() * myOverlappingValue / 100));
+							break;
+					}
+					buildInfos(page, page.StartCursor, page.EndCursor);
+					if (page.isEmptyPage()) {
+						page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.LINE_UNIT, 1));
+						buildInfos(page, page.StartCursor, page.EndCursor);
+					}
+				}
+				break;
+			case PaintStateEnum.START_IS_KNOWN:
+				buildInfos(page, page.StartCursor, page.EndCursor);
+				break;
+			case PaintStateEnum.END_IS_KNOWN:
+				page.StartCursor.setCursor(findStart(page.EndCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+				buildInfos(page, page.StartCursor, page.EndCursor);
+				break;
+		}
+		page.PaintState = PaintStateEnum.READY;
+		// TODO: cache?
+		myLineInfoCache.clear();
+
+		if (page == myCurrentPage) {
+			myPreviousPage.reset();
+			myNextPage.reset();
+		}
+	}
+
+	public void clearCaches() {
+		rebuildPaintInfo();
+	}
+
+	protected void rebuildPaintInfo() {
+		myPreviousPage.reset();
+		myNextPage.reset();
+		ZLTextParagraphCursorCache.clear();
+
+		if (myCurrentPage.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
+			myCurrentPage.LineInfos.clear();
+			if (!myCurrentPage.StartCursor.isNull()) {
+				myCurrentPage.StartCursor.rebuild();
+				myCurrentPage.EndCursor.reset();
+				myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+			} else if (!myCurrentPage.EndCursor.isNull()) {
+				myCurrentPage.EndCursor.rebuild();
+				myCurrentPage.StartCursor.reset();
+				myCurrentPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+			}
+		}
+
+		myLineInfoCache.clear();
+	}
+
+	private int infoSize(ZLTextLineInfo info, int unit) {
+		return (unit == SizeUnit.PIXEL_UNIT) ? (info.Height + info.Descent + info.VSpaceAfter) : (info.IsVisible ? 1 : 0);
+	}
+
+	private int paragraphSize(ZLTextWordCursor cursor, boolean beforeCurrentPosition, int unit) {
+		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final int endWordIndex =
+			beforeCurrentPosition ? cursor.getWordIndex() : paragraphCursor.getParagraphLength();
+		
+		resetTextStyle();
+
+		int size = 0;
+
+		int wordIndex = 0;
+		int charIndex = 0;
+		while (wordIndex != endWordIndex) {
+			ZLTextLineInfo info = processTextLine(paragraphCursor, wordIndex, charIndex, endWordIndex);
+			wordIndex = info.EndWordIndex;
+			charIndex = info.EndCharIndex;
+			size += infoSize(info, unit);
+		}
+
+		return size;
+	}
+
+	private void skip(ZLTextWordCursor cursor, int unit, int size) {
+		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final int endWordIndex = paragraphCursor.getParagraphLength();
+
+		resetTextStyle();
+		applyControls(paragraphCursor, 0, cursor.getWordIndex());
+
+		while (!cursor.isEndOfParagraph() && (size > 0)) {
+			ZLTextLineInfo info = processTextLine(paragraphCursor, cursor.getWordIndex(), cursor.getCharIndex(), endWordIndex);
+			cursor.moveTo(info.EndWordIndex, info.EndCharIndex);
+			size -= infoSize(info, unit);
+		}
+	}
+
+	private ZLTextWordCursor findStart(ZLTextWordCursor end, int unit, int size) {
+		final ZLTextWordCursor start = new ZLTextWordCursor(end);
+		size -= paragraphSize(start, true, unit);
+		boolean positionChanged = !start.isStartOfParagraph();
+		start.moveToParagraphStart();
+		while (size > 0) {
+			if (positionChanged && start.getParagraphCursor().isEndOfSection()) {
+				break;
+			}
+			if (!start.previousParagraph()) {
+				break;
+			}
+			if (!start.getParagraphCursor().isEndOfSection()) {
+				positionChanged = true;
+			}
+			size -= paragraphSize(start, false, unit);
+		}
+		skip(start, unit, -size);
+
+		if (unit == SizeUnit.PIXEL_UNIT) {
+			boolean sameStart = start.equalsToCursor(end);
+			if (!sameStart && start.isEndOfParagraph() && end.isStartOfParagraph()) {
+				ZLTextWordCursor startCopy = start;
+				startCopy.nextParagraph();
+				sameStart = startCopy.equalsToCursor(end);
+			}
+			if (sameStart) {
+				start.setCursor(findStart(end, SizeUnit.LINE_UNIT, 1));
+			}
+		}
+
+		return start;
+	}
+
+	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
+		return myCurrentPage.TextElementMap.binarySearch(x, y);
+	}
+
+	private static int lowerBound(int[] array, int value) {
+		int leftIndex = 0;
+		int rightIndex = array.length - 1;
+		if (array[rightIndex] <= value) {
+			return rightIndex;
+		}
+		while (leftIndex < rightIndex - 1) {
+			int middleIndex = (leftIndex + rightIndex) / 2;
+			if (array[middleIndex] <= value) {
+				leftIndex = middleIndex;
+			} else {
+				rightIndex = middleIndex;
+			}
+		}
+		return leftIndex;
+	}
+
+	public boolean onStylusMovePressed(int x, int y) {
+		if (mySelectionModel.extendTo(x, y)) {
+			ZLApplication.Instance().repaintView();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean onStylusRelease(int x, int y) {
+		mySelectionModel.deactivate();
+		return false;
+	}
+
+	protected abstract boolean isSelectionEnabled();
+
+	protected void activateSelection(int x, int y) {
+		if (isSelectionEnabled()) {
+			mySelectionModel.activate(x, y);
+			ZLApplication.Instance().repaintView();
+		}
+	}
 }

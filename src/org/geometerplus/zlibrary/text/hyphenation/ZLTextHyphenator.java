@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.text.hyphenation;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.view.impl.ZLTextWord; 
+import org.geometerplus.zlibrary.text.view.ZLTextWord; 
 
 public abstract class ZLTextHyphenator {
 	protected static ZLTextHyphenator ourInstance;

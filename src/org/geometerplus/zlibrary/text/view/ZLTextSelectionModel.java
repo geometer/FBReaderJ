@@ -17,12 +17,11 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 final class ZLTextSelectionModel {
 	final static class BoundElement {
@@ -98,7 +97,7 @@ final class ZLTextSelectionModel {
 		}
 	};
 
-	private final ZLTextViewImpl myView;
+	private final ZLTextView myView;
 
 	private boolean myIsActive;
 	private boolean myIsEmpty = true;
@@ -114,12 +113,12 @@ final class ZLTextSelectionModel {
 	private final HashSet myCursors = new HashSet();
 	private final StringBuilder myText = new StringBuilder();
 
-	ZLTextSelectionModel(ZLTextViewImpl view) {
+	ZLTextSelectionModel(ZLTextView view) {
 		myView = view;
 	}
 
 	void activate(int x, int y) {
-		if (myView.myTextElementMap.isEmpty()) {
+		if (myView.myCurrentPage.TextElementMap.isEmpty()) {
 			return;
 		}
 
@@ -133,7 +132,7 @@ final class ZLTextSelectionModel {
 	}
 
 	boolean extendTo(int x, int y) {
-		if (!myIsActive || myView.myTextElementMap.isEmpty()) {
+		if (!myIsActive || myView.myCurrentPage.TextElementMap.isEmpty()) {
 			return false;
 		}
 
@@ -207,7 +206,7 @@ final class ZLTextSelectionModel {
 	}
 
 	private void setBound(Bound bound, int x, int y) {
-		final ZLTextElementAreaVector areaVector = myView.myTextElementMap;
+		final ZLTextElementAreaVector areaVector = myView.myCurrentPage.TextElementMap;
 		if (areaVector.isEmpty()) {
 			return;
 		}
@@ -244,7 +243,7 @@ final class ZLTextSelectionModel {
 					int index;
 					for (index = 0; (index < len) && (diff > 0); ++index) {
 						previousDiff = diff;
-						diff = deltaX - ZLTextViewImpl.getWordWidth(myView.Context, word, start, index + 1);
+						diff = deltaX - myView.getWordWidth(word, start, index + 1);
 					}
 					if (previousDiff + diff < 0) {
 						--index;

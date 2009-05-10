@@ -23,9 +23,8 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.view.*;
-import org.geometerplus.zlibrary.text.view.impl.*;
 
-public abstract class FBView extends ZLTextViewImpl {
+public abstract class FBView extends ZLTextView {
 	private static ZLIntegerRangeOption ourLeftMarginOption;
 	private static ZLIntegerRangeOption ourRightMarginOption;
 	private static ZLIntegerRangeOption ourTopMarginOption;

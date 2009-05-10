@@ -17,9 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
-
-import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+package org.geometerplus.zlibrary.text.view;
 
 public class ZLTextElementArea { 
 	final int XStart;	

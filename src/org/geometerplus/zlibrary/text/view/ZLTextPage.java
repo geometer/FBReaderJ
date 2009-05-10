@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
 import java.util.ArrayList;
 
@@ -26,6 +26,8 @@ final class ZLTextPage {
 	final ZLTextWordCursor EndCursor = new ZLTextWordCursor();
 	final ArrayList<ZLTextLineInfo> LineInfos = new ArrayList<ZLTextLineInfo>();
 	int PaintState = PaintStateEnum.NOTHING_TO_PAINT;
+
+	final ZLTextElementAreaVector TextElementMap = new ZLTextElementAreaVector();
 
 	int OldWidth;
 	int OldHeight;
@@ -140,5 +142,25 @@ final class ZLTextPage {
 		}
 		cursor.setCursor(info.ParagraphCursor);
 		cursor.moveTo(info.EndWordIndex, info.EndCharIndex);
+	}
+
+	ZLTextElementArea findLast(int from, int to, ZLTextSelectionModel.BoundElement bound) {
+		final int boundElementIndex = bound.TextElementIndex;
+		final int boundCharIndex = bound.CharIndex;
+		final ZLTextElementAreaVector textAreas = TextElementMap;
+		ZLTextElementArea elementArea = textAreas.get(from);
+		if ((elementArea.TextElementIndex < boundElementIndex) ||
+				((elementArea.TextElementIndex == boundElementIndex) &&
+				 (elementArea.StartCharIndex <= boundCharIndex))) {
+			for (++from; from < to; ++from) {
+				elementArea = textAreas.get(from);
+				if ((elementArea.TextElementIndex > boundElementIndex) ||
+						((elementArea.TextElementIndex == boundElementIndex) &&
+						 (elementArea.StartCharIndex > boundCharIndex))) {
+					return textAreas.get(from - 1);
+				}
+			}
+		}
+		return elementArea;
 	}
 }

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.impl;
+package org.geometerplus.zlibrary.text.view;
 
 final class ZLTextElementAreaVector {
 	private ZLTextElementArea[] myData = new ZLTextElementArea[10];
@@ -66,23 +66,6 @@ final class ZLTextElementAreaVector {
 			} else if (candidate.XStart > x) {
 				right = middle;
 			} else if (candidate.XEnd < x) {
-				left = middle + 1;
-			} else {
-				return candidate;
-			}
-		}
-		return null;
-	}
-
-	ZLTextElementArea binarySearch(int y) {
-		int left = 0;
-		int right = myLength;
-		while (left < right) {
-			final int middle = (left + right) / 2;
-			final ZLTextElementArea candidate = myData[middle];
-			if (candidate.YStart > y) {
-				right = middle;
-			} else if (candidate.YEnd < y) {
 				left = middle + 1;
 			} else {
 				return candidate;
