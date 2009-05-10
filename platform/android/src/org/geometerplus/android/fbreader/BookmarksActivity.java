@@ -228,9 +228,9 @@ mainLoop:
 					sentenceBuilder.delete(0, sentenceBuilder.length());
 					++sentenceCounter;
 					storedWordCounter = wordCounter;
+					lineIsNonEmpty = false;
+					appendLineBreak = true;
 				}
-				lineIsNonEmpty = false;
-				appendLineBreak = true;
 			}
 			final ZLTextElement element = cursor.getElement();
 			if (element instanceof ZLTextWord) {
