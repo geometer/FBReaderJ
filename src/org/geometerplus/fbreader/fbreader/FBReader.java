@@ -190,7 +190,7 @@ public final class FBReader extends ZLApplication {
 			BookModel.Label label = Model.getLabel(id);
 			if ((label != null) && (label.Model != null)) {
 				if (label.Model == Model.BookTextModel) {
-					BookTextView.gotoParagraphSafe(label.ParagraphIndex);
+					BookTextView.gotoParagraph(label.ParagraphIndex, false);
 				} else {
 					FootnoteView.setModel(label.Model);
 					setMode(ViewMode.FOOTNOTE);

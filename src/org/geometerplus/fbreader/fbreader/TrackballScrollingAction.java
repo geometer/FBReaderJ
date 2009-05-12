@@ -30,12 +30,10 @@ class TrackballScrollingAction extends FBAction {
 	}
 		
 	public boolean isEnabled() {
-		// TODO: implement
 		return true;
 	}
 
 	public void run() {
-		Reader.getTextView().scrollPage(myForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
-		Reader.repaintView();
+		Reader.getTextView().doShortScroll(myForward);
 	}		
 }

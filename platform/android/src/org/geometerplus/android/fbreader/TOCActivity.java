@@ -124,7 +124,7 @@ public class TOCActivity extends ListActivity {
 			final TOCTree.Reference reference = tree.getReference();
 			if (reference != null) {
 				final FBReader fbreader = (FBReader)ZLApplication.Instance();
-				fbreader.BookTextView.gotoParagraphSafe(reference.ParagraphIndex);
+				fbreader.BookTextView.gotoParagraph(reference.ParagraphIndex, false);
 				finish();
 			}
 		}

@@ -42,7 +42,29 @@ public abstract class FBView extends ZLTextView {
 		super(context);
 	}
 
+	private int myHyperlinkIndex = -1;
+	private int myHyperlinkCount = -1;
+
+	final void doShortScroll(boolean forward) {
+		System.err.println("count = " + myHyperlinkCount);
+		if (myHyperlinkCount == -1) {
+			myHyperlinkCount = 0;
+			for (ZLTextElementArea area : allElements()) {
+			}
+		}
+		scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+		ZLApplication.Instance().repaintView();
+	}
+
+	public void onScrollingFinished(int viewPage) {
+		if (viewPage != PAGE_CENTRAL) {
+			myHyperlinkCount = -1;
+		}
+		super.onScrollingFinished(viewPage);
+	}
+
 	final void doScrollPage(boolean forward) {
+		myHyperlinkCount = -1;
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		if (preferences.AnimateOption.getValue()) {
 			if (forward) {

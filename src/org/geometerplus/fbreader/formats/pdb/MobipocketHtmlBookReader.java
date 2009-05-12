@@ -21,7 +21,11 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.html.ZLByteBuffer;
+import org.geometerplus.zlibrary.core.html.ZLHtmlAttributeMap;
+
 import org.geometerplus.fbreader.formats.html.HtmlReader;
+import org.geometerplus.fbreader.formats.html.HtmlTag;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
 public class MobipocketHtmlBookReader extends HtmlReader {
@@ -31,5 +35,38 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 
 	public InputStream getInputStream() throws IOException {
 		return new MobipocketStream(Model.Book.File);
+	}
+
+	@Override
+	public void startElementHandler(byte tag, int offset, ZLHtmlAttributeMap attributes) {
+		switch (tag) {
+			case HtmlTag.REFERENCE:
+			{
+				System.err.println("REFERENCE");
+				final ZLByteBuffer fp = attributes.getValue("filepos");
+				if (fp != null) {
+					System.err.println(": filepos = " + fp);
+				}
+				final ZLByteBuffer title = attributes.getValue("title");
+				if (title != null) {
+					System.err.println(": title = " + title);
+				}
+				final ZLByteBuffer type = attributes.getValue("type");
+				if (type != null) {
+					System.err.println(": type = " + type);
+				}
+				break;
+			}
+			default:
+			{
+				//System.err.println("offset = " + offset);
+				final ZLByteBuffer fp = attributes.getValue("filepos");
+				if (fp != null) {
+					System.err.println("filepos = " + fp);
+				}
+				super.startElementHandler(tag, offset, attributes);
+				break;
+			}
+		}
 	}
 }

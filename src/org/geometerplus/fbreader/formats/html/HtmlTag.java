@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.formats.html;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-final class HtmlTag {
+public final class HtmlTag {
 	public static final byte UNKNOWN = 0;
 	public static final byte HTML = 1;
 	public static final byte HEAD = 2;
@@ -58,8 +58,14 @@ final class HtmlTag {
 	public static final byte EM = 31;
 	public static final byte DFN = 32;
 	public static final byte CITE = 33;
+
+	public static final byte HR = 34;
 	
-	public static final byte TAG_NUMBER = 34;
+	// mobipocket specific tags
+	public static final byte REFERENCE = 35;
+	public static final byte GUIDE = 36;
+
+	public static final byte TAG_NUMBER = 37;
 	
 	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
 	private static final Byte ourUnknownTag;
@@ -99,6 +105,9 @@ final class HtmlTag {
 		ourTagByName.put("em", EM);
 		ourTagByName.put("def", DFN);
 		ourTagByName.put("cite", CITE);
+		ourTagByName.put("hr", HR);
+		ourTagByName.put("guide", GUIDE);
+		ourTagByName.put("reference", REFERENCE);
 	}
 
 	public static byte getTagByName(String name) {

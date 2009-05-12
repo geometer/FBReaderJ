@@ -19,46 +19,15 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-final class ZLTextElementAreaVector {
-	private ZLTextElementArea[] myData = new ZLTextElementArea[10];
-	private int myLength;	
+import java.util.ArrayList;
 
-	public boolean isEmpty() {
-		return myLength == 0;
-	}
-
-	public int size() {
-		return myLength;
-	}
-
-	public void add(ZLTextElementArea area) {
-		final int index = myLength++;
-		if (index == myData.length) {
-			ZLTextElementArea[] extended = new ZLTextElementArea[2 * index];
-			System.arraycopy(myData, 0, extended, 0, index);
-			myData = extended;
-		}
-		myData[index] = area;
-	}
-
-	public void clear() {
-		final ZLTextElementArea[] data = myData;
-		for (int i = myLength - 1; i >= 0; --i) {
-			data[i] = null;
-		}
-		myLength = 0;
-	}
-
-	ZLTextElementArea get(int index) {
-		return myData[index];
-	}
-
+final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 	ZLTextElementArea binarySearch(int x, int y) {
 		int left = 0;
-		int right = myLength;
+		int right = size();
 		while (left < right) {
 			final int middle = (left + right) / 2;
-			final ZLTextElementArea candidate = myData[middle];
+			final ZLTextElementArea candidate = get(middle);
 			if (candidate.YStart > y) {
 				right = middle;
 			} else if (candidate.YEnd < y) {

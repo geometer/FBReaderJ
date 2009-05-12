@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -232,7 +233,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		super.startAutoScrolling(viewPage);
 	}
 
-	public final synchronized void onScrollingFinished(int viewPage) {
+	public synchronized void onScrollingFinished(int viewPage) {
 		setScrollingActive(false);
 		switch (viewPage) {
 			case PAGE_CENTRAL:
@@ -392,6 +393,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return -1;
 		}
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		if (paragraphCursor == null) {
+			return -1;
+		}
 		final int paragraphIndex = paragraphCursor.Index;
 		int sizeOfText = myTextSize[paragraphIndex];
 		final int paragraphLength = paragraphCursor.getParagraphLength();
@@ -1087,6 +1091,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		return start;
+	}
+
+	protected List<ZLTextElementArea> allElements() {
+		return myCurrentPage.TextElementMap;
 	}
 
 	protected ZLTextElementArea getElementByCoordinates(int x, int y) {

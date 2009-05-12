@@ -228,8 +228,11 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 
-	public void startElementHandler(String tagName, ZLHtmlAttributeMap attributes) {
-		final byte tag = HtmlTag.getTagByName(tagName);
+	public void startElementHandler(String tagName, int offset, ZLHtmlAttributeMap attributes) {
+		startElementHandler(HtmlTag.getTagByName(tagName), offset, attributes);
+	}
+
+	public void startElementHandler(byte tag, int offset, ZLHtmlAttributeMap attributes) {
 		switch (tag) {
 			case HtmlTag.HTML:
 				break;

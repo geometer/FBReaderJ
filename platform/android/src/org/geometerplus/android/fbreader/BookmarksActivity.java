@@ -245,13 +245,16 @@ mainLoop:
 					case '.':
 					case '!':
 					case '?':
+						++sentenceCounter;
+					case ',':
+					case ':':
+					case ';':
 						if (appendLineBreak) {
 							builder.append("\n");
 							appendLineBreak = false;
 						}
 						builder.append(sentenceBuilder);
 						sentenceBuilder.delete(0, sentenceBuilder.length());
-						++sentenceCounter;
 						storedWordCounter = wordCounter;
 				}
 			}

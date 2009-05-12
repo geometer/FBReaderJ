@@ -78,6 +78,8 @@ final class ZLHtmlParser {
 		final ZLHtmlAttributeMap attributes = new ZLHtmlAttributeMap();
 		boolean scriptOpened = false;
 		boolean html = false;
+		int bufferOffset = 0;
+		int offset = 0;
 		
 		byte state = START_DOCUMENT;
 		while (true) {
@@ -88,6 +90,7 @@ final class ZLHtmlParser {
 			if (count < buffer.length) {
 				buffer = ZLArrayUtils.createCopy(buffer, count, count);
 			}
+			bufferOffset += count;
 			int startPosition = 0;
 			try {
 				for (int i = -1;;) {
@@ -98,6 +101,7 @@ mainSwitchLabel:
 							state = LANGLE;
 							break;
 						case LANGLE:
+							offset = bufferOffset + i;
 							switch (buffer[++i]) {
 								case '/':
 									state = END_TAG;
@@ -182,7 +186,7 @@ mainSwitchLabel:
 										tagName.append(buffer, startPosition, i - startPosition);
 										{
 											ZLByteBuffer stringTagName = unique(strings, tagName);
-											processStartTag(htmlReader, stringTagName, attributes);
+											processStartTag(htmlReader, stringTagName, offset, attributes);
 											if (stringTagName.equalsToLCString("script")) {
 												scriptOpened = true;
 												state = SCRIPT;
@@ -240,7 +244,7 @@ mainSwitchLabel:
 								case '>':
 									{
 										ZLByteBuffer stringTagName = unique(strings, tagName);
-										processStartTag(htmlReader, stringTagName, attributes);
+										processStartTag(htmlReader, stringTagName, offset, attributes);
 										if (stringTagName.equalsToLCString("script")) {
 											scriptOpened = true;
 											state = SCRIPT;
@@ -359,7 +363,7 @@ mainSwitchLabel:
 									case '>':
 										ZLByteBuffer stringTagName = unique(strings, tagName);
 										
-										processStartTag(htmlReader, stringTagName, attributes);
+										processStartTag(htmlReader, stringTagName, offset, attributes);
 										if (stringTagName.equalsToLCString("script")) {
 											scriptOpened = true;
 											state = SCRIPT;
@@ -399,7 +403,7 @@ mainSwitchLabel:
 									case ' ':
 										break;
 									case '>':
-										processFullTag(htmlReader, unique(strings, tagName), attributes);
+										processFullTag(htmlReader, unique(strings, tagName), offset, attributes);
 										state = TEXT;
 										startPosition = i + 1;
 										break mainSwitchLabel;
@@ -464,15 +468,15 @@ mainSwitchLabel:
 		}
 	}
 
-	private static void processFullTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName, ZLHtmlAttributeMap attributes) {
+	private static void processFullTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName, int offset, ZLHtmlAttributeMap attributes) {
 		String stringTagName = tagName.toString();
-		htmlReader.startElementHandler(stringTagName, attributes);
+		htmlReader.startElementHandler(stringTagName, offset, attributes);
 		htmlReader.endElementHandler(stringTagName);
 		attributes.clear();
 	}
 
-	private static void processStartTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName, ZLHtmlAttributeMap attributes) {
-		htmlReader.startElementHandler(tagName.toString(), attributes);
+	private static void processStartTag(ZLHtmlReader htmlReader, ZLByteBuffer tagName, int offset, ZLHtmlAttributeMap attributes) {
+		htmlReader.startElementHandler(tagName.toString(), offset, attributes);
 		attributes.clear();
 	}
 
