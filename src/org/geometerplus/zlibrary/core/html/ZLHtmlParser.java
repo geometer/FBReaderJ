@@ -90,7 +90,6 @@ final class ZLHtmlParser {
 			if (count < buffer.length) {
 				buffer = ZLArrayUtils.createCopy(buffer, count, count);
 			}
-			bufferOffset += count;
 			int startPosition = 0;
 			try {
 				for (int i = -1;;) {
@@ -465,6 +464,7 @@ mainSwitchLabel:
 						break;
 				}
 			}
+			bufferOffset += count;
 		}
 	}
 

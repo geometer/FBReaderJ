@@ -204,6 +204,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final ZLTextPosition position = new ZLTextPosition(cursor);
 		final StringBuilder builder = new StringBuilder();
 		final StringBuilder sentenceBuilder = new StringBuilder();
+		final StringBuilder phraseBuilder = new StringBuilder();
 		cursor = new ZLTextWordCursor(cursor);
 
 		int wordCounter = 0;
@@ -220,6 +221,10 @@ mainLoop:
 				if ((builder.length() > 0) && cursor.getParagraphCursor().isEndOfSection()) {
 					break mainLoop;
 				}
+				if (phraseBuilder.length() > 0) {
+					sentenceBuilder.append(phraseBuilder);
+					phraseBuilder.delete(0, phraseBuilder.length());
+				}
 				if (sentenceBuilder.length() > 0) {
 					if (appendLineBreak) {
 						builder.append("\n");
@@ -228,7 +233,9 @@ mainLoop:
 					sentenceBuilder.delete(0, sentenceBuilder.length());
 					++sentenceCounter;
 					storedWordCounter = wordCounter;
-					lineIsNonEmpty = false;
+				}
+				lineIsNonEmpty = false;
+				if (builder.length() > 0) {
 					appendLineBreak = true;
 				}
 			}
@@ -236,31 +243,40 @@ mainLoop:
 			if (element instanceof ZLTextWord) {
 				final ZLTextWord word = (ZLTextWord)element;
 				if (lineIsNonEmpty) {
-					sentenceBuilder.append(" ");
+					phraseBuilder.append(" ");
 				}
-				sentenceBuilder.append(word.Data, word.Offset, word.Length);
+				phraseBuilder.append(word.Data, word.Offset, word.Length);
 				++wordCounter;
 				lineIsNonEmpty = true;
 				switch (word.Data[word.Offset + word.Length - 1]) {
+					case ',':
+					case ':':
+					case ';':
+						sentenceBuilder.append(phraseBuilder);
+						phraseBuilder.delete(0, phraseBuilder.length());
+						break;
 					case '.':
 					case '!':
 					case '?':
 						++sentenceCounter;
-					case ',':
-					case ':':
-					case ';':
 						if (appendLineBreak) {
 							builder.append("\n");
 							appendLineBreak = false;
 						}
+						sentenceBuilder.append(phraseBuilder);
+						phraseBuilder.delete(0, phraseBuilder.length());
 						builder.append(sentenceBuilder);
 						sentenceBuilder.delete(0, sentenceBuilder.length());
 						storedWordCounter = wordCounter;
+						break;
 				}
 			}
 			cursor.nextWord();
 		}
 		if (storedWordCounter < 4) {
+			if (sentenceBuilder.length() == 0) {
+				sentenceBuilder.append(phraseBuilder);
+			}
 			builder.append(sentenceBuilder);
 		}
 

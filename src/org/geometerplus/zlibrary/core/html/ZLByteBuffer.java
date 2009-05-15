@@ -33,7 +33,7 @@ public final class ZLByteBuffer {
 		myData = new byte[len];
 	}
 
-	ZLByteBuffer() {
+	public ZLByteBuffer() {
 		this(20);
 	}
 
@@ -41,6 +41,10 @@ public final class ZLByteBuffer {
 		final int len = container.myLength;
 		myData = ZLArrayUtils.createCopy(container.myData, len, len);
 		myLength = len;
+	}
+
+	public boolean isEmpty() {
+		return myLength == 0;
 	}
 
 	public void append(byte[] buffer, int offset, int count) {

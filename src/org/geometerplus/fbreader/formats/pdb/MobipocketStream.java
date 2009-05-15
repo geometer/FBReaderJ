@@ -24,8 +24,11 @@ import java.io.IOException;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 class MobipocketStream extends PalmDocLikeStream {
+	private final int myFileSize;
+
 	MobipocketStream(ZLFile file) throws IOException {
 		super(file);
+		myFileSize = (int)file.size();
 
 		final int version = PdbUtil.readShort(myBase);
 		switch (version) {
@@ -46,5 +49,24 @@ class MobipocketStream extends PalmDocLikeStream {
 		}
 		myBuffer = new byte[maxRecordSize];
 		myRecordIndex = 0;
+	}
+
+	int getImageOffset(int index) {
+		try {
+			return myHeader.Offsets[index + myMaxRecordIndex + 1];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return -1;
+		}
+	}
+
+	int getImageLength(int index) {
+		try {
+			final int i = index + myMaxRecordIndex + 1;
+			final int start = myHeader.Offsets[i];
+			final int end = (i == myHeader.Offsets.length) ? myFileSize : myHeader.Offsets[i + 1];
+			return end - start;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return -1;
+		}
 	}
 }

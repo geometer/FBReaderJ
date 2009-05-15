@@ -57,7 +57,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		myStyleTable[HtmlTag.I] = FBTextKind.ITALIC;
 	}
 
-	private final CharsetDecoder myAttributeDecoder;
+	protected final CharsetDecoder myAttributeDecoder;
 
 	private boolean myInsideTitle = false;
 	private boolean mySectionStarted = false;
@@ -76,15 +76,17 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		super(model);
 		try {	
 			String encoding = model.Book.getEncoding();
-			myAttributeDecoder = Charset.forName(encoding).newDecoder()
-				.onMalformedInput(CodingErrorAction.REPLACE)
-				.onUnmappableCharacter(CodingErrorAction.REPLACE);
-			setByteDecoder(Charset.forName(encoding).newDecoder()
-				.onMalformedInput(CodingErrorAction.REPLACE)
-				.onUnmappableCharacter(CodingErrorAction.REPLACE));
+			myAttributeDecoder = createDecoder();
+			setByteDecoder(createDecoder());
 		} catch (UnsupportedCharsetException e) {
 			throw new UnsupportedEncodingException(e.getMessage());
 		}
+	}
+
+	protected final CharsetDecoder createDecoder() throws UnsupportedEncodingException {
+		return Charset.forName(Model.Book.getEncoding()).newDecoder()
+			.onMalformedInput(CodingErrorAction.REPLACE)
+			.onUnmappableCharacter(CodingErrorAction.REPLACE);
 	}
 
 	public boolean readBook() throws IOException {
@@ -169,8 +171,11 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 	
-	public void endElementHandler(String tagName) {
-		final byte tag = HtmlTag.getTagByName(tagName);
+	public final void endElementHandler(String tagName) {
+		endElementHandler(HtmlTag.getTagByName(tagName));
+	}
+
+	public void endElementHandler(byte tag) {
 		switch (tag) {
 			case HtmlTag.SCRIPT:
 			case HtmlTag.SELECT:
@@ -228,7 +233,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 
-	public void startElementHandler(String tagName, int offset, ZLHtmlAttributeMap attributes) {
+	public final void startElementHandler(String tagName, int offset, ZLHtmlAttributeMap attributes) {
 		startElementHandler(HtmlTag.getTagByName(tagName), offset, attributes);
 	}
 

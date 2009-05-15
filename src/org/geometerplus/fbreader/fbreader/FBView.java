@@ -46,7 +46,7 @@ public abstract class FBView extends ZLTextView {
 	private int myHyperlinkCount = -1;
 
 	final void doShortScroll(boolean forward) {
-		System.err.println("count = " + myHyperlinkCount);
+		//System.err.println("count = " + myHyperlinkCount);
 		if (myHyperlinkCount == -1) {
 			myHyperlinkCount = 0;
 			for (ZLTextElementArea area : allElements()) {

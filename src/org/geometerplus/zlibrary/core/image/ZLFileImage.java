@@ -20,41 +20,34 @@
 package org.geometerplus.zlibrary.core.image;
 
 import java.io.*;
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZLFileImage extends ZLSingleImage {
 	private final ZLFile myFile;
+	private final int myOffset;
+	private final int myLength;
 	
-	public ZLFileImage(String mimeType, ZLFile file) {
+	public ZLFileImage(String mimeType, ZLFile file, int offset, int length) {
 		super(mimeType);
 		myFile = file;
+		myOffset = offset;
+		myLength = length;
+	}
+
+	public ZLFileImage(String mimeType, ZLFile file) {
+		this(mimeType, file, 0, (int)file.size());
 	}
 
 	public byte [] byteData() {
 		try {
 			final InputStream stream = myFile.getInputStream();
-			if (stream == null) {
-				return new byte[0];
+			int toSkip = myOffset - (int)stream.skip(myOffset);
+			while (--toSkip >= 0) {
+				stream.read();
 			}
 
-			final ArrayList data = new ArrayList();
-			byte[] buffer;
-			int sizeOfBufferData;
-
-			do {
-				buffer = new byte[4096];
-				sizeOfBufferData = stream.read(buffer);
-				data.add(buffer);
-			} while (sizeOfBufferData == 4096);
-			final int dataSizeMinus1 = data.size() - 1;
-			buffer = new byte[dataSizeMinus1 * 4096 + sizeOfBufferData];
-			for (int i = 0; i < dataSizeMinus1; ++i) {
-				System.arraycopy(data.get(i), 0, buffer, i * 4096, 4096);
-			}
-			System.arraycopy(data.get(dataSizeMinus1), 0, buffer, dataSizeMinus1 * 4096, sizeOfBufferData);
-			stream.close();
+			byte[] buffer = new byte[myLength];
+			stream.read(buffer);
 			return buffer;
 		} catch (IOException e) {
 		}
