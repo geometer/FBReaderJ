@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public interface ZLTextModel {
+	String getId();
+
 	int getParagraphsNumber();
 	ZLTextParagraph getParagraph(int index);
 

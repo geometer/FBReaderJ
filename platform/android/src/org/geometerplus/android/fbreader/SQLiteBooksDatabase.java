@@ -57,7 +57,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		if (version >= 6) {
+		if (version >= 7) {
 			return;
 		}
 		ZLDialogManager.Instance().wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
@@ -79,12 +79,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables5();
 					case 6:
 						updateTables6();
+					case 7:
+						updateTables7();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
 
 				myDatabase.execSQL("VACUUM");
-				myDatabase.setVersion(6);
+				myDatabase.setVersion(7);
 			}
 		});
 	}
@@ -634,7 +636,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected List<Bookmark> listBookmarks(long bookId) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE book_id = ?", new String[] { "" + bookId }
+			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE book_id = ?", new String[] { "" + bookId }
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
@@ -646,9 +648,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				getDate(cursor, 5),
 				getDate(cursor, 6),
 				(int)cursor.getLong(7),
-				(int)cursor.getLong(8),
+				cursor.getString(8),
 				(int)cursor.getLong(9),
-				(int)cursor.getLong(10)
+				(int)cursor.getLong(10),
+				(int)cursor.getLong(11)
 			));
 		}
 		cursor.close();
@@ -659,7 +662,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id", null
+			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id", null
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
@@ -671,9 +674,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				getDate(cursor, 5),
 				getDate(cursor, 6),
 				(int)cursor.getLong(7),
-				(int)cursor.getLong(8),
+				cursor.getString(8),
 				(int)cursor.getLong(9),
-				(int)cursor.getLong(10)
+				(int)cursor.getLong(10),
+				(int)cursor.getLong(11)
 			));
 		}
 		cursor.close();
@@ -687,14 +691,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
 				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?)"
+					"INSERT INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?,?)"
 				);
 			}
 			statement = myInsertBookmarkStatement;
 		} else {
 			if (myUpdateBookmarkStatement == null) {
 				myUpdateBookmarkStatement = myDatabase.compileStatement(
-					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, paragraph = ?, word = ?, char = ? WHERE bookmark_id = ?"
+					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ? WHERE bookmark_id = ?"
 				);
 			}
 			statement = myUpdateBookmarkStatement;
@@ -707,9 +711,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		bindDate(statement, 5, bookmark.getTime(Bookmark.ACCESS));
 		statement.bindLong(6, bookmark.getAccessCount());
 		final ZLTextPosition position = bookmark.getPosition();
-		statement.bindLong(7, position.ParagraphIndex);
-		statement.bindLong(8, position.WordIndex);
-		statement.bindLong(9, position.CharIndex);
+		bindString(statement, 7, bookmark.getModelId());
+		statement.bindLong(8, position.ParagraphIndex);
+		statement.bindLong(9, position.WordIndex);
+		statement.bindLong(10, position.CharIndex);
 
 		if (statement == myInsertBookmarkStatement) {
 			return statement.executeInsert();
@@ -911,5 +916,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables6() {
+		myDatabase.execSQL(
+			"ALTER TABLE Bookmarks ADD COLUMN model_id TEXT"
+		);
+	}
+
+	private void updateTables7() {
 	}
 }

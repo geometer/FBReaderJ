@@ -77,8 +77,8 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> listRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, int paragraphIndex, int wordIndex, int charIndex) {
-		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, paragraphIndex, wordIndex, charIndex);
+	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex) {
+		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex);
 	}
 
 	protected abstract List<Bookmark> listBookmarks(long bookId);

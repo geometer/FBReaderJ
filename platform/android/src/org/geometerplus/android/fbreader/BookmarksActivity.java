@@ -192,20 +192,12 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		return super.onContextItemSelected(item);
 	}
 
-	private void addBookmark() {
-		final FBReader fbreader = (FBReader)FBReader.Instance();
-		ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
+	private String createBookmarkText(ZLTextWordCursor cursor) {
+		cursor = new ZLTextWordCursor(cursor);
 
-		if (cursor.isNull()) {
-			// TODO: implement
-			return;
-		}
-
-		final ZLTextPosition position = new ZLTextPosition(cursor);
 		final StringBuilder builder = new StringBuilder();
 		final StringBuilder sentenceBuilder = new StringBuilder();
 		final StringBuilder phraseBuilder = new StringBuilder();
-		cursor = new ZLTextWordCursor(cursor);
 
 		int wordCounter = 0;
 		int sentenceCounter = 0;
@@ -252,6 +244,7 @@ mainLoop:
 					case ',':
 					case ':':
 					case ';':
+					case ')':
 						sentenceBuilder.append(phraseBuilder);
 						phraseBuilder.delete(0, phraseBuilder.length());
 						break;
@@ -277,17 +270,42 @@ mainLoop:
 			if (sentenceBuilder.length() == 0) {
 				sentenceBuilder.append(phraseBuilder);
 			}
+			if (appendLineBreak) {
+				builder.append("\n");
+			}
 			builder.append(sentenceBuilder);
+		}
+		return builder.toString();
+	}
+
+	private void addBookmark() {
+		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final ZLTextView textView = fbreader.getTextView();
+		final ZLTextWordCursor cursor = textView.getStartCursor();
+
+		if (cursor.isNull()) {
+			// TODO: implement
+			return;
 		}
 
 		// TODO: text edit dialog
-		final Bookmark bookmark = new Bookmark(fbreader.Model.Book, builder.toString(), position);
+		final Bookmark bookmark = new Bookmark(
+			fbreader.Model.Book,
+			createBookmarkText(cursor),
+			textView.getModel().getId(),
+			new ZLTextPosition(cursor)
+		);
 		myThisBookBookmarks.add(0, bookmark);
 		AllBooksBookmarks.add(0, bookmark);
 		invalidateAllViews();
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {
+		if (bookmark.getModelId() != null) {
+			// TODO: implement
+			System.err.println("Cannot go to position in footnote model " + bookmark.getModelId());
+			return;
+		}
 		bookmark.onOpen();
 		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final long bookId = bookmark.getBookId();

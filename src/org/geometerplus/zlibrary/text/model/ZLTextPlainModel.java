@@ -25,13 +25,14 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public final class ZLTextPlainModel implements ZLTextModel {
-	private static final int INITIAL_CAPACITY = 1024;
+	private final String myId;
+
+	private int[] myStartEntryIndices;
+	private int[] myStartEntryOffsets;
+	private int[] myParagraphLengths;
+	private byte[] myParagraphKinds;
 
 	private final ArrayList myEntries = new ArrayList();
-	private int[] myStartEntryIndices = new int[INITIAL_CAPACITY];
-	private int[] myStartEntryOffsets = new int[INITIAL_CAPACITY];
-	private int[] myParagraphLengths = new int[INITIAL_CAPACITY];
-	private byte[] myParagraphKinds = new byte[INITIAL_CAPACITY];
 
 	int myParagraphsNumber;
 
@@ -177,12 +178,17 @@ public final class ZLTextPlainModel implements ZLTextModel {
 		}
 	}
 
-	public ZLTextPlainModel(int dataBlockSize, String directoryName, String extension) {
+	public ZLTextPlainModel(String id, int arraySize, int dataBlockSize, String directoryName, String extension) {
+		myId = id;
+		myStartEntryIndices = new int[arraySize];
+		myStartEntryOffsets = new int[arraySize];
+		myParagraphLengths = new int[arraySize];
+		myParagraphKinds = new byte[arraySize];
 		myStorage = new CachedCharStorage(dataBlockSize, directoryName, extension);
 	}
 
-	public ZLTextPlainModel(int dataBlockSize) {
-		myStorage = new SimpleCharStorage(dataBlockSize);
+	public String getId() {
+		return myId;
 	}
 
 	private void extend() {
