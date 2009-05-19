@@ -22,24 +22,17 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.text.view.*;
 
-public abstract class FBView extends ZLTextView {
-	private static ZLIntegerRangeOption ourLeftMarginOption;
-	private static ZLIntegerRangeOption ourRightMarginOption;
-	private static ZLIntegerRangeOption ourTopMarginOption;
-	private static ZLIntegerRangeOption ourBottomMarginOption;
-	
-	private static ZLBooleanOption ourSelectionOption;
+import org.geometerplus.fbreader.bookmodel.FBTextKind;
 
-	private static ZLIntegerRangeOption createMarginOption(String name, int defaultValue) {
-		return new ZLIntegerRangeOption(
-			"Options", name, 0, 1000, defaultValue
-		);
-	}
+public final class FBView extends ZLTextView {
+	private FBReader myReader;
 
-	FBView(ZLPaintContext context) {
-		super(context);
+	FBView(FBReader reader) {
+		super(ZLibrary.Instance().getPaintContext());
+		myReader = reader;
 	}
 
 	private int myHyperlinkIndex = -1;
@@ -49,6 +42,7 @@ public abstract class FBView extends ZLTextView {
 		//System.err.println("count = " + myHyperlinkCount);
 		if (myHyperlinkCount == -1) {
 			myHyperlinkCount = 0;
+			final ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
 			for (ZLTextElementArea area : allElements()) {
 			}
 		}
@@ -93,26 +87,69 @@ public abstract class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (!isScrollingActive()) {
-			final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-			if (preferences.FlickOption.getValue()) {
-				myStartX = x;
-				myStartY = y;
-				setScrollingActive(true);
-				myIsManualScrollingActive = true;
+		if (isScrollingActive()) {
+			return false;
+		}
+
+		ZLTextElementArea area = getElementByCoordinates(x, y);
+		if (area != null) {
+			ZLTextElement element = area.Element;
+			if ((element instanceof ZLTextImageElement) || (element instanceof ZLTextWord)) {
+				final ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
+				cursor.moveToParagraph(area.ParagraphIndex);
+				cursor.moveToParagraphStart();
+				final int elementIndex = area.ElementIndex;
+				byte hyperlinkKind = FBTextKind.REGULAR;
+				String id = null;
+				for (int i = 0; i < elementIndex; ++i) {
+					ZLTextElement e = cursor.getElement();
+					if (e instanceof ZLTextControlElement) {
+						if (e instanceof ZLTextHyperlinkControlElement) {
+							final ZLTextHyperlinkControlElement control = (ZLTextHyperlinkControlElement)e;
+							hyperlinkKind = control.Kind;
+							id = control.Label;
+						} else {
+							final ZLTextControlElement control = (ZLTextControlElement)e;
+							if (!control.IsStart && (control.Kind == hyperlinkKind)) {
+								hyperlinkKind = FBTextKind.REGULAR;
+								id = null;
+							}
+						}
+					}
+					cursor.nextWord();
+				}
+				if (id != null) {
+					switch (hyperlinkKind) {
+						case FBTextKind.EXTERNAL_HYPERLINK:
+							ZLibrary.Instance().openInBrowser(id);
+							return true;
+						case FBTextKind.FOOTNOTE:
+						case FBTextKind.INTERNAL_HYPERLINK:
+							((FBReader)ZLApplication.Instance()).tryOpenFootnote(id);
+							return true;
+					}
+				}
+			}
+		}
+
+		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+		if (preferences.FlickOption.getValue()) {
+			myStartX = x;
+			myStartY = y;
+			setScrollingActive(true);
+			myIsManualScrollingActive = true;
+		} else {
+			if (preferences.HorizontalOption.getValue()) {
+				if (x <= Context.getWidth() / 3) {
+					doScrollPage(false);
+				} else if (x >= Context.getWidth() * 2 / 3) {
+					doScrollPage(true);
+				}
 			} else {
-				if (preferences.HorizontalOption.getValue()) {
-					if (x <= Context.getWidth() / 3) {
-						doScrollPage(false);
-					} else if (x >= Context.getWidth() * 2 / 3) {
-						doScrollPage(true);
-					}
-				} else {
-					if (y <= Context.getHeight() / 3) {
-						doScrollPage(false);
-					} else if (y >= Context.getHeight() * 2 / 3) {
-						doScrollPage(true);
-					}
+				if (y <= Context.getHeight() / 3) {
+					doScrollPage(false);
+				} else if (y >= Context.getHeight() * 2 / 3) {
+					doScrollPage(true);
 				}
 			}
 		}
@@ -205,54 +242,33 @@ public abstract class FBView extends ZLTextView {
 		return true;
 	}
 
-	public static final ZLIntegerRangeOption getLeftMarginOption() {
-		if (ourLeftMarginOption == null) {
-			ourLeftMarginOption = createMarginOption("LeftMargin", 4);
-		}
-		return ourLeftMarginOption;
-	}
 	public int getLeftMargin() {
-		return getLeftMarginOption().getValue();
+		return myReader.LeftMarginOption.getValue();
 	}
 
-	public static final ZLIntegerRangeOption getRightMarginOption() {
-		if (ourRightMarginOption == null) {
-			ourRightMarginOption = createMarginOption("RightMargin", 4);
-		}
-		return ourRightMarginOption;
-	}
 	public int getRightMargin() {
-		return getRightMarginOption().getValue();
+		return myReader.RightMarginOption.getValue();
 	}
 
-	public static final ZLIntegerRangeOption getTopMarginOption() {
-		if (ourTopMarginOption == null) {
-			ourTopMarginOption = createMarginOption("TopMargin", 0);
-		}
-		return ourTopMarginOption;
-	}
 	public int getTopMargin() {
-		return getTopMarginOption().getValue();
+		return myReader.TopMarginOption.getValue();
 	}
 
-	public static final ZLIntegerRangeOption getBottomMarginOption() {
-		if (ourBottomMarginOption == null) {
-			ourBottomMarginOption = createMarginOption("BottomMargin", 4);
-		}
-		return ourBottomMarginOption;
-	}
 	public int getBottomMargin() {
-		return getBottomMarginOption().getValue();
-	}
-
-	public static ZLBooleanOption selectionOption() {
-		if (ourSelectionOption == null) {
-			ourSelectionOption = new ZLBooleanOption("Options", "IsSelectionEnabled", true);
-		}
-		return ourSelectionOption;
+		return myReader.BottomMarginOption.getValue();
 	}
 
 	protected boolean isSelectionEnabled() {
-		return selectionOption().getValue();
+		return myReader.SelectionEnabledOption.getValue();
+	}
+	
+	void scrollToHome() {
+		final ZLTextWordCursor cursor = getStartCursor();
+		if (!cursor.isNull() && cursor.isStartOfParagraph() && cursor.getParagraphIndex() == 0) {
+			return;
+		}
+		gotoPosition(0, 0, 0);
+		preparePaintInfo();
+		ZLApplication.Instance().repaintView();
 	}
 }

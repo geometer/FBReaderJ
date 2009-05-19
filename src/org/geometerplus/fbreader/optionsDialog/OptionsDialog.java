@@ -39,12 +39,12 @@ public class OptionsDialog {
 
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
 		marginTab.addOptions(
-			"left", new ZLSimpleSpinOptionEntry(FBView.getLeftMarginOption(), 1),
-			"right", new ZLSimpleSpinOptionEntry(FBView.getRightMarginOption(), 1)
+			"left", new ZLSimpleSpinOptionEntry(fbreader.LeftMarginOption, 1),
+			"right", new ZLSimpleSpinOptionEntry(fbreader.RightMarginOption, 1)
 		);
 		marginTab.addOptions(
-			"top", new ZLSimpleSpinOptionEntry(FBView.getTopMarginOption(), 1),
-			"bottom", new ZLSimpleSpinOptionEntry(FBView.getBottomMarginOption(), 1)
+			"top", new ZLSimpleSpinOptionEntry(fbreader.TopMarginOption, 1),
+			"bottom", new ZLSimpleSpinOptionEntry(fbreader.BottomMarginOption, 1)
 		);
 		
 		new FormatOptionsPage(myDialog.createTab("Format"));

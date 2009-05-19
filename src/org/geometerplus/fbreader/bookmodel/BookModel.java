@@ -65,7 +65,7 @@ public final class BookModel {
 		Book = book;
 	}
 
-	ZLTextModel getFootnoteModel(String id) {
+	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
 			model = new ZLTextPlainModel(id, 8, 2048, "/sdcard/Books/.FBReader", "cache" + myFootnotes.size()); 

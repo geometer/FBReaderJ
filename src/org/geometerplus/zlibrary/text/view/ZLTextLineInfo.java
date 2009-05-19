@@ -23,11 +23,11 @@ final class ZLTextLineInfo {
 	final ZLTextParagraphCursor ParagraphCursor;
 	final int ParagraphCursorLength;
 
-	final int StartWordIndex;
+	final int StartElementIndex;
 	final int StartCharIndex;
-	int RealStartWordIndex;
+	int RealStartElementIndex;
 	int RealStartCharIndex;
-	int EndWordIndex;
+	int EndElementIndex;
 	int EndCharIndex;
 
 	boolean IsVisible;
@@ -39,33 +39,33 @@ final class ZLTextLineInfo {
 	int SpaceCounter;
 	ZLTextStyle StartStyle;
 
-	ZLTextLineInfo(ZLTextParagraphCursor paragraphCursor, int wordIndex, int charIndex, ZLTextStyle style) {
+	ZLTextLineInfo(ZLTextParagraphCursor paragraphCursor, int elementIndex, int charIndex, ZLTextStyle style) {
 		ParagraphCursor = paragraphCursor;
 		ParagraphCursorLength = paragraphCursor.getParagraphLength();
 
-		StartWordIndex = wordIndex;
+		StartElementIndex = elementIndex;
 		StartCharIndex = charIndex;
-		RealStartWordIndex = wordIndex;
+		RealStartElementIndex = elementIndex;
 		RealStartCharIndex = charIndex;
-		EndWordIndex = wordIndex;
+		EndElementIndex = elementIndex;
 		EndCharIndex = charIndex;
 
 		StartStyle = style;
 	}
 
 	boolean isEndOfParagraph() {
-		return EndWordIndex == ParagraphCursorLength;
+		return EndElementIndex == ParagraphCursorLength;
 	}
 
 	public boolean equals(Object o) {
 		ZLTextLineInfo info = (ZLTextLineInfo)o;
 		return
 			(ParagraphCursor == info.ParagraphCursor) &&
-			(StartWordIndex == info.StartWordIndex) &&
+			(StartElementIndex == info.StartElementIndex) &&
 			(StartCharIndex == info.StartCharIndex);
 	}
 
 	public int hashCode() {
-		return ParagraphCursor.hashCode() + StartWordIndex + 239 * StartCharIndex;
+		return ParagraphCursor.hashCode() + StartElementIndex + 239 * StartCharIndex;
 	}
 }

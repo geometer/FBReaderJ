@@ -19,11 +19,12 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.model.ZLTextMark;
 
-public final class ZLTextWordCursor {
+public final class ZLTextWordCursor extends ZLTextPosition {
 	private ZLTextParagraphCursor myParagraphCursor;
-	private int myWordIndex;
+	private int myElementIndex;
 	private int myCharIndex;
 	
 //	private int myModelIndex;
@@ -37,7 +38,7 @@ public final class ZLTextWordCursor {
 
 	public void setCursor(ZLTextWordCursor cursor) {
 		myParagraphCursor = cursor.myParagraphCursor;
-		myWordIndex = cursor.myWordIndex;
+		myElementIndex = cursor.myElementIndex;
 		myCharIndex = cursor.myCharIndex;
 	}
 
@@ -47,7 +48,7 @@ public final class ZLTextWordCursor {
 
 	public void setCursor(ZLTextParagraphCursor paragraphCursor) {
 		myParagraphCursor = paragraphCursor;
-		myWordIndex = 0;
+		myElementIndex = 0;
 		myCharIndex = 0;
 	}
 
@@ -55,57 +56,60 @@ public final class ZLTextWordCursor {
 		return myParagraphCursor == null;
 	}
 
-	public boolean equalsToCursor(ZLTextWordCursor cursor) {
-		return (myWordIndex == cursor.myWordIndex) && (myCharIndex == cursor.myCharIndex) && (myParagraphCursor.Index == cursor.myParagraphCursor.Index);
-	}
-
 	public boolean isStartOfParagraph() {
-		return (myWordIndex == 0 && myCharIndex == 0);
+		return (myElementIndex == 0 && myCharIndex == 0);
 	}
 
 	public boolean isEndOfParagraph() {
-		return (myParagraphCursor != null) && (myWordIndex == myParagraphCursor.getParagraphLength());
+		return (myParagraphCursor != null) && (myElementIndex == myParagraphCursor.getParagraphLength());
 	}
 
-	public int getWordIndex() {
-		return myWordIndex;
+	@Override
+	public int getParagraphIndex() {
+		return myParagraphCursor.Index;
 	}
 
+	@Override
+	public int getElementIndex() {
+		return myElementIndex;
+	}
+
+	@Override
 	public int getCharIndex() {
 		return myCharIndex;
 	}
 
 	public ZLTextElement getElement() {
-		return myParagraphCursor.getElement(myWordIndex);
+		return myParagraphCursor.getElement(myElementIndex);
 	}
 
 	public ZLTextParagraphCursor getParagraphCursor() {
 		return myParagraphCursor;
 	}
 
-	public ZLTextMark getPosition() {
+	public ZLTextMark getMark() {
 		if (myParagraphCursor == null) {
 			return null;
 		}
 		final ZLTextParagraphCursor paragraph = myParagraphCursor;
 		int paragraphLength = paragraph.getParagraphLength();
-		int wordIndex = myWordIndex;
+		int wordIndex = myElementIndex;
 		while ((wordIndex < paragraphLength) && (!(paragraph.getElement(wordIndex) instanceof ZLTextWord))) {
 			wordIndex++;
 		}
 		if (wordIndex < paragraphLength) {
-			return new ZLTextMark(paragraph.Index, ((ZLTextWord) paragraph.getElement(wordIndex)).getParagraphOffset(), 0);
+			return new ZLTextMark(paragraph.Index, ((ZLTextWord)paragraph.getElement(wordIndex)).getParagraphOffset(), 0);
 		}
 		return new ZLTextMark(paragraph.Index + 1, 0, 0);
 	}
 	
 	public void nextWord() {
-		myWordIndex++;
+		myElementIndex++;
 		myCharIndex = 0;
 	}
 
 	public void previousWord() {
-		myWordIndex--;
+		myElementIndex--;
 		myCharIndex = 0;
 	}
 
@@ -133,21 +137,23 @@ public final class ZLTextWordCursor {
 
 	public void moveToParagraphStart() {
 		if (!isNull()) {
-			myWordIndex = 0;
+			myElementIndex = 0;
 			myCharIndex = 0;
 		}
 	}
 
 	public void moveToParagraphEnd() {
 		if (!isNull()) {
-			myWordIndex = myParagraphCursor.getParagraphLength();
+			myElementIndex = myParagraphCursor.getParagraphLength();
 			myCharIndex = 0;
 		}
 	}
 
 	public void moveToParagraph(int paragraphIndex) {
 		if (!isNull() && (paragraphIndex != myParagraphCursor.Index)) {
-			myParagraphCursor = ZLTextParagraphCursor.cursor(myParagraphCursor.Model, paragraphIndex);
+			final ZLTextModel model = myParagraphCursor.Model;
+			paragraphIndex = Math.max(0, Math.min(paragraphIndex, model.getParagraphsNumber() - 1));
+			myParagraphCursor = ZLTextParagraphCursor.cursor(model, paragraphIndex);
 			moveToParagraphStart();
 		}		
 	}
@@ -155,16 +161,16 @@ public final class ZLTextWordCursor {
 	public void moveTo(int wordIndex, int charIndex) {
 		if (!isNull()) {
 			if (wordIndex == 0 && charIndex == 0) {
-				myWordIndex = 0;
+				myElementIndex = 0;
 				myCharIndex = 0;
 			} else {
 				wordIndex = Math.max(0, wordIndex);
 				int size = myParagraphCursor.getParagraphLength();
 				if (wordIndex > size) {
-					myWordIndex = size;
+					myElementIndex = size;
 					myCharIndex = 0;
 				} else {
-					myWordIndex = wordIndex;
+					myElementIndex = wordIndex;
 					setCharIndex(charIndex);
 				}
 			}
@@ -175,7 +181,7 @@ public final class ZLTextWordCursor {
 		charIndex = Math.max(0, charIndex);
 		myCharIndex = 0;
 		if (charIndex > 0) {
-			ZLTextElement element = myParagraphCursor.getElement(myWordIndex);
+			ZLTextElement element = myParagraphCursor.getElement(myElementIndex);
 			if (element instanceof ZLTextWord) {
 				if (charIndex <= ((ZLTextWord)element).Length) {
 					myCharIndex = charIndex;
@@ -186,7 +192,7 @@ public final class ZLTextWordCursor {
 
 	public void reset() {
 		myParagraphCursor = null;
-		myWordIndex = 0;
+		myElementIndex = 0;
 		myCharIndex = 0;
 	}
 
@@ -194,16 +200,7 @@ public final class ZLTextWordCursor {
 		if (!isNull()) {
 			myParagraphCursor.clear();
 			myParagraphCursor.fill();
-			moveTo(myWordIndex, myCharIndex);
+			moveTo(myElementIndex, myCharIndex);
 		}
 	}
-
-/*	public int getModelIndex() {
-		return myModelIndex;
-	}
-
-	public void setModelIndex(int modelIndex) {
-		myModelIndex = modelIndex;
-	}
-	*/
 }

@@ -39,8 +39,6 @@ abstract public class ZLApplicationWindow {
 	}
 
 	protected void init() {
-		myApplication.setViewWidget(createViewWidget());
-
 		initMenu();
 	}
 	

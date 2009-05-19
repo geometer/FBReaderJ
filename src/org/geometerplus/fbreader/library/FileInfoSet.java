@@ -49,22 +49,31 @@ public final class FileInfoSet {
 		}
 	}
 
+	private final HashMap<ZLFile,FileInfo> myInfosByFile = new HashMap<ZLFile,FileInfo>();
+	private final HashMap<FileInfo,ZLFile> myFilesByInfo = new HashMap<FileInfo,ZLFile>();
 	private final HashMap<Pair,FileInfo> myInfosByPair = new HashMap<Pair,FileInfo>();
+	private final HashMap<Long,FileInfo> myInfosById = new HashMap<Long,FileInfo>();
+
 	private final LinkedHashSet<FileInfo> myInfosToSave = new LinkedHashSet<FileInfo>();
 	private final LinkedHashSet<FileInfo> myInfosToRemove = new LinkedHashSet<FileInfo>();
+
+	public FileInfoSet() {
+		load(BooksDatabase.Instance().loadFileInfos());
+	}
+
+	public FileInfoSet(ZLFile file) {
+		load(BooksDatabase.Instance().loadFileInfos(file));
+	}
+
+	FileInfoSet(long fileId) {
+		load(BooksDatabase.Instance().loadFileInfos(fileId));
+	}
 
 	private void load(Collection<FileInfo> infos) {
 		for (FileInfo info : infos) {
 			myInfosByPair.put(new Pair(info.Name, info.Parent), info);
+			myInfosById.put(info.Id, info);
 		}
-	}
-
-	public void loadAll() {
-		load(BooksDatabase.Instance().loadFileInfos());
-	}
-
-	public void load(ZLFile file) {
-		load(BooksDatabase.Instance().loadFileInfos(file));
 	}
 
 	public void save() {
@@ -126,8 +135,44 @@ public final class FileInfoSet {
 		return info;
 	}
 
+
 	private FileInfo get(ZLFile file) {
-		return (file == null) ? null : get(file.getName(false), get(file.getParent()));
+		if (file == null) {
+			return null;
+		}
+		FileInfo info = myInfosByFile.get(file);
+		if (info == null) {
+			info = get(file.getName(false), get(file.getParent()));
+			myInfosByFile.put(file, info);
+		}
+		return info;
+	}
+
+	public long getId(ZLFile file) {
+		final FileInfo info = get(file);
+		if (info == null) {
+			return -1;
+		}
+		if (info.Id == -1) {
+			save();
+		}
+		return info.Id;
+	}	
+
+	private ZLFile getFile(FileInfo info) {
+		if (info == null) {
+			return null;
+		}
+		ZLFile file = myFilesByInfo.get(info);
+		if (file == null) {
+			file = ZLFile.createFile(getFile(info.Parent), info.Name);
+			myFilesByInfo.put(info, file);
+		}
+		return file;
+	}
+
+	public ZLFile getFile(long id) {
+		return getFile(myInfosById.get(id));
 	}
 
 	private void removeChildren(FileInfo info) {

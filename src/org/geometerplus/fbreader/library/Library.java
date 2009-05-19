@@ -70,8 +70,8 @@ public final class Library {
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
-	private static Book getBook(ZLFile bookFile, Map<String,Book> saved, boolean doReadMetaInfo) {
-		Book book = saved.get(bookFile.getPath());
+	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
+		Book book = saved.get(fileInfos.getId(bookFile));
 		if (book == null) {
 			doReadMetaInfo = true;
 			book = new Book(bookFile);
@@ -86,10 +86,10 @@ public final class Library {
 	private void collectBooks(
 		ZLFile file,
 		FileInfoSet fileInfos,
-		Map<String,Book> savedBooks,
+		Map<Long,Book> savedBooks,
 		boolean doReadMetaInfo
 	) {
-		Book book = getBook(file, savedBooks, doReadMetaInfo);
+		Book book = getBook(file, fileInfos, savedBooks, doReadMetaInfo);
 		if (book != null) {
 			myBooks.add(book);
 		} else if (file.isArchive()) {
@@ -107,9 +107,6 @@ public final class Library {
 		dirQueue.offer(BookDirectory);
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {
-				if (file.getName(false).startsWith(".")) {
-					continue;
-				}
 				if (file.isDirectory()) {
 					if (!dirSet.contains(file)) {
 						dirQueue.add(file);
@@ -125,29 +122,30 @@ public final class Library {
 	}
 
 	private void collectBooks() {
+		final long start = System.currentTimeMillis();
 		//android.os.Debug.startMethodTracing("/sdcard/ll0");
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
 		//android.os.Debug.stopMethodTracing();
-		//System.err.println(physicalFilesList.size() + " files " + System.currentTimeMillis() % 20000);
-		//android.os.Debug.startMethodTracing("/sdcard/ll1");
-		final Map<String,Book> savedBooks = BooksDatabase.Instance().listBooks();
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println(savedBooks.size() + " saved books " + System.currentTimeMillis() % 20000);
+		//System.err.println(physicalFilesList.size() + " files " + (System.currentTimeMillis() - start));
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll2");
 		FileInfoSet fileInfos = new FileInfoSet();
-		fileInfos.loadAll();
 		//android.os.Debug.stopMethodTracing();
-		//System.err.println("file infos have been loaded " + System.currentTimeMillis() % 20000);
+		//System.err.println("file infos have been loaded " + (System.currentTimeMillis() - start));
+
+		//android.os.Debug.startMethodTracing("/sdcard/ll1");
+		final Map<Long,Book> savedBooks = BooksDatabase.Instance().listBooks(fileInfos);
+		//android.os.Debug.stopMethodTracing();
+		//System.err.println(savedBooks.size() + " saved books " + (System.currentTimeMillis() - start));
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll3");
 		for (ZLPhysicalFile file : physicalFilesList) {
 			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file));
 			file.setCached(false);
 		}
-		myBooks.add(getBook(getHelpFile(), savedBooks, false));
+		myBooks.add(getBook(getHelpFile(), fileInfos, savedBooks, false));
 		//android.os.Debug.stopMethodTracing();
-		//System.err.println("books have been synchronized " + System.currentTimeMillis() % 20000);
+		//System.err.println("books have been synchronized " + (System.currentTimeMillis() - start));
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll4");
 		fileInfos.save();
@@ -280,6 +278,11 @@ public final class Library {
 	public LibraryTree recentBooks() {
 		synchronize();
 		return myRecentBooks;
+	}
+
+	public Book getRecentBook() {
+		List<Long> recentIds = BooksDatabase.Instance().listRecentBookIds();
+		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
 
 	public LibraryTree searchBooks(String pattern) {

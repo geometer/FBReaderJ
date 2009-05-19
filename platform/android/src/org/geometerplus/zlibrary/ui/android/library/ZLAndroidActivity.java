@@ -61,7 +61,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} else if (fileToOpen != null) {
-			ZLApplication.Instance().openFiles(new ZLPhysicalFile(new File(fileToOpen)));
+			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
 		}
 		ZLApplication.Instance().repaintView();
 	}

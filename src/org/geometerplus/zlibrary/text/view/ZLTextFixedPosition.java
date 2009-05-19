@@ -17,13 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.zlibrary.text.view;
 
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
+public class ZLTextFixedPosition extends ZLTextPosition {
+	public final int ParagraphIndex;
+	public final int ElementIndex;
+	public final int CharIndex;
 
-public final class FootnoteView extends FBView {
-	FootnoteView(ZLPaintContext context) {
-		super(context);
+	public ZLTextFixedPosition(int paragraphIndex, int elementIndex, int charIndex) {
+		ParagraphIndex = paragraphIndex;
+		ElementIndex = elementIndex;
+		CharIndex = charIndex;
+	}
+
+	public ZLTextFixedPosition(ZLTextPosition position) {
+		ParagraphIndex = position.getParagraphIndex();
+		ElementIndex = position.getElementIndex();
+		CharIndex = position.getCharIndex();
+	}
+
+	public final int getParagraphIndex() {
+		return ParagraphIndex;
+	}
+
+	public final int getElementIndex() {
+		return ElementIndex;
+	}
+
+	public final int getCharIndex() {
+		return CharIndex;
 	}
 }

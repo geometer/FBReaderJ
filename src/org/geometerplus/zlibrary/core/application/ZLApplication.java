@@ -185,9 +185,9 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public abstract void openFiles(ZLFile ... files);
+	public abstract void openFile(ZLFile file);
 
-	final void setViewWidget(ZLViewWidget viewWidget) {
+	private final void setViewWidget(ZLViewWidget viewWidget) {
 		myViewWidget = viewWidget;
 	}
 

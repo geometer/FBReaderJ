@@ -274,6 +274,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			}
 			
 			case HtmlTag.IMG: {
+				/*
 				String ref = attributes.getStringValue(mySrcAttribute, myAttributeDecoder);
 				if ((ref != null) && (ref.length() != 0)) {
 					addImageReference(ref, (short)0);
@@ -284,6 +285,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					}
 					addImage(ref, new ZLFileImage("image/auto", ZLFile.createFileByPath(filePath)));
 				}
+				*/
 				break;
 			}
 			

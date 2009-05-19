@@ -69,7 +69,11 @@ final class ZLZipEntryFile extends ZLArchiveEntryFile {
 
 	@Override
 	public long size() {
-		throw new RuntimeException("Not implemented yet.");
+		try {
+			return getZipFile(myParent).getEntrySize(myName);
+		} catch (IOException e) {
+			return 0;
+		}
 	}
 
 	@Override

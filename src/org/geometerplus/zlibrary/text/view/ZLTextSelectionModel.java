@@ -24,16 +24,16 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 final class ZLTextSelectionModel {
-	final static class BoundElement {
+	final static class BoundElement extends ZLTextPosition {
 		boolean Exists;
 		int ParagraphIndex;
-		int TextElementIndex;
+		int ElementIndex;
 		int CharIndex;
 
 		void copyFrom(BoundElement original) {
 			Exists = original.Exists;
 			ParagraphIndex = original.ParagraphIndex;
-			TextElementIndex = original.TextElementIndex;
+			ElementIndex = original.ElementIndex;
 			CharIndex = original.CharIndex;
 		}
 
@@ -41,8 +41,20 @@ final class ZLTextSelectionModel {
 			return
 				(Exists == be.Exists) &&
 				(ParagraphIndex == be.ParagraphIndex) &&
-				(TextElementIndex == be.TextElementIndex) &&
+				(ElementIndex == be.ElementIndex) &&
 				(CharIndex == be.CharIndex);
+		}
+
+		public final int getParagraphIndex() {
+			return ParagraphIndex;
+		}
+
+		public final int getElementIndex() {
+			return ElementIndex;
+		}
+
+		public final int getCharIndex() {
+			return CharIndex;
 		}
 	};
 
@@ -69,21 +81,7 @@ final class ZLTextSelectionModel {
 				return true;
 			}	
 
-			{
-				int diff = Before.ParagraphIndex - bound.Before.ParagraphIndex;
-				if (diff != 0) {
-					return diff < 0;
-				}
-			}
-
-			{
-				int diff = Before.TextElementIndex - bound.Before.TextElementIndex;
-				if (diff != 0) {
-					return diff < 0;
-				}
-			}
-
-			return Before.CharIndex < bound.Before.CharIndex;
+			return Before.compareTo(bound.Before) < 0;
 		}
 	};
 
@@ -225,18 +223,18 @@ final class ZLTextSelectionModel {
 		final ZLTextElementArea elementArea = area;
 		if (areaIndex < areaVectorSize) {
 			bound.After.ParagraphIndex = elementArea.ParagraphIndex;
-			bound.After.TextElementIndex = elementArea.TextElementIndex;
+			bound.After.ElementIndex = elementArea.ElementIndex;
 			bound.After.Exists = true;
-			bound.After.CharIndex = elementArea.StartCharIndex;
+			bound.After.CharIndex = elementArea.CharIndex;
 			if (elementArea.contains(x, y)) {
 				bound.Before.ParagraphIndex = bound.After.ParagraphIndex;
-				bound.Before.TextElementIndex = bound.After.TextElementIndex;
+				bound.Before.ElementIndex = bound.After.ElementIndex;
 				bound.Before.Exists = true;
 				if (elementArea.Element instanceof ZLTextWord) {
 					myView.setTextStyle(elementArea.Style);
 					final ZLTextWord word = (ZLTextWord)elementArea.Element;
 					final int deltaX = x - elementArea.XStart;
-					final int start = elementArea.StartCharIndex;
+					final int start = elementArea.CharIndex;
 					final int len = elementArea.Length;
 					int diff = deltaX;
 					int previousDiff = diff;
@@ -256,14 +254,14 @@ final class ZLTextSelectionModel {
 			} else {
 				final ZLTextElementArea previous = areaVector.get(areaIndex - 1);
 				bound.Before.ParagraphIndex = previous.ParagraphIndex;
-				bound.Before.TextElementIndex = previous.TextElementIndex;
-				bound.Before.CharIndex = previous.StartCharIndex + previous.Length;
+				bound.Before.ElementIndex = previous.ElementIndex;
+				bound.Before.CharIndex = previous.CharIndex + previous.Length;
 				bound.Before.Exists = true;
 			}
 		} else {
 			bound.Before.ParagraphIndex = elementArea.ParagraphIndex;
-			bound.Before.TextElementIndex = elementArea.TextElementIndex;
-			bound.Before.CharIndex = elementArea.StartCharIndex + elementArea.Length;
+			bound.Before.ElementIndex = elementArea.ElementIndex;
+			bound.Before.CharIndex = elementArea.CharIndex + elementArea.Length;
 			bound.Before.Exists = true;
 			bound.After.Exists = false;
 		}

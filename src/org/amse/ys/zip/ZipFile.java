@@ -137,11 +137,19 @@ public final class ZipFile {
         return new ZipInputStream(this, header);
     }
 
+    public int getEntrySize(String entryName) throws IOException {
+		return getHeader(entryName).getUncompressedSize();
+	}
+
     public InputStream getInputStream(String entryName) throws IOException {
+		return createZipInputStream(getHeader(entryName));
+    }
+
+    public LocalFileHeader getHeader(String entryName) throws IOException {
         if (!myFileHeaders.isEmpty()) {
             LocalFileHeader header = myFileHeaders.get(entryName);
             if (header != null) {
-                return createZipInputStream(header);
+                return header;
             }
             if (myAllFilesAreRead) {
 				throw new ZipException("Entry " + entryName + " is not found");
@@ -165,7 +173,7 @@ public final class ZipFile {
             } while (!readFileHeader(baseStream, entryName));
             LocalFileHeader header = myFileHeaders.get(entryName);
             if (header != null) {
-            	return createZipInputStream(header);
+            	return header;
             }
 		} finally {
 			storeBaseStream(baseStream);

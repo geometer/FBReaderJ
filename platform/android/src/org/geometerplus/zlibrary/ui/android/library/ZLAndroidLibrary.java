@@ -121,7 +121,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		@Override
 		public InputStream getInputStream() throws IOException {
 			if (!myExists) {
-				throw new IOException("No such file: " + getPath());
+				throw new IOException("File not found: " + getPath());
 			}
 			try {
 				return myApplication.getResources().openRawResource(myResourceId);

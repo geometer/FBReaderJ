@@ -293,7 +293,7 @@ mainLoop:
 			fbreader.Model.Book,
 			createBookmarkText(cursor),
 			textView.getModel().getId(),
-			new ZLTextPosition(cursor)
+			cursor
 		);
 		myThisBookBookmarks.add(0, bookmark);
 		AllBooksBookmarks.add(0, bookmark);
@@ -301,11 +301,6 @@ mainLoop:
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {
-		if (bookmark.getModelId() != null) {
-			// TODO: implement
-			System.err.println("Cannot go to position in footnote model " + bookmark.getModelId());
-			return;
-		}
 		bookmark.onOpen();
 		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final long bookId = bookmark.getBookId();
@@ -313,7 +308,7 @@ mainLoop:
 			final Book book = Book.getById(bookId);
 			if (book != null) {
 				finish();
-				fbreader.openBook(book, bookmark.getPosition());
+				fbreader.openBook(book, bookmark);
 			} else {
 				Toast.makeText(
 					this,
@@ -323,7 +318,7 @@ mainLoop:
 			}
 		} else {
 			finish();
-			fbreader.BookTextView.gotoPosition(bookmark.getPosition());
+			fbreader.gotoBookmark(bookmark);
 		}
 	}
 

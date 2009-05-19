@@ -21,9 +21,10 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
-public class Bookmark {
+public final class Bookmark extends ZLTextFixedPosition {
 	public final static int CREATION = 0;
 	public final static int MODIFICATION = 1;
 	public final static int ACCESS = 2;
@@ -43,11 +44,12 @@ public class Bookmark {
 	private int myAccessCount;
 	private Date myLatestDate;
 	private final String myModelId;
-	private final ZLTextPosition myPosition;
 
 	private boolean myIsChanged;
 
-	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int wordIndex, int charIndex) {
+	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex) {
+		super(paragraphIndex, elementIndex, charIndex);
+
 		myId = id;
 		myBookId = bookId;
 		myBookTitle = bookTitle;
@@ -63,18 +65,18 @@ public class Bookmark {
 		}
 		myAccessCount = accessCount;
 		myModelId = modelId;
-		myPosition = new ZLTextPosition(paragraphIndex, wordIndex, charIndex);
 		myIsChanged = false;
 	}
 
-	public Bookmark(Book book, String text, String modelId, ZLTextPosition position) {
+	public Bookmark(Book book, String text, String modelId, ZLTextWordCursor cursor) {
+		super(cursor);
+
 		myId = -1;
 		myBookId = book.getId();
 		myBookTitle = book.getTitle();
 		myText = text;
 		myCreationDate = new Date();
 		myModelId = modelId;
-		myPosition = position;
 		myIsChanged = true;
 	}
 
@@ -96,10 +98,6 @@ public class Bookmark {
 
 	public String getModelId() {
 		return myModelId;
-	}
-
-	public ZLTextPosition getPosition() {
-		return myPosition;
 	}
 
 	public Date getTime(int timeStamp) {
@@ -152,12 +150,6 @@ public class Bookmark {
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			return bm1.getTime(LATEST).compareTo(bm0.getTime(LATEST));
-		}
-	}
-
-	public static class ByPositionComparator implements Comparator<Bookmark> {
-		public int compare(Bookmark bm0, Bookmark bm1) {
-			return bm0.getPosition().compareTo(bm1.getPosition());
 		}
 	}
 }

@@ -44,8 +44,7 @@ public class Book {
 			return null;
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet();
-		fileInfos.load(physicalFile);
+		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
 		if (fileInfos.check(physicalFile)) {
 			return book;
 		}
@@ -64,13 +63,13 @@ public class Book {
 			return null;
 		}
 
-		Book book = BooksDatabase.Instance().loadBook(bookFile.getPath());
+		final FileInfoSet fileInfos = new FileInfoSet(bookFile);
+
+		Book book = BooksDatabase.Instance().loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
 			book.loadLists();
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet();
-		fileInfos.load(physicalFile);
 		if (fileInfos.check(physicalFile) && (book != null)) {
 			return book;
 		}
@@ -305,9 +304,10 @@ public class Book {
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
-					database.updateBookInfo(myId, myEncoding, myLanguage, myTitle);
+					final FileInfoSet fileInfos = new FileInfoSet(File);
+					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
-					myId = database.insertBookInfo(File.getPath(), myEncoding, myLanguage, myTitle);
+					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
 				}
             
 				long index = 0;

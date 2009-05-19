@@ -36,7 +36,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReader;
-import org.geometerplus.fbreader.fbreader.BookTextView;
 
 public class TOCActivity extends ListActivity {
 	private TOCAdapter myAdapter;
@@ -50,12 +49,12 @@ public class TOCActivity extends ListActivity {
 		final TOCTree root = fbreader.Model.TOCTree;
 		myAdapter = new TOCAdapter(root);
 		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
-		int index = cursor.getParagraphCursor().Index;	
+		int index = cursor.getParagraphIndex();	
 		if (cursor.isEndOfParagraph()) {
 			++index;
 		}
 		TOCTree treeToSelect = null;
-		// TODO: rewrite for better speed
+		// TODO: use binary search
 		// TODO: process multi-model texts
 		for (int i = 0; i < root.getSize(); ++i) {
 			final TOCTree tree = root.getTree(i);
@@ -123,9 +122,10 @@ public class TOCActivity extends ListActivity {
 		void openBookText(TOCTree tree) {
 			final TOCTree.Reference reference = tree.getReference();
 			if (reference != null) {
-				final FBReader fbreader = (FBReader)ZLApplication.Instance();
-				fbreader.BookTextView.gotoParagraph(reference.ParagraphIndex, false);
 				finish();
+				final FBReader fbreader = (FBReader)ZLApplication.Instance();
+				fbreader.BookTextView.gotoPosition(reference.ParagraphIndex, 0, 0);
+				fbreader.showBookTextView();
 			}
 		}
 

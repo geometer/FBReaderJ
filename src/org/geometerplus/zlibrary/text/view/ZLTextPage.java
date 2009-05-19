@@ -57,6 +57,7 @@ final class ZLTextPage {
 		PaintState = PaintStateEnum.START_IS_KNOWN;
 	}
 
+	/*
 	void moveEndCursor(int paragraphIndex, int wordIndex, int charIndex) {
 		if (EndCursor.isNull()) {
 			EndCursor.setCursor(StartCursor);
@@ -72,6 +73,7 @@ final class ZLTextPage {
 		LineInfos.clear();
 		PaintState = PaintStateEnum.END_IS_KNOWN;
 	}
+	*/
 
 	boolean isEmptyPage() {
 		for (ZLTextLineInfo info : LineInfos) {
@@ -98,7 +100,7 @@ final class ZLTextPage {
 			}
 		}
 		cursor.setCursor(info.ParagraphCursor);
-		cursor.moveTo(info.EndWordIndex, info.EndCharIndex);
+		cursor.moveTo(info.EndElementIndex, info.EndCharIndex);
 	}
 
 	void findLineFromEnd(ZLTextWordCursor cursor, int overlappingValue) {
@@ -119,7 +121,7 @@ final class ZLTextPage {
 			}
 		}
 		cursor.setCursor(info.ParagraphCursor);
-		cursor.moveTo(info.StartWordIndex, info.StartCharIndex);
+		cursor.moveTo(info.StartElementIndex, info.StartCharIndex);
 	}
 
 	void findPercentFromStart(ZLTextWordCursor cursor, int areaHeight, int percent) {
@@ -141,22 +143,22 @@ final class ZLTextPage {
 			}
 		}
 		cursor.setCursor(info.ParagraphCursor);
-		cursor.moveTo(info.EndWordIndex, info.EndCharIndex);
+		cursor.moveTo(info.EndElementIndex, info.EndCharIndex);
 	}
 
 	ZLTextElementArea findLast(int from, int to, ZLTextSelectionModel.BoundElement bound) {
-		final int boundElementIndex = bound.TextElementIndex;
+		final int boundElementIndex = bound.ElementIndex;
 		final int boundCharIndex = bound.CharIndex;
 		final ZLTextElementAreaVector textAreas = TextElementMap;
 		ZLTextElementArea elementArea = textAreas.get(from);
-		if ((elementArea.TextElementIndex < boundElementIndex) ||
-				((elementArea.TextElementIndex == boundElementIndex) &&
-				 (elementArea.StartCharIndex <= boundCharIndex))) {
+		if ((elementArea.ElementIndex < boundElementIndex) ||
+				((elementArea.ElementIndex == boundElementIndex) &&
+				 (elementArea.CharIndex <= boundCharIndex))) {
 			for (++from; from < to; ++from) {
 				elementArea = textAreas.get(from);
-				if ((elementArea.TextElementIndex > boundElementIndex) ||
-						((elementArea.TextElementIndex == boundElementIndex) &&
-						 (elementArea.StartCharIndex > boundCharIndex))) {
+				if ((elementArea.ElementIndex > boundElementIndex) ||
+						((elementArea.ElementIndex == boundElementIndex) &&
+						 (elementArea.CharIndex > boundCharIndex))) {
 					return textAreas.get(from - 1);
 				}
 			}

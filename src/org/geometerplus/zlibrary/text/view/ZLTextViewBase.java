@@ -154,6 +154,21 @@ abstract class ZLTextViewBase extends ZLView {
 		return Context.getStringWidth(part, 0, length + 1);
 	}
 
+	int getAreaLength(ZLTextParagraphCursor paragraph, ZLTextElementArea area, int toCharIndex) {
+		setTextStyle(area.Style);
+		final ZLTextWord word = (ZLTextWord)paragraph.getElement(area.ElementIndex);
+		int length = toCharIndex - area.CharIndex;
+		boolean selectHyphenationSign = false;
+		if (length >= area.Length) {
+			selectHyphenationSign = area.AddHyphenationSign;
+			length = area.Length;
+		}
+		if (length > 0) {
+			return getWordWidth(word, area.CharIndex, length, selectHyphenationSign);
+		}
+		return 0;
+	}
+
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		final ZLPaintContext context = Context;
 		context.setColor(myTextStyle.getColor());	

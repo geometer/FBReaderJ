@@ -19,43 +19,29 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public final class ZLTextPosition implements Comparable<ZLTextPosition> {
-	public int ParagraphIndex;
-	public int WordIndex;
-	public int CharIndex;
+public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
+	public abstract int getParagraphIndex();
+	public abstract int getElementIndex();
+	public abstract int getCharIndex();
 
-	public ZLTextPosition(int paragraphIndex, int wordIndex, int charIndex) {
-		ParagraphIndex = paragraphIndex;
-		WordIndex = wordIndex;
-		CharIndex = charIndex;
-	}
-
-	public ZLTextPosition(ZLTextWordCursor cursor) {
-		set(cursor);
-	}
-
-	public void set(ZLTextWordCursor cursor) {
-		if (!cursor.isNull()) {
-			ParagraphIndex = cursor.getParagraphCursor().Index;
-			WordIndex = cursor.getWordIndex();
-			CharIndex = cursor.getCharIndex();
-		}
-	}
-
-	public boolean equalsToCursor(ZLTextWordCursor cursor) {
+	public boolean samePositionAs(ZLTextPosition position) {
 		return
-			(ParagraphIndex == cursor.getParagraphCursor().Index) &&
-			(WordIndex == cursor.getWordIndex()) &&
-			(CharIndex == cursor.getCharIndex());
+			(getParagraphIndex() == position.getParagraphIndex()) &&
+			(getElementIndex() == position.getElementIndex()) &&
+			(getCharIndex() == position.getCharIndex());
 	}
 
 	public int compareTo(ZLTextPosition position) {
-		if (ParagraphIndex != position.ParagraphIndex) {
-			return ParagraphIndex - position.ParagraphIndex;
+		final int pDiff = getParagraphIndex() - position.getParagraphIndex();
+		if (pDiff != 0) {
+			return pDiff;
 		}
-		if (WordIndex != position.WordIndex) {
-			return WordIndex - position.WordIndex;
+
+		final int eDiff = getElementIndex() - position.getElementIndex();
+		if (eDiff != 0) {
+			return eDiff;
 		}
-		return CharIndex - position.CharIndex;
+
+		return getCharIndex() - position.getCharIndex();
 	}
 }

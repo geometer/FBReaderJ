@@ -19,30 +19,26 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public class ZLTextElementArea { 
+public final class ZLTextElementArea extends ZLTextFixedPosition { 
 	final int XStart;	
 	final int XEnd;	
 	final int YStart;	
 	final int YEnd;	
 	
-	public final int ParagraphIndex;
-	public final int TextElementIndex;
-	final int StartCharIndex;	
 	final int Length;
 	final boolean AddHyphenationSign;
 	final boolean ChangeStyle;
 	final ZLTextStyle Style;
 	public final ZLTextElement Element;
 
-	ZLTextElementArea(int paragraphIndex, int textElementIndex, int startCharIndex, int length, boolean addHyphenationSign, boolean changeStyle, ZLTextStyle style, ZLTextElement element, int xStart, int xEnd, int yStart, int yEnd) {
+	ZLTextElementArea(int paragraphIndex, int elementIndex, int charIndex, int length, boolean addHyphenationSign, boolean changeStyle, ZLTextStyle style, ZLTextElement element, int xStart, int xEnd, int yStart, int yEnd) {
+		super(paragraphIndex, elementIndex, charIndex);
+
 		XStart = xStart;
 		XEnd = xEnd;
 		YStart = yStart;
 		YEnd = yEnd;
 
-		ParagraphIndex = paragraphIndex;
-		TextElementIndex = textElementIndex;
-		StartCharIndex = startCharIndex;
 		Length = length;
 		AddHyphenationSign = addHyphenationSign;
 		ChangeStyle = changeStyle;

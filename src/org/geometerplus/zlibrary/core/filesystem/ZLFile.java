@@ -73,6 +73,34 @@ public abstract class ZLFile {
 		myArchiveType = archiveType;
 	}
 	
+	public static ZLFile createFile(ZLFile parent, String name) {
+		ZLFile file = null;
+		if (parent == null) {
+			ZLFile cached = ourCachedFiles.get(name);
+			if (cached != null) {
+				return cached;
+			}
+			if (!name.startsWith("/")) {
+				return ZLResourceFile.createResourceFile(name);
+			} else {
+				return new ZLPhysicalFile(name);
+			}
+		} else if ((parent instanceof ZLPhysicalFile) && (parent.getParent() == null)) {
+			// parent is a directory
+			file = new ZLPhysicalFile(parent.getPath() + '/' + name);
+		} else {
+			file = ZLArchiveEntryFile.createArchiveEntryFile(parent, name);
+		}
+
+		if (!ourCachedFiles.isEmpty() && (file != null)) {
+			ZLFile cached = ourCachedFiles.get(file.getPath());
+			if (cached != null) {
+				return cached;
+			}
+		}
+		return file;
+	}
+
 	public static ZLFile createFileByPath(String path) {
 		if (path == null) {
 			return null;

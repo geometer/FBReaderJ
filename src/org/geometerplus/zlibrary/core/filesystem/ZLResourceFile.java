@@ -29,11 +29,9 @@ public abstract class ZLResourceFile extends ZLFile {
 	}
 
 	private final String myPath;
-	private final String myName;
 	
 	protected ZLResourceFile(String path) {
 		myPath = path;
-		myName = path.substring(path.lastIndexOf('/') + 1);
 		init();
 	}
 	
@@ -46,7 +44,7 @@ public abstract class ZLResourceFile extends ZLFile {
 	}
 	
 	public String getNameWithExtension() {
-		return myName;
+		return myPath;
 	}
 
 	public ZLFile getParent() {

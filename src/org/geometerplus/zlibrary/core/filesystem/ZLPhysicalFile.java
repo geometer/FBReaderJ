@@ -62,7 +62,7 @@ public final class ZLPhysicalFile extends ZLFile {
 	
 	@Override
 	public String getNameWithExtension() {
-		return myFile.getName();
+		return isDirectory() ? getPath() : myFile.getName();
 	}
 
 	@Override
@@ -88,7 +88,9 @@ public final class ZLPhysicalFile extends ZLFile {
 
 		ArrayList<ZLFile> entries  = new ArrayList<ZLFile>(subFiles.length);
 		for (File f : subFiles) {
-			entries.add(new ZLPhysicalFile(f));
+			if (!f.getName().startsWith(".")) {
+				entries.add(new ZLPhysicalFile(f));
+			}
 		}
 		return entries;
 	}

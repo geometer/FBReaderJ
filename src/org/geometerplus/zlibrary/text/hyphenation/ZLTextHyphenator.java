@@ -65,7 +65,7 @@ public abstract class ZLTextHyphenator {
 		pattern[len + 1] = ' ';
 
 		final ZLTextHyphenationInfo info = new ZLTextHyphenationInfo(len + 2);
-		final boolean[] mask = info.myMask;
+		final boolean[] mask = info.Mask;
 		hyphenate(pattern, mask, len + 2);
 		for (int i = 0, j = word.Offset - 1; i <= len; ++i, ++j) {
 			if ((i < 2) || (i > len - 2)) {

@@ -36,8 +36,12 @@ public abstract class BooksDatabase {
 		ourInstance = this;
 	}
 
-	protected Book createBook(long id, String filePath, String title, String encoding, String language) {
-		return new Book(id, ZLFile.createFileByPath(filePath), title, encoding, language);
+	protected Book createBook(long id, long fileId, String title, String encoding, String language) {
+		final FileInfoSet infos = new FileInfoSet(fileId);
+		return createBook(id, infos.getFile(fileId), title, encoding, language);
+	}
+	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
+		return (file != null) ? new Book(id, file, title, encoding, language) : null;
 	}
 	protected void addAuthor(Book book, Author author) {
 		book.addAuthorWithNoCheck(author);
@@ -49,21 +53,23 @@ public abstract class BooksDatabase {
 		book.setSeriesInfoWithNoCheck(series, index);
 	}
 
-	protected abstract Map<String,Book> listBooks();
 	protected abstract void executeAsATransaction(Runnable actions);
+
+	// returns map fileId -> book
+	protected abstract Map<Long,Book> listBooks(FileInfoSet infos);
 	protected abstract Book loadBook(long bookId);
-	protected abstract Book loadBook(String fileName);
+	protected abstract Book loadBookByFile(long fileId, ZLFile file);
+
 	protected abstract List<Author> loadAuthors(long bookId);
 	protected abstract List<Tag> loadTags(long bookId);
 	protected abstract SeriesInfo loadSeriesInfo(long bookId);
-	protected abstract void updateBookInfo(long bookId, String encoding, String language, String title);
-	protected abstract long insertBookInfo(String fileName, String encoding, String language, String title);
+	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
+	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
 	protected abstract void deleteAllBookAuthors(long bookId);
 	protected abstract void saveBookAuthorInfo(long bookId, long index, Author author);
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
-	protected abstract void resetBookInfo(String fileName);
 
 	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
 		return new FileInfo(name, parent, id);
@@ -71,6 +77,7 @@ public abstract class BooksDatabase {
 
 	protected abstract Collection<FileInfo> loadFileInfos();
 	protected abstract Collection<FileInfo> loadFileInfos(ZLFile file);
+	protected abstract Collection<FileInfo> loadFileInfos(long fileId);
 	protected abstract void removeFileInfo(long fileId);
 	protected abstract void saveFileInfo(FileInfo fileInfo);
 

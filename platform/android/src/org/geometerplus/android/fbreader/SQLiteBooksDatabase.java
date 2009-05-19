@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.library.*;
@@ -116,22 +117,25 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected Book loadBook(long bookId) {
 		Book book = null;
-		final Cursor cursor = myDatabase.rawQuery("SELECT file_name,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
+		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
 			book = createBook(
-				bookId, cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)
+				bookId, cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)
 			);
 		}
 		cursor.close();
 		return book;
 	}
 
-	protected Book loadBook(String fileName) {
+	protected Book loadBookByFile(long fileId, ZLFile file) {
+		if (fileId == -1) {
+			return null;
+		}
 		Book book = null;
-		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,title,encoding,language FROM Books WHERE file_name = ?", new String[] { fileName });
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id,title,encoding,language FROM Books WHERE file_id = " + fileId, null);
 		if (cursor.moveToNext()) {
 			book = createBook(
-				cursor.getLong(0), fileName, cursor.getString(1), cursor.getString(2), cursor.getString(3)
+				cursor.getLong(0), file, cursor.getString(1), cursor.getString(2), cursor.getString(3)
 			);
 		}
 		cursor.close();
@@ -160,21 +164,24 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 	}
 
-	protected Map<String,Book> listBooks() {
+	@Override
+	protected Map<Long,Book> listBooks(FileInfoSet infos) {
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id,file_name,title,encoding,language FROM Books", null
+			"SELECT book_id,file_id,title,encoding,language FROM Books", null
 		);
 		final int count = cursor.getCount();
 		final HashMap<Long,Book> booksById = new HashMap<Long,Book>(count);
-		final HashMap<String,Book> booksByFilename = new HashMap<String,Book>(count);
+		final HashMap<Long,Book> booksByFileId = new HashMap<Long,Book>(count);
 		while (cursor.moveToNext()) {
 			final long id = cursor.getLong(0);
-			final String fileName = cursor.getString(1);
+			final long fileId = cursor.getLong(1);
 			final Book book = createBook(
-				id, fileName, cursor.getString(2), cursor.getString(3), cursor.getString(4)
+				id, infos.getFile(fileId), cursor.getString(2), cursor.getString(3), cursor.getString(4)
 			);
-			booksById.put(id, book);
-			booksByFilename.put(fileName, book);
+			if (book != null) {
+				booksById.put(id, book);
+				booksByFileId.put(fileId, book);
+			}
 		}
 		cursor.close();
 
@@ -234,34 +241,36 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 		}
 		cursor.close();
-		return booksByFilename;
+		return booksByFileId;
 	}
 
 	private SQLiteStatement myUpdateBookInfoStatement;
-	protected void updateBookInfo(long bookId, String encoding, String language, String title) {
+	protected void updateBookInfo(long bookId, long fileId, String encoding, String language, String title) {
 		if (myUpdateBookInfoStatement == null) {
 			myUpdateBookInfoStatement = myDatabase.compileStatement(
-				"UPDATE Books SET encoding = ?, language = ?, title = ? WHERE book_id = ?"
+				"UPDATE Books SET file_id = ?, encoding = ?, language = ?, title = ? WHERE book_id = ?"
 			);
 		}
-		bindString(myUpdateBookInfoStatement, 1, encoding);
-		bindString(myUpdateBookInfoStatement, 2, language);
-		myUpdateBookInfoStatement.bindString(3, title);
-		myUpdateBookInfoStatement.bindLong(4, bookId);
+		myUpdateBookInfoStatement.bindLong(1, fileId);
+		bindString(myUpdateBookInfoStatement, 2, encoding);
+		bindString(myUpdateBookInfoStatement, 3, language);
+		myUpdateBookInfoStatement.bindString(4, title);
+		myUpdateBookInfoStatement.bindLong(5, bookId);
 		myUpdateBookInfoStatement.execute();
 	}
 
 	private SQLiteStatement myInsertBookInfoStatement;
-	protected long insertBookInfo(String fileName, String encoding, String language, String title) {
+	protected long insertBookInfo(ZLFile file, String encoding, String language, String title) {
 		if (myInsertBookInfoStatement == null) {
 			myInsertBookInfoStatement = myDatabase.compileStatement(
-				"INSERT INTO Books (encoding,language,title,file_name) VALUES (?,?,?,?)"
+				"INSERT INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
 			);
 		}
 		bindString(myInsertBookInfoStatement, 1, encoding);
 		bindString(myInsertBookInfoStatement, 2, language);
 		myInsertBookInfoStatement.bindString(3, title);
-		myInsertBookInfoStatement.bindString(4, fileName);
+		final FileInfoSet infoSet = new FileInfoSet(file);
+		myInsertBookInfoStatement.bindLong(4, infoSet.getId(file));
 		return myInsertBookInfoStatement.executeInsert();
 	}
 
@@ -461,39 +470,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return info;
 	}
 
-	private SQLiteStatement myResetBookInfoStatement;
-	private long getBookId(String fileName) {
-		if (myResetBookInfoStatement == null) {
-			myResetBookInfoStatement = myDatabase.compileStatement(
-				"SELECT book_id FROM Books WHERE file_name = ?"
-			);
-		}
-		myResetBookInfoStatement.bindString(1, fileName);
-		try {
-			return myResetBookInfoStatement.simpleQueryForLong();
-		} catch (SQLException e) {
-			return -1;
-		}
-	}
-
-	private final static String myBookIdWhereClause = "book_id = ?";
-	protected void resetBookInfo(String fileName) {
-		final long bookId = getBookId(fileName);
-		if (bookId != -1) {
-			final String[] parameters = { "" + bookId };
-			executeAsATransaction(new Runnable() {
-				public void run() {
-					myDatabase.delete("Books", myBookIdWhereClause, parameters);
-					myDatabase.delete("BookAuthor", myBookIdWhereClause, parameters);
-					myDatabase.delete("BookSeries", myBookIdWhereClause, parameters);
-					myDatabase.delete("BookTag", myBookIdWhereClause, parameters);
-					myDatabase.delete("Bookmarks", myBookIdWhereClause, parameters);
-					myDatabase.delete("BookState", myBookIdWhereClause, parameters);
-				}
-			});
-		}
-	}
-
 	private SQLiteStatement myRemoveFileInfoStatement;
 	protected void removeFileInfo(long fileId) {
 		if (fileId == -1) {
@@ -569,7 +545,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return infosById.values();
 	}
 
-	SQLiteStatement mySelectFileInfoStatement;
 	protected Collection<FileInfo> loadFileInfos(ZLFile file) {
 		final LinkedList<ZLFile> fileStack = new LinkedList<ZLFile>();
 		for (; file != null; file = file.getParent()) {
@@ -581,7 +556,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		FileInfo current = null;
 		for (ZLFile f : fileStack) {
 			parameters[0] = f.getName(false);
-			Cursor cursor = myDatabase.rawQuery(
+			final Cursor cursor = myDatabase.rawQuery(
 				(current == null) ?
 					"SELECT file_id,size FROM Files WHERE name = ?" :
 					"SELECT file_id,size FROM Files WHERE parent_id = " + current.Id + " AND name = ?",
@@ -600,6 +575,33 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 		}
 
+		return infos;
+	}
+
+	protected Collection<FileInfo> loadFileInfos(long fileId) {
+		final ArrayList<FileInfo> infos = new ArrayList<FileInfo>();
+		while (fileId != -1) {
+			final Cursor cursor = myDatabase.rawQuery(
+				"SELECT name,size,parent_id FROM Files WHERE file_id = " + fileId, null
+			);
+			if (cursor.moveToNext()) {
+				FileInfo info = createFileInfo(fileId, cursor.getString(0), null);
+				if (!cursor.isNull(1)) {
+					info.FileSize = cursor.getLong(1);
+				}
+				infos.add(0, info);
+				fileId = cursor.isNull(2) ? -1 : cursor.getLong(2);
+			} else {
+				fileId = -1;
+			}
+			cursor.close();
+		}
+		for (int i = 1; i < infos.size(); ++i) {
+			final FileInfo oldInfo = infos.get(i);
+			final FileInfo newInfo = createFileInfo(oldInfo.Id, oldInfo.Name, infos.get(i - 1));
+			newInfo.FileSize = oldInfo.FileSize;
+			infos.set(i, newInfo);
+		}
 		return infos;
 	}
 
@@ -710,17 +712,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		bindDate(statement, 4, bookmark.getTime(Bookmark.MODIFICATION));
 		bindDate(statement, 5, bookmark.getTime(Bookmark.ACCESS));
 		statement.bindLong(6, bookmark.getAccessCount());
-		final ZLTextPosition position = bookmark.getPosition();
 		bindString(statement, 7, bookmark.getModelId());
-		statement.bindLong(8, position.ParagraphIndex);
-		statement.bindLong(9, position.WordIndex);
-		statement.bindLong(10, position.CharIndex);
+		statement.bindLong(8, bookmark.ParagraphIndex);
+		statement.bindLong(9, bookmark.ElementIndex);
+		statement.bindLong(10, bookmark.CharIndex);
 
 		if (statement == myInsertBookmarkStatement) {
 			return statement.executeInsert();
 		} else {
 			final long id = bookmark.getId();
-			statement.bindLong(10, id);
+			statement.bindLong(11, id);
 			statement.execute();
 			return id;
 		}
@@ -743,7 +744,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT paragraph,word,char FROM BookState WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
-			position = new ZLTextPosition((int)cursor.getLong(0), (int)cursor.getLong(1), (int)cursor.getLong(2));
+			position = new ZLTextFixedPosition(
+				(int)cursor.getLong(0),
+				(int)cursor.getLong(1),
+				(int)cursor.getLong(2)
+			);
 		}
 		cursor.close();
 		return position;
@@ -757,9 +762,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			);
 		}
 		myStorePositionStatement.bindLong(1, bookId);
-		myStorePositionStatement.bindLong(2, position.ParagraphIndex);
-		myStorePositionStatement.bindLong(3, position.WordIndex);
-		myStorePositionStatement.bindLong(4, position.CharIndex);
+		myStorePositionStatement.bindLong(2, position.getParagraphIndex());
+		myStorePositionStatement.bindLong(3, position.getElementIndex());
+		myStorePositionStatement.bindLong(4, position.getCharIndex());
 		myStorePositionStatement.execute();
 	}
 
@@ -845,8 +850,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables4() {
 		final FileInfoSet fileInfos = new FileInfoSet();
-		fileInfos.loadAll();
-		Cursor cursor = myDatabase.rawQuery(
+		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_name FROM Books", null
 		);
 		while (cursor.moveToNext()) {
@@ -860,13 +864,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_index INTEGER PRIMARY KEY," +
 				"book_id INTEGER REFERENCES Books(book_id))");
 		final ArrayList<Long> ids = new ArrayList<Long>();
+
+		final SQLiteStatement statement = myDatabase.compileStatement(
+			"SELECT book_id FROM Books WHERE file_name = ?"
+		);
+
 		for (int i = 0; i < 20; ++i) {
 			final ZLStringOption option = new ZLStringOption("LastOpenedBooks", "Book" + i, "");
-			final String name = option.getValue();
+			final String fileName = option.getValue();
 			option.setValue("");
-			final long bookId = getBookId(name);
-			if (bookId != -1) {
-				ids.add(bookId);
+			try {
+				statement.bindString(1, fileName);
+				final long bookId = statement.simpleQueryForLong();
+				if (bookId != -1) {
+					ids.add(bookId);
+				}
+			} catch (SQLException e) {
 			}
 		}
 		saveRecentBookIds(ids);
@@ -919,6 +932,52 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"ALTER TABLE Bookmarks ADD COLUMN model_id TEXT"
 		);
+
+		myDatabase.execSQL(
+			"ALTER TABLE Books ADD COLUMN file_id INTEGER"
+		);
+
+		myDatabase.execSQL("DELETE FROM Files");
+		final FileInfoSet infoSet = new FileInfoSet();
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT file_name FROM Books", null
+		);
+		while (cursor.moveToNext()) {
+			infoSet.check(ZLFile.createFileByPath(cursor.getString(0)).getPhysicalFile());
+		}
+		cursor.close();
+		infoSet.save();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id,file_name FROM Books", null
+		);
+		final SQLiteStatement deleteStatement = myDatabase.compileStatement("DELETE FROM Books WHERE book_id = ?");
+		final SQLiteStatement updateStatement = myDatabase.compileStatement("UPDATE Books SET file_id = ? WHERE book_id = ?");
+		while (cursor.moveToNext()) {
+			final long bookId = cursor.getLong(0);
+			final long fileId = infoSet.getId(ZLFile.createFileByPath(cursor.getString(1)));
+
+			if (fileId == -1) {
+				deleteStatement.bindLong(1, bookId);
+				deleteStatement.execute();
+			} else {
+				updateStatement.bindLong(1, fileId);
+				updateStatement.bindLong(2, bookId);
+				updateStatement.execute();
+			}
+		}
+		cursor.close();
+
+		myDatabase.execSQL("ALTER TABLE Books RENAME TO Books_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE Books(" +
+				"book_id INTEGER PRIMARY KEY," +
+				"encoding TEXT," +
+				"language TEXT," +
+				"title TEXT NOT NULL," +
+				"file_id INTEGER UNIQUE NOT NULL REFERENCES Files(file_id))");
+		myDatabase.execSQL("INSERT INTO Books (book_id,encoding,language,title,file_id) SELECT book_id,encoding,language,title,file_id FROM Books_Obsolete");
+		myDatabase.execSQL("DROP TABLE Books_Obsolete");
 	}
 
 	private void updateTables7() {
