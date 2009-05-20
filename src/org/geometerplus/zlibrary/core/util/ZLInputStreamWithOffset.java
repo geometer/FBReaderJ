@@ -35,9 +35,12 @@ public class ZLInputStreamWithOffset extends InputStream {
 	}
 
 	public long skip(long n) throws IOException {
-		final long shift = myDecoratedStream.skip(n);
+		long shift = myDecoratedStream.skip(n);
 		if (shift > 0) {
 			myOffset += (int)shift;
+		}
+		while ((shift < n) && (read() != -1)) {
+			++shift;
 		}
 		return shift;
 	}

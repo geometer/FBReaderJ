@@ -32,15 +32,21 @@ public abstract class DocDecompressor {
 		int sourceIndex = 0;
 		int targetIndex = 0;
 
+		int count0 = 0;
+		int count1 = 0;
+		int count2 = 0;
+		int count3 = 0;
 		try {
 			while (true) {
 				final byte token = sourceBuffer[sourceIndex++];
 				switch (token) {
 					default:
+						++count0;
 						targetBuffer[targetIndex++] = token;
 						break;
 					case 1: case 2: case 3: case 4:
 					case 5: case 6: case 7: case 8:
+						++count1;
 						System.arraycopy(sourceBuffer, sourceIndex, targetBuffer, targetIndex, token);
 						sourceIndex += token;
 						targetIndex += token;
@@ -61,6 +67,7 @@ public abstract class DocDecompressor {
 					case -12: case -11: case -10: case -9:
 					case -8: case -7: case -6: case -5:
 					case -4: case -3: case -2: case -1:
+						++count2;
 						targetBuffer[targetIndex++] = ' ';
 						targetBuffer[targetIndex++] = (byte)(token ^ 0x80);
 						break;
@@ -80,6 +87,7 @@ public abstract class DocDecompressor {
 					case -76: case -75: case -74: case -73:
 					case -72: case -71: case -70: case -69:
 					case -68: case -67: case -66: case -65:
+						++count3;
 						final int N = ((token & 0x3F) << 8) + (sourceBuffer[sourceIndex++] & 0xFF);
 						int copyLength = (N & 7) + 3;
 						int srcIndex = targetIndex - (N >> 3);
@@ -87,14 +95,17 @@ public abstract class DocDecompressor {
 							System.arraycopy(targetBuffer, srcIndex, targetBuffer, targetIndex, copyLength);
 							targetIndex += copyLength;
 						} else {
-							do {
+							while (copyLength-- > 0) {
 								targetBuffer[targetIndex++] = targetBuffer[srcIndex++];
-							} while (--copyLength > 0);
+							}
 						}
 						break;
 				}
 			}
 		} catch (Exception e) {
+			if (targetIndex > targetBuffer.length) {
+				targetIndex = targetBuffer.length;
+			}
 		}
 
 		return targetIndex;

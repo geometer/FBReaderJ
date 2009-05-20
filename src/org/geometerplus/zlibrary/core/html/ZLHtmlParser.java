@@ -431,14 +431,22 @@ mainSwitchLabel:
 							}
 						case ENTITY_REF:
 							while (true) {
-								switch (buffer[++i]) {
-									case ';':
-										entityName.append(buffer, startPosition, i - startPosition);
-										state = TEXT;
-										startPosition = i + 1;
-										htmlReader.entityDataHandler(unique(strings, entityName).toString());
-										entityName.clear();
-										break mainSwitchLabel;
+								byte sym = buffer[++i];
+								if (sym == ';') {
+									entityName.append(buffer, startPosition, i - startPosition);
+									state = TEXT;
+									startPosition = i + 1;
+									htmlReader.entityDataHandler(unique(strings, entityName).toString());
+									entityName.clear();
+									break mainSwitchLabel;
+								} else if ((sym != '#') && !Character.isLetterOrDigit(sym)) {
+									entityName.append(buffer, startPosition, i - startPosition);
+									state = TEXT;
+									startPosition = i;
+									htmlReader.byteDataHandler(new byte[] { '&' }, 0, 1);
+									htmlReader.byteDataHandler(entityName.myData, 0, entityName.myLength);
+									entityName.clear();
+									break mainSwitchLabel;
 								}
 							}
 					}

@@ -26,8 +26,8 @@ import java.nio.charset.CharsetDecoder;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
 public final class ZLByteBuffer {
-	private byte[] myData;
-	private int myLength;
+	byte[] myData;
+	int myLength;
 
 	ZLByteBuffer(int len) {
 		myData = new byte[len];

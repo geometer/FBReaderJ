@@ -128,7 +128,7 @@ public final class FBReader extends ZLApplication {
 		super.initWindow();
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
 			public void run() { 
-				Book book = Book.getByFile(ZLFile.createFileByPath(myArg0));
+				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
 				if (book == null) {
 					book = Library.Instance().getRecentBook();
 				}
@@ -269,20 +269,28 @@ public final class FBReader extends ZLApplication {
 		setMode(ViewMode.BOOK_TEXT);
 	}
 	
-	@Override
-	public void openFile(final ZLFile file) {
+	private Book createBookForFile(ZLFile file) {
 		if (file == null) {
-			return;
+			return null;
 		}
 		Book book = Book.getByFile(file);
-		if ((book == null) && file.isArchive()) {
+		if (book != null) {
+			return book;
+		}
+		if (file.isArchive()) {
 			for (ZLFile child : file.children()) {
 				book = Book.getByFile(child);
 				if (book != null) {
-					break;
+					return book;
 				}
 			}
 		}
+		return null;
+	}
+
+	@Override
+	public void openFile(ZLFile file) {
+		final Book book = createBookForFile(file);
 		if (book != null) {
 			openBook(book, null);
 		}

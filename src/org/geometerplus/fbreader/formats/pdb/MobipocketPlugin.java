@@ -126,6 +126,7 @@ public class MobipocketPlugin extends PdbPlugin {
 		try {
 			return new MobipocketHtmlBookReader(model).readBook();
 		} catch (IOException e) {
+			//e.printStackTrace();
 			return false;
 		}
 	}
