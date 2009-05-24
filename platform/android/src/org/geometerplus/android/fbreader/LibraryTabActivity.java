@@ -88,8 +88,13 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	public void onStop() {
 		mySelectedTabOption.setValue(getTabHost().getCurrentTabTag());
 		Instance = null;
-		Library.Instance().clear();
 		super.onStop();
+	}
+
+	@Override
+	public void onDestroy() {
+		Library.Instance().clear();
+		super.onDestroy();
 	}
 
 	@Override
