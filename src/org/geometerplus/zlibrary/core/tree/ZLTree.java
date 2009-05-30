@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.tree;
 
 import java.util.*;
 
-public abstract class ZLTree<T extends ZLTree> {
+public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 	private int mySize = 1;
 	public final T Parent;
 	public final int Level;
@@ -89,5 +89,45 @@ public abstract class ZLTree<T extends ZLTree> {
 	public final void clear() {
 		mySubTrees = null;
 		mySize = 1;
+	}
+
+	public final Iterator<T> iterator() {
+		return new TreeIterator();
+	}
+
+	private class TreeIterator implements Iterator<T> {
+		private T myCurrentElement = (T)ZLTree.this;
+		private final LinkedList<Integer> myIndexStack = new LinkedList<Integer>();
+
+		public boolean hasNext() {
+			return myCurrentElement != null;
+		}
+
+		public T next() {
+			final T element = myCurrentElement;
+			if (element.hasChildren()) {
+				myCurrentElement = (T)element.mySubTrees.get(0);
+				myIndexStack.add(0);
+			} else {
+				ZLTree<T> parent = element;
+				while (!myIndexStack.isEmpty()) {
+					final int index = myIndexStack.removeLast() + 1;
+					parent = parent.Parent;
+					if (parent.mySubTrees.size() > index) {
+						myCurrentElement = parent.mySubTrees.get(index);
+						myIndexStack.add(index);
+						break;
+					}
+				}
+				if (myIndexStack.isEmpty()) {
+					myCurrentElement = null;
+				}
+			}
+			return element;
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
 	}
 }

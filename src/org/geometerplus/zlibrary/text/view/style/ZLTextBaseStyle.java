@@ -50,6 +50,8 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 		new ZLBooleanOption(GROUP, "Base:bold", false);
 	public final ZLBooleanOption ItalicOption =
 		new ZLBooleanOption(GROUP, "Base:italic", false);
+	public final ZLBooleanOption UnderlineOption =
+		new ZLBooleanOption(GROUP, "Base:underline", false);
 	public final ZLIntegerOption AlignmentOption =
 		new ZLIntegerOption(GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
 	public final ZLIntegerOption LineSpacePercentOption =
@@ -81,6 +83,10 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 
 	public boolean isItalic() {
 		return ItalicOption.getValue();
+	}
+
+	public boolean isUnderline() {
+		return UnderlineOption.getValue();
 	}
 
 	public int getLeftIndent() {

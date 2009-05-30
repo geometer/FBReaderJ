@@ -336,4 +336,14 @@ public class Book {
 			BooksDatabase.Instance().storePosition(myId, position);
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		return (int)myId;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return (o instanceof Book) && (myId == ((Book)o).myId);
+	}
 }

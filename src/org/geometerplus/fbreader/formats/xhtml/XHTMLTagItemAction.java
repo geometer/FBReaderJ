@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 
 class XHTMLTagItemAction extends XHTMLTagAction {
-	private final char[] BULLET = { '\u2022' };
+	private final char[] BULLET = { '\u2022', '\240' };
 
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		final BookReader modelReader = reader.getModelReader();

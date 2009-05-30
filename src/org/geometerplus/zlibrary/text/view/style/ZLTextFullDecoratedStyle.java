@@ -76,6 +76,17 @@ public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZL
 		}
 	}
 
+	protected boolean isUnderlineInternal() {
+		switch (myDecoration.UnderlineOption.getValue()) {
+			case ZLBoolean3.B3_TRUE:
+				return true;
+			case ZLBoolean3.B3_FALSE:
+				return false;
+			default:
+				return getBase().isUnderline();
+		}
+	}
+
 	public int getLeftIndent() {
 		return getBase().getLeftIndent() + myDecoration.LeftIndentOption.getValue();
 	}

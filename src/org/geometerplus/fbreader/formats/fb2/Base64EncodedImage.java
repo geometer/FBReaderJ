@@ -107,7 +107,7 @@ final class Base64EncodedImage extends ZLSingleImage {
 		inputStream.close();
 		file.delete();
 
-		final byte[] data = new byte[dataLength * 3 / 4 + 1];
+		final byte[] data = new byte[dataLength * 3 / 4 + 4];
 		int dataPos = 0;
 		for (int pos = 0; pos < dataLength; ) {
 			byte n0 = -1, n1 = -1, n2 = -1, n3 = -1;

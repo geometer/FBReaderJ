@@ -39,6 +39,7 @@ import org.geometerplus.fbreader.fbreader.FBReader;
 
 public class TOCActivity extends ListActivity {
 	private TOCAdapter myAdapter;
+	private ZLTree mySelectedItem;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -54,10 +55,8 @@ public class TOCActivity extends ListActivity {
 			++index;
 		}
 		TOCTree treeToSelect = null;
-		// TODO: use binary search
 		// TODO: process multi-model texts
-		for (int i = 0; i < root.getSize(); ++i) {
-			final TOCTree tree = root.getTree(i);
+		for (TOCTree tree : root) {
 			final TOCTree.Reference reference = tree.getReference();
 			if (reference == null) {
 				continue;
@@ -68,6 +67,7 @@ public class TOCActivity extends ListActivity {
 			treeToSelect = tree;
 		}
 		myAdapter.selectItem(treeToSelect);
+		mySelectedItem = treeToSelect;
 	}
 
 	private static final int PROCESS_TREE_ITEM_ID = 0;
@@ -113,7 +113,7 @@ public class TOCActivity extends ListActivity {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
 			final TOCTree tree = (TOCTree)getItem(position);
-			view.setBackgroundColor((tree == SelectedItem) ? 0xff808080 : 0);
+			view.setBackgroundColor((tree == mySelectedItem) ? 0xff808080 : 0);
 			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
 			return view;

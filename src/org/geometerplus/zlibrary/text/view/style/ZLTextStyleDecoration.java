@@ -31,18 +31,20 @@ public class ZLTextStyleDecoration {
 	public final ZLIntegerRangeOption FontSizeDeltaOption;
 	public final ZLBoolean3Option BoldOption;
 	public final ZLBoolean3Option ItalicOption;
+	public final ZLBoolean3Option UnderlineOption;
 	public final ZLIntegerOption VerticalShiftOption;
 	public final ZLBoolean3Option AllowHyphenationsOption;
 
 	private final String myName;
 	private byte myHyperlinkStyle;
 
-	public ZLTextStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int verticalShift, int allowHyphenations) {
+	public ZLTextStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int underline, int verticalShift, int allowHyphenations) {
 		myName = name;
 		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", "");
 		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
 		BoldOption = new ZLBoolean3Option(STYLE, name + ":bold", bold);
 		ItalicOption = new ZLBoolean3Option(STYLE, name + ":italic", italic);
+		UnderlineOption = new ZLBoolean3Option(STYLE, name + ":underline", underline);
 		VerticalShiftOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalShift);
 		AllowHyphenationsOption = new ZLBoolean3Option(STYLE, name + ":allowHyphenations", allowHyphenations);
 	}

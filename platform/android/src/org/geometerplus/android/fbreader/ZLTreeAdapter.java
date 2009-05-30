@@ -60,9 +60,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return myOpenItems.contains(tree);
 	}
 
-	protected ZLTree SelectedItem;
 	public final void selectItem(ZLTree tree) {
-		SelectedItem = tree;
 		if (tree == null) {
 			return;
 		}

@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.*;
 
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
@@ -38,6 +39,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 
 	final ZLStringOption mySelectedTabOption = new ZLStringOption("TabActivity", "SelectedTab", "");
 	private final ZLResource myResource = ZLResource.resource("libraryView");
+	private Book myCurrentBook;
 
 	private ListView createTab(String tag, int id) {
 		final TabHost host = getTabHost();
@@ -49,6 +51,10 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		final BookModel model = ((FBReader)FBReader.Instance()).Model;
+		myCurrentBook = (model != null) ? model.Book : null;
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 		final TabHost host = getTabHost();
@@ -137,12 +143,32 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			super(view, tree);
 			myLibraryTree = tree;
 			myIsFlat = isFlat;
+			if (!isFlat) {
+				selectItem(findFirstSelectedItem());
+			}
+		}
+
+		private ZLTree findFirstSelectedItem() {
+			if (myCurrentBook == null) {
+				return null;
+			}
+			for (LibraryTree tree : myLibraryTree) {
+				if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(myCurrentBook)) {
+					return tree;
+				}
+			}
+			return null;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 			final LibraryTree tree = (LibraryTree)getItem(position);
+			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(myCurrentBook)) {
+				view.setBackgroundColor(0xff808080);
+			} else {
+				view.setBackgroundColor(0);
+			}
 			final ImageView iconView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
 			if (myIsFlat) {
 				iconView.setVisibility(View.GONE);
@@ -159,10 +185,9 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 				return true;
 			}
 			finish();
-			final FBReader fbreader = (FBReader)FBReader.Instance();
 			final Book book = ((BookTree)tree).Book;
-			if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != book.getId())) {
-				fbreader.openBook(book, null);
+			if (!book.equals(myCurrentBook)) {
+				((FBReader)FBReader.Instance()).openBook(book, null);
 			}
 			return true;
 		}

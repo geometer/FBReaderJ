@@ -34,9 +34,6 @@ public class ZLTextStyleCollection {
 	
 	private ZLTextStyleCollection() {
 		new TextStyleReader(this).read(ZLResourceFile.createResourceFile("data/default/styles.xml"));
-		if (myBaseStyle == null) {
-			myBaseStyle = new ZLTextBaseStyle("", 20);
-		}
 	}
 	
 	public static ZLTextStyleCollection Instance() {
@@ -110,6 +107,7 @@ public class ZLTextStyleCollection {
 					int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
 					int bold = b3Value(attributes, "bold");
 					int italic = b3Value(attributes, "italic");
+					int underline = b3Value(attributes, "underline");
 					int verticalShift = intValue(attributes, "vShift", 0);
 					int allowHyphenations = b3Value(attributes, "allowHyphenations");
 					byte hyperlinkStyle = HyperlinkStyle.NONE;
@@ -124,7 +122,7 @@ public class ZLTextStyleCollection {
 					}
 
 					if (booleanValue(attributes, "partial")) {
-						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
+						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, verticalShift, allowHyphenations);
 					} else {
 						int spaceBefore = intValue(attributes, "spaceBefore", 0);
 						int spaceAfter = intValue(attributes, "spaceAfter", 0);
@@ -147,7 +145,7 @@ public class ZLTextStyleCollection {
 						}
 						final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
-						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
+						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
 					decoration.setHyperlinkStyle(hyperlinkStyle);
 

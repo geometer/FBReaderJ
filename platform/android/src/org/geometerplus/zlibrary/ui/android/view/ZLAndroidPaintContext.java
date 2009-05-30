@@ -105,7 +105,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, Paint);
 	}
 
-	protected void setFontInternal(String family, int size, boolean bold, boolean italic) {
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		final Paint paint = Paint;
 		Typeface[] typefaces = myTypefaces.get(family);
@@ -120,6 +120,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		paint.setTypeface(typeface);
 		paint.setTextSize(size);
+		paint.setUnderlineText(underline);
 	}
 
 	public void setColor(ZLColor color, int style) {

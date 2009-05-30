@@ -37,8 +37,8 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 
 	public final ZLIntegerOption LineSpacePercentOption;
 
-	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, int lineSpace, int allowHyphenations) {
-		super(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
+	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int underline, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, int lineSpace, int allowHyphenations) {
+		super(name, fontSizeDelta, bold, italic, underline, verticalShift, allowHyphenations);
 		SpaceBeforeOption = new ZLIntegerRangeOption(STYLE, name + ":spaceBefore", -10, 100, spaceBefore);
 		SpaceAfterOption = new ZLIntegerRangeOption(STYLE, name + ":spaceAfter", -10, 100, spaceAfter);
 		LeftIndentOption = new ZLIntegerRangeOption(STYLE, name + ":leftIndent", -300, 300, leftIndent);

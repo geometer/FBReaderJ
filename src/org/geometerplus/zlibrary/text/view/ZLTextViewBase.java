@@ -64,7 +64,7 @@ abstract class ZLTextViewBase extends ZLView {
 			myTextStyle = style;
 			myWordHeight = -1;
 		}
-		Context.setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic());
+		Context.setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic(), style.isUnderline());
 	}
 
 	final void resetTextStyle() {

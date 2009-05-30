@@ -387,6 +387,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return sizeOfText;
 	}
 
+	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = Context;
@@ -449,10 +450,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
 		int charIndex = info.RealStartCharIndex;
-		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex; ++wordIndex, charIndex = 0) {
+		for (int wordIndex = info.RealStartElementIndex; (wordIndex != endElementIndex) && (index < to); ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
-			if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
-				final ZLTextElementArea area = page.TextElementMap.get(index++);
+			final ZLTextElementArea area = page.TextElementMap.get(index);
+			//if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
+			if (element == area.Element) {
+				index++;
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
 				}
@@ -460,8 +463,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalShift();
 				if (element instanceof ZLTextWord) {
 					drawWord(areaX, areaY, (ZLTextWord)element, charIndex, -1, false);
-				} else {
+				} else if (element instanceof ZLTextImageElement) {
 					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
+				} else if (element == ZLTextElement.HSpace) {
+					final int cw = context.getSpaceWidth();
+					for (int len = 0; len < area.XEnd - area.XStart; len += cw) {
+						context.drawString(areaX + len, areaY, SPACE, 0, 1);
+					}
 				}
 			}
 		}
@@ -722,13 +730,23 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int paragraphIndex = paragraph.Index;
 		final int endElementIndex = info.EndElementIndex;
 		int charIndex = info.RealStartCharIndex;
+		ZLTextElementArea spaceElement = null;
 		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final int width = getElementWidth(element, charIndex);
 			if (element == ZLTextElement.HSpace) {
 				if (wordOccurred && (spaceCounter > 0)) {
-					int correction = fullCorrection / spaceCounter;
-					x += context.getSpaceWidth() + correction;
+					final int correction = fullCorrection / spaceCounter;
+					final int spaceLength = context.getSpaceWidth() + correction;
+					if (getTextStyle().isUnderline()) {
+						spaceElement = new ZLTextElementArea(
+							paragraphIndex, wordIndex, 0, 
+							0, false, false, getTextStyle(), element, x, x + spaceLength, y, y
+						);
+					} else {
+						spaceElement = null;
+					}
+					x += spaceLength;
 					fullCorrection -= correction;
 					wordOccurred = false;
 					--spaceCounter;
@@ -737,6 +755,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = (element instanceof ZLTextWord) ? ((ZLTextWord)element).Length : 0;
+				if (spaceElement != null) {
+					page.TextElementMap.add(spaceElement);
+					spaceElement = null;
+				}
 				page.TextElementMap.add(new ZLTextElementArea(paragraphIndex, wordIndex, charIndex, 
 					length - charIndex, false, changeStyle, getTextStyle(), element, x, x + width - 1, y - height + 1, y + descent));
 				changeStyle = false;

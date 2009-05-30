@@ -29,6 +29,8 @@ public interface ZLTextStyle {
 
 	boolean isBold();
 	boolean isItalic();
+	boolean isUnderline();
+
 	int getLeftIndent();
 	int getRightIndent();
 	int getFirstLineIndentDelta();

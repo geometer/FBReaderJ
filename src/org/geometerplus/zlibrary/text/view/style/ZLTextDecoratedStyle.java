@@ -82,6 +82,19 @@ public abstract class ZLTextDecoratedStyle {
 	}
 	protected abstract boolean isBoldInternal();
 
+	private boolean myIsUnderline;
+	private boolean myIsUnderlineCached;
+	public final boolean isUnderline() {
+		if (myIsUnderlineCached) {
+			return myIsUnderline;
+		}
+		final boolean answer = isUnderlineInternal();
+		myIsUnderline = answer;
+		myIsUnderlineCached = true;
+		return answer;
+	}
+	protected abstract boolean isUnderlineInternal();
+
 	private int myVerticalShift;
 	private boolean myVerticalShiftCached;
 	public final int getVerticalShift() {
