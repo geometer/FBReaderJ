@@ -23,6 +23,7 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 public class ZLTextStyleDecoration {
 	static final String STYLE = "Style";
@@ -36,7 +37,6 @@ public class ZLTextStyleDecoration {
 	public final ZLBoolean3Option AllowHyphenationsOption;
 
 	private final String myName;
-	private byte myHyperlinkStyle;
 
 	public ZLTextStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int underline, int verticalShift, int allowHyphenations) {
 		myName = name;
@@ -50,7 +50,11 @@ public class ZLTextStyleDecoration {
 	}
 	
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {
-		return new ZLTextPartialDecoratedStyle(base, this);
+		return createDecoratedStyle(base, null);
+	}
+
+	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
+		return new ZLTextPartialDecoratedStyle(base, this, hyperlink);
 	}
 	
 	public boolean isFullDecoration() {
@@ -59,13 +63,5 @@ public class ZLTextStyleDecoration {
 
 	public String getName() {
 		return myName;
-	}
-
-	public byte getHyperlinkStyle() {
-		return myHyperlinkStyle;
-	}
-
-	public void setHyperlinkStyle(byte hyperlinkStyle) {
-		myHyperlinkStyle = hyperlinkStyle;
 	}
 }

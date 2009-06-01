@@ -69,6 +69,9 @@ public final class FBReader extends ZLApplication {
 	final ZLBooleanOption SelectionEnabledOption =
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
 
+	final ZLStringOption ColorProfileOption =
+		new ZLStringOption("Options", "ColorProfile", "defaultLight");
+
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
 	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
@@ -123,7 +126,7 @@ public final class FBReader extends ZLApplication {
 
 		setMode(ViewMode.BOOK_TEXT);
 	}
-		
+
 	public void initWindow() {
 		super.initWindow();
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
@@ -146,6 +149,24 @@ public final class FBReader extends ZLApplication {
 				openBookInternal(book, bookmark); 
 			}
 		});
+	}
+
+	private ColorProfile myColorProfile;
+
+	public ColorProfile getColorProfile() {
+		if (myColorProfile == null) {
+			myColorProfile = ColorProfile.get(ColorProfileOption.getValue());
+		}
+		return myColorProfile;
+	}
+
+	public String getColorProfileName() {
+		return ColorProfileOption.getValue();
+	}
+
+	public void setColorProfileName(String name) {
+		ColorProfileOption.setValue(name);
+		myColorProfile = null;
 	}
 
 	public ZLKeyBindings keyBindings() {

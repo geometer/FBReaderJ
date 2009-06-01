@@ -120,7 +120,7 @@ public class BookReader {
 				textModel.addControl(stack[i], true);
 			}
 			if (myHyperlinkReference.length() != 0) {
-				textModel.addHyperlinkControl(myHyperlinkKind, myHyperlinkReference);
+				textModel.addHyperlinkControl(myHyperlinkKind, hyperlinkType(myHyperlinkKind), myHyperlinkReference);
 			}
 			myTextParagraphExists = true;
 		}		
@@ -253,10 +253,15 @@ public class BookReader {
 		}
 	}
 	
+	private static byte hyperlinkType(byte kind) {
+		return (kind == FBTextKind.EXTERNAL_HYPERLINK) ?
+			FBHyperlinkType.EXTERNAL : FBHyperlinkType.INTERNAL;
+	}
+
 	public final void addHyperlinkControl(byte kind, String label) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
-			myCurrentTextModel.addHyperlinkControl(kind, label);
+			myCurrentTextModel.addHyperlinkControl(kind, hyperlinkType(kind), label);
 		}
 		myHyperlinkKind = kind;
 		myHyperlinkReference = label;

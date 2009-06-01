@@ -24,9 +24,9 @@
 	<style id="9" name="Preformatted text" italic="true" alignment="left" allowHyphenations="false"/>
 
 	<style id="12" partial="true" name="Cite" italic="true"/>
-	<style id="15" partial="true" name="Internal Hyperlink" allowHyphenations="false" hyperlink="internal" underline="true"/>
-	<style id="37" partial="true" name="External Hyperlink" allowHyphenations="false" hyperlink="external" underline="true"/>
-	<style id="16" partial="true" name="Footnote" fontSizeDelta="-5" vShift="7" allowHyphenations="false" hyperlink="internal"/>
+	<style id="15" partial="true" name="Internal Hyperlink" allowHyphenations="false" underline="true"/>
+	<style id="37" partial="true" name="External Hyperlink" allowHyphenations="false" underline="true"/>
+	<style id="16" partial="true" name="Footnote" fontSizeDelta="-5" vShift="7" allowHyphenations="false"/>
 	<style id="17" partial="true" name="Emphasis" italic="true"/>
 	<style id="18" partial="true" name="Strong" bold="true"/>
 	<style id="35" name="Header 5" bold="true"/>

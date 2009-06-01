@@ -20,10 +20,10 @@
 package org.geometerplus.zlibrary.text.view;
 
 public final class ZLTextHyperlinkControlElement extends ZLTextControlElement {
-	public final String Label;
+	public final ZLTextHyperlink Hyperlink;
 
-	ZLTextHyperlinkControlElement(byte kind, String label) {
+	ZLTextHyperlinkControlElement(byte kind, byte type, String id) {
 		super(kind, true);
-		Label = label;
+		Hyperlink = new ZLTextHyperlink(type, id);
 	}
 }

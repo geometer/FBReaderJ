@@ -34,7 +34,6 @@ public class OptionsDialog {
 	private ZLOptionsDialog myDialog;
 	
 	public OptionsDialog(FBReader fbreader) {
-		final ZLTextBaseStyle baseStyle = ZLTextStyleCollection.Instance().baseStyle();
 		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
@@ -61,12 +60,11 @@ public class OptionsDialog {
 		final ZLResource resource = colorsTab.getResource(colorKey);
 		final ZLColorOptionBuilder builder = new ZLColorOptionBuilder();
 		final String BACKGROUND = resource.getResource("background").getValue();
-		builder.addOption(BACKGROUND, baseStyle.BackgroundColorOption);
-		//builder.addOption(resource.getResource("selectionBackground").getValue(), baseStyle.SelectionBackgroundColorOption);
-		builder.addOption(resource.getResource("text").getValue(), baseStyle.RegularTextColorOption);
-		builder.addOption(resource.getResource("internalLink").getValue(), baseStyle.InternalHyperlinkTextColorOption);
-		builder.addOption(resource.getResource("externalLink").getValue(), baseStyle.ExternalHyperlinkTextColorOption);
-		builder.addOption(resource.getResource("highlighted").getValue(), baseStyle.HighlightedTextColorOption);
+		final ColorProfile profile = fbreader.getColorProfile();
+		builder.addOption(BACKGROUND, profile.BackgroundOption);
+		builder.addOption(resource.getResource("text").getValue(), profile.RegularTextOption);
+		builder.addOption(resource.getResource("hyperlink").getValue(), profile.HyperlinkTextOption);
+		builder.addOption(resource.getResource("highlighted").getValue(), profile.HighlightedTextOption);
 		builder.setInitial(BACKGROUND);
 		colorsTab.addOption(colorKey, builder.comboEntry());
 		colorsTab.addOption("", builder.colorEntry());

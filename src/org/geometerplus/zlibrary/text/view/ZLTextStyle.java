@@ -19,28 +19,30 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import org.geometerplus.zlibrary.core.util.ZLColor;
+public abstract class ZLTextStyle {
+	public final ZLTextStyle Base;
+	public final ZLTextHyperlink Hyperlink;
 
-public interface ZLTextStyle {
-	String getFontFamily();
-	int getFontSize();
+	protected ZLTextStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
+		Base = (base != null) ? base : this;
+		Hyperlink = hyperlink;
+	}
 
-	ZLColor getColor();
+	public abstract String getFontFamily();
+	public abstract int getFontSize();
 
-	boolean isBold();
-	boolean isItalic();
-	boolean isUnderline();
+	public abstract boolean isBold();
+	public abstract boolean isItalic();
+	public abstract boolean isUnderline();
 
-	int getLeftIndent();
-	int getRightIndent();
-	int getFirstLineIndentDelta();
-	int getLineSpacePercent();
-	int getVerticalShift();
-	int getSpaceBefore();
-	int getSpaceAfter();
-	byte getAlignment();
+	public abstract int getLeftIndent();
+	public abstract int getRightIndent();
+	public abstract int getFirstLineIndentDelta();
+	public abstract int getLineSpacePercent();
+	public abstract int getVerticalShift();
+	public abstract int getSpaceBefore();
+	public abstract int getSpaceAfter();
+	public abstract byte getAlignment();
 
-	boolean allowHyphenations();
-
-	ZLTextStyle getBase();
+	public abstract boolean allowHyphenations();
 }

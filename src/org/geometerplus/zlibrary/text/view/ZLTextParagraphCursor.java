@@ -60,11 +60,16 @@ public final class ZLTextParagraphCursor {
 						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength());
 						break;
 					case ZLTextParagraph.Entry.CONTROL:
-						if (it.getControlIsStart() && it.getControlIsHyperlink()) {
-							elements.add(new ZLTextHyperlinkControlElement(it.getControlKind(), it.getHyperlinkControlLabel()));
-						} else {
-							elements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
+						if (it.getControlIsStart()) {
+							final byte hyperlinkType = it.getHyperlinkType();
+							if (hyperlinkType != 0) {
+								elements.add(new ZLTextHyperlinkControlElement(
+									it.getControlKind(), hyperlinkType, it.getHyperlinkId()
+								));
+								break;
+							}
 						}
+						elements.add(ZLTextControlElement.get(it.getControlKind(), it.getControlIsStart()));
 						break;
 					case ZLTextParagraph.Entry.IMAGE:
 						final ZLImageEntry imageEntry = it.getImageEntry();

@@ -20,28 +20,14 @@
 package org.geometerplus.zlibrary.text.view.style;
 
 import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
-public class ZLTextBaseStyle implements ZLTextStyle {
-	private static final String COLORS = "Colors";
+public class ZLTextBaseStyle extends ZLTextStyle {
 	private static final String GROUP = "Style";
 	private static final String OPTIONS = "Options";
-
-	public final ZLColorOption BackgroundColorOption =
-		new ZLColorOption(COLORS, "Background", new ZLColor(255, 255, 255));
-	public final ZLColorOption SelectionBackgroundColorOption =
-		new ZLColorOption(COLORS, "SelectionBackground", new ZLColor(82, 131, 194));
-	public final ZLColorOption HighlightedTextColorOption =
-		new ZLColorOption(COLORS, "SelectedText", new ZLColor(60, 139, 255));
-	public final ZLColorOption RegularTextColorOption =
-		new ZLColorOption(COLORS, "Text", new ZLColor(0, 0, 0));
-	public final ZLColorOption InternalHyperlinkTextColorOption =
-		new ZLColorOption(COLORS, "Hyperlink", new ZLColor(60, 139, 255));
-	public final ZLColorOption ExternalHyperlinkTextColorOption =
-		new ZLColorOption(COLORS, "ExternalHyperlink", new ZLColor(33, 96, 180));
 
 	public final ZLBooleanOption AutoHyphenationOption =
 		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);
@@ -61,70 +47,77 @@ public class ZLTextBaseStyle implements ZLTextStyle {
 	public final ZLIntegerRangeOption FontSizeOption;
 	
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
+		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
 		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 0, 72, fontSize);
 	}
 	
+	@Override
 	public String getFontFamily() {
 		return FontFamilyOption.getValue();
 	}
 
+	@Override
 	public int getFontSize() {
 		return FontSizeOption.getValue();
 	}
 
-	public ZLColor getColor() {
-		return RegularTextColorOption.getValue();
-	}
-	
+	@Override
 	public boolean isBold() {
 		return BoldOption.getValue();
 	}
 
+	@Override
 	public boolean isItalic() {
 		return ItalicOption.getValue();
 	}
 
+	@Override
 	public boolean isUnderline() {
 		return UnderlineOption.getValue();
 	}
 
+	@Override
 	public int getLeftIndent() {
 		return 0;
 	}
 
+	@Override
 	public int getRightIndent() {
 		return 0;
 	}
 
+	@Override
 	public int getFirstLineIndentDelta() {
 		return 0;
 	}
 	
+	@Override
 	public int getLineSpacePercent() {
 		return LineSpacePercentOption.getValue();
 	}
 
+	@Override
 	public int getVerticalShift() {
 		return 0;
 	}
 
+	@Override
 	public int getSpaceBefore() {
 		return 0;
 	}
 
+	@Override
 	public int getSpaceAfter() {
 		return 0;
 	}
 
+	@Override
 	public byte getAlignment() {
 		return (byte)AlignmentOption.getValue();
 	}
 
-	public ZLTextStyle getBase() {
-		return this;
-	}
-
+	@Override
 	public boolean allowHyphenations() {
 		return true;
 	}

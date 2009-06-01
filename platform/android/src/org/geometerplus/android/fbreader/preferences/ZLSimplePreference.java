@@ -19,6 +19,25 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-interface ZLPreference {
-	void onAccept();
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import android.content.Context;
+import android.preference.Preference;
+
+abstract class ZLSimplePreference extends Preference implements ZLPreference, Preference.OnPreferenceClickListener {
+	ZLSimplePreference(Context context) {
+		super(context);
+		setOnPreferenceClickListener(this);
+	}
+
+	@Override
+	public abstract void onAccept();
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		onClick();
+		return true;
+	}
+
+	public abstract void onClick();
 }

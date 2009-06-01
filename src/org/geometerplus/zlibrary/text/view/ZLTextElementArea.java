@@ -28,7 +28,7 @@ public final class ZLTextElementArea extends ZLTextFixedPosition {
 	final int Length;
 	final boolean AddHyphenationSign;
 	final boolean ChangeStyle;
-	final ZLTextStyle Style;
+	public final ZLTextStyle Style;
 	public final ZLTextElement Element;
 
 	ZLTextElementArea(int paragraphIndex, int elementIndex, int charIndex, int length, boolean addHyphenationSign, boolean changeStyle, ZLTextStyle style, ZLTextElement element, int xStart, int xEnd, int yStart, int yEnd) {

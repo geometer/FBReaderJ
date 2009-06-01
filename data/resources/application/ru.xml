@@ -75,6 +75,11 @@
 					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
+				<node name="colorProfile" value="Выбрать цветовую схему">
+					<node name="defaultLight" value="Черное на белом"/>
+					<node name="defaultDark" value="Белое на черном"/>
+					<node name="addCustomProfile" value="Сохранить текущую схему..."/>
+				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">
 				<node name="flick" value="Листать движением пальца">
@@ -164,8 +169,7 @@
 						<node name="background" value="фона"/>
 						<node name="selectionBackground" value="фона пометки"/>
 						<node name="text" value="обычного текста"/>
-						<node name="internalLink" value="ссылки"/>
-						<node name="externalLink" value="внешней ссылки"/>
+						<node name="hyperlink" value="ссылки"/>
 						<node name="highlighted" value="подсвеченного текста"/>
 					</node>
 				</node>

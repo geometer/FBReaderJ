@@ -41,7 +41,8 @@ class BookTitlePreference extends ZLStringPreference {
 		setValue(book.getTitle());
 	}
 
-	public void accept() {
+	@Override
+	public void onAccept() {
 		myBook.setTitle(getValue());
 	}
 }
@@ -77,7 +78,8 @@ class LanguagePreference extends ZLStringListPreference {
 		}
 	}
 
-	public void accept() {
+	@Override
+	public void onAccept() {
 		final String value = getValue();
 		myBook.setLanguage((value.length() != 0) ? value : null);
 	}
@@ -92,10 +94,10 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init() {
-		final Category commonCategory = new Category(null);
+		final Category commonCategory = createCategory(null);
 		myBook = ((FBReader)FBReader.Instance()).Model.Book;
-		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.getResource(), "title", myBook));
-		commonCategory.addPreference(new LanguagePreference(this, commonCategory.getResource(), "language", myBook));
+		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.Resource, "title", myBook));
+		commonCategory.addPreference(new LanguagePreference(this, commonCategory.Resource, "language", myBook));
 	}
 
 	@Override

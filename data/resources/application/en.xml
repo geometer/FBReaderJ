@@ -77,6 +77,11 @@
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
+				<node name="colorProfile" value="Select color scheme">
+					<node name="defaultLight" value="Black on white"/>
+					<node name="defaultDark" value="White on black"/>
+					<node name="addCustomProfile" value="Save current scheme as..."/>
+				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">
 				<node name="flick" value="Flick scrolling">
@@ -166,8 +171,7 @@
 						<node name="background" value="Background"/>
 						<node name="selectionBackground" value="Selection Background"/>
 						<node name="text" value="Regular Text"/>
-						<node name="internalLink" value="Internal Hyperlink Text"/>
-						<node name="externalLink" value="External Hyperlink Text"/>
+						<node name="hyperlink" value="Hyperlink Text"/>
 						<node name="highlighted" value="Highlighted Text"/>
 					</node>
 				</node>

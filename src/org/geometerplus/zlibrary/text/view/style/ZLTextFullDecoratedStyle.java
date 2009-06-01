@@ -20,109 +20,53 @@
 package org.geometerplus.zlibrary.text.view.style;
 
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 import org.geometerplus.zlibrary.core.util.*;
 
-public class ZLTextFullDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyle {
-	private final ZLTextFullStyleDecoration myDecoration;
+public class ZLTextFullDecoratedStyle extends ZLTextPartialDecoratedStyle {
+	private final ZLTextFullStyleDecoration myFullDecoration;
 	
-	ZLTextFullDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration) {
-		super(base);
-		myDecoration = decoration;	
+	ZLTextFullDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration, ZLTextHyperlink hyperlink) {
+		super(base, decoration, hyperlink);
+		myFullDecoration = decoration;	
 	}
 
-	protected String getFontFamilyInternal() {
-		String decoratedValue = myDecoration.FontFamilyOption.getValue();
-		return (decoratedValue.length() != 0) ? decoratedValue : getBase().getFontFamily();
-	}
-
-	protected ZLColor getColorInternal() {
-		byte hyperlinkStyle = myDecoration.getHyperlinkStyle();
-		if (hyperlinkStyle == HyperlinkStyle.NONE) {
-			return getBase().getColor();
-		}
-		ZLTextBaseStyle baseStyle = ZLTextStyleCollection.Instance().getBaseStyle();
-		if (hyperlinkStyle == HyperlinkStyle.INTERNAL) {
-			return baseStyle.InternalHyperlinkTextColorOption.getValue();
-		} else {
-			return baseStyle.ExternalHyperlinkTextColorOption.getValue();
-		}
-	}
-
-	protected int getFontSizeInternal() {
-		return getBase().getFontSize() + myDecoration.FontSizeDeltaOption.getValue();
-	}
-	
-	protected boolean isBoldInternal() {
-		switch (myDecoration.BoldOption.getValue()) {
-			case ZLBoolean3.B3_TRUE:
-				return true;
-			case ZLBoolean3.B3_FALSE:
-				return false;
-			default:
-				return getBase().isBold();
-		}
-	}
-
-	protected boolean isItalicInternal() {
-		switch (myDecoration.ItalicOption.getValue()) {
-			case ZLBoolean3.B3_TRUE:
-				return true;
-			case ZLBoolean3.B3_FALSE:
-				return false;
-			default:
-				return getBase().isItalic();
-		}
-	}
-
-	protected boolean isUnderlineInternal() {
-		switch (myDecoration.UnderlineOption.getValue()) {
-			case ZLBoolean3.B3_TRUE:
-				return true;
-			case ZLBoolean3.B3_FALSE:
-				return false;
-			default:
-				return getBase().isUnderline();
-		}
-	}
-
+	@Override
 	public int getLeftIndent() {
-		return getBase().getLeftIndent() + myDecoration.LeftIndentOption.getValue();
+		return Base.getLeftIndent() + myFullDecoration.LeftIndentOption.getValue();
 	}
 
+	@Override
 	public int getRightIndent() {
-		return getBase().getRightIndent() + myDecoration.RightIndentOption.getValue();
+		return Base.getRightIndent() + myFullDecoration.RightIndentOption.getValue();
 	}
 
+	@Override
 	public int getFirstLineIndentDelta() {
-		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : getBase().getFirstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
+		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : Base.getFirstLineIndentDelta() + myFullDecoration.FirstLineIndentDeltaOption.getValue();
 	}
 	
+	@Override
 	public int getLineSpacePercent() {
-		int value = myDecoration.LineSpacePercentOption.getValue();
-		return (value != -1) ? value : getBase().getLineSpacePercent();
+		int value = myFullDecoration.LineSpacePercentOption.getValue();
+		return (value != -1) ? value : Base.getLineSpacePercent();
 	}
 
-	protected int getVerticalShiftInternal() {
-		return getBase().getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
-	}
-
+	@Override
 	public int getSpaceBefore() {
-		return myDecoration.SpaceBeforeOption.getValue();
+		return myFullDecoration.SpaceBeforeOption.getValue();
 	}
 
+	@Override
 	public int getSpaceAfter() {
-		return myDecoration.SpaceAfterOption.getValue();
+		return myFullDecoration.SpaceAfterOption.getValue();
 	}		
 
+	@Override
 	public byte getAlignment() {
-		byte value = (byte)myDecoration.AlignmentOption.getValue();
-		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? getBase().getAlignment() : value;
-	}
-
-	public boolean allowHyphenations() {
-		int a = myDecoration.AllowHyphenationsOption.getValue();
-	      	return (a == ZLBoolean3.B3_UNDEFINED) ? getBase().allowHyphenations() : (a == ZLBoolean3.B3_TRUE);	
+		byte value = (byte)myFullDecoration.AlignmentOption.getValue();
+		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? Base.getAlignment() : value;
 	}
 }

@@ -55,8 +55,8 @@ public final class ZLTextPlainModel implements ZLTextModel {
 
 		private byte myControlKind;
 		private boolean myControlIsStart;
-		private boolean myControlIsHyperlink;
-		private String myHyperlinkControlLabel;
+		private byte myHyperlinkType;
+		private String myHyperlinkId;
 
 		private ZLImageEntry myImageEntry;
 
@@ -95,11 +95,11 @@ public final class ZLTextPlainModel implements ZLTextModel {
 		public boolean getControlIsStart() {
 			return myControlIsStart;
 		}
-		public boolean getControlIsHyperlink() {
-			return myControlIsHyperlink;
+		public byte getHyperlinkType() {
+			return myHyperlinkType;
 		}
-		public String getHyperlinkControlLabel() {
-			return myHyperlinkControlLabel;
+		public String getHyperlinkId() {
+			return myHyperlinkId;
 		}
 
 		public ZLImageEntry getImageEntry() {
@@ -143,13 +143,11 @@ public final class ZLTextPlainModel implements ZLTextModel {
 					short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
 					myControlIsStart = (kind & 0x0100) == 0x0100;
-					if ((kind & 0x0200) == 0x0200) {
-						myControlIsHyperlink = true;
+					myHyperlinkType = (byte)(kind >> 9);
+					if (myHyperlinkType != 0) {
 						short labelLength = (short)data[dataOffset++];
-						myHyperlinkControlLabel = new String(data, dataOffset, labelLength);
+						myHyperlinkId = new String(data, dataOffset, labelLength);
 						dataOffset += labelLength;
-					} else {
-						myControlIsHyperlink = false;
 					}
 					break;
 				}
@@ -264,13 +262,13 @@ public final class ZLTextPlainModel implements ZLTextModel {
 	}
 	
 	
-	public void addHyperlinkControl(byte textKind, String label) {
+	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
 		final short labelLength = (short)label.length();
 		final char[] block = getDataBlock(3 + labelLength);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
 		block[blockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
-		block[blockOffset++] = (char)(0x0300 + textKind);
+		block[blockOffset++] = (char)((hyperlinkType << 9) + 0x0100 + textKind);
 		block[blockOffset++] = (char)labelLength;
 		label.getChars(0, labelLength, block, blockOffset);
 		myBlockOffset = blockOffset + labelLength;

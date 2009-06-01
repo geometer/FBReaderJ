@@ -28,35 +28,31 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public class ZLTextStyleCollection {
 	private static ZLTextStyleCollection ourInstance = null;
-	
+
 	private ZLTextBaseStyle myBaseStyle;
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
-	
+
 	private ZLTextStyleCollection() {
 		new TextStyleReader(this).read(ZLResourceFile.createResourceFile("data/default/styles.xml"));
 	}
-	
+
 	public static ZLTextStyleCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLTextStyleCollection();
 		}
 		return ourInstance;
 	}
-	
+
 	public static void deleteInstance() {
 		ourInstance = null;
 	}
-	
+
 	public ZLTextBaseStyle getBaseStyle() {
 		return myBaseStyle;
 	}
-	
+
 	public ZLTextStyleDecoration getDecoration(byte kind) {
 		return myDecorationMap[kind & 0xFF];
-	}
-		
-	public ZLTextBaseStyle baseStyle() {
-		return myBaseStyle;
 	}
 
 	private static class TextStyleReader extends ZLXMLReaderAdapter {
@@ -73,9 +69,8 @@ public class ZLTextStyleCollection {
 				try {
 					i = Integer.parseInt(value);
 				} catch (NumberFormatException e) {
-					e.printStackTrace();
 				}
-			} 
+			}
 			return i;
 		}
 
@@ -86,7 +81,7 @@ public class ZLTextStyleCollection {
 		private static int b3Value(ZLStringMap attributes, String name) {
 			return ZLBoolean3.getByString(attributes.getValue(name));
 		}
-			
+
 		public TextStyleReader(ZLTextStyleCollection collection) {
 			myCollection = collection;
 		}
@@ -110,16 +105,6 @@ public class ZLTextStyleCollection {
 					int underline = b3Value(attributes, "underline");
 					int verticalShift = intValue(attributes, "vShift", 0);
 					int allowHyphenations = b3Value(attributes, "allowHyphenations");
-					byte hyperlinkStyle = HyperlinkStyle.NONE;
-					String hyperlink = attributes.getValue("hyperlink");
-					if (hyperlink != null) {
-						if ("internal".equals(hyperlink)) {
-							hyperlinkStyle = HyperlinkStyle.INTERNAL;
-						}
-						if ("external".equals(hyperlink)) {
-							hyperlinkStyle = HyperlinkStyle.EXTERNAL;
-						}
-					}
 
 					if (booleanValue(attributes, "partial")) {
 						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, verticalShift, allowHyphenations);
@@ -147,7 +132,6 @@ public class ZLTextStyleCollection {
 
 						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
-					decoration.setHyperlinkStyle(hyperlinkStyle);
 
 					String fontFamily = attributes.getValue("family");
 					if (fontFamily != null) {
@@ -159,5 +143,5 @@ public class ZLTextStyleCollection {
 			}
 			return false;
 		}
-	}	
+	}
 }

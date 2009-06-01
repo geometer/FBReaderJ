@@ -30,39 +30,60 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	private final ArrayList<ZLPreference> myPreferences = new ArrayList<ZLPreference>();
 
+	protected class Screen {
+		public final ZLResource Resource;
+		private final PreferenceScreen myScreen;
+
+		private Screen(ZLResource root, String resourceKey) {
+			Resource = root.getResource(resourceKey);
+			myScreen = getPreferenceManager().createPreferenceScreen(ZLPreferenceActivity.this);
+			myScreen.setTitle(Resource.getValue());
+		}
+
+		public void setSummary(CharSequence summary) {
+			myScreen.setSummary(summary);
+		}
+
+		protected Category createCategory(String resourceKey) {
+			return new Category(myScreen, Resource, resourceKey);
+		}
+
+		public void close() {
+			myScreen.getDialog().dismiss();
+			ZLPreferenceActivity.this.getListView().invalidateViews();
+		}
+	}
+
 	protected class Category {
-		private final ZLResource myResource;
+		public final ZLResource Resource;
 		private final PreferenceGroup myGroup;
 
-		Category(String resourceKey) {
+		private Category(PreferenceScreen screen, ZLResource root, String resourceKey) {
 			if (resourceKey != null) {
-				myResource = ZLPreferenceActivity.this.myResource.getResource(resourceKey);
+				Resource = root.getResource(resourceKey);
 				myGroup = new PreferenceCategory(ZLPreferenceActivity.this);
-				myGroup.setTitle(myResource.getValue());
-				myScreen.addPreference(myGroup);
+				myGroup.setTitle(Resource.getValue());
+				screen.addPreference(myGroup);
 			} else {
-				myResource = ZLPreferenceActivity.this.myResource;
-				myGroup = myScreen;
+				Resource = root;
+				myGroup = screen;
 			}
 		}
 
-		ZLResource getResource() {
-			return myResource;
+		Screen createPreferenceScreen(String resourceKey) {
+			Screen screen = new Screen(Resource, resourceKey);
+			myGroup.addPreference(screen.myScreen);
+			return screen;
 		}
 
-		void addPreference(ZLStringPreference preference) {
-			myGroup.addPreference(preference);
-			myPreferences.add(preference);
-		}
-
-		void addPreference(ZLStringListPreference preference) {
-			myGroup.addPreference(preference);
+		void addPreference(ZLPreference preference) {
+			myGroup.addPreference((Preference)preference);
 			myPreferences.add(preference);
 		}
 
 		void addOption(ZLBooleanOption option, String resourceKey) {
 			ZLBooleanPreference preference =
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, myResource, resourceKey);
+				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
 			myGroup.addPreference(preference);
 			myPreferences.add(preference);
 		}
@@ -73,6 +94,10 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 	ZLPreferenceActivity(String resourceKey) {
 		myResource = ZLResource.resource("dialog").getResource(resourceKey);
+	}
+
+	protected Category createCategory(String resourceKey) {
+		return new Category(myScreen, myResource, resourceKey);
 	}
 
 	protected abstract void init();
@@ -90,7 +115,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 	@Override
 	protected void onPause() {
 		for (ZLPreference preference : myPreferences) {
-			preference.accept();
+			preference.onAccept();
 		}
 		super.onPause();
 	}

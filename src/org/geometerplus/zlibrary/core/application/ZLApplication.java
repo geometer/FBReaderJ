@@ -70,7 +70,7 @@ public abstract class ZLApplication {
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
-	private final HashMap myIdToActionMap = new HashMap();
+	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
 
@@ -141,22 +141,18 @@ public abstract class ZLApplication {
 		myIdToActionMap.put(actionId, action);
 	}
 
-	private final ZLAction getAction(String actionId) {
-		return (ZLAction)myIdToActionMap.get(actionId);
-	}
-	
 	public final boolean isActionVisible(String actionId) {
-		ZLAction action = getAction(actionId);
+		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isVisible();
 	}
 	
 	public final boolean isActionEnabled(String actionId) {
-		ZLAction action = getAction(actionId);
+		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isEnabled();
 	}
 	
 	public final void doAction(String actionId) {
-		ZLAction action = getAction(actionId);
+		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
 			action.checkAndRun();
 		}
@@ -166,10 +162,10 @@ public abstract class ZLApplication {
 	abstract public ZLKeyBindings keyBindings();
 	
 	public final boolean doActionByKey(String key) {		
-		String actionId = keyBindings().getBinding(key);
+		final String actionId = keyBindings().getBinding(key);
 		if (actionId != null) {
-			ZLAction a = getAction(keyBindings().getBinding(key));
-			return (a != null) && a.checkAndRun();
+			final ZLAction action = myIdToActionMap.get(keyBindings().getBinding(key));
+			return (action != null) && action.checkAndRun();
 		}
 		return false;
 	}

@@ -31,7 +31,7 @@ final class ZLTreeResource extends ZLResource {
 
 	private boolean myHasValue;
 	private	String myValue;
-	private HashMap myChildren;
+	private HashMap<String,ZLTreeResource> myChildren;
 	
 	public static void buildTree() {
 		if (ourRoot == null) {
@@ -71,9 +71,9 @@ final class ZLTreeResource extends ZLResource {
 	}
 
 	public ZLResource getResource(String key) {
-		final HashMap children = myChildren;
+		final HashMap<String,ZLTreeResource> children = myChildren;
 		if (children != null) {
-			ZLResource child = (ZLResource)children.get(key);
+			ZLTreeResource child = children.get(key);
 			if (child != null) {
 				return child;
 			}
@@ -103,13 +103,13 @@ final class ZLTreeResource extends ZLResource {
 					String value = attributes.getValue("value");
 					ZLTreeResource peek = stack.get(stack.size() - 1);
 					ZLTreeResource node;
-					HashMap children = peek.myChildren;
+					HashMap<String,ZLTreeResource> children = peek.myChildren;
 					if (children == null) {
 						node = null;
-						children = new HashMap();
+						children = new HashMap<String,ZLTreeResource>();
 						peek.myChildren = children;
 					} else {
-						node = (ZLTreeResource)children.get(name);
+						node = children.get(name);
 					}
 					if (node == null) {
 						node = new ZLTreeResource(name, value);

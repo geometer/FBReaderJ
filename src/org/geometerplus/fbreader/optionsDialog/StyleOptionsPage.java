@@ -31,9 +31,9 @@ import org.geometerplus.zlibrary.text.view.style.ZLTextBaseStyle;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
 
-import static org.geometerplus.fbreader.bookmodel.FBTextKind.*;
+import org.geometerplus.fbreader.bookmodel.FBTextKind;
 
-public class StyleOptionsPage extends OptionsPage {
+public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 	private final static String KEY_STYLE = "style";
 	private final static String KEY_BASE = "Base";
 
@@ -64,7 +64,7 @@ public class StyleOptionsPage extends OptionsPage {
 
 		{
 			final String name = myComboEntry.initialValue();
-			ZLTextBaseStyle baseStyle = collection.baseStyle();
+			ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
 			registerEntry(dialogTab,
 				KEY_FONTFAMILY, new ZLFontFamilyOptionEntry(baseStyle.FontFamilyOption, context),

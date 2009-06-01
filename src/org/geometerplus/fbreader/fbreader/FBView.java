@@ -20,12 +20,13 @@
 package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public final class FBView extends ZLTextView {
 	private FBReader myReader;
@@ -93,42 +94,14 @@ public final class FBView extends ZLTextView {
 
 		ZLTextElementArea area = getElementByCoordinates(x, y);
 		if (area != null) {
-			ZLTextElement element = area.Element;
-			if ((element instanceof ZLTextImageElement) || (element instanceof ZLTextWord)) {
-				final ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
-				cursor.moveToParagraph(area.ParagraphIndex);
-				cursor.moveToParagraphStart();
-				final int elementIndex = area.ElementIndex;
-				byte hyperlinkKind = FBTextKind.REGULAR;
-				String id = null;
-				for (int i = 0; i < elementIndex; ++i) {
-					ZLTextElement e = cursor.getElement();
-					if (e instanceof ZLTextControlElement) {
-						if (e instanceof ZLTextHyperlinkControlElement) {
-							final ZLTextHyperlinkControlElement control = (ZLTextHyperlinkControlElement)e;
-							hyperlinkKind = control.Kind;
-							id = control.Label;
-						} else {
-							final ZLTextControlElement control = (ZLTextControlElement)e;
-							if (!control.IsStart && (control.Kind == hyperlinkKind)) {
-								hyperlinkKind = FBTextKind.REGULAR;
-								id = null;
-							}
-						}
-					}
-					cursor.nextWord();
-				}
-				if (id != null) {
-					switch (hyperlinkKind) {
-						case FBTextKind.EXTERNAL_HYPERLINK:
-							ZLibrary.Instance().openInBrowser(id);
-							return true;
-						case FBTextKind.FOOTNOTE:
-						case FBTextKind.INTERNAL_HYPERLINK:
-							((FBReader)ZLApplication.Instance()).tryOpenFootnote(id);
-							return true;
-					}
-				}
+			final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
+			switch (hyperlink.Type) {
+				case FBHyperlinkType.EXTERNAL:
+					ZLibrary.Instance().openInBrowser(hyperlink.Id);
+					return true;
+				case FBHyperlinkType.INTERNAL:
+					((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+					return true;
 			}
 		}
 
@@ -256,6 +229,30 @@ public final class FBView extends ZLTextView {
 
 	public int getBottomMargin() {
 		return myReader.BottomMarginOption.getValue();
+	}
+
+	public ZLColor getBackgroundColor() {
+		return myReader.getColorProfile().BackgroundOption.getValue();
+	}
+
+	public ZLColor getSelectedBackgroundColor() {
+		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
+	}
+
+	public ZLColor getTextColor(byte hyperlinkType) {
+		final ColorProfile profile = myReader.getColorProfile();
+		switch (hyperlinkType) {
+			default:
+			case FBHyperlinkType.NONE:
+				return profile.RegularTextOption.getValue();
+			case FBHyperlinkType.INTERNAL:
+			case FBHyperlinkType.EXTERNAL:
+				return profile.HyperlinkTextOption.getValue();
+		}
+	}
+
+	public ZLColor getHighlightedTextColor() {
+		return myReader.getColorProfile().HighlightedTextOption.getValue();
 	}
 
 	protected boolean isSelectionEnabled() {

@@ -257,7 +257,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public synchronized void paint(int viewPage) {
-		Context.clear(ZLTextStyleCollection.Instance().getBaseStyle().BackgroundColorOption.getValue());
+		Context.clear(getBackgroundColor());
 
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return;
@@ -442,7 +442,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 
 			if (left < right) {
-				context.setFillColor(ZLTextStyleCollection.Instance().getBaseStyle().SelectionBackgroundColorOption.getValue());
+				context.setFillColor(getSelectedBackgroundColor());
 				context.fillRectangle(left, top, right, bottom);
 			}
 		}

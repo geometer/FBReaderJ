@@ -19,21 +19,71 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.List;
+
+import android.content.Context;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+
 import org.geometerplus.fbreader.fbreader.ScrollingPreferences;
+import org.geometerplus.fbreader.fbreader.ColorProfile;
+import org.geometerplus.fbreader.fbreader.FBReader;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
 		super("Preferences");
 	}
 
+	private static final class ColorProfilePreference extends ZLSimplePreference {
+		private final FBReader myFBReader;
+		private final Screen myScreen;
+		private final String myKey;
+
+		static final String createTitle(ZLResource resource, String resourceKey) {
+			final ZLResource r = resource.getResource(resourceKey);
+			return r.hasValue() ? r.getValue() : resourceKey;
+		}
+
+		ColorProfilePreference(Context context, FBReader fbreader, Screen screen, String key, String title) {
+			super(context);
+			myFBReader = fbreader;
+			myScreen = screen;
+			myKey = key;
+			setTitle(title);
+		}
+
+		@Override
+		public void onAccept() {
+		}
+
+		@Override
+		public void onClick() {
+			myScreen.setSummary(getTitle());
+			myFBReader.setColorProfileName(myKey);
+			myScreen.close();
+		}
+	}
+
 	@Override
 	protected void init() {
-		final Category lookNFeelCategory = new Category("LookNFeel");
+		final Category lookNFeelCategory = createCategory("LookNFeel");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 
-		final Category scrollingCategory = new Category("Scrolling");
+		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
+		final Category colorProfileCategory = colorProfileScreen.createCategory(null);
+		final ZLResource resource = colorProfileCategory.Resource;
+		colorProfileScreen.setSummary(ColorProfilePreference.createTitle(resource, fbreader.getColorProfileName()));
+		for (String key : ColorProfile.names()) {
+			colorProfileCategory.addPreference(new ColorProfilePreference(
+				this, fbreader, colorProfileScreen, key, ColorProfilePreference.createTitle(resource, key)
+			));
+		}
+
+		final Category scrollingCategory = createCategory("Scrolling");
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 		scrollingCategory.addOption(scrollingPreferences.FlickOption, "flick");
 		scrollingCategory.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");

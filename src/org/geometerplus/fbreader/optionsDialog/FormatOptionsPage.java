@@ -63,7 +63,7 @@ class FormatOptionsPage extends OptionsPage {
 
 		{
 			final String name = myComboEntry.initialValue();
-			ZLTextBaseStyle baseStyle = collection.baseStyle();
+			ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
 			registerEntries(dialogTab,
 				KEY_LINESPACING, new ZLTextLineSpaceOptionEntry(baseStyle.LineSpacePercentOption, dialogTab.getResource(KEY_LINESPACING), false),

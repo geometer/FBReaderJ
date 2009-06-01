@@ -19,105 +19,86 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import org.geometerplus.zlibrary.core.util.ZLColor;
-
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
-public abstract class ZLTextDecoratedStyle {
-	private ZLTextStyle myBase;
-	
-	protected ZLTextDecoratedStyle(ZLTextStyle base) {
-		myBase = base;
-	}
-
-	public ZLTextStyle getBase() {
-		return myBase;
-	}
-
-	private ZLColor myColor;
-	public final ZLColor getColor() {
-		ZLColor color = myColor;
-		if (color == null) {
-			color = getColorInternal();
-			myColor = color;
-		}
-		return color;
-	}
-	protected abstract ZLColor getColorInternal();
-
+public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
+	// fields to be cached
 	private String myFontFamily;
+	private int myFontSize;
+	private boolean myIsItalic;
+	private boolean myIsBold;
+	private boolean myIsUnderline;
+	private int myVerticalShift;
+
+	private boolean myIsNotCached = true;
+
+	protected ZLTextDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
+		super(base, (hyperlink != null) ? hyperlink : base.Hyperlink);
+	}
+
+	private void initCache() {
+		myFontFamily = getFontFamilyInternal();
+		myFontSize = getFontSizeInternal();
+		myIsItalic = isItalicInternal();
+		myIsBold = isBoldInternal();
+		myIsUnderline = isUnderlineInternal();
+		myVerticalShift = getVerticalShiftInternal();
+
+		myIsNotCached = false;
+	}
+
+	@Override
 	public final String getFontFamily() {
-		String family = myFontFamily;
-		if (family == null) {
-			family = getFontFamilyInternal();
-			myFontFamily = family;
+		if (myIsNotCached) {
+			initCache();
 		}
-		return family;
+		return myFontFamily;
 	}
 	protected abstract String getFontFamilyInternal();
 
-	private boolean myIsItalic;
-	private boolean myIsItalicCached;
-	public final boolean isItalic() {
-		if (myIsItalicCached) {
-			return myIsItalic;
+	@Override
+	public final int getFontSize() {
+		if (myIsNotCached) {
+			initCache();
 		}
-		final boolean answer = isItalicInternal();
-		myIsItalic = answer;
-		myIsItalicCached = true;
-		return answer;
+		return myFontSize;
+	}
+	protected abstract int getFontSizeInternal();
+
+	@Override
+	public final boolean isItalic() {
+		if (myIsNotCached) {
+			initCache();
+		}
+		return myIsItalic;
 	}
 	protected abstract boolean isItalicInternal();
 
-	private boolean myIsBold;
-	private boolean myIsBoldCached;
+	@Override
 	public final boolean isBold() {
-		if (myIsBoldCached) {
-			return myIsBold;
+		if (myIsNotCached) {
+			initCache();
 		}
-		final boolean answer = isBoldInternal();
-		myIsBold = answer;
-		myIsBoldCached = true;
-		return answer;
+		return myIsBold;
 	}
 	protected abstract boolean isBoldInternal();
 
-	private boolean myIsUnderline;
-	private boolean myIsUnderlineCached;
+	@Override
 	public final boolean isUnderline() {
-		if (myIsUnderlineCached) {
-			return myIsUnderline;
+		if (myIsNotCached) {
+			initCache();
 		}
-		final boolean answer = isUnderlineInternal();
-		myIsUnderline = answer;
-		myIsUnderlineCached = true;
-		return answer;
+		return myIsUnderline;
 	}
 	protected abstract boolean isUnderlineInternal();
 
-	private int myVerticalShift;
-	private boolean myVerticalShiftCached;
+	@Override
 	public final int getVerticalShift() {
-		if (myVerticalShiftCached) {
-			return myVerticalShift;
+		if (myIsNotCached) {
+			initCache();
 		}
-		final int shift = getVerticalShiftInternal();
-		myVerticalShift = shift;
-		myVerticalShiftCached = true;
-		return shift;
+		return myVerticalShift;
 	}
 	protected abstract int getVerticalShiftInternal();
-
-	private int myFontSize;
-	private boolean myFontSizeCached;
-	public final int getFontSize() {
-		if (myFontSizeCached) {
-			return myFontSize;
-		}
-		final int size = getFontSizeInternal();
-		myFontSize = size;
-		myFontSizeCached = true;
-		return size;
-	}
-	protected abstract int getFontSizeInternal();
 }

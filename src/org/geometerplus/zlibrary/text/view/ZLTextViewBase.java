@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
@@ -39,6 +40,11 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract int getTopMargin();
 	public abstract int getBottomMargin();
 
+	public abstract ZLColor getBackgroundColor();
+	public abstract ZLColor getSelectedBackgroundColor();
+	public abstract ZLColor getTextColor(byte hyperlinkType);
+	public abstract ZLColor getHighlightedTextColor();
+
 	int getTextAreaHeight() {
 		return Context.getHeight() - getTopMargin() - getBottomMargin();
 	}
@@ -50,11 +56,11 @@ abstract class ZLTextViewBase extends ZLView {
 	int getBottomLine() {
 		return Context.getHeight() - getBottomMargin() - 1;
 	}
-	
+
 	int getRightLine() {
 		return Context.getWidth() - getRightMargin() - 1;
 	}
-	
+
 	final ZLTextStyle getTextStyle() {
 		return myTextStyle;
 	}
@@ -74,9 +80,13 @@ abstract class ZLTextViewBase extends ZLView {
 	void applyControl(ZLTextControlElement control) {
 		if (control.IsStart) {
 			ZLTextStyleDecoration decoration = ZLTextStyleCollection.Instance().getDecoration(control.Kind);
-			setTextStyle(decoration.createDecoratedStyle(myTextStyle));
+			if (control instanceof ZLTextHyperlinkControlElement) {
+				setTextStyle(decoration.createDecoratedStyle(myTextStyle, ((ZLTextHyperlinkControlElement)control).Hyperlink));
+			} else {
+				setTextStyle(decoration.createDecoratedStyle(myTextStyle));
+			}
 		} else {
-			setTextStyle(myTextStyle.getBase());
+			setTextStyle(myTextStyle.Base);
 		}
 	}
 
@@ -85,7 +95,7 @@ abstract class ZLTextViewBase extends ZLView {
 			final ZLTextElement element = cursor.getElement(index);
 			if (element instanceof ZLTextControlElement) {
 				applyControl((ZLTextControlElement)element);
-			}	
+			}
 		}
 	}
 
@@ -99,7 +109,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
 			return Context.getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;
 		}
-		return 0; 
+		return 0;
 	}
 
 	final int getElementHeight(ZLTextElement element) {
@@ -111,12 +121,12 @@ abstract class ZLTextViewBase extends ZLView {
 			return myWordHeight;
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLPaintContext context = Context;
-			return context.imageHeight(((ZLTextImageElement)element).ImageData) + 
+			return context.imageHeight(((ZLTextImageElement)element).ImageData) +
 				Math.max(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
 		}
 		return 0;
 	}
-	
+
 	final int getElementDescent(ZLTextElement element) {
 		return (element instanceof ZLTextWord) ? Context.getDescent() : 0;
 	}
@@ -127,18 +137,18 @@ abstract class ZLTextViewBase extends ZLView {
 				word.getWidth(Context) :
 				Context.getStringWidth(word.Data, word.Offset + start, word.Length - start);
 	}
-	
+
 	final int getWordWidth(ZLTextWord word, int start, int length) {
 		return Context.getStringWidth(word.Data, word.Offset + start, length);
 	}
-	
+
 	private char[] myWordPartArray = new char[20];
 
 	final int getWordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		if (length == -1) {
 			if (start == 0) {
 				return word.getWidth(Context);
-			}	
+			}
 			length = word.Length - start;
 		}
 		if (!addHyphenationSign) {
@@ -171,7 +181,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		final ZLPaintContext context = Context;
-		context.setColor(myTextStyle.getColor());	
+		context.setColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if ((start == 0) && (length == -1)) {
 			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
 		} else {
@@ -188,14 +198,14 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 				System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 				part[length] = '-';
-				drawString(x, y, part, 0, length + 1, word.getMark(), start);	
-			}	
+				drawString(x, y, part, 0, length + 1, word.getMark(), start);
+			}
 		}
 	}
 
 	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
 		final ZLPaintContext context = Context;
-		context.setColor(myTextStyle.getColor());
+		context.setColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
 		} else {
@@ -220,11 +230,11 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 
 				if (markStart < length) {
-					context.setColor(ZLTextStyleCollection.Instance().getBaseStyle().HighlightedTextColorOption.getValue());
+					context.setColor(getHighlightedTextColor());
 					int endPos = Math.min(markStart + markLen, length);
 					context.drawString(x, y, str, offset + markStart, endPos - markStart);
 					x += context.getStringWidth(str, offset + markStart, endPos - markStart);
-					context.setColor(myTextStyle.getColor());
+					context.setColor(getTextColor(myTextStyle.Hyperlink.Type));
 				}
 				pos = markStart + markLen;
 			}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.fbreader.bookmodel;
 
-interface ZLPreference {
-	void onAccept();
+public interface FBHyperlinkType {
+	byte NONE = 0;
+	byte INTERNAL = 1;
+	byte EXTERNAL = 2;
 }

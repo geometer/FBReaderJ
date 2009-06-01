@@ -17,10 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view.style;
+package org.geometerplus.zlibrary.text.view;
 
-interface HyperlinkStyle {
-	byte NONE = 0;
-	byte INTERNAL = 1;
-	byte EXTERNAL = 2;
+public class ZLTextHyperlink {
+	public final byte Type;
+	public final String Id;
+
+	public static final ZLTextHyperlink NO_LINK = new ZLTextHyperlink((byte)0, null);
+
+	ZLTextHyperlink(byte type, String id) {
+		Type = type;
+		Id = id;
+	}
 }
