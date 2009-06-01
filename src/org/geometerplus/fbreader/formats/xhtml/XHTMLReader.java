@@ -95,7 +95,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		addAction("br", new XHTMLTagRestartParagraphAction());
 		//addAction("center", new XHTMLTagAction());
 		addAction("div", new XHTMLTagParagraphAction());
-		//addAction("dt", new XHTMLTagAction());
+		addAction("dt", new XHTMLTagParagraphAction());
 		//addAction("head", new XHTMLTagAction());
 		//addAction("hr", new XHTMLTagAction());
 		//addAction("link", new XHTMLTagAction());

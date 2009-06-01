@@ -41,9 +41,13 @@ public final class ZLHtmlAttributeMap {
 		final int size = mySize++;
 		ZLByteBuffer[] keys = myKeys;
 		if (keys.length == size) {
-			keys = ZLArrayUtils.createCopy(keys, size, size << 1);
+			keys = new ZLByteBuffer[size << 1];
+			System.arraycopy(myKeys, 0, keys, 0, size);
 			myKeys = keys;
-			myValues = ZLArrayUtils.createCopy(myValues, size, size << 1);
+
+			final ZLByteBuffer[] values = new ZLByteBuffer[size << 1];
+			System.arraycopy(myValues, 0, values, 0, size);
+			myValues = values;
 		}
 		keys[size] = key;
 		myValues[size] = value;

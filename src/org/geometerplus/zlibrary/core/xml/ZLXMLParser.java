@@ -55,7 +55,7 @@ final class ZLXMLParser {
 	private static final byte ENTITY_REF = 22;
 
 	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString container) {
-		String s = (String)strings.get(container);
+		String s = strings.get(container);
 		if (s == null) {
 			s = container.toString();
 			strings.put(new ZLMutableString(container), s);
@@ -147,7 +147,7 @@ final class ZLXMLParser {
 	}
 
 	private static char[] getEntityValue(HashMap<String,char[]> entityMap, String name) {
-		char[] value = (char[])entityMap.get(name);
+		char[] value = entityMap.get(name);
 		if (value == null) {
 			if ((name.length() > 0) && (name.charAt(0) == '#')) {
 				try {
@@ -196,9 +196,9 @@ final class ZLXMLParser {
 		final HashMap<String,char[]> entityMap = getDTDMap(xmlReader.externalDTDs());
 		final InputStreamReader streamReader = myStreamReader;
 		final boolean processNamespaces = myProcessNamespaces;
-		HashMap oldNamespaceMap = processNamespaces ? new HashMap() : null;
-		HashMap currentNamespaceMap = null;
-		final ArrayList namespaceMapStack = new ArrayList();
+		HashMap<String,String> oldNamespaceMap = processNamespaces ? new HashMap<String,String>() : null;
+		HashMap<String,String> currentNamespaceMap = null;
+		final ArrayList<HashMap<String,String>> namespaceMapStack = new ArrayList<HashMap<String,String>>();
 		char[] buffer = myBuffer;
 		final ZLMutableString tagName = myTagName;
 		final ZLMutableString attributeName = myAttributeName;
@@ -485,7 +485,7 @@ mainSwitchLabel:
 							final String aName = convertToString(strings, attributeName);
 							if (processNamespaces && aName.startsWith("xmlns:")) {
 								if (currentNamespaceMap == null) {
-									currentNamespaceMap = new HashMap(oldNamespaceMap);
+									currentNamespaceMap = new HashMap<String,String>(oldNamespaceMap);
 								}
 								currentNamespaceMap.put(attributeValue.toString(), aName.substring(6));
 								attributeValue.clear();
@@ -557,9 +557,9 @@ mainSwitchLabel:
 											if (processNamespaces &&
 													(namespaceMapStack.remove(tagStackSize - 1) != null)) {
 												for (int j = namespaceMapStack.size() - 1; j >= 0; --j) {
-													Object element = namespaceMapStack.get(j);
+													HashMap<String,String> element = namespaceMapStack.get(j);
 													if (element != null) {
-														oldNamespaceMap = (HashMap)element;
+														oldNamespaceMap = element;
 														currentNamespaceMap = oldNamespaceMap;
 														break;
 													}

@@ -52,8 +52,8 @@ public abstract class ZLArrayUtils {
 		return newArray;
 	}
 
-	public static <T> T[] createCopy(T[] array, int dataSize, int newLength) {
-		T[] newArray = (T[])new Object[newLength];
+	public static String[] createCopy(String[] array, int dataSize, int newLength) {
+		String[] newArray = new String[newLength];
 		if (dataSize > 0) {
 			System.arraycopy(array, 0, newArray, 0, dataSize);
 		}
