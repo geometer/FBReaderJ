@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.ArrayList;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -36,30 +38,19 @@ public final class FBView extends ZLTextView {
 		myReader = reader;
 	}
 
-	private int myHyperlinkIndex = -1;
-	private int myHyperlinkCount = -1;
-
 	final void doShortScroll(boolean forward) {
-		//System.err.println("count = " + myHyperlinkCount);
-		if (myHyperlinkCount == -1) {
-			myHyperlinkCount = 0;
-			final ZLTextWordCursor cursor = new ZLTextWordCursor(getStartCursor());
-			for (ZLTextElementArea area : allElements()) {
-			}
+		if (!moveHyperlinkPointer(forward)) {
+			scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 		}
-		scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+
 		ZLApplication.Instance().repaintView();
 	}
 
 	public void onScrollingFinished(int viewPage) {
-		if (viewPage != PAGE_CENTRAL) {
-			myHyperlinkCount = -1;
-		}
 		super.onScrollingFinished(viewPage);
 	}
 
 	final void doScrollPage(boolean forward) {
-		myHyperlinkCount = -1;
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		if (preferences.AnimateOption.getValue()) {
 			if (forward) {

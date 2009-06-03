@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.*;
@@ -316,6 +318,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			drawTextLine(page, info, labels[index], labels[index + 1], y);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			++index;
+		}
+
+		final ZLTextHyperlinkArea hyperlinkArea = getCurrentHyperlinkArea(page);
+		if (hyperlinkArea != null) {
+			Context.setColor(new ZLColor(255, 0, 0));
+			for (ZLTextElementArea area : hyperlinkArea.textAreas()) {
+				Context.drawLine(area.XStart, area.YStart, area.XEnd, area.YStart);
+				Context.drawLine(area.XEnd, area.YStart, area.XEnd, area.YEnd);
+				Context.drawLine(area.XEnd, area.YEnd, area.XStart, area.YEnd);
+				Context.drawLine(area.XStart, area.YEnd, area.XStart, area.YStart);
+			}
 		}
 	}
 
@@ -1058,9 +1071,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return start;
 	}
 
+	/*
 	protected List<ZLTextElementArea> allElements() {
 		return myCurrentPage.TextElementMap;
 	}
+	*/
 
 	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
 		return myCurrentPage.TextElementMap.binarySearch(x, y);
@@ -1103,5 +1118,41 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			mySelectionModel.activate(x, y);
 			ZLApplication.Instance().repaintView();
 		}
+	}
+
+	private ZLTextHyperlinkArea myCurrentHyperlink;
+
+	private ZLTextHyperlinkArea getCurrentHyperlinkArea(ZLTextPage page) {
+		final ArrayList<ZLTextHyperlinkArea> hyperlinkAreas = page.TextElementMap.HyperlinkAreas;
+		final int index = hyperlinkAreas.indexOf(myCurrentHyperlink);
+		if (index == -1) {
+			return null;
+		}
+		return hyperlinkAreas.get(index);
+	}
+
+	protected boolean moveHyperlinkPointer(boolean forward) {
+		final ArrayList<ZLTextHyperlinkArea> hyperlinkAreas = myCurrentPage.TextElementMap.HyperlinkAreas;
+		boolean hyperlinkIsChanged = false;
+		if (!hyperlinkAreas.isEmpty()) {
+			final int index = hyperlinkAreas.indexOf(myCurrentHyperlink);
+			if (index == -1) {
+				myCurrentHyperlink = hyperlinkAreas.get(forward ? 0 : hyperlinkAreas.size() - 1);
+				return true;
+			} else {
+				if (forward) {
+					if (index + 1 < hyperlinkAreas.size()) {
+						myCurrentHyperlink = hyperlinkAreas.get(index + 1);
+						return true;
+					}
+				} else {
+					if (index > 0) {
+						myCurrentHyperlink = hyperlinkAreas.get(index - 1);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

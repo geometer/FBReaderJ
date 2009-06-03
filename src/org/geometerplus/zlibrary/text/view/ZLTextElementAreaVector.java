@@ -22,6 +22,32 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.ArrayList;
 
 final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
+	final ArrayList<ZLTextHyperlinkArea> HyperlinkAreas = new ArrayList<ZLTextHyperlinkArea>();
+	private ZLTextHyperlinkArea myCurrentHyperlinkArea;
+
+	@Override
+	public void clear() {
+		HyperlinkAreas.clear();
+		myCurrentHyperlinkArea = null;
+		super.clear();
+	}
+
+	@Override
+	public boolean add(ZLTextElementArea area) {
+		final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
+		if (hyperlink.Id == null) {
+			myCurrentHyperlinkArea = null;
+		} else {
+			if ((myCurrentHyperlinkArea == null) || (myCurrentHyperlinkArea.Hyperlink != hyperlink)) {
+				myCurrentHyperlinkArea = new ZLTextHyperlinkArea(hyperlink, this, size());
+				HyperlinkAreas.add(myCurrentHyperlinkArea);
+			} else {
+				myCurrentHyperlinkArea.extend();
+			}
+		}
+		return super.add(area);
+	}
+
 	ZLTextElementArea binarySearch(int x, int y) {
 		int left = 0;
 		int right = size();
