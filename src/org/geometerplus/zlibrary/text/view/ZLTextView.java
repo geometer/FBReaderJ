@@ -19,9 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
@@ -322,13 +320,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final ZLTextHyperlinkArea hyperlinkArea = getCurrentHyperlinkArea(page);
 		if (hyperlinkArea != null) {
-			Context.setColor(new ZLColor(255, 0, 0));
-			for (ZLTextElementArea area : hyperlinkArea.textAreas()) {
-				Context.drawLine(area.XStart, area.YStart, area.XEnd, area.YStart);
-				Context.drawLine(area.XEnd, area.YStart, area.XEnd, area.YEnd);
-				Context.drawLine(area.XEnd, area.YEnd, area.XStart, area.YEnd);
-				Context.drawLine(area.XStart, area.YEnd, area.XStart, area.YStart);
-			}
+			hyperlinkArea.draw(Context);
 		}
 	}
 
@@ -1129,6 +1121,33 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return null;
 		}
 		return hyperlinkAreas.get(index);
+	}
+
+	public ZLTextHyperlink getCurrentHyperlink() {
+		final ZLTextHyperlinkArea area = getCurrentHyperlinkArea(myCurrentPage);
+		return (area != null) ? area.Hyperlink : null;
+	}
+
+	protected ZLTextHyperlink findHyperlink(int x, int y, int maxDistance) {
+		ZLTextHyperlinkArea area = null;
+		int distance = Integer.MAX_VALUE;
+		for (ZLTextHyperlinkArea a : myCurrentPage.TextElementMap.HyperlinkAreas) {
+			final int d = a.distanceTo(x, y);
+			if ((d < distance) && (d <= maxDistance)) {
+				area = a;
+				distance = d;
+			}
+		}
+		return (area != null) ? area.Hyperlink : null;
+	}
+
+	protected void selectHyperlink(ZLTextHyperlink hyperlink) {
+		for (ZLTextHyperlinkArea area : myCurrentPage.TextElementMap.HyperlinkAreas) {
+			if (area.Hyperlink == hyperlink) {
+				myCurrentHyperlink = area;
+				break;
+			}
+		}
 	}
 
 	protected boolean moveHyperlinkPointer(boolean forward) {

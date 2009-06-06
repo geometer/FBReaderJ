@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2009 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +19,18 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class FindNextAction extends FBAction {
-	FindNextAction(FBReader fbreader) {
+public class FollowHyperlinkAction extends FBAction {
+	FollowHyperlinkAction(FBReader fbreader) {
 		super(fbreader);
 	}
 
 	public boolean isEnabled() {
 		FBView view = Reader.getTextView();
-		return (view != null) && view.canFindNext();
+		return (view != null) && (view.getCurrentHyperlink() != null);
 	}
 
 	public void run() {
-		Reader.getTextView().findNext();
+		FBView view = Reader.getTextView();
+		view.followHyperlink(view.getCurrentHyperlink());
 	}
 }

@@ -39,7 +39,6 @@ class ZLBooleanPreference extends CheckBoxPreference implements ZLPreference {
 		setChecked(option.getValue());
 	}
 
-	@Override
 	public void onAccept() {
 		myOption.setValue(isChecked());
 	}

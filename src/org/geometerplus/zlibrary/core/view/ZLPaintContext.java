@@ -85,10 +85,11 @@ abstract public class ZLPaintContext {
 
 	abstract protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline);
 
-	final public void setColor(ZLColor color) {
-		setColor(color, LineStyle.SOLID_LINE);
+	abstract public void setTextColor(ZLColor color);
+	final public void setLineColor(ZLColor color) {
+		setLineColor(color, LineStyle.SOLID_LINE);
 	}
-	abstract public void setColor(ZLColor color, int style);
+	abstract public void setLineColor(ZLColor color, int style);
 
 	final public void setFillColor(ZLColor color) {
 		setFillColor(color, FillStyle.SOLID_FILL);
@@ -142,6 +143,7 @@ abstract public class ZLPaintContext {
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 	abstract public void drawFilledCircle(int x, int y, int r);
+	abstract public void drawOutline(int[] xs, int ys[]);
 
 	public ArrayList fontFamilies() {
 		if (myFamilies.isEmpty()) {

@@ -49,4 +49,5 @@ public interface ActionCode {
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
 	String OPEN_SELECTED_TEXT_IN_DICTIONARY = "openInDictionary";
+	String FOLLOW_HYPERLINK = "followHyperlink";
 };

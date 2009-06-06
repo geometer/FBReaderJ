@@ -22,8 +22,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 import java.util.Map;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Bitmap;
+import android.graphics.*;
 import android.view.*;
 import android.util.AttributeSet;
 
@@ -35,6 +34,7 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View {
 	private ZLAndroidViewWidget myViewWidget;
+	private final Paint myPaint = new Paint();
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
 	private boolean mySecondaryBitmapIsUpToDate;
@@ -135,7 +135,7 @@ public class ZLAndroidWidget extends View {
 			myMainBitmap,
 			horizontal ? myScrollingShift : 0,
 			horizontal ? 0 : myScrollingShift,
-			context.Paint
+			myPaint
 		);
 		final int size = horizontal ? w : h;
 		int shift = (myScrollingShift < 0) ? (myScrollingShift + size) : (myScrollingShift - size);
@@ -143,7 +143,7 @@ public class ZLAndroidWidget extends View {
 			mySecondaryBitmap,
 			horizontal ? shift : 0,
 			horizontal ? 0 : shift,
-			context.Paint
+			myPaint
 		);
 		if (stopScrolling) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -165,10 +165,11 @@ public class ZLAndroidWidget extends View {
 				shift += size;
 			}
 			// TODO: set color
+			myPaint.setColor(Color.rgb(127, 127, 127));
 			if (horizontal) {
-				canvas.drawLine(shift, 0, shift, h + 1, context.Paint);
+				canvas.drawLine(shift, 0, shift, h + 1, myPaint);
 			} else {
-				canvas.drawLine(0, shift, w + 1, shift, context.Paint);
+				canvas.drawLine(0, shift, w + 1, shift, myPaint);
 			}
 			if (myScrollingInProgress) {
 				postInvalidate();
@@ -297,12 +298,16 @@ public class ZLAndroidWidget extends View {
 
 	private void onDrawStatic(Canvas canvas) {
 		drawOnBitmap(myMainBitmap);
-		canvas.drawBitmap(myMainBitmap, 0, 0, ZLAndroidPaintContext.Instance().Paint);
+		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
 	}
 
 	@Override
 	public boolean onTrackballEvent(MotionEvent event) {
-		ZLApplication.Instance().getCurrentView().onTrackballRotated((int)(10 * event.getX()), (int)(10 * event.getY()));
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			onKeyDown(KeyEvent.KEYCODE_DPAD_CENTER, null);
+		} else {
+			ZLApplication.Instance().getCurrentView().onTrackballRotated((int)(10 * event.getX()), (int)(10 * event.getY()));
+		}
 		return true;
 	}
 
@@ -359,6 +364,8 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
+			case KeyEvent.KEYCODE_ENTER:
+			case KeyEvent.KEYCODE_DPAD_CENTER:
 				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
 			case KeyEvent.KEYCODE_DPAD_DOWN:
 				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
@@ -376,6 +383,8 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
+			case KeyEvent.KEYCODE_ENTER:
+			case KeyEvent.KEYCODE_DPAD_CENTER:
 				return true;
 			default:
 				return false;

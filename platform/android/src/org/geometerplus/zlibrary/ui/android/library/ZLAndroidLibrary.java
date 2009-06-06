@@ -36,6 +36,8 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
+import org.geometerplus.android.fbreader.BookDownloader;
+
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
 	private final Application myApplication;
@@ -69,8 +71,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public void openInBrowser(String reference) {
-		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setData(Uri.parse(reference));
+		final Intent intent = new Intent(Intent.ACTION_VIEW);
+		final Uri uri = Uri.parse(reference);
+		if (BookDownloader.acceptsUri(uri)) {
+			intent.setClass(myActivity, BookDownloader.class);
+		}
+		intent.setData(uri);
 		myActivity.startActivity(intent);
 	}
 

@@ -35,7 +35,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-//import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -45,6 +44,20 @@ public class BookDownloader extends Activity {
 	private static int ourFileLength = -1;
 	private static int ourDownloadedPart = 0;
 	private static String ourFileName = "";
+
+	public static boolean acceptsUri(Uri uri) {
+		final List<String> path = uri.getPathSegments();
+		if ((path == null) || path.isEmpty()) {
+			return false;
+		}
+
+		final String fileName = path.get(path.size() - 1);
+		return
+			fileName.endsWith(".fb2.zip") ||
+			fileName.endsWith(".fb2") ||
+			fileName.endsWith(".epub") ||
+			fileName.endsWith(".mobi");
+	}
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -64,12 +77,7 @@ public class BookDownloader extends Activity {
 		if (uri != null) {
 			intent.setData(null);
 
-			final List<String> path = uri.getPathSegments();
-			ourFileName = path.get(path.size() - 1);
-			if (!ourFileName.endsWith(".fb2.zip") &&
-				!ourFileName.endsWith(".fb2") &&
-				!ourFileName.endsWith(".epub") &&
-				!ourFileName.endsWith(".mobi")) {
+			if (!acceptsUri(uri)) {
 				startNextMatchingActivity(intent);
 				finish();
 				return;
@@ -80,6 +88,7 @@ public class BookDownloader extends Activity {
 				host = "feedbooks.com";
 			}
 			String dir = "/sdcard/Books/" + host;
+			final List<String> path = uri.getPathSegments();
 			for (int i = 0; i < path.size() - 1; ++i) {
 				dir += '/' + path.get(i);
 			}
@@ -91,6 +100,7 @@ public class BookDownloader extends Activity {
 				return;
 			}
 
+			ourFileName = path.get(path.size() - 1);
 			final File fileFile = new File(dirFile, ourFileName);
 			if (fileFile.exists()) {
 				if (!fileFile.isFile()) {

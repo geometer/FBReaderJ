@@ -41,7 +41,6 @@ class BookTitlePreference extends ZLStringPreference {
 		setValue(book.getTitle());
 	}
 
-	@Override
 	public void onAccept() {
 		myBook.setTitle(getValue());
 	}
@@ -78,7 +77,6 @@ class LanguagePreference extends ZLStringListPreference {
 		}
 	}
 
-	@Override
 	public void onAccept() {
 		final String value = getValue();
 		myBook.setLanguage((value.length() != 0) ? value : null);

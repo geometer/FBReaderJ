@@ -181,7 +181,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		final ZLPaintContext context = Context;
-		context.setColor(getTextColor(myTextStyle.Hyperlink.Type));
+		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if ((start == 0) && (length == -1)) {
 			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
 		} else {
@@ -205,7 +205,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
 		final ZLPaintContext context = Context;
-		context.setColor(getTextColor(myTextStyle.Hyperlink.Type));
+		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
 		} else {
@@ -230,11 +230,11 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 
 				if (markStart < length) {
-					context.setColor(getHighlightedTextColor());
+					context.setTextColor(getHighlightedTextColor());
 					int endPos = Math.min(markStart + markLen, length);
 					context.drawString(x, y, str, offset + markStart, endPos - markStart);
 					x += context.getStringWidth(str, offset + markStart, endPos - markStart);
-					context.setColor(getTextColor(myTextStyle.Hyperlink.Type));
+					context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 				}
 				pos = markStart + markLen;
 			}

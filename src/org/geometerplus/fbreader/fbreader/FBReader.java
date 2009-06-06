@@ -120,6 +120,7 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
+		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
 
 		BookTextView = new FBView(this);
 		FootnoteView = new FBView(this);

@@ -70,6 +70,17 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
+	void followHyperlink(ZLTextHyperlink hyperlink) {
+		switch (hyperlink.Type) {
+			case FBHyperlinkType.EXTERNAL:
+				ZLibrary.Instance().openInBrowser(hyperlink.Id);
+				break;
+			case FBHyperlinkType.INTERNAL:
+				((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+				break;
+		}
+	}
+
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
@@ -83,17 +94,12 @@ public final class FBView extends ZLTextView {
 			return false;
 		}
 
-		ZLTextElementArea area = getElementByCoordinates(x, y);
-		if (area != null) {
-			final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
-			switch (hyperlink.Type) {
-				case FBHyperlinkType.EXTERNAL:
-					ZLibrary.Instance().openInBrowser(hyperlink.Id);
-					return true;
-				case FBHyperlinkType.INTERNAL:
-					((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
-					return true;
-			}
+		final ZLTextHyperlink hyperlink = findHyperlink(x, y, 10);
+		if (hyperlink != null) {
+			selectHyperlink(hyperlink);
+			ZLApplication.Instance().repaintView();
+			followHyperlink(hyperlink);
+			return true;
 		}
 
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();

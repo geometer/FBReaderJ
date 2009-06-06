@@ -30,10 +30,8 @@ abstract class ZLSimplePreference extends Preference implements ZLPreference, Pr
 		setOnPreferenceClickListener(this);
 	}
 
-	@Override
 	public abstract void onAccept();
 
-	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		onClick();
 		return true;
