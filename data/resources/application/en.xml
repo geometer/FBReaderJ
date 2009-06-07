@@ -77,6 +77,10 @@
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
+				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
+					<node name="summaryOn" value="Screen will not be turned off while you read a book"/>
+					<node name="summaryOff" value="Screen will be automatically turned off in case of inactivity"/>
+				</node>
 				<node name="colorProfile" value="Select color scheme">
 					<node name="defaultLight" value="Black on white"/>
 					<node name="defaultDark" value="White on black"/>

@@ -58,10 +58,12 @@ public abstract class ZLApplication {
 	public final ZLIntegerOption AngleStateOption =
 		new ZLIntegerOption(STATE, ANGLE, ZLViewWidget.Angle.DEGREES0);	
 
+	/*
 	public final ZLBooleanOption ConfigAutoSavingOption =
 		new ZLBooleanOption(CONFIG, AUTO_SAVE, true);
 	public final ZLIntegerRangeOption ConfigAutoSaveTimeoutOption =
 		new ZLIntegerRangeOption(CONFIG, TIMEOUT, 1, 6000, 30);
+	*/
 
 	public final ZLIntegerRangeOption KeyDelayOption =
 		new ZLIntegerRangeOption("Options", "KeyDelay", 0, 5000, 250);
@@ -77,9 +79,9 @@ public abstract class ZLApplication {
 	protected ZLApplication() {
 		ourInstance = this;
 		
-		if (ConfigAutoSavingOption.getValue()) {
+		//if (ConfigAutoSavingOption.getValue()) {
 			//ZLOption.startAutoSave(ConfigAutoSaveTimeoutOption.getValue());
-		}
+		//}
 
 		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
 	}

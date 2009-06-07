@@ -75,6 +75,10 @@
 					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
+				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
+					<node name="summaryOn" value="Экран не выключится автоматически во время чтения"/>
+					<node name="summaryOff" value="Экран выключится автоматически, если не листать страницы"/>
+				</node>
 				<node name="colorProfile" value="Выбрать цветовую схему">
 					<node name="defaultLight" value="Черное на белом"/>
 					<node name="defaultDark" value="Белое на черном"/>

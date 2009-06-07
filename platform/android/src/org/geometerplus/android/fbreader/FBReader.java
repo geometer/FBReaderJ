@@ -21,8 +21,8 @@ package org.geometerplus.android.fbreader;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.Context;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.content.pm.ActivityInfo;
@@ -109,16 +109,29 @@ public class FBReader extends ZLAndroidActivity {
 		}
 	}
 
+	private PowerManager.WakeLock myWakeLock;
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (myPanel.ControlPanel != null) {
 			myPanel.ControlPanel.setVisibility(myPanel.Visible ? View.VISIBLE : View.GONE);
 		}
+		if (ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue()) {
+			myWakeLock =
+				((PowerManager)getSystemService(POWER_SERVICE)).
+					newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "FBReader");
+			myWakeLock.acquire();
+		} else {
+			myWakeLock = null;
+		}
 	}
 
 	@Override
 	public void onPause() {
+		if (myWakeLock != null) {
+			myWakeLock.release();
+		}
 		if (myPanel.ControlPanel != null) {
 			myPanel.Visible = myPanel.ControlPanel.getVisibility() == View.VISIBLE;
 		}
@@ -155,7 +168,7 @@ public class FBReader extends ZLAndroidActivity {
 		if (myPanel.ControlPanel != null) {
 			final boolean visible = myPanel.ControlPanel.getVisibility() == View.VISIBLE;
 			myPanel.ControlPanel.hide(false);
-			SearchManager manager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+			SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 				public void onCancel() {
 					if ((myPanel.ControlPanel != null) && visible) {
