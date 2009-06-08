@@ -51,12 +51,13 @@ public class BookDownloader extends Activity {
 			return false;
 		}
 
-		final String fileName = path.get(path.size() - 1);
+		final String fileName = path.get(path.size() - 1).toLowerCase();
 		return
 			fileName.endsWith(".fb2.zip") ||
 			fileName.endsWith(".fb2") ||
 			fileName.endsWith(".epub") ||
-			fileName.endsWith(".mobi");
+			fileName.endsWith(".mobi") ||
+			fileName.endsWith(".prc");
 	}
 
 	public void onCreate(Bundle icicle) {
