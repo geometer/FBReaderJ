@@ -120,7 +120,7 @@ public class FBReader extends ZLAndroidActivity {
 		if (ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue()) {
 			myWakeLock =
 				((PowerManager)getSystemService(POWER_SERVICE)).
-					newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "FBReader");
+					newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "FBReader");
 			myWakeLock.acquire();
 		} else {
 			myWakeLock = null;
