@@ -30,17 +30,7 @@ class MobipocketStream extends PalmDocLikeStream {
 		super(file);
 		myFileSize = (int)file.size();
 
-		final int version = PdbUtil.readShort(myBase);
-		switch (version) {
-			case 1:
-				myIsCompressed = false;
-				break;
-			case 2:
-				myIsCompressed = true;
-				break;
-			default:
-				throw new IOException("Unsupported compression type: " + version);
-		}
+		myCompressionType = PdbUtil.readShort(myBase);
 		PdbUtil.skip(myBase, 6);
 		myMaxRecordIndex = Math.min(PdbUtil.readShort(myBase), myHeader.Offsets.length - 1);
 		final int maxRecordSize = PdbUtil.readShort(myBase);

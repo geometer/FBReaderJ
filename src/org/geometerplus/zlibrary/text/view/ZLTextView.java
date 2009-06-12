@@ -61,10 +61,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
  		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
-	public final void setModel(ZLTextModel model) {
+	public void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
 
 		myModel = model;
+		myCurrentPage.reset();
+		myPreviousPage.reset();
+		myNextPage.reset();
+		setScrollingActive(false);
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
@@ -74,8 +78,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					myTextSize[i + 1] = myTextSize[i] + myModel.getParagraphTextLength(i);
 				}
 				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
-				myPreviousPage.reset();
-				myNextPage.reset();
 			}
 		}
 	}
@@ -500,6 +502,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		do {
 			resetTextStyle();
 			final ZLTextParagraphCursor paragraphCursor = result.getParagraphCursor();
+			if (paragraphCursor == null) {
+				break;
+			}
 			final int wordIndex = result.getElementIndex();
 			applyControls(paragraphCursor, 0, wordIndex);	
 			ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, wordIndex, result.getCharIndex(), getTextStyle());
@@ -996,6 +1001,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private int paragraphSize(ZLTextWordCursor cursor, boolean beforeCurrentPosition, int unit) {
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		if (paragraphCursor == null) {
+			return 0;
+		}
 		final int endElementIndex =
 			beforeCurrentPosition ? cursor.getElementIndex() : paragraphCursor.getParagraphLength();
 		
@@ -1017,6 +1025,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private void skip(ZLTextWordCursor cursor, int unit, int size) {
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		if (paragraphCursor == null) {
+			return;
+		}
 		final int endElementIndex = paragraphCursor.getParagraphLength();
 
 		resetTextStyle();

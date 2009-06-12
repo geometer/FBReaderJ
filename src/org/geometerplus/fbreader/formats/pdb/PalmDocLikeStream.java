@@ -26,7 +26,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 abstract class PalmDocLikeStream extends PdbStream {
 	protected int myMaxRecordIndex;
 	protected int myRecordIndex;
-	protected boolean myIsCompressed;
+	protected interface CompressionType {
+		int NONE = 1;
+		int DOC = 2;
+		int HUFFDIC = 17480;
+	}
+	protected int myCompressionType;
 
 	private final long myFileSize;
 
@@ -54,11 +59,20 @@ abstract class PalmDocLikeStream extends PdbStream {
 				}
 				final short recordSize = (short)(nextOffset - currentOffset);
 
-				if (myIsCompressed) {
-					myBufferLength = (short)DocDecompressor.decompress(myBase, myBuffer, recordSize);
-				} else {
-					myBase.read(myBuffer, 0, recordSize);
-					myBufferLength = recordSize;
+				switch (myCompressionType) {
+					case CompressionType.NONE:
+						myBase.read(myBuffer, 0, recordSize);
+						myBufferLength = recordSize;
+						break;
+					case CompressionType.DOC:
+						myBufferLength = (short)DocDecompressor.decompress(myBase, myBuffer, recordSize);
+						break;
+					//case CompressionType.HUFFDIC:
+					//	myBufferLength = (short)HuffdicDecompressor.decompress(myBase, myBuffer, recordSize);
+					//	break;
+					default:
+						// Unsupported compression type
+						return false;
 				}
 			} catch (IOException e) {
 				return false;

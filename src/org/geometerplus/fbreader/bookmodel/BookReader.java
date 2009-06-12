@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.text.model.*;
 public class BookReader {
 	public final BookModel Model;
 
-	private ZLTextModel myCurrentTextModel = null;
+	private ZLTextWritableModel myCurrentTextModel = null;
 	
 	private boolean myTextParagraphExists = false;
 	
@@ -111,7 +111,7 @@ public class BookReader {
 	}
 
 	public final void beginParagraph(byte kind) {
-		final ZLTextModel textModel = myCurrentTextModel;
+		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			textModel.createParagraph(kind);
 			final byte[] stack = myKindStack;
@@ -139,7 +139,7 @@ public class BookReader {
 	}
 	
 	private final void insertEndParagraph(byte kind) {
-		final ZLTextModel textModel = myCurrentTextModel;
+		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if ((textModel != null) && mySectionContainsRegularContents) {
 			int size = textModel.getParagraphsNumber();
 			if ((size > 0) && (textModel.getParagraph(size-1).getKind() != kind)) {
@@ -170,11 +170,11 @@ public class BookReader {
 	}
 	
 	public final void setMainTextModel() {
-		myCurrentTextModel = Model.BookTextModel;
+		myCurrentTextModel = (ZLTextWritableModel)Model.BookTextModel;
 	}
 	
 	public final void setFootnoteTextModel(String id) {
-		myCurrentTextModel = Model.getFootnoteModel(id);
+		myCurrentTextModel = (ZLTextWritableModel)Model.getFootnoteModel(id);
 	}
 	
 	public final void addData(char[] data) {
@@ -268,7 +268,7 @@ public class BookReader {
 	}
 	
 	public final void addHyperlinkLabel(String label) {
-		final ZLTextModel textModel = myCurrentTextModel;
+		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			int paragraphNumber = textModel.getParagraphsNumber();
 			if (myTextParagraphExists) {
@@ -338,7 +338,7 @@ public class BookReader {
 		setReference(contentsParagraphNumber, myCurrentTextModel, referenceNumber);
 	}
 	
-	public final void setReference(int contentsParagraphNumber, ZLTextModel textModel, int referenceNumber) {
+	public final void setReference(int contentsParagraphNumber, ZLTextWritableModel textModel, int referenceNumber) {
 		final TOCTree contentsTree = Model.TOCTree;
 		if (contentsParagraphNumber < contentsTree.getSize()) {
 			contentsTree.getTree(contentsParagraphNumber).setReference(
@@ -364,7 +364,7 @@ public class BookReader {
 	}
 
 	public final void addImageReference(String ref, short vOffset) {
-		final ZLTextModel textModel = myCurrentTextModel;
+		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {

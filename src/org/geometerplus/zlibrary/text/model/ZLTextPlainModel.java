@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
-public final class ZLTextPlainModel implements ZLTextModel {
+public final class ZLTextPlainModel implements ZLTextWritableModel {
 	private final String myId;
 
 	private int[] myStartEntryIndices;

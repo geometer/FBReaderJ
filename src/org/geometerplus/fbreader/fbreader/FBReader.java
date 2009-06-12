@@ -136,7 +136,7 @@ public final class FBReader extends ZLApplication {
 				if (book == null) {
 					book = Library.Instance().getRecentBook();
 				}
-				if (book == null) {
+				if ((book == null) || !book.File.exists()) {
 					book = Book.getByFile(Library.Instance().getHelpFile());
 				}
 				openBookInternal(book, null);

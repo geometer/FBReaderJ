@@ -19,23 +19,17 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import java.util.ArrayList;
+import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
-public interface ZLTextModel {
-	String getId();
+public interface ZLTextWritableModel extends ZLTextModel {
+	void createParagraph(byte kind);
 
-	int getParagraphsNumber();
-	ZLTextParagraph getParagraph(int index);
+	void addControl(byte textKind, boolean isStart);
+	void addText(char[] text);
+	void addText(char[] text, int offset, int length);
 
-	void removeAllMarks();
-	ZLTextMark getFirstMark();
-	ZLTextMark getLastMark();
-	ZLTextMark getNextMark(ZLTextMark position);
-	ZLTextMark getPreviousMark(ZLTextMark position);
-
-	ArrayList getMarks();
-
-	int getParagraphTextLength(int index);
-	
-	int search(final String text, int startIndex, int endIndex, boolean ignoreCase);
+	void addControl(ZLTextForcedControlEntry entry);
+	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
+	void addImage(String id, ZLImageMap imageMap, short vOffset);
+	void addFixedHSpace(short length);
 }

@@ -61,7 +61,7 @@ abstract public class ZLView {
 	public abstract int getScrollbarThumbPosition(int viewPage);
 	public abstract int getScrollbarThumbLength(int viewPage);
 
-	final public void scrollTo(int viewPage, int shift) {
+	public final void scrollTo(int viewPage, int shift) {
 		ZLViewWidget viewWidget = ZLApplication.Instance().getViewWidget();
 		if (viewWidget != null) {
 			viewWidget.scrollTo(viewPage, shift);
