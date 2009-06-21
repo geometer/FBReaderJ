@@ -8,7 +8,6 @@
 	<property name="test.dir" value="test"/>
 	<property name="manifest.file" value="manifest.mf"/>
 	<property name="main.jar" value="FBReaderJ.jar"/>
-	<property name="sources.zip" value="FBReaderJ-sources.zip"/>
 
 	<target name="prepare">
 		<mkdir dir="${bin.dir}" />
@@ -61,26 +60,9 @@
 		<delete dir="${bin.dir}"/>
 		<delete dir="${cache.dir}"/>
 		<delete file="${main.jar}"/>
-		<delete file="${sources.zip}"/>
 		<delete file="FBReaderJ.jad"/>
 		<delete dir="platform/android/res/raw"/>
 		<delete dir="platform/android/res/drawable"/>
 		<delete file="platform/android/src/org/geometerplus/zlibrary/ui/android/R.java"/>
-	</target>
-
-	<target name="sources-archive" depends="clean">
-		<echo>Packaging sources archive...</echo>
-		<exec executable="zip" failonerror="true">
-			<arg value="-rq" />
-			<arg value="${sources.zip}" />
-			<arg value="${data.dir}" />
-			<arg value="${icons.dir}" />
-			<arg value="${manifest.file}" />
-			<arg value="build.xml" />
-			<arg value="src" />
-			<arg value="platform" />
-			<arg value="-x" />
-			<arg value="*/.svn/*" />
-		</exec>
 	</target>
 </project>

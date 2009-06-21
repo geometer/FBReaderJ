@@ -61,8 +61,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
  		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
-	public void setModel(ZLTextModel model) {
+	public synchronized void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
+		mySelectionModel.clear();
 
 		myModel = model;
 		myCurrentPage.reset();
@@ -100,7 +101,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.EndCursor;
 	}
 
-	private void gotoMark(ZLTextMark mark) {
+	private synchronized void gotoMark(ZLTextMark mark) {
 		if (mark == null) {
 			return;
 		}
@@ -136,7 +137,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
+	public synchronized int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
 		if (text.length() == 0) {
 			return 0;
 		}
@@ -166,7 +167,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return !end.isNull() && (myModel != null) && (myModel.getNextMark(end.getMark()) != null);
 	}
 
-	public void findNext() {
+	public synchronized void findNext() {
 		final ZLTextWordCursor end = myCurrentPage.EndCursor;
 		if (!end.isNull()) {
 			gotoMark(myModel.getNextMark(end.getMark()));
@@ -178,7 +179,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return !start.isNull() && (myModel != null) && (myModel.getPreviousMark(start.getMark()) != null);
 	}
 
-	public void findPrevious() {
+	public synchronized void findPrevious() {
 		final ZLTextWordCursor start = myCurrentPage.StartCursor;
 		if (!start.isNull()) {
 			gotoMark(myModel.getPreviousMark(start.getMark()));
@@ -250,7 +251,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				myNextPage.reset();
 				if (myCurrentPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
 					preparePaintInfo(myPreviousPage);
-					myCurrentPage.StartCursor.setCursor(myNextPage.EndCursor);
+					myCurrentPage.StartCursor.setCursor(myPreviousPage.EndCursor);
 					myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
 				}
 				break;
@@ -502,9 +503,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		do {
 			resetTextStyle();
 			final ZLTextParagraphCursor paragraphCursor = result.getParagraphCursor();
-			if (paragraphCursor == null) {
-				break;
-			}
 			final int wordIndex = result.getElementIndex();
 			applyControls(paragraphCursor, 0, wordIndex);	
 			ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, wordIndex, result.getCharIndex(), getTextStyle());
@@ -815,13 +813,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public final void gotoPosition(ZLTextPosition position) {
+	public final synchronized void gotoPosition(ZLTextPosition position) {
 		if (position != null) {
 			gotoPosition(position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex());
 		}
 	}
 	
-	public final void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
+	public final synchronized void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
 		if (myModel != null) {
 			myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
 			myPreviousPage.reset();

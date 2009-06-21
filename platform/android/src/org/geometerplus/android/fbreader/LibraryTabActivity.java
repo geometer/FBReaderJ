@@ -19,13 +19,15 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.TabActivity;
+import android.app.*;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -148,6 +150,20 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 		}
 
+		@Override
+		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			final LibraryTree tree = (LibraryTree)getItem(position);
+			if (tree instanceof BookTree) {
+				menu.setHeaderTitle(tree.getName());
+				final ZLResource resource = ZLResource.resource("libraryView");
+				menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+				if (Library.Instance().canDeleteBook(((BookTree)tree).Book)) {
+					menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+				}
+			}
+		}
+
 		private ZLTree findFirstSelectedItem() {
 			if (myCurrentBook == null) {
 				return null;
@@ -191,5 +207,62 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 			return true;
 		}
+	}
+
+	private static final int OPEN_BOOK_ITEM_ID = 0;
+	private static final int DELETE_BOOK_ITEM_ID = 1;
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final LibraryAdapter adapter =
+			(LibraryAdapter)((ListView)getTabHost().getCurrentView()).getAdapter();
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		final BookTree tree = (BookTree)adapter.getItem(position);
+		switch (item.getItemId()) {
+			case OPEN_BOOK_ITEM_ID:
+				adapter.runTreeItem(tree);
+				return true;
+			case DELETE_BOOK_ITEM_ID:
+				tryToDeleteBook(tree.Book);
+				return true;
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	private class BookDeleter implements DialogInterface.OnClickListener {
+		private final Book myBook;
+
+		BookDeleter(Book book) {
+			myBook = book;
+		}
+
+		private void invalidateView(View v) {
+			ZLTreeAdapter adapter = (ZLTreeAdapter)((ListView)v).getAdapter();
+			if (adapter != null) {
+				adapter.resetTree();
+			}
+		}
+
+		public void onClick(DialogInterface dialog, int which) {
+			Library.Instance().deleteBook(myBook);
+
+			invalidateView(findViewById(R.id.by_author));
+			invalidateView(findViewById(R.id.by_tag));
+			invalidateView(findViewById(R.id.recent));
+			invalidateView(findViewById(R.id.search_results));
+		}
+	}
+
+	private void tryToDeleteBook(Book book) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
+		new AlertDialog.Builder(this)
+			.setTitle(book.getTitle())
+			.setMessage(boxResource.getResource("message").getValue())
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book))
+			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+			.create().show();
 	}
 }

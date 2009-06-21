@@ -86,6 +86,20 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 		}
 	}
 
+	public void removeSelf() {
+		final int subTreeSize = getSize();
+		ZLTree parent = Parent;
+		if (parent != null) {
+			parent.mySubTrees.remove(this);
+			if (parent.mySubTrees.isEmpty()) {
+				parent.mySubTrees = null;
+			}
+			for (; parent != null; parent = parent.Parent) {
+				parent.mySize -= subTreeSize;
+			}
+		}
+	}
+
 	public final void clear() {
 		mySubTrees = null;
 		mySize = 1;

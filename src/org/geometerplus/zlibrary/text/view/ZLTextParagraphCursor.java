@@ -28,13 +28,13 @@ import org.geometerplus.zlibrary.text.model.*;
 public final class ZLTextParagraphCursor {
 	private static final class Processor {
 		private final ZLTextParagraph myParagraph;
-		private final ArrayList myElements;
+		private final ArrayList<ZLTextElement> myElements;
 		private int myOffset;
 		private int myFirstMark;
 		private int myLastMark;
 		private final ArrayList myMarks;
 		
-		private Processor(ZLTextParagraph paragraph, ArrayList marks, int paragraphIndex, ArrayList elements) {
+		private Processor(ZLTextParagraph paragraph, ArrayList marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
 			myParagraph = paragraph;
 			myElements = elements;
 			myMarks = marks;
@@ -52,7 +52,7 @@ public final class ZLTextParagraphCursor {
 		}
 
 		void fill() {
-			final ArrayList elements = myElements;
+			final ArrayList<ZLTextElement> elements = myElements;
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
 				it.next();
 				switch (it.getType()) {
@@ -97,7 +97,7 @@ public final class ZLTextParagraphCursor {
 				final int end = offset + length;
 				int firstNonSpace = -1;
 				boolean spaceInserted = false;
-				final ArrayList elements = myElements;
+				final ArrayList<ZLTextElement> elements = myElements;
 				for (int charPos = offset; charPos < end; ++charPos) {
 					final char ch = data[charPos];
 					if ((ch == ' ') || (ch <= 0x0D)) {
@@ -136,7 +136,7 @@ public final class ZLTextParagraphCursor {
 
 	public final int Index;
 	public final ZLTextModel Model;
-	private final ArrayList myElements = new ArrayList();
+	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
 	private ZLTextParagraphCursor(ZLTextModel model, int index) {
 		Model = model;
@@ -173,7 +173,7 @@ public final class ZLTextParagraphCursor {
 	}
 
 	public boolean isLast() {
-		return (Index + 1 == Model.getParagraphsNumber());
+		return (Index + 1 >= Model.getParagraphsNumber());
 	}
 	
 	public boolean isEndOfSection() {
@@ -194,7 +194,7 @@ public final class ZLTextParagraphCursor {
 	
 	ZLTextElement getElement(int index) {
 		try {
-			return (ZLTextElement)myElements.get(index);
+			return myElements.get(index);
 		} catch (IndexOutOfBoundsException e) {
 			return null;
 		}
@@ -202,5 +202,10 @@ public final class ZLTextParagraphCursor {
 
 	ZLTextParagraph getParagraph() {
 		return Model.getParagraph(Index);	
+	}
+
+	@Override
+	public String toString() {
+		return "ZLTextParagraphCursor [" + Index + " (0.." + myElements.size() + ")]";
 	}
 }

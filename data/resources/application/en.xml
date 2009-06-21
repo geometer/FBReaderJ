@@ -10,9 +10,11 @@
     <node name="recent" value="Recent"/>
     <node name="searchResults" value="Found"/>
     <node name="menu">
-			<node name="localSearch" value="Local Search"/>
-			<node name="networkSearch" value="Network Search"/>
+			<node name="localSearch" value="Local search"/>
+			<node name="networkSearch" value="Network search"/>
     </node>
+    <node name="openBook" value="Open book"/>
+    <node name="deleteBook" value="Delete book"/>
   </node>
   <node name="tocView">
     <node name="expandTree" value="Expand tree"/>
@@ -181,29 +183,8 @@
 				</node>
 			</node>
 		</node>
-		<node name="removeBookBox">
-			<node name="title" value="Remove Book"/>
-			<node name="message" value="Remove Book &#10;&#8220;%s&#8221;&#10; from the Library?"/>
-		</node>
-		<node name="removeTagBox">
-			<node name="title" value="Remove Tag"/>
-			<node name="message" value="Remove Tag &#8220;%s&#8221;?"/>
-		</node>
-		<node name="openBookErrorBox">
-			<node name="title" value="Error"/>
-			<node name="message" value="Couldn't open:&#10;%s"/>
-		</node>
-		<node name="noHelpBox">
-			<node name="title" value="Error"/>
-			<node name="message" value="Help file not found, sorry"/>
-		</node>
-		<node name="tagMustBeNonEmpty">
-			<node name="title" value="Error"/>
-			<node name="message" value="Tag name must be a non-empty string"/>
-		</node>
-		<node name="tagMustNotContainComma">
-			<node name="title" value="Error"/>
-			<node name="message" value="Tag name must not contain a &#8220;,&#8221; symbol"/>
+		<node name="deleteBookBox">
+			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>
@@ -268,11 +249,5 @@
 		<node name="unknown" value="Unknown Error"/>
 		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
 		<node name="encriptedFile" value="DRM-protected File"/>
-	</node>
-	<node name="library">
-		<node name="caption" value="Library"/>
-		<node name="allBooks" value="All Books"/>
-		<node name="booksWithoutTags" value="Books with no Tags"/>
-		<node name="noBooks" value="FBReader found no books in the configured locations. Please specify the path to your books in the Preferences Dialog (&#8220;Library&#8221; tab, &#8220;Book Path&#8221; entry). Alternatively, you can add books to your library using &#8220;Add Book&#8221; menu item."/>
 	</node>
 </resources>

@@ -51,7 +51,7 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile.isDirectory();
 	}
 	
-	public boolean remove() {
+	public boolean delete() {
 		return myFile.delete();
 	}
 

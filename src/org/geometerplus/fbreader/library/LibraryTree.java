@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
@@ -90,5 +89,25 @@ public abstract class LibraryTree extends ZLTree<LibraryTree> implements Compara
 				tree.sortAllChildren();
 			}
 		}
+	}
+
+	public boolean removeBook(Book book) {
+		final LinkedList<LibraryTree> toRemove = new LinkedList<LibraryTree>();
+		for (LibraryTree tree : this) {
+			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
+				toRemove.add(tree);
+			}
+		}
+		for (LibraryTree tree : toRemove) {
+			tree.removeSelf();
+			LibraryTree parent = tree.Parent;
+			for (; (parent != null) && !parent.hasChildren(); parent = parent.Parent) {
+				parent.removeSelf();
+			}
+			for (; parent != null; parent = parent.Parent) {
+				parent.myChildrenString = null;
+			}
+		}
+		return !toRemove.isEmpty();
 	}
 }

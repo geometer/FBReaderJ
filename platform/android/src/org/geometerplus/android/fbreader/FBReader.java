@@ -62,6 +62,11 @@ public class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		/*
+		android.telephony.TelephonyManager tele =
+			(android.telephony.TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+		System.err.println(tele.getNetworkOperator());
+		*/
 		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		myFullScreenFlag = 

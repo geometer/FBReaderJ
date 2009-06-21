@@ -311,4 +311,33 @@ public final class Library {
 		} 
 		db.saveRecentBookIds(ids);
 	}
+
+	public boolean canDeleteBook(Book book) {
+		ZLFile file = book.File;
+		if (file.getPhysicalFile() == null) {
+			return false;
+		}
+		while (file instanceof ZLArchiveEntryFile) {
+			file = file.getParent();
+			if (file.children().size() != 1) {
+				return false;
+			}
+		} 
+		return true;
+	}
+
+	public void deleteBook(Book book) {
+		synchronize();
+		myBooks.remove(book);
+		myLibraryByAuthor.removeBook(book);
+		myLibraryByTag.removeBook(book);
+		if (myRecentBooks.removeBook(book)) {
+			final BooksDatabase db = BooksDatabase.Instance();
+			final List<Long> ids = db.listRecentBookIds();
+			ids.remove(book.getId());
+			db.saveRecentBookIds(ids);
+		}
+		mySearchResult.removeBook(book);
+		book.File.getPhysicalFile().delete();
+	}
 }

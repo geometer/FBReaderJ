@@ -2,11 +2,11 @@
 <resources>
 	<node name="dialog">
 		<node name="button">
-			<node name="ok" value="&amp;ОК"/>
-			<node name="cancel" value="О&amp;тменить"/>
-			<node name="yes" value="&amp;Да"/>
-			<node name="no" value="&amp;Нет"/>
-			<node name="apply" value="При&amp;менить"/>
+			<node name="ok" value="ОК"/>
+			<node name="cancel" value="Отменить"/>
+			<node name="yes" value="Да"/>
+			<node name="no" value="Нет"/>
+			<node name="apply" value="Применить"/>
 		</node>
 		<node name="waitMessage">
 			<node name="savingConfig" value="Сохранение настроек..."/>

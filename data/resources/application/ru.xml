@@ -13,6 +13,8 @@
 			<node name="localSearch" value="Поиск"/>
 			<node name="networkSearch" value="Поиск в сети"/>
     </node>
+    <node name="openBook" value="Читать книгу"/>
+    <node name="deleteBook" value="Удалить книгу"/>
   </node>
   <node name="tocView">
     <node name="expandTree" value="Развернуть ветвь дерева"/>
@@ -179,29 +181,8 @@
 				</node>
 			</node>
 		</node>
-		<node name="removeBookBox">
-			<node name="title" value="Удаление книги"/>
-			<node name="message" value="Удалить книгу &#10;&#171;%s&#187;&#10; из библиотеки?"/>
-		</node>
-		<node name="removeTagBox">
-			<node name="title" value="Удаление категории"/>
-			<node name="message" value="Удалить категорию &#171;%s&#187;?"/>
-		</node>
-		<node name="openBookErrorBox">
-			<node name="title" value="Ошибка"/>
-			<node name="message" value="Не могу открыть:&#10;%s"/>
-		</node>
-		<node name="noHelpBox">
-			<node name="title" value="Ошибка"/>
-			<node name="message" value="Извините, нет файла с информацией"/>
-		</node>
-		<node name="tagMustBeNonEmpty">
-			<node name="title" value="Ошибка"/>
-			<node name="message" value="Название категории не может быть пустым"/>
-		</node>
-		<node name="tagMustNotContainComma">
-			<node name="title" value="Ошибка"/>
-			<node name="message" value="В названии категории не может быть запятой"/>
+		<node name="deleteBookBox">
+			<node name="message" value="Файл книги будет удален необратимо. Продолжать?"/>
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Загужается книга %s"/>
@@ -266,11 +247,5 @@
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
 		<node name="encriptedFile" value="файл защищен DRM"/>
-	</node>
-	<node name="library">
-		<node name="caption" value="Библиотека"/>
-		<node name="allBooks" value="Все книги"/>
-		<node name="booksWithoutTags" value="Книги без категорий"/>
-		<node name="noBooks" value="В библиотеке нет ни одной книги. Введите, пожалуйста, список каталогов, содержащих книги в диалоге настроек (вкладка &#171;Библиотека&#187;, поле &#171;Путь к книгам&#187;), либо добавьте книги вручную с помощью кнопки &#171;Добавить книгу&#187;."/>
 	</node>
 </resources>

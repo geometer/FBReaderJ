@@ -203,4 +203,9 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 			moveTo(myElementIndex, myCharIndex);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " (" + myParagraphCursor + "," + myElementIndex + "," + myCharIndex + ")";
+	}
 }
