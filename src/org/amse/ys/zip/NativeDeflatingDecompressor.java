@@ -47,7 +47,7 @@ public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
 		myOutBufferOffset = OUT_BUFFER_SIZE;
 		myOutBufferLength = 0;
 
-		System.err.println(startInflating());
+		startInflating();
     }
 
 	@Override
@@ -116,7 +116,6 @@ public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
 			myInBufferLength -= code >> 16;
 			myOutBufferOffset = 0;
 			myOutBufferLength = code & 0x0FFFF;
-			System.err.println(myInBufferLength + ":" + myOutBufferLength + ":" + myAvailable);
 		}
 	}
 
