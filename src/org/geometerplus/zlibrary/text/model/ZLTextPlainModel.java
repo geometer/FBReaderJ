@@ -24,22 +24,22 @@ import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
-public final class ZLTextPlainModel implements ZLTextWritableModel {
-	private final String myId;
+public class ZLTextPlainModel implements ZLTextModel {
+	protected final String myId;
 
-	private int[] myStartEntryIndices;
-	private int[] myStartEntryOffsets;
-	private int[] myParagraphLengths;
-	private byte[] myParagraphKinds;
+	protected int[] myStartEntryIndices;
+	protected int[] myStartEntryOffsets;
+	protected int[] myParagraphLengths;
+	protected byte[] myParagraphKinds;
 
-	private final ArrayList myEntries = new ArrayList();
+	protected int myParagraphsNumber;
 
-	int myParagraphsNumber;
+	protected final CharStorage myStorage;
+	protected final ArrayList<ZLTextMark> myMarks = new ArrayList<ZLTextMark>();
+	protected char[] myCurrentDataBlock;
+	protected int myBlockOffset;
 
-	private final CharStorage myStorage;
-	private final ArrayList<ZLTextMark> myMarks = new ArrayList<ZLTextMark>();
-	private char[] myCurrentDataBlock;
-	private int myBlockOffset;
+	protected final ZLImageMap myImageMap;
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
@@ -59,6 +59,7 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 		private String myHyperlinkId;
 
 		private ZLImageEntry myImageEntry;
+		private ZLTextForcedControlEntry myForcedControlEntry;
 
 		private short myFixedHSpaceLength;
 
@@ -104,6 +105,10 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
+		}
+
+		public ZLTextForcedControlEntry getForcedControlEntry() {
+			return myForcedControlEntry;
 		}
 
 		public short getFixedHSpaceLength() {
@@ -153,10 +158,11 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 				}
 				case ZLTextParagraph.Entry.IMAGE:
 				{
-					final int entryAddress =
-						((int)data[dataOffset++] << 16) +
-						(int)data[dataOffset++];
-					myImageEntry = (ZLImageEntry)myEntries.get(entryAddress);
+					final short vOffset = (short)data[dataOffset++];
+					final short len = (short)data[dataOffset++];
+					final String id = new String(data, dataOffset, len);
+					dataOffset += len;
+					myImageEntry = new ZLImageEntry(myImageMap, id, vOffset);
 					break;
 				}
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
@@ -164,11 +170,21 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 					break;
 				case ZLTextParagraph.Entry.FORCED_CONTROL:
 				{
-					final int entryAddress =
-						((int)data[dataOffset++] << 16) +
-						(int)data[dataOffset++];
-					//entry = myEntries.get((int)code);
-					break;
+					final int mask = (int)data[dataOffset++];
+					final ZLTextForcedControlEntry entry = new ZLTextForcedControlEntry();
+					if ((mask & ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) ==
+								ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) {
+						entry.setLeftIndent((short)data[dataOffset++]);
+					}
+					if ((mask & ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) ==
+								ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) {
+						entry.setRightIndent((short)data[dataOffset++]);
+					}
+					if ((mask & ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) ==
+								ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) {
+						entry.setAlignmentType((byte)data[dataOffset++]);
+					}
+					myForcedControlEntry = entry;
 				}
 			}
 			++myCounter;
@@ -176,132 +192,29 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 		}
 	}
 
-	public ZLTextPlainModel(String id, int arraySize, int dataBlockSize, String directoryName, String extension) {
+	protected ZLTextPlainModel(String id, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
 		myId = id;
 		myStartEntryIndices = new int[arraySize];
 		myStartEntryOffsets = new int[arraySize];
 		myParagraphLengths = new int[arraySize];
 		myParagraphKinds = new byte[arraySize];
 		myStorage = new CachedCharStorage(dataBlockSize, directoryName, extension);
+		myImageMap = imageMap;
 	}
 
-	public String getId() {
+	public final String getId() {
 		return myId;
 	}
 
-	private void extend() {
-		final int size = myStartEntryIndices.length;
-		myStartEntryIndices = ZLArrayUtils.createCopy(myStartEntryIndices, size, size << 1);
-		myStartEntryOffsets = ZLArrayUtils.createCopy(myStartEntryOffsets, size, size << 1);
-		myParagraphLengths = ZLArrayUtils.createCopy(myParagraphLengths, size, size << 1);
-		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size << 1);
-	}
-
-	public void createParagraph(byte kind) {
-		final int index = myParagraphsNumber++;
-		int[] startEntryIndices = myStartEntryIndices;
-		if (index == startEntryIndices.length) {
-			extend();
-			startEntryIndices = myStartEntryIndices;
-		}
-		final int dataSize = myStorage.size();
-		startEntryIndices[index] = (dataSize == 0) ? 0 : (dataSize - 1);
-		myStartEntryOffsets[index] = myBlockOffset;
-		myParagraphLengths[index] = 0;
-		myParagraphKinds[index] = kind;
-	}
-
-	private char[] getDataBlock(int minimumLength) {
-		char[] block = myCurrentDataBlock;
-		if ((block == null) || (minimumLength > block.length - myBlockOffset)) {
-			if (block != null) {
-				myStorage.freezeLastBlock();
-			}
-			block = myStorage.createNewBlock(minimumLength);
-			myCurrentDataBlock = block;
-			myBlockOffset = 0;
-		}
-		return block;
-	}
-
-	public void addControl(byte textKind, boolean isStart) {
-		final char[] block = getDataBlock(2);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
-		short kind = textKind;
-		if (isStart) {
-			kind += 0x0100;
-		}
-		block[myBlockOffset++] = (char)kind;
-	}
-
-	public void addText(char[] text) {
-		addText(text, 0, text.length);
-	}
-
-	public void addText(char[] text, int offset, int length) {
-		char[] block = getDataBlock(3 + length);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
-		block[blockOffset++] = (char)(length >> 16);
-		block[blockOffset++] = (char)length;
-		System.arraycopy(text, offset, block, blockOffset, length);
-		myBlockOffset = blockOffset + length;
-	}
-	
-	
-	public void addControl(ZLTextForcedControlEntry entry) {
-		final char[] block = getDataBlock(3);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FORCED_CONTROL;
-		final int entryAddress = myEntries.size();
-		block[myBlockOffset++] = (char)(entryAddress >> 16);
-		block[myBlockOffset++] = (char)entryAddress;
-		myEntries.add(entry);
-	}
-	
-	
-	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
-		final short labelLength = (short)label.length();
-		final char[] block = getDataBlock(3 + labelLength);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
-		block[blockOffset++] = (char)((hyperlinkType << 9) + 0x0100 + textKind);
-		block[blockOffset++] = (char)labelLength;
-		label.getChars(0, labelLength, block, blockOffset);
-		myBlockOffset = blockOffset + labelLength;
-	}
-	
-	public void addImage(String id, ZLImageMap imageMap, short vOffset) {
-		final char[] block = getDataBlock(3);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		final ArrayList entries = myEntries;
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
-		final int entryAddress = myEntries.size();
-		block[myBlockOffset++] = (char)(entryAddress >> 16);
-		block[myBlockOffset++] = (char)entryAddress;
-		entries.add(new ZLImageEntry(imageMap, id, vOffset));
-	}
-	
-	
-	public void addFixedHSpace(short length) {
-		final char[] block = getDataBlock(2);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
-		block[myBlockOffset++] = (char)length;
-	}	
-
-	public ZLTextMark getFirstMark() {
+	public final ZLTextMark getFirstMark() {
 		return myMarks.isEmpty() ? null : myMarks.get(0);
 	}
 	
-	public ZLTextMark getLastMark() {
+	public final ZLTextMark getLastMark() {
 		return myMarks.isEmpty() ? null : myMarks.get(myMarks.size() - 1);
 	}
 
-	public ZLTextMark getNextMark(ZLTextMark position) {
+	public final ZLTextMark getNextMark(ZLTextMark position) {
 		if (position == null) {
 			return null;
 		}
@@ -317,7 +230,7 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 		return mark;
 	}
 
-	public ZLTextMark getPreviousMark(ZLTextMark position) {
+	public final ZLTextMark getPreviousMark(ZLTextMark position) {
 		if (position == null) {
 			return null;
 		}
@@ -333,7 +246,7 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 		return mark;
 	}
 
-	public int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
+	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
 		int count = 0;
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks.clear();
@@ -364,26 +277,26 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 		return count;
 	}
 
-	public ArrayList getMarks() {
+	public final ArrayList<ZLTextMark> getMarks() {
 		return myMarks;
 	}	
 
-	public void removeAllMarks() {
+	public final void removeAllMarks() {
 		myMarks.clear();
 	}
 
-	public int getParagraphsNumber() {
+	public final int getParagraphsNumber() {
 		return myParagraphsNumber;
 	}
 
-	public ZLTextParagraph getParagraph(int index) {
+	public final ZLTextParagraph getParagraph(int index) {
 		final byte kind = myParagraphKinds[index];
 		return (kind == ZLTextParagraph.Kind.TEXT_PARAGRAPH) ?
 			new ZLTextParagraphImpl(this, index) :
 			new ZLTextSpecialParagraphImpl(kind, this, index);
 	}
 
-	public int getParagraphTextLength(int index) {
+	public final int getParagraphTextLength(int index) {
 		int textLength = 0;
 		int dataIndex = myStartEntryIndices[index];
 		int dataOffset = myStartEntryOffsets[index];
@@ -417,13 +330,16 @@ public final class ZLTextPlainModel implements ZLTextWritableModel {
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
-					dataOffset += 2;
+					dataOffset++;
+					dataOffset += (short)data[dataOffset++];
 					break;
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					++dataOffset;
 					break;
 				case ZLTextParagraph.Entry.FORCED_CONTROL:
-					dataOffset += 2;
+					for (int mask = (int)data[dataOffset++]; mask != 0; mask >>= 1) {
+						dataOffset += mask & 1;
+					}
 					break;
 			}
 		}

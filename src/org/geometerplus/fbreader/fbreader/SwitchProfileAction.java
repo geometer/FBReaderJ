@@ -19,21 +19,22 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class SetModeAction extends FBAction {
-	SetModeAction(FBReader fbreader, int modeToSet, int visibleInModes) {
+import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+
+class SwitchProfileAction extends FBAction {
+	private String myProfileName;
+
+	SwitchProfileAction(FBReader fbreader, String profileName) {
 		super(fbreader);
-		myModeToSet = modeToSet;
-		myVisibleInModes = visibleInModes;
+		myProfileName = profileName;
 	}
 
 	public boolean isVisible() {
-		return (Reader.getMode() & myVisibleInModes) != 0;
+		return !myProfileName.equals(Reader.getColorProfileName());
 	}
 
 	public void run() {
-		Reader.setMode(myModeToSet);
+		Reader.setColorProfileName(myProfileName);
+		Reader.repaintView();
 	}
-
-	private final int myModeToSet;
-	private final int myVisibleInModes;
 }

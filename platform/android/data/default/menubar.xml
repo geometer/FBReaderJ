@@ -4,9 +4,11 @@
 	<item id="toc"/>
 	<item id="bookmarks"/>
 	<item id="search"/>
+	<item id="night"/>
+	<item id="day"/>
 	<item id="preferences"/>
-	<item id="bookInfo"/>
 	<item id="preferences-old"/>
+	<item id="bookInfo"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>

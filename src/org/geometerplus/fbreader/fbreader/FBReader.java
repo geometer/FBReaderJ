@@ -41,12 +41,6 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
 
 public final class FBReader extends ZLApplication {
-	static interface ViewMode {
-		int UNDEFINED = 0;
-		int BOOK_TEXT = 1 << 0;
-		int FOOTNOTE = 1 << 1;
-	};
-
 	public final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 	public final ZLStringOption TextSearchPatternOption =
@@ -70,15 +64,12 @@ public final class FBReader extends ZLApplication {
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
 
 	final ZLStringOption ColorProfileOption =
-		new ZLStringOption("Options", "ColorProfile", "defaultLight");
+		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
 	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
 	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
 	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
 	private final ZLKeyBindings myBindings270 = new ZLKeyBindings("Keys270");
-
-	private int myMode = ViewMode.UNDEFINED;
-	private int myPreviousMode = ViewMode.BOOK_TEXT;
 
 	public final FBView BookTextView;
 	final FBView FootnoteView;
@@ -122,10 +113,13 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
 
+		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
+		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
+
 		BookTextView = new FBView(this);
 		FootnoteView = new FBView(this);
 
-		setMode(ViewMode.BOOK_TEXT);
+		setView(BookTextView);
 	}
 
 	public void initWindow() {
@@ -156,7 +150,7 @@ public final class FBReader extends ZLApplication {
 
 	public ColorProfile getColorProfile() {
 		if (myColorProfile == null) {
-			myColorProfile = ColorProfile.get(ColorProfileOption.getValue());
+			myColorProfile = ColorProfile.get(getColorProfileName());
 		}
 		return myColorProfile;
 	}
@@ -193,35 +187,6 @@ public final class FBReader extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	int getMode() {
-		return myMode;
-	}
-
-	void setMode(int mode) {
-		if (mode == myMode) {
-			return;
-		}
-
-		myPreviousMode = myMode;
-		myMode = mode;
-
-		switch (mode) {
-			case ViewMode.BOOK_TEXT:
-				setView(BookTextView);
-				break;
-			case ViewMode.FOOTNOTE:
-				setView(FootnoteView);
-				break;
-			default:
-				break;
-		}
-	}
-
-	void restorePreviousMode() {
-		setMode(myPreviousMode);
-		myPreviousMode = ViewMode.BOOK_TEXT;
-	}
-
 	void tryOpenFootnote(String id) {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
@@ -230,7 +195,7 @@ public final class FBReader extends ZLApplication {
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
 				} else {
 					FootnoteView.setModel(label.Model);
-					setMode(ViewMode.FOOTNOTE);
+					setView(FootnoteView);
 					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
 				repaintView();
@@ -264,7 +229,7 @@ public final class FBReader extends ZLApplication {
 				BookTextView.setModel(Model.BookTextModel);
 				BookTextView.gotoPosition(book.getStoredPosition());
 				if (bookmark == null) {
-					setMode(ViewMode.BOOK_TEXT);
+					setView(BookTextView);
 				} else {
 					gotoBookmark(bookmark);
 				}
@@ -278,17 +243,17 @@ public final class FBReader extends ZLApplication {
 		final String modelId = bookmark.getModelId();
 		if (modelId == null) {
 			BookTextView.gotoPosition(bookmark);
-			setMode(ViewMode.BOOK_TEXT);
+			setView(BookTextView);
 		} else {
 			FootnoteView.setModel(Model.getFootnoteModel(modelId));
 			FootnoteView.gotoPosition(bookmark);
-			setMode(ViewMode.FOOTNOTE);
+			setView(FootnoteView);
 		}
 		repaintView();
 	}
 	
 	public void showBookTextView() {
-		setMode(ViewMode.BOOK_TEXT);
+		setView(BookTextView);
 	}
 	
 	private Book createBookForFile(ZLFile file) {

@@ -40,7 +40,7 @@ public class PluckerBookReader extends BookReader {
 	private	String myConvertedTextBuffer;
 	private	boolean myParagraphStarted = false;
 	private	boolean myBufferIsEmpty;
-	private	ZLTextForcedControlEntry myForcedEntry;
+	//private	ZLTextForcedControlEntry myForcedEntry;
 	private	final ArrayList/*<std::pair<FBTextKind,bool> >*/ myDelayedControls = new ArrayList();
 	private	final ArrayList/*<std::string> */myDelayedHyperlinks = new ArrayList();
 	private	short myCompressionVersion;
@@ -59,7 +59,7 @@ public class PluckerBookReader extends BookReader {
 		//System.out.println(filePath + "  " + encoding);
 		myFont = FontType.FT_REGULAR;
 		myCharBuffer = new char[65535];
-		myForcedEntry = null;
+		//myForcedEntry = null;
 	}
 
 	public boolean readDocument() {
@@ -319,9 +319,9 @@ public class PluckerBookReader extends BookReader {
     		myBufferIsEmpty = false;
     	}
     	safeEndParagraph();
-    	if (myForcedEntry != null) {
-    		myForcedEntry = null;
-    	}
+    	//if (myForcedEntry != null) {
+    	//	myForcedEntry = null;
+    	//}
     	myDelayedControls.clear();
     }
     
@@ -351,24 +351,24 @@ public class PluckerBookReader extends BookReader {
 					break;
 				case 0x22:
 					if (!myParagraphStarted) {
-						if (myForcedEntry == null) {
-							myForcedEntry = new ZLTextForcedControlEntry();
-						}
-						myForcedEntry.setLeftIndent((short)ptr[cur + 1]);
-						myForcedEntry.setRightIndent((short)ptr[cur + 2]);
+						//if (myForcedEntry == null) {
+						//	myForcedEntry = new ZLTextForcedControlEntry();
+						//}
+						//myForcedEntry.setLeftIndent((short)ptr[cur + 1]);
+						//myForcedEntry.setRightIndent((short)ptr[cur + 2]);
 					}
 					break;
 				case 0x29:
 					if (!myParagraphStarted) {
-						if (myForcedEntry == null) {
-							myForcedEntry = new ZLTextForcedControlEntry();
-						}
-						switch (ptr[cur + 1]) {
-							case 0: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_LEFT); break;
-							case 1: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_RIGHT); break;
-							case 2: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_CENTER); break;
-							case 3: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_JUSTIFY); break;
-						}
+						//if (myForcedEntry == null) {
+						//	myForcedEntry = new ZLTextForcedControlEntry();
+						//}
+						//switch (ptr[cur + 1]) {
+						//	case 0: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_LEFT); break;
+						//	case 1: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_RIGHT); break;
+						//	case 2: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_CENTER); break;
+						//	case 3: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_JUSTIFY); break;
+						//}
 					}
 					break;
 				case 0x33: // just break line instead of horizontal rule (TODO: draw horizontal rule?)
@@ -489,11 +489,11 @@ public class PluckerBookReader extends BookReader {
     			Pair pit = (Pair)it.next();
     			addControl((Byte)pit.myFirst, (Boolean)pit.mySecond);
     		}
-    		if (myForcedEntry != null) {
-    			addControl(myForcedEntry);
-    		} else {
+    		//if (myForcedEntry != null) {
+    		//	addControl(myForcedEntry);
+    		//} else {
     			addControl(FBTextKind.REGULAR, true);
-    		}
+    		//}
     		for (Iterator it = myDelayedHyperlinks.iterator(); it.hasNext(); ) {
     			addHyperlinkControl(FBTextKind.INTERNAL_HYPERLINK, (String)it.next());
     		}

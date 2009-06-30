@@ -215,30 +215,37 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
+	@Override
 	public int getLeftMargin() {
 		return myReader.LeftMarginOption.getValue();
 	}
 
+	@Override
 	public int getRightMargin() {
 		return myReader.RightMarginOption.getValue();
 	}
 
+	@Override
 	public int getTopMargin() {
 		return myReader.TopMarginOption.getValue();
 	}
 
+	@Override
 	public int getBottomMargin() {
 		return myReader.BottomMarginOption.getValue();
 	}
 
+	@Override
 	public ZLColor getBackgroundColor() {
 		return myReader.getColorProfile().BackgroundOption.getValue();
 	}
 
+	@Override
 	public ZLColor getSelectedBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
 	}
 
+	@Override
 	public ZLColor getTextColor(byte hyperlinkType) {
 		final ColorProfile profile = myReader.getColorProfile();
 		switch (hyperlinkType) {
@@ -251,8 +258,9 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public ZLColor getHighlightedTextColor() {
-		return myReader.getColorProfile().HighlightedTextOption.getValue();
+	@Override
+	public ZLColor getHighlightingColor() {
+		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
 	protected boolean isSelectionEnabled() {

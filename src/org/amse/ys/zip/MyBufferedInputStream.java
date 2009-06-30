@@ -30,6 +30,25 @@ final class MyBufferedInputStream extends InputStream {
         return myCurrentPosition;
     }
 
+    public int read(byte[] b, int off, int len) throws IOException {        
+		int ready = (len < myBytesReady) ? len : myBytesReady;
+		if (ready > 0) {
+			System.arraycopy(myBuffer, myPositionInBuffer, b, off, ready);
+			len -= ready;
+			myBytesReady -= ready;
+			myPositionInBuffer += ready;
+			off += ready;
+		}
+		if (len > 0) {
+			final int ready2 = myFileInputStream.read(b, off, len);
+			if (ready2 >= 0) {
+				ready += ready2;
+			}
+		}
+		myCurrentPosition += ready;
+		return (ready > 0) ? ready : -1;
+	}
+
     public int read() throws IOException {        
         myCurrentPosition++;
         if (myBytesReady <= 0) {
@@ -94,8 +113,8 @@ final class MyBufferedInputStream extends InputStream {
         }
     }
 
-    public void backSkip(int n) {
-        throw new RuntimeException("back skip not implemented");
+    public void backSkip(int n) throws IOException {
+        throw new IOException("Back skip is not implemented");
     }
 
     public void setPosition(int position) throws IOException {

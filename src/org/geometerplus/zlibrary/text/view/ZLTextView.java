@@ -475,6 +475,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
+					/*
+					context.setFillColor(getHighlightingColor());
+					context.fillRectangle(
+						area.XStart, areaY - context.getStringHeight(),
+						area.XEnd - 1, areaY + context.getDescent()
+					);
+					*/
 					for (int len = 0; len < area.XEnd - area.XStart; len += cw) {
 						context.drawString(areaX + len, areaY, SPACE, 0, 1);
 					}

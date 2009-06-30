@@ -40,10 +40,10 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class BookDownloader extends Activity {
-	private static ProgressBar ourProgressBar;
-	private static int ourFileLength = -1;
-	private static int ourDownloadedPart = 0;
-	private static String ourFileName = "";
+	private ProgressBar myProgressBar;
+	private int myFileLength = -1;
+	private int myDownloadedPart = 0;
+	private String myFileName = "";
 
 	public static boolean acceptsUri(Uri uri) {
 		final List<String> path = uri.getPathSegments();
@@ -71,7 +71,7 @@ public class BookDownloader extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.downloader);
-		ourProgressBar = (ProgressBar)findViewById(android.R.id.progress);
+		myProgressBar = (ProgressBar)findViewById(android.R.id.progress);
 
 		final Intent intent = getIntent();
 		final Uri uri = intent.getData();
@@ -101,8 +101,8 @@ public class BookDownloader extends Activity {
 				return;
 			}
 
-			ourFileName = path.get(path.size() - 1);
-			final File fileFile = new File(dirFile, ourFileName);
+			myFileName = path.get(path.size() - 1);
+			final File fileFile = new File(dirFile, myFileName);
 			if (fileFile.exists()) {
 				if (!fileFile.isFile()) {
 					// TODO: error message
@@ -124,16 +124,16 @@ public class BookDownloader extends Activity {
 			startFileDownload(uri.toString(), fileFile);
 		}
 
-		if (ourFileLength <= 0) {
-			ourProgressBar.setIndeterminate(true);
+		if (myFileLength <= 0) {
+			myProgressBar.setIndeterminate(true);
 		} else {
-			ourProgressBar.setIndeterminate(false);
-			ourProgressBar.setMax(ourFileLength);
-			ourProgressBar.setProgress(ourDownloadedPart);
+			myProgressBar.setIndeterminate(false);
+			myProgressBar.setMax(myFileLength);
+			myProgressBar.setProgress(myDownloadedPart);
 		}
 
 		final TextView textView = (TextView)findViewById(R.id.downloadertext);
-		textView.setText(ZLDialogManager.getWaitMessageText("downloadingFile").replace("%s", ourFileName));
+		textView.setText(ZLDialogManager.getWaitMessageText("downloadingFile").replace("%s", myFileName));
 	}
 
 	private void runFBReader(final File file) {
@@ -159,12 +159,12 @@ public class BookDownloader extends Activity {
 				try {
 					final URL url = new URL(uriString);
 					final URLConnection connection = url.openConnection();
-					ourFileLength = connection.getContentLength();
-					if (ourFileLength > 0) {
-						ourProgressBar.setIndeterminate(false);
-						ourProgressBar.setMax(ourFileLength);
-						ourProgressBar.setProgress(0);
-						ourDownloadedPart = 0;
+					myFileLength = connection.getContentLength();
+					if (myFileLength > 0) {
+						myProgressBar.setIndeterminate(false);
+						myProgressBar.setMax(myFileLength);
+						myProgressBar.setProgress(0);
+						myDownloadedPart = 0;
 					}
 					final HttpURLConnection httpConnection = (HttpURLConnection)connection;
 					final int response = httpConnection.getResponseCode();
@@ -178,8 +178,8 @@ public class BookDownloader extends Activity {
 							if (size <= 0) {
 								break;
 							}
-							ourDownloadedPart += size;
-							ourProgressBar.setProgress(ourDownloadedPart);
+							myDownloadedPart += size;
+							myProgressBar.setProgress(myDownloadedPart);
 							outStream.write(buffer, 0, size);
 						}
 						inStream.close();
@@ -191,7 +191,7 @@ public class BookDownloader extends Activity {
 					// TODO: error message; remove file, don't start FBReader
 				}
 				handler.sendEmptyMessage(0);
-				ourFileLength = -1;
+				myFileLength = -1;
 			}
 		}).start();
 	}

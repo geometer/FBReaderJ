@@ -180,12 +180,12 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	protected final void setIcon(ImageView imageView, ZLTree tree) {
 		if (tree.hasChildren()) {
 			if (isOpen(tree)) {
-				imageView.setImageResource(R.drawable.tree_icon_group_open);
+				imageView.setImageResource(R.drawable.ic_list_group_open);
 			} else {
-				imageView.setImageResource(R.drawable.tree_icon_group_closed);
+				imageView.setImageResource(R.drawable.ic_list_group_closed);
 			}
 		} else {
-			imageView.setImageResource(R.drawable.tree_icon_group_empty);
+			imageView.setImageResource(R.drawable.ic_list_group_empty);
 		}
 		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
 	}

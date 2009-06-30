@@ -10,6 +10,7 @@ data_dir_common = project_dir + "/data"
 application_icons_dir_common = project_dir + "/icons/application"
 tree_icons_dir_android = platform_dir + "/icons/tree"
 menu_icons_dir_android = platform_dir + "/icons/menu"
+tabs_icons_dir_android = platform_dir + "/icons/tabs"
 text_search_icons_dir_android = platform_dir + "/icons/text_search"
 data_dir_android = platform_dir + "/data"
 
@@ -38,6 +39,7 @@ clean_res_dir(drawable_res_dir)
 process_data_dir("data__", data_dir_common, raw_res_dir)
 process_data_dir("data__", data_dir_android, raw_res_dir)
 shutil.copyfile(application_icons_dir_common + "/48x48.png", drawable_res_dir + "/fbreader.png")
-process_data_dir("tree_icon_", tree_icons_dir_android, drawable_res_dir, 0)
-process_data_dir("menu_icon_", menu_icons_dir_android, drawable_res_dir, 0)
+process_data_dir("", tree_icons_dir_android, drawable_res_dir, 0)
+process_data_dir("", menu_icons_dir_android, drawable_res_dir, 0)
+process_data_dir("", tabs_icons_dir_android, drawable_res_dir, 0)
 process_data_dir("text_search_", text_search_icons_dir_android, drawable_res_dir, 0)

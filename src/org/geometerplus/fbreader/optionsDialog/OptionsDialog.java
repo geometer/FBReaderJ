@@ -62,9 +62,9 @@ public class OptionsDialog {
 		final String BACKGROUND = resource.getResource("background").getValue();
 		final ColorProfile profile = fbreader.getColorProfile();
 		builder.addOption(BACKGROUND, profile.BackgroundOption);
+		builder.addOption(resource.getResource("highlighting").getValue(), profile.HighlightingOption);
 		builder.addOption(resource.getResource("text").getValue(), profile.RegularTextOption);
 		builder.addOption(resource.getResource("hyperlink").getValue(), profile.HyperlinkTextOption);
-		builder.addOption(resource.getResource("highlighted").getValue(), profile.HighlightedTextOption);
 		builder.setInitial(BACKGROUND);
 		colorsTab.addOption(colorKey, builder.comboEntry());
 		colorsTab.addOption("", builder.colorEntry());

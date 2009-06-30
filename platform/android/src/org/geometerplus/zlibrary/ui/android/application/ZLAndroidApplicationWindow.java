@@ -52,7 +52,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		protected void processItem(ZLApplication.Menubar.PlainItem item) {
 			MenuItem menuItem = myMenuStack.peek().add(0, myItemCount++, Menu.NONE, item.Name);
 			try {
-				final String fieldName = "menu_icon_" + item.ActionId.toLowerCase();
+				final String fieldName = "ic_menu_" + item.ActionId.toLowerCase();
 				menuItem.setIcon(R.drawable.class.getField(fieldName).getInt(null));
 			} catch (NoSuchFieldException e) {
 			} catch (IllegalAccessException e) {

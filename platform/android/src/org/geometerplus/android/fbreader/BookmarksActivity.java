@@ -123,7 +123,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			myResource.getResource("menu").getResource("search").getValue()
 		);
 		item.setOnMenuItemClickListener(this);
-		item.setIcon(R.drawable.menu_icon_search);
+		item.setIcon(R.drawable.ic_menu_search);
 		return true;
 	}
 
@@ -355,7 +355,7 @@ mainLoop:
 			final Bookmark bookmark = getItem(position);
 			if (bookmark == null) {
 				imageView.setVisibility(View.VISIBLE);
-				imageView.setImageResource(R.drawable.tree_icon_plus);
+				imageView.setImageResource(R.drawable.ic_list_plus);
 				textView.setText(ZLResource.resource("bookmarksView").getResource("new").getValue());
 				bookTitleView.setVisibility(View.GONE);
 			} else {
@@ -368,16 +368,6 @@ mainLoop:
 					bookTitleView.setText(bookmark.getBookTitle());
 				}
 			}
-			/*
-			((ImageView)view.findViewById(R.id.bookmark_item_icon)).setImageResource(
-				(bookmark != null) ? R.drawable.tree_icon_strut : R.drawable.tree_icon_plus
-			);
-			((TextView)view.findViewById(R.id.bookmark_item_text)).setText(
-				(bookmark != null) ?
-					bookmark.getText() :
-					ZLResource.resource("bookmarksView").getResource("new").getValue()
-			);
-			*/
 			return view;
 		}
 

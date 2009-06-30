@@ -25,6 +25,9 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class ColorProfile {
+	public static final String DAY = "defaultLight";
+	public static final String NIGHT = "defaultDark";
+
 	private static final ArrayList<String> ourNames = new ArrayList<String>();
 	private static final HashMap<String,ColorProfile> ourProfiles = new HashMap<String,ColorProfile>();
 
@@ -32,8 +35,8 @@ public class ColorProfile {
 		if (ourNames.isEmpty()) {
 			final int size = new ZLIntegerOption("Colors", "NumberOfSchemes", 0).getValue();
 			if (size == 0) {
-				ourNames.add("defaultLight");
-				ourNames.add("defaultDark");
+				ourNames.add(DAY);
+				ourNames.add(NIGHT);
 			} else for (int i = 0; i < size; ++i) {
 				ourNames.add(new ZLStringOption("Colors", "Scheme" + i, "").getValue());
 			}
@@ -52,7 +55,7 @@ public class ColorProfile {
 
 	public final ZLColorOption BackgroundOption;
 	public final ZLColorOption SelectionBackgroundOption;
-	public final ZLColorOption HighlightedTextOption;
+	public final ZLColorOption HighlightingOption;
 	public final ZLColorOption RegularTextOption;
 	public final ZLColorOption HyperlinkTextOption;
 
@@ -60,30 +63,30 @@ public class ColorProfile {
 		this(name);
 		BackgroundOption.setValue(base.BackgroundOption.getValue());
 		SelectionBackgroundOption.setValue(base.SelectionBackgroundOption.getValue());
-		HighlightedTextOption.setValue(base.HighlightedTextOption.getValue());
+		HighlightingOption.setValue(base.HighlightingOption.getValue());
 		RegularTextOption.setValue(base.RegularTextOption.getValue());
 		HyperlinkTextOption.setValue(base.HyperlinkTextOption.getValue());
 	}
 
 	private ColorProfile(String name) {
-		if ("defaultDark".equals(name)) {
+		if (NIGHT.equals(name)) {
 			BackgroundOption =
 				new ZLColorOption("Colors", name + ":Background", new ZLColor(0, 0, 0));
 			SelectionBackgroundOption =
 				new ZLColorOption("Colors", name + ":SelectionBackground", new ZLColor(82, 131, 194));
-			HighlightedTextOption =
-				new ZLColorOption("Colors", name + ":SelectedText", new ZLColor(45, 105, 192));
+			HighlightingOption =
+				new ZLColorOption("Colors", name + ":Highlighting", new ZLColor(96, 96, 128));
 			RegularTextOption =
 				new ZLColorOption("Colors", name + ":Text", new ZLColor(192, 192, 192));
 			HyperlinkTextOption =
-				new ZLColorOption("Colors", name + ":Hyperlink", new ZLColor(45, 105, 192));
+				new ZLColorOption("Colors", name + ":Hyperlink", new ZLColor(60, 142, 224));
 		} else {
 			BackgroundOption =
 				new ZLColorOption("Colors", name + ":Background", new ZLColor(255, 255, 255));
 			SelectionBackgroundOption =
 				new ZLColorOption("Colors", name + ":SelectionBackground", new ZLColor(82, 131, 194));
-			HighlightedTextOption =
-				new ZLColorOption("Colors", name + ":SelectedText", new ZLColor(60, 139, 255));
+			HighlightingOption =
+				new ZLColorOption("Colors", name + ":Highlighting", new ZLColor(255, 192, 128));
 			RegularTextOption =
 				new ZLColorOption("Colors", name + ":Text", new ZLColor(0, 0, 0));
 			HyperlinkTextOption =

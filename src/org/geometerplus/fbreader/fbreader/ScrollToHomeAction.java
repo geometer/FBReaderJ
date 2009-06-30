@@ -25,7 +25,7 @@ class ScrollToHomeAction extends FBAction {
 	}
 
 	public boolean isVisible() {
-		return Reader.getMode() == FBReader.ViewMode.BOOK_TEXT;
+		return Reader.getCurrentView() == Reader.BookTextView;
 	}
 
 	public boolean isEnabled() {

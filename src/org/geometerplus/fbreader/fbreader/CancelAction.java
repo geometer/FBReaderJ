@@ -25,8 +25,8 @@ class CancelAction extends FBAction {
 	}
 
 	public void run() {
-		if (Reader.getMode() != FBReader.ViewMode.BOOK_TEXT) {
-			Reader.restorePreviousMode();
+		if (Reader.getCurrentView() != Reader.BookTextView) {
+			Reader.showBookTextView();
 		} else {
 			Reader.closeWindow();
 		}

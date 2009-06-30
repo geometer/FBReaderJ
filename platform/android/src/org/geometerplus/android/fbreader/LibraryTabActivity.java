@@ -43,11 +43,11 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	private final ZLResource myResource = ZLResource.resource("libraryView");
 	private Book myCurrentBook;
 
-	private ListView createTab(String tag, int id) {
+	private ListView createTab(String tag, int viewId, int iconId) {
 		final TabHost host = getTabHost();
 		final String label = myResource.getResource(tag).getValue();
-		host.addTab(host.newTabSpec(tag).setIndicator(label).setContent(id));
-		return (ListView)findViewById(id);
+		host.addTab(host.newTabSpec(tag).setIndicator(label, getResources().getDrawable(iconId)).setContent(viewId));
+		return (ListView)findViewById(viewId);
 	}
 
 	@Override
@@ -62,9 +62,9 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.library, host.getTabContentView(), true);
 
-		new LibraryAdapter(createTab("byAuthor", R.id.by_author), Library.Instance().byAuthor(), false);
-		new LibraryAdapter(createTab("byTag", R.id.by_tag), Library.Instance().byTag(), false);
-		new LibraryAdapter(createTab("recent", R.id.recent), Library.Instance().recentBooks(), true);
+		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), Library.Instance().byAuthor(), Type.TREE);
+		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), Library.Instance().byTag(), Type.TREE);
+		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), Library.Instance().recentBooks(), Type.FLAT);
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
@@ -74,7 +74,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	void showSearchResultsTab(LibraryTree tree) {
 		if (mySearchResultsAdapter == null) {
 			mySearchResultsAdapter =
-				new LibraryAdapter(createTab("searchResults", R.id.search_results), tree, true);
+				new LibraryAdapter(createTab("searchResults", R.id.search_results, R.drawable.ic_tab_library_results), tree, Type.FLAT);
 		} else {
 			mySearchResultsAdapter.resetTree(tree);
 		}
@@ -108,8 +108,8 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, 1, "localSearch", R.drawable.menu_icon_search);
-		addMenuItem(menu, 2, "networkSearch", R.drawable.menu_icon_networksearch).setEnabled(false);
+		addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
+		addMenuItem(menu, 2, "networkSearch", R.drawable.ic_menu_networksearch).setEnabled(false);
 		return true;
 	}
 
@@ -137,17 +137,22 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		return true;
 	}
 
+	interface Type {
+		int TREE = 0;
+		int FLAT = 1;
+		int NETWORK = 2;
+	}
+
 	private final class LibraryAdapter extends ZLTreeAdapter {
 		private final LibraryTree myLibraryTree;
-		private final boolean myIsFlat;
+			
+		private final int myType;
 
-		LibraryAdapter(ListView view, LibraryTree tree, boolean isFlat) {
+		LibraryAdapter(ListView view, LibraryTree tree, int type) {
 			super(view, tree);
 			myLibraryTree = tree;
-			myIsFlat = isFlat;
-			if (!isFlat) {
-				selectItem(findFirstSelectedItem());
-			}
+			myType = type;
+			selectItem(findFirstSelectedItem());
 		}
 
 		@Override
@@ -186,10 +191,26 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 				view.setBackgroundColor(0);
 			}
 			final ImageView iconView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
-			if (myIsFlat) {
-				iconView.setVisibility(View.GONE);
-			} else {
-				setIcon(iconView, tree);
+			switch (myType) {
+				case Type.FLAT:
+					iconView.setVisibility(View.GONE);
+					break;
+				case Type.TREE:
+					setIcon(iconView, tree);
+					break;
+				case Type.NETWORK:
+					switch (position % 3) {
+						case 0:
+							iconView.setImageResource(R.drawable.ic_list_buy);
+							break;
+						case 1:
+							iconView.setImageResource(R.drawable.ic_list_download);
+							break;
+						case 2:
+							iconView.setImageResource(R.drawable.ic_list_flag);
+							break;
+					}
+					break;
 			}
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());

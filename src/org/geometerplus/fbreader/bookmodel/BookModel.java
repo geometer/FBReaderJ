@@ -36,21 +36,25 @@ public final class BookModel {
 			return null;
 		}
 		BookModel model = new BookModel(book);
+		//android.os.Debug.startMethodTracing("bookReadingLT", 1 << 25);
+		//final boolean code = plugin.readModel(model);
+		//android.os.Debug.stopMethodTracing();
+		//if (code) {
 		if (plugin.readModel(model)) {
 			return model;
 		}
 		return null;
 	}
 
+	private final ZLImageMap myImageMap = new ZLImageMap(); 
+	
 	public final Book Book;
-	public final ZLTextModel BookTextModel = new ZLTextPlainModel(null, 1024, 65536, "/sdcard/Books/.FBReader", "cache");
+	public final ZLTextModel BookTextModel = new ZLTextWritablePlainModel(null, 1024, 65536, "/sdcard/Books/.FBReader", "cache", myImageMap);
 	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
-	private final HashMap myInternalHyperlinks = new HashMap();
+	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
 
-	private final ZLImageMap myImageMap = new ZLImageMap(); 
-	
 	public class Label {
 		public final ZLTextModel Model;
 		public final int ParagraphIndex;
@@ -68,7 +72,7 @@ public final class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextPlainModel(id, 8, 2048, "/sdcard/Books/.FBReader", "cache" + myFootnotes.size()); 
+			model = new ZLTextWritablePlainModel(id, 8, 2048, "/sdcard/Books/.FBReader", "cache" + myFootnotes.size(), myImageMap); 
 			myFootnotes.put(id, model); 
 		}
 		return model;
@@ -79,22 +83,9 @@ public final class BookModel {
 	}
 
 	public Label getLabel(String id) {
-		return (Label)myInternalHyperlinks.get(id);
+		return myInternalHyperlinks.get(id);
 	}
 	
-	//tmp	
-	public ZLTextParagraph getParagraphByLink(String link) {
-		Label label = (Label)myInternalHyperlinks.get(link);
-		if (label != null) {
-			return label.Model.getParagraph(label.ParagraphIndex);
-		}
-		return null;
-	}
-
-	public ZLImageMap getImageMap() {
-		return myImageMap;
-	}
-
 	void addImage(String id, ZLImage image) {
 		myImageMap.put(id, image);
 	}

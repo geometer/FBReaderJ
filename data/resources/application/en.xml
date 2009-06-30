@@ -39,6 +39,8 @@
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
 	  <node name="toc" value="TOC"/>
+	  <node name="day" value="Day"/>
+	  <node name="night" value="Night"/>
 		<node name="navigate" value="Navigate">
 	  	<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
@@ -178,13 +180,16 @@
 						<node name="selectionBackground" value="Selection Background"/>
 						<node name="text" value="Regular Text"/>
 						<node name="hyperlink" value="Hyperlink Text"/>
-						<node name="highlighted" value="Highlighted Text"/>
+						<node name="highlighting" value="Search Results Background"/>
 					</node>
 				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="File already exists. Redownload?"/>
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>

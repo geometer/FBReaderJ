@@ -28,8 +28,8 @@ public interface ZLTextWritableModel extends ZLTextModel {
 	void addText(char[] text);
 	void addText(char[] text, int offset, int length);
 
-	void addControl(ZLTextForcedControlEntry entry);
+	//void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addImage(String id, ZLImageMap imageMap, short vOffset);
+	void addImage(String id, short vOffset);
 	void addFixedHSpace(short length);
 }

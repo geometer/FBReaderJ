@@ -2,7 +2,7 @@ package org.amse.ys.zip;
 
 import java.io.*;
 
-public class DeflatingDecompressor extends Decompressor {
+public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
     private static final int ST_HEADER = 1;
     private static final int ST_NO_COMPRESSION = 2;
     private static final int ST_FIXED_CODES = 3;
@@ -54,6 +54,7 @@ public class DeflatingDecompressor extends Decompressor {
         myReadInBlock = 0;
     }
 
+	@Override
     public int available() {
         return myHeader.getUncompressedSize() - myCurrentPosition;
     }
@@ -98,6 +99,7 @@ public class DeflatingDecompressor extends Decompressor {
 
     private static final int MAX_LEN = CircularBuffer.DICTIONARY_LENGTH / 2;
 
+	@Override
     public int read(byte b[], int off, int len) throws IOException {
         int i = 0;
         int available = myOutputBuffer.available();
@@ -126,6 +128,7 @@ public class DeflatingDecompressor extends Decompressor {
         return (i > 0) ? i : -1;
     }
 
+	@Override
     public int read() throws IOException {
         myCurrentPosition++;
         

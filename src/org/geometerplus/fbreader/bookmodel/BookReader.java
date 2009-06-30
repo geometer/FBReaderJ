@@ -82,12 +82,14 @@ public class BookReader {
 		}
 	}
 	
+	/*
 	public final void addControl(ZLTextForcedControlEntry entry) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl(entry);
 		}
 	}
+	*/
 	
 	public final void pushKind(byte kind) {
 		byte[] stack = myKindStack;
@@ -369,11 +371,11 @@ public class BookReader {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {
 				flushTextBufferToParagraph();
-				textModel.addImage(ref, Model.getImageMap(), vOffset);
+				textModel.addImage(ref, vOffset);
 			} else {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				textModel.addControl(FBTextKind.IMAGE, true);
-				textModel.addImage(ref, Model.getImageMap(), vOffset);
+				textModel.addImage(ref, vOffset);
 				textModel.addControl(FBTextKind.IMAGE, false);
 				endParagraph();
 			}

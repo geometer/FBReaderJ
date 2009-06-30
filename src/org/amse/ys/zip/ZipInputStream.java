@@ -18,10 +18,12 @@ class ZipInputStream extends InputStream {
         myDecompressor = Decompressor.init(myBaseStream, header);
     }
 
+	@Override
     public int available() {
         return myDecompressor.available();
     }
 
+	@Override
     public int read(byte b[], int off, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
@@ -35,6 +37,7 @@ class ZipInputStream extends InputStream {
         return myDecompressor.read(b, off, len);
     }
 
+	@Override
     public int read() throws IOException {
         return myDecompressor.read();
     }

@@ -43,7 +43,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectedBackgroundColor();
 	public abstract ZLColor getTextColor(byte hyperlinkType);
-	public abstract ZLColor getHighlightedTextColor();
+	public abstract ZLColor getHighlightingColor();
 
 	int getTextAreaHeight() {
 		return Context.getHeight() - getTopMargin() - getBottomMargin();
@@ -230,10 +230,12 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 
 				if (markStart < length) {
-					context.setTextColor(getHighlightedTextColor());
+					context.setFillColor(getHighlightingColor());
 					int endPos = Math.min(markStart + markLen, length);
+					final int endX = x + context.getStringWidth(str, offset + markStart, endPos - markStart);
+					context.fillRectangle(x, y - context.getStringHeight(), endX - 1, y + context.getDescent());
 					context.drawString(x, y, str, offset + markStart, endPos - markStart);
-					x += context.getStringWidth(str, offset + markStart, endPos - markStart);
+					x = endX;
 					context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 				}
 				pos = markStart + markLen;

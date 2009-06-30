@@ -19,12 +19,12 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-public class ZLTextForcedControlEntry {
-	private final static int SUPPORTS_LEFT_INDENT = 1 << 0;
-	private final static int SUPPORTS_RIGHT_INDENT = 1 << 1;
-	private final static int SUPPORTS_ALIGNMENT_TYPE = 1 << 2;
+public final class ZLTextForcedControlEntry {
+	final static short SUPPORTS_LEFT_INDENT = 1 << 0;
+	final static short SUPPORTS_RIGHT_INDENT = 1 << 1;
+	final static short SUPPORTS_ALIGNMENT_TYPE = 1 << 2;
 	
-	private int myMask;
+	private short myMask;
 	private short myLeftIndent;
 	private short myRightIndent;
 	private byte myAlignmentType;
@@ -32,6 +32,10 @@ public class ZLTextForcedControlEntry {
 	public ZLTextForcedControlEntry() {
 	}
 
+	short getMask() {
+		return myMask;
+	};
+	
 	public boolean isLeftIndentSupported() {
 		return (myMask & SUPPORTS_LEFT_INDENT) == SUPPORTS_LEFT_INDENT;
 	}

@@ -4,6 +4,8 @@
 	<!-- property name="sdk-folder" value="/home/geometer/src/android_sdk_linux_m3-rc37a" / -->
 	<property name="sdk-folder" value="/Users/geometer/android-sdk-mac_x86-1.0_r1" />
 	<property name="android-tools" value="${sdk-folder}/tools" />
+	<property name="sdk-folder-1.5" value="/Users/geometer/android-sdk-mac_x86-1.5_r1" />
+	<property name="android-tools-1.5" value="${sdk-folder-1.5}/tools" />
 	<property name="project-dir" value="/Users/geometer/src/projects/FBReaderJ" />
 	<property name="platform-dir" value="${project-dir}/platform/android" />
 
@@ -38,7 +40,7 @@
 	<property name="aapt" value="${android-tools}/aapt" />
 	<property name="dx" value="${android-tools}/dx" />
 	<property name="adb" value="${android-tools}/adb" />
-	<property name="apk-builder" value="${android-tools}/apkbuilder" />
+	<property name="apk-builder" value="${android-tools-1.5}/apkbuilder" />
 	<property name="android-jar" value="${sdk-folder}/android.jar" />
 
 	<!-- Rules -->
@@ -110,14 +112,6 @@
 		</exec>
 	</target>
 
-	<!-- Put the project's .class files into the output package file. -->
-	<target name="package-java" depends="compile, package-res">
-		<echo>Packaging java...</echo>
-		<jar destfile="${out-package}" update="true">
-			<fileset dir = "${outdir-classes}"/>
-		</jar>
-	</target>
-
 	<!-- Put the project's .dex files into the output package file. -->
 	<target name="package-dex" depends="dex, package-res">
 		<echo>Packaging dex...</echo>
@@ -127,10 +121,8 @@
 			<arg value="${resources-package}" />
 			<arg value="-f" />
 			<arg value="${intermediate-dex}" />
-			<arg value="-rf" />
-			<arg value="${project-dir}/src" />
-			<arg value="-rf" />
-			<arg value="${platform-dir}/src" />
+			<arg value="-nf" />
+			<arg value="${project-dir}/libs" />
 		</exec>
 	</target>
 
