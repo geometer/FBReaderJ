@@ -63,7 +63,7 @@ jint Java_org_amse_ys_zip_NativeDeflatingDecompressor_inflate(JNIEnv *env, jobje
 	stream->avail_out = outLength;
 	const int code = inflate(stream, Z_SYNC_FLUSH);
 	env->ReleaseByteArrayElements(in, inStart, 0);
-	env->ReleaseByteArrayElements(out, outStart, 0);
+	env->ReleaseByteArrayElements(out, outStart, outLength - stream->avail_out);
 	if ((code == Z_OK) || (code == Z_STREAM_END)) {
 		return ((inLength - stream->avail_in) << 16) + outLength - stream->avail_out;
 	}

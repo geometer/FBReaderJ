@@ -35,20 +35,22 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		String fileName = xmlattributes.getValue(myNameAttribute);
 		if (fileName != null) {
-			final BookReader modelReader = reader.getModelReader();
-			boolean flag = modelReader.paragraphIsOpen();
-			if (flag) {
-				modelReader.endParagraph();
-			}
 			if (fileName.startsWith("./")) {
 				fileName = fileName.substring(2);
 			}
 			final ZLFile imageFile = ZLFile.createFileByPath(reader.getPathPrefix() + fileName);
-			final String imageName = imageFile.getName(false);
-			modelReader.addImageReference(imageName, (short)0);
-			modelReader.addImage(imageName, new ZLFileImage("image/auto", imageFile));
-			if (flag) {
-				modelReader.beginParagraph();
+			if (imageFile != null) {
+				final BookReader modelReader = reader.getModelReader();
+				boolean flag = modelReader.paragraphIsOpen();
+				if (flag) {
+					modelReader.endParagraph();
+				}
+				final String imageName = imageFile.getName(false);
+				modelReader.addImageReference(imageName, (short)0);
+				modelReader.addImage(imageName, new ZLFileImage("image/auto", imageFile));
+				if (flag) {
+					modelReader.beginParagraph();
+				}
 			}
 		}
 	}
