@@ -111,8 +111,16 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 					if (name != null) {
 						name.trim();
 						if (name.length() != 0) {
-							String index = attributes.getValue("number");
-							myBook.setSeriesInfo(name, (index != null) ? Integer.parseInt(index) : 0);
+							int index = 0;
+							try {
+								System.err.println("hello");
+								final String sIndex = attributes.getValue("number");
+								if (sIndex != null) {
+									index = Integer.parseInt(sIndex);
+								}
+							} catch (NumberFormatException e) {
+							}
+							myBook.setSeriesInfo(name, index);
 						}
 					}
 				}

@@ -58,7 +58,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		if (version >= 7) {
+		if (version >= 8) {
 			return;
 		}
 		ZLDialogManager.Instance().wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
@@ -87,7 +87,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				myDatabase.endTransaction();
 
 				myDatabase.execSQL("VACUUM");
-				myDatabase.setVersion(7);
+				myDatabase.setVersion(8);
 			}
 		});
 	}
@@ -981,5 +981,37 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables7() {
+		final ArrayList<Long> seriesIDs = new ArrayList<Long>();
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT series_id,name FROM Series", null
+		);
+		while (cursor.moveToNext()) {
+			if (cursor.getString(1).length() > 200) {
+				seriesIDs.add(cursor.getLong(0));
+			}
+		}
+		cursor.close();
+		if (seriesIDs.isEmpty()) {
+			return;
+		}
+
+		final ArrayList<Long> bookIDs = new ArrayList<Long>();
+		for (Long id : seriesIDs) {
+			cursor = myDatabase.rawQuery(
+				"SELECT book_id FROM BookSeries WHERE series_id=" + id, null
+			);
+			while (cursor.moveToNext()) {
+				bookIDs.add(cursor.getLong(0));
+			}
+			cursor.close();
+			myDatabase.execSQL("DELETE FROM BookSeries WHERE series_id=" + id);
+			myDatabase.execSQL("DELETE FROM Series WHERE series_id=" + id);
+		}
+
+		for (Long id : bookIDs) {
+			myDatabase.execSQL("DELETE FROM Books WHERE book_id=" + id);
+			myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + id);
+			myDatabase.execSQL("DELETE FROM BookTag WHERE book_id=" + id);
+		}
 	}
 }

@@ -51,8 +51,9 @@ final class ZLXMLParser {
 	private static final byte WAIT_ATTRIBUTE_VALUE = 18;
 	private static final byte SLASH = 19;
 	private static final byte ATTRIBUTE_NAME = 20;
-	private static final byte ATTRIBUTE_VALUE = 21;
-	private static final byte ENTITY_REF = 22;
+	private static final byte ATTRIBUTE_VALUE_QUOT = 21;
+	private static final byte ATTRIBUTE_VALUE_APOS = 22;
+	private static final byte ENTITY_REF = 23;
 
 	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString container) {
 		String s = strings.get(container);
@@ -452,7 +453,11 @@ mainSwitchLabel:
 							while (true) {
 								switch (buffer[++i]) {
 									case '"':
-										state = ATTRIBUTE_VALUE;
+										state = ATTRIBUTE_VALUE_QUOT;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+									case '\'':
+										state = ATTRIBUTE_VALUE_APOS;
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
@@ -479,7 +484,7 @@ mainSwitchLabel:
 									}
 									break mainSwitchLabel;
 								default:
-									state = ATTRIBUTE_VALUE;
+									state = ATTRIBUTE_NAME;
 									break mainSwitchLabel;
 							}
 							final String aName = convertToString(strings, attributeName);
@@ -496,7 +501,7 @@ mainSwitchLabel:
 								attributes.put(aName, convertToString(strings, attributeValue));
 							}
 							break;
-						case ATTRIBUTE_VALUE:
+						case ATTRIBUTE_VALUE_QUOT:
 							while (true) {
 								switch (buffer[++i]) {
 									case '"':
@@ -505,7 +510,22 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 									case '&':
 										attributeValue.append(buffer, startPosition, i - startPosition);
-										savedState = ATTRIBUTE_VALUE;
+										savedState = ATTRIBUTE_VALUE_QUOT;
+										state = ENTITY_REF;
+										startPosition = i + 1;
+										break mainSwitchLabel;
+								}
+							}
+						case ATTRIBUTE_VALUE_APOS:
+							while (true) {
+								switch (buffer[++i]) {
+									case '\'':
+										attributeValue.append(buffer, startPosition, i - startPosition);
+										state = WS_AFTER_ATTRIBUTE_VALUE;
+										break mainSwitchLabel;
+									case '&':
+										attributeValue.append(buffer, startPosition, i - startPosition);
+										savedState = ATTRIBUTE_VALUE_APOS;
 										state = ENTITY_REF;
 										startPosition = i + 1;
 										break mainSwitchLabel;
@@ -521,7 +541,8 @@ mainSwitchLabel:
 										final char[] value = getEntityValue(entityMap, convertToString(strings, entityName));
 										if ((value != null) && (value.length != 0)) {
 											switch (state) {
-												case ATTRIBUTE_VALUE:
+												case ATTRIBUTE_VALUE_QUOT:
+												case ATTRIBUTE_VALUE_APOS:
 													attributeValue.append(value, 0, value.length);
 													break;
 												case ATTRIBUTE_NAME:
@@ -639,7 +660,8 @@ mainSwitchLabel:
 						case ATTRIBUTE_NAME:
 							attributeName.append(buffer, startPosition, count - startPosition);
 							break;
-						case ATTRIBUTE_VALUE:
+						case ATTRIBUTE_VALUE_QUOT:
+						case ATTRIBUTE_VALUE_APOS:
 							attributeValue.append(buffer, startPosition, count - startPosition);
 							break;
 						case ENTITY_REF:
