@@ -160,6 +160,9 @@ public class BookReader {
 	}
 */	
 	public final void unsetCurrentTextModel() {
+		if (myCurrentTextModel != null) {
+			myCurrentTextModel.stopReading();
+		}
 		myCurrentTextModel = null;
 	}
 	
@@ -172,10 +175,16 @@ public class BookReader {
 	}
 	
 	public final void setMainTextModel() {
+		if ((myCurrentTextModel != null) && (myCurrentTextModel != Model.BookTextModel)) {
+			myCurrentTextModel.stopReading();
+		}
 		myCurrentTextModel = (ZLTextWritableModel)Model.BookTextModel;
 	}
 	
 	public final void setFootnoteTextModel(String id) {
+		if ((myCurrentTextModel != null) && (myCurrentTextModel != Model.BookTextModel)) {
+			myCurrentTextModel.stopReading();
+		}
 		myCurrentTextModel = (ZLTextWritableModel)Model.getFootnoteModel(id);
 	}
 	

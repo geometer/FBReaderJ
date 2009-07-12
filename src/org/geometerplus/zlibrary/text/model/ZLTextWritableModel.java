@@ -32,4 +32,6 @@ public interface ZLTextWritableModel extends ZLTextModel {
 	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
 	void addImage(String id, short vOffset);
 	void addFixedHSpace(short length);
+
+	void stopReading();
 }

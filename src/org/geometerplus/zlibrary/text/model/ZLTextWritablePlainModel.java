@@ -25,6 +25,9 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements ZLTextWritableModel {
+	private char[] myCurrentDataBlock;
+	private int myBlockOffset;
+
 	public ZLTextWritablePlainModel(String id, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
 		super(id, arraySize, dataBlockSize, directoryName, extension, imageMap);
 	}
@@ -140,4 +143,16 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
 		block[myBlockOffset++] = (char)length;
 	}	
+
+	public void stopReading() {
+		if (myCurrentDataBlock != null) {
+			myStorage.freezeLastBlock();
+			myCurrentDataBlock = null;
+		}
+		final int size = myParagraphsNumber;
+		myStartEntryIndices = ZLArrayUtils.createCopy(myStartEntryIndices, size, size);
+		myStartEntryOffsets = ZLArrayUtils.createCopy(myStartEntryOffsets, size, size);
+		myParagraphLengths = ZLArrayUtils.createCopy(myParagraphLengths, size, size);
+		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size);
+	}
 }

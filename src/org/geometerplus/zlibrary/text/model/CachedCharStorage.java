@@ -32,7 +32,7 @@ final class CachedCharStorageException extends RuntimeException {
 
 final class CachedCharStorage implements CharStorage {
 	private final int myBlockSize;
-	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>(1024);
+	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
 	private final String myDirectoryName;
 	private final String myFileExtension;
 

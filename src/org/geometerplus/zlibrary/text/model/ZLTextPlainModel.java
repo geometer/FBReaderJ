@@ -35,9 +35,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	protected int myParagraphsNumber;
 
 	protected final CharStorage myStorage;
-	protected final ArrayList<ZLTextMark> myMarks = new ArrayList<ZLTextMark>();
-	protected char[] myCurrentDataBlock;
-	protected int myBlockOffset;
+	private ArrayList<ZLTextMark> myMarks;
 
 	protected final ZLImageMap myImageMap;
 
@@ -207,15 +205,15 @@ public class ZLTextPlainModel implements ZLTextModel {
 	}
 
 	public final ZLTextMark getFirstMark() {
-		return myMarks.isEmpty() ? null : myMarks.get(0);
+		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
 	
 	public final ZLTextMark getLastMark() {
-		return myMarks.isEmpty() ? null : myMarks.get(myMarks.size() - 1);
+		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
 
 	public final ZLTextMark getNextMark(ZLTextMark position) {
-		if (position == null) {
+		if ((position == null) || (myMarks == null)) {
 			return null;
 		}
 
@@ -231,7 +229,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	}
 
 	public final ZLTextMark getPreviousMark(ZLTextMark position) {
-		if (position == null) {
+		if ((position == null) || (myMarks == null)) {
 			return null;
 		}
 
@@ -249,7 +247,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
 		int count = 0;
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
-		myMarks.clear();
+		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
                 	startIndex = myParagraphsNumber;				
 		}
@@ -277,12 +275,12 @@ public class ZLTextPlainModel implements ZLTextModel {
 		return count;
 	}
 
-	public final ArrayList<ZLTextMark> getMarks() {
-		return myMarks;
+	public final List<ZLTextMark> getMarks() {
+		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
 	}	
 
 	public final void removeAllMarks() {
-		myMarks.clear();
+		myMarks = null;
 	}
 
 	public final int getParagraphsNumber() {

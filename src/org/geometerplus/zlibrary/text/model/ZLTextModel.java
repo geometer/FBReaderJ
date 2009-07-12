@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ZLTextModel {
 	String getId();
@@ -33,7 +33,7 @@ public interface ZLTextModel {
 	ZLTextMark getNextMark(ZLTextMark position);
 	ZLTextMark getPreviousMark(ZLTextMark position);
 
-	ArrayList getMarks();
+	List<ZLTextMark> getMarks();
 
 	int getParagraphTextLength(int index);
 	

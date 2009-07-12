@@ -32,9 +32,9 @@ public final class ZLTextParagraphCursor {
 		private int myOffset;
 		private int myFirstMark;
 		private int myLastMark;
-		private final ArrayList myMarks;
+		private final List<ZLTextMark> myMarks;
 		
-		private Processor(ZLTextParagraph paragraph, ArrayList marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
+		private Processor(ZLTextParagraph paragraph, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
 			myParagraph = paragraph;
 			myElements = elements;
 			myMarks = marks;
