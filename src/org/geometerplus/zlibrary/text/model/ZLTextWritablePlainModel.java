@@ -145,6 +145,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 	}	
 
 	public void stopReading() {
+		/*
 		if (myCurrentDataBlock != null) {
 			myStorage.freezeLastBlock();
 			myCurrentDataBlock = null;
@@ -154,5 +155,6 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myStartEntryOffsets = ZLArrayUtils.createCopy(myStartEntryOffsets, size, size);
 		myParagraphLengths = ZLArrayUtils.createCopy(myParagraphLengths, size, size);
 		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size);
+		*/
 	}
 }

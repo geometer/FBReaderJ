@@ -72,7 +72,7 @@ public final class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, 8, 2048, "/sdcard/Books/.FBReader", "cache" + myFootnotes.size(), myImageMap); 
+			model = new ZLTextWritablePlainModel(id, 8, 512, "/sdcard/Books/.FBReader", "cache" + myFootnotes.size(), myImageMap); 
 			myFootnotes.put(id, model); 
 		}
 		return model;
