@@ -76,6 +76,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 
 		for (String name : myHtmlFileNames) {
 			new XHTMLReader(myModelReader).readFile(ZLFile.createFileByPath(myFilePrefix + name), name);
+			myModelReader.insertEndOfSectionParagraph();
 		}
 
 		generateTOC();
