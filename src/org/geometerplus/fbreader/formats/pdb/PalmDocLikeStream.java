@@ -57,7 +57,7 @@ abstract class PalmDocLikeStream extends PdbStream {
 				if (nextOffset < currentOffset) {
 					return false;
 				}
-				final short recordSize = (short)(nextOffset - currentOffset);
+				final short recordSize = (short)Math.min(nextOffset - currentOffset, myBuffer.length);
 
 				switch (myCompressionType) {
 					case CompressionType.NONE:

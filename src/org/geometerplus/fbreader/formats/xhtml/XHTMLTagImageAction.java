@@ -38,7 +38,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 			if (fileName.startsWith("./")) {
 				fileName = fileName.substring(2);
 			}
-			final ZLFile imageFile = ZLFile.createFileByPath(reader.getPathPrefix() + fileName);
+			final ZLFile imageFile = ZLFile.createFileByPath(reader.myPathPrefix + fileName);
 			if (imageFile != null) {
 				final BookReader modelReader = reader.getModelReader();
 				boolean flag = modelReader.paragraphIsOpen();

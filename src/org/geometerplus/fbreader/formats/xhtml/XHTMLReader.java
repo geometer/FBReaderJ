@@ -117,7 +117,8 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	}
 
 	private final BookReader myModelReader;
-	private String myPathPrefix;
+	String myPathPrefix;
+	String myLocalPathPrefix;
 	String myReferenceName;
 	boolean myPreformatted;
 	boolean myInsideBody;
@@ -126,12 +127,8 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		myModelReader = modelReader;
 	}
 
-	BookReader getModelReader() {
+	final BookReader getModelReader() {
 		return myModelReader;
-	}
-
-	String getPathPrefix() {
-		return myPathPrefix;
 	}
 
 	public boolean readFile(ZLFile file, String referenceName) {
@@ -140,6 +137,8 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		fillTagTable();
 
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
+		final int index = myPathPrefix.lastIndexOf(':');
+		myLocalPathPrefix = (index >= 2) ? myPathPrefix.substring(index + 1) : myPathPrefix;
 		myReferenceName = referenceName;
 
 		myPreformatted = false;

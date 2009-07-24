@@ -49,13 +49,13 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 					FBTextKind.EXTERNAL_HYPERLINK :
 					FBTextKind.INTERNAL_HYPERLINK;
 			myHyperlinkStack[myHyperlinkStackSize++] = hyperlinkType;
-			modelReader.addHyperlinkControl(hyperlinkType, link);
+			modelReader.addHyperlinkControl(hyperlinkType, reader.myLocalPathPrefix + link);
 		} else {
 			myHyperlinkStack[myHyperlinkStackSize++] = FBTextKind.REGULAR;
 		}
 		final String name = xmlattributes.getValue("name");
 		if (name != null) {
-			modelReader.addHyperlinkLabel(reader.myReferenceName + "#" + name);
+			modelReader.addHyperlinkLabel(reader.myReferenceName + '#' + name);
 		}
 	}
 
