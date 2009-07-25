@@ -341,6 +341,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	public static final int SCROLLBAR_HIDE = 0;
+	public static final int SCROLLBAR_SHOW = 1;
+	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
+	public abstract int scrollbarType();
+
+	public final boolean showScrollbar() {
+		return scrollbarType() != SCROLLBAR_HIDE;
+	}
+
 	public final int getScrollbarFullSize() {
 		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
 			return 1;
@@ -350,6 +359,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public final int getScrollbarThumbPosition(int viewPage) {
 		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+			return 0;
+		}
+		if (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) {
 			return 0;
 		}
 		ZLTextPage page = getPage(viewPage);
@@ -363,7 +375,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		ZLTextPage page = getPage(viewPage);
 		preparePaintInfo(page);
-		int start = sizeOfTextBeforeCursor(page.StartCursor);
+		int start = (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) ? 0 : sizeOfTextBeforeCursor(page.StartCursor);
 		if (start == -1) {
 			start = 0;
 		}

@@ -57,6 +57,7 @@ abstract public class ZLView {
 		return false;
 	}
 
+	public abstract boolean showScrollbar();
 	public abstract int getScrollbarFullSize();
 	public abstract int getScrollbarThumbPosition(int viewPage);
 	public abstract int getScrollbarThumbLength(int viewPage);

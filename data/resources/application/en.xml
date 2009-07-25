@@ -85,10 +85,10 @@
 					<node name="summaryOn" value="Screen will not be turned off while you read a book"/>
 					<node name="summaryOff" value="Screen will be automatically turned off in case of inactivity"/>
 				</node>
-				<node name="colorProfile" value="Select color scheme">
-					<node name="defaultLight" value="Black on white"/>
-					<node name="defaultDark" value="White on black"/>
-					<node name="addCustomProfile" value="Save current scheme as..."/>
+				<node name="scrollbarType" value="Show scrollbar at right">
+					<node name="hide" value="Hide"/>
+					<node name="show" value="Show as a usual scrollbar"/>
+					<node name="showAsProgress" value="Show as a progress bar"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">

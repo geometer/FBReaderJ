@@ -276,4 +276,9 @@ public final class FBView extends ZLTextView {
 		preparePaintInfo();
 		ZLApplication.Instance().repaintView();
 	}
+
+	@Override
+	public int scrollbarType() {
+		return myReader.ScrollbarTypeOption.getValue();
+	}
 }

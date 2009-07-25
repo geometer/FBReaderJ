@@ -274,7 +274,7 @@ public class ZLAndroidWidget extends View {
 		context.beginPaint(canvas);
 		final int rotation = myViewWidget.getRotation();
 		context.setRotation(rotation);
-		final int scrollbarWidth = getVerticalScrollbarWidth();
+		final int scrollbarWidth = view.showScrollbar() ? getVerticalScrollbarWidth() : 0;
 		switch (rotation) {
 			case ZLViewWidget.Angle.DEGREES0:
 				context.setSize(w, h, scrollbarWidth);
@@ -391,33 +391,11 @@ public class ZLAndroidWidget extends View {
 		}
 	}
 
-	/*
-	private int myScrollBarRange;
-	private int myScrollBarOffset;
-	private int myScrollBarThumbSize;
-
-	void setVerticalScrollbarParameters(int full, int from, int to) {
-		if (full < 0) {
-			full = 0;
-		}
-		if (from < 0) {
-			from = 0;
-		} else if (from >= full) {
-			from = full - 1;
-		}
-		if (to <= from) {
-			to = from + 1;
-		} else if (to > full) {
-			to = full;
-		}
-		myScrollBarRange = full;
-		myScrollBarOffset = from;
-		myScrollBarThumbSize = to - from;
-	}
-	*/
-
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (!view.showScrollbar()) {
+			return 0;
+		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			final int from = view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbLength(myViewPageToScroll);
@@ -434,6 +412,9 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (!view.showScrollbar()) {
+			return 0;
+		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			final int from = view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbPosition(myViewPageToScroll);
@@ -450,6 +431,9 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (!view.showScrollbar()) {
+			return 0;
+		}
 		return view.getScrollbarFullSize();
 	}
 }

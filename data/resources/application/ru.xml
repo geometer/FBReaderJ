@@ -83,10 +83,10 @@
 					<node name="summaryOn" value="Экран не выключится автоматически во время чтения"/>
 					<node name="summaryOff" value="Экран выключится автоматически, если не листать страницы"/>
 				</node>
-				<node name="colorProfile" value="Выбрать цветовую схему">
-					<node name="defaultLight" value="Черное на белом"/>
-					<node name="defaultDark" value="Белое на черном"/>
-					<node name="addCustomProfile" value="Сохранить текущую схему..."/>
+				<node name="scrollbarType" value="Показывать полосу прокрутки справа">
+					<node name="hide" value="Не показывать"/>
+					<node name="show" value="Показывать как обычную полосу прокрутки"/>
+					<node name="showAsProgress" value="Заполненнять верхнюю часть полосы"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">

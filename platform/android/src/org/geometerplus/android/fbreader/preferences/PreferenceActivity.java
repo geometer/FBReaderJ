@@ -27,9 +27,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-import org.geometerplus.fbreader.fbreader.ScrollingPreferences;
-import org.geometerplus.fbreader.fbreader.ColorProfile;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.*;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
@@ -72,7 +70,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
+		lookNFeelCategory.addPreference(new ScrollbarTypePreference(this, lookNFeelCategory.Resource, "scrollbarType"));
 
+		/*
 		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
 		final Category colorProfileCategory = colorProfileScreen.createCategory(null);
@@ -83,6 +83,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, fbreader, colorProfileScreen, key, ColorProfilePreference.createTitle(resource, key)
 			));
 		}
+		*/
 
 		final Category scrollingCategory = createCategory("Scrolling");
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
@@ -90,5 +91,37 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingCategory.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
+	}
+}
+
+class ScrollbarTypePreference extends ZLStringListPreference {
+	private static final String[] myCodes = { "hide", "show", "showAsProgress" };
+
+	private FBReader myReader;
+
+	ScrollbarTypePreference(Context context, ZLResource rootResource, String resourceKey) {
+		super(context, rootResource, resourceKey);
+		myReader = (FBReader)FBReader.Instance();
+		final String[] names = new String[myCodes.length];
+		final ZLResource r = rootResource.getResource(resourceKey);
+		for (int i = 0; i < myCodes.length; ++i) {
+			names[i] = r.getResource(myCodes[i]).getValue();
+		}
+		setLists(myCodes, names);
+		setInitialValue(myCodes[
+			Math.max(0, Math.min(myCodes.length - 1, myReader.ScrollbarTypeOption.getValue()))
+		]);
+	}
+
+	public void onAccept() {
+		final String value = getValue();
+		int intValue = 0;
+		for (int i = 0; i < myCodes.length; ++i) {
+			if (value == myCodes[i]) {
+				intValue = i;
+				break;
+			}
+		}
+		myReader.ScrollbarTypeOption.setValue(intValue);
 	}
 }

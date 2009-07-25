@@ -30,9 +30,6 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -59,6 +56,9 @@ public final class FBReader extends ZLApplication {
 		new ZLIntegerRangeOption("Options", "TopMargin", 0, 1000, 0);
 	public final ZLIntegerRangeOption BottomMarginOption =
 		new ZLIntegerRangeOption("Options", "BottomMargin", 0, 1000, 4);
+
+	public final ZLIntegerRangeOption ScrollbarTypeOption =
+		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 2, FBView.SCROLLBAR_SHOW);
 
 	final ZLBooleanOption SelectionEnabledOption =
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
