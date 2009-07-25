@@ -95,29 +95,29 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 }
 
 class ScrollbarTypePreference extends ZLStringListPreference {
-	private static final String[] myCodes = { "hide", "show", "showAsProgress" };
+	private static final String[] ourCodes = { "hide", "show", "showAsProgress" };
 
 	private FBReader myReader;
 
 	ScrollbarTypePreference(Context context, ZLResource rootResource, String resourceKey) {
 		super(context, rootResource, resourceKey);
 		myReader = (FBReader)FBReader.Instance();
-		final String[] names = new String[myCodes.length];
+		final String[] names = new String[ourCodes.length];
 		final ZLResource r = rootResource.getResource(resourceKey);
-		for (int i = 0; i < myCodes.length; ++i) {
-			names[i] = r.getResource(myCodes[i]).getValue();
+		for (int i = 0; i < ourCodes.length; ++i) {
+			names[i] = r.getResource(ourCodes[i]).getValue();
 		}
-		setLists(myCodes, names);
-		setInitialValue(myCodes[
-			Math.max(0, Math.min(myCodes.length - 1, myReader.ScrollbarTypeOption.getValue()))
+		setLists(ourCodes, names);
+		setInitialValue(ourCodes[
+			Math.max(0, Math.min(ourCodes.length - 1, myReader.ScrollbarTypeOption.getValue()))
 		]);
 	}
 
 	public void onAccept() {
 		final String value = getValue();
 		int intValue = 0;
-		for (int i = 0; i < myCodes.length; ++i) {
-			if (value == myCodes[i]) {
+		for (int i = 0; i < ourCodes.length; ++i) {
+			if (value == ourCodes[i]) {
 				intValue = i;
 				break;
 			}

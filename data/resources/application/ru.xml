@@ -83,7 +83,7 @@
 					<node name="summaryOn" value="Экран не выключится автоматически во время чтения"/>
 					<node name="summaryOff" value="Экран выключится автоматически, если не листать страницы"/>
 				</node>
-				<node name="scrollbarType" value="Показывать полосу прокрутки справа">
+				<node name="scrollbarType" value="Полоса прокрутки справа от текста">
 					<node name="hide" value="Не показывать"/>
 					<node name="show" value="Показывать как обычную полосу прокрутки"/>
 					<node name="showAsProgress" value="Заполненнять верхнюю часть полосы"/>
