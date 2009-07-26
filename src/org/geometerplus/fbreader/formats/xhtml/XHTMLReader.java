@@ -131,36 +131,21 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return myModelReader;
 	}
 
-	public boolean readFile(ZLFile file, String referenceName) {
-		myModelReader.addHyperlinkLabel(referenceName);
-
+	public boolean readFile(ZLFile file) {
 		fillTagTable();
 
+		myReferenceName = MiscUtil.archiveEntryName(file.getPath());
+
+		myModelReader.addHyperlinkLabel(myReferenceName);
+
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
-		final int index = myPathPrefix.lastIndexOf(':');
-		myLocalPathPrefix = (index >= 2) ? myPathPrefix.substring(index + 1) : myPathPrefix;
-		myReferenceName = referenceName;
+		myLocalPathPrefix = MiscUtil.archiveEntryName(myPathPrefix);
 
 		myPreformatted = false;
 		myInsideBody = false;
 
 		return read(file);
 	}
-
-	/*
-	public boolean readFile(String pathPrefix, InputStream stream, String referenceName) {
-		myModelReader.addHyperlinkLabel(referenceName);
-
-		fillTagTable();
-
-		myPathPrefix = pathPrefix;
-		myReferenceName = referenceName;
-
-		myPreformatted = false;
-
-		return read(stream);
-	}
-	*/
 
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		String id = attributes.getValue("id");

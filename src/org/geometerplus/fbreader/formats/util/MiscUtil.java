@@ -32,4 +32,9 @@ public class MiscUtil {
 		}
 		return path.substring(0, path.length() - shortName.length() + index + 1);
 	}
+
+	public static String archiveEntryName(String fullPath) {
+		final int index = fullPath.lastIndexOf(':');
+		return (index >= 2) ? fullPath.substring(index + 1) : fullPath;
+	}
 }

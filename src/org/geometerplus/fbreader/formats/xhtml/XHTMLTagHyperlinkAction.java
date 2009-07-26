@@ -43,13 +43,16 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 			myHyperlinkStack = ZLArrayUtils.createCopy(myHyperlinkStack, myHyperlinkStackSize, 2 * myHyperlinkStackSize);
 		}
 		if ((href != null) && (href.length() > 0)) {
-			final String link = (href.charAt(0) == '#') ? (reader.myReferenceName + href) : href;
-			final byte hyperlinkType =
-				isReference(link) ?
-					FBTextKind.EXTERNAL_HYPERLINK :
-					FBTextKind.INTERNAL_HYPERLINK;
+			String link = (href.charAt(0) == '#') ? (reader.myReferenceName + href) : href;
+			final byte hyperlinkType;
+			if (isReference(link)) {
+				hyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
+			} else {
+				hyperlinkType = FBTextKind.INTERNAL_HYPERLINK;
+				link = reader.myLocalPathPrefix + link;
+			}
 			myHyperlinkStack[myHyperlinkStackSize++] = hyperlinkType;
-			modelReader.addHyperlinkControl(hyperlinkType, reader.myLocalPathPrefix + link);
+			modelReader.addHyperlinkControl(hyperlinkType, link);
 		} else {
 			myHyperlinkStack[myHyperlinkStackSize++] = FBTextKind.REGULAR;
 		}
