@@ -35,6 +35,7 @@ public class BookReader {
 	private ZLTextWritableModel myCurrentTextModel = null;
 	
 	private boolean myTextParagraphExists = false;
+	private boolean myTextParagraphIsNonEmpty = false;
 	
 	private char[] myTextBuffer = new char[4096];
 	private int myTextBufferLength;
@@ -132,12 +133,8 @@ public class BookReader {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myTextParagraphExists = false;
+			myTextParagraphIsNonEmpty = false;
 		}
-	}
-	
-	// new method
-	public boolean isTextParagraphExists() {
-		return myTextParagraphExists;
 	}
 	
 	private final void insertEndParagraph(byte kind) {
@@ -193,9 +190,11 @@ public class BookReader {
 	}
 
 	public final void addData(char[] data, int offset, int length, boolean direct) {
-		if (!myTextParagraphExists) {
+		if (!myTextParagraphExists || (length == 0)) {
 			return;
 		}
+		myTextParagraphIsNonEmpty = true;
+
 		if (direct && (myTextBufferLength == 0) && !myInsideTitle) {
 			myCurrentTextModel.addText(data, offset, length);
 		} else {
@@ -222,6 +221,7 @@ public class BookReader {
 		if (!myTextParagraphExists || (length == 0)) {
 			return;
 		}
+		myTextParagraphIsNonEmpty = true;
 
 		final int oldLength = myTextBufferLength;
 		if (myTextBuffer.length < oldLength + length) {
@@ -360,6 +360,10 @@ public class BookReader {
 	
 	public final boolean paragraphIsOpen() {
 		return myTextParagraphExists;
+	}
+	
+	public boolean paragraphIsNonEmpty() {
+		return myTextParagraphIsNonEmpty;
 	}
 
 	public final boolean contentsParagraphIsOpen() {
