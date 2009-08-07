@@ -48,6 +48,7 @@ public class ZLFileImage extends ZLSingleImage {
 
 			byte[] buffer = new byte[myLength];
 			stream.read(buffer);
+			stream.close();
 			return buffer;
 		} catch (IOException e) {
 		}

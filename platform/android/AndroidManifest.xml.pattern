@@ -47,19 +47,18 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="http" />
-				<data android:host="*" />
-				<data android:pathPattern=".*\\.epub" />
-				<data android:pathPattern=".*\\.oeb" />
-				<data android:pathPattern=".*\\.fb2" />
-				<data android:pathPattern=".*\\.mobi" />
-				<data android:pathPattern=".*\\.prc" />
+				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.epub" />
+				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.oeb" />
+				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.fb2" />
+				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.fb2\\.zip" />
+				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.mobi" />
+				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.prc" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:mimeType="*/*" android:scheme="http" android:pathPattern=".*\\.fb2\\.zip" />
+				<data android:host="*rus.ec" android:mimeType="application/zip" android:scheme="http" />
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.DialogActivity" android:label="" android:configChanges="orientation|keyboardHidden"/>
