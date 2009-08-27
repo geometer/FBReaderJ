@@ -66,7 +66,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 
 	@Override
 	public int getParagraphIndex() {
-		return myParagraphCursor.Index;
+		return (myParagraphCursor != null) ? myParagraphCursor.Index : 0;
 	}
 
 	@Override

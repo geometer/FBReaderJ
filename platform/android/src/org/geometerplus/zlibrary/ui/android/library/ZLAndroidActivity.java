@@ -40,6 +40,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);

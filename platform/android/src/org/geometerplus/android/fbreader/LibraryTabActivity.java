@@ -54,6 +54,8 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
 		final BookModel model = ((FBReader)FBReader.Instance()).Model;
 		myCurrentBook = (model != null) ? model.Book : null;
 
