@@ -45,13 +45,19 @@ public class BookDownloader extends Activity {
 	private int myDownloadedPart = 0;
 	private String myFileName = "";
 
+	private static String getFileName(List<String> path) {
+		final String fileName = path.get(path.size() - 1).toLowerCase();
+		final int index = fileName.indexOf('?');
+		return (index >= 0) ? fileName.substring(0, index) : fileName;
+	}
+
 	public static boolean acceptsUri(Uri uri) {
 		final List<String> path = uri.getPathSegments();
 		if ((path == null) || path.isEmpty()) {
 			return false;
 		}
 
-		final String fileName = path.get(path.size() - 1).toLowerCase();
+		final String fileName = getFileName(path);
 		return
 			fileName.endsWith(".fb2.zip") ||
 			fileName.endsWith(".fb2") ||
@@ -101,7 +107,7 @@ public class BookDownloader extends Activity {
 				return;
 			}
 
-			myFileName = path.get(path.size() - 1);
+			myFileName = getFileName(path);
 			final File fileFile = new File(dirFile, myFileName);
 			if (fileFile.exists()) {
 				if (!fileFile.isFile()) {
