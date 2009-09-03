@@ -50,24 +50,33 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		return (ListView)findViewById(viewId);
 	}
 
+	private void setCurrentBook() {
+		final BookModel model = ((FBReader)FBReader.Instance()).Model;
+		myCurrentBook = (model != null) ? model.Book : null;
+	}
+
+	private void createDefaultTabs() {
+		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), Library.Instance().byAuthor(), Type.TREE);
+		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), Library.Instance().byTag(), Type.TREE);
+		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), Library.Instance().recentBooks(), Type.FLAT);
+		findViewById(R.id.search_results).setVisibility(View.GONE);
+	}
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		final BookModel model = ((FBReader)FBReader.Instance()).Model;
-		myCurrentBook = (model != null) ? model.Book : null;
+		setCurrentBook();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.library, host.getTabContentView(), true);
 
-		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), Library.Instance().byAuthor(), Type.TREE);
-		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), Library.Instance().byTag(), Type.TREE);
-		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), Library.Instance().recentBooks(), Type.FLAT);
-		findViewById(R.id.search_results).setVisibility(View.GONE);
+		createDefaultTabs();
 
 		host.setCurrentTabByTag(mySelectedTabOption.getValue());
 	}
