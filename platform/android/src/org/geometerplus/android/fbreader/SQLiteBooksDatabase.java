@@ -492,7 +492,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (id == -1) {
 			if (myInsertFileInfoStatement == null) {
 				myInsertFileInfoStatement = myDatabase.compileStatement(
-					"INSERT INTO Files (name,parent_id,size) VALUES (?,?,?)"
+					"INSERT OR REPLACE INTO Files (name,parent_id,size) VALUES (?,?,?)"
 				);
 			}
 			statement = myInsertFileInfoStatement;
