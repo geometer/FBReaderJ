@@ -40,7 +40,13 @@ public class BugReportActivity extends Activity {
 		reportTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
 		reportTextView.setClickable(false);
 		reportTextView.setLongClickable(false);
-		reportTextView.append("FBReader has been crached, sorry. You can help to fix this bug by sending the report below to FBReader developers. The report will be sent by e-mail. Thank you in advance!\n\n");
+		String v = null;
+		try {
+			v = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		} catch (Exception e) {
+		}
+		final String versionName = (v != null) ? v : "?.?.?";
+		reportTextView.append("FBReader " + versionName + " has been crached, sorry. You can help to fix this bug by sending the report below to FBReader developers. The report will be sent by e-mail. Thank you in advance!\n\n");
 		reportTextView.append(stackTrace);
 
 		findViewById(R.id.send_report).setOnClickListener(
@@ -49,7 +55,7 @@ public class BugReportActivity extends Activity {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
 					sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@fbreader.org" });
 					sendIntent.putExtra(Intent.EXTRA_TEXT, stackTrace);
-					sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + android.R.styleable.AndroidManifest_versionName + " exception report");
+					sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + versionName + " exception report");
 					sendIntent.setType("message/rfc822");
 					startActivity(sendIntent);
 					finish();
