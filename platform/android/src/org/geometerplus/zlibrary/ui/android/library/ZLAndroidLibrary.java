@@ -80,9 +80,13 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myActivity.startActivity(intent);
 	}
 
-	//public String getVersionName() {
-	//	return myApplication.getResources().getString(android.R.attr.versionName);
-	//}
+	public String getVersionName() {
+		try {
+			return myActivity.getPackageManager().getPackageInfo(myActivity.getPackageName(), 0).versionName;
+		} catch (Exception e) {
+			return "";
+		}
+	}
 
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidResourceFile(path);

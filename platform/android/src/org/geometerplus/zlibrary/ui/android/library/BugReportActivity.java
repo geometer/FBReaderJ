@@ -40,12 +40,8 @@ public class BugReportActivity extends Activity {
 		reportTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
 		reportTextView.setClickable(false);
 		reportTextView.setLongClickable(false);
-		String v = null;
-		try {
-			v = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-		} catch (Exception e) {
-		}
-		final String versionName = (v != null) ? v : "?.?.?";
+
+		final String versionName = ZLibrary.Instance().getVersionName();
 		reportTextView.append("FBReader " + versionName + " has been crached, sorry. You can help to fix this bug by sending the report below to FBReader developers. The report will be sent by e-mail. Thank you in advance!\n\n");
 		reportTextView.append(stackTrace);
 

@@ -62,7 +62,10 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void namespaceListChangedHandler(HashMap namespaces) {
+	public void namespaceListChangedHandler(HashMap<String,String> namespaces) {
+	}
+
+	public void addExternalEntities(HashMap<String,char[]> entityMap) {
 	}
 
 	public List<String> externalDTDs() {

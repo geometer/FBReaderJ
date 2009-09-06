@@ -17,7 +17,6 @@ updateVersion() {
 	minor=`echo $version | cut -d . -f 2`
 	micro=`echo $version | cut -d . -f 3`
 	let intversion=10000*$major+100*$minor+$micro
-	echo "<!ENTITY FBReaderVersion   \"$version\">" > data/formats/fb2/FBReaderVersion.ent
 	sed "s/@INTVERSION@/$intversion/" platform/android/AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > platform/android/AndroidManifest.xml
 }
 

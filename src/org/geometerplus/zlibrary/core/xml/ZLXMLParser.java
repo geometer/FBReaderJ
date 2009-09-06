@@ -178,7 +178,6 @@ final class ZLXMLParser {
 			entityMap.put("gt", new char[] { '>' });
 			entityMap.put("lt", new char[] { '<' });
 			entityMap.put("quot", new char[] { '\"' });
-			//entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
 			for (String fileName : dtdList) {
 				final InputStream stream = ZLResourceFile.createResourceFile(fileName).getInputStream();
 				if (stream != null) {
@@ -195,6 +194,7 @@ final class ZLXMLParser {
 	void doIt() throws IOException {
 		final ZLXMLReader xmlReader = myXMLReader;
 		final HashMap<String,char[]> entityMap = getDTDMap(xmlReader.externalDTDs());
+		xmlReader.addExternalEntities(entityMap);
 		final InputStreamReader streamReader = myStreamReader;
 		final boolean processNamespaces = myProcessNamespaces;
 		HashMap<String,String> oldNamespaceMap = processNamespaces ? new HashMap<String,String>() : null;

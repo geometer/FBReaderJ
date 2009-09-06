@@ -285,7 +285,7 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 					insertEndOfSectionParagraph();
 					++mySectionDepth;
 					beginContentsParagraph();
-					mySectionStarted  = true;
+					mySectionStarted = true;
 				}
 				break;
 			
@@ -386,20 +386,19 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		return true;
 	}
 
-	public void namespaceListChangedHandler(HashMap namespaces) {
-		myHrefAttribute = (String)namespaces.get("http://www.w3.org/1999/xlink");
+	public void namespaceListChangedHandler(HashMap<String,String> namespaces) {
+		myHrefAttribute = namespaces.get("http://www.w3.org/1999/xlink");
 		if (myHrefAttribute != null) {
 			myHrefAttribute += ":href";
 			myHrefAttribute = myHrefAttribute.intern();
 		}
 	}
 
-	private static ArrayList<String> ourExternalDTDs = new ArrayList<String>();
+	public void addExternalEntities(HashMap<String,char[]> entityMap) {
+		entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
+	}
 
 	public List<String> externalDTDs() {
-		if (ourExternalDTDs.isEmpty()) {
-			ourExternalDTDs.add("data/formats/fb2/FBReaderVersion.ent");
-		}
-		return ourExternalDTDs;
+		return Collections.emptyList();
 	}
 }
