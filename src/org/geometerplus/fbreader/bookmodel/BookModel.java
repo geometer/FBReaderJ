@@ -30,6 +30,8 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 
 public final class BookModel {
+	private static String CacheDirectory = "/sdcard/Books/.FBReader";
+
 	public static BookModel createModel(Book book) {
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
 		if (plugin == null) {
@@ -49,18 +51,17 @@ public final class BookModel {
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	public final Book Book;
-	public final ZLTextModel BookTextModel = new ZLTextWritablePlainModel(null, 1024, 65536, "/sdcard/Books/.FBReader", "cache", myImageMap);
+	public final ZLTextModel BookTextModel = new ZLTextWritablePlainModel(null, 1024, 65536, CacheDirectory, "cache", myImageMap);
 	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
-	private final HashMap<String,Label> myInternalHyperlinks = new HashMap<String,Label>();
 
-	public class Label {
-		public final ZLTextModel Model;
+	public static final class Label {
+		public final String ModelId;
 		public final int ParagraphIndex;
 		
-		Label(ZLTextModel model, int paragraphIndex) {
-			Model = model;
+		public Label(String modelId, int paragraphIndex) {
+			ModelId = modelId;
 			ParagraphIndex = paragraphIndex;
 		}
 	}
@@ -72,18 +73,68 @@ public final class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, 8, 512, "/sdcard/Books/.FBReader", "cache" + myFootnotes.size(), myImageMap); 
+			model = new ZLTextWritablePlainModel(id, 8, 512, CacheDirectory, "cache" + myFootnotes.size(), myImageMap); 
 			myFootnotes.put(id, model); 
 		}
 		return model;
 	}
 	
+	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, CacheDirectory, "links");
+	private char[] myCurrentLinkBlock;
+	private int myCurrentLinkBlockOffset;
+
 	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
-		myInternalHyperlinks.put(label, new Label(model, paragraphNumber));
+		final String modelId = model.getId();
+		final int labelLength = label.length();
+		final int idLength = (modelId != null) ? modelId.length() : 0;
+		final int len = 4 + labelLength + idLength;
+		char[] block = myCurrentLinkBlock;
+		int offset = myCurrentLinkBlockOffset;
+		if ((block == null) || (offset + len > block.length)) {
+			if (block != null) {
+				myInternalHyperlinks.freezeLastBlock();
+			}
+			block = myInternalHyperlinks.createNewBlock(len);
+			myCurrentLinkBlock = block;
+			offset = 0;
+		}
+		block[offset++] = (char)labelLength;
+		label.getChars(0, labelLength, block, offset);
+		offset += labelLength;
+		block[offset++] = (char)idLength;
+		if (idLength > 0) {
+			modelId.getChars(0, idLength, block, offset);
+			offset += idLength;
+		}
+		block[offset++] = (char)(paragraphNumber >> 16);
+		block[offset++] = (char)paragraphNumber;
+		myCurrentLinkBlockOffset = offset;
 	}
 
 	public Label getLabel(String id) {
-		return myInternalHyperlinks.get(id);
+		System.err.println("searching label for " + id);
+		final int len = id.length();
+		final int size = myInternalHyperlinks.size();
+		for (int i = 0; i < size; ++i) {
+			final char[] block = myInternalHyperlinks.block(i);
+			for (int offset = 0; offset < block.length; ) {
+				final int labelLength = (int)block[offset++];
+				if (labelLength == 0) {
+					break;
+				}
+				final int idLength = (int)block[offset + labelLength];
+				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
+					offset += labelLength + idLength + 3;
+					continue;
+				}
+				offset += labelLength + 1;
+				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
+				offset += idLength;
+				final int paragraphNumber = (((int)block[offset++]) << 16) + (int)block[offset];
+				return new Label(modelId, paragraphNumber);
+			}
+		}
+		return null;
 	}
 	
 	void addImage(String id, ZLImage image) {

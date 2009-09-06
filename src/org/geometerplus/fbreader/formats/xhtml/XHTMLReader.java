@@ -119,24 +119,33 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	private final BookReader myModelReader;
 	String myPathPrefix;
 	String myLocalPathPrefix;
-	String myReferenceName;
+	String myReferencePrefix;
 	boolean myPreformatted;
 	boolean myInsideBody;
+	private final Map<String,Integer> myFileNumbers;
 
-	public XHTMLReader(BookReader modelReader) {
+	public XHTMLReader(BookReader modelReader, Map<String,Integer> fileNumbers) {
 		myModelReader = modelReader;
+		myFileNumbers = fileNumbers;
 	}
 
 	final BookReader getModelReader() {
 		return myModelReader;
 	}
 
-	public boolean readFile(ZLFile file) {
+	public final String getFileAlias(String fileName) {
+		Integer num = myFileNumbers.get(fileName);
+		if (num == null) {
+			num = myFileNumbers.size();
+			myFileNumbers.put(fileName, num);
+		}
+		return num.toString();
+	}
+
+	public boolean readFile(ZLFile file, String referencePrefix) {
 		fillTagTable();
 
-		myReferenceName = MiscUtil.archiveEntryName(file.getPath());
-
-		myModelReader.addHyperlinkLabel(myReferenceName);
+		myReferencePrefix = referencePrefix;
 
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myLocalPathPrefix = MiscUtil.archiveEntryName(myPathPrefix);
@@ -150,7 +159,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
 		if (id != null) {
-			myModelReader.addHyperlinkLabel(myReferenceName + '#' + id);
+			myModelReader.addHyperlinkLabel(myReferencePrefix + id);
 		}
 
 		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());

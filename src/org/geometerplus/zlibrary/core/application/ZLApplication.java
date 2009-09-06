@@ -79,10 +79,6 @@ public abstract class ZLApplication {
 	protected ZLApplication() {
 		ourInstance = this;
 		
-		//if (ConfigAutoSavingOption.getValue()) {
-			//ZLOption.startAutoSave(ConfigAutoSaveTimeoutOption.getValue());
-		//}
-
 		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
 	}
 

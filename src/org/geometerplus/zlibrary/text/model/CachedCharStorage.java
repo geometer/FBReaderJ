@@ -30,7 +30,7 @@ final class CachedCharStorageException extends RuntimeException {
 	}
 }
 
-final class CachedCharStorage implements CharStorage {
+public final class CachedCharStorage implements CharStorage {
 	private final int myBlockSize;
 	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
 	private final String myDirectoryName;
@@ -40,7 +40,7 @@ final class CachedCharStorage implements CharStorage {
 		return myDirectoryName + index + myFileExtension;
 	}
 
-	CachedCharStorage(int blockSize, String directoryName, String fileExtension) {
+	public CachedCharStorage(int blockSize, String directoryName, String fileExtension) {
 		myBlockSize = blockSize;
 		myDirectoryName = directoryName + '/';
 		myFileExtension = '.' + fileExtension;

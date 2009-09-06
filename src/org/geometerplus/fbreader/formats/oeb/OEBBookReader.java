@@ -57,6 +57,9 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader = new BookReader(model);
 	}
 
+	private TreeMap<String,Integer> myFileNumbers = new TreeMap<String,Integer>();
+	private TreeMap<String,Integer> myTOCLabels = new TreeMap<String,Integer>();
+
 	boolean readBook(ZLFile file) {
 		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
 
@@ -75,13 +78,36 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myModelReader.pushKind(FBTextKind.REGULAR);
 
 		for (String name : myHtmlFileNames) {
-			new XHTMLReader(myModelReader).readFile(ZLFile.createFileByPath(myFilePrefix + name));
+			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
+			final XHTMLReader reader = new XHTMLReader(myModelReader, myFileNumbers);
+			final String referenceName = reader.getFileAlias(MiscUtil.archiveEntryName(xhtmlFile.getPath()));
+
+			myModelReader.addHyperlinkLabel(referenceName);
+			myTOCLabels.put(referenceName, myModelReader.Model.BookTextModel.getParagraphsNumber());
+			reader.readFile(xhtmlFile, referenceName + '#');
 			myModelReader.insertEndOfSectionParagraph();
 		}
 
 		generateTOC();
 
 		return true;
+	}
+
+	private BookModel.Label getTOCLabel(String id) {
+		final int index = id.indexOf('#');
+		final String path = (index >= 0) ? id.substring(0, index) : id;
+		Integer num = myFileNumbers.get(path);
+		if (num == null) {
+			return null;
+		}
+		if (index == -1) {
+			final Integer para = myTOCLabels.get(num.toString());
+			if (para == null) {
+				return null;
+			}
+			return new BookModel.Label(null, para);
+		}
+		return myModelReader.Model.getLabel(num + id.substring(index));
 	}
 
 	private void generateTOC() {
@@ -92,7 +118,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				if (!navigationMap.isEmpty()) {
 					int level = 0;
 					for (NCXReader.NavPoint point : navigationMap.values()) {
-						final BookModel.Label label = myModelReader.Model.getLabel(point.ContentHRef);
+						final BookModel.Label label = getTOCLabel(point.ContentHRef);
 						int index = (label != null) ? label.ParagraphIndex : -1;
 						while (level > point.Level) {
 							myModelReader.endContentsParagraph();
@@ -115,7 +141,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		}
 
 		for (Reference ref : myTourTOC.isEmpty() ? myGuideTOC : myTourTOC) {
-			final BookModel.Label label = myModelReader.Model.getLabel(ref.HRef);
+			final BookModel.Label label = getTOCLabel(ref.HRef);
 			if (label != null) {
 				final int index = label.ParagraphIndex;
 				if (index != -1) {
