@@ -54,8 +54,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
-	private int[] myTextSize;
-
 	public ZLTextView(ZLPaintContext context) {
 		super(context);
  		mySelectionModel = new ZLTextSelectionModel(this);
@@ -73,11 +71,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
-				myTextSize = new int[paragraphsNumber + 1];
-				myTextSize[0] = 0;
-				for (int i = 0; i < paragraphsNumber; ++i) {
-					myTextSize[i + 1] = myTextSize[i] + myModel.getParagraphTextLength(i);
-				}
 				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
 			}
 		}
@@ -351,14 +344,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final int getScrollbarFullSize() {
-		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 1;
 		}
-		return myTextSize[myTextSize.length - 1];
+		return myModel.getTextLength(myModel.getParagraphsNumber() - 1);
 	}
 
 	public final int getScrollbarThumbPosition(int viewPage) {
-		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 0;
 		}
 		if (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) {
@@ -370,7 +363,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final int getScrollbarThumbLength(int viewPage) {
-		if ((myModel == null) || (myTextSize == null) || (myTextSize.length == 0)) {
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 0;
 		}
 		ZLTextPage page = getPage(viewPage);
@@ -381,7 +374,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		int end = sizeOfTextBeforeCursor(page.EndCursor);
 		if (end == -1) {
-			end = myTextSize[myTextSize.length - 1];
+			end = myModel.getTextLength(myModel.getParagraphsNumber() - 1) - 1;
 		}
 		return Math.max(1, end - start);
 	}
@@ -396,11 +389,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return -1;
 		}
 		final int paragraphIndex = paragraphCursor.Index;
-		int sizeOfText = myTextSize[paragraphIndex];
+		int sizeOfText = myModel.getTextLength(paragraphIndex - 1);
 		final int paragraphLength = paragraphCursor.getParagraphLength();
 		if (paragraphLength > 0) {
 			sizeOfText +=
-				(myTextSize[paragraphIndex + 1] - sizeOfText)
+				(myModel.getTextLength(paragraphIndex) - sizeOfText)
 				* cursor.getElementIndex()
 				/ paragraphLength;
 		}

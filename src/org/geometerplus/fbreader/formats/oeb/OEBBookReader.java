@@ -61,6 +61,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private TreeMap<String,Integer> myTOCLabels = new TreeMap<String,Integer>();
 
 	boolean readBook(ZLFile file) {
+		long start = System.currentTimeMillis();
 		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
 
 		myIdToHref.clear();
@@ -89,6 +90,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		}
 
 		generateTOC();
+		System.err.println("book loading time (seconds) = " + (System.currentTimeMillis() - start + 500) / 1000);
 
 		return true;
 	}

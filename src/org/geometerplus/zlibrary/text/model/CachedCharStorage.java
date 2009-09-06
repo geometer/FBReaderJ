@@ -98,7 +98,7 @@ public final class CachedCharStorage implements CharStorage {
 				throw new CachedCharStorageException("Block reference in null during freeze");
 			}
 			try {
-				OutputStreamWriter writer =
+				final OutputStreamWriter writer =
 					new OutputStreamWriter(
 						new FileOutputStream(fileName(index)),
 						"UTF-16LE"

@@ -37,11 +37,15 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myStartEntryIndices = ZLArrayUtils.createCopy(myStartEntryIndices, size, size << 1);
 		myStartEntryOffsets = ZLArrayUtils.createCopy(myStartEntryOffsets, size, size << 1);
 		myParagraphLengths = ZLArrayUtils.createCopy(myParagraphLengths, size, size << 1);
+		myTextSizes = ZLArrayUtils.createCopy(myTextSizes, size, size << 1);
 		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size << 1);
 	}
 
 	public void createParagraph(byte kind) {
 		final int index = myParagraphsNumber++;
+		if (index > 0) {
+			myTextSizes[index] = myTextSizes[index - 1];
+		}
 		int[] startEntryIndices = myStartEntryIndices;
 		if (index == startEntryIndices.length) {
 			extend();
@@ -91,6 +95,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[blockOffset++] = (char)length;
 		System.arraycopy(text, offset, block, blockOffset, length);
 		myBlockOffset = blockOffset + length;
+		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 	
 	public void addControl(ZLTextForcedControlEntry entry) {

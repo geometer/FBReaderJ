@@ -30,6 +30,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	protected int[] myStartEntryIndices;
 	protected int[] myStartEntryOffsets;
 	protected int[] myParagraphLengths;
+	protected int[] myTextSizes;
 	protected byte[] myParagraphKinds;
 
 	protected int myParagraphsNumber;
@@ -195,6 +196,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		myStartEntryIndices = new int[arraySize];
 		myStartEntryOffsets = new int[arraySize];
 		myParagraphLengths = new int[arraySize];
+		myTextSizes = new int[arraySize];
 		myParagraphKinds = new byte[arraySize];
 		myStorage = new CachedCharStorage(dataBlockSize, directoryName, extension);
 		myImageMap = imageMap;
@@ -294,54 +296,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 			new ZLTextSpecialParagraphImpl(kind, this, index);
 	}
 
-	public final int getParagraphTextLength(int index) {
-		int textLength = 0;
-		int dataIndex = myStartEntryIndices[index];
-		int dataOffset = myStartEntryOffsets[index];
-		char[] data = myStorage.block(dataIndex);
-
-		for (int len = myParagraphLengths[index]; len > 0; --len) {
-			if (dataOffset == data.length) {
-				data = myStorage.block(++dataIndex);
-				dataOffset = 0;
-			}
-			byte type = (byte)data[dataOffset];
-			if (type == 0) {
-				data = myStorage.block(++dataIndex);
-				dataOffset = 0;
-				type = (byte)data[0];
-			}
-			++dataOffset;
-			switch (type) {
-				case ZLTextParagraph.Entry.TEXT:
-					int entryLength =
-						((int)data[dataOffset++] << 16) +
-						(int)data[dataOffset++];
-					dataOffset += entryLength;
-					textLength += entryLength;
-					break;
-				case ZLTextParagraph.Entry.CONTROL:
-				{
-					if ((data[dataOffset++] & 0x0200) == 0x0200) {
-						dataOffset += (short)data[dataOffset++];
-					}
-					break;
-				}
-				case ZLTextParagraph.Entry.IMAGE:
-					dataOffset++;
-					dataOffset += (short)data[dataOffset++];
-					break;
-				case ZLTextParagraph.Entry.FIXED_HSPACE:
-					++dataOffset;
-					break;
-				case ZLTextParagraph.Entry.FORCED_CONTROL:
-					for (int mask = (int)data[dataOffset++]; mask != 0; mask >>= 1) {
-						dataOffset += mask & 1;
-					}
-					break;
-			}
-		}
-
-		return textLength;
+	public final int getTextLength(int index) {
+		return myTextSizes[index];
 	}
 }

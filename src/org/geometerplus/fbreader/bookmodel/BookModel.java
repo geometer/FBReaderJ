@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.bookmodel;
 
 import java.util.*;
+//import java.io.*;
 import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
@@ -66,8 +67,15 @@ public final class BookModel {
 		}
 	}
 	
+	//private static String linksFileName(int index) {
+	//	return CacheDirectory + "/links" + index + ".cache";
+	//}
+
 	private BookModel(Book book) {
 		Book = book;
+		//for (int i = 0; i < 50; ++i) {
+		//	new File(linksFileName(i)).delete();
+		//}
 	}
 
 	public ZLTextModel getFootnoteModel(String id) {
@@ -88,6 +96,27 @@ public final class BookModel {
 		final int labelLength = label.length();
 		final int idLength = (modelId != null) ? modelId.length() : 0;
 		final int len = 4 + labelLength + idLength;
+
+		/*
+		try {
+			final OutputStreamWriter writer =
+				new OutputStreamWriter(
+					new FileOutputStream(linksFileName(label.hashCode() % 50), true),
+					"UTF-16LE"
+				);
+			writer.write(labelLength);
+			writer.write(label);
+			writer.write(idLength);
+			if (idLength > 0) {
+				writer.write(modelId);
+			}
+			writer.write(paragraphNumber >> 16);
+			writer.write(paragraphNumber);
+			writer.close();
+		} catch (IOException e) {
+		}
+		*/
+
 		char[] block = myCurrentLinkBlock;
 		int offset = myCurrentLinkBlockOffset;
 		if ((block == null) || (offset + len > block.length)) {
@@ -112,9 +141,41 @@ public final class BookModel {
 	}
 
 	public Label getLabel(String id) {
-		System.err.println("searching label for " + id);
 		final int len = id.length();
 		final int size = myInternalHyperlinks.size();
+		/*
+		try {
+			final File file = new File(linksFileName(id.hashCode() % 50));
+			if (!file.exists()) {
+				return null;
+			}
+			final char[] block = new char[(int)file.length()];
+			final InputStreamReader reader =
+				new InputStreamReader(
+					new FileInputStream(file),
+					"UTF-16LE"
+				);
+			reader.read(block);
+			reader.close();
+			for (int offset = 0; offset < block.length; ) {
+				final int labelLength = (int)block[offset++];
+				if (labelLength == 0) {
+					break;
+				}
+				final int idLength = (int)block[offset + labelLength];
+				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
+					offset += labelLength + idLength + 3;
+					continue;
+				}
+				offset += labelLength + 1;
+				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
+				offset += idLength;
+				final int paragraphNumber = (((int)block[offset++]) << 16) + (int)block[offset];
+				return new Label(modelId, paragraphNumber);
+			}
+		} catch (IOException e) {
+		}
+		*/
 		for (int i = 0; i < size; ++i) {
 			final char[] block = myInternalHyperlinks.block(i);
 			for (int offset = 0; offset < block.length; ) {

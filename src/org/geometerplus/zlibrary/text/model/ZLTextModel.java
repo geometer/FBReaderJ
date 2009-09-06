@@ -35,7 +35,8 @@ public interface ZLTextModel {
 
 	List<ZLTextMark> getMarks();
 
-	int getParagraphTextLength(int index);
+	// text length for paragraphs from 0 to index
+	int getTextLength(int index);
 	
 	int search(final String text, int startIndex, int endIndex, boolean ignoreCase);
 }
