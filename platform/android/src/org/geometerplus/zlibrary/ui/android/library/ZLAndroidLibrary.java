@@ -80,16 +80,18 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myActivity.startActivity(intent);
 	}
 
+	@Override
+	public ZLResourceFile createResourceFile(String path) {
+		return new AndroidResourceFile(path);
+	}
+
+	@Override
 	public String getVersionName() {
 		try {
 			return myActivity.getPackageManager().getPackageInfo(myActivity.getPackageName(), 0).versionName;
 		} catch (Exception e) {
 			return "";
 		}
-	}
-
-	public ZLResourceFile createResourceFile(String path) {
-		return new AndroidResourceFile(path);
 	}
 
 	private final class AndroidResourceFile extends ZLResourceFile {

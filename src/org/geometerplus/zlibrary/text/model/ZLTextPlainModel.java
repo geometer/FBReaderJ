@@ -297,6 +297,6 @@ public class ZLTextPlainModel implements ZLTextModel {
 	}
 
 	public final int getTextLength(int index) {
-		return myTextSizes[index];
+		return myTextSizes[Math.max(Math.min(index, myParagraphsNumber - 1), 0)];
 	}
 }

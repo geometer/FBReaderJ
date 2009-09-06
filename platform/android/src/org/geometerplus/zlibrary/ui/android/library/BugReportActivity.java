@@ -32,6 +32,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 public class BugReportActivity extends Activity {
 	static final String STACKTRACE = "fbreader.stacktrace";
 
+	private String getVersionName() {
+		try {
+			return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bug_report_view);
@@ -41,7 +49,7 @@ public class BugReportActivity extends Activity {
 		reportTextView.setClickable(false);
 		reportTextView.setLongClickable(false);
 
-		final String versionName = ZLAndroidLibrary.Instance().getVersionName();
+		final String versionName = getVersionName();
 		reportTextView.append("FBReader " + versionName + " has been crached, sorry. You can help to fix this bug by sending the report below to FBReader developers. The report will be sent by e-mail. Thank you in advance!\n\n");
 		reportTextView.append(stackTrace);
 
