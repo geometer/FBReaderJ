@@ -90,7 +90,6 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		}
 
 		generateTOC();
-		System.err.println("book loading time (seconds) = " + (System.currentTimeMillis() - start + 500) / 1000);
 
 		return true;
 	}

@@ -43,13 +43,13 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 
 	public void createParagraph(byte kind) {
 		final int index = myParagraphsNumber++;
-		if (index > 0) {
-			myTextSizes[index] = myTextSizes[index - 1];
-		}
 		int[] startEntryIndices = myStartEntryIndices;
 		if (index == startEntryIndices.length) {
 			extend();
 			startEntryIndices = myStartEntryIndices;
+		}
+		if (index > 0) {
+			myTextSizes[index] = myTextSizes[index - 1];
 		}
 		final int dataSize = myStorage.size();
 		startEntryIndices[index] = (dataSize == 0) ? 0 : (dataSize - 1);

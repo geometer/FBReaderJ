@@ -113,7 +113,6 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 						if (name.length() != 0) {
 							int index = 0;
 							try {
-								System.err.println("hello");
 								final String sIndex = attributes.getValue("number");
 								if (sIndex != null) {
 									index = Integer.parseInt(sIndex);
