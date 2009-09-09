@@ -29,10 +29,9 @@ import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.Constants;
 
 public final class BookModel {
-	private static String CacheDirectory = "/sdcard/Books/.FBReader";
-
 	public static BookModel createModel(Book book) {
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
 		if (plugin == null) {
@@ -52,7 +51,7 @@ public final class BookModel {
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	public final Book Book;
-	public final ZLTextModel BookTextModel = new ZLTextWritablePlainModel(null, 1024, 65536, CacheDirectory, "cache", myImageMap);
+	public final ZLTextModel BookTextModel = new ZLTextWritablePlainModel(null, 1024, 65536, Constants.CACHE_DIRECTORY, "cache", myImageMap);
 	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
@@ -68,7 +67,7 @@ public final class BookModel {
 	}
 	
 	//private static String linksFileName(int index) {
-	//	return CacheDirectory + "/links" + index + ".cache";
+	//	return Constants.CACHE_DIRECTORY + "/links" + index + ".cache";
 	//}
 
 	private BookModel(Book book) {
@@ -81,13 +80,13 @@ public final class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, 8, 512, CacheDirectory, "cache" + myFootnotes.size(), myImageMap); 
+			model = new ZLTextWritablePlainModel(id, 8, 512, Constants.CACHE_DIRECTORY, "cache" + myFootnotes.size(), myImageMap); 
 			myFootnotes.put(id, model); 
 		}
 		return model;
 	}
 	
-	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, CacheDirectory, "links");
+	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Constants.CACHE_DIRECTORY, "links");
 	private char[] myCurrentLinkBlock;
 	private int myCurrentLinkBlockOffset;
 

@@ -24,6 +24,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.fbreader.Constants;
 
 public final class Library {
 	private static Library ourInstance;
@@ -36,7 +37,7 @@ public final class Library {
 	}
 
 	// TODO: this option is platform-dependent
-	private final ZLFile BookDirectory = new ZLPhysicalFile(new File("/sdcard/Books"));
+	private final ZLFile BookDirectory = new ZLPhysicalFile(new File(Constants.BOOKS_DIRECTORY));
 
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();

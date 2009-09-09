@@ -23,9 +23,9 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
-final class Base64EncodedImage extends ZLSingleImage {
-	private static final String DIRECTORY_NAME = "/sdcard/Books/.FBReader";
+import org.geometerplus.fbreader.Constants;
 
+final class Base64EncodedImage extends ZLSingleImage {
 	private static int ourCounter;
 
 	static void resetCounter() {
@@ -39,10 +39,10 @@ final class Base64EncodedImage extends ZLSingleImage {
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
 		super(contentType);
-		new File(DIRECTORY_NAME).mkdirs();
+		new File(Constants.CACHE_DIRECTORY).mkdirs();
 		myFileNumber = ourCounter++;
 		try {
-			myStreamWriter = new OutputStreamWriter(new FileOutputStream(DIRECTORY_NAME + "/image" + myFileNumber), "UTF-8");
+			myStreamWriter = new OutputStreamWriter(new FileOutputStream(Constants.CACHE_DIRECTORY + "/image" + myFileNumber), "UTF-8");
 		} catch (IOException e) {
 		}
 	}
@@ -77,7 +77,7 @@ final class Base64EncodedImage extends ZLSingleImage {
 	public byte[] byteData() {
 		try {
 			decode();
-			final File file = new File(DIRECTORY_NAME + "/dimage" + myFileNumber);
+			final File file = new File(Constants.CACHE_DIRECTORY + "/dimage" + myFileNumber);
 			final byte[] data = new byte[(int)file.length()];
 			final FileInputStream stream = new FileInputStream(file);
 			stream.read(data);
@@ -98,8 +98,8 @@ final class Base64EncodedImage extends ZLSingleImage {
 		byte[] encodedData;
 		FileOutputStream outputStream;
 		
-		final File file = new File(DIRECTORY_NAME + "/image" + myFileNumber);
-		outputStream = new FileOutputStream(DIRECTORY_NAME + "/dimage" + myFileNumber);
+		final File file = new File(Constants.CACHE_DIRECTORY + "/image" + myFileNumber);
+		outputStream = new FileOutputStream(Constants.CACHE_DIRECTORY + "/dimage" + myFileNumber);
 		dataLength = (int)file.length();
 		final FileInputStream inputStream = new FileInputStream(file);
 		encodedData = new byte[dataLength];

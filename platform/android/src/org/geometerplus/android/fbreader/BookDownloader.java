@@ -39,6 +39,8 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.Constants;
+
 public class BookDownloader extends Activity {
 	private ProgressBar myProgressBar;
 	private int myFileLength = -1;
@@ -94,7 +96,7 @@ public class BookDownloader extends Activity {
 			if (host.equals("www.feedbooks.com")) {
 				host = "feedbooks.com";
 			}
-			String dir = "/sdcard/Books/" + host;
+			String dir = Constants.BOOKS_DIRECTORY + "/" + host;
 			final List<String> path = uri.getPathSegments();
 			for (int i = 0; i < path.size() - 1; ++i) {
 				dir += '/' + path.get(i);
