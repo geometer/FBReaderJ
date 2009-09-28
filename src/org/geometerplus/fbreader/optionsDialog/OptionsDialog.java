@@ -49,11 +49,6 @@ public class OptionsDialog {
 			
 		new StyleOptionsPage(myDialog.createTab("Styles"), ZLibrary.Instance().getPaintContext());
 		
-		/*
-		final ZLDialogContent rotationTab = myDialog.createTab("Rotation");
-		rotationTab.addOption("direction", new RotationTypeEntry(rotationTab.getResource("direction"), fbreader.RotationAngleOption));
-		*/
-		
 		final ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
 		final ZLResource resource = colorsTab.getResource(colorKey);
