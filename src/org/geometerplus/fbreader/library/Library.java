@@ -36,9 +36,6 @@ public final class Library {
 		return ourInstance;
 	}
 
-	// TODO: this option is platform-dependent
-	private final ZLFile BookDirectory = new ZLPhysicalFile(new File(Constants.BOOKS_DIRECTORY));
-
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
 	private final LibraryTree myLibraryByTag = new RootTree();
@@ -105,7 +102,8 @@ public final class Library {
 		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		dirQueue.offer(BookDirectory);
+		dirQueue.offer(new ZLPhysicalFile(new File(Constants.BOOKS_DIRECTORY)));
+
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {
 				if (file.isDirectory()) {

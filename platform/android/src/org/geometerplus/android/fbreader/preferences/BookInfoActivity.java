@@ -94,6 +94,13 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	protected void init() {
 		final Category commonCategory = createCategory(null);
 		myBook = ((FBReader)FBReader.Instance()).Model.Book;
+		if (myBook.File.getPhysicalFile() != null) {
+			commonCategory.addPreference(new InfoPreference(
+				this,
+				commonCategory.Resource.getResource("fileName").getValue(),
+				myBook.File.getPath())
+			);
+		}
 		commonCategory.addPreference(new BookTitlePreference(this, commonCategory.Resource, "title", myBook));
 		commonCategory.addPreference(new LanguagePreference(this, commonCategory.Resource, "language", myBook));
 	}

@@ -72,6 +72,9 @@
 			<node name="encoding" value="Encoding"/>
 		</node>
 		<node name="Preferences">
+			<node name="Library" value="Library">
+				<node name="path" value="Directories to seek for books"/>
+			</node>
 			<node name="LookNFeel" value="Look &amp; Feel">
 				<node name="autoOrientation" value="Automatic rotation">
 					<node name="summaryOn" value="The display will rotate when user moves the device"/>
