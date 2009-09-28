@@ -19,7 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -37,12 +36,5 @@ public class ZLAndroidViewWidget extends ZLViewWidget {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 		widget.startAutoScrolling(viewPage);
-	}
-
-	public void repaint() {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
-		widget.postInvalidate();
 	}
 }

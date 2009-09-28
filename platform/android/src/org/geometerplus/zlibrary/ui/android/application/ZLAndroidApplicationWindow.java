@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidViewWidget;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -105,7 +106,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	protected final void repaintView() {
-		getViewWidget().repaint();
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
+		widget.postInvalidate();
 	}
 	
 	public void close() {
