@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
@@ -91,8 +90,16 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final ZLViewWidget getViewWidget() {
-		return (myWindow != null) ? myWindow.getViewWidget() : null;
+	public final void scrollViewTo(int viewPage, int shift) {
+		if (myWindow != null) {
+			myWindow.scrollViewTo(viewPage, shift);
+		}
+	}
+
+	public final void startViewAutoScrolling(int viewPage) {
+		if (myWindow != null) {
+			myWindow.startViewAutoScrolling(viewPage);
+		}
 	}
 
 	public final void onRepaintFinished() {

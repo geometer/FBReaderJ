@@ -97,7 +97,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	private ZLAndroidViewWidget myViewWidget;
-	@Override
 	protected ZLAndroidViewWidget getViewWidget() {
 		if (myViewWidget == null) {
 			myViewWidget = new ZLAndroidViewWidget();
@@ -105,11 +104,19 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		return myViewWidget;
 	}
 
-	protected final void repaintView() {
+	protected void repaintView() {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
 		widget.postInvalidate();
+	}
+
+	protected void scrollViewTo(int viewPage, int shift) {
+		getViewWidget().scrollTo(viewPage, shift);
+	}
+
+	protected void startViewAutoScrolling(int viewPage) {
+		getViewWidget().startAutoScrolling(viewPage);
 	}
 	
 	public void close() {

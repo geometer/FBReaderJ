@@ -143,15 +143,15 @@ public final class FBView extends ZLTextView {
 				if (diff > 0) {
 					ZLTextWordCursor cursor = getStartCursor();
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						scrollTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
+						ZLApplication.Instance().scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
 					}
 				} else if (diff < 0) {
 					ZLTextWordCursor cursor = getEndCursor();
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						scrollTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
+						ZLApplication.Instance().scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
 					}
 				} else {
-					scrollTo(PAGE_CENTRAL, 0);
+					ZLApplication.Instance().scrollViewTo(PAGE_CENTRAL, 0);
 				}
 				return true;
 			}
@@ -194,7 +194,7 @@ public final class FBView extends ZLTextView {
 					if (ScrollingPreferences.Instance().AnimateOption.getValue()) {
 						startAutoScrolling(viewPage);
 					} else {
-						scrollTo(PAGE_CENTRAL, 0);
+						ZLApplication.Instance().scrollViewTo(PAGE_CENTRAL, 0);
 						onScrollingFinished(viewPage);
 						ZLApplication.Instance().repaintView();
 						setScrollingActive(false);

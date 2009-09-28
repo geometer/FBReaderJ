@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.optionEntries.*;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.fbreader.fbreader.*;

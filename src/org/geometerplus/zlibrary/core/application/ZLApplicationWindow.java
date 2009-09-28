@@ -22,16 +22,12 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.view.ZLViewWidget;
-
 abstract public class ZLApplicationWindow {
 	private ZLApplication myApplication;
-	//private boolean myToggleButtonLock;
 
 	protected ZLApplicationWindow(ZLApplication application) {
 		myApplication = application;
 		myApplication.setWindow(this);
-		//myToggleButtonLock = false;
 	}
 
 	public ZLApplication getApplication() {
@@ -42,12 +38,12 @@ abstract public class ZLApplicationWindow {
 		initMenu();
 	}
 
-	abstract protected void repaintView();
-
 	abstract protected void initMenu();
 	abstract protected void refreshMenu();
 	
-	abstract protected ZLViewWidget getViewWidget();
+	abstract protected void repaintView();
+	abstract protected void scrollViewTo(int viewPage, int shift);
+	abstract protected void startViewAutoScrolling(int viewPage);
 	
 	abstract protected void close();
 }
