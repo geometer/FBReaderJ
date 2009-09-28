@@ -86,7 +86,7 @@
 				<node name="scrollbarType" value="Полоса прокрутки справа от текста">
 					<node name="hide" value="Не показывать"/>
 					<node name="show" value="Показывать как обычную полосу прокрутки"/>
-					<node name="showAsProgress" value="Заполненнять верхнюю часть полосы"/>
+					<node name="showAsProgress" value="Закрашивать верхнюю часть полосы"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">
