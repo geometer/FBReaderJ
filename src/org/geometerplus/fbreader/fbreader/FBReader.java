@@ -66,10 +66,7 @@ public final class FBReader extends ZLApplication {
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	private final ZLKeyBindings myBindings0 = new ZLKeyBindings("Keys");
-	private final ZLKeyBindings myBindings90 = new ZLKeyBindings("Keys90");
-	private final ZLKeyBindings myBindings180 = new ZLKeyBindings("Keys180");
-	private final ZLKeyBindings myBindings270 = new ZLKeyBindings("Keys270");
+	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
 	final FBView FootnoteView;
@@ -81,7 +78,6 @@ public final class FBReader extends ZLApplication {
 	public FBReader(String[] args) {
 		myArg0 = (args.length > 0) ? args[0] : null;
 		addAction(ActionCode.QUIT, new QuitAction(this));
-		addAction(ActionCode.ROTATE_SCREEN, new ZLApplication.RotationAction());
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
@@ -165,22 +161,7 @@ public final class FBReader extends ZLApplication {
 	}
 
 	public ZLKeyBindings keyBindings() {
-		return UseSeparateBindingsOption.getValue() ?
-				keyBindings(myViewWidget.getRotation()) : myBindings0;
-	}
-	
-	public ZLKeyBindings keyBindings(int angle) {
-		switch (angle) {
-			case ZLViewWidget.Angle.DEGREES0:
-			default:
-				return myBindings0;
-			case ZLViewWidget.Angle.DEGREES90:
-				return myBindings90;
-			case ZLViewWidget.Angle.DEGREES180:
-				return myBindings180;
-			case ZLViewWidget.Angle.DEGREES270:
-				return myBindings270;
-		}
+		return myBindings;
 	}
 
 	public FBView getTextView() {

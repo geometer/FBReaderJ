@@ -95,13 +95,19 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
-	protected ZLAndroidViewWidget createViewWidget() {
-		// TODO: implement
-		ZLAndroidViewWidget viewWidget =
-			new ZLAndroidViewWidget(getApplication().AngleStateOption.getValue());
-		return viewWidget;
+	private ZLAndroidViewWidget myViewWidget;
+	@Override
+	protected ZLAndroidViewWidget getViewWidget() {
+		if (myViewWidget == null) {
+			myViewWidget = new ZLAndroidViewWidget();
+		}
+		return myViewWidget;
 	}
 
+	protected final void repaintView() {
+		getViewWidget().repaint();
+	}
+	
 	public void close() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
 	}

@@ -47,7 +47,6 @@ public interface ActionCode {
 	String DECREASE_FONT = "decreaseFont";
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";
 	String FULLSCREEN_ON = "onFullscreen";
-	String ROTATE_SCREEN = "rotate";
 	String QUIT = "quit";
 	String GOTO_NEXT_TOC_SECTION = "nextTOCSection";
 	String GOTO_PREVIOUS_TOC_SECTION = "previousTOCSection";

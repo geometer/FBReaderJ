@@ -42,9 +42,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private int myHeight;
 	private int myScrollbarWidth;
 
-	private boolean myReversedX;
-	private boolean myReversedY;
-
 	static ZLAndroidPaintContext Instance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLAndroidPaintContext();
@@ -74,27 +71,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myWidth = width - scrollbarWidth;
 		myHeight = height;
 		myScrollbarWidth = scrollbarWidth;
-	}
-
-	void setRotation(int rotation) {
-		switch (rotation) {
-			case ZLViewWidget.Angle.DEGREES0:
-				myReversedX = false;
-				myReversedY = false;
-				break;
-			case ZLViewWidget.Angle.DEGREES90:
-				myReversedX = true;
-				myReversedY = false;
-				break;
-			case ZLViewWidget.Angle.DEGREES180:
-				myReversedX = true;
-				myReversedY = true;
-				break;
-			case ZLViewWidget.Angle.DEGREES270:
-				myReversedX = false;
-				myReversedY = true;
-				break;
-		}
 	}
 
 	void beginPaint(Canvas canvas) {
@@ -216,14 +192,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
-		if (myReversedX) {
-			++x0;
-			++x1;
-		}
-		if (myReversedY) {
-			++y0;
-			++y1;
-		}
 		final Canvas canvas = myCanvas;
 		final Paint paint = myLinePaint;
 		paint.setAntiAlias(false);

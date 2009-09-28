@@ -33,7 +33,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View {
-	private ZLAndroidViewWidget myViewWidget;
 	private final Paint myPaint = new Paint();
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
@@ -60,10 +59,6 @@ public class ZLAndroidWidget extends View {
 
 	public ZLAndroidPaintContext getPaintContext() {
 		return ZLAndroidPaintContext.Instance();
-	}
-
-	void setViewWidget(ZLAndroidViewWidget viewWidget) {
-		myViewWidget = viewWidget;
 	}
 
 	@Override
@@ -254,7 +249,7 @@ public class ZLAndroidWidget extends View {
 
 	private void drawOnBitmap(Bitmap bitmap) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if ((myViewWidget == null) || (view == null)) {
+		if (view == null) {
 			return;
 		}
 
@@ -272,26 +267,8 @@ public class ZLAndroidWidget extends View {
 
 		Canvas canvas = new Canvas(bitmap);
 		context.beginPaint(canvas);
-		final int rotation = myViewWidget.getRotation();
-		context.setRotation(rotation);
 		final int scrollbarWidth = view.showScrollbar() ? getVerticalScrollbarWidth() : 0;
-		switch (rotation) {
-			case ZLViewWidget.Angle.DEGREES0:
-				context.setSize(w, h, scrollbarWidth);
-				break;
-			case ZLViewWidget.Angle.DEGREES90:
-				context.setSize(h, w, scrollbarWidth);
-				canvas.rotate(270, h / 2, h / 2);
-				break;
-			case ZLViewWidget.Angle.DEGREES180:
-				context.setSize(w, h, scrollbarWidth);
-				canvas.rotate(180, w / 2, h / 2);
-				break;
-			case ZLViewWidget.Angle.DEGREES270:
-				context.setSize(h, w, scrollbarWidth);
-				canvas.rotate(90, w / 2, w / 2);
-				break;
-		}
+		context.setSize(w, h, scrollbarWidth);
 		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
 		context.endPaint();
 	}
@@ -316,30 +293,6 @@ public class ZLAndroidWidget extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		int x = (int)event.getX();
 		int y = (int)event.getY();
-		switch (myViewWidget.getRotation()) {
-			case ZLViewWidget.Angle.DEGREES0:
-				break;
-			case ZLViewWidget.Angle.DEGREES90:
-			{
-				int swap = x;
-				x = getHeight() - y - 1;
-				y = swap;
-				break;
-			}
-			case ZLViewWidget.Angle.DEGREES180:
-			{
-				x = getWidth() - x - 1;
-				y = getHeight() - y - 1;
-				break;
-			}
-			case ZLViewWidget.Angle.DEGREES270:
-			{
-				int swap = getWidth() - x - 1;
-				x = y;
-				y = swap;
-				break;
-			}
-		}
 
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {

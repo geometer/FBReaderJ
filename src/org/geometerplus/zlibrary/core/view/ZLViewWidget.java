@@ -22,29 +22,9 @@ package org.geometerplus.zlibrary.core.view;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 abstract public class ZLViewWidget {
-	private int myRotation;
-
-	public interface Angle {
-		int DEGREES0 = 0;
-		int DEGREES90 = 90;
-		int DEGREES180 = 180;
-		int DEGREES270 = 270;
-	};
-
-	protected ZLViewWidget(int initialAngle) {
-		myRotation = initialAngle;
+	protected ZLViewWidget() {
 	}
 
-	public final void rotate(int rotation) {
-		myRotation = rotation;
-	}
-
-	public final int getRotation() {
-		return myRotation;
-	}
-
-	// TODO: change to protected
-	abstract public void repaint();
 	abstract protected void scrollTo(int viewPage, int shift);
 	abstract protected void startAutoScrolling(int viewPage);
 }

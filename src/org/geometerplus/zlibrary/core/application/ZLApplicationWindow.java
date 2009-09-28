@@ -41,11 +41,13 @@ abstract public class ZLApplicationWindow {
 	protected void init() {
 		initMenu();
 	}
-	
+
+	abstract protected void repaintView();
+
 	abstract protected void initMenu();
 	abstract protected void refreshMenu();
 	
-	abstract protected ZLViewWidget createViewWidget();
+	abstract protected ZLViewWidget getViewWidget();
 	
 	abstract protected void close();
 }
