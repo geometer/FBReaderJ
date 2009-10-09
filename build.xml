@@ -21,5 +21,7 @@
   <target name="clean">
 		<delete dir="gen"/>
 		<delete dir="bin"/>
+		<delete dir="res/raw"/>
+		<delete dir="res/drawable"/>
   </target>
 </project>

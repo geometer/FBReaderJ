@@ -22,9 +22,10 @@ updateVersion() {
 
 buildSourceArchive() {
 	updateVersion
+  ant clean
   rm -rf $dir $archive
   mkdir $dir
-  cp -r data icons src platform native manifest.mf build.xml $0 VERSION $dir
+  cp -r data icons src native build.xml *.properties *.properties *.properties *.properties *.properties *.properties *.properties *.properties $0 VERSION $dir
   rm -rf `find $dir -name .svn`
   zip -rq $archive $dir/*
   rm -rf $dir
@@ -39,7 +40,6 @@ fi
 
 dir=FBReaderJ-sources-$version
 archive=FBReaderJ-sources-$version.zip
-
 
 case $1 in
 	$updateVersionArg)
