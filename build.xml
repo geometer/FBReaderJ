@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FBReaderJ" default="help">
+	<property file="local.properties"/>
+	<property file="build.properties"/>
+	<property file="default.properties"/>
+
+	<path id="android.antlibs">
+		<pathelement path="${sdk-location}/tools/lib/anttasks.jar" />
+		<pathelement path="${sdk-location}/tools/lib/sdklib.jar" />
+		<pathelement path="${sdk-location}/tools/lib/androidprefs.jar" />
+		<pathelement path="${sdk-location}/tools/lib/apkbuilder.jar" />
+		<pathelement path="${sdk-location}/tools/lib/jarutils.jar" />
+	</path>
+
+	<taskdef name="setup"
+		classname="com.android.ant.SetupTask"
+		classpathref="android.antlibs"/>
+
+	<setup />
+
+  <target name="clean">
+		<delete dir="gen"/>
+		<delete dir="bin"/>
+  </target>
+</project>
