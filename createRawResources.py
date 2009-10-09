@@ -10,8 +10,6 @@ tabs_icons_dir = "icons/tabs"
 text_search_icons_dir = "icons/text_search"
 data_dir = "data"
 
-print os.getcwd()
-
 def clean_res_dir(dir):
 	if os.path.exists(dir):
 		for file in os.listdir(dir):
