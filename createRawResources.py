@@ -3,16 +3,14 @@
 import os, sys, shutil;
 
 project_dir = sys.argv[1]
-platform_dir = project_dir + "/platform/android"
-raw_res_dir = platform_dir + "/res/raw"
-drawable_res_dir = platform_dir + "/res/drawable"
+raw_res_dir = project_dir + "/res/raw"
+drawable_res_dir = project_dir + "/res/drawable"
 data_dir_common = project_dir + "/data"
-application_icons_dir_common = project_dir + "/icons/application"
-tree_icons_dir_android = platform_dir + "/icons/tree"
-menu_icons_dir_android = platform_dir + "/icons/menu"
-tabs_icons_dir_android = platform_dir + "/icons/tabs"
-text_search_icons_dir_android = platform_dir + "/icons/text_search"
-data_dir_android = platform_dir + "/data"
+tree_icons_dir_android = project_dir + "/android_icons/tree"
+menu_icons_dir_android = project_dir + "/android_icons/menu"
+tabs_icons_dir_android = project_dir + "/android_icons/tabs"
+text_search_icons_dir_android = project_dir + "/android_icons/text_search"
+data_dir_android = project_dir + "/data"
 
 print os.getcwd()
 
@@ -38,8 +36,7 @@ clean_res_dir(raw_res_dir)
 clean_res_dir(drawable_res_dir)
 process_data_dir("data__", data_dir_common, raw_res_dir)
 process_data_dir("data__", data_dir_android, raw_res_dir)
-#shutil.copyfile(application_icons_dir_common + "/48x48.png", drawable_res_dir + "/fbreader.png")
-shutil.copyfile(platform_dir + "/icons/fbreader.png", drawable_res_dir + "/fbreader.png")
+shutil.copyfile(project_dir + "/android_icons/fbreader.png", drawable_res_dir + "/fbreader.png")
 process_data_dir("", tree_icons_dir_android, drawable_res_dir, 0)
 process_data_dir("", menu_icons_dir_android, drawable_res_dir, 0)
 process_data_dir("", tabs_icons_dir_android, drawable_res_dir, 0)
