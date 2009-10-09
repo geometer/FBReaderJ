@@ -17,7 +17,7 @@ updateVersion() {
 	minor=`echo $version | cut -d . -f 2`
 	micro=`echo $version | cut -d . -f 3`
 	let intversion=10000*$major+100*$minor+$micro
-	sed "s/@INTVERSION@/$intversion/" platform/android/AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > platform/android/AndroidManifest.xml
+	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > AndroidManifest.xml
 }
 
 buildSourceArchive() {
