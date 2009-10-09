@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>About FBReaderJ</book-title> <lang>en</lang></title-info></description>
+<body>
+<title><p>About FBReaderJ &FBReaderVersion;</p></title>
+<p>FBReaderJ is an e-book reader for the <a l:href="http://www.android.com/">Android platform</a>. It is a clone of the <a l:href="http://www.fbreader.org/">FBReader book reader</a> written in Java by the same authors. FBReaderJ supports several e-book formats: <code>oeb</code>, <code>epub</code>, <code>fb2</code>.  In future releases the list will be extended to support the same formats as the original FBReader. Direct reading from <code>zip</code>, <code>tar</code> and <code>gzip</code> archives is supported.</p>
+<p>You can configure FBReaderJ to read books with a pleasure. Colors, fonts, key bindings and many other properties can be changed in the <code>Preferences Dialog</code>.</p>
+<p>FBReaderJ is distributed under the terms of the <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<empty-line/>
+<subtitle><p>How To Start</p></subtitle>
+<p>There are 2 ways to add book into FBReaderJ library.</p>
+<p>The first one is to copy book file to your device into the directory <code>/sdcard/Books</code> (or any its subdirectory). FBReader will add this book automatically.</p>
+<p>The second way is to click a book link (i.e. on a link to a file with extension <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> or <code>.fb2.zip</code>) in the standard Android browser. A book will be downloaded to the device and opened in FBReaderJ. If you'll click the same link again, a book will not be downloaded again, local copy will be used for reading.</p>
+<empty-line/>
+<subtitle><p>Related sites</p></subtitle>
+<p>More information about FBReader and FBReaderJ can be found at <a l:href="http://www.fbreader.org">FBReader site</a>.</p>
+<p>If you want to be notified about new releases, please subscribe to <a l:href="http://freshmeat.net/projects/fbreaderj">FBReaderJ project at freshmeat</a>.</p>
+<p>If you have any questions or suggestions, please use <a l:href="http://groups.google.com/group/fbreader">FBReader group at googlegroups</a>.</p>
+</body>
+</FictionBook>

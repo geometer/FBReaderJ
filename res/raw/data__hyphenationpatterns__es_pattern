@@ -1,0 +1,2933 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!--
+  Spanish hyphenations description for FBReader (original was taken from the teTeX distribution)
+
+	From the original /usr/share/texmf-texlive/tex/generic/hyphen/sphyphen.tex file:
+
+% (c) Javier Bezos 1993 1997.
+% (c) Javier Bezos and CervanTeX 2001-2006
+% Some parts, (c) by Francesc Carmona
+% Licence: LPPL
+-->
+<HyphenationDescription>
+  <pattern> a2</pattern>
+  <pattern> an2a2</pattern>
+  <pattern> an3aero</pattern>
+  <pattern> ana3li</pattern>
+  <pattern> an2e2</pattern>
+  <pattern> an3e2pigr</pattern>
+  <pattern> ane3xa</pattern>
+  <pattern> ane3xe</pattern>
+  <pattern> ane3xio</pattern>
+  <pattern> ane3xió</pattern>
+  <pattern> ane3xá</pattern>
+  <pattern> ane3xé</pattern>
+  <pattern> an3h</pattern>
+  <pattern> an2i2</pattern>
+  <pattern> ani3dar</pattern>
+  <pattern> ani3ll</pattern>
+  <pattern> ani3m</pattern>
+  <pattern> ani3mad</pattern>
+  <pattern> ani3mád</pattern>
+  <pattern> ani3q</pattern>
+  <pattern> an3i2so</pattern>
+  <pattern> an3i2só</pattern>
+  <pattern> ani3vel</pattern>
+  <pattern> aniña</pattern>
+  <pattern> an2o2</pattern>
+  <pattern> ano5che</pattern>
+  <pattern> ano5din</pattern>
+  <pattern> ano5mal</pattern>
+  <pattern> ano5nad</pattern>
+  <pattern> ano5nim</pattern>
+  <pattern> ano5ta</pattern>
+  <pattern> ano3tá</pattern>
+  <pattern> ante2o3je</pattern>
+  <pattern> anti1a2</pattern>
+  <pattern> anti1e2</pattern>
+  <pattern> anti1h</pattern>
+  <pattern> anti1i2</pattern>
+  <pattern> anti1o2</pattern>
+  <pattern> anti1u2</pattern>
+  <pattern> anti1á2</pattern>
+  <pattern> anti1é2</pattern>
+  <pattern> anti1í2</pattern>
+  <pattern> anti1ó2</pattern>
+  <pattern> anti1ú2</pattern>
+  <pattern> an2u2</pattern>
+  <pattern> anua3l</pattern>
+  <pattern> anua4lm</pattern>
+  <pattern> anu3bl</pattern>
+  <pattern> anu3da</pattern>
+  <pattern> anu3l</pattern>
+  <pattern> an2á2</pattern>
+  <pattern> aná3li</pattern>
+  <pattern> an2é2</pattern>
+  <pattern> an2í2</pattern>
+  <pattern> an2ó2</pattern>
+  <pattern> anó5mal</pattern>
+  <pattern> anó3nim</pattern>
+  <pattern> an2ú2 </pattern>
+  <pattern> bi1anual</pattern>
+  <pattern> bi1aur</pattern>
+  <pattern> bien1and</pattern>
+  <pattern> bien1apa</pattern>
+  <pattern> bien1ave</pattern>
+  <pattern> bien1est</pattern>
+  <pattern> bien1int</pattern>
+  <pattern> bi1ox</pattern>
+  <pattern> bi1un</pattern>
+  <pattern> bi1ó2x</pattern>
+  <pattern> co2a2</pattern>
+  <pattern> co2e2</pattern>
+  <pattern> co2i2</pattern>
+  <pattern> co3o4</pattern>
+  <pattern> co2u2</pattern>
+  <pattern> co2á2</pattern>
+  <pattern> co2é2</pattern>
+  <pattern> co2í2</pattern>
+  <pattern> co2ó2</pattern>
+  <pattern> co2ú2</pattern>
+  <pattern> de2s2a2</pattern>
+  <pattern> de2s2e2</pattern>
+  <pattern> de2s2i2</pattern>
+  <pattern> de3s4in3ter2e3sa</pattern>
+  <pattern> de3s4in3ter2e3se</pattern>
+  <pattern> de3s4in3ter2e3so</pattern>
+  <pattern> de3s4in3ter2e3sá</pattern>
+  <pattern> de3s4in3ter2e3sé</pattern>
+  <pattern> de3s4in3ter2e3só</pattern>
+  <pattern> de2s2o2</pattern>
+  <pattern> de2s2u2</pattern>
+  <pattern> de2s2á2</pattern>
+  <pattern> de2s2é2</pattern>
+  <pattern> de2s2í2</pattern>
+  <pattern> de2s2ó2</pattern>
+  <pattern> de2s2ú2</pattern>
+  <pattern> dieci1o2</pattern>
+  <pattern> en2a2</pattern>
+  <pattern> en1aceit</pattern>
+  <pattern> en1aciy</pattern>
+  <pattern> en1aguach</pattern>
+  <pattern> en1aguaz</pattern>
+  <pattern> en1anch</pattern>
+  <pattern> en1apa</pattern>
+  <pattern> en1arb</pattern>
+  <pattern> en1art</pattern>
+  <pattern> en2artr</pattern>
+  <pattern> en2e2</pattern>
+  <pattern> en1ej</pattern>
+  <pattern> en2i2</pattern>
+  <pattern> en2o2</pattern>
+  <pattern> eno3jar</pattern>
+  <pattern> en2u2</pattern>
+  <pattern> enu3mera</pattern>
+  <pattern> enu3mere</pattern>
+  <pattern> enu3merá</pattern>
+  <pattern> en2á2</pattern>
+  <pattern> en2é2</pattern>
+  <pattern> en2í2</pattern>
+  <pattern> en2ó2</pattern>
+  <pattern> en2ú2</pattern>
+  <pattern> he4mee</pattern>
+  <pattern> hepta1e</pattern>
+  <pattern> hu4mea</pattern>
+  <pattern> hu4meo</pattern>
+  <pattern> in2a2</pattern>
+  <pattern> in3abarc</pattern>
+  <pattern> in3abord</pattern>
+  <pattern> in3acent</pattern>
+  <pattern> in3adapt</pattern>
+  <pattern> in3aguant</pattern>
+  <pattern> ina3movib</pattern>
+  <pattern> in3analiz</pattern>
+  <pattern> ina3nic</pattern>
+  <pattern> in3anim</pattern>
+  <pattern> in3apel</pattern>
+  <pattern> in3aplic</pattern>
+  <pattern> in3apreci</pattern>
+  <pattern> in3aprens</pattern>
+  <pattern> in3arrug</pattern>
+  <pattern> in3asist</pattern>
+  <pattern> in2e2</pattern>
+  <pattern> in3efic</pattern>
+  <pattern> in3efici</pattern>
+  <pattern> in3eludi</pattern>
+  <pattern> ine3narr</pattern>
+  <pattern> in2i2</pattern>
+  <pattern> ini3cia</pattern>
+  <pattern> ini3cie</pattern>
+  <pattern> ini3ciá</pattern>
+  <pattern> in2o2</pattern>
+  <pattern> ino3cua</pattern>
+  <pattern> ino3cula</pattern>
+  <pattern> ino3cule</pattern>
+  <pattern> ino3culá</pattern>
+  <pattern> ino3cuo</pattern>
+  <pattern> inte2r1a2</pattern>
+  <pattern> inte2r1e2</pattern>
+  <pattern> in3ter2e3sa</pattern>
+  <pattern> in3ter2e3se</pattern>
+  <pattern> in3ter2e3so</pattern>
+  <pattern> in3ter2e3sá</pattern>
+  <pattern> in3ter2e3sé</pattern>
+  <pattern> in3ter2e3só</pattern>
+  <pattern> inte2r1i2</pattern>
+  <pattern> inte2r1o2</pattern>
+  <pattern> inte2r3r</pattern>
+  <pattern> in3te3r4rog</pattern>
+  <pattern> in3te3r4rump</pattern>
+  <pattern> in3te3r4rupc</pattern>
+  <pattern> in3te3r4rupt</pattern>
+  <pattern> inte2r1u2</pattern>
+  <pattern> inte2r1á2</pattern>
+  <pattern> inte2r1é2</pattern>
+  <pattern> inte2r1í2</pattern>
+  <pattern> inte2r1ó2</pattern>
+  <pattern> inte2r1ú2</pattern>
+  <pattern> intra1o</pattern>
+  <pattern> intra1u</pattern>
+  <pattern> in2u2</pattern>
+  <pattern> inu3tiliz</pattern>
+  <pattern> in2á2</pattern>
+  <pattern> iná3nim</pattern>
+  <pattern> in2é2</pattern>
+  <pattern> iné3dit</pattern>
+  <pattern> in2í2</pattern>
+  <pattern> in2ó2</pattern>
+  <pattern> in2ú2</pattern>
+  <pattern> inú3til</pattern>
+  <pattern> mal1acon</pattern>
+  <pattern> mal1acos</pattern>
+  <pattern> mala1e</pattern>
+  <pattern> mal1andant</pattern>
+  <pattern> mal1andanz</pattern>
+  <pattern> ma4l3e4du</pattern>
+  <pattern> mal1est</pattern>
+  <pattern> mal1int</pattern>
+  <pattern> pa4n1afri</pattern>
+  <pattern> pa4n1a4meri</pattern>
+  <pattern> pa4n1europ</pattern>
+  <pattern> pa4n1ópti</pattern>
+  <pattern> pos2t2a2</pattern>
+  <pattern> pos2t2e2</pattern>
+  <pattern> post3elec</pattern>
+  <pattern> pos3terg</pattern>
+  <pattern> pos3te3ri</pattern>
+  <pattern> pos2t2i2</pattern>
+  <pattern> pos3ti3go</pattern>
+  <pattern> pos3ti3la</pattern>
+  <pattern> post3impr</pattern>
+  <pattern> pos3tin</pattern>
+  <pattern> post3ind</pattern>
+  <pattern> pos3ti3ne</pattern>
+  <pattern> pos3ti3za</pattern>
+  <pattern> pos3ti3zo</pattern>
+  <pattern> pos2t2o2</pattern>
+  <pattern> post3ope</pattern>
+  <pattern> post3rev</pattern>
+  <pattern> pos2t2u2</pattern>
+  <pattern> pos3tu3la</pattern>
+  <pattern> pos3tu3le</pattern>
+  <pattern> pos3tu3lá</pattern>
+  <pattern> pos3tu3lé</pattern>
+  <pattern> pos3tu3ra</pattern>
+  <pattern> pos2t2á2</pattern>
+  <pattern> pos2t2é2</pattern>
+  <pattern> pos2t2í2</pattern>
+  <pattern> pos3tín</pattern>
+  <pattern> pos2t2ó2</pattern>
+  <pattern> pos3tó3ni</pattern>
+  <pattern> pos2t2ú2</pattern>
+  <pattern> pre2a2</pattern>
+  <pattern> pre2e2</pattern>
+  <pattern> pre2h2</pattern>
+  <pattern> pre2i2</pattern>
+  <pattern> pre2o2</pattern>
+  <pattern> pre2u2</pattern>
+  <pattern> pre2á2</pattern>
+  <pattern> pre2é2</pattern>
+  <pattern> pre2í2</pattern>
+  <pattern> pre2ó2</pattern>
+  <pattern> pre2ú2</pattern>
+  <pattern> pro2a2</pattern>
+  <pattern> pro2e2</pattern>
+  <pattern> pro2h2</pattern>
+  <pattern> pro2i2</pattern>
+  <pattern> pro2o2</pattern>
+  <pattern> pro2u2</pattern>
+  <pattern> pro2á2</pattern>
+  <pattern> pro2é2</pattern>
+  <pattern> pro2í2</pattern>
+  <pattern> pro2ó2</pattern>
+  <pattern> pro2ú2</pattern>
+  <pattern> re2a2</pattern>
+  <pattern> re3abr</pattern>
+  <pattern> re3a2eg</pattern>
+  <pattern> re3afirm</pattern>
+  <pattern> re3afírm</pattern>
+  <pattern> re3a2grup</pattern>
+  <pattern> re3ajust</pattern>
+  <pattern> rea3júst</pattern>
+  <pattern> re3alim</pattern>
+  <pattern> rea3lism</pattern>
+  <pattern> rea3list</pattern>
+  <pattern> rea3liza</pattern>
+  <pattern> rea3lizá</pattern>
+  <pattern> rea3líza</pattern>
+  <pattern> re3anim</pattern>
+  <pattern> re3aním</pattern>
+  <pattern> re3aparec</pattern>
+  <pattern> re3a2q</pattern>
+  <pattern> re3a2z</pattern>
+  <pattern> re3e4</pattern>
+  <pattern> re2i2</pattern>
+  <pattern> re3i2m</pattern>
+  <pattern> re3inc</pattern>
+  <pattern> re3ing</pattern>
+  <pattern> re3ins</pattern>
+  <pattern> re3int</pattern>
+  <pattern> re2o2</pattern>
+  <pattern> re3o2b</pattern>
+  <pattern> re1oc</pattern>
+  <pattern> re1oj</pattern>
+  <pattern> re3orga</pattern>
+  <pattern> retro1a</pattern>
+  <pattern> re2u2</pattern>
+  <pattern> re3ubica</pattern>
+  <pattern> re3ubíca</pattern>
+  <pattern> reu3mati</pattern>
+  <pattern> reu3máti</pattern>
+  <pattern> re3unir</pattern>
+  <pattern> re1unt</pattern>
+  <pattern> re3unír</pattern>
+  <pattern> re3usar</pattern>
+  <pattern> re3usár</pattern>
+  <pattern> re3utiliz</pattern>
+  <pattern> re3utilíz</pattern>
+  <pattern> re2á2</pattern>
+  <pattern> re3ábr</pattern>
+  <pattern> re2é2</pattern>
+  <pattern> re2í2</pattern>
+  <pattern> re2ó2</pattern>
+  <pattern> re2ú2</pattern>
+  <pattern> so3a4s</pattern>
+  <pattern> su2b2a2</pattern>
+  <pattern> sub3aflue</pattern>
+  <pattern> sub3arr</pattern>
+  <pattern> su2b2e2</pattern>
+  <pattern> sub3enten</pattern>
+  <pattern> sub3estim</pattern>
+  <pattern> sub3estím</pattern>
+  <pattern> su2b2i2</pattern>
+  <pattern> su3b4ien</pattern>
+  <pattern> sub2i3ll</pattern>
+  <pattern> sub2i3mien</pattern>
+  <pattern> su2b2o2</pattern>
+  <pattern> sub3ofici</pattern>
+  <pattern> su4b3ray</pattern>
+  <pattern> su2b2u2</pattern>
+  <pattern> sub3urba</pattern>
+  <pattern> su2b2á2</pattern>
+  <pattern> su2b2é2</pattern>
+  <pattern> su2b2í2</pattern>
+  <pattern> sub3ími</pattern>
+  <pattern> sub3índ</pattern>
+  <pattern> su2b2ó2</pattern>
+  <pattern> su2b2ú2</pattern>
+  <pattern> su2d1a2fr</pattern>
+  <pattern> su2d1a2me</pattern>
+  <pattern> su2d1est</pattern>
+  <pattern> sur1a2me</pattern>
+  <pattern> sur1est</pattern>
+  <pattern> sur1oes</pattern>
+  <pattern> tele1imp</pattern>
+  <pattern> tele1obj</pattern>
+  <pattern> tran2s1alp</pattern>
+  <pattern> tran2s1and</pattern>
+  <pattern> tran2s1atl</pattern>
+  <pattern> tran2s1oce</pattern>
+  <pattern> tran2s1ur</pattern>
+  <pattern> tra2s1a</pattern>
+  <pattern> tra2s1o</pattern>
+  <pattern> tra2s2oñ</pattern>
+  <pattern> tri1ó2x</pattern>
+  <pattern>8'8</pattern>
+  <pattern>4a3ba </pattern>
+  <pattern>4a3bais </pattern>
+  <pattern>4a3ban </pattern>
+  <pattern>4a3bas </pattern>
+  <pattern>acante2</pattern>
+  <pattern>4a3ciones </pattern>
+  <pattern>4a3ción </pattern>
+  <pattern>acto1a2</pattern>
+  <pattern>acto1e2</pattern>
+  <pattern>acto1h</pattern>
+  <pattern>acto1i2</pattern>
+  <pattern>acto1o2</pattern>
+  <pattern>acto1u2</pattern>
+  <pattern>acto1á2</pattern>
+  <pattern>acto1é2</pattern>
+  <pattern>acto1í2</pattern>
+  <pattern>acto1ó2</pattern>
+  <pattern>acto1ú2</pattern>
+  <pattern>4ad </pattern>
+  <pattern>4a3da </pattern>
+  <pattern>4a3das </pattern>
+  <pattern>4adlas </pattern>
+  <pattern>4adle </pattern>
+  <pattern>4adles </pattern>
+  <pattern>4adlo </pattern>
+  <pattern>4adlos </pattern>
+  <pattern>4adme </pattern>
+  <pattern>4adnos </pattern>
+  <pattern>4a3do </pattern>
+  <pattern>4a3dor </pattern>
+  <pattern>4a3dora </pattern>
+  <pattern>4a3doras </pattern>
+  <pattern>4a3dores </pattern>
+  <pattern>4a3dos </pattern>
+  <pattern>4adte </pattern>
+  <pattern>aero1a2</pattern>
+  <pattern>aero1e2</pattern>
+  <pattern>aero1h</pattern>
+  <pattern>aero1i2</pattern>
+  <pattern>aero1o2</pattern>
+  <pattern>aero1u2</pattern>
+  <pattern>aero1á2</pattern>
+  <pattern>aero1é2</pattern>
+  <pattern>aero1í2</pattern>
+  <pattern>aero1ó2</pattern>
+  <pattern>aero1ú2</pattern>
+  <pattern>afro1a2</pattern>
+  <pattern>afro1e2</pattern>
+  <pattern>afro1h</pattern>
+  <pattern>afro1i2</pattern>
+  <pattern>afro1o2</pattern>
+  <pattern>afro1u2</pattern>
+  <pattern>afro1á2</pattern>
+  <pattern>afro1é2</pattern>
+  <pattern>afro1í2</pattern>
+  <pattern>afro1ó2</pattern>
+  <pattern>afro1ú2</pattern>
+  <pattern>4a4i3gan </pattern>
+  <pattern>2al </pattern>
+  <pattern>2ales </pattern>
+  <pattern>4a3mos </pattern>
+  <pattern>4an </pattern>
+  <pattern>ana3lí</pattern>
+  <pattern>4ando</pattern>
+  <pattern>anfi1a2</pattern>
+  <pattern>anfi1e2</pattern>
+  <pattern>anfi1h</pattern>
+  <pattern>anfi1i2</pattern>
+  <pattern>anfi1o2</pattern>
+  <pattern>anfi1u2</pattern>
+  <pattern>anfi1á2</pattern>
+  <pattern>anfi1é2</pattern>
+  <pattern>anfi1í2</pattern>
+  <pattern>anfi1ó2</pattern>
+  <pattern>anfi1ú2</pattern>
+  <pattern>anglo1a2</pattern>
+  <pattern>anglo1e2</pattern>
+  <pattern>anglo1h</pattern>
+  <pattern>anglo1i2</pattern>
+  <pattern>anglo1o2</pattern>
+  <pattern>anglo1u2</pattern>
+  <pattern>anglo1á2</pattern>
+  <pattern>anglo1é2</pattern>
+  <pattern>anglo1í2</pattern>
+  <pattern>anglo1ó2</pattern>
+  <pattern>anglo1ú2</pattern>
+  <pattern>ante1a2</pattern>
+  <pattern>ante1e2</pattern>
+  <pattern>ante1h</pattern>
+  <pattern>ante1i2</pattern>
+  <pattern>ante1o2</pattern>
+  <pattern>ante1u2</pattern>
+  <pattern>ante1á2</pattern>
+  <pattern>ante1é2</pattern>
+  <pattern>ante1í2</pattern>
+  <pattern>ante1ó2</pattern>
+  <pattern>ante1ú2</pattern>
+  <pattern>4aos </pattern>
+  <pattern>4ar </pattern>
+  <pattern>4a3ra </pattern>
+  <pattern>4a3rais </pattern>
+  <pattern>4a3ran </pattern>
+  <pattern>4a3ras </pattern>
+  <pattern>archi1a2</pattern>
+  <pattern>archi1e2</pattern>
+  <pattern>archi1h</pattern>
+  <pattern>archi1i2</pattern>
+  <pattern>archi1o2</pattern>
+  <pattern>archi1u2</pattern>
+  <pattern>archi1á2</pattern>
+  <pattern>archi1é2</pattern>
+  <pattern>archi1í2</pattern>
+  <pattern>archi1ó2</pattern>
+  <pattern>archi1ú2</pattern>
+  <pattern>4a3re </pattern>
+  <pattern>4a3reis </pattern>
+  <pattern>4a3remos </pattern>
+  <pattern>4a3ren </pattern>
+  <pattern>4a3res </pattern>
+  <pattern>a3rio </pattern>
+  <pattern>a3rios </pattern>
+  <pattern>4a4r3la </pattern>
+  <pattern>4a4r3las </pattern>
+  <pattern>4a4r3le </pattern>
+  <pattern>4a4r3les </pattern>
+  <pattern>4a4r3lo </pattern>
+  <pattern>4a4r3los </pattern>
+  <pattern>4a4rme </pattern>
+  <pattern>4a4r3nos </pattern>
+  <pattern>4a3ron </pattern>
+  <pattern>4a3ros </pattern>
+  <pattern>4a4r3se </pattern>
+  <pattern>4a4r3te </pattern>
+  <pattern>4a3rá </pattern>
+  <pattern>4a3rán </pattern>
+  <pattern>4a3rás </pattern>
+  <pattern>4a3ré </pattern>
+  <pattern>4a3réis </pattern>
+  <pattern>4a3rés </pattern>
+  <pattern>4a3ría </pattern>
+  <pattern>4a3ríais</pattern>
+  <pattern>4a3ríamos </pattern>
+  <pattern>4a3rían </pattern>
+  <pattern>4a3rías </pattern>
+  <pattern>4a3rís </pattern>
+  <pattern>4as </pattern>
+  <pattern>4a3se </pattern>
+  <pattern>4a3seis </pattern>
+  <pattern>4a3sen </pattern>
+  <pattern>4a3ses </pattern>
+  <pattern>4aste </pattern>
+  <pattern>4asteis </pattern>
+  <pattern>4astes </pattern>
+  <pattern>asu3b2</pattern>
+  <pattern>4ates </pattern>
+  <pattern>auto1a2</pattern>
+  <pattern>auto1e2</pattern>
+  <pattern>auto1h</pattern>
+  <pattern>auto1i2</pattern>
+  <pattern>auto1o2</pattern>
+  <pattern>auto1u2</pattern>
+  <pattern>auto1á2</pattern>
+  <pattern>auto1é2</pattern>
+  <pattern>auto1í2</pattern>
+  <pattern>auto1ó2</pattern>
+  <pattern>auto1ú2</pattern>
+  <pattern>aí5so </pattern>
+  <pattern>aí5sos </pattern>
+  <pattern>1b</pattern>
+  <pattern>2bb</pattern>
+  <pattern>2bc</pattern>
+  <pattern>2b3c2n</pattern>
+  <pattern>2b3c2t</pattern>
+  <pattern>2b3c2z</pattern>
+  <pattern>2bd</pattern>
+  <pattern>2bf</pattern>
+  <pattern>2b3f2t</pattern>
+  <pattern>2bg</pattern>
+  <pattern>2b3g2n</pattern>
+  <pattern>2b1h</pattern>
+  <pattern>biblio1a2</pattern>
+  <pattern>biblio1e2</pattern>
+  <pattern>biblio1h</pattern>
+  <pattern>biblio1i2</pattern>
+  <pattern>biblio1o2</pattern>
+  <pattern>biblio1u2</pattern>
+  <pattern>biblio1á2</pattern>
+  <pattern>biblio1é2</pattern>
+  <pattern>biblio1í2</pattern>
+  <pattern>biblio1ó2</pattern>
+  <pattern>biblio1ú2</pattern>
+  <pattern>bien2</pattern>
+  <pattern>b4ien3das </pattern>
+  <pattern>b4ien3do </pattern>
+  <pattern>bien3h</pattern>
+  <pattern>bien3m</pattern>
+  <pattern>bien3q</pattern>
+  <pattern>bien3t</pattern>
+  <pattern>bien3v</pattern>
+  <pattern>bio1a2</pattern>
+  <pattern>bio1e2</pattern>
+  <pattern>bio1h</pattern>
+  <pattern>bio1i2</pattern>
+  <pattern>bio1o2</pattern>
+  <pattern>bio1u2</pattern>
+  <pattern>bio1á2</pattern>
+  <pattern>bio1é2</pattern>
+  <pattern>bio1í2</pattern>
+  <pattern>bio1ó2</pattern>
+  <pattern>bio1ú2</pattern>
+  <pattern>bi1u2ní</pattern>
+  <pattern>2bj</pattern>
+  <pattern>2bk</pattern>
+  <pattern>b2l</pattern>
+  <pattern>2bl </pattern>
+  <pattern>2bm</pattern>
+  <pattern>2b3m2n</pattern>
+  <pattern>2bn</pattern>
+  <pattern>2bp</pattern>
+  <pattern>2b3p2n</pattern>
+  <pattern>2b3p2s</pattern>
+  <pattern>2b3p2t</pattern>
+  <pattern>2bq</pattern>
+  <pattern>b2r</pattern>
+  <pattern>2br </pattern>
+  <pattern>2bs</pattern>
+  <pattern>2bt</pattern>
+  <pattern>2b3t2s</pattern>
+  <pattern>2b3t2z</pattern>
+  <pattern>2bv</pattern>
+  <pattern>2bw</pattern>
+  <pattern>2bx</pattern>
+  <pattern>2by</pattern>
+  <pattern>2bz</pattern>
+  <pattern>1c</pattern>
+  <pattern>4caca4</pattern>
+  <pattern>4caga4</pattern>
+  <pattern>4cagas </pattern>
+  <pattern>4cago4</pattern>
+  <pattern>cardio1a2</pattern>
+  <pattern>cardio1e2</pattern>
+  <pattern>cardio1h</pattern>
+  <pattern>cardio1i2</pattern>
+  <pattern>cardio1o2</pattern>
+  <pattern>cardio1u2</pattern>
+  <pattern>cardio1á2</pattern>
+  <pattern>cardio1é2</pattern>
+  <pattern>cardio1í2</pattern>
+  <pattern>cardio1ó2</pattern>
+  <pattern>cardio1ú2</pattern>
+  <pattern>2cb</pattern>
+  <pattern>2cc</pattern>
+  <pattern>2c3c2n</pattern>
+  <pattern>2c3c2t</pattern>
+  <pattern>2c3c2z</pattern>
+  <pattern>2cd</pattern>
+  <pattern>cefalo1a2</pattern>
+  <pattern>cefalo1e2</pattern>
+  <pattern>cefalo1h</pattern>
+  <pattern>cefalo1i2</pattern>
+  <pattern>cefalo1o2</pattern>
+  <pattern>cefalo1u2</pattern>
+  <pattern>cefalo1á2</pattern>
+  <pattern>cefalo1é2</pattern>
+  <pattern>cefalo1í2</pattern>
+  <pattern>cefalo1ó2</pattern>
+  <pattern>cefalo1ú2</pattern>
+  <pattern>centi1a2</pattern>
+  <pattern>centi1e2</pattern>
+  <pattern>centi1h</pattern>
+  <pattern>centi1i2</pattern>
+  <pattern>centi1o2</pattern>
+  <pattern>centi1u2</pattern>
+  <pattern>centi1á2</pattern>
+  <pattern>centi5área</pattern>
+  <pattern>centi1é2</pattern>
+  <pattern>centi1í2</pattern>
+  <pattern>centi1ó2</pattern>
+  <pattern>centi1ú2</pattern>
+  <pattern>2cf</pattern>
+  <pattern>2c3f2t</pattern>
+  <pattern>2cg</pattern>
+  <pattern>2c3g2n</pattern>
+  <pattern>c4h</pattern>
+  <pattern>2ch </pattern>
+  <pattern>ciclo1a2</pattern>
+  <pattern>ciclo1e2</pattern>
+  <pattern>ciclo1h</pattern>
+  <pattern>ciclo1i2</pattern>
+  <pattern>ciclo1o2</pattern>
+  <pattern>ciclo1u2</pattern>
+  <pattern>ciclo1á2</pattern>
+  <pattern>ciclo1é2</pattern>
+  <pattern>ciclo1í2</pattern>
+  <pattern>ciclo1ó2</pattern>
+  <pattern>ciclo1ú2</pattern>
+  <pattern>cito1a2</pattern>
+  <pattern>cito1e2</pattern>
+  <pattern>cito1h</pattern>
+  <pattern>cito1i2</pattern>
+  <pattern>cito1o2</pattern>
+  <pattern>cito1u2</pattern>
+  <pattern>cito1á2</pattern>
+  <pattern>cito1é2</pattern>
+  <pattern>cito1í2</pattern>
+  <pattern>cito1ó2</pattern>
+  <pattern>cito1ú2</pattern>
+  <pattern>2cj</pattern>
+  <pattern>c2k</pattern>
+  <pattern>c2l</pattern>
+  <pattern>2cl </pattern>
+  <pattern>2cm</pattern>
+  <pattern>2c3m2n</pattern>
+  <pattern>2cn</pattern>
+  <pattern>4cn </pattern>
+  <pattern>3c2neor</pattern>
+  <pattern>cnico1a2</pattern>
+  <pattern>cnico1e2</pattern>
+  <pattern>cnico1h</pattern>
+  <pattern>cnico1i2</pattern>
+  <pattern>cnico1o2</pattern>
+  <pattern>cnico1u2</pattern>
+  <pattern>cnico1á2</pattern>
+  <pattern>cnico1é2</pattern>
+  <pattern>cnico1í2</pattern>
+  <pattern>cnico1ó2</pattern>
+  <pattern>cnico1ú2</pattern>
+  <pattern>co4acci</pattern>
+  <pattern>co4acti</pattern>
+  <pattern>co4adju</pattern>
+  <pattern>co4a3dun</pattern>
+  <pattern>co4adyu</pattern>
+  <pattern>co3agen</pattern>
+  <pattern>co4a3gul</pattern>
+  <pattern>co4a3lic</pattern>
+  <pattern>co4aptac</pattern>
+  <pattern>co4art</pattern>
+  <pattern>co4e3fic</pattern>
+  <pattern>co4erc</pattern>
+  <pattern>co4erz</pattern>
+  <pattern>co4e3tá</pattern>
+  <pattern>co3exis</pattern>
+  <pattern>co4imbr</pattern>
+  <pattern>co4inci</pattern>
+  <pattern>co4i3to</pattern>
+  <pattern>con1imbr</pattern>
+  <pattern>co3n4imbri</pattern>
+  <pattern>contra1a2</pattern>
+  <pattern>contra1e2</pattern>
+  <pattern>contra1h</pattern>
+  <pattern>contra1i2</pattern>
+  <pattern>contra1o2</pattern>
+  <pattern>contra1u2</pattern>
+  <pattern>contra1á2</pattern>
+  <pattern>contra1é2</pattern>
+  <pattern>contra1í2</pattern>
+  <pattern>contra1ó2</pattern>
+  <pattern>contra1ú2</pattern>
+  <pattern>con1urb</pattern>
+  <pattern>co4o3per</pattern>
+  <pattern>co4opt</pattern>
+  <pattern>co4o3pér</pattern>
+  <pattern>co4ord</pattern>
+  <pattern>co4á3gul</pattern>
+  <pattern>co4árt</pattern>
+  <pattern>2cp</pattern>
+  <pattern>2c3p2n</pattern>
+  <pattern>2c3p2s</pattern>
+  <pattern>2c3p2t</pattern>
+  <pattern>2cq</pattern>
+  <pattern>c2r</pattern>
+  <pattern>2cr </pattern>
+  <pattern>cripto1a2</pattern>
+  <pattern>cripto1e2</pattern>
+  <pattern>cripto1h</pattern>
+  <pattern>cripto1i2</pattern>
+  <pattern>cripto1o2</pattern>
+  <pattern>cripto1u2</pattern>
+  <pattern>cripto1á2</pattern>
+  <pattern>cripto1é2</pattern>
+  <pattern>cripto1í2</pattern>
+  <pattern>cripto1ó2</pattern>
+  <pattern>cripto1ú2</pattern>
+  <pattern>crono1a2</pattern>
+  <pattern>crono1e2</pattern>
+  <pattern>crono1h</pattern>
+  <pattern>crono1i2</pattern>
+  <pattern>crono1o2</pattern>
+  <pattern>crono1u2</pattern>
+  <pattern>crono1á2</pattern>
+  <pattern>crono1é2</pattern>
+  <pattern>crono1í2</pattern>
+  <pattern>crono1ó2</pattern>
+  <pattern>crono1ú2</pattern>
+  <pattern>2cs</pattern>
+  <pattern>2ct</pattern>
+  <pattern>4ct </pattern>
+  <pattern>2c3t2s</pattern>
+  <pattern>2c3t2z</pattern>
+  <pattern>4culo4</pattern>
+  <pattern>2cv</pattern>
+  <pattern>2cw</pattern>
+  <pattern>2cx</pattern>
+  <pattern>2cy</pattern>
+  <pattern>2cz</pattern>
+  <pattern>4cz </pattern>
+  <pattern>1d</pattern>
+  <pattern>2db</pattern>
+  <pattern>2dc</pattern>
+  <pattern>2d3c2n</pattern>
+  <pattern>2d3c2t</pattern>
+  <pattern>2d3c2z</pattern>
+  <pattern>2dd</pattern>
+  <pattern>deca1a2</pattern>
+  <pattern>deca1e2</pattern>
+  <pattern>deca1h</pattern>
+  <pattern>deca1i2</pattern>
+  <pattern>deca2i3mient</pattern>
+  <pattern>deca1o2</pattern>
+  <pattern>deca1u2</pattern>
+  <pattern>deca1á2</pattern>
+  <pattern>deca1é2</pattern>
+  <pattern>deca1í2</pattern>
+  <pattern>deca1ó2</pattern>
+  <pattern>deca1ú2</pattern>
+  <pattern>decimo1</pattern>
+  <pattern>de4s3abast</pattern>
+  <pattern>de4s3aboll</pattern>
+  <pattern>de4s3aboto</pattern>
+  <pattern>de4s3abr</pattern>
+  <pattern>desa3brid</pattern>
+  <pattern>de4s3abroch</pattern>
+  <pattern>de4s3aceit</pattern>
+  <pattern>de4s3aceler</pattern>
+  <pattern>desa3cert</pattern>
+  <pattern>desa3ciert</pattern>
+  <pattern>de4s3acobar</pattern>
+  <pattern>de4s3acomod</pattern>
+  <pattern>de4s3acomp</pattern>
+  <pattern>de4s3acons</pattern>
+  <pattern>de4s3acopl</pattern>
+  <pattern>de4s3acorr</pattern>
+  <pattern>de4s3acostum</pattern>
+  <pattern>de4s3acot</pattern>
+  <pattern>desa3craliz</pattern>
+  <pattern>de4s3acredit</pattern>
+  <pattern>de4s3activ</pattern>
+  <pattern>de4s3acuart</pattern>
+  <pattern>de4s3aderez</pattern>
+  <pattern>de4s3adeud</pattern>
+  <pattern>de4s3adorar</pattern>
+  <pattern>de4s3adormec</pattern>
+  <pattern>de4s3adorn</pattern>
+  <pattern>de4s3advert</pattern>
+  <pattern>de4s3aferr</pattern>
+  <pattern>desa3fi</pattern>
+  <pattern>de4s3afic</pattern>
+  <pattern>de4s3afil</pattern>
+  <pattern>de4s3afin</pattern>
+  <pattern>de4s3afor</pattern>
+  <pattern>desa3fí</pattern>
+  <pattern>desa3garr</pattern>
+  <pattern>de4s3agraci</pattern>
+  <pattern>de4s3agrad</pattern>
+  <pattern>de4s3agravi</pattern>
+  <pattern>de4s3agreg</pattern>
+  <pattern>de4s3agrup</pattern>
+  <pattern>de4s3agu</pattern>
+  <pattern>desa3guisado</pattern>
+  <pattern>desa3gü</pattern>
+  <pattern>de4s3aherr</pattern>
+  <pattern>de4s3ahij</pattern>
+  <pattern>de4s3ajust</pattern>
+  <pattern>de4s3alagar</pattern>
+  <pattern>de4s3alent</pattern>
+  <pattern>de4s3alfom</pattern>
+  <pattern>de4s3alfor</pattern>
+  <pattern>de4s3alien</pattern>
+  <pattern>desa3lin</pattern>
+  <pattern>de4s3aline</pattern>
+  <pattern>desa3liv</pattern>
+  <pattern>de4s3aliñ</pattern>
+  <pattern>de4s3alm</pattern>
+  <pattern>de4s3almid</pattern>
+  <pattern>desa3loj</pattern>
+  <pattern>de4s3alquil</pattern>
+  <pattern>de4s3alter</pattern>
+  <pattern>de4s3alumbr</pattern>
+  <pattern>desa3marr</pattern>
+  <pattern>desa3mobl</pattern>
+  <pattern>de4s3amold</pattern>
+  <pattern>de4s3amort</pattern>
+  <pattern>de4s3amuebl</pattern>
+  <pattern>de4s3and</pattern>
+  <pattern>de4s3angel</pattern>
+  <pattern>de4s3anid</pattern>
+  <pattern>de4s3anim</pattern>
+  <pattern>de4s3anud</pattern>
+  <pattern>de4s3aním</pattern>
+  <pattern>desa3pacib</pattern>
+  <pattern>de4s3apadr</pattern>
+  <pattern>de4s3apare</pattern>
+  <pattern>desa3parec</pattern>
+  <pattern>desa3paric</pattern>
+  <pattern>desa3pañ</pattern>
+  <pattern>desa3peg</pattern>
+  <pattern>desa3percib</pattern>
+  <pattern>de4s3aplic</pattern>
+  <pattern>de4s3apolill</pattern>
+  <pattern>de4s3apoy</pattern>
+  <pattern>de4s3aprend</pattern>
+  <pattern>desa3prensi</pattern>
+  <pattern>de4s3apret</pattern>
+  <pattern>de4s3apriet</pattern>
+  <pattern>de4s3aprob</pattern>
+  <pattern>de4s3apropi</pattern>
+  <pattern>de4s3aprovech</pattern>
+  <pattern>de4s3arbol</pattern>
+  <pattern>de4s3aren</pattern>
+  <pattern>de4s3arm</pattern>
+  <pattern>des4arme</pattern>
+  <pattern>de4s3arraig</pattern>
+  <pattern>de4s3arregl</pattern>
+  <pattern>de4s3arrend</pattern>
+  <pattern>de4s3arrim</pattern>
+  <pattern>desa3rroll</pattern>
+  <pattern>de4s3arrop</pattern>
+  <pattern>de4s3arrug</pattern>
+  <pattern>de4s3articul</pattern>
+  <pattern>de4s3asent</pattern>
+  <pattern>de4s3asist</pattern>
+  <pattern>de4s3asn</pattern>
+  <pattern>desa3soseg</pattern>
+  <pattern>desa3sosieg</pattern>
+  <pattern>de4s3atenc</pattern>
+  <pattern>de4s3atend</pattern>
+  <pattern>de4s3atent</pattern>
+  <pattern>de4s3atiend</pattern>
+  <pattern>desa3tin</pattern>
+  <pattern>de4s3atorn</pattern>
+  <pattern>de4s3atranc</pattern>
+  <pattern>de4s3autor</pattern>
+  <pattern>de4s3avis</pattern>
+  <pattern>desa3yun</pattern>
+  <pattern>desa3zon</pattern>
+  <pattern>desa3zón</pattern>
+  <pattern>de4s3embal</pattern>
+  <pattern>de4s3embar</pattern>
+  <pattern>de4s3embarg</pattern>
+  <pattern>de4s3embols</pattern>
+  <pattern>de4s3emborr</pattern>
+  <pattern>de4s3embosc</pattern>
+  <pattern>de4s3embot</pattern>
+  <pattern>de4s3embrag</pattern>
+  <pattern>de4s3embrave</pattern>
+  <pattern>de4s3embroll</pattern>
+  <pattern>de4s3embruj</pattern>
+  <pattern>de4s3embrág</pattern>
+  <pattern>de4s3embráve</pattern>
+  <pattern>de4s3embróll</pattern>
+  <pattern>de4s3embrúj</pattern>
+  <pattern>de4s3embál</pattern>
+  <pattern>de4s3embár</pattern>
+  <pattern>de3semej</pattern>
+  <pattern>de4s3empac</pattern>
+  <pattern>de4s3empaquet</pattern>
+  <pattern>de4s3empaquét</pattern>
+  <pattern>de4s3emparej</pattern>
+  <pattern>de4s3emparent</pattern>
+  <pattern>de4s3emparéj</pattern>
+  <pattern>de4s3empat</pattern>
+  <pattern>de4s3empañ</pattern>
+  <pattern>de4s3empedr</pattern>
+  <pattern>de4s3empeg</pattern>
+  <pattern>de4s3empeor</pattern>
+  <pattern>de4s3emperez</pattern>
+  <pattern>de4s3empern</pattern>
+  <pattern>de4s3emple</pattern>
+  <pattern>de4s3empolv</pattern>
+  <pattern>de4s3empotr</pattern>
+  <pattern>de4s3empoz</pattern>
+  <pattern>de4s3empáñ</pattern>
+  <pattern>de4s3empé</pattern>
+  <pattern>de4s3enam</pattern>
+  <pattern>de4s3encab</pattern>
+  <pattern>de4s3encad</pattern>
+  <pattern>de4s3encaj</pattern>
+  <pattern>de4s3encall</pattern>
+  <pattern>de4s3encam</pattern>
+  <pattern>de3sencant</pattern>
+  <pattern>de4s3encap</pattern>
+  <pattern>de4s3encar</pattern>
+  <pattern>de4s3ench</pattern>
+  <pattern>de4s3encl</pattern>
+  <pattern>de4s3enco</pattern>
+  <pattern>de4s3encr</pattern>
+  <pattern>de4s3encu</pattern>
+  <pattern>de4s3encáj</pattern>
+  <pattern>de4s3encáll</pattern>
+  <pattern>de4s3encár</pattern>
+  <pattern>de4s3end</pattern>
+  <pattern>de3senfad</pattern>
+  <pattern>de4s3enfi</pattern>
+  <pattern>de4s3enfo</pattern>
+  <pattern>de3senfren</pattern>
+  <pattern>de4s3enfund</pattern>
+  <pattern>de4s3enfur</pattern>
+  <pattern>de3senfád</pattern>
+  <pattern>de4s3enfó</pattern>
+  <pattern>de4s3enganch</pattern>
+  <pattern>de4s3engar</pattern>
+  <pattern>de4s3engas</pattern>
+  <pattern>de3sengañ</pattern>
+  <pattern>de4s3engom</pattern>
+  <pattern>de4s3engoz</pattern>
+  <pattern>de4s3engra</pattern>
+  <pattern>de3sengáñ</pattern>
+  <pattern>de4s3enhebr</pattern>
+  <pattern>de4s3enj</pattern>
+  <pattern>de4s3enlad</pattern>
+  <pattern>de4s3enlaz</pattern>
+  <pattern>de4s3enlo</pattern>
+  <pattern>de4s3enm</pattern>
+  <pattern>de4s3enr</pattern>
+  <pattern>de4s3ens</pattern>
+  <pattern>de4s3enta</pattern>
+  <pattern>de3sentend</pattern>
+  <pattern>de4s3enter</pattern>
+  <pattern>de3sentien</pattern>
+  <pattern>de4s3entier</pattern>
+  <pattern>de3sentién</pattern>
+  <pattern>de4s3entiér</pattern>
+  <pattern>de4s3ento</pattern>
+  <pattern>de4s3entr</pattern>
+  <pattern>de4s3entu</pattern>
+  <pattern>de4s3envain</pattern>
+  <pattern>de3senvolvim</pattern>
+  <pattern>de3seo</pattern>
+  <pattern>de4s3eq</pattern>
+  <pattern>de3s4erci</pattern>
+  <pattern>de3s4ert</pattern>
+  <pattern>de4s3espa</pattern>
+  <pattern>de3sesper</pattern>
+  <pattern>de3sesperac</pattern>
+  <pattern>de4s3esperanz</pattern>
+  <pattern>de4s3estabil</pattern>
+  <pattern>de4s3estim</pattern>
+  <pattern>de3sider</pattern>
+  <pattern>de3sidia</pattern>
+  <pattern>de3sidio</pattern>
+  <pattern>de3siert</pattern>
+  <pattern>de3sign</pattern>
+  <pattern>de3sigual</pattern>
+  <pattern>de3silusi</pattern>
+  <pattern>de4s3imagin</pattern>
+  <pattern>de4s3iman</pattern>
+  <pattern>de4s3impon</pattern>
+  <pattern>de4s3impres</pattern>
+  <pattern>de4s3impresX</pattern>
+  <pattern>de4s3incent</pattern>
+  <pattern>de4s3inclin</pattern>
+  <pattern>de4s3incorp</pattern>
+  <pattern>de4s3incrust</pattern>
+  <pattern>de3sinenc</pattern>
+  <pattern>de3sinfec</pattern>
+  <pattern>de4s3infl</pattern>
+  <pattern>de4s3inflam</pattern>
+  <pattern>de4s3inform</pattern>
+  <pattern>de4s3inhib</pattern>
+  <pattern>de4s3insect</pattern>
+  <pattern>de4s3instal</pattern>
+  <pattern>de3s4integr</pattern>
+  <pattern>de3s4inter</pattern>
+  <pattern>de4s3intox</pattern>
+  <pattern>de4s3inver</pattern>
+  <pattern>de3sisten</pattern>
+  <pattern>de4s3obedec</pattern>
+  <pattern>de4s3oblig</pattern>
+  <pattern>de4s3obstr</pattern>
+  <pattern>de3socup</pattern>
+  <pattern>de4s3odor</pattern>
+  <pattern>de3solac</pattern>
+  <pattern>de3solad</pattern>
+  <pattern>de3soll</pattern>
+  <pattern>de3sonce</pattern>
+  <pattern>de4s3orde</pattern>
+  <pattern>de4s3orej</pattern>
+  <pattern>de3s4oseg</pattern>
+  <pattern>de4s3ova</pattern>
+  <pattern>de4s3ovi</pattern>
+  <pattern>de4s3oxi</pattern>
+  <pattern>de4s3oye</pattern>
+  <pattern>de4s3oyé</pattern>
+  <pattern>de4s3ub4ic</pattern>
+  <pattern>de3s4ubstan</pattern>
+  <pattern>de3su3dan</pattern>
+  <pattern>de3su3dar</pattern>
+  <pattern>de3su3das</pattern>
+  <pattern>de3suell</pattern>
+  <pattern>de4s3unier</pattern>
+  <pattern>de4s3unim</pattern>
+  <pattern>de4s3unir</pattern>
+  <pattern>de3s4ustan</pattern>
+  <pattern>de3s4ért</pattern>
+  <pattern>de4s3órde</pattern>
+  <pattern>2df</pattern>
+  <pattern>2d3f2t</pattern>
+  <pattern>2dg</pattern>
+  <pattern>2d3g2n</pattern>
+  <pattern>2d1h</pattern>
+  <pattern>2dj</pattern>
+  <pattern>2dk</pattern>
+  <pattern>2dl</pattern>
+  <pattern>2dm</pattern>
+  <pattern>2d3m2n</pattern>
+  <pattern>2dn</pattern>
+  <pattern>dodeca1a2</pattern>
+  <pattern>dodeca1e2</pattern>
+  <pattern>dodeca1h</pattern>
+  <pattern>dodeca1i2</pattern>
+  <pattern>dodeca1o2</pattern>
+  <pattern>dodeca1u2</pattern>
+  <pattern>dodeca1á2</pattern>
+  <pattern>dodeca1é2</pattern>
+  <pattern>dodeca1í2</pattern>
+  <pattern>dodeca1ó2</pattern>
+  <pattern>dodeca1ú2</pattern>
+  <pattern>2dp</pattern>
+  <pattern>2d3p2n</pattern>
+  <pattern>2d3p2s</pattern>
+  <pattern>2d3p2t</pattern>
+  <pattern>2dq</pattern>
+  <pattern>d2r</pattern>
+  <pattern>2dr </pattern>
+  <pattern>2ds</pattern>
+  <pattern>2dt</pattern>
+  <pattern>2d3t2s</pattern>
+  <pattern>2d3t2z</pattern>
+  <pattern>2dv</pattern>
+  <pattern>2dw</pattern>
+  <pattern>2dx</pattern>
+  <pattern>2dy</pattern>
+  <pattern>2dz</pattern>
+  <pattern>4e </pattern>
+  <pattern>ea3cia </pattern>
+  <pattern>ea3cias </pattern>
+  <pattern>ea3cio </pattern>
+  <pattern>ea3cios </pattern>
+  <pattern>4eadla </pattern>
+  <pattern>e4a3miento</pattern>
+  <pattern>ecano1a2</pattern>
+  <pattern>ecano1e2</pattern>
+  <pattern>ecano1h</pattern>
+  <pattern>ecano1i2</pattern>
+  <pattern>ecano1o2</pattern>
+  <pattern>ecano1u2</pattern>
+  <pattern>ecano1á2</pattern>
+  <pattern>ecano1é2</pattern>
+  <pattern>ecano1í2</pattern>
+  <pattern>ecano1ó2</pattern>
+  <pattern>ecano1ú2</pattern>
+  <pattern>eco1a2</pattern>
+  <pattern>eco1e2</pattern>
+  <pattern>eco1h</pattern>
+  <pattern>eco1i2</pattern>
+  <pattern>eco1o2</pattern>
+  <pattern>eco1u2</pattern>
+  <pattern>eco1á2</pattern>
+  <pattern>eco1é2</pattern>
+  <pattern>eco1í2</pattern>
+  <pattern>eco1ó2</pattern>
+  <pattern>eco1ú2</pattern>
+  <pattern>ectro1a2</pattern>
+  <pattern>ectro1e2</pattern>
+  <pattern>ectro1h</pattern>
+  <pattern>ectro1i2</pattern>
+  <pattern>ectro1o2</pattern>
+  <pattern>ectro1u2</pattern>
+  <pattern>ectro1á2</pattern>
+  <pattern>ectro1é2</pattern>
+  <pattern>ectro1í2</pattern>
+  <pattern>ectro1ó2</pattern>
+  <pattern>ectro1ú2</pattern>
+  <pattern>4ed </pattern>
+  <pattern>4edlas </pattern>
+  <pattern>4edle </pattern>
+  <pattern>4edles </pattern>
+  <pattern>4edlo </pattern>
+  <pattern>4edlos </pattern>
+  <pattern>4edme </pattern>
+  <pattern>4ednos </pattern>
+  <pattern>4e3dro </pattern>
+  <pattern>4e3dros </pattern>
+  <pattern>4edte </pattern>
+  <pattern>4eedla </pattern>
+  <pattern>4emboca</pattern>
+  <pattern>emi2o2</pattern>
+  <pattern>4e3mos </pattern>
+  <pattern>4en </pattern>
+  <pattern>endo1a2</pattern>
+  <pattern>endo1e2</pattern>
+  <pattern>endo1h</pattern>
+  <pattern>endo1i2</pattern>
+  <pattern>endo1o2</pattern>
+  <pattern>endo1u2</pattern>
+  <pattern>endo1á2</pattern>
+  <pattern>endo1é2</pattern>
+  <pattern>endo1í2</pattern>
+  <pattern>endo1ó2</pattern>
+  <pattern>endo1ú2</pattern>
+  <pattern>ento1a2</pattern>
+  <pattern>ento1e2</pattern>
+  <pattern>ento1h</pattern>
+  <pattern>ento1i2</pattern>
+  <pattern>ento1o2</pattern>
+  <pattern>ento1u2</pattern>
+  <pattern>ento1á2</pattern>
+  <pattern>ento1é2</pattern>
+  <pattern>ento1í2</pattern>
+  <pattern>ento1ó2</pattern>
+  <pattern>ento1ú2</pattern>
+  <pattern>entre1a2</pattern>
+  <pattern>entre1e2</pattern>
+  <pattern>entre1h</pattern>
+  <pattern>entre1i2</pattern>
+  <pattern>entre1o2</pattern>
+  <pattern>entre1u2</pattern>
+  <pattern>entre1á2</pattern>
+  <pattern>entre1é2</pattern>
+  <pattern>entre1í2</pattern>
+  <pattern>entre1ó2</pattern>
+  <pattern>entre1ú2</pattern>
+  <pattern>4eos </pattern>
+  <pattern>4er </pattern>
+  <pattern>e5r4a3ba </pattern>
+  <pattern>e5r4a3bais </pattern>
+  <pattern>e5r4a3ban </pattern>
+  <pattern>e5r4a3bas </pattern>
+  <pattern>4e3ra3ble </pattern>
+  <pattern>4e3ra3blemente </pattern>
+  <pattern>4e3ra3bles </pattern>
+  <pattern>e5r4ad </pattern>
+  <pattern>e5r4a3da </pattern>
+  <pattern>e5r4a3das </pattern>
+  <pattern>e5r4a3do </pattern>
+  <pattern>e5r4a3dor </pattern>
+  <pattern>e5r4a3dora </pattern>
+  <pattern>e5r4a3doras </pattern>
+  <pattern>e5r4a3dores </pattern>
+  <pattern>e5r4a3dos </pattern>
+  <pattern>e5r4a3mos </pattern>
+  <pattern>e5r4an </pattern>
+  <pattern>e5r4a3ra </pattern>
+  <pattern>e5r4a3rais </pattern>
+  <pattern>e5r4a3ran </pattern>
+  <pattern>e5r4a3ras </pattern>
+  <pattern>e5r4a3re </pattern>
+  <pattern>e5r4a3reis </pattern>
+  <pattern>e5r4a3remos </pattern>
+  <pattern>e5r4a3ren </pattern>
+  <pattern>e5r4a3res </pattern>
+  <pattern>e5r4a3ron </pattern>
+  <pattern>e5r4a3rá </pattern>
+  <pattern>e5r4a3rán </pattern>
+  <pattern>e5r4a3rás </pattern>
+  <pattern>e5r4a3ré </pattern>
+  <pattern>e5r4a3réis </pattern>
+  <pattern>e5r4a3rés </pattern>
+  <pattern>e5r4a3ría </pattern>
+  <pattern>e5r4a3ríais</pattern>
+  <pattern>e5r4a3ríamos </pattern>
+  <pattern>e5r4a3rían </pattern>
+  <pattern>e5r4a3rías </pattern>
+  <pattern>e5r4a3rís </pattern>
+  <pattern>e5r4as </pattern>
+  <pattern>e5r4a3se </pattern>
+  <pattern>e5r4a3seis </pattern>
+  <pattern>e5r4a3sen </pattern>
+  <pattern>e5r4a3ses </pattern>
+  <pattern>e5r4aste </pattern>
+  <pattern>e5r4asteis </pattern>
+  <pattern>e5r4astes </pattern>
+  <pattern>e5r4ates </pattern>
+  <pattern>4e3re3mos </pattern>
+  <pattern>4e3rior </pattern>
+  <pattern>4e3riora </pattern>
+  <pattern>4e3rioras </pattern>
+  <pattern>4e3riores </pattern>
+  <pattern>4e3rioridad </pattern>
+  <pattern>4e3rioridades </pattern>
+  <pattern>4e3riormente </pattern>
+  <pattern>4erla </pattern>
+  <pattern>4erlas </pattern>
+  <pattern>4erle </pattern>
+  <pattern>4erles </pattern>
+  <pattern>4erlo </pattern>
+  <pattern>4erlos </pattern>
+  <pattern>4erme </pattern>
+  <pattern>4ernos </pattern>
+  <pattern>4e3ros </pattern>
+  <pattern>4erse </pattern>
+  <pattern>4erte </pattern>
+  <pattern>4e3rá </pattern>
+  <pattern>e5r4á3bamos </pattern>
+  <pattern>e5r4áis </pattern>
+  <pattern>4e3rán </pattern>
+  <pattern>e5r4á3ramos </pattern>
+  <pattern>e5r4á3remos </pattern>
+  <pattern>4e3rás </pattern>
+  <pattern>e5r4á3semos </pattern>
+  <pattern>4e3ré </pattern>
+  <pattern>4e3réis </pattern>
+  <pattern>4e3rés </pattern>
+  <pattern>4e3ría </pattern>
+  <pattern>4e3ríais </pattern>
+  <pattern>4e3ríamos </pattern>
+  <pattern>4e3rían </pattern>
+  <pattern>4e3rías </pattern>
+  <pattern>4e3rís </pattern>
+  <pattern>4es </pattern>
+  <pattern>euco1a2</pattern>
+  <pattern>euco1e2</pattern>
+  <pattern>euco1h</pattern>
+  <pattern>euco1i2</pattern>
+  <pattern>euco1o2</pattern>
+  <pattern>euco1u2</pattern>
+  <pattern>euco1á2</pattern>
+  <pattern>euco1é2</pattern>
+  <pattern>euco1í2</pattern>
+  <pattern>euco1ó2</pattern>
+  <pattern>euco1ú2</pattern>
+  <pattern>euro1a2</pattern>
+  <pattern>euro1e2</pattern>
+  <pattern>euro1h</pattern>
+  <pattern>euro1i2</pattern>
+  <pattern>euro1o2</pattern>
+  <pattern>euro1u2</pattern>
+  <pattern>euro1á2</pattern>
+  <pattern>euro1é2</pattern>
+  <pattern>euro1í2</pattern>
+  <pattern>euro1ó2</pattern>
+  <pattern>euro1ú2</pattern>
+  <pattern>expoli4</pattern>
+  <pattern>extra1a2</pattern>
+  <pattern>extra1e2</pattern>
+  <pattern>extra1h</pattern>
+  <pattern>extra1i2</pattern>
+  <pattern>extra1o2</pattern>
+  <pattern>extra1u2</pattern>
+  <pattern>extra1á2</pattern>
+  <pattern>extra1é2</pattern>
+  <pattern>extra1í2</pattern>
+  <pattern>extra1ó2</pattern>
+  <pattern>extra1ú2</pattern>
+  <pattern>1f</pattern>
+  <pattern>familia3ri</pattern>
+  <pattern>2fb</pattern>
+  <pattern>2fc</pattern>
+  <pattern>2fd</pattern>
+  <pattern>2ff</pattern>
+  <pattern>2fg</pattern>
+  <pattern>2f1h</pattern>
+  <pattern>2fj</pattern>
+  <pattern>2fk</pattern>
+  <pattern>f2l</pattern>
+  <pattern>2fl </pattern>
+  <pattern>2fm</pattern>
+  <pattern>2fn</pattern>
+  <pattern>fono1a2</pattern>
+  <pattern>fono1e2</pattern>
+  <pattern>fono1h</pattern>
+  <pattern>fono1i2</pattern>
+  <pattern>fono1o2</pattern>
+  <pattern>fono1u2</pattern>
+  <pattern>fono1á2</pattern>
+  <pattern>fono1é2</pattern>
+  <pattern>fono1í2</pattern>
+  <pattern>fono1ó2</pattern>
+  <pattern>fono1ú2</pattern>
+  <pattern>foto1a2</pattern>
+  <pattern>foto1e2</pattern>
+  <pattern>foto1h</pattern>
+  <pattern>foto1i2</pattern>
+  <pattern>foto1o2</pattern>
+  <pattern>foto1u2</pattern>
+  <pattern>foto1á2</pattern>
+  <pattern>foto1é2</pattern>
+  <pattern>foto1í2</pattern>
+  <pattern>foto1ó2</pattern>
+  <pattern>foto1ú2</pattern>
+  <pattern>2fp</pattern>
+  <pattern>2fq</pattern>
+  <pattern>f2r</pattern>
+  <pattern>2fr </pattern>
+  <pattern>2fs</pattern>
+  <pattern>2ft</pattern>
+  <pattern>4ft </pattern>
+  <pattern>2fv</pattern>
+  <pattern>2fw</pattern>
+  <pattern>2fx</pattern>
+  <pattern>2fy</pattern>
+  <pattern>2fz</pattern>
+  <pattern>1g</pattern>
+  <pattern>gastro1a2</pattern>
+  <pattern>gastro1e2</pattern>
+  <pattern>gastro1h</pattern>
+  <pattern>gastro1i2</pattern>
+  <pattern>gastro1o2</pattern>
+  <pattern>gastro1u2</pattern>
+  <pattern>gastro1á2</pattern>
+  <pattern>gastro1é2</pattern>
+  <pattern>gastro1í2</pattern>
+  <pattern>gastro1ó2</pattern>
+  <pattern>gastro1ú2</pattern>
+  <pattern>2gb</pattern>
+  <pattern>2gc</pattern>
+  <pattern>2gd</pattern>
+  <pattern>geo1a2</pattern>
+  <pattern>geo1e2</pattern>
+  <pattern>geo1h</pattern>
+  <pattern>geo1i2</pattern>
+  <pattern>geo1o2</pattern>
+  <pattern>geo1u2</pattern>
+  <pattern>geo1á2</pattern>
+  <pattern>geo1é2</pattern>
+  <pattern>geo1í2</pattern>
+  <pattern>geo1ó2</pattern>
+  <pattern>geo1ú2</pattern>
+  <pattern>2gf</pattern>
+  <pattern>2gg</pattern>
+  <pattern>2g2h</pattern>
+  <pattern>2gj</pattern>
+  <pattern>2gk</pattern>
+  <pattern>g2l</pattern>
+  <pattern>2gl </pattern>
+  <pattern>gluco1a2</pattern>
+  <pattern>gluco1e2</pattern>
+  <pattern>gluco1h</pattern>
+  <pattern>gluco1i2</pattern>
+  <pattern>gluco1o2</pattern>
+  <pattern>gluco1u2</pattern>
+  <pattern>gluco1á2</pattern>
+  <pattern>gluco1é2</pattern>
+  <pattern>gluco1í2</pattern>
+  <pattern>gluco1ó2</pattern>
+  <pattern>gluco1ú2</pattern>
+  <pattern>2gm</pattern>
+  <pattern>2gn</pattern>
+  <pattern>4gn </pattern>
+  <pattern>2gp</pattern>
+  <pattern>2gq</pattern>
+  <pattern>g2r</pattern>
+  <pattern>2gr </pattern>
+  <pattern>2gs</pattern>
+  <pattern>2gt</pattern>
+  <pattern>2gv</pattern>
+  <pattern>2gw</pattern>
+  <pattern>2gx</pattern>
+  <pattern>2gy</pattern>
+  <pattern>2gz</pattern>
+  <pattern>2hb</pattern>
+  <pattern>2hc</pattern>
+  <pattern>2hd</pattern>
+  <pattern>hecto1a2</pattern>
+  <pattern>hecto1e2</pattern>
+  <pattern>hecto1h</pattern>
+  <pattern>hecto1i2</pattern>
+  <pattern>hecto1o2</pattern>
+  <pattern>hecto1u2</pattern>
+  <pattern>hecto1á2</pattern>
+  <pattern>hecto1é2</pattern>
+  <pattern>hecto1í2</pattern>
+  <pattern>hecto1ó2</pattern>
+  <pattern>hecto1ú2</pattern>
+  <pattern>helio1a2</pattern>
+  <pattern>helio1e2</pattern>
+  <pattern>helio1h</pattern>
+  <pattern>helio1i2</pattern>
+  <pattern>helio1o2</pattern>
+  <pattern>helio1u2</pattern>
+  <pattern>helio1á2</pattern>
+  <pattern>helio1é2</pattern>
+  <pattern>helio1í2</pattern>
+  <pattern>helio1ó2</pattern>
+  <pattern>helio1ú2</pattern>
+  <pattern>hemato1a2</pattern>
+  <pattern>hemato1e2</pattern>
+  <pattern>hemato1h</pattern>
+  <pattern>hemato1i2</pattern>
+  <pattern>hemato1o2</pattern>
+  <pattern>hemato1u2</pattern>
+  <pattern>hemato1á2</pattern>
+  <pattern>hemato1é2</pattern>
+  <pattern>hemato1í2</pattern>
+  <pattern>hemato1ó2</pattern>
+  <pattern>hemato1ú2</pattern>
+  <pattern>hemi1a2</pattern>
+  <pattern>hemi1e2</pattern>
+  <pattern>hemi1h</pattern>
+  <pattern>hemi1i2</pattern>
+  <pattern>hemi1o2</pattern>
+  <pattern>hemi1u2</pattern>
+  <pattern>hemi1á2</pattern>
+  <pattern>hemi1é2</pattern>
+  <pattern>hemi1í2</pattern>
+  <pattern>hemi1ó2</pattern>
+  <pattern>hemi1ú2</pattern>
+  <pattern>hemo1a2</pattern>
+  <pattern>hemo1e2</pattern>
+  <pattern>hemo1h</pattern>
+  <pattern>hemo1i2</pattern>
+  <pattern>hemo1o2</pattern>
+  <pattern>hemo1u2</pattern>
+  <pattern>hemo1á2</pattern>
+  <pattern>hemo1é2</pattern>
+  <pattern>hemo1í2</pattern>
+  <pattern>hemo1ó2</pattern>
+  <pattern>hemo1ú2</pattern>
+  <pattern>hexa1a2</pattern>
+  <pattern>hexa1e2</pattern>
+  <pattern>hexa1h</pattern>
+  <pattern>hexa1i2</pattern>
+  <pattern>hexa1o2</pattern>
+  <pattern>hexa1u2</pattern>
+  <pattern>hexa1á2</pattern>
+  <pattern>hexa1é2</pattern>
+  <pattern>hexa1í2</pattern>
+  <pattern>hexa1ó2</pattern>
+  <pattern>hexa1ú2</pattern>
+  <pattern>2hf</pattern>
+  <pattern>2hg</pattern>
+  <pattern>2h1h</pattern>
+  <pattern>hidro1a2</pattern>
+  <pattern>hidro1e2</pattern>
+  <pattern>hidro1h</pattern>
+  <pattern>hidro1i2</pattern>
+  <pattern>hidro1o2</pattern>
+  <pattern>hidro1u2</pattern>
+  <pattern>hidro1á2</pattern>
+  <pattern>hidro1é2</pattern>
+  <pattern>hidro1í2</pattern>
+  <pattern>hidro1ó2</pattern>
+  <pattern>hidro1ú2</pattern>
+  <pattern>hipe2r1a2</pattern>
+  <pattern>hipe2r1e2</pattern>
+  <pattern>hipe2r1i2</pattern>
+  <pattern>hipe2r1o2</pattern>
+  <pattern>hipe2r3r</pattern>
+  <pattern>hipe2r1u2</pattern>
+  <pattern>hipe2r1á2</pattern>
+  <pattern>hipe2r1é2</pattern>
+  <pattern>hipe2r1í2</pattern>
+  <pattern>hipe2r1ó2</pattern>
+  <pattern>hipe2r1ú2</pattern>
+  <pattern>histo1a2</pattern>
+  <pattern>histo1e2</pattern>
+  <pattern>histo1h</pattern>
+  <pattern>histo1i2</pattern>
+  <pattern>histo1o2</pattern>
+  <pattern>histo1u2</pattern>
+  <pattern>histo1á2</pattern>
+  <pattern>histo1é2</pattern>
+  <pattern>histo1í2</pattern>
+  <pattern>histo1ó2</pattern>
+  <pattern>histo1ú2</pattern>
+  <pattern>2hj</pattern>
+  <pattern>2hk</pattern>
+  <pattern>2hl</pattern>
+  <pattern>2hm</pattern>
+  <pattern>2hn</pattern>
+  <pattern>homo1a2</pattern>
+  <pattern>homo1e2</pattern>
+  <pattern>homo1h</pattern>
+  <pattern>homo1i2</pattern>
+  <pattern>homo1o2</pattern>
+  <pattern>homo1u2</pattern>
+  <pattern>homo1á2</pattern>
+  <pattern>homo1é2</pattern>
+  <pattern>homo1í2</pattern>
+  <pattern>homo1ó2</pattern>
+  <pattern>homo1ú2</pattern>
+  <pattern>2hp</pattern>
+  <pattern>2hq</pattern>
+  <pattern>2hr</pattern>
+  <pattern>2hs</pattern>
+  <pattern>2ht</pattern>
+  <pattern>2hv</pattern>
+  <pattern>2hw</pattern>
+  <pattern>2hx</pattern>
+  <pattern>2hy</pattern>
+  <pattern>2hz</pattern>
+  <pattern>i2a </pattern>
+  <pattern>ia5res </pattern>
+  <pattern>i2as </pattern>
+  <pattern>2i3ca </pattern>
+  <pattern>2i3cas </pattern>
+  <pattern>2i3co </pattern>
+  <pattern>icono1a2</pattern>
+  <pattern>icono1e2</pattern>
+  <pattern>icono1h</pattern>
+  <pattern>icono1i2</pattern>
+  <pattern>icono1o2</pattern>
+  <pattern>icono1u2</pattern>
+  <pattern>icono1á2</pattern>
+  <pattern>icono1é2</pattern>
+  <pattern>icono1í2</pattern>
+  <pattern>icono1ó2</pattern>
+  <pattern>icono1ú2</pattern>
+  <pattern>2i3cos </pattern>
+  <pattern>4i2dal </pattern>
+  <pattern>4i2dales </pattern>
+  <pattern>4i3deo </pattern>
+  <pattern>4i3deos </pattern>
+  <pattern>4i4er </pattern>
+  <pattern>4i3ga </pattern>
+  <pattern>4i3gamos </pattern>
+  <pattern>4i3gas </pattern>
+  <pattern>4i3go </pattern>
+  <pattern>4i3gáis </pattern>
+  <pattern>4i3gá3monos </pattern>
+  <pattern>4i3gá3monosla </pattern>
+  <pattern>4i3gá3monoslas </pattern>
+  <pattern>4i3gá3monosle </pattern>
+  <pattern>4i3gá3monosles </pattern>
+  <pattern>4i3gá3monoslo </pattern>
+  <pattern>4i3gá3monoslos </pattern>
+  <pattern>4i3gá3moos </pattern>
+  <pattern>4i3gá3moosla </pattern>
+  <pattern>4i3gá3mooslas </pattern>
+  <pattern>4i3gá3moosle </pattern>
+  <pattern>4i3gá3moosles </pattern>
+  <pattern>4i3gá3mooslo </pattern>
+  <pattern>4i3gá3mooslos </pattern>
+  <pattern>4i3gá3mosela </pattern>
+  <pattern>4i3gá3moselas </pattern>
+  <pattern>4i3gá3mosele </pattern>
+  <pattern>4i3gá3moseles </pattern>
+  <pattern>4i3gá3moselo </pattern>
+  <pattern>4i3gá3moselos </pattern>
+  <pattern>4i3gá3mosla </pattern>
+  <pattern>4i3gá3moslas </pattern>
+  <pattern>4i3gá3mosle </pattern>
+  <pattern>4i3gá3mosles </pattern>
+  <pattern>4i3gá3moslo </pattern>
+  <pattern>4i3gá3moslos </pattern>
+  <pattern>4i3gá3mosme </pattern>
+  <pattern>4i3gá3mos3mela </pattern>
+  <pattern>4i3gá3mos3melas </pattern>
+  <pattern>4i3gá3mosmele </pattern>
+  <pattern>4i3gá3mosmeles </pattern>
+  <pattern>4i3gá3mosmelo </pattern>
+  <pattern>4i3gá3mosmelos </pattern>
+  <pattern>4i3gá3moste </pattern>
+  <pattern>4i3gá3mos3tela </pattern>
+  <pattern>4i3gá3mos3telas </pattern>
+  <pattern>4i3gá3mostele </pattern>
+  <pattern>4i3gá3mosteles </pattern>
+  <pattern>4i3gá3mostelo </pattern>
+  <pattern>4i3gá3mostelos </pattern>
+  <pattern>4i3gás </pattern>
+  <pattern>infra1a2</pattern>
+  <pattern>infra1e2</pattern>
+  <pattern>infra1h</pattern>
+  <pattern>infra1i2</pattern>
+  <pattern>infra1o2</pattern>
+  <pattern>infra1u2</pattern>
+  <pattern>infra1á2</pattern>
+  <pattern>infra1é2</pattern>
+  <pattern>infra1í2</pattern>
+  <pattern>infra1ó2</pattern>
+  <pattern>infra1ú2</pattern>
+  <pattern>inter4esar</pattern>
+  <pattern>inter4in</pattern>
+  <pattern>inter4ino</pattern>
+  <pattern>inter4ior</pattern>
+  <pattern>inter4és</pattern>
+  <pattern>intra1a2</pattern>
+  <pattern>intra1e2</pattern>
+  <pattern>intra1h</pattern>
+  <pattern>intra1i2</pattern>
+  <pattern>intra1o2</pattern>
+  <pattern>intra1u2</pattern>
+  <pattern>intra1á2</pattern>
+  <pattern>intra1é2</pattern>
+  <pattern>intra1í2</pattern>
+  <pattern>intra1ó2</pattern>
+  <pattern>intra1ú2</pattern>
+  <pattern>i2o </pattern>
+  <pattern>i2os </pattern>
+  <pattern>iso1a2</pattern>
+  <pattern>iso1e2</pattern>
+  <pattern>iso1h</pattern>
+  <pattern>iso1i2</pattern>
+  <pattern>iso1o2</pattern>
+  <pattern>iso1u2</pattern>
+  <pattern>iso1á2</pattern>
+  <pattern>iso1é2</pattern>
+  <pattern>iso1í2</pattern>
+  <pattern>iso1ó2</pattern>
+  <pattern>iso1ú2</pattern>
+  <pattern>1j</pattern>
+  <pattern>2jb</pattern>
+  <pattern>2jc</pattern>
+  <pattern>2jd</pattern>
+  <pattern>2jf</pattern>
+  <pattern>2jg</pattern>
+  <pattern>2j1h</pattern>
+  <pattern>2jj</pattern>
+  <pattern>2jk</pattern>
+  <pattern>2jl</pattern>
+  <pattern>2jm</pattern>
+  <pattern>2jn</pattern>
+  <pattern>2jp</pattern>
+  <pattern>2jq</pattern>
+  <pattern>2jr</pattern>
+  <pattern>2js</pattern>
+  <pattern>2jt</pattern>
+  <pattern>2jv</pattern>
+  <pattern>2jw</pattern>
+  <pattern>2jx</pattern>
+  <pattern>2jy</pattern>
+  <pattern>2jz</pattern>
+  <pattern>1k</pattern>
+  <pattern>2kb</pattern>
+  <pattern>2kc</pattern>
+  <pattern>2kd</pattern>
+  <pattern>2kf</pattern>
+  <pattern>2kg</pattern>
+  <pattern>2k2h</pattern>
+  <pattern>kilo1a2</pattern>
+  <pattern>kilo1e2</pattern>
+  <pattern>kilo1h</pattern>
+  <pattern>kilo1i2</pattern>
+  <pattern>kilo1o2</pattern>
+  <pattern>kilo1u2</pattern>
+  <pattern>kilo1á2</pattern>
+  <pattern>kilo1é2</pattern>
+  <pattern>kilo1í2</pattern>
+  <pattern>kilo1ó2</pattern>
+  <pattern>kilo1ú2</pattern>
+  <pattern>2kj</pattern>
+  <pattern>2kk</pattern>
+  <pattern>k2l</pattern>
+  <pattern>2kl </pattern>
+  <pattern>2km</pattern>
+  <pattern>2kn</pattern>
+  <pattern>2kp</pattern>
+  <pattern>2kq</pattern>
+  <pattern>k2r</pattern>
+  <pattern>2kr </pattern>
+  <pattern>2ks</pattern>
+  <pattern>2kt</pattern>
+  <pattern>2kv</pattern>
+  <pattern>2kw</pattern>
+  <pattern>2kx</pattern>
+  <pattern>2ky</pattern>
+  <pattern>2kz</pattern>
+  <pattern>1l</pattern>
+  <pattern>2lb</pattern>
+  <pattern>2lc</pattern>
+  <pattern>2l3c2n</pattern>
+  <pattern>2l3c2t</pattern>
+  <pattern>2l3c2z</pattern>
+  <pattern>2ld</pattern>
+  <pattern>2lf</pattern>
+  <pattern>2l3f2t</pattern>
+  <pattern>2lg</pattern>
+  <pattern>2l3g2n</pattern>
+  <pattern>2l1h</pattern>
+  <pattern>li5área</pattern>
+  <pattern>2lj</pattern>
+  <pattern>2lk</pattern>
+  <pattern>l4l</pattern>
+  <pattern>2ll </pattern>
+  <pattern>2lm</pattern>
+  <pattern>2l3m2n</pattern>
+  <pattern>2ln</pattern>
+  <pattern>2lp</pattern>
+  <pattern>2l3p2n</pattern>
+  <pattern>2l3p2s</pattern>
+  <pattern>2l3p2t</pattern>
+  <pattern>2lq</pattern>
+  <pattern>2lr</pattern>
+  <pattern>2ls</pattern>
+  <pattern>2lt</pattern>
+  <pattern>2l3t2s</pattern>
+  <pattern>2l3t2z</pattern>
+  <pattern>2lv</pattern>
+  <pattern>2lw</pattern>
+  <pattern>2lx</pattern>
+  <pattern>2ly</pattern>
+  <pattern>2lz</pattern>
+  <pattern>1m</pattern>
+  <pattern>macro1a2</pattern>
+  <pattern>macro1e2</pattern>
+  <pattern>macro1h</pattern>
+  <pattern>macro1i2</pattern>
+  <pattern>macro1o2</pattern>
+  <pattern>macro1u2</pattern>
+  <pattern>macro1á2</pattern>
+  <pattern>macro1é2</pattern>
+  <pattern>macro1í2</pattern>
+  <pattern>macro1ó2</pattern>
+  <pattern>macro1ú2</pattern>
+  <pattern>mal2</pattern>
+  <pattern>mal3b</pattern>
+  <pattern>mal3c</pattern>
+  <pattern>mal3d</pattern>
+  <pattern>mal3f</pattern>
+  <pattern>mal3g</pattern>
+  <pattern>ma4l3h</pattern>
+  <pattern>mal3m</pattern>
+  <pattern>mal3p</pattern>
+  <pattern>mal3q</pattern>
+  <pattern>mal3s</pattern>
+  <pattern>mal3t</pattern>
+  <pattern>mal3v</pattern>
+  <pattern>mante4a</pattern>
+  <pattern>maxi1a2</pattern>
+  <pattern>maxi1e2</pattern>
+  <pattern>maxi1h</pattern>
+  <pattern>maxi1i2</pattern>
+  <pattern>maxi1o2</pattern>
+  <pattern>maxi1u2</pattern>
+  <pattern>maxi1á2</pattern>
+  <pattern>maxi1é2</pattern>
+  <pattern>maxi1í2</pattern>
+  <pattern>maxi1ó2</pattern>
+  <pattern>maxi1ú2</pattern>
+  <pattern>2mb</pattern>
+  <pattern>2mc</pattern>
+  <pattern>2m3c2n</pattern>
+  <pattern>2m3c2t</pattern>
+  <pattern>2m3c2z</pattern>
+  <pattern>2md</pattern>
+  <pattern>4meable </pattern>
+  <pattern>4meables </pattern>
+  <pattern>mega1a2</pattern>
+  <pattern>mega1e2</pattern>
+  <pattern>mega1h</pattern>
+  <pattern>mega1i2</pattern>
+  <pattern>megalo1a2</pattern>
+  <pattern>megalo1e2</pattern>
+  <pattern>megalo1h</pattern>
+  <pattern>megalo1i2</pattern>
+  <pattern>megalo1o2</pattern>
+  <pattern>megalo1u2</pattern>
+  <pattern>megalo1á2</pattern>
+  <pattern>megalo1é2</pattern>
+  <pattern>megalo1í2</pattern>
+  <pattern>megalo1ó2</pattern>
+  <pattern>megalo1ú2</pattern>
+  <pattern>mega1o2</pattern>
+  <pattern>mega1u2</pattern>
+  <pattern>mega1á2</pattern>
+  <pattern>mega1é2</pattern>
+  <pattern>mega1í2</pattern>
+  <pattern>mega1ó2</pattern>
+  <pattern>mega1ú2</pattern>
+  <pattern>melano1a2</pattern>
+  <pattern>melano1e2</pattern>
+  <pattern>melano1h</pattern>
+  <pattern>melano1i2</pattern>
+  <pattern>melano1o2</pattern>
+  <pattern>melano1u2</pattern>
+  <pattern>melano1á2</pattern>
+  <pattern>melano1é2</pattern>
+  <pattern>melano1í2</pattern>
+  <pattern>melano1ó2</pattern>
+  <pattern>melano1ú2</pattern>
+  <pattern>3mente </pattern>
+  <pattern>4meo </pattern>
+  <pattern>2mf</pattern>
+  <pattern>2m3f2t</pattern>
+  <pattern>2mg</pattern>
+  <pattern>2m3g2n</pattern>
+  <pattern>2m1h</pattern>
+  <pattern>micro1a2</pattern>
+  <pattern>micro1e2</pattern>
+  <pattern>micro1h</pattern>
+  <pattern>micro1i2</pattern>
+  <pattern>micro1o2</pattern>
+  <pattern>micro1u2</pattern>
+  <pattern>micro1á2</pattern>
+  <pattern>micro1é2</pattern>
+  <pattern>micro1í2</pattern>
+  <pattern>micro1ó2</pattern>
+  <pattern>micro1ú2</pattern>
+  <pattern>mili1a2</pattern>
+  <pattern>mili4ar</pattern>
+  <pattern>mili4ario</pattern>
+  <pattern>mili1e2</pattern>
+  <pattern>mili1h</pattern>
+  <pattern>mili1i2</pattern>
+  <pattern>mili1o2</pattern>
+  <pattern>mili1u2</pattern>
+  <pattern>mili1á2</pattern>
+  <pattern>mili1é2</pattern>
+  <pattern>mili1í2</pattern>
+  <pattern>mili1ó2</pattern>
+  <pattern>mili1ú2</pattern>
+  <pattern>mini1a2</pattern>
+  <pattern>mini4a5tur</pattern>
+  <pattern>mini1e2</pattern>
+  <pattern>mini1h</pattern>
+  <pattern>mini1i2</pattern>
+  <pattern>mini1o2</pattern>
+  <pattern>mini1u2</pattern>
+  <pattern>mini1á2</pattern>
+  <pattern>mini1é2</pattern>
+  <pattern>mini1í2</pattern>
+  <pattern>mini1ó2</pattern>
+  <pattern>mini1ú2</pattern>
+  <pattern>miria1a2</pattern>
+  <pattern>miria1e2</pattern>
+  <pattern>miria1h</pattern>
+  <pattern>miria1i2</pattern>
+  <pattern>miria1o2</pattern>
+  <pattern>miria1u2</pattern>
+  <pattern>miria1á2</pattern>
+  <pattern>miria1é2</pattern>
+  <pattern>miria1í2</pattern>
+  <pattern>miria1ó2</pattern>
+  <pattern>miria1ú2</pattern>
+  <pattern>2mj</pattern>
+  <pattern>2mk</pattern>
+  <pattern>2ml</pattern>
+  <pattern>2mm</pattern>
+  <pattern>2m3m2n</pattern>
+  <pattern>2mn</pattern>
+  <pattern>4mn </pattern>
+  <pattern>mono1a2</pattern>
+  <pattern>mono1e2</pattern>
+  <pattern>mono1h</pattern>
+  <pattern>mono1i2</pattern>
+  <pattern>mono1o2</pattern>
+  <pattern>mono1u2</pattern>
+  <pattern>mono1á2</pattern>
+  <pattern>mono1é2</pattern>
+  <pattern>mono1í2</pattern>
+  <pattern>mono1ó2</pattern>
+  <pattern>mono1ú2</pattern>
+  <pattern>2mp</pattern>
+  <pattern>2m3p2n</pattern>
+  <pattern>2m3p2s</pattern>
+  <pattern>2m3p2t</pattern>
+  <pattern>2mq</pattern>
+  <pattern>2mr</pattern>
+  <pattern>2ms</pattern>
+  <pattern>2mt</pattern>
+  <pattern>2m3t2s</pattern>
+  <pattern>2m3t2z</pattern>
+  <pattern>multi1a2</pattern>
+  <pattern>multi1e2</pattern>
+  <pattern>multi1h</pattern>
+  <pattern>multi1i2</pattern>
+  <pattern>multi1o2</pattern>
+  <pattern>multi1u2</pattern>
+  <pattern>multi1á2</pattern>
+  <pattern>multi1é2</pattern>
+  <pattern>multi1í2</pattern>
+  <pattern>multi1ó2</pattern>
+  <pattern>multi1ú2</pattern>
+  <pattern>2mv</pattern>
+  <pattern>2mw</pattern>
+  <pattern>2mx</pattern>
+  <pattern>2my</pattern>
+  <pattern>2mz</pattern>
+  <pattern>1n</pattern>
+  <pattern>namo1a2</pattern>
+  <pattern>namo1e2</pattern>
+  <pattern>namo1h</pattern>
+  <pattern>namo1i2</pattern>
+  <pattern>namo1o2</pattern>
+  <pattern>namo1u2</pattern>
+  <pattern>namo1á2</pattern>
+  <pattern>namo1é2</pattern>
+  <pattern>namo1í2</pattern>
+  <pattern>namo1ó2</pattern>
+  <pattern>namo1ú2</pattern>
+  <pattern>2nb</pattern>
+  <pattern>2nc</pattern>
+  <pattern>2n3c2n</pattern>
+  <pattern>2n3c2t</pattern>
+  <pattern>2n3c2z</pattern>
+  <pattern>2nd</pattern>
+  <pattern>necro1a2</pattern>
+  <pattern>necro1e2</pattern>
+  <pattern>necro1h</pattern>
+  <pattern>necro1i2</pattern>
+  <pattern>necro1o2</pattern>
+  <pattern>necro1u2</pattern>
+  <pattern>necro1á2</pattern>
+  <pattern>necro1é2</pattern>
+  <pattern>necro1í2</pattern>
+  <pattern>necro1ó2</pattern>
+  <pattern>necro1ú2</pattern>
+  <pattern>neo1a2</pattern>
+  <pattern>neo1e2</pattern>
+  <pattern>neo1h</pattern>
+  <pattern>neo1i2</pattern>
+  <pattern>neo1o2</pattern>
+  <pattern>neo1u2</pattern>
+  <pattern>neo1á2</pattern>
+  <pattern>neo1é2</pattern>
+  <pattern>neo1í2</pattern>
+  <pattern>neo1ó2</pattern>
+  <pattern>neo1ú2</pattern>
+  <pattern>neto1a2</pattern>
+  <pattern>neto1e2</pattern>
+  <pattern>neto1h</pattern>
+  <pattern>neto1i2</pattern>
+  <pattern>neto1o2</pattern>
+  <pattern>neto1u2</pattern>
+  <pattern>neto1á2</pattern>
+  <pattern>neto1é2</pattern>
+  <pattern>neto1í2</pattern>
+  <pattern>neto1ó2</pattern>
+  <pattern>neto1ú2</pattern>
+  <pattern>2nf</pattern>
+  <pattern>2n3f2t</pattern>
+  <pattern>2ng</pattern>
+  <pattern>2n3g2n</pattern>
+  <pattern>2n1h</pattern>
+  <pattern>2nj</pattern>
+  <pattern>2nk</pattern>
+  <pattern>2nl</pattern>
+  <pattern>2nm</pattern>
+  <pattern>2n3m2n</pattern>
+  <pattern>2nn</pattern>
+  <pattern>2no </pattern>
+  <pattern>norte1a2</pattern>
+  <pattern>norte1e2</pattern>
+  <pattern>norte1h</pattern>
+  <pattern>norte1i2</pattern>
+  <pattern>norte1o2</pattern>
+  <pattern>norte1u2</pattern>
+  <pattern>norte1á2</pattern>
+  <pattern>norte1é2</pattern>
+  <pattern>norte1í2</pattern>
+  <pattern>norte1ó2</pattern>
+  <pattern>norte1ú2</pattern>
+  <pattern>2np</pattern>
+  <pattern>2n3p2n</pattern>
+  <pattern>2n3p2s</pattern>
+  <pattern>2n3p2t</pattern>
+  <pattern>2nq</pattern>
+  <pattern>2nr</pattern>
+  <pattern>2ns</pattern>
+  <pattern>2nt</pattern>
+  <pattern>2n3t2s</pattern>
+  <pattern>2n3t2z</pattern>
+  <pattern>2nv</pattern>
+  <pattern>2nw</pattern>
+  <pattern>2nx</pattern>
+  <pattern>2ny</pattern>
+  <pattern>2nz</pattern>
+  <pattern>2o </pattern>
+  <pattern>octa1a2</pattern>
+  <pattern>octa1e2</pattern>
+  <pattern>octa1h</pattern>
+  <pattern>octa1i2</pattern>
+  <pattern>octa1o2</pattern>
+  <pattern>octa1u2</pattern>
+  <pattern>octa1á2</pattern>
+  <pattern>octa1é2</pattern>
+  <pattern>octa1í2</pattern>
+  <pattern>octa1ó2</pattern>
+  <pattern>octa1ú2</pattern>
+  <pattern>octo1a2</pattern>
+  <pattern>octo1e2</pattern>
+  <pattern>octo1h</pattern>
+  <pattern>octo1i2</pattern>
+  <pattern>octo1o2</pattern>
+  <pattern>octo1u2</pattern>
+  <pattern>octo1á2</pattern>
+  <pattern>octo1é2</pattern>
+  <pattern>octo1í2</pattern>
+  <pattern>octo1ó2</pattern>
+  <pattern>octo1ú2</pattern>
+  <pattern>4o2ica </pattern>
+  <pattern>4o2icas </pattern>
+  <pattern>4o2ico </pattern>
+  <pattern>4o2icos </pattern>
+  <pattern>o4i3dal </pattern>
+  <pattern>o4i3dales </pattern>
+  <pattern>4o2i3de </pattern>
+  <pattern>o4i3dea </pattern>
+  <pattern>o4i3deas </pattern>
+  <pattern>4o2i3des </pattern>
+  <pattern>oligo1a2</pattern>
+  <pattern>oligo1e2</pattern>
+  <pattern>oligo1h</pattern>
+  <pattern>oligo1i2</pattern>
+  <pattern>oligo1o2</pattern>
+  <pattern>oligo1u2</pattern>
+  <pattern>oligo1á2</pattern>
+  <pattern>oligo1é2</pattern>
+  <pattern>oligo1í2</pattern>
+  <pattern>oligo1ó2</pattern>
+  <pattern>oligo1ú2</pattern>
+  <pattern>4o3logía </pattern>
+  <pattern>4o3logías </pattern>
+  <pattern>4o3lógica </pattern>
+  <pattern>4o3lógicamente </pattern>
+  <pattern>4o3lógicas </pattern>
+  <pattern>4o3lógico </pattern>
+  <pattern>4o3lógicos </pattern>
+  <pattern>omni1a2</pattern>
+  <pattern>omni1e2</pattern>
+  <pattern>omni1h</pattern>
+  <pattern>omni1i2</pattern>
+  <pattern>omni1o2</pattern>
+  <pattern>omni1u2</pattern>
+  <pattern>omni1á2</pattern>
+  <pattern>omni1é2</pattern>
+  <pattern>omni1í2</pattern>
+  <pattern>omni1ó2</pattern>
+  <pattern>omni1ú2</pattern>
+  <pattern>4ones </pattern>
+  <pattern>o2os </pattern>
+  <pattern>2os </pattern>
+  <pattern>2o3sa </pattern>
+  <pattern>2o3samente </pattern>
+  <pattern>2o3sas </pattern>
+  <pattern>2o3so </pattern>
+  <pattern>2o3sos </pattern>
+  <pattern>1p</pattern>
+  <pattern>paleo1a2</pattern>
+  <pattern>paleo1e2</pattern>
+  <pattern>paleo1h</pattern>
+  <pattern>paleo1i2</pattern>
+  <pattern>paleo1o2</pattern>
+  <pattern>paleo1u2</pattern>
+  <pattern>paleo1á2</pattern>
+  <pattern>paleo1é2</pattern>
+  <pattern>paleo1í2</pattern>
+  <pattern>paleo1ó2</pattern>
+  <pattern>paleo1ú2</pattern>
+  <pattern>para1a2</pattern>
+  <pattern>para1e2</pattern>
+  <pattern>para1h</pattern>
+  <pattern>para1i2</pattern>
+  <pattern>para2is </pattern>
+  <pattern>para1o2</pattern>
+  <pattern>para1u2</pattern>
+  <pattern>para4ulata</pattern>
+  <pattern>para1á2</pattern>
+  <pattern>para1é2</pattern>
+  <pattern>para1í2</pattern>
+  <pattern>para4íso</pattern>
+  <pattern>para1ó2</pattern>
+  <pattern>para1ú2</pattern>
+  <pattern>2pb</pattern>
+  <pattern>2pc</pattern>
+  <pattern>4pc </pattern>
+  <pattern>2pd</pattern>
+  <pattern>4pedo4</pattern>
+  <pattern>penta1a2</pattern>
+  <pattern>penta1e2</pattern>
+  <pattern>penta1h</pattern>
+  <pattern>penta1i2</pattern>
+  <pattern>penta1o2</pattern>
+  <pattern>penta1u2</pattern>
+  <pattern>penta1á2</pattern>
+  <pattern>penta1é2</pattern>
+  <pattern>penta1í2</pattern>
+  <pattern>penta1ó2</pattern>
+  <pattern>penta1ú2</pattern>
+  <pattern>pe5r4ante</pattern>
+  <pattern>pe3r4e3mia</pattern>
+  <pattern>perpon5d6r</pattern>
+  <pattern>2pf</pattern>
+  <pattern>2pg</pattern>
+  <pattern>2p1h</pattern>
+  <pattern>piezo1a2</pattern>
+  <pattern>piezo1e2</pattern>
+  <pattern>piezo1h</pattern>
+  <pattern>piezo1i2</pattern>
+  <pattern>piezo1o2</pattern>
+  <pattern>piezo1u2</pattern>
+  <pattern>piezo1á2</pattern>
+  <pattern>piezo1é2</pattern>
+  <pattern>piezo1í2</pattern>
+  <pattern>piezo1ó2</pattern>
+  <pattern>piezo1ú2</pattern>
+  <pattern>2pj</pattern>
+  <pattern>2pk</pattern>
+  <pattern>p2l</pattern>
+  <pattern>2pl </pattern>
+  <pattern>plan4c5t</pattern>
+  <pattern>pluri1a2</pattern>
+  <pattern>pluri1e2</pattern>
+  <pattern>pluri1h</pattern>
+  <pattern>pluri1i2</pattern>
+  <pattern>pluri1o2</pattern>
+  <pattern>pluri1u2</pattern>
+  <pattern>pluri1á2</pattern>
+  <pattern>pluri1é2</pattern>
+  <pattern>pluri1í2</pattern>
+  <pattern>pluri1ó2</pattern>
+  <pattern>pluri1ú2</pattern>
+  <pattern>2pm</pattern>
+  <pattern>2pn</pattern>
+  <pattern>4pn </pattern>
+  <pattern>poi3de </pattern>
+  <pattern>poi3des </pattern>
+  <pattern>poli1a2</pattern>
+  <pattern>poli4andr</pattern>
+  <pattern>poli4antea</pattern>
+  <pattern>poli4arq</pattern>
+  <pattern>poli1e2</pattern>
+  <pattern>poli1h</pattern>
+  <pattern>poli1i2</pattern>
+  <pattern>poli1o2</pattern>
+  <pattern>poli4o5mie</pattern>
+  <pattern>poli1u2</pattern>
+  <pattern>poli4u3r</pattern>
+  <pattern>poli1á2</pattern>
+  <pattern>poli4árq</pattern>
+  <pattern>poli1é2</pattern>
+  <pattern>poli4éste</pattern>
+  <pattern>poli1í2</pattern>
+  <pattern>poli1ó2</pattern>
+  <pattern>poli1ú2</pattern>
+  <pattern>pos3ta </pattern>
+  <pattern>pos3tas </pattern>
+  <pattern>2pp</pattern>
+  <pattern>2pq</pattern>
+  <pattern>p2r</pattern>
+  <pattern>2pr </pattern>
+  <pattern>pre3elig</pattern>
+  <pattern>pre3elij</pattern>
+  <pattern>pre3emin</pattern>
+  <pattern>pre3exis</pattern>
+  <pattern>preo3cup</pattern>
+  <pattern>preo2cúp</pattern>
+  <pattern>pre3olí</pattern>
+  <pattern>pre3opin</pattern>
+  <pattern>proto1a2</pattern>
+  <pattern>proto1e2</pattern>
+  <pattern>proto1h</pattern>
+  <pattern>proto1i2</pattern>
+  <pattern>proto1o2</pattern>
+  <pattern>proto1u2</pattern>
+  <pattern>proto1á2</pattern>
+  <pattern>proto1é2</pattern>
+  <pattern>proto1í2</pattern>
+  <pattern>proto1ó2</pattern>
+  <pattern>proto1ú2</pattern>
+  <pattern>2ps</pattern>
+  <pattern>3p2sic</pattern>
+  <pattern>3p2siq</pattern>
+  <pattern>2pt</pattern>
+  <pattern>4pt </pattern>
+  <pattern>4puta4</pattern>
+  <pattern>4puto4</pattern>
+  <pattern>2pv</pattern>
+  <pattern>2pw</pattern>
+  <pattern>2px</pattern>
+  <pattern>2py</pattern>
+  <pattern>2pz</pattern>
+  <pattern>1q</pattern>
+  <pattern>2qb</pattern>
+  <pattern>2qc</pattern>
+  <pattern>2qd</pattern>
+  <pattern>2qf</pattern>
+  <pattern>2qg</pattern>
+  <pattern>2q1h</pattern>
+  <pattern>2qj</pattern>
+  <pattern>2qk</pattern>
+  <pattern>2ql</pattern>
+  <pattern>2qm</pattern>
+  <pattern>2qn</pattern>
+  <pattern>2qp</pattern>
+  <pattern>2qq</pattern>
+  <pattern>2qr</pattern>
+  <pattern>2qs</pattern>
+  <pattern>2qt</pattern>
+  <pattern>2qv</pattern>
+  <pattern>2qw</pattern>
+  <pattern>2qx</pattern>
+  <pattern>2qy</pattern>
+  <pattern>2qz</pattern>
+  <pattern>1r</pattern>
+  <pattern>radio1a2</pattern>
+  <pattern>radio1e2</pattern>
+  <pattern>radio1h</pattern>
+  <pattern>radio1i2</pattern>
+  <pattern>radio1o2</pattern>
+  <pattern>radio1u2</pattern>
+  <pattern>radio1á2</pattern>
+  <pattern>radio1é2</pattern>
+  <pattern>radio1í2</pattern>
+  <pattern>radio1ó2</pattern>
+  <pattern>radio1ú2</pattern>
+  <pattern>ranco1a2</pattern>
+  <pattern>ranco1e2</pattern>
+  <pattern>ranco1h</pattern>
+  <pattern>ranco1i2</pattern>
+  <pattern>ranco1o2</pattern>
+  <pattern>ranco1u2</pattern>
+  <pattern>ranco1á2</pattern>
+  <pattern>ranco1é2</pattern>
+  <pattern>ranco1í2</pattern>
+  <pattern>ranco1ó2</pattern>
+  <pattern>ranco1ú2</pattern>
+  <pattern>2rb</pattern>
+  <pattern>2rc</pattern>
+  <pattern>2r3c2n</pattern>
+  <pattern>2r3c2t</pattern>
+  <pattern>2r3c2z</pattern>
+  <pattern>2rd</pattern>
+  <pattern>retro1a2</pattern>
+  <pattern>retro1e2</pattern>
+  <pattern>retro1h</pattern>
+  <pattern>retro1i2</pattern>
+  <pattern>retro1o2</pattern>
+  <pattern>retro1u2</pattern>
+  <pattern>retro1á2</pattern>
+  <pattern>retro1é2</pattern>
+  <pattern>retro1í2</pattern>
+  <pattern>retro1ó2</pattern>
+  <pattern>retro1ú2</pattern>
+  <pattern>2rf</pattern>
+  <pattern>2r3f2t</pattern>
+  <pattern>2rg</pattern>
+  <pattern>2r3g2n</pattern>
+  <pattern>2r1h</pattern>
+  <pattern>2rj</pattern>
+  <pattern>2rk</pattern>
+  <pattern>2rl</pattern>
+  <pattern>2rm</pattern>
+  <pattern>rmano1a2</pattern>
+  <pattern>rmano1e2</pattern>
+  <pattern>rmano1h</pattern>
+  <pattern>rmano1i2</pattern>
+  <pattern>rmano1o2</pattern>
+  <pattern>rmano1u2</pattern>
+  <pattern>rmano1á2</pattern>
+  <pattern>rmano1é2</pattern>
+  <pattern>rmano1í2</pattern>
+  <pattern>rmano1ó2</pattern>
+  <pattern>rmano1ú2</pattern>
+  <pattern>2r3m2n</pattern>
+  <pattern>2rn</pattern>
+  <pattern>romo1a2</pattern>
+  <pattern>romo1e2</pattern>
+  <pattern>romo1h</pattern>
+  <pattern>romo1i2</pattern>
+  <pattern>romo1o2</pattern>
+  <pattern>romo1u2</pattern>
+  <pattern>romo1á2</pattern>
+  <pattern>romo1é2</pattern>
+  <pattern>romo1í2</pattern>
+  <pattern>romo1ó2</pattern>
+  <pattern>romo1ú2</pattern>
+  <pattern>2rp</pattern>
+  <pattern>2r3p2n</pattern>
+  <pattern>2r3p2s</pattern>
+  <pattern>2r3p2t</pattern>
+  <pattern>2rq</pattern>
+  <pattern>r2r</pattern>
+  <pattern>2rr </pattern>
+  <pattern>2rs</pattern>
+  <pattern>2rt</pattern>
+  <pattern>2r3t2s</pattern>
+  <pattern>2r3t2z</pattern>
+  <pattern>2rv</pattern>
+  <pattern>2rw</pattern>
+  <pattern>2rx</pattern>
+  <pattern>2ry</pattern>
+  <pattern>2rz</pattern>
+  <pattern>1s</pattern>
+  <pattern>3sa </pattern>
+  <pattern>san4c5t</pattern>
+  <pattern>3sas </pattern>
+  <pattern>2sb</pattern>
+  <pattern>2sc</pattern>
+  <pattern>2s3c2n</pattern>
+  <pattern>2s3c2t</pattern>
+  <pattern>2s3c2z</pattern>
+  <pattern>2sd</pattern>
+  <pattern>semi1a2</pattern>
+  <pattern>semi1e2</pattern>
+  <pattern>semi1h</pattern>
+  <pattern>semi1i2</pattern>
+  <pattern>semi1o2</pattern>
+  <pattern>semi1u2</pattern>
+  <pattern>semi1á2</pattern>
+  <pattern>semi1é2</pattern>
+  <pattern>semi1í2</pattern>
+  <pattern>semi1ó2</pattern>
+  <pattern>semi1ú2</pattern>
+  <pattern>seudo1a2</pattern>
+  <pattern>seudo1e2</pattern>
+  <pattern>seudo1h</pattern>
+  <pattern>seudo1i2</pattern>
+  <pattern>seudo1o2</pattern>
+  <pattern>seudo1u2</pattern>
+  <pattern>seudo1á2</pattern>
+  <pattern>seudo1é2</pattern>
+  <pattern>seudo1í2</pattern>
+  <pattern>seudo1ó2</pattern>
+  <pattern>seudo1ú2</pattern>
+  <pattern>2sf</pattern>
+  <pattern>2s3f2t</pattern>
+  <pattern>2sg</pattern>
+  <pattern>2s3g2n</pattern>
+  <pattern>2s1h</pattern>
+  <pattern>2sj</pattern>
+  <pattern>2sk</pattern>
+  <pattern>2sl</pattern>
+  <pattern>2sm</pattern>
+  <pattern>2s3m2n</pattern>
+  <pattern>2sn</pattern>
+  <pattern>sobre1a2</pattern>
+  <pattern>sobre1e2</pattern>
+  <pattern>sobre1h</pattern>
+  <pattern>sobre1i2</pattern>
+  <pattern>sobre1o2</pattern>
+  <pattern>sobre1u2</pattern>
+  <pattern>sobre1á2</pattern>
+  <pattern>sobre1é2</pattern>
+  <pattern>sobre1í2</pattern>
+  <pattern>sobre1ó2</pattern>
+  <pattern>sobre1ú2</pattern>
+  <pattern>socio1a2</pattern>
+  <pattern>socio1e2</pattern>
+  <pattern>socio1h</pattern>
+  <pattern>socio1i2</pattern>
+  <pattern>socio1o2</pattern>
+  <pattern>socio1u2</pattern>
+  <pattern>socio1á2</pattern>
+  <pattern>socio1é2</pattern>
+  <pattern>socio1í2</pattern>
+  <pattern>socio1ó2</pattern>
+  <pattern>socio1ú2</pattern>
+  <pattern>2sp</pattern>
+  <pattern>2s3p2n</pattern>
+  <pattern>2s3p2s</pattern>
+  <pattern>2s3p2t</pattern>
+  <pattern>2sq</pattern>
+  <pattern>2sr</pattern>
+  <pattern>2ss</pattern>
+  <pattern>2st</pattern>
+  <pattern>s3tal </pattern>
+  <pattern>s3ta3les </pattern>
+  <pattern>s3te </pattern>
+  <pattern>s3tes </pattern>
+  <pattern>s3ti3lla </pattern>
+  <pattern>s3ti3llas </pattern>
+  <pattern>s3ti3llones </pattern>
+  <pattern>s3ti3llón </pattern>
+  <pattern>s3tor </pattern>
+  <pattern>s3tora </pattern>
+  <pattern>s3toras </pattern>
+  <pattern>s3tores </pattern>
+  <pattern>2s3t2s</pattern>
+  <pattern>2s3t2z</pattern>
+  <pattern>su4d3oes</pattern>
+  <pattern>supe2r1a2</pattern>
+  <pattern>super4able</pattern>
+  <pattern>super4ación</pattern>
+  <pattern>supe4r4a3r</pattern>
+  <pattern>supe2r1e2</pattern>
+  <pattern>supe2r1i2</pattern>
+  <pattern>super4ior</pattern>
+  <pattern>supe2r1o2</pattern>
+  <pattern>supe2r3r</pattern>
+  <pattern>supe2r1u2</pattern>
+  <pattern>supe2r1á2</pattern>
+  <pattern>supe4r4á3r</pattern>
+  <pattern>supe3r4á3vit </pattern>
+  <pattern>supe3r4á3vits </pattern>
+  <pattern>supe2r1é2</pattern>
+  <pattern>supe2r1í2</pattern>
+  <pattern>supe2r1ó2</pattern>
+  <pattern>supe2r1ú2</pattern>
+  <pattern>sup6ra</pattern>
+  <pattern>supra1a2</pattern>
+  <pattern>supra1e2</pattern>
+  <pattern>supra1h</pattern>
+  <pattern>supra1i2</pattern>
+  <pattern>supra1o2</pattern>
+  <pattern>supra1u2</pattern>
+  <pattern>supra1á2</pattern>
+  <pattern>supra1é2</pattern>
+  <pattern>supra1í2</pattern>
+  <pattern>supra1ó2</pattern>
+  <pattern>supra1ú2</pattern>
+  <pattern>2sv</pattern>
+  <pattern>2sw</pattern>
+  <pattern>2sx</pattern>
+  <pattern>2sy</pattern>
+  <pattern>2sz</pattern>
+  <pattern>1t</pattern>
+  <pattern>talmo1a2</pattern>
+  <pattern>talmo1e2</pattern>
+  <pattern>talmo1h</pattern>
+  <pattern>talmo1i2</pattern>
+  <pattern>talmo1o2</pattern>
+  <pattern>talmo1u2</pattern>
+  <pattern>talmo1á2</pattern>
+  <pattern>talmo1é2</pattern>
+  <pattern>talmo1í2</pattern>
+  <pattern>talmo1ó2</pattern>
+  <pattern>talmo1ú2</pattern>
+  <pattern>2tb</pattern>
+  <pattern>2tc</pattern>
+  <pattern>2t3c2n</pattern>
+  <pattern>2t3c2t</pattern>
+  <pattern>2t3c2z</pattern>
+  <pattern>2td</pattern>
+  <pattern>tele1a2</pattern>
+  <pattern>tele1e2</pattern>
+  <pattern>tele1h</pattern>
+  <pattern>tele1i2</pattern>
+  <pattern>tele1o2</pattern>
+  <pattern>tele1u2</pattern>
+  <pattern>tele1á2</pattern>
+  <pattern>tele1é2</pattern>
+  <pattern>tele1í2</pattern>
+  <pattern>tele1ó2</pattern>
+  <pattern>tele1ú2</pattern>
+  <pattern>t4eo3nes </pattern>
+  <pattern>3te3ri3n</pattern>
+  <pattern>4te4r5i4nsu</pattern>
+  <pattern>termo1a2</pattern>
+  <pattern>termo1e2</pattern>
+  <pattern>termo1h</pattern>
+  <pattern>termo1i2</pattern>
+  <pattern>termo1o2</pattern>
+  <pattern>termo1u2</pattern>
+  <pattern>termo1á2</pattern>
+  <pattern>termo1é2</pattern>
+  <pattern>termo1í2</pattern>
+  <pattern>termo1ó2</pattern>
+  <pattern>termo1ú2</pattern>
+  <pattern>4teta </pattern>
+  <pattern>4tetas </pattern>
+  <pattern>tetra1a2</pattern>
+  <pattern>tetra1e2</pattern>
+  <pattern>tetra1h</pattern>
+  <pattern>tetra1i2</pattern>
+  <pattern>tetra1o2</pattern>
+  <pattern>tetra1u2</pattern>
+  <pattern>tetra1á2</pattern>
+  <pattern>tetra1é2</pattern>
+  <pattern>tetra1í2</pattern>
+  <pattern>tetra1ó2</pattern>
+  <pattern>tetra1ú2</pattern>
+  <pattern>2tf</pattern>
+  <pattern>2t3f2t</pattern>
+  <pattern>2tg</pattern>
+  <pattern>2t3g2n</pattern>
+  <pattern>2t1h</pattern>
+  <pattern>ti2o3co</pattern>
+  <pattern>ti2o3qu</pattern>
+  <pattern>2tj</pattern>
+  <pattern>2tk</pattern>
+  <pattern>2t2l</pattern>
+  <pattern>2tm</pattern>
+  <pattern>2t3m2n</pattern>
+  <pattern>2tn</pattern>
+  <pattern>topo1a2</pattern>
+  <pattern>topo1e2</pattern>
+  <pattern>topo1h</pattern>
+  <pattern>topo1i2</pattern>
+  <pattern>topo1o2</pattern>
+  <pattern>topo1u2</pattern>
+  <pattern>topo1á2</pattern>
+  <pattern>topo1é2</pattern>
+  <pattern>topo1í2</pattern>
+  <pattern>topo1ó2</pattern>
+  <pattern>topo1ú2</pattern>
+  <pattern>2tp</pattern>
+  <pattern>2t3p2n</pattern>
+  <pattern>2t3p2s</pattern>
+  <pattern>2t3p2t</pattern>
+  <pattern>2tq</pattern>
+  <pattern>t2r</pattern>
+  <pattern>2tr </pattern>
+  <pattern>tran4sacc</pattern>
+  <pattern>trans4ar</pattern>
+  <pattern>trans4eúnte</pattern>
+  <pattern>trans4iber</pattern>
+  <pattern>trans4ición</pattern>
+  <pattern>trans4ido</pattern>
+  <pattern>trans4igen</pattern>
+  <pattern>trans4igir</pattern>
+  <pattern>trans4istor</pattern>
+  <pattern>trans4it</pattern>
+  <pattern>trans4itab</pattern>
+  <pattern>trans4itorio</pattern>
+  <pattern>trans4ubsta</pattern>
+  <pattern>tropo1a2</pattern>
+  <pattern>tropo1e2</pattern>
+  <pattern>tropo1h</pattern>
+  <pattern>tropo1i2</pattern>
+  <pattern>tropo1o2</pattern>
+  <pattern>tropo1u2</pattern>
+  <pattern>tropo1á2</pattern>
+  <pattern>tropo1é2</pattern>
+  <pattern>tropo1í2</pattern>
+  <pattern>tropo1ó2</pattern>
+  <pattern>tropo1ú2</pattern>
+  <pattern>2ts</pattern>
+  <pattern>4ts </pattern>
+  <pattern>2tt</pattern>
+  <pattern>2t3t2s</pattern>
+  <pattern>2t3t2z</pattern>
+  <pattern>2tv</pattern>
+  <pattern>2tw</pattern>
+  <pattern>t2x</pattern>
+  <pattern>2ty</pattern>
+  <pattern>2tz</pattern>
+  <pattern>4tz </pattern>
+  <pattern>ultra1a2</pattern>
+  <pattern>ultra1e2</pattern>
+  <pattern>ultra1h</pattern>
+  <pattern>ultra1i2</pattern>
+  <pattern>ultra1o2</pattern>
+  <pattern>ultra1u2</pattern>
+  <pattern>ultra1á2</pattern>
+  <pattern>ultra1é2</pattern>
+  <pattern>ultra1í2</pattern>
+  <pattern>ultra4ísmo</pattern>
+  <pattern>ultra1ó2</pattern>
+  <pattern>ultra1ú2</pattern>
+  <pattern>u4teri</pattern>
+  <pattern>1v</pattern>
+  <pattern>2vb</pattern>
+  <pattern>2vc</pattern>
+  <pattern>2vd</pattern>
+  <pattern>2vf</pattern>
+  <pattern>2vg</pattern>
+  <pattern>2v1h</pattern>
+  <pattern>2vj</pattern>
+  <pattern>2vk</pattern>
+  <pattern>v2l</pattern>
+  <pattern>2vl </pattern>
+  <pattern>2vm</pattern>
+  <pattern>2vn</pattern>
+  <pattern>2vp</pattern>
+  <pattern>2vq</pattern>
+  <pattern>v2r</pattern>
+  <pattern>2vr </pattern>
+  <pattern>2vs</pattern>
+  <pattern>2vt</pattern>
+  <pattern>2vv</pattern>
+  <pattern>2vw</pattern>
+  <pattern>2vx</pattern>
+  <pattern>2vy</pattern>
+  <pattern>2vz</pattern>
+  <pattern>1w</pattern>
+  <pattern>wa3s4h</pattern>
+  <pattern>2wb</pattern>
+  <pattern>2wc</pattern>
+  <pattern>2wd</pattern>
+  <pattern>2wf</pattern>
+  <pattern>2wg</pattern>
+  <pattern>2w1h</pattern>
+  <pattern>2wj</pattern>
+  <pattern>2wk</pattern>
+  <pattern>w2l</pattern>
+  <pattern>2wl </pattern>
+  <pattern>2wm</pattern>
+  <pattern>2wn</pattern>
+  <pattern>2wp</pattern>
+  <pattern>2wq</pattern>
+  <pattern>w2r</pattern>
+  <pattern>2wr </pattern>
+  <pattern>2ws</pattern>
+  <pattern>2wt</pattern>
+  <pattern>2wv</pattern>
+  <pattern>2ww</pattern>
+  <pattern>2wx</pattern>
+  <pattern>2wy</pattern>
+  <pattern>2wz</pattern>
+  <pattern>1x</pattern>
+  <pattern>2xb</pattern>
+  <pattern>2xc</pattern>
+  <pattern>2x3c2n</pattern>
+  <pattern>2x3c2t</pattern>
+  <pattern>2x3c2z</pattern>
+  <pattern>2xd</pattern>
+  <pattern>xeno1a2</pattern>
+  <pattern>xeno1e2</pattern>
+  <pattern>xeno1h</pattern>
+  <pattern>xeno1i2</pattern>
+  <pattern>xeno1o2</pattern>
+  <pattern>xeno1u2</pattern>
+  <pattern>xeno1á2</pattern>
+  <pattern>xeno1é2</pattern>
+  <pattern>xeno1í2</pattern>
+  <pattern>xeno1ó2</pattern>
+  <pattern>xeno1ú2</pattern>
+  <pattern>2xf</pattern>
+  <pattern>2x3f2t</pattern>
+  <pattern>2xg</pattern>
+  <pattern>2x3g2n</pattern>
+  <pattern>2x1h</pattern>
+  <pattern>2xj</pattern>
+  <pattern>2xk</pattern>
+  <pattern>2xl</pattern>
+  <pattern>2xm</pattern>
+  <pattern>2x3m2n</pattern>
+  <pattern>2xn</pattern>
+  <pattern>2xp</pattern>
+  <pattern>2x3p2n</pattern>
+  <pattern>2x3p2s</pattern>
+  <pattern>2x3p2t</pattern>
+  <pattern>2xq</pattern>
+  <pattern>2xr</pattern>
+  <pattern>2xs</pattern>
+  <pattern>2xt</pattern>
+  <pattern>2x3t2s</pattern>
+  <pattern>2x3t2z</pattern>
+  <pattern>2xv</pattern>
+  <pattern>2xw</pattern>
+  <pattern>2xx</pattern>
+  <pattern>2xy</pattern>
+  <pattern>2xz</pattern>
+  <pattern>1y</pattern>
+  <pattern>2yb</pattern>
+  <pattern>2yc</pattern>
+  <pattern>2y3c2n</pattern>
+  <pattern>2y3c2t</pattern>
+  <pattern>2y3c2z</pattern>
+  <pattern>2yd</pattern>
+  <pattern>2yf</pattern>
+  <pattern>2y3f2t</pattern>
+  <pattern>2yg</pattern>
+  <pattern>2y3g2n</pattern>
+  <pattern>2y1h</pattern>
+  <pattern>2yj</pattern>
+  <pattern>2yk</pattern>
+  <pattern>2yl</pattern>
+  <pattern>2ym</pattern>
+  <pattern>2y3m2n</pattern>
+  <pattern>2yn</pattern>
+  <pattern>2yp</pattern>
+  <pattern>2y3p2n</pattern>
+  <pattern>2y3p2s</pattern>
+  <pattern>2y3p2t</pattern>
+  <pattern>2yq</pattern>
+  <pattern>2yr</pattern>
+  <pattern>2ys</pattern>
+  <pattern>2yt</pattern>
+  <pattern>2y3t2s</pattern>
+  <pattern>2y3t2z</pattern>
+  <pattern>2yv</pattern>
+  <pattern>2yw</pattern>
+  <pattern>2yx</pattern>
+  <pattern>2yy</pattern>
+  <pattern>2yz</pattern>
+  <pattern>1z</pattern>
+  <pattern>2zb</pattern>
+  <pattern>2zc</pattern>
+  <pattern>2zd</pattern>
+  <pattern>2zf</pattern>
+  <pattern>2zg</pattern>
+  <pattern>2z1h</pattern>
+  <pattern>2zj</pattern>
+  <pattern>2zk</pattern>
+  <pattern>2zl</pattern>
+  <pattern>2zm</pattern>
+  <pattern>2zn</pattern>
+  <pattern>2zp</pattern>
+  <pattern>2zq</pattern>
+  <pattern>2zr</pattern>
+  <pattern>2zs</pattern>
+  <pattern>2zt</pattern>
+  <pattern>2zv</pattern>
+  <pattern>2zw</pattern>
+  <pattern>2zx</pattern>
+  <pattern>2zy</pattern>
+  <pattern>2zz</pattern>
+  <pattern>4á3bamos </pattern>
+  <pattern>4ád3mela </pattern>
+  <pattern>4ád3melas </pattern>
+  <pattern>4ádmele </pattern>
+  <pattern>4ádmeles </pattern>
+  <pattern>4ádmelo </pattern>
+  <pattern>4ádmelos </pattern>
+  <pattern>4ádnosla </pattern>
+  <pattern>4ádnoslas </pattern>
+  <pattern>4ádnosle </pattern>
+  <pattern>4ádnosles </pattern>
+  <pattern>4ádnoslo </pattern>
+  <pattern>4ádnoslos </pattern>
+  <pattern>4ádsela </pattern>
+  <pattern>4ádselas </pattern>
+  <pattern>4ádsele </pattern>
+  <pattern>4ádseles </pattern>
+  <pattern>4ádselo </pattern>
+  <pattern>4ádselos </pattern>
+  <pattern>4ád3tela </pattern>
+  <pattern>4ád3telas </pattern>
+  <pattern>4ádtele </pattern>
+  <pattern>4ádteles </pattern>
+  <pattern>4ádtelo </pattern>
+  <pattern>4ádtelos </pattern>
+  <pattern>4áis </pattern>
+  <pattern>4ándola </pattern>
+  <pattern>4ándolas </pattern>
+  <pattern>4ándole </pattern>
+  <pattern>4ándoles </pattern>
+  <pattern>4ándolo </pattern>
+  <pattern>4ándolos </pattern>
+  <pattern>4ándome </pattern>
+  <pattern>4ándomela </pattern>
+  <pattern>4ándomelas </pattern>
+  <pattern>4ándomele </pattern>
+  <pattern>4ándomeles </pattern>
+  <pattern>4ándomelo </pattern>
+  <pattern>4ándomelos </pattern>
+  <pattern>4ándonos </pattern>
+  <pattern>4ándoos </pattern>
+  <pattern>4ándose </pattern>
+  <pattern>4ándosela </pattern>
+  <pattern>4ándoselas </pattern>
+  <pattern>4ándosele </pattern>
+  <pattern>4ándoseles </pattern>
+  <pattern>4ándoselo </pattern>
+  <pattern>4ándoselos </pattern>
+  <pattern>4ándoseme </pattern>
+  <pattern>4ándosenos </pattern>
+  <pattern>4ándote </pattern>
+  <pattern>4ándotela </pattern>
+  <pattern>4ándotelas </pattern>
+  <pattern>4ándotele </pattern>
+  <pattern>4ándoteles </pattern>
+  <pattern>4ándotelo </pattern>
+  <pattern>4ándotelos </pattern>
+  <pattern>4ándoteme </pattern>
+  <pattern>4ándotenos </pattern>
+  <pattern>4áosla </pattern>
+  <pattern>4áoslas </pattern>
+  <pattern>4áosle </pattern>
+  <pattern>4áosles </pattern>
+  <pattern>4áoslo </pattern>
+  <pattern>4áoslos </pattern>
+  <pattern>4á3ramos </pattern>
+  <pattern>4á3remos </pattern>
+  <pattern>4á4r3mela </pattern>
+  <pattern>4á4r3melas </pattern>
+  <pattern>4á4rmele </pattern>
+  <pattern>4á4r3meles </pattern>
+  <pattern>4á4rmelo </pattern>
+  <pattern>4á4r3melos </pattern>
+  <pattern>4á4r3nosla </pattern>
+  <pattern>4á4r3noslas </pattern>
+  <pattern>4á4r3nosle </pattern>
+  <pattern>4á4r3nosles </pattern>
+  <pattern>4á4r3noslo </pattern>
+  <pattern>4á4r3noslos </pattern>
+  <pattern>4árosla </pattern>
+  <pattern>4ároslas </pattern>
+  <pattern>4árosle </pattern>
+  <pattern>4árosles </pattern>
+  <pattern>4ároslo </pattern>
+  <pattern>4ároslos </pattern>
+  <pattern>4á4r3sela </pattern>
+  <pattern>4á4r3selas </pattern>
+  <pattern>4á4r3sele </pattern>
+  <pattern>4á4r3seles </pattern>
+  <pattern>4á4r3selo </pattern>
+  <pattern>4á4r3selos </pattern>
+  <pattern>4á4r3tela </pattern>
+  <pattern>4á4r3telas </pattern>
+  <pattern>4á4r3tele </pattern>
+  <pattern>4á4r3teles </pattern>
+  <pattern>4á4r3telo </pattern>
+  <pattern>4á4r3telos </pattern>
+  <pattern>4ás </pattern>
+  <pattern>4á3semos </pattern>
+  <pattern>4é </pattern>
+  <pattern>4éd3mela </pattern>
+  <pattern>4éd3melas </pattern>
+  <pattern>4édmele </pattern>
+  <pattern>4édmeles </pattern>
+  <pattern>4édmelo </pattern>
+  <pattern>4édmelos </pattern>
+  <pattern>4édnosla </pattern>
+  <pattern>4édnoslas </pattern>
+  <pattern>4édnosle </pattern>
+  <pattern>4édnosles </pattern>
+  <pattern>4édnoslo </pattern>
+  <pattern>4édnoslos </pattern>
+  <pattern>4é3drica </pattern>
+  <pattern>4é3dricas </pattern>
+  <pattern>4é3drico </pattern>
+  <pattern>4é3dricos </pattern>
+  <pattern>4édsela </pattern>
+  <pattern>4édselas </pattern>
+  <pattern>4édsele </pattern>
+  <pattern>4édseles </pattern>
+  <pattern>4édselo </pattern>
+  <pattern>4édselos </pattern>
+  <pattern>4éd3tela </pattern>
+  <pattern>4éd3telas </pattern>
+  <pattern>4édtele </pattern>
+  <pattern>4édteles </pattern>
+  <pattern>4édtelo </pattern>
+  <pattern>4édtelos </pattern>
+  <pattern>4éis </pattern>
+  <pattern>4éosla </pattern>
+  <pattern>4éoslas </pattern>
+  <pattern>4éosle </pattern>
+  <pattern>4éosles </pattern>
+  <pattern>4éoslo </pattern>
+  <pattern>4éoslos </pattern>
+  <pattern>4ér3mela </pattern>
+  <pattern>4ér3melas </pattern>
+  <pattern>4érmele </pattern>
+  <pattern>4érmeles </pattern>
+  <pattern>4érmelo </pattern>
+  <pattern>4érmelos </pattern>
+  <pattern>4érnosla </pattern>
+  <pattern>4érnoslas </pattern>
+  <pattern>4érnosle </pattern>
+  <pattern>4érnosles </pattern>
+  <pattern>4érnoslo </pattern>
+  <pattern>4érnoslos </pattern>
+  <pattern>4é3rosla </pattern>
+  <pattern>4é3roslas </pattern>
+  <pattern>4é3rosle </pattern>
+  <pattern>4é3rosles </pattern>
+  <pattern>4é3roslo </pattern>
+  <pattern>4é3roslos </pattern>
+  <pattern>4érsela </pattern>
+  <pattern>4érselas </pattern>
+  <pattern>4érsele </pattern>
+  <pattern>4érseles </pattern>
+  <pattern>4érselo </pattern>
+  <pattern>4érselos </pattern>
+  <pattern>4ér3tela </pattern>
+  <pattern>4ér3telas </pattern>
+  <pattern>4értele </pattern>
+  <pattern>4érteles </pattern>
+  <pattern>4értelo </pattern>
+  <pattern>4értelos </pattern>
+  <pattern>4és</pattern>
+  <pattern>4í </pattern>
+  <pattern>4ía </pattern>
+  <pattern>4íais </pattern>
+  <pattern>4ía3mos </pattern>
+  <pattern>4ían </pattern>
+  <pattern>4ías </pattern>
+  <pattern>4í3da </pattern>
+  <pattern>4í3das </pattern>
+  <pattern>4í3do </pattern>
+  <pattern>4í3dos </pattern>
+  <pattern>4í3mos </pattern>
+  <pattern>4ísmo </pattern>
+  <pattern>4ísmos </pattern>
+  <pattern>4ísta </pattern>
+  <pattern>4ístas </pattern>
+  <pattern>4í4s3te </pattern>
+  <pattern>4ís3teis </pattern>
+  <pattern>4í4s3tes </pattern>
+  <pattern>4ística </pattern>
+  <pattern>4ísticas </pattern>
+  <pattern>4ístico </pattern>
+  <pattern>4ísticos </pattern>
+  <pattern>4í3tes </pattern>
+  <pattern>1ñ</pattern>
+  <pattern>4ó3loga </pattern>
+  <pattern>4ó3logas </pattern>
+  <pattern>4ó3logo </pattern>
+  <pattern>4ó3logos </pattern>
+  <pattern>4ón </pattern>
+  <pattern>4ósteo </pattern>
+  <pattern>4ósteos </pattern>
+  <pattern>2ótic</pattern>
+</HyphenationDescription>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!--
+  Indonesian hyphenations description for FBReader (original was taken from the teTeX distribution)
+
+	From the original /usr/share/texmf-texlive/tex/generic/hyphen/inhyph.tex file:
+
+% Version 1.3 19-SEP-1997
+%
+% Hyphenation patterns for bahasa indonesia (probably also usable
+% for bahasa melayu)
+%
+% (c) Copyright 1996, 1997 J\"org Knappen and Terry Mart
+% 
+% This patterns are free software according to the GNU General Public 
+% licence version 2, June 1991.
+%
+% Please read the GNU licence for details. If you don't receive a GNU
+% licence with these patterns, you can obtain it from 
+%
+%                          Free Software Foundation, Inc.
+%                          675 Mass Ave, Cambridge, MA 02139, USA
+%
+% If you make any changes to this file, please rename it so that it
+% cannot be confused with the original one, and change the contact
+% address for bug reports and suggestions.
+%
+% For bug reports, improvements, and suggestions, contact
+%
+% J\"org Knappen
+% jk Unternehmensberatung
+% Barbarossaring 43
+% 55118 Mainz
+%
+% knappen@vkpmzd.kph.uni-mainz.de
+%
+% or:
+% Terry Mart
+%
+% Institut fuer Kernphysik
+% Universitaet Mainz
+% 55099 Mainz
+% Germany
+%
+% phone : +49 6131 395174
+% fax   : +49 6131 395474
+% email : mart@kph.uni-mainz.de
+-->
+<HyphenationDescription>
+  <pattern> a2ta2u</pattern>
+  <pattern> be2r3</pattern>
+  <pattern> b8e7r8a7b8e </pattern>
+  <pattern> b8e7r8a7h8i </pattern>
+  <pattern> b8e7r8a8k </pattern>
+  <pattern> b8e7r8a8n7d8a </pattern>
+  <pattern> b8e7r8a8n7d8a8l </pattern>
+  <pattern> b8e7r8a8n8g </pattern>
+  <pattern> b8e7r8a7n8g8a8s7a8n </pattern>
+  <pattern> b8e7r8a8n8g7s8a8n8g </pattern>
+  <pattern> b8e7r8a7n8g8u8s </pattern>
+  <pattern> b8e7r8a7n8i </pattern>
+  <pattern> b8e7r8a8n7t8a8k7a8n </pattern>
+  <pattern> b8e7r8a8n7t8a8m </pattern>
+  <pattern> b8e7r8a8n7t8a8s </pattern>
+  <pattern> b8e7r8a7p8a </pattern>
+  <pattern> b8e7r8a8s </pattern>
+  <pattern> b8e7r8e8n7d8e8n8g </pattern>
+  <pattern> b8e7r8e7n8g8u8t </pattern>
+  <pattern> b8e7r8e7r8o8t </pattern>
+  <pattern> b8e7r8e8s </pattern>
+  <pattern> b8e7r8e7w8o8k </pattern>
+  <pattern> b8e7r8i </pattern>
+  <pattern> b8e7r8i7n8g8a8s </pattern>
+  <pattern> b8e7r8i7s8i8k </pattern>
+  <pattern> b8e7r8i7t8a </pattern>
+  <pattern> b8e7r8o8k </pattern>
+  <pattern> b8e7r8o8n7d8o8n8g </pattern>
+  <pattern> b8e7r8o8n7t8a8k </pattern>
+  <pattern> b8e7r8u7d8u </pattern>
+  <pattern> b8e7r8u8k </pattern>
+  <pattern> b8e7r8u8n7t8u8n </pattern>
+  <pattern> de3ng4an </pattern>
+  <pattern> ja3ng4an </pattern>
+  <pattern> le3ng4an </pattern>
+  <pattern> ma3ng4an </pattern>
+  <pattern> me2ng3</pattern>
+  <pattern> pa3ng4an </pattern>
+  <pattern> p8e8n8g7e8k8s7p8o8r </pattern>
+  <pattern> p8e8n8g7i8m7p8o8r </pattern>
+  <pattern> pe2r3</pattern>
+  <pattern> ri3ng4an </pattern>
+  <pattern> ta3ng4an </pattern>
+  <pattern> te2r3</pattern>
+  <pattern> t8e7r8a </pattern>
+  <pattern> t8e7r8a8n8g </pattern>
+  <pattern> t8e7r8a8s </pattern>
+  <pattern> t8e7r8a7s8i </pattern>
+  <pattern> t8e7r8a7t8a8i </pattern>
+  <pattern> t8e7r8a7w8a8n8g </pattern>
+  <pattern> t8e7r8a7w8e8h </pattern>
+  <pattern> t8e7r8i7a8k </pattern>
+  <pattern> t8e7r8i7g8u </pattern>
+  <pattern> t8e7r8i8k </pattern>
+  <pattern> t8e7r8i7m8a </pattern>
+  <pattern> t8e7r8i7p8a8n8g </pattern>
+  <pattern> t8e7r8o7b8o8s </pattern>
+  <pattern> t8e7r8o7b8o8s7a8n </pattern>
+  <pattern> t8e7r8o7m8o8l </pattern>
+  <pattern> t8e7r8o8m7p8a8h </pattern>
+  <pattern> t8e7r8o8m7p8e8t </pattern>
+  <pattern> t8e7r8o7p8o8n8g </pattern>
+  <pattern> t8e7r8o7w8o8n8g7a8n </pattern>
+  <pattern> t8e7r8u7b8u8k </pattern>
+  <pattern> t8e7r8u7n8a </pattern>
+  <pattern> t8e7r8u8s </pattern>
+  <pattern> t8e7r8u7s8i </pattern>
+  <pattern>8'8</pattern>
+  <pattern>a1</pattern>
+  <pattern>a2ir</pattern>
+  <pattern>3an </pattern>
+  <pattern>1ba1ga2i</pattern>
+  <pattern>2b1an </pattern>
+  <pattern>2b1d</pattern>
+  <pattern>2b1j</pattern>
+  <pattern>2b1k</pattern>
+  <pattern>2b1n</pattern>
+  <pattern>2b1s</pattern>
+  <pattern>2b1t</pattern>
+  <pattern>2c1an </pattern>
+  <pattern>2c1k</pattern>
+  <pattern>2c1n</pattern>
+  <pattern>2d1an </pattern>
+  <pattern>2d1k</pattern>
+  <pattern>2d1n</pattern>
+  <pattern>2d1p</pattern>
+  <pattern>e1</pattern>
+  <pattern>2f1an </pattern>
+  <pattern>2f1d</pattern>
+  <pattern>2f1k</pattern>
+  <pattern>2f1n</pattern>
+  <pattern>2f1t</pattern>
+  <pattern>2g1an </pattern>
+  <pattern>2g1g</pattern>
+  <pattern>2g1k</pattern>
+  <pattern>2g1n</pattern>
+  <pattern>2h1an </pattern>
+  <pattern>2h1k</pattern>
+  <pattern>2h1l</pattern>
+  <pattern>2h1m</pattern>
+  <pattern>2h1n</pattern>
+  <pattern>2h1w</pattern>
+  <pattern>i1</pattern>
+  <pattern>i2o1n</pattern>
+  <pattern>2j1an </pattern>
+  <pattern>2j1k</pattern>
+  <pattern>2j1n</pattern>
+  <pattern>2k1an </pattern>
+  <pattern>2k1b</pattern>
+  <pattern>2k1k</pattern>
+  <pattern>2k1m</pattern>
+  <pattern>2k1n</pattern>
+  <pattern>2k1r</pattern>
+  <pattern>2k1s</pattern>
+  <pattern>2k1t</pattern>
+  <pattern>2l1an </pattern>
+  <pattern>2l1b</pattern>
+  <pattern>2l1f</pattern>
+  <pattern>2l1g</pattern>
+  <pattern>2l1h</pattern>
+  <pattern>2l1k</pattern>
+  <pattern>2l1m</pattern>
+  <pattern>2l1n</pattern>
+  <pattern>2l1q</pattern>
+  <pattern>2l1s</pattern>
+  <pattern>2l1t</pattern>
+  <pattern>2m1an </pattern>
+  <pattern>2m1b</pattern>
+  <pattern>2m1k</pattern>
+  <pattern>2m1l</pattern>
+  <pattern>2m1m</pattern>
+  <pattern>2m1n</pattern>
+  <pattern>2m1p</pattern>
+  <pattern>2m1r</pattern>
+  <pattern>2m1s</pattern>
+  <pattern>2n1an </pattern>
+  <pattern>2n1c</pattern>
+  <pattern>2n1d</pattern>
+  <pattern>2n1f</pattern>
+  <pattern>2ng </pattern>
+  <pattern>2ng1an </pattern>
+  <pattern>2ng1g</pattern>
+  <pattern>2ng1h</pattern>
+  <pattern>2ng1k</pattern>
+  <pattern>2ng1n</pattern>
+  <pattern>2ng1s</pattern>
+  <pattern>2n1j</pattern>
+  <pattern>2n1k</pattern>
+  <pattern>2n1n</pattern>
+  <pattern>2n1p</pattern>
+  <pattern>2n1s</pattern>
+  <pattern>2n3s2t</pattern>
+  <pattern>2n1t</pattern>
+  <pattern>2n1v</pattern>
+  <pattern>2ny </pattern>
+  <pattern>o1</pattern>
+  <pattern>2p1an </pattern>
+  <pattern>2p1k</pattern>
+  <pattern>2p1n</pattern>
+  <pattern>2p1p</pattern>
+  <pattern>2p1r</pattern>
+  <pattern>2p1t</pattern>
+  <pattern>2r1an </pattern>
+  <pattern>2r1b</pattern>
+  <pattern>2r1c</pattern>
+  <pattern>2r1f</pattern>
+  <pattern>2r1g</pattern>
+  <pattern>2r1h</pattern>
+  <pattern>2r1j</pattern>
+  <pattern>2r1k</pattern>
+  <pattern>2r1l</pattern>
+  <pattern>2r1m</pattern>
+  <pattern>2r1n</pattern>
+  <pattern>2r1p</pattern>
+  <pattern>2r1r</pattern>
+  <pattern>2r1s</pattern>
+  <pattern>2r1t</pattern>
+  <pattern>2r1w</pattern>
+  <pattern>2r1y</pattern>
+  <pattern>2s1an </pattern>
+  <pattern>2s1b</pattern>
+  <pattern>2s1k</pattern>
+  <pattern>2s1l</pattern>
+  <pattern>2s1m</pattern>
+  <pattern>2s1n</pattern>
+  <pattern>2s1p</pattern>
+  <pattern>2s1r</pattern>
+  <pattern>2s1s</pattern>
+  <pattern>2s1t</pattern>
+  <pattern>2s1w</pattern>
+  <pattern>2t1an </pattern>
+  <pattern>2t1k</pattern>
+  <pattern>2t1l</pattern>
+  <pattern>2t1n</pattern>
+  <pattern>2t1t</pattern>
+  <pattern>u1</pattern>
+  <pattern>2v1an </pattern>
+  <pattern>2w1t</pattern>
+  <pattern>2z1an </pattern>
+</HyphenationDescription>

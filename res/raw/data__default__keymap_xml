@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keymap>
+	<binding key="&lt;VolumeDown&gt;" action="volumeKeyScrollForward"/>
+	<binding key="&lt;VolumeUp&gt;" action="volumeKeyScrollBackward"/>
+	<binding key="&lt;Back&gt;" action="cancel"/>
+	<binding key="&lt;Enter&gt;" action="followHyperlink"/>
+	<binding key="&lt;PadCenter&gt;" action="followHyperlink"/>
+</keymap>
