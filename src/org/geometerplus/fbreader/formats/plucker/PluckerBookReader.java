@@ -48,7 +48,7 @@ public class PluckerBookReader extends BookReader {
 
 	private	final ArrayList/*<std::pair<int, int> >*/ myReferencedParagraphs = new ArrayList();
 	private	final HashMap/*<int, std::vector<int> >*/ myParagraphMap = new HashMap(); /*<int, vector<pair<int, int>>>*/
-	private	ArrayList/*<Integer, Integer>*/ myParagraphVector = new ArrayList(); //�� ������ ������
+	private	ArrayList/*<Integer, Integer>*/ myParagraphVector = new ArrayList();
 	private	boolean myParagraphStored;
 	
 	public PluckerBookReader(ZLFile file, BookModel model, String encoding){
