@@ -25,7 +25,7 @@ buildSourceArchive() {
   ant clean
   rm -rf $dir $archive
   mkdir $dir
-  cp -r data icons src native build.xml *.properties *.properties *.properties *.properties *.properties *.properties *.properties *.properties $0 VERSION $dir
+  cp -r data icons src native build.xml res *.properties $0 VERSION $dir
   rm -rf `find $dir -name .svn`
   zip -rq $archive $dir/*
   rm -rf $dir
