@@ -1,8 +1,0 @@
-How to Build for Android
-------------------------
-
-Requirements: Android SDK 1.6, Android NDK 1.5
-
-1. compile native code in 'native' directory
-2. edit 'local.properties' file
-3. run 'ant release'

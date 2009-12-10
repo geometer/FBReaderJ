@@ -37,7 +37,11 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private String myAuthorTag;
 	private String mySubjectTag;
 	private String myLanguageTag;
+	private String myMetaTag = "meta";
 
+	private String mySeriesTitle = "";
+	private int mySeriesIndex = 0;
+	
 	private final ArrayList<String> myAuthorList = new ArrayList<String>();
 	private final ArrayList<String> myAuthorList2 = new ArrayList<String>();
 
@@ -124,6 +128,16 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				myReadState = READ_SUBJECT;
 			} else if (tag == myLanguageTag) {
 				myReadState = READ_LANGUAGE;
+			} else if (tag == myMetaTag) {
+				if (attributes.getValue("name").equals("calibre:series")) {
+					mySeriesTitle = attributes.getValue("content");
+				} else if (attributes.getValue("name").equals("calibre:series_index")) {
+					final String strIndex = attributes.getValue("content");
+					try {
+						mySeriesIndex = Integer.parseInt(strIndex);
+					} catch (NumberFormatException e) {
+					}
+				}
 			}
 		}
 		return false;
@@ -177,6 +191,12 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 						myBook.setLanguage("cz".equals(bufferContent) ? "cs" : bufferContent);
 					}
 					break;
+			}
+		} else {
+			if (tag == myMetaTag) {
+				if (!mySeriesTitle.equals("") && mySeriesIndex > 0) {
+					myBook.setSeriesInfo(mySeriesTitle, mySeriesIndex);
+				}
 			}
 		}
 		myBuffer.delete(0, myBuffer.length());

@@ -1,0 +1,10 @@
+How to Build for Android
+------------------------
+
+Requirements: Android SDK 1.6, Android NDK 1.5
+
+1. Compile native code.
+   This step could be skipped, prebuilded native libraries are currently included into the source package.
+2. Edit 'local.properties' file.
+3. Run './createRawResources.py'.
+4. Run 'ant release'.
