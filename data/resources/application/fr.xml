@@ -35,7 +35,7 @@
     </node>
   </node>
   <node name="menu">
-		<node name="preferences-old" value="Paramètres (anciens)"/>
+		<node name="preferences-old" value="Paramètres avancés"/>
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
 		<node name="library" value="Bibliothèque"/>
