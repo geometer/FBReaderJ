@@ -2,34 +2,34 @@
 <resources>
 	<node name="dialog">
 		<node name="button">
-			<node name="ok" value="Ok"/>
-			<node name="cancel" value="Cancel"/>
-			<node name="yes" value="Yes"/>
-			<node name="no" value="No"/>
-			<node name="apply" value="Apply"/>
+			<node name="ok" value="Ok" />
+			<node name="cancel" value="Cancel" />
+			<node name="yes" value="Yes" />
+			<node name="no" value="No" />
+			<node name="apply" value="Apply" />
 		</node>
 		<node name="waitMessage">
-			<node name="savingConfig" value="Saving config..."/>
+			<node name="savingConfig" value="Saving config..." />
 		</node>
 	</node>
 	<node name="color">
-		<node name="red" value="Red"/>
-		<node name="green" value="Green"/>
-		<node name="blue" value="Blue"/>
-		<node name="black" value="Black"/>
-		<node name="white" value="White"/>
-		<node name="maroon" value="Maroon"/>
-		<node name="olive" value="Olive"/>
-		<node name="navy" value="Navy"/>
-		<node name="purple" value="Purple"/>
-		<node name="teal" value="Teal"/>
-		<node name="silver" value="Silver"/>
-		<node name="gray" value="Gray"/>
-		<node name="lime" value="Lime"/>
-		<node name="yellow" value="Yellow"/>
-		<node name="magenta" value="Magenta"/>
-		<node name="cyan" value="Cyan"/>
-		<node name="custom..." value="Custom..."/>
+		<node name="red" value="Red" />
+		<node name="green" value="Green" />
+		<node name="blue" value="Blue" />
+		<node name="black" value="Black" />
+		<node name="white" value="White" />
+		<node name="maroon" value="Maroon" />
+		<node name="olive" value="Olive" />
+		<node name="navy" value="Navy" />
+		<node name="purple" value="Purple" />
+		<node name="teal" value="Teal" />
+		<node name="silver" value="Silver" />
+		<node name="gray" value="Gray" />
+		<node name="lime" value="Lime" />
+		<node name="yellow" value="Yellow" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="Cyan" />
+		<node name="custom..." value="Custom..." />
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabic" />
@@ -45,6 +45,8 @@
 		<node name="he" value="Hebrew" />
 		<node name="id" value="Indonesian" />
 		<node name="it" value="Italian" />
+		<node name="lt" value="Lithuanian" />
+		<node name="nl" value="Dutch" />
 		<node name="no" value="Norwegian" />
 		<node name="pt" value="Portuguese" />
 		<node name="ru" value="Russian" />
@@ -55,11 +57,11 @@
 		<node name="other" value="Other" />
 	</node>
 	<node name="boolean3">
-		<node name="on" value="on"/>
-		<node name="off" value="off"/>
-		<node name="unchanged" value="unchanged"/>
+		<node name="on" value="on" />
+		<node name="off" value="off" />
+		<node name="unchanged" value="unchanged" />
 	</node>
 	<node name="keyOptionView">
-		<node name="actionFor" value="Action for Key"/>
+		<node name="actionFor" value="Action for Key" />
 	</node>
 </resources>

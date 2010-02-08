@@ -34,7 +34,7 @@
     </node>
   </node>
   <node name="menu">
-		<node name="preferences-old" value="Settings (old)"/>
+		<node name="preferences-old" value="Settings (more)"/>
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
