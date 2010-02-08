@@ -117,7 +117,7 @@
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Options"/>
 			<node name="tab">
-				<node name="Library" value="Bibliothèque"/>
+				<node name="Library" value="Bibliothèque">
 					<node name="bookPath" value="Emplacement des livres"/>
 					<node name="lookInSubdirectories" value="Chercher des livres dans les sous-répertoires"/>
 					<node name="recentListSize" value="Taille de liste des livres récents"/>
