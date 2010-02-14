@@ -64,6 +64,5 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.DialogActivity" android:label="" android:configChanges="orientation|keyboardHidden"/>
-		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.OptionsActivity" android:label="" />
 	</application>
 </manifest> 
