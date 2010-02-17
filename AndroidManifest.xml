@@ -37,6 +37,7 @@
 		<activity android:name="org.geometerplus.android.fbreader.LibraryTabActivity" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookSearchActivity" />
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibraryActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookmarkSearchActivity" />

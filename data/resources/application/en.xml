@@ -16,6 +16,7 @@
     <node name="openBook" value="Open book"/>
     <node name="deleteBook" value="Delete book"/>
   </node>
+  <node name="networkView" />
   <node name="tocView">
     <node name="expandTree" value="Expand tree"/>
     <node name="collapseTree" value="Collapse tree"/>
@@ -38,11 +39,12 @@
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
-	  <node name="toc" value="TOC"/>
-	  <node name="day" value="Day"/>
-	  <node name="night" value="Night"/>
+		<node name="toc" value="TOC"/>
+		<node name="day" value="Day"/>
+		<node name="night" value="Night"/>
+		<node name="networkLibrary" value="Network library"/>
 		<node name="navigate" value="Navigate">
-	  	<node name="toc" value="Table of Contents"/>
+			<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
 			<node name="gotoPageNumber" value="Go to Page..."/>
 			<node name="gotoSectionStart" value="Go to Start of Text Section"/>
