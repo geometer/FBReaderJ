@@ -22,34 +22,29 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 
-public class NetworkLibrary {
-	private static NetworkLibrary ourInstance;
+abstract public class NetworkCatalogItem extends NetworkLibraryItem {
 
-	public static NetworkLibrary Instance() {
-		if (ourInstance == null) {
-			ourInstance = new NetworkLibrary();
-		}
-		return ourInstance;
+	public final int Visibility;
+
+	public interface CatalogType {
+		int OTHER = 0;
+		int BY_AUTHORS = 1;
 	}
 
+	public interface VisibilityType {
+		int NEVER = 0;
+		int ALWAYS = 1;
+		int LOGGED_USERS = 3;
+	};
 
-	private List<NetworkLink> myLinks;
-
-	public NetworkLibrary() {
-		myLinks.add(new NetworkLink("feedbooks.com") {
-			public NetworkLibraryItem libraryItem() {
-				return new NetworkLibraryItem(this, "Feedbooks catalog", "feedbooks online catalog");
-			}
-		});
-		myLinks.add(new NetworkLink("litres.ru") {
-			public NetworkLibraryItem libraryItem() {
-				return new NetworkLibraryItem(this, "Litres catalog", "litres online catalog");
-			}
-		});
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, int visibility) {
+		super(link, title, summary);
+		Visibility = visibility;
 	}
 
-	public List<NetworkLink> links() {
-		return Collections.unmodifiableList(myLinks);
-	}
+	abstract String loadChildren(List<NetworkLibraryItem> children);
 
+	int catalogType() {
+		return CatalogType.OTHER;
+	}
 }
