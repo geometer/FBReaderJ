@@ -32,6 +32,10 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.android.fbreader.ZLTreeAdapter;
+
+import org.geometerplus.fbreader.network.*;
+
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
 	static NetworkLibraryActivity Instance;
@@ -47,7 +51,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		//new NetworkLibraryAdapter((ListView)findViewById(viewId), tree);
+		new LibraryAdapter(getListView(), NetworkLibrary.Instance().getTree());
 	}
 
 	@Override
@@ -71,6 +75,48 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	public void onDestroy() {
 		super.onDestroy();
 	}
+
+
+	private final class LibraryAdapter extends ZLTreeAdapter {
+
+		LibraryAdapter(ListView view, NetworkTree tree) {
+			super(view, tree);
+		}
+
+		@Override
+		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+			/*final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			final LibraryTree tree = (LibraryTree)getItem(position);
+			if (tree instanceof BookTree) {
+				menu.setHeaderTitle(tree.getName());
+				final ZLResource resource = ZLResource.resource("libraryView");
+				menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+				if (Library.Instance().canDeleteBook(((BookTree)tree).Book)) {
+					menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+				}
+			}*/
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			final View view = (convertView != null) ? convertView :
+				LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+
+			final NetworkTree tree = (NetworkTree)getItem(position);
+
+			((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
+			((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
+			return view;
+		}
+
+		/*protected boolean runTreeItem(ZLTree tree) {
+			if (super.runTreeItem(tree)) {
+				return true;
+			}
+			return true;
+		}*/
+	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

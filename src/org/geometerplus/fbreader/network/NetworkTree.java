@@ -17,50 +17,44 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.tree;
+package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.tree.ZLTree;
+//import org.geometerplus.zlibrary.core.tree.ZLTree;
 
-public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree> {
-	protected FBTree() {
+import org.geometerplus.fbreader.tree.FBTree;
+
+public abstract class NetworkTree extends FBTree {
+
+	protected NetworkTree() {
 		super();
 	}
 
-	protected FBTree(FBTree parent) {
+	protected NetworkTree(NetworkTree parent) {
 		super(parent);
 	}
 
-	protected FBTree(FBTree parent, int position) {
+	protected NetworkTree(NetworkTree parent, int position) {
 		super(parent, position);
 	}
 
-	public abstract String getName();
-
-	protected String getSortKey() {
-		return getName();
-	}
-
-	public int compareTo(FBTree ct) {
-		final String key0 = getSortKey();
-		final String key1 = ct.getSortKey();
-		if (key0 == null) {
-			return (key1 == null) ? 0 : -1;
-		}
-		if (key1 == null) {
-			return 1;
-		}
-		return key0.toLowerCase().compareTo(key1.toLowerCase());
-	}
-
-	public final void sortAllChildren() {
-		List<FBTree> children = subTrees();
-		if (!children.isEmpty()) {
-			Collections.sort(children);
-			for (FBTree tree : children) {
-				tree.sortAllChildren();
+	private String myChildrenString;
+	public String getSecondString() {
+		if (myChildrenString == null) {
+			StringBuilder builder = new StringBuilder();
+			int count = 0;
+			for (FBTree subtree : subTrees()) {
+				if (count++ > 0) {
+					builder.append(",  ");
+				}
+				builder.append(subtree.getName());
+				if (count == 5) {
+					break;
+				}
 			}
+			myChildrenString = builder.toString();
 		}
+		return myChildrenString;
 	}
 }

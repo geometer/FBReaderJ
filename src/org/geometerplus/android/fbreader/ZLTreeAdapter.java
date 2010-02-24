@@ -29,13 +29,13 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
+public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
 	private ZLTree myTree;
 	private ZLTree[] myItems;
 	private final HashSet<ZLTree> myOpenItems = new HashSet<ZLTree>();
 
-	ZLTreeAdapter(ListView parent, ZLTree tree) {
+	protected ZLTreeAdapter(ListView parent, ZLTree tree) {
 		myParent = parent;
 		myTree = tree;
 		myItems = new ZLTree[tree.getSize() - 1];

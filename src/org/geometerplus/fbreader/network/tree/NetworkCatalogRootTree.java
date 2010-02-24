@@ -17,34 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.network.*;
 
-public abstract class NetworkCatalogItem extends NetworkLibraryItem {
+public class NetworkCatalogRootTree extends NetworkCatalogTree {
 
-	public final int Visibility;
-
-	public interface CatalogType {
-		int OTHER = 0;
-		int BY_AUTHORS = 1;
+	public NetworkCatalogRootTree(RootTree parent, NetworkLink link, int position) {
+		super(parent, (NetworkCatalogItem) link.libraryItem(), position);
 	}
 
-	public interface VisibilityType {
-		int NEVER = 0;
-		int ALWAYS = 1;
-		int LOGGED_USERS = 2;
-	};
-
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, int visibility) {
-		super(link, title, summary);
-		Visibility = visibility;
-	}
-
-	public abstract String loadChildren(List<NetworkLibraryItem> children); // returns Error Message
-
-	public int catalogType() {
-		return CatalogType.OTHER;
-	}
 }

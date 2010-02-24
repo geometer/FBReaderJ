@@ -19,13 +19,13 @@
 
 package org.geometerplus.fbreader.network;
 
-public class NetworkLibraryItem {
+public abstract class NetworkLibraryItem {
 
 	public final NetworkLink Link;
 	public final String Title;
 	public final String Summary;
 
-	public NetworkLibraryItem(NetworkLink link, String title, String summary) {
+	protected NetworkLibraryItem(NetworkLink link, String title, String summary) {
 		Link = link;
 		Title = title;
 		Summary = summary;
