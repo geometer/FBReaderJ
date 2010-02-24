@@ -21,9 +21,11 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.tree.ZLTree;
+//import org.geometerplus.zlibrary.core.tree.ZLTree;
 
-public abstract class LibraryTree extends ZLTree<LibraryTree> implements Comparable<LibraryTree> {
+import org.geometerplus.fbreader.tree.FBTree;
+
+public abstract class LibraryTree extends FBTree {
 	protected LibraryTree() {
 		super();
 	}
@@ -44,18 +46,12 @@ public abstract class LibraryTree extends ZLTree<LibraryTree> implements Compara
 		return new BookTree(this, book, showAuthors);
 	}
 
-	public abstract String getName();
-
-	protected String getSortKey() {
-		return getName();
-	}
-
 	private String myChildrenString;
 	public String getSecondString() {
 		if (myChildrenString == null) {
 			StringBuilder builder = new StringBuilder();
 			int count = 0;
-			for (LibraryTree subtree : subTrees()) {
+			for (FBTree subtree : subTrees()) {
 				if (count++ > 0) {
 					builder.append(",  ");
 				}
@@ -69,43 +65,21 @@ public abstract class LibraryTree extends ZLTree<LibraryTree> implements Compara
 		return myChildrenString;
 	}
 
-	public int compareTo(LibraryTree ct) {
-		final String key0 = getSortKey();
-		final String key1 = ct.getSortKey();
-		if (key0 == null) {
-			return (key1 == null) ? 0 : -1;
-		}
-		if (key1 == null) {
-			return 1;
-		}
-		return key0.toLowerCase().compareTo(key1.toLowerCase());
-	}
-
-	public final void sortAllChildren() {
-		List<LibraryTree> children = subTrees();
-		if (!children.isEmpty()) {
-			Collections.sort(children);
-			for (LibraryTree tree : children) {
-				tree.sortAllChildren();
-			}
-		}
-	}
-
 	public boolean removeBook(Book book) {
-		final LinkedList<LibraryTree> toRemove = new LinkedList<LibraryTree>();
-		for (LibraryTree tree : this) {
+		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
+		for (FBTree tree : this) {
 			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
 				toRemove.add(tree);
 			}
 		}
-		for (LibraryTree tree : toRemove) {
+		for (FBTree tree : toRemove) {
 			tree.removeSelf();
-			LibraryTree parent = tree.Parent;
+			FBTree parent = tree.Parent;
 			for (; (parent != null) && !parent.hasChildren(); parent = parent.Parent) {
 				parent.removeSelf();
 			}
 			for (; parent != null; parent = parent.Parent) {
-				parent.myChildrenString = null;
+				((LibraryTree)parent).myChildrenString = null;
 			}
 		}
 		return !toRemove.isEmpty();

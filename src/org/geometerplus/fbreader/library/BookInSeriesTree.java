@@ -19,13 +19,15 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.tree.FBTree;
+
 public final class BookInSeriesTree extends BookTree {
 	BookInSeriesTree(LibraryTree parent, Book book) {
 		super(parent, book, false);
 	}
 
 	@Override
-	public int compareTo(LibraryTree tree) {
+	public int compareTo(FBTree tree) {
 		if (tree instanceof BookInSeriesTree) {
 			final long difference =
 				Book.getSeriesInfo().Index - ((BookTree)tree).Book.getSeriesInfo().Index;

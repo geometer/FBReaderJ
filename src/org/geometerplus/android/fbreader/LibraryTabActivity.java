@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	static LibraryTabActivity Instance;
@@ -184,7 +185,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			if (myCurrentBook == null) {
 				return null;
 			}
-			for (LibraryTree tree : myLibraryTree) {
+			for (FBTree tree : myLibraryTree) {
 				if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(myCurrentBook)) {
 					return tree;
 				}
