@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,60 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.network.tree;
 
-public class BookTree extends LibraryTree {
-	public final Book Book;
+import java.util.*;
+
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.network.*;
+
+
+public class NetworkSeriesTree extends NetworkTree {
+
+	private final String myTitle;
 	private final boolean myShowAuthors;
 
-	BookTree(LibraryTree parent, Book book, boolean showAuthors) {
+	NetworkSeriesTree(NetworkTree parent, String seriesTitle, boolean showAuthors) {
 		super(parent);
-		Book = book;
+		myTitle = seriesTitle;
 		myShowAuthors = showAuthors;
 	}
 
+	@Override
 	public String getName() {
-		return Book.getTitle();
+		return myTitle;
 	}
 
+	@Override
 	public String getSummary() {
 		if (!myShowAuthors) {
 			return super.getSecondString();
 		}
+
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
-		for (Author author : Book.authors()) {
-			if (count++ > 0) {
-				builder.append(",  ");
+
+		Set<NetworkBookItem.AuthorData> authorSet = new TreeSet<NetworkBookItem.AuthorData>();
+		for (FBTree tree: this) {
+			if (!(tree instanceof NetworkBookTree)) {
+				continue;
 			}
-			builder.append(author.DisplayName);
-			if (count == 5) {
-				break;
+			final NetworkBookItem book = (NetworkBookItem) ((NetworkBookTree)tree).Book;
+
+			for (NetworkBookItem.AuthorData author: book.Authors) {
+				if (!authorSet.contains(author)) {
+					authorSet.add(author);
+					if (count++ > 0) {
+						builder.append(",  ");
+					}
+					builder.append(author.DisplayName);
+					if (count == 5) {
+						return builder.toString();
+					}
+				}
 			}
 		}
 		return builder.toString();
 	}
+
 }

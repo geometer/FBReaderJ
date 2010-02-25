@@ -22,15 +22,38 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 
-class NetworkBookItem extends NetworkLibraryItem {
+public class NetworkBookItem extends NetworkLibraryItem {
 
-	public static class AuthorData {
+	public static class AuthorData implements Comparable<AuthorData> {
 		public final String DisplayName;
 		public final String SortKey;
 
 		public AuthorData(String displayName, String sortKey) {
 			DisplayName = displayName;
 			SortKey = sortKey;
+		}
+
+		@Override
+		public int compareTo(AuthorData data) {
+			int key = SortKey.compareTo(data.SortKey);
+			if (key != 0) {
+				return key;
+			}
+			return DisplayName.compareTo(data.DisplayName);
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == null || !(o instanceof AuthorData)) {
+				return false;
+			}
+			AuthorData data = (AuthorData) o;
+			return SortKey == data.SortKey && DisplayName == data.DisplayName;
+		}
+
+		@Override
+		public int hashCode() {
+			return SortKey.hashCode() + DisplayName.hashCode();
 		}
 	}
 

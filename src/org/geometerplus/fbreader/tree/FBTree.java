@@ -63,4 +63,32 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 			}
 		}
 	}
+
+	private String myChildrenString;
+
+	public final void invalidateChildren() {
+		myChildrenString = "";
+	}
+
+	public final String getSecondString() {
+		if (myChildrenString == null) {
+			myChildrenString = getSummary();
+		}
+		return myChildrenString;
+	}
+
+	protected String getSummary() {
+		StringBuilder builder = new StringBuilder();
+		int count = 0;
+		for (FBTree subtree : subTrees()) {
+			if (count++ > 0) {
+				builder.append(",  ");
+			}
+			builder.append(subtree.getName());
+			if (count == 5) {
+				break;
+			}
+		}
+		return builder.toString();
+	}
 }

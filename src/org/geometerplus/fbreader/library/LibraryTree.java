@@ -46,25 +46,6 @@ public abstract class LibraryTree extends FBTree {
 		return new BookTree(this, book, showAuthors);
 	}
 
-	private String myChildrenString;
-	public String getSecondString() {
-		if (myChildrenString == null) {
-			StringBuilder builder = new StringBuilder();
-			int count = 0;
-			for (FBTree subtree : subTrees()) {
-				if (count++ > 0) {
-					builder.append(",  ");
-				}
-				builder.append(subtree.getName());
-				if (count == 5) {
-					break;
-				}
-			}
-			myChildrenString = builder.toString();
-		}
-		return myChildrenString;
-	}
-
 	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {
@@ -79,7 +60,7 @@ public abstract class LibraryTree extends FBTree {
 				parent.removeSelf();
 			}
 			for (; parent != null; parent = parent.Parent) {
-				((LibraryTree)parent).myChildrenString = null;
+				((LibraryTree)parent).invalidateChildren();
 			}
 		}
 		return !toRemove.isEmpty();

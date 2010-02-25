@@ -45,6 +45,11 @@ public class NetworkCatalogTree extends NetworkTree {
 		return Item.Title;
 	}
 
+	@Override
+	public String getSummary() {
+		return Item.Summary;
+	}
+
 	public void updateChildren() {
 	}
 

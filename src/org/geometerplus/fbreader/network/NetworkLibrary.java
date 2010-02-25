@@ -41,28 +41,7 @@ public class NetworkLibrary {
 	private boolean myUpdateChildren = true;
 
 
-	private static class DummyCatalogItem extends NetworkCatalogItem {
-		public DummyCatalogItem(NetworkLink link, String title, String summary) {
-			super(link, title, summary, VisibilityType.ALWAYS);
-		}
-
-		@Override
-		public String loadChildren(List<NetworkLibraryItem> children) {
-			return "";
-		}
-	}
-
 	public NetworkLibrary() {
-		myLinks.add(new NetworkLink("feedbooks.com") {
-			public NetworkLibraryItem libraryItem() {
-				return new DummyCatalogItem(this, "Feedbooks catalog", "feedbooks online catalog");
-			}
-		});
-		myLinks.add(new NetworkLink("litres.ru") {
-			public NetworkLibraryItem libraryItem() {
-				return new DummyCatalogItem(this, "Litres catalog", "litres online catalog");
-			}
-		});
 	}
 
 	public List<NetworkLink> links() {

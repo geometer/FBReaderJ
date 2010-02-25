@@ -39,22 +39,4 @@ public abstract class NetworkTree extends FBTree {
 		super(parent, position);
 	}
 
-	private String myChildrenString;
-	public String getSecondString() {
-		if (myChildrenString == null) {
-			StringBuilder builder = new StringBuilder();
-			int count = 0;
-			for (FBTree subtree : subTrees()) {
-				if (count++ > 0) {
-					builder.append(",  ");
-				}
-				builder.append(subtree.getName());
-				if (count == 5) {
-					break;
-				}
-			}
-			myChildrenString = builder.toString();
-		}
-		return myChildrenString;
-	}
 }

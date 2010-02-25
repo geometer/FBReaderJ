@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,45 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.network.tree;
 
-public class BookTree extends LibraryTree {
-	public final Book Book;
-	private final boolean myShowAuthors;
+import java.util.*;
 
-	BookTree(LibraryTree parent, Book book, boolean showAuthors) {
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.network.*;
+
+
+public class NetworkBookTree extends NetworkTree {
+
+	public final NetworkBookItem Book;
+
+	NetworkBookTree(NetworkTree parent, NetworkBookItem book) {
 		super(parent);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
+	@Override
 	public String getName() {
-		return Book.getTitle();
+		return Book.Title;
 	}
 
+	@Override
 	public String getSummary() {
-		if (!myShowAuthors) {
-			return super.getSecondString();
-		}
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
-		for (Author author : Book.authors()) {
+		for (NetworkBookItem.AuthorData author: Book.Authors) {
 			if (count++ > 0) {
 				builder.append(",  ");
 			}
 			builder.append(author.DisplayName);
-			if (count == 5) {
-				break;
-			}
 		}
-		return builder.toString();
+		String authorsString = builder.toString();
+
+		FBTree parent = this.Parent;
+		if (parent.getName().equals(authorsString)) {
+			return "";
+		}
+		return authorsString;
 	}
+
 }
