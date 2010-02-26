@@ -19,32 +19,16 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
+public final class ATOMConstants {
 
+	public static final String TYPE_TEXT = "text";
+	public static final String TYPE_HTML = "html";
+	public static final String TYPE_XHTML = "xhtml";
+	public static final String TYPE_DEFAULT = TYPE_TEXT;
 
-abstract class ATOMCommonAttributes {
-	public static final String XML_BASE = "xml:base";
-	public static final String XML_LANG = "xml:lang";
-
-	public final Map<String, String> Attributes = new TreeMap<String, String>();
-
-	public void readAttributes(Map<String, String> source) {
-		readAttribute(XML_BASE, source);
-		readAttribute(XML_LANG, source);
-	}
-
-	protected final void readAttribute(String name, Map<String, String> source) {
-		String value = source.get(name);
-		if (value != null) {
-			Attributes.put(name, value);
-		}
-	}
-
-	public final String getLang() {
-		return Attributes.get(XML_LANG);
-	}
-
-	public final String getBase() {
-		return Attributes.get(XML_BASE);
-	}
+	public static final String REL_ALTERNATE = "alternate";
+	public static final String REL_RELATED = "related";
+	public static final String REL_SELF = "self";
+	public static final String REL_ENCLOSURE = "enclosure";
+	public static final String REL_VIA = "via";
 }

@@ -22,29 +22,29 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.*;
 
 
-abstract class ATOMCommonAttributes {
-	public static final String XML_BASE = "xml:base";
-	public static final String XML_LANG = "xml:lang";
+public class ATOMCategory extends ATOMCommonAttributes {
 
-	public final Map<String, String> Attributes = new TreeMap<String, String>();
+	public static final String TERM = "term";
+	public static final String SCHEME = "scheme";
+	public static final String LABEL = "label";
 
+	@Override
 	public void readAttributes(Map<String, String> source) {
-		readAttribute(XML_BASE, source);
-		readAttribute(XML_LANG, source);
+		super.readAttributes(source);
+		readAttribute(TERM, source);
+		readAttribute(SCHEME, source);
+		readAttribute(LABEL, source);
 	}
 
-	protected final void readAttribute(String name, Map<String, String> source) {
-		String value = source.get(name);
-		if (value != null) {
-			Attributes.put(name, value);
-		}
+	public final String getTerm() {
+		return Attributes.get(TERM);
 	}
 
-	public final String getLang() {
-		return Attributes.get(XML_LANG);
+	public final String getScheme() {
+		return Attributes.get(SCHEME);
 	}
 
-	public final String getBase() {
-		return Attributes.get(XML_BASE);
+	public final String getLabel() {
+		return Attributes.get(LABEL);
 	}
 }

@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.*;
 
 
-class ATOMPersonConstruct extends ATOMCommonAttributes {
+abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
 
 	public String Name;
 	public String Uri;

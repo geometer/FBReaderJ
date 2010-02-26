@@ -22,29 +22,25 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.*;
 
 
-abstract class ATOMCommonAttributes {
-	public static final String XML_BASE = "xml:base";
-	public static final String XML_LANG = "xml:lang";
+public class ATOMUpdated extends ATOMDateConstruct {
 
-	public final Map<String, String> Attributes = new TreeMap<String, String>();
-
-	public void readAttributes(Map<String, String> source) {
-		readAttribute(XML_BASE, source);
-		readAttribute(XML_LANG, source);
+	public ATOMUpdated(int year) {
+		super(year);
 	}
 
-	protected final void readAttribute(String name, Map<String, String> source) {
-		String value = source.get(name);
-		if (value != null) {
-			Attributes.put(name, value);
-		}
+	public ATOMUpdated(int year, int month, int day) {
+		super(year, month, day);
 	}
 
-	public final String getLang() {
-		return Attributes.get(XML_LANG);
+	public ATOMUpdated(int year, int month, int day, int hour, int minutes, int seconds) {
+		super(year, month, day, hour, minutes, seconds);
 	}
 
-	public final String getBase() {
-		return Attributes.get(XML_BASE);
+	public ATOMUpdated(int year, int month, int day, int hour, int minutes, int seconds, float sfract) {
+		super(year, month, day, hour, minutes, seconds, sfract);
+	}
+
+	public ATOMUpdated(int year, int month, int day, int hour, int minutes, int seconds, float sfract, int tzhour, int tzminutes) {
+		super(year, month, day, hour, minutes, seconds, sfract, tzhour, tzminutes);
 	}
 }

@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.*;
 
 
-class ATOMDateConstruct extends ATOMCommonAttributes {
+abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 
 	public int Year;
 	public int Month;
@@ -82,21 +82,21 @@ class ATOMDateConstruct extends ATOMCommonAttributes {
 		SecondFraction = sfract;
 	}
 
-	public static ATOMDateConstruct parse(String str) {
-		int year = 0;
-		int month = 0;
-		int day = 0;
-		int hour = 0;
-		int minutes = 0;
-		int seconds = 0;
-		float secondFraction = 0.0f;
-		int tzHour = 0;
-		int tzMinutes = 0;
+	public static boolean parse(String str, ATOMDateConstruct dateTime) {
+		dateTime.Year = 0;
+		dateTime.Month = 0;
+		dateTime.Day = 0;
+		dateTime.Hour = 0;
+		dateTime.Minutes = 0;
+		dateTime.Seconds = 0;
+		dateTime.SecondFraction = 0.0f;
+		dateTime.TZHour = 0;
+		dateTime.TZMinutes = 0;
 
 		final int len = str.length();
 
 		if (len != 4 && len != 7 && len != 10 && len != 17 && len != 20 && len < 22) {
-			return null;
+			return false;
 		}
 
 		int num = 0, sign = 1;
@@ -107,39 +107,39 @@ class ATOMDateConstruct extends ATOMCommonAttributes {
 		while (start < len) {
 			ch = str.charAt(start++);
 			if (!Character.isDigit(ch)) {
-				return null;
+				return false;
 			}
 			num = 10 * num + ((int) (ch - '0'));
 			fnum += fmult * ((int) (ch - '0'));
 			fmult *= 0.1f;
 			if (start == end) {
 				switch (log) {
-				case 0: year = num; break;
-				case 1: month = num; break;
-				case 2: day = num; break;
-				case 3: hour = num; break;
-				case 4: minutes = num; break;
-				case 5: seconds = num; break;
-				case 6: secondFraction = fnum; break;
-				case 7: tzHour = sign * num; break;
-				case 8: tzMinutes = sign * num; break;
-				default: return null;
+				case 0: dateTime.Year = num; break;
+				case 1: dateTime.Month = num; break;
+				case 2: dateTime.Day = num; break;
+				case 3: dateTime.Hour = num; break;
+				case 4: dateTime.Minutes = num; break;
+				case 5: dateTime.Seconds = num; break;
+				case 6: dateTime.SecondFraction = fnum; break;
+				case 7: dateTime.TZHour = sign * num; break;
+				case 8: dateTime.TZMinutes = sign * num; break;
+				default: return false;
 				}
 				num = 0; fnum = 0.0f; fmult = 0.1f;
-				if (start == len) return new ATOMDateConstruct(year, month, day, hour, minutes, seconds, secondFraction, tzHour, tzMinutes);
+				if (start == len) return true;
 				switch (log) {
 				case 0:
 				case 1:
-					if (str.charAt(start++) != '-') return null;
+					if (str.charAt(start++) != '-') return false;
 					end = start + 2;
 					break;
 				case 2:
-					if (str.charAt(start++) != 'T') return null;
+					if (str.charAt(start++) != 'T') return false;
 					end = start + 2;
 					break;
 				case 3:
 				case 7:
-					if (str.charAt(start++) != ':') return null;
+					if (str.charAt(start++) != ':') return false;
 					end = start + 2;
 					break;
 				case 4:
@@ -151,8 +151,8 @@ class ATOMDateConstruct extends ATOMCommonAttributes {
 						log += 2;
 						end = start + 2;
 					} else if (ch == 'Z') {
-						return new ATOMDateConstruct(year, month, day, hour, minutes, seconds, secondFraction, tzHour, tzMinutes);
-					} else return null;
+						return true;
+					} else return false;
 					break;
 				case 5:
 					ch = str.charAt(start++);
@@ -164,8 +164,8 @@ class ATOMDateConstruct extends ATOMCommonAttributes {
 						log += 1;
 						end = start + 2;
 					} else if (ch == 'Z') {
-						return new ATOMDateConstruct(year, month, day, hour, minutes, seconds, secondFraction, tzHour, tzMinutes);
-					} else return null;
+						return true;
+					} else return false;
 					break;
 				case 6:
 					ch = str.charAt(start++);
@@ -173,16 +173,16 @@ class ATOMDateConstruct extends ATOMCommonAttributes {
 						sign = (ch == '-') ? -1 : 1;
 						end = start + 2;
 					} else if (ch == 'Z') {
-						return new ATOMDateConstruct(year, month, day, hour, minutes, seconds, secondFraction, tzHour, tzMinutes);
-					} else return null;
+						return true;
+					} else return false;
 					break;
 				//case 8:
-				default: return null;
+				default: return false;
 				}
 				++log;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	private static void appendChars(StringBuilder buffer, char ch, int count) {
