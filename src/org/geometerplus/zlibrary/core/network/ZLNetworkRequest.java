@@ -25,16 +25,14 @@ import java.io.*;
 public abstract class ZLNetworkRequest {
 
 	public final String Url;
-	//public final String SSLCertificate;
 	public String ErrorMessage;
 
 	private String myUserName;
 	private String myPassword;
 	private boolean myRedirectionSupported;
 
-	protected ZLNetworkRequest(String url/*, String sslCertificate*/) {
+	protected ZLNetworkRequest(String url) {
 		Url = url;
-		//SSLCertificate = sslCertificate;
 	}
 
 	public final void setRedirectionSupported(boolean supported) {
