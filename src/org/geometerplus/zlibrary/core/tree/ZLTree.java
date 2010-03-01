@@ -60,7 +60,7 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 		return mySubTrees;
 	}
 
-	public final T getTree(int index) {
+	public final T getTreeByParagraphNumber(int index) {
 		if ((index < 0) || (index >= mySize)) {
 			// TODO: throw exception?
 			return null;
@@ -73,7 +73,7 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 			if (subtree.mySize <= index) {
 				index -= subtree.mySize;
 			} else {
-				return (T)subtree.getTree(index);
+				return (T)subtree.getTreeByParagraphNumber(index);
 			}
 		}
 		throw new RuntimeException("That's impossible!!!");

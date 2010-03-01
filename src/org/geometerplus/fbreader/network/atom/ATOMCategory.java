@@ -37,14 +37,14 @@ public class ATOMCategory extends ATOMCommonAttributes {
 	}
 
 	public final String getTerm() {
-		return Attributes.get(TERM);
+		return getAttribute(TERM);
 	}
 
 	public final String getScheme() {
-		return Attributes.get(SCHEME);
+		return getAttribute(SCHEME);
 	}
 
 	public final String getLabel() {
-		return Attributes.get(LABEL);
+		return getAttribute(LABEL);
 	}
 }

@@ -352,7 +352,7 @@ public class BookReader {
 	public final void setReference(int contentsParagraphNumber, ZLTextWritableModel textModel, int referenceNumber) {
 		final TOCTree contentsTree = Model.TOCTree;
 		if (contentsParagraphNumber < contentsTree.getSize()) {
-			contentsTree.getTree(contentsParagraphNumber).setReference(
+			contentsTree.getTreeByParagraphNumber(contentsParagraphNumber).setReference(
 				textModel, referenceNumber
 			);
 		}

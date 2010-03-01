@@ -53,7 +53,7 @@ public class NetworkLibrary {
 	}
 
 	private void makeUpToDate() {
-		final List<FBTree> toRemove = new LinkedList<FBTree>();
+		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
 		Iterator<FBTree> nodeIterator = myRootTree.iterator();
 		FBTree currentNode = null;

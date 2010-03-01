@@ -77,15 +77,8 @@ public class NetworkBookItem extends NetworkLibraryItem {
 		Language = language;
 		Date = date;
 		Price = price;
-
-		List<AuthorData> authors2 = new LinkedList<AuthorData>();
-		authors2.addAll(authors);
-		Authors = Collections.unmodifiableList(authors2);
-
-		List<String> tags2 = new LinkedList<String>();
-		tags2.addAll(tags);
-		Tags = Collections.unmodifiableList(tags2);
-
+		Authors = new LinkedList<AuthorData>(authors);
+		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
 	}

@@ -41,10 +41,10 @@ public class ATOMGenerator extends ATOMCommonAttributes {
 	}
 
 	public final String getUri() {
-		return Attributes.get(URI);
+		return getAttribute(URI);
 	}
 
 	public final String getVersion() {
-		return Attributes.get(VERSION);
+		return getAttribute(VERSION);
 	}
 }

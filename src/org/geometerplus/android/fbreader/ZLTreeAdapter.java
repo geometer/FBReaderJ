@@ -121,7 +121,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		final int index = indexByPosition(position + 1, myTree) - 1;
 		ZLTree item = myItems[index];
 		if (item == null) {
-			item = myTree.getTree(index + 1);
+			item = myTree.getTreeByParagraphNumber(index + 1);
 			myItems[index] = item;
 		}
 		return item;

@@ -43,26 +43,26 @@ public class ATOMLink extends ATOMCommonAttributes {
 	}
 
 	public final String getHref() {
-		return Attributes.get(HREF);
+		return getAttribute(HREF);
 	}
 
 	public final String getRel() {
-		return Attributes.get(REL);
+		return getAttribute(REL);
 	}
 
 	public final String getType() {
-		return Attributes.get(TYPE);
+		return getAttribute(TYPE);
 	}
 
 	public final String getHrefLang() {
-		return Attributes.get(HREFLANG);
+		return getAttribute(HREFLANG);
 	}
 
 	public final String getTitle() {
-		return Attributes.get(TITLE);
+		return getAttribute(TITLE);
 	}
 
 	public final String getLength() {
-		return Attributes.get(LENGTH);
+		return getAttribute(LENGTH);
 	}
 }

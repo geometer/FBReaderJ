@@ -26,7 +26,7 @@ abstract class ATOMCommonAttributes {
 	public static final String XML_BASE = "xml:base";
 	public static final String XML_LANG = "xml:lang";
 
-	public final Map<String, String> Attributes = new TreeMap<String, String>();
+	private TreeMap<String, String> myAttributes = null;
 
 	public void readAttributes(Map<String, String> source) {
 		readAttribute(XML_BASE, source);
@@ -36,15 +36,25 @@ abstract class ATOMCommonAttributes {
 	protected final void readAttribute(String name, Map<String, String> source) {
 		String value = source.get(name);
 		if (value != null) {
-			Attributes.put(name, value);
+			if (myAttributes == null) {
+				myAttributes = new TreeMap<String, String>();
+			}
+			myAttributes.put(name, value);
 		}
 	}
 
+	public final String getAttribute(String name) {
+		if (myAttributes == null) {
+			return null;
+		}
+		return myAttributes.get(name);
+	}
+
 	public final String getLang() {
-		return Attributes.get(XML_LANG);
+		return getAttribute(XML_LANG);
 	}
 
 	public final String getBase() {
-		return Attributes.get(XML_BASE);
+		return getAttribute(XML_BASE);
 	}
 }
