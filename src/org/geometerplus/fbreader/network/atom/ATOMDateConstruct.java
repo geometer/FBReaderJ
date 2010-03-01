@@ -19,10 +19,8 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
 
-
-abstract class ATOMDateConstruct extends ATOMCommonAttributes {
+public abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 
 	public int Year;
 	public int Month;
@@ -36,16 +34,12 @@ abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 
 	public ATOMDateConstruct(int year) {
 		Year = year;
-		Month = Day = Hour = Minutes = Seconds = TZHour = TZMinutes = 0;
-		SecondFraction = 0.0f;
 	}
 
 	public ATOMDateConstruct(int year, int month, int day) {
 		Year = year;
 		Month = month;
 		Day = day;
-		Hour = Minutes = Seconds = TZHour = TZMinutes = 0;
-		SecondFraction = 0.0f;
 	}
 
 	public ATOMDateConstruct(int year, int month, int day, int hour, int minutes, int seconds) {
@@ -55,8 +49,6 @@ abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 		Hour = hour;
 		Minutes = minutes;
 		Seconds = seconds;
-		TZHour = TZMinutes = 0;
-		SecondFraction = 0.0f;
 	}
 
 	public ATOMDateConstruct(int year, int month, int day, int hour, int minutes, int seconds, float sfract) {
@@ -66,7 +58,6 @@ abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 		Hour = hour;
 		Minutes = minutes;
 		Seconds = seconds;
-		TZHour = TZMinutes = 0;
 		SecondFraction = sfract;
 	}
 

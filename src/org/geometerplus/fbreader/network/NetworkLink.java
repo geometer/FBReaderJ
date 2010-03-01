@@ -19,17 +19,34 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 
 abstract public class NetworkLink {
 
-	public final String SiteName;
-	public final ZLBooleanOption OnOption;
+	public static final String URL_MAIN = "main";
+	/*public static final String URL_SEARCH = "search";
+	public static final String URL_SIGN_IN = "signIn";
+	public static final String URL_SIGN_OUT = "signOut";
+	public static final String URL_SIGN_UP = "signUp";
+	public static final String URL_REFILL_ACCOUNT = "refillAccount";
+	public static final String URL_RECOVER_PASSWORD = "recoverPassword";*/
 
-	public NetworkLink(String siteName) {
+	public final String SiteName;
+	public final String Title;
+	public final String Summary;
+	public final ZLBooleanOption OnOption;
+	public final TreeMap<String, String> Links;
+
+
+	public NetworkLink(String siteName, String title, String summary, Map<String, String> links) {
 		SiteName = siteName;
+		Title = title;
+		Summary = summary;
 		OnOption = new ZLBooleanOption(SiteName, "on", true);
+		Links = new TreeMap(links);
 	}
 
 	abstract public NetworkLibraryItem libraryItem();

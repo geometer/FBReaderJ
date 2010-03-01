@@ -37,10 +37,4 @@ public class ATOMFeedMetadata extends ATOMCommonAttributes {
 	public String Subtitle; // TODO: implement ATOMTextConstruct
 	public String Title;    // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
-
-	public ATOMFeedMetadata(ATOMId id, String title, ATOMUpdated updated) {
-		Id = id;
-		Title = title;
-		Updated = updated;
-	}
 }

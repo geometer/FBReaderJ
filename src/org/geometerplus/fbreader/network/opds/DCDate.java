@@ -17,25 +17,29 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.atom;
+package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
+import org.geometerplus.fbreader.network.atom.*;
 
+class DCDate extends ATOMDateConstruct {
 
-public class ATOMEntry extends ATOMCommonAttributes {
+	public DCDate(int year) {
+		super(year);
+	}
 
-	public ATOMId Id;
+	public DCDate(int year, int month, int day) {
+		super(year, month, day);
+	}
 
-	public List<ATOMAuthor> Authors;
-	public List<ATOMCategory> Categories;
-	//public final ATOMContent Content; TODO: implement ATOMContent
-	public List<ATOMContributor> Contributors;
-	public List<ATOMLink> Links;
-	public ATOMPublished Published;
-	public String Rights;  // TODO: implement ATOMTextConstruct
-	//public final ATOMSource Source; // TODO: implement ATOMSource
-	public String Summary; // TODO: implement ATOMTextConstruct
-	public String Title;   // TODO: implement ATOMTextConstruct
-	public ATOMUpdated Updated;
+	public DCDate(int year, int month, int day, int hour, int minutes, int seconds) {
+		super(year, month, day, hour, minutes, seconds);
+	}
 
+	public DCDate(int year, int month, int day, int hour, int minutes, int seconds, float sfract) {
+		super(year, month, day, hour, minutes, seconds, sfract);
+	}
+
+	public DCDate(int year, int month, int day, int hour, int minutes, int seconds, float sfract, int tzhour, int tzminutes) {
+		super(year, month, day, hour, minutes, seconds, sfract, tzhour, tzminutes);
+	}
 }

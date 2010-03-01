@@ -28,14 +28,4 @@ abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
 	public String Uri;
 	public String Email;
 
-	public ATOMPersonConstruct() {
-		Name = Uri = Email = "";
-	}
-
-	public ATOMPersonConstruct(String name) {
-		Name = name;
-		Uri = Email = "";
-	}
-
-};
-
+}

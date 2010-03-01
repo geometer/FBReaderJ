@@ -17,38 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.network.*;
 
-public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
-	public final int Visibility;
+class OPDSCatalogItem extends NetworkCatalogItem {
 
-	public interface CatalogType {
-		int OTHER = 0;
-		int BY_AUTHORS = 1;
-	}
-
-	public interface VisibilityType {
-		int NEVER = 0;
-		int ALWAYS = 1;
-		int LOGGED_USERS = 2;
-	}
-
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
-		this(link, title, summary, urlByType, VisibilityType.ALWAYS);
-	}
-
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
+	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
 		super(link, title, summary, urlByType);
-		Visibility = visibility;
 	}
 
-	public abstract String loadChildren(List<NetworkLibraryItem> children); // returns Error Message
+	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
+		super(link, title, summary, urlByType, visibility);
+	}
 
-	public int catalogType() {
-		return CatalogType.OTHER;
+	@Override
+	public String loadChildren(List<NetworkLibraryItem> children) {
+		// TODO: implement
+		return null;
 	}
 }

@@ -24,4 +24,6 @@ public interface XMLNamespace {
 	String DublinCoreLegacyPrefix = "http://purl.org/metadata/dublin_core";
 	String XLink = "http://www.w3.org/1999/xlink";
 	String OpenPackagingFormat = "http://www.idpf.org/2007/opf";
+	String Atom = "http://www.w3.org/2005/Atom";
+	String OPDS = "http://opds-spec.org/2010/catalog";
 }

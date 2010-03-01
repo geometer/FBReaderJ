@@ -19,16 +19,34 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.*;
+
+
 public abstract class NetworkLibraryItem {
+
+	public interface URLType {
+		int URL_NONE = 0;
+		int URL_CATALOG = 1;
+		int URL_BOOK_EPUB = 2;
+		int URL_BOOK_MOBIPOCKET = 3;
+		int URL_BOOK_FB2_ZIP = 4;
+		int URL_BOOK_PDF = 5;
+		int URL_BOOK_DEMO_FB2_ZIP = 6;
+		int URL_HTML_PAGE = 7;
+		int URL_COVER = 8;
+	}
+
 
 	public final NetworkLink Link;
 	public final String Title;
 	public final String Summary;
+	public final TreeMap<Integer, String> URLByType;
 
-	protected NetworkLibraryItem(NetworkLink link, String title, String summary) {
+	protected NetworkLibraryItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
 		Link = link;
 		Title = title;
 		Summary = summary;
+		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
 
 }

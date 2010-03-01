@@ -17,25 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.atom;
+package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.network.*;
 
-public class ATOMEntry extends ATOMCommonAttributes {
 
-	public ATOMId Id;
+class OPDSLink extends NetworkLink {
 
-	public List<ATOMAuthor> Authors;
-	public List<ATOMCategory> Categories;
-	//public final ATOMContent Content; TODO: implement ATOMContent
-	public List<ATOMContributor> Contributors;
-	public List<ATOMLink> Links;
-	public ATOMPublished Published;
-	public String Rights;  // TODO: implement ATOMTextConstruct
-	//public final ATOMSource Source; // TODO: implement ATOMSource
-	public String Summary; // TODO: implement ATOMTextConstruct
-	public String Title;   // TODO: implement ATOMTextConstruct
-	public ATOMUpdated Updated;
+	OPDSLink(String siteName, String title, String summary, Map<String, String> links) {
+		super(siteName, title, summary, links);
+	}
+
+	public NetworkLibraryItem libraryItem() {
+		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
+		//urlMap.put(NetworkLibraryItem.URLType.URL_COVER, Icon);
+		urlMap.put(NetworkLibraryItem.URLType.URL_CATALOG, Links.get(URL_MAIN));
+		return new OPDSCatalogItem(this, Title, Summary, urlMap);
+	}
 
 }

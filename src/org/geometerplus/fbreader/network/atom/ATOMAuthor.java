@@ -19,16 +19,5 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
-
-
 public class ATOMAuthor extends ATOMPersonConstruct {
-
-	public ATOMAuthor() {
-		super();
-	}
-
-	public ATOMAuthor(String name) {
-		super(name);
-	}
 }

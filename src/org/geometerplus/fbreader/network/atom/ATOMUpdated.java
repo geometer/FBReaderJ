@@ -19,9 +19,6 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
-
-
 public class ATOMUpdated extends ATOMDateConstruct {
 
 	public ATOMUpdated(int year) {
