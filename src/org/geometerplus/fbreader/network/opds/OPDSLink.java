@@ -26,8 +26,25 @@ import org.geometerplus.fbreader.network.*;
 
 class OPDSLink extends NetworkLink {
 
+	public interface URLCondition {
+		int URL_CONDITION_NEVER = 0;
+		int URL_CONDITION_SIGNED_IN = 1;
+	}
+
+	private TreeMap<String, Integer> myUrlConditions = null;
+	private LinkedList<URLRewritingRule> myUrlRewritingRules = null;
+
+
 	OPDSLink(String siteName, String title, String summary, Map<String, String> links) {
 		super(siteName, title, summary, links);
+	}
+
+	public final void setUrlConditions(Map<String, Integer> conditions) {
+		myUrlConditions = new TreeMap(conditions);
+	}
+
+	public final void setUrlRewritingRules(List<URLRewritingRule> rules) {
+		myUrlRewritingRules = new LinkedList(rules);
 	}
 
 	public NetworkLibraryItem libraryItem() {
@@ -36,5 +53,4 @@ class OPDSLink extends NetworkLink {
 		urlMap.put(NetworkLibraryItem.URLType.URL_CATALOG, Links.get(URL_MAIN));
 		return new OPDSCatalogItem(this, Title, Summary, urlMap);
 	}
-
 }
