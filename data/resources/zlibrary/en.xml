@@ -11,6 +11,23 @@
 		<node name="waitMessage">
 			<node name="savingConfig" value="Saving config..." />
 		</node>
+		<node name="networkError">
+			<node name="title" value="Network error" />
+			<node name="unknownErrorMessage" value="Unknown error" />
+			<node name="couldntCreateDirectoryMessage" value="Couldn&apos;t create a directory&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Couldn&apos;t create a file&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Couldn&apos;t connect to the network" />
+			<node name="couldntConnectMessage" value="Couldn&apos;t connect to host %s" />
+			<node name="couldntResolveHostMessage" value="Couldn&apos;t resolve host %s" />
+			<node name="couldntResolveProxyMessage" value="Couldn&apos;t resolve proxy %s" />
+			<node name="operationTimedOutMessage" value="Operation is timed out" />
+			<node name="somethingWrongMessage" value="Something goes wrong for&#10;%s" />
+			<node name="sslConnectErrorMessage" value="SSL/TLS handshake problem occurred:&#10;%s" />
+			<node name="peerFailedVerificationMessage" value="SSL certificate from %s&#10;was deemed not OK" />
+			<node name="sslCertificateAuthorityMessage" value="SSL certificate from %s&#10;can't be authenticated with known SSL CA certificates" />
+			<node name="sslBadCertificateFileMessage" value="Couldn&apos;t read the SSL CA certificate file:&#10;%s" />
+			<node name="sslShutdownFailedMessage" value="Failed to shut down the SSL connection for&#10;%s" />
+		</node>
 	</node>
 	<node name="color">
 		<node name="red" value="Red" />

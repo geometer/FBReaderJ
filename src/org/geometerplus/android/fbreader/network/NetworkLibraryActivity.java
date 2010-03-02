@@ -134,17 +134,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 		ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
 
-		/*LoadSubCatalogRunnable loader(item(), children);
+		LoadSubCatalogRunnable loader = new LoadSubCatalogRunnable(tree.Item, children);
 		loader.executeWithUI();
 		if (loader.hasErrors()) {
-			loader.showErrorMessage();
-		} else if (myChildrenItems.empty()) {
-			ZLDialogManager::Instance().informationBox(ZLResourceKey("emptyCatalogBox"));
-		}*/
-
-		String error = tree.Item.loadChildren(children);
-		if (error != null) {
-			// show error
+			loader.showErrorMessage(this);
 		} else if (children.isEmpty()) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource buttonResource = dialogResource.getResource("button");
