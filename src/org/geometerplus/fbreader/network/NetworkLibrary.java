@@ -44,18 +44,23 @@ public class NetworkLibrary {
 
 	private boolean myUpdateChildren = true;
 
+	private static class LinksComparator implements Comparator<NetworkLink> {
+		@Override
+		public int compare(NetworkLink link1, NetworkLink link2) {
+			return link1.Title.compareTo(link2.Title);
+		}
+	}
 
 	public NetworkLibrary() {
 		LinkedList<String> catalogs = readCatalogFileNames();
 		OPDSLinkReader reader = new OPDSLinkReader();
 		for (String fileName: catalogs) {
-System.err.println("FBREADER -- FILE: " + fileName);
 			NetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
 			if (link != null) {
-System.err.println("FBREADER -- ADD LINK");
 				myLinks.add(link);
 			}
 		}
+		Collections.sort(myLinks, new LinksComparator());
 	}
 
 	private final LinkedList<String> readCatalogFileNames() {
