@@ -19,10 +19,14 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.io.*;
 import java.util.*;
+
+import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -42,6 +46,36 @@ public class NetworkLibrary {
 
 
 	public NetworkLibrary() {
+		LinkedList<String> catalogs = readCatalogFileNames();
+		OPDSLinkReader reader = new OPDSLinkReader();
+		for (String fileName: catalogs) {
+System.err.println("FBREADER -- FILE: " + fileName);
+			NetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
+			if (link != null) {
+System.err.println("FBREADER -- ADD LINK");
+				myLinks.add(link);
+			}
+		}
+	}
+
+	private final LinkedList<String> readCatalogFileNames() {
+		final LinkedList<String> catalogs = new LinkedList<String>();
+		final ZLResourceFile catalogsFile = ZLResourceFile.createResourceFile("data/network/catalogs.txt");
+		try {
+			InputStream stream = catalogsFile.getInputStream();
+			if (stream != null) {
+				Scanner scanner = new Scanner(stream);
+				while (scanner.hasNextLine()) {
+					String line = scanner.nextLine().trim();
+					if (line.length() > 0) {
+						catalogs.add(line);
+					}
+				}
+				scanner.close();
+			}
+		} catch (IOException ex) {
+		}
+		return catalogs;
 	}
 
 	public List<NetworkLink> links() {

@@ -1,0 +1,47 @@
+<!ELEMENT catalog (site,link+,title,summary?,advancedSearch?,feeds?,authentication?,urlRewritingRules?,icon)>
+<!ATTLIST catalog 
+	type (opds) #REQUIRED
+>
+
+<!ELEMENT site (#PCDATA)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT summary (#PCDATA)>
+<!ELEMENT icon (#PCDATA)>
+
+<!ELEMENT link (#PCDATA)>
+<!ATTLIST link 
+	rel (main|search|signIn|signOut|signUp|refillAccount|recoverPassword) #REQUIRED
+	type CDATA #REQUIRED
+>
+
+<!ELEMENT advancedSearch (field+)>
+<!ATTLIST advancedSearch
+	style (separateWords|quoted) #REQUIRED
+>
+
+<!ELEMENT field (#PCDATA)>
+<!ATTLIST field
+	name (author|titleOrSeries|tag|annotation) #REQUIRED
+>
+
+<!ELEMENT feeds (condition+)>
+
+<!ELEMENT condition (#PCDATA)>
+<!ATTLIST condition
+	show (never|signedIn) #REQUIRED
+>
+
+<!ELEMENT authentication EMPTY>
+<!ATTLIST authentication
+	type (basic|litres) #REQUIRED
+>
+
+<!ELEMENT urlRewritingRules (rule+)>
+
+<!ELEMENT rule EMPTY>
+<!ATTLIST rule
+	type (addUrlParameter) #REQUIRED
+	apply (always|external|internal) "always"
+	name CDATA #REQUIRED
+	value CDATA #REQUIRED
+>

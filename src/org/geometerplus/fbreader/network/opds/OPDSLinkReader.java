@@ -21,8 +21,9 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.xml.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 import org.geometerplus.fbreader.network.*;
 
 
@@ -43,7 +44,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 
 
-	public NetworkLink link() {
+	private NetworkLink link() {
 		if (mySiteName == null || myTitle == null || myLinks.get(NetworkLink.URL_MAIN) == null) {
 			return null;
 		}
@@ -79,6 +80,22 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		return opdsLink;
 	}
 
+	public NetworkLink readDocument(ZLFile file) {
+		mySiteName = myTitle = mySummary = myIcon = mySearchType = myAuthenticationType = null;
+		myLinks.clear();
+		mySearchFields.clear();
+		myUrlConditions.clear();
+		myUrlRewritingRules.clear();
+
+		myState = READ_NOTHING;
+
+		if (!ZLXMLProcessor.read(this, file)) {
+			return null;
+		}
+
+		return link();
+	}
+
 
 	private static final String TAG_SITE = "site";
 	private static final String TAG_LINK = "link";
@@ -105,7 +122,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private static final int READ_FEEDS_CONDITION = 9;
 	private static final int READ_URL_REWRITING_RULES = 10;
 
-	private int myState = READ_NOTHING;
+	private int myState;
 
 	private String myAttrBuffer;
 	private final StringBuffer myBuffer = new StringBuffer();
