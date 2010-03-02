@@ -130,7 +130,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
-		tag = tag.toLowerCase().intern();
+		tag = tag.intern();
 		if (TAG_SITE == tag) {
 			myState = READ_SITENAME;
 		} else if (TAG_TITLE == tag) {
@@ -204,7 +204,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public boolean endElementHandler(String tag) {
-		tag = tag.toLowerCase().intern();
+		tag = tag.intern();
 
 		String bufferContent = myBuffer.toString().trim();
 		myBuffer.delete(0, myBuffer.length());
