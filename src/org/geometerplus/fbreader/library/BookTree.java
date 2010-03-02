@@ -35,7 +35,7 @@ public class BookTree extends LibraryTree {
 
 	public String getSummary() {
 		if (!myShowAuthors) {
-			return super.getSecondString();
+			return super.getSummary();
 		}
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
