@@ -24,11 +24,7 @@ import java.util.*;
 
 public class ATOMId extends ATOMCommonAttributes {
 
-	public final String Uri;
-
-	public ATOMId(String uri) {
-		Uri = uri;
-	}
+	public String Uri;
 
 	@Override
 	public boolean equals(Object o) {

@@ -26,16 +26,15 @@ public class ATOMEntry extends ATOMCommonAttributes {
 
 	public ATOMId Id;
 
-	public List<ATOMAuthor> Authors;
-	public List<ATOMCategory> Categories;
+	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
+	public LinkedList<ATOMCategory> Categories = new LinkedList<ATOMCategory>();
 	//public final ATOMContent Content; TODO: implement ATOMContent
-	public List<ATOMContributor> Contributors;
-	public List<ATOMLink> Links;
+	public LinkedList<ATOMContributor> Contributors = new LinkedList<ATOMContributor>();
+	public LinkedList<ATOMLink> Links = new LinkedList<ATOMLink>();
 	public ATOMPublished Published;
 	public String Rights;  // TODO: implement ATOMTextConstruct
 	//public final ATOMSource Source; // TODO: implement ATOMSource
 	public String Summary; // TODO: implement ATOMTextConstruct
 	public String Title;   // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
-
 }

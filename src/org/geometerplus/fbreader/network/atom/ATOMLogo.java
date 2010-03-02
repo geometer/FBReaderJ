@@ -24,9 +24,5 @@ import java.util.*;
 
 public class ATOMLogo extends ATOMCommonAttributes {
 
-	public final String Uri;
-
-	public ATOMLogo(String uri) {
-		Uri = uri;
-	}
+	public String Uri;
 }

@@ -24,9 +24,5 @@ import java.util.*;
 
 public class ATOMIcon extends ATOMCommonAttributes {
 
-	public final String Uri;
-
-	public ATOMIcon(String uri) {
-		Uri = uri;
-	}
+	public String Uri;
 }

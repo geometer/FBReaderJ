@@ -21,23 +21,25 @@ package org.geometerplus.fbreader.network.atom;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 
 abstract class ATOMCommonAttributes {
 	public static final String XML_BASE = "xml:base";
 	public static final String XML_LANG = "xml:lang";
 
-	private TreeMap<String, String> myAttributes = null;
+	private ZLStringMap myAttributes;
 
-	public void readAttributes(Map<String, String> source) {
+	public void readAttributes(ZLStringMap source) {
 		readAttribute(XML_BASE, source);
 		readAttribute(XML_LANG, source);
 	}
 
-	protected final void readAttribute(String name, Map<String, String> source) {
-		String value = source.get(name);
+	protected final void readAttribute(String name, ZLStringMap source) {
+		String value = source.getValue(name);
 		if (value != null) {
 			if (myAttributes == null) {
-				myAttributes = new TreeMap<String, String>();
+				myAttributes = new ZLStringMap();
 			}
 			myAttributes.put(name, value);
 		}
@@ -47,7 +49,7 @@ abstract class ATOMCommonAttributes {
 		if (myAttributes == null) {
 			return null;
 		}
-		return myAttributes.get(name);
+		return myAttributes.getValue(name);
 	}
 
 	public final String getLang() {

@@ -21,6 +21,9 @@ package org.geometerplus.fbreader.network.atom;
 
 public class ATOMUpdated extends ATOMDateConstruct {
 
+	public ATOMUpdated() {
+	}
+
 	public ATOMUpdated(int year) {
 		super(year);
 	}

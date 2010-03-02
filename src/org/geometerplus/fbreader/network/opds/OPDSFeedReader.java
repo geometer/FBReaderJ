@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.constants;
+package org.geometerplus.fbreader.network.opds;
 
-public interface XMLNamespace {
-	String DublinCorePrefix = "http://purl.org/dc/elements";
-	String DublinCoreLegacyPrefix = "http://purl.org/metadata/dublin_core";
-	String XLink = "http://www.w3.org/1999/xlink";
-	String OpenPackagingFormat = "http://www.idpf.org/2007/opf";
-	String Atom = "http://www.w3.org/2005/Atom";
-	String OPDS = "http://opds-spec.org/2010/catalog";
-	String DublinCoreTermsPrefix = "http://purl.org/dc/terms";
-	String OpenSearchPrefix = "http://a9.com/-/spec/opensearch";
-	String CalibreMetadata = "http://calibre.kovidgoyal.net/2009/metadata";
+public interface OPDSFeedReader {
+
+	void processFeedStart();
+	void processFeedMetadata(OPDSFeedMetadata feed);
+	void processFeedEntry(OPDSEntry entry);
+	void processFeedEnd();
 }

@@ -23,6 +23,9 @@ import org.geometerplus.fbreader.network.atom.*;
 
 class DCDate extends ATOMDateConstruct {
 
+	public DCDate() {
+	}
+
 	public DCDate(int year) {
 		super(year);
 	}

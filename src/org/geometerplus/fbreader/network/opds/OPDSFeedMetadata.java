@@ -23,7 +23,7 @@ import org.geometerplus.fbreader.network.atom.*;
 
 class OPDSFeedMetadata extends ATOMFeedMetadata {
 
-	int myOpensearchTotalResults;
-	int myOpensearchItemsPerPage;
-	int myOpensearchStartIndex;
+	public int OpensearchTotalResults;
+	public int OpensearchItemsPerPage;
+	public int OpensearchStartIndex;
 }

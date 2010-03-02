@@ -26,12 +26,12 @@ public class ATOMFeedMetadata extends ATOMCommonAttributes {
 
 	public ATOMId Id;
 
-	public List<ATOMAuthor> Authors;
-	public List<ATOMCategory> Categories;
-	public List<ATOMContributor> Contributors;
+	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
+	public LinkedList<ATOMCategory> Categories = new LinkedList<ATOMCategory>();
+	public LinkedList<ATOMContributor> Contributors = new LinkedList<ATOMContributor>();
 	public ATOMGenerator Generator;
 	public ATOMIcon Icon;
-	public List<ATOMLink> Links;
+	public LinkedList<ATOMLink> Links = new LinkedList<ATOMLink>();
 	public ATOMLogo Logo;
 	public String Rights;   // TODO: implement ATOMTextConstruct
 	public String Subtitle; // TODO: implement ATOMTextConstruct

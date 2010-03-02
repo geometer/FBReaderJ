@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.atom;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 
 public class ATOMCategory extends ATOMCommonAttributes {
 
@@ -29,7 +31,7 @@ public class ATOMCategory extends ATOMCommonAttributes {
 	public static final String LABEL = "label";
 
 	@Override
-	public void readAttributes(Map<String, String> source) {
+	public void readAttributes(ZLStringMap source) {
 		super.readAttributes(source);
 		readAttribute(TERM, source);
 		readAttribute(SCHEME, source);

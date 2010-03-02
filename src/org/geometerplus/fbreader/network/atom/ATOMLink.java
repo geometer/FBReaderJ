@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.atom;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 
 public class ATOMLink extends ATOMCommonAttributes {
 
@@ -32,7 +34,7 @@ public class ATOMLink extends ATOMCommonAttributes {
 	public static final String LENGTH = "length";
 
 	@Override
-	public void readAttributes(Map<String, String> source) {
+	public void readAttributes(ZLStringMap source) {
 		super.readAttributes(source);
 		readAttribute(HREF, source);
 		readAttribute(REL, source);

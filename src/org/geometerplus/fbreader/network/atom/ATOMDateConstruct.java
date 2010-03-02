@@ -32,6 +32,9 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 	public int TZHour;
 	public int TZMinutes;
 
+	public ATOMDateConstruct() {
+	}
+
 	public ATOMDateConstruct(int year) {
 		Year = year;
 	}
