@@ -27,8 +27,6 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	public final NetworkCatalogItem Item;
 
-	private List<NetworkLibraryItem> myChildrenItems;
-
 
 	NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
@@ -49,9 +47,4 @@ public class NetworkCatalogTree extends NetworkTree {
 	public String getSummary() {
 		return Item.Summary;
 	}
-
-	public void updateChildren() {
-	}
-
 }
-

@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
@@ -35,6 +37,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.*;
 
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
@@ -108,12 +111,69 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return view;
 		}
 
-		/*protected boolean runTreeItem(ZLTree tree) {
+		@Override
+		protected boolean runTreeItem(ZLTree tree) {
 			if (super.runTreeItem(tree)) {
 				return true;
 			}
-			return true;
+			if (tree instanceof NetworkCatalogTree) {
+				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+				if (!catalogTree.hasChildren()) {
+					updateCatalogChildren(catalogTree);
+				}
+				super.runTreeItem(tree);
+				return true;
+			}
+			return false;
+		}
+	}
+
+
+	private void updateCatalogChildren(NetworkCatalogTree tree) {
+		tree.clear();
+
+		ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
+
+		/*LoadSubCatalogRunnable loader(item(), children);
+		loader.executeWithUI();
+		if (loader.hasErrors()) {
+			loader.showErrorMessage();
+		} else if (myChildrenItems.empty()) {
+			ZLDialogManager::Instance().informationBox(ZLResourceKey("emptyCatalogBox"));
 		}*/
+
+		String error = tree.Item.loadChildren(children);
+		if (error != null) {
+			// show error
+		} else if (children.isEmpty()) {
+			final ZLResource dialogResource = ZLResource.resource("dialog");
+			final ZLResource buttonResource = dialogResource.getResource("button");
+			final ZLResource boxResource = dialogResource.getResource("emptyCatalogBox");
+			new AlertDialog.Builder(this)
+				.setTitle(boxResource.getResource("title").getValue())
+				.setMessage(boxResource.getResource("message").getValue())
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+				.create().show();
+		}
+
+		boolean hasSubcatalogs = false;
+		for (NetworkLibraryItem child: children) {
+			if (child instanceof NetworkCatalogItem) {
+				hasSubcatalogs = true;
+				break;
+			}
+		}
+
+		if (hasSubcatalogs) {
+			for (NetworkLibraryItem child: children) {
+				NetworkTreeFactory.createNetworkTree(tree, child);
+			}
+		} else {
+			NetworkTreeFactory.fillAuthorNode(tree, children);
+		}
+		//NetworkLibrary.invalidateAccountDependents();
+		//NetworkLibrary.synchronize();
 	}
 
 

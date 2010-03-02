@@ -27,18 +27,19 @@ import org.geometerplus.fbreader.network.*;
 
 public class NetworkSeriesTree extends NetworkTree {
 
-	private final String myTitle;
+	public final String SeriesTitle;
+
 	private final boolean myShowAuthors;
 
 	NetworkSeriesTree(NetworkTree parent, String seriesTitle, boolean showAuthors) {
 		super(parent);
-		myTitle = seriesTitle;
+		SeriesTitle = seriesTitle;
 		myShowAuthors = showAuthors;
 	}
 
 	@Override
 	public String getName() {
-		return myTitle;
+		return SeriesTitle;
 	}
 
 	@Override

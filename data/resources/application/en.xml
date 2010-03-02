@@ -204,6 +204,10 @@
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
 			<node name="updatingBooksDatabase" value="Updating books database. Please, wait..."/>
 		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="Information" />
+			<node name="message" value="Catalog is empty." />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>
