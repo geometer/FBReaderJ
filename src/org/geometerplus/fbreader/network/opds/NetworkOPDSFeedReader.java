@@ -43,6 +43,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	@Override
 	public void processFeedStart() {
+		++myData.ResumeCount;
 	}
 
 	private static String intern(String value) {

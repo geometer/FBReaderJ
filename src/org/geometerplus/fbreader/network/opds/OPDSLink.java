@@ -47,6 +47,20 @@ class OPDSLink extends NetworkLink {
 		myUrlRewritingRules = new LinkedList(rules);
 	}
 
+	public final Map<String, Integer> getUrlConditions() {
+		if (myUrlConditions == null) {
+			return Collections.emptyMap();
+		}
+		return myUrlConditions;
+	}
+
+	public final List<URLRewritingRule> getUrlRewritingRules() {
+		if (myUrlRewritingRules == null) {
+			return Collections.emptyList();
+		}
+		return myUrlRewritingRules;
+	}
+
 	public NetworkLibraryItem libraryItem() {
 		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
 		//urlMap.put(NetworkLibraryItem.URLType.URL_COVER, Icon);

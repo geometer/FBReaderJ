@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
+import java.io.*;
+import java.net.*;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -36,7 +38,42 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 
 	@Override
 	public String loadChildren(List<NetworkLibraryItem> children) {
-		// TODO: implement
+		NetworkOperationData data = new NetworkOperationData(Link);
+
+		String urlString = URLByType.get(URLType.URL_CATALOG);
+
+		try {
+			while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!
+					&& urlString != null) {
+				final URL url = new URL(urlString);
+				final URLConnection connection = url.openConnection();
+				if (!(connection instanceof HttpURLConnection)) {
+					break;
+				}
+				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				final int response = httpConnection.getResponseCode();
+				if (response == HttpURLConnection.HTTP_OK) {
+					InputStream inStream = httpConnection.getInputStream();
+					try {
+						final NetworkOPDSFeedReader feedReader = new NetworkOPDSFeedReader(urlString, data, ((OPDSLink)Link).getUrlConditions());
+						final OPDSXMLReader xmlReader = new OPDSXMLReader(feedReader);
+						xmlReader.read(inStream);
+					} finally {
+						inStream.close();
+					}
+				} else {
+					return null; // return error???
+				}
+
+				children.addAll(data.Items);
+				urlString = data.ResumeURI;
+				data.clear();
+			}
+		} catch (MalformedURLException ex) {
+			// return error???
+		} catch (IOException ex) {
+			// return error???
+		}
 		return null;
 	}
 }
