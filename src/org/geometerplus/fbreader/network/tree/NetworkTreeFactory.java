@@ -57,7 +57,7 @@ public class NetworkTreeFactory {
 			final NetworkBookItem book = (NetworkBookItem) item;
 			String seriesTitle = book.SeriesTitle;
 
-			if (seriesTitle.length() > 0 && (seriesTree == null || !seriesTree.SeriesTitle.equals(seriesTitle))) {
+			if (seriesTitle != null && seriesTitle.length() > 0 && (seriesTree == null || !seriesTitle.equals(seriesTree.SeriesTitle))) {
 				ListIterator<NetworkLibraryItem> jt = books.listIterator(it.nextIndex());
 				NetworkBookItem next = null;
 				while (jt.hasNext()) {
@@ -68,13 +68,13 @@ public class NetworkTreeFactory {
 					}
 				}
 				if (next == null) {
-					seriesTitle = "";
-				} else if (!next.SeriesTitle.equals(seriesTitle)) {
-					seriesTitle = "";
+					seriesTitle = null;
+				} else if (!seriesTitle.equals(next.SeriesTitle)) {
+					seriesTitle = null;
 				}
 			}
 
-			if (seriesTitle.length() == 0) {
+			if (seriesTitle == null || seriesTitle.length() == 0) {
 				seriesTree = null;
 				new NetworkBookTree(parent, book, -1);
 			} else {

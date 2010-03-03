@@ -106,6 +106,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 			final NetworkTree tree = (NetworkTree)getItem(position);
 
+			final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
+
+			setIcon(iconView, tree);
+
 			((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
 			return view;

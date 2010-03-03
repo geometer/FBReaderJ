@@ -114,9 +114,11 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	private static final String AuthorsPrefix = "authors:";
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
-		String date = null;
+		final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
+		} else {
+			date = null;
 		}
 
 		LinkedList<String> tags = new LinkedList<String>();
@@ -270,7 +272,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		Integer entryCondition = myUrlConditions.get(entry.Id.Uri);
 		final boolean dependsOnAccount = entryCondition != null && entryCondition.intValue() == OPDSLink.URLCondition.URL_CONDITION_SIGNED_IN;
 
-		final String annotation = entry.Summary.replace("\011", "").replace("\012", "");
+		final String annotation;
+		if (entry.Summary == null) {
+			annotation = null;
+		} else {
+			annotation = entry.Summary.replace("\011", "").replace("\012", "");
+		}
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
 		urlMap.put(NetworkLibraryItem.URLType.URL_COVER, coverURL);
