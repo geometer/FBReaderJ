@@ -37,8 +37,6 @@ class LoadSubCatalogRunnable extends NetworkOperationRunnable {
 
 	@Override
 	public void run() {
-System.err.println("FBREADER -- " + "loadsubcatalog::run() -- start");
 		myErrorMessage = myItem.loadChildren(myChildren);
-System.err.println("FBREADER -- " + "loadsubcatalog::run() -- end");
 	}
 }

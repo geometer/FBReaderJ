@@ -118,14 +118,11 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			}
 			if (tree instanceof NetworkCatalogTree) {
 				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-System.err.println("FBREADER -- " + "before loading: " + catalogTree.getName());
 				if (!catalogTree.hasChildren()) {
-System.err.println("FBREADER -- " + "start loading: " + catalogTree.getName());
 					updateCatalogChildren(catalogTree);
-System.err.println("FBREADER -- " + "after loading: " + catalogTree.getName());
+					resetTree();
 				}
 				super.runTreeItem(tree);
-System.err.println("FBREADER -- " + "end loading: " + catalogTree.getName());
 				return true;
 			}
 			return false;
@@ -153,8 +150,6 @@ System.err.println("FBREADER -- " + "end loading: " + catalogTree.getName());
 				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
 				.create().show();
 		}
-
-System.err.println("FBREADER -- " + "children size = " + children.size());
 
 		boolean hasSubcatalogs = false;
 		for (NetworkLibraryItem child: children) {

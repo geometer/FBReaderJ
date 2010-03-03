@@ -153,7 +153,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		return true;
 	}
 
-	void resetTree(ZLTree tree) {
+	protected void resetTree(ZLTree tree) {
 		myTree = tree;
 		myItems = new ZLTree[tree.getSize() - 1];
 		myOpenItems.clear();
@@ -162,7 +162,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		myParent.requestLayout();
 	}
 
-	void resetTree() {
+	protected void resetTree() {
 		myItems = new ZLTree[myTree.getSize() - 1];
 		myParent.invalidateViews();
 		myParent.requestLayout();
