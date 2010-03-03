@@ -111,8 +111,10 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 		final int subTreesSize = mySize - 1;
 		mySubTrees = null;
 		mySize = 1;
-		for (ZLTree parent = Parent; parent != null; parent = parent.Parent) {
-			parent.mySize -= subTreesSize;
+		if (subTreesSize > 0) {
+			for (ZLTree parent = Parent; parent != null; parent = parent.Parent) {
+				parent.mySize -= subTreesSize;
+			}
 		}
 	}
 
