@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 
 
-public class NetworkOPDSFeedReader implements OPDSFeedReader {
+class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private final String myBaseURL;
 	private final HashMap<String, Integer> myUrlConditions;

@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.network.opds;
 
 
-public final class OPDSConstants {
+class OPDSConstants {
 
 	// Feed level
 	//public static final String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
