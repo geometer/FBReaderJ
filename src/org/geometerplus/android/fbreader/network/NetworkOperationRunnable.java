@@ -48,7 +48,8 @@ abstract class NetworkOperationRunnable implements Runnable {
 	}
 
 	public void executeWithUI() {
-		ZLDialogManager.Instance().wait(myKey, this);
+		//ZLDialogManager.Instance().wait(myKey, this);
+		run();
 	}
 
 	public boolean hasErrors() {
