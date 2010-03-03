@@ -23,14 +23,14 @@ package org.geometerplus.fbreader.network.opds;
 public final class OPDSConstants {
 
 	// Feed level
-	public static final String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
-	public static final String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
+	//public static final String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
+	//public static final String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / acquisition links
 	public static final String REL_ACQUISITION = "http://opds-spec.org/acquisition";
-	public static final String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
-	public static final String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
-	public static final String REL_ACQUISITION_SUBSCRIBE = "http://opds-spec.org/acquisition/subscribe";
+	//public static final String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
+	//public static final String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
+	//public static final String REL_ACQUISITION_SUBSCRIBE = "http://opds-spec.org/acquisition/subscribe";
 	public static final String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
 
 	// Entry level / other
@@ -40,7 +40,7 @@ public final class OPDSConstants {
 	public static final String REL_STANZA_THUMBNAIL = "x-stanza-cover-image-thumbnail";
 
 	// MIME types / MIME type for "Full Entry" atom:link element
-	public static final String MIME_OPDS_FULLENTRY = "application/atom+xml;type=entry";
+	//public static final String MIME_OPDS_FULLENTRY = "application/atom+xml;type=entry";
 
 	// MIME types / application
 	public static final String MIME_APP_FB2ZIP = "application/fb2+zip";
