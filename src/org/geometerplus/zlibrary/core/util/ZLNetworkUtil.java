@@ -17,13 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.opds;
+package org.geometerplus.zlibrary.core.util;
 
-import org.geometerplus.fbreader.network.atom.*;
+public class ZLNetworkUtil {
 
-class OPDSFeedMetadata extends ATOMFeedMetadata {
+	public static String url(String baseUrl, String relativePath) {
+		if (relativePath == null || relativePath.length() == 0) {
+			return null;
+		}
 
-	public int OpensearchTotalResults;
-	public int OpensearchItemsPerPage;
-	public int OpensearchStartIndex = 1;
+		if (relativePath.contains("://")) {
+			return relativePath;
+		}
+
+		if (relativePath.charAt(0) == '/') {
+			int index = baseUrl.indexOf("://");
+			index = baseUrl.indexOf("/", index + 3);
+			return baseUrl.substring(0, index) + relativePath;
+		} else {
+			int index = baseUrl.lastIndexOf('/');
+			return baseUrl.substring(0, index + 1) + relativePath;
+		}
+	}
+
 }

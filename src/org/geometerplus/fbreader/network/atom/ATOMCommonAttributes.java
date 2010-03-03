@@ -36,8 +36,8 @@ abstract class ATOMCommonAttributes {
 	}
 
 	protected final void readAttribute(String name, ZLStringMap source) {
-		String value = source.getValue(name);
-		if (value != null) {
+		final String value = source.getValue(name);
+		if (value != null && value.length() > 0) {
 			if (myAttributes == null) {
 				myAttributes = new ZLStringMap();
 			}
