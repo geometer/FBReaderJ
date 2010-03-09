@@ -28,6 +28,12 @@ public class NetworkBookItem extends NetworkLibraryItem {
 		public final String DisplayName;
 		public final String SortKey;
 
+		/**
+		 * Creates new AuthorData instance. 
+		 *
+		 * @param displayName author's name. Must be not <code>null</code>.
+		 * @param sortKey     string that defines sorting order of book's authors. Must be not <code>null</code>.
+		 */
 		public AuthorData(String displayName, String sortKey) {
 			DisplayName = displayName;
 			SortKey = sortKey;
@@ -69,6 +75,24 @@ public class NetworkBookItem extends NetworkLibraryItem {
 	public final String SeriesTitle;
 	public final int IndexInSeries;
 
+
+	/**
+	 * Creates new NetworkLibraryItem instance.
+	 *
+	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
+	 * @param id            string that uniquely identifies this book item. Must be not <code>null</code>.
+	 * @param index         sequence number of this book in corresponding catalog
+	 * @param title         title of this book. Must be not <code>null</code>.
+	 * @param summary       description of this book. Can be <code>null</code>.
+	 * @param langage       string specifies language of this book. Can be <code>null</code>.
+	 * @param date          string specifies release date of this book. Can be <code>null</code>.
+	 * @param price         string specifies price of this book. Can be <code>null</code>.
+	 * @param authors       list of book authors. Should contain at least one author.
+	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
+	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
+	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
+	 * @param urlByType     map contains URLs and their types. Must be not <code>null</code>.
+	 */
 	public NetworkBookItem(NetworkLink link, String id, int index, 
 		String title, String summary, String language, String date, String price,
 		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,

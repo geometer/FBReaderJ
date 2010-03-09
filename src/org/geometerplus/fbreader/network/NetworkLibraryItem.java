@@ -42,6 +42,14 @@ public abstract class NetworkLibraryItem {
 	public final String Summary;
 	public final TreeMap<Integer, String> URLByType;
 
+	/**
+	 * Creates new NetworkLibraryItem instance.
+	 *
+	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
+	 * @param title      title of this library item. Must be not <code>null</code>.
+	 * @param summary    description of this library item. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 */
 	protected NetworkLibraryItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
 		Link = link;
 		Title = title;

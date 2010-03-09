@@ -41,6 +41,14 @@ abstract public class NetworkLink {
 	public final TreeMap<String, String> Links;
 
 
+	/**
+	 * Creates new NetworkLink instance.
+	 *
+	 * @param siteName   name of the corresponding website. Must be not <code>null</code>.
+	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
+	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
+	 * @param links      map contains URLs with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
+	 */
 	public NetworkLink(String siteName, String title, String summary, Map<String, String> links) {
 		SiteName = siteName;
 		Title = title;

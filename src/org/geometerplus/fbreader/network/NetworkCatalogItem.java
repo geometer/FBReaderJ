@@ -37,10 +37,28 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 		int LOGGED_USERS = 2;
 	}
 
+	/**
+	 * Creates new NetworkCatalogItem instance with visibility set to <code>ALWAYS</code>.
+	 *
+	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
+	 * @param title      title of this library item. Must be not <code>null</code>.
+	 * @param summary    description of this library item. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 */
 	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
 		this(link, title, summary, urlByType, VisibilityType.ALWAYS);
 	}
 
+	/**
+	 * Creates new NetworkCatalogItem instance with specified visibility.
+	 *
+	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
+	 * @param title      title of this library item. Must be not <code>null</code>.
+	 * @param summary    description of this library item. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param visibility value defines when this library item will be shown in the network library. 
+	 *                   Can be on of the values listed in <code>VisibilityType</code> interface.
+	 */
 	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
 		super(link, title, summary, urlByType);
 		Visibility = visibility;

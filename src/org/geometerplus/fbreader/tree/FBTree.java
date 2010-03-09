@@ -64,17 +64,17 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		}
 	}
 
-	private String myChildrenString;
+	private String mySecondString;
 
 	public final void invalidateChildren() {
-		myChildrenString = "";
+		mySecondString = "";
 	}
 
 	public final String getSecondString() {
-		if (myChildrenString == null) {
-			myChildrenString = getSummary();
+		if (mySecondString == null) {
+			mySecondString = getSummary();
 		}
-		return myChildrenString;
+		return mySecondString;
 	}
 
 	protected String getSummary() {
