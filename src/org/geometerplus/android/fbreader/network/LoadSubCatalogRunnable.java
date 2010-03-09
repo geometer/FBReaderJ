@@ -35,7 +35,6 @@ class LoadSubCatalogRunnable extends NetworkOperationRunnable {
 		myChildren = children;
 	}
 
-	@Override
 	public void run() {
 		myErrorMessage = myItem.loadChildren(myChildren);
 	}

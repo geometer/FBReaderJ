@@ -45,7 +45,6 @@ public class NetworkLibrary {
 	private boolean myUpdateChildren = true;
 
 	private static class LinksComparator implements Comparator<NetworkLink> {
-		@Override
 		public int compare(NetworkLink link1, NetworkLink link2) {
 			return link1.Title.compareTo(link2.Title);
 		}

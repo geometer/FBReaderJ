@@ -39,7 +39,6 @@ public class NetworkBookItem extends NetworkLibraryItem {
 			SortKey = sortKey;
 		}
 
-		@Override
 		public int compareTo(AuthorData data) {
 			int key = SortKey.compareTo(data.SortKey);
 			if (key != 0) {

@@ -42,7 +42,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		myUrlConditions = new HashMap<String, Integer>(conditions);
 	}
 
-	@Override
 	public void processFeedStart() {
 		++myData.ResumeCount;
 	}
@@ -54,7 +53,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		return value.intern();
 	}
 
-	@Override
 	public void processFeedMetadata(OPDSFeedMetadata feed) {
 		for (ATOMLink link: feed.Links) {
 			String href = link.getHref();
@@ -67,7 +65,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		myOpenSearchStartIndex = feed.OpensearchStartIndex - 1;
 	}
 
-	@Override
 	public void processFeedEntry(OPDSEntry entry) {
 		Integer entryCondition = myUrlConditions.get(entry.Id.Uri);
 		if (entryCondition != null && entryCondition.intValue() == OPDSLink.URLCondition.URL_CONDITION_NEVER) {
@@ -99,7 +96,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 	}
 
-	@Override
 	public void processFeedEnd() {
 		for (NetworkLibraryItem item: myData.Items) {
 			if (!(item instanceof NetworkBookItem)) {
