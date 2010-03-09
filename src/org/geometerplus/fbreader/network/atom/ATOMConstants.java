@@ -19,16 +19,16 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-public final class ATOMConstants {
+public interface ATOMConstants {
 
-	public static final String TYPE_TEXT = "text";
-	public static final String TYPE_HTML = "html";
-	public static final String TYPE_XHTML = "xhtml";
-	public static final String TYPE_DEFAULT = TYPE_TEXT;
+	String TYPE_TEXT = "text";
+	String TYPE_HTML = "html";
+	String TYPE_XHTML = "xhtml";
+	String TYPE_DEFAULT = TYPE_TEXT;
 
-	public static final String REL_ALTERNATE = "alternate";
-	public static final String REL_RELATED = "related";
-	public static final String REL_SELF = "self";
-	public static final String REL_ENCLOSURE = "enclosure";
-	public static final String REL_VIA = "via";
+	String REL_ALTERNATE = "alternate";
+	String REL_RELATED = "related";
+	String REL_SELF = "self";
+	String REL_ENCLOSURE = "enclosure";
+	String REL_VIA = "via";
 }

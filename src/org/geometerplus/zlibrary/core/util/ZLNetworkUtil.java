@@ -23,7 +23,7 @@ public class ZLNetworkUtil {
 
 	public static String url(String baseUrl, String relativePath) {
 		if (relativePath == null || relativePath.length() == 0) {
-			return null;
+			return relativePath;
 		}
 
 		if (relativePath.contains("://")) {
@@ -33,9 +33,13 @@ public class ZLNetworkUtil {
 		if (relativePath.charAt(0) == '/') {
 			int index = baseUrl.indexOf("://");
 			index = baseUrl.indexOf("/", index + 3);
-			return baseUrl.substring(0, index) + relativePath;
+			if (index == -1) {
+				return baseUrl + relativePath;
+			} else {
+				return baseUrl.substring(0, index) + relativePath;
+			}
 		} else {
-			int index = baseUrl.lastIndexOf('/');
+			int index = baseUrl.lastIndexOf('/'); // TODO: if (baseUrl.charAt(baseUrl.length() - 1) == '/')
 			return baseUrl.substring(0, index + 1) + relativePath;
 		}
 	}

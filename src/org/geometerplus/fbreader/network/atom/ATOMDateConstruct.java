@@ -86,8 +86,11 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 		dateTime.TZHour = 0;
 		dateTime.TZMinutes = 0;
 
-		final int len = str.length();
+		if (str == null || dateTime == null) {
+			return false;
+		}
 
+		final int len = str.length();
 		if (len != 4 && len != 7 && len != 10 && len != 17 && len != 20 && len < 22) {
 			return false;
 		}

@@ -41,6 +41,9 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		NetworkOperationData data = new NetworkOperationData(Link);
 
 		String urlString = URLByType.get(URLType.URL_CATALOG);
+		if (urlString == null) {
+			return null; // TODO: return error/information message???
+		}
 
 		try {
 			while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!

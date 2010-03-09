@@ -20,39 +20,36 @@
 package org.geometerplus.fbreader.network.opds;
 
 
-class OPDSConstants {
+interface OPDSConstants {
 
 	// Feed level
-	//public static final String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
-	//public static final String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
+	//String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
+	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / acquisition links
-	public static final String REL_ACQUISITION = "http://opds-spec.org/acquisition";
-	//public static final String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
-	//public static final String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
-	//public static final String REL_ACQUISITION_SUBSCRIBE = "http://opds-spec.org/acquisition/subscribe";
-	public static final String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
+	String REL_ACQUISITION = "http://opds-spec.org/acquisition";
+	String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
+	//String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
+	//String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
+	//String REL_ACQUISITION_SUBSCRIBE = "http://opds-spec.org/acquisition/subscribe";
 
 	// Entry level / other
-	public static final String REL_COVER = "http://opds-spec.org/cover";
-	public static final String REL_STANZA_COVER = "x-stanza-cover-image";
-	public static final String REL_THUMBNAIL = "http://opds-spec.org/thumbnail";
-	public static final String REL_STANZA_THUMBNAIL = "x-stanza-cover-image-thumbnail";
-
-	// MIME types / MIME type for "Full Entry" atom:link element
-	//public static final String MIME_OPDS_FULLENTRY = "application/atom+xml;type=entry";
+	String REL_COVER = "http://opds-spec.org/cover";
+	String REL_STANZA_COVER = "x-stanza-cover-image";
+	String REL_THUMBNAIL = "http://opds-spec.org/thumbnail";
+	String REL_STANZA_THUMBNAIL = "x-stanza-cover-image-thumbnail";
 
 	// MIME types / application
-	public static final String MIME_APP_FB2ZIP = "application/fb2+zip";
-	public static final String MIME_APP_EPUB = "application/epub+zip";
-	public static final String MIME_APP_MOBI = "application/x-mobipocket-ebook";
-	public static final String MIME_APP_PDF = "application/pdf";
-	public static final String MIME_APP_ATOM = "application/atom+xml";
+	String MIME_APP_FB2ZIP = "application/fb2+zip";
+	String MIME_APP_EPUB = "application/epub+zip";
+	String MIME_APP_MOBI = "application/x-mobipocket-ebook";
+	String MIME_APP_PDF = "application/pdf";
+	String MIME_APP_ATOM = "application/atom+xml";
 
 	// MIME types / image
-	public static final String MIME_IMG_PNG = "image/png";
-	public static final String MIME_IMG_JPEG = "image/jpeg";
+	String MIME_IMG_PNG = "image/png";
+	String MIME_IMG_JPEG = "image/jpeg";
 
 	// MIME types / text
-	public static final String MIME_TEXT_HTML = "text/html";
+	String MIME_TEXT_HTML = "text/html";
 }

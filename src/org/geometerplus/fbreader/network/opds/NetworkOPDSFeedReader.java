@@ -31,7 +31,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private final String myBaseURL;
 	private final HashMap<String, Integer> myUrlConditions;
-	private NetworkOperationData myData;
+	private final NetworkOperationData myData;
 	private int myIndex;
 
 
@@ -59,13 +59,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			String href = link.getHref();
 			String rel = intern(link.getRel());
 			String type = intern(link.getType());
-			if (type == OPDSConstants.MIME_APP_ATOM) {
-				if (rel == "next") {
-					myData.ResumeURI = href;
-					//std::cerr << "<link type=\"application/atom+xml\" rel=\"next\" href=\"" << href << "\" title=\"Next Page\"/>" << std::endl;
-				} else if (rel == ATOMConstants.REL_SELF) {
-					//std::cerr << "<link type=\"application/atom+xml\" rel=\"self\" href=\"" << href << "\"/>" << std::endl;
-				}
+			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
+				myData.ResumeURI = href;
 			}
 		}
 		myIndex = feed.OpensearchStartIndex - 1;
@@ -73,9 +68,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	@Override
 	public void processFeedEntry(OPDSEntry entry) {
-		if (entry == null) {
-			return;
-		}
 		Integer entryCondition = myUrlConditions.get(entry.Id.Uri);
 		if (entryCondition != null && entryCondition.intValue() == OPDSLink.URLCondition.URL_CONDITION_NEVER) {
 			return;
@@ -185,8 +177,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				authorData = new NetworkBookItem.AuthorData(after + ' ' + before, before);
 			} else {
 				name = name.trim();
-				index = name.lastIndexOf(' ');
-				authorData = new NetworkBookItem.AuthorData(name, name.substring(index + 1).trim());
+				index = name.lastIndexOf(' '); // TODO: how about another spaces???
+				authorData = new NetworkBookItem.AuthorData(name, name.substring(index + 1));
 			}
 			authors.add(authorData);
 		}
@@ -280,9 +272,15 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
-		urlMap.put(NetworkLibraryItem.URLType.URL_COVER, coverURL);
-		urlMap.put(NetworkLibraryItem.URLType.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
-		urlMap.put(NetworkLibraryItem.URLType.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
+		if (coverURL != null) {
+			urlMap.put(NetworkLibraryItem.URLType.URL_COVER, coverURL);
+		}
+		if (url != null) {
+			urlMap.put(NetworkLibraryItem.URLType.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
+		}
+		if (htmlURL != null) {
+			urlMap.put(NetworkLibraryItem.URLType.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
+		}
 		return new OPDSCatalogItem(
 			myData.Link,
 			entry.Title,

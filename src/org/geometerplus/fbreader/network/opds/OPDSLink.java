@@ -40,11 +40,19 @@ class OPDSLink extends NetworkLink {
 	}
 
 	public final void setUrlConditions(Map<String, Integer> conditions) {
-		myUrlConditions = new TreeMap(conditions);
+		if (conditions != null && conditions.size() > 0) {
+			myUrlConditions = new TreeMap(conditions);
+		} else {
+			myUrlConditions = null;
+		}
 	}
 
 	public final void setUrlRewritingRules(List<URLRewritingRule> rules) {
-		myUrlRewritingRules = new LinkedList(rules);
+		if (rules != null && rules.size() > 0) {
+			myUrlRewritingRules = new LinkedList(rules);
+		} else {
+			myUrlRewritingRules = null;
+		}
 	}
 
 	public final Map<String, Integer> getUrlConditions() {

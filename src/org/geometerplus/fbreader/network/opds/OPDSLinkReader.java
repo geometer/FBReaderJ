@@ -34,14 +34,14 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private String mySummary;
 	private String myIcon;
 
-	private HashMap<String, String> myLinks = new HashMap<String, String>();
+	private final HashMap<String, String> myLinks = new HashMap<String, String>();
 
 	private String mySearchType;
-	private HashMap<String, String> mySearchFields = new HashMap<String, String>();
+	private final HashMap<String, String> mySearchFields = new HashMap<String, String>();
 
-	private HashMap<String, Integer> myUrlConditions = new HashMap<String, Integer>();
+	private final HashMap<String, Integer> myUrlConditions = new HashMap<String, Integer>();
 	private String myAuthenticationType;
-	private LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
+	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 
 
 	private NetworkLink link() {

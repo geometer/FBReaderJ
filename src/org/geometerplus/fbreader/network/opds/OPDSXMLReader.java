@@ -41,6 +41,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private ATOMCategory myCategory;
 	private ATOMUpdated myUpdated;
 	private ATOMPublished myPublished;
+	private DCDate myDCIssued;
 
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
@@ -265,6 +266,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					if (tag == DC_TAG_LANGUAGE) {
 						myState = FE_DC_LANGUAGE;
 					} else if (tag == DC_TAG_ISSUED) {
+						myDCIssued = new DCDate();
+						myDCIssued.readAttributes(attributes);
 						myState = FE_DC_ISSUED;
 					} else if (tag == DC_TAG_PUBLISHER) {
 						myState = FE_DC_PUBLISHER;
@@ -312,7 +315,10 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			tag = tag.intern();
 		}
 
-		final String bufferContent = myBuffer.toString().trim();
+		String bufferContent = myBuffer.toString().trim();
+		if (bufferContent.length() == 0) {
+			bufferContent = null;
+		}
 		myBuffer.delete(0, myBuffer.length());
 
 		switch (myState) {
@@ -320,7 +326,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FEED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
-					myFeedReader.processFeedMetadata(myFeed);
+					if (myFeed != null && myFeed.Id != null) {
+						myFeedReader.processFeedMetadata(myFeed);
+					}
 					myFeed = null;
 					myFeedReader.processFeedEnd();
 					myState = START;
@@ -328,7 +336,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case F_ENTRY:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
-					myFeedReader.processFeedEntry(myEntry);
+					if (myEntry != null && myEntry.Id != null) {
+						myFeedReader.processFeedEntry(myEntry);
+					}
 					myEntry = null;
 					myState = FEED;
 				}
@@ -336,8 +346,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case F_ID:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ID) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
-					myId.Uri = bufferContent;
-					if (myFeed != null) {
+					if (bufferContent != null && myFeed != null) {
+						myId.Uri = bufferContent;
 						myFeed.Id = myId;
 					}
 					myId = null;
@@ -375,8 +385,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case F_UPDATED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_UPDATED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
-					ATOMDateConstruct.parse(bufferContent, myUpdated);
-					if (myFeed != null) {
+					if (ATOMDateConstruct.parse(bufferContent, myUpdated) && myFeed != null) {
 						myFeed.Updated = myUpdated;
 					}
 					myUpdated = null;
@@ -385,7 +394,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case F_AUTHOR:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_AUTHOR) {
-					if (myFeed != null) {
+					if (myFeed != null && myAuthor.Name != null) {
 						myFeed.Authors.add(myAuthor);
 					}
 					myAuthor = null;
@@ -430,7 +439,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FE_AUTHOR:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_AUTHOR) {
-					myEntry.Authors.add(myAuthor);
+					if (myAuthor.Name != null) {
+						myEntry.Authors.add(myAuthor);
+					}
 					myAuthor = null;
 					myState = F_ENTRY;
 				} 
@@ -438,8 +449,10 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_ID:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ID) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
-					myId.Uri = bufferContent;
-					myEntry.Id = myId;
+					if (bufferContent != null) {
+						myId.Uri = bufferContent;
+						myEntry.Id = myId;
+					}
 					myId = null;
 					myState = F_ENTRY;
 				}
@@ -461,8 +474,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_PUBLISHED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_PUBLISHED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
-					ATOMDateConstruct.parse(bufferContent, myPublished);
-					myEntry.Published = myPublished;
+					if (ATOMDateConstruct.parse(bufferContent, myPublished)) {
+						myEntry.Published = myPublished;
+					}
 					myPublished = null;
 					myState = F_ENTRY;
 				}
@@ -471,15 +485,17 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUMMARY) {
 					// FIXME:summary can be lost:buffer will be truncated, if there are extension tags inside the <summary> tag
 					// TODO:implement ATOMTextConstruct & ATOMSummary
-					myEntry.Summary = bufferContent;
-					mySummaryTagFound = true;
+					if (bufferContent != null) {
+						myEntry.Summary = bufferContent;
+						mySummaryTagFound = true;
+					}
 					myState = F_ENTRY;
 				}
 				break;
 			case FE_CONTENT:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_CONTENT) {
 					// TODO:check this accurately
-					if (!mySummaryTagFound) {
+					if (bufferContent != null && !mySummaryTagFound) {
 						myEntry.Summary = bufferContent;
 					}
 					myState = F_ENTRY;
@@ -488,7 +504,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_SUBTITLE:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUBTITLE) {
 					// TODO:check this accurately
-					if (!mySummaryTagFound) {
+					if (bufferContent != null && !mySummaryTagFound) {
 						myEntry.Summary = bufferContent;
 					}
 					myState = F_ENTRY;
@@ -505,8 +521,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_UPDATED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_UPDATED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
-					ATOMDateConstruct.parse(bufferContent, myUpdated);
-					myEntry.Updated = myUpdated;
+					if (ATOMDateConstruct.parse(bufferContent, myUpdated)) {
+						myEntry.Updated = myUpdated;
+					}
 					myUpdated = null;
 					myState = F_ENTRY;
 				}
@@ -521,9 +538,10 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_DC_ISSUED:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_ISSUED) {
 					// FIXME:issued can be lost:buffer will be truncated, if there are extension tags inside the <dc:issued> tag
-					DCDate issued = new DCDate();
-					ATOMDateConstruct.parse(bufferContent, issued);
-					myEntry.DCIssued = issued;
+					if (ATOMDateConstruct.parse(bufferContent, myDCIssued)) {
+						myEntry.DCIssued = myDCIssued;
+					}
+					myDCIssued = null;
 					myState = F_ENTRY;
 				}
 				break;
@@ -537,12 +555,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case OPENSEARCH_TOTALRESULTS:
 				if (tagPrefix == myOpenSearchNamespaceId &&
 						tag == OPENSEARCH_TAG_TOTALRESULTS) {
-					try {
-						int number = Integer.parseInt(bufferContent);
-						if (myFeed != null) {
-							myFeed.OpensearchTotalResults = number;
+					if (myFeed != null && bufferContent != null) {
+						try {
+							myFeed.OpensearchTotalResults = Integer.parseInt(bufferContent);
+						} catch (NumberFormatException ex) {
 						}
-					} catch (NumberFormatException ex) {
 					}
 					myState = FEED;
 				}
@@ -550,12 +567,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case OPENSEARCH_ITEMSPERPAGE:
 				if (tagPrefix == myOpenSearchNamespaceId &&
 						tag == OPENSEARCH_TAG_ITEMSPERPAGE) {
-					try {
-						int number = Integer.parseInt(bufferContent);
-						if (myFeed != null) {
-							myFeed.OpensearchItemsPerPage = number;
+					if (myFeed != null && bufferContent != null) {
+						try {
+							myFeed.OpensearchItemsPerPage = Integer.parseInt(bufferContent);
+						} catch (NumberFormatException ex) {
 						}
-					} catch (NumberFormatException ex) {
 					}
 					myState = FEED;
 				}
@@ -563,12 +579,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case OPENSEARCH_STARTINDEX:
 				if (tagPrefix == myOpenSearchNamespaceId &&
 						tag == OPENSEARCH_TAG_STARTINDEX) {
-					try {
-						int number = Integer.parseInt(bufferContent);
-						if (myFeed != null) {
-							myFeed.OpensearchStartIndex = number;
+					if (myFeed != null && bufferContent != null) {
+						try {
+							myFeed.OpensearchStartIndex = Integer.parseInt(bufferContent);
+						} catch (NumberFormatException ex) {
 						}
-					} catch (NumberFormatException ex) {
 					}
 					myState = FEED;
 				}
