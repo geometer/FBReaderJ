@@ -33,6 +33,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	private final HashMap<String, Integer> myUrlConditions;
 	private final NetworkOperationData myData;
 	private int myIndex;
+	private int myOpenSearchStartIndex;
 
 
 	NetworkOPDSFeedReader(String baseURL, NetworkOperationData result, Map<String, Integer> conditions) {
@@ -63,7 +64,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				myData.ResumeURI = href;
 			}
 		}
-		myIndex = feed.OpensearchStartIndex - 1;
+		myOpenSearchStartIndex = feed.OpensearchStartIndex - 1;
 	}
 
 	@Override
@@ -100,6 +101,13 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	@Override
 	public void processFeedEnd() {
+		for (NetworkLibraryItem item: myData.Items) {
+			if (!(item instanceof NetworkBookItem)) {
+				continue;
+			}
+			NetworkBookItem book = (NetworkBookItem) item;
+			book.Index += myOpenSearchStartIndex;
+		}
 	}
 
 	private static final String AuthorPrefix = "author:";
