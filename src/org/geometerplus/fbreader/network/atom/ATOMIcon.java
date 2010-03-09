@@ -19,9 +19,6 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
-
-
 public class ATOMIcon extends ATOMCommonAttributes {
 
 	public String Uri;

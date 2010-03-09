@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 

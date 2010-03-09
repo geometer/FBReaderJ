@@ -19,13 +19,9 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
-
-
 abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
 
 	public String Name;
 	public String Uri;
 	public String Email;
-
 }

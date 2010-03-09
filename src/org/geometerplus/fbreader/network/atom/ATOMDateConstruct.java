@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-
 public abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 
 	public int Year;
