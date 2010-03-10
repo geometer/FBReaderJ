@@ -48,6 +48,9 @@ public final class ZLStringMap {
 		myValues[size] = value;
 	}
 
+	/*
+	 * Parameter `key` must be an interned string.
+	 */
 	public String getValue(String key) {
 		int index = mySize;
 		if (index > 0) {

@@ -39,7 +39,7 @@ public class ZLNetworkUtil {
 				return baseUrl.substring(0, index) + relativePath;
 			}
 		} else {
-			int index = baseUrl.lastIndexOf('/'); // TODO: if (baseUrl.charAt(baseUrl.length() - 1) == '/')
+			int index = baseUrl.lastIndexOf('/'); // FIXME: if (baseUrl.charAt(baseUrl.length() - 1) == '/')
 			return baseUrl.substring(0, index + 1) + relativePath;
 		}
 	}
