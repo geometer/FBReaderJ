@@ -193,7 +193,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 					break;
 			}
 		} else {
-			if (tag == myMetaTag) {
+			if (tag.equals(myMetaTag)) {
 				if (!mySeriesTitle.equals("") && mySeriesIndex > 0) {
 					myBook.setSeriesInfo(mySeriesTitle, mySeriesIndex);
 				}
