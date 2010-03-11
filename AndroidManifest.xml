@@ -45,7 +45,7 @@
 		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.preferences.BookInfoActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name="org.geometerplus.android.fbreader.network.BookDownloader" android:process=":bookDownloader" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden">
+		<activity android:name="org.geometerplus.android.fbreader.network.BookDownloader" android:process=":bookDownloader" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -64,6 +64,7 @@
 				<data android:host="*rus.ec" android:mimeType="application/zip" android:scheme="http" />
 			</intent-filter>
 		</activity>
+		<service android:name="org.geometerplus.android.fbreader.network.BookDownloaderService" android:process=":bookDownloader" />
 		<activity android:name="org.geometerplus.zlibrary.ui.android.dialogs.DialogActivity" android:label="" android:configChanges="orientation|keyboardHidden"/>
 	</application>
 </manifest> 
