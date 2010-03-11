@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
-import org.geometerplus.android.fbreader.BookDownloader;
+import org.geometerplus.android.fbreader.network.BookDownloader;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.fbreader.network;
 
 import java.util.List;
 import java.io.*;
@@ -150,7 +150,10 @@ public class BookDownloader extends Activity {
 		if (oldActivity != null) {
 			oldActivity.finish();
 		}*/
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, FBReader.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+		startActivity(
+			new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, org.geometerplus.android.fbreader.FBReader.class)
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+		);
 	}
 
 	private void startFileDownload(final String uriString, final File file) {
