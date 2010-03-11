@@ -19,9 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
-
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.List;
+import java.util.LinkedList;
 import java.io.*;
 import java.net.*;
 
@@ -32,12 +31,6 @@ import android.app.Service;
 import android.net.Uri;
 import android.content.Intent;
 
-/*
-import android.view.Window;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.content.pm.ActivityInfo;*/
-
 //import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
 //import org.geometerplus.zlibrary.ui.android.R;
@@ -46,7 +39,7 @@ import org.geometerplus.fbreader.Constants;
 
 public class BookDownloaderService extends Service {
 
-	private ConcurrentLinkedQueue<Integer> myStartIds;
+	private LinkedList<Integer> myStartIds;
 
 	//private ProgressBar myProgressBar;
 	//private int myFileLength = -1;
@@ -56,8 +49,7 @@ public class BookDownloaderService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		myStartIds = new ConcurrentLinkedQueue<Integer>();
-		System.err.println("FBREADER -- CREATE DOWNLOADER SERVICE");
+		myStartIds = new LinkedList<Integer>();
 	}
 
 	@Override
@@ -69,8 +61,6 @@ public class BookDownloaderService extends Service {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		myStartIds.offer(startId);
-
-		System.err.println("FBREADER -- START DOWNLOADER SERVICE");
 
 		final Uri uri = intent.getData();
 		if (uri == null || !BookDownloader.acceptsUri(uri)) {
@@ -132,7 +122,6 @@ public class BookDownloaderService extends Service {
 
 	@Override
 	public void onDestroy() {
-		System.err.println("FBREADER -- DESTROY DOWNLOADER SERVICE");
 		myStartIds = null;
 		super.onDestroy();
 	}
@@ -160,8 +149,6 @@ public class BookDownloaderService extends Service {
 				try {
 					final URL url = new URL(uriString);
 					final URLConnection connection = url.openConnection();
-int length = connection.getContentLength();
-int downloaded = 0;
 					/*myFileLength = connection.getContentLength();
 					if (myFileLength > 0) {
 						myProgressBar.setIndeterminate(false);
@@ -181,13 +168,6 @@ int downloaded = 0;
 							if (size <= 0) {
 								break;
 							}
-downloaded += size;
-if (length > 0) {
-	int percent = (100 * downloaded) / length;
-	System.err.println("FBREADER -- DOWNLOADER SERVICE (" + file.getName() + ") : " + percent + "%");
-} else {
-	System.err.println("FBREADER -- DOWNLOADER SERVICE (" + file.getName() + ") : " + downloaded + " bytes");
-}
 							//myDownloadedPart += size;
 							//myProgressBar.setProgress(myDownloadedPart);
 							outStream.write(buffer, 0, size);
