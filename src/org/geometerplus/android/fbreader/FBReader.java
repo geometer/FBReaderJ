@@ -62,7 +62,6 @@ public class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		System.err.println("FBREADER -- ON CREATE");
 		/*
 		android.telephony.TelephonyManager tele =
 			(android.telephony.TelephonyManager)getSystemService(TELEPHONY_SERVICE);
@@ -84,7 +83,6 @@ public class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		System.err.println("FBREADER -- ON START");
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 
 		final int fullScreenFlag = 
@@ -121,7 +119,6 @@ public class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		System.err.println("FBREADER -- ON RESUME");
 		if (myPanel.ControlPanel != null) {
 			myPanel.ControlPanel.setVisibility(myPanel.Visible ? View.VISIBLE : View.GONE);
 		}
@@ -137,7 +134,6 @@ public class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public void onPause() {
-		System.err.println("FBREADER -- ON PAUSE");
 		if (myWakeLock != null) {
 			myWakeLock.release();
 		}
@@ -149,7 +145,6 @@ public class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public void onStop() {
-		System.err.println("FBREADER -- ON STOP");
 		if (myPanel.ControlPanel != null) {
 			myPanel.ControlPanel.hide(false);
 			myPanel.ControlPanel = null;

@@ -76,7 +76,20 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		System.err.println("FBREADER -- ON NEW INTENT");
+
+		String fileToOpen = null;
+		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			final Uri uri = intent.getData();
+			if (uri != null) {
+				fileToOpen = uri.getPath();
+			}
+			intent.setData(null);
+		}
+
+		if (fileToOpen != null) {
+			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
+		}
+		ZLApplication.Instance().repaintView();
 	}
 
 	private static ZLAndroidLibrary getLibrary() {
