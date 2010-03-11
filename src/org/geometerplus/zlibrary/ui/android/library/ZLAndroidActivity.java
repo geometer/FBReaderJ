@@ -73,6 +73,12 @@ public abstract class ZLAndroidActivity extends Activity {
 		super.onPause();
 	}
 
+	@Override
+	public void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		System.err.println("FBREADER -- ON NEW INTENT");
+	}
+
 	private static ZLAndroidLibrary getLibrary() {
 		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 	}

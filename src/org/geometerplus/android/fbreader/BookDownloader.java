@@ -146,11 +146,11 @@ public class BookDownloader extends Activity {
 
 	private void runFBReader(final File file) {
 		finish();
-		final Activity oldActivity = org.geometerplus.android.fbreader.FBReader.Instance;
+		/*final Activity oldActivity = org.geometerplus.android.fbreader.FBReader.Instance;
 		if (oldActivity != null) {
 			oldActivity.finish();
-		}
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, FBReader.class));
+		}*/
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, FBReader.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 
 	private void startFileDownload(final String uriString, final File file) {
