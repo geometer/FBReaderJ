@@ -28,14 +28,21 @@ import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Service;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.net.Uri;
 import android.content.Intent;
+import android.content.Context;
 
 //import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
 //import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.Constants;
+
+import org.geometerplus.android.fbreader.FBNotifications;
+
 
 public class BookDownloaderService extends Service {
 
@@ -103,7 +110,8 @@ public class BookDownloaderService extends Service {
 				null, null
 			);
 			*/
-			runFBReader(fileFile);
+			stopSelf(myStartIds.poll().intValue());
+			startActivity(getFBReaderIntent(fileFile));
 			return;
 		}
 		startFileDownload(uri.toString(), fileFile);
@@ -126,22 +134,41 @@ public class BookDownloaderService extends Service {
 		super.onDestroy();
 	}
 
-	private void runFBReader(final File file) {
-		stopSelf(myStartIds.poll().intValue());
-		startActivity(
-			new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, org.geometerplus.android.fbreader.FBReader.class)
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-		);
+	private Intent getFBReaderIntent(final File file) {
+		return new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, org.geometerplus.android.fbreader.FBReader.class)
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 
 	private void startFileDownload(final String uriString, final File file) {
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
-				try {
-					runFBReader(file);
-				} catch (Exception e) {
-				}
+				final Notification notification = new Notification(
+					android.R.drawable.stat_sys_download_done,
+					"Book has been downloaded",
+					System.currentTimeMillis()
+				);
+
+				notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+				final PendingIntent contentIntent = PendingIntent.getActivity(
+					BookDownloaderService.this,
+					0,
+					getFBReaderIntent(file),
+					0
+				);
+
+				notification.setLatestEventInfo(
+					getApplicationContext(),
+					file.getName(),
+					"Download successful",
+					contentIntent
+				);
+
+				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.notify(FBNotifications.BOOKDOWNLOADER_DOWNLOADSUCCESSFUL, notification);
+
+				stopSelf(myStartIds.poll().intValue());
 			}
 		};
 		new Thread(new Runnable() {
