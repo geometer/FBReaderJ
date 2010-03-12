@@ -105,30 +105,25 @@ public class BookDownloaderService extends Service {
 	}
 
 	private Intent getFBReaderIntent(final File file) {
-		return new Intent(Intent.ACTION_VIEW, Uri.fromFile(file), this, org.geometerplus.android.fbreader.FBReader.class)
-			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		final Intent intent = new Intent(this, org.geometerplus.android.fbreader.FBReader.class);
+		if (file != null) {
+			intent.setAction(Intent.ACTION_VIEW).setData(Uri.fromFile(file));
+		}
+		return intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 
-	private Notification createDownloadSuccessfulNotification(File file) {
+	private Notification createDownloadFinishNotification(File file, boolean success) {
+		final String tickerText = success ? "Book has been downloaded" : "Book download error"; // TODO: i18n
+		final String contentText = success ? "Download successful" : "Download unsuccessful"; // TODO: i18n
 		final Notification notification = new Notification(
 			android.R.drawable.stat_sys_download_done,
-			"Book has been downloaded", // TODO: i18n
+			tickerText,
 			System.currentTimeMillis()
 		);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		final PendingIntent contentIntent = PendingIntent.getActivity(
-			this,
-			0,
-			getFBReaderIntent(file),
-			0
-		);
-		notification.setLatestEventInfo(
-			getApplicationContext(),
-			file.getName(),
-			"Download successful", // TODO: i18n
-			contentIntent
-		);
+		final Intent intent = getFBReaderIntent(success ? file : null);
+		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+		notification.setLatestEventInfo(getApplicationContext(), file.getName(), contentText, contentIntent);
 		return notification;
 	}
 
@@ -142,10 +137,7 @@ public class BookDownloaderService extends Service {
 		contentView.setTextViewText(R.id.download_notification_progress_text, "");
 		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
 
-		final Intent intent = new Intent(this, org.geometerplus.android.fbreader.FBReader.class)
-			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
+		final Intent intent = getFBReaderIntent(null);
 		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
 		final Notification notification = new Notification();
@@ -181,13 +173,13 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
-		final Handler downloadSuccessfulHandler = new Handler() {
+		final Handler downloadFinishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				notificationManager.cancel(notificationId);
 				notificationManager.notify(
 					notificationId,
-					createDownloadSuccessfulNotification(file)
+					createDownloadFinishNotification(file, message.what != 0)
 				);
 				stopSelf(myStartIds.poll().intValue());
 			}
@@ -196,6 +188,7 @@ public class BookDownloaderService extends Service {
 		new Thread(new Runnable() {
 			public void run() {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
+				boolean downloadSuccess = false;
 				try {
 					final URL url = new URL(uriString);
 					final URLConnection connection = url.openConnection();
@@ -208,38 +201,49 @@ public class BookDownloaderService extends Service {
 					final HttpURLConnection httpConnection = (HttpURLConnection)connection;
 					final int response = httpConnection.getResponseCode();
 					if (response == HttpURLConnection.HTTP_OK) {
-						InputStream inStream = httpConnection.getInputStream();
 						OutputStream outStream = new FileOutputStream(file);
-						final byte[] buffer = new byte[8192];
-						int fullSize = 0;	
-						while (true) {
-							final int size = inStream.read(buffer);
-							if (size <= 0) {
-								break;
-							}
-							downloadedPart += size;
-							if (fileLength > 0) {
-								final long currentTime = System.currentTimeMillis();
-								if (currentTime > progressTime) {
-									progressTime = currentTime + updateIntervalMillis;
-									progressHandler.sendEmptyMessage(downloadedPart * 100 / fileLength);
+						try {
+							InputStream inStream = httpConnection.getInputStream();
+							final byte[] buffer = new byte[8192];
+							int fullSize = 0;	
+							while (true) {
+								final int size = inStream.read(buffer);
+								if (size <= 0) {
+									break;
 								}
+								downloadedPart += size;
+								if (fileLength > 0) {
+									final long currentTime = System.currentTimeMillis();
+									if (currentTime > progressTime) {
+										progressTime = currentTime + updateIntervalMillis;
+										progressHandler.sendEmptyMessage(downloadedPart * 100 / fileLength);
+									}
+									/*if (downloadedPart * 100 / fileLength > 95) {
+										throw new IOException();
+									}*/
+								}
+								outStream.write(buffer, 0, size);
+								/*try {
+									Thread.currentThread().sleep(200);
+								} catch (InterruptedException ex) {
+								}*/
 							}
-							outStream.write(buffer, 0, size);
-							/*try {
-								Thread.currentThread().sleep(200);
-							} catch (InterruptedException ex) {
-							}*/
+							inStream.close();
+						} finally {
+							outStream.close();
 						}
-						inStream.close();
-						outStream.close();
+						downloadSuccess = true;
 					}
 				} catch (MalformedURLException e) {
 					// TODO: error message; remove file, don't start FBReader
 				} catch (IOException e) {
 					// TODO: error message; remove file, don't start FBReader
+				} finally {
+					downloadFinishHandler.sendEmptyMessage(downloadSuccess ? 1 : 0);
+					if (!downloadSuccess) {
+						file.delete();
+					}
 				}
-				downloadSuccessfulHandler.sendEmptyMessage(0);
 			}
 		}).start();
 	}
