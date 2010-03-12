@@ -34,30 +34,15 @@ import android.app.PendingIntent;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.Context;
+import android.widget.RemoteViews;
 
-//import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-
-//import org.geometerplus.zlibrary.ui.android.R;
-
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.Constants;
-
-import org.geometerplus.android.fbreader.FBNotifications;
 
 
 public class BookDownloaderService extends Service {
 
-	private LinkedList<Integer> myStartIds;
-
-	//private ProgressBar myProgressBar;
-	//private int myFileLength = -1;
-	//private int myDownloadedPart = 0;
-	//private String myFileName = "";
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		myStartIds = new LinkedList<Integer>();
-	}
+	private LinkedList<Integer> myStartIds = new LinkedList<Integer>();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -116,22 +101,7 @@ public class BookDownloaderService extends Service {
 		}
 		startFileDownload(uri.toString(), fileFile);
 
-		/*if (myFileLength <= 0) {
-			myProgressBar.setIndeterminate(true);
-		} else {
-			myProgressBar.setIndeterminate(false);
-			myProgressBar.setMax(myFileLength);
-			myProgressBar.setProgress(myDownloadedPart);
-		}*/
-
-		//final TextView textView = (TextView)findViewById(R.id.downloadertext);
 		//textView.setText(ZLDialogManager.getWaitMessageText("downloadingFile").replace("%s", myFileName));
-	}
-
-	@Override
-	public void onDestroy() {
-		myStartIds = null;
-		super.onDestroy();
 	}
 
 	private Intent getFBReaderIntent(final File file) {
@@ -140,49 +110,101 @@ public class BookDownloaderService extends Service {
 			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 
+	private Notification createDownloadSuccessfulNotification(File file) {
+		final Notification notification = new Notification(
+			android.R.drawable.stat_sys_download_done,
+			"Book has been downloaded", // TODO: i18n
+			System.currentTimeMillis()
+		);
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		final PendingIntent contentIntent = PendingIntent.getActivity(
+			this,
+			0,
+			getFBReaderIntent(file),
+			0
+		);
+		notification.setLatestEventInfo(
+			getApplicationContext(),
+			file.getName(),
+			"Download successful", // TODO: i18n
+			contentIntent
+		);
+		return notification;
+	}
+
+	private Notification createDownloadProgressNotification(File file) {
+		final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
+		String title = file.getName();
+		if (title == null || title.length() == 0) {
+			title = "<Untitled>"; // TODO: i18n
+		}
+		contentView.setTextViewText(R.id.download_notification_title, title);
+		contentView.setTextViewText(R.id.download_notification_progress_text, "");
+		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
+
+		final Intent intent = new Intent(this, org.geometerplus.android.fbreader.FBReader.class)
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+		final Notification notification = new Notification();
+		notification.icon = android.R.drawable.stat_sys_download;
+		notification.flags |= Notification.FLAG_ONGOING_EVENT;
+		notification.contentView = contentView;
+		notification.contentIntent = contentIntent;
+
+		return notification;
+	}
+
 	private void startFileDownload(final String uriString, final File file) {
-		final Handler handler = new Handler() {
+		final int notificationId = file.getPath().hashCode();
+		final Notification progressNotification = createDownloadProgressNotification(file);
+
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(notificationId, progressNotification);
+
+		final Handler progressHandler = new Handler() {
 			public void handleMessage(Message message) {
-				final Notification notification = new Notification(
-					android.R.drawable.stat_sys_download_done,
-					"Book has been downloaded",
-					System.currentTimeMillis()
-				);
+				final int progress = message.what;
+				final RemoteViews contentView = (RemoteViews)progressNotification.contentView;
 
-				notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-				final PendingIntent contentIntent = PendingIntent.getActivity(
-					BookDownloaderService.this,
-					0,
-					getFBReaderIntent(file),
-					0
-				);
-
-				notification.setLatestEventInfo(
-					getApplicationContext(),
-					file.getName(),
-					"Download successful",
-					contentIntent
-				);
-
+				if (progress < 0) {
+					contentView.setTextViewText(R.id.download_notification_progress_text, "");
+					contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
+				} else {
+					contentView.setTextViewText(R.id.download_notification_progress_text, "" + progress + "%");
+					contentView.setProgressBar(R.id.download_notification_progress_bar, 100, progress, false);
+				}
 				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-				notificationManager.notify(FBNotifications.BOOKDOWNLOADER_DOWNLOADSUCCESSFUL, notification);
+				notificationManager.notify(notificationId, progressNotification);
+			}
+		};
 
+		final Handler downloadSuccessfulHandler = new Handler() {
+			public void handleMessage(Message message) {
+				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.cancel(notificationId);
+				notificationManager.notify(
+					notificationId,
+					createDownloadSuccessfulNotification(file)
+				);
 				stopSelf(myStartIds.poll().intValue());
 			}
 		};
+
 		new Thread(new Runnable() {
 			public void run() {
+				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 				try {
 					final URL url = new URL(uriString);
 					final URLConnection connection = url.openConnection();
-					/*myFileLength = connection.getContentLength();
-					if (myFileLength > 0) {
-						myProgressBar.setIndeterminate(false);
-						myProgressBar.setMax(myFileLength);
-						myProgressBar.setProgress(0);
-						myDownloadedPart = 0;
-					}*/
+					final int fileLength = connection.getContentLength();
+					int downloadedPart = 0;
+					long progressTime = System.currentTimeMillis() + updateIntervalMillis;
+					if (fileLength <= 0) {
+						progressHandler.sendEmptyMessage(-1);
+					}
 					final HttpURLConnection httpConnection = (HttpURLConnection)connection;
 					final int response = httpConnection.getResponseCode();
 					if (response == HttpURLConnection.HTTP_OK) {
@@ -195,9 +217,19 @@ public class BookDownloaderService extends Service {
 							if (size <= 0) {
 								break;
 							}
-							//myDownloadedPart += size;
-							//myProgressBar.setProgress(myDownloadedPart);
+							downloadedPart += size;
+							if (fileLength > 0) {
+								final long currentTime = System.currentTimeMillis();
+								if (currentTime > progressTime) {
+									progressTime = currentTime + updateIntervalMillis;
+									progressHandler.sendEmptyMessage(downloadedPart * 100 / fileLength);
+								}
+							}
 							outStream.write(buffer, 0, size);
+							/*try {
+								Thread.currentThread().sleep(200);
+							} catch (InterruptedException ex) {
+							}*/
 						}
 						inStream.close();
 						outStream.close();
@@ -207,8 +239,7 @@ public class BookDownloaderService extends Service {
 				} catch (IOException e) {
 					// TODO: error message; remove file, don't start FBReader
 				}
-				handler.sendEmptyMessage(0);
-				//myFileLength = -1;
+				downloadSuccessfulHandler.sendEmptyMessage(0);
 			}
 		}).start();
 	}
