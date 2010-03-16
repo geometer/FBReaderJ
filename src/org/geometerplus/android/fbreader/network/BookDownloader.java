@@ -35,19 +35,13 @@ public class BookDownloader extends Activity {
 			return false;
 		}
 
-		final String fileName = getFileName(path);
+		final String fileName = path.get(path.size() - 1).toLowerCase();
 		return
 			fileName.endsWith(".fb2.zip") ||
 			fileName.endsWith(".fb2") ||
 			fileName.endsWith(".epub") ||
 			fileName.endsWith(".mobi") ||
 			fileName.endsWith(".prc");
-	}
-
-	static String getFileName(List<String> path) {
-		final String fileName = path.get(path.size() - 1).toLowerCase();
-		final int index = fileName.indexOf('?');
-		return (index >= 0) ? fileName.substring(0, index) : fileName;
 	}
 
 	public void onCreate(Bundle icicle) {

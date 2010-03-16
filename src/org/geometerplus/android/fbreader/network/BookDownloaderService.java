@@ -39,6 +39,8 @@ import android.widget.RemoteViews;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.Constants;
 
+import org.geometerplus.fbreader.network.BookReference;
+
 
 public class BookDownloaderService extends Service {
 
@@ -55,7 +57,7 @@ public class BookDownloaderService extends Service {
 		myStartIds.offer(startId);
 
 		final Uri uri = intent.getData();
-		if (uri == null || !BookDownloader.acceptsUri(uri)) {
+		if (uri == null) {
 			stopSelf(myStartIds.poll().intValue());
 			return;
 		}
@@ -68,7 +70,7 @@ public class BookDownloaderService extends Service {
 		String dir = Constants.BOOKS_DIRECTORY + "/" + host;
 		final List<String> path = uri.getPathSegments();
 		for (int i = 0; i < path.size() - 1; ++i) {
-			dir += '/' + path.get(i);
+			dir += File.separator + path.get(i);
 		}
 		final File dirFile = new File(dir);
 		dirFile.mkdirs();
@@ -78,7 +80,7 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 
-		String fileName = BookDownloader.getFileName(path);
+		String fileName = path.get(path.size() - 1).toLowerCase();
 		final File fileFile = new File(dirFile, fileName);
 		if (fileFile.exists()) {
 			if (!fileFile.isFile()) {
