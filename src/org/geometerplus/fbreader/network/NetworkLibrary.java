@@ -50,7 +50,7 @@ public class NetworkLibrary {
 		}
 	}
 
-	public NetworkLibrary() {
+	private NetworkLibrary() {
 		LinkedList<String> catalogs = readCatalogFileNames();
 		OPDSLinkReader reader = new OPDSLinkReader();
 		for (String fileName: catalogs) {

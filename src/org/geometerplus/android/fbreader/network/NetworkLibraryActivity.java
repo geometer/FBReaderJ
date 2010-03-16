@@ -128,6 +128,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				}
 				super.runTreeItem(tree);
 				return true;
+			} else if (tree instanceof NetworkBookTree) {
+				NetworkBookTree bookTree = (NetworkBookTree) tree;
+				NetworkBookItem book = bookTree.Book;
+				// TODO: handle book item
 			}
 			return false;
 		}
