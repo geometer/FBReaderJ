@@ -37,8 +37,6 @@ import android.content.Context;
 import android.widget.RemoteViews;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.fbreader.Constants;
-
 import org.geometerplus.fbreader.network.BookReference;
 
 
@@ -63,25 +61,24 @@ public class BookDownloaderService extends Service {
 		}
 		intent.setData(null);
 
-		String host = uri.getHost();
-		if (host.equals("www.feedbooks.com")) {
-			host = "feedbooks.com";
-		}
-		String dir = Constants.BOOKS_DIRECTORY + "/" + host;
-		final List<String> path = uri.getPathSegments();
-		for (int i = 0; i < path.size() - 1; ++i) {
-			dir += File.separator + path.get(i);
-		}
-		final File dirFile = new File(dir);
-		dirFile.mkdirs();
-		if (!dirFile.isDirectory()) {
-			// TODO: error message
+		String fileName = BookReference.makeBookFileName(uri.toString(), BookReference.Format.NONE, BookReference.Type.UNKNOWN);
+		if (fileName == null) {
 			stopSelf(myStartIds.poll().intValue());
 			return;
 		}
 
-		String fileName = path.get(path.size() - 1).toLowerCase();
-		final File fileFile = new File(dirFile, fileName);
+		int index = fileName.lastIndexOf(File.separator);
+		if (index != -1) {
+			final String dir = fileName.substring(0, index);
+			final File dirFile = new File(dir);
+			if (!dirFile.mkdirs() || !dirFile.isDirectory()) {
+				// TODO: error message
+				stopSelf(myStartIds.poll().intValue());
+				return;
+			}
+		}
+
+		final File fileFile = new File(fileName);
 		if (fileFile.exists()) {
 			if (!fileFile.isFile()) {
 				// TODO: error message

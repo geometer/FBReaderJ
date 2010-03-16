@@ -58,6 +58,8 @@ public class BookReference {
 		return URL;
 	}
 
+	private static final String TOESCAPE = "<>:\"|?*\\";
+
 	public static String makeBookFileName(String url, int format, int type) {
 		URI uri;
 		try {
@@ -83,7 +85,7 @@ public class BookReference {
 		int nameIndex = index;
 		while (index < path.length()) {
 			char ch = path.charAt(index);
-			if (ch == '<' || ch == '>' || ch == ':' || ch == '"' || ch == '|' || ch == '?' || ch == '*' || ch == '\\') {
+			if (TOESCAPE.indexOf(ch) != -1) {
 				path.setCharAt(index, '_');
 			}
 			if (ch == '/') {
@@ -111,10 +113,12 @@ public class BookReference {
 		}
 
 		if (ext == null) {
-			int j = path.lastIndexOf(".");
-			if (j > nameIndex) {
+			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`
+			if (j != -1) {
 				ext = path.substring(j);
 				path.delete(j, path.length());
+			} else {
+				return null;
 			}
 		} else if (path.length() > ext.length() && path.substring(path.length() - ext.length()).equals(ext)) {
 			path.delete(path.length() - ext.length(), path.length());
@@ -136,7 +140,7 @@ public class BookReference {
 					path.append("_").append(param);
 					while (k < path.length()) {
 						char ch = path.charAt(k);
-						if (ch == '<' || ch == '>' || ch == ':' || ch == '"' || ch == '|' || ch == '?' || ch == '*' || ch == '\\' || ch == '/') {
+						if (TOESCAPE.indexOf(ch) != -1 || ch == '/') {
 							path.setCharAt(k, '_');
 						}
 						++k;
