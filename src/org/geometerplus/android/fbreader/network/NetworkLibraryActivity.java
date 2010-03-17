@@ -101,21 +101,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 			final ZLResource resource = ZLResource.resource("networkView");
 
-			if (tree instanceof NetworkCatalogTree) {
-				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+			if (tree instanceof NetworkCatalogRootTree) {
+				//NetworkCatalogRootTree catalogTree = (NetworkCatalogRootTree) tree;
 				menu.setHeaderTitle(tree.getName());
-				if (tree instanceof NetworkCatalogRootTree) {
-					if (catalogTree.hasChildren() && isOpen(catalogTree)) {
-						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("closeCatalog").getValue());
-					} else {
-						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("openCatalog").getValue());
-					}
+				if (tree.hasChildren() && isOpen(tree)) {
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("closeCatalog").getValue());
 				} else {
-					if (catalogTree.hasChildren() && isOpen(catalogTree)) {
-						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("collapseTree").getValue());
-					} else {
-						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("expandTree").getValue());
-					}
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("openCatalog").getValue());
+				}
+			} else if (tree instanceof NetworkCatalogTree) {
+				//NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+				menu.setHeaderTitle(tree.getName());
+				if (tree.hasChildren() && isOpen(tree)) {
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("collapseTree").getValue());
+				} else {
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("expandTree").getValue());
 				}
 			} else if (tree instanceof NetworkBookTree) {
 				NetworkBookTree bookTree = (NetworkBookTree) tree;
