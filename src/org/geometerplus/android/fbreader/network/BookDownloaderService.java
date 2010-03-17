@@ -42,7 +42,7 @@ import org.geometerplus.fbreader.network.BookReference;
 
 public class BookDownloaderService extends Service {
 
-	private LinkedList<Integer> myStartIds = new LinkedList<Integer>();
+	private LinkedList<Integer> myStartIds = new LinkedList<Integer>(); // TODO: replace with counter
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -149,7 +149,7 @@ public class BookDownloaderService extends Service {
 	}
 
 	private void startFileDownload(final String uriString, final File file) {
-		final int notificationId = file.getPath().hashCode();
+		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
 		final Notification progressNotification = createDownloadProgressNotification(file);
 
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
