@@ -29,11 +29,11 @@ public class BookReference {
 	public interface Type {
 		int UNKNOWN = 0; // Unknown reference type
 		int DOWNLOAD_FULL = 1; // reference for download full version of the book
-		int DOWNLOAD_FULL_CONDITIONAL = 2; // reference for download full version of the book, useful only when
-		int DOWNLOAD_DEMO = 3;
-		int DOWNLOAD_FULL_OR_DEMO = 4;
-		int BUY = 5;
-		int BUY_IN_BROWSER = 6;
+		int DOWNLOAD_FULL_CONDITIONAL = 2; // reference for download full version of the book, useful only when book is bought
+		int DOWNLOAD_DEMO = 3; // reference for downloading demo version of the book
+		int DOWNLOAD_FULL_OR_DEMO = 4; // reference for downloading unknown version of the book
+		int BUY = 5; // reference for buying the book (useful only when authentication is supported)
+		int BUY_IN_BROWSER = 6; // reference to the site page, when it is possible to buy the book
 	}
 
 	public interface Format {
