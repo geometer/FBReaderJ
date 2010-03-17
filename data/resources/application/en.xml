@@ -3,38 +3,43 @@
 	<node name="library">
 		<node name="unknownAuthor" value="Unknown author"/>
 		<node name="booksWithNoTags" value="Books with no tags"/>
-  </node>
-  <node name="libraryView">
-    <node name="byAuthor" value="By author"/>
-    <node name="byTag" value="By tag"/>
-    <node name="recent" value="Recent"/>
-    <node name="searchResults" value="Found"/>
-    <node name="menu">
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="By author"/>
+		<node name="byTag" value="By tag"/>
+		<node name="recent" value="Recent"/>
+		<node name="searchResults" value="Found"/>
+		<node name="menu">
 			<node name="localSearch" value="Local search"/>
 			<node name="networkSearch" value="Network search"/>
-    </node>
-    <node name="openBook" value="Open book"/>
-    <node name="deleteBook" value="Delete book"/>
-  </node>
-  <node name="networkView" />
-  <node name="tocView">
-    <node name="expandTree" value="Expand tree"/>
-    <node name="collapseTree" value="Collapse tree"/>
-    <node name="readText" value="Read book text"/>
-  </node>
-  <node name="bookmarksView">
-    <node name="thisBook" value="This book"/>
-    <node name="allBooks" value="All books"/>
-    <node name="searchResults" value="Found"/>
-    <node name="new" value="New bookmark"/>
-    <node name="open" value="Open"/>
-    <node name="edit" value="Edit bookmark"/>
-    <node name="delete" value="Delete bookmark"/>
-    <node name="menu">
+		</node>
+		<node name="openBook" value="Open book"/>
+		<node name="deleteBook" value="Delete book"/>
+	</node>
+	<node name="networkView">
+		<node name="openCatalog" value="Open catalog"/>
+		<node name="closeCatalog" value="Close catalog"/>
+		<node name="expandTree" value="Expand"/>
+		<node name="collapseTree" value="Collapse"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Expand tree"/>
+		<node name="collapseTree" value="Collapse tree"/>
+		<node name="readText" value="Read book text"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="This book"/>
+		<node name="allBooks" value="All books"/>
+		<node name="searchResults" value="Found"/>
+		<node name="new" value="New bookmark"/>
+		<node name="open" value="Open"/>
+		<node name="edit" value="Edit bookmark"/>
+		<node name="delete" value="Delete bookmark"/>
+		<node name="menu">
 			<node name="search" value="Search"/>
-    </node>
-  </node>
-  <node name="menu">
+		</node>
+	</node>
+	<node name="menu">
 		<node name="preferences-old" value="Settings (more)"/>
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>

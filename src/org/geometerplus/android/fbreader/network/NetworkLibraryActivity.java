@@ -88,9 +88,9 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 		@Override
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-			/*final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			final LibraryTree tree = (LibraryTree)getItem(position);
-			if (tree instanceof BookTree) {
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			final NetworkTree tree = (NetworkTree) getItem(position);
+			/*if (tree instanceof BookTree) {
 				menu.setHeaderTitle(tree.getName());
 				final ZLResource resource = ZLResource.resource("libraryView");
 				menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
@@ -98,6 +98,31 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 				}
 			}*/
+
+			final ZLResource resource = ZLResource.resource("networkView");
+
+			if (tree instanceof NetworkCatalogTree) {
+				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+				menu.setHeaderTitle(tree.getName());
+				if (tree instanceof NetworkCatalogRootTree) {
+					if (catalogTree.hasChildren() && isOpen(catalogTree)) {
+						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("closeCatalog").getValue());
+					} else {
+						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("openCatalog").getValue());
+					}
+				} else {
+					if (catalogTree.hasChildren() && isOpen(catalogTree)) {
+						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("collapseTree").getValue());
+					} else {
+						menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("expandTree").getValue());
+					}
+				}
+			} else if (tree instanceof NetworkBookTree) {
+				NetworkBookTree bookTree = (NetworkBookTree) tree;
+				NetworkBookItem book = bookTree.Book;
+				// TODO: handle book item
+				//menu.setHeaderTitle(tree.getName());
+			}
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -179,11 +204,25 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	}
 
 
+	private static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final LibraryAdapter adapter = (LibraryAdapter) getListView().getAdapter();
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		final NetworkTree tree = (NetworkTree) adapter.getItem(position);
+		switch (item.getItemId()) {
+			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
+				adapter.runTreeItem(tree);
+				return true;
+		}
+		return super.onContextItemSelected(item);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	public boolean onMenuItemClick(MenuItem item) {
