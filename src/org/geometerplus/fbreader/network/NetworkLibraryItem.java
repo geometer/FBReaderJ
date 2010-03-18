@@ -24,17 +24,11 @@ import java.util.*;
 
 public abstract class NetworkLibraryItem {
 
-	public interface URLType {
-		int URL_NONE = 0;
-		int URL_CATALOG = 1;
-		int URL_BOOK_EPUB = 2;
-		int URL_BOOK_MOBIPOCKET = 3;
-		int URL_BOOK_FB2_ZIP = 4;
-		int URL_BOOK_PDF = 5;
-		int URL_BOOK_DEMO_FB2_ZIP = 6;
-		int URL_HTML_PAGE = 7;
-		int URL_COVER = 8;
-	}
+	// URL type values:
+	public static final int URL_NONE = 0;
+	public static final int URL_CATALOG = 1;
+	public static final int URL_HTML_PAGE = 2;
+	public static final int URL_COVER = 3;
 
 
 	public final NetworkLink Link;

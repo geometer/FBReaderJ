@@ -46,7 +46,7 @@ public class NetworkTreeFactory {
 		NetworkSeriesTree seriesTree = null;
 
 		boolean showAuthors = !(parent instanceof NetworkAuthorTree)
-			&& !(parent instanceof NetworkCatalogTree && ((NetworkCatalogTree)parent).Item.catalogType() == NetworkCatalogItem.CatalogType.BY_AUTHORS);
+			&& !(parent instanceof NetworkCatalogTree && ((NetworkCatalogTree)parent).Item.CatalogType == NetworkCatalogItem.CATALOG_BY_AUTHORS);
 
 		ListIterator<NetworkLibraryItem> it = books.listIterator();
 		while (it.hasNext()) {

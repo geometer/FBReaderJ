@@ -30,6 +30,11 @@ import org.geometerplus.fbreader.network.atom.*;
 
 class OPDSXMLReader extends ZLXMLReaderAdapter {
 
+	public static final String KEY_PRICE = "price";
+	public static final String KEY_CURRENCY = "currency";
+	public static final String KEY_FORMAT = "format";
+
+
 	private final OPDSFeedReader myFeedReader;
 
 	private OPDSFeedMetadata myFeed;
@@ -56,10 +61,18 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private String myAtomNamespaceId;
 	private String myOpenSearchNamespaceId;
 	private String myCalibreNamespaceId;
+	private String myOpdsNamespaceId;
 
 	@Override
 	public boolean processNamespaces() {
 		return true;
+	}
+
+	private static String intern(String str) {
+		if (str == null || str.length() == 0) {
+			return null;
+		}
+		return str.intern();
 	}
 
 	@Override
@@ -68,16 +81,19 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 		myAtomNamespaceId = null;
 		myOpenSearchNamespaceId = null;
 		myCalibreNamespaceId = null;
+		myOpdsNamespaceId = null;
 
 		for (String key: namespaces.keySet()) {
-			if (key.startsWith(XMLNamespace.DublinCoreTermsPrefix)) {
-				myDublinCoreNamespaceId = namespaces.get(key).intern();
-			} else if (key.equals(XMLNamespace.Atom)) {
-				myAtomNamespaceId = namespaces.get(key).intern();
-			} else if (key.startsWith(XMLNamespace.OpenSearchPrefix)) {
-				myOpenSearchNamespaceId = namespaces.get(key).intern();
-			} else if (key.equals(XMLNamespace.CalibreMetadata)) {
-				myCalibreNamespaceId = namespaces.get(key).intern();
+			if (key == XMLNamespace.DublinCoreTerms) {
+				myDublinCoreNamespaceId = intern(namespaces.get(key));
+			} else if (key == XMLNamespace.Atom) {
+				myAtomNamespaceId = intern(namespaces.get(key));
+			} else if (key == XMLNamespace.OpenSearch) {
+				myOpenSearchNamespaceId = intern(namespaces.get(key));
+			} else if (key == XMLNamespace.CalibreMetadata) {
+				myCalibreNamespaceId = intern(namespaces.get(key));
+			} else if (key == XMLNamespace.Opds) {
+				myOpdsNamespaceId = intern(namespaces.get(key));
 			}
 		}
 	}
@@ -108,12 +124,18 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final int FE_DC_LANGUAGE = 22;
 	private static final int FE_DC_ISSUED = 23;
 	private static final int FE_DC_PUBLISHER = 24;
-	private static final int FEA_NAME = 25;
-	private static final int FEA_URI = 26;
-	private static final int FEA_EMAIL = 27;
-	private static final int OPENSEARCH_TOTALRESULTS = 28;
-	private static final int OPENSEARCH_ITEMSPERPAGE = 29;
-	private static final int OPENSEARCH_STARTINDEX = 30;
+	private static final int FE_CALIBRE_SERIES = 25;
+	private static final int FE_CALIBRE_SERIES_INDEX = 26;
+	private static final int FEL_PRICE = 27;
+	private static final int FEL_FORMAT = 28;
+	private static final int FEA_NAME = 29;
+	private static final int FEA_URI = 30;
+	private static final int FEA_EMAIL = 31;
+	private static final int OPENSEARCH_TOTALRESULTS = 32;
+	private static final int OPENSEARCH_ITEMSPERPAGE = 33;
+	private static final int OPENSEARCH_STARTINDEX = 34;
+	private static final int FEC_HACK_SPAN = 35;
+
 
 	private static final String TAG_FEED = "feed";
 	private static final String TAG_ENTRY = "entry";
@@ -130,11 +152,18 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final String TAG_SUBTITLE = "subtitle";
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_UPDATED = "updated";
-	private static final String TAG_META = "meta";
+	private static final String TAG_PRICE = "price";
+//	private static final String TAG_META = "meta";
+
+	private static final String TAG_HACK_SPAN = "span";
 
 	private static final String DC_TAG_LANGUAGE = "language";
 	private static final String DC_TAG_ISSUED = "issued";
 	private static final String DC_TAG_PUBLISHER = "publisher";
+	private static final String DC_TAG_FORMAT = "format";
+
+	private static final String CALIBRE_TAG_SERIES = "series";
+	private static final String CALIBRE_TAG_SERIES_INDEX = "series_index";
 
 	private static final String OPENSEARCH_TAG_TOTALRESULTS = "totalResults";
 	private static final String OPENSEARCH_TAG_ITEMSPERPAGE = "itemsPerPage";
@@ -148,14 +177,17 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
-		String tagPrefix = null;
 		final int index = tag.indexOf(':');
-		if (index >= 0) {
+		final String tagPrefix;
+		if (index != -1) {
 			tagPrefix = tag.substring(0, index).intern();
 			tag = tag.substring(index + 1).intern();
 		} else {
+			tagPrefix = null;
 			tag = tag.intern();
 		}
+
+		boolean preserveBuffer = false;
 
 		switch (myState) {
 			case START:
@@ -248,19 +280,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myUpdated = new ATOMUpdated();
 						myUpdated.readAttributes(attributes);
 						myState = FE_UPDATED;
-					} else if (tag == TAG_META) {
-						String name = attributes.getValue("name");
-						String value = attributes.getValue("value");
-						if (name != null && value != null) {
-							if (name.equals(myCalibreNamespaceId + ":series")) {
-								myEntry.SeriesTitle = value;
-							} else if (name.equals(myCalibreNamespaceId + ":series_index")) {
-								try {
-									myEntry.SeriesIndex = Integer.parseInt(value);
-								} catch (NumberFormatException ex) {
-								}
-							}
-						}
 					}
 				} else if (tagPrefix == myDublinCoreNamespaceId) {
 					if (tag == DC_TAG_LANGUAGE) {
@@ -272,6 +291,12 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} else if (tag == DC_TAG_PUBLISHER) {
 						myState = FE_DC_PUBLISHER;
 					} 
+				} else if (tagPrefix == myCalibreNamespaceId) {
+					if (tag == CALIBRE_TAG_SERIES) {
+						myState = FE_CALIBRE_SERIES;
+					} else if (tag == CALIBRE_TAG_SERIES_INDEX) {
+						myState = FE_CALIBRE_SERIES_INDEX;
+					}
 				}
 				break;
 			case F_AUTHOR:
@@ -296,22 +321,45 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} 
 				}
 				break;
+			case FE_TITLE:
+				// TODO: remove this temporary code
+				// DON'T clear myBuffer
+				preserveBuffer = true;
+				break;
+			case FE_LINK:
+				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
+					// FIXME: HACK: price handling must be implemented not through attributes!!!
+					myLink.addAttribute(KEY_CURRENCY, attributes.getValue("currencycode"));
+					myState = FEL_PRICE;
+				} if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
+					myState = FEL_FORMAT;
+				}
+				break;
+			case FE_CONTENT:
+				// FIXME: HACK: html handling must be implemeted neatly
+				if (tag == TAG_HACK_SPAN || attributes.getValue("class") == "price") {
+					myState = FEC_HACK_SPAN;
+				}
+				break;
 			default:
 				break;
 		}
 
-		myBuffer.delete(0, myBuffer.length());
+		if (!preserveBuffer) {
+			myBuffer.delete(0, myBuffer.length());
+		}
 		return false;
 	}
 
 	@Override
 	public boolean endElementHandler(String tag) {
-		String tagPrefix = null;
 		final int index = tag.indexOf(':');
+		final String tagPrefix;
 		if (index >= 0) {
 			tagPrefix = tag.substring(0, index).intern();
 			tag = tag.substring(index + 1).intern();
 		} else {
+			tagPrefix = null;
 			tag = tag.intern();
 		}
 
@@ -437,6 +485,22 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					myState = FE_AUTHOR;
 				}
 				break;
+			case FEL_PRICE:
+				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
+					if (bufferContent != null) {
+						myLink.addAttribute(KEY_PRICE, bufferContent.intern());
+					}
+					myState = FE_LINK;
+				}
+				break;
+			case FEL_FORMAT:
+				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
+					if (bufferContent != null) {
+						myLink.addAttribute(KEY_FORMAT, bufferContent.intern());
+					}
+					myState = FE_LINK;
+				}
+				break;
 			case FE_AUTHOR:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_AUTHOR) {
 					if (myAuthor.Name != null) {
@@ -528,6 +592,13 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					myState = F_ENTRY;
 				}
 				break;
+			case FEC_HACK_SPAN:
+				// FIXME: HACK
+				if (bufferContent != null) {
+					myEntry.addAttribute(KEY_PRICE, bufferContent.intern());
+				}
+				myState = FE_CONTENT;
+				break;
 			case FE_DC_LANGUAGE:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_LANGUAGE) {
 					// FIXME:language can be lost:buffer will be truncated, if there are extension tags inside the <dc:language> tag
@@ -549,6 +620,23 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_PUBLISHER) {
 					// FIXME:publisher can be lost:buffer will be truncated, if there are extension tags inside the <dc:publisher> tag
 					myEntry.DCPublisher = bufferContent;
+					myState = F_ENTRY;
+				}
+				break;
+			case FE_CALIBRE_SERIES:
+				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES) {
+					myEntry.SeriesTitle = bufferContent;
+					myState = F_ENTRY;
+				}
+				break;
+			case FE_CALIBRE_SERIES_INDEX:
+				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES_INDEX) {
+					if (bufferContent != null) {
+						try {
+							myEntry.SeriesIndex = Integer.parseInt(bufferContent);
+						} catch (NumberFormatException ex) {
+						}
+					}
 					myState = F_ENTRY;
 				}
 				break;

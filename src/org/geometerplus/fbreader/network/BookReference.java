@@ -155,8 +155,12 @@ public class BookReference {
 		return path.append(ext).toString();
 	}
 
-	public String localCopyFileName() {
-		String fileName = makeBookFileName(cleanURL(), BookFormat, ReferenceType);
+	public final String makeBookFileName() {
+		return makeBookFileName(cleanURL(), BookFormat, ReferenceType);
+	}
+
+	public final String localCopyFileName() {
+		String fileName = makeBookFileName();
 		if (fileName != null && new File(fileName).exists()) {
 			return fileName;
 		}

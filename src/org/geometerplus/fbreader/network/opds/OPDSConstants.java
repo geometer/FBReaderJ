@@ -23,21 +23,24 @@ package org.geometerplus.fbreader.network.opds;
 interface OPDSConstants {
 
 	// Feed level
-	//String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
+	String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
+
+	// Entry level / catalog types
+	String REL_CATALOG_AUTHOR = "http://data.fbreader.org/catalog/author";
 
 	// Entry level / acquisition links
 	String REL_ACQUISITION = "http://opds-spec.org/acquisition";
 	String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
-	//String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
+	String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
 	//String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
 	//String REL_ACQUISITION_SUBSCRIBE = "http://opds-spec.org/acquisition/subscribe";
+	String REL_ACQUISITION_CONDITIONAL = "http://data.fbreader.org/acquisition/conditional";
+	String REL_ACQUISITION_SAMPLE_OR_FULL = "http://data.fbreader.org/acquisition/sampleOrFull";
 
 	// Entry level / other
 	String REL_COVER = "http://opds-spec.org/cover";
-	String REL_STANZA_COVER = "x-stanza-cover-image";
 	String REL_THUMBNAIL = "http://opds-spec.org/thumbnail";
-	String REL_STANZA_THUMBNAIL = "x-stanza-cover-image-thumbnail";
 
 	// MIME types / application
 	String MIME_APP_FB2ZIP = "application/fb2+zip";
@@ -45,6 +48,9 @@ interface OPDSConstants {
 	String MIME_APP_MOBI = "application/x-mobipocket-ebook";
 	String MIME_APP_PDF = "application/pdf";
 	String MIME_APP_ATOM = "application/atom+xml";
+
+	// a special MIME type for the litres OPDS catalog
+	String MIME_APP_LITRES = "application/litres+xml";
 
 	// MIME types / image
 	String MIME_IMG_PNG = "image/png";

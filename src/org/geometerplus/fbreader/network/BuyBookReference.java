@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
-class BuyBookReference extends BookReference {
+public class BuyBookReference extends BookReference {
 
 	public final String Price;
 

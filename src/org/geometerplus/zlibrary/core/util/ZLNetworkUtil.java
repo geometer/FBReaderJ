@@ -44,4 +44,59 @@ public class ZLNetworkUtil {
 		}
 	}
 
+	private static final char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+	public static String htmlEncode(String stringToEncode) {
+		if (stringToEncode == null) {
+			return null;
+		}
+		StringBuilder encodedString = new StringBuilder();
+		for (int i = 0; i < stringToEncode.length(); ++i) {
+			final char ch = stringToEncode.charAt(i);
+			if (Character.isLetter(ch) ||
+					(ch == '.') ||
+					(ch == '~') ||
+					(ch == '-') ||
+					(ch == '_')) {
+				encodedString.append(ch);
+			} else {
+				try {
+					byte[] bytes = String.valueOf(ch).getBytes("UTF-8");
+					for (byte b: bytes) {
+						encodedString.append('%').append(hexDigits[b / 16]).append(hexDigits[b % 16]);
+					}
+				} catch (java.io.UnsupportedEncodingException ex) {
+				}
+			}
+		}
+		return encodedString.toString();
+	}
+
+	public static String appendParameter(String url, String name, String value) {
+		if (name == null || value == null) {
+			return url;
+		}
+		value = value.trim();
+		if (value.length() == 0) {
+			return url;
+		}
+		value = htmlEncode(value);
+		int index = url.indexOf('?', url.lastIndexOf('/') + 1);
+		char delimiter = (index == -1) ? '?' : '&';
+		while (index != -1) {
+			final int start = index + 1;
+			final int eqIndex = url.indexOf('=', start);
+			index = url.indexOf('&', start);
+			if (eqIndex != -1 && url.substring(start, eqIndex).equals(name)) {
+				final int end = (index != -1 ? index : url.length());
+				if (url.substring(eqIndex + 1, end).equals(value)) {
+					return url;
+				} else {
+					return new StringBuilder(url).replace(eqIndex + 1, end, value).toString();
+				}
+			}
+		}
+		return new StringBuilder(url).append(delimiter).append(name).append('=').append(value).toString();
+	}
+
 }

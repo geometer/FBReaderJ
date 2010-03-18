@@ -20,6 +20,9 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.*;
+import java.io.File;
+
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
 public class NetworkBookItem extends NetworkLibraryItem {
@@ -40,7 +43,7 @@ public class NetworkBookItem extends NetworkLibraryItem {
 		}
 
 		public int compareTo(AuthorData data) {
-			int key = SortKey.compareTo(data.SortKey);
+			final int key = SortKey.compareTo(data.SortKey);
 			if (key != 0) {
 				return key;
 			}
@@ -52,7 +55,7 @@ public class NetworkBookItem extends NetworkLibraryItem {
 			if (o == null || !(o instanceof AuthorData)) {
 				return false;
 			}
-			AuthorData data = (AuthorData) o;
+			final AuthorData data = (AuthorData) o;
 			return SortKey == data.SortKey && DisplayName == data.DisplayName;
 		}
 
@@ -62,18 +65,16 @@ public class NetworkBookItem extends NetworkLibraryItem {
 		}
 	}
 
-	public int Index;
-
+	public /*final*/ int Index;
 	public final String Id;
 	public final String Language;
 	public final String Date;
-	// number with curency code (see http://en.wikipedia.org/wiki/List_of_circulating_currencies for example)
-	public final String Price;
 	public final List<AuthorData> Authors;
 	public final List<String> Tags;
 	public final String SeriesTitle;
 	public final int IndexInSeries;
 
+	private final LinkedList<BookReference> myReferences;
 
 	/**
 	 * Creates new NetworkLibraryItem instance.
@@ -85,27 +86,106 @@ public class NetworkBookItem extends NetworkLibraryItem {
 	 * @param summary       description of this book. Can be <code>null</code>.
 	 * @param langage       string specifies language of this book. Can be <code>null</code>.
 	 * @param date          string specifies release date of this book. Can be <code>null</code>.
-	 * @param price         string specifies price of this book. Can be <code>null</code>.
 	 * @param authors       list of book authors. Should contain at least one author.
 	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
 	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
 	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
 	 * @param urlByType     map contains URLs and their types. Must be not <code>null</code>.
+	 * @param references    list of references related to this book. Must be not <code>null</code>.
 	 */
-	public NetworkBookItem(NetworkLink link, String id, int index, 
-		String title, String summary, String language, String date, String price,
+	public NetworkBookItem(NetworkLink link, String id, int index,
+		String title, String summary, String language, String date,
 		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,
-		Map<Integer, String> urlByType) {
+		Map<Integer, String> urlByType,
+		List<BookReference> references) {
 		super(link, title, summary, urlByType);
 		Index = index;
 		Id = id;
 		Language = language;
 		Date = date;
-		Price = price;
 		Authors = new LinkedList<AuthorData>(authors);
 		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
+		myReferences = new LinkedList(references);
+	}
+
+	public BookReference reference(int type) {
+		BookReference reference = null;
+		for (BookReference ref: myReferences) {
+			if (ref.ReferenceType == type &&
+					(reference == null || ref.BookFormat > reference.BookFormat)) {
+				reference = ref;
+			}
+		}
+
+		if (reference == null && type == BookReference.Type.DOWNLOAD_FULL) {
+			reference = this.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL);
+			if (reference != null) {
+				NetworkAuthenticationManager authManager = Link.authenticationManager();
+				if (authManager == null || authManager.needPurchase(this)) {
+					return null;
+				}
+				reference = authManager.downloadReference(this);
+			}
+		}
+
+		if (reference == null &&
+				type == BookReference.Type.DOWNLOAD_FULL &&
+				this.reference(BookReference.Type.BUY) == null &&
+				this.reference(BookReference.Type.BUY_IN_BROWSER) == null) {
+			reference = this.reference(BookReference.Type.DOWNLOAD_FULL_OR_DEMO);
+		}
+
+		if (reference == null &&
+				type == BookReference.Type.DOWNLOAD_DEMO &&
+				(this.reference(BookReference.Type.BUY) != null ||
+				 this.reference(BookReference.Type.BUY_IN_BROWSER) != null)) {
+			reference = this.reference(BookReference.Type.DOWNLOAD_FULL_OR_DEMO);
+		}
+
+		return reference;
+	}
+
+	public String localCopyFileName() {
+		final boolean hasBuyReference =
+			this.reference(BookReference.Type.BUY) != null ||
+			this.reference(BookReference.Type.BUY_IN_BROWSER) != null;
+		BookReference reference = null;
+		String fileName = null;
+		for (BookReference ref: myReferences) {
+			final int type = ref.ReferenceType;
+			if ((type == BookReference.Type.DOWNLOAD_FULL ||
+					type == BookReference.Type.DOWNLOAD_FULL_CONDITIONAL ||
+					(!hasBuyReference && type == BookReference.Type.DOWNLOAD_FULL_OR_DEMO)) &&
+					(reference == null || ref.BookFormat > reference.BookFormat)) {
+				String name = ref.localCopyFileName();
+				if (name != null) {
+					reference = ref;
+					fileName = name;
+				}
+			}
+		}
+		return fileName;
+	}
+
+	public void removeLocalFiles() {
+		final boolean hasBuyReference =
+			this.reference(BookReference.Type.BUY) != null ||
+			this.reference(BookReference.Type.BUY_IN_BROWSER) != null;
+		for (BookReference ref: myReferences) {
+			final int type = ref.ReferenceType;
+			if (type == BookReference.Type.DOWNLOAD_FULL ||
+					type == BookReference.Type.DOWNLOAD_FULL_CONDITIONAL ||
+					(!hasBuyReference && type == BookReference.Type.DOWNLOAD_FULL_OR_DEMO)) {
+				String fileName = ref.localCopyFileName();
+				if (fileName != null) {
+					// TODO: remove a book from the library
+					// TODO: remove a record from the database
+					new File(fileName).delete();
+				}
+			}
+		}
 	}
 
 }

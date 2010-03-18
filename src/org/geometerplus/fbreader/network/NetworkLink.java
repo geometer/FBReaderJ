@@ -23,20 +23,23 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+
 
 abstract public class NetworkLink {
 
 	public static final String URL_MAIN = "main";
-	/*public static final String URL_SEARCH = "search";
+	public static final String URL_SEARCH = "search";
 	public static final String URL_SIGN_IN = "signIn";
 	public static final String URL_SIGN_OUT = "signOut";
 	public static final String URL_SIGN_UP = "signUp";
 	public static final String URL_REFILL_ACCOUNT = "refillAccount";
-	public static final String URL_RECOVER_PASSWORD = "recoverPassword";*/
+	public static final String URL_RECOVER_PASSWORD = "recoverPassword";
 
 	public final String SiteName;
 	public final String Title;
 	public final String Summary;
+	public final String Icon;
 	public final ZLBooleanOption OnOption;
 	public final TreeMap<String, String> Links;
 
@@ -47,16 +50,21 @@ abstract public class NetworkLink {
 	 * @param siteName   name of the corresponding website. Must be not <code>null</code>.
 	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
+	 * @param icon       string contains link's icon data/url. Can be <code>null</code>.
 	 * @param links      map contains URLs with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
 	 */
-	public NetworkLink(String siteName, String title, String summary, Map<String, String> links) {
+	public NetworkLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
 		SiteName = siteName;
 		Title = title;
 		Summary = summary;
+		Icon = icon;
 		OnOption = new ZLBooleanOption(SiteName, "on", true);
 		Links = new TreeMap(links);
 	}
 
-	abstract public NetworkLibraryItem libraryItem();
+	public abstract NetworkLibraryItem libraryItem();
+	public abstract NetworkAuthenticationManager authenticationManager();
+
+	public abstract String rewriteUrl(String url, boolean isUrlExternal);
 
 }

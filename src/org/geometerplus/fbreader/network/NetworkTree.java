@@ -19,10 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.*;
-
-//import org.geometerplus.zlibrary.core.tree.ZLTree;
-
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
@@ -38,5 +34,4 @@ public abstract class NetworkTree extends FBTree {
 	protected NetworkTree(NetworkTree parent, int position) {
 		super(parent, position);
 	}
-
 }

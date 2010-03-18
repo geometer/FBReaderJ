@@ -30,34 +30,44 @@ import org.geometerplus.fbreader.network.atom.*;
 class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private final String myBaseURL;
-	private final HashMap<String, Integer> myUrlConditions;
 	private final NetworkOperationData myData;
+
 	private int myIndex;
 	private int myOpenSearchStartIndex;
 
 
-	NetworkOPDSFeedReader(String baseURL, NetworkOperationData result, Map<String, Integer> conditions) {
+	/**
+	 * Creates new OPDSFeedReader instance that can be used to get NetworkLibraryItem objects from OPDS feeds.
+	 *
+	 * @param baseURL    string that contains URL of the OPDS feed, that will be read using this instance of the reader
+	 * @param result     network results buffer. Must be created using OPDSLink corresponding to the OPDS feed, 
+	 *                   that will be read using this instance of the reader.
+	 */
+	NetworkOPDSFeedReader(String baseURL, NetworkOperationData result) {
 		myBaseURL = baseURL;
 		myData = result;
-		myUrlConditions = new HashMap<String, Integer>(conditions);
+		if (!(result.Link instanceof OPDSLink)) {
+			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSLink class.");
+		}
 	}
 
 	public void processFeedStart() {
 		++myData.ResumeCount;
 	}
 
-	private static String intern(String value) {
-		if (value == null) {
+	private static String filter(String value) {
+		if (value == null || value.length() == 0) {
 			return null;
 		}
-		return value.intern();
+		return value;
 	}
 
 	public void processFeedMetadata(OPDSFeedMetadata feed) {
+		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
 			String href = link.getHref();
-			String rel = intern(link.getRel());
-			String type = intern(link.getType());
+			String type = link.getType();
+			String rel = opdsLink.relation(filter(link.getRel()), type);
 			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
 				myData.ResumeURI = href;
 			}
@@ -65,21 +75,63 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		myOpenSearchStartIndex = feed.OpensearchStartIndex - 1;
 	}
 
+	public void processFeedEnd() {
+		if (myOpenSearchStartIndex > 0) {
+			for (NetworkLibraryItem item: myData.Items) {
+				if (!(item instanceof NetworkBookItem)) {
+					continue;
+				}
+				NetworkBookItem book = (NetworkBookItem) item;
+				book.Index += myOpenSearchStartIndex;
+			}
+		}
+	}
+
+
+	// returns BookReference.Format value for specified String. String MUST BE interned.
+	private static int formatByMimeType(String mimeType) {
+		if (mimeType == OPDSConstants.MIME_APP_FB2ZIP) {
+			return BookReference.Format.FB2_ZIP;
+		} else if (mimeType == OPDSConstants.MIME_APP_EPUB) {
+			return BookReference.Format.EPUB;
+		} else if (mimeType == OPDSConstants.MIME_APP_MOBI) {
+			return BookReference.Format.MOBIPOCKET;
+		}
+		return BookReference.Format.NONE;
+	}
+
+	// returns BookReference.Type value for specified String. String MUST BE interned.
+	private static int typeByRelation(String rel) {
+		if (rel == null || rel == OPDSConstants.REL_ACQUISITION) {
+			return BookReference.Type.DOWNLOAD_FULL;
+		} else if (rel == OPDSConstants.REL_ACQUISITION_SAMPLE) {
+			return BookReference.Type.DOWNLOAD_DEMO;
+		} else if (rel == OPDSConstants.REL_ACQUISITION_CONDITIONAL) {
+			return BookReference.Type.DOWNLOAD_FULL_CONDITIONAL;
+		} else if (rel == OPDSConstants.REL_ACQUISITION_SAMPLE_OR_FULL) {
+			return BookReference.Type.DOWNLOAD_FULL_OR_DEMO;
+		} else if (rel == OPDSConstants.REL_ACQUISITION_BUY) {
+			return BookReference.Type.BUY;
+		} else {
+			return BookReference.Type.UNKNOWN;
+		}
+	}
+
 	public void processFeedEntry(OPDSEntry entry) {
-		Integer entryCondition = myUrlConditions.get(entry.Id.Uri);
-		if (entryCondition != null && entryCondition.intValue() == OPDSLink.URLCondition.URL_CONDITION_NEVER) {
+		final OPDSLink opdsLink = (OPDSLink) myData.Link;
+		if (opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.NEVER) {
 			return;
 		}
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
-			final String rel = intern(link.getRel());
-			final String type = intern(link.getType());
-			if ((rel == OPDSConstants.REL_ACQUISITION ||
-					 rel == OPDSConstants.REL_ACQUISITION_SAMPLE ||
-					 rel == null) &&
-					(type == OPDSConstants.MIME_APP_EPUB ||
-					 type == OPDSConstants.MIME_APP_MOBI ||
-					 type == OPDSConstants.MIME_APP_FB2ZIP)) {
+			final String type = link.getType();
+			final String rel = opdsLink.relation(filter(link.getRel()), type);
+			if (rel == OPDSConstants.REL_ACQUISITION ||
+					rel == OPDSConstants.REL_ACQUISITION_SAMPLE ||
+					rel == OPDSConstants.REL_ACQUISITION_BUY ||
+					rel == OPDSConstants.REL_ACQUISITION_CONDITIONAL ||
+					rel == OPDSConstants.REL_ACQUISITION_SAMPLE_OR_FULL ||
+					(rel == null && formatByMimeType(type) != BookReference.Format.NONE)) {
 				hasBookLink = true;
 				break;
 			}
@@ -96,20 +148,11 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 	}
 
-	public void processFeedEnd() {
-		for (NetworkLibraryItem item: myData.Items) {
-			if (!(item instanceof NetworkBookItem)) {
-				continue;
-			}
-			NetworkBookItem book = (NetworkBookItem) item;
-			book.Index += myOpenSearchStartIndex;
-		}
-	}
-
 	private static final String AuthorPrefix = "author:";
 	private static final String AuthorsPrefix = "authors:";
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
+		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
@@ -117,7 +160,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			date = null;
 		}
 
-		LinkedList<String> tags = new LinkedList<String>();
+		final LinkedList<String> tags = new LinkedList<String>();
 		for (ATOMCategory category: entry.Categories) {
 			String term = category.getTerm();
 			if (term != null) {
@@ -126,36 +169,55 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
+		LinkedList<BookReference> references = new LinkedList<BookReference>();
 		for (ATOMLink link: entry.Links) {
 			final String href = link.getHref();
-			final String rel = intern(link.getRel());
-			final String type = intern(link.getType());
-			if (rel == OPDSConstants.REL_COVER ||
-					rel == OPDSConstants.REL_STANZA_COVER) {
-				if (urlMap.get(NetworkLibraryItem.URLType.URL_COVER) == null &&
+			final String type = link.getType();
+			final String rel = opdsLink.relation(filter(link.getRel()), type);
+			final int referenceType = typeByRelation(rel);
+			if (rel == OPDSConstants.REL_COVER) {
+				if (urlMap.get(NetworkLibraryItem.URL_COVER) == null &&
 						(type == OPDSConstants.MIME_IMG_PNG ||
 						 type == OPDSConstants.MIME_IMG_JPEG)) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_COVER, href);
+					urlMap.put(NetworkLibraryItem.URL_COVER, href);
 				}
-			} else if (rel == OPDSConstants.REL_THUMBNAIL ||
-					rel == OPDSConstants.REL_STANZA_THUMBNAIL) {
+			} else if (rel == OPDSConstants.REL_THUMBNAIL) {
 				if (type == OPDSConstants.MIME_IMG_PNG ||
 						type == OPDSConstants.MIME_IMG_JPEG) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_COVER, href);
+					urlMap.put(NetworkLibraryItem.URL_COVER, href);
 				}
-			} else if (rel == OPDSConstants.REL_ACQUISITION || rel == null) {
-				if (type == OPDSConstants.MIME_APP_FB2ZIP) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_BOOK_FB2_ZIP, href);
-				} else if (type == OPDSConstants.MIME_APP_EPUB) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_BOOK_EPUB, href);
-				} else if (type == OPDSConstants.MIME_APP_MOBI) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_BOOK_MOBIPOCKET, href);
-				} else if (type == OPDSConstants.MIME_APP_PDF) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_BOOK_PDF, href);
+			} else if (referenceType == BookReference.Type.BUY) {
+				// FIXME: HACK: price handling must be implemented not through attributes!!!
+				String price = BuyBookReference.price(
+					link.getAttribute(OPDSXMLReader.KEY_PRICE),
+					link.getAttribute(OPDSXMLReader.KEY_CURRENCY)
+				);
+				if (price == null) {
+					// FIXME: HACK: price handling must be implemented not through attributes!!!
+					price = BuyBookReference.price(
+						entry.getAttribute(OPDSXMLReader.KEY_PRICE),
+						entry.getAttribute(OPDSXMLReader.KEY_CURRENCY)
+					);
 				}
-			} else if (rel == OPDSConstants.REL_ACQUISITION_SAMPLE) {
-				if (type == OPDSConstants.MIME_APP_FB2ZIP) {
-					urlMap.put(NetworkLibraryItem.URLType.URL_BOOK_DEMO_FB2_ZIP, href);
+				if (type == OPDSConstants.MIME_TEXT_HTML) {
+					references.add(new BuyBookReference(
+						href, BookReference.Format.NONE, BookReference.Type.BUY_IN_BROWSER, price
+					));
+				} else {
+					int format = formatByMimeType(filter(link.getAttribute(OPDSXMLReader.KEY_FORMAT)));
+					if (format == BookReference.Format.NONE) {
+						format = formatByMimeType(filter(entry.getAttribute(OPDSXMLReader.KEY_FORMAT)));
+					}
+					if (format != BookReference.Format.NONE) {
+						references.add(new BuyBookReference(
+							href, format, BookReference.Type.BUY, price
+						));
+					}
+				}
+			} else if (referenceType != BookReference.Type.UNKNOWN) {
+				final int format = formatByMimeType(type);
+				if (format != BookReference.Format.NONE) {
+					references.add(new BookReference(href, format, referenceType));
 				}
 			}
 		}
@@ -181,7 +243,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				authorData = new NetworkBookItem.AuthorData(after + ' ' + before, before);
 			} else {
 				name = name.trim();
-				index = name.lastIndexOf(' '); // TODO: how about another spaces???
+				index = name.lastIndexOf(' ');
 				authorData = new NetworkBookItem.AuthorData(name, name.substring(index + 1));
 			}
 			authors.add(authorData);
@@ -208,51 +270,56 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			entry.Summary,
 			entry.DCLanguage,
 			date,
-			null, // price
 			authors,
 			tags,
 			entry.SeriesTitle,
 			entry.SeriesIndex,
-			urlMap
+			urlMap,
+			references
 		);
 	}
 
 	private NetworkLibraryItem readCatalogItem(OPDSEntry entry) {
+		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		String coverURL = null;
 		String url = null;
 		boolean urlIsAlternate = false;
 		String htmlURL = null;
+		boolean litresCatalogue = false;
+		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
 		for (ATOMLink link: entry.Links) {
 			final String href = link.getHref();
-			final String rel = intern(link.getRel());
-			final String type = intern(link.getType());
-			if (rel == OPDSConstants.REL_COVER ||
-					rel == OPDSConstants.REL_STANZA_COVER) {
-				if (coverURL == null &&
-						(type == OPDSConstants.MIME_IMG_PNG ||
-						 type == OPDSConstants.MIME_IMG_JPEG)) {
+			final String type = link.getType();
+			final String rel = opdsLink.relation(filter(link.getRel()), type);
+			if (type == OPDSConstants.MIME_IMG_PNG ||
+					type == OPDSConstants.MIME_IMG_JPEG) {
+				if (rel == OPDSConstants.REL_THUMBNAIL ||
+						(coverURL == null && rel == OPDSConstants.REL_COVER)) {
 					coverURL = href;
 				}
-			} else if (rel == OPDSConstants.REL_THUMBNAIL ||
-					rel == OPDSConstants.REL_STANZA_THUMBNAIL) {
-				if (type == OPDSConstants.MIME_IMG_PNG ||
-						type == OPDSConstants.MIME_IMG_JPEG) {
-					coverURL = href;
-				}
-			} else if (rel == OPDSConstants.REL_ACQUISITION ||
-					rel == ATOMConstants.REL_ALTERNATE ||
-					rel == null) {
-				if (type == OPDSConstants.MIME_APP_ATOM) {
-					if (rel == ATOMConstants.REL_ALTERNATE) {
-						if (url == null) {
-							url = href;
-							urlIsAlternate = true;
-						}
-					} else {
+			} else if (type == OPDSConstants.MIME_APP_ATOM) {
+				if (rel == ATOMConstants.REL_ALTERNATE) {
+					if (url == null) {
 						url = href;
+						urlIsAlternate = true;
 					}
-				} else if (type == OPDSConstants.MIME_TEXT_HTML) {
+				} else {
+					url = href;
+					urlIsAlternate = false;
+					if (rel == OPDSConstants.REL_CATALOG_AUTHOR) {
+						catalogType = NetworkCatalogItem.CATALOG_BY_AUTHORS;
+					}
+				}
+			} else if (type == OPDSConstants.MIME_TEXT_HTML) {
+				if (rel == OPDSConstants.REL_ACQUISITION ||
+						rel == ATOMConstants.REL_ALTERNATE ||
+						rel == null) {
 					htmlURL = href;
+				}
+			} else if (type == OPDSConstants.MIME_APP_LITRES) {
+				if (rel == OPDSConstants.REL_BOOKSHELF) {
+					litresCatalogue = true;
+					url = href;
 				}
 			}
 		}
@@ -265,8 +332,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			htmlURL = null;
 		}
 
-		Integer entryCondition = myUrlConditions.get(entry.Id.Uri);
-		final boolean dependsOnAccount = entryCondition != null && entryCondition.intValue() == OPDSLink.URLCondition.URL_CONDITION_SIGNED_IN;
+		final boolean dependsOnAccount = opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.SIGNED_IN;
 
 		final String annotation;
 		if (entry.Summary == null) {
@@ -277,20 +343,32 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
 		if (coverURL != null) {
-			urlMap.put(NetworkLibraryItem.URLType.URL_COVER, coverURL);
+			urlMap.put(NetworkLibraryItem.URL_COVER, coverURL);
 		}
 		if (url != null) {
-			urlMap.put(NetworkLibraryItem.URLType.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
+			urlMap.put(NetworkLibraryItem.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
 		}
 		if (htmlURL != null) {
-			urlMap.put(NetworkLibraryItem.URLType.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
+			urlMap.put(NetworkLibraryItem.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
 		}
-		return new OPDSCatalogItem(
-			myData.Link,
-			entry.Title,
-			annotation,
-			urlMap,
-			dependsOnAccount ? OPDSCatalogItem.VisibilityType.LOGGED_USERS : OPDSCatalogItem.VisibilityType.ALWAYS
-		);
+		if (litresCatalogue) {
+			/*return new LitResBookshelfItem(
+				opdsLink,
+				entry.Title,
+				annotation,
+				urlMap,
+				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS
+			);*/
+			return null;
+		} else {
+			return new OPDSCatalogItem(
+				opdsLink,
+				entry.Title,
+				annotation,
+				urlMap,
+				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS,
+				catalogType
+			);
+		}
 	}
 }

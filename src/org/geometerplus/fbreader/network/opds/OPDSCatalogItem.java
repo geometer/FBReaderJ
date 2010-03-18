@@ -36,11 +36,15 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		super(link, title, summary, urlByType, visibility);
 	}
 
+	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility, int catalogType) {
+		super(link, title, summary, urlByType, visibility, catalogType);
+	}
+
 	@Override
 	public String loadChildren(List<NetworkLibraryItem> children) {
 		NetworkOperationData data = new NetworkOperationData(Link);
 
-		String urlString = URLByType.get(URLType.URL_CATALOG);
+		String urlString = URLByType.get(URL_CATALOG);
 		if (urlString == null) {
 			return null; // TODO: return error/information message???
 		}
@@ -58,7 +62,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 				if (response == HttpURLConnection.HTTP_OK) {
 					InputStream inStream = httpConnection.getInputStream();
 					try {
-						final NetworkOPDSFeedReader feedReader = new NetworkOPDSFeedReader(urlString, data, ((OPDSLink)Link).getUrlConditions());
+						final NetworkOPDSFeedReader feedReader = new NetworkOPDSFeedReader(urlString, data);
 						final OPDSXMLReader xmlReader = new OPDSXMLReader(feedReader);
 						xmlReader.read(inStream);
 					} finally {

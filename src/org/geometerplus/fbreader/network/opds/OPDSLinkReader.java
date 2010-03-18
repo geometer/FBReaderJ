@@ -36,6 +36,8 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
 	private final HashMap<String, String> myLinks = new HashMap<String, String>();
 
+	private HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
+
 	private String mySearchType;
 	private final HashMap<String, String> mySearchFields = new HashMap<String, String>();
 
@@ -53,7 +55,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 			mySiteName,
 			myTitle,
 			mySummary,
-			//myIcon,
+			myIcon,
 			myLinks
 		);
 
@@ -66,6 +68,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 				mySearchFields["annotation"]
 			);
 		}*/
+		opdsLink.setRelationAliases(myRelationAliases);
 		opdsLink.setUrlConditions(myUrlConditions);
 		opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 
@@ -86,6 +89,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		mySearchFields.clear();
 		myUrlConditions.clear();
 		myUrlRewritingRules.clear();
+		myRelationAliases.clear();
 
 		myState = READ_NOTHING;
 
@@ -102,6 +106,8 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_SUMMARY = "summary";
 	private static final String TAG_ICON = "icon";
+	private static final String TAG_RELATION_ALIASES = "relationAliases";
+	private static final String TAG_ALIAS = "alias";
 	private static final String TAG_SEARCH_DESCRIPTION = "advancedSearch";
 	private static final String TAG_FEEDS = "feeds";
 	private static final String TAG_AUTHENTICATION = "authentication";
@@ -121,6 +127,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private static final int READ_FEEDS = 8;
 	private static final int READ_FEEDS_CONDITION = 9;
 	private static final int READ_URL_REWRITING_RULES = 10;
+	private static final int READ_RELATION_ALIASES = 11;
 
 	private int myState;
 
@@ -180,23 +187,34 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 			String name  = attributes.getValue("name");
 			String value = attributes.getValue("value");
 
-			int ruleApply = URLRewritingRule.RuleApply.ALWAYS;
+			int ruleApply = URLRewritingRule.APPLY_ALWAYS;
 			if (apply != null) {
 				apply = apply.intern();
 				if (apply == "external") {
-					ruleApply = URLRewritingRule.RuleApply.EXTERNAL;
+					ruleApply = URLRewritingRule.APPLY_EXTERNAL;
 				} else if (apply == "internal") {
-					ruleApply = URLRewritingRule.RuleApply.INTERNAL;
+					ruleApply = URLRewritingRule.APPLY_INTERNAL;
 				} else if (apply != "always") {
 					type = null;
 				}
 			}
 
 			if (type != null && name != null && value != null) {
-				type = type.intern();
 				if (type == "addUrlParameter") {
-					myUrlRewritingRules.add(new URLRewritingRule(URLRewritingRule.RuleType.ADD_URL_PARAMETER, ruleApply, name, value));
+					myUrlRewritingRules.add(new URLRewritingRule(URLRewritingRule.ADD_URL_PARAMETER, ruleApply, name, value));
 				}
+			}
+		} else if (TAG_RELATION_ALIASES == tag) {
+			myState = READ_RELATION_ALIASES;
+		} else if (myState == READ_RELATION_ALIASES && TAG_ALIAS == tag) {
+			String alias = attributes.getValue("alias");
+			String name  = attributes.getValue("name");
+			String type  = attributes.getValue("type");
+			if (alias != null && name != null) {
+				if (alias.length() == 0) {
+					alias = null;
+				}
+				myRelationAliases.put(new RelationAlias(alias, type), name);
 			}
 		}
 		return false;
@@ -215,6 +233,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 				case READ_SEARCH_DESCRIPTION:
 				case READ_FEEDS:
 				case READ_URL_REWRITING_RULES:
+				case READ_RELATION_ALIASES:
 					break;
 				case READ_SITENAME:
 					mySiteName = bufferContent;
@@ -238,8 +257,8 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 					myUrlConditions.put(
 						bufferContent,
 						myAttrBuffer.equals("signedIn") ? 
-							OPDSLink.URLCondition.URL_CONDITION_SIGNED_IN : 
-							OPDSLink.URLCondition.URL_CONDITION_NEVER
+							OPDSLink.FeedCondition.SIGNED_IN : 
+							OPDSLink.FeedCondition.NEVER
 					);
 					break;
 			}
@@ -250,6 +269,8 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		} else if (myState == READ_FEEDS_CONDITION) {
 			myState = READ_FEEDS;
 		} else if (myState == READ_URL_REWRITING_RULES && TAG_RULE == tag) {
+			//myState = myState;
+		} else if (myState == READ_RELATION_ALIASES && TAG_ALIAS == tag) {
 			//myState = myState;
 		} else {
 			myState = READ_NOTHING;
@@ -264,6 +285,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 			case READ_SEARCH_DESCRIPTION:
 			case READ_FEEDS:
 			case READ_URL_REWRITING_RULES:
+			case READ_RELATION_ALIASES:
 				break;
 			case READ_SITENAME:
 			case READ_TITLE:

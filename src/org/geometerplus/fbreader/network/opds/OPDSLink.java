@@ -21,25 +21,39 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
 class OPDSLink extends NetworkLink {
 
-	public interface URLCondition {
-		int URL_CONDITION_NEVER = 0;
-		int URL_CONDITION_SIGNED_IN = 1;
+	public interface FeedCondition {
+		int REGULAR = 0;
+		int NEVER = 1;
+		int SIGNED_IN = 2;
 	}
 
-	private TreeMap<String, Integer> myUrlConditions = null;
-	private LinkedList<URLRewritingRule> myUrlRewritingRules = null;
+	private TreeMap<RelationAlias, String> myRelationAliases;
+
+	private TreeMap<String, Integer> myUrlConditions;
+	private LinkedList<URLRewritingRule> myUrlRewritingRules;
 
 
-	OPDSLink(String siteName, String title, String summary, Map<String, String> links) {
-		super(siteName, title, summary, links);
+	OPDSLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
+		super(siteName, title, summary, icon, links);
 	}
 
-	public final void setUrlConditions(Map<String, Integer> conditions) {
+	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
+		if (relationAliases != null && relationAliases.size() > 0) {
+			myRelationAliases = new TreeMap(relationAliases);
+		} else {
+			myRelationAliases = null;
+		}
+	}
+
+	final void setUrlConditions(Map<String, Integer> conditions) {
 		if (conditions != null && conditions.size() > 0) {
 			myUrlConditions = new TreeMap(conditions);
 		} else {
@@ -47,7 +61,7 @@ class OPDSLink extends NetworkLink {
 		}
 	}
 
-	public final void setUrlRewritingRules(List<URLRewritingRule> rules) {
+	final void setUrlRewritingRules(List<URLRewritingRule> rules) {
 		if (rules != null && rules.size() > 0) {
 			myUrlRewritingRules = new LinkedList(rules);
 		} else {
@@ -55,24 +69,65 @@ class OPDSLink extends NetworkLink {
 		}
 	}
 
-	public final Map<String, Integer> getUrlConditions() {
-		if (myUrlConditions == null) {
-			return Collections.emptyMap();
-		}
-		return myUrlConditions;
-	}
-
-	public final List<URLRewritingRule> getUrlRewritingRules() {
-		if (myUrlRewritingRules == null) {
-			return Collections.emptyList();
-		}
-		return myUrlRewritingRules;
-	}
-
+	@Override
 	public NetworkLibraryItem libraryItem() {
 		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
-		//urlMap.put(NetworkLibraryItem.URLType.URL_COVER, Icon);
-		urlMap.put(NetworkLibraryItem.URLType.URL_CATALOG, Links.get(URL_MAIN));
+		urlMap.put(NetworkLibraryItem.URL_COVER, Icon);
+		urlMap.put(NetworkLibraryItem.URL_CATALOG, Links.get(URL_MAIN));
 		return new OPDSCatalogItem(this, Title, Summary, urlMap);
+	}
+
+	@Override
+	public NetworkAuthenticationManager authenticationManager() {
+		return null;
+	}
+
+	@Override
+	public String rewriteUrl(String url, boolean isUrlExternal) {
+		for (URLRewritingRule rule: myUrlRewritingRules) {
+			if (rule.Apply != URLRewritingRule.APPLY_ALWAYS) {
+				if ((rule.Apply == URLRewritingRule.APPLY_EXTERNAL && !isUrlExternal)
+					|| (rule.Apply == URLRewritingRule.APPLY_INTERNAL && isUrlExternal)) {
+					continue;
+				}
+			}
+			switch (rule.Type) {
+			case URLRewritingRule.ADD_URL_PARAMETER:
+				url = ZLNetworkUtil.appendParameter(url, rule.Name, rule.Value);
+				break;
+			}
+		}
+		return url;
+	}
+
+	int getCondition(String url) {
+		if (myUrlConditions == null) {
+			return FeedCondition.REGULAR;
+		}
+		Integer cond = myUrlConditions.get(url);
+		if (cond == null) {
+			return FeedCondition.REGULAR;
+		}
+		return cond.intValue();
+	}
+
+	// rel and type must be either null or interned String objects.
+	String relation(String rel, String type) {
+		if (myRelationAliases == null) {
+			return rel;
+		}
+		RelationAlias alias = new RelationAlias(rel, type);
+		String mapped = myRelationAliases.get(alias);
+		if (mapped != null) {
+			return mapped;
+		}
+		if (type != null) {
+			alias = new RelationAlias(rel, null);
+			mapped = myRelationAliases.get(alias);
+			if (mapped != null) {
+				return mapped;
+			}
+		}
+		return rel;
 	}
 }

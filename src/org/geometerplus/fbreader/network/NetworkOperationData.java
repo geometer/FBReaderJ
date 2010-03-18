@@ -21,7 +21,9 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-
+/**
+ * Mutable class that serves as a buffer stores network operation results.
+ */
 public class NetworkOperationData {
 
 	public final NetworkLink Link;

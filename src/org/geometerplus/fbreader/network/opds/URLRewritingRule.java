@@ -21,15 +21,14 @@ package org.geometerplus.fbreader.network.opds;
 
 class URLRewritingRule {
 
-	public interface RuleType {
-		int ADD_URL_PARAMETER = 0;
-	}
+	// rule types:
+	public static final int ADD_URL_PARAMETER = 0;
 
-	public interface RuleApply {
-		int ALWAYS = 0;
-		int EXTERNAL = 1;
-		int INTERNAL = 2;
-	}
+	// apply values:
+	public static final int APPLY_ALWAYS = 0;
+	public static final int APPLY_EXTERNAL = 1;
+	public static final int APPLY_INTERNAL = 2;
+
 
 	public final int Type;
 	public final int Apply;

@@ -24,21 +24,19 @@ import java.util.*;
 
 public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
+	// catalog types:
+	public static final int CATALOG_OTHER = 0;
+	public static final int CATALOG_BY_AUTHORS = 1;
+
+	// catalog visibility types:
+	public static final int VISIBLE_ALWAYS = 1;
+	public static final int VISIBLE_LOGGED_USER = 2;
+
 	public final int Visibility;
-
-	public interface CatalogType {
-		int OTHER = 0;
-		int BY_AUTHORS = 1;
-	}
-
-	public interface VisibilityType {
-		int NEVER = 0;
-		int ALWAYS = 1;
-		int LOGGED_USERS = 2;
-	}
+	public final int CatalogType;
 
 	/**
-	 * Creates new NetworkCatalogItem instance with visibility set to <code>ALWAYS</code>.
+	 * Creates new NetworkCatalogItem instance with <code>VISIBLE_ALWAYS</code> visibility and <code>CATALOG_OTHER</code> type.
 	 *
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
@@ -46,27 +44,48 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 */
 	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
-		this(link, title, summary, urlByType, VisibilityType.ALWAYS);
+		this(link, title, summary, urlByType, VISIBLE_ALWAYS, CATALOG_OTHER);
 	}
 
 	/**
-	 * Creates new NetworkCatalogItem instance with specified visibility.
+	 * Creates new NetworkCatalogItem instance with specified visibility and <code>CATALOG_OTHER</code> type.
 	 *
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 * @param visibility value defines when this library item will be shown in the network library. 
-	 *                   Can be on of the values listed in <code>VisibilityType</code> interface.
+	 *                   Can be one of the VISIBLE_* values.
 	 */
 	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
+		this(link, title, summary, urlByType, visibility, CATALOG_OTHER);
+	}
+
+	/**
+	 * Creates new NetworkCatalogItem instance with specified visibility and type.
+	 *
+	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
+	 * @param title      title of this library item. Must be not <code>null</code>.
+	 * @param summary    description of this library item. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param visibility value defines when this library item will be shown in the network library. 
+	 *                   Can be one of the VISIBLE_* values.
+	 * @param catalogType value defines type of this catalog. Can be one of the CATALOG_* values.
+	 */
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility, int catalogType) {
 		super(link, title, summary, urlByType);
 		Visibility = visibility;
+		CatalogType = catalogType;
 	}
 
 	public abstract String loadChildren(List<NetworkLibraryItem> children); // returns Error Message
 
-	public int catalogType() {
-		return CatalogType.OTHER;
+	/**
+	 * Method is called each time this item is displayed to the user.
+	 *
+	 * This method is called when UI-element corresponding to this item is shown to the User.
+	 */
+	public void onDisplayItem() {
 	}
+
 }

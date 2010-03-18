@@ -57,4 +57,15 @@ abstract class ATOMCommonAttributes {
 	public final String getBase() {
 		return getAttribute(XML_BASE);
 	}
+
+	// FIXME: HACK: addAttribute is used ONLY to add OPDSPrice to the ATOMLink... Must be killed + SEE NetworkOPDSFeedReader
+	// name and value MUST BE not null AND MUST BE INTERNED String objects
+	public void addAttribute(String name, String value) {
+		if (value != null && value.length() > 0) {
+			if (myAttributes == null) {
+				myAttributes = new ZLStringMap();
+			}
+			myAttributes.put(name, value);
+		}
+	}
 }
