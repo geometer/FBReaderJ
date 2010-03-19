@@ -58,6 +58,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 					break;
 				}
 				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				httpConnection.setConnectTimeout(30000); // FIXME: hardcoded timeout value!!!
 				final int response = httpConnection.getResponseCode();
 				if (response == HttpURLConnection.HTTP_OK) {
 					InputStream inStream = httpConnection.getInputStream();
@@ -78,8 +79,16 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 			}
 		} catch (MalformedURLException ex) {
 			// return error???
+			return null;
+		} catch (SocketTimeoutException ex) {
+			return NetworkErrors.errorMessage("operationTimedOutMessage");
 		} catch (IOException ex) {
-			// return error???
+			try {
+				return NetworkErrors.errorMessage(NetworkErrors.ERROR_SOMETHING_WRONG, new URL(urlString).getHost());
+			} catch (MalformedURLException ex2) {
+				// return error???
+				return null;
+			}
 		}
 		return null;
 	}

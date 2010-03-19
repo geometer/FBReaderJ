@@ -59,7 +59,7 @@ public final class NetworkErrors {
 		if (key == null) {
 			return "null";
 		}
-		return getResource().getResource(key).getValue().replaceFirst("%s", arg);
+		return getResource().getResource(key).getValue().replace("%s", arg);
 	}
 
 }
