@@ -121,8 +121,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
 						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
 					//registerAction(new NetworkBookReadAction(book, false));
+					//registerAction(new NetworkBookDeleteAction(book));
 					if (book.localCopyFileName() != null) {
 						menu.add(0, READ_BOOK_ITEM_ID, 0, resource.getResource("read").getValue());
+						menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("delete").getValue());
 					}
 
 					//registerAction(new NetworkBookDownloadAction(book, false));
@@ -130,8 +132,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 							book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
 						menu.add(0, DOWNLOAD_BOOK_ITEM_ID, 0, resource.getResource("download").getValue());
 					}
-
-					//registerAction(new NetworkBookDeleteAction(book));
 				}
 				if (book.reference(BookReference.Type.DOWNLOAD_DEMO) != null) {
 					//registerAction(new NetworkBookReadAction(book, true));
@@ -227,6 +227,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
 	private static final int DOWNLOAD_BOOK_ITEM_ID = 1;
 	private static final int READ_BOOK_ITEM_ID = 2;
+	private static final int DELETE_BOOK_ITEM_ID = 3;
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -262,10 +263,33 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					}
 				}
 				return true;
+			case DELETE_BOOK_ITEM_ID: {
+					NetworkBookTree bookTree = (NetworkBookTree) tree;
+					NetworkBookItem book = bookTree.Book;
+					tryToDeleteBook(book);
+				}
+				return true;
 		}
 		return super.onContextItemSelected(item);
 	}
 
+	private void tryToDeleteBook(final NetworkBookItem book) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
+		new AlertDialog.Builder(this)
+			.setTitle(book.Title)
+			.setMessage(boxResource.getResource("message").getValue())
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO: remove information about book from Library???
+					book.removeLocalFiles();
+				}
+			})
+			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+			.create().show();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
