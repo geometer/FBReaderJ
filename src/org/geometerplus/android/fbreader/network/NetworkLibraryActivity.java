@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
+import java.io.File;
 
 import android.app.*;
 import android.os.Bundle;
@@ -92,15 +93,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final NetworkTree tree = (NetworkTree) getItem(position);
-			/*if (tree instanceof BookTree) {
-				menu.setHeaderTitle(tree.getName());
-				final ZLResource resource = ZLResource.resource("libraryView");
-				menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
-				if (Library.Instance().canDeleteBook(((BookTree)tree).Book)) {
-					menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
-				}
-			}*/
-
 			final ZLResource resource = ZLResource.resource("networkView");
 
 			if (tree instanceof NetworkCatalogRootTree) {
@@ -129,6 +121,9 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
 						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
 					//registerAction(new NetworkBookReadAction(book, false));
+					if (book.localCopyFileName() != null) {
+						menu.add(0, READ_BOOK_ITEM_ID, 0, resource.getResource("read").getValue());
+					}
 
 					//registerAction(new NetworkBookDownloadAction(book, false));
 					if (book.localCopyFileName() == null &&
@@ -231,6 +226,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
 	private static final int DOWNLOAD_BOOK_ITEM_ID = 1;
+	private static final int READ_BOOK_ITEM_ID = 2;
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -250,6 +246,18 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 							new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), this, BookDownloaderService.class)
 								.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 								.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
+						);
+					}
+				}
+				return true;
+			case READ_BOOK_ITEM_ID: {
+					NetworkBookTree bookTree = (NetworkBookTree) tree;
+					NetworkBookItem book = bookTree.Book;
+					String local = book.localCopyFileName();
+					if (local != null) {
+						startActivity(
+							new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(local)), this, org.geometerplus.android.fbreader.FBReader.class)
+								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP/* | Intent.FLAG_ACTIVITY_NEW_TASK*/)
 						);
 					}
 				}
