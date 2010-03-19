@@ -54,7 +54,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		new LibraryAdapter(getListView(), NetworkLibrary.Instance().getTree());
