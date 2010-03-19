@@ -74,7 +74,6 @@ public class BookReference {
 		if (host.startsWith("www.")) {
 			path.delete(0, 4);
 		}
-		path.append(File.separator);
 		path.insert(0, File.separator);
 		path.insert(0, Constants.BOOKS_DIRECTORY);
 

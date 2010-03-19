@@ -42,7 +42,17 @@ import org.geometerplus.fbreader.network.BookReference;
 
 public class BookDownloaderService extends Service {
 
-	private LinkedList<Integer> myStartIds = new LinkedList<Integer>(); // TODO: replace with counter
+	private volatile int myServiceCounter;
+
+	private void doStart() {
+		++myServiceCounter;
+	}
+
+	private void doStop() {
+		if (--myServiceCounter == 0) {
+			stopSelf();
+		}
+	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -52,18 +62,18 @@ public class BookDownloaderService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		myStartIds.offer(startId);
+		doStart();
 
 		final Uri uri = intent.getData();
 		if (uri == null) {
-			stopSelf(myStartIds.poll().intValue());
+			doStop();
 			return;
 		}
 		intent.setData(null);
 
 		String fileName = BookReference.makeBookFileName(uri.toString(), BookReference.Format.NONE, BookReference.Type.UNKNOWN);
 		if (fileName == null) {
-			stopSelf(myStartIds.poll().intValue());
+			doStop();
 			return;
 		}
 
@@ -71,9 +81,14 @@ public class BookDownloaderService extends Service {
 		if (index != -1) {
 			final String dir = fileName.substring(0, index);
 			final File dirFile = new File(dir);
-			if (!dirFile.mkdirs() || !dirFile.isDirectory()) {
+			if (!dirFile.exists() && !dirFile.mkdirs()) {
 				// TODO: error message
-				stopSelf(myStartIds.poll().intValue());
+				doStop();
+				return;
+			}
+			if (!dirFile.exists() || !dirFile.isDirectory()) {
+				// TODO: error message
+				doStop();
 				return;
 			}
 		}
@@ -82,7 +97,7 @@ public class BookDownloaderService extends Service {
 		if (fileFile.exists()) {
 			if (!fileFile.isFile()) {
 				// TODO: error message
-				stopSelf(myStartIds.poll().intValue());
+				doStop();
 				return;
 			}
 			// TODO: question box: redownload?
@@ -94,7 +109,7 @@ public class BookDownloaderService extends Service {
 				null, null
 			);
 			*/
-			stopSelf(myStartIds.poll().intValue());
+			doStop();
 			startActivity(getFBReaderIntent(fileFile));
 			return;
 		}
@@ -180,7 +195,7 @@ public class BookDownloaderService extends Service {
 					notificationId,
 					createDownloadFinishNotification(file, message.what != 0)
 				);
-				stopSelf(myStartIds.poll().intValue());
+				doStop();
 			}
 		};
 
