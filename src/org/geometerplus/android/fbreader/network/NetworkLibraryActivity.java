@@ -137,9 +137,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					}
 				}
 				if (book.reference(BookReference.Type.BUY) != null) {
-					//registerAction(new NetworkBookBuyDirectlyAction(book));
+					if (book.localCopyFileName() == null &&
+							book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+						BookReference reference = book.reference(BookReference.Type.BUY);
+						String title = resource.getResource("buy").getValue()
+							.replace("%s", ((BuyBookReference) reference).Price);
+						menu.add(0, BUY_DIRECTLY_ITEM_ID, 0, title);
+					}
 				} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
-					//registerAction(new NetworkBookBuyInBrowserAction(book));
+					if (book.localCopyFileName() == null &&
+							book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+						BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
+						String title = resource.getResource("buy").getValue()
+							.replace("%s", ((BuyBookReference) reference).Price);
+						menu.add(0, BUY_IN_BROWSER_ITEM_ID, 0, title);
+					}
 				}
 			}
 		}
@@ -172,10 +184,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				}
 				super.runTreeItem(tree);
 				return true;
-			} else if (tree instanceof NetworkBookTree) {
-				NetworkBookTree bookTree = (NetworkBookTree) tree;
-				NetworkBookItem book = bookTree.Book;
-				// TODO: handle book item
 			}
 			return false;
 		}
@@ -229,6 +237,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int DELETE_BOOK_ITEM_ID = 3;
 	private static final int READ_DEMO_ITEM_ID = 4;
 	private static final int DOWNLOAD_DEMO_ITEM_ID = 5;
+	private static final int BUY_DIRECTLY_ITEM_ID = 6;
+	private static final int BUY_IN_BROWSER_ITEM_ID = 7;
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
@@ -266,9 +276,73 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			case DELETE_BOOK_ITEM_ID:
 				tryToDeleteBook(tree);
 				return true;
+			case BUY_DIRECTLY_ITEM_ID:
+				doBuyDirectly(tree);
+				return true;
+			case BUY_IN_BROWSER_ITEM_ID:
+				doBuyInBrowser(tree);
+				return true;
 		}
 		return super.onContextItemSelected(item);
 	}
+
+	private void doBuyInBrowser(NetworkTree tree) {
+		NetworkBookTree bookTree = (NetworkBookTree) tree;
+		NetworkBookItem book = bookTree.Book;
+		BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
+		if (reference != null) {
+			startActivity(
+				new Intent(Intent.ACTION_VIEW, Uri.parse(reference.URL))
+			);
+		}
+	}
+
+	private void doBuyDirectly(NetworkTree tree) {
+		NetworkBookTree bookTree = (NetworkBookTree) tree;
+		NetworkBookItem book = bookTree.Book;
+		//FBReader &fbreader = FBReader::Instance();
+		/*NetworkAuthenticationManager mgr = book.Link.authenticationManager();
+		if (mgr == null) {
+			return;
+		}
+		if (!NetworkOperationRunnable::tryConnect()) {
+			return;
+		}
+		if (mgr.isAuthorised().Status != ZLBoolean3.B3_TRUE) {
+			return;
+			if (!AuthenticationDialog::run(mgr)) {
+				return;
+			}
+			fbreader.invalidateAccountDependents();
+			fbreader.refreshWindow();
+			if (!mgr.needPurchase(myBook)) {
+				return;
+			}
+		}
+		ZLResourceKey boxKey("purchaseConfirmBox");
+		const std::string message = ZLStringUtil::printf(ZLDialogManager::dialogMessage(boxKey), myBook.Title);
+		const int code = ZLDialogManager::Instance().questionBox(boxKey, message, ZLResourceKey("buy"), ZLResourceKey("buyAndDownload"), ZLDialogManager::CANCEL_BUTTON);
+		if (code == 2) {
+			return;
+		}
+		bool downloadBook = code == 1;
+		if (mgr.needPurchase(myBook)) {
+			PurchaseBookRunnable purchaser(mgr, myBook);
+			purchaser.executeWithUI();
+			if (purchaser.hasErrors()) {
+				purchaser.showErrorMessage();
+				downloadBook = false;
+			}
+		}
+		if (downloadBook) {
+			NetworkBookDownloadAction(myBook, false).run();
+		}
+		if (mgr.isAuthorised().Status == B3_FALSE) {
+			fbreader.invalidateAccountDependents();
+		}
+		fbreader.refreshWindow();*/
+	}
+
 
 	private void doDownloadBook(NetworkTree tree, boolean demo) {
 		NetworkBookTree bookTree = (NetworkBookTree) tree;

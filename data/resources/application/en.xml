@@ -26,6 +26,7 @@
 		<node name="delete" value="Delete local copy"/>
 		<node name="readDemo" value="Read sample"/>
 		<node name="downloadDemo" value="Download sample"/>
+		<node name="buy" value="Buy (%s)"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>

@@ -200,6 +200,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 						entry.getAttribute(OPDSXMLReader.KEY_CURRENCY)
 					);
 				}
+				if (price == null) {
+					price = "";
+				}
 				if (type == OPDSConstants.MIME_TEXT_HTML) {
 					references.add(new BuyBookReference(
 						href, BookReference.Format.NONE, BookReference.Type.BUY_IN_BROWSER, price
