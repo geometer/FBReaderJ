@@ -56,7 +56,7 @@ public class BookDownloader extends Activity {
 			return;
 		}
 		intent.setData(null);
-		startService(new Intent(Intent.ACTION_VIEW, uri, this, org.geometerplus.android.fbreader.network.BookDownloaderService.class));
+		startService(new Intent(Intent.ACTION_VIEW, uri, this, BookDownloaderService.class));
 		finish();
 	}
 }

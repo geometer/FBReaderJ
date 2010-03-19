@@ -21,6 +21,7 @@
 		<node name="closeCatalog" value="Close catalog"/>
 		<node name="expandTree" value="Expand"/>
 		<node name="collapseTree" value="Collapse"/>
+		<node name="download" value="Download"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>

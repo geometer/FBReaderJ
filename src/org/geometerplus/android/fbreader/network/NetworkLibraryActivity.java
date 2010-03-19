@@ -25,6 +25,8 @@ import android.app.*;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+import android.net.Uri;
+import android.content.Intent;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -121,7 +123,30 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				NetworkBookTree bookTree = (NetworkBookTree) tree;
 				NetworkBookItem book = bookTree.Book;
 				// TODO: handle book item
-				//menu.setHeaderTitle(tree.getName());
+
+				menu.setHeaderTitle(tree.getName());
+
+				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
+						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
+					//registerAction(new NetworkBookReadAction(book, false));
+
+					//registerAction(new NetworkBookDownloadAction(book, false));
+					if (book.localCopyFileName() == null &&
+							book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
+						menu.add(0, DOWNLOAD_BOOK_ITEM_ID, 0, resource.getResource("download").getValue());
+					}
+
+					//registerAction(new NetworkBookDeleteAction(book));
+				}
+				if (book.reference(BookReference.Type.DOWNLOAD_DEMO) != null) {
+					//registerAction(new NetworkBookReadAction(book, true));
+					//registerAction(new NetworkBookDownloadAction(book, true, resource()["demo"].value()));
+				}
+				if (book.reference(BookReference.Type.BUY) != null) {
+					//registerAction(new NetworkBookBuyDirectlyAction(book));
+				} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
+					//registerAction(new NetworkBookBuyInBrowserAction(book));
+				}
 			}
 		}
 
@@ -205,6 +230,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 
 	private static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
+	private static final int DOWNLOAD_BOOK_ITEM_ID = 1;
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -214,6 +240,19 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		switch (item.getItemId()) {
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
 				adapter.runTreeItem(tree);
+				return true;
+			case DOWNLOAD_BOOK_ITEM_ID: {
+					NetworkBookTree bookTree = (NetworkBookTree) tree;
+					NetworkBookItem book = bookTree.Book;
+					BookReference ref = book.reference(BookReference.Type.DOWNLOAD_FULL);
+					if (ref != null) {
+						startService(
+							new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), this, BookDownloaderService.class)
+								.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
+								.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
+						);
+					}
+				}
 				return true;
 		}
 		return super.onContextItemSelected(item);

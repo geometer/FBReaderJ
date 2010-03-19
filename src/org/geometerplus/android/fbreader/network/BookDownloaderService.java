@@ -27,6 +27,7 @@ import java.net.*;
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Bundle;
 import android.app.Service;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -41,6 +42,9 @@ import org.geometerplus.fbreader.network.BookReference;
 
 
 public class BookDownloaderService extends Service {
+
+	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
+	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 
 	private volatile int myServiceCounter;
 
@@ -71,7 +75,11 @@ public class BookDownloaderService extends Service {
 		}
 		intent.setData(null);
 
-		String fileName = BookReference.makeBookFileName(uri.toString(), BookReference.Format.NONE, BookReference.Type.UNKNOWN);
+		final String url = uri.toString();
+		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookReference.Format.NONE);
+		final int referenceType = intent.getIntExtra(REFERENCE_TYPE_KEY, BookReference.Type.UNKNOWN);
+
+		String fileName = BookReference.makeBookFileName(url, bookFormat, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;
@@ -113,7 +121,7 @@ public class BookDownloaderService extends Service {
 			startActivity(getFBReaderIntent(fileFile));
 			return;
 		}
-		startFileDownload(uri.toString(), fileFile);
+		startFileDownload(url, fileFile);
 
 		//textView.setText(ZLDialogManager.getWaitMessageText("downloadingFile").replace("%s", myFileName));
 	}
