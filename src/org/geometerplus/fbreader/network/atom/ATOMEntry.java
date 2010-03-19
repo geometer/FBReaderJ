@@ -37,4 +37,42 @@ public class ATOMEntry extends ATOMCommonAttributes {
 	public String Summary; // TODO: implement ATOMTextConstruct
 	public String Title;   // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder("[")
+			.append(super.toString())
+			.append(",\nId=").append(Id)
+			.append(",\nAuthors:[\n");
+
+		boolean first = true;
+		for (ATOMAuthor author: Authors) {
+			if (!first) buf.append(",\n");
+			first = false;
+			buf.append(author.toString());
+		}
+		buf.append("],\nCategories:[\n");
+		first = true;
+		for (ATOMCategory category: Categories) {
+			if (!first) buf.append(",\n");
+			first = false;
+			buf.append(category.toString());
+		}
+		buf.append("],\nLinks:[\n");
+		first = true;
+		for (ATOMLink link: Links) {
+			if (!first) buf.append(",\n");
+			first = false;
+			buf.append(link.toString());
+		}
+		return buf
+			.append("]")
+			.append(",\nPublished=").append(Published)
+			.append(",\nRights=").append(Rights)
+			.append(",\nSummary=").append(Summary)
+			.append(",\nTitle=").append(Title)
+			.append(",\nUpdated=").append(Updated)
+			.append("]")
+			.toString();
+	}
 }

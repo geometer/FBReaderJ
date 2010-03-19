@@ -2,14 +2,14 @@
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
 <catalog type="opds">
 	<site>litres.ru</site>
+	<title>Каталог LitRes</title>
+	<summary>Продажа электронных книг.</summary>
 	<link rel="main" type="application/atom+xml">http://data.fbreader.org/catalogs/litres/index.php</link>
 	<link rel="search" type="application/atom+xml">http://data.fbreader.org/catalogs/litres/search.php?query=%s</link>
 	<link rel="signIn" type="text/html">https://robot.litres.ru/pages/catalit_authorise/?lfrom=51</link>
 	<link rel="signUp" type="text/html">https://robot.litres.ru/pages/catalit_register_user/?lfrom=51</link>
 	<link rel="refillAccount" type="text/html">https://www.litres.ru/pages/put_money_on_account/?lfrom=51</link>
 	<link rel="recoverPassword" type="text/html">http://robot.litres.ru/pages/catalit_recover_pass/?lfrom=51</link>
-	<title>Каталог LitRes (OPDS version)</title>
-	<summary>Продажа электронных книг.</summary>
 	<advancedSearch style="separateWords">
 		<field name="author">author</field>
 		<field name="titleOrSeries">titleOrSeries</field>

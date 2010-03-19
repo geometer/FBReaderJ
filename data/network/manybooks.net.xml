@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
 <catalog type="opds">
 	<site>manybooks.net</site>
-	<link rel="main" type="application/atom+xml">http://manybooks.net/opds/</link>
-	<link rel="search" type="application/atom+xml">http://manybooks.net/opds/search.php?q=%s</link>
 	<title>ManyBooks Catalog</title>
 	<summary>ManyBooks.net: The best ebooks at the best price: free!</summary>
+	<link rel="main" type="application/atom+xml">http://manybooks.net/opds/</link>
+	<link rel="search" type="application/atom+xml">http://manybooks.net/opds/search.php?q=%s</link>
+	<relationAliases>
+		<alias alias="http://opds-spec.org/opds-cover-image-thumbnail" name="http://opds-spec.org/thumbnail" />
+	</relationAliases>
 	<icon>data:image/png;base64,
 iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
 bWFnZVJlYWR5ccllPAAAA+pJREFUeNrsmz1sEzEUxx3UrUh0KiNJ56KGCTaCwggFxrAkEjA3c4vU
@@ -29,3 +33,4 @@ oz1pPpoiVrInvcSxqNxxeDsIPTu893+Mpudfq9nMXe6kF7oLd/HpQELi8047aWMY+pDEYN+B17VR
 XQAAAABJRU5ErkJggg==
 	</icon>
 </catalog>
+-->

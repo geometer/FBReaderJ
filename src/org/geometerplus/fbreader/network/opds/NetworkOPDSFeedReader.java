@@ -144,6 +144,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			item = readCatalogItem(entry);
 		}
 		if (item != null) {
+			//item.dbgEntry = entry;
 			myData.Items.add(item);
 		}
 	}
@@ -205,9 +206,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 					));
 				} else {
 					int format = formatByMimeType(filter(link.getAttribute(OPDSXMLReader.KEY_FORMAT)));
-					if (format == BookReference.Format.NONE) {
-						format = formatByMimeType(filter(entry.getAttribute(OPDSXMLReader.KEY_FORMAT)));
-					}
 					if (format != BookReference.Format.NONE) {
 						references.add(new BuyBookReference(
 							href, format, BookReference.Type.BUY, price

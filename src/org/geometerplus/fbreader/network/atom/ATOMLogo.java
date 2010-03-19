@@ -22,4 +22,13 @@ package org.geometerplus.fbreader.network.atom;
 public class ATOMLogo extends ATOMCommonAttributes {
 
 	public String Uri;
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder("[");
+		buf.append(super.toString());
+		buf.append(",\nUri=").append(Uri);
+		buf.append("]");
+		return buf.toString();
+	}
 }

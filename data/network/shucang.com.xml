@@ -2,12 +2,16 @@
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
 <catalog type="opds">
 	<site>shucang.com</site>
+	<title>Shucang Catalog</title>
+	<summary>Shucang: a Chinese bookshelf.</summary>
 	<link rel="main" type="application/atom+xml">http://www.shucang.com/s/index.php</link>
 	<link rel="search" type="application/atom+xml">http://www.shucang.com/s/doclist.php?skey=%s</link>
 	<link rel="signIn" type="application/atom+xml">http://www.shucang.com/s/myshucang.php</link>
 	<link rel="signOut" type="application/atom+xml">http://www.shucang.com/logout.php</link>
-	<title>Shucang Catalog</title>
-	<summary>Shucang: a Chinese bookshelf.</summary>
+	<relationAliases>
+		<alias alias="x-stanza-cover-image-thumbnail" name="http://opds-spec.org/thumbnail" />
+		<alias alias="x-stanza-cover-image" name="http://opds-spec.org/cover" />
+	</relationAliases>
 	<feeds>
 		<condition show="signedIn">urn:uuid:01182b8b-4719-2369-35e0-107bce646b54</condition>
 	</feeds>

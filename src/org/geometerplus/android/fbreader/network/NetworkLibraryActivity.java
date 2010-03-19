@@ -95,8 +95,11 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			final NetworkTree tree = (NetworkTree) getItem(position);
 			final ZLResource resource = ZLResource.resource("networkView");
 
+			/*if (tree instanceof NetworkCatalogTree || tree instanceof NetworkBookTree) {
+				menu.add(0, DBG_PRINT_ENTRY_ITEM_ID, 0, "dbg - Dump Entry");
+			}*/
+
 			if (tree instanceof NetworkCatalogRootTree) {
-				//NetworkCatalogRootTree catalogTree = (NetworkCatalogRootTree) tree;
 				menu.setHeaderTitle(tree.getName());
 				if (tree.hasChildren() && isOpen(tree)) {
 					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("closeCatalog").getValue());
@@ -104,7 +107,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("openCatalog").getValue());
 				}
 			} else if (tree instanceof NetworkCatalogTree) {
-				//NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 				menu.setHeaderTitle(tree.getName());
 				if (tree.hasChildren() && isOpen(tree)) {
 					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("collapseTree").getValue());
@@ -114,10 +116,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			} else if (tree instanceof NetworkBookTree) {
 				NetworkBookTree bookTree = (NetworkBookTree) tree;
 				NetworkBookItem book = bookTree.Book;
-				// TODO: handle book item
-
 				menu.setHeaderTitle(tree.getName());
-
 				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
 						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
 					if (book.localCopyFileName() != null) {
@@ -231,12 +230,24 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int READ_DEMO_ITEM_ID = 4;
 	private static final int DOWNLOAD_DEMO_ITEM_ID = 5;
 
+	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final LibraryAdapter adapter = (LibraryAdapter) getListView().getAdapter();
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree) adapter.getItem(position);
 		switch (item.getItemId()) {
+			/*case DBG_PRINT_ENTRY_ITEM_ID: {
+					String msg = null;
+					if (tree instanceof NetworkCatalogTree) {
+						msg = ((NetworkCatalogTree) tree).Item.dbgEntry.toString();
+					} else if (tree instanceof NetworkBookTree) {
+						msg = ((NetworkBookTree) tree).Book.dbgEntry.toString();
+					}
+					new AlertDialog.Builder(this).setTitle("dbg entry").setMessage(msg).setIcon(0).setPositiveButton("ok", null).create().show();
+				}
+				return true;*/
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
 				adapter.runTreeItem(tree);
 				return true;

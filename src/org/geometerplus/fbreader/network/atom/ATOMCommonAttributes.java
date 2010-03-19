@@ -68,4 +68,21 @@ abstract class ATOMCommonAttributes {
 			myAttributes.put(name, value);
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder("[Attributes:\n");
+		if (myAttributes != null) {
+			for (int i = 0; i < myAttributes.getSize(); ++i) {
+				String key = myAttributes.getKey(i);
+				String value = myAttributes.getValue(key);
+				if (i != 0) {
+					buf.append(",\n");
+				}
+				buf.append(key).append("=").append(value);
+			}
+		}
+		buf.append("]");
+		return buf.toString();
+	}
 }

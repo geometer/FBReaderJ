@@ -2,18 +2,24 @@
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
 <catalog type="opds">
 	<site>smashwords.com</site>
-	<link rel="main" type="application/atom+xml">http://smashwords.com/atom</link>
-	<link rel="search" type="application/atom+xml">http://smashwords.com/atom/search/books?query=%s</link>
 	<title>Smashwords</title>
 	<summary>Ebooks from independent authors and publishers</summary>
+	<link rel="main" type="application/atom+xml">http://smashwords.com/atom</link>
+	<link rel="search" type="application/atom+xml">http://smashwords.com/atom/search/books?query=%s</link>
 	<advancedSearch style="quoted">
 		<field name="author">authorFullName</field>
 		<field name="titleOrSeries">title</field>
 		<field name="tag">categories</field>
 		<field name="annotation">description</field>
 	</advancedSearch>
+	<relationAliases>
+		<alias alias="x-stanza-cover-image-thumbnail" name="http://opds-spec.org/thumbnail" />
+		<alias alias="x-stanza-cover-image" name="http://opds-spec.org/cover" />
+		<alias alias="bookinfo" name="http://opds-spec.org/acquisition/buy" type="text/html" />
+		<alias alias="" name="http://data.fbreader.org/acquisition/sampleOrFull" type="application/epub+zip" />
+	</relationAliases>
 	<urlRewritingRules>
-		<rule type="addUrlParameter" name="lfrom" value="51"/>
+		<rule type="addUrlParameter" apply="external" name="ref" value="geometer"/>
 	</urlRewritingRules>
 	<icon>data:image/png;base64,
 iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAL

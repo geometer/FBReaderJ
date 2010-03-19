@@ -29,4 +29,17 @@ class OPDSEntry extends ATOMEntry {
 
 	public String SeriesTitle;
 	public int SeriesIndex;
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder("[");
+		buf.append(super.toString());
+		buf.append(",DCLanguage=").append(DCLanguage);
+		buf.append(",DCPublisher=").append(DCPublisher);
+		buf.append(",DCIssued=").append(DCIssued);
+		buf.append(",SeriesTitle=").append(SeriesTitle);
+		buf.append(",SeriesIndex=").append(SeriesIndex);
+		buf.append("]");
+		return buf.toString();
+	}
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
 <catalog type="opds">
 	<site>booksonboard.com</site>
@@ -8,3 +9,4 @@
 	<summary>New Bestsellers and Great Prices.</summary>
 	<icon></icon>
 </catalog>
+-->

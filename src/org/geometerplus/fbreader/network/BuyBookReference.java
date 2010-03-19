@@ -30,10 +30,11 @@ public class BuyBookReference extends BookReference {
 
 	public static String price(String price, String currency) {
 		if (price == null || currency == null) {
-			return null;
-		}
-		if (currency.equals("RUB")) {
+			return price;
+		} else if (currency.equals("RUB")) {
 			return price + " \u0440.";
+		} else if (currency.equals("USD")) {
+			return "$" + price;
 		}
 		return currency + " " + price;
 	}

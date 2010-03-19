@@ -36,4 +36,13 @@ public class ATOMId extends ATOMCommonAttributes {
 	public int hashCode() {
 		return Uri.hashCode();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder("[");
+		buf.append(super.toString());
+		buf.append(",\nUri=").append(Uri);
+		buf.append("]");
+		return buf.toString();
+	}
 }

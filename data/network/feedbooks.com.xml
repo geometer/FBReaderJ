@@ -2,12 +2,12 @@
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
 <catalog type="opds">
 	<site>feedbooks.com</site>
+	<title>Feedbooks OPDS Catalog</title>
+	<summary>Feedbooks: Food for the mind. A place to discover and publish e-books.</summary>
 	<link rel="main" type="application/atom+xml">http://feedbooks.com/catalog.atom</link>
 	<link rel="search" type="application/atom+xml">http://feedbooks.com/books/search.atom?query=%s</link>
 	<link rel="signIn" type="application/atom+xml">https://feedbooks.com/user/profile.atom</link>
 	<link rel="signOut" type="application/atom+xml">https://feedbooks.com/user/signout</link>
-	<title>Feedbooks OPDS Catalog</title>
-	<summary>Feedbooks: Food for the mind. A place to discover and publish e-books.</summary>
 	<advancedSearch style="separateWords">
 		<field name="author">author</field>
 		<field name="titleOrSeries">title</field>

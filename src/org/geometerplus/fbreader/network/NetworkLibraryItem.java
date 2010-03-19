@@ -36,6 +36,8 @@ public abstract class NetworkLibraryItem {
 	public final String Summary;
 	public final TreeMap<Integer, String> URLByType;
 
+	//public org.geometerplus.fbreader.network.atom.ATOMEntry dbgEntry;
+
 	/**
 	 * Creates new NetworkLibraryItem instance.
 	 *
@@ -50,5 +52,4 @@ public abstract class NetworkLibraryItem {
 		Summary = summary;
 		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
-
 }
