@@ -118,23 +118,22 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final int FE_PUBLISHED = 16;
 	private static final int FE_SUMMARY = 17;
 	private static final int FE_CONTENT = 18;
-	private static final int FE_SUBTITLE = 19;
-	private static final int FE_TITLE = 20;
-	private static final int FE_UPDATED = 21;
-	private static final int FE_DC_LANGUAGE = 22;
-	private static final int FE_DC_ISSUED = 23;
-	private static final int FE_DC_PUBLISHER = 24;
-	private static final int FE_CALIBRE_SERIES = 25;
-	private static final int FE_CALIBRE_SERIES_INDEX = 26;
-	private static final int FEL_PRICE = 27;
-	private static final int FEL_FORMAT = 28;
-	private static final int FEA_NAME = 29;
-	private static final int FEA_URI = 30;
-	private static final int FEA_EMAIL = 31;
-	private static final int OPENSEARCH_TOTALRESULTS = 32;
-	private static final int OPENSEARCH_ITEMSPERPAGE = 33;
-	private static final int OPENSEARCH_STARTINDEX = 34;
-	private static final int FEC_HACK_SPAN = 35;
+	private static final int FE_TITLE = 19;
+	private static final int FE_UPDATED = 20;
+	private static final int FE_DC_LANGUAGE = 21;
+	private static final int FE_DC_ISSUED = 22;
+	private static final int FE_DC_PUBLISHER = 23;
+	private static final int FE_CALIBRE_SERIES = 24;
+	private static final int FE_CALIBRE_SERIES_INDEX = 25;
+	private static final int FEL_PRICE = 26;
+	private static final int FEL_FORMAT = 27;
+	private static final int FEA_NAME = 28;
+	private static final int FEA_URI = 29;
+	private static final int FEA_EMAIL = 30;
+	private static final int OPENSEARCH_TOTALRESULTS = 31;
+	private static final int OPENSEARCH_ITEMSPERPAGE = 32;
+	private static final int OPENSEARCH_STARTINDEX = 33;
+	private static final int FEC_HACK_SPAN = 34;
 
 
 	private static final String TAG_FEED = "feed";
@@ -149,11 +148,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final String TAG_PUBLISHED = "published";
 	private static final String TAG_SUMMARY = "summary";
 	private static final String TAG_CONTENT = "content";
-	private static final String TAG_SUBTITLE = "subtitle";
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_UPDATED = "updated";
 	private static final String TAG_PRICE = "price";
-//	private static final String TAG_META = "meta";
 
 	private static final String TAG_HACK_SPAN = "span";
 
@@ -269,9 +266,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} else if (tag == TAG_CONTENT) {
 						// ???
 						myState = FE_CONTENT;
-					} else if (tag == TAG_SUBTITLE) {
-						// ???
-						myState = FE_SUBTITLE;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
 						//myTitle.readAttributes(attributes);
@@ -558,15 +552,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FE_CONTENT:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_CONTENT) {
-					// TODO:check this accurately
-					if (bufferContent != null && !mySummaryTagFound) {
-						myEntry.Summary = bufferContent;
-					}
-					myState = F_ENTRY;
-				}
-				break;
-			case FE_SUBTITLE:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUBTITLE) {
 					// TODO:check this accurately
 					if (bufferContent != null && !mySummaryTagFound) {
 						myEntry.Summary = bufferContent;
