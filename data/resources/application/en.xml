@@ -27,6 +27,8 @@
 		<node name="readDemo" value="Read sample"/>
 		<node name="downloadDemo" value="Download sample"/>
 		<node name="buy" value="Buy (%s)"/>
+		<node name="openInBrowser" value="Open in browser" />
+		<node name="reload" value="Reload"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>

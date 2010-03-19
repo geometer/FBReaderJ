@@ -41,6 +41,7 @@ import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.authentication.*;
 
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
@@ -108,10 +109,18 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				}
 			} else if (tree instanceof NetworkCatalogTree) {
 				menu.setHeaderTitle(tree.getName());
+				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+				NetworkCatalogItem item = catalogTree.Item;
+				if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
+					String key = (tree.hasChildren() && isOpen(tree)) ? "collapseTree" : "expandTree";
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource(key).getValue());
+				}
+				String htmlUrl = item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE);
+				if (htmlUrl != null) {
+					menu.add(0, OPEN_IN_BROWSER_ITEM_ID, 0, resource.getResource("openInBrowser").getValue());
+				}
 				if (tree.hasChildren() && isOpen(tree)) {
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("collapseTree").getValue());
-				} else {
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("expandTree").getValue());
+					menu.add(0, RELOAD_ITEM_ID, 0, resource.getResource("reload").getValue());
 				}
 			} else if (tree instanceof NetworkBookTree) {
 				NetworkBookTree bookTree = (NetworkBookTree) tree;
@@ -171,18 +180,49 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return view;
 		}
 
+		public void expandCatalog(NetworkCatalogTree tree) {
+			/*if (!NetworkOperationRunnable::tryConnect()) {
+				return;
+			}*/
+			NetworkCatalogItem item = tree.Item;
+			NetworkLink link = item.Link;
+			if (link.authenticationManager() != null) {
+				NetworkAuthenticationManager mgr = link.authenticationManager();
+				/*IsAuthorisedRunnable checker(mgr);
+				checker.executeWithUI();
+				if (checker.hasErrors()) {
+					checker.showErrorMessage();
+					return;
+				}
+				if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
+					InitializeAuthenticationManagerRunnable initializer(mgr);
+					initializer.executeWithUI();
+					if (initializer.hasErrors()) {
+						LogOutRunnable logout(mgr);
+						logout.executeWithUI();
+					}
+				}*/
+			}
+			if (!tree.hasChildren()) {
+				updateCatalogChildren(tree);
+				resetTree();
+			}
+			super.runTreeItem(tree);
+		}
+
+		public void reloadCatalog(NetworkCatalogTree tree) {
+			updateCatalogChildren(tree);
+			resetTree();
+			//super.runTreeItem(tree);
+		}
+
 		@Override
 		protected boolean runTreeItem(ZLTree tree) {
 			if (super.runTreeItem(tree)) {
 				return true;
 			}
 			if (tree instanceof NetworkCatalogTree) {
-				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-				if (!catalogTree.hasChildren()) {
-					updateCatalogChildren(catalogTree);
-					resetTree();
-				}
-				super.runTreeItem(tree);
+				expandCatalog((NetworkCatalogTree) tree);
 				return true;
 			}
 			return false;
@@ -239,6 +279,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int DOWNLOAD_DEMO_ITEM_ID = 5;
 	private static final int BUY_DIRECTLY_ITEM_ID = 6;
 	private static final int BUY_IN_BROWSER_ITEM_ID = 7;
+	private static final int OPEN_IN_BROWSER_ITEM_ID = 8;
+	private static final int RELOAD_ITEM_ID = 9;
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
@@ -259,7 +301,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				}
 				return true;*/
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
-				adapter.runTreeItem(tree);
+				adapter.expandCatalog((NetworkCatalogTree)tree);
 				return true;
 			case DOWNLOAD_BOOK_ITEM_ID:
 				doDownloadBook(tree, false);
@@ -282,6 +324,12 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			case BUY_IN_BROWSER_ITEM_ID:
 				doBuyInBrowser(tree);
 				return true;
+			case OPEN_IN_BROWSER_ITEM_ID:
+				openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE));
+				return true;
+			case RELOAD_ITEM_ID:
+				adapter.reloadCatalog((NetworkCatalogTree)tree);
+				return true;
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -291,9 +339,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		NetworkBookItem book = bookTree.Book;
 		BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
 		if (reference != null) {
-			startActivity(
-				new Intent(Intent.ACTION_VIEW, Uri.parse(reference.URL))
-			);
+			openInBrowser(reference.URL);
+		}
+	}
+
+	private void openInBrowser(String url) {
+		if (url != null) {
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 	}
 
