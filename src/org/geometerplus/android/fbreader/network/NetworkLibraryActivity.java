@@ -120,22 +120,22 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
 						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
-					//registerAction(new NetworkBookReadAction(book, false));
-					//registerAction(new NetworkBookDeleteAction(book));
 					if (book.localCopyFileName() != null) {
 						menu.add(0, READ_BOOK_ITEM_ID, 0, resource.getResource("read").getValue());
 						menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("delete").getValue());
-					}
-
-					//registerAction(new NetworkBookDownloadAction(book, false));
-					if (book.localCopyFileName() == null &&
-							book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
+					} else if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
 						menu.add(0, DOWNLOAD_BOOK_ITEM_ID, 0, resource.getResource("download").getValue());
 					}
 				}
-				if (book.reference(BookReference.Type.DOWNLOAD_DEMO) != null) {
-					//registerAction(new NetworkBookReadAction(book, true));
-					//registerAction(new NetworkBookDownloadAction(book, true, resource()["demo"].value()));
+				if (book.reference(BookReference.Type.DOWNLOAD_DEMO) != null &&
+						book.localCopyFileName() == null &&
+						book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+					BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
+					if (reference.localCopyFileName() != null) {
+						menu.add(0, READ_DEMO_ITEM_ID, 0, resource.getResource("readDemo").getValue());
+					} else {
+						menu.add(0, DOWNLOAD_DEMO_ITEM_ID, 0, resource.getResource("downloadDemo").getValue());
+					}
 				}
 				if (book.reference(BookReference.Type.BUY) != null) {
 					//registerAction(new NetworkBookBuyDirectlyAction(book));
@@ -228,6 +228,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int DOWNLOAD_BOOK_ITEM_ID = 1;
 	private static final int READ_BOOK_ITEM_ID = 2;
 	private static final int DELETE_BOOK_ITEM_ID = 3;
+	private static final int READ_DEMO_ITEM_ID = 4;
+	private static final int DOWNLOAD_DEMO_ITEM_ID = 5;
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -238,42 +240,64 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
 				adapter.runTreeItem(tree);
 				return true;
-			case DOWNLOAD_BOOK_ITEM_ID: {
-					NetworkBookTree bookTree = (NetworkBookTree) tree;
-					NetworkBookItem book = bookTree.Book;
-					BookReference ref = book.reference(BookReference.Type.DOWNLOAD_FULL);
-					if (ref != null) {
-						startService(
-							new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), this, BookDownloaderService.class)
-								.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
-								.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
-						);
-					}
-				}
+			case DOWNLOAD_BOOK_ITEM_ID:
+				doDownloadBook(tree, false);
 				return true;
-			case READ_BOOK_ITEM_ID: {
-					NetworkBookTree bookTree = (NetworkBookTree) tree;
-					NetworkBookItem book = bookTree.Book;
-					String local = book.localCopyFileName();
-					if (local != null) {
-						startActivity(
-							new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(local)), this, org.geometerplus.android.fbreader.FBReader.class)
-								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP/* | Intent.FLAG_ACTIVITY_NEW_TASK*/)
-						);
-					}
-				}
+			case DOWNLOAD_DEMO_ITEM_ID:
+				doDownloadBook(tree, true);
 				return true;
-			case DELETE_BOOK_ITEM_ID: {
-					NetworkBookTree bookTree = (NetworkBookTree) tree;
-					NetworkBookItem book = bookTree.Book;
-					tryToDeleteBook(book);
-				}
+			case READ_BOOK_ITEM_ID:
+				doReadBook(tree, false);
+				return true;
+			case READ_DEMO_ITEM_ID:
+				doReadBook(tree, true);
+				return true;
+			case DELETE_BOOK_ITEM_ID:
+				tryToDeleteBook(tree);
 				return true;
 		}
 		return super.onContextItemSelected(item);
 	}
 
-	private void tryToDeleteBook(final NetworkBookItem book) {
+	private void doDownloadBook(NetworkTree tree, boolean demo) {
+		NetworkBookTree bookTree = (NetworkBookTree) tree;
+		NetworkBookItem book = bookTree.Book;
+		BookReference ref = book.reference(
+			demo ? BookReference.Type.DOWNLOAD_DEMO : BookReference.Type.DOWNLOAD_FULL
+		);
+		if (ref != null) {
+			// TODO: add `demo` tag to the book???
+			startService(
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), this, BookDownloaderService.class)
+					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
+					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
+			);
+		}
+	}
+
+	private void doReadBook(NetworkTree tree, boolean demo) {
+		final NetworkBookTree bookTree = (NetworkBookTree) tree;
+		final NetworkBookItem book = bookTree.Book;
+		String local = null;
+		if (!demo) {
+			local = book.localCopyFileName();
+		} else {
+			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
+			if (reference != null) {
+				local = reference.localCopyFileName();
+			}
+		}
+		if (local != null) {
+			startActivity(
+				new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(local)), this, org.geometerplus.android.fbreader.FBReader.class)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP/* | Intent.FLAG_ACTIVITY_NEW_TASK*/)
+			);
+		}
+	}
+
+	private void tryToDeleteBook(NetworkTree tree) {
+		final NetworkBookTree bookTree = (NetworkBookTree) tree;
+		final NetworkBookItem book = bookTree.Book;
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
