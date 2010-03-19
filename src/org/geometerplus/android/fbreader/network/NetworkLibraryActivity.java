@@ -102,11 +102,30 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 			if (tree instanceof NetworkCatalogRootTree) {
 				menu.setHeaderTitle(tree.getName());
-				if (tree.hasChildren() && isOpen(tree)) {
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("closeCatalog").getValue());
-				} else {
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource("openCatalog").getValue());
+				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+				NetworkCatalogItem item = catalogTree.Item;
+				NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+				if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
+					String key = (tree.hasChildren() && isOpen(tree)) ? "closeCatalog" : "openCatalog";
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource(key).getValue());
 				}
+				if (tree.hasChildren() && isOpen(tree)) {
+					menu.add(0, RELOAD_ITEM_ID, 0, resource.getResource("reload").getValue());
+				}
+				/*if (!mgr.isNull()) {
+					registerAction(new LoginAction(*mgr));
+					registerAction(new LogoutAction(*mgr));
+					if (!mgr->refillAccountLink().empty()) {
+						registerAction(new RefillAccountAction(*mgr));
+					}
+					if (mgr->registrationSupported()) {
+						registerAction(new RegisterUserAction(*mgr), true);
+					}
+					if (mgr->passwordRecoverySupported()) {
+						registerAction(new PasswordRecoveryAction(*mgr), true);
+					}
+				}*/
+				//menu.add(0, DONT_SHOW_ITEM_ID, 0, resource.getResource("dontShow").getValue()); // TODO: is it needed??? and how to turn it on???
 			} else if (tree instanceof NetworkCatalogTree) {
 				menu.setHeaderTitle(tree.getName());
 				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
@@ -216,6 +235,16 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			//super.runTreeItem(tree);
 		}
 
+		public void diableCatalog(NetworkCatalogRootTree tree) {
+			/*NetworkLink link = tree.Link;
+			link.OnOption.setValue(false);
+			NetworkLibrary library = NetworkLibrary.Instance();
+			library.invalidate();
+			library.synchronize();
+			resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
+			*/
+		}
+
 		@Override
 		protected boolean runTreeItem(ZLTree tree) {
 			if (super.runTreeItem(tree)) {
@@ -281,6 +310,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int BUY_IN_BROWSER_ITEM_ID = 7;
 	private static final int OPEN_IN_BROWSER_ITEM_ID = 8;
 	private static final int RELOAD_ITEM_ID = 9;
+	private static final int DONT_SHOW_ITEM_ID = 10;
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
@@ -329,6 +359,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				return true;
 			case RELOAD_ITEM_ID:
 				adapter.reloadCatalog((NetworkCatalogTree)tree);
+				return true;
+			case DONT_SHOW_ITEM_ID:
 				return true;
 		}
 		return super.onContextItemSelected(item);
