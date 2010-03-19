@@ -58,7 +58,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 					break;
 				}
 				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
-				httpConnection.setConnectTimeout(30000); // FIXME: hardcoded timeout value!!!
+				httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
 				final int response = httpConnection.getResponseCode();
 				if (response == HttpURLConnection.HTTP_OK) {
 					InputStream inStream = httpConnection.getInputStream();
