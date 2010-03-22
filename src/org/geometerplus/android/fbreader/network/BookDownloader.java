@@ -51,12 +51,12 @@ public class BookDownloader extends Activity {
 
 		final Intent intent = getIntent();
 		final Uri uri = intent.getData();
+		intent.setData(null);
 		if (uri == null || !acceptsUri(uri)) {
 			finish();
 			return;
 		}
-		intent.setData(null);
-		startService(new Intent(Intent.ACTION_VIEW, uri, this, BookDownloaderService.class));
+		startService(new Intent(Intent.ACTION_DEFAULT, uri, this, BookDownloaderService.class));
 		finish();
 	}
 }
