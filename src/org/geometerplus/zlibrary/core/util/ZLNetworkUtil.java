@@ -99,4 +99,7 @@ public class ZLNetworkUtil {
 		return new StringBuilder(url).append(delimiter).append(name).append('=').append(value).toString();
 	}
 
+	public static String getUserAgent(String versionName) {
+		return "FBReader/" + versionName + "(java)";
+	}
 }
