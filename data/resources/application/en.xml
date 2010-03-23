@@ -25,6 +25,7 @@
 		<node name="read" value="Read local copy"/>
 		<node name="delete" value="Delete local copy"/>
 		<node name="readDemo" value="Read sample"/>
+		<node name="deleteDemo" value="Delete sample"/>
 		<node name="downloadDemo" value="Download sample"/>
 		<node name="buy" value="Buy (%s)"/>
 		<node name="openInBrowser" value="Open in browser" />

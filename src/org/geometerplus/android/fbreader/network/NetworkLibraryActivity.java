@@ -160,6 +160,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
 					if (reference.localCopyFileName() != null) {
 						menu.add(0, READ_DEMO_ITEM_ID, 0, resource.getResource("readDemo").getValue());
+						menu.add(0, DELETE_DEMO_ITEM_ID, 0, resource.getResource("deleteDemo").getValue());
 					} else {
 						menu.add(0, DOWNLOAD_DEMO_ITEM_ID, 0, resource.getResource("downloadDemo").getValue());
 					}
@@ -311,6 +312,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private static final int OPEN_IN_BROWSER_ITEM_ID = 8;
 	private static final int RELOAD_ITEM_ID = 9;
 	private static final int DONT_SHOW_ITEM_ID = 10;
+	private static final int DELETE_DEMO_ITEM_ID = 11;
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
@@ -346,7 +348,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				doReadBook(tree, true);
 				return true;
 			case DELETE_BOOK_ITEM_ID:
-				tryToDeleteBook(tree);
+				tryToDeleteBook(tree, false);
+				return true;
+			case DELETE_DEMO_ITEM_ID:
+				tryToDeleteBook(tree, true);
 				return true;
 			case BUY_DIRECTLY_ITEM_ID:
 				doBuyDirectly(tree);
@@ -464,7 +469,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		}
 	}
 
-	private void tryToDeleteBook(NetworkTree tree) {
+	private void tryToDeleteBook(NetworkTree tree, final boolean demo) {
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
 		final ZLResource dialogResource = ZLResource.resource("dialog");
@@ -477,7 +482,17 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO: remove information about book from Library???
-					book.removeLocalFiles();
+					if (!demo) {
+						book.removeLocalFiles();
+					} else {
+						final BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
+						if (reference != null) {
+							final String fileName = reference.localCopyFileName();
+							if (fileName != null) {
+								new File(fileName).delete();
+							}
+						}
+					}
 				}
 			})
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
