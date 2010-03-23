@@ -1,7 +1,7 @@
 DONE нарисовать иконку (скопирована иконка ic_menu_networksearch.png)
 DONE переместить в главном меню наверх (вместо Settings)
 DONE пункт меню "delete sample"
-*	BookDownloaderService - i18n
+DONE BookDownloaderService - i18n
 *	указывать HTTP-agent = "FBReader/<version>(java)" -- номер версии смотреть, как в диалоге About
 *	прятать Profile (прятать запрещенные каталоги)
 *	при щелчке на книжку - сделать default action, и о нем спрашивать.

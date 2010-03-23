@@ -37,6 +37,8 @@ import android.content.Intent;
 import android.content.Context;
 import android.widget.RemoteViews;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.BookReference;
 
@@ -56,6 +58,10 @@ public class BookDownloaderService extends Service {
 		if (--myServiceCounter == 0) {
 			stopSelf();
 		}
+	}
+
+	public static ZLResource getResource() {
+		return ZLResource.resource("bookDownloader");
 	}
 
 	@Override
@@ -122,8 +128,6 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 		startFileDownload(url, fileFile);
-
-		//textView.setText(ZLDialogManager.getWaitMessageText("downloadingFile").replace("%s", myFileName));
 	}
 
 	private Intent getFBReaderIntent(final File file) {
@@ -135,8 +139,13 @@ public class BookDownloaderService extends Service {
 	}
 
 	private Notification createDownloadFinishNotification(File file, boolean success) {
-		final String tickerText = success ? "Book has been downloaded" : "Book download error"; // TODO: i18n
-		final String contentText = success ? "Download successful" : "Download unsuccessful"; // TODO: i18n
+		final ZLResource resource = getResource();
+		final String tickerText = success ?
+			resource.getResource("tickerSuccess").getValue() :
+			resource.getResource("tickerError").getValue();
+		final String contentText = success ?
+			resource.getResource("contentSuccess").getValue() :
+			resource.getResource("contentError").getValue();
 		final Notification notification = new Notification(
 			android.R.drawable.stat_sys_download_done,
 			tickerText,
@@ -153,7 +162,7 @@ public class BookDownloaderService extends Service {
 		final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
 		String title = file.getName();
 		if (title == null || title.length() == 0) {
-			title = "<Untitled>"; // TODO: i18n
+			title = getResource().getResource("untitled").getValue();
 		}
 		contentView.setTextViewText(R.id.download_notification_title, title);
 		contentView.setTextViewText(R.id.download_notification_progress_text, "");

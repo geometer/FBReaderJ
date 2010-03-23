@@ -31,6 +31,13 @@
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="reload" value="Reload"/>
 	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Book has been downloaded" />
+		<node name="tickerError" value="Book download error" />
+		<node name="contentSuccess" value="Download successful" />
+		<node name="contentError" value="Download unsuccessful" />
+		<node name="untitled" value="&lt;Untitled&gt;" />
+	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>
 		<node name="collapseTree" value="Collapse tree"/>
