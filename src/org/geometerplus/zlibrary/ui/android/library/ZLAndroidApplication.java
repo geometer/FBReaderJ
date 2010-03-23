@@ -57,7 +57,6 @@ public class ZLAndroidApplication extends Application {
 		new ZLAndroidImageManager();
 		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);
-		System.err.println("FBREADER -- UserAgent = " + ZLNetworkUtil.getUserAgent(ZLAndroidApplication.Instance().getVersionName()));
 		System.setProperty("http.agent", ZLNetworkUtil.getUserAgent(ZLAndroidApplication.Instance().getVersionName()));
 	}
 
