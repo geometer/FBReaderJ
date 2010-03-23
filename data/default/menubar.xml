@@ -6,10 +6,10 @@
 	<item id="search"/>
 	<item id="night"/>
 	<item id="day"/>
+	<item id="networkLibrary"/>
 	<item id="preferences"/>
 	<item id="preferences-old"/>
 	<item id="bookInfo"/>
-	<item id="networkLibrary"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>

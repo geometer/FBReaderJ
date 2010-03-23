@@ -1,4 +1,5 @@
-*	нарисовать иконку (подменить) + переместить в главном меню наверх (вместо Settings)
+DONE нарисовать иконку (скопирована иконка ic_menu_networksearch.png)
+DONE переместить в главном меню наверх (вместо Settings)
 
 *	пункт меню "delete sample"
 *	BookDownloaderService - i18n
