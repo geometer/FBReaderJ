@@ -4,7 +4,7 @@ DONE пункт меню "delete sample"
 DONE BookDownloaderService - i18n
 DONE указывать HTTP-agent = "FBReader/<version>(java)" -- номер версии смотреть, как в диалоге About
 DONE прятать Profile (прятать запрещенные каталоги)
-*	при щелчке на книжку - сделать default action, и о нем спрашивать.
+DONE при щелчке на книжку - сделать default action, и о нем спрашивать.
 
 *	асинхронная загрузка каталогов
 *	асинхронная работа с сетью

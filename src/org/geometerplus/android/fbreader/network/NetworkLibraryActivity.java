@@ -94,7 +94,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final NetworkTree tree = (NetworkTree) getItem(position);
-			final ZLResource resource = ZLResource.resource("networkView");
 
 			/*if (tree instanceof NetworkCatalogTree || tree instanceof NetworkBookTree) {
 				menu.add(0, DBG_PRINT_ENTRY_ITEM_ID, 0, "dbg - Dump Entry");
@@ -107,10 +106,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 				if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
 					String key = (tree.hasChildren() && isOpen(tree)) ? "closeCatalog" : "openCatalog";
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource(key).getValue());
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, myResource.getResource(key).getValue());
 				}
 				if (tree.hasChildren() && isOpen(tree)) {
-					menu.add(0, RELOAD_ITEM_ID, 0, resource.getResource("reload").getValue());
+					menu.add(0, RELOAD_ITEM_ID, 0, myResource.getResource("reload").getValue());
 				}
 				/*if (!mgr.isNull()) {
 					registerAction(new LoginAction(*mgr));
@@ -125,21 +124,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 						registerAction(new PasswordRecoveryAction(*mgr), true);
 					}
 				}*/
-				//menu.add(0, DONT_SHOW_ITEM_ID, 0, resource.getResource("dontShow").getValue()); // TODO: is it needed??? and how to turn it on???
+				//menu.add(0, DONT_SHOW_ITEM_ID, 0, myResource.getResource("dontShow").getValue()); // TODO: is it needed??? and how to turn it on???
 			} else if (tree instanceof NetworkCatalogTree) {
 				menu.setHeaderTitle(tree.getName());
 				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 				NetworkCatalogItem item = catalogTree.Item;
 				if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
 					String key = (tree.hasChildren() && isOpen(tree)) ? "collapseTree" : "expandTree";
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, resource.getResource(key).getValue());
+					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, myResource.getResource(key).getValue());
 				}
 				String htmlUrl = item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE);
 				if (htmlUrl != null) {
-					menu.add(0, OPEN_IN_BROWSER_ITEM_ID, 0, resource.getResource("openInBrowser").getValue());
+					menu.add(0, OPEN_IN_BROWSER_ITEM_ID, 0, myResource.getResource("openInBrowser").getValue());
 				}
 				if (tree.hasChildren() && isOpen(tree)) {
-					menu.add(0, RELOAD_ITEM_ID, 0, resource.getResource("reload").getValue());
+					menu.add(0, RELOAD_ITEM_ID, 0, myResource.getResource("reload").getValue());
 				}
 			} else if (tree instanceof NetworkBookTree) {
 				NetworkBookTree bookTree = (NetworkBookTree) tree;
@@ -148,10 +147,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
 						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
 					if (book.localCopyFileName() != null) {
-						menu.add(0, READ_BOOK_ITEM_ID, 0, resource.getResource("read").getValue());
-						menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("delete").getValue());
+						menu.add(0, READ_BOOK_ITEM_ID, 0, myResource.getResource("read").getValue());
+						menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("delete").getValue());
 					} else if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
-						menu.add(0, DOWNLOAD_BOOK_ITEM_ID, 0, resource.getResource("download").getValue());
+						menu.add(0, DOWNLOAD_BOOK_ITEM_ID, 0, myResource.getResource("download").getValue());
 					}
 				}
 				if (book.reference(BookReference.Type.DOWNLOAD_DEMO) != null &&
@@ -159,25 +158,22 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 						book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
 					BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
 					if (reference.localCopyFileName() != null) {
-						menu.add(0, READ_DEMO_ITEM_ID, 0, resource.getResource("readDemo").getValue());
-						menu.add(0, DELETE_DEMO_ITEM_ID, 0, resource.getResource("deleteDemo").getValue());
+						menu.add(0, READ_DEMO_ITEM_ID, 0, myResource.getResource("readDemo").getValue());
+						menu.add(0, DELETE_DEMO_ITEM_ID, 0, myResource.getResource("deleteDemo").getValue());
 					} else {
-						menu.add(0, DOWNLOAD_DEMO_ITEM_ID, 0, resource.getResource("downloadDemo").getValue());
+						menu.add(0, DOWNLOAD_DEMO_ITEM_ID, 0, myResource.getResource("downloadDemo").getValue());
 					}
 				}
-				if (book.reference(BookReference.Type.BUY) != null) {
-					if (book.localCopyFileName() == null &&
-							book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+				if (book.localCopyFileName() == null &&
+						book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+					if (book.reference(BookReference.Type.BUY) != null) {
 						BookReference reference = book.reference(BookReference.Type.BUY);
-						String title = resource.getResource("buy").getValue()
+						String title = myResource.getResource("buy").getValue()
 							.replace("%s", ((BuyBookReference) reference).Price);
 						menu.add(0, BUY_DIRECTLY_ITEM_ID, 0, title);
-					}
-				} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
-					if (book.localCopyFileName() == null &&
-							book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+					} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
 						BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
-						String title = resource.getResource("buy").getValue()
+						String title = myResource.getResource("buy").getValue()
 							.replace("%s", ((BuyBookReference) reference).Price);
 						menu.add(0, BUY_IN_BROWSER_ITEM_ID, 0, title);
 					}
@@ -254,6 +250,61 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			if (tree instanceof NetworkCatalogTree) {
 				expandCatalog((NetworkCatalogTree) tree);
 				return true;
+			} else if (tree instanceof NetworkBookTree) {
+				final ZLResource resource = myResource.getResource("confirmQuestions");
+				final NetworkBookTree bookTree = (NetworkBookTree) tree;
+				final NetworkBookItem book = bookTree.Book;
+				int actionCode = -1;
+				String confirm = null;
+				if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
+						book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null) {
+					if (book.localCopyFileName() != null) {
+						actionCode = READ_BOOK_ITEM_ID;
+						confirm = resource.getResource("read").getValue();
+					} else if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
+						actionCode = DOWNLOAD_BOOK_ITEM_ID;
+						confirm = resource.getResource("download").getValue();
+					}
+				} else if (book.reference(BookReference.Type.DOWNLOAD_DEMO) != null &&
+						book.localCopyFileName() == null &&
+						book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+					BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
+					if (reference.localCopyFileName() != null) {
+						actionCode = READ_DEMO_ITEM_ID;
+						confirm = resource.getResource("readDemo").getValue();
+					} else {
+						actionCode = DOWNLOAD_DEMO_ITEM_ID;
+						confirm = resource.getResource("downloadDemo").getValue();
+					}
+				} else if (book.localCopyFileName() == null &&
+						book.reference(BookReference.Type.DOWNLOAD_FULL) == null) {
+					if (book.reference(BookReference.Type.BUY) != null) {
+						actionCode = BUY_DIRECTLY_ITEM_ID;
+						BookReference reference = book.reference(BookReference.Type.BUY);
+						confirm = resource.getResource("buy").getValue()
+							.replace("%s", ((BuyBookReference) reference).Price);
+					} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
+						actionCode = BUY_IN_BROWSER_ITEM_ID;
+						BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
+						confirm = resource.getResource("buy").getValue()
+							.replace("%s", ((BuyBookReference) reference).Price);
+					}
+				}
+				if (confirm != null) {
+					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+					final int actionCodeValue = actionCode;
+					new AlertDialog.Builder(NetworkLibraryActivity.this)
+						.setTitle(book.Title)
+						.setMessage(confirm)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								runContextMenuItem(bookTree, actionCodeValue);
+							}
+						})
+						.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+						.create().show();
+				}
 			}
 			return false;
 		}
@@ -322,7 +373,15 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		final LibraryAdapter adapter = (LibraryAdapter) getListView().getAdapter();
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree) adapter.getItem(position);
-		switch (item.getItemId()) {
+		if (runContextMenuItem(tree, item.getItemId())) {
+			return true;
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	private boolean runContextMenuItem(NetworkTree tree, int actionCode) {
+		final LibraryAdapter adapter = (LibraryAdapter) getListView().getAdapter();
+		switch (actionCode) {
 			/*case DBG_PRINT_ENTRY_ITEM_ID: {
 					String msg = null;
 					if (tree instanceof NetworkCatalogTree) {
@@ -369,7 +428,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			case DONT_SHOW_ITEM_ID:
 				return true;
 		}
-		return super.onContextItemSelected(item);
+		return false;
 	}
 
 	private void doBuyInBrowser(NetworkTree tree) {

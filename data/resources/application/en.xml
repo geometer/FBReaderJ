@@ -30,6 +30,13 @@
 		<node name="buy" value="Buy (%s)"/>
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="reload" value="Reload"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Do you want to read local copy?"/>
+			<node name="download" value="Do you want to download this book?"/>
+			<node name="readDemo" value="Do you want to read sample?"/>
+			<node name="downloadDemo" value="Do you want to download sample?"/>
+			<node name="buy" value="Do you want to buy this book? (%s)"/>
+		</node>
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Book has been downloaded" />
