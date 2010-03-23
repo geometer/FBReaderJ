@@ -43,6 +43,7 @@ public class NetworkLibrary {
 	private final RootTree myRootTree = new RootTree();
 
 	private boolean myUpdateChildren = true;
+	private boolean myUpdateAccountDependents;
 
 	private static class LinksComparator implements Comparator<NetworkLink> {
 		public int compare(NetworkLink link1, NetworkLink link2) {
@@ -90,10 +91,14 @@ public class NetworkLibrary {
 		myUpdateChildren = true;
 	}
 
+	public void invalidateAccountDependents() {
+		myUpdateAccountDependents = true;
+	}
+
 	private void makeUpToDate() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		Iterator<FBTree> nodeIterator = myRootTree.iterator();
+		Iterator<FBTree> nodeIterator = myRootTree.subTrees().iterator();
 		FBTree currentNode = null;
 		int nodeCount = 0;
 
@@ -109,6 +114,7 @@ public class NetworkLibrary {
 				}
 				if (!(currentNode instanceof NetworkCatalogTree)) {
 					currentNode = null;
+					++nodeCount;
 					continue;
 				}
 				final NetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
@@ -165,7 +171,7 @@ public class NetworkLibrary {
 			NetworkNodesFactory::createSubnodes(srNode, result);
 		}*/
 
-		for (FBTree tree : toRemove) {
+		for (FBTree tree: toRemove) {
 			tree.removeSelf();
 		}
 
@@ -175,10 +181,23 @@ public class NetworkLibrary {
 		}*/
 	}
 
+	private void updateAccountDependents() {
+		for (FBTree tree: myRootTree.subTrees()) {
+			if (!(tree instanceof NetworkCatalogTree)) {
+				continue;
+			}
+			((NetworkCatalogTree) tree).updateAccountDependents();
+		}
+	}
+
 	public void synchronize() {
 		if (myUpdateChildren) {
 			myUpdateChildren = false;
 			makeUpToDate();
+		}
+		if (myUpdateAccountDependents) {
+			myUpdateAccountDependents = false;
+			updateAccountDependents();
 		}
 	}
 

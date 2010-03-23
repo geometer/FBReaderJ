@@ -263,8 +263,9 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private void updateCatalogChildren(NetworkCatalogTree tree) {
 		tree.clear();
 
-		ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
+		ArrayList<NetworkLibraryItem> children = tree.ChildrenItems;
 
+		children.clear();
 		LoadSubCatalogRunnable loader = new LoadSubCatalogRunnable(tree.Item, children);
 		loader.executeWithUI();
 		if (loader.hasErrors()) {
@@ -296,8 +297,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		} else {
 			NetworkTreeFactory.fillAuthorNode(tree, children);
 		}
-		//NetworkLibrary.invalidateAccountDependents();
-		//NetworkLibrary.synchronize();
+		NetworkLibrary.Instance().invalidateAccountDependents();
+		NetworkLibrary.Instance().synchronize();
 	}
 
 

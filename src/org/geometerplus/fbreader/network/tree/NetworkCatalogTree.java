@@ -21,12 +21,15 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkCatalogTree extends NetworkTree {
 
 	public final NetworkCatalogItem Item;
-
+	public final ArrayList<NetworkLibraryItem> ChildrenItems = new ArrayList<NetworkLibraryItem>();
 
 	NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
@@ -49,5 +52,86 @@ public class NetworkCatalogTree extends NetworkTree {
 			return "";
 		}
 		return Item.Summary;
+	}
+
+	private boolean processAccountDependent(NetworkCatalogItem item) {
+		if (item.Visibility == NetworkCatalogItem.VISIBLE_ALWAYS) {
+			return true;
+		}
+		final NetworkLink link = item.Link;
+		if (link.authenticationManager() == null) {
+			return false;
+		}
+		return link.authenticationManager().isAuthorised(true).Status != ZLBoolean3.B3_FALSE;
+	}
+
+	public void updateAccountDependents() {
+		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
+
+		Iterator<FBTree> nodeIterator = subTrees().iterator();
+		FBTree currentNode = null;
+		int nodeCount = 0;
+
+		for (int i = 0; i < ChildrenItems.size(); ++i) {
+			NetworkLibraryItem currentItem = ChildrenItems.get(i);
+			if (!(currentItem instanceof NetworkCatalogItem)) {
+				continue;
+			}
+			boolean processed = false;
+			while (currentNode != null || nodeIterator.hasNext()) {
+				if (currentNode == null) {
+					currentNode = nodeIterator.next();
+				}
+				if (!(currentNode instanceof NetworkCatalogTree)) {
+					currentNode = null;
+					++nodeCount;
+					continue;
+				}
+				NetworkCatalogTree child = (NetworkCatalogTree) currentNode;
+				if (child.Item == currentItem) {
+					if (processAccountDependent(child.Item)) {
+						child.updateAccountDependents();
+					} else {
+						toRemove.add(child);
+					}
+					currentNode = null;
+					++nodeCount;
+					processed = true;
+					break;
+				} else {
+					boolean found = false;
+					for (int j = i + 1; j < ChildrenItems.size(); ++j) {
+						if (child.Item == ChildrenItems.get(j)) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						toRemove.add(currentNode);
+						currentNode = null;
+						++nodeCount;
+					} else {
+						break;
+					}
+				}
+			}
+			if (!processed && processAccountDependent((NetworkCatalogItem) currentItem)) {
+				NetworkTreeFactory.createNetworkTree(this, currentItem, nodeCount++);
+			}
+		}
+
+		while (currentNode != null || nodeIterator.hasNext()) {
+			if (currentNode == null) {
+				currentNode = nodeIterator.next();
+			}
+			if (currentNode instanceof NetworkCatalogTree) {
+				toRemove.add(currentNode);
+			}
+			currentNode = null;
+		}
+
+		for (FBTree tree: toRemove) {
+			tree.removeSelf();
+		}
 	}
 }
