@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.xml;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -55,7 +56,7 @@ final class ZLXMLParser {
 	private static final byte ATTRIBUTE_VALUE_APOS = 22;
 	private static final byte ENTITY_REF = 23;
 
-	private static String convertToString(HashMap<ZLMutableString,String> strings, ZLMutableString container) {
+	private static String convertToString(Map<ZLMutableString,String> strings, ZLMutableString container) {
 		String s = strings.get(container);
 		if (s == null) {
 			s = container.toString();
@@ -167,7 +168,7 @@ final class ZLXMLParser {
 		return value;
 	}
 
-	private static HashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = new HashMap();
+	private static ConcurrentHashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = new ConcurrentHashMap(); // FIXME: concurrency violation
 
 	static HashMap<String,char[]> getDTDMap(List<String> dtdList) throws IOException {
 		HashMap<String,char[]> entityMap = ourDTDMaps.get(dtdList);
@@ -189,7 +190,7 @@ final class ZLXMLParser {
 		return entityMap;
 	}
 
-	private final static HashMap ourStringMap = new HashMap();
+	private final static ConcurrentHashMap ourStringMap = new ConcurrentHashMap();
 
 	void doIt() throws IOException {
 		final ZLXMLReader xmlReader = myXMLReader;
@@ -206,7 +207,7 @@ final class ZLXMLParser {
 		final ZLMutableString attributeValue = myAttributeValue;
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final ZLMutableString entityName = myEntityName;
-		final HashMap<ZLMutableString,String> strings = ourStringMap;//new HashMap();
+		final Map<ZLMutableString,String> strings = ourStringMap;//new HashMap();
 		final ZLStringMap attributes = new ZLStringMap();
 		String[] tagStack = new String[10];
 		int tagStackSize = 0;

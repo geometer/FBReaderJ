@@ -24,10 +24,13 @@ import java.io.File;
 
 import android.app.*;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.*;
 import android.widget.*;
 import android.net.Uri;
 import android.content.Intent;
+import android.content.Context;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -196,40 +199,122 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return view;
 		}
 
-		public void expandCatalog(NetworkCatalogTree tree) {
-			/*if (!NetworkOperationRunnable::tryConnect()) {
-				return;
-			}*/
-			NetworkCatalogItem item = tree.Item;
-			NetworkLink link = item.Link;
-			if (link.authenticationManager() != null) {
-				NetworkAuthenticationManager mgr = link.authenticationManager();
-				/*IsAuthorisedRunnable checker(mgr);
-				checker.executeWithUI();
-				if (checker.hasErrors()) {
-					checker.showErrorMessage();
-					return;
-				}
-				if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
-					InitializeAuthenticationManagerRunnable initializer(mgr);
-					initializer.executeWithUI();
-					if (initializer.hasErrors()) {
-						LogOutRunnable logout(mgr);
-						logout.executeWithUI();
-					}
-				}*/
-			}
-			if (!tree.hasChildren()) {
-				updateCatalogChildren(tree);
-				resetTree();
-			}
-			super.runTreeItem(tree);
+		private final LinkedList<NetworkTree> myProcessingTrees = new LinkedList<NetworkTree>();
+		private final int myProcessingNotificationId = (int) System.currentTimeMillis();
+
+		private void updateProgressNotification(NetworkCatalogTree tree) {
+			final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
+			String title = "Downloading catalogs"; // TODO: i18n
+			contentView.setTextViewText(R.id.download_notification_title, title);
+			contentView.setTextViewText(R.id.download_notification_progress_text, "");
+			contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
+
+			//final Intent intent = new Intent(NetworkLibraryActivity.this, NetworkLibraryActivity.class);
+			//final PendingIntent contentIntent = PendingIntent.getActivity(NetworkLibraryActivity.this, 0, intent, 0);
+			final PendingIntent contentIntent = PendingIntent.getActivity(NetworkLibraryActivity.this, 0, new Intent(), 0);
+
+			final Notification notification = new Notification();
+			notification.icon = android.R.drawable.stat_notify_sync;
+			notification.flags |= Notification.FLAG_ONGOING_EVENT;
+			notification.contentView = contentView;
+			notification.contentIntent = contentIntent;
+			notification.number = myProcessingTrees.size();
+
+			final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(myProcessingNotificationId, notification);
 		}
 
-		public void reloadCatalog(NetworkCatalogTree tree) {
-			updateCatalogChildren(tree);
+		private boolean startProgressNotification(NetworkCatalogTree tree) {
+			if (myProcessingTrees.contains(tree)) {
+				return false;
+			}
+			myProcessingTrees.add(tree);
+			updateProgressNotification(tree);
+			return true;
+		}
+
+		private void endProgressNotification(NetworkCatalogTree tree) {
+			myProcessingTrees.remove(tree);
+			if (myProcessingTrees.size() == 0) {
+				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.cancel(myProcessingNotificationId);
+			} else {
+				updateProgressNotification(tree);
+			}
+		}
+
+		public void expandCatalog(final NetworkCatalogTree tree) {
+			if (!startProgressNotification(tree)) {
+				return;
+			}
+			final ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
+			final boolean hadChildren = tree.hasChildren();
+			final Handler finishHandler = new Handler() {
+				public void handleMessage(Message message) {
+					if (!hadChildren) {
+						afterUpdateCatalogChildren(tree, children, (String) message.obj);
+						resetTree();
+					}
+					LibraryAdapter.super.runTreeItem(tree);
+					endProgressNotification(tree);
+				}
+			};
+			new Thread(new Runnable() {
+				public void run() {
+					/*if (!NetworkOperationRunnable::tryConnect()) {
+						return;
+					}*/
+					NetworkCatalogItem item = tree.Item;
+					NetworkLink link = item.Link;
+					if (link.authenticationManager() != null) {
+						NetworkAuthenticationManager mgr = link.authenticationManager();
+						/*IsAuthorisedRunnable checker(mgr);
+						checker.executeWithUI();
+						if (checker.hasErrors()) {
+							checker.showErrorMessage();
+							return;
+						}
+						if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
+							InitializeAuthenticationManagerRunnable initializer(mgr);
+							initializer.executeWithUI();
+							if (initializer.hasErrors()) {
+								LogOutRunnable logout(mgr);
+								logout.executeWithUI();
+							}
+						}*/
+					}
+					Message msg = new Message();
+					if (!hadChildren) {
+						msg.obj = tree.Item.loadChildren(children);
+					}
+					finishHandler.sendMessage(msg);
+				}
+			}).start();
+		}
+
+		public void reloadCatalog(final NetworkCatalogTree tree) {
+			if (!startProgressNotification(tree)) {
+				return;
+			}
+			final ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
+			final Handler finishHandler = new Handler() {
+				public void handleMessage(Message message) {
+					afterUpdateCatalogChildren(tree, children, (String) message.obj);
+					resetTree();
+					LibraryAdapter.super.runTreeItem(tree);
+					endProgressNotification(tree);
+				}
+			};
+			LibraryAdapter.super.runTreeItem(tree);
+			tree.clear();
 			resetTree();
-			//super.runTreeItem(tree);
+			new Thread(new Runnable() {
+				public void run() {
+					Message msg = new Message();
+					msg.obj = tree.Item.loadChildren(children);
+					finishHandler.sendMessage(msg);
+				}
+			}).start();
 		}
 
 		public void diableCatalog(NetworkCatalogRootTree tree) {
@@ -310,18 +395,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		}
 	}
 
+	private void afterUpdateCatalogChildren(NetworkCatalogTree tree, ArrayList<NetworkLibraryItem> children, String errorMessage) {
+		tree.ChildrenItems.clear();
+		tree.ChildrenItems.addAll(children);
 
-	private void updateCatalogChildren(NetworkCatalogTree tree) {
-		tree.clear();
-
-		ArrayList<NetworkLibraryItem> children = tree.ChildrenItems;
-
-		children.clear();
-		LoadSubCatalogRunnable loader = new LoadSubCatalogRunnable(tree.Item, children);
-		loader.executeWithUI();
-		if (loader.hasErrors()) {
-			loader.showErrorMessage(this);
-		} else if (children.isEmpty()) {
+		if (errorMessage != null) {
+			final ZLResource dialogResource = ZLResource.resource("dialog");
+			final ZLResource buttonResource = dialogResource.getResource("button");
+			final ZLResource boxResource = dialogResource.getResource("networkError");
+			new AlertDialog.Builder(this)
+				.setTitle(boxResource.getResource("title").getValue())
+				.setMessage(errorMessage)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+				.create().show();
+		} else if (children.size() == 0) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource buttonResource = dialogResource.getResource("button");
 			final ZLResource boxResource = dialogResource.getResource("emptyCatalogBox");
