@@ -25,6 +25,7 @@ import android.app.*;
 import android.os.Message;
 import android.os.Handler;
 import android.view.ContextMenu;
+import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.content.Intent;
 import android.content.Context;
@@ -137,6 +138,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doReloadCatalog((NetworkCatalogTree)tree);
 				return true;
 			/*case DONT_SHOW_ITEM_ID:
+				diableCatalog((NetworkCatalogRootTree) tree);
 				return true;*/
 		}
 		return false;
@@ -191,15 +193,29 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		final ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
 		final boolean hadChildren = tree.hasChildren();
+		final Handler progressHandler = new Handler() {
+			public void handleMessage(Message message) {
+				NetworkLibraryItem item = (NetworkLibraryItem) message.obj;
+				boolean expand = !tree.hasChildren();
+				tree.ChildrenItems.add(item);
+				NetworkTreeFactory.createNetworkTree(tree, item);
+				tree.updateAccountDependents();
+				myAdapter.resetTree();
+				if (expand) {
+					// If catalog loading started => Tree must be expanded after the first item has been loaded
+					myAdapter.expandOrCollapseTree(tree);
+				}
+			}
+		};
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				if (!hadChildren) {
-					afterUpdateCatalogChildren(tree, children, (String) message.obj);
-					myAdapter.resetTree();
+					afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
+				} else {
+					// If Tree had children => catalog loading wasn't started => Tree must be expanded manually
+					myAdapter.expandOrCollapseTree(tree);
 				}
-				myAdapter.expandOrCollapseTree(tree);
 				endProgressNotification(tree);
 			}
 		};
@@ -229,7 +245,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				}
 				Message msg = new Message();
 				if (!hadChildren) {
-					msg.obj = tree.Item.loadChildren(children);
+					msg.obj = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+						public void onNewItem(NetworkLibraryItem item) {
+							Message itemMsg = new Message();
+							itemMsg.obj = item;
+							progressHandler.sendMessage(itemMsg);
+						}
+					});
 				}
 				finishHandler.sendMessage(msg);
 			}
@@ -240,31 +262,46 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		final ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
+		final Handler progressHandler = new Handler() {
+			public void handleMessage(Message message) {
+				NetworkLibraryItem item = (NetworkLibraryItem) message.obj;
+				boolean expand = !tree.hasChildren();
+				tree.ChildrenItems.add(item);
+				NetworkTreeFactory.createNetworkTree(tree, item);
+				tree.updateAccountDependents();
+				myAdapter.resetTree();
+				if (expand) {
+					// If catalog loading started => Tree must be expanded after the first item has been loaded
+					myAdapter.expandOrCollapseTree(tree);
+				}
+			}
+		};
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
-				afterUpdateCatalogChildren(tree, children, (String) message.obj);
-				myAdapter.resetTree();
-				myAdapter.expandOrCollapseTree(tree);
+				afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
 				endProgressNotification(tree);
 			}
 		};
 		myAdapter.expandOrCollapseTree(tree);
+		tree.ChildrenItems.clear();
 		tree.clear();
 		myAdapter.resetTree();
 		new Thread(new Runnable() {
 			public void run() {
 				Message msg = new Message();
-				msg.obj = tree.Item.loadChildren(children);
+				msg.obj = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+					public void onNewItem(NetworkLibraryItem item) {
+						Message itemMsg = new Message();
+						itemMsg.obj = item;
+						progressHandler.sendMessage(itemMsg);
+					}
+				});
 				finishHandler.sendMessage(msg);
 			}
 		}).start();
 	}
 
-	private void afterUpdateCatalogChildren(NetworkCatalogTree tree, ArrayList<NetworkLibraryItem> children, String errorMessage) {
-		tree.ChildrenItems.clear();
-		tree.ChildrenItems.addAll(children);
-
+	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
 		if (errorMessage != null) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource buttonResource = dialogResource.getResource("button");
@@ -275,7 +312,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				.setIcon(0)
 				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
 				.create().show();
-		} else if (children.size() == 0) {
+		} else if (childrenEmpty) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource buttonResource = dialogResource.getResource("button");
 			final ZLResource boxResource = dialogResource.getResource("emptyCatalogBox");
@@ -286,33 +323,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
 				.create().show();
 		}
-
-		boolean hasSubcatalogs = false;
-		for (NetworkLibraryItem child: children) {
-			if (child instanceof NetworkCatalogItem) {
-				hasSubcatalogs = true;
-				break;
-			}
-		}
-
-		if (hasSubcatalogs) {
-			for (NetworkLibraryItem child: children) {
-				NetworkTreeFactory.createNetworkTree(tree, child);
-			}
-		} else {
-			NetworkTreeFactory.fillAuthorNode(tree, children);
-		}
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.invalidateAccountDependents();
 		library.synchronize();
+		myAdapter.resetTree();
 	}
 
-	public void diableCatalog(NetworkCatalogRootTree tree) {
+	/*public void diableCatalog(NetworkCatalogRootTree tree) {
 		tree.Link.OnOption.setValue(false);
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.invalidate();
 		library.synchronize();
 		myAdapter.resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
-	}
+	}*/
 
 }

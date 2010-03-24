@@ -88,8 +88,6 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 				// return error???
 				return null;
 			}
-		} finally {
-			listener.onStop();
 		}
 		return null;
 	}

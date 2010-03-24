@@ -80,7 +80,6 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
 	public interface CatalogListener {
 		void onNewItem(NetworkLibraryItem item);
-		void onStop();
 	}
 
 	public static class OperationData {
@@ -101,15 +100,13 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
 	public abstract String loadChildren(CatalogListener listener); // returns Error Message
 
-	public final String loadChildren(final List<NetworkLibraryItem> children) {
+	/*public final String loadChildren(final List<NetworkLibraryItem> children) {
 		return loadChildren(new CatalogListener() {
 			public void onNewItem(NetworkLibraryItem item) {
 				children.add(item);
 			}
-			public void onStop() {
-			}
 		});
-	}
+	}*/
 
 	/**
 	 * Method is called each time this item is displayed to the user.
