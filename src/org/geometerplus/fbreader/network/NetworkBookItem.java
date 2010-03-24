@@ -65,7 +65,7 @@ public class NetworkBookItem extends NetworkLibraryItem {
 		}
 	}
 
-	public /*final*/ int Index;
+	public final int Index;
 	public final String Id;
 	public final String Language;
 	public final String Date;

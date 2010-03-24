@@ -41,8 +41,8 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public String loadChildren(List<NetworkLibraryItem> children) {
-		NetworkOperationData data = new NetworkOperationData(Link);
+	public String loadChildren(CatalogListener listener) {
+		OperationData data = new OperationData(Link, listener);
 
 		String urlString = URLByType.get(URL_CATALOG);
 		if (urlString == null) {
@@ -73,7 +73,6 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 					return null; // return error???
 				}
 
-				children.addAll(data.Items);
 				urlString = data.ResumeURI;
 				data.clear();
 			}
@@ -89,6 +88,8 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 				// return error???
 				return null;
 			}
+		} finally {
+			listener.onStop();
 		}
 		return null;
 	}

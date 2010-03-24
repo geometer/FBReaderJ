@@ -49,10 +49,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int RELOAD_ITEM_ID = 2;
 	//public static final int DONT_SHOW_ITEM_ID = 3;
 
-
-	private static final LinkedList<NetworkTree> ourProcessingTrees = new LinkedList<NetworkTree>();
-	private static final int ourProcessingNotificationId = (int) System.currentTimeMillis();
-
 	private ZLTreeAdapter myAdapter;
 
 	public NetworkCatalogActions(NetworkLibraryActivity activity, ZLTreeAdapter adapter) {
@@ -146,6 +142,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		return false;
 	}
 
+
+	private static final LinkedList<NetworkTree> ourProcessingTrees = new LinkedList<NetworkTree>();
+	private static final int ourProcessingNotificationId = (int) System.currentTimeMillis();
 
 	private void updateProgressNotification(NetworkCatalogTree tree) {
 		final RemoteViews contentView = new RemoteViews(myActivity.getPackageName(), R.layout.download_notification);

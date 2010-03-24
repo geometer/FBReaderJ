@@ -30,10 +30,9 @@ import org.geometerplus.fbreader.network.atom.*;
 class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private final String myBaseURL;
-	private final NetworkOperationData myData;
+	private final NetworkCatalogItem.OperationData myData;
 
 	private int myIndex;
-	private int myOpenSearchStartIndex;
 
 
 	/**
@@ -43,7 +42,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	 * @param result     network results buffer. Must be created using OPDSLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
-	NetworkOPDSFeedReader(String baseURL, NetworkOperationData result) {
+	NetworkOPDSFeedReader(String baseURL, NetworkCatalogItem.OperationData result) {
 		myBaseURL = baseURL;
 		myData = result;
 		if (!(result.Link instanceof OPDSLink)) {
@@ -72,19 +71,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				myData.ResumeURI = href;
 			}
 		}
-		myOpenSearchStartIndex = feed.OpensearchStartIndex - 1;
+		myIndex = feed.OpensearchStartIndex - 1;
 	}
 
 	public void processFeedEnd() {
-		if (myOpenSearchStartIndex > 0) {
-			for (NetworkLibraryItem item: myData.Items) {
-				if (!(item instanceof NetworkBookItem)) {
-					continue;
-				}
-				NetworkBookItem book = (NetworkBookItem) item;
-				book.Index += myOpenSearchStartIndex;
-			}
-		}
 	}
 
 
@@ -145,7 +135,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 		if (item != null) {
 			//item.dbgEntry = entry;
-			myData.Items.add(item);
+			//myData.Items.add(item);
+			myData.Listener.onNewItem(item);
 		}
 	}
 
@@ -264,7 +255,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		//entry.rights();
 
 		return new NetworkBookItem(
-			myData.Link,
+			opdsLink,
 			entry.Id.Uri,
 			myIndex++,
 			entry.Title,

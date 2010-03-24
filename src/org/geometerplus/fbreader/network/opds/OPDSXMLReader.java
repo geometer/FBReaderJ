@@ -226,6 +226,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myEntry.readAttributes(attributes);
 						mySummaryTagFound = false;
 						myState = F_ENTRY;
+						// Process feed metadata just before first feed entry
+						if (myFeed != null && myFeed.Id != null) {
+							myFeedReader.processFeedMetadata(myFeed);
+						}
+						myFeed = null;
 					} 
 				} else if (tagPrefix == myOpenSearchNamespaceId) {
 					if (tag == OPENSEARCH_TAG_TOTALRESULTS) {

@@ -78,7 +78,38 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 		CatalogType = catalogType;
 	}
 
-	public abstract String loadChildren(List<NetworkLibraryItem> children); // returns Error Message
+	public interface CatalogListener {
+		void onNewItem(NetworkLibraryItem item);
+		void onStop();
+	}
+
+	public static class OperationData {
+		public final NetworkLink Link;
+		public final CatalogListener Listener;
+		public String ResumeURI;
+		public int ResumeCount;
+
+		public OperationData(NetworkLink link, CatalogListener listener) {
+			Link = link;
+			Listener = listener;
+		}
+
+		public void clear() {
+			ResumeURI = null;
+		}
+	}
+
+	public abstract String loadChildren(CatalogListener listener); // returns Error Message
+
+	public final String loadChildren(final List<NetworkLibraryItem> children) {
+		return loadChildren(new CatalogListener() {
+			public void onNewItem(NetworkLibraryItem item) {
+				children.add(item);
+			}
+			public void onStop() {
+			}
+		});
+	}
 
 	/**
 	 * Method is called each time this item is displayed to the user.
