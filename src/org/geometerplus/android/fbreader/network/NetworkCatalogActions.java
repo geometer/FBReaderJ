@@ -61,6 +61,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
+	public boolean canHandleTree(NetworkTree tree) {
+		return tree instanceof NetworkCatalogTree;
+	}
+
+	@Override
 	public void buildContextMenu(ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
@@ -298,8 +303,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		} else {
 			NetworkTreeFactory.fillAuthorNode(tree, children);
 		}
-		NetworkLibrary.Instance().invalidateAccountDependents();
-		NetworkLibrary.Instance().synchronize();
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		library.invalidateAccountDependents();
+		library.synchronize();
+	}
+
+	public void diableCatalog(NetworkCatalogRootTree tree) {
+		tree.Link.OnOption.setValue(false);
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		library.invalidate();
+		library.synchronize();
+		myAdapter.resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
 	}
 
 }

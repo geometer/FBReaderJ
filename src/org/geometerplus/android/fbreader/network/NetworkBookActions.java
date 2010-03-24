@@ -65,6 +65,11 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
+	public boolean canHandleTree(NetworkTree tree) {
+		return tree instanceof NetworkBookTree;
+	}
+
+	@Override
 	public void buildContextMenu(ContextMenu menu, NetworkTree tree) {
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;

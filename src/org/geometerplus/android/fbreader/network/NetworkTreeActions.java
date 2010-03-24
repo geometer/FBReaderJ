@@ -59,6 +59,8 @@ abstract class NetworkTreeActions {
 		menu.add(0, id, 0, getTitleValue(key, arg));
 	}
 
+	public abstract boolean canHandleTree(NetworkTree tree);
+
 	public abstract void buildContextMenu(ContextMenu menu, NetworkTree tree);
 
 	public abstract int getDefaultActionCode(NetworkTree tree);

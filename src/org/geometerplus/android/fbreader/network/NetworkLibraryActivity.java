@@ -45,6 +45,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private final ZLResource myResource = ZLResource.resource("networkView");
 
+	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -54,7 +56,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		new LibraryAdapter(getListView(), NetworkLibrary.Instance().getTree());
+		LibraryAdapter adapter = new LibraryAdapter(getListView(), NetworkLibrary.Instance().getTree());
+
+		myActions.add(new NetworkBookActions(this));
+		myActions.add(new NetworkCatalogActions(this, adapter));
+		myActions.trimToSize();
+	}
+
+	private NetworkTreeActions chooseActions(ZLTree tree) {
+		NetworkTree networkTree = (NetworkTree) tree;
+		for (NetworkTreeActions actions: myActions) {
+			if (actions.canHandleTree(networkTree)) {
+				return actions;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -95,10 +111,9 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				menu.add(0, DBG_PRINT_ENTRY_ITEM_ID, 0, "dbg - Dump Entry");
 			}*/
 
-			if (tree instanceof NetworkCatalogTree) {
-				new NetworkCatalogActions(NetworkLibraryActivity.this, this).buildContextMenu(menu, tree);
-			} else if (tree instanceof NetworkBookTree) {
-				new NetworkBookActions(NetworkLibraryActivity.this).buildContextMenu(menu, tree);
+			final NetworkTreeActions actions = chooseActions(tree);
+			if (actions != null) {
+				actions.buildContextMenu(menu, tree);
 			}
 		}
 
@@ -117,32 +132,16 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return view;
 		}
 
-		/*public void diableCatalog(NetworkCatalogRootTree tree) {
-			NetworkLink link = tree.Link;
-			link.OnOption.setValue(false);
-			NetworkLibrary library = NetworkLibrary.Instance();
-			library.invalidate();
-			library.synchronize();
-			resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
-		}*/
-
 		@Override
 		protected boolean runTreeItem(ZLTree tree) {
 			if (super.runTreeItem(tree)) {
 				return true;
 			}
-			final NetworkTreeActions actions;
-			if (tree instanceof NetworkCatalogTree) {
-				actions = new NetworkCatalogActions(NetworkLibraryActivity.this, this);
-			} else if (tree instanceof NetworkBookTree) {
-				actions = new NetworkBookActions(NetworkLibraryActivity.this);
-			} else {
-				actions = null;
-			}
+			final NetworkTree networkTree = (NetworkTree) tree;
+			final NetworkTreeActions actions = chooseActions(networkTree);
 			if (actions == null) {
 				return false;
 			}
-			final NetworkTree networkTree = (NetworkTree) tree;
 			final int actionCode = actions.getDefaultActionCode(networkTree);
 			final String confirm = actions.getConfirmText(networkTree, actionCode);
 			if (actionCode < 0) {
@@ -188,15 +187,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return true;
 		}*/
 
-		final NetworkTreeActions actions;
-		if (tree instanceof NetworkCatalogTree) {
-			actions = new NetworkCatalogActions(this, adapter);
-		} else if (tree instanceof NetworkBookTree) {
-			actions = new NetworkBookActions(this);
-		} else {
-			actions = null;
-		}
-		if (actions != null && 
+		final NetworkTreeActions actions = chooseActions(tree);
+		if (actions != null &&
 				actions.runAction(tree, item.getItemId())) {
 			return true;
 		}
