@@ -46,7 +46,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		parent.setOnCreateContextMenuListener(this);
 	}
 
-	public final void openTree(ZLTree tree) {
+	protected final void openTree(ZLTree tree) {
 		if (tree == null) {
 			return;
 		}
@@ -56,7 +56,20 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		}
 	}
 
-	protected final boolean isOpen(ZLTree tree) {
+	public final void expandOrCollapseTree(ZLTree tree) {
+		if (!tree.hasChildren()) {
+			return;
+		}
+		if (isOpen(tree)) {
+			myOpenItems.remove(tree);
+		} else {
+			myOpenItems.add(tree);
+		}
+		myParent.invalidateViews();
+		myParent.requestLayout();
+	}
+
+	public final boolean isOpen(ZLTree tree) {
 		return myOpenItems.contains(tree);
 	}
 
@@ -143,13 +156,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		if (!tree.hasChildren()) {
 			return false;
 		}
-		if (isOpen(tree)) {
-			myOpenItems.remove(tree);
-		} else {
-			myOpenItems.add(tree);
-		}
-		myParent.invalidateViews();
-		myParent.requestLayout();
+		expandOrCollapseTree(tree);
 		return true;
 	}
 

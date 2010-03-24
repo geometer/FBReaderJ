@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.view.ContextMenu;
-import android.content.Context;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -30,27 +29,34 @@ import org.geometerplus.fbreader.network.NetworkTree;
 abstract class NetworkTreeActions {
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
+	protected final NetworkLibraryActivity myActivity;
 
-	protected Context myContext;
-
-	protected NetworkTreeActions(Context context) {
-		myContext = context;
+	protected NetworkTreeActions(NetworkLibraryActivity activity) {
+		myActivity = activity;
 	}
 
-	protected String getResourceValue(String key) {
+	protected String getTitleValue(String key) {
 		return myResource.getResource(key).getValue();
 	}
 
-	protected String getResourceValue(String key, String arg) {
+	protected String getTitleValue(String key, String arg) {
 		return myResource.getResource(key).getValue().replace("%s", arg);
 	}
 
+	protected String getConfirmValue(String key) {
+		return myResource.getResource("confirmQuestions").getResource(key).getValue();
+	}
+
+	protected String getConfirmValue(String key, String arg) {
+		return myResource.getResource("confirmQuestions").getResource(key).getValue().replace("%s", arg);
+	}
+
 	protected void addMenuItem(ContextMenu menu, int id, String key) {
-		menu.add(0, id, 0, getResourceValue(key));
+		menu.add(0, id, 0, getTitleValue(key));
 	}
 
 	protected void addMenuItem(ContextMenu menu, int id, String key, String arg) {
-		menu.add(0, id, 0, getResourceValue(key, arg));
+		menu.add(0, id, 0, getTitleValue(key, arg));
 	}
 
 	public abstract void buildContextMenu(ContextMenu menu, NetworkTree tree);

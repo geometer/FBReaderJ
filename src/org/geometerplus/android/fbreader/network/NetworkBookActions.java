@@ -24,7 +24,6 @@ import java.io.File;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.content.Intent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.ContextMenu;
 
@@ -45,8 +44,8 @@ class NetworkBookActions extends NetworkTreeActions {
 	public static final int BUY_DIRECTLY_ITEM_ID = 6;
 	public static final int BUY_IN_BROWSER_ITEM_ID = 7;
 
-	public NetworkBookActions(Context context) {
-		super(context);
+	protected NetworkBookActions(NetworkLibraryActivity activity) {
+		super(activity);
 	}
 
 	private boolean useFullReferences(NetworkBookItem book) {
@@ -137,17 +136,17 @@ class NetworkBookActions extends NetworkTreeActions {
 		final NetworkBookItem book = bookTree.Book;
 		switch (actionCode) {
 		case READ_BOOK_ITEM_ID:
-			return getResourceValue("read");
+			return getConfirmValue("read");
 		case DOWNLOAD_BOOK_ITEM_ID:
-			return getResourceValue("download");
+			return getConfirmValue("download");
 		case READ_DEMO_ITEM_ID:
-			return getResourceValue("readDemo");
+			return getConfirmValue("readDemo");
 		case DOWNLOAD_DEMO_ITEM_ID:
-			return getResourceValue("downloadDemo");
+			return getConfirmValue("downloadDemo");
 		case BUY_DIRECTLY_ITEM_ID:
-			return getResourceValue("buy", ((BuyBookReference) book.reference(BookReference.Type.BUY)).Price);
+			return getConfirmValue("buy", ((BuyBookReference) book.reference(BookReference.Type.BUY)).Price);
 		case BUY_IN_BROWSER_ITEM_ID:
-			return getResourceValue("buy", ((BuyBookReference) book.reference(BookReference.Type.BUY_IN_BROWSER)).Price);
+			return getConfirmValue("buy", ((BuyBookReference) book.reference(BookReference.Type.BUY_IN_BROWSER)).Price);
 		}
 		return null;
 	}
@@ -191,8 +190,8 @@ class NetworkBookActions extends NetworkTreeActions {
 		);
 		if (ref != null) {
 			// TODO: add `demo` tag to the book???
-			myContext.startService(
-				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), myContext, BookDownloaderService.class)
+			myActivity.startService(
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), myActivity, BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
 			);
@@ -212,10 +211,10 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		}
 		if (local != null) {
-			myContext.startActivity(
+			myActivity.startActivity(
 				new Intent(Intent.ACTION_VIEW,
 					Uri.fromFile(new File(local)),
-					myContext,
+					myActivity,
 					org.geometerplus.android.fbreader.FBReader.class
 				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 			);
@@ -228,7 +227,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
-		new AlertDialog.Builder(myContext)
+		new AlertDialog.Builder(myActivity)
 			.setTitle(book.Title)
 			.setMessage(boxResource.getResource("message").getValue())
 			.setIcon(0)
@@ -303,7 +302,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		NetworkBookItem book = bookTree.Book;
 		BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
 		if (reference != null) {
-			((NetworkLibraryActivity) myContext).openInBrowser(reference.URL);
+			myActivity.openInBrowser(reference.URL);
 		}
 	}
 

@@ -20,31 +20,24 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
-import java.io.File;
 
 import android.app.*;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.*;
 import android.widget.*;
 import android.net.Uri;
 import android.content.Intent;
-import android.content.Context;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.authentication.*;
 
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
@@ -102,47 +95,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				menu.add(0, DBG_PRINT_ENTRY_ITEM_ID, 0, "dbg - Dump Entry");
 			}*/
 
-			if (tree instanceof NetworkCatalogRootTree) {
-				menu.setHeaderTitle(tree.getName());
-				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-				NetworkCatalogItem item = catalogTree.Item;
-				NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-				if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
-					String key = (tree.hasChildren() && isOpen(tree)) ? "closeCatalog" : "openCatalog";
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, myResource.getResource(key).getValue());
-				}
-				if (tree.hasChildren() && isOpen(tree)) {
-					menu.add(0, RELOAD_ITEM_ID, 0, myResource.getResource("reload").getValue());
-				}
-				/*if (!mgr.isNull()) {
-					registerAction(new LoginAction(*mgr));
-					registerAction(new LogoutAction(*mgr));
-					if (!mgr->refillAccountLink().empty()) {
-						registerAction(new RefillAccountAction(*mgr));
-					}
-					if (mgr->registrationSupported()) {
-						registerAction(new RegisterUserAction(*mgr), true);
-					}
-					if (mgr->passwordRecoverySupported()) {
-						registerAction(new PasswordRecoveryAction(*mgr), true);
-					}
-				}*/
-				//menu.add(0, DONT_SHOW_ITEM_ID, 0, myResource.getResource("dontShow").getValue()); // TODO: is it needed??? and how to turn it on???
-			} else if (tree instanceof NetworkCatalogTree) {
-				menu.setHeaderTitle(tree.getName());
-				NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-				NetworkCatalogItem item = catalogTree.Item;
-				if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
-					String key = (tree.hasChildren() && isOpen(tree)) ? "collapseTree" : "expandTree";
-					menu.add(0, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, 0, myResource.getResource(key).getValue());
-				}
-				String htmlUrl = item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE);
-				if (htmlUrl != null) {
-					menu.add(0, OPEN_IN_BROWSER_ITEM_ID, 0, myResource.getResource("openInBrowser").getValue());
-				}
-				if (tree.hasChildren() && isOpen(tree)) {
-					menu.add(0, RELOAD_ITEM_ID, 0, myResource.getResource("reload").getValue());
-				}
+			if (tree instanceof NetworkCatalogTree) {
+				new NetworkCatalogActions(NetworkLibraryActivity.this, this).buildContextMenu(menu, tree);
 			} else if (tree instanceof NetworkBookTree) {
 				new NetworkBookActions(NetworkLibraryActivity.this).buildContextMenu(menu, tree);
 			}
@@ -163,219 +117,57 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return view;
 		}
 
-		private final LinkedList<NetworkTree> myProcessingTrees = new LinkedList<NetworkTree>();
-		private final int myProcessingNotificationId = (int) System.currentTimeMillis();
-
-		private void updateProgressNotification(NetworkCatalogTree tree) {
-			final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
-			String title = "Downloading catalogs"; // TODO: i18n
-			contentView.setTextViewText(R.id.download_notification_title, title);
-			contentView.setTextViewText(R.id.download_notification_progress_text, "");
-			contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
-
-			//final Intent intent = new Intent(NetworkLibraryActivity.this, NetworkLibraryActivity.class);
-			//final PendingIntent contentIntent = PendingIntent.getActivity(NetworkLibraryActivity.this, 0, intent, 0);
-			final PendingIntent contentIntent = PendingIntent.getActivity(NetworkLibraryActivity.this, 0, new Intent(), 0);
-
-			final Notification notification = new Notification();
-			notification.icon = android.R.drawable.stat_notify_sync;
-			notification.flags |= Notification.FLAG_ONGOING_EVENT;
-			notification.contentView = contentView;
-			notification.contentIntent = contentIntent;
-			notification.number = myProcessingTrees.size();
-
-			final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(myProcessingNotificationId, notification);
-		}
-
-		private boolean startProgressNotification(NetworkCatalogTree tree) {
-			if (myProcessingTrees.contains(tree)) {
-				return false;
-			}
-			myProcessingTrees.add(tree);
-			updateProgressNotification(tree);
-			return true;
-		}
-
-		private void endProgressNotification(NetworkCatalogTree tree) {
-			myProcessingTrees.remove(tree);
-			if (myProcessingTrees.size() == 0) {
-				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-				notificationManager.cancel(myProcessingNotificationId);
-			} else {
-				updateProgressNotification(tree);
-			}
-		}
-
-		public void expandCatalog(final NetworkCatalogTree tree) {
-			if (!startProgressNotification(tree)) {
-				return;
-			}
-			final ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
-			final boolean hadChildren = tree.hasChildren();
-			final Handler finishHandler = new Handler() {
-				public void handleMessage(Message message) {
-					if (!hadChildren) {
-						afterUpdateCatalogChildren(tree, children, (String) message.obj);
-						resetTree();
-					}
-					LibraryAdapter.super.runTreeItem(tree);
-					endProgressNotification(tree);
-				}
-			};
-			new Thread(new Runnable() {
-				public void run() {
-					/*if (!NetworkOperationRunnable::tryConnect()) {
-						return;
-					}*/
-					NetworkCatalogItem item = tree.Item;
-					NetworkLink link = item.Link;
-					if (link.authenticationManager() != null) {
-						NetworkAuthenticationManager mgr = link.authenticationManager();
-						/*IsAuthorisedRunnable checker(mgr);
-						checker.executeWithUI();
-						if (checker.hasErrors()) {
-							checker.showErrorMessage();
-							return;
-						}
-						if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
-							InitializeAuthenticationManagerRunnable initializer(mgr);
-							initializer.executeWithUI();
-							if (initializer.hasErrors()) {
-								LogOutRunnable logout(mgr);
-								logout.executeWithUI();
-							}
-						}*/
-					}
-					Message msg = new Message();
-					if (!hadChildren) {
-						msg.obj = tree.Item.loadChildren(children);
-					}
-					finishHandler.sendMessage(msg);
-				}
-			}).start();
-		}
-
-		public void reloadCatalog(final NetworkCatalogTree tree) {
-			if (!startProgressNotification(tree)) {
-				return;
-			}
-			final ArrayList<NetworkLibraryItem> children = new ArrayList<NetworkLibraryItem>();
-			final Handler finishHandler = new Handler() {
-				public void handleMessage(Message message) {
-					afterUpdateCatalogChildren(tree, children, (String) message.obj);
-					resetTree();
-					LibraryAdapter.super.runTreeItem(tree);
-					endProgressNotification(tree);
-				}
-			};
-			LibraryAdapter.super.runTreeItem(tree);
-			tree.clear();
-			resetTree();
-			new Thread(new Runnable() {
-				public void run() {
-					Message msg = new Message();
-					msg.obj = tree.Item.loadChildren(children);
-					finishHandler.sendMessage(msg);
-				}
-			}).start();
-		}
-
-		public void diableCatalog(NetworkCatalogRootTree tree) {
-			/*NetworkLink link = tree.Link;
+		/*public void diableCatalog(NetworkCatalogRootTree tree) {
+			NetworkLink link = tree.Link;
 			link.OnOption.setValue(false);
 			NetworkLibrary library = NetworkLibrary.Instance();
 			library.invalidate();
 			library.synchronize();
 			resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
-			*/
-		}
+		}*/
 
 		@Override
 		protected boolean runTreeItem(ZLTree tree) {
 			if (super.runTreeItem(tree)) {
 				return true;
 			}
+			final NetworkTreeActions actions;
 			if (tree instanceof NetworkCatalogTree) {
-				expandCatalog((NetworkCatalogTree) tree);
-				return true;
+				actions = new NetworkCatalogActions(NetworkLibraryActivity.this, this);
 			} else if (tree instanceof NetworkBookTree) {
+				actions = new NetworkBookActions(NetworkLibraryActivity.this);
+			} else {
+				actions = null;
+			}
+			if (actions == null) {
+				return false;
+			}
+			final NetworkTree networkTree = (NetworkTree) tree;
+			final int actionCode = actions.getDefaultActionCode(networkTree);
+			final String confirm = actions.getConfirmText(networkTree, actionCode);
+			if (actionCode < 0) {
+				return false;
+			}
+			if (confirm != null) {
 				final ZLResource resource = myResource.getResource("confirmQuestions");
-				final NetworkBookTree bookTree = (NetworkBookTree) tree;
-				final NetworkBookItem book = bookTree.Book;
-				NetworkBookActions actions = new NetworkBookActions(NetworkLibraryActivity.this);
-				int actionCode = actions.getDefaultActionCode(bookTree);
-				String confirm = actions.getConfirmText(bookTree, actionCode);
-				if (confirm != null) {
-					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-					final int actionCodeValue = actionCode;
-					new AlertDialog.Builder(NetworkLibraryActivity.this)
-						.setTitle(book.Title)
-						.setMessage(confirm)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								runContextMenuItem(bookTree, actionCodeValue);
-							}
-						})
-						.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-						.create().show();
-				}
+				final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+				new AlertDialog.Builder(NetworkLibraryActivity.this)
+					.setTitle(networkTree.getName())
+					.setMessage(confirm)
+					.setIcon(0)
+					.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							actions.runAction(networkTree, actionCode);
+						}
+					})
+					.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+					.create().show();
+			} else {
+				actions.runAction(networkTree, actionCode);
 			}
-			return false;
+			return true;
 		}
 	}
-
-	private void afterUpdateCatalogChildren(NetworkCatalogTree tree, ArrayList<NetworkLibraryItem> children, String errorMessage) {
-		tree.ChildrenItems.clear();
-		tree.ChildrenItems.addAll(children);
-
-		if (errorMessage != null) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			final ZLResource buttonResource = dialogResource.getResource("button");
-			final ZLResource boxResource = dialogResource.getResource("networkError");
-			new AlertDialog.Builder(this)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(errorMessage)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-				.create().show();
-		} else if (children.size() == 0) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			final ZLResource buttonResource = dialogResource.getResource("button");
-			final ZLResource boxResource = dialogResource.getResource("emptyCatalogBox");
-			new AlertDialog.Builder(this)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(boxResource.getResource("message").getValue())
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-				.create().show();
-		}
-
-		boolean hasSubcatalogs = false;
-		for (NetworkLibraryItem child: children) {
-			if (child instanceof NetworkCatalogItem) {
-				hasSubcatalogs = true;
-				break;
-			}
-		}
-
-		if (hasSubcatalogs) {
-			for (NetworkLibraryItem child: children) {
-				NetworkTreeFactory.createNetworkTree(tree, child);
-			}
-		} else {
-			NetworkTreeFactory.fillAuthorNode(tree, children);
-		}
-		NetworkLibrary.Instance().invalidateAccountDependents();
-		NetworkLibrary.Instance().synchronize();
-	}
-
-
-	private static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
-	private static final int OPEN_IN_BROWSER_ITEM_ID = 1;
-	private static final int RELOAD_ITEM_ID = 2;
-	private static final int DONT_SHOW_ITEM_ID = 3;
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
@@ -385,42 +177,30 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree) adapter.getItem(position);
 
-		if (tree instanceof NetworkBookTree) {
-			if (new NetworkBookActions(this).runAction(tree, item.getItemId())) {
-				return true;
+		/*if (actionCode == DBG_PRINT_ENTRY_ITEM_ID) {
+			String msg = null;
+			if (tree instanceof NetworkCatalogTree) {
+				msg = ((NetworkCatalogTree) tree).Item.dbgEntry.toString();
+			} else if (tree instanceof NetworkBookTree) {
+				msg = ((NetworkBookTree) tree).Book.dbgEntry.toString();
 			}
-		} else if (runContextMenuItem(tree, item.getItemId())) {
+			new AlertDialog.Builder(this).setTitle("dbg entry").setMessage(msg).setIcon(0).setPositiveButton("ok", null).create().show();
+			return true;
+		}*/
+
+		final NetworkTreeActions actions;
+		if (tree instanceof NetworkCatalogTree) {
+			actions = new NetworkCatalogActions(this, adapter);
+		} else if (tree instanceof NetworkBookTree) {
+			actions = new NetworkBookActions(this);
+		} else {
+			actions = null;
+		}
+		if (actions != null && 
+				actions.runAction(tree, item.getItemId())) {
 			return true;
 		}
 		return super.onContextItemSelected(item);
-	}
-
-	private boolean runContextMenuItem(NetworkTree tree, int actionCode) {
-		final LibraryAdapter adapter = (LibraryAdapter) getListView().getAdapter();
-		switch (actionCode) {
-			/*case DBG_PRINT_ENTRY_ITEM_ID: {
-					String msg = null;
-					if (tree instanceof NetworkCatalogTree) {
-						msg = ((NetworkCatalogTree) tree).Item.dbgEntry.toString();
-					} else if (tree instanceof NetworkBookTree) {
-						msg = ((NetworkBookTree) tree).Book.dbgEntry.toString();
-					}
-					new AlertDialog.Builder(this).setTitle("dbg entry").setMessage(msg).setIcon(0).setPositiveButton("ok", null).create().show();
-				}
-				return true;*/
-			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
-				adapter.expandCatalog((NetworkCatalogTree)tree);
-				return true;
-			case OPEN_IN_BROWSER_ITEM_ID:
-				openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE));
-				return true;
-			case RELOAD_ITEM_ID:
-				adapter.reloadCatalog((NetworkCatalogTree)tree);
-				return true;
-			case DONT_SHOW_ITEM_ID:
-				return true;
-		}
-		return false;
 	}
 
 	public void openInBrowser(String url) {
