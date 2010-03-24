@@ -162,7 +162,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		myParent.requestLayout();
 	}
 
-	protected void resetTree() {
+	public void resetTree() {
 		myItems = new ZLTree[myTree.getSize() - 1];
 		myParent.invalidateViews();
 		myParent.requestLayout();
