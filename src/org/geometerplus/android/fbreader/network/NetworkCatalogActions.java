@@ -122,6 +122,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public String getConfirmText(NetworkTree tree, int actionCode) {
+		if (actionCode == OPEN_IN_BROWSER_ITEM_ID) {
+			return getConfirmValue("openInBrowser");
+		}
 		return null;
 	}
 

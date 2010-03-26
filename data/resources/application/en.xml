@@ -36,6 +36,7 @@
 			<node name="readDemo" value="Do you want to read sample?"/>
 			<node name="downloadDemo" value="Do you want to download sample?"/>
 			<node name="buy" value="Do you want to buy this book? (%s)"/>
+			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
 	</node>

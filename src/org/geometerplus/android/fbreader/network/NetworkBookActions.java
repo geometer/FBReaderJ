@@ -118,14 +118,16 @@ class NetworkBookActions extends NetworkTreeActions {
 			} else if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
 				return DOWNLOAD_BOOK_ITEM_ID;
 			}
-		} else if (useDemoReferences(book)) {
+		}
+		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
 			if (reference.localCopyFileName() != null) {
 				return READ_DEMO_ITEM_ID;
 			} else {
 				return DOWNLOAD_DEMO_ITEM_ID;
 			}
-		} else if (useBuyReferences(book)) {
+		}
+		if (useBuyReferences(book)) {
 			if (book.reference(BookReference.Type.BUY) != null) {
 				return BUY_DIRECTLY_ITEM_ID;
 			} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
