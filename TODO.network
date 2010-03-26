@@ -11,6 +11,9 @@ DONE постепенная асинхронная загрузка катало
 DELAYED нормальная архитектура для асинхронной загрузки каталогов
 DELAYED асинхронная работа с сетью
 *	использование rewriteUrl
+	DONE link from a Book (reading mode) -- external
+	DONE link from a Network Library -- external
+	** link from a Network Library -- internal
 
 *	загрузка иконок:
 	* книг

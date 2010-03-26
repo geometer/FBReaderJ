@@ -197,6 +197,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	public void openInBrowser(String url) {
 		if (url != null) {
+			url = NetworkLibrary.Instance().rewriteUrl(url, true);
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 	}

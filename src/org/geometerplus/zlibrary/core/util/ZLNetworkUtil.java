@@ -99,6 +99,19 @@ public class ZLNetworkUtil {
 		return new StringBuilder(url).append(delimiter).append(name).append('=').append(value).toString();
 	}
 
+	public static String hostFromUrl(String url) {
+		String host = url;
+		int index = host.indexOf("://");
+		if (index != -1) {
+			host = host.substring(index + 3);
+		}
+		index = host.indexOf("/");
+		if (index != -1) {
+			host = host.substring(0, index);
+		}
+		return host;
+	}
+
 	public static String getUserAgent(String versionName) {
 		return "FBReader/" + versionName + "(java)";
 	}

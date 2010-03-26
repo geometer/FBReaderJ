@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -85,6 +86,16 @@ public class NetworkLibrary {
 
 	public List<NetworkLink> links() {
 		return Collections.unmodifiableList(myLinks);
+	}
+
+	public String rewriteUrl(String url, boolean externalUrl) {
+		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
+		for (NetworkLink link: myLinks) {
+			if (host.contains(link.SiteName)) {
+				url = link.rewriteUrl(url, externalUrl);
+			}
+		}
+		return url;
 	}
 
 	public void invalidate() {

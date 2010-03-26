@@ -84,6 +84,9 @@ class OPDSLink extends NetworkLink {
 
 	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
+		if (myUrlRewritingRules == null) {
+			return url;
+		}
 		for (URLRewritingRule rule: myUrlRewritingRules) {
 			if (rule.Apply != URLRewritingRule.APPLY_ALWAYS) {
 				if ((rule.Apply == URLRewritingRule.APPLY_EXTERNAL && !isUrlExternal)

@@ -23,6 +23,8 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+
 import org.geometerplus.fbreader.network.*;
 
 
@@ -82,12 +84,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		} catch (SocketTimeoutException ex) {
 			return NetworkErrors.errorMessage("operationTimedOutMessage");
 		} catch (IOException ex) {
-			try {
-				return NetworkErrors.errorMessage(NetworkErrors.ERROR_SOMETHING_WRONG, new URL(urlString).getHost());
-			} catch (MalformedURLException ex2) {
-				// return error???
-				return null;
-			}
+			return NetworkErrors.errorMessage(NetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(urlString));
 		}
 		return null;
 	}
