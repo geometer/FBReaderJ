@@ -47,6 +47,7 @@ public class BookDownloaderService extends Service {
 
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
+	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
 
 	private volatile int myServiceCounter;
 
@@ -84,8 +85,12 @@ public class BookDownloaderService extends Service {
 		final String url = uri.toString();
 		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookReference.Format.NONE);
 		final int referenceType = intent.getIntExtra(REFERENCE_TYPE_KEY, BookReference.Type.UNKNOWN);
+		String cleanURL = intent.getStringExtra(CLEAN_URL_KEY);
+		if (cleanURL == null) {
+			cleanURL = url;
+		}
 
-		String fileName = BookReference.makeBookFileName(url, bookFormat, referenceType);
+		String fileName = BookReference.makeBookFileName(cleanURL, bookFormat, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;

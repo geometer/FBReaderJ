@@ -54,6 +54,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		try {
 			while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!
 					&& urlString != null) {
+				urlString = Link.rewriteUrl(urlString, false);
 				final URL url = new URL(urlString);
 				final URLConnection connection = url.openConnection();
 				if (!(connection instanceof HttpURLConnection)) {

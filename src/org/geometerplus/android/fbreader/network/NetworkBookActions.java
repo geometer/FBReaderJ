@@ -201,6 +201,7 @@ class NetworkBookActions extends NetworkTreeActions {
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), myActivity, BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
+					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanURL())
 			);
 		}
 	}
