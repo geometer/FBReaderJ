@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menubar>
 	<item id="library"/>
+	<item id="networkLibrary"/>
 	<item id="toc"/>
 	<item id="bookmarks"/>
 	<item id="search"/>
 	<item id="night"/>
 	<item id="day"/>
-	<item id="networkLibrary"/>
 	<item id="preferences"/>
 	<item id="preferences-old"/>
 	<item id="bookInfo"/>
