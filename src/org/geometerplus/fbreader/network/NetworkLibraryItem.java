@@ -30,11 +30,21 @@ public abstract class NetworkLibraryItem {
 	public static final int URL_HTML_PAGE = 2;
 	public static final int URL_COVER = 3;
 
+	public static class Link {
+		public String URL;
+		public String MimeType;
+
+		// mimeType string must be interned
+		public Link(String url, String mimeType) {
+			URL = url;
+			MimeType = mimeType;
+		}
+	}
 
 	public final NetworkLink Link;
 	public final String Title;
 	public final String Summary;
-	public final TreeMap<Integer, String> URLByType;
+	public final TreeMap<Integer, Link> LinkByType;
 
 	//public org.geometerplus.fbreader.network.atom.ATOMEntry dbgEntry;
 
@@ -46,10 +56,10 @@ public abstract class NetworkLibraryItem {
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 */
-	protected NetworkLibraryItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
+	protected NetworkLibraryItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType) {
 		Link = link;
 		Title = title;
 		Summary = summary;
-		URLByType = new TreeMap<Integer, String>(urlByType);
+		LinkByType = new TreeMap<Integer, Link>(linkByType);
 	}
 }

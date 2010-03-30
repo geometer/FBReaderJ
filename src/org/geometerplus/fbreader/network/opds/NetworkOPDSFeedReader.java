@@ -160,7 +160,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			}
 		}
 
-		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
+		HashMap<Integer, NetworkLibraryItem.Link> urlMap = new HashMap<Integer, NetworkLibraryItem.Link>();
 		LinkedList<BookReference> references = new LinkedList<BookReference>();
 		for (ATOMLink link: entry.Links) {
 			final String href = link.getHref();
@@ -169,14 +169,14 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final int referenceType = typeByRelation(rel);
 			if (rel == OPDSConstants.REL_COVER) {
 				if (urlMap.get(NetworkLibraryItem.URL_COVER) == null &&
-						(type == OPDSConstants.MIME_IMG_PNG ||
-						 type == OPDSConstants.MIME_IMG_JPEG)) {
-					urlMap.put(NetworkLibraryItem.URL_COVER, href);
+						(type == NetworkImage.MIME_PNG ||
+						 type == NetworkImage.MIME_JPEG)) {
+					urlMap.put(NetworkLibraryItem.URL_COVER, new NetworkLibraryItem.Link(href, type));
 				}
 			} else if (rel == OPDSConstants.REL_THUMBNAIL) {
-				if (type == OPDSConstants.MIME_IMG_PNG ||
-						type == OPDSConstants.MIME_IMG_JPEG) {
-					urlMap.put(NetworkLibraryItem.URL_COVER, href);
+				if (type == NetworkImage.MIME_PNG ||
+						type == NetworkImage.MIME_JPEG) {
+					urlMap.put(NetworkLibraryItem.URL_COVER, new NetworkLibraryItem.Link(href, type));
 				}
 			} else if (referenceType == BookReference.Type.BUY) {
 				// FIXME: HACK: price handling must be implemented not through attributes!!!
@@ -273,30 +273,30 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private NetworkLibraryItem readCatalogItem(OPDSEntry entry) {
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
-		String coverURL = null;
-		String url = null;
+		NetworkLibraryItem.Link coverURL = null;
+		NetworkLibraryItem.Link url = null;
 		boolean urlIsAlternate = false;
-		String htmlURL = null;
+		NetworkLibraryItem.Link htmlURL = null;
 		boolean litresCatalogue = false;
 		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
 		for (ATOMLink link: entry.Links) {
 			final String href = link.getHref();
 			final String type = link.getType();
 			final String rel = opdsLink.relation(filter(link.getRel()), type);
-			if (type == OPDSConstants.MIME_IMG_PNG ||
-					type == OPDSConstants.MIME_IMG_JPEG) {
+			if (type == NetworkImage.MIME_PNG ||
+					type == NetworkImage.MIME_JPEG) {
 				if (rel == OPDSConstants.REL_THUMBNAIL ||
 						(coverURL == null && rel == OPDSConstants.REL_COVER)) {
-					coverURL = href;
+					coverURL = new NetworkLibraryItem.Link(href, type);
 				}
 			} else if (type == OPDSConstants.MIME_APP_ATOM) {
 				if (rel == ATOMConstants.REL_ALTERNATE) {
 					if (url == null) {
-						url = href;
+						url = new NetworkLibraryItem.Link(href, type);
 						urlIsAlternate = true;
 					}
 				} else {
-					url = href;
+					url = new NetworkLibraryItem.Link(href, type);
 					urlIsAlternate = false;
 					if (rel == OPDSConstants.REL_CATALOG_AUTHOR) {
 						catalogType = NetworkCatalogItem.CATALOG_BY_AUTHORS;
@@ -306,12 +306,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				if (rel == OPDSConstants.REL_ACQUISITION ||
 						rel == ATOMConstants.REL_ALTERNATE ||
 						rel == null) {
-					htmlURL = href;
+					htmlURL = new NetworkLibraryItem.Link(href, type);
 				}
 			} else if (type == OPDSConstants.MIME_APP_LITRES) {
 				if (rel == OPDSConstants.REL_BOOKSHELF) {
 					litresCatalogue = true;
-					url = href;
+					url = new NetworkLibraryItem.Link(href, type); // FIXME: mimeType ???
 				}
 			}
 		}
@@ -333,15 +333,17 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			annotation = entry.Summary.replace("\011", "").replace("\012", "");
 		}
 
-		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
+		HashMap<Integer, NetworkLibraryItem.Link> urlMap = new HashMap<Integer, NetworkLibraryItem.Link>();
 		if (coverURL != null) {
 			urlMap.put(NetworkLibraryItem.URL_COVER, coverURL);
 		}
 		if (url != null) {
-			urlMap.put(NetworkLibraryItem.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
+			url.URL = ZLNetworkUtil.url(myBaseURL, url.URL);
+			urlMap.put(NetworkLibraryItem.URL_CATALOG, url);
 		}
 		if (htmlURL != null) {
-			urlMap.put(NetworkLibraryItem.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
+			htmlURL.URL = ZLNetworkUtil.url(myBaseURL, htmlURL.URL);
+			urlMap.put(NetworkLibraryItem.URL_HTML_PAGE, htmlURL);
 		}
 		if (litresCatalogue) {
 			/*return new LitResBookshelfItem(

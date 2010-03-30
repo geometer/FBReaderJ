@@ -52,10 +52,6 @@ interface OPDSConstants {
 	// a special MIME type for the litres OPDS catalog
 	String MIME_APP_LITRES = "application/litres+xml";
 
-	// MIME types / image
-	String MIME_IMG_PNG = "image/png";
-	String MIME_IMG_JPEG = "image/jpeg";
-
 	// MIME types / text
 	String MIME_TEXT_HTML = "text/html";
 }

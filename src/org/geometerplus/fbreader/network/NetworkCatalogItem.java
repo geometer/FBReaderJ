@@ -41,10 +41,10 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param linkByType map contains URLs and their types. Must be not <code>null</code>.
 	 */
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
-		this(link, title, summary, urlByType, VISIBLE_ALWAYS, CATALOG_OTHER);
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType) {
+		this(link, title, summary, linkByType, VISIBLE_ALWAYS, CATALOG_OTHER);
 	}
 
 	/**
@@ -53,12 +53,12 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param linkByType map contains URLs and their types. Must be not <code>null</code>.
 	 * @param visibility value defines when this library item will be shown in the network library. 
 	 *                   Can be one of the VISIBLE_* values.
 	 */
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
-		this(link, title, summary, urlByType, visibility, CATALOG_OTHER);
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType, int visibility) {
+		this(link, title, summary, linkByType, visibility, CATALOG_OTHER);
 	}
 
 	/**
@@ -67,13 +67,13 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param linkByType map contains URLs and their types. Must be not <code>null</code>.
 	 * @param visibility value defines when this library item will be shown in the network library. 
 	 *                   Can be one of the VISIBLE_* values.
 	 * @param catalogType value defines type of this catalog. Can be one of the CATALOG_* values.
 	 */
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility, int catalogType) {
-		super(link, title, summary, urlByType);
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType, int visibility, int catalogType) {
+		super(link, title, summary, linkByType);
 		Visibility = visibility;
 		CatalogType = catalogType;
 	}

@@ -90,15 +90,15 @@ public class NetworkBookItem extends NetworkLibraryItem {
 	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
 	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
 	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
-	 * @param urlByType     map contains URLs and their types. Must be not <code>null</code>.
+	 * @param linkByType    map contains URLs and their types. Must be not <code>null</code>.
 	 * @param references    list of references related to this book. Must be not <code>null</code>.
 	 */
 	public NetworkBookItem(NetworkLink link, String id, int index,
 		String title, String summary, String language, String date,
 		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,
-		Map<Integer, String> urlByType,
+		Map<Integer, Link> linkByType,
 		List<BookReference> references) {
-		super(link, title, summary, urlByType);
+		super(link, title, summary, linkByType);
 		Index = index;
 		Id = id;
 		Language = language;

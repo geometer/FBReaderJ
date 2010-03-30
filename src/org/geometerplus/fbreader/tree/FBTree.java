@@ -22,8 +22,13 @@ package org.geometerplus.fbreader.tree;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree> {
+
+	private ZLImage myCover;
+	private boolean myCoverRequested;
+
 	protected FBTree() {
 		super();
 	}
@@ -90,5 +95,17 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 			}
 		}
 		return builder.toString();
+	}
+
+	protected ZLImage createCover() {
+		return null;
+	}
+
+	public final ZLImage getCover() {
+		if (!myCoverRequested) {
+			myCover = createCover();
+			myCoverRequested = true;
+		}
+		return myCover;
 	}
 }

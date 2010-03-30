@@ -20,14 +20,18 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 import android.app.*;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.*;
 import android.widget.*;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -38,6 +42,10 @@ import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
+
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
@@ -98,8 +106,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private final class LibraryAdapter extends ZLTreeAdapter {
 
+		private final ExecutorService myPool;
+		private final HashSet<NetworkTree> myTreesToDraw;
+
 		LibraryAdapter(ListView view, NetworkTree tree) {
 			super(view, tree);
+			myPool = Executors.newFixedThreadPool(10); // TODO: how many threads ???
+			myTreesToDraw = new HashSet<NetworkTree>();
 		}
 
 		@Override
@@ -117,18 +130,60 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			}
 		}
 
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(int position, View convertView, final ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 
 			final NetworkTree tree = (NetworkTree)getItem(position);
 
-			final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-
-			setIcon(iconView, tree);
-
 			((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
+
+			view.measure(-1, -2);
+			final int maxHeight = view.getMeasuredHeight();
+			final int maxWidth = maxHeight * 2 / 3;
+//System.err.println("FBREADER -- dims(" + maxWidth + ", " + maxHeight + ")");
+
+			final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
+			Bitmap coverBitmap = null;
+			final ZLImage cover = tree.getCover();
+			if (cover != null) {
+				ZLAndroidImageData data = null;
+				final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
+				if (cover instanceof NetworkImage) {
+					final NetworkImage img = (NetworkImage) cover;
+					if (img.isSynchronized()) {
+						data = mgr.getImageData(img);
+					} else if (!myTreesToDraw.contains(tree)) {
+						myTreesToDraw.add(tree);
+						final Handler handler = new Handler() {
+							public void handleMessage(Message message) {
+								myTreesToDraw.remove(tree);
+								ListView view = NetworkLibraryActivity.this.getListView();
+								view.invalidateViews();
+								view.requestLayout();
+							}
+						};
+						myPool.execute(new Runnable() {
+							public void run() {
+								img.synchronize();
+								handler.sendEmptyMessage(0);
+							}
+						});
+					}
+				} else {
+					data = mgr.getImageData(cover);
+				}
+				if (data != null) {
+					coverBitmap = data.getBitmap(maxWidth, maxHeight);
+				}
+			}
+			if (coverBitmap != null) {
+				setIcon(iconView, tree, coverBitmap);
+			} else {
+				setIcon(iconView, tree);
+			}
+
 			return view;
 		}
 

@@ -24,6 +24,7 @@ import java.util.HashSet;
 import android.content.Context;
 import android.view.*;
 import android.widget.*;
+import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
@@ -194,6 +195,11 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		} else {
 			imageView.setImageResource(R.drawable.ic_list_group_empty);
 		}
+		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
+	}
+
+	protected final void setIcon(ImageView imageView, ZLTree tree, Bitmap image) {
+		imageView.setImageBitmap(image);
 		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
 	}
 }

@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.zlibrary.core.image.ZLImage;
+
 public abstract class NetworkTree extends FBTree {
 
 	protected NetworkTree() {
@@ -33,5 +35,30 @@ public abstract class NetworkTree extends FBTree {
 
 	protected NetworkTree(NetworkTree parent, int position) {
 		super(parent, position);
+	}
+
+	public static ZLImage createCover(NetworkLibraryItem item) {
+		NetworkLibraryItem.Link link = item.LinkByType.get(NetworkLibraryItem.URL_COVER);
+		if (link == null) {
+			return null;
+		}
+		return createCover(link.URL, link.MimeType);
+	}
+
+	public static ZLImage createCover(String url, String mimeType) {
+		if (url == null) {
+			return null;
+		}
+		if (mimeType == null) {
+			mimeType = "image/auto";
+		}
+		if (url.startsWith("http://") ||
+				url.startsWith("https://") ||
+				url.startsWith("ftp://")) {
+			return new NetworkImage(url, mimeType);
+		} else if (url.startsWith("data:")) {
+			// TODO: implement Base64 images
+		}
+		return null;
 	}
 }

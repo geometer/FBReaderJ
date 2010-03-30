@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.tree;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
@@ -52,6 +53,11 @@ public class NetworkCatalogTree extends NetworkTree {
 			return "";
 		}
 		return Item.Summary;
+	}
+
+	@Override
+	protected ZLImage createCover() {
+		return createCover(Item);
 	}
 
 	private boolean processAccountDependent(NetworkCatalogItem item) {

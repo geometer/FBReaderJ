@@ -241,7 +241,6 @@ public class BookDownloaderService extends Service {
 						try {
 							InputStream inStream = httpConnection.getInputStream();
 							final byte[] buffer = new byte[8192];
-							int fullSize = 0;	
 							while (true) {
 								final int size = inStream.read(buffer);
 								if (size <= 0) {

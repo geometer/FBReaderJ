@@ -30,26 +30,27 @@ import org.geometerplus.fbreader.network.*;
 
 class OPDSCatalogItem extends NetworkCatalogItem {
 
-	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
-		super(link, title, summary, urlByType);
+	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType) {
+		super(link, title, summary, linkByType);
 	}
 
-	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
-		super(link, title, summary, urlByType, visibility);
+	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType, int visibility) {
+		super(link, title, summary, linkByType, visibility);
 	}
 
-	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility, int catalogType) {
-		super(link, title, summary, urlByType, visibility, catalogType);
+	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, Link> linkByType, int visibility, int catalogType) {
+		super(link, title, summary, linkByType, visibility, catalogType);
 	}
 
 	@Override
 	public String loadChildren(CatalogListener listener) {
 		OperationData data = new OperationData(Link, listener);
 
-		String urlString = URLByType.get(URL_CATALOG);
-		if (urlString == null) {
+		final NetworkLibraryItem.Link urlLink = LinkByType.get(URL_CATALOG);
+		if (urlLink == null) {
 			return null; // TODO: return error/information message???
 		}
+		String urlString = urlLink.URL;
 
 		try {
 			while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!
