@@ -203,8 +203,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				boolean expand = !tree.hasChildren();
 				tree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(tree, item);
-				tree.updateAccountDependents();
-				myAdapter.resetTree();
+				if (!hasMessages(0)) {
+					tree.updateAccountDependents();
+					myAdapter.resetTree();
+				}
 				if (expand) {
 					// If catalog loading started => Tree must be expanded after the first item has been loaded
 					myAdapter.expandOrCollapseTree(tree);
@@ -246,17 +248,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						}
 					}*/
 				}
-				Message msg = new Message();
+				String err = null;
 				if (!hadChildren) {
-					msg.obj = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+					err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 						public void onNewItem(NetworkLibraryItem item) {
-							Message itemMsg = new Message();
-							itemMsg.obj = item;
-							progressHandler.sendMessage(itemMsg);
+							progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
 						}
 					});
 				}
-				finishHandler.sendMessage(msg);
+				finishHandler.sendMessage(finishHandler.obtainMessage(0, err));
 			}
 		}).start();
 	}
@@ -271,8 +271,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				boolean expand = !tree.hasChildren();
 				tree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(tree, item);
-				tree.updateAccountDependents();
-				myAdapter.resetTree();
+				if (!hasMessages(0)) {
+					tree.updateAccountDependents();
+					myAdapter.resetTree();
+				}
 				if (expand) {
 					// If catalog loading started => Tree must be expanded after the first item has been loaded
 					myAdapter.expandOrCollapseTree(tree);
@@ -291,15 +293,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		myAdapter.resetTree();
 		new Thread(new Runnable() {
 			public void run() {
-				Message msg = new Message();
-				msg.obj = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+				String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 					public void onNewItem(NetworkLibraryItem item) {
-						Message itemMsg = new Message();
-						itemMsg.obj = item;
-						progressHandler.sendMessage(itemMsg);
+						progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
 					}
 				});
-				finishHandler.sendMessage(msg);
+				finishHandler.sendMessage(finishHandler.obtainMessage(0, err));
 			}
 		}).start();
 	}
