@@ -48,6 +48,7 @@
 		<node name="contentError" value="Download unsuccessful" />
 		<node name="untitled" value="&lt;Untitled&gt;" />
 		<node name="downloadingStarted" value="Book downloading has been started" />
+		<node name="alreadyDownloading" value="Book is already being downloaded" />
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>

@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.io.*;
 import java.net.*;
 
@@ -54,12 +53,14 @@ public class BookDownloaderService extends Service {
 	public static final String SHOW_NOTIFICATIONS_KEY = "org.geometerplus.android.fbreader.network.ShowNotifications";
 
 	public interface Notifications {
-		int DOWNLOAD_STARTED = 0x0001;
+		int DOWNLOADING_STARTED = 0x0001;
 		int ALREADY_DOWNLOADING = 0x0002;
 
 		int ALL = 0x0003;
 	}
 
+
+	private HashSet<String> myDownloadingURLs = new HashSet<String>();
 
 	private volatile int myServiceCounter;
 
@@ -102,6 +103,18 @@ public class BookDownloaderService extends Service {
 		String cleanURL = intent.getStringExtra(CLEAN_URL_KEY);
 		if (cleanURL == null) {
 			cleanURL = url;
+		}
+
+		if (myDownloadingURLs.contains(url)) {
+			if ((notifications & Notifications.ALREADY_DOWNLOADING) != 0) {
+				Toast.makeText(
+					getApplicationContext(),
+					getResource().getResource("alreadyDownloading").getValue(),
+					Toast.LENGTH_SHORT
+				).show();
+			}
+			doStop();
+			return;
 		}
 
 		String fileName = BookReference.makeBookFileName(cleanURL, bookFormat, referenceType);
@@ -153,7 +166,7 @@ public class BookDownloaderService extends Service {
 		if (title == null || title.length() == 0) {
 			title = getResource().getResource("untitled").getValue();
 		}
-		if ((notifications & Notifications.DOWNLOAD_STARTED) != 0) {
+		if ((notifications & Notifications.DOWNLOADING_STARTED) != 0) {
 			Toast.makeText(
 				getApplicationContext(),
 				getResource().getResource("downloadingStarted").getValue(),
@@ -209,7 +222,9 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
-	private void startFileDownload(final String uriString, final File file, final String title) {
+	private void startFileDownload(final String urlString, final File file, final String title) {
+		myDownloadingURLs.add(urlString);
+
 		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
@@ -235,6 +250,7 @@ public class BookDownloaderService extends Service {
 
 		final Handler downloadFinishHandler = new Handler() {
 			public void handleMessage(Message message) {
+				myDownloadingURLs.remove(urlString);
 				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				notificationManager.cancel(notificationId);
 				notificationManager.notify(
@@ -250,7 +266,7 @@ public class BookDownloaderService extends Service {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 				boolean downloadSuccess = false;
 				try {
-					final URL url = new URL(uriString);
+					final URL url = new URL(urlString);
 					final URLConnection connection = url.openConnection();
 					final int fileLength = connection.getContentLength();
 					int downloadedPart = 0;
