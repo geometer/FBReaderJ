@@ -201,8 +201,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				boolean expand = !tree.hasChildren();
 				tree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(tree, item);
+				tree.updateAccountDependents();
 				if (!hasMessages(0)) {
-					tree.updateAccountDependents();
 					myAdapter.resetTree();
 				}
 				if (expand) {
@@ -269,8 +269,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				boolean expand = !tree.hasChildren();
 				tree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(tree, item);
+				tree.updateAccountDependents();
 				if (!hasMessages(0)) {
-					tree.updateAccountDependents();
 					myAdapter.resetTree();
 				}
 				if (expand) {

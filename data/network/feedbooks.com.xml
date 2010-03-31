@@ -4,10 +4,10 @@
 	<site>feedbooks.com</site>
 	<title>Feedbooks OPDS Catalog</title>
 	<summary>Feedbooks: Food for the mind. A place to discover and publish e-books.</summary>
-	<link rel="main" type="application/atom+xml">http://feedbooks.com/catalog.atom</link>
-	<link rel="search" type="application/atom+xml">http://feedbooks.com/books/search.atom?query=%s</link>
-	<link rel="signIn" type="application/atom+xml">https://feedbooks.com/user/profile.atom</link>
-	<link rel="signOut" type="application/atom+xml">https://feedbooks.com/user/signout</link>
+	<link rel="main" type="application/atom+xml">http://www.feedbooks.com/catalog.atom</link>
+	<link rel="search" type="application/atom+xml">http://www.feedbooks.com/books/search.atom?query=%s</link>
+	<link rel="signIn" type="application/atom+xml">https://www.feedbooks.com/user/profile.atom</link>
+	<link rel="signOut" type="application/atom+xml">https://www.feedbooks.com/user/signout</link>
 	<advancedSearch style="separateWords">
 		<field name="author">author</field>
 		<field name="titleOrSeries">title</field>
@@ -15,8 +15,8 @@
 		<field name="annotation">description</field>
 	</advancedSearch>
 	<feeds>
-		<condition show="never">http://feedbooks.com/news/catalog.atom</condition>
-		<condition show="signedIn">https://feedbooks.com/user/profile.atom</condition>
+		<condition show="never">http://www.feedbooks.com/news/catalog.atom</condition>
+		<condition show="signedIn">https://www.feedbooks.com/user/profile.atom</condition>
 	</feeds>
 	<authentication type="basic"/>
 	<icon>data:image/png;base64,
