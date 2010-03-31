@@ -84,7 +84,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (reference.localCopyFileName() != null) {
+			if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
 				addMenuItem(menu, READ_DEMO_ITEM_ID, "readDemo");
 				addMenuItem(menu, DELETE_DEMO_ITEM_ID, "deleteDemo");
 			} else {
@@ -121,7 +121,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (reference.localCopyFileName() != null) {
+			if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
 				return READ_DEMO_ITEM_ID;
 			} else {
 				return DOWNLOAD_DEMO_ITEM_ID;
@@ -192,15 +192,14 @@ class NetworkBookActions extends NetworkTreeActions {
 	private void doDownloadBook(NetworkTree tree, boolean demo) {
 		NetworkBookTree bookTree = (NetworkBookTree) tree;
 		NetworkBookItem book = bookTree.Book;
-		BookReference ref = book.reference(
-			demo ? BookReference.Type.DOWNLOAD_DEMO : BookReference.Type.DOWNLOAD_FULL
-		);
+		int resolvedType = demo ? BookReference.Type.DOWNLOAD_DEMO : BookReference.Type.DOWNLOAD_FULL;
+		BookReference ref = book.reference(resolvedType);
 		if (ref != null) {
 			// TODO: add `demo` tag to the book???
 			myActivity.startService(
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), myActivity, BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
-					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
+					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanURL())
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
 			);
@@ -216,7 +215,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		} else {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
 			if (reference != null) {
-				local = reference.localCopyFileName();
+				local = reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO);
 			}
 		}
 		if (local != null) {
@@ -248,7 +247,7 @@ class NetworkBookActions extends NetworkTreeActions {
 					} else {
 						final BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
 						if (reference != null) {
-							final String fileName = reference.localCopyFileName();
+							final String fileName = reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO);
 							if (fileName != null) {
 								new File(fileName).delete();
 							}

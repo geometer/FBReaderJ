@@ -35,6 +35,7 @@ public class BookReference {
 		int BUY = 5; // reference for buying the book (useful only when authentication is supported)
 		int BUY_IN_BROWSER = 6; // reference to the site page, when it is possible to buy the book
 	}
+	// resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
 	public interface Format {
 		int NONE = 0;
@@ -60,7 +61,7 @@ public class BookReference {
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeBookFileName(String url, int format, int type) {
+	public static String makeBookFileName(String url, int format, int resolvedReferenceType) {
 		URI uri;
 		try {
 			uri = new URI(url);
@@ -148,18 +149,21 @@ public class BookReference {
 				index = j + 1;
 			}
 		}
-		if (type == Type.DOWNLOAD_DEMO) {
+		if (resolvedReferenceType == Type.DOWNLOAD_DEMO) {
 			path.append(".trial");
+			System.err.println("FBREADER -- TRIAL (type = " + resolvedReferenceType + ")");
+		} else {
+			System.err.println("FBREADER -- FULL (type = " + resolvedReferenceType + ")");
 		}
 		return path.append(ext).toString();
 	}
 
-	public final String makeBookFileName() {
-		return makeBookFileName(cleanURL(), BookFormat, ReferenceType);
+	public final String makeBookFileName(int resolvedReferenceType) {
+		return makeBookFileName(cleanURL(), BookFormat, resolvedReferenceType);
 	}
 
-	public final String localCopyFileName() {
-		String fileName = makeBookFileName();
+	public final String localCopyFileName(int resolvedReferenceType) {
+		String fileName = makeBookFileName(resolvedReferenceType);
 		if (fileName != null && new File(fileName).exists()) {
 			return fileName;
 		}

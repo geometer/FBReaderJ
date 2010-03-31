@@ -159,7 +159,7 @@ public class NetworkBookItem extends NetworkLibraryItem {
 					type == BookReference.Type.DOWNLOAD_FULL_CONDITIONAL ||
 					(!hasBuyReference && type == BookReference.Type.DOWNLOAD_FULL_OR_DEMO)) &&
 					(reference == null || ref.BookFormat > reference.BookFormat)) {
-				String name = ref.localCopyFileName();
+				String name = ref.localCopyFileName(BookReference.Type.DOWNLOAD_FULL);
 				if (name != null) {
 					reference = ref;
 					fileName = name;
@@ -178,7 +178,7 @@ public class NetworkBookItem extends NetworkLibraryItem {
 			if (type == BookReference.Type.DOWNLOAD_FULL ||
 					type == BookReference.Type.DOWNLOAD_FULL_CONDITIONAL ||
 					(!hasBuyReference && type == BookReference.Type.DOWNLOAD_FULL_OR_DEMO)) {
-				String fileName = ref.localCopyFileName();
+				String fileName = ref.localCopyFileName(BookReference.Type.DOWNLOAD_FULL);
 				if (fileName != null) {
 					// TODO: remove a book from the library
 					// TODO: remove a record from the database
