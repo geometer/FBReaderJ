@@ -57,6 +57,11 @@ public class BookDownloader extends Activity {
 			return;
 		}
 
+		if (!intent.hasExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY)) {
+			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, 
+				BookDownloaderService.Notifications.ALREADY_DOWNLOADING);
+		}
+
 		startService(
 			new Intent(Intent.ACTION_DEFAULT, uri, this, BookDownloaderService.class)
 				.putExtras(intent.getExtras())
