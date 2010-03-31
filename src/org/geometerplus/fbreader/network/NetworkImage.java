@@ -171,8 +171,12 @@ public final class NetworkImage extends ZLSingleImage {
 			}
 			final File imageFile = new File(fileName);
 			if (imageFile.exists()) {
-				// check its validity
-				return;
+				final long diff = System.currentTimeMillis() - imageFile.lastModified();
+				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
+				if (diff >= 0 && diff <= valid) {
+					return;
+				}
+				imageFile.delete();
 			}
 			try {
 				final URL url = new URL(myUrl);

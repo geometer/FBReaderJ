@@ -97,8 +97,12 @@ final class Base64EncodedImage extends ZLSingleImage {
 		try {
 			File file = new File(myFileName);
 			if (file.exists()) {
-				// TODO: check file validity
-				return;
+				final long diff = System.currentTimeMillis() - file.lastModified();
+				final long valid = 24 * 60 * 60 * 1000; // one day in milliseconds; FIXME: hardcoded const
+				if (diff >= 0 && diff <= valid) {
+					return;
+				}
+				file.delete();
 			}
 			outputStream = new FileOutputStream(file);
 			final int dataLength = myData.length();
