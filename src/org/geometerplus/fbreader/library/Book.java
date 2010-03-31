@@ -23,10 +23,13 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.formats.*;
+
+import org.geometerplus.fbreader.Constants;
 
 public class Book {
 	public static Book getById(long bookId) {
@@ -119,6 +122,12 @@ public class Book {
 		}
 		if ((myTitle == null) || (myTitle.length() == 0)) {
 			setTitle(File.getName(true));
+		}
+		final String demoPathPrefix = Constants.BOOKS_DIRECTORY + java.io.File.separator + "Demos" + java.io.File.separator;
+		if (File.getPath().startsWith(demoPathPrefix)) {
+			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
+			setTitle(getTitle() + " (" + demoTag + ")");
+			addTag(demoTag);
 		}
 		return true;
 	}

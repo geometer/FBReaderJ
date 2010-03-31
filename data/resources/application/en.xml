@@ -3,6 +3,7 @@
 	<node name="library">
 		<node name="unknownAuthor" value="Unknown author"/>
 		<node name="booksWithNoTags" value="Books with no tags"/>
+		<node name="demo" value="sample"/>
 	</node>
 	<node name="libraryView">
 		<node name="byAuthor" value="By author"/>
