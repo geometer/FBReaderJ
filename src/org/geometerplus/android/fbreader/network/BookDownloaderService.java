@@ -48,6 +48,7 @@ public class BookDownloaderService extends Service {
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
+	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
 
 	private volatile int myServiceCounter;
 
@@ -132,7 +133,14 @@ public class BookDownloaderService extends Service {
 			startActivity(getFBReaderIntent(fileFile));
 			return;
 		}
-		startFileDownload(url, fileFile);
+		String title = intent.getStringExtra(TITLE_KEY);
+		if (title == null || title.length() == 0) {
+			title = fileFile.getName();
+		}
+		if (title == null || title.length() == 0) {
+			title = getResource().getResource("untitled").getValue();
+		}
+		startFileDownload(url, fileFile, title);
 	}
 
 	private Intent getFBReaderIntent(final File file) {
@@ -143,7 +151,7 @@ public class BookDownloaderService extends Service {
 		return intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 
-	private Notification createDownloadFinishNotification(File file, boolean success) {
+	private Notification createDownloadFinishNotification(File file, String title, boolean success) {
 		final ZLResource resource = getResource();
 		final String tickerText = success ?
 			resource.getResource("tickerSuccess").getValue() :
@@ -159,16 +167,12 @@ public class BookDownloaderService extends Service {
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		final Intent intent = getFBReaderIntent(success ? file : null);
 		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
-		notification.setLatestEventInfo(getApplicationContext(), file.getName(), contentText, contentIntent);
+		notification.setLatestEventInfo(getApplicationContext(), title, contentText, contentIntent);
 		return notification;
 	}
 
-	private Notification createDownloadProgressNotification(File file) {
+	private Notification createDownloadProgressNotification(String title) {
 		final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
-		String title = file.getName();
-		if (title == null || title.length() == 0) {
-			title = getResource().getResource("untitled").getValue();
-		}
 		contentView.setTextViewText(R.id.download_notification_title, title);
 		contentView.setTextViewText(R.id.download_notification_progress_text, "");
 		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
@@ -185,9 +189,9 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
-	private void startFileDownload(final String uriString, final File file) {
+	private void startFileDownload(final String uriString, final File file, final String title) {
 		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
-		final Notification progressNotification = createDownloadProgressNotification(file);
+		final Notification progressNotification = createDownloadProgressNotification(title);
 
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(notificationId, progressNotification);
@@ -215,7 +219,7 @@ public class BookDownloaderService extends Service {
 				notificationManager.cancel(notificationId);
 				notificationManager.notify(
 					notificationId,
-					createDownloadFinishNotification(file, message.what != 0)
+					createDownloadFinishNotification(file, title, message.what != 0)
 				);
 				doStop();
 			}

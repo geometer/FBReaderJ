@@ -202,6 +202,7 @@ class NetworkBookActions extends NetworkTreeActions {
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, ref.ReferenceType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanURL())
+					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
 			);
 		}
 	}
