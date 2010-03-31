@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.view.ContextMenu;
+import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -51,12 +52,12 @@ abstract class NetworkTreeActions {
 		return myResource.getResource("confirmQuestions").getResource(key).getValue().replace("%s", arg);
 	}
 
-	protected void addMenuItem(ContextMenu menu, int id, String key) {
-		menu.add(0, id, 0, getTitleValue(key));
+	protected MenuItem addMenuItem(ContextMenu menu, int id, String key) {
+		return menu.add(0, id, 0, getTitleValue(key));
 	}
 
-	protected void addMenuItem(ContextMenu menu, int id, String key, String arg) {
-		menu.add(0, id, 0, getTitleValue(key, arg));
+	protected MenuItem addMenuItem(ContextMenu menu, int id, String key, String arg) {
+		return menu.add(0, id, 0, getTitleValue(key, arg));
 	}
 
 	public abstract boolean canHandleTree(NetworkTree tree);

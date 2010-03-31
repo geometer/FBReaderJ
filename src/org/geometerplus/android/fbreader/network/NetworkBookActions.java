@@ -75,16 +75,21 @@ class NetworkBookActions extends NetworkTreeActions {
 		final NetworkBookItem book = bookTree.Book;
 		menu.setHeaderTitle(tree.getName());
 		if (useFullReferences(book)) {
-			if (book.localCopyFileName() != null) {
+			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
+			if (reference != null && myActivity.isBeingDownloaded(reference.URL)) {
+				addMenuItem(menu, -1, "alreadyDownloading").setEnabled(false);
+			} else if (book.localCopyFileName() != null) {
 				addMenuItem(menu, READ_BOOK_ITEM_ID, "read");
 				addMenuItem(menu, DELETE_BOOK_ITEM_ID, "delete");
-			} else if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
+			} else if (reference != null) {
 				addMenuItem(menu, DOWNLOAD_BOOK_ITEM_ID, "download");
 			}
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
+			if (myActivity.isBeingDownloaded(reference.URL)) {
+				addMenuItem(menu, -1, "alreadyDownloadingDemo").setEnabled(false);
+			} else if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
 				addMenuItem(menu, READ_DEMO_ITEM_ID, "readDemo");
 				addMenuItem(menu, DELETE_DEMO_ITEM_ID, "deleteDemo");
 			} else {

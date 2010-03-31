@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashSet;
+import java.util.*;
 import java.io.*;
 import java.net.*;
 
@@ -60,7 +60,7 @@ public class BookDownloaderService extends Service {
 	}
 
 
-	private HashSet<String> myDownloadingURLs = new HashSet<String>();
+	private Set<String> myDownloadingURLs = Collections.synchronizedSet(new HashSet<String>());
 
 	private volatile int myServiceCounter;
 
@@ -80,7 +80,12 @@ public class BookDownloaderService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		return null;
+		return new BookDownloaderInterface.Stub() {
+			@Override
+			public boolean isBeingDownloaded(String url) {
+				return myDownloadingURLs.contains(url);
+			}
+		};
 	}
 
 	@Override

@@ -26,11 +26,14 @@ import android.app.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.IBinder;
 import android.view.*;
 import android.widget.*;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.ServiceConnection;
+import android.content.ComponentName;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -55,6 +58,37 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 
+
+	private class BookDownloaderServiceConnection implements ServiceConnection {
+
+		private BookDownloaderInterface myInterface;
+
+		public synchronized void onServiceConnected(ComponentName className, IBinder service) {
+			myInterface = BookDownloaderInterface.Stub.asInterface(service);
+		}
+
+		public synchronized void onServiceDisconnected(ComponentName name) {
+			myInterface = null;
+		}
+
+		public synchronized boolean isBeingDownloaded(String url) {
+			if (myInterface != null) {
+				try {
+					return myInterface.isBeingDownloaded(url);
+				} catch (android.os.RemoteException e) {
+				}
+			}
+			return false;
+		}
+	}
+
+	private BookDownloaderServiceConnection myConnection;
+
+	public boolean isBeingDownloaded(String url) {
+		return (myConnection == null) ? false : myConnection.isBeingDownloaded(url);
+	}
+
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -71,6 +105,32 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		myActions.trimToSize();
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		Instance = this;
+
+		myConnection = new BookDownloaderServiceConnection();
+		bindService(
+			new Intent(this, BookDownloaderService.class),
+			myConnection,
+			BIND_AUTO_CREATE
+		);
+	}
+
+	@Override
+	public void onStop() {
+		unbindService(myConnection);
+		myConnection = null;
+		Instance = null;
+		super.onStop();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+
 	private NetworkTreeActions chooseActions(ZLTree tree) {
 		NetworkTree networkTree = (NetworkTree) tree;
 		for (NetworkTreeActions actions: myActions) {
@@ -79,28 +139,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		Instance = this;
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onStop() {
-		Instance = null;
-		super.onStop();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
 	}
 
 
