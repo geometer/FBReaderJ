@@ -118,18 +118,23 @@ class NetworkBookActions extends NetworkTreeActions {
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
 		if (useFullReferences(book)) {
-			if (book.localCopyFileName() != null) {
-				return READ_BOOK_ITEM_ID;
-			} else if (book.reference(BookReference.Type.DOWNLOAD_FULL) != null) {
-				return DOWNLOAD_BOOK_ITEM_ID;
+			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
+			if (reference == null || !myActivity.isBeingDownloaded(reference.URL)) {
+				if (book.localCopyFileName() != null) {
+					return READ_BOOK_ITEM_ID;
+				} else if (reference != null) {
+					return DOWNLOAD_BOOK_ITEM_ID;
+				}
 			}
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
-				return READ_DEMO_ITEM_ID;
-			} else {
-				return DOWNLOAD_DEMO_ITEM_ID;
+			if (!myActivity.isBeingDownloaded(reference.URL)) {
+				if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
+					return READ_DEMO_ITEM_ID;
+				} else {
+					return DOWNLOAD_DEMO_ITEM_ID;
+				}
 			}
 		}
 		if (useBuyReferences(book)) {
