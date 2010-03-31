@@ -76,12 +76,14 @@ public class BookReference {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
+		if (resolvedReferenceType == Type.DOWNLOAD_DEMO) {
+			path.insert(0, "Demos");
+			path.insert(0, File.separator);
+		}
 		path.insert(0, Constants.BOOKS_DIRECTORY);
 
 		int index = path.length();
-
 		path.append(uri.getPath());
-
 		int nameIndex = index;
 		while (index < path.length()) {
 			char ch = path.charAt(index);
@@ -148,12 +150,6 @@ public class BookReference {
 				}
 				index = j + 1;
 			}
-		}
-		if (resolvedReferenceType == Type.DOWNLOAD_DEMO) {
-			path.append(".trial");
-			System.err.println("FBREADER -- TRIAL (type = " + resolvedReferenceType + ")");
-		} else {
-			System.err.println("FBREADER -- FULL (type = " + resolvedReferenceType + ")");
 		}
 		return path.append(ext).toString();
 	}
