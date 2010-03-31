@@ -52,12 +52,26 @@ public abstract class NetworkTree extends FBTree {
 		if (mimeType == null) {
 			mimeType = "image/auto";
 		}
-		if (url.startsWith("http://") ||
-				url.startsWith("https://") ||
-				url.startsWith("ftp://")) {
+		if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://")) {
 			return new NetworkImage(url, mimeType);
 		} else if (url.startsWith("data:")) {
-			// TODO: implement Base64 images
+			int commaIndex = url.indexOf(',');
+			if (commaIndex == -1) {
+				return null;
+			}
+			if (mimeType == "image/auto") {
+				int index = url.indexOf(';');
+				if (index == -1 || index > commaIndex) {
+					index = commaIndex;
+				}
+				if (url.startsWith("image/", 5)) { // 11 -- length of "data:image/"; 5 -- length of "data:"
+					mimeType = url.substring(5, index);
+				}
+			}
+			int key = url.indexOf("base64");
+			if (key != -1 && key < commaIndex) {
+				return new Base64EncodedImage(mimeType, url.substring(commaIndex + 1));
+			}
 		}
 		return null;
 	}

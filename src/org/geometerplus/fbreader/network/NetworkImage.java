@@ -39,10 +39,14 @@ public final class NetworkImage extends ZLSingleImage {
 	public NetworkImage(String url, String mimeType) {
 		super(mimeType);
 		myUrl = url;
+		new File(makeImagesDir()).mkdirs();
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
+	public static String makeImagesDir() {
+		return Constants.CACHE_DIRECTORY + File.separator + "cache";
+	}
 
 	// mimeType string MUST be interned
 	public static String makeImageFileName(String url, String mimeType) {
@@ -60,9 +64,7 @@ public final class NetworkImage extends ZLSingleImage {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
-		path.insert(0, "cache");
-		path.insert(0, File.separator);
-		path.insert(0, Constants.CACHE_DIRECTORY);
+		path.insert(0, makeImagesDir());
 
 		int index = path.length();
 
@@ -89,12 +91,10 @@ public final class NetworkImage extends ZLSingleImage {
 		if (mimeType == MIME_PNG) {
 			ext = ".png";
 		} else if (mimeType == MIME_JPEG) {
-			if (path.length() > 5) {
-				if (path.substring(path.length() - 4).equals(".jpg")) {
-					ext = ".jpg";
-				} else if (path.substring(path.length() - 5).equals(".jpeg")) {
-					ext = ".jpeg";
-				}
+			if (path.length() > 5 && path.substring(path.length() - 5).equals(".jpeg")) {
+				ext = ".jpeg";
+			} else {
+				ext = ".jpg";
 			}
 		}
 
