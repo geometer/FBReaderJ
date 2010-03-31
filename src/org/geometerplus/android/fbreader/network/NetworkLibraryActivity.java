@@ -107,12 +107,12 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private final class LibraryAdapter extends ZLTreeAdapter {
 
 		private final ExecutorService myPool;
-		private final HashSet<NetworkTree> myTreesToDraw;
+		private final HashSet<NetworkImage> myIconsToSync;
 
 		LibraryAdapter(ListView view, NetworkTree tree) {
 			super(view, tree);
 			myPool = Executors.newFixedThreadPool(10); // TODO: how many threads ???
-			myTreesToDraw = new HashSet<NetworkTree>();
+			myIconsToSync = new HashSet<NetworkImage>();
 		}
 
 		@Override
@@ -154,11 +154,11 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					final NetworkImage img = (NetworkImage) cover;
 					if (img.isSynchronized()) {
 						data = mgr.getImageData(img);
-					} else if (!myTreesToDraw.contains(tree)) {
-						myTreesToDraw.add(tree);
+					} else if (!myIconsToSync.contains(img)) {
+						myIconsToSync.add(img);
 						final Handler handler = new Handler() {
 							public void handleMessage(Message message) {
-								myTreesToDraw.remove(tree);
+								myIconsToSync.remove(img);
 								ListView view = NetworkLibraryActivity.this.getListView();
 								view.invalidateViews();
 								view.requestLayout();
