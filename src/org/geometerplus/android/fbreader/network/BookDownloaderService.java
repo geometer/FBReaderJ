@@ -36,6 +36,7 @@ import android.net.Uri;
 import android.content.Intent;
 import android.content.Context;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -49,6 +50,16 @@ public class BookDownloaderService extends Service {
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
 	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
+
+	public static final String SHOW_NOTIFICATIONS_KEY = "org.geometerplus.android.fbreader.network.ShowNotifications";
+
+	public interface Notifications {
+		int DOWNLOAD_STARTED = 0x0001;
+		int ALREADY_DOWNLOADING = 0x0002;
+
+		int ALL = 0x0003;
+	}
+
 
 	private volatile int myServiceCounter;
 
@@ -82,6 +93,8 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 		intent.setData(null);
+
+		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
 		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookReference.Format.NONE);
@@ -139,6 +152,13 @@ public class BookDownloaderService extends Service {
 		}
 		if (title == null || title.length() == 0) {
 			title = getResource().getResource("untitled").getValue();
+		}
+		if ((notifications & Notifications.DOWNLOAD_STARTED) != 0) {
+			Toast.makeText(
+				getApplicationContext(),
+				getResource().getResource("downloadingStarted").getValue(),
+				Toast.LENGTH_SHORT
+			).show();
 		}
 		startFileDownload(url, fileFile, title);
 	}

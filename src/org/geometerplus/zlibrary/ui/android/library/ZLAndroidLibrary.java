@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 
 import org.geometerplus.android.fbreader.network.BookDownloader;
+import org.geometerplus.android.fbreader.network.BookDownloaderService;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
@@ -77,6 +78,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		boolean externalUrl = true;
 		if (BookDownloader.acceptsUri(Uri.parse(reference))) {
 			intent.setClass(myActivity, BookDownloader.class);
+			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		}
 		reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);

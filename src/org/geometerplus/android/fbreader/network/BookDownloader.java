@@ -56,7 +56,11 @@ public class BookDownloader extends Activity {
 			finish();
 			return;
 		}
-		startService(new Intent(Intent.ACTION_DEFAULT, uri, this, BookDownloaderService.class));
+
+		startService(
+			new Intent(Intent.ACTION_DEFAULT, uri, this, BookDownloaderService.class)
+				.putExtras(intent.getExtras())
+		);
 		finish();
 	}
 }
