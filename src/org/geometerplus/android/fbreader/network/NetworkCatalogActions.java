@@ -50,7 +50,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int RELOAD_ITEM_ID = 2;
 	//public static final int DONT_SHOW_ITEM_ID = 3;
 
-	public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
+	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
 	private ZLTreeAdapter myAdapter;
 
@@ -105,9 +105,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				addMenuItem(menu, RELOAD_ITEM_ID, "reload");
 			}
 		}
-		if (tree.hasChildren()) {
+		/*if (tree.hasChildren()) {
 			menu.add(0, DBG_UNLOAD_CATALOG_ITEM_ID, 0, "Unload catalog");
-		}
+		}*/
 	}
 
 	@Override
@@ -146,7 +146,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			/*case DONT_SHOW_ITEM_ID:
 				diableCatalog((NetworkCatalogRootTree) tree);
 				return true;*/
-			case DBG_UNLOAD_CATALOG_ITEM_ID: {
+			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 					if (tree.hasChildren() && myAdapter.isOpen(tree)) {
 						myAdapter.expandOrCollapseTree(tree);
@@ -155,7 +155,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					tree.clear();
 					myAdapter.resetTree();
 				}
-				return true;
+				return true;*/
 		}
 		return false;
 	}
@@ -385,5 +385,4 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		library.synchronize();
 		myAdapter.resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
 	}*/
-
 }
