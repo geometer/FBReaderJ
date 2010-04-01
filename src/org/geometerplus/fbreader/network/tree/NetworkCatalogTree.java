@@ -60,7 +60,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		return createCover(Item);
 	}
 
-	private boolean processAccountDependent(NetworkCatalogItem item) {
+	static boolean processAccountDependent(NetworkCatalogItem item) {
 		if (item.Visibility == NetworkCatalogItem.VISIBLE_ALWAYS) {
 			return true;
 		}
@@ -121,8 +121,8 @@ public class NetworkCatalogTree extends NetworkTree {
 					}
 				}
 			}
-			if (!processed && processAccountDependent((NetworkCatalogItem) currentItem)) {
-				NetworkTreeFactory.createNetworkTree(this, currentItem, nodeCount++);
+			if (!processed && NetworkTreeFactory.createNetworkTree(this, currentItem, nodeCount) != null) {
+				++nodeCount;
 			}
 		}
 

@@ -205,45 +205,56 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private static final int WHAT_NEW_ITEM = 0;
+	private static final int WHAT_UPDATE_ITEMS = 0;
 	private static final int WHAT_FINISHED = 1;
 
 	private class ExpandCatalogHandler extends Handler {
 
 		private final NetworkCatalogTree myTree;
 		private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
-		private long myUpdateTime;
 
 		ExpandCatalogHandler(NetworkCatalogTree tree) {
 			myTree = tree;
 		}
 
-		private void displayItems() {
-			for (NetworkLibraryItem item: myItems) {
-				myTree.ChildrenItems.add(item);
-				NetworkTreeFactory.createNetworkTree(myTree, item);
-				myTree.updateAccountDependents();
+		void addItem(NetworkLibraryItem item) {
+			synchronized (myItems) {
+				myItems.add(item);
 			}
-			myItems.clear();
+		}
+
+		void ensureFinish() {
+			synchronized (myItems) {
+				while (myItems.size() > 0) {
+					try {
+						myItems.wait();
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		}
+
+		private void displayItems() {
+			synchronized (myItems) {
+				for (NetworkLibraryItem item: myItems) {
+					myTree.ChildrenItems.add(item);
+					NetworkTreeFactory.createNetworkTree(myTree, item);
+				}
+				myItems.clear();
+				myItems.notifyAll(); // wake up process, that waits for all items to be displayed
+			}
 			myAdapter.resetTree();
 		}
 
-		private void onNewItem(NetworkLibraryItem item) {
-			myItems.add(item);
-			final long now = System.currentTimeMillis();
-			if (myUpdateTime == 0) {
-				displayItems();
+		private void onUpdateItems() {
+			boolean expand = !myTree.hasChildren();
+			displayItems();
+			if (expand) {
 				myAdapter.expandOrCollapseTree(myTree);
-			} else if (myUpdateTime <= now) {
-				displayItems();
 			}
-			myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
 		}
 
 		private void onFinish(String err) {
-			if (myItems.size() > 0) {
-				displayItems();
-			}
 			afterUpdateCatalog(err, myTree.ChildrenItems.size() == 0);
 			endProgressNotification(myTree);
 		}
@@ -251,8 +262,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		@Override
 		public void handleMessage(Message message) {
 			switch (message.what) {
-			case WHAT_NEW_ITEM:
-				onNewItem((NetworkLibraryItem) message.obj);
+			case WHAT_UPDATE_ITEMS:
+				onUpdateItems();
 				break;
 			case WHAT_FINISHED:
 				onFinish((String) message.obj);
@@ -269,7 +280,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		final Handler handler = new ExpandCatalogHandler(tree);
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		new Thread(new Runnable() {
 			public void run() {
 				/*if (!NetworkOperationRunnable::tryConnect()) {
@@ -295,10 +306,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}*/
 				}
 				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+					private long myUpdateTime;
 					public void onNewItem(NetworkLibraryItem item) {
-						handler.sendMessage(handler.obtainMessage(WHAT_NEW_ITEM, item));
+						handler.addItem(item);
+						final long now = System.currentTimeMillis();
+						if (now > myUpdateTime) {
+							handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+							myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
+						}
 					}
 				});
+				handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+				handler.ensureFinish();
 				handler.sendMessage(handler.obtainMessage(WHAT_FINISHED, err));
 			}
 		}).start();
@@ -308,7 +327,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		final Handler handler = new ExpandCatalogHandler(tree);
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		myAdapter.expandOrCollapseTree(tree);
 		tree.ChildrenItems.clear();
 		tree.clear();
@@ -316,10 +335,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		new Thread(new Runnable() {
 			public void run() {
 				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+					private long myUpdateTime;
 					public void onNewItem(NetworkLibraryItem item) {
-						handler.sendMessage(handler.obtainMessage(WHAT_NEW_ITEM, item));
+						handler.addItem(item);
+						final long now = System.currentTimeMillis();
+						if (now > myUpdateTime) {
+							handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+							myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
+						}
 					}
 				});
+				handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+				handler.ensureFinish();
 				handler.sendMessage(handler.obtainMessage(WHAT_FINISHED, err));
 			}
 		}).start();

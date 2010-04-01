@@ -31,8 +31,12 @@ public class NetworkTreeFactory {
 
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkLibraryItem item, int position) {
 		if (item instanceof NetworkCatalogItem) {
-			NetworkCatalogTree tree = new NetworkCatalogTree(parent, (NetworkCatalogItem) item, position);
-			//ptr->item().onDisplayItem();
+			NetworkCatalogItem catalogItem = (NetworkCatalogItem) item;
+			if (!NetworkCatalogTree.processAccountDependent(catalogItem)) {
+				return null;
+			}
+			NetworkCatalogTree tree = new NetworkCatalogTree(parent, catalogItem, position);
+			//catalogItem.onDisplayItem();
 			return tree;
 		} else if (item instanceof NetworkBookItem) {
 			return new NetworkBookTree(parent, (NetworkBookItem) item, position);
