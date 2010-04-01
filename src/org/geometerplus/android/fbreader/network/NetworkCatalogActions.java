@@ -212,6 +212,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		private final NetworkCatalogTree myTree;
 		private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
+		private long myUpdateTime;
 
 		ExpandCatalogHandler(NetworkCatalogTree tree) {
 			myTree = tree;
@@ -229,18 +230,19 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		private void onNewItem(NetworkLibraryItem item) {
 			myItems.add(item);
-			if (!hasMessages(WHAT_NEW_ITEM)) {
-				final boolean expand = !myTree.hasChildren();
+			final long now = System.currentTimeMillis();
+			if (myUpdateTime == 0) {
 				displayItems();
-				if (expand) {
-					myAdapter.expandOrCollapseTree(myTree);
-				}
+				myAdapter.expandOrCollapseTree(myTree);
+			} else if (myUpdateTime <= now) {
+				displayItems();
 			}
+			myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
 		}
 
 		private void onFinish(String err) {
 			if (myItems.size() > 0) {
-				throw new RuntimeException("Not all items have been displayed!!!");
+				displayItems();
 			}
 			afterUpdateCatalog(err, myTree.ChildrenItems.size() == 0);
 			endProgressNotification(myTree);
@@ -324,9 +326,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
 		if (errorMessage != null) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			final ZLResource buttonResource = dialogResource.getResource("button");
 			final ZLResource boxResource = dialogResource.getResource("networkError");
 			new AlertDialog.Builder(myActivity)
 				.setTitle(boxResource.getResource("title").getValue())
@@ -335,8 +337,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
 				.create().show();
 		} else if (childrenEmpty) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			final ZLResource buttonResource = dialogResource.getResource("button");
 			final ZLResource boxResource = dialogResource.getResource("emptyCatalogBox");
 			new AlertDialog.Builder(myActivity)
 				.setTitle(boxResource.getResource("title").getValue())
