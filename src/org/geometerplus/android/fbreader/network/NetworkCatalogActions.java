@@ -54,9 +54,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private ZLTreeAdapter myAdapter;
 
-	private int dbgCatalogsCounter;
-	private int dbgBooksCounter;
-
 	public NetworkCatalogActions(NetworkLibraryActivity activity, ZLTreeAdapter adapter) {
 		super(activity);
 		myAdapter = adapter;
@@ -208,6 +205,60 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
+	private static final int WHAT_NEW_ITEM = 0;
+	private static final int WHAT_FINISHED = 1;
+
+	private class ExpandCatalogHandler extends Handler {
+
+		private final NetworkCatalogTree myTree;
+		private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
+
+		ExpandCatalogHandler(NetworkCatalogTree tree) {
+			myTree = tree;
+		}
+
+		private void displayItems() {
+			for (NetworkLibraryItem item: myItems) {
+				myTree.ChildrenItems.add(item);
+				NetworkTreeFactory.createNetworkTree(myTree, item);
+				myTree.updateAccountDependents();
+			}
+			myItems.clear();
+			myAdapter.resetTree();
+		}
+
+		private void onNewItem(NetworkLibraryItem item) {
+			myItems.add(item);
+			if (!hasMessages(WHAT_NEW_ITEM)) {
+				final boolean expand = !myTree.hasChildren();
+				displayItems();
+				if (expand) {
+					myAdapter.expandOrCollapseTree(myTree);
+				}
+			}
+		}
+
+		private void onFinish(String err) {
+			if (myItems.size() > 0) {
+				throw new RuntimeException("Not all items have been displayed!!!");
+			}
+			afterUpdateCatalog(err, myTree.ChildrenItems.size() == 0);
+			endProgressNotification(myTree);
+		}
+
+		@Override
+		public void handleMessage(Message message) {
+			switch (message.what) {
+			case WHAT_NEW_ITEM:
+				onNewItem((NetworkLibraryItem) message.obj);
+				break;
+			case WHAT_FINISHED:
+				onFinish((String) message.obj);
+				break;
+			}
+		}
+	}
+
 	public void doExpandCatalog(final NetworkCatalogTree tree) {
 		if (tree.hasChildren()) {
 			myAdapter.expandOrCollapseTree(tree);
@@ -216,35 +267,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		//final boolean hadChildren = false;
-		final Handler progressHandler = new Handler() {
-			public void handleMessage(Message message) {
-				NetworkLibraryItem item = (NetworkLibraryItem) message.obj;
-				boolean expand = !tree.hasChildren();
-				tree.ChildrenItems.add(item);
-				NetworkTreeFactory.createNetworkTree(tree, item);
-				tree.updateAccountDependents();
-				
-				if (item instanceof NetworkCatalogItem) {
-					++dbgCatalogsCounter;
-				} if (item instanceof NetworkBookItem) {
-					++dbgBooksCounter;
-				}
-				myAdapter.resetTree();
-				if (expand) {
-					// If catalog loading started => Tree must be expanded after the first item has been loaded
-					myAdapter.expandOrCollapseTree(tree);
-				}
-			}
-		};
-		final Handler finishHandler = new Handler() {
-			public void handleMessage(Message message) {
-				afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
-				endProgressNotification(tree);
-				System.err.println("FBREADER -- dbgCatalogsCounter = " + dbgCatalogsCounter);
-				System.err.println("FBREADER -- dbgBooksCounter = " + dbgBooksCounter);
-			}
-		};
+		final Handler handler = new ExpandCatalogHandler(tree);
 		new Thread(new Runnable() {
 			public void run() {
 				/*if (!NetworkOperationRunnable::tryConnect()) {
@@ -271,10 +294,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				}
 				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 					public void onNewItem(NetworkLibraryItem item) {
-						progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
+						handler.sendMessage(handler.obtainMessage(WHAT_NEW_ITEM, item));
 					}
 				});
-				finishHandler.sendMessage(finishHandler.obtainMessage(0, err));
+				handler.sendMessage(handler.obtainMessage(WHAT_FINISHED, err));
 			}
 		}).start();
 	}
@@ -283,26 +306,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		final Handler progressHandler = new Handler() {
-			public void handleMessage(Message message) {
-				NetworkLibraryItem item = (NetworkLibraryItem) message.obj;
-				boolean expand = !tree.hasChildren();
-				tree.ChildrenItems.add(item);
-				NetworkTreeFactory.createNetworkTree(tree, item);
-				tree.updateAccountDependents();
-				myAdapter.resetTree();
-				if (expand) {
-					// If catalog loading started => Tree must be expanded after the first item has been loaded
-					myAdapter.expandOrCollapseTree(tree);
-				}
-			}
-		};
-		final Handler finishHandler = new Handler() {
-			public void handleMessage(Message message) {
-				afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
-				endProgressNotification(tree);
-			}
-		};
+		final Handler handler = new ExpandCatalogHandler(tree);
 		myAdapter.expandOrCollapseTree(tree);
 		tree.ChildrenItems.clear();
 		tree.clear();
@@ -311,10 +315,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			public void run() {
 				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 					public void onNewItem(NetworkLibraryItem item) {
-						progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
+						handler.sendMessage(handler.obtainMessage(WHAT_NEW_ITEM, item));
 					}
 				});
-				finishHandler.sendMessage(finishHandler.obtainMessage(0, err));
+				handler.sendMessage(handler.obtainMessage(WHAT_FINISHED, err));
 			}
 		}).start();
 	}
