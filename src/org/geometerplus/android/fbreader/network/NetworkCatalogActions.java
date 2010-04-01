@@ -241,7 +241,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					NetworkTreeFactory.createNetworkTree(myTree, item);
 				}
 				myItems.clear();
-				myItems.notifyAll(); // wake up process, that waits for all items to be displayed
+				myItems.notifyAll(); // wake up process, that waits for all items to be displayed (see ensureFinish() method)
 			}
 			myAdapter.resetTree();
 		}
