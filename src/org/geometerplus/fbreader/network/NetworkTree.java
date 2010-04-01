@@ -70,7 +70,9 @@ public abstract class NetworkTree extends FBTree {
 			}
 			int key = url.indexOf("base64");
 			if (key != -1 && key < commaIndex) {
-				return new Base64EncodedImage(mimeType, url.substring(commaIndex + 1));
+				Base64EncodedImage img = new Base64EncodedImage(mimeType);
+				img.setData(url.substring(commaIndex + 1));
+				return img;
 			}
 		}
 		return null;

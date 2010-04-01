@@ -27,21 +27,63 @@ import org.geometerplus.fbreader.Constants;
 
 final class Base64EncodedImage extends ZLSingleImage {
 
-	private String myData;
+	private static final String ENCODED_SUFFIX = ".base64";
+
 	private String myFileName;
+	private boolean myIsDecoded;
 
 	// mimeType string MUST be interned
-	public Base64EncodedImage(String mimeType, String data) {
+	public Base64EncodedImage(String mimeType) {
 		super(mimeType);
-		myData = data;
 		new File(makeImagesDir()).mkdirs();
+	}
+
+	public void setData(String data) {
+		myFileName = makeImagesDir() + File.separator + Integer.toHexString(data.hashCode());
+		String type = mimeType();
+		if (type == NetworkImage.MIME_PNG) {
+			myFileName += ".png";
+		} else if (type == NetworkImage.MIME_JPEG) {
+			myFileName += ".jpg";
+		}
+		myIsDecoded = isCacheValid(new File(myFileName));
+		if (myIsDecoded) {
+			return;
+		}
+		myFileName += ENCODED_SUFFIX;
+		File file = new File(myFileName);
+		if (isCacheValid(file)) {
+			return;
+		}
+		OutputStreamWriter writer = null;
+		try {
+			writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+			try {
+				writer.write(data, 0, data.length());
+			} finally {
+				writer.close();
+			}
+		} catch (IOException e) {
+		}
+	}
+
+	private static boolean isCacheValid(File file) {
+		if (file.exists()) {
+			final long diff = System.currentTimeMillis() - file.lastModified();
+			final long valid = 24 * 60 * 60 * 1000; // one day in milliseconds; FIXME: hardcoded const
+			if (diff >= 0 && diff <= valid) {
+				return true;
+			}
+			file.delete();
+		}
+		return false;
 	}
 
 	public static String makeImagesDir() {
 		return NetworkImage.makeImagesDir() + File.separator + "base64";
 	}
 
-	private static byte decodeByte(char encodedByte) {
+	private static byte decodeByte(byte encodedByte) {
 		switch (encodedByte) {
 			case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
 			case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
@@ -74,8 +116,11 @@ final class Base64EncodedImage extends ZLSingleImage {
 			final File file = new File(myFileName);
 			final byte[] data = new byte[(int)file.length()];
 			final FileInputStream stream = new FileInputStream(file);
-			stream.read(data);
-			stream.close();
+			try {
+				stream.read(data);
+			} finally {
+				stream.close();
+			}
 			return data;
 		} catch (IOException e) {
 			return null;
@@ -83,44 +128,49 @@ final class Base64EncodedImage extends ZLSingleImage {
 	}
 
 	private void decode() throws IOException {
-		if (myFileName != null) {
+		if (myIsDecoded) {
 			return;
 		}
-		myFileName = makeImagesDir() + File.separator + myData.hashCode();
-		final String type = mimeType();
-		if (type == NetworkImage.MIME_PNG) {
-			myFileName += ".png";
-		} else if (type == NetworkImage.MIME_JPEG) {
-			myFileName += ".jpg";
+		myIsDecoded = true;
+		final String encodedFileName = myFileName;
+		myFileName = myFileName.substring(0, myFileName.length() - ENCODED_SUFFIX.length());
+
+		final File outputFile = new File(myFileName);
+		if (isCacheValid(outputFile)) {
+			return;
 		}
-		FileOutputStream outputStream = null;
+
+		FileOutputStream outputStream = new FileOutputStream(outputFile);
 		try {
-			File file = new File(myFileName);
-			if (file.exists()) {
-				final long diff = System.currentTimeMillis() - file.lastModified();
-				final long valid = 24 * 60 * 60 * 1000; // one day in milliseconds; FIXME: hardcoded const
-				if (diff >= 0 && diff <= valid) {
-					return;
-				}
-				file.delete();
+			int dataLength;
+			byte[] encodedData;
+			final File file = new File(encodedFileName);
+			final FileInputStream inputStream = new FileInputStream(file);
+			try {
+				dataLength = (int)file.length();
+				encodedData = new byte[dataLength];
+				inputStream.read(encodedData);
+			} finally {
+				inputStream.close();
 			}
-			outputStream = new FileOutputStream(file);
-			final int dataLength = myData.length();
-			final byte[] data = new byte[myData.length() * 3 / 4 + 4];
+			file.delete();
+
+			final byte[] data = new byte[dataLength * 3 / 4 + 4];
 			int dataPos = 0;
+
 			for (int pos = 0; pos < dataLength; ) {
 				byte n0 = -1, n1 = -1, n2 = -1, n3 = -1;
 				while ((pos < dataLength) && (n0 == -1)) {
-					n0 = decodeByte(myData.charAt(pos++));
+					n0 = decodeByte(encodedData[pos++]);
 				}
 				while ((pos < dataLength) && (n1 == -1)) {
-					n1 = decodeByte(myData.charAt(pos++));
+					n1 = decodeByte(encodedData[pos++]);
 				}
 				while ((pos < dataLength) && (n2 == -1)) {
-					n2 = decodeByte(myData.charAt(pos++));
+					n2 = decodeByte(encodedData[pos++]);
 				}
 				while ((pos < dataLength) && (n3 == -1)) {
-					n3 = decodeByte(myData.charAt(pos++));
+					n3 = decodeByte(encodedData[pos++]);
 				}
 				data[dataPos++] = (byte)(n0 << 2 | n1 >> 4);
 				data[dataPos++] = (byte)(((n1 & 0xf) << 4) | ((n2 >> 2) & 0xf));
@@ -128,10 +178,7 @@ final class Base64EncodedImage extends ZLSingleImage {
 			}
 			outputStream.write(data, 0, dataPos);
 		} finally {
-			if (outputStream != null) {
-				outputStream.close();
-			}
-			myData = null;
+			outputStream.close();
 		}
 	}
 }
