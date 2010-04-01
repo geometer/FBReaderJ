@@ -64,6 +64,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private String myOpdsNamespaceId;
 
 	@Override
+	public boolean dontCacheAttributeValues() {
+		return true;
+	}
+
+	@Override
 	public boolean processNamespaces() {
 		return true;
 	}

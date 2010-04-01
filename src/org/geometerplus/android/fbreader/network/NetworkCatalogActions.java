@@ -50,6 +50,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int RELOAD_ITEM_ID = 2;
 	//public static final int DONT_SHOW_ITEM_ID = 3;
 
+	public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
+
 	private ZLTreeAdapter myAdapter;
 
 	public NetworkCatalogActions(NetworkLibraryActivity activity, ZLTreeAdapter adapter) {
@@ -103,6 +105,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				addMenuItem(menu, RELOAD_ITEM_ID, "reload");
 			}
 		}
+		if (tree.hasChildren()) {
+			menu.add(0, DBG_UNLOAD_CATALOG_ITEM_ID, 0, "Unload catalog");
+		}
 	}
 
 	@Override
@@ -141,6 +146,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			/*case DONT_SHOW_ITEM_ID:
 				diableCatalog((NetworkCatalogRootTree) tree);
 				return true;*/
+			case DBG_UNLOAD_CATALOG_ITEM_ID: {
+					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+					if (tree.hasChildren() && myAdapter.isOpen(tree)) {
+						myAdapter.expandOrCollapseTree(tree);
+					}
+					catalogTree.ChildrenItems.clear();
+					tree.clear();
+					myAdapter.resetTree();
+				}
+				return true;
 		}
 		return false;
 	}
@@ -191,10 +206,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doExpandCatalog(final NetworkCatalogTree tree) {
+		if (tree.hasChildren()) {
+			myAdapter.expandOrCollapseTree(tree);
+			return;
+		}
 		if (!startProgressNotification(tree)) {
 			return;
 		}
-		final boolean hadChildren = tree.hasChildren();
+		//final boolean hadChildren = false;
 		final Handler progressHandler = new Handler() {
 			public void handleMessage(Message message) {
 				NetworkLibraryItem item = (NetworkLibraryItem) message.obj;
@@ -213,12 +232,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		};
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
-				if (!hadChildren) {
-					afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
-				} else {
-					// If Tree had children => catalog loading wasn't started => Tree must be expanded manually
-					myAdapter.expandOrCollapseTree(tree);
-				}
+				afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
 				endProgressNotification(tree);
 			}
 		};
@@ -246,14 +260,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						}
 					}*/
 				}
-				String err = null;
-				if (!hadChildren) {
-					err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
-						public void onNewItem(NetworkLibraryItem item) {
-							progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
-						}
-					});
-				}
+				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+					public void onNewItem(NetworkLibraryItem item) {
+						progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
+					}
+				});
 				finishHandler.sendMessage(finishHandler.obtainMessage(0, err));
 			}
 		}).start();
@@ -291,7 +302,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		myAdapter.resetTree();
 		new Thread(new Runnable() {
 			public void run() {
-				String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 					public void onNewItem(NetworkLibraryItem item) {
 						progressHandler.sendMessage(progressHandler.obtainMessage(0, item));
 					}

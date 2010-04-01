@@ -66,8 +66,9 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		} else {
 			myOpenItems.add(tree);
 		}
-		myParent.invalidateViews();
-		myParent.requestLayout();
+		//myParent.invalidateViews();
+		//myParent.requestLayout();
+		notifyDataSetChanged();
 	}
 
 	public final boolean isOpen(ZLTree tree) {
@@ -166,14 +167,16 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		myItems = new ZLTree[tree.getSize() - 1];
 		myOpenItems.clear();
 		myOpenItems.add(tree);
-		myParent.invalidateViews();
-		myParent.requestLayout();
+		//myParent.invalidateViews();
+		//myParent.requestLayout();
+		notifyDataSetChanged();
 	}
 
 	public void resetTree() {
 		myItems = new ZLTree[myTree.getSize() - 1];
-		myParent.invalidateViews();
-		myParent.requestLayout();
+		//myParent.invalidateViews();
+		//myParent.requestLayout();
+		notifyDataSetChanged();
 	}
 
 	public final void onItemClick(AdapterView parent, View view, int position, long id) {
