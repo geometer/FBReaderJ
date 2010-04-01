@@ -46,7 +46,7 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public static ZLImage createCover(String url, String mimeType) {
-		if (url == null) {
+		/*if (url == null) {
 			return null;
 		}
 		if (mimeType == null) {
@@ -74,7 +74,7 @@ public abstract class NetworkTree extends FBTree {
 				img.setData(url.substring(commaIndex + 1));
 				return img;
 			}
-		}
+		}*/
 		return null;
 	}
 }

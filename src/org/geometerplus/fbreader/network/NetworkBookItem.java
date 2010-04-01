@@ -38,8 +38,8 @@ public class NetworkBookItem extends NetworkLibraryItem {
 		 * @param sortKey     string that defines sorting order of book's authors. Must be not <code>null</code>.
 		 */
 		public AuthorData(String displayName, String sortKey) {
-			DisplayName = displayName;
-			SortKey = sortKey;
+			DisplayName = displayName.intern();
+			SortKey = sortKey.intern();
 		}
 
 		public int compareTo(AuthorData data) {
@@ -67,10 +67,10 @@ public class NetworkBookItem extends NetworkLibraryItem {
 
 	public final int Index;
 	public final String Id;
-	public final String Language;
-	public final String Date;
-	public final List<AuthorData> Authors;
-	public final List<String> Tags;
+	//public final String Language;
+	//public final String Date;
+	public final LinkedList<AuthorData> Authors;
+	//public final LinkedList<String> Tags;
 	public final String SeriesTitle;
 	public final int IndexInSeries;
 
@@ -84,27 +84,27 @@ public class NetworkBookItem extends NetworkLibraryItem {
 	 * @param index         sequence number of this book in corresponding catalog
 	 * @param title         title of this book. Must be not <code>null</code>.
 	 * @param summary       description of this book. Can be <code>null</code>.
-	 * @param langage       string specifies language of this book. Can be <code>null</code>.
-	 * @param date          string specifies release date of this book. Can be <code>null</code>.
+	 * //@param langage       string specifies language of this book. Can be <code>null</code>.
+	 * //@param date          string specifies release date of this book. Can be <code>null</code>.
 	 * @param authors       list of book authors. Should contain at least one author.
-	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
+	 * //@param tags          list of book tags. Must be not <code>null</code> (can be empty).
 	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
 	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
 	 * @param linkByType    map contains URLs and their types. Must be not <code>null</code>.
 	 * @param references    list of references related to this book. Must be not <code>null</code>.
 	 */
 	public NetworkBookItem(NetworkLink link, String id, int index,
-		String title, String summary, String language, String date,
-		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,
+		String title, String summary, /*String language, String date,*/
+		List<AuthorData> authors, /*List<String> tags,*/ String seriesTitle, int indexInSeries,
 		Map<Integer, Link> linkByType,
 		List<BookReference> references) {
 		super(link, title, summary, linkByType);
 		Index = index;
 		Id = id;
-		Language = language;
-		Date = date;
+		//Language = language;
+		//Date = date;
 		Authors = new LinkedList<AuthorData>(authors);
-		Tags = new LinkedList<String>(tags);
+		//Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
 		myReferences = new LinkedList(references);

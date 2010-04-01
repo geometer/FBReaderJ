@@ -367,7 +367,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			tag = tag.intern();
 		}
 
-		String bufferContent = myBuffer.toString().trim();
+		String bufferContent = myBuffer.toString().trim().intern();
 		if (bufferContent.length() == 0) {
 			bufferContent = null;
 		}

@@ -54,6 +54,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private ZLTreeAdapter myAdapter;
 
+	private int dbgCatalogsCounter;
+	private int dbgBooksCounter;
+
 	public NetworkCatalogActions(NetworkLibraryActivity activity, ZLTreeAdapter adapter) {
 		super(activity);
 		myAdapter = adapter;
@@ -221,9 +224,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				tree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(tree, item);
 				tree.updateAccountDependents();
-				if (!hasMessages(0)) {
-					myAdapter.resetTree();
+				
+				if (item instanceof NetworkCatalogItem) {
+					++dbgCatalogsCounter;
+				} if (item instanceof NetworkBookItem) {
+					++dbgBooksCounter;
 				}
+				myAdapter.resetTree();
 				if (expand) {
 					// If catalog loading started => Tree must be expanded after the first item has been loaded
 					myAdapter.expandOrCollapseTree(tree);
@@ -234,6 +241,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			public void handleMessage(Message message) {
 				afterUpdateCatalog((String) message.obj, tree.ChildrenItems.size() == 0);
 				endProgressNotification(tree);
+				System.err.println("FBREADER -- dbgCatalogsCounter = " + dbgCatalogsCounter);
+				System.err.println("FBREADER -- dbgBooksCounter = " + dbgBooksCounter);
 			}
 		};
 		new Thread(new Runnable() {
@@ -281,9 +290,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				tree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(tree, item);
 				tree.updateAccountDependents();
-				if (!hasMessages(0)) {
-					myAdapter.resetTree();
-				}
+				myAdapter.resetTree();
 				if (expand) {
 					// If catalog loading started => Tree must be expanded after the first item has been loaded
 					myAdapter.expandOrCollapseTree(tree);
