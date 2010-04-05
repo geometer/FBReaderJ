@@ -496,7 +496,7 @@ mainSwitchLabel:
 								currentNamespaceMap.put(attributeValue.toString(), aName.substring(6));
 								attributeValue.clear();
 							} else if (dontCacheAttributeValues) {
-								attributes.put(aName, attributeValue.toString());
+								attributes.put(aName, attributeValue.toStringLight());
 								attributeValue.clear();
 							} else {
 								attributes.put(aName, convertToString(strings, attributeValue));
