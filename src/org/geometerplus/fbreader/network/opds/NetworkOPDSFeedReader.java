@@ -160,7 +160,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			}
 		}
 
-		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
+		String cover = null;
 		LinkedList<BookReference> references = new LinkedList<BookReference>();
 		for (ATOMLink link: entry.Links) {
 			final String href = link.getHref();
@@ -168,15 +168,15 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final String rel = opdsLink.relation(filter(link.getRel()), type);
 			final int referenceType = typeByRelation(rel);
 			if (rel == OPDSConstants.REL_COVER) {
-				if (urlMap.get(NetworkLibraryItem.URL_COVER) == null &&
+				if (cover == null &&
 						(type == NetworkImage.MIME_PNG ||
 						 type == NetworkImage.MIME_JPEG)) {
-					urlMap.put(NetworkLibraryItem.URL_COVER, href);
+					cover = href;
 				}
 			} else if (rel == OPDSConstants.REL_THUMBNAIL) {
 				if (type == NetworkImage.MIME_PNG ||
 						type == NetworkImage.MIME_JPEG) {
-					urlMap.put(NetworkLibraryItem.URL_COVER, href);
+					cover = href;
 				}
 			} else if (referenceType == BookReference.Type.BUY) {
 				// FIXME: HACK: price handling must be implemented not through attributes!!!
@@ -266,7 +266,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			//tags,
 			entry.SeriesTitle,
 			entry.SeriesIndex,
-			urlMap,
+			cover,
 			references
 		);
 	}
@@ -334,20 +334,18 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
-		if (coverURL != null) {
-			urlMap.put(NetworkLibraryItem.URL_COVER, coverURL);
-		}
 		if (url != null) {
-			urlMap.put(NetworkLibraryItem.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
+			urlMap.put(NetworkCatalogItem.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
 		}
 		if (htmlURL != null) {
-			urlMap.put(NetworkLibraryItem.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
+			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
 		}
 		if (litresCatalogue) {
 			/*return new LitResBookshelfItem(
 				opdsLink,
 				entry.Title,
 				annotation,
+				coverURL,
 				urlMap,
 				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS
 			);*/
@@ -357,6 +355,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				opdsLink,
 				entry.Title,
 				annotation,
+				coverURL,
 				urlMap,
 				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS,
 				catalogType

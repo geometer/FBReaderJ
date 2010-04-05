@@ -38,11 +38,10 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public static ZLImage createCover(NetworkLibraryItem item) {
-		String link = item.URLByType.get(NetworkLibraryItem.URL_COVER);
-		if (link == null) {
+		if (item.Cover == null) {
 			return null;
 		}
-		return createCover(link, null);
+		return createCover(item.Cover, null);
 	}
 
 	public static ZLImage createCover(String url, String mimeType) {

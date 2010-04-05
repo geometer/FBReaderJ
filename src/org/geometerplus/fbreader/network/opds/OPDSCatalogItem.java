@@ -30,16 +30,16 @@ import org.geometerplus.fbreader.network.*;
 
 class OPDSCatalogItem extends NetworkCatalogItem {
 
-	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
-		super(link, title, summary, urlByType);
+	OPDSCatalogItem(NetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
+		super(link, title, summary, cover, urlByType);
 	}
 
-	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
-		super(link, title, summary, urlByType, visibility);
+	OPDSCatalogItem(NetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility) {
+		super(link, title, summary, cover, urlByType, visibility);
 	}
 
-	OPDSCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility, int catalogType) {
-		super(link, title, summary, urlByType, visibility, catalogType);
+	OPDSCatalogItem(NetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, int catalogType) {
+		super(link, title, summary, cover, urlByType, visibility, catalogType);
 	}
 
 	@Override

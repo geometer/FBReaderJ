@@ -71,7 +71,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		menu.setHeaderTitle(tree.getName());
 		final boolean isOpened = tree.hasChildren() && myAdapter.isOpen(tree);
 		if (tree instanceof NetworkCatalogRootTree) {
-			if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
+			if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
 				addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID,
 					isOpened ? "closeCatalog" : "openCatalog");
 			}
@@ -94,11 +94,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}*/
 			//addMenuItem(DONT_SHOW_ITEM_ID, "dontShow"); // TODO: is it needed??? and how to turn it on???
 		} else {
-			if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
+			if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
 				addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID,
 					isOpened ? "collapseTree" : "expandTree");
 			}
-			if (item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE) != null) {
+			if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
 			}
 			if (isOpened) {
@@ -114,10 +114,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public int getDefaultActionCode(NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
-		if (item.URLByType.get(NetworkLibraryItem.URL_CATALOG) != null) {
+		if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
 			return EXPAND_OR_COLLAPSE_TREE_ITEM_ID;
 		}
-		if (item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE) != null) {
+		if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
 		return -1;
@@ -138,7 +138,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doExpandCatalog((NetworkCatalogTree)tree);
 				return true;
 			case OPEN_IN_BROWSER_ITEM_ID:
-				myActivity.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkLibraryItem.URL_HTML_PAGE));
+				myActivity.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE));
 				return true;
 			case RELOAD_ITEM_ID:
 				doReloadCatalog((NetworkCatalogTree)tree);

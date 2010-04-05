@@ -32,8 +32,14 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public static final int VISIBLE_ALWAYS = 1;
 	public static final int VISIBLE_LOGGED_USER = 2;
 
+	// URL type values:
+	public static final int URL_NONE = 0;
+	public static final int URL_CATALOG = 1;
+	public static final int URL_HTML_PAGE = 2;
+
 	public final int Visibility;
 	public final int CatalogType;
+	public final TreeMap<Integer, String> URLByType;
 
 	/**
 	 * Creates new NetworkCatalogItem instance with <code>VISIBLE_ALWAYS</code> visibility and <code>CATALOG_OTHER</code> type.
@@ -41,10 +47,11 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType map contains URLs and their types. Must be not <code>null</code>.
+	 * @param cover      cover url. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 */
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
-		this(link, title, summary, urlByType, VISIBLE_ALWAYS, CATALOG_OTHER);
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
+		this(link, title, summary, cover, urlByType, VISIBLE_ALWAYS, CATALOG_OTHER);
 	}
 
 	/**
@@ -53,12 +60,13 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType map contains URLs and their types. Must be not <code>null</code>.
+	 * @param cover      cover url. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 * @param visibility value defines when this library item will be shown in the network library. 
 	 *                   Can be one of the VISIBLE_* values.
 	 */
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility) {
-		this(link, title, summary, urlByType, visibility, CATALOG_OTHER);
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility) {
+		this(link, title, summary, cover, urlByType, visibility, CATALOG_OTHER);
 	}
 
 	/**
@@ -67,15 +75,17 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType map contains URLs and their types. Must be not <code>null</code>.
+	 * @param cover      cover url. Can be <code>null</code>.
+	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 * @param visibility value defines when this library item will be shown in the network library. 
 	 *                   Can be one of the VISIBLE_* values.
 	 * @param catalogType value defines type of this catalog. Can be one of the CATALOG_* values.
 	 */
-	public NetworkCatalogItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType, int visibility, int catalogType) {
-		super(link, title, summary, urlByType);
+	public NetworkCatalogItem(NetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, int catalogType) {
+		super(link, title, summary, cover);
 		Visibility = visibility;
 		CatalogType = catalogType;
+		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
 
 	public interface CatalogListener {

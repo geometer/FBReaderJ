@@ -19,21 +19,12 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.*;
-
-
 public abstract class NetworkLibraryItem {
-
-	// URL type values:
-	public static final int URL_NONE = 0;
-	public static final int URL_CATALOG = 1;
-	public static final int URL_HTML_PAGE = 2;
-	public static final int URL_COVER = 3;
 
 	public final NetworkLink Link;
 	public final String Title;
 	public final String Summary;
-	public final TreeMap<Integer, String> URLByType;
+	public final String Cover;
 
 	//public org.geometerplus.fbreader.network.atom.ATOMEntry dbgEntry;
 
@@ -43,12 +34,12 @@ public abstract class NetworkLibraryItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param cover      cover url. Can be <code>null</code>.
 	 */
-	protected NetworkLibraryItem(NetworkLink link, String title, String summary, Map<Integer, String> urlByType) {
+	protected NetworkLibraryItem(NetworkLink link, String title, String summary, String cover) {
 		Link = link;
 		Title = title;
 		Summary = summary;
-		URLByType = new TreeMap<Integer, String>(urlByType);
+		Cover = cover;
 	}
 }

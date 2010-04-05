@@ -72,9 +72,8 @@ class OPDSLink extends NetworkLink {
 	@Override
 	public NetworkLibraryItem libraryItem() {
 		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
-		urlMap.put(NetworkLibraryItem.URL_COVER, Icon);
-		urlMap.put(NetworkLibraryItem.URL_CATALOG, Links.get(URL_MAIN));
-		return new OPDSCatalogItem(this, Title, Summary, urlMap);
+		urlMap.put(NetworkCatalogItem.URL_CATALOG, Links.get(URL_MAIN));
+		return new OPDSCatalogItem(this, Title, Summary, Icon, urlMap);
 	}
 
 	@Override
