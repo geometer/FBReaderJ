@@ -81,7 +81,6 @@ public class BookDownloaderService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
 		return new BookDownloaderInterface.Stub() {
-			@Override
 			public boolean isBeingDownloaded(String url) {
 				return myDownloadingURLs.contains(url);
 			}

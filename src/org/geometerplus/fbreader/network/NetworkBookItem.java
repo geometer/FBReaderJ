@@ -25,7 +25,7 @@ import java.io.File;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
-public class NetworkBookItem extends NetworkLibraryItem {
+public final class NetworkBookItem extends NetworkLibraryItem {
 
 	public static class AuthorData implements Comparable<AuthorData> {
 		public final String DisplayName;
