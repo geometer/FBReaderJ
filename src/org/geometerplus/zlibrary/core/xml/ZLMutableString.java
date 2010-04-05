@@ -92,8 +92,4 @@ final class ZLMutableString {
 	public String toString() {
 		return new String(myData, 0, myLength).intern();
 	}
-
-	public String toStringLight() {
-		return new String(myData, 0, myLength);
-	}
 }
