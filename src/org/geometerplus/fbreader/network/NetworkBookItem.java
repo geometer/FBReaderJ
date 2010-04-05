@@ -96,9 +96,9 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 	public NetworkBookItem(NetworkLink link, String id, int index,
 		String title, String summary, /*String language, String date,*/
 		List<AuthorData> authors, /*List<String> tags,*/ String seriesTitle, int indexInSeries,
-		Map<Integer, Link> linkByType,
+		Map<Integer, String> urlByType,
 		List<BookReference> references) {
-		super(link, title, summary, linkByType);
+		super(link, title, summary, urlByType);
 		Index = index;
 		Id = id;
 		//Language = language;
