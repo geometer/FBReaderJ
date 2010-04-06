@@ -64,11 +64,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private String myOpdsNamespaceId;
 
 	@Override
-	public boolean dontCacheAttributeValues() {
-		return true;
-	}
-
-	@Override
 	public boolean processNamespaces() {
 		return true;
 	}
@@ -367,9 +362,12 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			tag = tag.intern();
 		}
 
-		String bufferContent = myBuffer.toString().trim().intern();
-		if (bufferContent.length() == 0) {
+		final char[] bufferContentArray = myBuffer.toString().trim().toCharArray();
+		final String bufferContent;
+		if (bufferContentArray.length == 0) {
 			bufferContent = null;
+		} else {
+			bufferContent = new String(bufferContentArray);
 		}
 		myBuffer.delete(0, myBuffer.length());
 
