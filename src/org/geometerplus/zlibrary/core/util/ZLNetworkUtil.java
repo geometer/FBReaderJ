@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.util;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+
 public class ZLNetworkUtil {
 
 	public static String url(String baseUrl, String relativePath) {
@@ -112,7 +114,7 @@ public class ZLNetworkUtil {
 		return host;
 	}
 
-	public static String getUserAgent(String versionName) {
-		return "FBReader/" + versionName + "(java)";
+	public static String getUserAgent() {
+		return "FBReader/" + ZLibrary.Instance().getVersionName() + "(java)";
 	}
 }

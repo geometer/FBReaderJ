@@ -94,7 +94,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public String getVersionName() {
 		try {
-			return myActivity.getPackageManager().getPackageInfo(myActivity.getPackageName(), 0).versionName;
+			return myApplication.getPackageManager().getPackageInfo(myApplication.getPackageName(), 0).versionName;
 		} catch (Exception e) {
 			return "";
 		}

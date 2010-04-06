@@ -23,6 +23,7 @@ import java.io.*;
 import java.net.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.Constants;
 
@@ -181,7 +182,15 @@ public final class NetworkImage extends ZLSingleImage {
 			try {
 				final URL url = new URL(myUrl);
 				final URLConnection connection = url.openConnection();
-				final HttpURLConnection httpConnection = (HttpURLConnection)connection;
+				if (!(connection instanceof HttpURLConnection)) {
+					// TODO: error message ???
+					return;
+				}
+				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
+				httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
+				httpConnection.setRequestProperty("Connection", "Close");
+				httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
 				final int response = httpConnection.getResponseCode();
 				if (response == HttpURLConnection.HTTP_OK) {
 					OutputStream outStream = new FileOutputStream(imageFile);

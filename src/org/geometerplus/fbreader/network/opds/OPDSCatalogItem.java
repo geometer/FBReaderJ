@@ -58,11 +58,13 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 				final URL url = new URL(urlString);
 				final URLConnection connection = url.openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
-					break;
+					return null; // TODO: return error/information message???
 				}
 				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
 				httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
+				httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
 				httpConnection.setRequestProperty("Connection", "Close");
+				httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
 				final int response = httpConnection.getResponseCode();
 				if (response == HttpURLConnection.HTTP_OK) {
 					InputStream inStream = httpConnection.getInputStream();

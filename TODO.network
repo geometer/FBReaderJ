@@ -3,12 +3,12 @@ DONE нарисовать иконку (скопирована иконка ic_m
 
 NP улучшить определение размеров иконок
 ** сделать стартовые иконки прозрачными
-** перенести User-Agent в connection.setRequestProperty();
 
 DONE переместить в главном меню наверх (вместо Settings)
 DONE пункт меню "delete sample"
 DONE BookDownloaderService - i18n
 DONE указывать HTTP-agent = "FBReader/<version>(java)" -- номер версии смотреть, как в диалоге About
+	DONE перенести User-Agent в connection.setRequestProperty();
 DONE прятать Profile (прятать запрещенные каталоги)
 DONE при щелчке на книжку - сделать default action, и о нем спрашивать.
 

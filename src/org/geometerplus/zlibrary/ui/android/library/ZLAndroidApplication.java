@@ -23,12 +23,8 @@ import java.util.HashMap;
 
 import android.app.Application;
 
-import android.content.ComponentName;
-import android.content.pm.PackageInfo;
-
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
@@ -57,7 +53,6 @@ public class ZLAndroidApplication extends Application {
 		new ZLAndroidImageManager();
 		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);
-		System.setProperty("http.agent", ZLNetworkUtil.getUserAgent(ZLAndroidApplication.Instance().getVersionName()));
 	}
 
 	public void onTerminate() {
@@ -77,14 +72,4 @@ public class ZLAndroidApplication extends Application {
 	}
 
 	private final HashMap myData = new HashMap();
-
-	public String getVersionName() {
-		try {
-			ComponentName comp = new ComponentName(this, this.getClass());
-			PackageInfo pinfo = getPackageManager().getPackageInfo(comp.getPackageName(), 0);
-			return pinfo.versionName;
-		} catch (android.content.pm.PackageManager.NameNotFoundException ex) {
-			return null;
-		}
-	}
 }

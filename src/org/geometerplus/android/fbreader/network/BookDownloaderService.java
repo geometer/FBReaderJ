@@ -38,6 +38,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.BookReference;
@@ -272,15 +273,22 @@ public class BookDownloaderService extends Service {
 				try {
 					final URL url = new URL(urlString);
 					final URLConnection connection = url.openConnection();
-					final int fileLength = connection.getContentLength();
-					int downloadedPart = 0;
-					long progressTime = System.currentTimeMillis() + updateIntervalMillis;
-					if (fileLength <= 0) {
-						progressHandler.sendEmptyMessage(-1);
+					if (!(connection instanceof HttpURLConnection)) {
+						return; // TODO: return error/information message???
 					}
-					final HttpURLConnection httpConnection = (HttpURLConnection)connection;
+					final HttpURLConnection httpConnection = (HttpURLConnection) connection;
+					httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
+					httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
+					httpConnection.setRequestProperty("Connection", "Close");
+					httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
 					final int response = httpConnection.getResponseCode();
 					if (response == HttpURLConnection.HTTP_OK) {
+						final int fileLength = httpConnection.getContentLength();
+						int downloadedPart = 0;
+						long progressTime = System.currentTimeMillis() + updateIntervalMillis;
+						if (fileLength <= 0) {
+							progressHandler.sendEmptyMessage(-1);
+						}
 						OutputStream outStream = new FileOutputStream(file);
 						try {
 							InputStream inStream = httpConnection.getInputStream();
@@ -314,9 +322,12 @@ public class BookDownloaderService extends Service {
 						downloadSuccess = true;
 					}
 				} catch (MalformedURLException e) {
-					// TODO: error message; remove file, don't start FBReader
+					// TODO: error message
+				} catch (SocketTimeoutException ex) {
+					// TODO: error message
+					// error message : NetworkErrors.errorMessage("operationTimedOutMessage");
 				} catch (IOException e) {
-					// TODO: error message; remove file, don't start FBReader
+					// TODO: error message
 				} finally {
 					downloadFinishHandler.sendEmptyMessage(downloadSuccess ? 1 : 0);
 					if (!downloadSuccess) {
