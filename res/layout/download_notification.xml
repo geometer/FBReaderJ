@@ -41,8 +41,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
-            android:focusable="true"
-            android:clickable="true"
             >
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -70,13 +68,31 @@
                     android:paddingLeft="5dp"
                     /> -->
             </LinearLayout>
+            <Button
+            	android:id="@+id/download_notification_cancel_button"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textColor="#ff000000"
+                android:singleLine="true"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/download_notification_title"
+                android:focusable="true"
+                android:clickable="true"
+                android:visibility="gone"
+                />
             <ProgressBar android:id="@+id/download_notification_progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent" 
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@id/download_notification_cancel_button"
                 android:paddingBottom="8dp"
                 android:paddingRight="25dp"
+                android:focusable="true"
+                android:clickable="true"
                 />
         </RelativeLayout>
     </LinearLayout>

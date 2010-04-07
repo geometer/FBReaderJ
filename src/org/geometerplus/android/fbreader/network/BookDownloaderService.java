@@ -53,6 +53,8 @@ public class BookDownloaderService extends Service {
 
 	public static final String SHOW_NOTIFICATIONS_KEY = "org.geometerplus.android.fbreader.network.ShowNotifications";
 
+	public static final String CANCEL_DOWNLOAD_KEY = "org.geometerplus.android.fbreader.network.CancelDownload";
+
 	public interface Notifications {
 		int DOWNLOADING_STARTED = 0x0001;
 		int ALREADY_DOWNLOADING = 0x0002;
@@ -61,7 +63,7 @@ public class BookDownloaderService extends Service {
 	}
 
 
-	private Set<String> myDownloadingURLs = Collections.synchronizedSet(new HashSet<String>());
+	private final HashMap<String, Boolean> myDownloadsPermissions = new HashMap<String, Boolean>();
 
 	private volatile int myServiceCounter;
 
@@ -79,11 +81,17 @@ public class BookDownloaderService extends Service {
 		return ZLResource.resource("bookDownloader");
 	}
 
+	private final boolean isDownloadInProgress(String url) {
+		synchronized (myDownloadsPermissions) {
+			return myDownloadsPermissions.containsKey(url);
+		}
+	}
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return new BookDownloaderInterface.Stub() {
 			public boolean isBeingDownloaded(String url) {
-				return myDownloadingURLs.contains(url);
+				return isDownloadInProgress(url);
 			}
 		};
 	}
@@ -103,6 +111,14 @@ public class BookDownloaderService extends Service {
 		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
+
+		final boolean cancelDownload = intent.getBooleanExtra(CANCEL_DOWNLOAD_KEY, false);
+		if (cancelDownload) {
+			System.err.println("FBREADER -- CANCEL!!!");
+			doStop();
+			return;
+		}
+
 		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookReference.Format.NONE);
 		final int referenceType = intent.getIntExtra(REFERENCE_TYPE_KEY, BookReference.Type.UNKNOWN);
 		String cleanURL = intent.getStringExtra(CLEAN_URL_KEY);
@@ -110,7 +126,7 @@ public class BookDownloaderService extends Service {
 			cleanURL = url;
 		}
 
-		if (myDownloadingURLs.contains(url)) {
+		if (isDownloadInProgress(url)) {
 			if ((notifications & Notifications.ALREADY_DOWNLOADING) != 0) {
 				Toast.makeText(
 					getApplicationContext(),
@@ -209,7 +225,7 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
-	private Notification createDownloadProgressNotification(String title) {
+	private Notification createDownloadProgressNotification(String title, String url) {
 		final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
 		contentView.setTextViewText(R.id.download_notification_title, title);
 		contentView.setTextViewText(R.id.download_notification_progress_text, "");
@@ -217,6 +233,13 @@ public class BookDownloaderService extends Service {
 
 		final Intent intent = getFBReaderIntent(null);
 		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+		final Intent cancelIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url), this, BookDownloaderService.class)
+			.putExtra(BookDownloaderService.CANCEL_DOWNLOAD_KEY, true);
+		final PendingIntent cancelContentIntent = PendingIntent.getService(this, 0, cancelIntent, 0);
+		contentView.setOnClickPendingIntent(R.id.download_notification_cancel_button, cancelContentIntent);
+		contentView.setTextViewText(R.id.download_notification_cancel_button, getResource().getResource("cancel").getValue());
+		contentView.setViewVisibility(R.id.download_notification_cancel_button, android.view.View.VISIBLE);
 
 		final Notification notification = new Notification();
 		notification.icon = android.R.drawable.stat_sys_download;
@@ -227,11 +250,17 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
+	private static final int DOWNLOAD_SUCCESS = 0;
+	private static final int DOWNLOAD_FAILURE = 1;
+	private static final int DOWNLOAD_CANCEL = 2;
+
 	private void startFileDownload(final String urlString, final File file, final String title) {
-		myDownloadingURLs.add(urlString);
+		synchronized (myDownloadsPermissions) {
+			myDownloadsPermissions.put(urlString, Boolean.valueOf(true));
+		}
 
 		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
-		final Notification progressNotification = createDownloadProgressNotification(title);
+		final Notification progressNotification = createDownloadProgressNotification(title, urlString);
 
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(notificationId, progressNotification);
@@ -255,13 +284,29 @@ public class BookDownloaderService extends Service {
 
 		final Handler downloadFinishHandler = new Handler() {
 			public void handleMessage(Message message) {
-				myDownloadingURLs.remove(urlString);
+				synchronized (myDownloadsPermissions) {
+					myDownloadsPermissions.remove(urlString);
+				}
+				boolean success = false;
+				boolean cancel = false;
+				switch (message.what) {
+					case DOWNLOAD_SUCCESS:
+						success = true;
+						break;
+					case DOWNLOAD_CANCEL:
+						cancel = true;
+						break;
+					case DOWNLOAD_FAILURE:
+						break;
+				}
 				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				notificationManager.cancel(notificationId);
-				notificationManager.notify(
-					notificationId,
-					createDownloadFinishNotification(file, title, message.what != 0)
-				);
+				if (!cancel) {
+					notificationManager.notify(
+						notificationId,
+						createDownloadFinishNotification(file, title, success)
+					);
+				}
 				doStop();
 			}
 		};
@@ -270,6 +315,7 @@ public class BookDownloaderService extends Service {
 			public void run() {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 				boolean downloadSuccess = false;
+				boolean downloadCanceled = false;
 				try {
 					final URL url = new URL(urlString);
 					final URLConnection connection = url.openConnection();
@@ -294,6 +340,15 @@ public class BookDownloaderService extends Service {
 							InputStream inStream = httpConnection.getInputStream();
 							final byte[] buffer = new byte[8192];
 							while (true) {
+								synchronized (myDownloadsPermissions) {
+									Boolean b = myDownloadsPermissions.get(urlString);
+									if (b != null) {
+										downloadCanceled = !b.booleanValue();
+									}
+								}
+								if (downloadCanceled) {
+									break;
+								}
 								final int size = inStream.read(buffer);
 								if (size <= 0) {
 									break;
@@ -319,7 +374,7 @@ public class BookDownloaderService extends Service {
 						} finally {
 							outStream.close();
 						}
-						downloadSuccess = true;
+						downloadSuccess = !downloadCanceled;
 					}
 				} catch (MalformedURLException e) {
 					// TODO: error message
@@ -329,8 +384,16 @@ public class BookDownloaderService extends Service {
 				} catch (IOException e) {
 					// TODO: error message
 				} finally {
-					downloadFinishHandler.sendEmptyMessage(downloadSuccess ? 1 : 0);
-					if (!downloadSuccess) {
+					final int state;
+					if (downloadCanceled) {
+						state = DOWNLOAD_CANCEL;
+					} else if (downloadSuccess) {
+						state = DOWNLOAD_SUCCESS;
+					} else {
+						state = DOWNLOAD_FAILURE;
+					}
+					downloadFinishHandler.sendEmptyMessage(state);
+					if (state != DOWNLOAD_SUCCESS) {
 						file.delete();
 					}
 				}
