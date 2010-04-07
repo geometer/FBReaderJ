@@ -62,6 +62,7 @@ public class BookDownloaderService extends Service {
 
 
 	private Set<String> myDownloadingURLs = Collections.synchronizedSet(new HashSet<String>());
+	private Set<Integer> myOngoingNotifications = new HashSet<Integer>();
 
 	private volatile int myServiceCounter;
 
@@ -86,6 +87,16 @@ public class BookDownloaderService extends Service {
 				return myDownloadingURLs.contains(url);
 			}
 		};
+	}
+
+	@Override
+	public void onDestroy() {
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		for (int notificationId: myOngoingNotifications) {
+			notificationManager.cancel(notificationId);
+			System.err.println("FBREADER -- Cancel ID: " + notificationId);
+		}
+		super.onDestroy();
 	}
 
 	@Override
@@ -234,6 +245,7 @@ public class BookDownloaderService extends Service {
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		myOngoingNotifications.add(Integer.valueOf(notificationId));
 		notificationManager.notify(notificationId, progressNotification);
 
 		final Handler progressHandler = new Handler() {
@@ -258,6 +270,7 @@ public class BookDownloaderService extends Service {
 				myDownloadingURLs.remove(urlString);
 				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				notificationManager.cancel(notificationId);
+				myOngoingNotifications.remove(Integer.valueOf(notificationId));
 				notificationManager.notify(
 					notificationId,
 					createDownloadFinishNotification(file, title, message.what != 0)

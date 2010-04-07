@@ -128,6 +128,9 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	public void onDestroy() {
+		for (NetworkTreeActions actions: myActions) {
+			actions.onDestroy();
+		}
 		super.onDestroy();
 	}
 

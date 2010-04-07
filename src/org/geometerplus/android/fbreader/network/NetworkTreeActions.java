@@ -68,4 +68,7 @@ abstract class NetworkTreeActions {
 	public abstract String getConfirmText(NetworkTree tree, int actionCode);
 
 	public abstract boolean runAction(NetworkTree tree, int actionCode);
+
+	public void onDestroy() {
+	}
 }

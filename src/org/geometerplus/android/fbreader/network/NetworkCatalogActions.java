@@ -60,6 +60,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
+	public void onDestroy() {
+		final NotificationManager notificationManager = (NotificationManager) myActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.cancel(ourProcessingNotificationId);
+		super.onDestroy();
+	}
+
+	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof NetworkCatalogTree;
 	}

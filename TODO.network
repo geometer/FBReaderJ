@@ -3,7 +3,8 @@ DONE нарисовать иконку (скопирована иконка ic_m
 
 NP улучшить определение размеров иконок
 ** сделать стартовые иконки прозрачными
-** чистить все Notification'ы при завершении NetworkLibrary / BookDownloadService
+DONE чистить все Notification'ы при завершении NetworkLibrary / BookDownloadService
+** CRASH: начать загрузку большого каталога --> Нажать кнопку "Home" --> Открыть FBReader --> Открыть библиотеку --> Развернуть каталог
 
 DONE переместить в главном меню наверх (вместо Settings)
 DONE пункт меню "delete sample"
