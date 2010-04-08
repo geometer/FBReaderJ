@@ -61,6 +61,15 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:host="*" android:scheme="http" />
+				<data android:mimeType="application/epub+zip" />
+				<data android:mimeType="application/x-pilot-prc" />
+				<data android:mimeType="application/x-mobipocket-ebook" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:host="*rus.ec" android:mimeType="application/zip" android:scheme="http" />
 			</intent-filter>
 		</activity>
