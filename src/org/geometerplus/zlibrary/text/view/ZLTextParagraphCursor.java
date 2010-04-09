@@ -91,12 +91,14 @@ public final class ZLTextParagraphCursor {
 			}
 		}
 		
+		private static byte[] ourBreaks = new byte[1024];
 		private void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
 				final LineBreak breaker = new LineBreak("en");
-				final byte[] breaks = new byte[length];
-				System.err.println(length);
-				breaker.setLineBreaks(data, offset, length, breaks);
+				if (ourBreaks.length < length) {
+					ourBreaks = new byte[length];
+				}
+				breaker.setLineBreaks(data, offset, length, ourBreaks);
 
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
 				final int end = offset + length;
