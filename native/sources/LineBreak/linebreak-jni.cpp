@@ -27,7 +27,7 @@ void Java_org_vimgadgets_linebreak_LineBreak_setLineBreaksForString(JNIEnv *env,
 	const size_t len = env->GetStringLength(data);
 	const char *langArray = env->GetStringUTFChars(lang, 0);
 
-	set_linebreaks_utf16(dataArray, len, "en", (char*)breaksArray);
+	set_linebreaks_utf16(dataArray, len, langArray, (char*)breaksArray);
 
   env->ReleaseStringUTFChars(lang, langArray);
 	env->ReleaseByteArrayElements(breaks, breaksArray, 0);
