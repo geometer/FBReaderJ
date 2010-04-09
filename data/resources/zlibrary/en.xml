@@ -22,6 +22,10 @@
 			<node name="couldntConnectToNetworkMessage" value="Couldn&apos;t connect to the network" />
 			<node name="couldntConnectMessage" value="Couldn&apos;t connect to host %s" />
 			<node name="couldntResolveHostMessage" value="Couldn&apos;t resolve host %s" />
+			<node name="unsupportedURL" value="Unsupported URL" />
+			<node name="invalidURL" value="Invalid URL" />
+			<node name="hostCantBeReached" value="Host %s cannot be reached" />
+			<node name="connectionRefused" value="Connection was refused by %s" />
 		</node>
 	</node>
 	<node name="color">

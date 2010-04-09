@@ -19,9 +19,9 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.network.ZLNetworkErrors;
 
-public final class NetworkErrors {
+public final class NetworkErrors extends ZLNetworkErrors {
 
 	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 	public static final String ERROR_INTERNAL = "internalError";
@@ -40,26 +40,6 @@ public final class NetworkErrors {
 
 	public static final String ERROR_NO_USER_EMAIL = "noUserEmail";
 
-	public static final String ERROR_SOMETHING_WRONG = "somethingWrongMessage";
 	public static final String ERROR_UNSUPPORTED_OPERATION = "unsupportedOperation";
-
-
-	public static ZLResource getResource() {
-		return ZLResource.resource("dialog").getResource("networkError");
-	}
-
-	public static String errorMessage(String key) {
-		if (key == null) {
-			return "null";
-		}
-		return getResource().getResource(key).getValue();
-	}
-
-	public static String errorMessage(String key, String arg) {
-		if (key == null) {
-			return "null";
-		}
-		return getResource().getResource(key).getValue().replace("%s", arg);
-	}
 
 }
