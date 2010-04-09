@@ -13,6 +13,23 @@
 			<node name="savingConfig" value="Enregistrement de la configuration..."/>
 		</node>
 	</node>
+	<node name="networkError">
+		<node name="title" value="Erreur réseau"/>
+		<node name="unknownErrorMessage" value="Erreur inconnue"/>
+		<node name="couldntCreateDirectoryMessage" value="Impossible de créer un répertoire&#10;%s"/>
+		<node name="couldntCreateFileMessage" value="Impossible de créer un fichier&#10;%s"/>
+		<node name="couldntConnectToNetworkMessage" value="Connexion au réseau impossible"/>
+		<node name="couldntConnectMessage" value="Impossible de se connecter à l'hôte %s"/>
+		<node name="couldntResolveHostMessage" value="Résolution du nom %s impossible"/>
+		<node name="couldntResolveProxyMessage" value="Résolution du proxy %s impossible"/>
+		<node name="operationTimedOutMessage" value="Le délai réseau a expiré"/>
+		<node name="somethingWrongMessage" value="Il y a un problème avec&#10;%s"/>
+		<node name="sslConnectErrorMessage" value="Problème de connexion SSL/TLS :&#10;%s"/>
+		<node name="peerFailedVerificationMessage" value="Le certificat SSL de %s&#10;a été jugé invalide"/>
+		<node name="sslCertificateAuthorityMessage" value="Le certificat SSL de %s&#10;ne peut être authentifié avec les certificats de CA connus"/>
+		<node name="sslBadCertificateFileMessage" value="Impossible de lire le fichier des certificats de CA :&#10;%s"/>
+		<node name="sslShutdownFailedMessage" value="Impossible de clore la connexion SSL pour&#10;%s"/>
+	</node>
 	<node name="color">
 		<node name="red" value="Rouge"/>
 		<node name="green" value="Vert"/>

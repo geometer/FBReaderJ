@@ -3,6 +3,7 @@
 	<node name="library">
 		<node name="unknownAuthor" value="Автор не указан"/>
 		<node name="booksWithNoTags" value="Книги вне категорий"/>
+		<node name="demo" value="фрагмент"/>
   </node>
   <node name="libraryView">
     <node name="byAuthor" value="Авторы"/>
@@ -16,6 +17,47 @@
     <node name="openBook" value="Читать книгу"/>
     <node name="deleteBook" value="Удалить книгу"/>
   </node>
+	<node name="networkView">
+		<node name="libraryItemNode">
+			<node name="expandTree" value="Развернуть" />
+			<node name="collapseTree" value="Свернуть" />
+			<node name="reload" value="Обновить" />
+			<node name="openInBrowser" value="Показать в браузере" />
+		</node>
+		<node name="libraryItemRootNode">
+			<node name="expandTree" value="Открыть каталог" />
+			<node name="collapseTree" value="Закрыть каталог" />
+			<node name="login" value="Войти" />
+			<node name="logout" value="Выйти (%s)" />
+			<node name="reload" value="Обновить" />
+			<node name="dontShow" value="Скрыть этот каталог" />
+			<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
+			<node name="register" value="Зарегистрироваться" />
+			<node name="passwordRecovery" value="Забыли пароль?" />
+		</node>
+		<node name="searchResultNode">
+			<node name="title" value="Результаты поиска" />
+			<node name="expandTree" value="Показать результаты" />
+			<node name="collapseTree" value="Скрыть результаты" />
+		</node>
+		<node name="authorNode">
+			<node name="expandTree" value="Показать книги" />
+			<node name="collapseTree" value="Скрыть книги" />
+		</node>
+		<node name="seriesNode">
+			<node name="expandTree" value="Показать книги" />
+			<node name="collapseTree" value="Скрыть книги" />
+		</node>
+		<node name="bookNode">
+			<node name="read" value="Читать локальную копию" />
+			<node name="delete" value="Удалить локальную копию" />
+			<node name="download" value="Скачать" />
+			<node name="readDemo" value="Читать фрагмент" />
+			<node name="downloadDemo" value="Скачать фрагмент" />
+			<node name="demo" value="фрагмент"/>
+			<node name="buy" value="Купить (%s)" />
+		</node>
+	</node>
   <node name="tocView">
     <node name="expandTree" value="Развернуть ветвь дерева"/>
     <node name="collapseTree" value="Свернуть ветвь дерева"/>
