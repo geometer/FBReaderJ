@@ -350,6 +350,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		library.synchronize();
 		if (NetworkLibraryActivity.Instance != null) {
 			NetworkLibraryActivity.Instance.getAdapter().resetTree();
+			NetworkLibraryActivity.Instance.getListView().invalidateViews();
 		}
 	}
 

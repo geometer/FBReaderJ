@@ -196,11 +196,14 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		}
 	};
 	public void wait(String key, Runnable action) {
+		wait(key, action, myActivity);
+	}
+	public void wait(String key, Runnable action, Activity activity) {
 		synchronized (this) {
 			final String message = getWaitMessageText(key);
 			myTaskQueue.offer(new Pair(action, message));
 			if (myProgress == null) {
-				myProgress = ProgressDialog.show(myActivity, null, message, true, false);
+				myProgress = ProgressDialog.show(activity, null, message, true, false);
 			} else {
 				return;
 			}

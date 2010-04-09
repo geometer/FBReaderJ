@@ -238,8 +238,6 @@
 			<node name="loadingBookList" value="Opening library. Please, wait..."/>
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
 			<node name="updatingBooksDatabase" value="Updating books database. Please, wait..."/>
-			<node name="loadingBook" value="Loading book. Please, wait..." />
-			<node name="loadingBookList" value="Loading library. Please, wait..." />
 			<node name="migrate" value="Upgrading to the new version. Please, wait..." />
 			<node name="downloadBookList" value="Downloading book list. Please, wait..." />
 			<node name="downloadBook" value="Downloading book. Please, wait..." />
@@ -252,6 +250,7 @@
 			<node name="passwordRecovery" value="Recovering password. Please, wait..." />
 			<node name="authenticationCheck" value="Account validation. Please, wait..." />
 			<node name="signOut" value="Signing out. Please, wait..." />
+			<node name="loadingNetworkLibrary" value="Opening library. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="emptyLibrariesList" value="Empty libraries list" />

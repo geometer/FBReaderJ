@@ -54,6 +54,8 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
 	static NetworkLibraryActivity Instance;
@@ -64,6 +66,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private HashMap<Uri, Runnable> myCatalogRunnables = new HashMap<Uri, Runnable>();
 
+	private boolean myLibraryLoaded;
 
 	private class BookDownloaderServiceConnection implements ServiceConnection {
 
@@ -103,13 +106,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
-		LibraryAdapter adapter = new LibraryAdapter(getListView(), NetworkLibrary.Instance().getTree());
-
-		myActions.add(new NetworkBookActions());
-		myActions.add(new NetworkCatalogActions());
-		myActions.trimToSize();
 	}
 
 	@Override
@@ -122,6 +118,32 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			myConnection,
 			BIND_AUTO_CREATE
 		);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (!myLibraryLoaded) {
+			myLibraryLoaded = true;
+			final Handler handler = new Handler() {
+				public void handleMessage(Message message) {
+					ListView view = getListView();
+					new LibraryAdapter(view, NetworkLibrary.Instance().getTree());
+
+					myActions.add(new NetworkBookActions());
+					myActions.add(new NetworkCatalogActions());
+					myActions.trimToSize();
+
+					view.invalidateViews();
+				}
+			};
+			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
+				public void run() {
+					NetworkLibrary.Instance().synchronize();
+					handler.sendEmptyMessage(0);
+				}
+			}, this);
+		}
 	}
 
 	@Override
