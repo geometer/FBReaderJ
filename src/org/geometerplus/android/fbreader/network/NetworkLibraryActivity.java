@@ -189,6 +189,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 //System.err.println("FBREADER -- dims(" + maxWidth + ", " + maxHeight + ")");
 
 			final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
+			iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			Bitmap coverBitmap = null;
 			final ZLImage cover = tree.getCover();
 			if (cover != null) {

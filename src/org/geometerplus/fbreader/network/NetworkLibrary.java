@@ -48,7 +48,23 @@ public class NetworkLibrary {
 
 	private static class LinksComparator implements Comparator<NetworkLink> {
 		public int compare(NetworkLink link1, NetworkLink link2) {
-			return link1.Title.compareTo(link2.Title);
+			String title1 = link1.Title;
+			for (int index = 0; index < title1.length(); ++index) {
+				final char ch = title1.charAt(index);
+				if (ch < 128 && Character.isLetter(ch)) {
+					title1 = title1.substring(index);
+					break;
+				}
+			}
+			String title2 = link2.Title;
+			for (int index = 0; index < title2.length(); ++index) {
+				final char ch = title2.charAt(index);
+				if (ch < 128 && Character.isLetter(ch)) {
+					title2 = title2.substring(index);
+					break;
+				}
+			}
+			return title1.compareTo(title2);
 		}
 	}
 
