@@ -177,9 +177,6 @@ public class BookDownloaderService extends Service {
 		if (title == null || title.length() == 0) {
 			title = fileFile.getName();
 		}
-		if (title == null || title.length() == 0) {
-			title = getResource().getResource("untitled").getValue();
-		}
 		if ((notifications & Notifications.DOWNLOADING_STARTED) != 0) {
 			Toast.makeText(
 				getApplicationContext(),

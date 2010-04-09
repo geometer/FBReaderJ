@@ -46,9 +46,8 @@
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Book has been downloaded" />
 		<node name="tickerError" value="Book download error" />
-		<node name="contentSuccess" value="Download successful" />
-		<node name="contentError" value="Download unsuccessful" />
-		<node name="untitled" value="&lt;Untitled&gt;" />
+		<node name="contentSuccess" value="Download complete" />
+		<node name="contentError" value="Download failed" />
 		<node name="downloadingStarted" value="Book downloading has been started" />
 		<node name="alreadyDownloading" value="Book is already being downloaded" />
 	</node>
@@ -238,22 +237,9 @@
 			<node name="loadingBookList" value="Opening library. Please, wait..."/>
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
 			<node name="updatingBooksDatabase" value="Updating books database. Please, wait..."/>
-			<node name="migrate" value="Upgrading to the new version. Please, wait..." />
-			<node name="downloadBookList" value="Downloading book list. Please, wait..." />
-			<node name="downloadBook" value="Downloading book. Please, wait..." />
-			<node name="downloadImages" value="Downloading images. Please, wait..." />
-			<node name="authentication" value="Authentication. Please, wait..." />
-			<node name="purchaseBook" value="Purchase book. Please, wait..." />
-			<node name="initializeAuthenticationManager" value="Downloading account information. Please, wait..." />
-			<node name="loadSubCatalog" value="Loading catalog. Please, wait..." />
-			<node name="registerUser" value="Registering new account. Please, wait..." />
-			<node name="passwordRecovery" value="Recovering password. Please, wait..." />
-			<node name="authenticationCheck" value="Account validation. Please, wait..." />
-			<node name="signOut" value="Signing out. Please, wait..." />
 			<node name="loadingNetworkLibrary" value="Opening library. Please, wait..." />
 		</node>
 		<node name="networkError">
-			<node name="emptyLibrariesList" value="Empty libraries list" />
 			<node name="authenticationFailed" value="Authentication failed" />
 			<node name="internalError" value="Internal server error" />
 			<node name="purchaseNotEnoughMoney" value="Not enough money" />
@@ -261,7 +247,6 @@
 			<node name="purchaseAlreadyPurchased" value="Already purchased" />
 			<node name="bookNotPurchased" value="Book was not purchased" />
 			<node name="downloadLimitExceeded" value="Download limit exceeded" />
-			<node name="unsupportedOperation" value="Unsupported operation" />
 			<node name="loginAlreadyTaken" value="Username is already in use" />
 			<node name="loginNotSpecified" value="Please, enter a username" />
 			<node name="passwordNotSpecified" value="Please, enter a non-empty password" />
@@ -269,6 +254,7 @@
 			<node name="invalidEMail" value="Invalid e-mail address" />
 			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" />
 			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address" />
+			<node name="unsupportedOperation" value="Unsupported operation" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information" />

@@ -11,23 +11,18 @@
 		<node name="waitMessage">
 			<node name="savingConfig" value="Сохранение настроек..."/>
 		</node>
-	</node>
-	<node name="networkError">
-		<node name="title" value="Ошибка при работе с сетью" />
-		<node name="unknownErrorMessage" value="Неизвестная ошибка" />
-		<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог&#10;%s" />
-		<node name="couldntCreateFileMessage" value="Не удалось создать файл&#10;%s" />
-		<node name="couldntConnectToNetworkMessage" value="Не удалось соединиться с сетью" />
-		<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом %s" />
-		<node name="couldntResolveHostMessage" value="Не удается найти сайт %s" />
-		<node name="couldntResolveProxyMessage" value="Не удается найти прокси-сервер %s" />
-		<node name="operationTimedOutMessage" value="Отведенное время истекло" />
-		<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
-		<node name="sslConnectErrorMessage" value="Проблема установления SSL/TLS соединения:&#10;%s" />
-		<node name="peerFailedVerificationMessage" value="SSL сертификат %s&#10;не в порядке" />
-		<node name="sslCertificateAuthorityMessage" value="SSL сертификат %s&#10;не может быть подтвержден известными сертификатами SSL CA" />
-		<node name="sslBadCertificateFileMessage" value="Не могу прочитать файл сертификата SSL CA:&#10;%s" />
-		<node name="sslShutdownFailedMessage" value="Не удалось закрыть SSL соединение с&#10;%s" />
+		<node name="networkError">
+			<node name="title" value="Ошибка при работе с сетью" />
+			<node name="emptyLibrariesList" value="Не указаны библиотеки для поиска" />
+			<node name="unknownErrorMessage" value="Неизвестная ошибка" />
+			<node name="operationTimedOutMessage" value="Отведенное время истекло" />
+			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Не удалось создать файл&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Не удалось соединиться с сетью" />
+			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом %s" />
+			<node name="couldntResolveHostMessage" value="Не удается найти сайт %s" />
+		</node>
 	</node>
 	<node name="color">
 		<node name="red" value="Красный"/>

@@ -4,6 +4,7 @@
 	<node name="library">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
 		<node name="booksWithNoTags" value="Livres sans étiquettes"/>
+		<node name="demo" value="l'extrait"/>
 	</node>
 	<node name="libraryView">
 		<node name="byAuthor" value="Par auteur"/>
@@ -16,6 +17,40 @@
 		</node>
 		<node name="openBook" value="Ouvrir ce livre"/>
 		<node name="deleteBook" value="Supprimer ce livre"/>
+	</node>
+	<node name="networkView">
+		<node name="openCatalog" value="Ouvrir le catalogue"/>
+		<node name="closeCatalog" value="Fermer le catalogue"/>
+		<node name="expandTree" value="Ouvrir"/>
+		<node name="collapseTree" value="Refermer"/>
+		<node name="download" value="Télécharger"/>
+		<node name="read" value="Lire la copie locale"/>
+		<node name="delete" value="Supprimer la copie locale"/>
+		<node name="readDemo" value="Lire l'extrait"/>
+		<node name="deleteDemo" value="Supprimer l'extrait"/>
+		<node name="downloadDemo" value="Télécharger l'extrait"/>
+		<node name="buy" value="Acheter (%s)"/>
+		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
+		<node name="reload" value="Recharger"/>
+		<node name="alreadyDownloading" toBeTranslated="true" value="Book is being downloaded" />
+		<node name="alreadyDownloadingDemo" toBeTranslated="true" value="Sample is being downloaded" />
+		<node name="confirmQuestions">
+			<node name="read" toBeTranslated="true" value="Do you want to read local copy?"/>
+			<node name="download" toBeTranslated="true" value="Do you want to download this book?"/>
+			<node name="readDemo" toBeTranslated="true" value="Do you want to read sample?"/>
+			<node name="downloadDemo" toBeTranslated="true" value="Do you want to download sample?"/>
+			<node name="buy" toBeTranslated="true" value="Do you want to buy this book? (%s)"/>
+			<node name="openInBrowser" toBeTranslated="true" value="Do you want to open this catalog in browser?" />
+		</node>
+		<node name="downloadingCatalogs" toBeTranslated="true" value="Downloading catalogs"/> <!-- used as notification title -->
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" toBeTranslated="true" value="Book has been downloaded" />
+		<node name="tickerError" toBeTranslated="true" value="Book download error" />
+		<node name="contentSuccess" toBeTranslated="true" value="Download complete" />
+		<node name="contentError" toBeTranslated="true" value="Download failed" />
+		<node name="downloadingStarted" toBeTranslated="true" value="Book downloading has been started" />
+		<node name="alreadyDownloading" toBeTranslated="true" value="Book is already being downloaded" />
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Ouvrir l'arbre"/>
@@ -42,6 +77,7 @@
 		<node name="toc" value="Table des matières"/>
 		<node name="day" value="Jour"/>
 		<node name="night" value="Nuit"/>
+		<node name="networkLibrary" toBeTranslated="true" value="Network library"/>
 		<node name="navigate" value="Naviguer">
 			<node name="toc" value="Table des Matières"/>
 			<node name="gotoHome" value="Aller au début du document"/>
@@ -202,6 +238,28 @@
 			<node name="loadingBookList" value="Ouverture de la bibliothèque. Patientez, s'il-vous plait..."/>
 			<node name="creatingBooksDatabase" value="Création de la base des livres. Patientez, s'il-vous plait..."/>
 			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres. Patientez, s'il-vous plait..."/>
+			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque. Patientez, s'il-vous plait..." />
+		</node>
+		<node name="networkError">
+			<node name="authenticationFailed" value="Authentification échouée"/>
+			<node name="internalError" value="Erreur interne du serveur"/>
+			<node name="purchaseNotEnoughMoney" value="Pas assez de crédit"/>
+			<node name="purchaseMissingBook" value="Livre manquant"/>
+			<node name="purchaseAlreadyPurchased" value="Déjà acheté"/>
+			<node name="bookNotPurchased" value="Le livre n'a pas été acheté"/>
+			<node name="downloadLimitExceeded" value="Limite de téléchargement atteinte"/>
+			<node name="loginAlreadyTaken" value="Identifiant déjà utilisé"/>
+			<node name="loginNotSpecified" value="Veuillez entrer un identifiant"/>
+			<node name="passwordNotSpecified" value="Veuillez entrer un mot de passe non vide"/>
+			<node name="emailNotSpecified" value="Veuillez entrer une adresse email"/>
+			<node name="invalidEMail" value="Adresse email invalide"/>
+			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
+			<node name="noUserEmail" value="Aucun utilisateur n'est inscrit&#10;avec l'adresse email indiquée"/>
+			<node name="unsupportedOperation" value="Opération non supportée"/>
+		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="Information"/>
+			<node name="message" value="Le catalogue est vide."/>
 		</node>
 	</node>
 	<node name="errorMessage">

@@ -18,45 +18,38 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 	</node>
 	<node name="networkView">
-		<node name="libraryItemNode">
-			<node name="expandTree" value="Развернуть" />
-			<node name="collapseTree" value="Свернуть" />
-			<node name="reload" value="Обновить" />
-			<node name="openInBrowser" value="Показать в браузере" />
+		<node name="openCatalog" value="Открыть каталог"/>
+		<node name="closeCatalog" value="Закрыть каталог"/>
+		<node name="expandTree" value="Развернуть"/>
+		<node name="collapseTree" value="Свернуть"/>
+		<node name="download" value="Скачать"/>
+		<node name="read" value="Читать локальную копию"/>
+		<node name="delete" value="Удалить локальную копию"/>
+		<node name="readDemo" value="Читать фрагмент"/>
+		<node name="deleteDemo" value="Удалить фрагмент"/>
+		<node name="downloadDemo" value="Скачать фрагмент"/>
+		<node name="buy" value="Купить (%s)"/>
+		<node name="openInBrowser" value="Показать в браузере" />
+		<node name="reload" value="Обновить"/>
+		<node name="alreadyDownloading" value="Книга загружается" />
+		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
+		<node name="confirmQuestions">
+			<node name="read" value="Do you want to read local copy?"/>
+			<node name="download" value="Do you want to download this book?"/>
+			<node name="readDemo" value="Do you want to read sample?"/>
+			<node name="downloadDemo" value="Do you want to download sample?"/>
+			<node name="buy" value="Do you want to buy this book? (%s)"/>
+			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
 		</node>
-		<node name="libraryItemRootNode">
-			<node name="expandTree" value="Открыть каталог" />
-			<node name="collapseTree" value="Закрыть каталог" />
-			<node name="login" value="Войти" />
-			<node name="logout" value="Выйти (%s)" />
-			<node name="reload" value="Обновить" />
-			<node name="dontShow" value="Скрыть этот каталог" />
-			<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
-			<node name="register" value="Зарегистрироваться" />
-			<node name="passwordRecovery" value="Забыли пароль?" />
-		</node>
-		<node name="searchResultNode">
-			<node name="title" value="Результаты поиска" />
-			<node name="expandTree" value="Показать результаты" />
-			<node name="collapseTree" value="Скрыть результаты" />
-		</node>
-		<node name="authorNode">
-			<node name="expandTree" value="Показать книги" />
-			<node name="collapseTree" value="Скрыть книги" />
-		</node>
-		<node name="seriesNode">
-			<node name="expandTree" value="Показать книги" />
-			<node name="collapseTree" value="Скрыть книги" />
-		</node>
-		<node name="bookNode">
-			<node name="read" value="Читать локальную копию" />
-			<node name="delete" value="Удалить локальную копию" />
-			<node name="download" value="Скачать" />
-			<node name="readDemo" value="Читать фрагмент" />
-			<node name="downloadDemo" value="Скачать фрагмент" />
-			<node name="demo" value="фрагмент"/>
-			<node name="buy" value="Купить (%s)" />
-		</node>
+		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Книга скачана" />
+		<node name="tickerError" value="Книгу скачать не удалось" />
+		<node name="contentSuccess" value="Скачивание завершено" />
+		<node name="contentError" value="Не удалось скачать" />
+		<node name="downloadingStarted" value="Скачивание книги запущено" />
+		<node name="alreadyDownloading" value="Книга уже скачивается" />
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Развернуть ветвь дерева"/>
@@ -76,13 +69,16 @@
 		</node>
 	</node>
 	<node name="menu">
+		<node name="preferences-old" value="Настройки (дополнительно)"/>
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
+		<node name="library" value="Библиотека"/>
 		<node name="toc" value="Оглавление"/>
 		<node name="day" value="День"/>
 		<node name="night" value="Ночь"/>
-		<node name="library" value="Библиотека"/>
+		<node name="networkLibrary" value="Сетевая библиотека"/>
 		<node name="navigate" value="Переход">
+			<node name="toc" value="Оглавление"/>
 			<node name="gotoHome" value="В начало книги"/>
 			<node name="gotoPageNumber" value="На страницу..."/>
 			<node name="gotoSectionStart" value="В начало раздела"/>
@@ -112,6 +108,9 @@
 			<node name="encoding" value="Кодировка"/>
 		</node>
 		<node name="Preferences">
+			<node name="Library" value="Библиотека">
+				<node name="path" value="Каталоги для поиска книг"/>
+			</node>
 			<node name="LookNFeel" value="Внешний вид">
 				<node name="autoOrientation" value="Автоматический поворот">
 					<node name="summaryOn" value="Изображение поворачивается при повороте устройства"/>
@@ -238,6 +237,28 @@
 			<node name="loadingBookList" value="Открывается библиотека. Подождите, пожалуйста..."/>
 			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста..."/>
 			<node name="updatingBooksDatabase" value="Обновляется база книг. Подождите, пожалуйста..."/>
+			<node name="loadingNetworkLibrary" value="Открывается библиотека. Подождите, пожалуйста..." />
+		</node>
+		<node name="networkError">
+			<node name="authenticationFailed" value="Ошибка авторизации" />
+			<node name="internalError" value="Внутренняя ошибка сервера" />
+			<node name="purchaseNotEnoughMoney" value="Не достаточно средств на счету" />
+			<node name="purchaseMissingBook" value="Книга отсутствует в продаже" />
+			<node name="purchaseAlreadyPurchased" value="Книга уже была куплена" />
+			<node name="bookNotPurchased" value="Книга не была куплена" />
+			<node name="downloadLimitExceeded" value="Исчерпан лимит загрузок" />
+			<node name="loginAlreadyTaken" value="Это имя пользователя занято" />
+			<node name="loginNotSpecified" value="Введите имя пользователя" />
+			<node name="passwordNotSpecified" value="Введите пароль" />
+			<node name="emailNotSpecified" value="Введите почтовый адрес" />
+			<node name="invalidEMail" value="Некорректный почтовый адрес" />
+			<node name="tooManyRegistrations" value="Слишком много регистраций с вашего IP;&#10;попробуйте еще раз через пару минут" />
+			<node name="noUserEmail" value="Нет пользователя с таким адресом" />
+			<node name="unsupportedOperation" value="Неподдерживаемая операция" />
+		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="Информация" />
+			<node name="message" value="Каталог пуст." />
 		</node>
 	</node>
 	<node name="errorMessage">

@@ -1,6 +1,6 @@
 DONE При первом открытии network library activity около 2 секунд показывается черный экран. Должен быть wait message.
 ** Когда сети нет появляется сообщение "somthing goes wrong". Должно быть что-то более понятное.
-** Синхронизировать ресурсы (русские и французские)
+DONE Синхронизировать ресурсы (русские и французские)
 
 DONE http://groups.google.com/group/fbreader/browse_thread/thread/a439a8994a88a636
 
