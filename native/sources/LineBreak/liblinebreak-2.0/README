@@ -1,0 +1,82 @@
+                        L I B L I N E B R E A K
+                        =======================
+
+Overview
+--------
+
+This is the README file for liblinebreak, an implementation of the line
+breaking algorithm as described in Unicode 5.2.0 Standard Annex 14,
+Revision 24, available at
+         <URL:http://www.unicode.org/reports/tr14/tr14-24.html>
+
+Check this URL for up-to-date information:
+         <URL:http://vimgadgets.sourceforge.net/liblinebreak/>
+
+
+Licence
+-------
+
+This library is released under an open-source licence, the zlib/libpng
+licence.  Please check the file LICENCE for details.
+
+Apart from using the algorithm, part of the code is derived from the
+data provided under
+                  <URL:http://www.unicode.org/Public/>
+
+And the Unicode Terms of Use may apply:
+              <URL:http://www.unicode.org/copyright.html>
+
+
+Installation
+------------
+
+There are three ways to build the library:
+
+1) On *NIX systems supported by the autoconfiscation tools, do the
+   normal
+
+     ./configure
+     make
+     sudo make install
+
+   to build and install both the dynamic and static libraries.  In
+   addition, one may
+
+   - type `make doc' to generate the doxygen documentation; or
+   - type `make linebreakdata' to regenerate linebreakdata.c from
+     LineBreak.txt.
+
+2) On systems where GCC and Binutils are supported, one can type
+
+     cp -p Makefile.gcc Makefile
+     make
+
+   to build the static library.  In addition, one may
+
+   - type `make debug' or `make release' to explicitly generate the
+     debug or release build;
+   - type `make doc' to generate the doxygen documentation; or
+   - type `make linebreakdata' to regenerate linebreakdata.c from
+     LineBreak.txt.
+
+3) On Windows, apart from using method 1 (Cygwin/MSYS) and method 2
+   (MinGW), MSVC can also be used.  Type
+
+     nmake -f Makefile.msvc
+
+   to build the static library.  By default the debug release is built.
+   To build the release version
+
+     nmake -f Makefile.msvc CFG="linebreak - Win32 Release"
+
+
+Documentation
+-------------
+
+Check the generated document doc/html/linebreak_8h.html for the public
+interfaces exposed to applications.
+
+
+$Id: README,v 1.6 2009/11/29 08:09:13 adah Exp $
+
+vim:autoindent:expandtab:formatoptions=tcqlmn:textwidth=72:

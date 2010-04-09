@@ -21,12 +21,12 @@ package org.vimgadgets.linebreak;
 
 public final class LineBreak {
 	static {
-		System.loadLibrary("linebreak");
+		System.loadLibrary("LineBreak");
 		init();
 	}
 
 	private static native void init();
-	private static native void setLineBreaksForCharArray(char[] data, String lang, byte[] breaks);
+	private static native void setLineBreaksForCharArray(char[] data, int offset, int length, String lang, byte[] breaks);
 	private static native void setLineBreaksForString(String data, String lang, byte[] breaks);
 
 	private final String myLanguage;
@@ -35,8 +35,8 @@ public final class LineBreak {
 		myLanguage = lang;
 	}
 
-	public void setLineBreaks(char[] data, byte[] breaks) {
-		setLineBreaksForCharArray(data, myLanguage, breaks);
+	public void setLineBreaks(char[] data, int offset, int length, byte[] breaks) {
+		setLineBreaksForCharArray(data, offset, length, myLanguage, breaks);
 	}
 
 	public void setLineBreaks(String data, byte[] breaks) {

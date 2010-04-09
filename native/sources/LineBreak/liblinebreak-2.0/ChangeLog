@@ -1,0 +1,380 @@
+2009-11-29  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.h: Add a documentation comment.
+
+2009-11-29  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c (baTable): Add the missing changes for `NU' and `AL'.
+
+2009-11-29  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c (baTable): Fix a comment; reflow the table data.
+
+2009-11-29  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Doxyfile (TAB_SIZE): Set to the correct size `4', as used in the
+	source files.
+
+2009-11-29  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Update files according to UAX #14-24, for Unicode 5.2.0.
+	* linebreak.c: Update comments about UAX #14.
+	* linebreak.h: Ditto.
+	* linebreakdef.c: Ditto.
+	* linebreakdef.h: Ditto.
+	(LBP_CP): New enumerator for the new `CP' class as defined in
+	UAX #14-24.
+	* linebreak.c (baTable): Update for the new class `CP'.
+	* linebreakdata.c: Regenerate from LineBreak-5.2.0.txt.
+	* README: Update the reference to UAX #14-24, for Unicode 5.2.0.
+
+2009-05-03  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* NEWS: Add information about the 1.2 release.
+
+2009-04-30  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Optimize the Doxygen output.
+	* linebreak.c (lb_prop_index): Adjust its definition format
+	slightly.
+
+2009-04-30  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Doxyfile (USE_WINDOWS_ENCODING): Remove obsolete tag.
+	(DETAILS_AT_TOP): Ditto.
+	(MAX_DOT_GRAPH_WIDTH): Ditto.
+	(MAX_DOT_GRAPH_HEIGHT): Ditto.
+	(REFERENCED_BY_RELATION): Set to `NO'.
+	(REFERENCES_RELATION): Ditto.
+	(EXCLUDE): Add `filter_dup.c'.
+
+2009-04-28  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c (lb_get_next_char_utf8): Fix the issue that the index
+	can point to the middle of a UTF-8 sequence if End of String (EOS)
+	is encountered prematurely (thanks to Nikolay Pultsin and Rick Xu).
+	(lb_get_next_char_utf16): Fix the issue that the index can point to
+	the middle of a UTF-16 surrogate pair if EOS is encountered
+	prematurely.
+
+2009-04-20  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreakdef.c (lb_prop_English): Remove the specialization of
+	right single quotation mark as closing punctuation mark, because it
+	can be used as apostrophe.
+	(lb_prop_Spanish): Ditto.
+	(lb_prop_French): Ditto.
+
+2009-04-09  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile.msvc: Make the `clean' target work on MSVC versions other
+	than 6.0; do not use precompiled header.
+
+2009-03-07  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.h: Correct the wrong date in the documentation comment.
+	* linebreakdef.h: Ditto.
+
+2009-02-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* configure.ac (AC_INIT): Increase the version to 2.0.
+	* Makefile.am (liblinebreak_la_LDFLAGS): Set the version-info to
+	`2:0'.
+
+2009-02-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.h (LINEBREAK_VERSION): New macro.
+	(linebreak_version): New global constant declaration.
+	* linebreak.c (linebreak_version): New global constant definition.
+
+2009-02-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Reduce namespace pollution.
+	* linebreak.c (get_lb_prop_lang): Mark as static.
+	(get_next_char_utf8): Rename to lb_get_next_char_utf8.
+	(get_next_char_utf16): Rename to lb_get_next_char_utf32.
+	(get_next_char_utf32): Rename to lb_get_next_char_utf32.
+	(is_breakable): Rename to is_line_breakable.
+	* linebreak.h (get_next_char_utf8): Remove the function prototype
+	declaration.
+	(get_next_char_utf16): Ditto.
+	(get_next_char_utf32): Ditto.
+	(is_breakable): Rename to is_line_breakable.
+	* linebreakdef.h (lb_get_next_char_utf8): Add the function prototype
+	declaration.
+	(lb_get_next_char_utf16): Ditto.
+	(lb_get_next_char_utf32): Ditto.
+
+2009-02-06  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* NEWS: Add information about the 1.1 release.
+
+2009-01-02  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile.am (EXTRA_DIST): Add the missing `LICENCE' file.
+
+2008-12-31  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c: Update the version number in comment to 1.0.
+	* linebreak.h: Ditto.
+	* linebreakdef.c: Ditto.
+	* linebreakdef.h: Ditto.
+
+2008-12-31  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* NEWS: Update for the 1.0 release.
+
+2008-12-31  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* README: Correct two typos.
+
+2008-12-31  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* README: Add the online URL reference.
+
+2008-12-30  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* README: Update the reference to UAX #14-22, for Unicode 5.1.0.
+
+2008-12-13  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Update files according to UAX #14-22, for Unicode 5.1.0.
+	* linebreak.c (baTable): Update according to Table 2 of UAX #14-22.
+	* linebreakdef.c (lb_prop_Spanish): Remove the unnecessary
+	customization for inverted marks in Spanish.
+	* linebreakdata.c: Regenerate from LineBreak-5.1.0.txt.
+	* linebreak.h: Update comment only.
+	* linebreakdef.h: Ditto.
+
+2008-12-12  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* README: Update for the new build methods and better readability.
+
+2008-12-12  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile.msvc: Correct the inconsistent naming in the output
+	message.
+
+2008-12-12  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* configure.ac (AM_INIT_AUTOMAKE): Mark `foreign'.
+	* bootstrap: New file.
+	* purge: New file.
+	* Makefile.gcc (purge): Remove this target.
+
+2008-12-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* NEWS: New file.
+
+2008-12-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* AUTHORS: New file.
+
+2008-12-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile.gcc (purge): New phony target to purge files generated by
+	autoconfiscation.
+
+2008-12-10  Thomas Klausner  <tk@giga.or.at>
+
+	* configure.ac: New file.
+	* Makefile.am: New file.
+
+2008-12-10  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Doxyfile (OUTPUT_DIRECTORY): Set to `doc'.
+	(ALPHABETICAL_INDEX): Set to `YES'.
+
+2008-12-09  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile.msvc: New file.
+
+2008-12-09  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile: Remove (to become Makefile.gcc).
+	* Makefile.gcc: New file (was Makefile).
+
+2008-12-07  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c: Adjust the comment that refers to Unicode Annex 14.
+	* linebreak.h: Ditto.
+	* linebreakdef.c: Ditto.
+	* linebreakdef.h: Ditto.
+
+2008-12-07  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Use only POSIX basic regexp to ensure maximum portability (issues
+	have been found on Mac OS X, where GNU extensions do not work).
+	* LineBreak1.sed: Replace `[:xdigit:]' with `0-9A-F', and `\+' with
+	`\{1,\}'.
+	* LineBreak2.sed: Ditto.
+
+2008-12-07  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile: Replace `*.exe' with `filter_dup$(EXEEXT)', since the
+	extension `.exe' is specific to Windows.
+
+2008-04-20  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Add README and LICENCE files, as well as a Doxyfile to generate
+	documents.
+	* README: New file.
+	* LICENCE: New file.
+	* Doxyfile: New file.
+	* Makefile (doc): Add new phony target.
+
+2008-04-04  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Remove the English override for plus sign: it is better treated in
+	the text breaking program (see ../breaktext/ for an example).
+	* linebreakdef.c (lb_prop_English): Remove the line for plus sign.
+
+2008-03-29  Wu Yongwei <wuyongwei@gmail.com>
+
+	* Makefile: Correct the dependency-making rules when OLDGCC=Y.
+
+2008-03-23  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile (clean): Do not remove *.exe and tags here.
+	(distclean): Remove *.exe and tags.
+
+2008-03-23  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Remove the English override for solidus: it is better treated in the
+	text breaking program (see ../breaktext/ for an example).
+	* linebreakdef.c (lb_prop_English): Remove the line for solidus.
+
+2008-03-16  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Rename init_linebreak_prop_index to init_linebreak for future
+	safety; make visible certain functions that are potentially useful.
+	* linebreak.c (init_linebreak_prop_index): Rename to init_linebreak.
+	(get_next_char_t): Move to linebreakdef.h.
+	(get_next_char_utf8): Make non-static.
+	(get_next_char_utf16): Ditto.
+	(get_next_char_utf32): Ditto.
+	(set_linebreaks): Ditto.
+	* linebreak.h (init_linebreak_prop_index): Rename to init_linebreak.
+	(get_next_char_utf8): Add the function prototype.
+	(get_next_char_utf16): Ditto.
+	(get_next_char_utf32): Ditto.
+	* linebreakdef.h (get_next_char_t): Add the typedef.
+	(set_linebreaks): Add the function prototype.
+
+2008-03-16  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile (OLDGCC): Add support for GCC 2.95.3 (when OLDGCC=Y).
+
+2008-03-15  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c (set_linebreaks): Fix a bug that `==' was wrongly used
+	for `='.
+
+2008-03-05  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Improve the performance by reducing the look-ups of the
+	language-specific line breaking properties array from the language
+	name (thanks to Nikolay Pultsin).
+	* linebreak.c (get_lb_prop_lang): New function.
+	(get_char_lb_class_lang): Change the second parameter from the
+	language name to the line breaking properties array.
+	(set_linebreaks): Look up the language-specific line breaking
+	properties array from the language name only once in one function
+	call.
+
+2008-03-03  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Make minor adjustments in code and comments.
+	* linebreak.c: Adjust the doc comments.
+	(init_linebreak_prop_index): Modify a conditional to make it more
+	robust and consistent.
+	* linebreakdef.c (lb_prop_lang_map): Replace the pointer
+	lb_prop_default with NULL, since the value is never used.
+
+2008-03-03  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Accelerate get_char_lb_class for invalid Unicode code points.
+	* linebreak.c (get_char_lb_class): Adjust the conditionals so that
+	getting the line breaking class for an invalid code point is much
+	faster, which requires the array of line breaking properties be
+	sorted.
+	* linebreakdef.h: Adjust a comment that the array of line break
+	properties must be sorted.
+
+2008-03-02  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Change the values of enum BreakAction to more complete forms.
+	* linebreak.c (INDRCT_BRK): Rename to INDIRECT_BRK.
+	(CM_INDRCT_BRK): Rename to CM_INDIRECT_BRK.
+	(CM_PROHIBTD_BRK): Rename to CM_PROHIBITED_BRK.
+	(PROHIBTD_BRK): Rename to PROHIBITED_BRK.
+
+2008-03-02  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Implement a two-stage search in get_char_lb_class_default to
+	accelerate the overall performance, especially for non-Latin
+	languages.
+	* linebreak.c (LINEBREAK_INDEX_SIZE): New constant macro.
+	(struct LineBreakPropertiesIndex): New struct.
+	(lb_prop_index): New static variable.
+	(init_linebreak_prop_index): New function.
+	(get_char_lb_class_default): New function.
+	(get_char_lb_class_lang): Use get_char_lb_class_default.
+	* linebreak.h: Detect C++ and add extern "C" guard if necessary.
+	(init_linebreak_prop_index): Add the prototype declaration.
+	* linebreakdef.h: Adjust a comment.
+
+2008-03-02  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Split/refactor the code; add (doc) comments.
+	* Makefile (CFILES): Add linebreakdata.c and linebreakdef.c.
+	* linebreak.c: Add and adjust comments.
+	(linebreakdef.h): Add include file.
+	(linebreakdata.c): Remove include file.
+	(EOS): Remove (now in linebreakdef.h).
+	(enum LineBreakClass): Ditto.
+	(struct LineBreakProperties): Ditto.
+	(lbpEnglish): Remove (now in linebreakdef.c as lb_prop_English).
+	(lbpGerman): Remove (now in linebreakdef.c as lb_prop_German).
+	(lbpSpanish): Remove (now in linebreakdef.c as lb_prop_Spanish).
+	(lbpFrench): Remove (now in linebreakdef.c as lb_prop_French).
+	(lbpRussian): Remove (now in linebreakdef.c as lb_prop_Russian).
+	(lbpChinese): Remove (now in linebreakdef.c as lb_prop_Chinese).
+	(struct LineBreakPropertiesLang): Remove (now in linebreakdef.h).
+	(lbpLangs): Remove (now in linebreakdef.c as lb_prop_lang_map).
+	(get_next_char_utf16): Make sure memory access not go beyond len.
+	* linebreak.h: Add copyright information and adjust comments.
+	(stddef.h): Add include file.
+	* linebreakdata.c (linebreak.h): Add include file.
+	(linebreakdef.h): Add include file.
+	(lbpDefault): Make global and rename to lb_prop_default.
+	* linebreakdata2.tmpl: Add two include files, a comment line, and
+	remove `static'.
+	* linebreakdef.c: New file.
+	* linebreakdef.h: New file.
+
+2008-02-26  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* linebreak.c (lbpSpanish): New array for Spanish-specific data.
+	(lbpLangs): Update the index array for Spanish.
+	(resolve_lb_class): Resolve AmbIguous class to IDeographic in
+	Chinese, Japanese, and Korean.
+
+2008-02-26  Wu Yongwei  <wuyongwei@gmail.com>
+
+	* Makefile (LineBreak.txt): Add new rule to retrieve it from the Web
+	if it is not already there.
+
+2008-02-23  Wu Yongwei  <wuyongwei@gmail.com>
+
+	Add files for linebreak.
+	* LineBreak1.sed: New file.
+	* LineBreak2.sed: New file.
+	* Makefile: New file.
+	* filter_dup.c: New file.
+	* linebreak.c: New file.
+	* linebreak.h: New file.
+	* linebreakdata.c: New file.
+	* linebreakdata1.tmpl: New file.
+	* linebreakdata2.tmpl: New file.
+	* linebreakdata3.tmpl: New file.

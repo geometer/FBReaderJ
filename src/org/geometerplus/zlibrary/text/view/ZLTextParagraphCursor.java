@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
-//import org.vimgadgets.linebreak.LineBreak;
+import org.vimgadgets.linebreak.LineBreak;
 
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
@@ -52,7 +52,6 @@ public final class ZLTextParagraphCursor {
 		}
 
 		void fill() {
-			//new LineBreak("en");
 			final ArrayList<ZLTextElement> elements = myElements;
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
 				it.next();
@@ -94,6 +93,11 @@ public final class ZLTextParagraphCursor {
 		
 		private void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
+				final LineBreak breaker = new LineBreak("en");
+				final byte[] breaks = new byte[length];
+				System.err.println(length);
+				breaker.setLineBreaks(data, offset, length, breaks);
+
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
 				final int end = offset + length;
 				int firstNonSpace = -1;
