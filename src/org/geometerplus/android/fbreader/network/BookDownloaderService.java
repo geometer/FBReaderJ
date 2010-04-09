@@ -26,7 +26,6 @@ import java.net.*;
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.app.Service;
 import android.app.Notification;
 import android.app.NotificationManager;

@@ -19,14 +19,13 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.LinkedList;
 
-import android.app.*;
+import android.app.AlertDialog;
 import android.os.Message;
 import android.os.Handler;
 import android.view.ContextMenu;
 import android.net.Uri;
-import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
