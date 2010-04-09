@@ -25,14 +25,10 @@ import android.app.*;
 import android.os.Message;
 import android.os.Handler;
 import android.view.ContextMenu;
-import android.widget.ListView;
-import android.widget.RemoteViews;
+import android.net.Uri;
 import android.content.Intent;
-import android.content.Context;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
@@ -52,20 +48,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
-	private ZLTreeAdapter myAdapter;
-
-	public NetworkCatalogActions(NetworkLibraryActivity activity, ZLTreeAdapter adapter) {
-		super(activity);
-		myAdapter = adapter;
-	}
-
-	@Override
-	public void onDestroy() {
-		final NotificationManager notificationManager = (NotificationManager) myActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancel(ourProcessingNotificationId);
-		super.onDestroy();
-	}
-
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof NetworkCatalogTree;
@@ -76,7 +58,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
-		final boolean isOpened = tree.hasChildren() && myAdapter.isOpen(tree);
+		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
 		if (tree instanceof NetworkCatalogRootTree) {
 			if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
 				addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID,
@@ -145,7 +127,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doExpandCatalog((NetworkCatalogTree)tree);
 				return true;
 			case OPEN_IN_BROWSER_ITEM_ID:
-				myActivity.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE));
+				NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE));
 				return true;
 			case RELOAD_ITEM_ID:
 				doReloadCatalog((NetworkCatalogTree)tree);
@@ -155,12 +137,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return true;*/
 			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-					if (tree.hasChildren() && myAdapter.isOpen(tree)) {
-						myAdapter.expandOrCollapseTree(tree);
+					final ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
+					if (tree.hasChildren() && adapter.isOpen(tree)) {
+						adapter.expandOrCollapseTree(tree);
 					}
 					catalogTree.ChildrenItems.clear();
 					tree.clear();
-					myAdapter.resetTree();
+					adapter.resetTree();
 				}
 				return true;*/
 		}
@@ -169,47 +152,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 
 	private static final LinkedList<NetworkTree> ourProcessingTrees = new LinkedList<NetworkTree>();
-	private static final int ourProcessingNotificationId = (int) System.currentTimeMillis();
 
-	private void updateProgressNotification(NetworkCatalogTree tree) {
-		final RemoteViews contentView = new RemoteViews(myActivity.getPackageName(), R.layout.download_notification);
-		String title = getTitleValue("downloadingCatalogs");
-		contentView.setTextViewText(R.id.download_notification_title, title);
-		contentView.setTextViewText(R.id.download_notification_progress_text, "");
-		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
-
-		//final Intent intent = new Intent(myActivity, NetworkLibraryActivity.class);
-		//final PendingIntent contentIntent = PendingIntent.getActivity(myActivity, 0, intent, 0);
-		final PendingIntent contentIntent = PendingIntent.getActivity(myActivity, 0, new Intent(), 0);
-
-		final Notification notification = new Notification();
-		notification.icon = android.R.drawable.stat_notify_sync;
-		notification.flags |= Notification.FLAG_ONGOING_EVENT;
-		notification.contentView = contentView;
-		notification.contentIntent = contentIntent;
-		notification.number = ourProcessingTrees.size();
-
-		final NotificationManager notificationManager = (NotificationManager) myActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(ourProcessingNotificationId, notification);
-	}
-
-	private boolean startProgressNotification(NetworkCatalogTree tree) {
+	private boolean startProcessingTree(NetworkTree tree) {
 		if (ourProcessingTrees.contains(tree)) {
 			return false;
 		}
 		ourProcessingTrees.add(tree);
-		updateProgressNotification(tree);
 		return true;
 	}
 
-	private void endProgressNotification(NetworkCatalogTree tree) {
+	private void endProcessingTree(NetworkTree tree) {
 		ourProcessingTrees.remove(tree);
-		if (ourProcessingTrees.size() == 0) {
-			final NotificationManager notificationManager = (NotificationManager) myActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.cancel(ourProcessingNotificationId);
-		} else {
-			updateProgressNotification(tree);
-		}
 	}
 
 	private static final int WHAT_UPDATE_ITEMS = 0;
@@ -250,20 +203,22 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				myItems.clear();
 				myItems.notifyAll(); // wake up process, that waits for all items to be displayed (see ensureFinish() method)
 			}
-			myAdapter.resetTree();
+			if (NetworkLibraryActivity.Instance != null) {
+				NetworkLibraryActivity.Instance.getAdapter().resetTree();
+			}
 		}
 
 		private void onUpdateItems() {
 			boolean expand = !myTree.hasChildren();
 			displayItems();
-			if (expand) {
-				myAdapter.expandOrCollapseTree(myTree);
+			if (expand && NetworkLibraryActivity.Instance != null) {
+				NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(myTree);
 			}
 		}
 
 		private void onFinish(String err) {
 			afterUpdateCatalog(err, myTree.ChildrenItems.size() == 0);
-			endProgressNotification(myTree);
+			endProcessingTree(myTree);
 		}
 
 		@Override
@@ -279,110 +234,124 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
+	private static class ExpandCatalogRunnable implements Runnable {
+
+		private final NetworkCatalogTree myTree;
+		private final boolean myCheckAuthentication;
+		private final ExpandCatalogHandler myHandler;
+
+		public ExpandCatalogRunnable(NetworkCatalogTree tree, ExpandCatalogHandler handler, boolean checkAuthentication) {
+			myTree = tree;
+			myHandler = handler;
+			myCheckAuthentication = checkAuthentication;
+		}
+
+		public void run() {
+			/*if (!NetworkOperationRunnable::tryConnect()) {
+				return;
+			}*/
+			final NetworkLink link = myTree.Item.Link;
+			if (myCheckAuthentication && link.authenticationManager() != null) {
+				NetworkAuthenticationManager mgr = link.authenticationManager();
+				/*IsAuthorisedRunnable checker(mgr);
+				checker.executeWithUI();
+				if (checker.hasErrors()) {
+					checker.showErrorMessage();
+					return;
+				}
+				if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
+					InitializeAuthenticationManagerRunnable initializer(mgr);
+					initializer.executeWithUI();
+					if (initializer.hasErrors()) {
+						LogOutRunnable logout(mgr);
+						logout.executeWithUI();
+					}
+				}*/
+			}
+			final String err = myTree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+				private long myUpdateTime;
+				public void onNewItem(NetworkLibraryItem item) {
+					myHandler.addItem(item);
+					final long now = System.currentTimeMillis();
+					if (now > myUpdateTime) {
+						myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+						myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
+					}
+				}
+			});
+			myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+			myHandler.ensureFinish();
+			myHandler.sendMessage(myHandler.obtainMessage(WHAT_FINISHED, err));
+		}
+	}
+
 	public void doExpandCatalog(final NetworkCatalogTree tree) {
 		if (tree.hasChildren()) {
-			myAdapter.expandOrCollapseTree(tree);
+			NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
 			return;
 		}
-		if (!startProgressNotification(tree)) {
+		if (!startProcessingTree(tree)) {
 			return;
+		}
+		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+		if (url == null) {
+			throw new RuntimeException("That's impossible!!!");
 		}
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
-		new Thread(new Runnable() {
-			public void run() {
-				/*if (!NetworkOperationRunnable::tryConnect()) {
-					return;
-				}*/
-				NetworkCatalogItem item = tree.Item;
-				NetworkLink link = item.Link;
-				if (link.authenticationManager() != null) {
-					NetworkAuthenticationManager mgr = link.authenticationManager();
-					/*IsAuthorisedRunnable checker(mgr);
-					checker.executeWithUI();
-					if (checker.hasErrors()) {
-						checker.showErrorMessage();
-						return;
-					}
-					if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
-						InitializeAuthenticationManagerRunnable initializer(mgr);
-						initializer.executeWithUI();
-						if (initializer.hasErrors()) {
-							LogOutRunnable logout(mgr);
-							logout.executeWithUI();
-						}
-					}*/
-				}
-				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
-					private long myUpdateTime;
-					public void onNewItem(NetworkLibraryItem item) {
-						handler.addItem(item);
-						final long now = System.currentTimeMillis();
-						if (now > myUpdateTime) {
-							handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
-							myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
-						}
-					}
-				});
-				handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
-				handler.ensureFinish();
-				handler.sendMessage(handler.obtainMessage(WHAT_FINISHED, err));
-			}
-		}).start();
+		NetworkLibraryActivity.Instance.loadCatalog(
+			Uri.parse(url),
+			new ExpandCatalogRunnable(tree, handler, true)
+		);
 	}
 
 	public void doReloadCatalog(final NetworkCatalogTree tree) {
-		if (!startProgressNotification(tree)) {
+		if (!startProcessingTree(tree)) {
 			return;
 		}
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
-		myAdapter.expandOrCollapseTree(tree);
+		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+		if (url == null) {
+			throw new RuntimeException("That's impossible!!!");
+		}
+		NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
 		tree.ChildrenItems.clear();
 		tree.clear();
-		myAdapter.resetTree();
-		new Thread(new Runnable() {
-			public void run() {
-				final String err = tree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
-					private long myUpdateTime;
-					public void onNewItem(NetworkLibraryItem item) {
-						handler.addItem(item);
-						final long now = System.currentTimeMillis();
-						if (now > myUpdateTime) {
-							handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
-							myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
-						}
-					}
-				});
-				handler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
-				handler.ensureFinish();
-				handler.sendMessage(handler.obtainMessage(WHAT_FINISHED, err));
-			}
-		}).start();
+		NetworkLibraryActivity.Instance.getAdapter().resetTree();
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+		NetworkLibraryActivity.Instance.loadCatalog(
+			Uri.parse(url),
+			new ExpandCatalogRunnable(tree, handler, false)
+		);
 	}
 
 	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
+		ZLResource boxResource = null;
+		String msg = null;
 		if (errorMessage != null) {
-			final ZLResource boxResource = dialogResource.getResource("networkError");
-			new AlertDialog.Builder(myActivity)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(errorMessage)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-				.create().show();
+			boxResource = dialogResource.getResource("networkError");
+			msg = errorMessage;
 		} else if (childrenEmpty) {
-			final ZLResource boxResource = dialogResource.getResource("emptyCatalogBox");
-			new AlertDialog.Builder(myActivity)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(boxResource.getResource("message").getValue())
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-				.create().show();
+			boxResource = dialogResource.getResource("emptyCatalogBox");
+			msg = boxResource.getResource("message").getValue();
+		}
+		if (msg != null) {
+			if (NetworkLibraryActivity.Instance != null) {
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(NetworkLibraryActivity.Instance)
+					.setTitle(boxResource.getResource("title").getValue())
+					.setMessage(msg)
+					.setIcon(0)
+					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+					.create().show();
+			}
+			// TODO: else show notification???
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.invalidateAccountDependents();
 		library.synchronize();
-		myAdapter.resetTree();
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.getAdapter().resetTree();
+		}
 	}
 
 	/*public void diableCatalog(NetworkCatalogRootTree tree) {
@@ -390,6 +359,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.invalidate();
 		library.synchronize();
-		myAdapter.resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
+		NetworkLibraryActivity.Instance.getAdapter().resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
 	}*/
 }

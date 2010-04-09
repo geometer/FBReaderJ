@@ -58,6 +58,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 
+	private HashMap<Uri, Runnable> myCatalogRunnables = new HashMap<Uri, Runnable>();
+
 
 	private class BookDownloaderServiceConnection implements ServiceConnection {
 
@@ -92,6 +94,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Instance = this;
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
@@ -100,15 +103,14 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 		LibraryAdapter adapter = new LibraryAdapter(getListView(), NetworkLibrary.Instance().getTree());
 
-		myActions.add(new NetworkBookActions(this));
-		myActions.add(new NetworkCatalogActions(this, adapter));
+		myActions.add(new NetworkBookActions());
+		myActions.add(new NetworkCatalogActions());
 		myActions.trimToSize();
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		Instance = this;
 
 		myConnection = new BookDownloaderServiceConnection();
 		bindService(
@@ -122,15 +124,12 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	public void onStop() {
 		unbindService(myConnection);
 		myConnection = null;
-		Instance = null;
 		super.onStop();
 	}
 
 	@Override
 	public void onDestroy() {
-		for (NetworkTreeActions actions: myActions) {
-			actions.onDestroy();
-		}
+		Instance = null;
 		super.onDestroy();
 	}
 
@@ -266,9 +265,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
+	public final ZLTreeAdapter getAdapter() {
+		return (ZLTreeAdapter) getListView().getAdapter();
+	}
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final LibraryAdapter adapter = (LibraryAdapter) getListView().getAdapter();
+		final LibraryAdapter adapter = (LibraryAdapter) getAdapter();
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree) adapter.getItem(position);
 
@@ -296,6 +299,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
+	}
+
+	public void loadCatalog(Uri uri, Runnable loadCatalogRunnable) {
+		if (!myCatalogRunnables.containsKey(uri)) {
+			myCatalogRunnables.put(uri, loadCatalogRunnable);
+			startService(
+				new Intent(Intent.ACTION_DEFAULT, uri, this, CatalogDownloaderService.class)
+			);
+		}
+	}
+
+	public Runnable getCatalogRunnable(Uri uri) {
+		Runnable r = myCatalogRunnables.get(uri);
+		myCatalogRunnables.remove(uri);
+		return r;
 	}
 
 	@Override

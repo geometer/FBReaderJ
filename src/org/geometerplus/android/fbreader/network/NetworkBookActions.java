@@ -44,10 +44,6 @@ class NetworkBookActions extends NetworkTreeActions {
 	public static final int BUY_DIRECTLY_ITEM_ID = 6;
 	public static final int BUY_IN_BROWSER_ITEM_ID = 7;
 
-	protected NetworkBookActions(NetworkLibraryActivity activity) {
-		super(activity);
-	}
-
 	private boolean useFullReferences(NetworkBookItem book) {
 		return book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
 			book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null;
@@ -76,7 +72,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		menu.setHeaderTitle(tree.getName());
 		if (useFullReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
-			if (reference != null && myActivity.isBeingDownloaded(reference.URL)) {
+			if (reference != null && NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				addMenuItem(menu, -1, "alreadyDownloading").setEnabled(false);
 			} else if (book.localCopyFileName() != null) {
 				addMenuItem(menu, READ_BOOK_ITEM_ID, "read");
@@ -87,7 +83,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (myActivity.isBeingDownloaded(reference.URL)) {
+			if (NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				addMenuItem(menu, -1, "alreadyDownloadingDemo").setEnabled(false);
 			} else if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
 				addMenuItem(menu, READ_DEMO_ITEM_ID, "readDemo");
@@ -119,7 +115,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		final NetworkBookItem book = bookTree.Book;
 		if (useFullReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
-			if (reference == null || !myActivity.isBeingDownloaded(reference.URL)) {
+			if (reference == null || !NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				if (book.localCopyFileName() != null) {
 					return READ_BOOK_ITEM_ID;
 				} else if (reference != null) {
@@ -129,7 +125,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (!myActivity.isBeingDownloaded(reference.URL)) {
+			if (!NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
 					return READ_DEMO_ITEM_ID;
 				} else {
@@ -206,8 +202,8 @@ class NetworkBookActions extends NetworkTreeActions {
 		BookReference ref = book.reference(resolvedType);
 		if (ref != null) {
 			// TODO: add `demo` tag to the book???
-			myActivity.startService(
-				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), myActivity, BookDownloaderService.class)
+			NetworkLibraryActivity.Instance.startService(
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), NetworkLibraryActivity.Instance, BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanURL())
@@ -229,10 +225,10 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		}
 		if (local != null) {
-			myActivity.startActivity(
+			NetworkLibraryActivity.Instance.startActivity(
 				new Intent(Intent.ACTION_VIEW,
 					Uri.fromFile(new File(local)),
-					myActivity,
+					NetworkLibraryActivity.Instance,
 					org.geometerplus.android.fbreader.FBReader.class
 				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 			);
@@ -245,7 +241,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
-		new AlertDialog.Builder(myActivity)
+		new AlertDialog.Builder(NetworkLibraryActivity.Instance)
 			.setTitle(book.Title)
 			.setMessage(boxResource.getResource("message").getValue())
 			.setIcon(0)
@@ -320,7 +316,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		NetworkBookItem book = bookTree.Book;
 		BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
 		if (reference != null) {
-			myActivity.openInBrowser(reference.URL);
+			NetworkLibraryActivity.Instance.openInBrowser(reference.URL);
 		}
 	}
 

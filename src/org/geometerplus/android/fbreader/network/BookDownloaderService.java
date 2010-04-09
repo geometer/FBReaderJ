@@ -94,7 +94,6 @@ public class BookDownloaderService extends Service {
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		for (int notificationId: myOngoingNotifications) {
 			notificationManager.cancel(notificationId);
-			System.err.println("FBREADER -- Cancel ID: " + notificationId);
 		}
 		super.onDestroy();
 	}

@@ -30,11 +30,6 @@ import org.geometerplus.fbreader.network.NetworkTree;
 abstract class NetworkTreeActions {
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
-	protected final NetworkLibraryActivity myActivity;
-
-	protected NetworkTreeActions(NetworkLibraryActivity activity) {
-		myActivity = activity;
-	}
 
 	protected String getTitleValue(String key) {
 		return myResource.getResource(key).getValue();
@@ -68,7 +63,4 @@ abstract class NetworkTreeActions {
 	public abstract String getConfirmText(NetworkTree tree, int actionCode);
 
 	public abstract boolean runAction(NetworkTree tree, int actionCode);
-
-	public void onDestroy() {
-	}
 }
