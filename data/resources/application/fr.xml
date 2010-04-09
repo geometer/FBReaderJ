@@ -4,46 +4,46 @@
 	<node name="library">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
 		<node name="booksWithNoTags" value="Livres sans étiquettes"/>
-  </node>
-  <node name="libraryView">
-    <node name="byAuthor" value="Par auteur"/>
-    <node name="byTag" value="Par étiquette"/>
-    <node name="recent" value="Récent"/>
-    <node name="searchResults" value="Trouvé(s)"/>
-    <node name="menu">
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="Par auteur"/>
+		<node name="byTag" value="Par étiquette"/>
+		<node name="recent" value="Récent"/>
+		<node name="searchResults" value="Trouvé(s)"/>
+		<node name="menu">
 			<node name="localSearch" value="Recherche locale"/>
 			<node name="networkSearch" value="Recherche sur le réseau"/>
-    </node>
-    <node name="openBook" value="Ouvrir ce livre"/>
-    <node name="deleteBook" value="Supprimer ce livre"/>
-  </node>
-  <node name="tocView">
-    <node name="expandTree" value="Ouvrir l'arbre"/>
-    <node name="collapseTree" value="Fermer l'arbre"/>
-    <node name="readText" value="Lire le texte"/>
-  </node>
-  <node name="bookmarksView">
-    <node name="thisBook" value="Ce livre"/>
-    <node name="allBooks" value="Tous les livres"/>
-    <node name="searchResults" value="Trouvé"/>
-    <node name="new" value="Nouveau marque-page"/>
-    <node name="open" value="Ouvrir"/>
-    <node name="edit" value="Modifier le marque-page"/>
-    <node name="delete" value="Supprimer le marque-page"/>
-    <node name="menu">
+		</node>
+		<node name="openBook" value="Ouvrir ce livre"/>
+		<node name="deleteBook" value="Supprimer ce livre"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Ouvrir l'arbre"/>
+		<node name="collapseTree" value="Fermer l'arbre"/>
+		<node name="readText" value="Lire le texte"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Ce livre"/>
+		<node name="allBooks" value="Tous les livres"/>
+		<node name="searchResults" value="Trouvé"/>
+		<node name="new" value="Nouveau marque-page"/>
+		<node name="open" value="Ouvrir"/>
+		<node name="edit" value="Modifier le marque-page"/>
+		<node name="delete" value="Supprimer le marque-page"/>
+		<node name="menu">
 			<node name="search" value="Search"/>
-    </node>
-  </node>
-  <node name="menu">
+		</node>
+	</node>
+	<node name="menu">
 		<node name="preferences-old" value="Paramètres avancés"/>
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
 		<node name="library" value="Bibliothèque"/>
-	  <node name="toc" value="Table des matières"/>
-	  <node name="day" value="Jour"/>
-	  <node name="night" value="Nuit"/>
+		<node name="toc" value="Table des matières"/>
+		<node name="day" value="Jour"/>
+		<node name="night" value="Nuit"/>
 		<node name="navigate" value="Naviguer">
-	  	<node name="toc" value="Table des Matières"/>
+			<node name="toc" value="Table des Matières"/>
 			<node name="gotoHome" value="Aller au début du document"/>
 			<node name="gotoPageNumber" value="Aller à la Page..."/>
 			<node name="gotoSectionStart" value="Aller au début de la section de texte"/>
@@ -96,7 +96,7 @@
 				</node>
 			</node>
 			<node name="Scrolling" value="Défilement">
-			  <node name="flick" value="Défilement par accoup (Flick)">
+				<node name="flick" value="Défilement par accoup (Flick)">
 					<node name="summaryOn" value="Les pages défileront par la pression du doigt"/>
 					<node name="summaryOff" value="Les pages défileront par la tape du doigt"/>
 				</node>

@@ -4,19 +4,19 @@
 		<node name="unknownAuthor" value="Автор не указан"/>
 		<node name="booksWithNoTags" value="Книги вне категорий"/>
 		<node name="demo" value="фрагмент"/>
-  </node>
-  <node name="libraryView">
-    <node name="byAuthor" value="Авторы"/>
-    <node name="byTag" value="Категории"/>
-    <node name="recent" value="Недавние"/>
-    <node name="searchResults" value="Найдено"/>
-    <node name="menu">
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="Авторы"/>
+		<node name="byTag" value="Категории"/>
+		<node name="recent" value="Недавние"/>
+		<node name="searchResults" value="Найдено"/>
+		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
 			<node name="networkSearch" value="Поиск в сети"/>
-    </node>
-    <node name="openBook" value="Читать книгу"/>
-    <node name="deleteBook" value="Удалить книгу"/>
-  </node>
+		</node>
+		<node name="openBook" value="Читать книгу"/>
+		<node name="deleteBook" value="Удалить книгу"/>
+	</node>
 	<node name="networkView">
 		<node name="libraryItemNode">
 			<node name="expandTree" value="Развернуть" />
@@ -58,29 +58,29 @@
 			<node name="buy" value="Купить (%s)" />
 		</node>
 	</node>
-  <node name="tocView">
-    <node name="expandTree" value="Развернуть ветвь дерева"/>
-    <node name="collapseTree" value="Свернуть ветвь дерева"/>
-    <node name="readText" value="Читать главу"/>
-  </node>
-  <node name="bookmarksView">
-    <node name="thisBook" value="Эта книга"/>
-    <node name="allBooks" value="Все книги"/>
-    <node name="searchResults" value="Найдено"/>
-    <node name="new" value="Добавить закладку"/>
-    <node name="open" value="Открыть"/>
-    <node name="edit" value="Поправить закладку"/>
-    <node name="delete" value="Стереть закладку"/>
-    <node name="menu">
+	<node name="tocView">
+		<node name="expandTree" value="Развернуть ветвь дерева"/>
+		<node name="collapseTree" value="Свернуть ветвь дерева"/>
+		<node name="readText" value="Читать главу"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Эта книга"/>
+		<node name="allBooks" value="Все книги"/>
+		<node name="searchResults" value="Найдено"/>
+		<node name="new" value="Добавить закладку"/>
+		<node name="open" value="Открыть"/>
+		<node name="edit" value="Поправить закладку"/>
+		<node name="delete" value="Стереть закладку"/>
+		<node name="menu">
 			<node name="search" value="Поиск"/>
-    </node>
-  </node>
-  <node name="menu">
+		</node>
+	</node>
+	<node name="menu">
 		<node name="preferences" value="Настройки"/>
-	  <node name="bookInfo" value="О книге"/>
-	  <node name="toc" value="Оглавление"/>
-	  <node name="day" value="День"/>
-	  <node name="night" value="Ночь"/>
+		<node name="bookInfo" value="О книге"/>
+		<node name="toc" value="Оглавление"/>
+		<node name="day" value="День"/>
+		<node name="night" value="Ночь"/>
 		<node name="library" value="Библиотека"/>
 		<node name="navigate" value="Переход">
 			<node name="gotoHome" value="В начало книги"/>
