@@ -19,20 +19,10 @@
 
 package org.geometerplus.zlibrary.core.library;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.HashMap;
-
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public abstract class ZLibrary {
-	//public static final String JAR_DATA_PREFIX = "#JAR#://";
-	private final HashMap myProperties = new HashMap();
-
 	public static ZLibrary Instance() {
 		return ourImplementation;
 	}
@@ -41,17 +31,6 @@ public abstract class ZLibrary {
 
 	protected ZLibrary() {
 		ourImplementation = this;
-	}
-
-	protected final Class getApplicationClass() {
-		try {
-			Class clazz = Class.forName((String)myProperties.get("applicationClass"));
-			if ((clazz != null) && ZLApplication.class.isAssignableFrom(clazz)) {
-				return clazz;
-			}
-		} catch (ClassNotFoundException e) {
-		}
-		return null;
 	}
 
 	abstract public ZLResourceFile createResourceFile(String path);
