@@ -240,7 +240,6 @@
 			<node name="loadingNetworkLibrary" value="Открывается библиотека. Подождите, пожалуйста..." />
 		</node>
 		<node name="networkError">
-			<node name="authenticationFailed" value="Ошибка авторизации" />
 			<node name="internalError" value="Внутренняя ошибка сервера" />
 			<node name="purchaseNotEnoughMoney" value="Не достаточно средств на счету" />
 			<node name="purchaseMissingBook" value="Книга отсутствует в продаже" />

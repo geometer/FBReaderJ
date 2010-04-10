@@ -38,12 +38,9 @@ public class ZLNetworkManager {
 
 
 	private String doBeforeRequest(ZLNetworkRequest request) {
-		if (!request.doBefore()) {
-			final String err = request.getErrorMessage();
-			if (err != null) {
-				return err;
-			}
-			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+		final String err = request.doBefore();
+		if (err != null) {
+			return err;
 		}
 
 		/*if (request.isInstanceOf(ZLNetworkPostRequest::TYPE_ID)) {
@@ -76,17 +73,16 @@ public class ZLNetworkManager {
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {
-					if (!request.handleStream(stream)) {
-						final String err = request.getErrorMessage();
-						if (err != null) {
-							return err;
-						}
-						return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+					final String err = request.handleStream(httpConnection, stream);
+					if (err != null) {
+						return err;
 					}
 				} finally {
 					stream.close();
 				}
 				sucess = true;
+			} else if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
+				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
 			} else {
 				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 			}
@@ -103,13 +99,9 @@ public class ZLNetworkManager {
 		} catch (IOException ex) {
 			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 		} finally {
-			boolean res = request.doAfter(sucess);
-			if (sucess && !res) {
-				final String err = request.getErrorMessage();
-				if (err != null) {
-					return err;
-				}
-				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+			final String err = request.doAfter(sucess);
+			if (sucess && err != null) {
+				return err;
 			}
 		}
 		return null;

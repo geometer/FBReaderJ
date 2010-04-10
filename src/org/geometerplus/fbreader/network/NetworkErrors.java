@@ -23,7 +23,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkErrors;
 
 public final class NetworkErrors extends ZLNetworkErrors {
 
-	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 	public static final String ERROR_INTERNAL = "internalError";
 	public static final String ERROR_PURCHASE_NOT_ENOUGH_MONEY = "purchaseNotEnoughMoney";
 	public static final String ERROR_PURCHASE_MISSING_BOOK = "purchaseMissingBook";

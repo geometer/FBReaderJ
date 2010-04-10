@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.network;
 
 import java.io.InputStream;
 import java.io.IOException;
+import java.net.URLConnection;
 
 
 public abstract class ZLNetworkRequest {
@@ -38,25 +39,24 @@ public abstract class ZLNetworkRequest {
 
 	public boolean FollowRedirects = true;
 
-	private String myErrorMessage;
 
+	protected ZLNetworkRequest(String url) {
+		this(url, null);
+	}
 
 	protected ZLNetworkRequest(String url, String sslCertificate) {
 		URL = url;
 		SSLCertificate = sslCertificate;
 	}
 
-	public String getErrorMessage() {
-		return myErrorMessage;
+	// callbacks return error messages
+	public String doBefore() {
+		return null;
 	}
 
-	protected void setErrorMessage(String errorMessage) {
-		myErrorMessage = errorMessage;
+	public abstract String handleStream(URLConnection connection, InputStream inputStream) throws IOException;
+
+	public String doAfter(boolean success) { // returned error message is ignored when `success == false`
+		return null;
 	}
-
-	public abstract boolean doBefore();
-	public abstract boolean handleStream(InputStream inputStream) throws IOException;
-
-	// When `success == true` return false MUST make request fail; when `success == false` return value MUST be ignored.
-	public abstract boolean doAfter(boolean success);
 }

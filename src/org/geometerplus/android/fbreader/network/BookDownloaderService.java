@@ -39,6 +39,8 @@ import android.widget.Toast;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
+import org.geometerplus.zlibrary.core.network.*;
+
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.BookReference;
 
@@ -274,73 +276,62 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
+		final ZLNetworkRequest request = new ZLNetworkRequest(urlString) {
+
+			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
+
+				final int fileLength = connection.getContentLength();
+				int downloadedPart = 0;
+				long progressTime = System.currentTimeMillis() + updateIntervalMillis;
+				if (fileLength <= 0) {
+					progressHandler.sendEmptyMessage(-1);
+				}
+				OutputStream outStream;
+				try {
+					outStream = new FileOutputStream(file);
+				} catch (FileNotFoundException ex) {
+					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_CREATE_FILE, file.getPath());
+				}
+				try {
+					final byte[] buffer = new byte[8192];
+					while (true) {
+						final int size = inputStream.read(buffer);
+						if (size <= 0) {
+							break;
+						}
+						downloadedPart += size;
+						if (fileLength > 0) {
+							final long currentTime = System.currentTimeMillis();
+							if (currentTime > progressTime) {
+								progressTime = currentTime + updateIntervalMillis;
+								progressHandler.sendEmptyMessage(downloadedPart * 100 / fileLength);
+							}
+							/*if (downloadedPart * 100 / fileLength > 95) {
+								throw new IOException("debug exception");
+							}*/
+						}
+						outStream.write(buffer, 0, size);
+						/*try {
+							Thread.currentThread().sleep(200);
+						} catch (InterruptedException ex) {
+						}*/
+					}
+				} finally {
+					outStream.close();
+				}
+				return null;
+			}
+		};
+
 		new Thread(new Runnable() {
 			public void run() {
-				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
-				boolean downloadSuccess = false;
-				try {
-					final URL url = new URL(urlString);
-					final URLConnection connection = url.openConnection();
-					if (!(connection instanceof HttpURLConnection)) {
-						return; // TODO: return error/information message???
-					}
-					final HttpURLConnection httpConnection = (HttpURLConnection) connection;
-					httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
-					httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
-					httpConnection.setRequestProperty("Connection", "Close");
-					httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
-					final int response = httpConnection.getResponseCode();
-					if (response == HttpURLConnection.HTTP_OK) {
-						final int fileLength = httpConnection.getContentLength();
-						int downloadedPart = 0;
-						long progressTime = System.currentTimeMillis() + updateIntervalMillis;
-						if (fileLength <= 0) {
-							progressHandler.sendEmptyMessage(-1);
-						}
-						OutputStream outStream = new FileOutputStream(file);
-						try {
-							InputStream inStream = httpConnection.getInputStream();
-							final byte[] buffer = new byte[8192];
-							while (true) {
-								final int size = inStream.read(buffer);
-								if (size <= 0) {
-									break;
-								}
-								downloadedPart += size;
-								if (fileLength > 0) {
-									final long currentTime = System.currentTimeMillis();
-									if (currentTime > progressTime) {
-										progressTime = currentTime + updateIntervalMillis;
-										progressHandler.sendEmptyMessage(downloadedPart * 100 / fileLength);
-									}
-									/*if (downloadedPart * 100 / fileLength > 95) {
-										throw new IOException();
-									}*/
-								}
-								outStream.write(buffer, 0, size);
-								/*try {
-									Thread.currentThread().sleep(200);
-								} catch (InterruptedException ex) {
-								}*/
-							}
-							inStream.close();
-						} finally {
-							outStream.close();
-						}
-						downloadSuccess = true;
-					}
-				} catch (MalformedURLException e) {
-					// TODO: error message
-				} catch (SocketTimeoutException ex) {
-					// TODO: error message
-					// error message : NetworkErrors.errorMessage("operationTimedOutMessage");
-				} catch (IOException e) {
-					// TODO: error message
-				} finally {
-					downloadFinishHandler.sendEmptyMessage(downloadSuccess ? 1 : 0);
-					if (!downloadSuccess) {
-						file.delete();
-					}
+				final String err = ZLNetworkManager.Instance().perform(request);
+				// TODO: show error message to User
+				final boolean success = (err == null);
+				downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
+				if (!success) {
+					file.delete();
 				}
 			}
 		}).start();

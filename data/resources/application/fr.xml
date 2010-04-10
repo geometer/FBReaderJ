@@ -241,7 +241,6 @@
 			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque. Patientez, s'il-vous plait..." />
 		</node>
 		<node name="networkError">
-			<node name="authenticationFailed" value="Authentification échouée"/>
 			<node name="internalError" value="Erreur interne du serveur"/>
 			<node name="purchaseNotEnoughMoney" value="Pas assez de crédit"/>
 			<node name="purchaseMissingBook" value="Livre manquant"/>

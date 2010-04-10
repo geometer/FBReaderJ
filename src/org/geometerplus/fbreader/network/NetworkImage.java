@@ -24,6 +24,7 @@ import java.net.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.Constants;
 
@@ -179,39 +180,25 @@ public final class NetworkImage extends ZLSingleImage {
 				}
 				imageFile.delete();
 			}
-			try {
-				final URL url = new URL(myUrl);
-				final URLConnection connection = url.openConnection();
-				if (!(connection instanceof HttpURLConnection)) {
-					// TODO: error message ???
-					return;
-				}
-				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
-				httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
-				httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
-				httpConnection.setRequestProperty("Connection", "Close");
-				httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
-				final int response = httpConnection.getResponseCode();
-				if (response == HttpURLConnection.HTTP_OK) {
+
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(myUrl) {
+				public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
 					OutputStream outStream = new FileOutputStream(imageFile);
 					try {
-						InputStream inStream = httpConnection.getInputStream();
 						final byte[] buffer = new byte[8192];
 						while (true) {
-							final int size = inStream.read(buffer);
+							final int size = inputStream.read(buffer);
 							if (size <= 0) {
 								break;
 							}
 							outStream.write(buffer, 0, size);
 						}
-						inStream.close();
 					} finally {
 						outStream.close();
 					}
+					return null;
 				}
-			} catch (MalformedURLException e) {
-			} catch (IOException e) {
-			}
+			});
 		} finally {
 			mySynchronized = true;
 		}

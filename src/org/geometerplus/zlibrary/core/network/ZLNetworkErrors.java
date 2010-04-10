@@ -30,6 +30,7 @@ public class ZLNetworkErrors {
 	public static final String ERROR_CONNECT_TO_NETWORK = "couldntConnectToNetworkMessage";
 	public static final String ERROR_UNSUPPORTED_URL = "unsupportedURL";
 	public static final String ERROR_INVALID_URL = "invalidURL";
+	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 
 	// Messages with one parameter:
 	public static final String ERROR_SOMETHING_WRONG = "somethingWrongMessage";

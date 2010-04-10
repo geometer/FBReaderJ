@@ -24,6 +24,7 @@ import java.io.*;
 import java.net.*;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -44,52 +45,31 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 
 	@Override
 	public String loadChildren(CatalogListener listener) {
-		OperationData data = new OperationData(Link, listener);
-
 		String urlString = URLByType.get(URL_CATALOG);
 		if (urlString == null) {
 			return null; // TODO: return error/information message???
 		}
 
-		try {
-			while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!
-					&& urlString != null) {
-				urlString = Link.rewriteUrl(urlString, false);
-				final URL url = new URL(urlString);
-				final URLConnection connection = url.openConnection();
-				if (!(connection instanceof HttpURLConnection)) {
-					return null; // TODO: return error/information message???
-				}
-				final HttpURLConnection httpConnection = (HttpURLConnection) connection;
-				httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
-				httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
-				httpConnection.setRequestProperty("Connection", "Close");
-				httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
-				final int response = httpConnection.getResponseCode();
-				if (response == HttpURLConnection.HTTP_OK) {
-					InputStream inStream = httpConnection.getInputStream();
-					try {
-						final NetworkOPDSFeedReader feedReader = new NetworkOPDSFeedReader(urlString, data);
-						final OPDSXMLReader xmlReader = new OPDSXMLReader(feedReader);
-						xmlReader.read(inStream);
-					} finally {
-						inStream.close();
-					}
-				} else {
-					return null; // return error???
-				}
+		final OperationData data = new OperationData(Link, listener);
 
-				urlString = data.ResumeURI;
-				data.clear();
-			}
-		} catch (MalformedURLException ex) {
-			// return error???
-			return null;
-		} catch (SocketTimeoutException ex) {
-			return NetworkErrors.errorMessage("operationTimedOutMessage");
-		} catch (IOException ex) {
-			return NetworkErrors.errorMessage(NetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(urlString));
+		String errorMessage = null;
+		while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!
+				&& urlString != null && errorMessage == null) {
+
+			urlString = Link.rewriteUrl(urlString, false);
+
+			errorMessage = ZLNetworkManager.Instance().perform(new ZLNetworkRequest(urlString) {
+				public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+					new OPDSXMLReader(
+						new NetworkOPDSFeedReader(URL, data)
+					).read(inputStream);
+					return null;
+				}
+			});
+
+			urlString = data.ResumeURI;
+			data.clear();
 		}
-		return null;
+		return errorMessage;
 	}
 }
