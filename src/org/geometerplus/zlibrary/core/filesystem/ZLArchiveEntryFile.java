@@ -25,6 +25,9 @@ import org.geometerplus.zlibrary.core.filesystem.tar.ZLTarEntryFile;
 
 public abstract class ZLArchiveEntryFile extends ZLFile {
 	public static ZLArchiveEntryFile createArchiveEntryFile(ZLFile archive, String entryName) {
+		if (archive == null) {
+			return null;
+		}
 		switch (archive.myArchiveType & ArchiveType.ARCHIVE) {
 			case ArchiveType.ZIP: 
 				return new ZLZipEntryFile(archive, entryName);
