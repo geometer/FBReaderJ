@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLTextPlainModel implements ZLTextModel {
 	protected final String myId;
+	private final String myLanguage;
 
 	protected int[] myStartEntryIndices;
 	protected int[] myStartEntryOffsets;
@@ -191,8 +192,9 @@ public class ZLTextPlainModel implements ZLTextModel {
 		}
 	}
 
-	protected ZLTextPlainModel(String id, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
+	protected ZLTextPlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
 		myId = id;
+		myLanguage = language;
 		myStartEntryIndices = new int[arraySize];
 		myStartEntryOffsets = new int[arraySize];
 		myParagraphLengths = new int[arraySize];
@@ -204,6 +206,10 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 	public final String getId() {
 		return myId;
+	}
+
+	public final String getLanguage() {
+		return myLanguage;
 	}
 
 	public final ZLTextMark getFirstMark() {

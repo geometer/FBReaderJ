@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
-import org.vimgadgets.linebreak.LineBreak;
+import org.vimgadgets.linebreak.LineBreaker;
 
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
@@ -28,14 +28,16 @@ import org.geometerplus.zlibrary.text.model.*;
 public final class ZLTextParagraphCursor {
 	private static final class Processor {
 		private final ZLTextParagraph myParagraph;
+		private final LineBreaker myLineBreaker;
 		private final ArrayList<ZLTextElement> myElements;
 		private int myOffset;
 		private int myFirstMark;
 		private int myLastMark;
 		private final List<ZLTextMark> myMarks;
 		
-		private Processor(ZLTextParagraph paragraph, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
+		private Processor(ZLTextParagraph paragraph, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
 			myParagraph = paragraph;
+			myLineBreaker = lineBreaker;
 			myElements = elements;
 			myMarks = marks;
 			final ZLTextMark mark = new ZLTextMark(paragraphIndex, 0, 0);
@@ -92,38 +94,62 @@ public final class ZLTextParagraphCursor {
 		}
 		
 		private static byte[] ourBreaks = new byte[1024];
+		private static final int NO_SPACE = 0;
+		private static final int SPACE = 1;
+		private static final int NON_BREAKABLE_SPACE = 2;
 		private void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
-				final LineBreak breaker = new LineBreak("en");
 				if (ourBreaks.length < length) {
 					ourBreaks = new byte[length];
 				}
-				breaker.setLineBreaks(data, offset, length, ourBreaks);
+				final byte[] breaks = ourBreaks;
+				myLineBreaker.setLineBreaks(data, offset, length, breaks);
 
 				final ZLTextElement hSpace = ZLTextElement.HSpace;
-				final int end = offset + length;
-				int firstNonSpace = -1;
-				boolean spaceInserted = false;
 				final ArrayList<ZLTextElement> elements = myElements;
-				for (int charPos = offset; charPos < end; ++charPos) {
-					final char ch = data[charPos];
-					if ((ch == ' ') || (ch <= 0x0D)) {
-						if (firstNonSpace != -1) {
-							addWord(data, firstNonSpace, charPos - firstNonSpace, myOffset + (firstNonSpace - offset));
-							elements.add(hSpace);
-							spaceInserted = true;
-							firstNonSpace = -1;					
-						} else if (!spaceInserted) {
-							elements.add(hSpace);
-							spaceInserted = true;	
-						}	
-					} else if (firstNonSpace == -1) {
-						firstNonSpace = charPos;
+				char ch;
+				char previousChar = data[offset];
+				int spaceState = NO_SPACE;
+				int wordStart = 0;
+				for (int index = 0; index < length; ++index) {
+					ch = data[offset + index];
+					if (Character.isSpace(ch)) {
+						if (index > 0 && spaceState == NO_SPACE) {
+							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart);
+						}
+						spaceState = SPACE;
+					} else {
+						switch (spaceState) {
+							case SPACE:
+								//if (breaks[index - 1] == LineBreak.NOBREAK || previousChar == '-') {
+								//}
+								elements.add(hSpace);
+								wordStart = index;
+								break;
+							//case NON_BREAKABLE_SPACE:
+								//break;
+							case NO_SPACE:
+								if (index > 0 &&
+									breaks[index - 1] != LineBreaker.NOBREAK &&
+									previousChar != '-' &&
+									index != wordStart) {
+									addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart);
+									wordStart = index;
+								}
+								break;
+						}
+						spaceState = NO_SPACE;
 					}
-				} 
-				if (firstNonSpace != -1) {
-					addWord(data, firstNonSpace, end - firstNonSpace, myOffset + (firstNonSpace - offset));
-//					elements.add(new ZLTextWord(data, firstNonSpace, end - firstNonSpace, 0));
+				}
+				switch (spaceState) {
+					case SPACE:
+						elements.add(hSpace);
+						break;
+					//case NON_BREAKABLE_SPACE:
+						//break;
+					case NO_SPACE:
+						addWord(data, offset + wordStart, length - wordStart, myOffset + wordStart);
+						break;
 				}
 				myOffset += length;
 			}
@@ -164,7 +190,7 @@ public final class ZLTextParagraphCursor {
 		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
-				new Processor(paragraph, Model.getMarks(), Index, myElements).fill();
+				new Processor(paragraph, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
 				break;
 			default:
 				break;

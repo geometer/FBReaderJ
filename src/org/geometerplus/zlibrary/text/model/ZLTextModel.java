@@ -23,6 +23,7 @@ import java.util.List;
 
 public interface ZLTextModel {
 	String getId();
+	String getLanguage();
 
 	int getParagraphsNumber();
 	ZLTextParagraph getParagraph(int index);

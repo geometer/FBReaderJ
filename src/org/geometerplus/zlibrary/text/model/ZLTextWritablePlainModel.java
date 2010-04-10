@@ -28,8 +28,8 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
 
-	public ZLTextWritablePlainModel(String id, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
-		super(id, arraySize, dataBlockSize, directoryName, extension, imageMap);
+	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
+		super(id, language, arraySize, dataBlockSize, directoryName, extension, imageMap);
 	}
 
 	private void extend() {

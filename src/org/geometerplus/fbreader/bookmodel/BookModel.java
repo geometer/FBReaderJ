@@ -51,7 +51,7 @@ public final class BookModel {
 	private final ZLImageMap myImageMap = new ZLImageMap(); 
 	
 	public final Book Book;
-	public final ZLTextModel BookTextModel = new ZLTextWritablePlainModel(null, 1024, 65536, Constants.CACHE_DIRECTORY, "cache", myImageMap);
+	public final ZLTextModel BookTextModel;
 	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
@@ -72,6 +72,7 @@ public final class BookModel {
 
 	private BookModel(Book book) {
 		Book = book;
+		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Constants.CACHE_DIRECTORY, "cache", myImageMap);
 		//for (int i = 0; i < 50; ++i) {
 		//	new File(linksFileName(i)).delete();
 		//}
@@ -80,7 +81,7 @@ public final class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, 8, 512, Constants.CACHE_DIRECTORY, "cache" + myFootnotes.size(), myImageMap); 
+			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Constants.CACHE_DIRECTORY, "cache" + myFootnotes.size(), myImageMap); 
 			myFootnotes.put(id, model); 
 		}
 		return model;
