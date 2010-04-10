@@ -22,8 +22,8 @@ package org.geometerplus.zlibrary.core.xml;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
 final class ZLMutableString {
-	private char[] myData;
-	private int myLength;
+	char[] myData;
+	int myLength;
 
 	ZLMutableString(int len) {
 		myData = new char[len];

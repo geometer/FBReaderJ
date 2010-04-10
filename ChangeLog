@@ -4,3 +4,4 @@
   from http://vimgadgets.cvs.sourceforge.net/vimgadgets/common/tools/linebreak/)
 * Network libraries integration has been included
 * French interface translation has been added (by Sébastien Rodriguez & Pierre Senellart)
+* Meta information reading for ePubs from www.gutenberg.org has been fixed

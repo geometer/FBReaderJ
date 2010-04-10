@@ -55,6 +55,9 @@ final class ZLXMLParser {
 	private static final byte ATTRIBUTE_VALUE_QUOT = 21;
 	private static final byte ATTRIBUTE_VALUE_APOS = 22;
 	private static final byte ENTITY_REF = 23;
+	private static final byte CDATA = 24; // <![CDATA[...]]>
+	private static final byte END_OF_CDATA1 = 25;
+	private static final byte END_OF_CDATA2 = 26;
 
 	private static String convertToString(Map<ZLMutableString,String> strings, ZLMutableString container) {
 		String s = strings.get(container);
@@ -104,6 +107,7 @@ final class ZLXMLParser {
 
 	private final char[] myBuffer;
 	private final ZLMutableString myTagName = getMutableString();
+	private final ZLMutableString myCData = getMutableString();
 	private final ZLMutableString myAttributeName = getMutableString();
 	private final ZLMutableString myAttributeValue = getMutableString();
 	private final ZLMutableString myEntityName = getMutableString();
@@ -203,6 +207,7 @@ final class ZLXMLParser {
 		final ArrayList<HashMap<String,String>> namespaceMapStack = new ArrayList<HashMap<String,String>>();
 		char[] buffer = myBuffer;
 		final ZLMutableString tagName = myTagName;
+		final ZLMutableString cData = myCData;
 		final ZLMutableString attributeName = myAttributeName;
 		final ZLMutableString attributeValue = myAttributeValue;
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
@@ -259,10 +264,17 @@ mainSwitchLabel:
 							}
 							break;
 						case EXCL_TAG_START:
-							if (buffer[++i] == '-') {
-								state = COMMENT;
-							} else {
-								state = EXCL_TAG;
+							switch (buffer[++i]) {
+								case '-':
+									state = COMMENT;
+									break;
+								case '[':
+									state = CDATA;
+									startPosition = i + 1;
+									break;
+								default:
+									state = EXCL_TAG;
+									break;
 							}
 							break;
 						case EXCL_TAG:
@@ -274,6 +286,38 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
+						case CDATA:
+							while (true) {
+								switch (buffer[++i]) {
+									case ']':
+										state = END_OF_CDATA1;
+										break mainSwitchLabel;
+								}
+							}
+						case END_OF_CDATA1:
+							if (buffer[++i] == ']') {
+								state = END_OF_CDATA2;
+							} else {
+								state = CDATA;
+							}
+							break;
+						case END_OF_CDATA2:
+							if (buffer[++i] == '>') {
+								cData.append(buffer, startPosition, i - startPosition);
+								int len = cData.myLength;
+								if (len > 8) {
+									char data[] = cData.myData;
+									if (new String(data, 0, 6).equals("CDATA[")) {
+										xmlReader.characterDataHandler(data, 6, len - 8);
+									}
+								}
+								cData.clear();
+								state = TEXT;
+								startPosition = i + 1;
+							} else {
+								state = CDATA;
+							}
+							break;
 						case COMMENT:
 							while (true) {
 								switch (buffer[++i]) {
@@ -667,6 +711,11 @@ mainSwitchLabel:
 							break;
 						case ENTITY_REF:
 							entityName.append(buffer, startPosition, count - startPosition);
+							break;
+						case CDATA:
+						case END_OF_CDATA1:
+						case END_OF_CDATA2:
+							cData.append(buffer, startPosition, count - startPosition);
 							break;
 						case TEXT:
 							xmlReader.characterDataHandler(buffer, startPosition, count - startPosition);
