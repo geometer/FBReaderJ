@@ -32,6 +32,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 
 	private String myDCMetadataTag = "dc-metadata";
 	private String myMetadataTag = "metadata";
+	private String myOpfMetadataTag = "metadata";
 	private String myMetadataTagRealName;
 	private String myTitleTag;
 	private String myAuthorTag;
@@ -93,7 +94,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myAuthorTag = null;
 		mySubjectTag = null;
 		myLanguageTag = null;
-		myMetadataTag = "metadata";
+		myOpfMetadataTag = "metadata";
 		for (Object o : namespaces.keySet()) {
 			final String id = (String)o;
 			if (id.startsWith(DublinCorePrefix) || id.startsWith(DublinCoreLegacyPrefix)) {
@@ -104,14 +105,14 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				myLanguageTag = (name + ":language").intern();
 			} else if (id.equals(OpenPackagingFormat)) {
 				final String name = (String)namespaces.get(id);
-				myMetadataTag = (name + ":metadata").intern();
+				myOpfMetadataTag = (name + ":metadata").intern();
 			}
 		}
 	}
 
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
-		if ((tag == myMetadataTag) || (tag == myDCMetadataTag)) {
+		if (tag == myMetadataTag || tag == myDCMetadataTag || tag == myOpfMetadataTag) {
 			myMetadataTagRealName = tag;
 			myReadMetaData = true;
 		} else if (myReadMetaData) {
