@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 public class ZLNetworkErrors {
 
 	// Messages with no parameters:
-	public static final String ERROR_NO_LIBRARIES = "emptyLibrariesList";
 	public static final String ERROR_UNKNOWN_ERROR = "unknownErrorMessage";
 	public static final String ERROR_TIMEOUT = "operationTimedOutMessage";
 	public static final String ERROR_CONNECT_TO_NETWORK = "couldntConnectToNetworkMessage";

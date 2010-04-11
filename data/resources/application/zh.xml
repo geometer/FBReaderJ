@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Chinese FBReaderJ resources, by http://shucang.com/ -->
+<resources>
+	<node name="library">
+		<node name="unknownAuthor" toBeTranslated="true" value="Unknown author" />
+		<node name="booksWithNoTags" toBeTranslated="true" value="Books with no tags" />
+		<node name="demo" toBeTranslated="true" value="sample" />
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" toBeTranslated="true" value="By author" />
+		<node name="byTag" toBeTranslated="true" value="By tag" />
+		<node name="recent" toBeTranslated="true" value="Recent" />
+		<node name="searchResults" toBeTranslated="true" value="Found" />
+		<node name="menu">
+			<node name="localSearch" toBeTranslated="true" value="Local search" />
+			<node name="networkSearch" toBeTranslated="true" value="Network search" />
+		</node>
+		<node name="openBook" toBeTranslated="true" value="Open book" />
+		<node name="deleteBook" toBeTranslated="true" value="Delete book" />
+	</node>
+	<node name="networkView">
+		<node name="openCatalog" toBeTranslated="true" value="Open catalog" />
+		<node name="closeCatalog" toBeTranslated="true" value="Close catalog" />
+		<node name="expandTree" toBeTranslated="true" value="Expand" />
+		<node name="collapseTree" toBeTranslated="true" value="Collapse" />
+		<node name="download" toBeTranslated="true" value="Download" />
+		<node name="read" toBeTranslated="true" value="Read local copy" />
+		<node name="delete" toBeTranslated="true" value="Delete local copy" />
+		<node name="readDemo" toBeTranslated="true" value="Read sample" />
+		<node name="deleteDemo" toBeTranslated="true" value="Delete sample" />
+		<node name="downloadDemo" toBeTranslated="true" value="Download sample" />
+		<node name="buy" toBeTranslated="true" value="Buy (%s)" />
+		<node name="openInBrowser" toBeTranslated="true" value="Open in browser" />
+		<node name="reload" toBeTranslated="true" value="Reload" />
+		<node name="alreadyDownloading" toBeTranslated="true" value="Book is being downloaded" />
+		<node name="alreadyDownloadingDemo" toBeTranslated="true" value="Sample is being downloaded" />
+		<node name="confirmQuestions">
+			<node name="read" toBeTranslated="true" value="Do you want to read local copy?" />
+			<node name="download" toBeTranslated="true" value="Do you want to download this book?" />
+			<node name="readDemo" toBeTranslated="true" value="Do you want to read sample?" />
+			<node name="downloadDemo" toBeTranslated="true" value="Do you want to download sample?" />
+			<node name="buy" toBeTranslated="true" value="Do you want to buy this book? (%s)" />
+			<node name="openInBrowser" toBeTranslated="true" value="Do you want to open this catalog in browser?" />
+		</node>
+		<node name="downloadingCatalogs" toBeTranslated="true" value="Downloading catalogs" /> <!-- used as notification title -->
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" toBeTranslated="true" value="Book has been downloaded" />
+		<node name="tickerError" toBeTranslated="true" value="Book download error" />
+		<node name="contentSuccess" toBeTranslated="true" value="Download complete" />
+		<node name="contentError" toBeTranslated="true" value="Download failed" />
+		<node name="downloadingStarted" toBeTranslated="true" value="Book downloading has been started" />
+		<node name="alreadyDownloading" toBeTranslated="true" value="Book is already being downloaded" />
+	</node>
+	<node name="tocView">
+		<node name="expandTree" toBeTranslated="true" value="Expand tree" />
+		<node name="collapseTree" toBeTranslated="true" value="Collapse tree" />
+		<node name="readText" toBeTranslated="true" value="Read book text" />
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" toBeTranslated="true" value="This book" />
+		<node name="allBooks" toBeTranslated="true" value="All books" />
+		<node name="searchResults" toBeTranslated="true" value="Found" />
+		<node name="new" toBeTranslated="true" value="New bookmark" />
+		<node name="open" toBeTranslated="true" value="Open" />
+		<node name="edit" toBeTranslated="true" value="Edit bookmark" />
+		<node name="delete" toBeTranslated="true" value="Delete bookmark" />
+		<node name="menu">
+			<node name="search" toBeTranslated="true" value="Search" />
+		</node>
+	</node>
+	<node name="menu">
+		<node name="preferences-old" toBeTranslated="true" value="Settings (more)" />
+		<node name="preferences" value="参数设置..." />
+		<node name="bookInfo" value="书籍信息..." />
+		<node name="library" value="书库" />
+		<node name="toc" value="目录" />
+		<node name="day" toBeTranslated="true" value="Day" />
+		<node name="night" toBeTranslated="true" value="Night" />
+		<node name="networkLibrary" toBeTranslated="true" value="Network library" />
+		<node name="navigate" value="导航">
+			<node name="toc" value="目录" />
+			<node name="gotoHome" value="跳转到文档开始" />
+			<node name="gotoPageNumber" value="跳转到某页..." />
+			<node name="gotoSectionStart" value="跳转到章节开始" />
+			<node name="gotoSectionEnd" value="跳转到章节结束" />
+			<node name="nextTOCSection" value="跳转到下一个目录项 " />
+			<node name="previousTOCSection" value="回到上一个目录项" />
+			<node name="undo" value="后退" />
+			<node name="redo" value="前进" />
+		</node>
+		<node name="selection" value="选择">
+			<node name="copyToClipboard" value="复制到剪贴板" />
+			<node name="openInDictionary" value="从书库里打开" />
+			<node name="clearSelection" value="清除" />
+		</node>
+		<node name="search" value="查找" />
+		<node name="view" value="视图">
+			<node name="rotate" value="旋转屏幕" />
+			<node name="toggleFullscreen" value="全屏" />
+		</node>
+		<node name="bookmarks" toBeTranslated="true" value="Bookmarks" />
+	</node>
+	<node name="dialog">
+		<node name="BookInfo">
+			<node name="fileName" value="文件" />
+			<node name="title" value="书名" />
+			<node name="language" value="语言" />
+			<node name="encoding" value="编码" />
+		</node>
+		<node name="Preferences">
+			<node name="Library" value="书库">
+				<node name="path" toBeTranslated="true" value="Directories to seek for books" />
+			</node>
+			<node name="LookNFeel" toBeTranslated="true" value="Look &amp; Feel">
+				<node name="autoOrientation" toBeTranslated="true" value="Automatic rotation">
+					<node name="summaryOn" toBeTranslated="true" value="The display will rotate when user moves the device" />
+					<node name="summaryOff" toBeTranslated="true" value="The display will not rotate when user moves the device" />
+				</node>
+				<node name="showStatusBar" toBeTranslated="true" value="Show status bar">
+					<node name="summaryOn" toBeTranslated="true" value="Show status bar in reading mode" />
+					<node name="summaryOff" toBeTranslated="true" value="Hide status bar in reading mode" />
+				</node>
+				<node name="dontTurnScreenOff" toBeTranslated="true" value="Prevent screen from sleeping">
+					<node name="summaryOn" toBeTranslated="true" value="Screen will not be turned off while you read a book" />
+					<node name="summaryOff" toBeTranslated="true" value="Screen will be automatically turned off in case of inactivity" />
+				</node>
+				<node name="scrollbarType" toBeTranslated="true" value="Scrollbar at right side">
+					<node name="hide" toBeTranslated="true" value="Hide" />
+					<node name="show" toBeTranslated="true" value="Show as a usual scrollbar" />
+					<node name="showAsProgress" toBeTranslated="true" value="Show as a progress bar" />
+				</node>
+			</node>
+			<node name="Scrolling" toBeTranslated="true" value="Scrolling">
+				<node name="flick" toBeTranslated="true" value="Flick scrolling">
+					<node name="summaryOn" toBeTranslated="true" value="Pages will be scrolled by finger flick" />
+					<node name="summaryOff" toBeTranslated="true" value="Pages will be scrolled by finger tap" />
+				</node>
+				<node name="volumeKeys" toBeTranslated="true" value="Volume keys scrolling">
+					<node name="summaryOn" toBeTranslated="true" value="Use volume keys to scroll" />
+					<node name="summaryOff" toBeTranslated="true" value="Keep volume keys for sound" />
+				</node>
+				<node name="animated" toBeTranslated="true" value="Animated scrolling">
+					<node name="summaryOn" toBeTranslated="true" value="Scroll pages smoother" />
+					<node name="summaryOff" toBeTranslated="true" value="Scroll pages faster" />
+				</node>
+				<node name="horizontal" toBeTranslated="true" value="Horizontal scrolling">
+					<node name="summaryOn" toBeTranslated="true" value="Scroll pages horizontally" />
+					<node name="summaryOff" toBeTranslated="true" value="Scroll pages vertically" />
+				</node>
+			</node>
+		</node>
+		<node name="OptionsDialog">
+			<node name="title" value="FBReader - 设置" />
+			<node name="tab">
+				<node name="Library" value="书库">
+					<node name="bookPath" value="书籍路径" />
+					<node name="lookInSubdirectories" value="在子目录中查找书籍" />
+				</node>
+				<node name="Language" value="语言">
+					<node name="autoDetect" value="自动检测语言和编码" />
+					<node name="defaultLanguage" value="默认语言" />
+					<node name="defaultEncodingSet" value="默认编码设置" />
+					<node name="defaultEncoding" value="默认编码" />
+				</node>
+				<node name="Selection" value="选择项">
+					<node name="enableSelection" value="允许文本选择" />
+				</node>
+				<node name="Margins" value="边距">
+					<node name="left" value="左边距" />
+					<node name="right" value="右边距" />
+					<node name="top" value="顶边距" />
+					<node name="bottom" value="底边距" />
+				</node>
+				<node name="Format" value="格式">
+					<node name="optionsFor" value="设置" />
+					<node name="lineSpacing" value="行间距">
+						<node name="unchanged" value="&lt;不可变&gt;" />
+					</node>
+					<node name="firstLineIndent" value="首行缩进" />
+					<node name="alignment" value="对齐">
+						<node name="left" value="左" />
+						<node name="right" value="右" />
+						<node name="center" value="居中" />
+						<node name="justify" value="对齐" />
+						<node name="unchanged" value="&lt;不变&gt;" />
+					</node>
+					<node name="spaceBefore" value="前间距" />
+					<node name="spaceAfter" value="后间距" />
+					<node name="leftIndent" toBeTranslated="true" value="Left Indent" />
+					<node name="rightIndent" toBeTranslated="true" value="Right Indent" />
+				</node>
+				<node name="Styles" value="样式">
+					<node name="optionsFor" value="选项" />
+					<node name="fontFamily" value="字体">
+						<node name="unchanged" value="&lt;不变&gt;" />
+					</node>
+					<node name="fontSize" value="大小" />
+					<node name="fontSizeDifference" value="大小差异" />
+					<node name="bold" value="加粗" />
+					<node name="italic" value="倾斜" />
+					<node name="allowHyphenations" value="允许断字" />
+					<node name="autoHyphenations" value="自动断字" />
+				</node>
+				<node name="Colors" value="颜色">
+					<node name="colorFor" value="颜色设置">
+						<node name="background" value="背景色" />
+						<node name="selectionBackground" value="选择背景色" />
+						<node name="text" value="普通文本" />
+						<node name="hyperlink" toBeTranslated="true" value="Hyperlink Text" />
+						<node name="highlighting" toBeTranslated="true" value="Search Results Background" />
+					</node>
+				</node>
+			</node>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" toBeTranslated="true" value="The book file will be removed irreversibly. Are you sure?" />
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" toBeTranslated="true" value="File already exists. Redownload?" />
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" toBeTranslated="true" value="Downloading book %s" />
+			<node name="search" toBeTranslated="true" value="Searching. Please, wait..." />
+			<node name="loadingBook" value="书籍加载中，请等待..." />
+			<node name="loadingBookList" value="书籍列表加载中，请等待..." />
+			<node name="creatingBooksDatabase" toBeTranslated="true" value="Creating books database. Please, wait..." />
+			<node name="updatingBooksDatabase" toBeTranslated="true" value="Updating books database. Please, wait..." />
+			<node name="loadingNetworkLibrary" toBeTranslated="true" value="Opening library. Please, wait..." />
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="内部服务器出错" />
+			<node name="purchaseNotEnoughMoney" value="余额不足" />
+			<node name="purchaseMissingBook" value="缺失书籍" />
+			<node name="purchaseAlreadyPurchased" value="已购买书籍" />
+			<node name="bookNotPurchased" value="未购买书籍" />
+			<node name="downloadLimitExceeded" value="超过下载限制" />
+			<node name="loginAlreadyTaken" value="用户名已经存在" />
+			<node name="loginNotSpecified" value="请输入用户名" />
+			<node name="passwordNotSpecified" value="请输入密码" />
+			<node name="emailNotSpecified" value="请输入你的电子邮箱" />
+			<node name="invalidEMail" value="无效的电子邮箱" />
+			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册" />
+			<node name="noUserEmail" value="你的电子邮箱可以注册&#10;" />
+			<node name="unsupportedOperation" value="非法操作" />
+		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="信息" />
+			<node name="message" value="目录是空的." />
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="textNotFound" toBeTranslated="true" value="There is no suitable text in the book, sorry" />
+		<node name="bookNotFound" toBeTranslated="true" value="There are no suitable books in the library, sorry" />
+		<node name="bookmarkNotFound" toBeTranslated="true" value="There are no suitable bookmarks, sorry" />
+		<node name="cannotOpenBook" toBeTranslated="true" value="Cannot open this book at the moment, sorry" />
+	</node>
+	<node name="style">
+		<node name="Base" value="基础" />
+		<node name="Regular Paragraph" value="连续段落" />
+		<node name="Title" value="标题" />
+		<node name="Section Title" value="章节标题" />
+		<node name="Poem Title" value="诗标题" />
+		<node name="Subtitle" value="副标题" />
+		<node name="Annotation" value="注释" />
+		<node name="Epigraph" value="题词" />
+		<node name="Stanza" value="节" />
+		<node name="Verse" value="韵文" />
+		<node name="Preformatted text" value="预置格式文本" />
+		<node name="Image" value="图像" />
+		<node name="Cite" value="举例" />
+		<node name="Author" value="作者" />
+		<node name="Date" value="日期" />
+		<node name="Internal Hyperlink" value="内部超链接" />
+		<node name="Footnote" value="脚注" />
+		<node name="Emphasis" value="重点" />
+		<node name="Strong" value="固定" />
+		<node name="Subscript" value="下标" />
+		<node name="Superscript" value="上标" />
+		<node name="Code" value="编码" />
+		<node name="StrikeThrough" value="删除线" />
+		<node name="Italic" value="倾斜" />
+		<node name="Bold" value="加粗" />
+		<node name="Definition" value="定义" />
+		<node name="Definition Description" value="定义描述" />
+		<node name="Header 1" value="标题 1" />
+		<node name="Header 2" value="标题 2" />
+		<node name="Header 3" value="标题 3" />
+		<node name="Header 4" value="标题 4" />
+		<node name="Header 5" value="标题 5" />
+		<node name="Header 6" value="标题 6" />
+		<node name="External Hyperlink" value="外部超链接" />
+	</node>
+	<node name="external">
+		<node name="browser" value="浏览器" />
+		<node name="defaultBrowser" value="默认浏览器" />
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="未知的错误" />
+		<node name="unsupportedCompressionMethod" value="不支持的压缩方法" />
+		<node name="encryptedFile" value="受版权保护文件" />
+	</node>
+</resources>

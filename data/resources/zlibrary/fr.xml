@@ -9,12 +9,8 @@
 			<node name="no" value="Non"/>
 			<node name="apply" value="Appliquer"/>
 		</node>
-		<node name="waitMessage">
-			<node name="savingConfig" value="Enregistrement de la configuration..."/>
-		</node>
 		<node name="networkError">
 			<node name="title" value="Erreur réseau"/>
-			<node name="emptyLibrariesList" value="Liste de bibliothèques vide"/>
 			<node name="unknownErrorMessage" value="Erreur inconnue"/>
 			<node name="operationTimedOutMessage" value="Le délai réseau a expiré"/>
 			<node name="somethingWrongMessage" value="Il y a un problème avec&#10;%s"/>
@@ -61,6 +57,7 @@
 		<node name="fi" value="Finnois"/>
 		<node name="fr" value="Français"/>
 		<node name="he" value="Hébreu"/>
+		<node name="hu" value="Hongrois" />
 		<node name="id" value="Indonésien"/>
 		<node name="it" value="Italien"/>
 		<node name="lt" value="Lithuanien"/>
@@ -71,6 +68,7 @@
 		<node name="tr" value="Turc"/>
 		<node name="sv" value="Suédois"/>
 		<node name="uk" value="Ukrainien"/>
+		<node name="vi" value="Vietnamien" />
 		<node name="zh" value="Chinois"/>
 		<node name="other" value="Autre"/>
 	</node>

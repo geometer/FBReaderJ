@@ -155,9 +155,6 @@
 				<node name="Library" value="Библиотека">
 					<node name="bookPath" value="Каталоги с книгами"/>
 					<node name="lookInSubdirectories" value="Искать книги в подкаталогах"/>
-					<node name="recentListSize" value="Размер списка прочитанных книг"/>
-					<node name="showTags" value="Сортировать книги по категориям"/>
-					<node name="showAllBooksList" value="Показывать список всех книг"/>
 				</node>
 				<node name="Language" value="Язык">
 					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
@@ -203,15 +200,6 @@
 					<node name="italic" value="Курсив"/>
 					<node name="allowHyphenations" value="Переносы"/>
 					<node name="autoHyphenations" value="Переносы"/>
-				</node>
-				<node name="Rotation" value="Поворот">
-					<node name="direction" value="Как поворачивать">
-						<node name="disabled" value="Не поворачивать вообще"/>
-						<node name="clockwise" value="На 90 градусов по часовой стрелке"/>
-						<node name="counterclockwise" value="На 90 градусов против часовой стрелки"/>
-						<node name="180" value="На 180 градусов"/>
-						<node name="cycle" value="Переключаться между 4 ориентациями"/>
-					</node>
 				</node>
 				<node name="Colors" value="Цвета">
 					<node name="colorFor" value="Цвет">
@@ -290,10 +278,6 @@
 		<node name="Superscript" value="верхнего индекса"/>
 		<node name="Code" value="текста программы"/>
 		<node name="StrikeThrough" value="зачеркнутого текста"/>
-		<node name="Contents Table" value="оглавления"/>
-		<node name="Author in Library" value="имени автора в библиотеке"/>
-		<node name="Book in Library" value="библиотеки"/>
-		<node name="Recent Book List" value="списка книг"/>
 		<node name="Italic" value="курсива"/>
 		<node name="Bold" value="жирного текста"/>
 		<node name="Definition" value="определения"/>

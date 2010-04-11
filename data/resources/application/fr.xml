@@ -156,9 +156,6 @@
 				<node name="Library" value="Bibliothèque">
 					<node name="bookPath" value="Emplacement des livres"/>
 					<node name="lookInSubdirectories" value="Chercher des livres dans les sous-répertoires"/>
-					<node name="recentListSize" value="Taille de liste des livres récents"/>
-					<node name="showTags" value="Voir la hiérarchie des étiquettes"/>
-					<node name="showAllBooksList" value="Voir la branche de tous les livres"/>
 				</node>
 				<node name="Language" value="Langue">
 					<node name="autoDetect" value="Détection automatique de la langue et de l'encodage"/>
@@ -204,15 +201,6 @@
 					<node name="italic" value="Italique"/>
 					<node name="allowHyphenations" value="Autoriser les césures"/>
 					<node name="autoHyphenations" value="Césures automatiques"/>
-				</node>
-				<node name="Rotation" value="Rotation">
-					<node name="direction" value="Type de rotation">
-						<node name="disabled" value="Désactivée"/>
-						<node name="clockwise" value="90 degrés dans les sens des horloges"/>
-						<node name="counterclockwise" value="90 degrés dans le sens inverse des horloges"/>
-						<node name="180" value="180 degrés"/>
-						<node name="cycle" value="Parcort dans les 4 directions"/>
-					</node>
 				</node>
 				<node name="Colors" value="Couleurs">
 					<node name="colorFor" value="Couleur pour">
@@ -291,10 +279,6 @@
 		<node name="Superscript" value="Exposant"/>
 		<node name="Code" value="Code"/>
 		<node name="StrikeThrough" value="Texte barré"/>
-		<node name="Contents Table" value="Contenu de la table"/>
-		<node name="Author in Library" value="Auteur dans la bibliothèque"/>
-		<node name="Book in Library" value="Livre dans la bibliothèque"/>
-		<node name="Recent Book List" value="Liste des livres récents"/>
 		<node name="Italic" value="Italique"/>
 		<node name="Bold" value="Gras"/>
 		<node name="Definition" value="Définition"/>

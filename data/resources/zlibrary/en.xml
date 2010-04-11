@@ -8,12 +8,8 @@
 			<node name="no" value="No" />
 			<node name="apply" value="Apply" />
 		</node>
-		<node name="waitMessage">
-			<node name="savingConfig" value="Saving config..." />
-		</node>
 		<node name="networkError">
 			<node name="title" value="Network error" />
-			<node name="emptyLibrariesList" value="Empty libraries list" />
 			<node name="unknownErrorMessage" value="Unknown error" />
 			<node name="operationTimedOutMessage" value="Operation is timed out" />
 			<node name="somethingWrongMessage" value="Something goes wrong for&#10;%s" />
@@ -60,6 +56,7 @@
 		<node name="fi" value="Finnish" />
 		<node name="fr" value="French" />
 		<node name="he" value="Hebrew" />
+		<node name="hu" value="Hungarian" />
 		<node name="id" value="Indonesian" />
 		<node name="it" value="Italian" />
 		<node name="lt" value="Lithuanian" />
@@ -70,6 +67,7 @@
 		<node name="sv" value="Swedish" />
 		<node name="tr" value="Turkish" />
 		<node name="uk" value="Ukrainian" />
+		<node name="vi" value="Vietnamese" />
 		<node name="zh" value="Chinese" />
 		<node name="other" value="Other" />
 	</node>

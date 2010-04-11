@@ -8,12 +8,8 @@
 			<node name="no" value="Нет"/>
 			<node name="apply" value="Применить"/>
 		</node>
-		<node name="waitMessage">
-			<node name="savingConfig" value="Сохранение настроек..."/>
-		</node>
 		<node name="networkError">
 			<node name="title" value="Ошибка при работе с сетью" />
-			<node name="emptyLibrariesList" value="Не указаны библиотеки для поиска" />
 			<node name="unknownErrorMessage" value="Неизвестная ошибка" />
 			<node name="operationTimedOutMessage" value="Отведенное время истекло" />
 			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
@@ -60,6 +56,7 @@
 		<node name="fi" value="финский" />
 		<node name="fr" value="французский" />
 		<node name="he" value="иврит" />
+		<node name="hu" value="венгерский" />
 		<node name="id" value="индонезийский" />
 		<node name="it" value="итальянский" />
 		<node name="lt" value="литовский" />
@@ -70,6 +67,7 @@
 		<node name="tr" value="турецкий" />
 		<node name="sv" value="шведский" />
 		<node name="uk" value="украинский" />
+		<node name="vi" value="вьетнамский" />
 		<node name="zh" value="китайский" />
 		<node name="other" value="другой" />
 	</node>
