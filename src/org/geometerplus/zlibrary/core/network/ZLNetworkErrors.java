@@ -28,7 +28,7 @@ public class ZLNetworkErrors {
 	public static final String ERROR_UNKNOWN_ERROR = "unknownErrorMessage";
 	public static final String ERROR_TIMEOUT = "operationTimedOutMessage";
 	public static final String ERROR_CONNECT_TO_NETWORK = "couldntConnectToNetworkMessage";
-	public static final String ERROR_UNSUPPORTED_URL = "unsupportedURL";
+	public static final String ERROR_UNSUPPORTED_PROTOCOL = "unsupportedProtocol";
 	public static final String ERROR_INVALID_URL = "invalidURL";
 	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 

@@ -24,7 +24,7 @@
 			<node name="couldntConnectMessage" value="Impossible de se connecter à l'hôte %s"/>
 			<node name="couldntResolveHostMessage" value="Résolution du nom %s impossible"/>
 			<node name="authenticationFailed" value="Authentification échouée"/>
-			<node name="unsupportedURL" toBeTranslated="true" value="Unsupported URL" />
+			<node name="unsupportedProtocol" toBeTranslated="true" value="Unsupported protocol" />
 			<node name="invalidURL" toBeTranslated="true" value="Invalid URL" />
 			<node name="hostCantBeReached" toBeTranslated="true" value="Host %s&#10;cannot be reached" />
 			<node name="connectionRefused" toBeTranslated="true" value="Connection was refused by&#10;%s" />

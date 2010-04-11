@@ -55,7 +55,7 @@ public class ZLNetworkManager {
 			final URL url = new URL(request.URL);
 			final URLConnection connection = url.openConnection();
 			if (!(connection instanceof HttpURLConnection)) {
-				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_UNSUPPORTED_URL);
+				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_UNSUPPORTED_PROTOCOL);
 			}
 			String error = doBeforeRequest(request);
 			if (error != null) {
