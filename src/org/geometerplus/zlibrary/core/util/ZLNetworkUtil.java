@@ -55,7 +55,7 @@ public class ZLNetworkUtil {
 		StringBuilder encodedString = new StringBuilder();
 		for (int i = 0; i < stringToEncode.length(); ++i) {
 			final char ch = stringToEncode.charAt(i);
-			if (Character.isLetter(ch) ||
+			if (Character.isLetterOrDigit(ch) ||
 					(ch == '.') ||
 					(ch == '~') ||
 					(ch == '-') ||
