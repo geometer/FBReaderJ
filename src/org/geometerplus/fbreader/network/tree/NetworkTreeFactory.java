@@ -36,7 +36,7 @@ public class NetworkTreeFactory {
 				return null;
 			}
 			NetworkCatalogTree tree = new NetworkCatalogTree(parent, catalogItem, position);
-			//catalogItem.onDisplayItem();
+			catalogItem.onDisplayItem();
 			return tree;
 		} else if (item instanceof NetworkBookItem) {
 			return new NetworkBookTree(parent, (NetworkBookItem) item, position);
@@ -46,7 +46,7 @@ public class NetworkTreeFactory {
 
 	//static void createSubtrees(SearchResultTree parent, NetworkBookCollection books);
 
-	public static void fillAuthorNode(NetworkTree parent, List<NetworkLibraryItem> books) {
+	/*public static void fillAuthorNode(NetworkTree parent, List<NetworkLibraryItem> books) {
 		NetworkSeriesTree seriesTree = null;
 
 		boolean showAuthors = !(parent instanceof NetworkAuthorTree)
@@ -88,6 +88,5 @@ public class NetworkTreeFactory {
 				new NetworkBookTree(seriesTree, book, -1);
 			}
 		}
-	}
-
+	}*/
 }

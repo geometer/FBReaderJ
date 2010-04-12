@@ -169,7 +169,7 @@ public class NetworkLibrary {
 			}
 			if (!processed) {
 				NetworkCatalogRootTree ptr = new NetworkCatalogRootTree(myRootTree, link, nodeCount++);
-				//ptr.item().onDisplayItem();
+				ptr.Item.onDisplayItem();
 			}
 		}
 
