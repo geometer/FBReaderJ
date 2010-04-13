@@ -26,10 +26,10 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.fbreader.network.*;
 
 
-class LitResXMLReader extends ZLXMLReaderAdapter {
+class LitResXMLReader extends LitResAuthenticationXMLReader {
 
-	private final NetworkLink myLink;
-	private final List<NetworkLibraryItem> myBooks;
+	public final NetworkLink Link;
+	public final List<NetworkLibraryItem> Books;
 
 	private int myIndex;
 
@@ -54,8 +54,9 @@ class LitResXMLReader extends ZLXMLReaderAdapter {
 	private LinkedList<BookReference> myReferences = new LinkedList<BookReference>();
 
 	public LitResXMLReader(NetworkLink link, List<NetworkLibraryItem> books) {
-		myLink = link;
-		myBooks = books;
+		super(link.SiteName);
+		Link = link;
+		Books = books;
 	}
 
 	private static final int START = 0;
@@ -219,8 +220,8 @@ class LitResXMLReader extends ZLXMLReaderAdapter {
 					summary = null;
 				}
 
-				myBooks.add(new NetworkBookItem(
-					myLink,
+				Books.add(new NetworkBookItem(
+					Link,
 					myBookId,
 					myIndex++,
 					myTitle,

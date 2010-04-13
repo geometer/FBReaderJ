@@ -39,7 +39,7 @@ class OPDSLink extends NetworkLink {
 
 	private TreeMap<String, Integer> myUrlConditions;
 	private LinkedList<URLRewritingRule> myUrlRewritingRules;
-
+	private NetworkAuthenticationManager myAuthenticationManager;
 
 	OPDSLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
 		super(siteName, title, summary, icon, links);
@@ -69,6 +69,10 @@ class OPDSLink extends NetworkLink {
 		}
 	}
 
+	final void setAuthenticationManager(NetworkAuthenticationManager mgr) {
+		myAuthenticationManager = mgr;
+	}
+
 	@Override
 	public NetworkLibraryItem libraryItem() {
 		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
@@ -78,7 +82,7 @@ class OPDSLink extends NetworkLink {
 
 	@Override
 	public NetworkAuthenticationManager authenticationManager() {
-		return null;
+		return myAuthenticationManager;
 	}
 
 	@Override

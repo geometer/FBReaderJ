@@ -17,27 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.authentication.litres;
-
-import java.io.InputStream;
-import java.io.IOException;
-import java.net.URLConnection;
-
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+package org.geometerplus.fbreader.network;
 
 
-class LitResNetworkRequest extends ZLNetworkRequest {
+public class DecoratedBookReference extends BookReference {
 
-	public final LitResAuthenticationXMLReader Reader;
+	private final String myCleanURL;
 
-	public LitResNetworkRequest(String url, LitResAuthenticationXMLReader reader) {
-		super(url);
-		Reader = reader;
+	public DecoratedBookReference(BookReference base, String url) {
+		super(url, base.BookFormat, base.ReferenceType);
+		myCleanURL = base.cleanURL();
 	}
 
-	@Override
-	public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
-		Reader.read(inputStream);
-		return Reader.getErrorMessage();
+	public String cleanURL() {
+		return myCleanURL;
 	}
 }

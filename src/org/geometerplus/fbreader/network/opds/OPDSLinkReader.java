@@ -25,6 +25,8 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 
 
 public class OPDSLinkReader extends ZLXMLReaderAdapter {
@@ -72,13 +74,13 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		opdsLink.setUrlConditions(myUrlConditions);
 		opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 
-		/*NetworkAuthenticationManager authManager;
-		if (myAuthenticationType.equals("basic")) {
-			authManager = new BasicAuthenticationManager(opdsLink);
-		} else if (myAuthenticationType.equals("litres")) {
+		NetworkAuthenticationManager authManager = null;
+		if (myAuthenticationType == "basic") {
+			//authManager = new BasicAuthenticationManager(opdsLink);
+		} else if (myAuthenticationType == "litres") {
 			authManager = new LitResAuthenticationManager(opdsLink);
 		}
-		opdsLink.setAuthenticationManager(authManager);*/
+		opdsLink.setAuthenticationManager(authManager);
 
 		return opdsLink;
 	}

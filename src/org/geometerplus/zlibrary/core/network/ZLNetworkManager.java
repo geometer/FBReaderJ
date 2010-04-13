@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.network;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -47,6 +48,34 @@ public class ZLNetworkManager {
 			return doBeforePostRequest((ZLNetworkPostRequest &) request);
 		}*/
 		return null;
+	}
+
+	public String perform(List<ZLNetworkRequest> requests) {
+		if (requests.size() == 0) {
+			return "";
+		}
+		if (requests.size() == 1) {
+			return perform(requests.get(0));
+		}
+		HashSet<String> errors = new HashSet<String>();
+		// TODO: implement concurrent execution !!!
+		for (ZLNetworkRequest r: requests) {
+			final String e = perform(r);
+			if (e != null && !errors.contains(e)) {
+				errors.add(e);
+			}
+		}
+		if (errors.size() == 0) {
+			return null;
+		}
+		StringBuilder message = new StringBuilder();
+		for (String e: errors) {
+			if (message.length() != 0) {
+				message.append(", ");
+			}
+			message.append(e);
+		}
+		return message.toString();
 	}
 
 	public String perform(ZLNetworkRequest request) {

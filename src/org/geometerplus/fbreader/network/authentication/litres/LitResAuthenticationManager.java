@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.*;
@@ -36,9 +38,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private ZLStringOption mySidOption;
 
 	private String myInitializedDataSid;
-	private Set<String> myPurchasedBooksIds;
-	private LinkedList<NetworkLibraryItem> myPurchasedBooksList;
 	private String myAccount;
+	private final HashMap<String, NetworkLibraryItem> myPurchasedBooks = new HashMap<String, NetworkLibraryItem>();
 
 
 	public LitResAuthenticationManager(NetworkLink link) {
@@ -60,62 +61,52 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			return new AuthenticationStatus(false);
 		}
 
-		/*String firstName, lastName, newSid;
-		shared_ptr<ZLXMLReader> xmlReader = new LitResLoginDataParser(firstName, lastName, newSid);
+		String url = Link.Links.get(NetworkLink.URL_SIGN_IN);
+		if (url == null) {
+			return new AuthenticationStatus(NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION));
+		}
+		url = ZLNetworkUtil.appendParameter(url, "sid", mySidOption.getValue());
 
-		std::string url = Link.url(NetworkLink::URL_SIGN_IN);
-		ZLNetworkUtil::appendParameter(url, "sid", mySidOption.getValue());
+		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.SiteName);
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
 
-		shared_ptr<ZLExecutionData> networkData =
-			ZLNetworkManager::Instance().createXMLParserRequest(
-				url, certificate(), xmlReader
-			);
-		std::string error = ZLNetworkManager::Instance().perform(networkData);
-
-		if (!error.empty()) {
-			if (error != NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED)) {
-				return AuthenticationStatus(error);
+		if (error != null) {
+			if (!error.equals(NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED))) {
+				return new AuthenticationStatus(error);
 			}
 			mySidChecked = true;
 			mySidUserNameOption.setValue("");
 			mySidOption.setValue("");
-			return AuthenticationStatus(false);
+			return new AuthenticationStatus(false);
 		}
 		mySidChecked = true;
-		mySidOption.setValue(newSid);
-		return AuthenticationStatus(true);*/
-		return new AuthenticationStatus(false); // temp
+		mySidOption.setValue(xmlReader.Sid);
+		return new AuthenticationStatus(true);
 	}
 
 	public String authorise(String password) {
-		/*String firstName, lastName, newSid;
-		shared_ptr<ZLXMLReader> xmlReader = new LitResLoginDataParser(firstName, lastName, newSid);
-
-		std::string url = Link.url(NetworkLink::URL_SIGN_IN);
-		ZLNetworkUtil::appendParameter(url, "login", UserNameOption.value());
-		ZLNetworkUtil::appendParameter(url, "pwd", pwd);
-		if (SkipIPOption.value()) {
-			ZLNetworkUtil::appendParameter(url, "skip_ip", "1");
+		String url = Link.Links.get(NetworkLink.URL_SIGN_IN);
+		if (url == null) {
+			return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+		}
+		url = ZLNetworkUtil.appendParameter(url, "login", UserNameOption.getValue());
+		url = ZLNetworkUtil.appendParameter(url, "pwd", password);
+		if (SkipIPOption.getValue()) {
+			url = ZLNetworkUtil.appendParameter(url, "skip_ip", "1");
 		}
 
-		shared_ptr<ZLExecutionData> networkData =
-			ZLNetworkManager::Instance().createXMLParserRequest(
-				url,
-				certificate(),
-				xmlReader
-			);
-		std::string error = ZLNetworkManager::Instance().perform(networkData);
+		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.SiteName);
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
 
 		mySidChecked = true;
-		if (!error.empty()) {
+		if (error != null) {
 			mySidUserNameOption.setValue("");
 			mySidOption.setValue("");
 			return error;
 		}
-		mySidOption.setValue(newSid);
-		mySidUserNameOption.setValue(UserNameOption.value());
-		return "";*/
-		return null; // tmp
+		mySidOption.setValue(xmlReader.Sid);
+		mySidUserNameOption.setValue(UserNameOption.getValue());
+		return null;
 	}
 
 	public void logOut() {
@@ -129,15 +120,13 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		/*shared_ptr<BookReference> reference =
-			book.reference(BookReference::DOWNLOAD_FULL_CONDITIONAL);
-		if (reference.isNull()) {
-			return 0;
+		BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL);
+		if (reference == null) {
+			return null;
 		}
-		std::string url = reference->URL;
-		ZLNetworkUtil::appendParameter(url, "sid", sid);
-		return new DecoratedBookReference(*reference, url);*/
-		return null; // tmp
+		String url = reference.URL;
+		url = ZLNetworkUtil.appendParameter(url, "sid", sid);
+		return new DecoratedBookReference(reference, url);
 	}
 
 	public boolean skipIPSupported() {
@@ -154,10 +143,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 
 	public boolean needPurchase(NetworkBookItem book) {
-		if (myPurchasedBooksIds == null) {
-			return true;
-		}
-		return !myPurchasedBooksIds.contains(book.Id);
+		return !myPurchasedBooks.containsKey(book.Id);
 	}
 
 	public String purchaseBook(NetworkBookItem book) {
@@ -166,43 +152,36 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			return NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
 		}
 
-		/*shared_ptr<BookReference> reference = book.reference(BookReference::BUY);
-		if (reference.isNull()) {
-			// TODO: add correct error message
-			return "Oh, that's impossible";
+		BookReference reference = book.reference(BookReference.Type.BUY);
+		if (reference == null) {
+			return NetworkErrors.errorMessage(NetworkErrors.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
 		}
-		std::string query = reference->URL;
-		ZLNetworkUtil::appendParameter(query, "sid", sid);
+		String query = reference.URL;
+		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
 
-		std::string account, bookId;
-		shared_ptr<ZLXMLReader> xmlReader = new LitResPurchaseDataParser(account, bookId);
+		final LitResPurchaseXMLReader xmlReader = new LitResPurchaseXMLReader(Link.SiteName);
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(query, xmlReader));
 
-		shared_ptr<ZLExecutionData> networkData = ZLNetworkManager::Instance().createXMLParserRequest(
-			query, certificate(), xmlReader
-		);
-		std::string error = ZLNetworkManager::Instance().perform(networkData);
-
-		if (!account.empty()) {
-			myAccount = BuyBookReference::price(account, "RUB");
+		if (xmlReader.Account != null) {
+			myAccount = BuyBookReference.price(xmlReader.Account, "RUB");
 		}
-		if (error == NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED)) {
+		final String authenticationError = NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+		if (authenticationError.equals(error)) {
 			mySidChecked = true;
 			mySidUserNameOption.setValue("");
 			mySidOption.setValue("");
 		}
-		const std::string alreadyPurchasedError = NetworkErrors.errorMessage(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED);
-		if (error != alreadyPurchasedError) {
-			if (!error.empty()) {
+		final String alreadyPurchasedError = NetworkErrors.errorMessage(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED);
+		if (!alreadyPurchasedError.equals(error)) {
+			if (error != null) {
 				return error;
 			}
-			if (bookId != book.Id) {
+			if (xmlReader.BookId != book.Id) {
 				return NetworkErrors.errorMessage(NetworkErrors.ERROR_SOMETHING_WRONG, Link.SiteName);
 			}
 		}
-		myPurchasedBooksIds.insert(book.Id);
-		myPurchasedBooksList.push_back(new NetworkBookItem(book, 0));
-		return error;*/
-		return null; // tmp
+		myPurchasedBooks.put(book.Id, book);
+		return error;
 	}
 
 
@@ -234,32 +213,24 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			return NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
 		}
 
-		/*std::set<std::string> purchasedBooksIds;
-		NetworkItem::List purchasedBooksList;
+		final LitResNetworkRequest networkRequest = loadPurchasedBooks();
+		final String error = ZLNetworkManager.Instance().perform(networkRequest);
 
-		shared_ptr<ZLExecutionData> networkData = loadPurchasedBooks(purchasedBooksIds, purchasedBooksList);
-
-		std::string error = ZLNetworkManager::Instance().perform(networkData);
-		if (!error.empty()) {
-			//loadPurchasedBooksOnError(purchasedBooksIds, purchasedBooksList);
-			if (error == NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED)) {
+		if (error != null) {
+			//loadPurchasedBooksOnError();
+			if (error.equals(NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED))) {
 				mySidChecked = true;
 				mySidUserNameOption.setValue("");
 				mySidOption.setValue("");
 			}
 			return error;
 		}
-		loadPurchasedBooksOnSuccess(purchasedBooksIds, purchasedBooksList);
-		myPurchasedBooksIds = purchasedBooksIds;
-		myPurchasedBooksList = purchasedBooksList;
-		return "";*/
-		return null; // tmp
+		loadPurchasedBooksOnSuccess(networkRequest);
+		return null;
 	}
 
 	public void collectPurchasedBooks(List<NetworkLibraryItem> list) {
-		if (myPurchasedBooksList != null) {
-			list.addAll(myPurchasedBooksList);
-		}
+		list.addAll(myPurchasedBooks.values());
 	}
 
 
@@ -280,78 +251,75 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			return null;
 		}
 
-		/*std::string dummy1;
+		LitResNetworkRequest purchasedBooksRequest = loadPurchasedBooks();
+		LitResNetworkRequest accountRequest = loadAccount();
 
-		ZLExecutionData::Vector dataList;
-		dataList.push_back(loadPurchasedBooks(myPurchasedBooksIds, myPurchasedBooksList));
-		dataList.push_back(loadAccount(dummy1));
+		final LinkedList<ZLNetworkRequest> requests = new LinkedList<ZLNetworkRequest>();
+		requests.add(purchasedBooksRequest);
+		requests.add(accountRequest);
+		final String error = ZLNetworkManager.Instance().perform(requests);
 
-		std::string error = ZLNetworkManager::Instance().perform(dataList);
-		if (!error.empty()) {
-			myInitializedDataSid.clear();
-			loadPurchasedBooksOnError(myPurchasedBooksIds, myPurchasedBooksList);
+		if (error != null) {
+			myInitializedDataSid = null;
+			loadPurchasedBooksOnError();
 			loadAccountOnError();
 			return error;
 		}
 		myInitializedDataSid = sid;
-		loadPurchasedBooksOnSuccess(myPurchasedBooksIds, myPurchasedBooksList);
-		loadAccountOnSuccess();
-		return "";*/
-		return null; // tmp
+		loadPurchasedBooksOnSuccess(purchasedBooksRequest);
+		loadAccountOnSuccess(accountRequest);
+		return null;
 	}
 
-	/*private ZLExecutionData loadPurchasedBooks(Set<String> purchasedBooksIds, List<NetworkLibraryItem> purchasedBooksList) {
-		const std::string &sid = mySidOption.getValue();
-		purchasedBooksIds.clear();
-		purchasedBooksList.clear();
+	private LitResNetworkRequest loadPurchasedBooks() {
+		final String sid = mySidOption.getValue();
 
-		std::string query;
-		ZLNetworkUtil::appendParameter(query, "my", "1");
-		ZLNetworkUtil::appendParameter(query, "sid", sid);
+		String query = "pages/catalit_browser/";
+		query = ZLNetworkUtil.appendParameter(query, "my", "1");
+		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
 
-		return ZLNetworkManager::Instance().createXMLParserRequest(
-			LitResUtil::url(Link, "pages/catalit_browser/" + query), 
-			certificate(),
-			new LitResDataParser(Link, purchasedBooksList)
+		return new LitResNetworkRequest(
+			LitResUtil.url(Link, query), 
+			new LitResXMLReader(Link, new LinkedList<NetworkLibraryItem>())
 		);
 	}
 
-	private void loadPurchasedBooksOnError(Set<String> purchasedBooksIds, List<NetworkLibraryItem> purchasedBooksList) {
-		purchasedBooksIds.clear();
-		purchasedBooksList.clear();
+	private void loadPurchasedBooksOnError() {
+		myPurchasedBooks.clear();
 	}
 
-	private void loadPurchasedBooksOnSuccess(Set<String> purchasedBooksIds, List<NetworkLibraryItem> purchasedBooksList) {
-		for (NetworkItem::List::iterator it = purchasedBooksList.begin(); it != purchasedBooksList.end(); ++it) {
-			NetworkBookItem &book = (NetworkBookItem&)**it;
-			book.Index = 0;
-			purchasedBooksIds.insert(book.Id);
+	private void loadPurchasedBooksOnSuccess(LitResNetworkRequest purchasedBooksRequest) {
+		LitResXMLReader reader = (LitResXMLReader) purchasedBooksRequest.Reader;
+		myPurchasedBooks.clear();
+		for (NetworkLibraryItem item: reader.Books) {
+			if (item instanceof NetworkBookItem) {
+				NetworkBookItem book = (NetworkBookItem) item;
+				myPurchasedBooks.put(book.Id, book);
+			}
 		}
 	}
 
-	private ZLExecutionData loadAccount(String dummy1) {
-		const std::string &sid = mySidOption.getValue();
+	private LitResNetworkRequest loadAccount() {
+		final String sid = mySidOption.getValue();
 
-		myAccount.clear();
+		String query = "pages/purchase_book/";
+		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
+		query = ZLNetworkUtil.appendParameter(query, "art", "0");
 
-		std::string query;
-		ZLNetworkUtil::appendParameter(query, "sid", sid);
-		ZLNetworkUtil::appendParameter(query, "art", "0");
-
-		return ZLNetworkManager::Instance().createXMLParserRequest(
-			LitResUtil::url(Link, "pages/purchase_book/" + query),
-			certificate(),
-			new LitResPurchaseDataParser(myAccount, dummy1)
+		return new LitResNetworkRequest(
+			LitResUtil.url(Link, query),
+			new LitResPurchaseXMLReader(Link.SiteName)
 		);
 	}
 
 	private void loadAccountOnError() {
-		myAccount.clear();
+		myAccount = null;
 	}
 
-	private void loadAccountOnSuccess() {
-		myAccount = BuyBookReference::price(myAccount, "RUB");
-	}*/
+	private void loadAccountOnSuccess(LitResNetworkRequest accountRequest) {
+		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader) accountRequest.Reader;
+		myAccount = BuyBookReference.price(reader.Account, "RUB");
+	}
 
 
 	public boolean registrationSupported() {
@@ -359,30 +327,26 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	public String registerUser(String login, String password, String email) {
-		/*String newSid;
-		shared_ptr<ZLXMLReader> xmlReader = new LitResRegisterUserDataParser(newSid);
+		String url = Link.Links.get(NetworkLink.URL_SIGN_UP);
+		if (url == null) {
+			return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+		}
+		url = ZLNetworkUtil.appendParameter(url, "new_login", login);
+		url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
+		url = ZLNetworkUtil.appendParameter(url, "mail", email);
 
-		std::string url = Link.url(NetworkLink::URL_SIGN_UP);
-		ZLNetworkUtil::appendParameter(url, "new_login", login);
-		ZLNetworkUtil::appendParameter(url, "new_pwd1", password);
-		ZLNetworkUtil::appendParameter(url, "mail", email);
-
-		shared_ptr<ZLExecutionData> networkData =
-			ZLNetworkManager::Instance().createXMLParserRequest(
-				url, certificate(), xmlReader
-			);
-		std::string error = ZLNetworkManager::Instance().perform(networkData);
+		final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader(Link.SiteName);
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
 
 		mySidChecked = true;
-		if (!error.empty()) {
+		if (error != null) {
 			mySidUserNameOption.setValue("");
 			mySidOption.setValue("");
 			return error;
 		}
-		mySidOption.setValue(newSid);
+		mySidOption.setValue(xmlReader.Sid);
 		mySidUserNameOption.setValue(login);
-		return "";*/
-		return null; // tmp
+		return null;
 	}
 
 
@@ -391,14 +355,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	public String recoverPassword(String email) {
-		/*String url = Link.url(NetworkLink::URL_RECOVER_PASSWORD);
-		ZLNetworkUtil::appendParameter(url, "mail", email);
-
-		shared_ptr<ZLExecutionData> networkData =
-			ZLNetworkManager::Instance().createXMLParserRequest(
-				url, certificate(), new LitResPasswordRecoveryDataParser()
-			);
-		return ZLNetworkManager::Instance().perform(networkData);*/
-		return null; // tmp
+		String url = Link.Links.get(NetworkLink.URL_RECOVER_PASSWORD);
+		if (url == null) {
+			return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+		}
+		url = ZLNetworkUtil.appendParameter(url, "mail", email);
+		final LitResPasswordRecoveryXMLReader xmlReader =  new LitResPasswordRecoveryXMLReader(Link.SiteName);
+		return ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
 	}
 }
