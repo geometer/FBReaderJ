@@ -167,7 +167,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
 
 
-	int myState = START;
+	private int myState = START;
 
 	private final StringBuffer myBuffer = new StringBuffer();
 

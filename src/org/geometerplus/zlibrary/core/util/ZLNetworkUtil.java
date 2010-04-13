@@ -74,6 +74,29 @@ public class ZLNetworkUtil {
 		return encodedString.toString();
 	}
 
+	public static boolean hasParameter(String url, String name) {
+		int index = url.lastIndexOf('/') + 1;
+		if (index == -1 || index >= url.length()) {
+			return false;
+		}
+		index = url.indexOf('?', index);
+		while (index != -1) {
+			int start = index + 1;
+			if (start >= url.length()) {
+				return false;
+			}
+			int eqIndex = url.indexOf('=', start);
+			if (eqIndex == -1) {
+				return false;
+			}
+			if (url.substring(start, eqIndex).equals(name)) {
+				return true;
+			}
+			index = url.indexOf('&', start);
+		}
+		return false;
+	}
+
 	public static String appendParameter(String url, String name, String value) {
 		if (name == null || value == null) {
 			return url;

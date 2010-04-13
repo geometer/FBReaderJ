@@ -40,7 +40,7 @@ public abstract class NetworkAuthenticationManager {
 	/*
 	 * Common manager methods
 	 */
-	public abstract AuthenticationStatus isAuthorised(boolean useNetwork);
+	public abstract AuthenticationStatus isAuthorised(boolean useNetwork /* = true */);
 	public abstract String authorise(String password); // returns error message
 	public abstract void logOut();
 	public abstract BookReference downloadReference(NetworkBookItem book);

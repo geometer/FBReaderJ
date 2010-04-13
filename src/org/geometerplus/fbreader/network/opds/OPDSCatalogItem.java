@@ -59,6 +59,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 			urlString = Link.rewriteUrl(urlString, false);
 
 			errorMessage = ZLNetworkManager.Instance().perform(new ZLNetworkRequest(urlString) {
+				@Override
 				public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
 					new OPDSXMLReader(
 						new NetworkOPDSFeedReader(URL, data)
