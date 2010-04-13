@@ -68,7 +68,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		if (link.authenticationManager() == null) {
 			return false;
 		}
-		return link.authenticationManager().isAuthorised(true).Status != ZLBoolean3.B3_FALSE;
+		return link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE;
 	}
 
 	public void updateAccountDependents() {

@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
+import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
 
 
 class NetworkOPDSFeedReader implements OPDSFeedReader {
@@ -341,15 +342,14 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
 		}
 		if (litresCatalogue) {
-			/*return new LitResBookshelfItem(
+			return new LitResBookshelfItem(
 				opdsLink,
 				entry.Title,
 				annotation,
 				coverURL,
 				urlMap,
 				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS
-			);*/
-			return null;
+			);
 		} else {
 			return new OPDSCatalogItem(
 				opdsLink,

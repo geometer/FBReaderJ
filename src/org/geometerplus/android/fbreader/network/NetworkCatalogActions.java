@@ -29,6 +29,8 @@ import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
@@ -66,20 +68,20 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			if (isOpened) {
 				addMenuItem(menu, RELOAD_ITEM_ID, "reload");
 			}
-			//NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-			/*if (!mgr.isNull()) {
-				registerAction(new LoginAction(*mgr));
-				registerAction(new LogoutAction(*mgr));
-				if (!mgr->refillAccountLink().empty()) {
-					registerAction(new RefillAccountAction(*mgr));
+			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+			if (mgr != null) {
+				//registerAction(new LoginAction(mgr));
+				//registerAction(new LogoutAction(mgr));
+				if (mgr.refillAccountLink() != null) {
+					//registerAction(new RefillAccountAction(mgr));
 				}
-				if (mgr->registrationSupported()) {
-					registerAction(new RegisterUserAction(*mgr), true);
+				if (mgr.registrationSupported()) {
+					//registerAction(new RegisterUserAction(mgr), true);
 				}
-				if (mgr->passwordRecoverySupported()) {
-					registerAction(new PasswordRecoveryAction(*mgr), true);
+				if (mgr.passwordRecoverySupported()) {
+					//registerAction(new PasswordRecoveryAction(mgr), true);
 				}
-			}*/
+			}
 			//addMenuItem(DONT_SHOW_ITEM_ID, "dontShow"); // TODO: is it needed??? and how to turn it on???
 		} else {
 			if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
@@ -252,20 +254,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			final NetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
 				NetworkAuthenticationManager mgr = link.authenticationManager();
-				/*IsAuthorisedRunnable checker(mgr);
-				checker.executeWithUI();
-				if (checker.hasErrors()) {
-					checker.showErrorMessage();
+				AuthenticationStatus auth = mgr.isAuthorised(true);
+				if (auth.Message != null) {
+					myHandler.sendMessage(myHandler.obtainMessage(WHAT_FINISHED, auth.Message));
 					return;
 				}
-				if (checker.result() == B3_TRUE && mgr.needsInitialization()) {
-					InitializeAuthenticationManagerRunnable initializer(mgr);
-					initializer.executeWithUI();
-					if (initializer.hasErrors()) {
-						LogOutRunnable logout(mgr);
-						logout.executeWithUI();
+				if (auth.Status == ZLBoolean3.B3_TRUE && mgr.needsInitialization()) {
+					final String err = mgr.initialize();
+					if (err != null) {
+						mgr.logOut();
 					}
-				}*/
+				}
 			}
 			final String err = myTree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 				private long myUpdateTime;
