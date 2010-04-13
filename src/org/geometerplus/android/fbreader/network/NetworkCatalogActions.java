@@ -46,6 +46,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
 	public static final int RELOAD_ITEM_ID = 2;
 	//public static final int DONT_SHOW_ITEM_ID = 3;
+	public static final int SIGNIN_ITEM_ID = 4;
 
 	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
@@ -70,16 +71,20 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 			if (mgr != null) {
-				//registerAction(new LoginAction(mgr));
-				//registerAction(new LogoutAction(mgr));
-				if (mgr.refillAccountLink() != null) {
-					//registerAction(new RefillAccountAction(mgr));
-				}
-				if (mgr.registrationSupported()) {
-					//registerAction(new RegisterUserAction(mgr), true);
-				}
-				if (mgr.passwordRecoverySupported()) {
-					//registerAction(new PasswordRecoveryAction(mgr), true);
+				final boolean maybeSignedIn = mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE;
+				if (maybeSignedIn) {
+					//registerAction(new LogoutAction(mgr));
+					if (mgr.refillAccountLink() != null) {
+						//registerAction(new RefillAccountAction(mgr));
+					}
+				} else {
+					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
+					if (mgr.registrationSupported()) {
+						//registerAction(new RegisterUserAction(mgr), true);
+					}
+					if (mgr.passwordRecoverySupported()) {
+						//registerAction(new PasswordRecoveryAction(mgr), true);
+					}
 				}
 			}
 			//addMenuItem(DONT_SHOW_ITEM_ID, "dontShow"); // TODO: is it needed??? and how to turn it on???
@@ -136,6 +141,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			/*case DONT_SHOW_ITEM_ID:
 				diableCatalog((NetworkCatalogRootTree) tree);
 				return true;*/
+			case SIGNIN_ITEM_ID:
+				AuthenticationDialog.Instance().show((NetworkCatalogTree)tree);
+				return true;
 			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 					final ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();

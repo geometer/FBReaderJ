@@ -24,6 +24,7 @@ import java.util.concurrent.*;
 
 import android.app.ListActivity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,20 +45,24 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import org.geometerplus.android.fbreader.ZLTreeAdapter;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
+
+	// dialog identifiers
+	static final int DIALOG_AUTHENTICATION = 0;
+
+
 	static NetworkLibraryActivity Instance;
 
 	private final ZLResource myResource = ZLResource.resource("networkView");
@@ -205,7 +210,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
 
-			view.measure(-1, -2);
+			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			final int maxHeight = view.getMeasuredHeight();
 			final int maxWidth = maxHeight * 2 / 3;
 //System.err.println("FBREADER -- dims(" + maxWidth + ", " + maxHeight + ")");
@@ -342,6 +347,27 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		myCatalogRunnables.remove(uri);
 		return r;
 	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog = null;
+		switch (id) {
+		case DIALOG_AUTHENTICATION:
+			dialog = AuthenticationDialog.Instance().createDialog(this);
+			break;
+		}
+		return dialog;
+	}
+
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		super.onPrepareDialog(id, dialog);
+		switch (id) {
+		case DIALOG_AUTHENTICATION:
+			AuthenticationDialog.Instance().prepareDialog(dialog);
+			break;
+		}		
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

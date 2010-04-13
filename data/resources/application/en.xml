@@ -31,6 +31,7 @@
 		<node name="buy" value="Buy (%s)"/>
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="reload" value="Reload"/>
+		<node name="signIn" value="Sign in"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="confirmQuestions">
@@ -226,6 +227,8 @@
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait..."/>
 			<node name="updatingBooksDatabase" value="Updating books database. Please, wait..."/>
 			<node name="loadingNetworkLibrary" value="Opening library. Please, wait..." />
+			<node name="authentication" value="Authentication. Please, wait..." />
+			<node name="signOut" value="Signing out. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />
@@ -246,6 +249,13 @@
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information" />
 			<node name="message" value="Catalog is empty." />
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Authentication" />
+			<node name="login" value="Username" />
+			<node name="password" value="Password" />
+			<node name="skipIP" value="Don't bound to ip-address" />
+			<node name="loginIsEmpty" value="Username should be non-empty" />
 		</node>
 	</node>
 	<node name="errorMessage">
