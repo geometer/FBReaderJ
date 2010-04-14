@@ -74,7 +74,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public void updateAccountDependents() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		Iterator<FBTree> nodeIterator = subTrees().iterator();
+		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
 		FBTree currentNode = null;
 		int nodeCount = 0;
 
@@ -121,8 +121,10 @@ public class NetworkCatalogTree extends NetworkTree {
 					}
 				}
 			}
+			final int nextIndex = nodeIterator.nextIndex();
 			if (!processed && NetworkTreeFactory.createNetworkTree(this, currentItem, nodeCount) != null) {
 				++nodeCount;
+				nodeIterator = subTrees().listIterator(nextIndex + 1);
 			}
 		}
 

@@ -31,6 +31,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
@@ -47,6 +49,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int RELOAD_ITEM_ID = 2;
 	//public static final int DONT_SHOW_ITEM_ID = 3;
 	public static final int SIGNIN_ITEM_ID = 4;
+	public static final int SIGNOUT_ITEM_ID = 5;
 
 	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
@@ -73,7 +76,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			if (mgr != null) {
 				final boolean maybeSignedIn = mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE;
 				if (maybeSignedIn) {
-					//registerAction(new LogoutAction(mgr));
+					addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
 					if (mgr.refillAccountLink() != null) {
 						//registerAction(new RefillAccountAction(mgr));
 					}
@@ -143,6 +146,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return true;*/
 			case SIGNIN_ITEM_ID:
 				AuthenticationDialog.Instance().show((NetworkCatalogTree)tree);
+				return true;
+			case SIGNOUT_ITEM_ID:
+				doSignOut((NetworkCatalogTree)tree);
 				return true;
 			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
@@ -368,4 +374,28 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		library.synchronize();
 		NetworkLibraryActivity.Instance.getAdapter().resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
 	}*/
+
+	private void doSignOut(NetworkCatalogTree tree) {
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.invalidateAccountDependents();
+				library.synchronize();
+				if (NetworkLibraryActivity.Instance != null) {
+					NetworkLibraryActivity.Instance.getAdapter().resetTree();
+					NetworkLibraryActivity.Instance.getListView().invalidateViews();
+				}
+			}
+		};
+		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
+		final Runnable runnable = new Runnable() {
+			public void run() {
+				if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+					mgr.logOut();
+					handler.sendEmptyMessage(-1);
+				}
+			}
+		};
+		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, NetworkLibraryActivity.Instance);
+	}
 }

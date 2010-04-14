@@ -71,7 +71,18 @@ class AuthenticationDialog {
 		}
 
 		public void handleMessage(Message message) {
-			if (message.what < 0) {
+			if (message.what == -2) {
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.invalidateAccountDependents();
+				library.synchronize();
+				((NetworkLibraryActivity) myActivity).getAdapter().resetTree();
+				((NetworkLibraryActivity) myActivity).getListView().invalidateViews();
+			} else if (message.what == -1) {
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.invalidateAccountDependents();
+				library.synchronize();
+				((NetworkLibraryActivity) myActivity).getAdapter().resetTree();
+				((NetworkLibraryActivity) myActivity).getListView().invalidateViews();
 				myErrorMessage = (String) message.obj;
 				myActivity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 			} else if (message.what == 1) {
@@ -98,6 +109,7 @@ class AuthenticationDialog {
 								return;
 							}
 						}
+						DialogHandler.this.sendEmptyMessage(-2);
 					}
 				};
 				((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("authentication", runnable, myActivity);
@@ -107,6 +119,7 @@ class AuthenticationDialog {
 					public void run() {
 						if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
 							mgr.logOut();
+							DialogHandler.this.sendEmptyMessage(-2);
 						}
 					}
 				};
@@ -177,5 +190,8 @@ class AuthenticationDialog {
 			error.setVisibility(View.VISIBLE);
 			error.setText(myErrorMessage);
 		}
+		View dlgView = dialog.findViewById(R.id.network_authentication_dialog);
+		dlgView.invalidate();
+		dlgView.requestLayout();
 	}
 }

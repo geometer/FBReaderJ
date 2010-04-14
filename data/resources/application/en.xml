@@ -32,6 +32,7 @@
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="reload" value="Reload"/>
 		<node name="signIn" value="Sign in"/>
+		<node name="signOut" value="Sign out (%s)"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="confirmQuestions">

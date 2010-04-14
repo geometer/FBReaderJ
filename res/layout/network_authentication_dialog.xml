@@ -3,7 +3,8 @@
 	android:id="@+id/network_authentication_dialog"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:padding="10dp"
+	android:paddingLeft="10dp"
+	android:paddingRight="10dp"
 	android:orientation="vertical"
 >
 	<LinearLayout
@@ -60,6 +61,7 @@
 		android:layout_height="wrap_content"
 		android:visibility="gone"
 		android:textColor="#ff0000"
-		android:paddingTop="12dp"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="5dp"
 	/>
 </LinearLayout>
