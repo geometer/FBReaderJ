@@ -32,6 +32,8 @@
 		<node name="buy" value="Acheter (%s)"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="reload" value="Recharger"/>
+		<node name="signIn" value="Connexion"/>
+		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="alreadyDownloading" toBeTranslated="true" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" toBeTranslated="true" value="Sample is being downloaded" />
 		<node name="confirmQuestions">
@@ -227,6 +229,8 @@
 			<node name="creatingBooksDatabase" value="Création de la base des livres. Patientez, s'il-vous plait..."/>
 			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres. Patientez, s'il-vous plait..."/>
 			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque. Patientez, s'il-vous plait..." />
+			<node name="authentication" value="Authentification. Veuillez patienter..."/>
+			<node name="signOut" toBeTranslated="true" value="Signing out. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
@@ -247,6 +251,13 @@
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information"/>
 			<node name="message" value="Le catalogue est vide."/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Authentification"/>
+			<node name="login" value="Identifiant"/>
+			<node name="password" value="Mot de passe"/>
+			<node name="skipIP" value="Ne pas associer à l'adresse IP"/>
+			<node name="loginIsEmpty" value="L'identifiant ne doit pas être vide"/>
 		</node>
 	</node>
 	<node name="errorMessage">

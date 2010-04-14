@@ -24,6 +24,11 @@
 			<node name="invalidURL" toBeTranslated="true" value="Invalid URL" />
 			<node name="hostCantBeReached" toBeTranslated="true" value="Host %s&#10;cannot be reached" />
 			<node name="connectionRefused" toBeTranslated="true" value="Connection was refused by&#10;%s" />
+			<node name="sslError" toBeTranslated="true" value="SSL subsystem error" />
+			<node name="sslConnectErrorMessage" value="Problème de connexion SSL/TLS :&#10;%s" />
+			<node name="sslBadKey" toBeTranslated="true" value="Bad SSL certificate:&#10;%s" />
+			<node name="sslPeerUnverified" toBeTranslated="true" value="Unable to verify peer's identity:&#10;%s" />
+			<node name="sslProtocolError" toBeTranslated="true" value="Error in the operation of the SSL protocol:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">
@@ -65,8 +70,8 @@
 		<node name="no" value="Norvégien"/>
 		<node name="pt" value="Portugais"/>
 		<node name="ru" value="Russe"/>
-		<node name="tr" value="Turc"/>
 		<node name="sv" value="Suédois"/>
+		<node name="tr" value="Turc"/>
 		<node name="uk" value="Ukrainien"/>
 		<node name="vi" value="Vietnamien" />
 		<node name="zh" value="Chinois"/>

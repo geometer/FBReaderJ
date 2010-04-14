@@ -31,6 +31,8 @@
 		<node name="buy" value="Купить (%s)"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="reload" value="Обновить"/>
+		<node name="signIn" value="Войти"/>
+		<node name="signOut" value="Выйти (%s)"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="confirmQuestions">
@@ -226,6 +228,8 @@
 			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста..."/>
 			<node name="updatingBooksDatabase" value="Обновляется база книг. Подождите, пожалуйста..."/>
 			<node name="loadingNetworkLibrary" value="Открывается библиотека. Подождите, пожалуйста..." />
+			<node name="authentication" value="Идет авторизация. Подождите, пожалуйста..." />
+			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -246,6 +250,13 @@
 		<node name="emptyCatalogBox">
 			<node name="title" value="Информация" />
 			<node name="message" value="Каталог пуст." />
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Авторизация" />
+			<node name="login" value="Имя пользователя" />
+			<node name="password" value="Пароль" />
+			<node name="skipIP" value="Не привязываться к ip-адресу" />
+			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
 		</node>
 	</node>
 	<node name="errorMessage">

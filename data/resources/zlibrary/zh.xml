@@ -24,11 +24,11 @@
 			<node name="invalidURL" value="无效网址" />
 			<node name="hostCantBeReached" value="网站无法访问 %s" />
 			<node name="connectionRefused" value="连接被拒绝&#10;%s" />
+			<node name="sslError" toBeTranslated="true" value="SSL subsystem error" />
 			<node name="sslConnectErrorMessage" value="SSL/TLS 连接出现问题:&#10;%s" />
-			<node name="peerFailedVerificationMessage" value="来自 %s&#10;的SSL验证被认定无效" />
-			<node name="sslCertificateAuthorityMessage" value="来自 %s&#10; 的SSL验证不能被已知的SSL CA certificates授权" />
-			<node name="sslBadCertificateFileMessage" value="无法读取 SSL CA certificate 文件:&#10;%s" />
-			<node name="sslShutdownFailedMessage" value="关闭SSL连接&#10;%s 失败" />
+			<node name="sslBadKey" toBeTranslated="true" value="Bad SSL certificate:&#10;%s" />
+			<node name="sslPeerUnverified" toBeTranslated="true" value="Unable to verify peer's identity:&#10;%s" />
+			<node name="sslProtocolError" toBeTranslated="true" value="Error in the operation of the SSL protocol:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

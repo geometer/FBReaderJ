@@ -23,6 +23,11 @@
 			<node name="invalidURL" value="Неправильный URL" />
 			<node name="hostCantBeReached" value="Сайт %s недоступен" />
 			<node name="connectionRefused" value="Соединение закрыто сайтом&#10;%s" />
+			<node name="sslError" value="Ошибка подсистемы SSL" />
+			<node name="sslConnectErrorMessage" value="Проблема установления SSL/TLS соединения:&#10;%s" />
+			<node name="sslBadKey" value="Плохой SSL сертификат:&#10;%s" />
+			<node name="sslPeerUnverified" value="Невозможно проверить подлинность сайта:&#10;%s" />
+			<node name="sslProtocolError" value="Ошибка в работе протокола SSL:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">
@@ -64,8 +69,8 @@
 		<node name="no" value="норвежский" />
 		<node name="pt" value="португальский" />
 		<node name="ru" value="русский" />
-		<node name="tr" value="турецкий" />
 		<node name="sv" value="шведский" />
+		<node name="tr" value="турецкий" />
 		<node name="uk" value="украинский" />
 		<node name="vi" value="вьетнамский" />
 		<node name="zh" value="китайский" />
