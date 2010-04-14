@@ -30,7 +30,8 @@ class LitResUtil {
 		String url = "://robot.litres.ru/" + path;
 		if (ZLNetworkUtil.hasParameter(url, "sid") ||
 				ZLNetworkUtil.hasParameter(url, "pwd")) {
-			url = "https" + url;
+			//url = "https" + url;
+			url = "http" + url;
 		} else {
 			url = "http" + url;
 		}
