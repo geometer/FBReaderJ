@@ -82,25 +82,34 @@ public class ZLNetworkManager {
 	public String perform(ZLNetworkRequest request) {
 		boolean sucess = false;
 		try {
-			System.err.println("PERFORM:" + request.URL);
-			final URL url = new URL(request.URL);
-			final URLConnection connection = url.openConnection();
-			if (!(connection instanceof HttpURLConnection)) {
-				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_UNSUPPORTED_PROTOCOL);
-			}
-			String error = doBeforeRequest(request);
+			System.err.println("PERFORM: " + request.URL);
+			final String error = doBeforeRequest(request);
 			if (error != null) {
 				return error;
 			}
-			final HttpURLConnection httpConnection = (HttpURLConnection) connection;
-			// TODO: handle SSLCertificate
-			// TODO: handle Authentication
-			httpConnection.setInstanceFollowRedirects(request.FollowRedirects);
-			httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
-			httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
-			//httpConnection.setRequestProperty("Connection", "Close");
-			httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
-			final int response = httpConnection.getResponseCode();
+			HttpURLConnection httpConnection = null;
+			int response = -1;
+			for (int retryCounter = 0; retryCounter < 3 && response == -1; ++retryCounter) {
+				if (retryCounter > 0) {
+					System.err.println("RETRY: " + retryCounter);
+				}
+				final URL url = new URL(request.URL);
+				final URLConnection connection = url.openConnection();
+				if (!(connection instanceof HttpURLConnection)) {
+					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_UNSUPPORTED_PROTOCOL);
+				}
+				httpConnection = (HttpURLConnection) connection;
+				// TODO: handle SSLCertificate
+				// TODO: handle Authentication
+				httpConnection.setInstanceFollowRedirects(request.FollowRedirects);
+				httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
+				httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
+				//httpConnection.setRequestProperty("Connection", "Close");
+				httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
+				httpConnection.setAllowUserInteraction(false);
+				httpConnection.connect();
+				response = httpConnection.getResponseCode();
+			}
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {
@@ -112,11 +121,14 @@ public class ZLNetworkManager {
 					stream.close();
 				}
 				sucess = true;
-			} else if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
-				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
 			} else {
 				System.err.println("RESPONSE: " + response);
-				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+				System.err.println("RESPONSE MESSAGE: " + httpConnection.getResponseMessage());
+				if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
+					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
+				} else {
+					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+				}
 			}
 		} catch (SSLHandshakeException ex) {
 			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SSL_CONNECT, ex.getMessage());
