@@ -4,9 +4,9 @@
 	<item id="networkLibrary"/>
 	<item id="toc"/>
 	<item id="bookmarks"/>
-	<item id="search"/>
 	<item id="night"/>
 	<item id="day"/>
+	<item id="search"/>
 	<item id="preferences"/>
 	<item id="preferences-old"/>
 	<item id="bookInfo"/>
