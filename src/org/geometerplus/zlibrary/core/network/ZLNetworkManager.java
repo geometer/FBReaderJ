@@ -103,7 +103,7 @@ public class ZLNetworkManager {
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {
-					final String err = request.handleStream(httpConnection, stream);
+					final String err = request.doHandleStream(httpConnection, stream);
 					if (err != null) {
 						return err;
 					}

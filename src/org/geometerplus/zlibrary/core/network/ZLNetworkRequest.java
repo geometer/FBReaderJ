@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.network;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URLConnection;
+import java.util.zip.GZIPInputStream;
 
 
 public abstract class ZLNetworkRequest {
@@ -52,6 +53,17 @@ public abstract class ZLNetworkRequest {
 	// callbacks return error messages
 	public String doBefore() {
 		return null;
+	}
+	
+	String doHandleStream(URLConnection connection, InputStream inputStream) throws IOException {
+		String encoding = connection.getContentEncoding();
+		if (encoding != null) {
+			encoding = encoding.toLowerCase();
+			if (encoding.equals("gzip")) {
+				inputStream = new GZIPInputStream(inputStream);
+			}
+		}
+		return handleStream(connection, inputStream);
 	}
 
 	public abstract String handleStream(URLConnection connection, InputStream inputStream) throws IOException;
