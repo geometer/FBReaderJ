@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network.opds;
 interface OPDSFeedReader {
 
 	void processFeedStart();
-	void processFeedMetadata(OPDSFeedMetadata feed);
+	void processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries);
 	void processFeedEntry(OPDSEntry entry);
 	void processFeedEnd();
 }

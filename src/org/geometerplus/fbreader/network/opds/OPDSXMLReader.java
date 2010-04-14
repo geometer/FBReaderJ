@@ -228,9 +228,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && myFeed.Id != null) {
-							myFeedReader.processFeedMetadata(myFeed);
+							myFeedReader.processFeedMetadata(myFeed, true);
 						}
-						myFeed = null;
 					} 
 				} else if (tagPrefix == myOpenSearchNamespaceId) {
 					if (tag == OPENSEARCH_TAG_TOTALRESULTS) {
@@ -377,7 +376,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FEED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
 					if (myFeed != null && myFeed.Id != null) {
-						myFeedReader.processFeedMetadata(myFeed);
+						myFeedReader.processFeedMetadata(myFeed, false);
 					}
 					myFeed = null;
 					myFeedReader.processFeedEnd();

@@ -82,6 +82,7 @@ public class ZLNetworkManager {
 	public String perform(ZLNetworkRequest request) {
 		boolean sucess = false;
 		try {
+			System.err.println("PERFORM:" + request.URL);
 			final URL url = new URL(request.URL);
 			final URLConnection connection = url.openConnection();
 			if (!(connection instanceof HttpURLConnection)) {
@@ -97,7 +98,7 @@ public class ZLNetworkManager {
 			httpConnection.setInstanceFollowRedirects(request.FollowRedirects);
 			httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
 			httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
-			httpConnection.setRequestProperty("Connection", "Close");
+			//httpConnection.setRequestProperty("Connection", "Close");
 			httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
 			final int response = httpConnection.getResponseCode();
 			if (response == HttpURLConnection.HTTP_OK) {
@@ -114,6 +115,7 @@ public class ZLNetworkManager {
 			} else if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
 				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
 			} else {
+				System.err.println("RESPONSE: " + response);
 				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 			}
 		} catch (SSLHandshakeException ex) {
@@ -137,6 +139,7 @@ public class ZLNetworkManager {
 		} catch (SocketTimeoutException ex) {
 			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_TIMEOUT);
 		} catch (IOException ex) {
+			ex.printStackTrace();
 			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 		} finally {
 			final String err = request.doAfter(sucess);

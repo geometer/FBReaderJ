@@ -62,7 +62,11 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		return value;
 	}
 
-	public void processFeedMetadata(OPDSFeedMetadata feed) {
+	public void processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
+		if (beforeEntries) {
+			myIndex = feed.OpensearchStartIndex - 1;
+			return;
+		}
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
 			String href = link.getHref();
@@ -72,7 +76,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				myData.ResumeURI = href;
 			}
 		}
-		myIndex = feed.OpensearchStartIndex - 1;
 	}
 
 	public void processFeedEnd() {
