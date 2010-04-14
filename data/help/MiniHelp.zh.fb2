@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>关于FBreaderJ</book-title> <lang>en</lang></title-info></description>
+<body>
+
+<title><p>关于FBreaderJ &FBReaderVersion;</p></title>
+<p>FBReaderJ是一款基于<a l:href="http://www.android.com/">Android</a>平台的电子书阅读软件，是开发者在<a l:href="http://www.fbreader.org/">FBReader</a>阅读软件的基础上用java语言编写的版本。FBReaderJ支持多种电子书格式：如<code>oeb</code>,<code>epub</code>,<code>fb2</code>.未来的升级版本将像支持原始的FBReader格式一样支持以上格式.同时将支持<code>zip</code>,<code>tar</code>和<code>gzip</code>格式的的直接阅读。</p>
+<p>通过FBReaderJ阅读软件，您可以享受更多的阅读乐趣。您可以根据需要任意设置颜色，字体，按键绑定或者是更改对话框中的其他属性。</p>
+<p>FBReaderJ遵循<a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>协议的所有条款。</p>
+<empty-line/>
+<subtitle><p>如何使用FBReaderJ</p></subtitle>
+<p>有三种方法可以将书加入FBReaderJ的书库。</p>
+<p>第一种方法是将图书文件复制到您的设备目录中/ SD卡/书籍（或任何其子目录）。 FBReader将自动添加此书。</p>
+<p>第二种方法是点击标准Android浏览器中的图书链接（如带有<code>ePub</code>，<code>oeb</code>，<code>fb2</code>或<code>fb2.zip</code>等扩展名的文件链接。）图书将会被下载到设备中并且用FBReaderJ打开。如果你再次点击相同的链接，图书不会重复下载，本地阅读本将供阅读。</p>
+<p>第三种方法是使用内置的在线书库，直接从中下载并阅读。</p>
+<empty-line/>
+<subtitle><p>相关网站</p></subtitle>
+<p>更多有关FBReader的信息可以在<a l:href="http://www.fbreader.org">FBReader</a>网站查阅到。</p>
+<p>  如果您想知道FBReader的最新版本信息，请订阅<a l:href="http://freshmeat.net/projects/fbreaderj">FBReader project at freshmeat</a>。</p>
+<p>  如果您有任何的问题或建议，请使用googlegroups中的“<a l:href="http://groups.google.com/group/fbreader">FBReader group</a>”。</p>
+</body>
+</FictionBook>
+
+
