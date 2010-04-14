@@ -30,6 +30,7 @@ public class ZLNetworkErrors {
 	public static final String ERROR_UNSUPPORTED_PROTOCOL = "unsupportedProtocol";
 	public static final String ERROR_INVALID_URL = "invalidURL";
 	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
+	public static final String ERROR_SSL_SUBSYSTEM = "sslError";
 
 	// Messages with one parameter:
 	public static final String ERROR_SOMETHING_WRONG = "somethingWrongMessage";
@@ -39,6 +40,10 @@ public class ZLNetworkErrors {
 	public static final String ERROR_RESOLVE_HOST = "couldntResolveHostMessage";
 	public static final String ERROR_HOST_CANNOT_BE_REACHED = "hostCantBeReached";
 	public static final String ERROR_CONNECTION_REFUSED = "connectionRefused";
+	public static final String ERROR_SSL_CONNECT = "sslConnectErrorMessage";
+	public static final String ERROR_SSL_BAD_KEY = "sslBadKey";
+	public static final String ERROR_SSL_PEER_UNVERIFIED = "sslPeerUnverified";
+	public static final String ERROR_SSL_PROTOCOL_ERROR = "sslProtocolError";
 
 
 	public static ZLResource getResource() {
@@ -59,6 +64,9 @@ public class ZLNetworkErrors {
 	public static String errorMessage(String key, String arg) {
 		if (key == null) {
 			return "null";
+		}
+		if (arg == null) {
+			arg = "null";
 		}
 		return getResource().getResource(key).getValue().replace("%s", arg);
 	}

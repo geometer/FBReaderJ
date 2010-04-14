@@ -19,9 +19,10 @@
 
 package org.geometerplus.zlibrary.core.network;
 
+import java.util.*;
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import javax.net.ssl.*;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -115,6 +116,16 @@ public class ZLNetworkManager {
 			} else {
 				return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 			}
+		} catch (SSLHandshakeException ex) {
+			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SSL_CONNECT, ex.getMessage());
+		} catch (SSLKeyException ex) {
+			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SSL_BAD_KEY, ex.getMessage());
+		} catch (SSLPeerUnverifiedException ex) {
+			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SSL_PEER_UNVERIFIED, ex.getMessage());
+		} catch (SSLProtocolException ex) {
+			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SSL_PROTOCOL_ERROR, ex.getMessage());
+		} catch (SSLException ex) {
+			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SSL_SUBSYSTEM);
 		} catch (ConnectException ex) {
 			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_CONNECTION_REFUSED, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (NoRouteToHostException ex) {

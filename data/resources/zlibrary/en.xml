@@ -23,6 +23,11 @@
 			<node name="invalidURL" value="Invalid URL" />
 			<node name="hostCantBeReached" value="Host %s&#10;cannot be reached" />
 			<node name="connectionRefused" value="Connection was refused by&#10;%s" />
+			<node name="sslError" value="SSL subsystem error" />
+			<node name="sslConnectErrorMessage" value="SSL/TLS handshake problem occurred:&#10;%s" />
+			<node name="sslBadKey" value="Bad SSL certificate:&#10;%s" />
+			<node name="sslPeerUnverified" value="Unable to verify peer's identity:&#10;%s" />
+			<node name="sslProtocolError" value="Error in the operation of the SSL protocol:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

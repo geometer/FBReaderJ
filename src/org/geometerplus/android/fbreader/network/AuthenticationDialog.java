@@ -88,12 +88,14 @@ class AuthenticationDialog {
 						if (err != null) {
 							mgr.logOut();
 							DialogHandler.this.sendMessage(DialogHandler.this.obtainMessage(-1, err));
+							return;
 						}
 						if (mgr.needsInitialization()) {
 							err = mgr.initialize();
 							if (err != null) {
 								mgr.logOut();
 								DialogHandler.this.sendMessage(DialogHandler.this.obtainMessage(-1, err));
+								return;
 							}
 						}
 					}
