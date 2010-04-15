@@ -30,8 +30,8 @@ class LitResNetworkRequest extends ZLNetworkRequest {
 
 	public final LitResAuthenticationXMLReader Reader;
 
-	public LitResNetworkRequest(String url, LitResAuthenticationXMLReader reader) {
-		super(url);
+	public LitResNetworkRequest(String url, String sslCertificate, LitResAuthenticationXMLReader reader) {
+		super(url, sslCertificate);
 		Reader = reader;
 	}
 

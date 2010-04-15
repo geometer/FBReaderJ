@@ -25,9 +25,12 @@
 			<node name="connectionRefused" value="Connection was refused by&#10;%s" />
 			<node name="sslError" value="SSL subsystem error" />
 			<node name="sslConnectErrorMessage" value="SSL/TLS handshake problem occurred:&#10;%s" />
-			<node name="sslBadKey" value="Bad SSL certificate:&#10;%s" />
-			<node name="sslPeerUnverified" value="Unable to verify peer's identity:&#10;%s" />
-			<node name="sslProtocolError" value="Error in the operation of the SSL protocol:&#10;%s" />
+			<node name="sslBadKey" value="Bad SSL certificate from:&#10;%s" />
+			<node name="sslPeerUnverified" value="Unable to verify peer's identity for:&#10;%s" />
+			<node name="sslProtocolError" value="Error in the operation of the SSL protocol" />
+			<node name="sslBadCertificateFileMessage" value="Couldn&apos;t read the SSL CA certificate file:&#10;%s" />
+			<node name="sslCertificateExpired" value="SSL certificate has expired:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL certificate is not yet valid:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

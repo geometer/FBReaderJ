@@ -31,6 +31,8 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 
 public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
+	private String myPath;
+
 	private String mySiteName;
 	private String myTitle;
 	private String mySummary;
@@ -47,6 +49,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private String myAuthenticationType;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 
+	private String mySSLCertificate;
 
 	private NetworkLink link() {
 		if (mySiteName == null || myTitle == null || myLinks.get(NetworkLink.URL_MAIN) == null) {
@@ -74,11 +77,17 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		opdsLink.setUrlConditions(myUrlConditions);
 		opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 
+		if (mySSLCertificate != null && mySSLCertificate.startsWith("./")) {
+			final int parentIndex = myPath.lastIndexOf("/");
+			final String parent = myPath.substring(0, parentIndex);
+			mySSLCertificate = parent + mySSLCertificate.substring(1);
+		}
+
 		NetworkAuthenticationManager authManager = null;
 		if (myAuthenticationType == "basic") {
-			//authManager = new BasicAuthenticationManager(opdsLink);
+			//authManager = new BasicAuthenticationManager(opdsLink, mySSLCertificate);
 		} else if (myAuthenticationType == "litres") {
-			authManager = new LitResAuthenticationManager(opdsLink);
+			authManager = new LitResAuthenticationManager(opdsLink, mySSLCertificate);
 		}
 		opdsLink.setAuthenticationManager(authManager);
 
@@ -86,7 +95,9 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	}
 
 	public NetworkLink readDocument(ZLFile file) {
-		mySiteName = myTitle = mySummary = myIcon = mySearchType = myAuthenticationType = null;
+		myPath = file.getPath();
+
+		mySiteName = myTitle = mySummary = myIcon = mySearchType = myAuthenticationType = mySSLCertificate = null;
 		myLinks.clear();
 		mySearchFields.clear();
 		myUrlConditions.clear();
@@ -117,6 +128,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private static final String TAG_FIELD = "field";
 	private static final String TAG_CONDITION = "condition";
 	private static final String TAG_RULE = "rule";
+	private static final String TAG_SSL_CERTIFICATE = "sslCertificate";
 
 	private static final int READ_NOTHING = 0;
 	private static final int READ_SITENAME = 1;
@@ -180,6 +192,11 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 			String authenticationType = attributes.getValue("type");
 			if (authenticationType != null) {
 				myAuthenticationType = authenticationType;
+			}
+		} else if (TAG_SSL_CERTIFICATE == tag) {
+			String path = attributes.getValue("path");
+			if (path != null) {
+				mySSLCertificate = path;
 			}
 		} else if (TAG_URL_REWRITING_RULES == tag) {
 			myState = READ_URL_REWRITING_RULES;

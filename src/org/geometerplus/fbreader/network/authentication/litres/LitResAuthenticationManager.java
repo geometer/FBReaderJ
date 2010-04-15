@@ -42,8 +42,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private final HashMap<String, NetworkLibraryItem> myPurchasedBooks = new HashMap<String, NetworkLibraryItem>();
 
 
-	public LitResAuthenticationManager(NetworkLink link) {
-		super(link);
+	public LitResAuthenticationManager(NetworkLink link, String sslCertificate) {
+		super(link, sslCertificate);
 		mySidUserNameOption = new ZLStringOption(link.SiteName, "sidUserName", "");
 		mySidOption = new ZLStringOption(link.SiteName, "sid", "");
 	}
@@ -68,7 +68,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		url = ZLNetworkUtil.appendParameter(url, "sid", mySidOption.getValue());
 
 		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.SiteName);
-		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 
 		if (error != null) {
 			if (!error.equals(NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED))) {
@@ -96,7 +96,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 
 		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.SiteName);
-		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 
 		mySidChecked = true;
 		if (error != null) {
@@ -160,7 +160,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
 
 		final LitResPurchaseXMLReader xmlReader = new LitResPurchaseXMLReader(Link.SiteName);
-		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(query, xmlReader));
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(query, SSLCertificate, xmlReader));
 
 		if (xmlReader.Account != null) {
 			myAccount = BuyBookReference.price(xmlReader.Account, "RUB");
@@ -279,7 +279,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
 
 		return new LitResNetworkRequest(
-			LitResUtil.url(Link, query), 
+			LitResUtil.url(Link, query),
+			SSLCertificate,
 			new LitResXMLReader(Link, new LinkedList<NetworkLibraryItem>())
 		);
 	}
@@ -308,6 +309,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		return new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
+			SSLCertificate,
 			new LitResPurchaseXMLReader(Link.SiteName)
 		);
 	}
@@ -336,7 +338,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		url = ZLNetworkUtil.appendParameter(url, "mail", email);
 
 		final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader(Link.SiteName);
-		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
+		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 
 		mySidChecked = true;
 		if (error != null) {
@@ -361,6 +363,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 		url = ZLNetworkUtil.appendParameter(url, "mail", email);
 		final LitResPasswordRecoveryXMLReader xmlReader =  new LitResPasswordRecoveryXMLReader(Link.SiteName);
-		return ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, xmlReader));
+		return ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 	}
 }

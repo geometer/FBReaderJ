@@ -1,4 +1,4 @@
-<!ELEMENT catalog (site,title,summary?,link+,advancedSearch?,relationAliases?,feeds?,authentication?,urlRewritingRules?,icon)>
+<!ELEMENT catalog (site,title,summary?,link+,advancedSearch?,relationAliases?,feeds?,authentication?,sslCertificate?,urlRewritingRules?,icon)>
 <!ATTLIST catalog 
 	type (opds) #REQUIRED
 >
@@ -42,6 +42,11 @@
 <!ELEMENT authentication EMPTY>
 <!ATTLIST authentication
 	type (basic|litres) #REQUIRED
+>
+
+<!ELEMENT sslCertificate EMPTY>
+<!ATTLIST sslCertificate
+	path CDATA #REQUIRED
 >
 
 <!ELEMENT urlRewritingRules (rule+)>

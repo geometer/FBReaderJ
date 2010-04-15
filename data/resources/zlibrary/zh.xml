@@ -26,9 +26,12 @@
 			<node name="connectionRefused" value="连接被拒绝&#10;%s" />
 			<node name="sslError" toBeTranslated="true" value="SSL subsystem error" />
 			<node name="sslConnectErrorMessage" value="SSL/TLS 连接出现问题:&#10;%s" />
-			<node name="sslBadKey" toBeTranslated="true" value="Bad SSL certificate:&#10;%s" />
-			<node name="sslPeerUnverified" toBeTranslated="true" value="Unable to verify peer's identity:&#10;%s" />
-			<node name="sslProtocolError" toBeTranslated="true" value="Error in the operation of the SSL protocol:&#10;%s" />
+			<node name="sslBadKey" toBeTranslated="true" value="Bad SSL certificate from:&#10;%s" />
+			<node name="sslPeerUnverified" toBeTranslated="true" value="Unable to verify peer's identity for:&#10;%s" />
+			<node name="sslProtocolError" toBeTranslated="true" value="Error in the operation of the SSL protocol" />
+			<node name="sslBadCertificateFileMessage" toBeTranslated="true" value="Couldn&apos;t read the SSL CA certificate file:&#10;%s" />
+			<node name="sslCertificateExpired" toBeTranslated="true" value="SSL certificate has expired:&#10;%s" />
+			<node name="sslCertificateNotYetValid" toBeTranslated="true" value="SSL certificate is not yet valid:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

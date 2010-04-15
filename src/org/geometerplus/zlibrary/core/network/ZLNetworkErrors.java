@@ -31,6 +31,7 @@ public class ZLNetworkErrors {
 	public static final String ERROR_INVALID_URL = "invalidURL";
 	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 	public static final String ERROR_SSL_SUBSYSTEM = "sslError";
+	public static final String ERROR_SSL_PROTOCOL_ERROR = "sslProtocolError";
 
 	// Messages with one parameter:
 	public static final String ERROR_SOMETHING_WRONG = "somethingWrongMessage";
@@ -43,7 +44,9 @@ public class ZLNetworkErrors {
 	public static final String ERROR_SSL_CONNECT = "sslConnectErrorMessage";
 	public static final String ERROR_SSL_BAD_KEY = "sslBadKey";
 	public static final String ERROR_SSL_PEER_UNVERIFIED = "sslPeerUnverified";
-	public static final String ERROR_SSL_PROTOCOL_ERROR = "sslProtocolError";
+	public static final String ERROR_SSL_BAD_FILE = "sslBadCertificateFileMessage";
+	public static final String ERROR_SSL_EXPIRED = "sslCertificateExpired";
+	public static final String ERROR_SSL_NOT_YET_VALID = "sslCertificateNotYetValid";
 
 
 	public static ZLResource getResource() {
