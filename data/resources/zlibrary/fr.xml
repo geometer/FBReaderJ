@@ -29,7 +29,7 @@
 			<node name="sslBadKey" toBeTranslated="true" value="Bad SSL certificate from:&#10;%s" />
 			<node name="sslPeerUnverified" toBeTranslated="true" value="Unable to verify peer's identity for:&#10;%s" />
 			<node name="sslProtocolError" toBeTranslated="true" value="Error in the operation of the SSL protocol" />
-			<node name="sslBadCertificateFileMessage" toBeTranslated="true" value="Couldn&apos;t read the SSL CA certificate file:&#10;%s" />
+			<node name="sslBadCertificateFileMessage" value="Impossible de lire le fichier des certificats de CA :&#10;%s" />
 			<node name="sslCertificateExpired" toBeTranslated="true" value="SSL certificate has expired:&#10;%s" />
 			<node name="sslCertificateNotYetValid" toBeTranslated="true" value="SSL certificate is not yet valid:&#10;%s" />
 		</node>
