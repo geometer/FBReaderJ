@@ -34,6 +34,7 @@
 		<node name="reload" value="重新加载" />
 		<node name="signIn" value="登录"/>
 		<node name="signOut" value="退出 (%s)"/>
+		<node name="refillAccount" value="重新输入账号(目前: %s)" />
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="confirmQuestions">

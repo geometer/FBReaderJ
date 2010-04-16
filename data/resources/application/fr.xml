@@ -34,6 +34,7 @@
 		<node name="reload" value="Recharger"/>
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
+		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="alreadyDownloading" toBeTranslated="true" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" toBeTranslated="true" value="Sample is being downloaded" />
 		<node name="confirmQuestions">

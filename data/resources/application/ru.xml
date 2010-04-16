@@ -33,6 +33,7 @@
 		<node name="reload" value="Обновить"/>
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
+		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="confirmQuestions">

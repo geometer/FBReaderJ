@@ -49,6 +49,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	//public static final int DONT_SHOW_ITEM_ID = 3;
 	public static final int SIGNIN_ITEM_ID = 4;
 	public static final int SIGNOUT_ITEM_ID = 5;
+	public static final int REFILL_ACCOUNT_ITEM_ID = 6;
 
 	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
@@ -77,7 +78,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (maybeSignedIn) {
 					addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
 					if (mgr.refillAccountLink() != null) {
-						//registerAction(new RefillAccountAction(mgr));
+						final String account = mgr.currentAccount();
+						if (account != null) {
+							addMenuItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount", account);
+						}
 					}
 				} else {
 					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
@@ -148,6 +152,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return true;
 			case SIGNOUT_ITEM_ID:
 				doSignOut((NetworkCatalogTree)tree);
+				return true;
+			case REFILL_ACCOUNT_ITEM_ID:
+				NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink());
 				return true;
 			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
