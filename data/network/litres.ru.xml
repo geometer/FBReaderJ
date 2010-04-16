@@ -20,7 +20,6 @@
 		<condition show="signedIn">http://data.fbreader.org/catalogs/litres/my.php</condition>
 	</feeds>
 	<authentication type="litres"/>
-	<sslCertificate path="./certificates/litres.ru.crt" />
 	<urlRewritingRules>
 		<rule type="addUrlParameter" apply="external" name="lfrom" value="51"/>
 	</urlRewritingRules>
