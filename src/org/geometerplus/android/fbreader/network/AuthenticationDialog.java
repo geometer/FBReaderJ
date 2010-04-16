@@ -61,75 +61,7 @@ class AuthenticationDialog {
 		NetworkLibraryActivity.Instance.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 	}
 
-
-	private class DialogHandler extends Handler {
-
-		private final Activity myActivity;
-
-		public DialogHandler(Activity activity) {
-			myActivity = activity;
-		}
-
-		public void handleMessage(Message message) {
-			if (message.what == -2) {
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateAccountDependents();
-				library.synchronize();
-				((NetworkLibraryActivity) myActivity).getAdapter().resetTree();
-				((NetworkLibraryActivity) myActivity).getListView().invalidateViews();
-			} else if (message.what == -1) {
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateAccountDependents();
-				library.synchronize();
-				((NetworkLibraryActivity) myActivity).getAdapter().resetTree();
-				((NetworkLibraryActivity) myActivity).getListView().invalidateViews();
-				myErrorMessage = (String) message.obj;
-				myActivity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
-			} else if (message.what == 1) {
-				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-				if (mgr.UserNameOption.getValue().length() == 0) {
-					myErrorMessage = myResource.getResource("loginIsEmpty").getValue();
-					myActivity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
-					return;
-				}
-				final String password = (String) message.obj;
-				final Runnable runnable = new Runnable() {
-					public void run() {
-						String err = mgr.authorise(password);
-						if (err != null) {
-							mgr.logOut();
-							DialogHandler.this.sendMessage(DialogHandler.this.obtainMessage(-1, err));
-							return;
-						}
-						if (mgr.needsInitialization()) {
-							err = mgr.initialize();
-							if (err != null) {
-								mgr.logOut();
-								DialogHandler.this.sendMessage(DialogHandler.this.obtainMessage(-1, err));
-								return;
-							}
-						}
-						DialogHandler.this.sendEmptyMessage(-2);
-					}
-				};
-				((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("authentication", runnable, myActivity);
-			} else {
-				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-				final Runnable runnable = new Runnable() {
-					public void run() {
-						if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
-							mgr.logOut();
-							DialogHandler.this.sendEmptyMessage(-2);
-						}
-					}
-				};
-				((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, myActivity);
-			}
-		}
-	}
-
-
-	public Dialog createDialog(Activity activity) {
+	public Dialog createDialog(final Activity activity) {
 		final View layout = activity.getLayoutInflater().inflate(R.layout.network_authentication_dialog, null);
 
 		final TextView login = (TextView) layout.findViewById(R.id.network_authentication_login);
@@ -149,27 +81,74 @@ class AuthenticationDialog {
 
 		// TODO: implement skipIP option
 
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.invalidateAccountDependents();
+				library.synchronize();
+				((NetworkLibraryActivity) activity).getAdapter().resetTree();
+				((NetworkLibraryActivity) activity).getListView().invalidateViews();
+				if (message.what == 0) {
+					myErrorMessage = (String) message.obj;
+					activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+				}
+			}
+		};
+
+		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					AlertDialog alert = (AlertDialog) dialog;
+					final String login = ((TextView) alert.findViewById(R.id.network_authentication_login)).getText().toString();
+					final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString();
+
+					if (mgr.UserNameOption.getValue().length() == 0) {
+						myErrorMessage = myResource.getResource("loginIsEmpty").getValue();
+						activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+						return;
+					}
+					mgr.UserNameOption.setValue(login);
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							String err = mgr.authorise(password);
+							if (err != null) {
+								mgr.logOut();
+								handler.sendMessage(handler.obtainMessage(0, err));
+								return;
+							}
+							if (mgr.needsInitialization()) {
+								err = mgr.initialize();
+								if (err != null) {
+									mgr.logOut();
+									handler.sendMessage(handler.obtainMessage(0, err));
+									return;
+								}
+							}
+							handler.sendEmptyMessage(1);
+						}
+					};
+					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("authentication", runnable, activity);
+				} else {
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+								mgr.logOut();
+								handler.sendEmptyMessage(1);
+							}
+						}
+					};
+					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, activity);
+				}
+			}
+		};
+
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Handler handler = new DialogHandler(activity);
 		return new AlertDialog.Builder(activity)
 			.setView(layout)
 			.setTitle(myResource.getResource("title").getValue())
-			.setPositiveButton(buttonResource.getResource("ok").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					AlertDialog alert = (AlertDialog) dialog;
-					final TextView loginView = (TextView) alert.findViewById(R.id.network_authentication_login);
-					final TextView passwordView = (TextView) alert.findViewById(R.id.network_authentication_password);
-					final String login = loginView.getText().toString();
-					final String password = passwordView.getText().toString();
-					mgr.UserNameOption.setValue(login);
-					handler.sendMessage(handler.obtainMessage(1, password));
-				}
-			})
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					handler.sendEmptyMessage(0);
-				}
-			})
+			.setPositiveButton(buttonResource.getResource("ok").getValue(), listener)
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
 			.create();
 	}
 
