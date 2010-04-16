@@ -54,10 +54,12 @@ class AuthenticationDialog {
 
 	private NetworkLink myLink;
 	private String myErrorMessage;
+	private Runnable myOnSucessRunnable;
 
-	public void show(NetworkLink link) {
+	public void show(NetworkLink link, Runnable onSucessRunnable) {
 		myLink = link;
 		myErrorMessage = null;
+		myOnSucessRunnable = onSucessRunnable;
 		NetworkLibraryActivity.Instance.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 	}
 
@@ -88,9 +90,13 @@ class AuthenticationDialog {
 				library.synchronize();
 				((NetworkLibraryActivity) activity).getAdapter().resetTree();
 				((NetworkLibraryActivity) activity).getListView().invalidateViews();
-				if (message.what == 0) {
+				if (message.what < 0) {
 					myErrorMessage = (String) message.obj;
 					activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+				} else if (message.what > 0) {
+					if (myOnSucessRunnable != null) {
+						myOnSucessRunnable.run();
+					}
 				}
 			}
 		};
@@ -114,14 +120,14 @@ class AuthenticationDialog {
 							String err = mgr.authorise(password);
 							if (err != null) {
 								mgr.logOut();
-								handler.sendMessage(handler.obtainMessage(0, err));
+								handler.sendMessage(handler.obtainMessage(-1, err));
 								return;
 							}
 							if (mgr.needsInitialization()) {
 								err = mgr.initialize();
 								if (err != null) {
 									mgr.logOut();
-									handler.sendMessage(handler.obtainMessage(0, err));
+									handler.sendMessage(handler.obtainMessage(-1, err));
 									return;
 								}
 							}
@@ -134,7 +140,7 @@ class AuthenticationDialog {
 						public void run() {
 							if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
 								mgr.logOut();
-								handler.sendEmptyMessage(1);
+								handler.sendEmptyMessage(0);
 							}
 						}
 					};

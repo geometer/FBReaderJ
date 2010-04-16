@@ -281,18 +281,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		/*if (!NetworkOperationRunnable::tryConnect()) {
 			return;
 		}*/
-		if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_TRUE) {
-			/*if (!AuthenticationDialog::run(mgr)) {
-				return;
-			}
-			fbreader.invalidateAccountDependents();
-			fbreader.refreshWindow();
-			if (!mgr.needPurchase(myBook)) {
-				return;
-			}*/
-			AuthenticationDialog.Instance().show(book.Link);
-			return;
-		}
+
 
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
@@ -340,15 +329,29 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		};
 
-		final ZLResource boxResource = dialogResource.getResource("purchaseConfirmBox");
-		new AlertDialog.Builder(NetworkLibraryActivity.Instance)
-			.setTitle(boxResource.getResource("title").getValue())
-			.setMessage(boxResource.getResource("message").getValue().replace("%s", book.Title))
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("buy").getValue(), listener)
-			.setNeutralButton(buttonResource.getResource("buyAndDownload").getValue(), listener)
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
-			.create().show();
+		final Runnable buyRunnable = new Runnable() {
+			public void run() {
+				if (!mgr.needPurchase(book)) {
+					return;
+				}
+				final ZLResource boxResource = dialogResource.getResource("purchaseConfirmBox");
+				new AlertDialog.Builder(NetworkLibraryActivity.Instance)
+					.setTitle(boxResource.getResource("title").getValue())
+					.setMessage(boxResource.getResource("message").getValue().replace("%s", book.Title))
+					.setIcon(0)
+					.setPositiveButton(buttonResource.getResource("buy").getValue(), listener)
+					.setNeutralButton(buttonResource.getResource("buyAndDownload").getValue(), listener)
+					.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+					.create().show();
+			}
+		};
+
+		if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_TRUE) {
+			AuthenticationDialog.Instance().show(book.Link, buyRunnable);
+			return;
+		} else {
+			buyRunnable.run();
+		}
 	}
 
 	private void doBuyInBrowser(NetworkTree tree) {
