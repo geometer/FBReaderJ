@@ -103,6 +103,10 @@
 		<node name="bookmarks" value="Закладки"/>
 	</node>
 	<node name="dialog">
+		<node name="button">
+			<node name="buy" value="Купить" />
+			<node name="buyAndDownload" value="Купить и скачать" />
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>
 			<node name="title" value="Название"/>
@@ -230,6 +234,7 @@
 			<node name="loadingNetworkLibrary" value="Открывается библиотека. Подождите, пожалуйста..." />
 			<node name="authentication" value="Идет авторизация. Подождите, пожалуйста..." />
 			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
+			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -257,6 +262,10 @@
 			<node name="password" value="Пароль" />
 			<node name="skipIP" value="Не привязываться к ip-адресу" />
 			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="Покупка книги" />
+			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
 		</node>
 	</node>
 	<node name="errorMessage">

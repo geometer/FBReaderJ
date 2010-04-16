@@ -22,15 +22,21 @@ package org.geometerplus.android.fbreader.network;
 import java.io.File;
 
 import android.app.AlertDialog;
+import android.os.Message;
+import android.os.Handler;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.authentication.*;
 
 
 class NetworkBookActions extends NetworkTreeActions {
@@ -266,49 +272,83 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	private void doBuyDirectly(NetworkTree tree) {
-		NetworkBookTree bookTree = (NetworkBookTree) tree;
-		NetworkBookItem book = bookTree.Book;
-		//FBReader &fbreader = FBReader::Instance();
-		/*NetworkAuthenticationManager mgr = book.Link.authenticationManager();
+		final NetworkBookTree bookTree = (NetworkBookTree) tree;
+		final NetworkBookItem book = bookTree.Book;
+		final NetworkAuthenticationManager mgr = book.Link.authenticationManager();
 		if (mgr == null) {
 			return;
 		}
-		if (!NetworkOperationRunnable::tryConnect()) {
+		/*if (!NetworkOperationRunnable::tryConnect()) {
 			return;
-		}
-		if (mgr.isAuthorised().Status != ZLBoolean3.B3_TRUE) {
-			return;
-			if (!AuthenticationDialog::run(mgr)) {
+		}*/
+		if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_TRUE) {
+			/*if (!AuthenticationDialog::run(mgr)) {
 				return;
 			}
 			fbreader.invalidateAccountDependents();
 			fbreader.refreshWindow();
 			if (!mgr.needPurchase(myBook)) {
 				return;
-			}
-		}
-		ZLResourceKey boxKey("purchaseConfirmBox");
-		const std::string message = ZLStringUtil::printf(ZLDialogManager::dialogMessage(boxKey), myBook.Title);
-		const int code = ZLDialogManager::Instance().questionBox(boxKey, message, ZLResourceKey("buy"), ZLResourceKey("buyAndDownload"), ZLDialogManager::CANCEL_BUTTON);
-		if (code == 2) {
+			}*/
+			AuthenticationDialog.Instance().show(book.Link);
 			return;
 		}
-		bool downloadBook = code == 1;
-		if (mgr.needPurchase(myBook)) {
-			PurchaseBookRunnable purchaser(mgr, myBook);
-			purchaser.executeWithUI();
-			if (purchaser.hasErrors()) {
-				purchaser.showErrorMessage();
-				downloadBook = false;
+
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+
+		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				if (which == DialogInterface.BUTTON_NEGATIVE) {
+					return;
+				}
+				final boolean downloadBook = which == DialogInterface.BUTTON_NEUTRAL;
+				if (mgr.needPurchase(book)) {
+					final Handler handler = new Handler() {
+						public void handleMessage(Message message) {
+							String err = (String) message.obj;
+							if (err != null) {
+								final ZLResource boxResource = dialogResource.getResource("networkError");
+								new AlertDialog.Builder(NetworkLibraryActivity.Instance)
+									.setTitle(boxResource.getResource("title").getValue())
+									.setMessage(err)
+									.setIcon(0)
+									.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+									.create().show();
+							} else if (downloadBook) {
+								doDownloadBook(bookTree, false);
+							}
+							if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
+								final NetworkLibrary library = NetworkLibrary.Instance();
+								library.invalidateAccountDependents();
+								library.synchronize();
+							}
+							if (NetworkLibraryActivity.Instance != null) {
+								NetworkLibraryActivity.Instance.getAdapter().resetTree();
+								NetworkLibraryActivity.Instance.getListView().invalidateViews();
+							}
+						}
+					};
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							String err = mgr.purchaseBook(book);
+							handler.sendMessage(handler.obtainMessage(0, err));
+						}
+					};
+					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("purchaseBook", runnable, NetworkLibraryActivity.Instance);
+				}
 			}
-		}
-		if (downloadBook) {
-			NetworkBookDownloadAction(myBook, false).run();
-		}
-		if (mgr.isAuthorised().Status == B3_FALSE) {
-			fbreader.invalidateAccountDependents();
-		}
-		fbreader.refreshWindow();*/
+		};
+
+		final ZLResource boxResource = dialogResource.getResource("purchaseConfirmBox");
+		new AlertDialog.Builder(NetworkLibraryActivity.Instance)
+			.setTitle(boxResource.getResource("title").getValue())
+			.setMessage(boxResource.getResource("message").getValue().replace("%s", book.Title))
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("buy").getValue(), listener)
+			.setNeutralButton(buttonResource.getResource("buyAndDownload").getValue(), listener)
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+			.create().show();
 	}
 
 	private void doBuyInBrowser(NetworkTree tree) {

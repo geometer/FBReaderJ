@@ -103,6 +103,10 @@
 		<node name="bookmarks" value="Bookmarks"/>
 	</node>
 	<node name="dialog">
+		<node name="button">
+			<node name="buy" value="Buy" />
+			<node name="buyAndDownload" value="Buy and download" />
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="File name"/>
 			<node name="title" value="Title"/>
@@ -230,6 +234,7 @@
 			<node name="loadingNetworkLibrary" value="Opening library. Please, wait..." />
 			<node name="authentication" value="Authentication. Please, wait..." />
 			<node name="signOut" value="Signing out. Please, wait..." />
+			<node name="purchaseBook" value="Purchase book. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />
@@ -257,6 +262,10 @@
 			<node name="password" value="Password" />
 			<node name="skipIP" value="Don't bound to ip-address" />
 			<node name="loginIsEmpty" value="Username should be non-empty" />
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="Purchase book" />
+			<node name="message" value="Are you sure you want to buy&#10;&#8220;%s&#8221;&#10;book?" />
 		</node>
 	</node>
 	<node name="errorMessage">

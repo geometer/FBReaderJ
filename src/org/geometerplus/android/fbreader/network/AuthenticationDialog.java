@@ -52,11 +52,11 @@ class AuthenticationDialog {
 
 	private final ZLResource myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
-	private NetworkCatalogTree myTree;
+	private NetworkLink myLink;
 	private String myErrorMessage;
 
-	public void show(NetworkCatalogTree tree) {
-		myTree = tree;
+	public void show(NetworkLink link) {
+		myLink = link;
 		myErrorMessage = null;
 		NetworkLibraryActivity.Instance.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 	}
@@ -86,7 +86,7 @@ class AuthenticationDialog {
 				myErrorMessage = (String) message.obj;
 				myActivity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 			} else if (message.what == 1) {
-				final NetworkAuthenticationManager mgr = myTree.Item.Link.authenticationManager();
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (mgr.UserNameOption.getValue().length() == 0) {
 					myErrorMessage = myResource.getResource("loginIsEmpty").getValue();
 					myActivity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
@@ -114,7 +114,7 @@ class AuthenticationDialog {
 				};
 				((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("authentication", runnable, myActivity);
 			} else {
-				final NetworkAuthenticationManager mgr = myTree.Item.Link.authenticationManager();
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				final Runnable runnable = new Runnable() {
 					public void run() {
 						if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
@@ -145,7 +145,7 @@ class AuthenticationDialog {
 		passwordText.setText(myResource.getResource("password").getValue());
 		passwordText.getLayoutParams().height = password.getMeasuredHeight();
 
-		final NetworkAuthenticationManager mgr = myTree.Item.Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
 		// TODO: implement skipIP option
 
@@ -174,7 +174,7 @@ class AuthenticationDialog {
 	}
 
 	public void prepareDialog(Dialog dialog) {
-		final NetworkAuthenticationManager mgr = myTree.Item.Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
 		final TextView login = (TextView) dialog.findViewById(R.id.network_authentication_login);
 		login.setText(mgr.UserNameOption.getValue());

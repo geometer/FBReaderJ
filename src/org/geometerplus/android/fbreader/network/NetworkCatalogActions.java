@@ -28,7 +28,6 @@ import android.view.ContextMenu;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
@@ -145,7 +144,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				diableCatalog((NetworkCatalogRootTree) tree);
 				return true;*/
 			case SIGNIN_ITEM_ID:
-				AuthenticationDialog.Instance().show((NetworkCatalogTree)tree);
+				AuthenticationDialog.Instance().show(((NetworkCatalogTree)tree).Item.Link);
 				return true;
 			case SIGNOUT_ITEM_ID:
 				doSignOut((NetworkCatalogTree)tree);

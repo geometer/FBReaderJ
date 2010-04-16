@@ -104,6 +104,10 @@
 		<node name="bookmarks" value="书签" />
 	</node>
 	<node name="dialog">
+		<node name="button">
+			<node name="buy" value="购买" />
+			<node name="buyAndDownload" value="购买 下载" />
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="文件" />
 			<node name="title" value="书名" />
@@ -231,6 +235,7 @@
 			<node name="loadingNetworkLibrary" value="正在打开书库，请等待..." />
 			<node name="authentication" value="验证中.请等待..." />
 			<node name="signOut" value="退出. 正在处理,请稍等..." />
+			<node name="purchaseBook" value="书籍购买中. 请等待..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />
@@ -258,6 +263,10 @@
 			<node name="password" value="密码" />
 			<node name="skipIP" value="不绑定到IP地址" />
 			<node name="loginIsEmpty" value="用户名不允许为空" />
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="购买书籍" />
+			<node name="message" value="确认购买%s书籍?" />
 		</node>
 	</node>
 	<node name="errorMessage">
