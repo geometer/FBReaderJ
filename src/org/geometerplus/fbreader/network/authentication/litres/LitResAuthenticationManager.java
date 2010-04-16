@@ -176,7 +176,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			if (error != null) {
 				return error;
 			}
-			if (xmlReader.BookId != book.Id) {
+			if (xmlReader.BookId == null || !xmlReader.BookId.equals(book.Id)) {
 				return NetworkErrors.errorMessage(NetworkErrors.ERROR_SOMETHING_WRONG, Link.SiteName);
 			}
 		}
