@@ -35,6 +35,11 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 	private ZLTree myTree;
 	private ZLTree[] myItems;
 	private final HashSet<ZLTree> myOpenItems = new HashSet<ZLTree>();
+	private View myClickedView;
+
+	protected View getClickedView() {
+		return myClickedView;
+	}
 
 	protected ZLTreeAdapter(ListView parent, ZLTree tree) {
 		myParent = parent;
@@ -180,6 +185,7 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 	}
 
 	public final void onItemClick(AdapterView parent, View view, int position, long id) {
+		myClickedView = view;
 		runTreeItem(getItem(position));
 	}
 

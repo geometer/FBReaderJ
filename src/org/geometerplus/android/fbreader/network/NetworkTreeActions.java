@@ -29,6 +29,11 @@ import org.geometerplus.fbreader.network.NetworkTree;
 
 abstract class NetworkTreeActions {
 
+	// special values to return from getDefaultActionCode(NetworkTree)
+	public static final int TREE_NO_ACTION = -1;
+	public static final int TREE_SHOW_CONTEXT_MENU = -2;
+
+
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	protected String getTitleValue(String key) {

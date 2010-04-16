@@ -271,6 +271,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			}
 			final int actionCode = actions.getDefaultActionCode(networkTree);
 			final String confirm = actions.getConfirmText(networkTree, actionCode);
+			if (actionCode == NetworkTreeActions.TREE_SHOW_CONTEXT_MENU) {
+				NetworkLibraryActivity.this.getListView().showContextMenuForChild(getClickedView());
+				return true;
+			}
 			if (actionCode < 0) {
 				return false;
 			}

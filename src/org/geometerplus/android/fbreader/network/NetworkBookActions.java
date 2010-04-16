@@ -129,7 +129,7 @@ class NetworkBookActions extends NetworkTreeActions {
 				}
 			}
 		}
-		if (useDemoReferences(book)) {
+		/*if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
 			if (!NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
@@ -145,8 +145,8 @@ class NetworkBookActions extends NetworkTreeActions {
 			} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
 				return BUY_IN_BROWSER_ITEM_ID;
 			}
-		}
-		return -1;
+		}*/
+		return TREE_SHOW_CONTEXT_MENU;
 	}
 
 	@Override

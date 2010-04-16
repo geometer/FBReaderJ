@@ -117,7 +117,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
-		return -1;
+		return TREE_NO_ACTION;
 	}
 
 	@Override
