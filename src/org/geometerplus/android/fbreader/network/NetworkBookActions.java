@@ -207,13 +207,19 @@ class NetworkBookActions extends NetworkTreeActions {
 		int resolvedType = demo ? BookReference.Type.DOWNLOAD_DEMO : BookReference.Type.DOWNLOAD_FULL;
 		BookReference ref = book.reference(resolvedType);
 		if (ref != null) {
-			// TODO: add `demo` tag to the book???
+			final String sslCertificate;
+			if (book.Link.authenticationManager() != null) {
+				sslCertificate = book.Link.authenticationManager().SSLCertificate;
+			} else {
+				sslCertificate = null;
+			}
 			NetworkLibraryActivity.Instance.startService(
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), NetworkLibraryActivity.Instance, BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanURL())
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
+					.putExtra(BookDownloaderService.SSL_CERTIFICATE_KEY, sslCertificate)
 			);
 		}
 	}

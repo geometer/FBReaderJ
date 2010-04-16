@@ -51,6 +51,7 @@ public class BookDownloaderService extends Service {
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
 	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
+	public static final String SSL_CERTIFICATE_KEY = "org.geometerplus.android.fbreader.network.SSLCertificate";
 
 	public static final String SHOW_NOTIFICATIONS_KEY = "org.geometerplus.android.fbreader.network.ShowNotifications";
 
@@ -186,7 +187,8 @@ public class BookDownloaderService extends Service {
 				Toast.LENGTH_SHORT
 			).show();
 		}
-		startFileDownload(url, fileFile, title);
+		final String sslCertificate = intent.getStringExtra(SSL_CERTIFICATE_KEY);
+		startFileDownload(url, sslCertificate, fileFile, title);
 	}
 
 	private Intent getFBReaderIntent(final File file) {
@@ -235,7 +237,7 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
-	private void startFileDownload(final String urlString, final File file, final String title) {
+	private void startFileDownload(final String urlString, final String sslCertificate, final File file, final String title) {
 		myDownloadingURLs.add(urlString);
 
 		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
@@ -276,7 +278,7 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
-		final ZLNetworkRequest request = new ZLNetworkRequest(urlString) {
+		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate) {
 
 			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
