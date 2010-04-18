@@ -49,7 +49,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	public synchronized AuthenticationStatus isAuthorised(boolean useNetwork /* = true */) {
-		boolean authState = mySidUserNameOption.getValue().length() != 0 && mySidOption.getValue().length() != 0;
+		boolean authState =
+			mySidUserNameOption.getValue().length() != 0 &&
+			mySidOption.getValue().length() != 0;
+
 		if (mySidChecked || !useNetwork) {
 			return new AuthenticationStatus(authState);
 		}

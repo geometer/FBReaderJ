@@ -1,3 +1,6 @@
+** Network library: Объединять книги по сериям
+** Не обрабатывается ошибка в Authorization dialog: пустое имя пользователя
+
 DONE Shucang: не обрабатывается next-link, например для http://www.shucang.com/s/doclist.php?type=newest (на первом уровне, иконка с часами)
 DONE Shucang catalog -> второй пункт сверху -> открываем => item'ы книг без названий и аторов
 DONE И после загрузки в notification для первого файла из этого списка -- название файла

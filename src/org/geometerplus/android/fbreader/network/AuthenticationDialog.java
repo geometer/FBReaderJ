@@ -54,12 +54,12 @@ class AuthenticationDialog {
 
 	private NetworkLink myLink;
 	private String myErrorMessage;
-	private Runnable myOnSucessRunnable;
+	private Runnable myOnSuccessRunnable;
 
-	public void show(NetworkLink link, Runnable onSucessRunnable) {
+	public void show(NetworkLink link, Runnable onSuccessRunnable) {
 		myLink = link;
 		myErrorMessage = null;
-		myOnSucessRunnable = onSucessRunnable;
+		myOnSuccessRunnable = onSuccessRunnable;
 		NetworkLibraryActivity.Instance.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 	}
 
@@ -94,8 +94,8 @@ class AuthenticationDialog {
 					myErrorMessage = (String) message.obj;
 					activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 				} else if (message.what > 0) {
-					if (myOnSucessRunnable != null) {
-						myOnSucessRunnable.run();
+					if (myOnSuccessRunnable != null) {
+						myOnSuccessRunnable.run();
 					}
 				}
 			}
@@ -106,10 +106,10 @@ class AuthenticationDialog {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					AlertDialog alert = (AlertDialog) dialog;
-					final String login = ((TextView) alert.findViewById(R.id.network_authentication_login)).getText().toString();
-					final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString();
+					final String login = ((TextView) alert.findViewById(R.id.network_authentication_login)).getText().toString().trim();
+					final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString().trim();
 
-					if (mgr.UserNameOption.getValue().length() == 0) {
+					if (login.length() == 0) {
 						myErrorMessage = myResource.getResource("loginIsEmpty").getValue();
 						activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 						return;
