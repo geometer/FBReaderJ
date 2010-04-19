@@ -165,11 +165,11 @@ public final class Library {
 				return false;
 			}
 			AuthorSeriesPair pair = (AuthorSeriesPair)object;
-			return myAuthor.equals(pair.myAuthor) && mySeries.equals(pair.mySeries);
+			return Author.areEquals(myAuthor, pair.myAuthor) && mySeries.equals(pair.mySeries);
 		}
 
 		public int hashCode() {
-			return myAuthor.hashCode() + mySeries.hashCode();
+			return Author.hashCode(myAuthor) + mySeries.hashCode();
 		}
 	}
 
