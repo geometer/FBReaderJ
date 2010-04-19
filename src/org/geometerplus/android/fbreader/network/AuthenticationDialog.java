@@ -107,11 +107,11 @@ class AuthenticationDialog {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					AlertDialog alert = (AlertDialog) dialog;
 					final String login = ((TextView) alert.findViewById(R.id.network_authentication_login)).getText().toString().trim();
-					final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString().trim();
+					final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString();
 
 					if (login.length() == 0) {
-						myErrorMessage = myResource.getResource("loginIsEmpty").getValue();
-						activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+						String err = myResource.getResource("loginIsEmpty").getValue();
+						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
 					mgr.UserNameOption.setValue(login);

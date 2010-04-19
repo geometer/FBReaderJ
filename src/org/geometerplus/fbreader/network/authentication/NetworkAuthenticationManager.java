@@ -29,13 +29,11 @@ public abstract class NetworkAuthenticationManager {
 
 	public final NetworkLink Link;
 	public final ZLStringOption UserNameOption;
-	public final ZLBooleanOption SkipIPOption;
 	public final String SSLCertificate;
 
 	public NetworkAuthenticationManager(NetworkLink link, String sslCertificate) {
 		Link = link;
 		UserNameOption = new ZLStringOption(link.SiteName, "userName", "");
-		SkipIPOption = new ZLBooleanOption(link.SiteName, "skipIP", false);
 		SSLCertificate = sslCertificate;
 	}
 

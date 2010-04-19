@@ -94,9 +94,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 		url = ZLNetworkUtil.appendParameter(url, "login", UserNameOption.getValue());
 		url = ZLNetworkUtil.appendParameter(url, "pwd", password);
-		if (SkipIPOption.getValue()) {
-			url = ZLNetworkUtil.appendParameter(url, "skip_ip", "1");
-		}
 
 		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.SiteName);
 		final String error = ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
