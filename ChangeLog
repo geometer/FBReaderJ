@@ -1,4 +1,4 @@
-===== 0.6.0 (April ??, 2010) =====
+===== 0.6.0 (April 19, 2010) =====
 
 * Chinese text layouting has been implemented (we use native liblinebreak library
   from http://vimgadgets.cvs.sourceforge.net/vimgadgets/common/tools/linebreak/)
