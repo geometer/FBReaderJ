@@ -72,7 +72,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	private String mySecondString;
 
 	public final void invalidateChildren() {
-		mySecondString = "";
+		mySecondString = null;
 	}
 
 	public final String getSecondString() {
