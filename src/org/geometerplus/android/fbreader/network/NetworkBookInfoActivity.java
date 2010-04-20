@@ -19,11 +19,14 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.Set;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Button;
 import android.net.Uri;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -56,11 +59,17 @@ public class NetworkBookInfoActivity extends Activity {
 
 		setTitle(myBook.Title);
 		setContentView(R.layout.network_book);
-		final View rootView = findViewById(R.id.network_book_root);
-		final ImageView coverView = (ImageView) findViewById(R.id.network_book_cover);
-		final TextView descriptionViewTitle = (TextView) findViewById(R.id.network_book_description_title);
-		final TextView descriptionView = (TextView) findViewById(R.id.network_book_description);
 
+		setupDescription();
+		setupCover();
+		setupButtons();
+	}
+
+	private final void setupDescription() {
+		final TextView descriptionViewTitle = (TextView) findViewById(R.id.network_book_description_title);
+		descriptionViewTitle.setText(myResource.getResource("description").getValue());
+
+		final TextView descriptionView = (TextView) findViewById(R.id.network_book_description);
 		final String description;
 		if (myBook.Summary != null) {
 			description = myBook.Summary;
@@ -68,7 +77,11 @@ public class NetworkBookInfoActivity extends Activity {
 			description = myResource.getResource("noDescription").getValue();
 		}
 		descriptionView.setText(description);
-		descriptionViewTitle.setText(myResource.getResource("description").getValue());
+	}
+
+	private final void setupCover() {
+		final View rootView = findViewById(R.id.network_book_root);
+		final ImageView coverView = (ImageView) findViewById(R.id.network_book_cover);
 
 		final int maxHeight = 300; // FIXME: hardcoded constant
 		final int maxWidth = maxHeight * 2 / 3;
@@ -114,4 +127,72 @@ public class NetworkBookInfoActivity extends Activity {
 		}
 	}
 
+	private final void setupButtons() {
+		final int buttonCount = 3;
+		int buttonNumber = 0;
+		Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook);
+		for (final NetworkBookActions.Action a: actions) {
+			if (buttonNumber >= buttonCount) {
+				break;
+			}
+
+			ZLResource resource = ZLResource.resource("networkView");
+			final String text;
+			if (a.Arg == null) {
+				text = resource.getResource(a.Key).getValue();
+			} else {
+				text = resource.getResource(a.Key).getValue().replace("%s", a.Arg);
+			}
+
+			final String buttonName = "network_book_button" + buttonNumber++;
+			try {
+				int buttonId = R.id.class.getDeclaredField(buttonName).getInt(null);
+				Button button = (Button) findViewById(buttonId);
+				button.setText(text);
+				button.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						NetworkBookActions.runAction(myBook, a.Id);
+						NetworkBookInfoActivity.this.updateView();
+					}
+				});
+			} catch (NoSuchFieldException ex) {
+			} catch (SecurityException ex) {
+			} catch (IllegalAccessException ex) {
+			} catch (IllegalArgumentException ex) {
+			}
+		}
+		boolean showSpacers = buttonNumber == 1;
+		findViewById(R.id.network_book_left_spacer).setVisibility(showSpacers ? View.VISIBLE : View.GONE);
+		findViewById(R.id.network_book_right_spacer).setVisibility(showSpacers ? View.VISIBLE : View.GONE);
+		while (buttonNumber < buttonCount) {
+			final String buttonName = "network_book_button" + buttonNumber++;
+			try {
+				int buttonId = R.id.class.getDeclaredField(buttonName).getInt(null);
+				View button = findViewById(buttonId);
+				button.setVisibility(View.GONE);
+				button.setOnClickListener(null);
+			} catch (NoSuchFieldException ex) {
+			} catch (SecurityException ex) {
+			} catch (IllegalAccessException ex) {
+			} catch (IllegalArgumentException ex) {
+			}
+		}
+	}
+
+	void updateView() {
+		setupButtons();
+		final View rootView = findViewById(R.id.network_book_root);
+		rootView.invalidate();
+		rootView.requestLayout();
+	}
+
+	protected void onStart() {
+		super.onStart();
+		NetworkLibraryActivity.Instance.setTopLevelActivity(this);
+	}
+
+	protected void onStop() {
+		NetworkLibraryActivity.Instance.setTopLevelActivity(null);
+		super.onStop();
+	}
 }

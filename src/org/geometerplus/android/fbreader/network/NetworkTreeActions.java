@@ -53,11 +53,11 @@ abstract class NetworkTreeActions {
 	}
 
 	protected MenuItem addMenuItem(ContextMenu menu, int id, String key) {
-		return menu.add(0, id, 0, getTitleValue(key));
+		return menu.add(0, id, 0, getTitleValue(key)).setEnabled(id != TREE_NO_ACTION);
 	}
 
 	protected MenuItem addMenuItem(ContextMenu menu, int id, String key, String arg) {
-		return menu.add(0, id, 0, getTitleValue(key, arg));
+		return menu.add(0, id, 0, getTitleValue(key, arg)).setEnabled(id != TREE_NO_ACTION);
 	}
 
 	public abstract boolean canHandleTree(NetworkTree tree);

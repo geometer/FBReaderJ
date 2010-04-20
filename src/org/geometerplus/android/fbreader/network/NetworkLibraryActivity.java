@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.util.concurrent.*;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -106,10 +107,25 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	}
 
 
+	private Activity myTopLevelActivity;
+
+	public Activity getTopLevelActivity() {
+		return myTopLevelActivity;
+	}
+
+	void setTopLevelActivity(Activity activity) {
+		if (activity == null) {
+			myTopLevelActivity = this;
+		} else {
+			myTopLevelActivity = activity;
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Instance = this;
+		myTopLevelActivity = this;
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
@@ -122,7 +138,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 		myConnection = new BookDownloaderServiceConnection();
 		bindService(
-			new Intent(this, BookDownloaderService.class),
+			new Intent(getApplicationContext(), BookDownloaderService.class),
 			myConnection,
 			BIND_AUTO_CREATE
 		);
@@ -336,7 +352,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		if (!myCatalogRunnables.containsKey(uri)) {
 			myCatalogRunnables.put(uri, loadCatalogRunnable);
 			startService(
-				new Intent(Intent.ACTION_DEFAULT, uri, this, CatalogDownloaderService.class)
+				new Intent(Intent.ACTION_DEFAULT, uri, getApplicationContext(), CatalogDownloaderService.class)
 			);
 		}
 	}
@@ -348,7 +364,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	void showBookInfoActivity(NetworkBookItem book) {
 		myBookInfoItem = book;
 		startActivity(
-			new Intent(this, NetworkBookInfoActivity.class)
+			new Intent(getApplicationContext(), NetworkBookInfoActivity.class)
 		);
 	}
 
