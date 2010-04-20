@@ -78,6 +78,9 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	public final String getSecondString() {
 		if (mySecondString == null) {
 			mySecondString = getSummary();
+			if (mySecondString == null) {
+				mySecondString = "";
+			}
 		}
 		return mySecondString;
 	}
