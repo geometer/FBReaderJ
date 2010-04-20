@@ -225,7 +225,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				myItems.notifyAll(); // wake up process, that waits for all items to be displayed (see ensureFinish() method)
 			}
 			if (NetworkLibraryActivity.Instance != null) {
-				NetworkLibraryActivity.Instance.getAdapter().resetTree();
+				NetworkLibraryActivity.Instance.resetTree();
 			}
 		}
 
@@ -233,7 +233,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			boolean expand = !myTree.hasChildren();
 			displayItems();
 			if (expand && NetworkLibraryActivity.Instance != null) {
-				NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(myTree);
+				ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
+				if (adapter != null) {
+					adapter.expandOrCollapseTree(myTree);
+				}
 			}
 		}
 
@@ -368,8 +371,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		library.invalidateAccountDependents();
 		library.synchronize();
 		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.getAdapter().resetTree();
-			NetworkLibraryActivity.Instance.getListView().invalidateViews();
+			NetworkLibraryActivity.Instance.resetTree();
 		}
 	}
 
@@ -378,7 +380,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.invalidate();
 		library.synchronize();
-		NetworkLibraryActivity.Instance.getAdapter().resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
+		NetworkLibraryActivity.Instance.resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
 	}*/
 
 	private void doSignOut(NetworkCatalogTree tree) {
@@ -388,8 +390,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				library.invalidateAccountDependents();
 				library.synchronize();
 				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.getAdapter().resetTree();
-					NetworkLibraryActivity.Instance.getListView().invalidateViews();
+					NetworkLibraryActivity.Instance.resetTree();
 				}
 			}
 		};

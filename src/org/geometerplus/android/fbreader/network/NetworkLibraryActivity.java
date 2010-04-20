@@ -305,6 +305,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		return (ZLTreeAdapter) getListView().getAdapter();
 	}
 
+	public final void resetTree() {
+		ZLTreeAdapter adapter = getAdapter();
+		if (adapter != null) {
+			adapter.resetTree();
+		}
+	}
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final LibraryAdapter adapter = (LibraryAdapter) getAdapter();
