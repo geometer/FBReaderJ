@@ -69,7 +69,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 
-	private HashMap<Uri, Runnable> myCatalogRunnables = new HashMap<Uri, Runnable>();
+	private final HashMap<Uri, Runnable> myCatalogRunnables = new HashMap<Uri, Runnable>();
+	private NetworkBookItem myBookInfoItem;
+	private final HashSet<String> myIconsToSync = new HashSet<String>();
+	private final HashMap<String, Runnable> myOnCoverSyncRunnables = new HashMap<String, Runnable>();
 
 	private boolean myLibraryLoaded;
 
@@ -178,12 +181,10 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private final class LibraryAdapter extends ZLTreeAdapter {
 
 		private final ExecutorService myPool;
-		private final HashSet<NetworkImage> myIconsToSync;
 
 		LibraryAdapter(ListView view, NetworkTree tree) {
 			super(view, tree);
-			myPool = Executors.newFixedThreadPool(10); // TODO: how many threads ???
-			myIconsToSync = new HashSet<NetworkImage>();
+			myPool = Executors.newFixedThreadPool(3); // TODO: how many threads ???
 		}
 
 		@Override
@@ -226,14 +227,18 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					final NetworkImage img = (NetworkImage) cover;
 					if (img.isSynchronized()) {
 						data = mgr.getImageData(img);
-					} else if (!myIconsToSync.contains(img)) {
-						myIconsToSync.add(img);
+					} else if (!myIconsToSync.contains(img.Url)) {
+						myIconsToSync.add(img.Url);
 						final Handler handler = new Handler() {
 							public void handleMessage(Message message) {
-								myIconsToSync.remove(img);
-								ListView view = NetworkLibraryActivity.this.getListView();
+								myIconsToSync.remove(img.Url);
+								final ListView view = NetworkLibraryActivity.this.getListView();
 								view.invalidateViews();
 								view.requestLayout();
+								final Runnable runnable = myOnCoverSyncRunnables.remove(img.Url);
+								if (runnable != null) {
+									runnable.run();
+								}
 							}
 						};
 						myPool.execute(new Runnable() {
@@ -301,15 +306,56 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
 
-	public final ZLTreeAdapter getAdapter() {
+	boolean isCoverLoading(String url) {
+		return myIconsToSync.contains(url);
+	}
+
+	void setOnCoverSyncRunnable(String invalidateOnUrl, Runnable runnable) {
+		myOnCoverSyncRunnables.put(invalidateOnUrl, runnable);
+	}
+
+	final ZLTreeAdapter getAdapter() {
 		return (ZLTreeAdapter) getListView().getAdapter();
 	}
 
-	public final void resetTree() {
+	final void resetTree() {
 		ZLTreeAdapter adapter = getAdapter();
 		if (adapter != null) {
 			adapter.resetTree();
 		}
+	}
+
+	void openInBrowser(String url) {
+		if (url != null) {
+			url = NetworkLibrary.Instance().rewriteUrl(url, true);
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		}
+	}
+
+	void loadCatalog(Uri uri, Runnable loadCatalogRunnable) {
+		if (!myCatalogRunnables.containsKey(uri)) {
+			myCatalogRunnables.put(uri, loadCatalogRunnable);
+			startService(
+				new Intent(Intent.ACTION_DEFAULT, uri, this, CatalogDownloaderService.class)
+			);
+		}
+	}
+
+	Runnable getCatalogRunnable(Uri uri) {
+		return myCatalogRunnables.remove(uri);
+	}
+
+	void showBookInfoActivity(NetworkBookItem book) {
+		myBookInfoItem = book;
+		startActivity(
+			new Intent(this, NetworkBookInfoActivity.class)
+		);
+	}
+
+	NetworkBookItem getBookItem() {
+		NetworkBookItem book = myBookInfoItem;
+		myBookInfoItem = null;
+		return book;
 	}
 
 	@Override
@@ -335,28 +381,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			return true;
 		}
 		return super.onContextItemSelected(item);
-	}
-
-	public void openInBrowser(String url) {
-		if (url != null) {
-			url = NetworkLibrary.Instance().rewriteUrl(url, true);
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-		}
-	}
-
-	public void loadCatalog(Uri uri, Runnable loadCatalogRunnable) {
-		if (!myCatalogRunnables.containsKey(uri)) {
-			myCatalogRunnables.put(uri, loadCatalogRunnable);
-			startService(
-				new Intent(Intent.ACTION_DEFAULT, uri, this, CatalogDownloaderService.class)
-			);
-		}
-	}
-
-	public Runnable getCatalogRunnable(Uri uri) {
-		Runnable r = myCatalogRunnables.get(uri);
-		myCatalogRunnables.remove(uri);
-		return r;
 	}
 
 	@Override

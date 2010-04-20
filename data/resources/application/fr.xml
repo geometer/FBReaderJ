@@ -47,6 +47,10 @@
 		</node>
 		<node name="downloadingCatalogs" toBeTranslated="true" value="Downloading catalogs"/> <!-- used as notification title -->
 	</node>
+	<node name="networkBookView">
+		<node name="description" toBeTranslated="true" value="Description" />
+		<node name="noDescription" toBeTranslated="true" value="No description available." />
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" toBeTranslated="true" value="Book has been downloaded" />
 		<node name="tickerError" toBeTranslated="true" value="Book download error" />

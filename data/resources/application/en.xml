@@ -46,6 +46,10 @@
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
 	</node>
+	<node name="networkBookView">
+		<node name="description" value="Description" />
+		<node name="noDescription" value="No description available." />
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Book has been downloaded" />
 		<node name="tickerError" value="Book download error" />

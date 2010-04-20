@@ -47,6 +47,10 @@
 		</node>
 		<node name="downloadingCatalogs" value="书库目录下载" /> <!-- used as notification title -->
 	</node>
+	<node name="networkBookView">
+		<node name="description" toBeTranslated="true" value="Description" />
+		<node name="noDescription" toBeTranslated="true" value="No description available." />
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="下载成功" />
 		<node name="tickerError" value="下载出错" />

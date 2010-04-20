@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/network_book_root"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+>
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+	>
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+		>
+			<ImageView
+				android:id="@+id/network_book_cover"
+				android:scaleType="centerInside"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="10dp"
+			/>
+			<TextView
+				android:id="@+id/network_book_description_title"
+				style="?android:attr/listSeparatorTextViewStyle"
+			/>
+			<TextView
+				android:id="@+id/network_book_description"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:padding="10dp"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+			/>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

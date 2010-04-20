@@ -49,6 +49,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	public static final int DELETE_DEMO_ITEM_ID = 5;
 	public static final int BUY_DIRECTLY_ITEM_ID = 6;
 	public static final int BUY_IN_BROWSER_ITEM_ID = 7;
+	public static final int SHOW_BOOK_ACTIVITY_ITEM_ID = 8;
 
 	private boolean useFullReferences(NetworkBookItem book) {
 		return book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
@@ -117,36 +118,7 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkTree tree) {
-		final NetworkBookTree bookTree = (NetworkBookTree) tree;
-		final NetworkBookItem book = bookTree.Book;
-		if (useFullReferences(book)) {
-			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
-			if (reference == null || !NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
-				if (book.localCopyFileName() != null) {
-					return READ_BOOK_ITEM_ID;
-				} else if (reference != null) {
-					return DOWNLOAD_BOOK_ITEM_ID;
-				}
-			}
-		}
-		/*if (useDemoReferences(book)) {
-			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (!NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
-				if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
-					return READ_DEMO_ITEM_ID;
-				} else {
-					return DOWNLOAD_DEMO_ITEM_ID;
-				}
-			}
-		}
-		if (useBuyReferences(book)) {
-			if (book.reference(BookReference.Type.BUY) != null) {
-				return BUY_DIRECTLY_ITEM_ID;
-			} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
-				return BUY_IN_BROWSER_ITEM_ID;
-			}
-		}*/
-		return TREE_SHOW_CONTEXT_MENU;
+		return SHOW_BOOK_ACTIVITY_ITEM_ID;
 	}
 
 	@Override
@@ -196,6 +168,9 @@ class NetworkBookActions extends NetworkTreeActions {
 				return true;
 			case BUY_IN_BROWSER_ITEM_ID:
 				doBuyInBrowser(tree);
+				return true;
+			case SHOW_BOOK_ACTIVITY_ITEM_ID:
+				NetworkLibraryActivity.Instance.showBookInfoActivity(((NetworkBookTree) tree).Book);
 				return true;
 		}
 		return false;

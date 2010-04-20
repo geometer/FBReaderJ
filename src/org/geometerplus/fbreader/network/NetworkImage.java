@@ -34,13 +34,13 @@ public final class NetworkImage extends ZLSingleImage {
 	public static final String MIME_PNG = "image/png";
 	public static final String MIME_JPEG = "image/jpeg";
 
-	private final String myUrl;
+	public final String Url;
 	private volatile boolean mySynchronized;
 
 	// mimeType string MUST be interned
 	public NetworkImage(String url, String mimeType) {
 		super(mimeType);
-		myUrl = url;
+		Url = url;
 		new File(makeImagesDir()).mkdirs();
 	}
 
@@ -141,7 +141,7 @@ public final class NetworkImage extends ZLSingleImage {
 	}
 
 	public String getFileName() {
-		return makeImageFileName(myUrl, mimeType());
+		return makeImageFileName(Url, mimeType());
 	}
 
 	public boolean isSynchronized() {
@@ -149,6 +149,14 @@ public final class NetworkImage extends ZLSingleImage {
 	}
 
 	public void synchronize() {
+		synchronizeInternal(false);
+	}
+
+	public void synchronizeFast() {
+		synchronizeInternal(true);
+	}
+
+	private final void synchronizeInternal(boolean doFast) {
 		if (mySynchronized) {
 			return;
 		}
@@ -180,8 +188,11 @@ public final class NetworkImage extends ZLSingleImage {
 				}
 				imageFile.delete();
 			}
+			if (doFast) {
+				return;
+			}
 
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(myUrl) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(Url) {
 				public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
 					OutputStream outStream = new FileOutputStream(imageFile);
 					try {

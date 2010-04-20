@@ -46,6 +46,10 @@
 		</node>
 		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
 	</node>
+	<node name="networkBookView">
+		<node name="description" value="Описание" />
+		<node name="noDescription" value="Описание отсутствует." />
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Книга скачана" />
 		<node name="tickerError" value="Книгу скачать не удалось" />
