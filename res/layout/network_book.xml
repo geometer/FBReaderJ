@@ -27,27 +27,21 @@
 			android:id="@+id/network_book_button0"
 			android:layout_width="0dip"
 			android:layout_weight="1"
-			android:ellipsize="marquee"
-			android:marqueeRepeatLimit="marquee_forever"
-			android:singleLine="true"
+			android:maxLines="2"
 			android:layout_height="wrap_content"
 		/>
 		<Button
 			android:id="@+id/network_book_button1"
 			android:layout_width="0dip"
 			android:layout_weight="1"
-			android:ellipsize="marquee"
-			android:marqueeRepeatLimit="marquee_forever"
-			android:singleLine="true"
+			android:maxLines="2"
 			android:layout_height="wrap_content"
 		/>
 		<Button
 			android:id="@+id/network_book_button2"
 			android:layout_width="0dip"
 			android:layout_weight="1"
-			android:ellipsize="marquee"
-			android:marqueeRepeatLimit="marquee_forever"
-			android:singleLine="true"
+			android:maxLines="2"
 			android:layout_height="wrap_content"
 		/>
 		<LinearLayout
