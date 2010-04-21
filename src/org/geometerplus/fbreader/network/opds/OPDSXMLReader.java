@@ -675,6 +675,15 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public void characterDataHandler(char[] data, int start, int length) {
+		final int startIndex = myBuffer.length();
 		myBuffer.append(data, start, length);
+		int index = startIndex;
+		while ((index = myBuffer.indexOf("\r\n", index)) != -1) {
+			myBuffer.replace(index, index + 2, "\n");
+		}
+		index = startIndex;
+		while ((index = myBuffer.indexOf("\r", index)) != -1) {
+			myBuffer.setCharAt(index, '\n');
+		}
 	}
 }

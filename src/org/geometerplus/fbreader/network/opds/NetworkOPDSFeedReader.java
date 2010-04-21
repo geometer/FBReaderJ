@@ -334,7 +334,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		if (entry.Summary == null) {
 			annotation = null;
 		} else {
-			annotation = entry.Summary.replace("\011", "").replace("\012", "");
+			annotation = entry.Summary.replace("\n", "");
 		}
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
