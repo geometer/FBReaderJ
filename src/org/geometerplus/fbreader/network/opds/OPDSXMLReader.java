@@ -19,6 +19,10 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import android.text.Html;
+import android.text.Editable;
+import org.xml.sax.XMLReader;
+
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
@@ -50,7 +54,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
-	private boolean mySummaryTagFound;
+
 
 	public OPDSXMLReader(OPDSFeedReader feedReader) {
 		myFeedReader = feedReader;
@@ -94,6 +98,89 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				myCalibreNamespaceId = intern(namespaces.get(key));
 			} else if (key == XMLNamespace.Opds) {
 				myOpdsNamespaceId = intern(namespaces.get(key));
+			}
+		}
+	}
+
+
+	private String myLastOpenedTag;
+	private String myTextType;
+	private StringBuilder myTextContent = new StringBuilder();
+
+	private void setupTextContent(ZLStringMap attributes) {
+		myTextType = attributes.getValue("type");
+		if (myTextType == null) {
+			myTextType = ATOMConstants.TYPE_DEFAULT;
+		}
+		myTextContent.delete(0, myTextContent.length());
+	}
+
+	private String finishTextContent(String bufferContent) {
+		if (bufferContent != null) {
+			myTextContent.append(bufferContent);
+		}
+		char[] contentArray = myTextContent.toString().trim().toCharArray();
+		String result;
+		if (contentArray.length == 0) {
+			result = null;
+		} else {
+			result = new String(contentArray);
+		}
+		if (result != null) {
+			if (myTextType == ATOMConstants.TYPE_HTML || myTextType == ATOMConstants.TYPE_XHTML
+					|| myTextType == "text/html" || myTextType == "text/xhtml") {
+				result = Html.fromHtml(
+					result,
+					null,
+					new Html.TagHandler() {
+						public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+							tag = tag.intern();
+							if (tag == "html" || tag == "body") {
+								return;
+							}
+							System.err.println("FBREADER -- handle tag: " + tag);
+							output.append(" ");
+						}
+					}
+				).toString();
+			}
+		}
+		myTextType = null;
+		myTextContent.delete(0, myTextContent.length());
+		return result;
+	}
+
+	private void processTextContent(boolean closeTag, String tag, ZLStringMap attributes, String bufferContent) {
+		if (myTextType == ATOMConstants.TYPE_XHTML || myTextType == "text/xhtml") {
+			if (bufferContent != null) {
+				myTextContent.append(bufferContent);
+			}
+			if (closeTag) {
+				final int index = myTextContent.length() - 1;
+				if (tag == myLastOpenedTag && bufferContent == null && myTextContent.charAt(index) == '>') {
+					myTextContent.insert(index, '/'); // TODO: Is it necessary in HTML???????
+				} else {
+					myTextContent.append("</").append(tag).append(">");
+				}
+				myLastOpenedTag = null;
+			} else {
+				myLastOpenedTag = tag;
+				StringBuilder buffer = new StringBuilder("<").append(tag);
+				for (int i = 0; i < attributes.getSize(); ++i) {
+					final String key = attributes.getKey(i);
+					final String value = attributes.getValue(key);
+					buffer.append(" ").append(key).append("=\"");
+					if (value != null) {
+						buffer.append(value);
+					}
+					buffer.append("\"");
+				}
+				buffer.append(" >");
+				myTextContent.append(buffer.toString());
+			}
+		} else {
+			if (bufferContent != null) {
+				myTextContent.append(bufferContent);
 			}
 		}
 	}
@@ -184,7 +271,14 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			tag = tag.intern();
 		}
 
-		boolean preserveBuffer = false;
+		final char[] bufferContentArray = myBuffer.toString().trim().toCharArray();
+		final String bufferContent;
+		if (bufferContentArray.length == 0) {
+			bufferContent = null;
+		} else {
+			bufferContent = new String(bufferContentArray);
+		}
+		myBuffer.delete(0, myBuffer.length());
 
 		switch (myState) {
 			case START:
@@ -216,6 +310,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
 						//myTitle.readAttributes(attributes);
+						setupTextContent(attributes);
 						myState = F_TITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated();
@@ -224,7 +319,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} else if (tag == TAG_ENTRY) {
 						myEntry = new OPDSEntry();
 						myEntry.readAttributes(attributes);
-						mySummaryTagFound = false;
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && myFeed.Id != null) {
@@ -266,13 +360,17 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} else if (tag == TAG_SUMMARY) {
 						//mySummary = new ATOMSummary(); // TODO:implement ATOMTextConstruct & ATOMSummary
 						//mySummary.readAttributes(attributes);
+						setupTextContent(attributes);
 						myState = FE_SUMMARY;
 					} else if (tag == TAG_CONTENT) {
-						// ???
+						//myConent = new ATOMContent(); // TODO:implement ATOMContent
+						//myConent.readAttributes(attributes);
+						setupTextContent(attributes);
 						myState = FE_CONTENT;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
 						//myTitle.readAttributes(attributes);
+						setupTextContent(attributes);
 						myState = FE_TITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated();
@@ -319,11 +417,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					} 
 				}
 				break;
-			case FE_TITLE:
-				// TODO: remove this temporary code
-				// DON'T clear myBuffer
-				preserveBuffer = true;
-				break;
 			case FE_LINK:
 				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
 					// FIXME: HACK: price handling must be implemented not through attributes!!!
@@ -334,18 +427,21 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_CONTENT:
+				processTextContent(false, tag, attributes, bufferContent);
 				// FIXME: HACK: html handling must be implemeted neatly
 				if (tag == TAG_HACK_SPAN || attributes.getValue("class") == "price") {
 					myState = FEC_HACK_SPAN;
 				}
 				break;
+			case FE_SUMMARY:
+			case FE_TITLE:
+			case F_TITLE:
+				processTextContent(false, tag, attributes, bufferContent);
+				break;
 			default:
 				break;
 		}
 
-		if (!preserveBuffer) {
-			myBuffer.delete(0, myBuffer.length());
-		}
 		return false;
 	}
 
@@ -423,12 +519,14 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case F_TITLE:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_TITLE) {
-					// FIXME:title can be lost:buffer will be truncated, if there are extension tags inside the <title> tag
 					// TODO:implement ATOMTextConstruct & ATOMTitle
+					final String title = finishTextContent(bufferContent);
 					if (myFeed != null) {
-						myFeed.Title = bufferContent;
+						myFeed.Title = title;
 					}
 					myState = FEED;
+				} else {
+					processTextContent(true, tag, null, bufferContent);
 				} 
 				break;
 			case F_UPDATED:
@@ -548,30 +646,29 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FE_SUMMARY:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUMMARY) {
-					// FIXME:summary can be lost:buffer will be truncated, if there are extension tags inside the <summary> tag
 					// TODO:implement ATOMTextConstruct & ATOMSummary
-					if (bufferContent != null) {
-						myEntry.Summary = bufferContent;
-						mySummaryTagFound = true;
-					}
+					myEntry.Summary = finishTextContent(bufferContent);
 					myState = F_ENTRY;
+				} else {
+					processTextContent(true, tag, null, bufferContent);
 				}
 				break;
 			case FE_CONTENT:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_CONTENT) {
-					// TODO:check this accurately
-					if (bufferContent != null && !mySummaryTagFound) {
-						myEntry.Summary = bufferContent;
-					}
+					// TODO:implement ATOMContent
+					myEntry.Content = finishTextContent(bufferContent);
 					myState = F_ENTRY;
+				} else {
+					processTextContent(true, tag, null, bufferContent);
 				}
 				break;
 			case FE_TITLE:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_TITLE) {
-					// FIXME:title can be lost:buffer will be truncated, if there are extension tags inside the <title> tag
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					myEntry.Title = bufferContent;
+					myEntry.Title = finishTextContent(bufferContent);
 					myState = F_ENTRY;
+				} else {
+					processTextContent(true, tag, null, bufferContent);
 				}
 				break;
 			case FE_UPDATED:
@@ -586,6 +683,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FEC_HACK_SPAN:
 				// FIXME: HACK
+				processTextContent(true, tag, null, bufferContent);
 				if (bufferContent != null) {
 					myEntry.addAttribute(KEY_PRICE, bufferContent.intern());
 				}

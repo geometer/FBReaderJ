@@ -28,13 +28,13 @@ public class ATOMEntry extends ATOMCommonAttributes {
 
 	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
 	public LinkedList<ATOMCategory> Categories = new LinkedList<ATOMCategory>();
-	//public final ATOMContent Content; TODO: implement ATOMContent
 	public LinkedList<ATOMContributor> Contributors = new LinkedList<ATOMContributor>();
 	public LinkedList<ATOMLink> Links = new LinkedList<ATOMLink>();
 	public ATOMPublished Published;
-	public String Rights;  // TODO: implement ATOMTextConstruct
+	//public String Rights;  // TODO: implement ATOMTextConstruct
 	//public final ATOMSource Source; // TODO: implement ATOMSource
 	public String Summary; // TODO: implement ATOMTextConstruct
+	public String Content; // TODO: implement ATOMContent
 	public String Title;   // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
 
@@ -68,7 +68,7 @@ public class ATOMEntry extends ATOMCommonAttributes {
 		return buf
 			.append("]")
 			.append(",\nPublished=").append(Published)
-			.append(",\nRights=").append(Rights)
+			//.append(",\nRights=").append(Rights)
 			.append(",\nSummary=").append(Summary)
 			.append(",\nTitle=").append(Title)
 			.append(",\nUpdated=").append(Updated)

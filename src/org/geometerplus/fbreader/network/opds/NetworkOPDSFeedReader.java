@@ -258,12 +258,21 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}*/
 		//entry.rights();
 
+		final String annotation;
+		if (entry.Summary != null) {
+			annotation = entry.Summary;
+		} else if (entry.Content != null) {
+			annotation = entry.Content;
+		} else {
+			annotation = null;
+		}
+
 		return new NetworkBookItem(
 			opdsLink,
 			entry.Id.Uri,
 			myIndex++,
 			entry.Title,
-			entry.Summary,
+			annotation,
 			//entry.DCLanguage,
 			//date,
 			authors,
@@ -331,10 +340,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		final boolean dependsOnAccount = opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.SIGNED_IN;
 
 		final String annotation;
-		if (entry.Summary == null) {
-			annotation = null;
-		} else {
+		if (entry.Summary != null) {
 			annotation = entry.Summary.replace("\n", "");
+		} else if (entry.Content != null) {
+			annotation = entry.Content.replace("\n", "");
+		} else {
+			annotation = null;
 		}
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
