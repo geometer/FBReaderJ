@@ -19,10 +19,6 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import android.text.Html;
-import android.text.Editable;
-import org.xml.sax.XMLReader;
-
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
@@ -103,6 +99,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	}
 
 
+	private HtmlToStringReader myHtmlToStringReader = new HtmlToStringReader();
+
 	private String myLastOpenedTag;
 	private String myTextType;
 	private StringBuilder myTextContent = new StringBuilder();
@@ -129,20 +127,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 		if (result != null) {
 			if (myTextType == ATOMConstants.TYPE_HTML || myTextType == ATOMConstants.TYPE_XHTML
 					|| myTextType == "text/html" || myTextType == "text/xhtml") {
-				result = Html.fromHtml(
-					result,
-					null,
-					new Html.TagHandler() {
-						public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-							tag = tag.intern();
-							if (tag == "html" || tag == "body") {
-								return;
-							}
-							System.err.println("FBREADER -- handle tag: " + tag);
-							output.append(" ");
-						}
-					}
-				).toString();
+				myHtmlToStringReader.readFromString(result);
+				result = myHtmlToStringReader.getString();
 			}
 		}
 		myTextType = null;
