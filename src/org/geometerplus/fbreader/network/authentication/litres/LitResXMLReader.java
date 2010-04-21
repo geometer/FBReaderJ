@@ -24,6 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.HtmlToString;
 
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
@@ -40,7 +41,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private String mySeriesTitle;
 	private int myIndexInSeries;
 
-	private StringBuilder mySummary = new StringBuilder();
+	private String mySummary;
 
 	private String myCover;
 
@@ -58,6 +59,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 		Link = link;
 		Books = books;
 	}
+
 
 	private static final int START = 0;
 	private static final int CATALOG = 1;
@@ -93,6 +95,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private int myState = START;
 	private final StringBuilder myBuffer = new StringBuilder();
+	private HtmlToString myHtmlToString = new HtmlToString();
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
@@ -154,6 +157,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			} else if (TAG_BOOK_TITLE == tag) {
 				myState = BOOK_TITLE;
 			} else if (TAG_ANNOTATION == tag) {
+				myHtmlToString.setupTextContent("text/xhtml");
 				myState = ANNOTATION;
 			} else if (TAG_DATE == tag) {
 				myState = DATE;
@@ -184,9 +188,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			}
 			break;
 		case ANNOTATION:
-			if (bufferContent != null) {
-				mySummary.append(bufferContent).append(" ");
-			}
+			myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
 			break;
 		}
 		return false;
@@ -214,18 +216,13 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			break;
 		case BOOK:
 			if (TAG_BOOK == tag) {
-				String summary = new String(mySummary.toString().trim().toCharArray());
-				mySummary.delete(0, mySummary.length());
-				if (summary.length() == 0) {
-					summary = null;
-				}
 
 				Books.add(new NetworkBookItem(
 					Link,
 					myBookId,
 					myIndex++,
 					myTitle,
-					summary,
+					mySummary,
 					//myLanguage,
 					//myDate,
 					myAuthors,
@@ -328,23 +325,11 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			}
 			break;
 		case ANNOTATION:
-			if (bufferContent != null) {
-				mySummary.append(bufferContent);
-			}
-			if (mySummary.length() > 0) {
-				final char lastChar = mySummary.charAt(mySummary.length() - 1);
-				if ("p" == tag) {
-					if (lastChar != '\n') {
-						mySummary.append("\n");
-					}
-				} else {
-					if (bufferContent != null && lastChar != '\n') {
-						mySummary.append(" ");
-					}
-				}
-			}
 			if (TAG_ANNOTATION == tag) {
+				mySummary = myHtmlToString.finishTextContent(bufferContent);
 				myState = TITLE_INFO;
+			} else {
+				myHtmlToString.processTextContent(true, tag, null, bufferContent);
 			}
 			break;
 		case DATE:
