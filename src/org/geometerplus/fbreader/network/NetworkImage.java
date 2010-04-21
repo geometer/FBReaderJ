@@ -106,7 +106,7 @@ public final class NetworkImage extends ZLSingleImage {
 				ext = path.substring(j);
 				path.delete(j, path.length());
 			} else {
-				return null;
+				ext = "";
 			}
 		} else if (path.length() > ext.length() && path.substring(path.length() - ext.length()).equals(ext)) {
 			path.delete(path.length() - ext.length(), path.length());
