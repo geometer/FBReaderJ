@@ -343,14 +343,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return scrollbarType() != SCROLLBAR_HIDE;
 	}
 
-	public final int getScrollbarFullSize() {
+	public final synchronized int getScrollbarFullSize() {
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 1;
 		}
 		return myModel.getTextLength(myModel.getParagraphsNumber() - 1);
 	}
 
-	public final int getScrollbarThumbPosition(int viewPage) {
+	public final synchronized int getScrollbarThumbPosition(int viewPage) {
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 0;
 		}
@@ -362,7 +362,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
 	}
 
-	public final int getScrollbarThumbLength(int viewPage) {
+	public final synchronized int getScrollbarThumbLength(int viewPage) {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 0;
 		}
@@ -380,9 +380,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
-		if (myModel == null || myModel.getParagraphsNumber() == 0) {
-			return 0;
-		}
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
 		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
 			return -1;
