@@ -210,7 +210,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			} else {
 				sslCertificate = null;
 			}
-			NetworkLibraryActivity.Instance.startService(
+			NetworkLibraryActivity.Instance.getTopLevelActivity().startService(
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), 
 						NetworkLibraryActivity.Instance.getApplicationContext(), BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
@@ -233,7 +233,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		}
 		if (local != null) {
-			NetworkLibraryActivity.Instance.startActivity(
+			NetworkLibraryActivity.Instance.getTopLevelActivity().startActivity(
 				new Intent(Intent.ACTION_VIEW,
 					Uri.fromFile(new File(local)),
 					NetworkLibraryActivity.Instance.getApplicationContext(),
@@ -265,6 +265,7 @@ class NetworkBookActions extends NetworkTreeActions {
 							}
 						}
 					}
+					NetworkLibraryActivity.Instance.fireOnModelChanged();
 				}
 			})
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
@@ -312,19 +313,20 @@ class NetworkBookActions extends NetworkTreeActions {
 							}
 							if (NetworkLibraryActivity.Instance != null) {
 								NetworkLibraryActivity.Instance.getAdapter().resetTree();
+								NetworkLibraryActivity.Instance.fireOnModelChanged();
 							}
 						}
-					};
+					}; // end Handler
 					final Runnable runnable = new Runnable() {
 						public void run() {
 							String err = mgr.purchaseBook(book);
 							handler.sendMessage(handler.obtainMessage(0, err));
 						}
-					};
+					}; // end Runnable
 					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("purchaseBook", runnable, NetworkLibraryActivity.Instance.getTopLevelActivity());
-				}
-			}
-		};
+				} // end if
+			} // end onClick
+		}; // end listener
 
 		final Runnable buyRunnable = new Runnable() {
 			public void run() {

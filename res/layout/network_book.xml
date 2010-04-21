@@ -10,42 +10,48 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:layout_alignParentBottom="true"
-        android:paddingTop="4dip"
-        android:paddingLeft="2dip"
-        android:paddingRight="2dip"
+		android:paddingTop="4dip"
+		android:paddingLeft="2dip"
+		android:paddingRight="2dip"
+		android:baselineAligned="false"
 	>
 		<LinearLayout
 			android:id="@+id/network_book_left_spacer"
-			android:layout_weight="0.25"
+			android:layout_weight="0.5"
 			android:layout_width="0dip"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
-			android:visibility="gone" />
+			android:visibility="gone"
+		/>
 		<Button
 			android:id="@+id/network_book_button0"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:maxLines="2"
-			android:layout_height="wrap_content" />
+			android:layout_height="wrap_content"
+		/>
 		<Button
 			android:id="@+id/network_book_button1"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:maxLines="2"
-			android:layout_height="wrap_content" />
+			android:layout_height="wrap_content"
+		/>
 		<Button
 			android:id="@+id/network_book_button2"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:maxLines="2"
-			android:layout_height="wrap_content" />
+			android:layout_height="wrap_content"
+		/>
 		<LinearLayout
 			android:id="@+id/network_book_right_spacer"
 			android:layout_width="0dip"
-			android:layout_weight="0.25"
+			android:layout_weight="0.5"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
-			android:visibility="gone" />
+			android:visibility="gone"
+		/>
 	</LinearLayout>
 	<ScrollView
 		android:layout_width="fill_parent"

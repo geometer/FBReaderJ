@@ -192,7 +192,7 @@ public class BookDownloaderService extends Service {
 	}
 
 	private Intent getFBReaderIntent(final File file) {
-		final Intent intent = new Intent(this, org.geometerplus.android.fbreader.FBReader.class);
+		final Intent intent = new Intent(getApplicationContext(), org.geometerplus.android.fbreader.FBReader.class);
 		if (file != null) {
 			intent.setAction(Intent.ACTION_VIEW).setData(Uri.fromFile(file));
 		}
@@ -213,7 +213,7 @@ public class BookDownloaderService extends Service {
 			System.currentTimeMillis()
 		);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		final Intent intent = getFBReaderIntent(success ? file : null);
+		final Intent intent = success ? getFBReaderIntent(file) : new Intent();
 		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
 		notification.setLatestEventInfo(getApplicationContext(), title, contentText, contentIntent);
 		return notification;
@@ -225,8 +225,7 @@ public class BookDownloaderService extends Service {
 		contentView.setTextViewText(R.id.download_notification_progress_text, "");
 		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
 
-		final Intent intent = getFBReaderIntent(null);
-		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
 
 		final Notification notification = new Notification();
 		notification.icon = android.R.drawable.stat_sys_download;
@@ -237,8 +236,16 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
+	private void startCallbackActivity() {
+		startActivity(
+			new Intent(getApplicationContext(), BookDownloaderCallback.class)
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+		);
+	}
+
 	private void startFileDownload(final String urlString, final String sslCertificate, final File file, final String title) {
 		myDownloadingURLs.add(urlString);
+		startCallbackActivity();
 
 		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
 		final Notification progressNotification = createDownloadProgressNotification(title);
@@ -274,6 +281,7 @@ public class BookDownloaderService extends Service {
 					notificationId,
 					createDownloadFinishNotification(file, title, message.what != 0)
 				);
+				startCallbackActivity();
 				doStop();
 			}
 		};
@@ -331,10 +339,10 @@ public class BookDownloaderService extends Service {
 				final String err = ZLNetworkManager.Instance().perform(request);
 				// TODO: show error message to User
 				final boolean success = (err == null);
-				downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
 				if (!success) {
 					file.delete();
 				}
+				downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
 			}
 		}).start();
 	}

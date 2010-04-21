@@ -107,13 +107,33 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	}
 
 
+	public interface EventListener {
+		void onModelChanged();
+	}
+
+	private LinkedList<EventListener> myEventListeners = new LinkedList<EventListener>();
+
+	public final void addEventListener(EventListener listener) {
+		myEventListeners.add(listener);
+	}
+
+	public final void removeEventListener(EventListener listener) {
+		myEventListeners.remove(listener);
+	}
+
+	final void fireOnModelChanged() {
+		for (EventListener listener: myEventListeners) {
+			listener.onModelChanged();
+		}
+	}
+
 	private Activity myTopLevelActivity;
 
-	public Activity getTopLevelActivity() {
+	public final Activity getTopLevelActivity() {
 		return myTopLevelActivity;
 	}
 
-	void setTopLevelActivity(Activity activity) {
+	final void setTopLevelActivity(Activity activity) {
 		if (activity == null) {
 			myTopLevelActivity = this;
 		} else {
@@ -124,17 +144,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Instance = this;
-		myTopLevelActivity = this;
-
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-	}
+		Instance = this;
+		myTopLevelActivity = this;
+		myEventListeners.clear();
 
-	@Override
-	public void onStart() {
-		super.onStart();
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		myConnection = new BookDownloaderServiceConnection();
 		bindService(
@@ -142,6 +158,11 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			myConnection,
 			BIND_AUTO_CREATE
 		);
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
 	}
 
 	@Override
@@ -172,13 +193,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	public void onStop() {
-		unbindService(myConnection);
-		myConnection = null;
 		super.onStop();
 	}
 
 	@Override
 	public void onDestroy() {
+		unbindService(myConnection);
+		myConnection = null;
 		Instance = null;
 		super.onDestroy();
 	}
@@ -410,6 +431,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		return dialog;
 	}
 
+	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		super.onPrepareDialog(id, dialog);
 		switch (id) {

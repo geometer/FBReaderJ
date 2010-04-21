@@ -22,8 +22,10 @@ package org.geometerplus.android.fbreader.network;
 import java.util.Set;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
@@ -42,7 +44,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.fbreader.network.*;
 
 
-public class NetworkBookInfoActivity extends Activity {
+public class NetworkBookInfoActivity extends Activity implements NetworkLibraryActivity.EventListener {
 
 	private NetworkBookItem myBook;
 
@@ -128,11 +130,15 @@ public class NetworkBookInfoActivity extends Activity {
 	}
 
 	private final void setupButtons() {
-		final int buttonCount = 3;
+		final int buttons[] = new int[] {
+			R.id.network_book_button0,
+			R.id.network_book_button1,
+			R.id.network_book_button2,
+		};
 		int buttonNumber = 0;
 		Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook);
 		for (final NetworkBookActions.Action a: actions) {
-			if (buttonNumber >= buttonCount) {
+			if (buttonNumber >= buttons.length) {
 				break;
 			}
 
@@ -144,42 +150,30 @@ public class NetworkBookInfoActivity extends Activity {
 				text = resource.getResource(a.Key).getValue().replace("%s", a.Arg);
 			}
 
-			final String buttonName = "network_book_button" + buttonNumber++;
-			try {
-				int buttonId = R.id.class.getDeclaredField(buttonName).getInt(null);
-				Button button = (Button) findViewById(buttonId);
-				button.setText(text);
-				button.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						NetworkBookActions.runAction(myBook, a.Id);
-						NetworkBookInfoActivity.this.updateView();
-					}
-				});
-			} catch (NoSuchFieldException ex) {
-			} catch (SecurityException ex) {
-			} catch (IllegalAccessException ex) {
-			} catch (IllegalArgumentException ex) {
-			}
+			final int buttonId = buttons[buttonNumber++];
+			Button button = (Button) findViewById(buttonId);
+			button.setText(text);
+			button.setVisibility(View.VISIBLE);
+			button.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					NetworkBookActions.runAction(myBook, a.Id);
+					NetworkBookInfoActivity.this.updateView();
+				}
+			});
+			button.setEnabled(a.Id != NetworkTreeActions.TREE_NO_ACTION);
 		}
 		boolean showSpacers = buttonNumber == 1;
 		findViewById(R.id.network_book_left_spacer).setVisibility(showSpacers ? View.VISIBLE : View.GONE);
 		findViewById(R.id.network_book_right_spacer).setVisibility(showSpacers ? View.VISIBLE : View.GONE);
-		while (buttonNumber < buttonCount) {
-			final String buttonName = "network_book_button" + buttonNumber++;
-			try {
-				int buttonId = R.id.class.getDeclaredField(buttonName).getInt(null);
-				View button = findViewById(buttonId);
-				button.setVisibility(View.GONE);
-				button.setOnClickListener(null);
-			} catch (NoSuchFieldException ex) {
-			} catch (SecurityException ex) {
-			} catch (IllegalAccessException ex) {
-			} catch (IllegalArgumentException ex) {
-			}
+		while (buttonNumber < buttons.length) {
+			final int buttonId = buttons[buttonNumber++];
+			View button = findViewById(buttonId);
+			button.setVisibility(View.GONE);
+			button.setOnClickListener(null);
 		}
 	}
 
-	void updateView() {
+	private void updateView() {
 		setupButtons();
 		final View rootView = findViewById(R.id.network_book_root);
 		rootView.invalidate();
@@ -188,11 +182,42 @@ public class NetworkBookInfoActivity extends Activity {
 
 	protected void onStart() {
 		super.onStart();
-		NetworkLibraryActivity.Instance.setTopLevelActivity(this);
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.setTopLevelActivity(this);
+			NetworkLibraryActivity.Instance.addEventListener(this);
+		}
 	}
 
 	protected void onStop() {
-		NetworkLibraryActivity.Instance.setTopLevelActivity(null);
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.setTopLevelActivity(null);
+			NetworkLibraryActivity.Instance.removeEventListener(this);
+		}
 		super.onStop();
+	}
+
+	public void onModelChanged() {
+		updateView();
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog = null;
+		switch (id) {
+		case NetworkLibraryActivity.DIALOG_AUTHENTICATION:
+			dialog = AuthenticationDialog.Instance().createDialog(this);
+			break;
+		}
+		return dialog;
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		super.onPrepareDialog(id, dialog);
+		switch (id) {
+		case NetworkLibraryActivity.DIALOG_AUTHENTICATION:
+			AuthenticationDialog.Instance().prepareDialog(dialog);
+			break;
+		}		
 	}
 }

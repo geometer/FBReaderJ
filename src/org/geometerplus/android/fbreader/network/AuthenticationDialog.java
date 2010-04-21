@@ -60,7 +60,7 @@ class AuthenticationDialog {
 		myLink = link;
 		myErrorMessage = null;
 		myOnSuccessRunnable = onSuccessRunnable;
-		NetworkLibraryActivity.Instance.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+		NetworkLibraryActivity.Instance.getTopLevelActivity().showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
 	}
 
 	public Dialog createDialog(final Activity activity) {
@@ -88,8 +88,10 @@ class AuthenticationDialog {
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateAccountDependents();
 				library.synchronize();
-				((NetworkLibraryActivity) activity).getAdapter().resetTree();
-				((NetworkLibraryActivity) activity).getListView().invalidateViews();
+				if (NetworkLibraryActivity.Instance != null) {
+					NetworkLibraryActivity.Instance.getAdapter().resetTree();
+					NetworkLibraryActivity.Instance.fireOnModelChanged();
+				}
 				if (message.what < 0) {
 					myErrorMessage = (String) message.obj;
 					activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
