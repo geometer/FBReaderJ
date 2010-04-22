@@ -221,7 +221,16 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 		LibraryAdapter(ListView view, NetworkTree tree) {
 			super(view, tree);
-			myPool = Executors.newFixedThreadPool(3); // TODO: how many threads ???
+			myPool = Executors.newFixedThreadPool(3 /* TODO: how many threads ??? */, new ThreadFactory() {
+
+				private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
+
+				public Thread newThread(Runnable r) {
+					final Thread th = myDefaultThreadFactory.newThread(r);
+					th.setPriority(Thread.MIN_PRIORITY);
+					return th;
+				}
+			});
 		}
 
 		@Override

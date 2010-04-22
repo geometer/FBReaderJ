@@ -134,11 +134,13 @@ public class CatalogDownloaderService extends Service {
 		startProgressNotification();
 
 		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
-		new Thread(new Runnable() {
+		final Thread loader = new Thread(new Runnable() {
 			public void run() {
 				runnable.run();
 				finishHandler.sendEmptyMessage(0);
 			}
-		}).start();
+		});
+		loader.setPriority(Thread.MIN_PRIORITY);
+		loader.start();
 	}
 }

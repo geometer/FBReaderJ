@@ -334,7 +334,7 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
-		new Thread(new Runnable() {
+		final Thread downloader = new Thread(new Runnable() {
 			public void run() {
 				final String err = ZLNetworkManager.Instance().perform(request);
 				// TODO: show error message to User
@@ -344,6 +344,8 @@ public class BookDownloaderService extends Service {
 				}
 				downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
 			}
-		}).start();
+		});
+		downloader.setPriority(Thread.MIN_PRIORITY);
+		downloader.start();
 	}
 }
