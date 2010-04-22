@@ -48,7 +48,7 @@
 		<node name="downloadingCatalogs" value="书库目录下载" /> <!-- used as notification title -->
 	</node>
 	<node name="networkBookView">
-		<node name="bookInfo" value="书籍信息" />
+		<node name="bookInfo" toBeTranslated="true" value="Book Info" />
 		<node name="description" toBeTranslated="true" value="Description" />
 		<node name="noDescription" toBeTranslated="true" value="No description available." />
 		<node name="title" toBeTranslated="true" value="Title:" />
