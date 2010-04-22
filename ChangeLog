@@ -1,3 +1,8 @@
+===== 0.6.1 (April 23, 2010) =====
+
+* User can preview a book before downloading/purchasing.
+* French resources have been updated.
+
 ===== 0.6.0 (April 19, 2010) =====
 
 * Chinese text layouting has been implemented (we use native liblinebreak library
