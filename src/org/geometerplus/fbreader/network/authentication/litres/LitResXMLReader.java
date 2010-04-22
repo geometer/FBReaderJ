@@ -50,7 +50,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private String myAuthorLastName;
 	private LinkedList<NetworkBookItem.AuthorData> myAuthors = new LinkedList<NetworkBookItem.AuthorData>();
 
-	//private LinkedList<String> myTags = new LinkedList<String>();
+	private LinkedList<String> myTags = new LinkedList<String>();
 	private HashMap<Integer, String> myURLByType = new HashMap<Integer, String>(); // TODO: remove
 	private LinkedList<BookReference> myReferences = new LinkedList<BookReference>();
 
@@ -226,7 +226,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					//myLanguage,
 					//myDate,
 					myAuthors,
-					//myTags,
+					myTags,
 					mySeriesTitle,
 					myIndexInSeries,
 					myCover,
@@ -241,7 +241,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				myIndexInSeries = 0;
 				myCover = null;
 				myAuthors.clear();
-				//myTags.clear();
+				myTags.clear();
 				myURLByType.clear();
 				myReferences.clear();
 				myState = CATALOG;

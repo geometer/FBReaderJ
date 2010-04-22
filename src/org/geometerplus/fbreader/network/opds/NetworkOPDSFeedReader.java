@@ -276,7 +276,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			//entry.DCLanguage,
 			//date,
 			authors,
-			//tags,
+			tags,
 			entry.SeriesTitle,
 			entry.SeriesIndex,
 			cover,

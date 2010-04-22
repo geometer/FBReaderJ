@@ -70,7 +70,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 	//public final String Language;
 	//public final String Date;
 	public final LinkedList<AuthorData> Authors;
-	//public final LinkedList<String> Tags;
+	public final LinkedList<String> Tags;
 	public final String SeriesTitle;
 	public final int IndexInSeries;
 
@@ -87,7 +87,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 	 * //@param langage       string specifies language of this book. Can be <code>null</code>.
 	 * //@param date          string specifies release date of this book. Can be <code>null</code>.
 	 * @param authors       list of book authors. Should contain at least one author.
-	 * //@param tags          list of book tags. Must be not <code>null</code> (can be empty).
+	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
 	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
 	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
 	 * @param cover         cover url. Can be <code>null</code>.
@@ -95,7 +95,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 	 */
 	public NetworkBookItem(NetworkLink link, String id, int index,
 		String title, String summary, /*String language, String date,*/
-		List<AuthorData> authors, /*List<String> tags,*/ String seriesTitle, int indexInSeries,
+		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,
 		String cover,
 		List<BookReference> references) {
 		super(link, title, summary, cover);
@@ -104,7 +104,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 		//Language = language;
 		//Date = date;
 		Authors = new LinkedList<AuthorData>(authors);
-		//Tags = new LinkedList<String>(tags);
+		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
 		myReferences = new LinkedList(references);

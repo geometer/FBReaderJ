@@ -189,6 +189,28 @@
 						android:textAppearance="?android:attr/textAppearanceMedium"
 					/>
 				</LinearLayout>
+				<LinearLayout
+					android:id="@+id/network_book_tags"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:paddingBottom="10dp"
+				>
+					<TextView
+						android:id="@+id/network_book_tags_key"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textAppearance="?android:attr/textAppearanceMedium"
+						android:textStyle="bold"
+						android:paddingRight="10dp"
+					/>
+					<TextView
+						android:id="@+id/network_book_tags_value"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textAppearance="?android:attr/textAppearanceMedium"
+					/>
+				</LinearLayout>
 			</LinearLayout>
 			<TextView
 				android:id="@+id/network_book_description_title"

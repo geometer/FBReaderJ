@@ -88,12 +88,14 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 		((TextView) findViewById(R.id.network_book_authors_key)).setText(myResource.getResource("authors").getValue());
 		((TextView) findViewById(R.id.network_book_series_key)).setText(myResource.getResource("series").getValue());
 		((TextView) findViewById(R.id.network_book_series_index_key)).setText(myResource.getResource("indexInSeries").getValue());
+		((TextView) findViewById(R.id.network_book_tags_key)).setText(myResource.getResource("tags").getValue());
+
 
 		((TextView) findViewById(R.id.network_book_title_value)).setText(myBook.Title);
 
 		if (myBook.Authors.size() > 0) {
 			findViewById(R.id.network_book_authors).setVisibility(View.VISIBLE);
-			StringBuilder authorsText = new StringBuilder();
+			final StringBuilder authorsText = new StringBuilder();
 			for (NetworkBookItem.AuthorData author: myBook.Authors) {
 				if (authorsText.length() > 0) {
 					authorsText.append(", ");
@@ -117,6 +119,20 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 		} else {
 			findViewById(R.id.network_book_series).setVisibility(View.GONE);
 			findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
+		}
+
+		if (myBook.Tags.size() > 0) {
+			findViewById(R.id.network_book_tags).setVisibility(View.VISIBLE);
+			final StringBuilder tagsText = new StringBuilder();
+			for (String tag: myBook.Tags) {
+				if (tagsText.length() > 0) {
+					tagsText.append(", ");
+				}
+				tagsText.append(tag);
+			}
+			((TextView) findViewById(R.id.network_book_tags_value)).setText(tagsText);
+		} else {
+			findViewById(R.id.network_book_tags).setVisibility(View.GONE);
 		}
 	}
 

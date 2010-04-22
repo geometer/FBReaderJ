@@ -54,6 +54,7 @@
 		<node name="authors" value="Авторы:" />
 		<node name="series" value="Серия:" />
 		<node name="indexInSeries" value="Номер в серии:" />
+		<node name="tags" value="Категории:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Книга скачана" />

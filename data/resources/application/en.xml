@@ -54,6 +54,7 @@
 		<node name="authors" value="Authors:" />
 		<node name="series" value="Series:" />
 		<node name="indexInSeries" value="Index in series:" />
+		<node name="tags" value="Tags:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Book has been downloaded" />

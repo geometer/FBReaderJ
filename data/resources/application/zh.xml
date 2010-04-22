@@ -55,6 +55,7 @@
 		<node name="authors" toBeTranslated="true" value="Authors:" />
 		<node name="series" toBeTranslated="true" value="Series:" />
 		<node name="indexInSeries" toBeTranslated="true" value="Index in series:" />
+		<node name="tags" toBeTranslated="true" value="Tags:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="下载成功" />
