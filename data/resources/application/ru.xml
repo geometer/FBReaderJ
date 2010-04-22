@@ -47,8 +47,13 @@
 		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
 	</node>
 	<node name="networkBookView">
+		<node name="bookInfo" value="Информация о книге" />
 		<node name="description" value="Описание" />
 		<node name="noDescription" value="Описание отсутствует." />
+		<node name="title" value="Название:" />
+		<node name="authors" value="Авторы:" />
+		<node name="series" value="Серия:" />
+		<node name="indexInSeries" value="Номер в серии:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Книга скачана" />

@@ -48,8 +48,13 @@
 		<node name="downloadingCatalogs" value="Chargement des catalogues"/> <!-- used as notification title -->
 	</node>
 	<node name="networkBookView">
+		<node name="bookInfo" value="Informations sur le livre" />
 		<node name="description" toBeTranslated="true" value="Description" />
 		<node name="noDescription" toBeTranslated="true" value="No description available." />
+		<node name="title" toBeTranslated="true" value="Title:" />
+		<node name="authors" toBeTranslated="true" value="Authors:" />
+		<node name="series" toBeTranslated="true" value="Series:" />
+		<node name="indexInSeries" toBeTranslated="true" value="Index in series:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Le livre a été téléchargé" />

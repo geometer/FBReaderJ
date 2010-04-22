@@ -63,13 +63,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 		setContentView(R.layout.network_book);
 
 		setupDescription();
+		setupInfo();
 		setupCover();
 		setupButtons();
 	}
 
 	private final void setupDescription() {
-		final TextView descriptionViewTitle = (TextView) findViewById(R.id.network_book_description_title);
-		descriptionViewTitle.setText(myResource.getResource("description").getValue());
+		((TextView) findViewById(R.id.network_book_description_title)).setText(myResource.getResource("description").getValue());
 
 		final TextView descriptionView = (TextView) findViewById(R.id.network_book_description);
 		final String description;
@@ -79,6 +79,45 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 			description = myResource.getResource("noDescription").getValue();
 		}
 		descriptionView.setText(description);
+	}
+
+	private void setupInfo() {
+		((TextView) findViewById(R.id.network_book_info_title)).setText(myResource.getResource("bookInfo").getValue());
+
+		((TextView) findViewById(R.id.network_book_title_key)).setText(myResource.getResource("title").getValue());
+		((TextView) findViewById(R.id.network_book_authors_key)).setText(myResource.getResource("authors").getValue());
+		((TextView) findViewById(R.id.network_book_series_key)).setText(myResource.getResource("series").getValue());
+		((TextView) findViewById(R.id.network_book_series_index_key)).setText(myResource.getResource("indexInSeries").getValue());
+
+		((TextView) findViewById(R.id.network_book_title_value)).setText(myBook.Title);
+
+		if (myBook.Authors.size() > 0) {
+			findViewById(R.id.network_book_authors).setVisibility(View.VISIBLE);
+			StringBuilder authorsText = new StringBuilder();
+			for (NetworkBookItem.AuthorData author: myBook.Authors) {
+				if (authorsText.length() > 0) {
+					authorsText.append(", ");
+				}
+				authorsText.append(author.DisplayName);
+			}
+			((TextView) findViewById(R.id.network_book_authors_value)).setText(authorsText);
+		} else {
+			findViewById(R.id.network_book_authors).setVisibility(View.GONE);
+		}
+
+		if (myBook.SeriesTitle != null) {
+			findViewById(R.id.network_book_series).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.network_book_series_value)).setText(myBook.SeriesTitle);
+			if (myBook.IndexInSeries > 0) {
+				((TextView) findViewById(R.id.network_book_series_index_value)).setText(String.valueOf(myBook.IndexInSeries));
+				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
+			} else {
+				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
+			}
+		} else {
+			findViewById(R.id.network_book_series).setVisibility(View.GONE);
+			findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
+		}
 	}
 
 	private final void setupCover() {
