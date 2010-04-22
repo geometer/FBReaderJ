@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French zlibrary resources, by Pierre Senellart -->
+<!-- French zlibrary resources, by Pierre Senellart (update by Sébastien Rodriguez)-->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -20,18 +20,18 @@
 			<node name="couldntConnectMessage" value="Impossible de se connecter à l'hôte %s"/>
 			<node name="couldntResolveHostMessage" value="Résolution du nom %s impossible"/>
 			<node name="authenticationFailed" value="Authentification échouée"/>
-			<node name="unsupportedProtocol" toBeTranslated="true" value="Unsupported protocol" />
-			<node name="invalidURL" toBeTranslated="true" value="Invalid URL" />
-			<node name="hostCantBeReached" toBeTranslated="true" value="Host %s&#10;cannot be reached" />
-			<node name="connectionRefused" toBeTranslated="true" value="Connection was refused by&#10;%s" />
-			<node name="sslError" toBeTranslated="true" value="SSL subsystem error" />
+			<node name="unsupportedProtocol" value="Protocole non supporté" />
+			<node name="invalidURL" value="URL invalide" />
+			<node name="hostCantBeReached" value="L'hôte %s&#10;ne peut être joint" />
+			<node name="connectionRefused" value="La connexion a été refusée par&#10;%s" />
+			<node name="sslError" value="Erreur du sous-système SSL" />
 			<node name="sslConnectErrorMessage" value="Problème de connexion SSL/TLS :&#10;%s" />
-			<node name="sslBadKey" toBeTranslated="true" value="Bad SSL certificate from:&#10;%s" />
-			<node name="sslPeerUnverified" toBeTranslated="true" value="Unable to verify peer's identity for:&#10;%s" />
-			<node name="sslProtocolError" toBeTranslated="true" value="Error in the operation of the SSL protocol" />
+			<node name="sslBadKey" value="Mauvais certificat SSL de:&#10;%s" />
+			<node name="sslPeerUnverified" value="Incapable de vérifier l'identité de:&#10;%s" />
+			<node name="sslProtocolError" value="Erreur dans l'opération du protocole SSL" />
 			<node name="sslBadCertificateFileMessage" value="Impossible de lire le fichier des certificats de CA :&#10;%s" />
-			<node name="sslCertificateExpired" toBeTranslated="true" value="SSL certificate has expired:&#10;%s" />
-			<node name="sslCertificateNotYetValid" toBeTranslated="true" value="SSL certificate is not yet valid:&#10;%s" />
+			<node name="sslCertificateExpired" value="Le certificat SSL est expiré:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Le certificat SSL n'est plus valide:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">
