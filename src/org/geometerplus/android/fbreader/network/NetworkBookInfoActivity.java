@@ -130,19 +130,31 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 	}
 
 	private final void setupButtons() {
+		final ZLResource resource = ZLResource.resource("networkView");
 		final int buttons[] = new int[] {
-			R.id.network_book_button0,
-			R.id.network_book_button1,
-			R.id.network_book_button2,
+				R.id.network_book_button0,
+				R.id.network_book_button1,
+				R.id.network_book_button2,
+				R.id.network_book_button3,
 		};
+		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook);
+// debug code:
+/*if (actions.size() == 2) {
+	actions.clear();
+}*/
+/*actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "buy", "0z"));
+actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "buy", "1z"));
+actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "buy", "2z"));*/
+		final boolean skipSecondButton = actions.size() < buttons.length && (actions.size() % 2) == 1;
 		int buttonNumber = 0;
-		Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook);
 		for (final NetworkBookActions.Action a: actions) {
+			if (skipSecondButton && buttonNumber == 1) {
+				++buttonNumber;
+			}
 			if (buttonNumber >= buttons.length) {
 				break;
 			}
 
-			ZLResource resource = ZLResource.resource("networkView");
 			final String text;
 			if (a.Arg == null) {
 				text = resource.getResource(a.Key).getValue();
@@ -162,9 +174,14 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 			});
 			button.setEnabled(a.Id != NetworkTreeActions.TREE_NO_ACTION);
 		}
-		boolean showSpacers = buttonNumber == 1;
-		findViewById(R.id.network_book_left_spacer).setVisibility(showSpacers ? View.VISIBLE : View.GONE);
-		findViewById(R.id.network_book_right_spacer).setVisibility(showSpacers ? View.VISIBLE : View.GONE);
+		findViewById(R.id.network_book_left_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
+		findViewById(R.id.network_book_right_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
+		if (skipSecondButton) {
+			final int buttonId = buttons[1];
+			View button = findViewById(buttonId);
+			button.setVisibility(View.GONE);
+			button.setOnClickListener(null);
+		}
 		while (buttonNumber < buttons.length) {
 			final int buttonId = buttons[buttonNumber++];
 			View button = findViewById(buttonId);
