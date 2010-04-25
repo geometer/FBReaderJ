@@ -139,7 +139,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doExpandCatalog((NetworkCatalogTree)tree);
 				return true;
 			case OPEN_IN_BROWSER_ITEM_ID:
-				NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE));
+				if (NetworkLibraryActivity.Instance != null) {
+					NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE));
+				}
 				return true;
 			case RELOAD_ITEM_ID:
 				doReloadCatalog((NetworkCatalogTree)tree);
@@ -154,7 +156,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut((NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-				NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink());
+				if (NetworkLibraryActivity.Instance != null) {
+					NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink());
+				}
 				return true;
 			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
@@ -307,6 +311,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doExpandCatalog(final NetworkCatalogTree tree) {
+		if (NetworkLibraryActivity.Instance == null) {
+			return;
+		}
 		if (tree.hasChildren()) {
 			NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
 			return;
@@ -326,6 +333,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doReloadCatalog(final NetworkCatalogTree tree) {
+		if (NetworkLibraryActivity.Instance == null) {
+			return;
+		}
 		if (!startProcessingTree(tree)) {
 			return;
 		}
@@ -384,6 +394,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}*/
 
 	private void doSignOut(NetworkCatalogTree tree) {
+		if (NetworkLibraryActivity.Instance == null) {
+			return;
+		}
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();

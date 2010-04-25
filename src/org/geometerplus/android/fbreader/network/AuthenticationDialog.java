@@ -60,7 +60,9 @@ class AuthenticationDialog {
 		myLink = link;
 		myErrorMessage = null;
 		myOnSuccessRunnable = onSuccessRunnable;
-		NetworkLibraryActivity.Instance.getTopLevelActivity().showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.getTopLevelActivity().showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+		}
 	}
 
 	public Dialog createDialog(final Activity activity) {

@@ -53,6 +53,11 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		if (NetworkLibraryActivity.Instance == null) {
+			finish();
+			return;
+		}
+
 		myBook = NetworkLibraryActivity.Instance.getBookItem();
 		if (myBook == null) {
 			finish();
@@ -149,7 +154,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
 			if (cover instanceof NetworkImage) {
 				final NetworkImage img = (NetworkImage) cover;
-				if (NetworkLibraryActivity.Instance.isCoverLoading(img.Url)) {
+				if (NetworkLibraryActivity.Instance != null
+						&& NetworkLibraryActivity.Instance.isCoverLoading(img.Url)) {
 					NetworkLibraryActivity.Instance.setOnCoverSyncRunnable(img.Url, new Runnable() {
 						public void run() {
 							img.synchronizeFast();
