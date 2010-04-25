@@ -1,7 +1,13 @@
+===== 0.6.2 (April 25, 2010) =====
+
+* Downloader service priority has been decreased for better UI responsivity
+* New menu items: Rotate Screen, Zoom In, Zoom Out
+* A problem with %-escaped file names inside ePubs has been fixed
+
 ===== 0.6.1 (April 23, 2010) =====
 
-* User can preview a book before downloading/purchasing.
-* French resources have been updated.
+* User can preview a book before downloading/purchasing
+* French resources have been updated
 
 ===== 0.6.0 (April 19, 2010) =====
 
