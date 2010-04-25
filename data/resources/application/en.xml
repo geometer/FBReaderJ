@@ -107,10 +107,10 @@
 			<node name="clearSelection" value="Clear"/>
 		</node>
 		<node name="search" value="Search"/>
-		<node name="view" value="View">
-			<node name="rotate" value="Rotate Screen"/>
-			<node name="toggleFullscreen" value="Full Screen"/>
-		</node>
+		<node name="rotate" value="Rotate screen"/>
+		<node name="increaseFont" value="Zoom in" />
+		<node name="decreaseFont" value="Zoom out" />
+		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
 	</node>
 	<node name="dialog">

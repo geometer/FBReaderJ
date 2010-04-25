@@ -108,10 +108,10 @@
 			<node name="clearSelection" value="Effacer"/>
 		</node>
 		<node name="search" value="Rechercher"/>
-		<node name="view" value="Vue">
-			<node name="rotate" value="Orienter l'écran"/>
-			<node name="toggleFullscreen" value="Plein écran"/>
-		</node>
+		<node name="rotate" value="Orienter l'écran"/>
+		<node name="increaseFont" toBeTranslated="true" value="Zoom in" />
+		<node name="decreaseFont" toBeTranslated="true" value="Zoom out" />
+		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
 	</node>
 	<node name="dialog">

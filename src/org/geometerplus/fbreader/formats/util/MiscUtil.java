@@ -37,4 +37,32 @@ public class MiscUtil {
 		final int index = fullPath.lastIndexOf(':');
 		return (index >= 2) ? fullPath.substring(index + 1) : fullPath;
 	}
+
+	private static boolean isHexDigit(char ch) {
+		return
+			(ch >= '0' && ch <= '9') ||
+			(ch >= 'a' && ch <= 'f') ||
+			(ch >= 'A' && ch <= 'F');
+	}
+
+	public static String decodeHtmlReference(String name) {
+		int index = 0;
+		while (true) {
+			index = name.indexOf('%', index);
+			if (index == -1 || index >= name.length() - 2) {
+				break;
+			}
+			if (isHexDigit(name.charAt(index + 1)) &&
+				isHexDigit(name.charAt(index + 2))) {
+				char c = 0;
+				try {
+					c = (char)Integer.decode("0x" + name.substring(index + 1, index + 3)).intValue();
+				} catch (NumberFormatException e) {
+				}
+				name = name.substring(0, index) + c + name.substring(index + 3);
+			}
+			index = index + 1;
+		}
+		return name;
+	}
 }

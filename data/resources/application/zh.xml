@@ -108,10 +108,10 @@
 			<node name="clearSelection" value="清除" />
 		</node>
 		<node name="search" value="查找" />
-		<node name="view" value="视图">
-			<node name="rotate" value="翻转屏幕" />
-			<node name="toggleFullscreen" value="全屏" />
-		</node>
+		<node name="rotate" value="翻转屏幕" />
+		<node name="increaseFont" value="字体加大" />
+		<node name="decreaseFont" value="字体缩小" />
+		<node name="toggleFullscreen" value="全屏" />
 		<node name="bookmarks" value="书签" />
 	</node>
 	<node name="dialog">

@@ -190,8 +190,9 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			myState = READ_TOUR;
 		} else if ((myState == READ_MANIFEST) && (ITEM == tag)) {
 			final String id = xmlattributes.getValue("id");
-			final String href = xmlattributes.getValue("href");
+			String href = xmlattributes.getValue("href");
 			if ((id != null) && (href != null)) {
+				href = MiscUtil.decodeHtmlReference(href);
 				myIdToHref.put(id, href);
 			}
 		} else if ((myState == READ_SPINE) && (ITEMREF == tag)) {
@@ -205,8 +206,9 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		} else if ((myState == READ_GUIDE) && (REFERENCE == tag)) {
 			final String type = xmlattributes.getValue("type");
 			final String title = xmlattributes.getValue("title");
-			final String href = xmlattributes.getValue("href");
+			String href = xmlattributes.getValue("href");
 			if (href != null) {
+				href = MiscUtil.decodeHtmlReference(href);
 				if (title != null) {
 					myGuideTOC.add(new Reference(title, href));
 				}
@@ -220,8 +222,9 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			}
 		} else if ((myState == READ_TOUR) && (SITE == tag)) {
 			final String title = xmlattributes.getValue("title");
-			final String href = xmlattributes.getValue("href");
+			String href = xmlattributes.getValue("href");
 			if ((title != null) && (href != null)) {
+				href = MiscUtil.decodeHtmlReference(href);
 				myTourTOC.add(new Reference(title, href));
 			}
 		}

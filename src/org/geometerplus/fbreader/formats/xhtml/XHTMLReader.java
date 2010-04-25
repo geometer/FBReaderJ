@@ -134,6 +134,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	}
 
 	public final String getFileAlias(String fileName) {
+		fileName = MiscUtil.decodeHtmlReference(fileName);
 		Integer num = myFileNumbers.get(fileName);
 		if (num == null) {
 			num = myFileNumbers.size();

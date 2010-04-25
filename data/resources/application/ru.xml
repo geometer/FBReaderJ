@@ -107,10 +107,10 @@
 			<node name="clearSelection" value="Убрать пометку"/>
 		</node>
 		<node name="search" value="Поиск"/>
-		<node name="view" value="Изображение">
-			<node name="rotate" value="Повернуть"/>
-			<node name="toggleFullscreen" value="На весь экран"/>
-		</node>
+		<node name="rotate" value="Повернуть"/>
+		<node name="increaseFont" value="Увеличить шрифта" />
+		<node name="decreaseFont" value="Уменьшить шрифта" />
+		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
 	</node>
 	<node name="dialog">

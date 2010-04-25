@@ -150,6 +150,12 @@ public abstract class ZLApplication {
 		return false;
 	}
 
+	public void rotateScreen() {
+		if (myWindow != null) {
+			myWindow.rotate();
+		}
+	}
+
 	public boolean closeWindow() {
 		onWindowClosing();
 		if (myWindow != null) {

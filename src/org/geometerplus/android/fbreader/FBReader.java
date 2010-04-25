@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
 import android.view.WindowManager;
-import android.content.pm.ActivityInfo;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -91,11 +90,6 @@ public class FBReader extends ZLAndroidActivity {
 			startActivity(new Intent(this, this.getClass()));
 			finish();
 		}
-		setRequestedOrientation(
-			application.AutoOrientationOption.getValue() ?
-				ActivityInfo.SCREEN_ORIENTATION_SENSOR :
-				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
-		);
 
 		if (myPanel.ControlPanel == null) {
 			myPanel.ControlPanel = new ControlPanel(this);

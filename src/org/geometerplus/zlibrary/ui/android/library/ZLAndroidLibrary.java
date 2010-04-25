@@ -25,6 +25,7 @@ import android.app.Application;
 import android.content.res.Resources;
 import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -54,6 +55,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myActivity = activity;
 		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).setActivity(activity);
 		myWidget = null;
+	}
+
+	public void rotateScreen() {
+		if (myActivity != null)	{
+			myActivity.rotate();
+		}
 	}
 
 	public void finish() {

@@ -836,6 +836,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
 			myPreviousPage.reset();
 			myNextPage.reset();
+			preparePaintInfo(myCurrentPage);
+			if (myCurrentPage.isEmptyPage()) {
+				scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			}
 		}
 	}
 

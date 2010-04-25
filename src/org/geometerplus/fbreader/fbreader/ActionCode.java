@@ -44,6 +44,7 @@ public interface ActionCode {
 	String SCROLL_TO_START_OF_TEXT = "gotoSectionStart";
 	String SCROLL_TO_END_OF_TEXT = "gotoSectionEnd";
 	String CANCEL = "cancel";
+	String ROTATE = "rotate";
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";

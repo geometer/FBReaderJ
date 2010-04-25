@@ -17,35 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.application;
+package org.geometerplus.fbreader.fbreader;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
-
-abstract public class ZLApplicationWindow {
-	private ZLApplication myApplication;
-
-	protected ZLApplicationWindow(ZLApplication application) {
-		myApplication = application;
-		myApplication.setWindow(this);
+class RotateAction extends FBAction {
+	RotateAction(FBReader fbreader) {
+		super(fbreader);
 	}
 
-	public ZLApplication getApplication() {
-		return myApplication;
+	public void run() {
+		Reader.rotateScreen();
 	}
-
-	protected void init() {
-		initMenu();
-	}
-
-	abstract protected void initMenu();
-	abstract protected void refreshMenu();
-	
-	abstract protected void repaintView();
-	abstract protected void scrollViewTo(int viewPage, int shift);
-	abstract protected void startViewAutoScrolling(int viewPage);
-
-	abstract protected void rotate();
-	
-	abstract protected void close();
 }

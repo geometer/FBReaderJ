@@ -25,6 +25,8 @@ import android.net.Uri;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -40,6 +42,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
@@ -65,6 +68,21 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
 		}
 		ZLApplication.Instance().repaintView();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		switch (ourOrientation) {
+			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+				setRequestedOrientation(ourOrientation);
+				myChangeCounter = 0;
+				break;
+			default:
+				setAutoRotationMode();
+				break;
+		}
 	}
 
 	@Override
@@ -113,5 +131,59 @@ public abstract class ZLAndroidActivity extends Activity {
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		View view = findViewById(R.id.main_view);
 		return ((view != null) && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
+	}
+
+	private int myChangeCounter = 0;
+	private static int ourOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+	private void setAutoRotationMode() {
+		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+		setRequestedOrientation(
+			application.AutoOrientationOption.getValue() ?
+				ActivityInfo.SCREEN_ORIENTATION_SENSOR :
+				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
+		);
+		myChangeCounter = 0;
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration config) {
+		super.onConfigurationChanged(config);
+
+		switch (getRequestedOrientation()) {
+			default:
+				break;
+			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+				if (config.orientation == Configuration.ORIENTATION_PORTRAIT && myChangeCounter++ > 0) {
+					setAutoRotationMode();
+				}
+				break;
+			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+				if (config.orientation == Configuration.ORIENTATION_LANDSCAPE && myChangeCounter++ > 0) {
+					setAutoRotationMode();
+				}
+				break;
+		}
+	}
+
+	void rotate() {
+		View view = findViewById(R.id.main_view);
+		if (view != null) {
+			switch (getRequestedOrientation()) {
+				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+					ourOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+					break;
+				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+					ourOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+					break;
+				default:
+					if (view.getWidth() > view.getHeight()) {
+						ourOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+					} else {
+						ourOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+					}
+			}
+			setRequestedOrientation(ourOrientation);
+			myChangeCounter = 0;
+		}
 	}
 }

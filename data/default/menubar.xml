@@ -10,6 +10,9 @@
 	<item id="preferences"/>
 	<item id="preferences-old"/>
 	<item id="bookInfo"/>
+	<item id="rotate"/>
+	<item id="increaseFont"/>
+	<item id="decreaseFont"/>
 	<submenu id="navigate">
 		<item id="gotoHome"/>
 		<item id="gotoSectionStart"/>
