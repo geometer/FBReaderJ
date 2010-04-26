@@ -108,8 +108,8 @@
 		</node>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>
-		<node name="increaseFont" value="Увеличить шрифта" />
-		<node name="decreaseFont" value="Уменьшить шрифта" />
+		<node name="increaseFont" value="Увеличить шрифт" />
+		<node name="decreaseFont" value="Уменьшить шрифт" />
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
 	</node>
