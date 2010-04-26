@@ -162,11 +162,7 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 
 	private class ViewAdapter extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = (View)getAndroidViews().get(position);
-			}
-
-			return convertView;
+			return (View)getAndroidViews().get(position);
 		}
 
 		public boolean areAllItemsSelectable() {

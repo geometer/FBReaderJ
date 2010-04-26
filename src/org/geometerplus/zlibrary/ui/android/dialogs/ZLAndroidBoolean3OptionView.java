@@ -89,19 +89,21 @@ class ZLAndroidBoolean3OptionView extends ZLAndroidOptionView {
 		}
 
 		public View getDropDownView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
+			if (convertView == null || !(convertView instanceof TextView)) {
 				TextView textView = new TextView(parent.getContext());
 				textView.setPadding(0, 12, 0, 12);
 				textView.setTextSize(20);
 				textView.setText((String)getItem(position));
 				convertView = textView;
+			} else {
+				((TextView)convertView).setText((String)getItem(position));
 			}
 			return convertView;
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			EditText editor;
-			if (convertView == null) {
+			if (convertView instanceof EditText) {
 				editor = (EditText)convertView;
 			} else {
 				editor = new EditText(parent.getContext()) {
