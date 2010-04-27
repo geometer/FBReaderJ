@@ -40,29 +40,10 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.authentication.*;
 
 
-class AuthenticationDialog {
-	private static AuthenticationDialog ourDialog;
+class AuthenticationDialog extends NetworkDialog {
 
-	public static AuthenticationDialog Instance() {
-		if (ourDialog == null) {
-			ourDialog = new AuthenticationDialog();
-		}
-		return ourDialog;
-	}
-
-	private final ZLResource myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
-
-	private NetworkLink myLink;
-	private String myErrorMessage;
-	private Runnable myOnSuccessRunnable;
-
-	public void show(NetworkLink link, Runnable onSuccessRunnable) {
-		myLink = link;
-		myErrorMessage = null;
-		myOnSuccessRunnable = onSuccessRunnable;
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.getTopLevelActivity().showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
-		}
+	public AuthenticationDialog() {
+		super("AuthenticationDialog");
 	}
 
 	public Dialog createDialog(final Activity activity) {
@@ -83,8 +64,6 @@ class AuthenticationDialog {
 
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
-		// TODO: implement skipIP option
-
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
@@ -96,7 +75,7 @@ class AuthenticationDialog {
 				}
 				if (message.what < 0) {
 					myErrorMessage = (String) message.obj;
-					activity.showDialog(NetworkLibraryActivity.DIALOG_AUTHENTICATION);
+					activity.showDialog(NetworkDialog.DIALOG_AUTHENTICATION);
 				} else if (message.what > 0) {
 					if (myOnSuccessRunnable != null) {
 						myOnSuccessRunnable.run();
@@ -152,6 +131,24 @@ class AuthenticationDialog {
 				}
 			}
 		};
+
+		final TextView registerText = (TextView) layout.findViewById(R.id.network_authentication_register);
+		registerText.setText(myResource.getResource("register").getValue());
+		/*registerText.setOnClickListener(new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				if (mgr.registrationSupported()) {
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+								mgr.logOut();
+								handler.sendEmptyMessage(0);
+							}
+						}
+					};
+					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, activity);
+				}
+			}
+		});*/
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		return new AlertDialog.Builder(activity)

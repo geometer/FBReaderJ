@@ -274,6 +274,7 @@
 			<node name="password" value="密码" />
 			<node name="skipIP" value="不绑定到IP地址" />
 			<node name="loginIsEmpty" value="用户名不允许为空" />
+			<node name="register" value="注册" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="购买书籍" />

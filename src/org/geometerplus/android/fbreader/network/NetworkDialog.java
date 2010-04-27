@@ -1,0 +1,96 @@
+/*
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
+package org.geometerplus.android.fbreader.network;
+
+import java.util.TreeMap;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.AlertDialog;
+import android.os.Handler;
+import android.os.Message;
+import android.view.*;
+import android.widget.TextView;
+import android.content.DialogInterface;
+
+import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.authentication.*;
+
+
+abstract class NetworkDialog {
+
+	// dialog identifiers
+	public static final int DIALOG_AUTHENTICATION = 0;
+	public static final int DIALOG_REGISTER_USER = 1;
+
+	private static final TreeMap<Integer, NetworkDialog> ourInstances = new TreeMap<Integer, NetworkDialog>();
+
+	public static NetworkDialog getDialog(int id) {
+		NetworkDialog dlg = ourInstances.get(Integer.valueOf(id));
+		if (dlg == null) {
+			switch (id) {
+			case DIALOG_AUTHENTICATION:
+				dlg = new AuthenticationDialog();
+				break;
+			case DIALOG_REGISTER_USER:
+				dlg = new RegisterUserDialog();
+				break;
+			}
+			if (dlg != null) {
+				ourInstances.put(Integer.valueOf(id), dlg);
+			}
+		}
+		return dlg;
+	}
+
+	protected final ZLResource myResource;
+
+	protected NetworkLink myLink;
+	protected String myErrorMessage;
+	protected Runnable myOnSuccessRunnable;
+
+	public NetworkDialog(String key) {
+		myResource = ZLResource.resource("dialog").getResource(key);
+	}
+
+	public static void show(int id, NetworkLink link, Runnable onSuccessRunnable) {
+		getDialog(id).showInternal(id, link, onSuccessRunnable);
+	}
+
+	private void showInternal(int id, NetworkLink link, Runnable onSuccessRunnable) {
+		myLink = link;
+		myErrorMessage = null;
+		myOnSuccessRunnable = onSuccessRunnable;
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.getTopLevelActivity().showDialog(id);
+		}
+	}
+
+	public abstract Dialog createDialog(final Activity activity);
+	public abstract void prepareDialog(Dialog dialog);
+}

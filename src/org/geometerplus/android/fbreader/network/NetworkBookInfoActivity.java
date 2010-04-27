@@ -280,22 +280,20 @@ actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "bu
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-		case NetworkLibraryActivity.DIALOG_AUTHENTICATION:
-			dialog = AuthenticationDialog.Instance().createDialog(this);
-			break;
+		final NetworkDialog dlg = NetworkDialog.getDialog(id);
+		if (dlg != null) {
+			return dlg.createDialog(this);
 		}
-		return dialog;
+		return null;
 	}
 
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		super.onPrepareDialog(id, dialog);
-		switch (id) {
-		case NetworkLibraryActivity.DIALOG_AUTHENTICATION:
-			AuthenticationDialog.Instance().prepareDialog(dialog);
-			break;
+
+		final NetworkDialog dlg = NetworkDialog.getDialog(id);
+		if (dlg != null) {
+			dlg.prepareDialog(dialog);
 		}		
 	}
 }

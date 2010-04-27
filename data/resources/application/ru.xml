@@ -273,6 +273,7 @@
 			<node name="password" value="Пароль" />
 			<node name="skipIP" value="Не привязываться к ip-адресу" />
 			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
+			<node name="register" value="Зарегистрироваться" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />

@@ -273,6 +273,7 @@
 			<node name="password" value="Password" />
 			<node name="skipIP" value="Don't bound to ip-address" />
 			<node name="loginIsEmpty" value="Username should be non-empty" />
+			<node name="register" value="Sign up" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Purchase book" />

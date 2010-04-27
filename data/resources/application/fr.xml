@@ -274,6 +274,7 @@
 			<node name="password" value="Mot de passe"/>
 			<node name="skipIP" value="Ne pas associer à l'adresse IP"/>
 			<node name="loginIsEmpty" value="L'identifiant ne doit pas être vide"/>
+			<node name="register" value="Inscription"/>
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Achat du livre"/>

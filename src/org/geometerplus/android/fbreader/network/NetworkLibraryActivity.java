@@ -59,11 +59,6 @@ import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 
 public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
-
-	// dialog identifiers
-	static final int DIALOG_AUTHENTICATION = 0;
-
-
 	static NetworkLibraryActivity Instance;
 
 	private final ZLResource myResource = ZLResource.resource("networkView");
@@ -431,22 +426,20 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-		case DIALOG_AUTHENTICATION:
-			dialog = AuthenticationDialog.Instance().createDialog(this);
-			break;
+		final NetworkDialog dlg = NetworkDialog.getDialog(id);
+		if (dlg != null) {
+			return dlg.createDialog(this);
 		}
-		return dialog;
+		return null;
 	}
 
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		super.onPrepareDialog(id, dialog);
-		switch (id) {
-		case DIALOG_AUTHENTICATION:
-			AuthenticationDialog.Instance().prepareDialog(dialog);
-			break;
+
+		final NetworkDialog dlg = NetworkDialog.getDialog(id);
+		if (dlg != null) {
+			dlg.prepareDialog(dialog);
 		}		
 	}
 

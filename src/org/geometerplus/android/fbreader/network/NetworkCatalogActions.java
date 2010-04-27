@@ -150,7 +150,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				diableCatalog((NetworkCatalogRootTree) tree);
 				return true;*/
 			case SIGNIN_ITEM_ID:
-				AuthenticationDialog.Instance().show(((NetworkCatalogTree)tree).Item.Link, null);
+				NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
 			case SIGNOUT_ITEM_ID:
 				doSignOut((NetworkCatalogTree)tree);

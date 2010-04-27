@@ -376,7 +376,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		};
 
 		if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_TRUE) {
-			AuthenticationDialog.Instance().show(book.Link, buyRunnable);
+			NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, book.Link, buyRunnable);
 			return;
 		} else {
 			buyRunnable.run();
