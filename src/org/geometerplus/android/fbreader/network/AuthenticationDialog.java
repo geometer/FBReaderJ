@@ -62,8 +62,6 @@ class AuthenticationDialog extends NetworkDialog {
 		passwordText.setText(myResource.getResource("password").getValue());
 		passwordText.getLayoutParams().height = password.getMeasuredHeight();
 
-		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
@@ -136,6 +134,7 @@ class AuthenticationDialog extends NetworkDialog {
 		registerText.setText(myResource.getResource("register").getValue());
 		/*registerText.setOnClickListener(new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (mgr.registrationSupported()) {
 					final Runnable runnable = new Runnable() {
 						public void run() {
@@ -176,6 +175,9 @@ class AuthenticationDialog extends NetworkDialog {
 			error.setVisibility(View.VISIBLE);
 			error.setText(myErrorMessage);
 		}
+
+		dialog.findViewById(R.id.network_authentication_register).setVisibility(mgr.registrationSupported() ? View.VISIBLE : View.GONE);
+
 		View dlgView = dialog.findViewById(R.id.network_authentication_dialog);
 		dlgView.invalidate();
 		dlgView.requestLayout();
