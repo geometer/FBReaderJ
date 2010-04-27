@@ -49,18 +49,8 @@ class AuthenticationDialog extends NetworkDialog {
 	public Dialog createDialog(final Activity activity) {
 		final View layout = activity.getLayoutInflater().inflate(R.layout.network_authentication_dialog, null);
 
-		final TextView login = (TextView) layout.findViewById(R.id.network_authentication_login);
-		final TextView password = (TextView) layout.findViewById(R.id.network_authentication_password);
-		login.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		password.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		final TextView loginText = (TextView) layout.findViewById(R.id.network_authentication_login_text);
-		loginText.setText(myResource.getResource("login").getValue());
-		loginText.getLayoutParams().height = login.getMeasuredHeight();
-
-		final TextView passwordText = (TextView) layout.findViewById(R.id.network_authentication_password_text);
-		passwordText.setText(myResource.getResource("password").getValue());
-		passwordText.getLayoutParams().height = password.getMeasuredHeight();
+		setupLabel(layout, R.id.network_authentication_login_text, "login", R.id.network_authentication_login);
+		setupLabel(layout, R.id.network_authentication_password_text, "password", R.id.network_authentication_password);
 
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
@@ -91,7 +81,7 @@ class AuthenticationDialog extends NetworkDialog {
 					final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString();
 
 					if (login.length() == 0) {
-						String err = myResource.getResource("loginIsEmpty").getValue();
+						final String err = myResource.getResource("loginIsEmpty").getValue();
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
@@ -132,22 +122,24 @@ class AuthenticationDialog extends NetworkDialog {
 
 		final TextView registerText = (TextView) layout.findViewById(R.id.network_authentication_register);
 		registerText.setText(myResource.getResource("register").getValue());
-		/*registerText.setOnClickListener(new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+		registerText.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (mgr.registrationSupported()) {
-					final Runnable runnable = new Runnable() {
+					activity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
+					NetworkDialog.show(NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
 						public void run() {
-							if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
-								mgr.logOut();
-								handler.sendEmptyMessage(0);
+							if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_TRUE) {
+								myOnSuccessRunnable.run();
+							} else {
+								// TODO: test this code !!!
+								NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
 							}
 						}
-					};
-					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, activity);
+					});
 				}
 			}
-		});*/
+		});
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		return new AlertDialog.Builder(activity)
@@ -161,11 +153,8 @@ class AuthenticationDialog extends NetworkDialog {
 	public void prepareDialog(Dialog dialog) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
-		final TextView login = (TextView) dialog.findViewById(R.id.network_authentication_login);
-		login.setText(mgr.UserNameOption.getValue());
-
-		final TextView password = (TextView) dialog.findViewById(R.id.network_authentication_password);
-		password.setText("");
+		((TextView) dialog.findViewById(R.id.network_authentication_login)).setText(mgr.UserNameOption.getValue());
+		((TextView) dialog.findViewById(R.id.network_authentication_password)).setText("");
 
 		final TextView error = (TextView) dialog.findViewById(R.id.network_authentication_error);
 		if (myErrorMessage == null) {

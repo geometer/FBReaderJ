@@ -93,4 +93,13 @@ abstract class NetworkDialog {
 
 	public abstract Dialog createDialog(final Activity activity);
 	public abstract void prepareDialog(Dialog dialog);
+
+	protected void setupLabel(View layout, int labelId, String key, int labelForId) {
+		final View viewFor = layout.findViewById(labelForId);
+		viewFor.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		final TextView label = (TextView) layout.findViewById(labelId);
+		label.setText(myResource.getResource(key).getValue());
+		label.getLayoutParams().height = viewFor.getMeasuredHeight();
+	}
 }

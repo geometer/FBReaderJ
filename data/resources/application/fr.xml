@@ -247,6 +247,7 @@
 			<node name="authentication" value="Authentification. Veuillez patienter..."/>
 			<node name="signOut" value="Déconnexion en cours. Patientez, s'il-vous plait..." />
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
+			<node name="registerUser" value="Inscription en cours. Veuillez patienter..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
@@ -275,6 +276,14 @@
 			<node name="skipIP" value="Ne pas associer à l'adresse IP"/>
 			<node name="loginIsEmpty" value="L'identifiant ne doit pas être vide"/>
 			<node name="register" value="Inscription"/>
+		</node>
+		<node name="RegisterUserDialog">
+			<node name="title" value="Inscription"/>
+			<node name="login" value="Identifiant"/>
+			<node name="password" value="Mot de passe"/>
+			<node name="confirmPassword" value="Confirmer le mot de passe"/>
+			<node name="email" value="Email"/>
+			<node name="differentPasswords" value="Les deux mots de passe indiqués doivent être les mêmes."/>
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Achat du livre"/>

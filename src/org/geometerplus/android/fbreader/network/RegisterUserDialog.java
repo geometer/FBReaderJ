@@ -43,13 +43,144 @@ import org.geometerplus.fbreader.network.authentication.*;
 class RegisterUserDialog extends NetworkDialog {
 
 	public RegisterUserDialog() {
-		super("AuthenticationDialog");
+		super("RegisterUserDialog");
 	}
 
 	public Dialog createDialog(final Activity activity) {
-		return null;
+		final View layout = activity.getLayoutInflater().inflate(R.layout.network_register_user_dialog, null);
+
+		setupLabel(layout, R.id.network_register_login_text, "login", R.id.network_register_login);
+		setupLabel(layout, R.id.network_register_password_text, "password", R.id.network_register_password);
+		setupLabel(layout, R.id.network_register_confirm_password_text, "confirmPassword", R.id.network_register_confirm_password);
+		setupLabel(layout, R.id.network_register_email_text, "email", R.id.network_register_email);
+
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.invalidateAccountDependents();
+				library.synchronize();
+				if (NetworkLibraryActivity.Instance != null) {
+					NetworkLibraryActivity.Instance.getAdapter().resetTree();
+					NetworkLibraryActivity.Instance.fireOnModelChanged();
+				}
+				if (message.what < 0) {
+					if (message.what == -2) {
+						// TODO: test this code !!!
+						final ZLResource dialogResource = ZLResource.resource("dialog");
+						final ZLResource boxResource = dialogResource.getResource("networkError");
+						final ZLResource buttonResource = dialogResource.getResource("button");
+						new AlertDialog.Builder(activity)
+							.setTitle(boxResource.getResource("title").getValue())
+							.setMessage((String) message.obj)
+							.setIcon(0)
+							.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+							.create().show();
+					} else {
+						myErrorMessage = (String) message.obj;
+						activity.showDialog(NetworkDialog.DIALOG_REGISTER_USER);
+					}
+				} else if (message.what > 0) {
+					if (myOnSuccessRunnable != null) {
+						myOnSuccessRunnable.run();
+					}
+				}
+			}
+		};
+
+		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					AlertDialog alert = (AlertDialog) dialog;
+					final String login = ((TextView) alert.findViewById(R.id.network_register_login)).getText().toString().trim();
+					final String password = ((TextView) alert.findViewById(R.id.network_register_password)).getText().toString();
+					final String confirmPassword = ((TextView) alert.findViewById(R.id.network_register_confirm_password)).getText().toString();
+					final String email = ((TextView) alert.findViewById(R.id.network_register_email)).getText().toString().trim();
+
+					if (login.length() == 0) {
+						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
+						handler.sendMessage(handler.obtainMessage(-1, err));
+						return;
+					}
+					if (!password.equals(confirmPassword)) {
+						final String err = myResource.getResource("differentPasswords").getValue();
+						//password.clear();
+						handler.sendMessage(handler.obtainMessage(-1, err));
+						return;
+					}
+					if (email.length() == 0) {
+						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
+						handler.sendMessage(handler.obtainMessage(-1, err));
+						return;
+					}
+					final int atPos = email.indexOf("@");
+					if (atPos == -1 || email.indexOf(".", atPos) == -1) {
+						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_INVALID_EMAIL);
+						handler.sendMessage(handler.obtainMessage(-1, err));
+						return;
+					}
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							String err = mgr.registerUser(login, password, email);
+							if (err != null) {
+								mgr.logOut();
+								handler.sendMessage(handler.obtainMessage(-1, err));
+								return;
+							}
+							if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_FALSE && mgr.needsInitialization()) {
+								err = mgr.initialize();
+								if (err != null) {
+									mgr.logOut();
+									handler.sendMessage(handler.obtainMessage(-2, err));
+									return;
+								}
+							}
+							handler.sendEmptyMessage(1);
+						}
+					};
+					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, activity);
+				} else {
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+								mgr.logOut();
+								handler.sendEmptyMessage(0);
+							}
+						}
+					};
+					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, activity);
+				}
+			}
+		};
+
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		return new AlertDialog.Builder(activity)
+			.setView(layout)
+			.setTitle(myResource.getResource("title").getValue())
+			.setPositiveButton(buttonResource.getResource("ok").getValue(), listener)
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+			.create();
 	}
 
 	public void prepareDialog(Dialog dialog) {
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+
+		((TextView) dialog.findViewById(R.id.network_register_login)).setText("");
+		((TextView) dialog.findViewById(R.id.network_register_password)).setText("");
+		((TextView) dialog.findViewById(R.id.network_register_confirm_password)).setText("");
+		((TextView) dialog.findViewById(R.id.network_register_email)).setText("");
+
+		final TextView error = (TextView) dialog.findViewById(R.id.network_register_error);
+		if (myErrorMessage == null) {
+			error.setVisibility(View.GONE);
+			error.setText("");
+		} else {
+			error.setVisibility(View.VISIBLE);
+			error.setText(myErrorMessage);
+		}
+
+		View dlgView = dialog.findViewById(R.id.network_register_user_dialog);
+		dlgView.invalidate();
+		dlgView.requestLayout();
 	}
 }

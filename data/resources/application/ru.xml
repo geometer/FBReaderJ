@@ -246,6 +246,7 @@
 			<node name="authentication" value="Идет авторизация. Подождите, пожалуйста..." />
 			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
+			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -274,6 +275,14 @@
 			<node name="skipIP" value="Не привязываться к ip-адресу" />
 			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
 			<node name="register" value="Зарегистрироваться" />
+		</node>
+		<node name="RegisterUserDialog">
+			<node name="title" value="Регистрация нового пользователя" />
+			<node name="login" value="Имя пользователя" />
+			<node name="password" value="Пароль" />
+			<node name="confirmPassword" value="Еще раз пароль" />
+			<node name="email" value="E-mail" />
+			<node name="differentPasswords" value="Вы ввели 2 разных пароля." />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />

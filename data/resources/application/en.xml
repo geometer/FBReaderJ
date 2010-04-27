@@ -246,6 +246,7 @@
 			<node name="authentication" value="Authentication. Please, wait..." />
 			<node name="signOut" value="Signing out. Please, wait..." />
 			<node name="purchaseBook" value="Purchase book. Please, wait..." />
+			<node name="registerUser" value="Registering new account. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />
@@ -274,6 +275,14 @@
 			<node name="skipIP" value="Don't bound to ip-address" />
 			<node name="loginIsEmpty" value="Username should be non-empty" />
 			<node name="register" value="Sign up" />
+		</node>
+		<node name="RegisterUserDialog">
+			<node name="title" value="Register User" />
+			<node name="login" value="Username" />
+			<node name="password" value="Password" />
+			<node name="confirmPassword" value="Password confirmation" />
+			<node name="email" value="E-mail" />
+			<node name="differentPasswords" value="Password and password confirmation must be the same." />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Purchase book" />
