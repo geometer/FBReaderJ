@@ -73,7 +73,6 @@ class RegisterUserDialog extends NetworkDialog {
 				}
 				if (message.what < 0) {
 					if (message.what == -2) {
-						// TODO: test this code !!!
 						final ZLResource dialogResource = ZLResource.resource("dialog");
 						final ZLResource boxResource = dialogResource.getResource("networkError");
 						final ZLResource buttonResource = dialogResource.getResource("button");
@@ -152,15 +151,7 @@ class RegisterUserDialog extends NetworkDialog {
 					};
 					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, activity);
 				} else {
-					final Runnable runnable = new Runnable() {
-						public void run() {
-							if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
-								mgr.logOut();
-								handler.sendEmptyMessage(0);
-							}
-						}
-					};
-					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, activity);
+					handler.sendEmptyMessage(0);
 				}
 			}
 		};

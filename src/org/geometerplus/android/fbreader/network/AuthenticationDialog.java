@@ -134,7 +134,6 @@ class AuthenticationDialog extends NetworkDialog {
 									myOnSuccessRunnable.run();
 								}
 							} else {
-								// TODO: test this code !!!
 								NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
 							}
 						}
