@@ -279,6 +279,10 @@
 			<node name="title" value="Achat du livre"/>
 			<node name="message" value="Êtes-vous sûr de vouloir acheter&#10;le livre&#10;« %s » ?"/>
 		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="Achat du livre" />
+			<node name="message" toBeTranslated="true" value="Book is already bought" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="Aucune occurence dans le livre, désolé."/>

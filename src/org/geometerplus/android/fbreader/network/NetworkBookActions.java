@@ -354,7 +354,13 @@ class NetworkBookActions extends NetworkTreeActions {
 					return;
 				}
 				if (!mgr.needPurchase(book)) {
-					// TODO: make dialog
+					final ZLResource boxResource = dialogResource.getResource("alreadyPurchasedBox");
+					new AlertDialog.Builder(NetworkLibraryActivity.Instance.getTopLevelActivity())
+						.setTitle(boxResource.getResource("title").getValue())
+						.setMessage(boxResource.getResource("message").getValue())
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+						.create().show();
 					return;
 				}
 				final ZLResource boxResource = dialogResource.getResource("purchaseConfirmBox");

@@ -278,6 +278,10 @@
 			<node name="title" value="Purchase book" />
 			<node name="message" value="Are you sure you want to buy&#10;&#8220;%s&#8221;&#10;book?" />
 		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="Purchase book" />
+			<node name="message" value="Book is already bought" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>

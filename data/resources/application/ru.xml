@@ -278,6 +278,10 @@
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
 		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="Покупка книги" />
+			<node name="message" value="Книга уже куплена" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="В этой книге нет такого текста"/>

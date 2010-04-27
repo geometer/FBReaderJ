@@ -279,6 +279,10 @@
 			<node name="title" value="购买书籍" />
 			<node name="message" value="确认购买%s书籍?" />
 		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="购买书籍" />
+			<node name="message" toBeTranslated="true" value="Book is already bought" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="对不起，本书中找不到对应内容" />
