@@ -42,8 +42,16 @@ import org.geometerplus.fbreader.network.authentication.*;
 
 class RegisterUserDialog extends NetworkDialog {
 
+	private String myLogin;
+	private String myPassword;
+	private String myEmail;
+
 	public RegisterUserDialog() {
 		super("RegisterUserDialog");
+	}
+
+	private void clearUserInfo() {
+		myLogin = myPassword = myEmail = null;
 	}
 
 	public Dialog createDialog(final Activity activity) {
@@ -78,12 +86,14 @@ class RegisterUserDialog extends NetworkDialog {
 					} else {
 						myErrorMessage = (String) message.obj;
 						activity.showDialog(NetworkDialog.DIALOG_REGISTER_USER);
+						return;
 					}
 				} else if (message.what > 0) {
 					if (myOnSuccessRunnable != null) {
 						myOnSuccessRunnable.run();
 					}
 				}
+				clearUserInfo();
 			}
 		};
 
@@ -92,36 +102,38 @@ class RegisterUserDialog extends NetworkDialog {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					AlertDialog alert = (AlertDialog) dialog;
-					final String login = ((TextView) alert.findViewById(R.id.network_register_login)).getText().toString().trim();
-					final String password = ((TextView) alert.findViewById(R.id.network_register_password)).getText().toString();
+					myLogin = ((TextView) alert.findViewById(R.id.network_register_login)).getText().toString().trim();
+					myPassword = ((TextView) alert.findViewById(R.id.network_register_password)).getText().toString();
 					final String confirmPassword = ((TextView) alert.findViewById(R.id.network_register_confirm_password)).getText().toString();
-					final String email = ((TextView) alert.findViewById(R.id.network_register_email)).getText().toString().trim();
+					myEmail = ((TextView) alert.findViewById(R.id.network_register_email)).getText().toString().trim();
 
-					if (login.length() == 0) {
+					if (myLogin.length() == 0) {
+						myLogin = null;
 						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
-					if (!password.equals(confirmPassword)) {
+					if (!myPassword.equals(confirmPassword)) {
 						final String err = myResource.getResource("differentPasswords").getValue();
-						//password.clear();
+						myPassword = null;
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
-					if (email.length() == 0) {
+					if (myEmail.length() == 0) {
+						myEmail = null;
 						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
-					final int atPos = email.indexOf("@");
-					if (atPos == -1 || email.indexOf(".", atPos) == -1) {
+					final int atPos = myEmail.indexOf("@");
+					if (atPos == -1 || myEmail.indexOf(".", atPos) == -1) {
 						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_INVALID_EMAIL);
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
 					final Runnable runnable = new Runnable() {
 						public void run() {
-							String err = mgr.registerUser(login, password, email);
+							String err = mgr.registerUser(myLogin, myPassword, myEmail);
 							if (err != null) {
 								mgr.logOut();
 								handler.sendMessage(handler.obtainMessage(-1, err));
@@ -165,10 +177,10 @@ class RegisterUserDialog extends NetworkDialog {
 	public void prepareDialog(Dialog dialog) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
-		((TextView) dialog.findViewById(R.id.network_register_login)).setText("");
-		((TextView) dialog.findViewById(R.id.network_register_password)).setText("");
-		((TextView) dialog.findViewById(R.id.network_register_confirm_password)).setText("");
-		((TextView) dialog.findViewById(R.id.network_register_email)).setText("");
+		((TextView) dialog.findViewById(R.id.network_register_login)).setText((myLogin != null) ? myLogin : "");
+		((TextView) dialog.findViewById(R.id.network_register_password)).setText((myPassword != null) ? myPassword : "");
+		((TextView) dialog.findViewById(R.id.network_register_confirm_password)).setText((myPassword != null) ? myPassword : "");
+		((TextView) dialog.findViewById(R.id.network_register_email)).setText((myEmail != null) ? myEmail : "");
 
 		final TextView error = (TextView) dialog.findViewById(R.id.network_register_error);
 		if (myErrorMessage == null) {

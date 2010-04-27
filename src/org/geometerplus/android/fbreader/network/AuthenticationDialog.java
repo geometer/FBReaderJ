@@ -130,7 +130,9 @@ class AuthenticationDialog extends NetworkDialog {
 					NetworkDialog.show(NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
 						public void run() {
 							if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_TRUE) {
-								myOnSuccessRunnable.run();
+								if (myOnSuccessRunnable != null) {
+									myOnSuccessRunnable.run();
+								}
 							} else {
 								// TODO: test this code !!!
 								NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
