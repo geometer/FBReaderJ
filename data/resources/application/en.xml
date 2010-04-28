@@ -37,6 +37,7 @@
 		<node name="refillAccount" value="Refill account (currently: %s)"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
+		<node name="stoppingCatalogLoading" value="Stopping loading" />
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>

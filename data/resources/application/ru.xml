@@ -37,6 +37,7 @@
 		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
+		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>

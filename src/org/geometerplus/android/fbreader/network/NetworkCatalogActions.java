@@ -67,12 +67,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		menu.setHeaderTitle(tree.getName());
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
-		final boolean isLoading = (catalogUrl != null) ?
-			(NetworkLibraryActivity.Instance.getCatalogRunnable(Uri.parse(catalogUrl)) != null) : false;
+
+		final Runnable catalogRunnable = (catalogUrl != null) ? NetworkLibraryActivity.Instance.getCatalogRunnable(Uri.parse(catalogUrl)) : null;
+		final boolean isLoading = catalogRunnable != null;
 
 		if (catalogUrl != null) {
 			if (isLoading) {
-				addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopLoading");
+				if (catalogRunnable instanceof ExpandCatalogRunnable && ((ExpandCatalogRunnable) catalogRunnable).InterruptFlag.get()) {
+					addMenuItem(menu, TREE_NO_ACTION, "stoppingCatalogLoading");
+				} else {
+					addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopLoading");
+				}
 			} else {
 				final String expandOrCollapseTitle;
 				if (tree instanceof NetworkCatalogRootTree) {
