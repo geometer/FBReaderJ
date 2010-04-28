@@ -147,6 +147,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		myEventListeners.clear();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		myConnection = new BookDownloaderServiceConnection();
 		bindService(
@@ -459,12 +460,34 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	}
 
 
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setOnMenuItemClickListener(this);
+		item.setIcon(iconId);
+		return item;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
+		super.onCreateOptionsMenu(menu);
+		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
+		return true;
 	}
 
 	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+			case 1:
+				return onSearchRequested();
+			default:
+				return true;
+		}
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 }

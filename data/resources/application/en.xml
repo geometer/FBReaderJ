@@ -12,7 +12,6 @@
 		<node name="searchResults" value="Found"/>
 		<node name="menu">
 			<node name="localSearch" value="Local search"/>
-			<node name="networkSearch" value="Network search"/>
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="deleteBook" value="Delete book"/>
@@ -47,6 +46,9 @@
 			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="Network search"/>
+		</node>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Book Info" />

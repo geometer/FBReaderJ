@@ -13,7 +13,6 @@
 		<node name="searchResults" value="Trouvé(s)"/>
 		<node name="menu">
 			<node name="localSearch" value="Recherche locale"/>
-			<node name="networkSearch" value="Recherche sur le réseau"/>
 		</node>
 		<node name="openBook" value="Ouvrir ce livre"/>
 		<node name="deleteBook" value="Supprimer ce livre"/>
@@ -48,6 +47,9 @@
 			<node name="openInBrowser" value="Voulez-vous ouvrir ce catalogue dans le navigateur?" />
 		</node>
 		<node name="downloadingCatalogs" value="Chargement des catalogues"/> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="Recherche sur le réseau"/>
+		</node>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Informations sur le livre" />

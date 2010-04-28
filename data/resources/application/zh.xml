@@ -12,8 +12,7 @@
 		<node name="recent" value="最近" />
 		<node name="searchResults" value="搜索结果" />
 		<node name="menu">
-			<node name="Localsearch" value="本地搜索" />
-			<node name="networkSearch" value="网络搜索" />
+			<node name="localSearch" value="本地搜索" />
 		</node>
 		<node name="openBook" value="打开图书" />
 		<node name="deleteBook" value="删除图书" />
@@ -48,6 +47,9 @@
 			<node name="openInBrowser" value="是否在浏览器中打开?" />
 		</node>
 		<node name="downloadingCatalogs" value="书库目录下载" /> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="网络搜索" />
+		</node>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" toBeTranslated="true" value="Book Info" />

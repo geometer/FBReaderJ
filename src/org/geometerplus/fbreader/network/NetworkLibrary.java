@@ -24,6 +24,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -38,6 +39,8 @@ public class NetworkLibrary {
 		}
 		return ourInstance;
 	}
+
+	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
 
 
 	private final ArrayList<NetworkLink> myLinks = new ArrayList<NetworkLink>();
