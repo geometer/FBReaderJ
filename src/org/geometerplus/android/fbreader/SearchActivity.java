@@ -27,6 +27,8 @@ import android.widget.Toast;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
 abstract class SearchActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -53,7 +55,7 @@ abstract class SearchActivity extends Activity {
 					).show();
 				}
 			};
-			ZLDialogManager.Instance().wait(getWaitMessageResourceKey(), new Runnable() {
+			final Runnable runnable = new Runnable() {
 				public void run() {
 					if (runSearch(pattern)) {
 						successHandler.sendEmptyMessage(0);
@@ -61,7 +63,8 @@ abstract class SearchActivity extends Activity {
 						failureHandler.sendEmptyMessage(0);
 					}
 				}
-			});
+			};
+			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait(getWaitMessageResourceKey(), runnable, getParentActivity());
 		}
 		finish();
 	}
