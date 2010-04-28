@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkTreeFactory {
@@ -30,6 +31,13 @@ public class NetworkTreeFactory {
 	}
 
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkLibraryItem item, int position) {
+		final List<FBTree> subtrees = parent.subTrees();
+		if (position == -1) {
+			position = subtrees.size();
+		} else if (position < 0 || position > subtrees.size()) {
+			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + subtrees.size() + "]");
+		}
+
 		if (item instanceof NetworkCatalogItem) {
 			NetworkCatalogItem catalogItem = (NetworkCatalogItem) item;
 			if (!NetworkCatalogTree.processAccountDependent(catalogItem)) {
@@ -39,7 +47,36 @@ public class NetworkTreeFactory {
 			catalogItem.onDisplayItem();
 			return tree;
 		} else if (item instanceof NetworkBookItem) {
-			return new NetworkBookTree(parent, (NetworkBookItem) item, position);
+			NetworkBookItem book = (NetworkBookItem) item;
+			String seriesTitle = book.SeriesTitle;
+			if (seriesTitle == null) {
+				return new NetworkBookTree(parent, (NetworkBookItem) item, position);
+			}
+
+			if (position > 0) {
+				final NetworkTree previous = (NetworkTree) subtrees.get(position - 1);
+				if (previous instanceof NetworkSeriesTree) {
+					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) previous;
+					if (seriesTree.SeriesTitle.equals(seriesTitle)) {
+						return new NetworkBookTree(seriesTree, book);
+					}
+				}
+			}
+
+			if (position < subtrees.size()) {
+				final NetworkTree next = (NetworkTree) subtrees.get(position);
+				if (next instanceof NetworkSeriesTree) {
+					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) next;
+					if (seriesTree.SeriesTitle.equals(seriesTitle)) {
+						return new NetworkBookTree(seriesTree, book, 0);
+					}
+				}
+			}
+
+			final boolean showAuthors = parent.Item.CatalogType != NetworkCatalogItem.CATALOG_BY_AUTHORS;
+
+			final NetworkSeriesTree seriesTree = new NetworkSeriesTree(parent, seriesTitle, position, showAuthors);
+			return new NetworkBookTree(seriesTree, book);
 		}
 		return null;
 	}

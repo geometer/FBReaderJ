@@ -31,8 +31,8 @@ public class NetworkSeriesTree extends NetworkTree {
 
 	private final boolean myShowAuthors;
 
-	NetworkSeriesTree(NetworkTree parent, String seriesTitle, boolean showAuthors) {
-		super(parent);
+	NetworkSeriesTree(NetworkTree parent, String seriesTitle, int position, boolean showAuthors) {
+		super(parent, position);
 		SeriesTitle = seriesTitle;
 		myShowAuthors = showAuthors;
 	}
@@ -45,7 +45,7 @@ public class NetworkSeriesTree extends NetworkTree {
 	@Override
 	public String getSummary() {
 		if (!myShowAuthors) {
-			return super.getSecondString();
+			return super.getSummary();
 		}
 
 		StringBuilder builder = new StringBuilder();

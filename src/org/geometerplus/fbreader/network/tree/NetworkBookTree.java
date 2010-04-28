@@ -31,6 +31,11 @@ public class NetworkBookTree extends NetworkTree {
 
 	public final NetworkBookItem Book;
 
+	NetworkBookTree(NetworkTree parent, NetworkBookItem book) {
+		super(parent);
+		Book = book;
+	}
+
 	NetworkBookTree(NetworkTree parent, NetworkBookItem book, int position) {
 		super(parent, position);
 		Book = book;
