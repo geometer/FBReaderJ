@@ -31,6 +31,7 @@
 		<node name="buy" value="Buy (%s)"/>
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="reload" value="Reload"/>
+		<node name="stopLoading" value="Stop loading" />
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="refillAccount" value="Refill account (currently: %s)"/>

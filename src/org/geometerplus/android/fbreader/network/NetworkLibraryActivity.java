@@ -66,6 +66,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 
 	private final HashMap<Uri, Runnable> myCatalogRunnables = new HashMap<Uri, Runnable>();
+
 	private NetworkBookItem myBookInfoItem;
 	private final HashSet<String> myIconsToSync = new HashSet<String>();
 	private final HashMap<String, Runnable> myOnCoverSyncRunnables = new HashMap<String, Runnable>();
@@ -374,8 +375,14 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	}
 
 	void loadCatalog(Uri uri, Runnable loadCatalogRunnable) {
-		if (!myCatalogRunnables.containsKey(uri)) {
-			myCatalogRunnables.put(uri, loadCatalogRunnable);
+		boolean doDownload = false;
+		synchronized (myCatalogRunnables) {
+			if (!myCatalogRunnables.containsKey(uri)) {
+				myCatalogRunnables.put(uri, loadCatalogRunnable);
+				doDownload = true;
+			}
+		}
+		if (doDownload) {
 			startService(
 				new Intent(Intent.ACTION_DEFAULT, uri, getApplicationContext(), CatalogDownloaderService.class)
 			);
@@ -383,7 +390,15 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 	}
 
 	Runnable getCatalogRunnable(Uri uri) {
-		return myCatalogRunnables.remove(uri);
+		synchronized (myCatalogRunnables) {
+			return myCatalogRunnables.get(uri);
+		}
+	}
+
+	Runnable removeCatalogRunnable(Uri uri) {
+		synchronized (myCatalogRunnables) {
+			return myCatalogRunnables.remove(uri);
+		}
 	}
 
 	void showBookInfoActivity(NetworkBookItem book) {

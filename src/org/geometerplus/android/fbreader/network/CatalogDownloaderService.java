@@ -123,21 +123,31 @@ public class CatalogDownloaderService extends Service {
 			doStop();
 			return;
 		}
+		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
+		if (runnable == null) {
+			doStop();
+			return;
+		}
 
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				doStop();
 				endProgressNotification();
+				if (NetworkLibraryActivity.Instance != null) {
+					NetworkLibraryActivity.Instance.removeCatalogRunnable(uri);
+				}
 			}
 		};
 
 		startProgressNotification();
 
-		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {
-				runnable.run();
-				finishHandler.sendEmptyMessage(0);
+				try {
+					runnable.run();
+				} finally {
+					finishHandler.sendEmptyMessage(0);
+				}
 			}
 		});
 		loader.setPriority(Thread.MIN_PRIORITY);

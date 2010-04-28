@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.AlertDialog;
 import android.os.Message;
@@ -50,6 +51,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int SIGNIN_ITEM_ID = 4;
 	public static final int SIGNOUT_ITEM_ID = 5;
 	public static final int REFILL_ACCOUNT_ITEM_ID = 6;
+	public static final int STOP_LOADING_ITEM_ID = 7;
 
 	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
@@ -63,15 +65,29 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
+		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
+		final boolean isLoading = (catalogUrl != null) ?
+			(NetworkLibraryActivity.Instance.getCatalogRunnable(Uri.parse(catalogUrl)) != null) : false;
+
+		if (catalogUrl != null) {
+			if (isLoading) {
+				addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopLoading");
+			} else {
+				final String expandOrCollapseTitle;
+				if (tree instanceof NetworkCatalogRootTree) {
+					expandOrCollapseTitle = isOpened ? "closeCatalog" : "openCatalog";
+				} else {
+					expandOrCollapseTitle = isOpened ? "collapseTree" : "expandTree";
+				}
+				addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, expandOrCollapseTitle);
+				if (isOpened) {
+					addMenuItem(menu, RELOAD_ITEM_ID, "reload");
+				}
+			}
+		}
+
 		if (tree instanceof NetworkCatalogRootTree) {
-			if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
-				addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID,
-					isOpened ? "closeCatalog" : "openCatalog");
-			}
-			if (isOpened) {
-				addMenuItem(menu, RELOAD_ITEM_ID, "reload");
-			}
 			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 			if (mgr != null) {
 				final boolean maybeSignedIn = mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE;
@@ -85,28 +101,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}
 				} else {
 					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
-					if (mgr.registrationSupported()) {
-						//registerAction(new RegisterUserAction(mgr), true);
-					}
-					if (mgr.passwordRecoverySupported()) {
+					/*if (mgr.passwordRecoverySupported()) {
 						//registerAction(new PasswordRecoveryAction(mgr), true);
-					}
+					}*/
 				}
 			}
 			//addMenuItem(DONT_SHOW_ITEM_ID, "dontShow"); // TODO: is it needed??? and how to turn it on???
 		} else {
-			if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
-				addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID,
-					isOpened ? "collapseTree" : "expandTree");
-			}
 			if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
 			}
-			if (isOpened) {
-				addMenuItem(menu, RELOAD_ITEM_ID, "reload");
-			}
 		}
-		/*if (tree.hasChildren()) {
+		/*if (!isLoading && tree.hasChildren()) {
 			menu.add(0, DBG_UNLOAD_CATALOG_ITEM_ID, 0, "Unload catalog");
 		}*/
 	}
@@ -159,6 +165,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (NetworkLibraryActivity.Instance != null) {
 					NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink());
 				}
+				return true;
+			case STOP_LOADING_ITEM_ID:
+				doStopLoading((NetworkCatalogTree)tree);
 				return true;
 			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
 					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
@@ -268,6 +277,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		private final boolean myCheckAuthentication;
 		private final ExpandCatalogHandler myHandler;
 
+		public final AtomicBoolean InterruptFlag = new AtomicBoolean();
+
 		public ExpandCatalogRunnable(NetworkCatalogTree tree, ExpandCatalogHandler handler, boolean checkAuthentication) {
 			myTree = tree;
 			myHandler = handler;
@@ -298,12 +309,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				private int myItemsNumber;
 				public boolean onNewItem(NetworkLibraryItem item) {
 					myHandler.addItem(item);
+					if (InterruptFlag.get() || myItemsNumber++ >= 250) { // FIXME: hardcoded Entries Limit constant
+						return true;
+					}
 					final long now = System.currentTimeMillis();
 					if (now > myUpdateTime) {
 						myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
 						myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
 					}
-					return myItemsNumber++ >= 250; // FIXME: hardcoded Entries Limit constant
+					return false;
 				}
 			});
 			myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
@@ -384,6 +398,21 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		library.synchronize();
 		if (NetworkLibraryActivity.Instance != null) {
 			NetworkLibraryActivity.Instance.resetTree();
+		}
+	}
+
+	private void doStopLoading(NetworkCatalogTree tree) {
+		if (NetworkLibraryActivity.Instance == null) {
+			return;
+		}
+		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+		if (url == null) {
+			throw new RuntimeException("That's impossible!!!");
+		}
+		final Uri uri = Uri.parse(url);
+		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
+		if (runnable != null && runnable instanceof ExpandCatalogRunnable) {
+			((ExpandCatalogRunnable) runnable).InterruptFlag.set(true);
 		}
 	}
 

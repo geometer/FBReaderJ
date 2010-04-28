@@ -32,6 +32,7 @@
 		<node name="buy" value="Acheter (%s)"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="reload" value="Recharger"/>
+		<node name="stopLoading" toBeTranslated="true" value="Stop loading" />
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
