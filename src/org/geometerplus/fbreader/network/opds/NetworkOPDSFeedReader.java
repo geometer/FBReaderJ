@@ -111,10 +111,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 	}
 
-	public void processFeedEntry(OPDSEntry entry) {
+	public boolean processFeedEntry(OPDSEntry entry) {
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		if (opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.NEVER) {
-			return;
+			return false;
 		}
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
@@ -140,8 +140,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		if (item != null) {
 			//item.dbgEntry = entry;
 			//myData.Items.add(item);
-			myData.Listener.onNewItem(item);
+			return myData.Listener.onNewItem(item);
 		}
+		return false;
 	}
 
 	private static final String AuthorPrefix = "author:";

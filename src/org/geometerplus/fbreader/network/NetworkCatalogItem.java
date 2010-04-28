@@ -89,7 +89,8 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	}
 
 	public interface CatalogListener {
-		void onNewItem(NetworkLibraryItem item);
+		// return true to interrupt reading; return false to continue reading
+		boolean onNewItem(NetworkLibraryItem item);
 	}
 
 	public static class OperationData {

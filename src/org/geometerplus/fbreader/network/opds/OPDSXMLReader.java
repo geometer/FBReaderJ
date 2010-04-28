@@ -380,6 +380,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 		}
 		myBuffer.delete(0, myBuffer.length());
 
+		boolean interruptReading = false;
 		switch (myState) {
 			case START:
 				break;
@@ -396,7 +397,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case F_ENTRY:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
 					if (myEntry != null && myEntry.Id != null) {
-						myFeedReader.processFeedEntry(myEntry);
+						interruptReading = myFeedReader.processFeedEntry(myEntry);
 					}
 					myEntry = null;
 					myState = FEED;
@@ -682,7 +683,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 		}
 
-		return false;
+		return interruptReading;
 	}
 
 	@Override

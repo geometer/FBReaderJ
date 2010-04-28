@@ -23,6 +23,9 @@ interface OPDSFeedReader {
 
 	void processFeedStart();
 	void processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries);
-	void processFeedEntry(OPDSEntry entry);
+
+	// return true to interrupt reading; return false to continue reading
+	boolean processFeedEntry(OPDSEntry entry);
+
 	void processFeedEnd();
 }

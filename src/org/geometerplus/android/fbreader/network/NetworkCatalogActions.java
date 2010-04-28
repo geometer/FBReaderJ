@@ -295,13 +295,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 			final String err = myTree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
 				private long myUpdateTime;
-				public void onNewItem(NetworkLibraryItem item) {
+				private int myItemsNumber;
+				public boolean onNewItem(NetworkLibraryItem item) {
 					myHandler.addItem(item);
 					final long now = System.currentTimeMillis();
 					if (now > myUpdateTime) {
 						myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
 						myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
 					}
+					return myItemsNumber++ >= 250; // FIXME: hardcoded Entries Limit constant
 				}
 			});
 			myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
