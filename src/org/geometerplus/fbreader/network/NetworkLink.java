@@ -63,6 +63,7 @@ abstract public class NetworkLink {
 		Links = new TreeMap(links);
 	}
 
+	public abstract ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	public abstract ZLNetworkRequest resume(NetworkOperationData data);
 
 	public abstract NetworkLibraryItem libraryItem();

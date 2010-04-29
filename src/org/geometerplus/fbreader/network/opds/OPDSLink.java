@@ -94,6 +94,12 @@ class OPDSLink extends NetworkLink {
 	}
 
 	@Override
+	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
+		// TODO: implement
+		return null;
+	}
+
+	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
 		String url = data.ResumeURI;
 		data.clear();

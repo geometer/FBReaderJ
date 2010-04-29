@@ -25,6 +25,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -236,4 +238,45 @@ public class NetworkLibrary {
 		return myRootTree;
 	}
 
+
+	// returns Error Message
+	public String simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) {
+		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
+		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
+
+		NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
+			public synchronized boolean onNewItem(NetworkLibraryItem item) {
+				return listener.onNewItem(item);
+			}
+		};
+
+		for (NetworkLink link: myLinks) {
+			if (link.OnOption.getValue()) {
+				NetworkOperationData data = new NetworkOperationData(link, synchronizedListener);
+				ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
+				if (request != null) {
+					dataList.add(data);
+					requestList.add(request);
+				}
+			}
+		}
+
+		while (requestList.size() != 0) {
+			final String errorMessage = ZLNetworkManager.Instance().perform(requestList);
+			if (errorMessage != null) {
+				return errorMessage;
+			}
+
+			requestList.clear();
+
+			for (NetworkOperationData data: dataList) {
+				ZLNetworkRequest request = data.resume();
+				if (request != null) {
+					requestList.add(request);
+				}
+			}
+		}
+
+		return null;
+	}
 }
