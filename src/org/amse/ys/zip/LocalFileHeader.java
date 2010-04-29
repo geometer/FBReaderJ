@@ -5,13 +5,15 @@ package org.amse.ys.zip;
  * construcor, all fields are final.
  */
 
+import java.io.IOException;
+
 public class LocalFileHeader {
     /**
      * Initilization of constants. Implements: versions, ...
      */
     static final int FILE_HEADER_SIGNATURE = 0x04034b50;
     static final int FOLDER_HEADER_SIGNATURE = 0x02014b50;
-    static final int DATA_DESCRIPTOR_SIGNATURE = 0x504b0708;
+    static final int DATA_DESCRIPTOR_SIGNATURE = 0x07084b50;
 
     final int VersionNeededToExtract;
     final int GeneralPurposeFlag;
@@ -25,7 +27,6 @@ public class LocalFileHeader {
     LocalFileHeader(int versionNeededToExtract, int generalPurposeFlag,
             int compressionMethod, int compressedSize, int uncompressedSize,
             int offsetOfLocalData, String fileName) {
-
         VersionNeededToExtract = versionNeededToExtract;
         GeneralPurposeFlag = generalPurposeFlag;
         CompressionMethod = compressionMethod;
@@ -40,20 +41,20 @@ public class LocalFileHeader {
         return mySizeIsKnown;
     }
 
-    int getCompressedSize() {
+    int getCompressedSize() throws IOException {
         if (mySizeIsKnown) {
             return myCompressedSize;
         } else {
-            throw new RuntimeException(
+            throw new ZipException(
                     "Error in getCompressedSize: file size is not known yet");
         }
     }
 
-    int getUncompressedSize() {
+    int getUncompressedSize() throws IOException {
         if (mySizeIsKnown) {
             return myUncompressedSize;
         } else {
-            throw new RuntimeException(
+            throw new ZipException(
                     "Error in getUncompressedSize: file size is not known yet");
         }
     }

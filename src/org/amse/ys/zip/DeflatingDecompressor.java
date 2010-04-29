@@ -34,12 +34,12 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
     private final int[] myDistanceCodes = new int[1 << 15];
     private final int[] myAuxCodes = new int[1 << 15];
 
-    public DeflatingDecompressor(MyBufferedInputStream inputStream, LocalFileHeader header) {
+    public DeflatingDecompressor(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
         super();
         reset(inputStream, header);
     }
 
-    void reset(MyBufferedInputStream inputStream, LocalFileHeader header) {
+    void reset(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
         myStream = inputStream;
         myHeader = header;
         myTotalLength = header.getCompressedSize();
@@ -55,7 +55,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
     }
 
 	@Override
-    public int available() {
+    public int available() throws IOException {
         return myHeader.getUncompressedSize() - myCurrentPosition;
     }
     
@@ -225,7 +225,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
                 }
                 distance = previousCode + 1 + readIntegerByBit(extraBits);
             } else {
-                throw new RuntimeException("distance code > 29 found");
+                throw new ZipException("distance code > 29 found");
             }
             myOutputBuffer.repeat(length, distance);
             return length;
@@ -253,7 +253,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
 
     private void readHeader() throws IOException {
         if ((myState != ST_HEADER) || (myBytesRead >= myTotalLength)) {
-            throw new RuntimeException("unexpected case of readheader call");
+            throw new ZipException("unexpected case of readheader call");
         }
         myTheBlockIsFinal = (getBit() != 0);
         switch (readIntegerByBit(2)) {
@@ -327,7 +327,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
                         previous = false;
                         break;
                     default:
-                        throw new RuntimeException("error when reading dynamic Huffman codes");
+                        throw new ZipException("error when reading dynamic Huffman codes");
                 }
                 previousNumber = previous ? previousNumber : 0;
                 for (int j = 0; j < repeatNumber; j++) {
@@ -366,7 +366,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
                     previous = false;
                     break;
                 default:
-                    throw new RuntimeException("error when reading dynamic Huffman codes");
+                    throw new ZipException("error when reading dynamic Huffman codes");
                 }
                 previousNumber = (previous ? previousNumber : 0);
                 for (int j = 0; j < repeatNumber; j++) {
