@@ -51,6 +51,8 @@ public class NetworkLibrary {
 	private boolean myUpdateChildren = true;
 	private boolean myUpdateAccountDependents;
 
+	private SearchResult mySearchResult;
+
 	private static class LinksComparator implements Comparator<NetworkLink> {
 		public int compare(NetworkLink link1, NetworkLink link2) {
 			String title1 = link1.Title;
@@ -127,6 +129,10 @@ public class NetworkLibrary {
 		myUpdateAccountDependents = true;
 	}
 
+	public void setSearchResult(SearchResult searchResult) {
+		mySearchResult = searchResult;
+	}
+
 	private void makeUpToDate() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
@@ -178,30 +184,38 @@ public class NetworkLibrary {
 			}
 		}
 
-		/*SearchResultNode srNode = null;
-		while (nodeIterator.hasNext()) {
-			FBTree node = nodeIterator.next();
-			++nodeCount;
-			if (node instanceof SearchResultNode) {
-				srNode = (SearchResultNode) node;
-			} else {
-				toRemove.add(node);
+		SearchResultTree srTree = null;
+
+		while (currentNode != null || nodeIterator.hasNext()) {
+			if (currentNode == null) {
+				currentNode = nodeIterator.next();
 			}
+			if (currentNode instanceof SearchResultTree) {
+				srTree = (SearchResultTree) currentNode;
+			} else {
+				toRemove.add(currentNode);
+			}
+			currentNode = null;
+			//++nodeCount; // TODO: where to increment???
 		}
 
-		final SearchResult searchResult = SearchResult.lastSearchResult();
-		NetworkBookCollection result = searchResult.collection();
-		if (result.isNull()) {
-			if (srNode != 0) {
-				toRemove.add(srNode);
+		if (mySearchResult == null || mySearchResult.empty()) {
+			if (srTree != null) {
+				toRemove.add(srTree);
 			}
-		} else if (srNode == null || srNode->searchResult() != result) {
-			if (srNode != null) {
-				toRemove.add(srNode);
+		} else {
+			if (srTree.Result != mySearchResult) {
+				toRemove.add(srTree);
+				srTree = null;
 			}
-			srNode = new SearchResultNode(myRootTree, result, searchResult.summary()); // at nodeCount ??? or not???
-			NetworkNodesFactory::createSubnodes(srNode, result);
-		}*/
+			if (srTree == null) {
+				srTree = new SearchResultTree(myRootTree, mySearchResult); // at nodeCount ???
+				// TODO: create subnodes
+			} else {
+				// TODO: update subnodes
+			}
+			//NetworkNodesFactory::createSubnodes(srNode, result);
+		}
 
 		for (FBTree tree: toRemove) {
 			tree.removeSelf();
