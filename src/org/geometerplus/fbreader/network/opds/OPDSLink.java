@@ -93,10 +93,16 @@ class OPDSLink extends NetworkLink {
 		};
 	}
 
+	private final String searchURL(String query) {
+		return Links.get(URL_SEARCH).replace("%s", query);
+	}
+
 	@Override
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		// TODO: implement
-		return null;
+		return createNetworkData(
+			searchURL(ZLNetworkUtil.htmlEncode(pattern)),
+			data
+		);
 	}
 
 	@Override
