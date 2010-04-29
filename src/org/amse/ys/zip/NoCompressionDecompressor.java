@@ -34,7 +34,7 @@ public class NoCompressionDecompressor extends Decompressor {
         }
     }
     
-    public int available() throws IOException {
+    public int available() {
         return (myHeader.getUncompressedSize() - myCurrentPosition);
     }
 }

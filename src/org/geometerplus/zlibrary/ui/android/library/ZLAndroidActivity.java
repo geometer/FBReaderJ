@@ -42,7 +42,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		System.err.println("onCreate");
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -74,7 +73,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		System.err.println("onStart");
 		switch (ourOrientation) {
 			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
 			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
@@ -90,14 +88,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onPause() {
 		ZLApplication.Instance().onWindowClosing();
-		System.err.println("onPause");
 		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		System.err.println("onResume");
-		super.onResume();
 	}
 
 	@Override
@@ -157,9 +148,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onConfigurationChanged(Configuration config) {
 		super.onConfigurationChanged(config);
-		Configuration defaultConfig = new Configuration();
-		defaultConfig.setToDefaults();
-		System.err.println("config = " + config);
 
 		switch (getRequestedOrientation()) {
 			default:

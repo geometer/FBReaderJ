@@ -30,12 +30,12 @@ public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
 	private int myOutBufferOffset;
 	private int myOutBufferLength;
 
-    public NativeDeflatingDecompressor(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
+    public NativeDeflatingDecompressor(MyBufferedInputStream inputStream, LocalFileHeader header) {
         super();
         reset(inputStream, header);
     }
 
-    void reset(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
+    void reset(MyBufferedInputStream inputStream, LocalFileHeader header) {
 		endInflating();
 
         myStream = inputStream;

@@ -19,7 +19,7 @@ class ZipInputStream extends InputStream {
     }
 
 	@Override
-    public int available() throws IOException {
+    public int available() {
         return myDecompressor.available();
     }
 

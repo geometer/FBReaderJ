@@ -20,7 +20,6 @@ public final class ZipFile {
 		}
 	}
 
-	private String PATH;
     private final InputStreamHolder myStreamHolder;
     private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>();
 
@@ -28,7 +27,6 @@ public final class ZipFile {
 
     public ZipFile(String filePath) {
 		this(new FileInputStreamHolder(filePath));
-		PATH = filePath;
     }
 
     public ZipFile(InputStreamHolder streamHolder) {
@@ -101,7 +99,6 @@ public final class ZipFile {
      * Finds descriptor of the last header and installs sizes of files
      */
     private void findAndReadDescriptor(MyBufferedInputStream baseStream, LocalFileHeader header) throws IOException {
-loop:
         while (true) {
             int signature = 0;
             do {
@@ -110,30 +107,18 @@ loop:
                     throw new ZipException(
                             "readFileHeaders. Unexpected end of file when looking for DataDescriptor");
                 }
-                signature = ((signature >> 8) & 0x0FFFFFF) | (nextByte << 24);
-            } while (
-				signature != LocalFileHeader.FILE_HEADER_SIGNATURE &&
-				signature != LocalFileHeader.FOLDER_HEADER_SIGNATURE &&
-				signature != LocalFileHeader.DATA_DESCRIPTOR_SIGNATURE
-			);
-			System.err.println(PATH + " : " + Integer.toHexString(signature));
-			switch (signature) {
-				case LocalFileHeader.FILE_HEADER_SIGNATURE:
-					break loop;
-				case LocalFileHeader.FOLDER_HEADER_SIGNATURE:
-					break loop;
-				case LocalFileHeader.DATA_DESCRIPTOR_SIGNATURE:
-					baseStream.skip(4);
-					int compressedSize = baseStream.read4Bytes();
-					int uncompressedSize = baseStream.read4Bytes();
-                    if ((baseStream.offset() - header.OffsetOfLocalData - 16) == compressedSize) {
-                        header.setSizes(compressedSize, uncompressedSize);
-                        break loop;
-                    } else {
-                        baseStream.backSkip(12);
-                        continue loop;
-                    }
-			}
+                signature = ((signature << 8) & (0x0FFFFFFFF)) + (byte) nextByte;
+            } while (signature != LocalFileHeader.DATA_DESCRIPTOR_SIGNATURE);
+			baseStream.skip(4);
+			int compressedSize = baseStream.read4Bytes();
+			int uncompressedSize = baseStream.read4Bytes();
+            if ((baseStream.offset() - header.OffsetOfLocalData - 16) == compressedSize) {
+                header.setSizes(compressedSize, uncompressedSize);
+                break;
+            } else {
+                baseStream.backSkip(12);
+                continue;
+            }
         }
     }
 

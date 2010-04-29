@@ -1,7 +1,5 @@
 package org.amse.ys.zip;
 
-import java.io.IOException;
-
 final class CircularBuffer {
     static final int DICTIONARY_LENGTH = (1 << 15);
     private static final int DICTIONARY_MASK = DICTIONARY_LENGTH - 1;
@@ -35,9 +33,9 @@ final class CircularBuffer {
         myBytesReady -= length;
     }
 
-    public byte read() throws IOException {
+    public byte read() {
         if (myBytesReady == 0) {
-            throw new ZipException("reading from empty buffer");
+            throw new RuntimeException("reading from empty buffer");
         }
         final byte result = myBuffer[myCurrentPosition++];
         myCurrentPosition &= DICTIONARY_MASK;
@@ -50,9 +48,9 @@ final class CircularBuffer {
         myBytesReady++;
     }
 
-    public void repeat(int length, int distance) throws IOException {
+    public void repeat(int length, int distance) {
         if (myBytesReady + length > DICTIONARY_LENGTH) {
-            throw new ZipException("circular buffer overflow");
+            throw new RuntimeException("circular buffer overflow");
         }
         int writePoint = (myCurrentPosition + myBytesReady) & DICTIONARY_MASK;
         int readPoint = (writePoint - distance) & DICTIONARY_MASK;
