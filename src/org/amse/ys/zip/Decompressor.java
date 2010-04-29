@@ -23,7 +23,7 @@ public abstract class Decompressor {
         }
     }
 
-    public static Decompressor init(MyBufferedInputStream is, LocalFileHeader header) throws ZipException {
+    public static Decompressor init(MyBufferedInputStream is, LocalFileHeader header) throws IOException {
         switch (header.CompressionMethod) {
         case 0:
             return new NoCompressionDecompressor(is, header);
@@ -44,7 +44,7 @@ public abstract class Decompressor {
         }
     }
     
-    public int available() {
+    public int available() throws IOException {
         return -1;
     }
 }
