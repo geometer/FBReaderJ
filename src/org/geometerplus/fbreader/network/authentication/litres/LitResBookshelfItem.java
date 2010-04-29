@@ -49,7 +49,7 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public String loadChildren(CatalogListener listener) {
+	public String loadChildren(NetworkOperationData.OnNewItemListener listener) {
 		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
 		if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
 			return NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);

@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -62,9 +63,10 @@ abstract public class NetworkLink {
 		Links = new TreeMap(links);
 	}
 
+	public abstract ZLNetworkRequest resume(NetworkOperationData data);
+
 	public abstract NetworkLibraryItem libraryItem();
 	public abstract NetworkAuthenticationManager authenticationManager();
 
 	public abstract String rewriteUrl(String url, boolean isUrlExternal);
-
 }

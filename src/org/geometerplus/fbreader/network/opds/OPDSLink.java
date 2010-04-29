@@ -20,8 +20,12 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
+import java.net.URLConnection;
+import java.io.InputStream;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -71,6 +75,29 @@ class OPDSLink extends NetworkLink {
 
 	final void setAuthenticationManager(NetworkAuthenticationManager mgr) {
 		myAuthenticationManager = mgr;
+	}
+
+	ZLNetworkRequest createNetworkData(String url, final NetworkOperationData result) {
+		if (url == null) {
+			return null;
+		}
+		url = rewriteUrl(url, false);
+		return new ZLNetworkRequest(url) {
+			@Override
+			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+				new OPDSXMLReader(
+					new NetworkOPDSFeedReader(URL, result)
+				).read(inputStream);
+				return null;
+			}
+		};
+	}
+
+	@Override
+	public ZLNetworkRequest resume(NetworkOperationData data) {
+		String url = data.ResumeURI;
+		data.clear();
+		return createNetworkData(url, data);
 	}
 
 	@Override

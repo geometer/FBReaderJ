@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfIt
 class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private final String myBaseURL;
-	private final NetworkCatalogItem.OperationData myData;
+	private final NetworkOperationData myData;
 
 	private int myIndex;
 
@@ -43,7 +43,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	 * @param result     network results buffer. Must be created using OPDSLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
-	NetworkOPDSFeedReader(String baseURL, NetworkCatalogItem.OperationData result) {
+	NetworkOPDSFeedReader(String baseURL, NetworkOperationData result) {
 		myBaseURL = baseURL;
 		myData = result;
 		if (!(result.Link instanceof OPDSLink)) {
@@ -52,7 +52,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	}
 
 	public void processFeedStart() {
-		++myData.ResumeCount;
 	}
 
 	private static String filter(String value) {

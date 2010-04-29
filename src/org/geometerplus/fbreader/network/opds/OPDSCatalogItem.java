@@ -19,12 +19,10 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import java.util.Map;
 
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -44,33 +42,20 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public String loadChildren(CatalogListener listener) {
-		String urlString = URLByType.get(URL_CATALOG);
-		if (urlString == null) {
-			return null; // TODO: return error/information message???
+	public String loadChildren(NetworkOperationData.OnNewItemListener listener) {
+
+		final NetworkOperationData data = new NetworkOperationData(Link, listener);
+
+		ZLNetworkRequest networkRequest =
+			((OPDSLink) Link).createNetworkData(URLByType.get(URL_CATALOG), data);
+
+		while (networkRequest != null) {
+			final String errorMessage = ZLNetworkManager.Instance().perform(networkRequest);
+			if (errorMessage != null) {
+				return errorMessage;
+			}
+			networkRequest = data.resume();
 		}
-
-		final OperationData data = new OperationData(Link, listener);
-
-		String errorMessage = null;
-		while (data.ResumeCount < 10 // FIXME: hardcoded resume limit constant!!!
-				&& urlString != null && errorMessage == null) {
-
-			urlString = Link.rewriteUrl(urlString, false);
-
-			errorMessage = ZLNetworkManager.Instance().perform(new ZLNetworkRequest(urlString) {
-				@Override
-				public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
-					new OPDSXMLReader(
-						new NetworkOPDSFeedReader(URL, data)
-					).read(inputStream);
-					return null;
-				}
-			});
-
-			urlString = data.ResumeURI;
-			data.clear();
-		}
-		return errorMessage;
+		return null;
 	}
 }

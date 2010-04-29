@@ -309,7 +309,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}
 				}
 			}
-			final String err = myTree.Item.loadChildren(new NetworkCatalogItem.CatalogListener() {
+			final String err = myTree.Item.loadChildren(new NetworkOperationData.OnNewItemListener() {
 				private long myUpdateTime;
 				private int myItemsNumber;
 				public boolean onNewItem(NetworkLibraryItem item) {

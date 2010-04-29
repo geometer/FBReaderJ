@@ -88,28 +88,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
 
-	public interface CatalogListener {
-		// return true to interrupt reading; return false to continue reading
-		boolean onNewItem(NetworkLibraryItem item);
-	}
-
-	public static class OperationData {
-		public final NetworkLink Link;
-		public final CatalogListener Listener;
-		public String ResumeURI;
-		public int ResumeCount;
-
-		public OperationData(NetworkLink link, CatalogListener listener) {
-			Link = link;
-			Listener = listener;
-		}
-
-		public void clear() {
-			ResumeURI = null;
-		}
-	}
-
-	public abstract String loadChildren(CatalogListener listener); // returns Error Message
+	public abstract String loadChildren(NetworkOperationData.OnNewItemListener listener); // returns Error Message
 
 	/*public final String loadChildren(final List<NetworkLibraryItem> children) {
 		return loadChildren(new CatalogListener() {
