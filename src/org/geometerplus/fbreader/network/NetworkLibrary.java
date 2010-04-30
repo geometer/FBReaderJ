@@ -204,7 +204,7 @@ public class NetworkLibrary {
 				toRemove.add(srTree);
 			}
 		} else {
-			if (srTree.Result != mySearchResult) {
+			if (srTree != null && srTree.Result != mySearchResult) {
 				toRemove.add(srTree);
 				srTree = null;
 			}
