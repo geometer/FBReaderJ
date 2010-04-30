@@ -55,7 +55,9 @@ public class ZLNetworkUtil {
 		StringBuilder encodedString = new StringBuilder();
 		for (int i = 0; i < stringToEncode.length(); ++i) {
 			final char ch = stringToEncode.charAt(i);
-			if (Character.isLetterOrDigit(ch) ||
+			if ((ch >= '0' && ch <= '9') ||
+					(ch >= 'a' && ch <= 'z') ||
+					(ch >= 'A' && ch <= 'Z') ||
 					(ch == '.') ||
 					(ch == '~') ||
 					(ch == '-') ||
@@ -65,7 +67,7 @@ public class ZLNetworkUtil {
 				try {
 					byte[] bytes = String.valueOf(ch).getBytes("UTF-8");
 					for (byte b: bytes) {
-						encodedString.append('%').append(hexDigits[b / 16]).append(hexDigits[b % 16]);
+						encodedString.append('%').append(hexDigits[(b >>> 4) & 15]).append(hexDigits[b & 15]);
 					}
 				} catch (java.io.UnsupportedEncodingException ex) {
 				}
