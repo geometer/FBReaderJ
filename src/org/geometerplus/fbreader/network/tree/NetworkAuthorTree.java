@@ -27,6 +27,7 @@ import org.geometerplus.fbreader.network.*;
 public class NetworkAuthorTree extends NetworkTree {
 
 	public final NetworkBookItem.AuthorData Author;
+	public int BooksNumber; // TODO hide this field
 
 
 	NetworkAuthorTree(NetworkTree parent, NetworkBookItem.AuthorData author) {

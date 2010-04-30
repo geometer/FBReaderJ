@@ -33,6 +33,9 @@ import android.net.Uri;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.SearchResultTree;
+
+import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 
 public class NetworkSearchActivity extends Activity {
@@ -54,9 +57,11 @@ public class NetworkSearchActivity extends Activity {
 	private class SearchHandler extends ItemsLoadingHandler {
 
 		private final SearchResult myResult;
+		private boolean doExpand;
 
 		public SearchHandler(SearchResult result) {
 			myResult = result;
+			doExpand = true;
 		}
 
 		public void onUpdateItems(List<NetworkLibraryItem> items) {
@@ -73,6 +78,17 @@ public class NetworkSearchActivity extends Activity {
 			library.synchronize();
 			if (NetworkLibraryActivity.Instance != null) {
 				NetworkLibraryActivity.Instance.resetTree();
+			}
+
+			if (doExpand && NetworkLibraryActivity.Instance != null) {
+				final SearchResultTree tree = library.getSearchResultTree();
+				if (tree != null) {
+					ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
+					if (adapter != null) {
+						adapter.expandOrCollapseTree(tree);
+					}
+					doExpand = !tree.hasChildren();
+				}
 			}
 		}
 
@@ -139,6 +155,9 @@ public class NetworkSearchActivity extends Activity {
 		library.setSearchResult(result);
 		library.invalidate();
 		library.synchronize();
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.resetTree();
+		}
 
 		final SearchHandler handler = new SearchHandler(result);
 		NetworkLibraryActivity.Instance.startItemsLoading(

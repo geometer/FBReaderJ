@@ -26,8 +26,8 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.SearchResult;
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.network.*;
 
 
 public class SearchResultTree extends NetworkTree {
@@ -53,5 +53,81 @@ public class SearchResultTree extends NetworkTree {
 	protected ZLImage createCover() {
 		ZLResourceFile file = ZLResourceFile.createResourceFile("data/searchresult.png");
 		return new ZLFileImage("image/png", file);
+	}
+
+	public void updateSubTrees() {
+		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
+
+		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
+		FBTree currentNode = null;
+		int nodeCount = 0;
+
+		final ArrayList<NetworkBookItem.AuthorData> authors = new ArrayList<NetworkBookItem.AuthorData>();
+		authors.addAll(Result.BooksMap.keySet());
+
+		for (int i = 0; i < authors.size(); ++i) {
+			NetworkBookItem.AuthorData currentItem = authors.get(i);
+			boolean processed = false;
+			while (currentNode != null || nodeIterator.hasNext()) {
+				if (currentNode == null) {
+					currentNode = nodeIterator.next();
+				}
+				if (!(currentNode instanceof NetworkAuthorTree)) {
+					currentNode = null;
+					++nodeCount;
+					continue;
+				}
+				NetworkAuthorTree child = (NetworkAuthorTree) currentNode;
+				if (child.Author.equals(currentItem)) {
+					LinkedList<NetworkBookItem> authorBooks = Result.BooksMap.get(currentItem);
+					if (child.BooksNumber != authorBooks.size()) { // TODO: implement by child's method
+						//update author's books
+						child.BooksNumber = authorBooks.size(); // TODO: move into child's update code
+					}
+					currentNode = null;
+					++nodeCount;
+					processed = true;
+					break;
+				} else {
+					boolean found = false;
+					for (int j = i + 1; j < authors.size(); ++j) {
+						if (child.Author.equals(authors.get(j))) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						toRemove.add(currentNode);
+						currentNode = null;
+						++nodeCount;
+					} else {
+						break;
+					}
+				}
+			}
+			final int nextIndex = nodeIterator.nextIndex();
+			if (!processed) {
+				LinkedList<NetworkBookItem> authorBooks = Result.BooksMap.get(currentItem);
+				if (authorBooks.size() != 0) {
+					NetworkAuthorTree child = new NetworkAuthorTree(this, currentItem);
+					//update author's books
+					child.BooksNumber = authorBooks.size(); // TODO: move into child's update code
+					++nodeCount;
+					nodeIterator = subTrees().listIterator(nextIndex + 1);
+				}
+			}
+		}
+
+		while (currentNode != null || nodeIterator.hasNext()) {
+			if (currentNode == null) {
+				currentNode = nodeIterator.next();
+			}
+			toRemove.add(currentNode);
+			currentNode = null;
+		}
+
+		for (FBTree tree: toRemove) {
+			tree.removeSelf();
+		}
 	}
 }

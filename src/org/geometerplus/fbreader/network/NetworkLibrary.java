@@ -52,6 +52,7 @@ public class NetworkLibrary {
 	private boolean myUpdateAccountDependents;
 
 	private SearchResult mySearchResult;
+	private SearchResultTree mySearchResultTree;
 
 	private static class LinksComparator implements Comparator<NetworkLink> {
 		public int compare(NetworkLink link1, NetworkLink link2) {
@@ -133,6 +134,10 @@ public class NetworkLibrary {
 		mySearchResult = searchResult;
 	}
 
+	public SearchResultTree getSearchResultTree() {
+		return mySearchResultTree;
+	}
+
 	private void makeUpToDate() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
@@ -184,15 +189,11 @@ public class NetworkLibrary {
 			}
 		}
 
-		SearchResultTree srTree = null;
-
 		while (currentNode != null || nodeIterator.hasNext()) {
 			if (currentNode == null) {
 				currentNode = nodeIterator.next();
 			}
-			if (currentNode instanceof SearchResultTree) {
-				srTree = (SearchResultTree) currentNode;
-			} else {
+			if (currentNode != mySearchResultTree) {
 				toRemove.add(currentNode);
 			}
 			currentNode = null;
@@ -200,31 +201,24 @@ public class NetworkLibrary {
 		}
 
 		if (mySearchResult == null || mySearchResult.empty()) {
-			if (srTree != null) {
-				toRemove.add(srTree);
+			if (mySearchResultTree != null) {
+				toRemove.add(mySearchResultTree);
+				mySearchResultTree = null;
 			}
 		} else {
-			if (srTree != null && srTree.Result != mySearchResult) {
-				toRemove.add(srTree);
-				srTree = null;
+			if (mySearchResultTree != null && mySearchResultTree.Result != mySearchResult) {
+				toRemove.add(mySearchResultTree);
+				mySearchResultTree = null;
 			}
-			if (srTree == null) {
-				srTree = new SearchResultTree(myRootTree, mySearchResult); // at nodeCount ???
-				// TODO: create subnodes
-			} else {
-				// TODO: update subnodes
+			if (mySearchResultTree == null) {
+				mySearchResultTree = new SearchResultTree(myRootTree, mySearchResult); // at nodeCount ???
 			}
-			//NetworkNodesFactory::createSubnodes(srNode, result);
+			mySearchResultTree.updateSubTrees();
 		}
 
 		for (FBTree tree: toRemove) {
 			tree.removeSelf();
 		}
-
-		/*if (srNode != null) {
-			srNode->open(false);
-			srNode->expandOrCollapseSubtree();
-		}*/
 	}
 
 	private void updateAccountDependents() {
