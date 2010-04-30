@@ -21,14 +21,16 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
 
 public class NetworkAuthorTree extends NetworkTree {
 
 	public final NetworkBookItem.AuthorData Author;
-	public int BooksNumber; // TODO hide this field
 
+	private int myBooksNumber;
+	private HashMap<String, Integer> mySeriesMap;
 
 	NetworkAuthorTree(NetworkTree parent, NetworkBookItem.AuthorData author) {
 		super(parent);
@@ -43,6 +45,69 @@ public class NetworkAuthorTree extends NetworkTree {
 	@Override
 	protected String getSortKey() {
 		return Author.SortKey;
+	}
+
+	private int getSeriesIndex(String seriesName) {
+		if (mySeriesMap == null) {
+			return -1;
+		}
+		Integer value = mySeriesMap.get(seriesName);
+		if (value == null) {
+			return -1;
+		}
+		return value.intValue();
+	}
+
+	private void setSeriesIndex(String seriesName, int index) {
+		if (mySeriesMap == null) {
+			mySeriesMap = new HashMap<String, Integer>();
+		}
+		mySeriesMap.put(seriesName, Integer.valueOf(index));
+	}
+
+	public void updateSubTrees(LinkedList<NetworkBookItem> books) {
+		if (myBooksNumber >= books.size()) {
+			return;
+		}
+
+		ListIterator<NetworkBookItem> booksIterator = books.listIterator(myBooksNumber);
+		while (booksIterator.hasNext()) {
+			NetworkBookItem book = booksIterator.next();
+
+			if (book.SeriesTitle != null) {
+				final int seriesPosition = getSeriesIndex(book.SeriesTitle);
+				if (seriesPosition == -1) {
+					final int insertAt = subTrees().size();
+					setSeriesIndex(book.SeriesTitle, insertAt);
+					final NetworkSeriesTree seriesTree = new NetworkSeriesTree(this, book.SeriesTitle, insertAt, false);
+					new NetworkBookTree(seriesTree, book);
+				} else {
+					FBTree treeAtSeriesPosition = subTrees().get(seriesPosition);
+					if (!(treeAtSeriesPosition instanceof NetworkSeriesTree)) {
+						throw new RuntimeException("That's impossible!!!");
+					}
+					NetworkSeriesTree seriesTree = (NetworkSeriesTree) treeAtSeriesPosition;
+					ListIterator<FBTree> nodesIterator = seriesTree.subTrees().listIterator();
+					int insertAt = 0;
+					while (nodesIterator.hasNext()) {
+						FBTree tree = nodesIterator.next();
+						if (!(tree instanceof NetworkBookTree)) {
+							throw new RuntimeException("That's impossible!!!");
+						}
+						NetworkBookTree bookTree = (NetworkBookTree) tree;
+						if (bookTree.Book.IndexInSeries > book.IndexInSeries) {
+							break;
+						}
+						++insertAt;
+					}
+					new NetworkBookTree(seriesTree, book, insertAt);
+				}
+			} else {
+				new NetworkBookTree(this, book);
+			}
+		}
+
+		myBooksNumber = books.size();
 	}
 
 }
