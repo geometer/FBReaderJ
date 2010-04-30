@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.AlertDialog;
 import android.os.Message;
@@ -74,7 +73,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		if (catalogUrl != null) {
 			if (isLoading) {
-				if (catalogRunnable instanceof ExpandCatalogRunnable && ((ExpandCatalogRunnable) catalogRunnable).InterruptFlag.get()) {
+				if (catalogRunnable instanceof ItemsLoadingRunnable && ((ItemsLoadingRunnable) catalogRunnable).InterruptFlag.get()) {
 					addMenuItem(menu, TREE_NO_ACTION, "stoppingCatalogLoading");
 				} else {
 					addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopLoading");
@@ -241,21 +240,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private static class ExpandCatalogRunnable implements Runnable {
+	private static class ExpandCatalogRunnable extends ItemsLoadingRunnable {
 
 		private final NetworkCatalogTree myTree;
 		private final boolean myCheckAuthentication;
-		private final ExpandCatalogHandler myHandler;
 
-		public final AtomicBoolean InterruptFlag = new AtomicBoolean();
-
-		public ExpandCatalogRunnable(NetworkCatalogTree tree, ExpandCatalogHandler handler, boolean checkAuthentication) {
+		public ExpandCatalogRunnable(ExpandCatalogHandler handler, NetworkCatalogTree tree, boolean checkAuthentication) {
+			super(handler);
 			myTree = tree;
-			myHandler = handler;
 			myCheckAuthentication = checkAuthentication;
 		}
 
-		public void run() {
+		public String doBefore() {
 			/*if (!NetworkOperationRunnable::tryConnect()) {
 				return;
 			}*/
@@ -264,8 +260,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				NetworkAuthenticationManager mgr = link.authenticationManager();
 				AuthenticationStatus auth = mgr.isAuthorised(true);
 				if (auth.Message != null) {
-					myHandler.sendFinish(auth.Message);
-					return;
+					return auth.Message;
 				}
 				if (auth.Status == ZLBoolean3.B3_TRUE && mgr.needsInitialization()) {
 					final String err = mgr.initialize();
@@ -274,25 +269,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}
 				}
 			}
-			final String err = myTree.Item.loadChildren(new NetworkOperationData.OnNewItemListener() {
-				private long myUpdateTime;
-				private int myItemsNumber;
-				public boolean onNewItem(NetworkLibraryItem item) {
-					myHandler.addItem(item);
-					if (InterruptFlag.get() || myItemsNumber++ >= 250) { // FIXME: hardcoded Entries Limit constant
-						return true;
-					}
-					final long now = System.currentTimeMillis();
-					if (now > myUpdateTime) {
-						myHandler.sendUpdateItems();
-						myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
-					}
-					return false;
-				}
-			});
-			myHandler.sendUpdateItems();
-			myHandler.ensureFinish();
-			myHandler.sendFinish(err);
+			return null;
+		}
+
+		public String doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+			return myTree.Item.loadChildren(doWithListener);
 		}
 	}
 
@@ -314,7 +295,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		NetworkLibraryActivity.Instance.loadCatalog(
 			Uri.parse(url),
-			new ExpandCatalogRunnable(tree, handler, true)
+			new ExpandCatalogRunnable(handler, tree, true)
 		);
 	}
 
@@ -336,7 +317,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		NetworkLibraryActivity.Instance.loadCatalog(
 			Uri.parse(url),
-			new ExpandCatalogRunnable(tree, handler, false)
+			new ExpandCatalogRunnable(handler, tree, false)
 		);
 	}
 
@@ -381,8 +362,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 		final Uri uri = Uri.parse(url);
 		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
-		if (runnable != null && runnable instanceof ExpandCatalogRunnable) {
-			((ExpandCatalogRunnable) runnable).InterruptFlag.set(true);
+		if (runnable != null && runnable instanceof ItemsLoadingRunnable) {
+			((ItemsLoadingRunnable) runnable).InterruptFlag.set(true);
 		}
 	}
 
