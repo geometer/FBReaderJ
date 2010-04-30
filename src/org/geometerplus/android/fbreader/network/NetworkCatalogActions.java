@@ -278,9 +278,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		private final boolean myCheckAuthentication;
 
 		public ExpandCatalogRunnable(ItemsLoadingHandler handler, NetworkCatalogTree tree, boolean checkAuthentication) {
-			super(handler);
+			super(handler, CATALOG_LOADING);
 			myTree = tree;
 			myCheckAuthentication = checkAuthentication;
+		}
+
+		public int getNotificationId() {
+			return NetworkNotifications.Instance().getCatalogLoadingId();
+		}
+
+		public String getResourceKey() {
+			return "downloadingCatalogs";
 		}
 
 		public String doBefore() {

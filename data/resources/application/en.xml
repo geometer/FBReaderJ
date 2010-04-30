@@ -48,6 +48,7 @@
 			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="Searching for books in network"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="Network search"/>
 		</node>

@@ -97,6 +97,7 @@ public class BookDownloaderService extends Service {
 		for (int notificationId: myOngoingNotifications) {
 			notificationManager.cancel(notificationId);
 		}
+		myOngoingNotifications.clear();
 		super.onDestroy();
 	}
 
@@ -247,7 +248,7 @@ public class BookDownloaderService extends Service {
 		myDownloadingURLs.add(urlString);
 		startCallbackActivity();
 
-		final int notificationId = (int) System.currentTimeMillis(); // notification unique identifier
+		final int notificationId = NetworkNotifications.Instance().getBookDownloadingId();
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

@@ -57,11 +57,37 @@ public class ItemsLoadingService extends Service {
 	}
 
 
-	private static final int ourProcessingNotificationId = (int) System.currentTimeMillis();
+	private HashMap<Integer, Integer> myRunnablesNumbers = new HashMap<Integer, Integer>(0, 0.9f);
 
-	private void updateProgressNotification() {
+	private int getRunnablesNumber(int runnableType) {
+		Integer value = myRunnablesNumbers.get(runnableType);
+		if (value == null) {
+			return 0;
+		}
+		return value.intValue();
+	}
+
+	private int increaseRunnablesNumber(int runnableType) {
+		final Integer value = myRunnablesNumbers.get(runnableType);
+		final int val = (value == null) ? 1 : (value.intValue() + 1);
+		myRunnablesNumbers.put(runnableType, Integer.valueOf(val));
+		return val;
+	}
+
+	private int decreaseRunnablesNumber(int runnableType) {
+		final Integer value = myRunnablesNumbers.get(runnableType);
+		final int val = (value == null) ? 0 : (value.intValue() - 1);
+		if (val == 0) {
+			myRunnablesNumbers.remove(runnableType);
+		} else {
+			myRunnablesNumbers.put(runnableType, Integer.valueOf(val));
+		}
+		return val;
+	}
+
+	private void updateProgressNotification(ItemsLoadingRunnable runnable) {
 		final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
-		String title = ZLResource.resource("networkView").getResource("downloadingCatalogs").getValue();
+		String title = ZLResource.resource("networkView").getResource(runnable.getResourceKey()).getValue();
 		contentView.setTextViewText(R.id.download_notification_title, title);
 		contentView.setTextViewText(R.id.download_notification_progress_text, "");
 		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
@@ -73,22 +99,24 @@ public class ItemsLoadingService extends Service {
 		notification.flags |= Notification.FLAG_ONGOING_EVENT;
 		notification.contentView = contentView;
 		notification.contentIntent = contentIntent;
-		notification.number = myServiceCounter;
+		notification.number = getRunnablesNumber(runnable.Type);
 
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(ourProcessingNotificationId, notification);
+		notificationManager.notify(runnable.getNotificationId(), notification);
 	}
 
-	private void startProgressNotification() {
-		updateProgressNotification();
+	private void startProgressNotification(ItemsLoadingRunnable runnable) {
+		increaseRunnablesNumber(runnable.Type);
+		updateProgressNotification(runnable);
 	}
 
-	private void endProgressNotification() {
-		if (myServiceCounter == 0) {
+	private void endProgressNotification(ItemsLoadingRunnable runnable) {
+		final int number = decreaseRunnablesNumber(runnable.Type);
+		if (number == 0) {
 			final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.cancel(ourProcessingNotificationId);
+			notificationManager.cancel(runnable.getNotificationId());
 		} else {
-			updateProgressNotification();
+			updateProgressNotification(runnable);
 		}
 	}
 
@@ -100,7 +128,9 @@ public class ItemsLoadingService extends Service {
 	@Override
 	public void onDestroy() {
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancel(ourProcessingNotificationId);
+		final NetworkNotifications notifications = NetworkNotifications.Instance();
+		notificationManager.cancel(notifications.getCatalogLoadingId());
+		notificationManager.cancel(notifications.getNetworkSearchId());
 		super.onDestroy();
 	}
 
@@ -125,7 +155,7 @@ public class ItemsLoadingService extends Service {
 			doStop();
 			return;
 		}
-		final Runnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(key);
+		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(key);
 		if (runnable == null) {
 			doStop();
 			return;
@@ -134,14 +164,14 @@ public class ItemsLoadingService extends Service {
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				doStop();
-				endProgressNotification();
+				endProgressNotification(runnable);
 				if (NetworkLibraryActivity.Instance != null) {
 					NetworkLibraryActivity.Instance.removeItemsLoadingRunnable(key);
 				}
 			}
 		};
 
-		startProgressNotification();
+		startProgressNotification(runnable);
 
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {

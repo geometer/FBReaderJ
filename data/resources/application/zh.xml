@@ -49,6 +49,7 @@
 			<node name="openInBrowser" value="是否在浏览器中打开?" />
 		</node>
 		<node name="downloadingCatalogs" value="书库目录下载" /> <!-- used as notification title -->
+		<node name="searchingNetwork" toBeTranslated="true" value="Searching for books in network"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索" />
 		</node>

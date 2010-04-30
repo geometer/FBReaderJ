@@ -48,6 +48,7 @@
 			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
 		</node>
 		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="Поиск в сети"/>
 		</node>
