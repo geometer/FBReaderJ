@@ -40,7 +40,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 
-public class CatalogDownloaderService extends Service {
+public class ItemsLoadingService extends Service {
 
 	private volatile int myServiceCounter;
 
@@ -123,7 +123,7 @@ public class CatalogDownloaderService extends Service {
 			doStop();
 			return;
 		}
-		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
+		final Runnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(uri);
 		if (runnable == null) {
 			doStop();
 			return;
@@ -134,7 +134,7 @@ public class CatalogDownloaderService extends Service {
 				doStop();
 				endProgressNotification();
 				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.removeCatalogRunnable(uri);
+					NetworkLibraryActivity.Instance.removeItemsLoadingRunnable(uri);
 				}
 			}
 		};

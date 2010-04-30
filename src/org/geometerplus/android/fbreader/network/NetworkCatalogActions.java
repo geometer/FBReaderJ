@@ -68,12 +68,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
 
-		final Runnable catalogRunnable = (catalogUrl != null) ? NetworkLibraryActivity.Instance.getCatalogRunnable(Uri.parse(catalogUrl)) : null;
+		final ItemsLoadingRunnable catalogRunnable = (catalogUrl != null) ? 
+			NetworkLibraryActivity.Instance.getItemsLoadingRunnable(Uri.parse(catalogUrl)) : null;
 		final boolean isLoading = catalogRunnable != null;
 
 		if (catalogUrl != null) {
 			if (isLoading) {
-				if (catalogRunnable instanceof ItemsLoadingRunnable && ((ItemsLoadingRunnable) catalogRunnable).InterruptFlag.get()) {
+				if (catalogRunnable.InterruptFlag.get()) {
 					addMenuItem(menu, TREE_NO_ACTION, "stoppingCatalogLoading");
 				} else {
 					addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopLoading");
@@ -293,7 +294,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			throw new RuntimeException("That's impossible!!!");
 		}
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
-		NetworkLibraryActivity.Instance.loadCatalog(
+		NetworkLibraryActivity.Instance.startItemsLoading(
 			Uri.parse(url),
 			new ExpandCatalogRunnable(handler, tree, true)
 		);
@@ -315,7 +316,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		tree.clear();
 		NetworkLibraryActivity.Instance.getAdapter().resetTree();
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
-		NetworkLibraryActivity.Instance.loadCatalog(
+		NetworkLibraryActivity.Instance.startItemsLoading(
 			Uri.parse(url),
 			new ExpandCatalogRunnable(handler, tree, false)
 		);
@@ -361,9 +362,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			throw new RuntimeException("That's impossible!!!");
 		}
 		final Uri uri = Uri.parse(url);
-		final Runnable runnable = NetworkLibraryActivity.Instance.getCatalogRunnable(uri);
-		if (runnable != null && runnable instanceof ItemsLoadingRunnable) {
-			((ItemsLoadingRunnable) runnable).InterruptFlag.set(true);
+		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(uri);
+		if (runnable != null) {
+			runnable.InterruptFlag.set(true);
 		}
 	}
 
