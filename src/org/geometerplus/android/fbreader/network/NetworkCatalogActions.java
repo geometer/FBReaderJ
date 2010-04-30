@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.AlertDialog;
@@ -204,75 +205,39 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		ourProcessingTrees.remove(tree);
 	}
 
-	private static final int WHAT_UPDATE_ITEMS = 0;
-	private static final int WHAT_FINISHED = 1;
-
-	private class ExpandCatalogHandler extends Handler {
+	private class ExpandCatalogHandler extends ItemsLoadingHandler {
 
 		private final NetworkCatalogTree myTree;
-		private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
+		private boolean doExpand;
 
 		ExpandCatalogHandler(NetworkCatalogTree tree) {
 			myTree = tree;
+			doExpand = !myTree.hasChildren();
 		}
 
-		void addItem(NetworkLibraryItem item) {
-			synchronized (myItems) {
-				myItems.add(item);
+		public void onUpdateItems(List<NetworkLibraryItem> items) {
+			for (NetworkLibraryItem item: items) {
+				myTree.ChildrenItems.add(item);
+				NetworkTreeFactory.createNetworkTree(myTree, item);
 			}
 		}
 
-		void ensureFinish() {
-			synchronized (myItems) {
-				while (myItems.size() > 0) {
-					try {
-						myItems.wait();
-					} catch (InterruptedException e) {
-					}
-				}
-			}
-		}
-
-		private void displayItems() {
-			synchronized (myItems) {
-				for (NetworkLibraryItem item: myItems) {
-					myTree.ChildrenItems.add(item);
-					NetworkTreeFactory.createNetworkTree(myTree, item);
-				}
-				myItems.clear();
-				myItems.notifyAll(); // wake up process, that waits for all items to be displayed (see ensureFinish() method)
-			}
+		public void afterUpdateItems() {
 			if (NetworkLibraryActivity.Instance != null) {
 				NetworkLibraryActivity.Instance.resetTree();
 			}
-		}
-
-		private void onUpdateItems() {
-			boolean expand = !myTree.hasChildren();
-			displayItems();
-			if (expand && NetworkLibraryActivity.Instance != null) {
+			if (doExpand && NetworkLibraryActivity.Instance != null) {
 				ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
 				if (adapter != null) {
 					adapter.expandOrCollapseTree(myTree);
 				}
 			}
+			doExpand = !myTree.hasChildren();
 		}
 
-		private void onFinish(String err) {
-			afterUpdateCatalog(err, myTree.ChildrenItems.size() == 0);
+		public void onFinish(String errorMessage) {
+			afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
 			endProcessingTree(myTree);
-		}
-
-		@Override
-		public void handleMessage(Message message) {
-			switch (message.what) {
-			case WHAT_UPDATE_ITEMS:
-				onUpdateItems();
-				break;
-			case WHAT_FINISHED:
-				onFinish((String) message.obj);
-				break;
-			}
 		}
 	}
 
@@ -299,7 +264,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				NetworkAuthenticationManager mgr = link.authenticationManager();
 				AuthenticationStatus auth = mgr.isAuthorised(true);
 				if (auth.Message != null) {
-					myHandler.sendMessage(myHandler.obtainMessage(WHAT_FINISHED, auth.Message));
+					myHandler.sendFinish(auth.Message);
 					return;
 				}
 				if (auth.Status == ZLBoolean3.B3_TRUE && mgr.needsInitialization()) {
@@ -319,15 +284,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}
 					final long now = System.currentTimeMillis();
 					if (now > myUpdateTime) {
-						myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+						myHandler.sendUpdateItems();
 						myUpdateTime = now + 1000; // update interval == 1000 milliseconds; FIXME: hardcoded const
 					}
 					return false;
 				}
 			});
-			myHandler.sendEmptyMessage(WHAT_UPDATE_ITEMS);
+			myHandler.sendUpdateItems();
 			myHandler.ensureFinish();
-			myHandler.sendMessage(myHandler.obtainMessage(WHAT_FINISHED, err));
+			myHandler.sendFinish(err);
 		}
 	}
 
