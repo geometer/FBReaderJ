@@ -158,6 +158,10 @@ public class NetworkSearchActivity extends Activity {
 			return;
 		}
 
+		if (NetworkLibraryActivity.Instance.getItemsLoadingRunnable(SEARCH_RUNNABLE_KEY) != null) {
+			return;
+		}
+
 		final String summary = ZLResource.resource("networkView").getResource("searchResults").getValue().replace("%s", pattern);
 
 		final SearchResult result = new SearchResult(summary);

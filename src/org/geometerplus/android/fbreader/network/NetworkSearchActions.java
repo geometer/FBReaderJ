@@ -58,11 +58,11 @@ class NetworkSearchActions extends NetworkTreeActions {
 
 		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
 
-		final ItemsLoadingRunnable catalogRunnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		final boolean isLoading = catalogRunnable != null;
+		final ItemsLoadingRunnable searchRunnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		final boolean isLoading = searchRunnable != null;
 
 		if (isLoading) {
-			if (catalogRunnable.InterruptFlag.get()) {
+			if (searchRunnable.InterruptFlag.get()) {
 				addMenuItem(menu, TREE_NO_ACTION, "stoppingNetworkSearch");
 			} else {
 				addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopSearching");

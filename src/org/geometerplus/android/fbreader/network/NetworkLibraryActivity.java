@@ -477,6 +477,13 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		return true;
 	}
 
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		final boolean searchInProgress = getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY) != null;
+		System.err.println("SEARCH IN PROGRESS == " + searchInProgress);
+		menu.findItem(1).setEnabled(!searchInProgress);
+		return true;
+	}
+
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case 1:
@@ -488,6 +495,11 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	public boolean onSearchRequested() {
+		if (getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY) != null) {
+			System.err.println("SEARCH IN PROGRESS ==> BLOCK SEARCH");
+			return false;
+		}
+		System.err.println("SEARCH NOT IN PROGRESS ==> DO SEARCH");
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
 		return true;
