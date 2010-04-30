@@ -21,6 +21,8 @@
 		<node name="closeCatalog" value="Закрыть каталог"/>
 		<node name="expandTree" value="Развернуть"/>
 		<node name="collapseTree" value="Свернуть"/>
+		<node name="showResults" value="Показать результаты"/>
+		<node name="hideResults" value="Скрыть результаты"/>
 		<node name="download" value="Скачать"/>
 		<node name="read" value="Читать локальную копию"/>
 		<node name="delete" value="Удалить локальную копию"/>
@@ -31,12 +33,14 @@
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="reload" value="Обновить"/>
 		<node name="stopLoading" value="Остановить загрузку" />
+		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
 		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
+		<node name="stoppingNetworkSearch" value="Завершение поиска" />
 		<node name="searchResultNode" value="Результаты поиска" />
 		<node name="searchResults" value="Результаты поиска для: %s" />
 		<node name="confirmQuestions">

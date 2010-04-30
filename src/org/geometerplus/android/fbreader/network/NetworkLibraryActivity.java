@@ -174,6 +174,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 					myActions.add(new NetworkBookActions());
 					myActions.add(new NetworkCatalogActions());
+					myActions.add(new NetworkSearchActions());
 					myActions.trimToSize();
 
 					view.invalidateViews();

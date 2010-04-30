@@ -21,6 +21,8 @@
 		<node name="closeCatalog" value="Close catalog"/>
 		<node name="expandTree" value="Expand"/>
 		<node name="collapseTree" value="Collapse"/>
+		<node name="showResults" value="Show results"/>
+		<node name="hideResults" value="Hide results"/>
 		<node name="download" value="Download"/>
 		<node name="read" value="Read local copy"/>
 		<node name="delete" value="Delete local copy"/>
@@ -31,12 +33,14 @@
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="reload" value="Reload"/>
 		<node name="stopLoading" value="Stop loading" />
+		<node name="stopSearching" value="Stop searching" />
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="refillAccount" value="Refill account (currently: %s)"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
+		<node name="stoppingNetworkSearch" value="Stopping search" />
 		<node name="searchResultNode" value="Search results" />
 		<node name="searchResults" value="Search results for: %s" />
 		<node name="confirmQuestions">

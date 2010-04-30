@@ -22,6 +22,8 @@
 		<node name="closeCatalog" value="Fermer le catalogue"/>
 		<node name="expandTree" value="Ouvrir"/>
 		<node name="collapseTree" value="Refermer"/>
+		<node name="showResults" value="Afficher les résultats"/>
+		<node name="hideResults" value="Masquer les résultats"/>
 		<node name="download" value="Télécharger"/>
 		<node name="read" value="Lire la copie locale"/>
 		<node name="delete" value="Supprimer la copie locale"/>
@@ -32,12 +34,14 @@
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="reload" value="Recharger"/>
 		<node name="stopLoading" toBeTranslated="true" value="Stop loading" />
+		<node name="stopSearching" toBeTranslated="true" value="Stop searching" />
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
 		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
+		<node name="stoppingNetworkSearch" toBeTranslated="true" value="Stopping search" />
 		<node name="searchResultNode" value="Résultats de la recherche" />
 		<node name="searchResults" value="Résultats de la recherche : %s"/>
 		<node name="confirmQuestions">

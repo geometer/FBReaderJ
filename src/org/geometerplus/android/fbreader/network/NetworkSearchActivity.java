@@ -40,6 +40,8 @@ import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 public class NetworkSearchActivity extends Activity {
 
+	public static final String SEARCH_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.NetworkSearchActivity";
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -169,7 +171,7 @@ public class NetworkSearchActivity extends Activity {
 
 		final SearchHandler handler = new SearchHandler(result);
 		NetworkLibraryActivity.Instance.startItemsLoading(
-			"org.geometerplus.android.fbreader.network.NetworkSearchActivity",
+			SEARCH_RUNNABLE_KEY,
 			new SearchRunnable(handler, pattern)
 		);
 	}
