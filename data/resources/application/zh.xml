@@ -38,6 +38,8 @@
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
+		<node name="searchResultNode" value="搜索结果" />
+		<node name="searchResults" value="搜索结果: %s" />
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读" />
 			<node name="download" value="是否下载本图书?" />
@@ -272,6 +274,10 @@
 		<node name="emptyCatalogBox">
 			<node name="title" value="信息" />
 			<node name="message" value="空书库目录" />
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="搜索结果" />
+			<node name="message" toBeTranslated="true" value="There are no suitable books found" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="鉴定" />

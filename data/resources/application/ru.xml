@@ -37,6 +37,8 @@
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
+		<node name="searchResultNode" value="Результаты поиска" />
+		<node name="searchResults" value="Результаты поиска для: %s" />
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
@@ -270,7 +272,11 @@
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Информация" />
-			<node name="message" value="Каталог пуст." />
+			<node name="message" value="Каталог пуст" />
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="Результаты поиска" />
+			<node name="message" value="Подходящих книг не найдено" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизация" />

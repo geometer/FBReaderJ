@@ -38,6 +38,8 @@
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
 		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
+		<node name="searchResultNode" value="Résultats de la recherche" />
+		<node name="searchResults" value="Résultats de la recherche : %s"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Voulez-vous lire la copie locale?"/>
 			<node name="download" value="Voulez-vous télécharger ce livre?"/>
@@ -271,7 +273,11 @@
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information"/>
-			<node name="message" value="Le catalogue est vide."/>
+			<node name="message" value="Le catalogue est vide"/>
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="Résultats de la recherche" />
+			<node name="message" toBeTranslated="true" value="There are no suitable books found" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>

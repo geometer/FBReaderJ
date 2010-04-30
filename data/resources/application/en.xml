@@ -37,6 +37,8 @@
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
+		<node name="searchResultNode" value="Search results" />
+		<node name="searchResults" value="Search results for: %s" />
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
@@ -270,7 +272,11 @@
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information" />
-			<node name="message" value="Catalog is empty." />
+			<node name="message" value="Catalog is empty" />
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="Search results" />
+			<node name="message" value="There are no suitable books found" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication" />
