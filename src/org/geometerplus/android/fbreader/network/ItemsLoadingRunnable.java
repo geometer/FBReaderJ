@@ -39,7 +39,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	private final int myItemsLimit;
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler, int type) {
-		this(handler, type, 1000, 250);
+		this(handler, type, 1000, 500);
 	}
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler, int type, long updateIntervalMillis, int itemsLimit) {
