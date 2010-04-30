@@ -65,7 +65,7 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 
-	private final HashMap<Uri, ItemsLoadingRunnable> myItemsLoadingRunnables = new HashMap<Uri, ItemsLoadingRunnable>();
+	private final HashMap<String, ItemsLoadingRunnable> myItemsLoadingRunnables = new HashMap<String, ItemsLoadingRunnable>();
 
 	private NetworkBookItem myBookInfoItem;
 	private final HashSet<String> myIconsToSync = new HashSet<String>();
@@ -375,30 +375,31 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		}
 	}
 
-	void startItemsLoading(Uri uri, ItemsLoadingRunnable runnable) {
+	void startItemsLoading(String key, ItemsLoadingRunnable runnable) {
 		boolean doDownload = false;
 		synchronized (myItemsLoadingRunnables) {
-			if (!myItemsLoadingRunnables.containsKey(uri)) {
-				myItemsLoadingRunnables.put(uri, runnable);
+			if (!myItemsLoadingRunnables.containsKey(key)) {
+				myItemsLoadingRunnables.put(key, runnable);
 				doDownload = true;
 			}
 		}
 		if (doDownload) {
 			startService(
-				new Intent(Intent.ACTION_DEFAULT, uri, getApplicationContext(), ItemsLoadingService.class)
+				new Intent(getApplicationContext(), ItemsLoadingService.class)
+					.putExtra(ItemsLoadingService.ITEMS_LOADING_RUNNABLE_KEY, key)
 			);
 		}
 	}
 
-	ItemsLoadingRunnable getItemsLoadingRunnable(Uri uri) {
+	ItemsLoadingRunnable getItemsLoadingRunnable(String key) {
 		synchronized (myItemsLoadingRunnables) {
-			return myItemsLoadingRunnables.get(uri);
+			return myItemsLoadingRunnables.get(key);
 		}
 	}
 
-	ItemsLoadingRunnable removeItemsLoadingRunnable(Uri uri) {
+	ItemsLoadingRunnable removeItemsLoadingRunnable(String key) {
 		synchronized (myItemsLoadingRunnables) {
-			return myItemsLoadingRunnables.remove(uri);
+			return myItemsLoadingRunnables.remove(key);
 		}
 	}
 

@@ -42,6 +42,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public class ItemsLoadingService extends Service {
 
+	public static final String ITEMS_LOADING_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.ItemsLoadingRunnable";
+
 	private volatile int myServiceCounter;
 
 	private void doStart() {
@@ -112,18 +114,18 @@ public class ItemsLoadingService extends Service {
 		super.onStart(intent, startId);
 		doStart();
 
-		final Uri uri = intent.getData();
-		if (uri == null) {
+		final String key = intent.getStringExtra(ITEMS_LOADING_RUNNABLE_KEY);
+		if (key == null) {
 			doStop();
 			return;
 		}
-		intent.setData(null);
+		intent.removeExtra(ITEMS_LOADING_RUNNABLE_KEY);
 
 		if (NetworkLibraryActivity.Instance == null) {
 			doStop();
 			return;
 		}
-		final Runnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(uri);
+		final Runnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(key);
 		if (runnable == null) {
 			doStop();
 			return;
@@ -134,7 +136,7 @@ public class ItemsLoadingService extends Service {
 				doStop();
 				endProgressNotification();
 				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.removeItemsLoadingRunnable(uri);
+					NetworkLibraryActivity.Instance.removeItemsLoadingRunnable(key);
 				}
 			}
 		};

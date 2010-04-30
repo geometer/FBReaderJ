@@ -69,7 +69,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
 
 		final ItemsLoadingRunnable catalogRunnable = (catalogUrl != null) ? 
-			NetworkLibraryActivity.Instance.getItemsLoadingRunnable(Uri.parse(catalogUrl)) : null;
+			NetworkLibraryActivity.Instance.getItemsLoadingRunnable(catalogUrl) : null;
 		final boolean isLoading = catalogRunnable != null;
 
 		if (catalogUrl != null) {
@@ -239,6 +239,37 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
 			endProcessingTree(myTree);
 		}
+
+		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
+			final ZLResource dialogResource = ZLResource.resource("dialog");
+			ZLResource boxResource = null;
+			String msg = null;
+			if (errorMessage != null) {
+				boxResource = dialogResource.getResource("networkError");
+				msg = errorMessage;
+			} else if (childrenEmpty) {
+				boxResource = dialogResource.getResource("emptyCatalogBox");
+				msg = boxResource.getResource("message").getValue();
+			}
+			if (msg != null) {
+				if (NetworkLibraryActivity.Instance != null) {
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					new AlertDialog.Builder(NetworkLibraryActivity.Instance)
+						.setTitle(boxResource.getResource("title").getValue())
+						.setMessage(msg)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+						.create().show();
+				}
+				// TODO: else show notification???
+			}
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			library.invalidateAccountDependents();
+			library.synchronize();
+			if (NetworkLibraryActivity.Instance != null) {
+				NetworkLibraryActivity.Instance.resetTree();
+			}
+		}
 	}
 
 	private static class ExpandCatalogRunnable extends ItemsLoadingRunnable {
@@ -246,7 +277,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		private final NetworkCatalogTree myTree;
 		private final boolean myCheckAuthentication;
 
-		public ExpandCatalogRunnable(ExpandCatalogHandler handler, NetworkCatalogTree tree, boolean checkAuthentication) {
+		public ExpandCatalogRunnable(ItemsLoadingHandler handler, NetworkCatalogTree tree, boolean checkAuthentication) {
 			super(handler);
 			myTree = tree;
 			myCheckAuthentication = checkAuthentication;
@@ -295,7 +326,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		NetworkLibraryActivity.Instance.startItemsLoading(
-			Uri.parse(url),
+			url,
 			new ExpandCatalogRunnable(handler, tree, true)
 		);
 	}
@@ -317,40 +348,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		NetworkLibraryActivity.Instance.getAdapter().resetTree();
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		NetworkLibraryActivity.Instance.startItemsLoading(
-			Uri.parse(url),
+			url,
 			new ExpandCatalogRunnable(handler, tree, false)
 		);
-	}
-
-	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		ZLResource boxResource = null;
-		String msg = null;
-		if (errorMessage != null) {
-			boxResource = dialogResource.getResource("networkError");
-			msg = errorMessage;
-		} else if (childrenEmpty) {
-			boxResource = dialogResource.getResource("emptyCatalogBox");
-			msg = boxResource.getResource("message").getValue();
-		}
-		if (msg != null) {
-			if (NetworkLibraryActivity.Instance != null) {
-				final ZLResource buttonResource = dialogResource.getResource("button");
-				new AlertDialog.Builder(NetworkLibraryActivity.Instance)
-					.setTitle(boxResource.getResource("title").getValue())
-					.setMessage(msg)
-					.setIcon(0)
-					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-					.create().show();
-			}
-			// TODO: else show notification???
-		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		library.invalidateAccountDependents();
-		library.synchronize();
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.resetTree();
-		}
 	}
 
 	private void doStopLoading(NetworkCatalogTree tree) {
@@ -361,8 +361,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
 		}
-		final Uri uri = Uri.parse(url);
-		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(uri);
+		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(url);
 		if (runnable != null) {
 			runnable.InterruptFlag.set(true);
 		}
