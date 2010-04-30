@@ -76,24 +76,25 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	}
 
 	@Override
-	public void namespaceListChangedHandler(HashMap<String,String> namespaces) {
+	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
 		myDublinCoreNamespaceId = null;
 		myAtomNamespaceId = null;
 		myOpenSearchNamespaceId = null;
 		myCalibreNamespaceId = null;
 		myOpdsNamespaceId = null;
 
-		for (String key: namespaces.keySet()) {
-			if (key == XMLNamespace.DublinCoreTerms) {
-				myDublinCoreNamespaceId = intern(namespaces.get(key));
-			} else if (key == XMLNamespace.Atom) {
-				myAtomNamespaceId = intern(namespaces.get(key));
-			} else if (key == XMLNamespace.OpenSearch) {
-				myOpenSearchNamespaceId = intern(namespaces.get(key));
-			} else if (key == XMLNamespace.CalibreMetadata) {
-				myCalibreNamespaceId = intern(namespaces.get(key));
-			} else if (key == XMLNamespace.Opds) {
-				myOpdsNamespaceId = intern(namespaces.get(key));
+		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
+			final String value = entry.getValue();
+			if (value == XMLNamespace.DublinCoreTerms) {
+				myDublinCoreNamespaceId = intern(entry.getKey());
+			} else if (value == XMLNamespace.Atom) {
+				myAtomNamespaceId = intern(entry.getKey());
+			} else if (value == XMLNamespace.OpenSearch) {
+				myOpenSearchNamespaceId = intern(entry.getKey());
+			} else if (value == XMLNamespace.CalibreMetadata) {
+				myCalibreNamespaceId = intern(entry.getKey());
+			} else if (value == XMLNamespace.Opds) {
+				myOpdsNamespaceId = intern(entry.getKey());
 			}
 		}
 	}

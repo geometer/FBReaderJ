@@ -247,11 +247,12 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		return true;
 	}
 
-	public void namespaceListChangedHandler(HashMap namespaces) {
+	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
 		myOPFSchemePrefix = null;
-		for (Object o : namespaces.keySet()) {
-			if (OpenPackagingFormat.equals(o)) {
-				myOPFSchemePrefix = namespaces.get(o) + ":";
+		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
+			if (OpenPackagingFormat.equals(entry.getValue())) {
+				myOPFSchemePrefix = entry.getKey() + ":";
+				break;
 			}
 		}
 	}

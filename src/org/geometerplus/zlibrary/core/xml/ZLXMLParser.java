@@ -537,7 +537,7 @@ mainSwitchLabel:
 								if (currentNamespaceMap == null) {
 									currentNamespaceMap = new HashMap<String,String>(oldNamespaceMap);
 								}
-								currentNamespaceMap.put(attributeValue.toString(), aName.substring(6));
+								currentNamespaceMap.put(aName.substring(6), attributeValue.toString());
 								attributeValue.clear();
 							} else if (dontCacheAttributeValues) {
 								attributes.put(aName, attributeValue.toString());
@@ -742,7 +742,7 @@ mainSwitchLabel:
 			return true;
 		}
 		if (currentNamespaceMap != null) {
-			xmlReader.namespaceListChangedHandler(currentNamespaceMap);
+			xmlReader.namespaceMapChangedHandler(currentNamespaceMap);
 		}
 		attributes.clear();
 		return false;
@@ -750,7 +750,7 @@ mainSwitchLabel:
 
 	private static boolean processEndTag(ZLXMLReader xmlReader, String tagName, HashMap currentNamespaceMap) {
 		if (currentNamespaceMap != null) {
-			xmlReader.namespaceListChangedHandler(currentNamespaceMap);
+			xmlReader.namespaceMapChangedHandler(currentNamespaceMap);
 		}
 		return xmlReader.endElementHandler(tagName);
 	}

@@ -89,22 +89,22 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		return true;
 	}
 
-	public void namespaceListChangedHandler(HashMap namespaces) {
+	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
 		myTitleTag = null;
 		myAuthorTag = null;
 		mySubjectTag = null;
 		myLanguageTag = null;
 		myOpfMetadataTag = "metadata";
-		for (Object o : namespaces.keySet()) {
-			final String id = (String)o;
+		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
+			final String id = entry.getValue();
 			if (id.startsWith(DublinCorePrefix) || id.startsWith(DublinCoreLegacyPrefix)) {
-				final String name = (String)namespaces.get(id);
+				final String name = entry.getKey();
 				myTitleTag = (name + ":title").intern();
 				myAuthorTag = (name + ":creator").intern();
 				mySubjectTag = (name + ":subject").intern();
 				myLanguageTag = (name + ":language").intern();
 			} else if (id.equals(OpenPackagingFormat)) {
-				final String name = (String)namespaces.get(id);
+				final String name = entry.getKey();
 				myOpfMetadataTag = (name + ":metadata").intern();
 			}
 		}

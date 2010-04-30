@@ -234,4 +234,11 @@ cycle:
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
+
+	public boolean processNamespaces() {
+		return true;
+	}
+
+	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
+	}
 }

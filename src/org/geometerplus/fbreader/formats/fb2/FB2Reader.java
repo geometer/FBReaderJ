@@ -386,11 +386,13 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		return true;
 	}
 
-	public void namespaceListChangedHandler(HashMap<String,String> namespaces) {
-		myHrefAttribute = namespaces.get("http://www.w3.org/1999/xlink");
-		if (myHrefAttribute != null) {
-			myHrefAttribute += ":href";
-			myHrefAttribute = myHrefAttribute.intern();
+	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
+		myHrefAttribute = null;
+		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
+			if ("http://www.w3.org/1999/xlink".equals(entry.getValue())) {
+				myHrefAttribute = (entry.getKey() + ":href").intern();
+				break;
+			}
 		}
 	}
 

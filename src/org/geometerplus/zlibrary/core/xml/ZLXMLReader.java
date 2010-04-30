@@ -34,7 +34,7 @@ public interface ZLXMLReader {
 	public void characterDataHandlerFinal(char[] ch, int start, int length);
 
 	boolean processNamespaces();
-	void namespaceListChangedHandler(HashMap<String,String> namespaces);
+	void namespaceMapChangedHandler(HashMap<String,String> namespaces);
 
 	void addExternalEntities(HashMap<String,char[]> entityMap);
 	List<String> externalDTDs();
