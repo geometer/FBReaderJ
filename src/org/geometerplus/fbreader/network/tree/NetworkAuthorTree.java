@@ -74,7 +74,7 @@ public class NetworkAuthorTree extends NetworkTree {
 		while (booksIterator.hasNext()) {
 			NetworkBookItem book = booksIterator.next();
 
-			if (book.SeriesTitle != null) {
+			/*if (book.SeriesTitle != null) {
 				final int seriesPosition = getSeriesIndex(book.SeriesTitle);
 				if (seriesPosition == -1) {
 					final int insertAt = subTrees().size();
@@ -102,9 +102,9 @@ public class NetworkAuthorTree extends NetworkTree {
 					}
 					new NetworkBookTree(seriesTree, book, insertAt);
 				}
-			} else {
+			} else {*/
 				new NetworkBookTree(this, book);
-			}
+			/*}*/
 		}
 
 		myBooksNumber = books.size();
