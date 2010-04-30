@@ -20,13 +20,15 @@ public class NoCompressionDecompressor extends Decompressor {
             if (value == -1) {
                 break;
             }
-            b[off + i] = (byte)value;
+			if (b != null) {
+            	b[off + i] = (byte)value;
+			}
         }
         return (i > 0) ? i : -1;
     }
 
     public int read() throws IOException {
-        if (myCurrentPosition < myHeader.getCompressedSize()) {
+        if (myCurrentPosition < myHeader.CompressedSize) {
             myCurrentPosition++;
             return myStream.read();
         } else {
@@ -35,6 +37,6 @@ public class NoCompressionDecompressor extends Decompressor {
     }
     
     public int available() throws IOException {
-        return (myHeader.getUncompressedSize() - myCurrentPosition);
+        return (myHeader.UncompressedSize - myCurrentPosition);
     }
 }

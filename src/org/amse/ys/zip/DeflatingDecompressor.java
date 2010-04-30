@@ -42,7 +42,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
     void reset(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
         myStream = inputStream;
         myHeader = header;
-        myTotalLength = header.getCompressedSize();
+        myTotalLength = header.CompressedSize;
         myBytesRead = 0;
         myCurrentPosition = 0;
         myTheBlockIsFinal = false;
@@ -56,7 +56,7 @@ public class DeflatingDecompressor extends AbstractDeflatingDecompressor {
 
 	@Override
     public int available() throws IOException {
-        return myHeader.getUncompressedSize() - myCurrentPosition;
+        return myHeader.UncompressedSize - myCurrentPosition;
     }
     
     private void ensure16BitsInBuffer() throws IOException {

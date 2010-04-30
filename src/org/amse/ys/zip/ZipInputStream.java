@@ -14,7 +14,7 @@ class ZipInputStream extends InputStream {
     public ZipInputStream(ZipFile parent, LocalFileHeader header) throws IOException {
 		myParent = parent;
         myBaseStream = parent.getBaseStream();
-        myBaseStream.setPosition(header.OffsetOfLocalData);
+        myBaseStream.setPosition(header.DataOffset);
         myDecompressor = Decompressor.init(myBaseStream, header);
     }
 

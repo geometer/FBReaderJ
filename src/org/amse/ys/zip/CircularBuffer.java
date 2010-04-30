@@ -25,11 +25,15 @@ final class CircularBuffer {
         if (from + length > DICTIONARY_LENGTH) {
             final int firstPart = DICTIONARY_LENGTH - from;
             final int secondPart = length - firstPart;
-            System.arraycopy(myBuffer, from, buffer, offset, firstPart);
-            System.arraycopy(myBuffer, 0, buffer, offset + firstPart, secondPart);
+            if (buffer != null) {
+                System.arraycopy(myBuffer, from, buffer, offset, firstPart);
+                System.arraycopy(myBuffer, 0, buffer, offset + firstPart, secondPart);
+            }
             myCurrentPosition = secondPart;
         } else {
-            System.arraycopy(myBuffer, from, buffer, offset, length);
+            if (buffer != null) {
+                System.arraycopy(myBuffer, from, buffer, offset, length);
+            }
             myCurrentPosition = from + length;
         }
         myBytesReady -= length;

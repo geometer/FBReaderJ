@@ -8,62 +8,57 @@ package org.amse.ys.zip;
 import java.io.IOException;
 
 public class LocalFileHeader {
-    /**
-     * Initilization of constants. Implements: versions, ...
-     */
     static final int FILE_HEADER_SIGNATURE = 0x04034b50;
     static final int FOLDER_HEADER_SIGNATURE = 0x02014b50;
     static final int DATA_DESCRIPTOR_SIGNATURE = 0x07084b50;
 
-    final int VersionNeededToExtract;
-    final int GeneralPurposeFlag;
-    final int CompressionMethod;
-    private int myCompressedSize; // not final!
-    private int myUncompressedSize; // not final!
-    final int OffsetOfLocalData;
-    public final String FileName;
-    private boolean mySizeIsKnown;
+	int Signature;
 
-    LocalFileHeader(int versionNeededToExtract, int generalPurposeFlag,
-            int compressionMethod, int compressedSize, int uncompressedSize,
-            int offsetOfLocalData, String fileName) {
-        VersionNeededToExtract = versionNeededToExtract;
-        GeneralPurposeFlag = generalPurposeFlag;
-        CompressionMethod = compressionMethod;
-        myCompressedSize = compressedSize;
-        myUncompressedSize = uncompressedSize;
-        OffsetOfLocalData = offsetOfLocalData;
-        FileName = fileName;
-        mySizeIsKnown = ((GeneralPurposeFlag & 8) == 0);
+    int Version;
+	int Flags;
+    int CompressionMethod;
+	int ModificationTime;
+	int ModificationDate;
+	int CRC32;
+    int CompressedSize;
+    int UncompressedSize;
+	int NameLength;
+	int ExtraLength;
+
+	public String FileName;
+	int DataOffset;
+
+    LocalFileHeader() {
     }
 
-    boolean sizeIsKnown() {
-        return mySizeIsKnown;
-    }
-
-    int getCompressedSize() throws IOException {
-        if (mySizeIsKnown) {
-            return myCompressedSize;
-        } else {
-            throw new ZipException(
-                    "Error in getCompressedSize: file size is not known yet");
-        }
-    }
-
-    int getUncompressedSize() throws IOException {
-        if (mySizeIsKnown) {
-            return myUncompressedSize;
-        } else {
-            throw new ZipException(
-                    "Error in getUncompressedSize: file size is not known yet");
-        }
-    }
-
-    void setSizes(int compressedSize, int uncompressedSize) {
-        if (!mySizeIsKnown) {
-            myCompressedSize = compressedSize;
-            myUncompressedSize = uncompressedSize;
-            mySizeIsKnown = true;
-        }
+    void readFrom(MyBufferedInputStream stream) throws IOException {
+		Signature = stream.read4Bytes();
+		switch (Signature) {
+			default:
+				break;
+			case FILE_HEADER_SIGNATURE:
+                Version = stream.read2Bytes();
+                Flags = stream.read2Bytes();
+                CompressionMethod = stream.read2Bytes();
+                ModificationTime = stream.read2Bytes();
+                ModificationDate = stream.read2Bytes();
+                CRC32 = stream.read4Bytes();
+                CompressedSize = stream.read4Bytes();
+                UncompressedSize = stream.read4Bytes();
+				if (CompressionMethod == 0 && CompressedSize != UncompressedSize) {
+					CompressedSize = UncompressedSize;
+				}
+                NameLength = stream.read2Bytes();
+                ExtraLength = stream.read2Bytes();
+				FileName = stream.readString(NameLength);
+				stream.skip(ExtraLength);
+				break;
+			case DATA_DESCRIPTOR_SIGNATURE:
+				CRC32 = stream.read4Bytes();
+				CompressedSize = stream.read4Bytes();
+				UncompressedSize = stream.read4Bytes();
+				break;
+		}
+		DataOffset = stream.offset();
     }
 }

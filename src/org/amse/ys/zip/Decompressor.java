@@ -7,6 +7,9 @@ public abstract class Decompressor {
     public Decompressor(MyBufferedInputStream is, LocalFileHeader header) {
     }
 
+	/**
+	 * byte b[] -- target buffer for bytes; might be null
+	 */
     public abstract int read(byte b[], int off, int len) throws IOException;
     public abstract int read() throws IOException;
 
@@ -35,10 +38,7 @@ public abstract class Decompressor {
                     return decompressor;
                 }
             }
-            return 
-				NativeDeflatingDecompressor.INITIALIZED
-					? new NativeDeflatingDecompressor(is, header)
-					: new DeflatingDecompressor(is, header);
+            return new NativeDeflatingDecompressor(is, header);
         default:
             throw new ZipException("Unsupported method of compression");
         }

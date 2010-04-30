@@ -3,16 +3,8 @@ package org.amse.ys.zip;
 import java.io.*;
 
 public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
-	public static final boolean INITIALIZED;
 	static {
-		boolean ini;
-		try {
-			System.loadLibrary("DeflatingDecompressor");
-			ini = true;
-		} catch (Throwable t) {
-			ini = false;
-		}
-		INITIALIZED = ini;
+		System.loadLibrary("DeflatingDecompressor");
 	}
 
     // common variables
@@ -39,8 +31,8 @@ public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
 		endInflating();
 
         myStream = inputStream;
-        myCompressedAvailable = header.getCompressedSize();
-		myAvailable = header.getUncompressedSize();
+        myCompressedAvailable = header.CompressedSize;
+		myAvailable = header.UncompressedSize;
 
 		myInBufferOffset = IN_BUFFER_SIZE;
 		myInBufferLength = 0;
@@ -71,7 +63,9 @@ public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
 				throw new IOException("cannot read from zip");
 			}
 			final int ready = (toFill < myOutBufferLength) ? toFill : myOutBufferLength;
-			System.arraycopy(myOutBuffer, myOutBufferOffset, b, off, ready);
+			if (b != null) {
+				System.arraycopy(myOutBuffer, myOutBufferOffset, b, off, ready);
+			}
 			off += ready;
 			myOutBufferOffset += ready;
 			toFill -= ready;
@@ -108,18 +102,25 @@ public class NativeDeflatingDecompressor extends AbstractDeflatingDecompressor {
 				myInBufferLength = toRead;
 				myCompressedAvailable -= toRead;
 			}
-			final int code = inflate(myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
-			if (code == 0) {
+			final long result = inflate(myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
+			if (result == 0) {
 				throw new IOException("cannot read from base stream");
 			}
-			myInBufferOffset += code >> 16;
-			myInBufferLength -= code >> 16;
+			final int in = (int)(result >> 16) & 0xFFFF;
+			final int out = (int)result & 0xFFFF;
+			myInBufferOffset += in;
+			myInBufferLength -= in;
 			myOutBufferOffset = 0;
-			myOutBufferLength = code & 0x0FFFF;
+			myOutBufferLength = out;
+			if ((result & (1L << 32)) != 0) {
+				endInflating();
+				myStream.backSkip(myInBufferLength - myInBufferOffset);
+				break;
+			}
 		}
 	}
 
     private native boolean startInflating();
     private native void endInflating();
-	private native int inflate(byte[] in, int inOffset, int inLength, byte[] out);
+	private native long inflate(byte[] in, int inOffset, int inLength, byte[] out);
 }
