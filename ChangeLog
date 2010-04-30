@@ -1,6 +1,9 @@
 ===== 0.6.3 (???) =====
 
 * A problem with some zip-archives has been fixed
+* Searching for books in network catalogs has been implemented
+* Stopping catalogs loading from context menu
+* Users registration in Litres network catalog
 
 ===== 0.6.2 (April 26, 2010) =====
 
