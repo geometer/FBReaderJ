@@ -103,7 +103,7 @@ public class NetworkAuthorTree extends NetworkTree {
 					new NetworkBookTree(seriesTree, book, insertAt);
 				}
 			} else {*/
-				new NetworkBookTree(this, book);
+				new NetworkBookTree(this, book, false);
 			/*}*/
 		}
 

@@ -31,14 +31,18 @@ public class NetworkBookTree extends NetworkTree {
 
 	public final NetworkBookItem Book;
 
-	NetworkBookTree(NetworkTree parent, NetworkBookItem book) {
+	private final boolean myShowAuthors;
+
+	NetworkBookTree(NetworkTree parent, NetworkBookItem book, boolean showAuthors) {
 		super(parent);
 		Book = book;
+		myShowAuthors = showAuthors;
 	}
 
-	NetworkBookTree(NetworkTree parent, NetworkBookItem book, int position) {
+	NetworkBookTree(NetworkTree parent, NetworkBookItem book, int position, boolean showAuthors) {
 		super(parent, position);
 		Book = book;
+		myShowAuthors = showAuthors;
 	}
 
 	@Override
@@ -48,6 +52,9 @@ public class NetworkBookTree extends NetworkTree {
 
 	@Override
 	public String getSummary() {
+		if (!myShowAuthors && Book.Authors.size() < 2) {
+			return null;
+		}
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
 		for (NetworkBookItem.AuthorData author: Book.Authors) {
@@ -56,13 +63,7 @@ public class NetworkBookTree extends NetworkTree {
 			}
 			builder.append(author.DisplayName);
 		}
-		String authorsString = builder.toString();
-
-		FBTree parent = this.Parent;
-		if (parent.getName().equals(authorsString)) {
-			return "";
-		}
-		return authorsString;
+		return builder.toString();
 	}
 
 	@Override

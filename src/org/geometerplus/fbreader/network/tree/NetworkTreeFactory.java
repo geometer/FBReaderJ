@@ -47,7 +47,8 @@ public class NetworkTreeFactory {
 			catalogItem.onDisplayItem();
 			return tree;
 		} else if (item instanceof NetworkBookItem) {
-			return new NetworkBookTree(parent, (NetworkBookItem) item, position);
+			final boolean showAuthors = parent.Item.CatalogType != NetworkCatalogItem.CATALOG_BY_AUTHORS;
+			return new NetworkBookTree(parent, (NetworkBookItem) item, position, showAuthors);
 			/*NetworkBookItem book = (NetworkBookItem) item;
 			String seriesTitle = book.SeriesTitle;
 			if (seriesTitle == null) {
@@ -73,8 +74,6 @@ public class NetworkTreeFactory {
 					}
 				}
 			}
-
-			final boolean showAuthors = parent.Item.CatalogType != NetworkCatalogItem.CATALOG_BY_AUTHORS;
 
 			final NetworkSeriesTree seriesTree = new NetworkSeriesTree(parent, seriesTitle, position, showAuthors);
 			return new NetworkBookTree(seriesTree, book);*/
