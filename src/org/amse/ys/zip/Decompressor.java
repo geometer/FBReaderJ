@@ -16,12 +16,12 @@ public abstract class Decompressor {
     protected Decompressor() {
     }
 
-    private static Queue<AbstractDeflatingDecompressor> ourDeflators = new LinkedList<AbstractDeflatingDecompressor>();
+    private static Queue<DeflatingDecompressor> ourDeflators = new LinkedList<DeflatingDecompressor>();
 
     static void storeDecompressor(Decompressor decompressor) {
-        if (decompressor instanceof AbstractDeflatingDecompressor) {
+        if (decompressor instanceof DeflatingDecompressor) {
             synchronized (ourDeflators) {
-                ourDeflators.add((AbstractDeflatingDecompressor)decompressor);
+                ourDeflators.add((DeflatingDecompressor)decompressor);
             }
         }
     }
@@ -33,12 +33,12 @@ public abstract class Decompressor {
         case 8:
             synchronized (ourDeflators) {
                 if (!ourDeflators.isEmpty()) {
-                    AbstractDeflatingDecompressor decompressor = ourDeflators.poll();
+                    DeflatingDecompressor decompressor = ourDeflators.poll();
                     decompressor.reset(is, header);
                     return decompressor;
                 }
             }
-            return new NativeDeflatingDecompressor(is, header);
+            return new DeflatingDecompressor(is, header);
         default:
             throw new ZipException("Unsupported method of compression");
         }

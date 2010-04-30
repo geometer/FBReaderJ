@@ -11,7 +11,7 @@ static jobject				keys[SIZE]				= { 0 };
 static z_stream*			values[SIZE]			= { 0 };
 
 extern "C"
-jboolean Java_org_amse_ys_zip_NativeDeflatingDecompressor_startInflating(JNIEnv *env, jobject thiz) {
+jboolean Java_org_amse_ys_zip_DeflatingDecompressor_startInflating(JNIEnv *env, jobject thiz) {
 	int i;
 	for (i = 0; i < SIZE; ++i) {
 		if (keys[i] == 0) {
@@ -26,7 +26,7 @@ jboolean Java_org_amse_ys_zip_NativeDeflatingDecompressor_startInflating(JNIEnv 
 }
 
 extern "C"
-void Java_org_amse_ys_zip_NativeDeflatingDecompressor_endInflating(JNIEnv *env, jobject thiz) {
+void Java_org_amse_ys_zip_DeflatingDecompressor_endInflating(JNIEnv *env, jobject thiz) {
 	int i;
 	for (i = 0; i < SIZE; ++i) {
 		if (keys[i] == thiz) {
@@ -41,7 +41,7 @@ void Java_org_amse_ys_zip_NativeDeflatingDecompressor_endInflating(JNIEnv *env, 
 
 // returns (endFlag << 32) + ((used inLength) << 16) + outLength
 extern "C"
-jlong Java_org_amse_ys_zip_NativeDeflatingDecompressor_inflate(JNIEnv *env, jobject thiz, jbyteArray in, jint inOffset, jint inLength, jbyteArray out) {
+jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject thiz, jbyteArray in, jint inOffset, jint inLength, jbyteArray out) {
 	int i;
 	z_stream *stream = 0;
 	for (i = 0; i < SIZE; ++i) {
