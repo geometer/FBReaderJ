@@ -45,15 +45,21 @@ public final class ZipFile {
 		LocalFileHeader header = new LocalFileHeader();
 		header.readFrom(baseStream);
 
+		if (header.Signature != LocalFileHeader.FILE_HEADER_SIGNATURE) {
+			return false;
+		}
 		if (header.FileName != null) {
         	myFileHeaders.put(header.FileName, header);
+			if (header.FileName.equals(fileToFind)) {
+				return true;
+			}
 		}
         if ((header.Flags & 0x08) == 0) {
             baseStream.skip(header.CompressedSize);
         } else {
             findAndReadDescriptor(baseStream, header);
         }
-        return header.FileName != null && header.FileName.equals(fileToFind);
+        return false;
     }
 
     private void readAllHeaders() throws IOException {

@@ -191,8 +191,6 @@ public final class FBReader extends ZLApplication {
 	}
 	
 	void openBookInternal(Book book, Bookmark bookmark) {
-		clearTextCaches();
-
 		if (book != null) {
 			onViewChanged();
 
@@ -201,6 +199,7 @@ public final class FBReader extends ZLApplication {
 			}
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
+			clearTextCaches();
 
 			Model = null;
 			System.gc();

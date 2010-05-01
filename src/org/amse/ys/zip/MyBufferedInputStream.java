@@ -114,21 +114,16 @@ final class MyBufferedInputStream extends InputStream {
     }
 
     public void backSkip(int n) throws IOException {
-		if (n > 0) {
-			if (myPositionInBuffer >= n) {
-				myPositionInBuffer -= n;
-				myBytesReady += n;
-				myCurrentPosition -= n;
-			} else {
-            	myFileInputStream.close();
-            	myFileInputStream = myStreamHolder.getInputStream();
-            	myBytesReady = 0;
-				myPositionInBuffer = 0;
-				int position = myCurrentPosition - n;
-				myCurrentPosition = 0;
-            	skip(position);
-			}
+		if (n <= 0) {
+			return;
 		}
+        myFileInputStream.close();
+        myFileInputStream = myStreamHolder.getInputStream();
+        myBytesReady = 0;
+		myPositionInBuffer = 0;
+		int position = myCurrentPosition - n;
+		myCurrentPosition = 0;
+        skip(position);
     }
 
     public void setPosition(int position) throws IOException {

@@ -22,17 +22,28 @@ public class DeflatingDecompressor extends Decompressor {
 	private int myOutBufferOffset;
 	private int myOutBufferLength;
 
+	private boolean myInflatingInProgress;
+
     public DeflatingDecompressor(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
         super();
         reset(inputStream, header);
     }
 
     void reset(MyBufferedInputStream inputStream, LocalFileHeader header) throws IOException {
-		endInflating();
+		if (myInflatingInProgress) {
+			endInflating();
+			myInflatingInProgress = false;
+		}
 
         myStream = inputStream;
         myCompressedAvailable = header.CompressedSize;
+		if (myCompressedAvailable <= 0) {
+			myCompressedAvailable = Integer.MAX_VALUE;
+		}
 		myAvailable = header.UncompressedSize;
+		if (myAvailable <= 0) {
+			myAvailable = Integer.MAX_VALUE;
+		}
 
 		myInBufferOffset = IN_BUFFER_SIZE;
 		myInBufferLength = 0;
@@ -40,6 +51,7 @@ public class DeflatingDecompressor extends Decompressor {
 		myOutBufferLength = 0;
 
 		startInflating();
+		myInflatingInProgress = true;
     }
 
 	@Override
@@ -60,7 +72,12 @@ public class DeflatingDecompressor extends Decompressor {
 				fillOutBuffer();
 			}
 			if (myOutBufferLength == 0) {
-				throw new IOException("cannot read from zip");
+				if (myInflatingInProgress) {
+					throw new IOException("cannot read from zip");
+				} else {
+					len -= toFill;
+					break;
+				}
 			}
 			final int ready = (toFill < myOutBufferLength) ? toFill : myOutBufferLength;
 			if (b != null) {
@@ -84,7 +101,12 @@ public class DeflatingDecompressor extends Decompressor {
 			fillOutBuffer();
 		}
 		if (myOutBufferLength == 0) {
-			throw new IOException("cannot read from zip");
+			if (myInflatingInProgress) {
+				throw new IOException("cannot read from zip");
+			} else {
+				myAvailable = 0;
+				return -1;
+			}
 		}
 		--myAvailable;
 		--myOutBufferLength;
@@ -92,15 +114,23 @@ public class DeflatingDecompressor extends Decompressor {
     }
 
 	private void fillOutBuffer() throws IOException {
+		if (!myInflatingInProgress) {
+			return;
+		}
+
 		while (myOutBufferLength == 0) {
 			if (myInBufferLength == 0) {
 				myInBufferOffset = 0;
 				final int toRead = (myCompressedAvailable < IN_BUFFER_SIZE) ? myCompressedAvailable : IN_BUFFER_SIZE;
-				if (myStream.read(myInBuffer, 0, toRead) != toRead) {
-					throw new IOException("cannot read from base stream");
+				myInBufferLength = myStream.read(myInBuffer, 0, toRead);
+				if (myInBufferLength < toRead) {
+					myCompressedAvailable = 0;
+				} else {
+					myCompressedAvailable -= toRead;
 				}
-				myInBufferLength = toRead;
-				myCompressedAvailable -= toRead;
+			}
+			if (myInBufferLength == 0) {
+				break;
 			}
 			final long result = inflate(myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
 			if (result == 0) {
@@ -114,7 +144,8 @@ public class DeflatingDecompressor extends Decompressor {
 			myOutBufferLength = out;
 			if ((result & (1L << 32)) != 0) {
 				endInflating();
-				myStream.backSkip(myInBufferLength - myInBufferOffset);
+				myInflatingInProgress = false;
+				myStream.backSkip(myInBufferLength);
 				break;
 			}
 		}
