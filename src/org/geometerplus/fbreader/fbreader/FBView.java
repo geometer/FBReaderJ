@@ -142,11 +142,17 @@ public final class FBView extends ZLTextView {
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				if (diff > 0) {
 					ZLTextWordCursor cursor = getStartCursor();
+					if (cursor == null || cursor.isNull()) {
+						return false;
+					}
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
 						ZLApplication.Instance().scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
 					}
 				} else if (diff < 0) {
 					ZLTextWordCursor cursor = getEndCursor();
+					if (cursor == null || cursor.isNull()) {
+						return false;
+					}
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
 						ZLApplication.Instance().scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
 					}
