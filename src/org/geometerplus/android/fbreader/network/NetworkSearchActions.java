@@ -98,19 +98,17 @@ class NetworkSearchActions extends NetworkTreeActions {
 
 
 	public void doExpandCatalog(final SearchResultTree tree) {
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
+		if (NetworkLibraryActivity.Instance != null) {
+			NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
 		}
-		NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
 	}
 
 	private void doStopLoading(SearchResultTree tree) {
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
-		}
-		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		if (runnable != null) {
-			runnable.InterruptFlag.set(true);
+		if (NetworkLibraryActivity.Instance != null) {
+			final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+			if (runnable != null) {
+				runnable.InterruptFlag.set(true);
+			}
 		}
 	}
 }

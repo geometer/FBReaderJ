@@ -169,9 +169,7 @@ public class NetworkSearchActivity extends Activity {
 		library.setSearchResult(result);
 		library.invalidate();
 		library.synchronize();
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.resetTree();
-		}
+		NetworkLibraryActivity.Instance.resetTree();
 
 		final SearchHandler handler = new SearchHandler(result);
 		NetworkLibraryActivity.Instance.startItemsLoading(

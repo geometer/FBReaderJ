@@ -112,7 +112,9 @@ class NetworkBookActions extends NetworkTreeActions {
 		LinkedHashSet<Action> actions = new LinkedHashSet<Action>();
 		if (useFullReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
-			if (reference != null && NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
+			if (reference != null
+					&& NetworkLibraryActivity.Instance != null
+					&& NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				actions.add(new Action(TREE_NO_ACTION, "alreadyDownloading"));
 			} else if (book.localCopyFileName() != null) {
 				actions.add(new Action(READ_BOOK_ITEM_ID, "read"));
@@ -123,7 +125,8 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 		if (useDemoReferences(book)) {
 			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
+			if (NetworkLibraryActivity.Instance != null
+					&& NetworkLibraryActivity.Instance.isBeingDownloaded(reference.URL)) {
 				actions.add(new Action(TREE_NO_ACTION, "alreadyDownloadingDemo"));
 			} else if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
 				actions.add(new Action(READ_DEMO_ITEM_ID, "readDemo"));
@@ -317,13 +320,17 @@ class NetworkBookActions extends NetworkTreeActions {
 					public void handleMessage(Message message) {
 						String err = (String) message.obj;
 						if (err != null) {
-							final ZLResource boxResource = dialogResource.getResource("networkError");
-							new AlertDialog.Builder(NetworkLibraryActivity.Instance.getTopLevelActivity())
-								.setTitle(boxResource.getResource("title").getValue())
-								.setMessage(err)
-								.setIcon(0)
-								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-								.create().show();
+							if (NetworkLibraryActivity.Instance != null) {
+								final ZLResource boxResource = dialogResource.getResource("networkError");
+								new AlertDialog.Builder(NetworkLibraryActivity.Instance.getTopLevelActivity())
+									.setTitle(boxResource.getResource("title").getValue())
+									.setMessage(err)
+									.setIcon(0)
+									.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+									.create().show();
+							} else {
+								// TODO: another notification???
+							}
 						} else if (downloadBook) {
 							doDownloadBook(book, false);
 						}
