@@ -48,11 +48,11 @@ public class NetworkTreeFactory {
 			return tree;
 		} else if (item instanceof NetworkBookItem) {
 			final boolean showAuthors = parent.Item.CatalogType != NetworkCatalogItem.CATALOG_BY_AUTHORS;
-			return new NetworkBookTree(parent, (NetworkBookItem) item, position, showAuthors);
-			/*NetworkBookItem book = (NetworkBookItem) item;
+
+			NetworkBookItem book = (NetworkBookItem) item;
 			String seriesTitle = book.SeriesTitle;
 			if (seriesTitle == null) {
-				return new NetworkBookTree(parent, (NetworkBookItem) item, position);
+				return new NetworkBookTree(parent, (NetworkBookItem) item, position, showAuthors);
 			}
 
 			if (position > 0) {
@@ -60,7 +60,7 @@ public class NetworkTreeFactory {
 				if (previous instanceof NetworkSeriesTree) {
 					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) previous;
 					if (seriesTree.SeriesTitle.equals(seriesTitle)) {
-						return new NetworkBookTree(seriesTree, book);
+						return new NetworkBookTree(seriesTree, book, showAuthors);
 					}
 				}
 			}
@@ -70,60 +70,14 @@ public class NetworkTreeFactory {
 				if (next instanceof NetworkSeriesTree) {
 					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) next;
 					if (seriesTree.SeriesTitle.equals(seriesTitle)) {
-						return new NetworkBookTree(seriesTree, book, 0);
+						return new NetworkBookTree(seriesTree, book, 0, showAuthors);
 					}
 				}
 			}
 
 			final NetworkSeriesTree seriesTree = new NetworkSeriesTree(parent, seriesTitle, position, showAuthors);
-			return new NetworkBookTree(seriesTree, book);*/
+			return new NetworkBookTree(seriesTree, book, showAuthors);
 		}
 		return null;
 	}
-
-	//static void createSubtrees(SearchResultTree parent, NetworkBookCollection books);
-
-	/*public static void fillAuthorNode(NetworkTree parent, List<NetworkLibraryItem> books) {
-		NetworkSeriesTree seriesTree = null;
-
-		boolean showAuthors = !(parent instanceof NetworkAuthorTree)
-			&& !(parent instanceof NetworkCatalogTree && ((NetworkCatalogTree)parent).Item.CatalogType == NetworkCatalogItem.CATALOG_BY_AUTHORS);
-
-		ListIterator<NetworkLibraryItem> it = books.listIterator();
-		while (it.hasNext()) {
-			NetworkLibraryItem item = it.next();
-			if (!(item instanceof NetworkBookItem)) {
-				continue;
-			}
-			final NetworkBookItem book = (NetworkBookItem) item;
-			String seriesTitle = book.SeriesTitle;
-
-			if (seriesTitle != null && seriesTitle.length() > 0 && (seriesTree == null || !seriesTitle.equals(seriesTree.SeriesTitle))) {
-				ListIterator<NetworkLibraryItem> jt = books.listIterator(it.nextIndex());
-				NetworkBookItem next = null;
-				while (jt.hasNext()) {
-					final NetworkLibraryItem jtem = jt.next();
-					if (jtem instanceof NetworkBookItem) {
-						next = (NetworkBookItem) jtem;
-						break;
-					}
-				}
-				if (next == null) {
-					seriesTitle = null;
-				} else if (!seriesTitle.equals(next.SeriesTitle)) {
-					seriesTitle = null;
-				}
-			}
-
-			if (seriesTitle == null || seriesTitle.length() == 0) {
-				seriesTree = null;
-				new NetworkBookTree(parent, book, -1);
-			} else {
-				if (seriesTree == null || !seriesTree.SeriesTitle.equals(seriesTitle)) {
-					seriesTree = new NetworkSeriesTree(parent, seriesTitle, showAuthors);
-				}
-				new NetworkBookTree(seriesTree, book, -1);
-			}
-		}
-	}*/
 }

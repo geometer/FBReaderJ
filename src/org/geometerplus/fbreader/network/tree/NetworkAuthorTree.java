@@ -74,13 +74,13 @@ public class NetworkAuthorTree extends NetworkTree {
 		while (booksIterator.hasNext()) {
 			NetworkBookItem book = booksIterator.next();
 
-			/*if (book.SeriesTitle != null) {
+			if (book.SeriesTitle != null) {
 				final int seriesPosition = getSeriesIndex(book.SeriesTitle);
 				if (seriesPosition == -1) {
 					final int insertAt = subTrees().size();
 					setSeriesIndex(book.SeriesTitle, insertAt);
 					final NetworkSeriesTree seriesTree = new NetworkSeriesTree(this, book.SeriesTitle, insertAt, false);
-					new NetworkBookTree(seriesTree, book);
+					new NetworkBookTree(seriesTree, book, false);
 				} else {
 					FBTree treeAtSeriesPosition = subTrees().get(seriesPosition);
 					if (!(treeAtSeriesPosition instanceof NetworkSeriesTree)) {
@@ -100,14 +100,13 @@ public class NetworkAuthorTree extends NetworkTree {
 						}
 						++insertAt;
 					}
-					new NetworkBookTree(seriesTree, book, insertAt);
+					new NetworkBookTree(seriesTree, book, insertAt, false);
 				}
-			} else {*/
+			} else {
 				new NetworkBookTree(this, book, false);
-			/*}*/
+			}
 		}
 
 		myBooksNumber = books.size();
 	}
-
 }
