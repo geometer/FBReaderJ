@@ -31,11 +31,11 @@ public class NetworkTreeFactory {
 	}
 
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkLibraryItem item, int position) {
-		final List<FBTree> subtrees = parent.subTrees();
+		final int subtreesSize = parent.subTrees().size();
 		if (position == -1) {
-			position = subtrees.size();
-		} else if (position < 0 || position > subtrees.size()) {
-			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + subtrees.size() + "]");
+			position = subtreesSize;
+		} else if (position < 0 || position > subtreesSize) {
+			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + subtreesSize + "]");
 		}
 
 		if (item instanceof NetworkCatalogItem) {
@@ -47,6 +47,10 @@ public class NetworkTreeFactory {
 			catalogItem.onDisplayItem();
 			return tree;
 		} else if (item instanceof NetworkBookItem) {
+			if (position != subtreesSize) {
+				throw new RuntimeException("Unable to insert NetworkBookItem to the middle of the catalog");
+			}
+
 			final boolean showAuthors = parent.Item.CatalogType != NetworkCatalogItem.CATALOG_BY_AUTHORS;
 
 			NetworkBookItem book = (NetworkBookItem) item;
@@ -56,27 +60,25 @@ public class NetworkTreeFactory {
 			}
 
 			if (position > 0) {
-				final NetworkTree previous = (NetworkTree) subtrees.get(position - 1);
+				final NetworkTree previous = (NetworkTree) parent.subTrees().get(position - 1);
 				if (previous instanceof NetworkSeriesTree) {
 					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) previous;
-					if (seriesTree.SeriesTitle.equals(seriesTitle)) {
+					if (seriesTitle.equals(seriesTree.SeriesTitle)) {
+						return new NetworkBookTree(seriesTree, book, showAuthors);
+					}
+				} else if (previous instanceof NetworkBookTree) {
+					final NetworkBookTree bookTree = (NetworkBookTree) previous;
+					final NetworkBookItem previousBook = bookTree.Book;
+					if (seriesTitle.equals(previousBook.SeriesTitle)) {
+						bookTree.removeSelf();
+						final NetworkSeriesTree seriesTree = new NetworkSeriesTree(parent, seriesTitle, --position, showAuthors);
+						new NetworkBookTree(seriesTree, previousBook, showAuthors);
 						return new NetworkBookTree(seriesTree, book, showAuthors);
 					}
 				}
 			}
 
-			if (position < subtrees.size()) {
-				final NetworkTree next = (NetworkTree) subtrees.get(position);
-				if (next instanceof NetworkSeriesTree) {
-					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) next;
-					if (seriesTree.SeriesTitle.equals(seriesTitle)) {
-						return new NetworkBookTree(seriesTree, book, 0, showAuthors);
-					}
-				}
-			}
-
-			final NetworkSeriesTree seriesTree = new NetworkSeriesTree(parent, seriesTitle, position, showAuthors);
-			return new NetworkBookTree(seriesTree, book, showAuthors);
+			return new NetworkBookTree(parent, book, position, showAuthors);
 		}
 		return null;
 	}

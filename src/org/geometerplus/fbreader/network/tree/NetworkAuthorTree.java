@@ -79,14 +79,21 @@ public class NetworkAuthorTree extends NetworkTree {
 				if (seriesPosition == -1) {
 					final int insertAt = subTrees().size();
 					setSeriesIndex(book.SeriesTitle, insertAt);
-					final NetworkSeriesTree seriesTree = new NetworkSeriesTree(this, book.SeriesTitle, insertAt, false);
-					new NetworkBookTree(seriesTree, book, false);
+					new NetworkBookTree(this, book, false);
 				} else {
 					FBTree treeAtSeriesPosition = subTrees().get(seriesPosition);
+					if (treeAtSeriesPosition instanceof NetworkBookTree) {
+						final NetworkBookTree bookTree = (NetworkBookTree) treeAtSeriesPosition;
+						bookTree.removeSelf();
+						final NetworkSeriesTree seriesTree = new NetworkSeriesTree(this, book.SeriesTitle, seriesPosition, false);
+						new NetworkBookTree(seriesTree, bookTree.Book, false);
+						treeAtSeriesPosition = seriesTree;
+					}
+
 					if (!(treeAtSeriesPosition instanceof NetworkSeriesTree)) {
 						throw new RuntimeException("That's impossible!!!");
 					}
-					NetworkSeriesTree seriesTree = (NetworkSeriesTree) treeAtSeriesPosition;
+					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) treeAtSeriesPosition;
 					ListIterator<FBTree> nodesIterator = seriesTree.subTrees().listIterator();
 					int insertAt = 0;
 					while (nodesIterator.hasNext()) {
