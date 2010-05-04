@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.image.ZLImage;
+
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
@@ -52,11 +54,11 @@ public class NetworkSeriesTree extends NetworkTree {
 		int count = 0;
 
 		Set<NetworkBookItem.AuthorData> authorSet = new TreeSet<NetworkBookItem.AuthorData>();
-		for (FBTree tree: this) {
+		for (FBTree tree: subTrees()) {
 			if (!(tree instanceof NetworkBookTree)) {
 				continue;
 			}
-			final NetworkBookItem book = (NetworkBookItem) ((NetworkBookTree)tree).Book;
+			final NetworkBookItem book = ((NetworkBookTree) tree).Book;
 
 			for (NetworkBookItem.AuthorData author: book.Authors) {
 				if (!authorSet.contains(author)) {
@@ -74,4 +76,13 @@ public class NetworkSeriesTree extends NetworkTree {
 		return builder.toString();
 	}
 
+	@Override
+	protected ZLImage createCover() {
+		for (FBTree tree: subTrees()) {
+			if (tree instanceof NetworkBookTree) {
+				return ((NetworkBookTree) tree).createCover();
+			}
+		}
+		return null;
+	}
 }
