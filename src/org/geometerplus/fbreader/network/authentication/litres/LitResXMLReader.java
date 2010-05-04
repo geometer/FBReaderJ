@@ -233,13 +233,8 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					myReferences
 				));
 
-				myBookId = null;
-				myTitle = null;
-				myLanguage = null;
-				myDate = null;
-				mySeriesTitle = null;
+				myBookId = myTitle = myLanguage = myDate = mySeriesTitle = mySummary = myCover = null;
 				myIndexInSeries = 0;
-				myCover = null;
 				myAuthors.clear();
 				myTags.clear();
 				myURLByType.clear();
