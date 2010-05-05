@@ -78,17 +78,15 @@ abstract class NetworkDialog {
 		myResource = ZLResource.resource("dialog").getResource(key);
 	}
 
-	public static void show(int id, NetworkLink link, Runnable onSuccessRunnable) {
-		getDialog(id).showInternal(id, link, onSuccessRunnable);
+	public static void show(Activity activity, int id, NetworkLink link, Runnable onSuccessRunnable) {
+		getDialog(id).showInternal(activity, id, link, onSuccessRunnable);
 	}
 
-	private void showInternal(int id, NetworkLink link, Runnable onSuccessRunnable) {
+	private void showInternal(Activity activity, int id, NetworkLink link, Runnable onSuccessRunnable) {
 		myLink = link;
 		myErrorMessage = null;
 		myOnSuccessRunnable = onSuccessRunnable;
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.getTopLevelActivity().showDialog(id);
-		}
+		activity.showDialog(id);
 	}
 
 	public abstract Dialog createDialog(final Activity activity);

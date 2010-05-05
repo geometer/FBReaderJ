@@ -48,6 +48,10 @@ public class NetworkSearchActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		if (!NetworkView.Instance().isInitialized()) {
+			finish();
+		}
+
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
@@ -78,17 +82,17 @@ public class NetworkSearchActivity extends Activity {
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			library.invalidate();
 			library.synchronize();
-			if (NetworkLibraryActivity.Instance != null) {
-				NetworkLibraryActivity.Instance.resetTree();
+			if (NetworkView.Instance().isInitialized()) {
+				NetworkView.Instance().fireModelChanged();
 			}
 
-			if (doExpand && NetworkLibraryActivity.Instance != null) {
+			if (doExpand) {
 				final SearchResultTree tree = library.getSearchResultTree();
 				if (tree != null) {
-					ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
+					/*ZLTreeAdapter adapter = myActivity.getAdapter();
 					if (adapter != null) {
 						adapter.expandOrCollapseTree(tree);
-					}
+					}*/
 					doExpand = !tree.hasChildren();
 				}
 			}
@@ -110,16 +114,13 @@ public class NetworkSearchActivity extends Activity {
 				msg = boxResource.getResource("message").getValue();
 			}
 			if (msg != null) {
-				if (NetworkLibraryActivity.Instance != null) {
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					new AlertDialog.Builder(NetworkLibraryActivity.Instance)
-						.setTitle(boxResource.getResource("title").getValue())
-						.setMessage(msg)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-						.create().show();
-				}
-				// TODO: else show notification???
+				/*final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(myActivity)
+					.setTitle(boxResource.getResource("title").getValue())
+					.setMessage(msg)
+					.setIcon(0)
+					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+					.create().show();*/
 			}
 		}
 	}
@@ -154,11 +155,7 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
-		}
-
-		if (NetworkLibraryActivity.Instance.getItemsLoadingRunnable(SEARCH_RUNNABLE_KEY) != null) {
+		if (NetworkView.Instance().containsItemsLoadingRunnable(SEARCH_RUNNABLE_KEY)) {
 			return;
 		}
 
@@ -169,16 +166,13 @@ public class NetworkSearchActivity extends Activity {
 		library.setSearchResult(result);
 		library.invalidate();
 		library.synchronize();
-		NetworkLibraryActivity.Instance.resetTree();
+		NetworkView.Instance().fireModelChanged();
 
 		final SearchHandler handler = new SearchHandler(result);
-		NetworkLibraryActivity.Instance.startItemsLoading(
+		NetworkView.Instance().startItemsLoading(
+			this,
 			SEARCH_RUNNABLE_KEY,
 			new SearchRunnable(handler, pattern)
 		);
-	}
-
-	protected Activity getParentActivity() {
-		return NetworkLibraryActivity.Instance;
 	}
 }

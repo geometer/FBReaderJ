@@ -44,25 +44,33 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.fbreader.network.*;
 
 
-public class NetworkBookInfoActivity extends Activity implements NetworkLibraryActivity.EventListener {
+public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 
 	private NetworkBookItem myBook;
 
 	private final ZLResource myResource = ZLResource.resource("networkBookView");
+	private BookDownloaderServiceConnection myConnection;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (NetworkLibraryActivity.Instance == null) {
+		if (!NetworkView.Instance().isInitialized()) {
 			finish();
 			return;
 		}
 
-		myBook = NetworkLibraryActivity.Instance.getBookItem();
+		myBook = NetworkView.Instance().getBookInfoItem();
 		if (myBook == null) {
 			finish();
 			return;
 		}
+
+		myConnection = new BookDownloaderServiceConnection();
+		bindService(
+			new Intent(getApplicationContext(), BookDownloaderService.class),
+			myConnection,
+			BIND_AUTO_CREATE
+		);
 
 		setTitle(myBook.Title);
 		setContentView(R.layout.network_book);
@@ -71,6 +79,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 		setupInfo();
 		setupCover();
 		setupButtons();
+	}
+
+	@Override
+	public void onDestroy() {
+		unbindService(myConnection);
+		myConnection = null;
+		super.onDestroy();
 	}
 
 	private final void setupDescription() {
@@ -154,9 +169,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
 			if (cover instanceof NetworkImage) {
 				final NetworkImage img = (NetworkImage) cover;
-				if (NetworkLibraryActivity.Instance != null
-						&& NetworkLibraryActivity.Instance.isCoverLoading(img.Url)) {
-					NetworkLibraryActivity.Instance.setOnCoverSyncRunnable(img.Url, new Runnable() {
+				final NetworkView networkView = NetworkView.Instance();
+				if (networkView.isInitialized()
+						&& networkView.isCoverLoading(img.Url)) {
+					networkView.addCoverSynchronizationRunnable(img.Url, new Runnable() {
 						public void run() {
 							img.synchronizeFast();
 							final ZLAndroidImageData data = mgr.getImageData(img);
@@ -198,14 +214,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibraryA
 				R.id.network_book_button2,
 				R.id.network_book_button3,
 		};
-		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook);
-// debug code:
-/*if (actions.size() == 2) {
-	actions.clear();
-}*/
-/*actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "buy", "0z"));
-actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "buy", "1z"));
-actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "buy", "2z"));*/
+		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook, myConnection);
+
 		final boolean skipSecondButton = actions.size() < buttons.length && (actions.size() % 2) == 1;
 		int buttonNumber = 0;
 		for (final NetworkBookActions.Action a: actions) {
@@ -229,7 +239,7 @@ actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "bu
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					NetworkBookActions.runAction(myBook, a.Id);
+					NetworkBookActions.runAction(NetworkBookInfoActivity.this, myBook, a.Id);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});
@@ -258,19 +268,15 @@ actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "bu
 		rootView.requestLayout();
 	}
 
+	@Override
 	protected void onStart() {
 		super.onStart();
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.setTopLevelActivity(this);
-			NetworkLibraryActivity.Instance.addEventListener(this);
-		}
+		NetworkView.Instance().addEventListener(this);
 	}
 
+	@Override
 	protected void onStop() {
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.setTopLevelActivity(null);
-			NetworkLibraryActivity.Instance.removeEventListener(this);
-		}
+		NetworkView.Instance().removeEventListener(this);
 		super.onStop();
 	}
 
@@ -280,6 +286,9 @@ actions.add(new NetworkBookActions.Action(NetworkBookActions.TREE_NO_ACTION, "bu
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
+		if (!NetworkView.Instance().isInitialized()) {
+			return null;
+		}
 		final NetworkDialog dlg = NetworkDialog.getDialog(id);
 		if (dlg != null) {
 			return dlg.createDialog(this);

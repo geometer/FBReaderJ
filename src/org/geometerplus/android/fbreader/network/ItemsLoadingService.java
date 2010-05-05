@@ -151,11 +151,11 @@ public class ItemsLoadingService extends Service {
 		}
 		intent.removeExtra(ITEMS_LOADING_RUNNABLE_KEY);
 
-		if (NetworkLibraryActivity.Instance == null) {
+		if (!NetworkView.Instance().isInitialized()) {
 			doStop();
 			return;
 		}
-		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(key);
+		final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
 		if (runnable == null) {
 			doStop();
 			return;
@@ -165,8 +165,8 @@ public class ItemsLoadingService extends Service {
 			public void handleMessage(Message message) {
 				doStop();
 				endProgressNotification(runnable);
-				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.removeItemsLoadingRunnable(key);
+				if (NetworkView.Instance().isInitialized()) {
+					NetworkView.Instance().removeItemsLoadingRunnable(key);
 				}
 			}
 		};

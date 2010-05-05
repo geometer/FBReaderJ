@@ -19,16 +19,29 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.os.Bundle;
-import android.app.Activity;
+import android.os.IBinder;
+import android.content.ServiceConnection;
+import android.content.ComponentName;
 
-public class BookDownloaderCallback extends Activity {
+class BookDownloaderServiceConnection implements ServiceConnection {
 
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-		if (NetworkView.Instance().isInitialized()) {
-			NetworkView.Instance().fireModelChanged();
+	private BookDownloaderInterface myInterface;
+
+	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
+		myInterface = BookDownloaderInterface.Stub.asInterface(service);
+	}
+
+	public synchronized void onServiceDisconnected(ComponentName name) {
+		myInterface = null;
+	}
+
+	public synchronized boolean isBeingDownloaded(String url) {
+		if (myInterface != null) {
+			try {
+				return myInterface.isBeingDownloaded(url);
+			} catch (android.os.RemoteException e) {
+			}
 		}
-		finish();
+		return false;
 	}
 }

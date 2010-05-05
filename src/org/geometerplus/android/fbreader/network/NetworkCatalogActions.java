@@ -47,13 +47,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
 	public static final int RELOAD_ITEM_ID = 2;
-	//public static final int DONT_SHOW_ITEM_ID = 3;
 	public static final int SIGNIN_ITEM_ID = 4;
 	public static final int SIGNOUT_ITEM_ID = 5;
 	public static final int REFILL_ACCOUNT_ITEM_ID = 6;
 	public static final int STOP_LOADING_ITEM_ID = 7;
 
-	//public static final int DBG_UNLOAD_CATALOG_ITEM_ID = 128;
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -61,15 +59,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
+		final boolean isOpened = tree.hasChildren() && activity.getAdapter().isOpen(tree);
 
 		final ItemsLoadingRunnable catalogRunnable = (catalogUrl != null) ? 
-			NetworkLibraryActivity.Instance.getItemsLoadingRunnable(catalogUrl) : null;
+			NetworkView.Instance().getItemsLoadingRunnable(catalogUrl) : null;
 		final boolean isLoading = catalogRunnable != null;
 
 		if (catalogUrl != null) {
@@ -112,15 +110,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}*/
 				}
 			}
-			//addMenuItem(DONT_SHOW_ITEM_ID, "dontShow"); // TODO: is it needed??? and how to turn it on???
 		} else {
 			if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
 			}
 		}
-		/*if (!isLoading && tree.hasChildren()) {
-			menu.add(0, DBG_UNLOAD_CATALOG_ITEM_ID, 0, "Unload catalog");
-		}*/
 	}
 
 	@Override
@@ -145,47 +139,35 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
-				doExpandCatalog((NetworkCatalogTree)tree);
+				doExpandCatalog(activity, (NetworkCatalogTree)tree);
 				return true;
 			case OPEN_IN_BROWSER_ITEM_ID:
-				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE));
-				}
+				NetworkView.Instance().openInBrowser(
+					activity,
+					((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE)
+				);
 				return true;
 			case RELOAD_ITEM_ID:
-				doReloadCatalog((NetworkCatalogTree)tree);
+				doReloadCatalog(activity, (NetworkCatalogTree)tree);
 				return true;
-			/*case DONT_SHOW_ITEM_ID:
-				diableCatalog((NetworkCatalogRootTree) tree);
-				return true;*/
 			case SIGNIN_ITEM_ID:
-				NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
+				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
 			case SIGNOUT_ITEM_ID:
-				doSignOut((NetworkCatalogTree)tree);
+				doSignOut(activity, (NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.openInBrowser(((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink());
-				}
+				NetworkView.Instance().openInBrowser(
+					activity,
+					((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink()
+				);
 				return true;
 			case STOP_LOADING_ITEM_ID:
 				doStopLoading((NetworkCatalogTree)tree);
 				return true;
-			/*case DBG_UNLOAD_CATALOG_ITEM_ID: {
-					final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-					final ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
-					if (tree.hasChildren() && adapter.isOpen(tree)) {
-						adapter.expandOrCollapseTree(tree);
-					}
-					catalogTree.ChildrenItems.clear();
-					tree.clear();
-					adapter.resetTree();
-				}
-				return true;*/
 		}
 		return false;
 	}
@@ -207,12 +189,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private class ExpandCatalogHandler extends ItemsLoadingHandler {
 
+		private final NetworkLibraryActivity myActivity; // TODO: this activity may become invalid
 		private final NetworkCatalogTree myTree;
-		private boolean doExpand;
+		private boolean myDoExpand;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree) {
+		ExpandCatalogHandler(NetworkLibraryActivity activity, NetworkCatalogTree tree) {
+			myActivity = activity;
 			myTree = tree;
-			doExpand = !myTree.hasChildren();
+			myDoExpand = !myTree.hasChildren();
 		}
 
 		public void onUpdateItems(List<NetworkLibraryItem> items) {
@@ -223,16 +207,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		public void afterUpdateItems() {
-			if (NetworkLibraryActivity.Instance != null) {
-				NetworkLibraryActivity.Instance.resetTree();
+			if (NetworkView.Instance().isInitialized()) {
+				NetworkView.Instance().fireModelChanged();
 			}
-			if (doExpand && NetworkLibraryActivity.Instance != null) {
-				ZLTreeAdapter adapter = NetworkLibraryActivity.Instance.getAdapter();
+			if (myDoExpand) {
+				ZLTreeAdapter adapter = myActivity.getAdapter();
 				if (adapter != null) {
 					adapter.expandOrCollapseTree(myTree);
 				}
 			}
-			doExpand = !myTree.hasChildren();
+			myDoExpand = !myTree.hasChildren();
 		}
 
 		public void onFinish(String errorMessage) {
@@ -252,22 +236,19 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				msg = boxResource.getResource("message").getValue();
 			}
 			if (msg != null) {
-				if (NetworkLibraryActivity.Instance != null) {
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					new AlertDialog.Builder(NetworkLibraryActivity.Instance)
-						.setTitle(boxResource.getResource("title").getValue())
-						.setMessage(msg)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-						.create().show();
-				}
-				// TODO: else show notification???
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(myActivity)
+					.setTitle(boxResource.getResource("title").getValue())
+					.setMessage(msg)
+					.setIcon(0)
+					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+					.create().show();
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			library.invalidateAccountDependents();
 			library.synchronize();
-			if (NetworkLibraryActivity.Instance != null) {
-				NetworkLibraryActivity.Instance.resetTree();
+			if (NetworkView.Instance().isInitialized()) {
+				NetworkView.Instance().fireModelChanged();
 			}
 		}
 	}
@@ -317,12 +298,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	public void doExpandCatalog(final NetworkCatalogTree tree) {
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
-		}
+	public void doExpandCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
 		if (tree.hasChildren()) {
-			NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
+			activity.getAdapter().expandOrCollapseTree(tree);
 			return;
 		}
 		if (!startProcessingTree(tree)) {
@@ -332,17 +310,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
 		}
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
-		NetworkLibraryActivity.Instance.startItemsLoading(
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(activity, tree);
+		NetworkView.Instance().startItemsLoading(
+			activity,
 			url,
 			new ExpandCatalogRunnable(handler, tree, true)
 		);
 	}
 
-	public void doReloadCatalog(final NetworkCatalogTree tree) {
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
-		}
+	public void doReloadCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
 		if (!startProcessingTree(tree)) {
 			return;
 		}
@@ -350,50 +326,37 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
 		}
-		NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
+		activity.getAdapter().expandOrCollapseTree(tree);
 		tree.ChildrenItems.clear();
 		tree.clear();
-		NetworkLibraryActivity.Instance.getAdapter().resetTree();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
-		NetworkLibraryActivity.Instance.startItemsLoading(
+		activity.getAdapter().resetTree();
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(activity, tree);
+		NetworkView.Instance().startItemsLoading(
+			activity,
 			url,
 			new ExpandCatalogRunnable(handler, tree, false)
 		);
 	}
 
 	private void doStopLoading(NetworkCatalogTree tree) {
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
-		}
 		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
 		}
-		final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(url);
+		final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(url);
 		if (runnable != null) {
 			runnable.InterruptFlag.set(true);
 		}
 	}
 
-	/*public void diableCatalog(NetworkCatalogRootTree tree) {
-		tree.Link.OnOption.setValue(false);
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		library.invalidate();
-		library.synchronize();
-		NetworkLibraryActivity.Instance.resetTree(); // FIXME: may be bug: [open catalog] -> [disable] -> [enable] -> [load againg] => catalog won't opens (it will be closed after previos opening)
-	}*/
-
-	private void doSignOut(NetworkCatalogTree tree) {
-		if (NetworkLibraryActivity.Instance == null) {
-			return;
-		}
+	private void doSignOut(NetworkLibraryActivity activity, NetworkCatalogTree tree) {
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateAccountDependents();
 				library.synchronize();
-				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.resetTree();
+				if (NetworkView.Instance().isInitialized()) {
+					NetworkView.Instance().fireModelChanged();
 				}
 			}
 		};
@@ -406,6 +369,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				}
 			}
 		};
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, NetworkLibraryActivity.Instance);
+		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, activity);
 	}
 }

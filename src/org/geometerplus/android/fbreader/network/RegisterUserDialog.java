@@ -67,9 +67,8 @@ class RegisterUserDialog extends NetworkDialog {
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateAccountDependents();
 				library.synchronize();
-				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.getAdapter().resetTree();
-					NetworkLibraryActivity.Instance.fireOnModelChanged();
+				if (NetworkView.Instance().isInitialized()) {
+					NetworkView.Instance().fireModelChanged();
 				}
 				if (message.what < 0) {
 					if (message.what == -2) {

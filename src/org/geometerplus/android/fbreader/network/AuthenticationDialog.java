@@ -54,13 +54,13 @@ class AuthenticationDialog extends NetworkDialog {
 
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
+				if (!NetworkView.Instance().isInitialized()) {
+					return;
+				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateAccountDependents();
 				library.synchronize();
-				if (NetworkLibraryActivity.Instance != null) {
-					NetworkLibraryActivity.Instance.getAdapter().resetTree();
-					NetworkLibraryActivity.Instance.fireOnModelChanged();
-				}
+				NetworkView.Instance().fireModelChanged();
 				if (message.what < 0) {
 					myErrorMessage = (String) message.obj;
 					activity.showDialog(NetworkDialog.DIALOG_AUTHENTICATION);
@@ -127,14 +127,14 @@ class AuthenticationDialog extends NetworkDialog {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (mgr.registrationSupported()) {
 					activity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
-					NetworkDialog.show(NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
+					NetworkDialog.show(activity, NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
 						public void run() {
 							if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_TRUE) {
 								if (myOnSuccessRunnable != null) {
 									myOnSuccessRunnable.run();
 								}
 							} else {
-								NetworkDialog.show(NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
+								NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
 							}
 						}
 					});

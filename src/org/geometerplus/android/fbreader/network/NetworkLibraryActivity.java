@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
-import java.util.concurrent.*;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -38,8 +37,6 @@ import android.widget.TextView;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.content.ServiceConnection;
-import android.content.ComponentName;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -58,177 +55,74 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.android.fbreader.ZLTreeAdapter;
 
 
-public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
-	static NetworkLibraryActivity Instance;
+public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnMenuItemClickListener, NetworkView.EventListener {
 
 	private final ZLResource myResource = ZLResource.resource("networkView");
 
-	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
+	public BookDownloaderServiceConnection Connection;
 
-	private final HashMap<String, ItemsLoadingRunnable> myItemsLoadingRunnables = new HashMap<String, ItemsLoadingRunnable>();
-
-	private NetworkBookItem myBookInfoItem;
-	private final HashSet<String> myIconsToSync = new HashSet<String>();
-	private final HashMap<String, Runnable> myOnCoverSyncRunnables = new HashMap<String, Runnable>();
-
-	private boolean myLibraryLoaded;
-
-	private class BookDownloaderServiceConnection implements ServiceConnection {
-
-		private BookDownloaderInterface myInterface;
-
-		public synchronized void onServiceConnected(ComponentName className, IBinder service) {
-			myInterface = BookDownloaderInterface.Stub.asInterface(service);
-		}
-
-		public synchronized void onServiceDisconnected(ComponentName name) {
-			myInterface = null;
-		}
-
-		public synchronized boolean isBeingDownloaded(String url) {
-			if (myInterface != null) {
-				try {
-					return myInterface.isBeingDownloaded(url);
-				} catch (android.os.RemoteException e) {
-				}
-			}
-			return false;
-		}
-	}
-
-	private BookDownloaderServiceConnection myConnection;
-
-	public boolean isBeingDownloaded(String url) {
-		return (myConnection == null) ? false : myConnection.isBeingDownloaded(url);
-	}
-
-
-	public interface EventListener {
-		void onModelChanged();
-	}
-
-	private LinkedList<EventListener> myEventListeners = new LinkedList<EventListener>();
-
-	public final void addEventListener(EventListener listener) {
-		myEventListeners.add(listener);
-	}
-
-	public final void removeEventListener(EventListener listener) {
-		myEventListeners.remove(listener);
-	}
-
-	final void fireOnModelChanged() {
-		for (EventListener listener: myEventListeners) {
-			listener.onModelChanged();
-		}
-	}
-
-	private Activity myTopLevelActivity;
-
-	public final Activity getTopLevelActivity() {
-		return myTopLevelActivity;
-	}
-
-	final void setTopLevelActivity(Activity activity) {
-		if (activity == null) {
-			myTopLevelActivity = this;
-		} else {
-			myTopLevelActivity = activity;
-		}
-	}
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		Instance = this;
-		myTopLevelActivity = this;
-		myEventListeners.clear();
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		myConnection = new BookDownloaderServiceConnection();
+		Connection = new BookDownloaderServiceConnection();
 		bindService(
 			new Intent(getApplicationContext(), BookDownloaderService.class),
-			myConnection,
+			Connection,
 			BIND_AUTO_CREATE
 		);
 	}
 
 	@Override
-	public void onStart() {
+	public void onDestroy() {
+		unbindService(Connection);
+		Connection = null;
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onStart() {
 		super.onStart();
+		NetworkView.Instance().addEventListener(this);
+	}
+
+	@Override
+	protected void onStop() {
+		NetworkView.Instance().removeEventListener(this);
+		super.onStop();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!myLibraryLoaded) {
-			myLibraryLoaded = true;
+		final NetworkView networkView = NetworkView.Instance();
+		if (!networkView.isInitialized()) {
 			final Handler handler = new Handler() {
 				public void handleMessage(Message message) {
 					ListView view = getListView();
 					new LibraryAdapter(view, NetworkLibrary.Instance().getTree());
-
-					myActions.add(new NetworkBookActions());
-					myActions.add(new NetworkCatalogActions());
-					myActions.add(new NetworkSearchActions());
-					myActions.trimToSize();
-
 					view.invalidateViews();
 				}
 			};
 			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
 				public void run() {
-					NetworkLibrary.Instance().synchronize();
+					networkView.initialize();
 					handler.sendEmptyMessage(0);
 				}
 			}, this);
 		}
 	}
 
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-
-	@Override
-	public void onDestroy() {
-		unbindService(myConnection);
-		myConnection = null;
-		Instance = null;
-		super.onDestroy();
-	}
-
-	private NetworkTreeActions chooseActions(ZLTree tree) {
-		NetworkTree networkTree = (NetworkTree) tree;
-		for (NetworkTreeActions actions: myActions) {
-			if (actions.canHandleTree(networkTree)) {
-				return actions;
-			}
-		}
-		return null;
-	}
-
 
 	private final class LibraryAdapter extends ZLTreeAdapter {
 
-		private final ExecutorService myPool;
-
 		LibraryAdapter(ListView view, NetworkTree tree) {
 			super(view, tree);
-			myPool = Executors.newFixedThreadPool(3 /* TODO: how many threads ??? */, new ThreadFactory() {
-
-				private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
-
-				public Thread newThread(Runnable r) {
-					final Thread th = myDefaultThreadFactory.newThread(r);
-					th.setPriority(Thread.MIN_PRIORITY);
-					return th;
-				}
-			});
 		}
 
 		@Override
@@ -240,9 +134,11 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				menu.add(0, DBG_PRINT_ENTRY_ITEM_ID, 0, "dbg - Dump Entry");
 			}*/
 
-			final NetworkTreeActions actions = chooseActions(tree);
+			final NetworkView networkView = NetworkView.Instance();
+
+			final NetworkTreeActions actions = networkView.getActions(tree);
 			if (actions != null) {
-				actions.buildContextMenu(menu, tree);
+				actions.buildContextMenu(NetworkLibraryActivity.this, menu, tree);
 			}
 		}
 
@@ -258,7 +154,6 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			final int maxHeight = view.getMeasuredHeight();
 			final int maxWidth = maxHeight * 2 / 3;
-//System.err.println("FBREADER -- dims(" + maxWidth + ", " + maxHeight + ")");
 
 			final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
 			iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -271,26 +166,21 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					final NetworkImage img = (NetworkImage) cover;
 					if (img.isSynchronized()) {
 						data = mgr.getImageData(img);
-					} else if (!myIconsToSync.contains(img.Url)) {
-						myIconsToSync.add(img.Url);
-						final Handler handler = new Handler() {
-							public void handleMessage(Message message) {
-								myIconsToSync.remove(img.Url);
+					} else {
+						final Runnable runnable = new Runnable() {
+							public void run() {
 								final ListView view = NetworkLibraryActivity.this.getListView();
 								view.invalidateViews();
 								view.requestLayout();
-								final Runnable runnable = myOnCoverSyncRunnables.remove(img.Url);
-								if (runnable != null) {
-									runnable.run();
-								}
 							}
 						};
-						myPool.execute(new Runnable() {
-							public void run() {
-								img.synchronize();
-								handler.sendEmptyMessage(0);
-							}
-						});
+						final NetworkView networkView = NetworkView.Instance();
+						if (!networkView.isCoverLoading(img.Url)) {
+							networkView.performCoverSynchronization(img, runnable);
+						} else {
+							// TODO: reduce maximum numer of runnables per image for each activity to 1
+							networkView.addCoverSynchronizationRunnable(img.Url, runnable);
+						}
 					}
 				} else {
 					data = mgr.getImageData(cover);
@@ -314,7 +204,8 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 				return true;
 			}
 			final NetworkTree networkTree = (NetworkTree) tree;
-			final NetworkTreeActions actions = chooseActions(networkTree);
+			final NetworkView networkView = NetworkView.Instance();
+			final NetworkTreeActions actions = networkView.getActions(networkTree);
 			if (actions == null) {
 				return false;
 			}
@@ -336,26 +227,16 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 					.setIcon(0)
 					.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							actions.runAction(networkTree, actionCode);
+							actions.runAction(NetworkLibraryActivity.this, networkTree, actionCode);
 						}
 					})
 					.setNegativeButton(buttonResource.getResource("no").getValue(), null)
 					.create().show();
 			} else {
-				actions.runAction(networkTree, actionCode);
+				actions.runAction(NetworkLibraryActivity.this, networkTree, actionCode);
 			}
 			return true;
 		}
-	}
-
-	//private static final int DBG_PRINT_ENTRY_ITEM_ID = 32000;
-
-	boolean isCoverLoading(String url) {
-		return myIconsToSync.contains(url);
-	}
-
-	void setOnCoverSyncRunnable(String invalidateOnUrl, Runnable runnable) {
-		myOnCoverSyncRunnables.put(invalidateOnUrl, runnable);
 	}
 
 	final ZLTreeAdapter getAdapter() {
@@ -369,74 +250,15 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 		}
 	}
 
-	void openInBrowser(String url) {
-		if (url != null) {
-			url = NetworkLibrary.Instance().rewriteUrl(url, true);
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-		}
-	}
-
-	void startItemsLoading(String key, ItemsLoadingRunnable runnable) {
-		boolean doDownload = false;
-		synchronized (myItemsLoadingRunnables) {
-			if (!myItemsLoadingRunnables.containsKey(key)) {
-				myItemsLoadingRunnables.put(key, runnable);
-				doDownload = true;
-			}
-		}
-		if (doDownload) {
-			startService(
-				new Intent(getApplicationContext(), ItemsLoadingService.class)
-					.putExtra(ItemsLoadingService.ITEMS_LOADING_RUNNABLE_KEY, key)
-			);
-		}
-	}
-
-	ItemsLoadingRunnable getItemsLoadingRunnable(String key) {
-		synchronized (myItemsLoadingRunnables) {
-			return myItemsLoadingRunnables.get(key);
-		}
-	}
-
-	ItemsLoadingRunnable removeItemsLoadingRunnable(String key) {
-		synchronized (myItemsLoadingRunnables) {
-			return myItemsLoadingRunnables.remove(key);
-		}
-	}
-
-	void showBookInfoActivity(NetworkBookItem book) {
-		myBookInfoItem = book;
-		startActivity(
-			new Intent(getApplicationContext(), NetworkBookInfoActivity.class)
-		);
-	}
-
-	NetworkBookItem getBookItem() {
-		NetworkBookItem book = myBookInfoItem;
-		myBookInfoItem = null;
-		return book;
-	}
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final LibraryAdapter adapter = (LibraryAdapter) getAdapter();
+		final ZLTreeAdapter adapter = getAdapter();
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree) adapter.getItem(position);
-
-		/*if (actionCode == DBG_PRINT_ENTRY_ITEM_ID) {
-			String msg = null;
-			if (tree instanceof NetworkCatalogTree) {
-				msg = ((NetworkCatalogTree) tree).Item.dbgEntry.toString();
-			} else if (tree instanceof NetworkBookTree) {
-				msg = ((NetworkBookTree) tree).Book.dbgEntry.toString();
-			}
-			new AlertDialog.Builder(this).setTitle("dbg entry").setMessage(msg).setIcon(0).setPositiveButton("ok", null).create().show();
-			return true;
-		}*/
-
-		final NetworkTreeActions actions = chooseActions(tree);
+		final NetworkView networkView = NetworkView.Instance();
+		final NetworkTreeActions actions = networkView.getActions(tree);
 		if (actions != null &&
-				actions.runAction(tree, item.getItemId())) {
+				actions.runAction(this, tree, item.getItemId())) {
 			return true;
 		}
 		return super.onContextItemSelected(item);
@@ -444,6 +266,9 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
+		if (!NetworkView.Instance().isInitialized()) {
+			return null;
+		}
 		final NetworkDialog dlg = NetworkDialog.getDialog(id);
 		if (dlg != null) {
 			return dlg.createDialog(this);
@@ -472,13 +297,19 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+		if (!super.onCreateOptionsMenu(menu)) {
+			return false;
+		}
 		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
 		return true;
 	}
 
+	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		final boolean searchInProgress = getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY) != null;
+		if (!super.onPrepareOptionsMenu(menu)) {
+			return false;
+		}
+		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 		menu.findItem(1).setEnabled(!searchInProgress);
 		return true;
 	}
@@ -494,11 +325,16 @@ public class NetworkLibraryActivity extends ListActivity implements MenuItem.OnM
 
 	@Override
 	public boolean onSearchRequested() {
-		if (getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY) != null) {
+		if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY)) {
 			return false;
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
 		return true;
+	}
+
+	// methods from NetworkView.EventListener
+	public void onModelChanged() {
+		resetTree();
 	}
 }

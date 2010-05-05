@@ -51,14 +51,14 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		final SearchResultTree searchTree = (SearchResultTree) tree;
 		//final SearchResult result = searchTree.Result;
 		menu.setHeaderTitle(tree.getName());
 
-		final boolean isOpened = tree.hasChildren() && NetworkLibraryActivity.Instance.getAdapter().isOpen(tree);
+		final boolean isOpened = tree.hasChildren() && activity.getAdapter().isOpen(tree);
 
-		final ItemsLoadingRunnable searchRunnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		final ItemsLoadingRunnable searchRunnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 		final boolean isLoading = searchRunnable != null;
 
 		if (isLoading) {
@@ -84,10 +84,10 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
-				doExpandCatalog((SearchResultTree)tree);
+				doExpandCatalog(activity, (SearchResultTree)tree);
 				return true;
 			case STOP_LOADING_ITEM_ID:
 				doStopLoading((SearchResultTree)tree);
@@ -97,15 +97,13 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 
-	public void doExpandCatalog(final SearchResultTree tree) {
-		if (NetworkLibraryActivity.Instance != null) {
-			NetworkLibraryActivity.Instance.getAdapter().expandOrCollapseTree(tree);
-		}
+	public void doExpandCatalog(NetworkLibraryActivity activity, final SearchResultTree tree) {
+		activity.getAdapter().expandOrCollapseTree(tree);
 	}
 
 	private void doStopLoading(SearchResultTree tree) {
-		if (NetworkLibraryActivity.Instance != null) {
-			final ItemsLoadingRunnable runnable = NetworkLibraryActivity.Instance.getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		if (NetworkView.Instance().isInitialized()) {
+			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 			if (runnable != null) {
 				runnable.InterruptFlag.set(true);
 			}
