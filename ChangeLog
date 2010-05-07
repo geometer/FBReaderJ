@@ -1,3 +1,8 @@
+===== 0.6.4 (???) =====
+
+* View for the Network Library has been completely changed: each subcatalog opens in new window
+* Network search item has been added to the Network Library
+
 ===== 0.6.3 (April 30, 2010) =====
 
 * A problem with some zip-archives has been fixed
