@@ -45,9 +45,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int OPEN_CATALOG_ITEM_ID = 0;
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
 	public static final int RELOAD_ITEM_ID = 2;
-	//public static final int SIGNIN_ITEM_ID = 4;
-	//public static final int SIGNOUT_ITEM_ID = 5;
-	//public static final int REFILL_ACCOUNT_ITEM_ID = 6;
+	public static final int SIGNIN_ITEM_ID = 4;
+	public static final int SIGNOUT_ITEM_ID = 5;
+	public static final int REFILL_ACCOUNT_ITEM_ID = 6;
 	public static final int STOP_LOADING_ITEM_ID = 7;
 
 
@@ -83,7 +83,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		if (tree instanceof NetworkCatalogRootTree) {
-			/*NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 			if (mgr != null) {
 				final boolean maybeSignedIn = mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE;
 				if (maybeSignedIn) {
@@ -100,7 +100,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					//	registerAction(new PasswordRecoveryAction(mgr), true);
 					//}
 				}
-			}*/
+			}
 		} else {
 			if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
@@ -144,7 +144,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case RELOAD_ITEM_ID:
 				doReloadCatalog(activity, (NetworkCatalogTree)tree);
 				return true;
-			/*case SIGNIN_ITEM_ID:
+			case SIGNIN_ITEM_ID:
 				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
 			case SIGNOUT_ITEM_ID:
@@ -155,7 +155,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					activity,
 					((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink()
 				);
-				return true;*/
+				return true;
 			case STOP_LOADING_ITEM_ID:
 				doStopLoading((NetworkCatalogTree)tree);
 				return true;
@@ -322,7 +322,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	/*private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
+	private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
@@ -338,10 +338,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			public void run() {
 				if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
 					mgr.logOut();
-					handler.sendEmptyMessage(-1);
+					handler.sendEmptyMessage(0);
 				}
 			}
 		};
 		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, activity);
-	}*/
+	}
 }
