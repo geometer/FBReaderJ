@@ -76,7 +76,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
 		menu.setHeaderTitle(tree.getName());
@@ -163,7 +163,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		return runAction(activity, ((NetworkBookTree) tree).Book, actionCode);
 	}
 

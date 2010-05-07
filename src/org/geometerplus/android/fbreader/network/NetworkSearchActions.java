@@ -36,8 +36,6 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.SearchResultTree;
 
-import org.geometerplus.android.fbreader.ZLTreeAdapter;
-
 
 class NetworkSearchActions extends NetworkTreeActions {
 
@@ -51,12 +49,12 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		final SearchResultTree searchTree = (SearchResultTree) tree;
 		//final SearchResult result = searchTree.Result;
 		menu.setHeaderTitle(tree.getName());
 
-		final boolean isOpened = tree.hasChildren() && activity.getAdapter().isOpen(tree);
+		final boolean isOpened = tree.hasChildren() && false;
 
 		final ItemsLoadingRunnable searchRunnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 		final boolean isLoading = searchRunnable != null;
@@ -84,7 +82,7 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
 				doExpandCatalog(activity, (SearchResultTree)tree);
@@ -97,8 +95,8 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 
-	public void doExpandCatalog(NetworkLibraryActivity activity, final SearchResultTree tree) {
-		activity.getAdapter().expandOrCollapseTree(tree);
+	public void doExpandCatalog(NetworkBaseActivity activity, final SearchResultTree tree) {
+		//activity.getAdapter().expandOrCollapseTree(tree);
 	}
 
 	private void doStopLoading(SearchResultTree tree) {

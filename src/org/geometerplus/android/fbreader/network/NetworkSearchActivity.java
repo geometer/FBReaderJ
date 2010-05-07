@@ -35,8 +35,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.SearchResultTree;
 
-import org.geometerplus.android.fbreader.ZLTreeAdapter;
-
 
 public class NetworkSearchActivity extends Activity {
 

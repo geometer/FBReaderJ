@@ -30,16 +30,11 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
+abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
 	private ZLTree myTree;
 	private ZLTree[] myItems;
 	private final HashSet<ZLTree> myOpenItems = new HashSet<ZLTree>();
-	private View myClickedView;
-
-	protected View getClickedView() {
-		return myClickedView;
-	}
 
 	protected ZLTreeAdapter(ListView parent, ZLTree tree) {
 		myParent = parent;
@@ -185,7 +180,6 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 	}
 
 	public final void onItemClick(AdapterView parent, View view, int position, long id) {
-		myClickedView = view;
 		runTreeItem(getItem(position));
 	}
 
@@ -204,11 +198,6 @@ public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.O
 		} else {
 			imageView.setImageResource(R.drawable.ic_list_group_empty);
 		}
-		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
-	}
-
-	protected final void setIcon(ImageView imageView, ZLTree tree, Bitmap image) {
-		imageView.setImageBitmap(image);
 		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
 	}
 }

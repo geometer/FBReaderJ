@@ -39,8 +39,6 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.*;
 
-import org.geometerplus.android.fbreader.ZLTreeAdapter;
-
 
 class NetworkCatalogActions extends NetworkTreeActions {
 
@@ -59,12 +57,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		final boolean isOpened = tree.hasChildren() && activity.getAdapter().isOpen(tree);
+		final boolean isOpened = tree.hasChildren() && false;
 
 		final ItemsLoadingRunnable catalogRunnable = (catalogUrl != null) ? 
 			NetworkView.Instance().getItemsLoadingRunnable(catalogUrl) : null;
@@ -139,7 +137,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
 			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
 				doExpandCatalog(activity, (NetworkCatalogTree)tree);
@@ -189,11 +187,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private class ExpandCatalogHandler extends ItemsLoadingHandler {
 
-		private final NetworkLibraryActivity myActivity; // TODO: this activity may become invalid
+		private final NetworkBaseActivity myActivity; // TODO: this activity may become invalid
 		private final NetworkCatalogTree myTree;
 		private boolean myDoExpand;
 
-		ExpandCatalogHandler(NetworkLibraryActivity activity, NetworkCatalogTree tree) {
+		ExpandCatalogHandler(NetworkBaseActivity activity, NetworkCatalogTree tree) {
 			myActivity = activity;
 			myTree = tree;
 			myDoExpand = !myTree.hasChildren();
@@ -211,10 +209,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				NetworkView.Instance().fireModelChanged();
 			}
 			if (myDoExpand) {
-				ZLTreeAdapter adapter = myActivity.getAdapter();
+				/*ZLTreeAdapter adapter = myActivity.getAdapter();
 				if (adapter != null) {
 					adapter.expandOrCollapseTree(myTree);
-				}
+				}*/
 			}
 			myDoExpand = !myTree.hasChildren();
 		}
@@ -298,9 +296,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	public void doExpandCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
+	public void doExpandCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		if (tree.hasChildren()) {
-			activity.getAdapter().expandOrCollapseTree(tree);
+			//activity.getAdapter().expandOrCollapseTree(tree);
 			return;
 		}
 		if (!startProcessingTree(tree)) {
@@ -318,7 +316,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		);
 	}
 
-	public void doReloadCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
+	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		if (!startProcessingTree(tree)) {
 			return;
 		}
@@ -326,10 +324,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
 		}
-		activity.getAdapter().expandOrCollapseTree(tree);
+		//activity.getAdapter().expandOrCollapseTree(tree);
 		tree.ChildrenItems.clear();
 		tree.clear();
-		activity.getAdapter().resetTree();
+		//activity.getAdapter().resetTree();
+		//activity.getListAdapter().notifyDataSetChanged(); ???
+		activity.getListView().invalidateViews();
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(activity, tree);
 		NetworkView.Instance().startItemsLoading(
 			activity,
@@ -349,7 +349,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private void doSignOut(NetworkLibraryActivity activity, NetworkCatalogTree tree) {
+	private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
