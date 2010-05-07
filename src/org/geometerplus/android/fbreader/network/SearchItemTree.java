@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.tree;
+package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
@@ -28,25 +28,25 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.*;
 
 
-public class SearchResultTree extends NetworkTree {
+public class SearchItemTree extends NetworkTree {
 
-	public final SearchResult Result;
+	private SearchResult myResult;
 
-	public SearchResultTree(NetworkTree parent, SearchResult result) {
+	public SearchItemTree(NetworkTree parent) {
 		super(parent);
-		Result = result;
 	}
 
 	@Override
 	public String getName() {
-		return ZLResource.resource("networkView").getResource("searchResultNode").getValue();
+		return ZLResource.resource("networkView").getResource("search").getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return Result.Summary;
+		return ZLResource.resource("networkView").getResource("searchSummary").getValue();
 	}
 
 	@Override
@@ -55,10 +55,19 @@ public class SearchResultTree extends NetworkTree {
 		return new ZLFileImage("image/png", file);
 	}
 
+	public void setSearchResult(SearchResult result) {
+		myResult = result;
+		clear();
+	}
+
+	public SearchResult getSearchResult() {
+		return myResult;
+	}
+
 	public void updateSubTrees() {
 		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
 
-		final Set<NetworkBookItem.AuthorData> authorsSet = Result.BooksMap.keySet();
+		final Set<NetworkBookItem.AuthorData> authorsSet = myResult.BooksMap.keySet();
 
 		for (NetworkBookItem.AuthorData author: authorsSet) {
 			if (nodeIterator != null) {
@@ -71,14 +80,14 @@ public class SearchResultTree extends NetworkTree {
 					if (!child.Author.equals(author)) {
 						throw new RuntimeException("That's impossible!!!");
 					}
-					LinkedList<NetworkBookItem> authorBooks = Result.BooksMap.get(author);
+					LinkedList<NetworkBookItem> authorBooks = myResult.BooksMap.get(author);
 					child.updateSubTrees(authorBooks);
 					continue;
 				}
 				nodeIterator = null;
 			}
 
-			LinkedList<NetworkBookItem> authorBooks = Result.BooksMap.get(author);
+			LinkedList<NetworkBookItem> authorBooks = myResult.BooksMap.get(author);
 			if (authorBooks.size() != 0) {
 				NetworkAuthorTree child = new NetworkAuthorTree(this, author);
 				child.updateSubTrees(authorBooks);

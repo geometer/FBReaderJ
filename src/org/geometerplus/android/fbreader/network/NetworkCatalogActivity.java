@@ -57,8 +57,10 @@ import org.geometerplus.fbreader.network.tree.*;
 public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
+	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
-	private NetworkCatalogTree myTree;
+	private NetworkTree myTree;
+	private String myCatalogKey;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -76,26 +78,40 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 			throw new RuntimeException("Catalog's Level was not specified!!!");
 		}
 
-		myTree = (NetworkCatalogTree) networkView.getOpenedTree(level);
+		myCatalogKey = intent.getStringExtra(CATALOG_KEY_KEY);
+		if (myCatalogKey == null) {
+			throw new RuntimeException("Catalog's Key was not specified!!!");
+		}
+
+		myTree = networkView.getOpenedTree(level);
 		if (myTree == null) {
 			finish();
 			return;
 		}
 
-		networkView.setOpenedActivity(myTree, this);
-
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+		networkView.setOpenedActivity(myCatalogKey, this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
-		setTitle( myTree.getName() + " - " + myTree.Item.Link.SiteName );
+		setupTitle();
+	}
+
+	private final void setupTitle() {
+		String title = null;
+		final NetworkTreeActions actions = NetworkView.Instance().getActions(myTree);
+		if (actions != null) {
+			title = actions.getTreeTitle(myTree);
+		}
+		if (title == null) {
+			title = myTree.getName();
+		}
+		setTitle(title);
 	}
 
 	@Override
 	public void onDestroy() {
-		if (myTree != null) {
-			NetworkView.Instance().setOpenedActivity(myTree, null);
+		if (myTree != null && myCatalogKey != null) {
+			NetworkView.Instance().setOpenedActivity(myCatalogKey, null);
 		}
 		super.onDestroy();
 	}
@@ -103,6 +119,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		getListView().invalidateViews();
 	}
 
 
@@ -127,12 +144,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 			final NetworkTree tree = getItem(position);
 			return setupNetworkTreeItemView(convertView, parent, tree);
 		}
-	}
-
-
-	@Override
-	public boolean onSearchRequested() {
-		return false;
 	}
 
 	@Override

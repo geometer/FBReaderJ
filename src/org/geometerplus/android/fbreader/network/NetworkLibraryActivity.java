@@ -58,6 +58,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	private boolean myInitialized;
 
+	private NetworkTree myTree;
+	private SearchItemTree mySearchItem;
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -69,7 +72,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private void prepareView() {
 		if (!myInitialized) {
 			myInitialized = true;
-			setListAdapter(new LibraryAdapter(NetworkLibrary.Instance().getTree()));
+			myTree = NetworkLibrary.Instance().getTree();
+			mySearchItem = NetworkView.Instance().getSearchItemTree();
+			setListAdapter(new LibraryAdapter());
 			getListView().invalidateViews();
 		}
 	}
@@ -98,17 +103,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	private final class LibraryAdapter extends BaseAdapter {
 
-		private final NetworkTree myTree;
-		private final NetworkTree mySearchItem;
-
-		public LibraryAdapter(NetworkTree libraryTree) {
-			myTree = libraryTree;
-			mySearchItem = null; // TODO: implement SearchItemTree;
-		}
-
 		public final int getCount() {
-			return myTree.subTrees().size();
-			//return myTree.subTrees().size() + 1; // subtrees + <search item>
+			return myTree.subTrees().size() + 1; // subtrees + <search item>
 		}
 
 		public final NetworkTree getItem(int position) {
@@ -135,15 +131,15 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		//addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
+		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
 		return true;
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		//final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		//menu.findItem(1).setEnabled(!searchInProgress);
+		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		menu.findItem(1).setEnabled(!searchInProgress);
 		return true;
 	}
 
@@ -159,13 +155,12 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		return false;
-		/*if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY)) {
+		if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY)) {
 			return false;
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
-		return true;*/
+		return true;
 	}
 
 	@Override

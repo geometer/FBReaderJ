@@ -57,6 +57,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
+	public String getTreeTitle(NetworkTree tree) {
+		if (tree instanceof NetworkCatalogRootTree) {
+			return tree.getName();
+		}
+		return tree.getName() + " - " + ((NetworkCatalogTree) tree).Item.Link.SiteName;
+	}
+
+	@Override
 	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
@@ -166,10 +174,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private static class ExpandCatalogHandler extends ItemsLoadingHandler {
 
+		private final String myKey;
 		private final NetworkCatalogTree myTree;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree) {
+		ExpandCatalogHandler(NetworkCatalogTree tree, String key) {
 			myTree = tree;
+			myKey = key;
 		}
 
 		public void onUpdateItems(List<NetworkLibraryItem> items) {
@@ -187,6 +197,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		public void onFinish(String errorMessage) {
 			afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			library.invalidateAccountDependents();
+			library.synchronize();
+			if (NetworkView.Instance().isInitialized()) {
+				NetworkView.Instance().fireModelChanged();
+			}
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
@@ -203,7 +219,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 			if (msg != null) {
 				if (NetworkView.Instance().isInitialized()) {
-					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myTree);
+					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
 					if (activity != null) {
 						final ZLResource buttonResource = dialogResource.getResource("button");
 						new AlertDialog.Builder(activity)
@@ -214,12 +230,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 							.create().show();
 					}
 				}
-			}
-			final NetworkLibrary library = NetworkLibrary.Instance();
-			library.invalidateAccountDependents();
-			library.synchronize();
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChanged();
 			}
 		}
 	}
@@ -270,25 +280,22 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doExpandCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		if (tree.hasChildren()) {
-			NetworkView.Instance().openTree(activity, tree);
-			return;
-		}
 		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
 		}
-		if (NetworkView.Instance().containsItemsLoadingRunnable(url)) {
-			NetworkView.Instance().openTree(activity, tree);
+		if (tree.hasChildren()
+				|| NetworkView.Instance().containsItemsLoadingRunnable(url)) {
+			NetworkView.Instance().openTree(activity, tree, url);
 			return;
 		}
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
 		NetworkView.Instance().startItemsLoading(
 			activity,
 			url,
 			new ExpandCatalogRunnable(handler, tree, true)
 		);
-		NetworkView.Instance().openTree(activity, tree);
+		NetworkView.Instance().openTree(activity, tree, url);
 	}
 
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
@@ -302,13 +309,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		tree.ChildrenItems.clear();
 		tree.clear();
 		NetworkView.Instance().fireModelChanged();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
 		NetworkView.Instance().startItemsLoading(
 			activity,
 			url,
 			new ExpandCatalogRunnable(handler, tree, false)
 		);
-		NetworkView.Instance().openTree(activity, tree);
+		NetworkView.Instance().openTree(activity, tree, url);
 	}
 
 	private void doStopLoading(NetworkCatalogTree tree) {

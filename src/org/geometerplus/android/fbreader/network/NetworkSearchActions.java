@@ -34,46 +34,60 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.SearchResultTree;
 
 
 class NetworkSearchActions extends NetworkTreeActions {
 
-	public static final int EXPAND_OR_COLLAPSE_TREE_ITEM_ID = 0;
+	public static final int OPEN_RESULTS_ITEM_ID = 0;
 	public static final int STOP_LOADING_ITEM_ID = 1;
+	public static final int RUN_SEARCH_ITEM_ID = 2;
 
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
-		return tree instanceof SearchResultTree;
+		return tree instanceof SearchItemTree;
+	}
+
+	@Override
+	public String getTreeTitle(NetworkTree tree) {
+		final SearchResult result = ((SearchItemTree) tree).getSearchResult();
+		if (result != null) {
+			return result.Summary;
+		}
+		return tree.getName();
 	}
 
 	@Override
 	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
-		final SearchResultTree searchTree = (SearchResultTree) tree;
-		//final SearchResult result = searchTree.Result;
+		final SearchItemTree searchTree = (SearchItemTree) tree;
+		final SearchResult result = searchTree.getSearchResult();
 		menu.setHeaderTitle(tree.getName());
-
-		final boolean isOpened = tree.hasChildren() && false;
 
 		final ItemsLoadingRunnable searchRunnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 		final boolean isLoading = searchRunnable != null;
 
+		if (!isLoading) {
+			addMenuItem(menu, RUN_SEARCH_ITEM_ID, "search");
+		}
+		if (isLoading || tree.hasChildren()) {
+			addMenuItem(menu, OPEN_RESULTS_ITEM_ID, "showResults");
+		}
 		if (isLoading) {
 			if (searchRunnable.InterruptFlag.get()) {
 				addMenuItem(menu, TREE_NO_ACTION, "stoppingNetworkSearch");
 			} else {
 				addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopSearching");
 			}
-		} else {
-			final String expandOrCollapseTitle = isOpened ? "hideResults" : "showResults";
-			addMenuItem(menu, EXPAND_OR_COLLAPSE_TREE_ITEM_ID, expandOrCollapseTitle);
 		}
 	}
 
 	@Override
 	public int getDefaultActionCode(NetworkTree tree) {
-		return EXPAND_OR_COLLAPSE_TREE_ITEM_ID;
+		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		if (!isLoading) {
+			return RUN_SEARCH_ITEM_ID;
+		}
+		return TREE_NO_ACTION;
 	}
 
 	@Override
@@ -84,27 +98,34 @@ class NetworkSearchActions extends NetworkTreeActions {
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
-			case EXPAND_OR_COLLAPSE_TREE_ITEM_ID:
-				doExpandCatalog(activity, (SearchResultTree)tree);
+			case OPEN_RESULTS_ITEM_ID:
+				doExpandCatalog(activity, (SearchItemTree)tree);
 				return true;
 			case STOP_LOADING_ITEM_ID:
-				doStopLoading((SearchResultTree)tree);
+				doStopLoading((SearchItemTree)tree);
+				return true;
+			case RUN_SEARCH_ITEM_ID:
+				activity.onSearchRequested();
 				return true;
 		}
 		return false;
 	}
 
 
-	public void doExpandCatalog(NetworkBaseActivity activity, final SearchResultTree tree) {
-		//activity.getAdapter().expandOrCollapseTree(tree);
+	public void doExpandCatalog(NetworkBaseActivity activity, final SearchItemTree tree) {
+		if (!NetworkView.Instance().isInitialized()) {
+			return;
+		}
+		NetworkView.Instance().openTree(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 	}
 
-	private void doStopLoading(SearchResultTree tree) {
-		if (NetworkView.Instance().isInitialized()) {
-			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-			if (runnable != null) {
-				runnable.InterruptFlag.set(true);
-			}
+	private void doStopLoading(SearchItemTree tree) {
+		if (!NetworkView.Instance().isInitialized()) {
+			return;
+		}
+		final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		if (runnable != null) {
+			runnable.InterruptFlag.set(true);
 		}
 	}
 }

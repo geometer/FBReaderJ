@@ -51,9 +51,6 @@ public class NetworkLibrary {
 	private boolean myUpdateChildren = true;
 	private boolean myUpdateAccountDependents;
 
-	private SearchResult mySearchResult;
-	private SearchResultTree mySearchResultTree;
-
 	private static class LinksComparator implements Comparator<NetworkLink> {
 		public int compare(NetworkLink link1, NetworkLink link2) {
 			String title1 = link1.Title;
@@ -130,14 +127,6 @@ public class NetworkLibrary {
 		myUpdateAccountDependents = true;
 	}
 
-	public void setSearchResult(SearchResult searchResult) {
-		mySearchResult = searchResult;
-	}
-
-	public SearchResultTree getSearchResultTree() {
-		return mySearchResultTree;
-	}
-
 	private void makeUpToDate() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
@@ -193,27 +182,9 @@ public class NetworkLibrary {
 			if (currentNode == null) {
 				currentNode = nodeIterator.next();
 			}
-			if (currentNode != mySearchResultTree) {
-				toRemove.add(currentNode);
-			}
+			toRemove.add(currentNode);
 			currentNode = null;
 			//++nodeCount; // TODO: where to increment???
-		}
-
-		if (mySearchResult == null || mySearchResult.empty()) {
-			if (mySearchResultTree != null) {
-				toRemove.add(mySearchResultTree);
-				mySearchResultTree = null;
-			}
-		} else {
-			if (mySearchResultTree != null && mySearchResultTree.Result != mySearchResult) {
-				toRemove.add(mySearchResultTree);
-				mySearchResultTree = null;
-			}
-			if (mySearchResultTree == null) {
-				mySearchResultTree = new SearchResultTree(myRootTree, mySearchResult); // at nodeCount ???
-			}
-			mySearchResultTree.updateSubTrees();
 		}
 
 		for (FBTree tree: toRemove) {

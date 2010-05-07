@@ -265,4 +265,8 @@ abstract class NetworkBaseActivity extends ListActivity
 		}		
 	}
 
+	@Override
+	public boolean onSearchRequested() {
+		return false;
+	}
 }

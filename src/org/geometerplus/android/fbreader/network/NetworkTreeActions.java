@@ -62,6 +62,10 @@ abstract class NetworkTreeActions {
 
 	public abstract boolean canHandleTree(NetworkTree tree);
 
+	public String getTreeTitle(NetworkTree tree) {
+		return tree.getName();
+	}
+
 	public abstract void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree);
 
 	public abstract int getDefaultActionCode(NetworkTree tree);

@@ -243,9 +243,7 @@ class NetworkView {
 	}
 
 	NetworkBookItem getBookInfoItem() {
-		final NetworkBookItem book = myBookInfoItem;
-		myBookInfoItem = null;
-		return book;
+		return myBookInfoItem;
 	}
 
 
@@ -253,18 +251,10 @@ class NetworkView {
 	 * Opening Catalogs & managing opened catalogs stack
 	 */
 
-	private static final class OpenedStackItem {
-		public final NetworkTree Tree;
-		public NetworkCatalogActivity Activity;
+	private final LinkedList<NetworkTree> myOpenedStack = new LinkedList<NetworkTree>();
+	private final HashMap<String, NetworkCatalogActivity> myOpenedActivities = new HashMap<String, NetworkCatalogActivity>();
 
-		public OpenedStackItem(NetworkTree tree) {
-			Tree = tree;
-		}
-	};
-
-	private final LinkedList<OpenedStackItem> myOpenedStack = new LinkedList<OpenedStackItem>();
-
-	public void openTree(Context context, NetworkTree tree) {
+	public void openTree(Context context, NetworkTree tree, String key) {
 		final int level = tree.Level - 1; // tree.Level == 1 for catalog's root element
 		if (level > myOpenedStack.size()) {
 			throw new RuntimeException("Unable to open catalog with Level greater than the number of opened catalogs.\n"
@@ -273,44 +263,44 @@ class NetworkView {
 				+ "Opened catalogs: " + myOpenedStack.size());
 		}
 		while (level < myOpenedStack.size()) {
-			final OpenedStackItem item = myOpenedStack.removeLast();
-			if (item.Activity != null) {
-				throw new RuntimeException("Unable to open catalog when catalog's Level (" 
-					+ level + ") isn't greater than opened catalog's Level (" + (item.Tree.Level - 1) + ")");
-			}
+			myOpenedStack.removeLast();
 		}
-		myOpenedStack.add(new OpenedStackItem(tree));
+		myOpenedStack.add(tree);
 
-		if (tree instanceof NetworkCatalogTree) {
-			context.startActivity(
-				new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
-					.putExtra(NetworkCatalogActivity.CATALOG_LEVEL_KEY, level)
-			);
+		context.startActivity(
+			new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
+				.putExtra(NetworkCatalogActivity.CATALOG_LEVEL_KEY, level)
+				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, key)
+		);
+	}
+
+	void setOpenedActivity(String key, NetworkCatalogActivity activity) {
+		if (activity == null) {
+			myOpenedActivities.remove(key);
 		} else {
-			throw new RuntimeException("Don't know how to start activity for " + tree.getClass().getName());
+			myOpenedActivities.put(key, activity);
 		}
 	}
 
-	void setOpenedActivity(NetworkTree tree, NetworkCatalogActivity activity) {
-		final int level = tree.Level - 1;
-		if (level < 0 || level >= myOpenedStack.size()) {
-			throw new RuntimeException("Unable to set opened activity with level = " + level + ", when opened level = " + (myOpenedStack.size() - 1));
-		}
-		myOpenedStack.get(level).Activity = activity;
-	}
-
-	public NetworkCatalogActivity getOpenedActivity(NetworkTree tree) {
-		final int level = tree.Level - 1;
-		if (level < 0 || level >= myOpenedStack.size()) {
-			return null;
-		}
-		return myOpenedStack.get(level).Activity;
+	public NetworkCatalogActivity getOpenedActivity(String key) {
+		return myOpenedActivities.get(key);
 	}
 
 	public NetworkTree getOpenedTree(int level) {
 		if (level < 0 || level >= myOpenedStack.size()) {
 			return null;
 		}
-		return myOpenedStack.get(level).Tree;
+		return myOpenedStack.get(level);
+	}
+
+	/*
+	 * Special view items item
+	 */
+
+	private final RootTree mySpecialRoot = new RootTree();
+	private final SearchItemTree mySearchItem = new SearchItemTree(mySpecialRoot);
+
+	public SearchItemTree getSearchItemTree() {
+		return mySearchItem;
 	}
 }

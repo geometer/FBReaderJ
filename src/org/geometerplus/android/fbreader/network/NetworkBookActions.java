@@ -38,11 +38,13 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.authentication.*;
 
 
 class NetworkBookActions extends NetworkTreeActions {
+
+	private static final String PACKAGE = "org.geometerplus.android.fbreader.network";
 
 	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
 	public static final int DOWNLOAD_DEMO_ITEM_ID = 1;
@@ -53,6 +55,8 @@ class NetworkBookActions extends NetworkTreeActions {
 	public static final int BUY_DIRECTLY_ITEM_ID = 6;
 	public static final int BUY_IN_BROWSER_ITEM_ID = 7;
 	public static final int SHOW_BOOK_ACTIVITY_ITEM_ID = 8;
+
+	public static final int SHOW_BOOKS_ITEM_ID = 9;
 
 	private static boolean useFullReferences(NetworkBookItem book) {
 		return book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
@@ -72,14 +76,21 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
-		return tree instanceof NetworkBookTree;
+		return tree instanceof NetworkBookTree
+			|| tree instanceof NetworkAuthorTree
+			|| tree instanceof NetworkSeriesTree;
 	}
 
 	@Override
 	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
+		menu.setHeaderTitle(tree.getName());
+		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			addMenuItem(menu, SHOW_BOOKS_ITEM_ID, "showBooks");
+			return;
+		}
+
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
-		menu.setHeaderTitle(tree.getName());
 
 		Set<Action> actions = getContextMenuActions(book, activity.Connection);
 		for (Action a: actions) {
@@ -154,6 +165,9 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkTree tree) {
+		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			return SHOW_BOOKS_ITEM_ID;
+		}
 		return SHOW_BOOK_ACTIVITY_ITEM_ID;
 	}
 
@@ -164,7 +178,28 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			switch (actionCode) {
+			case SHOW_BOOKS_ITEM_ID:
+				showBooks(activity, tree);
+				return true;
+			}
+			return false;
+		}
 		return runAction(activity, ((NetworkBookTree) tree).Book, actionCode);
+	}
+
+
+	private void showBooks(NetworkBaseActivity activity, NetworkTree tree) {
+		String key = null;
+		if (tree instanceof NetworkAuthorTree) {
+			key = PACKAGE + ".Authors:" + ((NetworkAuthorTree) tree).Author.DisplayName;
+		} else if (tree instanceof NetworkSeriesTree) {
+			key = PACKAGE + ".Series:" + ((NetworkSeriesTree) tree).SeriesTitle;
+		}
+		if (key != null) {
+			NetworkView.Instance().openTree(activity, tree, key);
+		}
 	}
 
 	static boolean runAction(Activity activity, NetworkBookItem book, int actionCode) {
