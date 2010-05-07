@@ -44,11 +44,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	public static final int OPEN_CATALOG_ITEM_ID = 0;
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
-	//public static final int RELOAD_ITEM_ID = 2;
+	public static final int RELOAD_ITEM_ID = 2;
 	//public static final int SIGNIN_ITEM_ID = 4;
 	//public static final int SIGNOUT_ITEM_ID = 5;
 	//public static final int REFILL_ACCOUNT_ITEM_ID = 6;
-	//public static final int STOP_LOADING_ITEM_ID = 7;
+	public static final int STOP_LOADING_ITEM_ID = 7;
 
 
 	@Override
@@ -68,17 +68,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final boolean isLoading = catalogRunnable != null;
 
 		if (catalogUrl != null) {
+			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
 			if (isLoading) {
-				/*if (catalogRunnable.InterruptFlag.get()) {
+				if (catalogRunnable.InterruptFlag.get()) {
 					addMenuItem(menu, TREE_NO_ACTION, "stoppingCatalogLoading");
 				} else {
 					addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopLoading");
-				}*/
+				}
 			} else {
-				addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
-				/*if (isOpened) {
+				if (catalogTree.hasChildren()) {
 					addMenuItem(menu, RELOAD_ITEM_ID, "reload");
-				}*/
+				}
 			}
 		}
 
@@ -141,10 +141,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE)
 				);
 				return true;
-			/*case RELOAD_ITEM_ID:
+			case RELOAD_ITEM_ID:
 				doReloadCatalog(activity, (NetworkCatalogTree)tree);
 				return true;
-			case SIGNIN_ITEM_ID:
+			/*case SIGNIN_ITEM_ID:
 				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
 			case SIGNOUT_ITEM_ID:
@@ -155,10 +155,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					activity,
 					((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink()
 				);
-				return true;
+				return true;*/
 			case STOP_LOADING_ITEM_ID:
 				doStopLoading((NetworkCatalogTree)tree);
-				return true;*/
+				return true;
 		}
 		return false;
 	}
@@ -279,6 +279,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			throw new RuntimeException("That's impossible!!!");
 		}
 		if (NetworkView.Instance().containsItemsLoadingRunnable(url)) {
+			NetworkView.Instance().openTree(activity, tree);
 			return;
 		}
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
@@ -290,7 +291,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		NetworkView.Instance().openTree(activity, tree);
 	}
 
-	/*public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
+	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
@@ -298,21 +299,19 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (NetworkView.Instance().containsItemsLoadingRunnable(url)) {
 			return;
 		}
-		//activity.getAdapter().expandOrCollapseTree(tree);
 		tree.ChildrenItems.clear();
 		tree.clear();
-		//activity.getAdapter().resetTree();
-		//activity.getListAdapter().notifyDataSetChanged(); ???
-		activity.getListView().invalidateViews();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(activity, tree);
+		NetworkView.Instance().fireModelChanged();
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		NetworkView.Instance().startItemsLoading(
 			activity,
 			url,
 			new ExpandCatalogRunnable(handler, tree, false)
 		);
-	}*/
+		NetworkView.Instance().openTree(activity, tree);
+	}
 
-	/*private void doStopLoading(NetworkCatalogTree tree) {
+	private void doStopLoading(NetworkCatalogTree tree) {
 		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		if (url == null) {
 			throw new RuntimeException("That's impossible!!!");
@@ -321,7 +320,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (runnable != null) {
 			runnable.InterruptFlag.set(true);
 		}
-	}*/
+	}
 
 	/*private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
 		final Handler handler = new Handler() {
