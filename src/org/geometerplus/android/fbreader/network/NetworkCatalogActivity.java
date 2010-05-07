@@ -54,69 +54,66 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 
-public class NetworkLibraryActivity extends NetworkBaseActivity {
+public class NetworkCatalogActivity extends NetworkBaseActivity {
 
-	private boolean myInitialized;
+	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
+
+	private NetworkCatalogTree myTree;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		final NetworkView networkView = NetworkView.Instance();
+		if (!networkView.isInitialized()) {
+			finish();
+			return;
+		}
+
+		final Intent intent = getIntent();
+		final int level = intent.getIntExtra(CATALOG_LEVEL_KEY, -1);
+		if (level == -1) {
+			throw new RuntimeException("Catalog's Level was not specified!!!");
+		}
+
+		myTree = (NetworkCatalogTree) networkView.getOpenedTree(level);
+		if (myTree == null) {
+			finish();
+			return;
+		}
+
+		networkView.setOpenedActivity(myTree, this);
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		setListAdapter(new CatalogAdapter());
+		getListView().invalidateViews();
 	}
 
-	private void prepareView() {
-		if (!myInitialized) {
-			myInitialized = true;
-			setListAdapter(new LibraryAdapter(NetworkLibrary.Instance().getTree()));
-			getListView().invalidateViews();
+	@Override
+	public void onDestroy() {
+		if (myTree != null) {
+			NetworkView.Instance().setOpenedActivity(myTree, null);
 		}
+		super.onDestroy();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		final NetworkView networkView = NetworkView.Instance();
-		if (!networkView.isInitialized()) {
-			final Handler handler = new Handler() {
-				public void handleMessage(Message message) {
-					prepareView();
-				}
-			};
-			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
-				public void run() {
-					networkView.initialize();
-					handler.sendEmptyMessage(0);
-				}
-			}, this);
-		} else {
-			prepareView();
-		}
 	}
 
 
-	private final class LibraryAdapter extends BaseAdapter {
-
-		private final NetworkTree myTree;
-		private final NetworkTree mySearchItem;
-
-		public LibraryAdapter(NetworkTree libraryTree) {
-			myTree = libraryTree;
-			mySearchItem = null; // TODO: implement SearchItemTree;
-		}
+	private final class CatalogAdapter extends BaseAdapter {
 
 		public final int getCount() {
 			return myTree.subTrees().size();
-			//return myTree.subTrees().size() + 1; // subtrees + <search item>
 		}
 
 		public final NetworkTree getItem(int position) {
-			final int size = myTree.subTrees().size();
-			if (position >= 0 && position < size) {
+			if (position >= 0 && position < myTree.subTrees().size()) {
 				return (NetworkTree) myTree.subTrees().get(position);
-			} else if (position == size) {
-				return mySearchItem;
 			}
 			return null;
 		}
@@ -133,39 +130,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		//addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
-		return true;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		//final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		//menu.findItem(1).setEnabled(!searchInProgress);
-		return true;
-	}
-
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		switch (item.getItemId()) {
-			case 1:
-				return onSearchRequested();
-			default:
-				return true;
-		}
-	}
-
-	@Override
 	public boolean onSearchRequested() {
 		return false;
-		/*if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY)) {
-			return false;
-		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
-		return true;*/
 	}
 
 	@Override

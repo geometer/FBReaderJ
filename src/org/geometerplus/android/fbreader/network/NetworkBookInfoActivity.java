@@ -83,8 +83,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onDestroy() {
-		unbindService(myConnection);
-		myConnection = null;
+		if (myConnection != null) {
+			unbindService(myConnection);
+			myConnection = null;
+		}
 		super.onDestroy();
 	}
 

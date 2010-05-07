@@ -18,9 +18,9 @@
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>
-		<node name="closeCatalog" value="Close catalog"/>
-		<node name="expandTree" value="Expand"/>
-		<node name="collapseTree" value="Collapse"/>
+		<!--node name="closeCatalog" value="Close catalog"/-->
+		<!--node name="expandTree" value="Expand"/-->
+		<!--node name="collapseTree" value="Collapse"/-->
 		<node name="showResults" value="Show results"/>
 		<node name="hideResults" value="Hide results"/>
 		<node name="download" value="Download"/>

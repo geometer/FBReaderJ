@@ -76,8 +76,10 @@ abstract class NetworkBaseActivity extends ListActivity
 
 	@Override
 	public void onDestroy() {
-		unbindService(Connection);
-		Connection = null;
+		if (Connection != null) {
+			unbindService(Connection);
+			Connection = null;
+		}
 		super.onDestroy();
 	}
 
@@ -160,9 +162,27 @@ abstract class NetworkBaseActivity extends ListActivity
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
 		} else {
-			// TODO: what to do in this case???
+			coverView.setImageDrawable(null);
 		}
 	}
+
+	protected View setupNetworkTreeItemView(View convertView, final ViewGroup parent, NetworkTree tree) {
+		final View view = (convertView != null) ? convertView :
+			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+
+		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
+		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
+
+		view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		final int maxHeight = view.getMeasuredHeight();
+		final int maxWidth = maxHeight * 2 / 3;
+
+		final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
+		setupCover(iconView, tree, maxWidth, maxHeight);
+
+		return view;
+	}
+
 
 	// from View.OnCreateContextMenuListener
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {

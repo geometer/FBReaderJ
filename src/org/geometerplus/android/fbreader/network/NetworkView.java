@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.*;
 
 
 class NetworkView {
@@ -119,26 +120,6 @@ class NetworkView {
 
 	public final boolean containsItemsLoadingRunnable(String key) {
 		return getItemsLoadingRunnable(key) != null;
-	}
-
-
-	/*
-	 * Starting BookInfo activity
-	 */
-
-	private NetworkBookItem myBookInfoItem;
-
-	public void showBookInfoActivity(Context context, NetworkBookItem book) {
-		myBookInfoItem = book;
-		context.startActivity(
-			new Intent(context.getApplicationContext(), NetworkBookInfoActivity.class)
-		);
-	}
-
-	NetworkBookItem getBookInfoItem() {
-		final NetworkBookItem book = myBookInfoItem;
-		myBookInfoItem = null;
-		return book;
 	}
 
 
@@ -245,5 +226,91 @@ class NetworkView {
 		for (EventListener listener: myEventListeners) {
 			listener.onModelChanged();
 		}
+	}
+
+
+	/*
+	 * Starting BookInfo activity
+	 */
+
+	private NetworkBookItem myBookInfoItem;
+
+	public void showBookInfoActivity(Context context, NetworkBookItem book) {
+		myBookInfoItem = book;
+		context.startActivity(
+			new Intent(context.getApplicationContext(), NetworkBookInfoActivity.class)
+		);
+	}
+
+	NetworkBookItem getBookInfoItem() {
+		final NetworkBookItem book = myBookInfoItem;
+		myBookInfoItem = null;
+		return book;
+	}
+
+
+	/*
+	 * Opening Catalogs & managing opened catalogs stack
+	 */
+
+	private static final class OpenedStackItem {
+		public final NetworkTree Tree;
+		public NetworkCatalogActivity Activity;
+
+		public OpenedStackItem(NetworkTree tree) {
+			Tree = tree;
+		}
+	};
+
+	private final LinkedList<OpenedStackItem> myOpenedStack = new LinkedList<OpenedStackItem>();
+
+	public void openTree(Context context, NetworkTree tree) {
+		final int level = tree.Level - 1; // tree.Level == 1 for catalog's root element
+		if (level > myOpenedStack.size()) {
+			throw new RuntimeException("Unable to open catalog with Level greater than the number of opened catalogs.\n"
+				+ "Catalog: " + tree.getName() + "\n"
+				+ "Level: " + level + "\n"
+				+ "Opened catalogs: " + myOpenedStack.size());
+		}
+		while (level < myOpenedStack.size()) {
+			final OpenedStackItem item = myOpenedStack.removeLast();
+			if (item.Activity != null) {
+				throw new RuntimeException("Unable to open catalog when catalog's Level (" 
+					+ level + ") isn't greater than opened catalog's Level (" + (item.Tree.Level - 1) + ")");
+			}
+		}
+		myOpenedStack.add(new OpenedStackItem(tree));
+
+		if (tree instanceof NetworkCatalogTree) {
+			context.startActivity(
+				new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
+					.putExtra(NetworkCatalogActivity.CATALOG_LEVEL_KEY, level)
+			);
+		} else {
+			throw new RuntimeException("Don't know how to start activity for " + tree.getClass().getName());
+		}
+	}
+
+	void setOpenedActivity(NetworkTree tree, NetworkCatalogActivity activity) {
+		final int level = tree.Level - 1;
+		if (level < 0 || level >= myOpenedStack.size()) {
+			throw new RuntimeException("Unable to set opened activity with level = " + level + ", when opened level = " + (myOpenedStack.size() - 1));
+		}
+		myOpenedStack.get(level).Activity = activity;
+	}
+
+	public NetworkCatalogActivity getOpenedActivity(NetworkTree tree) {
+		final int level = tree.Level - 1;
+		if (level < 0 || level >= myOpenedStack.size()) {
+			return null;
+		}
+		return myOpenedStack.get(level).Activity;
+	}
+
+	public NetworkTree getOpenedTree(int level) {
+		if (level < 0 || level >= myOpenedStack.size()) {
+			return null;
+		}
+		return myOpenedStack.get(level).Tree;
 	}
 }
