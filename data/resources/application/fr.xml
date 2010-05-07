@@ -19,11 +19,8 @@
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
-		<node name="closeCatalog" value="Fermer le catalogue"/>
-		<node name="expandTree" value="Ouvrir"/>
-		<node name="collapseTree" value="Refermer"/>
 		<node name="showResults" value="Afficher les résultats"/>
-		<node name="hideResults" value="Masquer les résultats"/>
+		<node name="showBooks" value="Afficher les livres"/>
 		<node name="download" value="Télécharger"/>
 		<node name="read" value="Lire la copie locale"/>
 		<node name="delete" value="Supprimer la copie locale"/>
@@ -42,7 +39,8 @@
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
 		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
 		<node name="stoppingNetworkSearch" toBeTranslated="true" value="Stopping search" />
-		<node name="searchResultNode" value="Résultats de la recherche" />
+		<node name="search" toBeTranslated="true" value="Search" />
+		<node name="searchSummary" toBeTranslated="true" value="Search for books in catalogs" />
 		<node name="searchResults" value="Résultats de la recherche : %s"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Voulez-vous lire la copie locale?"/>

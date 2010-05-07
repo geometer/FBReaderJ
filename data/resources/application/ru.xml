@@ -18,11 +18,8 @@
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
-		<node name="closeCatalog" value="Закрыть каталог"/>
-		<node name="expandTree" value="Развернуть"/>
-		<node name="collapseTree" value="Свернуть"/>
 		<node name="showResults" value="Показать результаты"/>
-		<node name="hideResults" value="Скрыть результаты"/>
+		<node name="showBooks" value="Показать книги"/>
 		<node name="download" value="Скачать"/>
 		<node name="read" value="Читать локальную копию"/>
 		<node name="delete" value="Удалить локальную копию"/>
@@ -41,7 +38,8 @@
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
 		<node name="stoppingNetworkSearch" value="Завершение поиска" />
-		<node name="searchResultNode" value="Результаты поиска" />
+		<node name="search" value="Поиск" />
+		<node name="searchSummary" value="Поиск книг в каталогах" />
 		<node name="searchResults" value="Результаты поиска для: %s" />
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>

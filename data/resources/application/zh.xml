@@ -19,11 +19,8 @@
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="打开书库目录" />
-		<node name="closeCatalog" value="关闭书库目录" />
-		<node name="expandTree" value="展开" />
-		<node name="collapseTree" value="折叠" />
 		<node name="showResults" value="显示结果"/>
-		<node name="hideResults" value="隐藏结果"/>
+		<node name="showBooks" value="显示书籍"/>
 		<node name="download" value="下载" />
 		<node name="read" value="阅读" />
 		<node name="delete" value="删除" />
@@ -42,7 +39,8 @@
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
 		<node name="stoppingNetworkSearch" toBeTranslated="true" value="Stopping search" />
-		<node name="searchResultNode" value="搜索结果" />
+		<node name="search" toBeTranslated="true" value="Search" />
+		<node name="searchSummary" toBeTranslated="true" value="Search for books in catalogs" />
 		<node name="searchResults" value="搜索结果: %s" />
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读" />
