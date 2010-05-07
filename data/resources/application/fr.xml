@@ -30,16 +30,16 @@
 		<node name="buy" value="Acheter (%s)"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="reload" value="Recharger"/>
-		<node name="stopLoading" toBeTranslated="true" value="Stop loading" />
-		<node name="stopSearching" toBeTranslated="true" value="Stop searching" />
+		<node name="stopLoading" value="Arrêt du chargement" />
+		<node name="stopSearching" value="Arrêt de la recherche" />
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
-		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
-		<node name="stoppingNetworkSearch" toBeTranslated="true" value="Stopping search" />
-		<node name="search" toBeTranslated="true" value="Search" />
+		<node name="stoppingCatalogLoading" value="Arrêt du chargement" />
+		<node name="stoppingNetworkSearch" value="Arrêt de la recherche" />
+		<node name="search" value="Rechercher" />
 		<node name="searchSummary" toBeTranslated="true" value="Search for books in catalogs" />
 		<node name="searchResults" value="Résultats de la recherche : %s"/>
 		<node name="confirmQuestions">
@@ -51,7 +51,7 @@
 			<node name="openInBrowser" value="Voulez-vous ouvrir ce catalogue dans le navigateur?" />
 		</node>
 		<node name="downloadingCatalogs" value="Chargement des catalogues"/> <!-- used as notification title -->
-		<node name="searchingNetwork" toBeTranslated="true" value="Searching for books in network"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="Recherche de livres sur le réseau"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="Recherche sur le réseau"/>
 		</node>
@@ -59,11 +59,11 @@
 	<node name="networkBookView">
 		<node name="bookInfo" value="Informations sur le livre" />
 		<node name="description" value="Description" />
-		<node name="noDescription" toBeTranslated="true" value="No description available." />
+		<node name="noDescription" value="Aucune description disponible." />
 		<node name="title" value="Titre:" />
 		<node name="authors" value="Auteurs:" />
 		<node name="series" value="Série:" />
-		<node name="indexInSeries" toBeTranslated="true" value="Index in series:" />
+		<node name="indexInSeries" value="Index dans les séries:" />
 		<node name="tags" value="Tags:" />
 	</node>
 	<node name="bookDownloader">
@@ -88,7 +88,7 @@
 		<node name="edit" value="Modifier le marque-page"/>
 		<node name="delete" value="Supprimer le marque-page"/>
 		<node name="menu">
-			<node name="search" value="Search"/>
+			<node name="search" value="Rechercher"/>
 		</node>
 	</node>
 	<node name="menu">
@@ -118,8 +118,8 @@
 		</node>
 		<node name="search" value="Rechercher"/>
 		<node name="rotate" value="Orienter l'écran"/>
-		<node name="increaseFont" toBeTranslated="true" value="Zoom in" />
-		<node name="decreaseFont" toBeTranslated="true" value="Zoom out" />
+		<node name="increaseFont" value="Augmenter la taille" />
+		<node name="decreaseFont" value="Diminuier la taille" />
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
 	</node>
@@ -280,7 +280,7 @@
 		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Résultats de la recherche" />
-			<node name="message" toBeTranslated="true" value="There are no suitable books found" />
+			<node name="message" value="Aucun livre correspondant trouvé." />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>
@@ -304,7 +304,7 @@
 		</node>
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="Achat du livre" />
-			<node name="message" toBeTranslated="true" value="Book is already bought" />
+			<node name="message" value="Le livre a déjà été acheté" />
 		</node>
 	</node>
 	<node name="errorMessage">
