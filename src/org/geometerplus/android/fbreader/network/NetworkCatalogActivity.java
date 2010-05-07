@@ -84,11 +84,12 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 		networkView.setOpenedActivity(myTree, this);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
+		setTitle( myTree.getName() + " - " + myTree.Item.Link.SiteName );
 	}
 
 	@Override
