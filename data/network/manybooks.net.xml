@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog SYSTEM "catalog.dtd">
+<catalog type="opds">
+	<site>manybooks.net</site>
+	<title>ManyBooks Catalog</title>
+	<summary>ManyBooks.net: The best ebooks at the best price: free!</summary>
+	<link rel="main" type="application/atom+xml">http://manybooks.net/opds/</link>
+	<link rel="search" type="application/atom+xml">http://manybooks.net/opds/search.php?q=%s</link>
+	<relationAliases>
+		<alias alias="http://opds-spec.org/opds-cover-image-thumbnail" name="http://opds-spec.org/thumbnail" />
+	</relationAliases>
+	<icon>data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAA+pJREFUeNrsmz1sEzEUxx3UrUh0KiNJ56KGCTaCwggFxrAkEjA3c4vU
+MABrYC1DJsJGWtYiXTbYgpKZhLFMQSJz+Tvv8s65fJAPx2dHZ52iRnm688/v/57f2W7i8oFYs3ZF
+iBgpRoqRYiRLkTavrQsSSLJ5cfRZfOrqvfFGBDAgufNYXmh/u9pvbxDp9iOf5OqWuOiI07L4WpFf
+n5ZcQwqRAANX+4f/K/kKLbUnsgVxMyMObtmKRF1Ej68npbq+1SRJqx42207Kzw9taWapl0ZJTmri
++2k4MZDfyEVwXdOTZr2ueOtZg7R9Q5LgosE+r4whgQ0YYLOTll9/NvxwYhHu3vUHBfLDBeOHiQX6
+kliqEg/1Ej6hq/cnsEFHySFEC4eQze9fQ/chBg4tuA725pDklFKYRgKD3UyQFaDAljfehhxC9wEG
+DMAM41RaihBIZAaD6qvVIGE4X5T9sYRyIBt1vEODzV1UFQhd4VcioXmJaGHG96Ehw4PwCKJFm9lj
+cyJBRRg8hEq1FPSA1K8GCTmEg4T0CRuMN5zG8sOnakMGuAndh2ib/YQBvJmRFkoP9wui3ZBOIJ9Q
+kFCaZqdhpGlGgg0ZkFdVp8mkkvflRzaU/c76/gmljZVnPAwbDSQYql4QJHj8fnEoPNBF1QAu3T+Q
+oRLCqHpD2osyiUu3dPyJn8s2CIYcQiPNlQELj8QJV2vC0IeE/r2s+X+jlx9L/XxV990FBtRvKgZx
+AljN8paWrRBPuSA2t3wMymaUBoxgrAAJUfG+EWCo7jLetNZ4kNbSdbRlb7U9Te9ziMM5E7fFyym5
+Y/HlUs7mHI1uI8EzOt5wrUFCtXFUc2SFSNYTB3K2nd6KFX/6sn3tAYFBDSXFYSYo28auTzi2jgcP
+vPHG+wqSg4t4GnApliZRseTolcSx9DBKxZKDMlFSuSQ8XlVVqfC+xJIDj6Yi0BQSesxxwlSq5ELL
+SQ4g9foZT6VCmcvLD5okZzyWoCuVSnWg1vcOs+lhlEqr5CIqiFQq3ZKLrsYjKvhHt+SMFERTqF4/
+ceEV0I4WI8VIMdKgXXTkCq5jGW9So83p5ZaULUPSsT6+hrG0YSIw5PZEZ12QniW177VELTzjPHEs
+mW+8Re82UmpP7vOG9qTPK64h8SEbdRd00T3pOZFadXFSFLmShvXrsRg6dkHn99LZO/nUYiU4NzJ7
+oz1pPpoiVrInvcSxqNxxeDsIPTu893+Mpudfq9nMXe6kF7oLd/HpQELi8047aWMY+pDEYN+B17VR
++IROAEFaZrfWE3r+MyabF8/7R3BaA29M2kpyBommxSjKn1UixS/qMVKMFCPZ3v4JMAC5KATHe24p
+XQAAAABJRU5ErkJggg==
+	</icon>
+</catalog>
