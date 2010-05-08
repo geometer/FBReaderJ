@@ -1,28 +1,31 @@
-===== 0.6.4 (???) =====
+===== 0.6.5 (May ???, 2010) =====
 
 * View for the Network Library has been completely changed: each subcatalog opens in new window
 * Network search item has been added to the Network Library
 
-===== 0.6.3 (April 30, 2010) =====
+===== 0.6.4 (May 1, 2010) =====
+* Zip decompressing has been fixed
+
+===== 0.6.3 (Apr 30, 2010) =====
 
 * A problem with some zip-archives has been fixed
 * Searching for books in network catalogs has been implemented
 * Stopping catalogs loading from context menu
 * Users registration in Litres network catalog
 
-===== 0.6.2 (April 26, 2010) =====
+===== 0.6.2 (Apr 26, 2010) =====
 
 * Downloader service priority has been decreased for better UI responsivity
 * New menu items: Rotate Screen, Zoom In, Zoom Out
 * A problem with %-escaped file names inside ePubs has been fixed
 * Small fixes in "Old" Preferences Dialog (by Robert Stockton)
 
-===== 0.6.1 (April 23, 2010) =====
+===== 0.6.1 (Apr 23, 2010) =====
 
 * User can preview a book before downloading/purchasing
 * French resources have been updated
 
-===== 0.6.0 (April 19, 2010) =====
+===== 0.6.0 (Apr 19, 2010) =====
 
 * Chinese text layouting has been implemented (we use native liblinebreak library
   from http://vimgadgets.cvs.sourceforge.net/vimgadgets/common/tools/linebreak/)
