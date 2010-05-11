@@ -30,17 +30,17 @@
 		<node name="buy" value="购买(%s)" />
 		<node name="openInBrowser" value="在浏览器中打开" />
 		<node name="reload" value="重新加载" />
-		<node name="stopLoading" toBeTranslated="true" value="Stop loading" />
-		<node name="stopSearching" toBeTranslated="true" value="Stop searching" />
+		<node name="stopLoading" value="停止加载" />
+		<node name="stopSearching" value="停止搜索" />
 		<node name="signIn" value="登录"/>
 		<node name="signOut" value="退出 (%s)"/>
 		<node name="refillAccount" value="重新输入账号(目前: %s)" />
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
-		<node name="stoppingCatalogLoading" toBeTranslated="true" value="Stopping loading" />
-		<node name="stoppingNetworkSearch" toBeTranslated="true" value="Stopping search" />
-		<node name="search" toBeTranslated="true" value="Search" />
-		<node name="searchSummary" toBeTranslated="true" value="Search for books in catalogs" />
+		<node name="stoppingCatalogLoading" value="停止加载" />
+		<node name="stoppingNetworkSearch" value="停止搜索" />
+		<node name="search" value="搜索" />
+		<node name="searchSummary" value="搜索书库目录" />
 		<node name="searchResults" value="搜索结果: %s" />
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读" />
@@ -51,20 +51,20 @@
 			<node name="openInBrowser" value="是否在浏览器中打开?" />
 		</node>
 		<node name="downloadingCatalogs" value="书库目录下载" /> <!-- used as notification title -->
-		<node name="searchingNetwork" toBeTranslated="true" value="Searching for books in network"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="搜索书库目录"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索" />
 		</node>
 	</node>
 	<node name="networkBookView">
-		<node name="bookInfo" toBeTranslated="true" value="Book Info" />
-		<node name="description" toBeTranslated="true" value="Description" />
-		<node name="noDescription" toBeTranslated="true" value="No description available." />
-		<node name="title" toBeTranslated="true" value="Title:" />
-		<node name="authors" toBeTranslated="true" value="Authors:" />
-		<node name="series" toBeTranslated="true" value="Series:" />
-		<node name="indexInSeries" toBeTranslated="true" value="Index in series:" />
-		<node name="tags" toBeTranslated="true" value="Tags:" />
+		<node name="bookInfo" value="书籍信息" />
+		<node name="description" value="描述" />
+		<node name="noDescription" value="没有有效描述." />
+		<node name="title" value="书名:" />
+		<node name="authors" value="作者:" />
+		<node name="series" value="系列:" />
+		<node name="indexInSeries" value="系列序号:" />
+		<node name="tags" value="Tags:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="下载成功" />
@@ -280,7 +280,7 @@
 		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="搜索结果" />
-			<node name="message" toBeTranslated="true" value="There are no suitable books found" />
+			<node name="message" value="没有找到对应的书籍." />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="鉴定" />
@@ -304,7 +304,7 @@
 		</node>
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="购买书籍" />
-			<node name="message" toBeTranslated="true" value="Book is already bought" />
+			<node name="message" value="该书已经买过." />
 		</node>
 	</node>
 	<node name="errorMessage">
