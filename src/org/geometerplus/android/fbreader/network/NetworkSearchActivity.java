@@ -81,12 +81,16 @@ public class NetworkSearchActivity extends Activity {
 			}
 		}
 
-		public void onFinish(String errorMessage) {
-			myTree.updateSubTrees();
+		public void onFinish(String errorMessage, boolean interrupted) {
+			if (interrupted) {
+				myTree.setSearchResult(null);
+			} else {
+				myTree.updateSubTrees();
+				afterUpdateCatalog(errorMessage, myTree.getSearchResult().empty());
+			}
 			if (NetworkView.Instance().isInitialized()) {
 				NetworkView.Instance().fireModelChanged();
 			}
-			afterUpdateCatalog(errorMessage, myTree.getSearchResult().empty());
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {

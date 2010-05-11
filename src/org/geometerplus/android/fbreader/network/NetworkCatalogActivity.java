@@ -150,4 +150,30 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	public void onModelChanged() {
 		getListView().invalidateViews();
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			doStopLoading();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void doStopLoading() {
+		ItemsLoadingRunnable runnable = null;
+		if (myTree instanceof NetworkCatalogTree) {
+			final String url = ((NetworkCatalogTree) myTree).Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+			if (url == null) {
+				throw new RuntimeException("That's impossible!!!");
+			}
+			runnable = NetworkView.Instance().getItemsLoadingRunnable(url);
+		} else if (myTree instanceof SearchItemTree) {
+			if (NetworkView.Instance().isInitialized()) {
+				runnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+			}
+		}
+		if (runnable != null) {
+			runnable.interrupt();
+		}
+	}
 }

@@ -39,7 +39,6 @@ import org.geometerplus.fbreader.network.*;
 class NetworkSearchActions extends NetworkTreeActions {
 
 	public static final int OPEN_RESULTS_ITEM_ID = 0;
-	public static final int STOP_LOADING_ITEM_ID = 1;
 	public static final int RUN_SEARCH_ITEM_ID = 2;
 
 
@@ -72,13 +71,13 @@ class NetworkSearchActions extends NetworkTreeActions {
 		if (isLoading || tree.hasChildren()) {
 			addMenuItem(menu, OPEN_RESULTS_ITEM_ID, "showResults");
 		}
-		if (isLoading) {
+		/*if (isLoading) {
 			if (searchRunnable.InterruptFlag.get()) {
 				addMenuItem(menu, TREE_NO_ACTION, "stoppingNetworkSearch");
 			} else {
-				addMenuItem(menu, STOP_LOADING_ITEM_ID, "stopSearching");
+				addMenuItem(menu, TREE_NO_ACTION, "stopSearching");
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -101,9 +100,6 @@ class NetworkSearchActions extends NetworkTreeActions {
 			case OPEN_RESULTS_ITEM_ID:
 				doExpandCatalog(activity, (SearchItemTree)tree);
 				return true;
-			case STOP_LOADING_ITEM_ID:
-				doStopLoading((SearchItemTree)tree);
-				return true;
 			case RUN_SEARCH_ITEM_ID:
 				activity.onSearchRequested();
 				return true;
@@ -112,20 +108,16 @@ class NetworkSearchActions extends NetworkTreeActions {
 	}
 
 
-	public void doExpandCatalog(NetworkBaseActivity activity, final SearchItemTree tree) {
+	public void doExpandCatalog(final NetworkBaseActivity activity, final SearchItemTree tree) {
 		if (!NetworkView.Instance().isInitialized()) {
 			return;
 		}
-		NetworkView.Instance().openTree(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-	}
-
-	private void doStopLoading(SearchItemTree tree) {
-		if (!NetworkView.Instance().isInitialized()) {
-			return;
-		}
-		final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		if (runnable != null) {
-			runnable.InterruptFlag.set(true);
-		}
+		NetworkView.Instance().tryResumeLoading(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY, new Runnable() {
+			public void run() {
+				if (tree.hasChildren()) {
+					NetworkView.Instance().openTree(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+				}
+			}
+		});
 	}
 }

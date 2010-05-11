@@ -36,13 +36,17 @@ abstract class ItemsLoadingHandler extends Handler {
 	private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
 	private final Object myItemsMonitor = new Object();
 
+	private volatile boolean myFinishProcessed;
+	private final Object myFinishMonitor = new Object();
+
+
 	public final void addItem(NetworkLibraryItem item) {
 		synchronized (myItemsMonitor) {
 			myItems.add(item);
 		}
 	}
 
-	public final void ensureFinish() {
+	public final void ensureItemsProcessed() {
 		synchronized (myItemsMonitor) {
 			while (myItems.size() > 0) {
 				try {
@@ -53,26 +57,51 @@ abstract class ItemsLoadingHandler extends Handler {
 		}
 	}
 
-	public final void sendUpdateItems() {
-		sendEmptyMessage(WHAT_UPDATE_ITEMS);
-	}
-
-	public final void sendFinish(String errorMessage) {
-		sendMessage(obtainMessage(WHAT_FINISHED, errorMessage));
-	}
-
-	public abstract void onUpdateItems(List<NetworkLibraryItem> items);
-	public abstract void afterUpdateItems();
-	public abstract void onFinish(String errorMessage);
-
 	private final void doUpdateItems() {
 		synchronized (myItemsMonitor) {
 			onUpdateItems(myItems);
 			myItems.clear();
-			myItemsMonitor.notifyAll(); // wake up process, that waits for all items to be displayed (see ensureFinish() method)
+			myItemsMonitor.notifyAll(); // wake up process, that waits for finish condition (see ensureFinish() method)
 		}
 		afterUpdateItems();
 	}
+
+	public final void ensureFinishProcessed() {
+		synchronized (myFinishMonitor) {
+			while (!myFinishProcessed) {
+				try {
+					myFinishMonitor.wait();
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+	}
+
+	private final void doProcessFinish(String errorMessage, boolean interrupted) {
+		synchronized (myFinishMonitor) {
+			onFinish(errorMessage, interrupted);
+			myFinishProcessed = true;
+			myFinishMonitor.notifyAll(); // wake up process, that waits for finish condition (see ensureFinish() method)
+		}
+	}
+
+
+	// sending messages methods
+	public final void sendUpdateItems() {
+		sendEmptyMessage(WHAT_UPDATE_ITEMS);
+	}
+
+	public final void sendFinish(String errorMessage, boolean interrupted) {
+		int arg1 = interrupted ? 1 : 0;
+		sendMessage(obtainMessage(WHAT_FINISHED, arg1, 0, errorMessage));
+	}
+
+
+	// callbacks
+	public abstract void onUpdateItems(List<NetworkLibraryItem> items);
+	public abstract void afterUpdateItems();
+	public abstract void onFinish(String errorMessage, boolean interrupted);
+
 
 	@Override
 	public final void handleMessage(Message message) {
@@ -81,7 +110,7 @@ abstract class ItemsLoadingHandler extends Handler {
 			doUpdateItems();
 			break;
 		case WHAT_FINISHED:
-			onFinish((String) message.obj);
+			doProcessFinish((String) message.obj, message.arg1 != 0);
 			break;
 		}
 	}

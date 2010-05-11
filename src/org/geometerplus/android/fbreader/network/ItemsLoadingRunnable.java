@@ -19,7 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import android.os.Message;
+import android.os.Handler;
 
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
@@ -30,13 +31,53 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	public static final int CATALOG_LOADING = 0;
 	public static final int NETWORK_SEARCH = 1;
 
-	public final AtomicBoolean InterruptFlag = new AtomicBoolean();
 	public final int Type;
 
 	private final ItemsLoadingHandler myHandler;
 
 	private final long myUpdateInterval; // in milliseconds
 	private final int myItemsLimit;
+
+	private boolean myInterruptRequested;
+	private boolean myInterruptConfirmed;
+	private Object myInterruptLock = new Object();
+
+
+	private boolean myFinished;
+	private Handler myFinishedHandler;
+	private Object myFinishedLock = new Object();
+
+
+	public void interrupt() {
+		synchronized (myInterruptLock) {
+			myInterruptRequested = true;
+		}
+	}
+
+	private boolean confirmInterrupt() {
+		synchronized (myInterruptLock) {
+			if (myInterruptRequested) {
+				myInterruptConfirmed = true;
+			}
+			return myInterruptConfirmed;
+		}
+	}
+
+	public boolean tryResume() {
+		synchronized (myInterruptLock) {
+			if (!myInterruptConfirmed) {
+				myInterruptRequested = false;
+			}
+			return !myInterruptRequested;
+		}
+	}
+
+	private boolean isInterrupted() {
+		synchronized (myInterruptLock) {
+			return myInterruptConfirmed;
+		}
+	}
+
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler, int type) {
 		this(handler, type, 1000, 500);
@@ -59,7 +100,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	public final void run() {
 		String err = doBefore();
 		if (err != null) {
-			myHandler.sendFinish(err);
+			myHandler.sendFinish(err, false);
 			return;
 		}
 		err = doLoading(new NetworkOperationData.OnNewItemListener() {
@@ -67,7 +108,8 @@ abstract class ItemsLoadingRunnable implements Runnable {
 			private int myItemsNumber;
 			public boolean onNewItem(NetworkLibraryItem item) {
 				myHandler.addItem(item);
-				if (InterruptFlag.get() || myItemsNumber++ >= myItemsLimit) {
+				final boolean interrupted = confirmInterrupt();
+				if (interrupted || myItemsNumber++ >= myItemsLimit) {
 					return true;
 				}
 				final long now = System.currentTimeMillis();
@@ -79,7 +121,31 @@ abstract class ItemsLoadingRunnable implements Runnable {
 			}
 		});
 		myHandler.sendUpdateItems();
-		myHandler.ensureFinish();
-		myHandler.sendFinish(err);
+		myHandler.ensureItemsProcessed();
+		myHandler.sendFinish(err, isInterrupted());
+		myHandler.ensureFinishProcessed();
+		synchronized (myFinishedLock) {
+			if (myFinishedHandler != null) {
+				myFinishedHandler.sendEmptyMessage(0);
+			}
+			myFinished = true;
+		}
+	}
+
+	public void runOnFinish(final Runnable runnable) {
+		if (myFinishedHandler != null) {
+			return;
+		}
+		synchronized (myFinishedLock) {
+			if (myFinished) {
+				runnable.run();
+			} else {
+				myFinishedHandler = new Handler() {
+					public void handleMessage(Message message) {
+						runnable.run();
+					}
+				};
+			}
+		}
 	}
 }

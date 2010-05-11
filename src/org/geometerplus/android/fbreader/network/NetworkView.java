@@ -122,6 +122,18 @@ class NetworkView {
 		return getItemsLoadingRunnable(key) != null;
 	}
 
+	public void tryResumeLoading(NetworkBaseActivity activity, NetworkTree tree, String key, Runnable expandRunnable) {
+		final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
+		if (runnable != null && runnable.tryResume()) {
+			openTree(activity, tree, key);
+			return;
+		}
+		if (runnable == null) {
+			expandRunnable.run();
+		} else {
+			runnable.runOnFinish(expandRunnable);
+		}
+	}
 
 	/*
 	 * Loading covers
