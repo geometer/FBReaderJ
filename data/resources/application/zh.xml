@@ -29,7 +29,6 @@
 		<node name="downloadDemo" value="下载试读本" />
 		<node name="buy" value="购买(%s)" />
 		<node name="openInBrowser" value="在浏览器中打开" />
-		<node name="reload" value="重新加载" />
 		<node name="stopLoading" value="停止加载" />
 		<node name="stopSearching" value="停止搜索" />
 		<node name="signIn" value="登录"/>
@@ -54,6 +53,10 @@
 		<node name="searchingNetwork" value="搜索书库目录"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索" />
+			<node name="reload" value="重新加载" />
+			<node name="signIn" value="登录"/>
+			<node name="signOut" value="退出 (%s)"/>
+			<node name="refillAccount" value="重新输入账号(目前: %s)" />
 		</node>
 	</node>
 	<node name="networkBookView">

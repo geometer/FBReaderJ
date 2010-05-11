@@ -29,7 +29,6 @@
 		<node name="downloadDemo" value="Télécharger l'extrait"/>
 		<node name="buy" value="Acheter (%s)"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
-		<node name="reload" value="Recharger"/>
 		<node name="stopLoading" value="Arrêt du chargement" />
 		<node name="stopSearching" value="Arrêt de la recherche" />
 		<node name="signIn" value="Connexion"/>
@@ -54,6 +53,10 @@
 		<node name="searchingNetwork" value="Recherche de livres sur le réseau"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="Recherche sur le réseau"/>
+			<node name="reload" value="Recharger"/>
+			<node name="signIn" value="Connexion"/>
+			<node name="signOut" value="Déconnexion (%s)"/>
+			<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		</node>
 	</node>
 	<node name="networkBookView">

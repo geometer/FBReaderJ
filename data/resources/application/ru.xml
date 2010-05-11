@@ -28,7 +28,6 @@
 		<node name="downloadDemo" value="Скачать фрагмент"/>
 		<node name="buy" value="Купить (%s)"/>
 		<node name="openInBrowser" value="Показать в браузере" />
-		<node name="reload" value="Обновить"/>
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
@@ -53,6 +52,10 @@
 		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="Поиск в сети"/>
+			<node name="reload" value="Обновить"/>
+			<node name="signIn" value="Войти"/>
+			<node name="signOut" value="Выйти (%s)"/>
+			<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
 		</node>
 	</node>
 	<node name="networkBookView">

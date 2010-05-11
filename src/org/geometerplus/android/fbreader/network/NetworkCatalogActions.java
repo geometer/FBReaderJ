@@ -71,23 +71,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		menu.setHeaderTitle(tree.getName());
 
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		final ItemsLoadingRunnable catalogRunnable = (catalogUrl != null) ? 
-			NetworkView.Instance().getItemsLoadingRunnable(catalogUrl) : null;
-		final boolean isLoading = catalogRunnable != null;
-
 		if (catalogUrl != null) {
 			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
-			/*if (isLoading) {
-				if (catalogRunnable.InterruptFlag.get()) {
-					addMenuItem(menu, TREE_NO_ACTION, "stoppingCatalogLoading");
-				} else {
-					addMenuItem(menu, TREE_NO_ACTION, "stopLoading");
-				}
-			} else {
-				if (catalogTree.hasChildren()) {
-					addMenuItem(menu, RELOAD_ITEM_ID, "reload");
-				}
-			}*/
 		}
 
 		if (tree instanceof NetworkCatalogRootTree) {
@@ -139,12 +124,51 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		return false;
+		addOptionsItem(menu, RELOAD_ITEM_ID, "reload");
+		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
+		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
+		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount", "");
+		return true;
 	}
 
 	@Override
 	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
-		return false;
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+		final NetworkCatalogItem item = catalogTree.Item;
+
+		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+		final boolean isLoading = (catalogUrl != null) ?
+			NetworkView.Instance().containsItemsLoadingRunnable(catalogUrl) : false;
+
+		prepareOptionsItem(menu, RELOAD_ITEM_ID, catalogUrl != null && !isLoading);
+
+		boolean signIn = false;
+		boolean signOut = false;
+		boolean refill = false;
+		String userName = null;
+		String account = null;
+		if (tree instanceof NetworkCatalogRootTree) {
+			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+			if (mgr != null) {
+				if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+					userName = mgr.currentUserName();
+					signOut = true;
+					account = mgr.currentAccount();
+					if (mgr.refillAccountLink() != null && account != null) {
+						refill = true;
+					}
+				} else {
+					signIn = true;
+					//if (mgr.passwordRecoverySupported()) {
+					//	registerAction(new PasswordRecoveryAction(mgr), true);
+					//}
+				}
+			}
+		}
+		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
+		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
+		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill, "refillAccount", account);
+		return true;
 	}
 
 	@Override

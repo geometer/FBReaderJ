@@ -37,49 +37,62 @@ abstract class NetworkTreeActions {
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
-	protected String getTitleValue(String key) {
+	protected final String getTitleValue(String key) {
 		return myResource.getResource(key).getValue();
 	}
 
-	protected String getTitleValue(String key, String arg) {
+	protected final String getTitleValue(String key, String arg) {
 		return myResource.getResource(key).getValue().replace("%s", arg);
 	}
 
-	protected String getConfirmValue(String key) {
+	protected final String getConfirmValue(String key) {
 		return myResource.getResource("confirmQuestions").getResource(key).getValue();
 	}
 
-	protected String getConfirmValue(String key, String arg) {
+	protected final String getConfirmValue(String key, String arg) {
 		return myResource.getResource("confirmQuestions").getResource(key).getValue().replace("%s", arg);
 	}
 
-	protected String getOptionsValue(String key) {
+	protected final String getOptionsValue(String key) {
 		return myResource.getResource("menu").getResource(key).getValue();
 	}
 
-	protected String getOptionsValue(String key, String arg) {
+	protected final String getOptionsValue(String key, String arg) {
 		return myResource.getResource("menu").getResource(key).getValue().replace("%s", arg);
 	}
 
-	protected MenuItem addMenuItem(ContextMenu menu, int id, String key) {
+	protected final MenuItem addMenuItem(ContextMenu menu, int id, String key) {
 		return menu.add(0, id, 0, getTitleValue(key)).setEnabled(id != TREE_NO_ACTION);
 	}
 
-	protected MenuItem addMenuItem(ContextMenu menu, int id, String key, String arg) {
+	protected final MenuItem addMenuItem(ContextMenu menu, int id, String key, String arg) {
 		return menu.add(0, id, 0, getTitleValue(key, arg)).setEnabled(id != TREE_NO_ACTION);
 	}
 
-	protected MenuItem addOptionsItem(Menu menu, int id, String key, int iconId) {
+	protected final MenuItem addOptionsItem(Menu menu, int id, String key/*, int iconId*/) {
 		final MenuItem item = menu.add(0, id, 0, getOptionsValue(key));
 		//item.setIcon(iconId);
 		return item;
 	}
 
-	protected MenuItem addOptionsItem(Menu menu, int id, String key, String arg, int iconId) {
+	protected final MenuItem addOptionsItem(Menu menu, int id, String key, String arg/*, int iconId*/) {
 		final MenuItem item = menu.add(0, id, 0, getOptionsValue(key, arg));
 		//item.setIcon(iconId);
 		return item;
 	}
+
+	protected final MenuItem prepareOptionsItem(Menu menu, int id, boolean state) {
+		return menu.findItem(id).setVisible(state).setEnabled(state);
+	}
+
+	protected final MenuItem prepareOptionsItem(Menu menu, int id, boolean state, String key, String arg) {
+		final MenuItem item = prepareOptionsItem(menu, id, state);
+		if (state) {
+			item.setTitle(getOptionsValue(key, arg));
+		}
+		return item;
+	}
+
 
 	public abstract boolean canHandleTree(NetworkTree tree);
 
