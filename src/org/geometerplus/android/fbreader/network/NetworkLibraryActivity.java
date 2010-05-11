@@ -128,6 +128,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 
+	protected MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -144,7 +149,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	@Override
-	public boolean onMenuItemClick(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case 1:
 				return onSearchRequested();

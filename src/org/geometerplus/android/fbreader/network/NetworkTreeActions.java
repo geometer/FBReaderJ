@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.view.Menu;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 
@@ -52,12 +53,32 @@ abstract class NetworkTreeActions {
 		return myResource.getResource("confirmQuestions").getResource(key).getValue().replace("%s", arg);
 	}
 
+	protected String getOptionsValue(String key) {
+		return myResource.getResource("menu").getResource(key).getValue();
+	}
+
+	protected String getOptionsValue(String key, String arg) {
+		return myResource.getResource("menu").getResource(key).getValue().replace("%s", arg);
+	}
+
 	protected MenuItem addMenuItem(ContextMenu menu, int id, String key) {
 		return menu.add(0, id, 0, getTitleValue(key)).setEnabled(id != TREE_NO_ACTION);
 	}
 
 	protected MenuItem addMenuItem(ContextMenu menu, int id, String key, String arg) {
 		return menu.add(0, id, 0, getTitleValue(key, arg)).setEnabled(id != TREE_NO_ACTION);
+	}
+
+	protected MenuItem addOptionsItem(Menu menu, int id, String key, int iconId) {
+		final MenuItem item = menu.add(0, id, 0, getOptionsValue(key));
+		//item.setIcon(iconId);
+		return item;
+	}
+
+	protected MenuItem addOptionsItem(Menu menu, int id, String key, String arg, int iconId) {
+		final MenuItem item = menu.add(0, id, 0, getOptionsValue(key, arg));
+		//item.setIcon(iconId);
+		return item;
 	}
 
 	public abstract boolean canHandleTree(NetworkTree tree);
@@ -72,4 +93,7 @@ abstract class NetworkTreeActions {
 	public abstract String getConfirmText(NetworkTree tree, int actionCode);
 
 	public abstract boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode);
+
+	public abstract boolean createOptionsMenu(Menu menu, NetworkTree tree);
+	public abstract boolean prepareOptionsMenu(Menu menu, NetworkTree tree);
 }

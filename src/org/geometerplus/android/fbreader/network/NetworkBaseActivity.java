@@ -54,7 +54,7 @@ import org.geometerplus.fbreader.network.tree.*;
 
 
 abstract class NetworkBaseActivity extends ListActivity 
-		implements MenuItem.OnMenuItemClickListener, NetworkView.EventListener, View.OnCreateContextMenuListener {
+		implements NetworkView.EventListener, View.OnCreateContextMenuListener {
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
@@ -104,20 +104,6 @@ abstract class NetworkBaseActivity extends ListActivity
 
 	// method from NetworkView.EventListener
 	public void onModelChanged() {
-	}
-
-	// method from MenuItem.OnMenuItemClickListener
-	public boolean onMenuItemClick(MenuItem item) {
-		return false;
-	}
-
-
-	protected MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
-		final MenuItem item = menu.add(0, index, Menu.NONE, label);
-		item.setOnMenuItemClickListener(this);
-		item.setIcon(iconId);
-		return item;
 	}
 
 
@@ -198,8 +184,7 @@ abstract class NetworkBaseActivity extends ListActivity
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree) getListAdapter().getItem(position);
-		final NetworkView networkView = NetworkView.Instance();
-		final NetworkTreeActions actions = networkView.getActions(tree);
+		final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
 		if (actions != null &&
 				actions.runAction(this, tree, item.getItemId())) {
 			return true;

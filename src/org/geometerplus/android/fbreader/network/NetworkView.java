@@ -31,6 +31,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.view.MenuItem;
+import android.view.Menu;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
@@ -83,6 +85,42 @@ class NetworkView {
 		return null;
 	}
 
+	/*
+	 * OptionsMenu methods
+	 */
+
+	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
+		if (!isInitialized()) {
+			return false;
+		}
+		final NetworkTreeActions actions = getActions(tree);
+		if (actions != null) {
+			return actions.createOptionsMenu(menu, tree);
+		}
+		return false;
+	}
+
+	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+		if (!isInitialized()) {
+			return false;
+		}
+		final NetworkTreeActions actions = getActions(tree);
+		if (actions != null) {
+			return actions.prepareOptionsMenu(menu, tree);
+		}
+		return false;
+	}
+
+	public boolean runOptionsMenu(NetworkBaseActivity activity, MenuItem item, NetworkTree tree) {
+		if (!isInitialized()) {
+			return false;
+		}
+		final NetworkTreeActions actions = getActions(tree);
+		if (actions != null) {
+			return actions.runAction(activity, tree, item.getItemId());
+		}
+		return false;
+	}
 
 	/*
 	 * Code for loading network items (running items-loading service and managing items-loading runnables).

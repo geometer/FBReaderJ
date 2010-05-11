@@ -25,6 +25,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.os.Message;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.ContextMenu;
 import android.net.Uri;
 
@@ -92,6 +93,16 @@ class NetworkSearchActions extends NetworkTreeActions {
 	@Override
 	public String getConfirmText(NetworkTree tree, int actionCode) {
 		return null;
+	}
+
+	@Override
+	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
+		return false;
+	}
+
+	@Override
+	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+		return false;
 	}
 
 	@Override

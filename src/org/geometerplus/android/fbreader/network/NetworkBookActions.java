@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
+import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -174,6 +175,16 @@ class NetworkBookActions extends NetworkTreeActions {
 	@Override
 	public String getConfirmText(NetworkTree tree, int actionCode) {
 		return null;
+	}
+
+	@Override
+	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
+		return false;
+	}
+
+	@Override
+	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+		return false;
 	}
 
 	@Override

@@ -176,4 +176,24 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 			runnable.interrupt();
 		}
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		return NetworkView.Instance().createOptionsMenu(menu, myTree);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		return NetworkView.Instance().prepareOptionsMenu(menu, myTree);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (NetworkView.Instance().runOptionsMenu(this, item, myTree)) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
