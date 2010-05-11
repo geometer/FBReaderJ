@@ -109,10 +109,10 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 		public final NetworkTree getItem(int position) {
 			final int size = myTree.subTrees().size();
-			if (position >= 0 && position < size) {
-				return (NetworkTree) myTree.subTrees().get(position);
-			} else if (position == size) {
+			if (position == 0) {
 				return mySearchItem;
+			} else if (position > 0 && position <= size) {
+				return (NetworkTree) myTree.subTrees().get(position - 1);
 			}
 			return null;
 		}
