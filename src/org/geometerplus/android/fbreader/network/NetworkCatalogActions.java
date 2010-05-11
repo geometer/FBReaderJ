@@ -354,7 +354,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			url,
 			new ExpandCatalogRunnable(handler, tree, false)
 		);
-		NetworkView.Instance().openTree(activity, tree, url);
 	}
 
 	private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
