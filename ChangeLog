@@ -4,8 +4,11 @@
 * "Network search" item has been added to the Network Library
 * "My Books" item never becomes hidden; Authentication dialog is showed if needed
 * Options menu has been added to Network Catalogs
+* Books directory is now configurable
+* Manybooks catalog has been added
 
 ===== 0.6.4 (May 1, 2010) =====
+
 * Zip decompressing has been fixed
 
 ===== 0.6.3 (Apr 30, 2010) =====
