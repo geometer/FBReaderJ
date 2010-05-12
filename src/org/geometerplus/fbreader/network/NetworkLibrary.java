@@ -49,7 +49,7 @@ public class NetworkLibrary {
 	private final RootTree myRootTree = new RootTree();
 
 	private boolean myUpdateChildren = true;
-	private boolean myUpdateAccountDependents;
+	private boolean myUpdateVisibility;
 
 	private static class LinksComparator implements Comparator<NetworkLink> {
 		public int compare(NetworkLink link1, NetworkLink link2) {
@@ -123,8 +123,8 @@ public class NetworkLibrary {
 		myUpdateChildren = true;
 	}
 
-	public void invalidateAccountDependents() {
-		myUpdateAccountDependents = true;
+	public void invalidateVisibility() {
+		myUpdateVisibility = true;
 	}
 
 	private void makeUpToDate() {
@@ -192,12 +192,12 @@ public class NetworkLibrary {
 		}
 	}
 
-	private void updateAccountDependents() {
+	private void updateVisibility() {
 		for (FBTree tree: myRootTree.subTrees()) {
 			if (!(tree instanceof NetworkCatalogTree)) {
 				continue;
 			}
-			((NetworkCatalogTree) tree).updateAccountDependents();
+			((NetworkCatalogTree) tree).updateVisibility();
 		}
 	}
 
@@ -206,9 +206,9 @@ public class NetworkLibrary {
 			myUpdateChildren = false;
 			makeUpToDate();
 		}
-		if (myUpdateAccountDependents) {
-			myUpdateAccountDependents = false;
-			updateAccountDependents();
+		if (myUpdateVisibility) {
+			myUpdateVisibility = false;
+			updateVisibility();
 		}
 	}
 

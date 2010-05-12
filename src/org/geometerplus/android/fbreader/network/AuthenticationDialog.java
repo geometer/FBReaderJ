@@ -58,7 +58,7 @@ class AuthenticationDialog extends NetworkDialog {
 					return;
 				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateAccountDependents();
+				library.invalidateVisibility();
 				library.synchronize();
 				NetworkView.Instance().fireModelChanged();
 				if (message.what < 0) {

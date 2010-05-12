@@ -60,7 +60,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 
-	public void updateAccountDependents() {
+	public void updateVisibility() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
 		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
@@ -85,7 +85,7 @@ public class NetworkCatalogTree extends NetworkTree {
 				NetworkCatalogTree child = (NetworkCatalogTree) currentNode;
 				if (child.Item == currentItem) {
 					if (child.Item.isVisible()) {
-						child.updateAccountDependents();
+						child.updateVisibility();
 					} else {
 						toRemove.add(child);
 					}

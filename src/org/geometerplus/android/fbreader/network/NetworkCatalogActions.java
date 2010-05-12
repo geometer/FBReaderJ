@@ -231,7 +231,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			} else {
 				afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
 				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateAccountDependents();
+				library.invalidateVisibility();
 				library.synchronize();
 			}
 			if (NetworkView.Instance().isInitialized()) {
@@ -358,7 +358,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateAccountDependents();
+				library.invalidateVisibility();
 				library.synchronize();
 				if (NetworkView.Instance().isInitialized()) {
 					NetworkView.Instance().fireModelChanged();

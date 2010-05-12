@@ -358,7 +358,7 @@ class NetworkBookActions extends NetworkTreeActions {
 						}
 						if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
 							final NetworkLibrary library = NetworkLibrary.Instance();
-							library.invalidateAccountDependents();
+							library.invalidateVisibility();
 							library.synchronize();
 						}
 						if (NetworkView.Instance().isInitialized()) {
