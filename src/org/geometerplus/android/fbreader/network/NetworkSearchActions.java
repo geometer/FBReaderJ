@@ -63,8 +63,7 @@ class NetworkSearchActions extends NetworkTreeActions {
 		final SearchResult result = searchTree.getSearchResult();
 		menu.setHeaderTitle(tree.getName());
 
-		final ItemsLoadingRunnable searchRunnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		final boolean isLoading = searchRunnable != null;
+		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 
 		if (!isLoading) {
 			addMenuItem(menu, RUN_SEARCH_ITEM_ID, "search");
@@ -72,13 +71,6 @@ class NetworkSearchActions extends NetworkTreeActions {
 		if (isLoading || tree.hasChildren()) {
 			addMenuItem(menu, OPEN_RESULTS_ITEM_ID, "showResults");
 		}
-		/*if (isLoading) {
-			if (searchRunnable.InterruptFlag.get()) {
-				addMenuItem(menu, TREE_NO_ACTION, "stoppingNetworkSearch");
-			} else {
-				addMenuItem(menu, TREE_NO_ACTION, "stopSearching");
-			}
-		}*/
 	}
 
 	@Override
@@ -125,7 +117,8 @@ class NetworkSearchActions extends NetworkTreeActions {
 		}
 		NetworkView.Instance().tryResumeLoading(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY, new Runnable() {
 			public void run() {
-				if (tree.hasChildren()) {
+				final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+				if (isLoading || tree.hasChildren()) {
 					NetworkView.Instance().openTree(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 				}
 			}
