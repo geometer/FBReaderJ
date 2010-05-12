@@ -147,22 +147,20 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		boolean refill = false;
 		String userName = null;
 		String account = null;
-		if (tree instanceof NetworkCatalogRootTree) {
-			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-			if (mgr != null) {
-				if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
-					userName = mgr.currentUserName();
-					signOut = true;
-					account = mgr.currentAccount();
-					if (mgr.refillAccountLink() != null && account != null) {
-						refill = true;
-					}
-				} else {
-					signIn = true;
-					//if (mgr.passwordRecoverySupported()) {
-					//	registerAction(new PasswordRecoveryAction(mgr), true);
-					//}
+		NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+		if (mgr != null) {
+			if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+				userName = mgr.currentUserName();
+				signOut = true;
+				account = mgr.currentAccount();
+				if (mgr.refillAccountLink() != null && account != null) {
+					refill = true;
 				}
+			} else {
+				signIn = true;
+				//if (mgr.passwordRecoverySupported()) {
+				//	registerAction(new PasswordRecoveryAction(mgr), true);
+				//}
 			}
 		}
 		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
