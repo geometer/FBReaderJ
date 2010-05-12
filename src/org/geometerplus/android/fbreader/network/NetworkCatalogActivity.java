@@ -114,18 +114,23 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 		setTitle(title);
 
 		boolean inProgress = false;
-		final String key = getNetworkTreeKey(myTree);
+		final String key = getNetworkTreeKey(myTree, true);
 		if (key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key)) {
 			inProgress = true;
 		}
 		setProgressBarIndeterminateVisibility(inProgress);
 	}
 
-	private static String getNetworkTreeKey(NetworkTree tree) {
+	private static String getNetworkTreeKey(NetworkTree tree, boolean recursive) {
 		if (tree instanceof NetworkCatalogTree) {
 			return ((NetworkCatalogTree) tree).Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		} else if (tree instanceof SearchItemTree) {
 			return NetworkSearchActivity.SEARCH_RUNNABLE_KEY;
+		} else if (recursive && tree.Parent instanceof NetworkTree) {
+			if (tree instanceof NetworkAuthorTree
+					|| tree instanceof NetworkSeriesTree) {
+				return getNetworkTreeKey((NetworkTree) tree.Parent, true);
+			}
 		}
 		return null;
 	}
@@ -142,7 +147,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		getListView().invalidateViews();
 	}
 
 
@@ -209,7 +213,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	}
 
 	private void doStopLoading() {
-		final String key = getNetworkTreeKey(myTree);
+		final String key = getNetworkTreeKey(myTree, false);
 		if (key != null && NetworkView.Instance().isInitialized()) {
 			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
 			if (runnable != null) {

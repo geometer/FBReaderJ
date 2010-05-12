@@ -99,6 +99,7 @@ abstract class NetworkBaseActivity extends ListActivity
 	public void onResume() {
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
+		onModelChanged(); // do the same update actions as upon onModelChanged
 	}
 
 

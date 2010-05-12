@@ -173,6 +173,7 @@ public class ItemsLoadingService extends Service {
 		};
 
 		startProgressNotification(runnable);
+		NetworkView.Instance().fireModelChanged(); // this call is needed to show indeterminate progress bar in title right on downloading start
 
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {
