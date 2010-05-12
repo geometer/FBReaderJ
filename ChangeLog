@@ -1,6 +1,6 @@
 ===== 0.6.5 (May ???, 2010) =====
 
-* View for the Network Library has been completely changed: each subcatalog opens in new window
+* Network library view has been completely changed: each subcatalog opens in new window
 * "Network search" item has been added to the Network Library
 * "My Books" item never becomes hidden; Authentication dialog is showed if needed
 * Options menu has been added to Network Catalogs
