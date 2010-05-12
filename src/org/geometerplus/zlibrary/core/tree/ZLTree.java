@@ -27,6 +27,10 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 	public final int Level;
 	private ArrayList<T> mySubTrees;
 
+	protected ZLTree(int level) {
+		this(level, null, 0);
+	}
+
 	protected ZLTree() {
 		this(null);
 	}
@@ -36,6 +40,10 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 	}
 
 	protected ZLTree(T parent, int position) {
+		this(0, parent, position);
+	}
+
+	private ZLTree(int nullLevel, T parent, int position) {
 		if (parent != null && (position < 0 || position > parent.subTrees().size())) {
 			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subTrees().size() + "]");
 		}
@@ -44,7 +52,7 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 			Level = parent.Level + 1;
 			parent.addSubTree(this, position);
 		} else {
-			Level = 0;
+			Level = nullLevel;
 		}
 	}
 

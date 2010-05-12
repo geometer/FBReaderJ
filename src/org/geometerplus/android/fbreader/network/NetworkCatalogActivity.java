@@ -52,6 +52,7 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.authentication.*;
 
 
 public class NetworkCatalogActivity extends NetworkBaseActivity {
@@ -125,13 +126,38 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	private final class CatalogAdapter extends BaseAdapter {
 
+		private ArrayList<NetworkTree> mySpecialItems;
+
+		public CatalogAdapter() {
+			mySpecialItems = null;
+			if (myTree instanceof NetworkCatalogRootTree) {
+				NetworkCatalogTree tree = (NetworkCatalogTree) myTree;
+				NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
+				if (mgr != null) {
+					mySpecialItems = new ArrayList<NetworkTree>();
+					if (mgr.refillAccountSupported()) {
+						mySpecialItems.add(new RefillAccountTree(tree));
+					}
+					mySpecialItems.trimToSize();
+				}
+			}
+		}
+
 		public final int getCount() {
-			return myTree.subTrees().size();
+			return myTree.subTrees().size() +
+				((mySpecialItems == null) ? 0 : mySpecialItems.size());
 		}
 
 		public final NetworkTree getItem(int position) {
-			if (position >= 0 && position < myTree.subTrees().size()) {
+			if (position < 0) {
+				return null;
+			}
+			if (position < myTree.subTrees().size()) {
 				return (NetworkTree) myTree.subTrees().get(position);
+			}
+			position -= myTree.subTrees().size();
+			if (mySpecialItems != null && position < mySpecialItems.size()) {
+				return mySpecialItems.get(position);
 			}
 			return null;
 		}
@@ -149,6 +175,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	@Override
 	public void onModelChanged() {
 		getListView().invalidateViews();
+		setupTitle();
 	}
 
 	@Override

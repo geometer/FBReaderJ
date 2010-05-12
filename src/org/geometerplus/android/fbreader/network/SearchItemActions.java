@@ -37,7 +37,7 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.fbreader.network.*;
 
 
-class NetworkSearchActions extends NetworkTreeActions {
+class SearchItemActions extends NetworkTreeActions {
 
 	public static final int OPEN_RESULTS_ITEM_ID = 0;
 	public static final int RUN_SEARCH_ITEM_ID = 2;

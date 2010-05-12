@@ -25,6 +25,10 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public abstract class NetworkTree extends FBTree {
 
+	protected NetworkTree(int level) {
+		super(level);
+	}
+
 	protected NetworkTree() {
 		super();
 	}

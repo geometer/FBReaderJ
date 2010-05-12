@@ -155,7 +155,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		addOptionsItem(menu, RELOAD_ITEM_ID, "reload");
 		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
-		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount", "");
+		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillShort");
 		return true;
 	}
 
@@ -193,7 +193,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
 		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
-		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill, "refillAccount", account);
+		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill);
 		return true;
 	}
 

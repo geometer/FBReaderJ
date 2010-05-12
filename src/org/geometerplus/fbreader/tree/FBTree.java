@@ -29,6 +29,10 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	private ZLImage myCover;
 	private boolean myCoverRequested;
 
+	protected FBTree(int level) {
+		super(level);
+	}
+
 	protected FBTree() {
 		super();
 	}

@@ -35,8 +35,8 @@ public class SearchItemTree extends NetworkTree {
 
 	private SearchResult myResult;
 
-	public SearchItemTree(NetworkTree parent) {
-		super(parent);
+	public SearchItemTree() {
+		super(1);
 	}
 
 	@Override

@@ -63,7 +63,8 @@ class NetworkView {
 
 		myActions.add(new NetworkBookActions());
 		myActions.add(new NetworkCatalogActions());
-		myActions.add(new NetworkSearchActions());
+		myActions.add(new SearchItemActions());
+		myActions.add(new RefillAccountActions());
 		myActions.trimToSize();
 
 		myInitialized = true;
@@ -347,8 +348,7 @@ class NetworkView {
 	 * Special view items item
 	 */
 
-	private final RootTree mySpecialRoot = new RootTree();
-	private final SearchItemTree mySearchItem = new SearchItemTree(mySpecialRoot);
+	private final SearchItemTree mySearchItem = new SearchItemTree();
 
 	public SearchItemTree getSearchItemTree() {
 		return mySearchItem;
