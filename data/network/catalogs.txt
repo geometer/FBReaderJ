@@ -3,4 +3,3 @@ feedbooks.com.xml
 smashwords.com.xml
 litres.ru.xml
 manybooks.net.xml
-ebooksearch.webfactional.com.xml
