@@ -126,12 +126,8 @@ public class NetworkSearchActivity extends Activity {
 		private final String myPattern;
 
 		public SearchRunnable(ItemsLoadingHandler handler, String pattern) {
-			super(handler, NETWORK_SEARCH);
+			super(handler);
 			myPattern = pattern;
-		}
-
-		public int getNotificationId() {
-			return NetworkNotifications.Instance().getNetworkSearchId();
 		}
 
 		public String getResourceKey() {

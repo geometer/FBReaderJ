@@ -29,8 +29,8 @@ class NetworkNotifications {
 		return ourInstance;
 	}
 
-	private static final int CATALOG_LOADING = 0;
-	private static final int NETWORK_SEARCH = 1;
+	//private static final int CATALOG_LOADING = 0;
+	//private static final int NETWORK_SEARCH = 1;
 
 	private static final int BOOK_DOWNLOADING_START = 0x10000000;
 	private static final int BOOK_DOWNLOADING_END   = 0x1fffffff;
@@ -40,13 +40,13 @@ class NetworkNotifications {
 	private NetworkNotifications() {
 	}
 
-	public int getCatalogLoadingId() {
+	/*public int getCatalogLoadingId() {
 		return CATALOG_LOADING;
-	}
+	}*/
 
-	public int getNetworkSearchId() {
+	/*public int getNetworkSearchId() {
 		return NETWORK_SEARCH;
-	}
+	}*/
 
 	public synchronized int getBookDownloadingId() {
 		final int id = myBookDownloadingId;

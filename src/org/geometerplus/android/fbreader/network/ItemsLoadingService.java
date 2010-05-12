@@ -57,83 +57,6 @@ public class ItemsLoadingService extends Service {
 	}
 
 
-	private HashMap<Integer, Integer> myRunnablesNumbers = new HashMap<Integer, Integer>(0, 0.9f);
-
-	private int getRunnablesNumber(int runnableType) {
-		Integer value = myRunnablesNumbers.get(runnableType);
-		if (value == null) {
-			return 0;
-		}
-		return value.intValue();
-	}
-
-	private int increaseRunnablesNumber(int runnableType) {
-		final Integer value = myRunnablesNumbers.get(runnableType);
-		final int val = (value == null) ? 1 : (value.intValue() + 1);
-		myRunnablesNumbers.put(runnableType, Integer.valueOf(val));
-		return val;
-	}
-
-	private int decreaseRunnablesNumber(int runnableType) {
-		final Integer value = myRunnablesNumbers.get(runnableType);
-		final int val = (value == null) ? 0 : (value.intValue() - 1);
-		if (val == 0) {
-			myRunnablesNumbers.remove(runnableType);
-		} else {
-			myRunnablesNumbers.put(runnableType, Integer.valueOf(val));
-		}
-		return val;
-	}
-
-	private void updateProgressNotification(ItemsLoadingRunnable runnable) {
-		final RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.download_notification);
-		String title = ZLResource.resource("networkView").getResource(runnable.getResourceKey()).getValue();
-		contentView.setTextViewText(R.id.download_notification_title, title);
-		contentView.setTextViewText(R.id.download_notification_progress_text, "");
-		contentView.setProgressBar(R.id.download_notification_progress_bar, 100, 0, true);
-
-		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
-
-		final Notification notification = new Notification();
-		notification.icon = android.R.drawable.stat_notify_sync;
-		notification.flags |= Notification.FLAG_ONGOING_EVENT;
-		notification.contentView = contentView;
-		notification.contentIntent = contentIntent;
-		notification.number = getRunnablesNumber(runnable.Type);
-
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(runnable.getNotificationId(), notification);
-	}
-
-	private void startProgressNotification(ItemsLoadingRunnable runnable) {
-		increaseRunnablesNumber(runnable.Type);
-		updateProgressNotification(runnable);
-	}
-
-	private void endProgressNotification(ItemsLoadingRunnable runnable) {
-		final int number = decreaseRunnablesNumber(runnable.Type);
-		if (number == 0) {
-			final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.cancel(runnable.getNotificationId());
-		} else {
-			updateProgressNotification(runnable);
-		}
-	}
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-	}
-
-	@Override
-	public void onDestroy() {
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		final NetworkNotifications notifications = NetworkNotifications.Instance();
-		notificationManager.cancel(notifications.getCatalogLoadingId());
-		notificationManager.cancel(notifications.getNetworkSearchId());
-		super.onDestroy();
-	}
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -164,7 +87,6 @@ public class ItemsLoadingService extends Service {
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				doStop();
-				endProgressNotification(runnable);
 				if (NetworkView.Instance().isInitialized()) {
 					NetworkView.Instance().removeItemsLoadingRunnable(key);
 					NetworkView.Instance().fireModelChanged();
@@ -172,7 +94,6 @@ public class ItemsLoadingService extends Service {
 			}
 		};
 
-		startProgressNotification(runnable);
 		NetworkView.Instance().fireModelChanged(); // this call is needed to show indeterminate progress bar in title right on downloading start
 
 		final Thread loader = new Thread(new Runnable() {

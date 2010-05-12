@@ -28,11 +28,6 @@ import org.geometerplus.fbreader.network.NetworkLibraryItem;
 
 abstract class ItemsLoadingRunnable implements Runnable {
 
-	public static final int CATALOG_LOADING = 0;
-	public static final int NETWORK_SEARCH = 1;
-
-	public final int Type;
-
 	private final ItemsLoadingHandler myHandler;
 
 	private final long myUpdateInterval; // in milliseconds
@@ -41,7 +36,6 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	private boolean myInterruptRequested;
 	private boolean myInterruptConfirmed;
 	private Object myInterruptLock = new Object();
-
 
 	private boolean myFinished;
 	private Handler myFinishedHandler;
@@ -79,21 +73,19 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	}
 
 
-	public ItemsLoadingRunnable(ItemsLoadingHandler handler, int type) {
-		this(handler, type, 1000, 500);
+	public ItemsLoadingRunnable(ItemsLoadingHandler handler) {
+		this(handler, 1000, 500);
 	}
 
-	public ItemsLoadingRunnable(ItemsLoadingHandler handler, int type, long updateIntervalMillis, int itemsLimit) {
+	public ItemsLoadingRunnable(ItemsLoadingHandler handler, long updateIntervalMillis, int itemsLimit) {
 		myHandler = handler;
 		myUpdateInterval = updateIntervalMillis;
 		myItemsLimit = itemsLimit;
-		Type = type;
 	}
 
 	public abstract String doBefore();
 	public abstract String doLoading(NetworkOperationData.OnNewItemListener doWithListener);
 
-	public abstract int getNotificationId();
 	public abstract String getResourceKey();
 
 
