@@ -45,10 +45,6 @@ public abstract class NetworkAuthenticationManager {
 	public abstract void logOut();
 	public abstract BookReference downloadReference(NetworkBookItem book);
 
-	public boolean skipIPSupported() {
-		return false;
-	}
-
 	/*
 	 * Account specific methods (can be called only if authorised!!!)
 	 */
@@ -73,16 +69,23 @@ public abstract class NetworkAuthenticationManager {
 		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 	}
 
-	public String refillAccountLink() {
-		return null;
-	}
-
 	public String currentAccount() {
 		return null;
 	}
 
 	//public abstract ZLNetworkSSLCertificate certificate();
 
+	/*
+	 * refill account
+	 */
+
+	public boolean refillAccountSupported() {
+		return false;
+	}
+
+	public String refillAccountLink() {
+		return null;
+	}
 
 	/*
 	 * new User Registration

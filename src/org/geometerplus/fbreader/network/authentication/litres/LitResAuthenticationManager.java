@@ -48,6 +48,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		mySidOption = new ZLStringOption(link.SiteName, "sid", "");
 	}
 
+	@Override
 	public synchronized AuthenticationStatus isAuthorised(boolean useNetwork /* = true */) {
 		boolean authState =
 			mySidUserNameOption.getValue().length() != 0 &&
@@ -87,6 +88,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return new AuthenticationStatus(true);
 	}
 
+	@Override
 	public synchronized String authorise(String password) {
 		String url = Link.Links.get(NetworkLink.URL_SIGN_IN);
 		if (url == null) {
@@ -109,12 +111,14 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return null;
 	}
 
+	@Override
 	public synchronized void logOut() {
 		mySidChecked = true;
 		mySidUserNameOption.setValue("");
 		mySidOption.setValue("");
 	}
 
+	@Override
 	public synchronized BookReference downloadReference(NetworkBookItem book) {
 		final String sid = mySidOption.getValue();
 		if (sid.length() == 0) {
@@ -129,10 +133,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return new DecoratedBookReference(reference, url);
 	}
 
-	public synchronized boolean skipIPSupported() {
-		return true;
-	}
 
+	@Override
 	public synchronized String currentUserName() {
 		String value = mySidUserNameOption.getValue();
 		if (value.length() == 0) {
@@ -142,10 +144,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 
+	@Override
 	public synchronized boolean needPurchase(NetworkBookItem book) {
 		return !myPurchasedBooks.containsKey(book.Id);
 	}
 
+	@Override
 	public synchronized String purchaseBook(NetworkBookItem book) {
 		final String sid = mySidOption.getValue();
 		if (sid.length() == 0) {
@@ -184,7 +188,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return error;
 	}
 
+	@Override
+	public boolean refillAccountSupported() {
+		return true;
+	}
 
+	@Override
 	public synchronized String refillAccountLink() {
 		final String sid = mySidOption.getValue();
 		if (sid.length() == 0) {
@@ -197,11 +206,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return ZLNetworkUtil.appendParameter(url, "sid", sid);
 	}
 
+	@Override
 	public synchronized String currentAccount() {
 		return myAccount;
 	}
 
-	public synchronized String reloadPurchasedBooks() {
+	synchronized String reloadPurchasedBooks() {
 		final String sid = mySidOption.getValue();
 		if (sid.length() == 0) {
 			return NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
@@ -229,11 +239,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return null;
 	}
 
-	public synchronized void collectPurchasedBooks(List<NetworkLibraryItem> list) {
+	synchronized void collectPurchasedBooks(List<NetworkLibraryItem> list) {
 		list.addAll(myPurchasedBooks.values());
 	}
 
 
+	@Override
 	public synchronized boolean needsInitialization() {
 		final String sid = mySidOption.getValue();
 		if (sid.length() == 0) {
@@ -242,6 +253,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return !sid.equals(myInitializedDataSid);
 	}
 
+	@Override
 	public synchronized String initialize() {
 		final String sid = mySidOption.getValue();
 		if (sid.length() == 0) {
@@ -324,10 +336,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 
+	@Override
 	public synchronized boolean registrationSupported() {
 		return true;
 	}
 
+	@Override
 	public synchronized String registerUser(String login, String password, String email) {
 		String url = Link.Links.get(NetworkLink.URL_SIGN_UP);
 		if (url == null) {
@@ -352,10 +366,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 
+	@Override
 	public synchronized boolean passwordRecoverySupported() {
 		return true;
 	}
 
+	@Override
 	public synchronized String recoverPassword(String email) {
 		String url = Link.Links.get(NetworkLink.URL_RECOVER_PASSWORD);
 		if (url == null) {
