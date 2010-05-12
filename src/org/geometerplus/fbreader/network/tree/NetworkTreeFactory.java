@@ -66,6 +66,7 @@ public class NetworkTreeFactory {
 				if (previous instanceof NetworkSeriesTree) {
 					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) previous;
 					if (seriesTitle.equals(seriesTree.SeriesTitle)) {
+						seriesTree.invalidateChildren(); // call to update secondString
 						return new NetworkBookTree(seriesTree, book, showAuthors);
 					}
 				} else if (previous instanceof NetworkBookTree) {
