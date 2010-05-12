@@ -282,6 +282,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				myTree.ChildrenItems.clear();
 				myTree.clear();
 			} else {
+				myTree.updateLoadedTime();
 				afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateVisibility();
@@ -374,8 +375,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		NetworkView.Instance().tryResumeLoading(activity, tree, url, new Runnable() {
 			public void run() {
 				if (tree.hasChildren()) {
-					NetworkView.Instance().openTree(activity, tree, url);
-					return;
+					if (tree.isContentValid()) {
+						NetworkView.Instance().openTree(activity, tree, url);
+						return;
+					} else {
+						tree.ChildrenItems.clear();
+						tree.clear();
+						NetworkView.Instance().fireModelChanged();
+					}
 				}
 				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
 				NetworkView.Instance().startItemsLoading(

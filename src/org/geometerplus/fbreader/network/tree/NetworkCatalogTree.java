@@ -32,6 +32,8 @@ public class NetworkCatalogTree extends NetworkTree {
 	public final NetworkCatalogItem Item;
 	public final ArrayList<NetworkLibraryItem> ChildrenItems = new ArrayList<NetworkLibraryItem>();
 
+	private long myLoadedTime = -1;
+
 	NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		Item = item;
@@ -58,6 +60,24 @@ public class NetworkCatalogTree extends NetworkTree {
 	@Override
 	protected ZLImage createCover() {
 		return createCover(Item);
+	}
+
+
+	public boolean isContentValid() {
+		if (myLoadedTime < 0) {
+			return false;
+		}
+		final int reloadTime = 15 * 60 * 1000; // 15 minutes in milliseconds
+		return System.currentTimeMillis() - myLoadedTime < reloadTime;
+	}
+
+	public void updateLoadedTime() {
+		myLoadedTime = System.currentTimeMillis();
+		FBTree tree = Parent;
+		while (tree instanceof NetworkCatalogTree) {
+			((NetworkCatalogTree) tree).myLoadedTime = myLoadedTime;
+			tree = tree.Parent;
+		}
 	}
 
 
