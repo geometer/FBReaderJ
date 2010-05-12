@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -60,16 +59,6 @@ public class NetworkCatalogTree extends NetworkTree {
 		return createCover(Item);
 	}
 
-	static boolean processAccountDependent(NetworkCatalogItem item) {
-		if (item.Visibility == NetworkCatalogItem.VISIBLE_ALWAYS) {
-			return true;
-		}
-		final NetworkLink link = item.Link;
-		if (link.authenticationManager() == null) {
-			return false;
-		}
-		return link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE;
-	}
 
 	public void updateAccountDependents() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
@@ -95,7 +84,7 @@ public class NetworkCatalogTree extends NetworkTree {
 				}
 				NetworkCatalogTree child = (NetworkCatalogTree) currentNode;
 				if (child.Item == currentItem) {
-					if (processAccountDependent(child.Item)) {
+					if (child.Item.isVisible()) {
 						child.updateAccountDependents();
 					} else {
 						toRemove.add(child);

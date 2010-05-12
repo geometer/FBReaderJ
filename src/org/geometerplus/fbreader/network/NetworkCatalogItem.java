@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
 
 public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
@@ -106,4 +108,16 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public void onDisplayItem() {
 	}
 
+	public boolean isVisible() {
+		if (Visibility == VISIBLE_ALWAYS) {
+			return true;
+		}
+		if (Visibility == VISIBLE_LOGGED_USER) {
+			if (Link.authenticationManager() == null) {
+				return false;
+			}
+			return Link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE;
+		}
+		return false;
+	}
 }

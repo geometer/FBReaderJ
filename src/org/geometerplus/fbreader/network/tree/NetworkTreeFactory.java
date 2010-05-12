@@ -40,7 +40,7 @@ public class NetworkTreeFactory {
 
 		if (item instanceof NetworkCatalogItem) {
 			NetworkCatalogItem catalogItem = (NetworkCatalogItem) item;
-			if (!NetworkCatalogTree.processAccountDependent(catalogItem)) {
+			if (!catalogItem.isVisible()) {
 				return null;
 			}
 			NetworkCatalogTree tree = new NetworkCatalogTree(parent, catalogItem, position);
