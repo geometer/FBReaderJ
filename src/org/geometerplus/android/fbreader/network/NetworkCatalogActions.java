@@ -70,34 +70,52 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
 
+		final boolean isVisible = item.getVisibility() == ZLBoolean3.B3_TRUE;
+		boolean hasItems = false;
+
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		if (catalogUrl != null) {
 			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
+			hasItems = true;
 		}
 
 		if (tree instanceof NetworkCatalogRootTree) {
-			NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-			if (mgr != null) {
-				final boolean maybeSignedIn = mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE;
-				if (maybeSignedIn) {
-					addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
-					if (mgr.refillAccountLink() != null) {
-						final String account = mgr.currentAccount();
-						if (account != null) {
-							addMenuItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount", account);
+			if (isVisible) {
+				final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+				if (mgr != null) {
+					final boolean maybeSignedIn = mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE;
+					if (maybeSignedIn) {
+						addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
+						if (mgr.refillAccountLink() != null) {
+							final String account = mgr.currentAccount();
+							if (account != null) {
+								addMenuItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount", account);
+							}
 						}
+					} else {
+						addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
+						//if (mgr.passwordRecoverySupported()) {
+						//	registerAction(new PasswordRecoveryAction(mgr), true);
+						//}
 					}
-				} else {
-					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
-					//if (mgr.passwordRecoverySupported()) {
-					//	registerAction(new PasswordRecoveryAction(mgr), true);
-					//}
 				}
 			}
 		} else {
 			if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
+				hasItems = true;
 			}
+		}
+
+		if (!isVisible && !hasItems) {
+			switch (item.Visibility) {
+			case NetworkCatalogItem.VISIBLE_LOGGED_USER:
+				if (item.Link.authenticationManager() != null) {
+					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
+				}
+				break;
+			}
+			return;
 		}
 	}
 
@@ -110,6 +128,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 		if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 			return OPEN_IN_BROWSER_ITEM_ID;
+		}
+		if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
+			switch (item.Visibility) {
+			case NetworkCatalogItem.VISIBLE_LOGGED_USER:
+				if (item.Link.authenticationManager() != null) {
+					return SIGNIN_ITEM_ID;
+				}
+				break;
+			}
+			return TREE_NO_ACTION;
 		}
 		return TREE_NO_ACTION;
 	}
@@ -169,8 +197,33 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		return true;
 	}
 
+	private boolean consumeByVisibility(final NetworkBaseActivity activity, final NetworkTree tree, final int actionCode) {
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+		if (catalogTree.Item.getVisibility() == ZLBoolean3.B3_TRUE) {
+			return false;
+		}
+		switch (catalogTree.Item.Visibility) {
+		case NetworkCatalogItem.VISIBLE_LOGGED_USER:
+			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+				public void run() {
+					if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
+						return;
+					}
+					if (actionCode != SIGNIN_ITEM_ID) {
+						runAction(activity, tree, actionCode);
+					}
+				}
+			});
+			break;
+		}
+		return true;
+	}
+
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+		if (consumeByVisibility(activity, tree, actionCode)) {
+			return true;
+		}
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
 				doExpandCatalog(activity, (NetworkCatalogTree)tree);

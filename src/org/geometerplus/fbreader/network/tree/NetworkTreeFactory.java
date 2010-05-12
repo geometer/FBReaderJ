@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
@@ -40,7 +42,7 @@ public class NetworkTreeFactory {
 
 		if (item instanceof NetworkCatalogItem) {
 			NetworkCatalogItem catalogItem = (NetworkCatalogItem) item;
-			if (!catalogItem.isVisible()) {
+			if (catalogItem.getVisibility() == ZLBoolean3.B3_FALSE) {
 				return null;
 			}
 			NetworkCatalogTree tree = new NetworkCatalogTree(parent, catalogItem, position);

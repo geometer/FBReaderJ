@@ -108,16 +108,17 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public void onDisplayItem() {
 	}
 
-	public boolean isVisible() {
+	public int getVisibility() {
 		if (Visibility == VISIBLE_ALWAYS) {
-			return true;
+			return ZLBoolean3.B3_TRUE;
 		}
 		if (Visibility == VISIBLE_LOGGED_USER) {
 			if (Link.authenticationManager() == null) {
-				return false;
+				return ZLBoolean3.B3_FALSE;
 			}
-			return Link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE;
+			return (Link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE) ?
+				ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
 		}
-		return false;
+		return ZLBoolean3.B3_FALSE;
 	}
 }

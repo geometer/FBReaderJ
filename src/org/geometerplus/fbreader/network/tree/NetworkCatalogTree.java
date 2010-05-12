@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.tree;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
@@ -84,10 +85,14 @@ public class NetworkCatalogTree extends NetworkTree {
 				}
 				NetworkCatalogTree child = (NetworkCatalogTree) currentNode;
 				if (child.Item == currentItem) {
-					if (child.Item.isVisible()) {
+					final int visibility = child.Item.getVisibility();
+					if (visibility == ZLBoolean3.B3_TRUE) {
 						child.updateVisibility();
-					} else {
+					} else if (visibility == ZLBoolean3.B3_FALSE) {
 						toRemove.add(child);
+					} else {
+						child.clear();
+						child.ChildrenItems.clear();
 					}
 					currentNode = null;
 					++nodeCount;
