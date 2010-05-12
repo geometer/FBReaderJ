@@ -24,7 +24,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 public final class Library {
 	private static Library ourInstance;
@@ -102,7 +102,7 @@ public final class Library {
 		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		dirQueue.offer(new ZLPhysicalFile(new File(Constants.BOOKS_DIRECTORY)));
+		dirQueue.offer(new ZLPhysicalFile(new File(Paths.BooksDirectoryOption.getValue())));
 
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {

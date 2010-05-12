@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.*;
 
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 
 public final class NetworkImage extends ZLSingleImage {
@@ -47,7 +47,7 @@ public final class NetworkImage extends ZLSingleImage {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeImagesDir() {
-		return Constants.CACHE_DIRECTORY + File.separator + "cache";
+		return Paths.cacheDirectory() + File.separator + "cache";
 	}
 
 	// mimeType string MUST be interned

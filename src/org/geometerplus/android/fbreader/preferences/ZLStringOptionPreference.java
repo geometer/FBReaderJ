@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader;
+package org.geometerplus.android.fbreader.preferences;
 
-import android.os.Environment;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public abstract class Constants {
-	public static String BOOKS_DIRECTORY = Environment.getExternalStorageDirectory() + "/Books";
-	public static String CACHE_DIRECTORY = BOOKS_DIRECTORY + "/.FBReader";
+import android.content.Context;
+
+class ZLStringOptionPreference extends ZLStringPreference {
+	private final ZLStringOption myOption;
+
+	ZLStringOptionPreference(Context context, ZLStringOption option, ZLResource rootResource, String resourceKey) {
+		super(context, rootResource, resourceKey);
+		myOption = option;
+		setValue(myOption.getValue());
+	}
+
+	public void onAccept() {
+		myOption.setValue(getValue());
+	}
 }

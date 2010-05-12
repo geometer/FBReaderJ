@@ -23,7 +23,7 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 final class Base64EncodedImage extends ZLSingleImage {
 	private static int ourCounter;
@@ -32,6 +32,7 @@ final class Base64EncodedImage extends ZLSingleImage {
 		ourCounter = 0;
 	}
 
+	private final String myDirName;
 	private final int myFileNumber;
 	private OutputStreamWriter myStreamWriter;
 	private boolean myIsDecoded;
@@ -39,10 +40,11 @@ final class Base64EncodedImage extends ZLSingleImage {
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
 		super(contentType);
-		new File(Constants.CACHE_DIRECTORY).mkdirs();
+		myDirName = Paths.cacheDirectory().intern();
+		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;
 		try {
-			myStreamWriter = new OutputStreamWriter(new FileOutputStream(Constants.CACHE_DIRECTORY + "/image" + myFileNumber), "UTF-8");
+			myStreamWriter = new OutputStreamWriter(new FileOutputStream(myDirName + "/image" + myFileNumber), "UTF-8");
 		} catch (IOException e) {
 		}
 	}
@@ -77,7 +79,7 @@ final class Base64EncodedImage extends ZLSingleImage {
 	public byte[] byteData() {
 		try {
 			decode();
-			final File file = new File(Constants.CACHE_DIRECTORY + "/dimage" + myFileNumber);
+			final File file = new File(myDirName + "/dimage" + myFileNumber);
 			final byte[] data = new byte[(int)file.length()];
 			final FileInputStream stream = new FileInputStream(file);
 			stream.read(data);
@@ -98,8 +100,8 @@ final class Base64EncodedImage extends ZLSingleImage {
 		byte[] encodedData;
 		FileOutputStream outputStream;
 		
-		final File file = new File(Constants.CACHE_DIRECTORY + "/image" + myFileNumber);
-		outputStream = new FileOutputStream(Constants.CACHE_DIRECTORY + "/dimage" + myFileNumber);
+		final File file = new File(myDirName + "/image" + myFileNumber);
+		outputStream = new FileOutputStream(myDirName + "/dimage" + myFileNumber);
 		dataLength = (int)file.length();
 		final FileInputStream inputStream = new FileInputStream(file);
 		encodedData = new byte[dataLength];

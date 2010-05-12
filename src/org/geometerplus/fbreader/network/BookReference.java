@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.io.File;
 import java.net.URI;
 
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 public class BookReference {
 
@@ -80,7 +80,7 @@ public class BookReference {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
 		}
-		path.insert(0, Constants.BOOKS_DIRECTORY);
+		path.insert(0, Paths.BooksDirectoryOption.getValue());
 
 		int index = path.length();
 		path.append(uri.getPath());

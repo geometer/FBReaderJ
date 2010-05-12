@@ -23,8 +23,6 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
-import org.geometerplus.fbreader.Constants;
-
 final class Base64EncodedImage extends ZLSingleImage {
 
 	private static final String ENCODED_SUFFIX = ".base64";

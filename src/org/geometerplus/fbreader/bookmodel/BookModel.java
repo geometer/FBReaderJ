@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 public final class BookModel {
 	public static BookModel createModel(Book book) {
@@ -72,7 +72,7 @@ public final class BookModel {
 
 	private BookModel(Book book) {
 		Book = book;
-		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Constants.CACHE_DIRECTORY, "cache", myImageMap);
+		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
 		//for (int i = 0; i < 50; ++i) {
 		//	new File(linksFileName(i)).delete();
 		//}
@@ -81,13 +81,13 @@ public final class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Constants.CACHE_DIRECTORY, "cache" + myFootnotes.size(), myImageMap); 
+			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap); 
 			myFootnotes.put(id, model); 
 		}
 		return model;
 	}
 	
-	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Constants.CACHE_DIRECTORY, "links");
+	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	private char[] myCurrentLinkBlock;
 	private int myCurrentLinkBlockOffset;
 

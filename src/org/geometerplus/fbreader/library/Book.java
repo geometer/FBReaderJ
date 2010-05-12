@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.formats.*;
 
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 public class Book {
 	public static Book getById(long bookId) {
@@ -123,7 +123,7 @@ public class Book {
 		if ((myTitle == null) || (myTitle.length() == 0)) {
 			setTitle(File.getName(true));
 		}
-		final String demoPathPrefix = Constants.BOOKS_DIRECTORY + java.io.File.separator + "Demos" + java.io.File.separator;
+		final String demoPathPrefix = Paths.BooksDirectoryOption.getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
 		if (File.getPath().startsWith(demoPathPrefix)) {
 			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");

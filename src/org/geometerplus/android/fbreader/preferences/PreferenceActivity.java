@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.fbreader.*;
-import org.geometerplus.fbreader.Constants;
+import org.geometerplus.fbreader.Paths;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
@@ -68,10 +68,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category libraryCategory = createCategory("Library");
+		/*
 		libraryCategory.addPreference(new InfoPreference(
 			this,
 			libraryCategory.Resource.getResource("path").getValue(),
 			Constants.BOOKS_DIRECTORY)
+		);
+		*/
+		libraryCategory.addPreference(new ZLStringOptionPreference(
+			this,
+			Paths.BooksDirectoryOption,
+			libraryCategory.Resource,
+			"path")
 		);
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
