@@ -67,6 +67,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		final NetworkView networkView = NetworkView.Instance();
 		if (!networkView.isInitialized()) {
 			finish();
@@ -99,19 +101,39 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	private final void setupTitle() {
 		String title = null;
-		final NetworkTreeActions actions = NetworkView.Instance().getActions(myTree);
-		if (actions != null) {
-			title = actions.getTreeTitle(myTree);
+		final NetworkView networkView = NetworkView.Instance();
+		if (networkView.isInitialized()) {
+			final NetworkTreeActions actions = networkView.getActions(myTree);
+			if (actions != null) {
+				title = actions.getTreeTitle(myTree);
+			}
 		}
 		if (title == null) {
 			title = myTree.getName();
 		}
 		setTitle(title);
+
+		boolean inProgress = false;
+		final String key = getNetworkTreeKey(myTree);
+		if (key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key)) {
+			inProgress = true;
+		}
+		setProgressBarIndeterminateVisibility(inProgress);
 	}
+
+	private static String getNetworkTreeKey(NetworkTree tree) {
+		if (tree instanceof NetworkCatalogTree) {
+			return ((NetworkCatalogTree) tree).Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+		} else if (tree instanceof SearchItemTree) {
+			return NetworkSearchActivity.SEARCH_RUNNABLE_KEY;
+		}
+		return null;
+	}
+
 
 	@Override
 	public void onDestroy() {
-		if (myTree != null && myCatalogKey != null) {
+		if (myTree != null && myCatalogKey != null && NetworkView.Instance().isInitialized()) {
 			NetworkView.Instance().setOpenedActivity(myCatalogKey, null);
 		}
 		super.onDestroy();
@@ -187,20 +209,12 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	}
 
 	private void doStopLoading() {
-		ItemsLoadingRunnable runnable = null;
-		if (myTree instanceof NetworkCatalogTree) {
-			final String url = ((NetworkCatalogTree) myTree).Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-			if (url == null) {
-				throw new RuntimeException("That's impossible!!!");
+		final String key = getNetworkTreeKey(myTree);
+		if (key != null && NetworkView.Instance().isInitialized()) {
+			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
+			if (runnable != null) {
+				runnable.interrupt();
 			}
-			runnable = NetworkView.Instance().getItemsLoadingRunnable(url);
-		} else if (myTree instanceof SearchItemTree) {
-			if (NetworkView.Instance().isInitialized()) {
-				runnable = NetworkView.Instance().getItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-			}
-		}
-		if (runnable != null) {
-			runnable.interrupt();
 		}
 	}
 

@@ -167,6 +167,7 @@ public class ItemsLoadingService extends Service {
 				endProgressNotification(runnable);
 				if (NetworkView.Instance().isInitialized()) {
 					NetworkView.Instance().removeItemsLoadingRunnable(key);
+					NetworkView.Instance().fireModelChanged();
 				}
 			}
 		};
