@@ -24,7 +24,10 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.tar.ZLTarEntryFile;
 
 public abstract class ZLArchiveEntryFile extends ZLFile {
-	static String normalizeEntryName(String entryName) {
+	private static String normalizeEntryName(String entryName) {
+		while (entryName.startsWith("./")) {
+			entryName = entryName.substring(2);
+		}
 		while (true) {
 			final int index = entryName.lastIndexOf("/./");
 			if (index == -1) {
