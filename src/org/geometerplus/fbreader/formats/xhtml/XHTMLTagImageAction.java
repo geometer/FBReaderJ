@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.formats.xhtml;
 
+import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -35,9 +36,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		String fileName = xmlattributes.getValue(myNameAttribute);
 		if (fileName != null) {
-			if (fileName.startsWith("./")) {
-				fileName = fileName.substring(2);
-			}
+			fileName = MiscUtil.decodeHtmlReference(fileName);
 			final ZLFile imageFile = ZLFile.createFileByPath(reader.myPathPrefix + fileName);
 			if (imageFile != null) {
 				final BookReader modelReader = reader.getModelReader();
