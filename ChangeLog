@@ -6,6 +6,7 @@
 * Options menu has been added to Network Catalogs
 * Books directory is now configurable
 * Manybooks catalog has been added
+* A processing of ePub internal hyperlinks with "/../" in the path has been fixed
 
 ===== 0.6.4 (May 1, 2010) =====
 
