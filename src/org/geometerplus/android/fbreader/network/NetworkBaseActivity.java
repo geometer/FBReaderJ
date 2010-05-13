@@ -86,6 +86,11 @@ abstract class NetworkBaseActivity extends ListActivity
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		/*
+		 * Set listener in onStart() to give descendants initialize itself in
+		 * onCreate methods before onModelChanged() will be called.
+		 */
 		NetworkView.Instance().addEventListener(this);
 	}
 
