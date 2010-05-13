@@ -62,6 +62,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	private NetworkTree myTree;
 	private String myCatalogKey;
+	private boolean myInProgress;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -112,13 +113,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 			title = myTree.getName();
 		}
 		setTitle(title);
-
-		boolean inProgress = false;
-		final String key = getNetworkTreeKey(myTree, true);
-		if (key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key)) {
-			inProgress = true;
-		}
-		setProgressBarIndeterminateVisibility(inProgress);
+		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
 	private static String getNetworkTreeKey(NetworkTree tree, boolean recursive) {
@@ -171,7 +166,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 		public final int getCount() {
 			return myTree.subTrees().size() +
-				((mySpecialItems == null) ? 0 : mySpecialItems.size());
+				((mySpecialItems != null && !myInProgress) ? mySpecialItems.size() : 0);
 		}
 
 		public final NetworkTree getItem(int position) {
@@ -180,6 +175,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 			}
 			if (position < myTree.subTrees().size()) {
 				return (NetworkTree) myTree.subTrees().get(position);
+			}
+			if (myInProgress) {
+				return null;
 			}
 			position -= myTree.subTrees().size();
 			if (mySpecialItems != null && position < mySpecialItems.size()) {
@@ -200,6 +198,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	@Override
 	public void onModelChanged() {
+		final NetworkView networkView = NetworkView.Instance();
+		final String key = getNetworkTreeKey(myTree, true);
+		myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
 		getListView().invalidateViews();
 		setupTitle();
 	}
