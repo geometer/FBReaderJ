@@ -32,9 +32,9 @@
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
-		<node name="refillShort" value="Пополнить счёт"/>
 		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
-		<node name="refillSummary" value="Положить деньги на свой счёт"/>
+		<node name="refillTitle" value="Пополнить счёт"/>
+		<node name="refillSummary" value="Текущий счёт: %s"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
@@ -57,7 +57,7 @@
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
 			<node name="signOut" value="Выйти (%s)"/>
-			<node name="refillShort" value="Пополнить счёт"/>
+			<node name="refillAccount" value="Пополнить счёт"/>
 		</node>
 	</node>
 	<node name="networkBookView">

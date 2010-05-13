@@ -33,9 +33,9 @@
 		<node name="stopSearching" value="停止搜索" />
 		<node name="signIn" value="登录"/>
 		<node name="signOut" value="退出 (%s)"/>
-		<node name="refillShort" toBeTranslated="true" value="Refill account"/>
 		<node name="refillAccount" value="重新输入账号(目前: %s)" />
-		<node name="refillSummary" toBeTranslated="true" value="Put money on your account"/>
+		<node name="refillTitle" toBeTranslated="true" value="Refill account"/>
+		<node name="refillSummary" toBeTranslated="true" value="Currently: %s"/>
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="stoppingCatalogLoading" value="停止加载" />
@@ -58,7 +58,7 @@
 			<node name="reload" value="重新加载" />
 			<node name="signIn" value="登录"/>
 			<node name="signOut" value="退出 (%s)"/>
-			<node name="refillShort" toBeTranslated="true" value="Refill account"/>
+			<node name="refillAccount" toBeTranslated="true" value="Refill account"/>
 		</node>
 	</node>
 	<node name="networkBookView">

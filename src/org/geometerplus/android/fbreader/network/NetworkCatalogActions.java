@@ -155,7 +155,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		addOptionsItem(menu, RELOAD_ITEM_ID, "reload");
 		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
-		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillShort");
+		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount");
 		return true;
 	}
 

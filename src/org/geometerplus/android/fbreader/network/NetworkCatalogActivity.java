@@ -64,6 +64,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 	private String myCatalogKey;
 	private boolean myInProgress;
 
+	private ArrayList<NetworkTree> mySpecialItems;
+
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -91,6 +94,22 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 		if (myTree == null) {
 			finish();
 			return;
+		}
+
+		if (myTree instanceof NetworkCatalogRootTree) {
+			NetworkCatalogTree tree = (NetworkCatalogTree) myTree;
+			NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
+			if (mgr != null) {
+				mySpecialItems = new ArrayList<NetworkTree>();
+				if (mgr.refillAccountSupported()) {
+					mySpecialItems.add(new RefillAccountTree(tree));
+				}
+				if (mySpecialItems.size() > 0) {
+					mySpecialItems.trimToSize();
+				} else {
+					mySpecialItems = null;
+				}
+			}
 		}
 
 		networkView.setOpenedActivity(myCatalogKey, this);
@@ -147,23 +166,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	private final class CatalogAdapter extends BaseAdapter {
 
-		private ArrayList<NetworkTree> mySpecialItems;
-
-		public CatalogAdapter() {
-			mySpecialItems = null;
-			if (myTree instanceof NetworkCatalogRootTree) {
-				NetworkCatalogTree tree = (NetworkCatalogTree) myTree;
-				NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
-				if (mgr != null) {
-					mySpecialItems = new ArrayList<NetworkTree>();
-					if (mgr.refillAccountSupported()) {
-						mySpecialItems.add(new RefillAccountTree(tree));
-					}
-					mySpecialItems.trimToSize();
-				}
-			}
-		}
-
 		public final int getCount() {
 			return myTree.subTrees().size() +
 				((mySpecialItems != null && !myInProgress) ? mySpecialItems.size() : 0);
@@ -196,11 +198,20 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 		}
 	}
 
+	private void updateSpecialItems() {
+		if (mySpecialItems != null) {
+			for (NetworkTree tree: mySpecialItems) {
+				tree.invalidateChildren(); // call to update secondString
+			}
+		}
+	}
+
 	@Override
 	public void onModelChanged() {
 		final NetworkView networkView = NetworkView.Instance();
 		final String key = getNetworkTreeKey(myTree, true);
 		myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
+		updateSpecialItems();
 		getListView().invalidateViews();
 		setupTitle();
 	}

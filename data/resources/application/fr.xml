@@ -33,9 +33,9 @@
 		<node name="stopSearching" value="Arrêt de la recherche" />
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
-		<node name="refillShort" value="Recréditer le compte"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
-		<node name="refillSummary" toBeTranslated="true" value="Put money on your account"/>
+		<node name="refillTitle" value="Recréditer le compte"/>
+		<node name="refillSummary" value="Аctuellement : %s"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
 		<node name="stoppingCatalogLoading" value="Arrêt du chargement" />
@@ -58,7 +58,7 @@
 			<node name="reload" value="Recharger"/>
 			<node name="signIn" value="Connexion"/>
 			<node name="signOut" value="Déconnexion (%s)"/>
-			<node name="refillShort" value="Recréditer le compte"/>
+			<node name="refillAccount" value="Recréditer le compte"/>
 		</node>
 	</node>
 	<node name="networkBookView">

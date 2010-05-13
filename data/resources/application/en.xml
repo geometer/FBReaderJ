@@ -32,9 +32,9 @@
 		<node name="stopSearching" value="Stop searching" />
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
-		<node name="refillShort" value="Refill account"/>
 		<node name="refillAccount" value="Refill account (currently: %s)"/>
-		<node name="refillSummary" value="Put money on your account"/>
+		<node name="refillTitle" value="Refill account"/>
+		<node name="refillSummary" value="Currently: %s"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
@@ -57,7 +57,7 @@
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
 			<node name="signOut" value="Sign out (%s)"/>
-			<node name="refillShort" value="Refill account"/>
+			<node name="refillAccount" value="Refill account"/>
 		</node>
 	</node>
 	<node name="networkBookView">

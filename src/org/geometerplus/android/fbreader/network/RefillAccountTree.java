@@ -46,19 +46,19 @@ class RefillAccountTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		final NetworkAuthenticationManager mgr = Link.authenticationManager();
-		if (mgr.isAuthorised(false).Status == ZLBoolean3.B3_TRUE) {
-			final String account = mgr.currentAccount();
-			if (account != null) {
-				return ZLResource.resource("networkView").getResource("refillAccount").getValue().replace("%s", account);
-			}
-		}
-		return ZLResource.resource("networkView").getResource("refillShort").getValue();
+		return ZLResource.resource("networkView").getResource("refillTitle").getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return ZLResource.resource("networkView").getResource("refillSummary").getValue();
+		final NetworkAuthenticationManager mgr = Link.authenticationManager();
+		if (mgr.isAuthorised(false).Status == ZLBoolean3.B3_TRUE) {
+			final String account = mgr.currentAccount();
+			if (account != null) {
+				return ZLResource.resource("networkView").getResource("refillSummary").getValue().replace("%s", account);
+			}
+		}
+		return null;
 	}
 
 	@Override

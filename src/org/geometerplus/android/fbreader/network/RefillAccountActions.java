@@ -51,9 +51,9 @@ class RefillAccountActions extends NetworkTreeActions {
 	@Override
 	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		final RefillAccountTree refillTree = (RefillAccountTree) tree;
-		menu.setHeaderTitle(getTitleValue("refillShort"));
+		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
-		addMenuItem(menu, REFILL_ITEM_ID, "refillShort");
+		addMenuItem(menu, REFILL_ITEM_ID, "refillTitle");
 	}
 
 	@Override
