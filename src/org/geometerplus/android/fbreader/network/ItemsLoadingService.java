@@ -19,25 +19,11 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Service;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.net.Uri;
 import android.content.Intent;
-import android.content.Context;
-import android.widget.RemoteViews;
-
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 
 public class ItemsLoadingService extends Service {

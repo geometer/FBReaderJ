@@ -23,23 +23,13 @@ import java.util.TreeMap;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.AlertDialog;
-import android.os.Handler;
-import android.os.Message;
-import android.view.*;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.content.DialogInterface;
-
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.authentication.*;
+import org.geometerplus.fbreader.network.NetworkLink;
 
 
 abstract class NetworkDialog {

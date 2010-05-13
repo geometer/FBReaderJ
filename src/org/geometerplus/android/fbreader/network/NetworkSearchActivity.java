@@ -25,10 +25,7 @@ import android.app.AlertDialog;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.content.Intent;
-import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 

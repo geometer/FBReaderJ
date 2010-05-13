@@ -19,18 +19,14 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.authentication.*;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.NetworkLink;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
 class RefillAccountTree extends NetworkTree {

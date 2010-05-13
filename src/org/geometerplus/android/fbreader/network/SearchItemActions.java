@@ -19,22 +19,11 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import android.app.AlertDialog;
-import android.os.Message;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.ContextMenu;
-import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.SearchResult;
 
 
 class SearchItemActions extends NetworkTreeActions {

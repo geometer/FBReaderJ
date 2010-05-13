@@ -19,40 +19,17 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import android.app.Activity;
-import android.app.ListActivity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.IBinder;
 import android.view.*;
-import android.widget.ListView;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.BaseAdapter;
-import android.net.Uri;
 import android.content.Intent;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.zlibrary.core.tree.ZLTree;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.authentication.*;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
 public class NetworkCatalogActivity extends NetworkBaseActivity {

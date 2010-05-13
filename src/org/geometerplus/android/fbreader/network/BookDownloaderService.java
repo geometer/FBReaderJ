@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 import java.io.*;
-import java.net.*;
+import java.net.URLConnection;
 
 import android.os.IBinder;
 import android.os.Handler;
@@ -32,16 +32,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.net.Uri;
 import android.content.Intent;
-import android.content.Context;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.*;
 
-import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.BookReference;
 
 
@@ -93,7 +91,7 @@ public class BookDownloaderService extends Service {
 
 	@Override
 	public void onDestroy() {
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		for (int notificationId: myOngoingNotifications) {
 			notificationManager.cancel(notificationId);
 		}
@@ -251,7 +249,7 @@ public class BookDownloaderService extends Service {
 		final int notificationId = NetworkNotifications.Instance().getBookDownloadingId();
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		myOngoingNotifications.add(Integer.valueOf(notificationId));
 		notificationManager.notify(notificationId, progressNotification);
 
@@ -267,7 +265,7 @@ public class BookDownloaderService extends Service {
 					contentView.setTextViewText(R.id.download_notification_progress_text, "" + progress + "%");
 					contentView.setProgressBar(R.id.download_notification_progress_bar, 100, progress, false);
 				}
-				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 				notificationManager.notify(notificationId, progressNotification);
 			}
 		};
@@ -275,7 +273,7 @@ public class BookDownloaderService extends Service {
 		final Handler downloadFinishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				myDownloadingURLs.remove(urlString);
-				final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 				notificationManager.cancel(notificationId);
 				myOngoingNotifications.remove(Integer.valueOf(notificationId));
 				notificationManager.notify(

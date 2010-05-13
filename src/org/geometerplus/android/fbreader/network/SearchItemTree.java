@@ -19,7 +19,9 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.Set;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
@@ -28,7 +30,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 
 
 public class SearchItemTree extends NetworkTree {

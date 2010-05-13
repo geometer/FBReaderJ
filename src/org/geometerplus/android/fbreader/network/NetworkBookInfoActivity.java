@@ -25,11 +25,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
-import android.net.Uri;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
@@ -236,7 +233,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			}
 
 			final int buttonId = buttons[buttonNumber++];
-			Button button = (Button) findViewById(buttonId);
+			TextView button = (TextView) findViewById(buttonId);
 			button.setText(text);
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {

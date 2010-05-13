@@ -39,8 +39,10 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.authentication.*;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
+import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
 class NetworkBookActions extends NetworkTreeActions {

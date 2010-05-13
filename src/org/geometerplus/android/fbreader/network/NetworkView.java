@@ -35,7 +35,6 @@ import android.view.MenuItem;
 import android.view.Menu;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.*;
 
 
 class NetworkView {
