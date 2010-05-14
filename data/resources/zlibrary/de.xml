@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- German zlibrary resources, by Victor Massini-->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK" />
+			<node name="cancel" value="Abbruch" />
+			<node name="yes" value="Ja" />
+			<node name="no" value="Nein" />
+			<node name="apply" value="Übernehmen" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Netzwerk Fehler" />
+			<node name="unknownErrorMessage" value="Unbekannter Fehler" />
+			<node name="operationTimedOutMessage" value="Zeitüberschreitung" />
+			<node name="somethingWrongMessage" value="Etwas läuft verkehrt bei&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Verzeichnis&#10;%s konnte nicht erzeugt werden" />
+			<node name="couldntCreateFileMessage" value="Datei&#10;%s konnte nicht erzeugt werden" />
+			<node name="couldntConnectToNetworkMessage" value="Keine Verbindung zum Netzwerk" />
+			<node name="couldntConnectMessage" value="Keine Verbindung zum Host&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Konnte Host&#10;%s nicht auflösen" />
+			<node name="authenticationFailed" value="Authentifikation fehlgeschlagen" />
+			<node name="unsupportedProtocol" value="Nicht unterstütztes Protokol" />
+			<node name="invalidURL" value="Ungültige URL" />
+			<node name="hostCantBeReached" value="Host %s&#10; kann nicht erreicht werden" />
+			<node name="connectionRefused" value="Verbindung wurde verweigert von&#10;%s" />
+			<node name="sslError" value="SSL Subsystem Fehler" />
+			<node name="sslConnectErrorMessage" value="SSL/TLS Handshake Problem aufgetreten:&#10;%s" />
+			<node name="sslBadKey" value="Schlechtes SSL Zertifikat von:&#10;%s" />
+			<node name="sslPeerUnverified" value="Kann nicht die Peer's Identität für:&#10;%s überprüfen" />
+			<node name="sslProtocolError" value="Fehler im SSL Protokol" />
+			<node name="sslBadCertificateFileMessage" value="Die SSL CA Zertifikat-Datei:&#10;%s kann nicht gelesen werden" />
+			<node name="sslCertificateExpired" value="SSL Zertifikat ist abgelaufen:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL Zertifikat ist noch nicht gültig:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rot" />
+		<node name="green" value="Grün" />
+		<node name="blue" value="Blau" />
+		<node name="black" value="Schwarz" />
+		<node name="white" value="Weiß" />
+		<node name="maroon" value="Braun" />
+		<node name="olive" value="Oliv" />
+		<node name="navy" value="Marine" />
+		<node name="purple" value="Violett" />
+		<node name="teal" value="Türkis" />
+		<node name="silver" value="Silber" />
+		<node name="gray" value="Grau" />
+		<node name="lime" value="Limone" />
+		<node name="yellow" value="Gelb" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="Cyan" />
+		<node name="custom..." value="Weitere..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabisch" />
+		<node name="cs" value="Tschechisch" />
+		<node name="de" value="Deutsch" />
+		<node name="de-traditional" value="Deutsch (alte Schreibweise)" />
+		<node name="el" value="Griechisch" />
+		<node name="en" value="Englisch" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Spanisch" />
+		<node name="fi" value="Finnisch" />
+		<node name="fr" value="Französisch" />
+		<node name="he" value="Hebräisch" />
+		<node name="hu" value="Ungarisch" />
+		<node name="id" value="Indonesisch" />
+		<node name="it" value="Italienisch" />
+		<node name="lt" value="Litauisch" />
+		<node name="nl" value="Niederländisch" />
+		<node name="no" value="Norwegisch" />
+		<node name="pt" value="Portugiesisch" />
+		<node name="ru" value="Russisch" />
+		<node name="sv" value="Schwedisch" />
+		<node name="tr" value="Türkisch" />
+		<node name="uk" value="Ukrainisch" />
+		<node name="vi" value="Vietnamesisch" />
+		<node name="zh" value="Chinesisch" />
+		<node name="other" value="Andere" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="ein" />
+		<node name="off" value="aus" />
+		<node name="unchanged" value="unverädnert" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Aktion für Taste" />
+	</node>
+</resources>
