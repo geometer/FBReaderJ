@@ -253,7 +253,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Buch wird geladen %s"/>
 			<node name="search" value="Suche läuft. Bitte warten..."/>
-			<node name="loadingBook" value="Buch wird geladen. Bitte warten...."/>
+			<node name="loadingBook" value="Buch wird geladen. Bitte warten..."/>
 			<node name="loadingBookList" value="Buchliste wird geladen. Bitte warten..."/>
 			<node name="creatingBooksDatabase" value="Erstelle Buch Datenbank. Bitte warten..."/>
 			<node name="updatingBooksDatabase" value="Aktualisiere Buch Datenbank. Bitte warten..."/>
