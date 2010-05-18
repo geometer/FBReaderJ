@@ -39,11 +39,26 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication(String fileName);
 
-	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
+	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
 
+	@Override
+	protected void onSaveInstanceState(Bundle state) {
+		super.onSaveInstanceState(state);
+		state.putInt(REQUESTED_ORIENTATION_KEY, myOrientation);
+		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
+	}
+
+	@Override
+	public void onCreate(Bundle state) {
+		super.onCreate(state);
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+
+		if (state != null) {
+			myOrientation = state.getInt(REQUESTED_ORIENTATION_KEY, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+			myChangeCounter = state.getInt(ORIENTATION_CHANGE_COUNTER_KEY);
+		}
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -73,15 +88,22 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		switch (ourOrientation) {
-			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-				setRequestedOrientation(ourOrientation);
-				myChangeCounter = 0;
-				break;
-			default:
-				setAutoRotationMode();
-				break;
+
+		if (ZLAndroidApplication.Instance().AutoOrientationOption.getValue()) {
+			setAutoRotationMode();
+		} else {
+			switch (myOrientation) {
+				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+					if (getRequestedOrientation() != myOrientation) {
+						setRequestedOrientation(myOrientation);
+						myChangeCounter = 0;
+					}
+					break;
+				default:
+					setAutoRotationMode();
+					break;
+			}
 		}
 	}
 
@@ -133,16 +155,13 @@ public abstract class ZLAndroidActivity extends Activity {
 		return ((view != null) && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
 	}
 
-	private int myChangeCounter = 0;
-	private static int ourOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+	private int myChangeCounter;
+	private int myOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 	private void setAutoRotationMode() {
-System.err.println("FBREADER -- setAutoRotationMode");
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
-		setRequestedOrientation(
-			application.AutoOrientationOption.getValue() ?
-				ActivityInfo.SCREEN_ORIENTATION_SENSOR :
-				ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
-		);
+		myOrientation = application.AutoOrientationOption.getValue() ?
+			ActivityInfo.SCREEN_ORIENTATION_SENSOR : ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
+		setRequestedOrientation(myOrientation);
 		myChangeCounter = 0;
 	}
 
@@ -150,15 +169,10 @@ System.err.println("FBREADER -- setAutoRotationMode");
 	public void onConfigurationChanged(Configuration config) {
 		super.onConfigurationChanged(config);
 
-System.err.println("FBREADER -- onConfigurationChanged: myChangeCounter = " + myChangeCounter);
-System.err.println("FBREADER -- onConfigurationChanged: config.orientation = " + config.orientation);
-
 		switch (getRequestedOrientation()) {
 			default:
-System.err.println("FBREADER -- onConfigurationChanged: default");
 				break;
 			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-System.err.println("FBREADER -- onConfigurationChanged: ActivityInfo.SCREEN_ORIENTATION_PORTRAIT");
 				if (config.orientation != Configuration.ORIENTATION_PORTRAIT) {
 					myChangeCounter = 0;
 				} else if (myChangeCounter++ > 0) {
@@ -166,7 +180,6 @@ System.err.println("FBREADER -- onConfigurationChanged: ActivityInfo.SCREEN_ORIE
 				}
 				break;
 			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-System.err.println("FBREADER -- onConfigurationChanged: ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE");
 				if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
 					myChangeCounter = 0;
 				} else if (myChangeCounter++ > 0) {
@@ -177,27 +190,23 @@ System.err.println("FBREADER -- onConfigurationChanged: ActivityInfo.SCREEN_ORIE
 	}
 
 	void rotate() {
-System.err.println("FBREADER -- rotate");
 		View view = findViewById(R.id.main_view);
 		if (view != null) {
 			switch (getRequestedOrientation()) {
 				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-System.err.println("FBREADER -- rotate: ActivityInfo.SCREEN_ORIENTATION_PORTRAIT");
-					ourOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+					myOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 					break;
 				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-System.err.println("FBREADER -- rotate: ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE");
-					ourOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+					myOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 					break;
 				default:
-System.err.println("FBREADER -- rotate: default");
 					if (view.getWidth() > view.getHeight()) {
-						ourOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+						myOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 					} else {
-						ourOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+						myOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 					}
 			}
-			setRequestedOrientation(ourOrientation);
+			setRequestedOrientation(myOrientation);
 			myChangeCounter = 0;
 		}
 	}
