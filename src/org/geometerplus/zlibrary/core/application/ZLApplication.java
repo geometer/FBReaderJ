@@ -156,6 +156,13 @@ public abstract class ZLApplication {
 		}
 	}
 
+	public boolean canRotateScreen() {
+		if (myWindow != null) {
+			return myWindow.canRotate();
+		}
+		return false;
+	}
+
 	public boolean closeWindow() {
 		onWindowClosing();
 		if (myWindow != null) {

@@ -27,4 +27,8 @@ class RotateAction extends FBAction {
 	public void run() {
 		Reader.rotateScreen();
 	}
+
+	public boolean isVisible() {
+		return Reader.canRotateScreen();
+	}
 }
