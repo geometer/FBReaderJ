@@ -299,7 +299,7 @@
 			<node name="title" value="Inscription"/>
 			<node name="login" value="Identifiant"/>
 			<node name="password" value="Mot de passe"/>
-			<node name="confirmPassword" value="Confirmer le mot de passe"/>
+			<node name="confirmPassword" value="Confirmer&#10;le mot de passe"/>
 			<node name="email" value="Email"/>
 			<node name="differentPasswords" value="Les deux mots de passe indiqués doivent être les mêmes."/>
 		</node>

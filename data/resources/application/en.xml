@@ -298,7 +298,7 @@
 			<node name="title" value="Register User" />
 			<node name="login" value="Username" />
 			<node name="password" value="Password" />
-			<node name="confirmPassword" value="Password confirmation" />
+			<node name="confirmPassword" value="Password&#10;confirmation" />
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="Password and password confirmation must be the same." />
 		</node>
