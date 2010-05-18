@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
-public class FBReader extends ZLAndroidActivity {
+public final class FBReader extends ZLAndroidActivity {
 	static FBReader Instance;
 
 	private int myFullScreenFlag;
