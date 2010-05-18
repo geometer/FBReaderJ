@@ -1,6 +1,7 @@
 ** Записать изменения в ChangeLog
 
-** ZLAndroidActivity -- переделать вращение (BUG с красной кнопкой)
+** ZLAndroidActivity -- переделать вращение
+	DONE BUG с красной кнопкой
 ** Menu->More->Settings->toggle "Show status bar" => приложение уходит в фон. Когда-то так не было.
 ** Добавить поддержку custom каталогов -- как в Aldiko
 ** Объединить общие части двух Base64EncodedImage

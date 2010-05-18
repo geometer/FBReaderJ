@@ -136,6 +136,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	private int myChangeCounter = 0;
 	private static int ourOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 	private void setAutoRotationMode() {
+System.err.println("FBREADER -- setAutoRotationMode");
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		setRequestedOrientation(
 			application.AutoOrientationOption.getValue() ?
@@ -149,16 +150,26 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onConfigurationChanged(Configuration config) {
 		super.onConfigurationChanged(config);
 
+System.err.println("FBREADER -- onConfigurationChanged: myChangeCounter = " + myChangeCounter);
+System.err.println("FBREADER -- onConfigurationChanged: config.orientation = " + config.orientation);
+
 		switch (getRequestedOrientation()) {
 			default:
+System.err.println("FBREADER -- onConfigurationChanged: default");
 				break;
 			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-				if (config.orientation == Configuration.ORIENTATION_PORTRAIT && myChangeCounter++ > 0) {
+System.err.println("FBREADER -- onConfigurationChanged: ActivityInfo.SCREEN_ORIENTATION_PORTRAIT");
+				if (config.orientation != Configuration.ORIENTATION_PORTRAIT) {
+					myChangeCounter = 0;
+				} else if (myChangeCounter++ > 0) {
 					setAutoRotationMode();
 				}
 				break;
 			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-				if (config.orientation == Configuration.ORIENTATION_LANDSCAPE && myChangeCounter++ > 0) {
+System.err.println("FBREADER -- onConfigurationChanged: ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE");
+				if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+					myChangeCounter = 0;
+				} else if (myChangeCounter++ > 0) {
 					setAutoRotationMode();
 				}
 				break;
@@ -166,16 +177,20 @@ public abstract class ZLAndroidActivity extends Activity {
 	}
 
 	void rotate() {
+System.err.println("FBREADER -- rotate");
 		View view = findViewById(R.id.main_view);
 		if (view != null) {
 			switch (getRequestedOrientation()) {
 				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+System.err.println("FBREADER -- rotate: ActivityInfo.SCREEN_ORIENTATION_PORTRAIT");
 					ourOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 					break;
 				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+System.err.println("FBREADER -- rotate: ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE");
 					ourOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 					break;
 				default:
+System.err.println("FBREADER -- rotate: default");
 					if (view.getWidth() > view.getHeight()) {
 						ourOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 					} else {
