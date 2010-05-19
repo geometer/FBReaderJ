@@ -5,6 +5,10 @@ Requirements: Android SDK 1.6, Android NDK 1.5
 
 1. Compile native code.
    This step could be skipped, prebuilded native libraries are currently included into the source package.
-2. Edit 'local.properties' file.
+
+2. Create 'local.properties' file containing sdk-location definition:
+	sdk-location=<path to the Android SDK folder>
+
 3. Run './createRawResources.py'.
+
 4. Run 'ant release'.
