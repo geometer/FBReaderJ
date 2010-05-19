@@ -1,3 +1,9 @@
+===== 0.6.6 (May 20, 2010) =====
+
+* FBReader doesn't require to press the screen off button twice
+* FBReader doesn't go to the background after changing status bar option
+* FBReader keeps rotation after switching screen off and back
+
 ===== 0.6.5 (May 14, 2010) =====
 
 * Network library view has been completely changed: each subcatalog opens in new window
