@@ -180,10 +180,14 @@ public final class FBView extends ZLTextView {
 				boolean doScroll = false;
 				if (diff > 0) {
 					ZLTextWordCursor cursor = getStartCursor();
-					doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
+					if (cursor != null && !cursor.isNull()) {
+						doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
+					}
 				} else if (diff < 0) {
 					ZLTextWordCursor cursor = getEndCursor();
-					doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
+					if (cursor != null && !cursor.isNull()) {
+						doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
+					}
 				}
 				if (doScroll) {
 					final int h = Context.getHeight();
