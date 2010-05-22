@@ -42,7 +42,7 @@ public final class Library {
 	private final LibraryTree myRecentBooks = new RootTree();
 	private final LibraryTree mySearchResult = new RootTree();
 
-	private	boolean myDoRebuild = true;
+	private boolean myDoRebuild = true;
 
 	private Library() {
 	}
@@ -188,7 +188,7 @@ public final class Library {
 			tagTreeMap.put(tag, tagTree);
 		}
 		return tagTree;
-	} 
+	}
 
 	private void build() {
 		//System.err.println("before build: " + System.currentTimeMillis() % 20000);
@@ -307,7 +307,7 @@ public final class Library {
 		ids.add(0, bookId);
 		if (ids.size() > 12) {
 			ids.remove(12);
-		} 
+		}
 		db.saveRecentBookIds(ids);
 	}
 
@@ -321,7 +321,7 @@ public final class Library {
 			if (file.children().size() != 1) {
 				return false;
 			}
-		} 
+		}
 		return true;
 	}
 

@@ -68,7 +68,7 @@ public final class FBReader extends ZLAndroidActivity {
 		*/
 		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
-		myFullScreenFlag = 
+		myFullScreenFlag =
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
@@ -84,7 +84,7 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onStart();
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 
-		final int fullScreenFlag = 
+		final int fullScreenFlag =
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
@@ -97,14 +97,14 @@ public final class FBReader extends ZLAndroidActivity {
 			myPanel.ControlPanel.addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
 			myPanel.ControlPanel.addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
 			myPanel.ControlPanel.addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
-        
+
 			RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-            p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            root.addView(myPanel.ControlPanel, p);
+			RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+			p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			root.addView(myPanel.ControlPanel, p);
 		}
 	}
 
