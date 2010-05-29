@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hungarian zlibrary resources, by L. B. Szabó. Based on FBReader translation by Sándor Gábor -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK" />
+			<node name="cancel" value="Mégsem" />
+			<node name="yes" value="Igen" />
+			<node name="no" value="Nem" />
+			<node name="apply" value="Alkalmaz" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Hálózati hiba" />
+			<node name="unknownErrorMessage" value="Ismeretlen hiba" />
+			<node name="operationTimedOutMessage" value="Időtúllépés" />
+			<node name="somethingWrongMessage" value="Valam hiba történt&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Könyvtár létrhozása sikertelen&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Fájl létrehozása sikertelen&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Hálózati csatlakozás sikertelen" />
+			<node name="couldntConnectMessage" value="Csatlakozás sikertelen&#10;%s" />
+			<node name="couldntResolveHostMessage" value="A(z) %s gépnév nem felismerhető" />
+			<node name="authenticationFailed" value="Hitelesítés sikertelen" />
+			<node name="unsupportedProtocol" value="Nem támogatott protokoll" />
+			<node name="invalidURL" value="Érvénytelen URL" />
+			<node name="hostCantBeReached" value="%s&#10;kiszolgáló nem elérhető" />
+			<node name="connectionRefused" value="%s&#10;bontotta a kapcsolatot" />
+			<node name="sslError" value="SSL alrendszer hiba" />
+			<node name="sslConnectErrorMessage" value="SSL/TLS kapcsolódási hiba:&#10;%s" />
+			<node name="sslBadKey" value="Hibás SSL tanúsítvány:&#10;%s" />
+			<node name="sslPeerUnverified" value="Azonosítás sikertelen:&#10;%s" />
+			<node name="sslProtocolError" value="Hiba az SSL protokoll működésében" />
+			<node name="sslBadCertificateFileMessage" value="SSL CA tanúsítvény beolvasása sikertelen:&#10;%s" />
+			<node name="sslCertificateExpired" value="Az SSL tanúsítvány lejárt:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Az SSL tanúsítvány még nem érvényes:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Piros" />
+		<node name="green" value="Zöld" />
+		<node name="blue" value="Kék" />
+		<node name="black" value="Fekete" />
+		<node name="white" value="Fehér" />
+		<node name="maroon" value="Gesztenye" />
+		<node name="olive" value="Olívzöld" />
+		<node name="navy" value="Tengerészkék" />
+		<node name="purple" value="Lila" />
+		<node name="teal" value="Türkiz" />
+		<node name="silver" value="Ezüst" />
+		<node name="gray" value="Szürke" />
+		<node name="lime" value="Lime" />
+		<node name="yellow" value="Sárga" />
+		<node name="magenta" value="Bíbor" />
+		<node name="cyan" value="Cián" />
+		<node name="custom..." value="Egyéni..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arab" />
+		<node name="cs" value="Cseh" />
+		<node name="de" value="Német" />
+		<node name="de-traditional" value="Német (hagyományos)" />
+		<node name="el" value="Görög" />
+		<node name="en" value="Angol" />
+		<node name="eo" value="Eszperantó" />
+		<node name="es" value="Spanyol" />
+		<node name="fi" value="Finn" />
+		<node name="fr" value="Francia" />
+		<node name="he" value="Héber" />
+		<node name="hu" value="Magyar" />
+		<node name="id" value="Indonéz" />
+		<node name="it" value="Olasz" />
+		<node name="lt" value="Litván" />
+		<node name="nl" value="Holland" />
+		<node name="no" value="Norvég" />
+		<node name="pt" value="Portugál" />
+		<node name="ru" value="Orosz" />
+		<node name="sv" value="Svéd" />
+		<node name="tr" value="Török" />
+		<node name="uk" value="Ukrán" />
+		<node name="vi" value="Vietnami" />
+		<node name="zh" value="Kínai" />
+		<node name="other" value="Egyéb" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="be" />
+		<node name="off" value="ki" />
+		<node name="unchanged" value="változatlan" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Végrehajtandó feladat" />
+	</node>
+</resources>

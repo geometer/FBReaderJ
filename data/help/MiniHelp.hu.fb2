@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Az FBReaderJ névjegye</book-title> <lang>hu</lang></title-info></description>
+<body>
+<title><p>Az FBReaderJ &FBReaderVersion; névjegye</p></title>
+<p>Az FBReaderJ egy elektronikus könyv (e-book) olvasó <a l:href="http://www.android.com/">Androidra</a>. A <a l:href="http://www.fbreader.org/">FBReader könyvolvasó</a> Java klónja ugyanazoktól a szerzőktől. Az FBReaderJ több e-könyv formátumot támogat: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. A jövőben minden olyan formátumot támogatni fog, amit az eredeti FBReader is. Közvetlenül olvas a <code>zip</code>, <code>tar</code>, <code>gzip</code> and <code>bzip2</code> formátumú tömörített fájlokból.</p>
+<p>Az FBReaderJ teljesen testreszabható a  kényelmes olvasáshoz. A színek, a betűtípusok, a billentyűparancsok és számos más tulajdonság megváltoztatható a <code>Beállítások</code> menüben.</p>
+<p>Az FBReader a <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a> hatálya alatt terjesztett program..</p>
+<empty-line/>
+<subtitle><p>Kezdő lépések</p></subtitle>
+<p>Két módon adható köny az FBReaderJ könyvtárához.</p>
+<p>Az első módszer, az e-könyv fájl bemásolása a készülék <code>/sdcard/Books</code> mappájába (vagy ezen belül egy almappába). Az FBReader automatikusan hozzáadja ezt a könyvet  könyvtárhoz.</p>
+<p>A második mód, ha egy könyv linkjére (azaz egy <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> vagy <code>.fb2.zip</code> kiterjesztésű fájlra mutató linkre) kattintunk az alapértelmezett Android böngészőben. A könyv letöltődik a készülékre és azFBReaderJ megnyitja. Ha ismét ugyanarra a linkre kattintunk, a könyv nem lesz újra letöltve, hanem a már letöltött példány nyílik meg olvasásra.</p>
+<empty-line/>
+<subtitle><p>Kapcsolódó weboldalak</p></subtitle>
+<p>További információ a FBReader-ről és az FBReaderJ-ről az <a l:href="http://www.fbreader.org">FBReader honlap</a>on.</p>
+<p>Ha értesítést szeretnél a változásokról, iratkozz fel a <a l:href="http://freshmeat.net/projects/fbreader">FBReader projectre a freshmeat-en</a>.</p>
+<p>Ha kérdéseid vagy ötleteid vannak, használd az <a l:href="http://groups.google.com/group/fbreader">FBReader csoportot a googlegroups-on</a>.</p>
+</body>
+</FictionBook>
