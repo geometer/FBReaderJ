@@ -58,12 +58,16 @@ public final class FBView extends ZLTextView {
 		if (preferences.AnimateOption.getValue()) {
 			if (forward) {
 				ZLTextWordCursor cursor = getEndCursor();
-				if (cursor != null && !cursor.isNull() && !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
+				if (cursor != null &&
+					!cursor.isNull() &&
+					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast())) {
 					startAutoScrolling(preferences.HorizontalOption.getValue() ? PAGE_RIGHT : PAGE_BOTTOM);
 				}
 			} else {
 				ZLTextWordCursor cursor = getStartCursor();
-				if (cursor != null && !cursor.isNull() && !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
+				if (cursor != null &&
+					!cursor.isNull() &&
+					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
 					startAutoScrolling(preferences.HorizontalOption.getValue() ? PAGE_LEFT : PAGE_TOP);
 				}
 			}
