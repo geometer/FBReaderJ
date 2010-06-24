@@ -566,6 +566,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		gotoPositionByEnd(paragraphIndex, wordIndex, 0);
 	}
 
+	public void gotoHome() {
+		final ZLTextWordCursor cursor = getStartCursor();
+		if (!cursor.isNull() && cursor.isStartOfParagraph() && cursor.getParagraphIndex() == 0) {
+			return;
+		}
+		gotoPosition(0, 0, 0);
+		preparePaintInfo();
+	}
+
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;

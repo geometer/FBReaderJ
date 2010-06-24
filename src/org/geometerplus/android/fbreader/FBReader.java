@@ -190,11 +190,8 @@ public final class FBReader extends ZLAndroidActivity {
 	private AlertDialog myNavigateDialog;
 
 	public void navigate() {
-		if (myNavigateDialog == null) {
-			setupNavigation();
-		}
+		setupNavigation();
 		myNavigateDialog.show();
-		updateNavigation();
 	}
 
 	public boolean canNavigate() {
@@ -211,57 +208,49 @@ public final class FBReader extends ZLAndroidActivity {
 		final SeekBar slider = (SeekBar) layout.findViewById(R.id.book_position_slider);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-			private boolean myInTouch;
-
 			private void gotoPage(int page) {
 				final ZLView view = ZLApplication.Instance().getCurrentView();
 				if (view instanceof ZLTextView) {
 					ZLTextView textView = (ZLTextView) view;
-					textView.gotoPage(page);
+					if (page == 1) {
+						textView.gotoHome();
+					} else {
+						textView.gotoPage(page);
+					}
 					ZLApplication.Instance().repaintView();
 				}
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				gotoPage(seekBar.getProgress() + 1);
-				myInTouch = false;
 			}
-			
+
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				myInTouch = true;
 			}
-			
+
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
 					final int page = progress + 1;
 					final int pagesNumber = seekBar.getMax() + 1; 
 					myNavigateDialog.setTitle(makeNavigationTitle(page, pagesNumber));
-					if (!myInTouch) {
-						gotoPage(page);
-					}
+					gotoPage(page);
 				}
 			}
 		});
 
-		myNavigateDialog = new AlertDialog.Builder(this)
-			.setView(layout)
-			.setTitle("?????") // use Non-empty string to preserve title-bar
-			.setIcon(0)
-			.create();
-	}
-
-	private void updateNavigation() {
 		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
 			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		final ZLTextView textView = (ZLTextView) fbreader.getCurrentView();
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
-	
-		final SeekBar slider = (SeekBar) myNavigateDialog.findViewById(R.id.book_position_slider);
+
 		slider.setMax(pagesNumber - 1);
 		slider.setProgress(page - 1);
 
-		myNavigateDialog.setTitle(makeNavigationTitle(page, pagesNumber));
+		myNavigateDialog = new AlertDialog.Builder(this)
+			.setView(layout)
+			.setTitle(makeNavigationTitle(page, pagesNumber))
+			.setIcon(0)
+			.create();
 	}
 
 	private static String makeNavigationTitle(int page, int pagesNumber) {
