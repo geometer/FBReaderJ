@@ -1,3 +1,8 @@
+===== 0.7.0 (??? ??, 2010) =====
+
+* New "Navigation" dialog where user can navigate to a specific page 
+  (page numbers are computed approximately)
+
 ===== 0.6.6 (May 20, 2010) =====
 
 * FBReader doesn't require to press the screen off button twice

@@ -1,7 +1,6 @@
 ** Записать изменения в ChangeLog
 
-** сделать SeekBar (как в ветке alex) в пункте Navigate (прозрачное окошко поверх текста)
-
+DONE сделать SeekBar (как в ветке alex) в пункте Navigate (прозрачное окошко поверх текста)
 DONE ZLAndroidActivity -- переделать вращение
 	DONE BUG с красной кнопкой
 	DONE отключить пункт Rotate Screen при включенном autorotate
