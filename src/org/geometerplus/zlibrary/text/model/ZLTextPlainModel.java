@@ -305,4 +305,30 @@ public class ZLTextPlainModel implements ZLTextModel {
 	public final int getTextLength(int index) {
 		return myTextSizes[Math.max(Math.min(index, myParagraphsNumber - 1), 0)];
 	}
+
+	private static int binarySearch(int[] array, int length, int value) {
+		int lowIndex = 0;
+		int highIndex = length - 1;
+
+		while (lowIndex <= highIndex) {
+			int midIndex = (lowIndex + highIndex) >>> 1;
+			int midValue = array[midIndex];
+			if (midValue > value) {
+				highIndex = midIndex - 1;
+			} else if (midValue < value) {
+				lowIndex = midIndex + 1;
+			} else {
+				return midIndex;
+			}
+		}
+		return -lowIndex - 1;
+	}
+
+	public final int findParagraphByTextLength(int length) {
+		int index = binarySearch(myTextSizes, myParagraphsNumber, length);
+		if (index >= 0) {
+			return index;
+		}
+		return Math.min(-index - 1, myParagraphsNumber - 1);
+	}
 }

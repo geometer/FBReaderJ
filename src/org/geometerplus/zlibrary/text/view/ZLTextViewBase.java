@@ -35,6 +35,14 @@ abstract class ZLTextViewBase extends ZLView {
 		resetTextStyle();
 	}
 
+	final int getWordHeight() {
+		if (myWordHeight == -1) {
+			final ZLTextStyle textStyle = myTextStyle;
+			myWordHeight = (int)(Context.getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
+		}
+		return myWordHeight;
+	}
+
 	public abstract int getLeftMargin();
 	public abstract int getRightMargin();
 	public abstract int getTopMargin();
@@ -114,11 +122,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 	final int getElementHeight(ZLTextElement element) {
 		if (element instanceof ZLTextWord) {
-			if (myWordHeight == -1) {
-				final ZLTextStyle textStyle = myTextStyle;
-				myWordHeight = (int)(Context.getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
-			}
-			return myWordHeight;
+			return getWordHeight();
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLPaintContext context = Context;
 			return context.imageHeight(((ZLTextImageElement)element).ImageData) +

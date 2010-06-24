@@ -57,7 +57,6 @@ final class ZLTextPage {
 		PaintState = PaintStateEnum.START_IS_KNOWN;
 	}
 
-	/*
 	void moveEndCursor(int paragraphIndex, int wordIndex, int charIndex) {
 		if (EndCursor.isNull()) {
 			EndCursor.setCursor(StartCursor);
@@ -73,7 +72,6 @@ final class ZLTextPage {
 		LineInfos.clear();
 		PaintState = PaintStateEnum.END_IS_KNOWN;
 	}
-	*/
 
 	boolean isEmptyPage() {
 		for (ZLTextLineInfo info : LineInfos) {
