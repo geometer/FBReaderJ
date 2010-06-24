@@ -13,13 +13,5 @@
 	<item id="rotate"/>
 	<item id="increaseFont"/>
 	<item id="decreaseFont"/>
-	<submenu id="navigate">
-		<item id="gotoHome"/>
-		<item id="gotoSectionStart"/>
-		<item id="gotoSectionEnd"/>
-		<item id="nextTOCSection"/>
-		<item id="previousTOCSection"/>
-		<item id="undo"/>
-		<item id="redo"/>
-	</submenu>
+	<item id="navigate"/>
 </menubar>

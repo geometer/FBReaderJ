@@ -61,6 +61,19 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
+	public void navigate() {
+		if (myActivity != null)	{
+			myActivity.navigate();
+		}
+	}
+
+	public boolean canNavigate() {
+		if (myActivity != null)	{
+			return myActivity.canNavigate();
+		}
+		return false;
+	}
+
 	public void finish() {
 		if ((myActivity != null) && !myActivity.isFinishing()) {
 			myActivity.finish();

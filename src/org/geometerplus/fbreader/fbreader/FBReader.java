@@ -90,16 +90,12 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 		
-		addAction(ActionCode.SCROLL_TO_HOME, new ScrollToHomeAction(this));
-		//addAction(ActionCode.SCROLL_TO_START_OF_TEXT, new DummyAction(this));
-		//addAction(ActionCode.SCROLL_TO_END_OF_TEXT, new DummyAction(this));
+		addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));
 		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new TrackballScrollingAction(this, true));
 		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new TrackballScrollingAction(this, false));
 		addAction(ActionCode.CANCEL, new CancelAction(this));
-		//addAction(ActionCode.GOTO_NEXT_TOC_SECTION, new DummyAction(this));
-		//addAction(ActionCode.GOTO_PREVIOUS_TOC_SECTION, new DummyAction(this));
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));

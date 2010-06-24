@@ -44,6 +44,8 @@ abstract public class ZLApplicationWindow {
 
 	abstract protected void rotate();
 	abstract protected boolean canRotate();
+	abstract protected void navigate();
+	abstract protected boolean canNavigate();
 
 	abstract protected void close();
 }

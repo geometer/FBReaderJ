@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +27,11 @@ import android.os.PowerManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -180,5 +184,97 @@ public final class FBReader extends ZLAndroidActivity {
 			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
+	}
+
+
+	private AlertDialog myNavigateDialog;
+
+	public void navigate() {
+		if (myNavigateDialog == null) {
+			setupNavigation();
+		}
+		myNavigateDialog.show();
+		updateNavigation();
+	}
+
+	public boolean canNavigate() {
+		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
+			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+		final ZLView view = fbreader.getCurrentView();
+		return view instanceof ZLTextView
+				&& ((ZLTextView) view).getModel() != null
+				&& ((ZLTextView) view).getModel().getParagraphsNumber() != 0;
+	}
+
+	private void setupNavigation() {
+		final View layout = getLayoutInflater().inflate(R.layout.navigate, null);
+		final SeekBar slider = (SeekBar) layout.findViewById(R.id.book_position_slider);
+
+		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			private boolean myInTouch;
+
+			private void gotoPage(int page) {
+				/*final ZLView view = ZLApplication.Instance().getCurrentView();
+				if (view instanceof ZLTextView) {
+					ZLTextView textView = (ZLTextView) view;
+					textView.gotoPage(page);
+				}*/
+			}
+
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				gotoPage(seekBar.getProgress() + 1);
+				//updateEpdView(0);
+				myInTouch = false;
+			}
+			
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				myInTouch = true;
+			}
+			
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if (fromUser) {
+					final int page = progress + 1;
+					final int pagesNumber = seekBar.getMax() + 1; 
+					myNavigateDialog.setTitle(makeNavigationTitle(page, pagesNumber));
+					if (!myInTouch) {
+						gotoPage(page);
+						//updateEpdView(250);
+					}
+				}
+			}
+		});
+
+		myNavigateDialog = new AlertDialog.Builder(this)
+			.setView(layout)
+			.setTitle("?????") // use Non-empty string to preserve title-bar
+			.setIcon(0)
+			.create();
+	}
+
+	private void updateNavigation() {
+		/*final org.geometerplus.fbreader.fbreader.FBReader fbreader =
+			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+		final ZLTextView textView = (ZLTextView) fbreader.getCurrentView();
+		final int page = textView.computeCurrentPage();
+		final int pagesNumber = textView.computePageNumber();*/
+	
+		final int page = 1;
+		final int pagesNumber = 100;
+
+		final SeekBar slider = (SeekBar) myNavigateDialog.findViewById(R.id.book_position_slider);
+		slider.setMax(pagesNumber - 1);
+		slider.setProgress(page - 1);
+
+		myNavigateDialog.setTitle(makeNavigationTitle(page, pagesNumber));
+	}
+
+	private static String makeNavigationTitle(int page, int pagesNumber) {
+		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
+			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+		String title = "";
+		if (fbreader.Model != null && fbreader.Model.Book != null) {
+			title = fbreader.Model.Book.getTitle();
+		}
+		return title + ": " + page + " / " + pagesNumber;
 	}
 }

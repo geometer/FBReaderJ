@@ -19,20 +19,17 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class ScrollToHomeAction extends FBAction {
-	ScrollToHomeAction(FBReader fbreader) {
+class ShowNavigationAction extends FBAction {
+	ShowNavigationAction(FBReader fbreader) {
 		super(fbreader);
 	}
 
+	@Override
 	public boolean isVisible() {
-		return Reader.getCurrentView() == Reader.BookTextView;
-	}
-
-	public boolean isEnabled() {
-		return isVisible();
+		return Reader.canNavigate();
 	}
 
 	public void run() {
-		Reader.BookTextView.scrollToHome();
+		Reader.navigate();
 	}
 }

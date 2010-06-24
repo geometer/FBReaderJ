@@ -119,13 +119,21 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	protected void startViewAutoScrolling(int viewPage) {
 		getViewWidget().startAutoScrolling(viewPage);
 	}
-	
+
 	public void rotate() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
 	}
 
 	public boolean canRotate() {
 		return !ZLAndroidApplication.Instance().AutoOrientationOption.getValue();
+	}
+
+	public void navigate() {
+		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).navigate();
+	}
+
+	public boolean canNavigate() {
+		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).canNavigate();
 	}
 
 	public void close() {
