@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.resources;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.filesystem.*;
@@ -91,10 +90,12 @@ final class ZLTreeResource extends ZLResource {
 			read(file);
 		}
 
+		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final ArrayList<ZLTreeResource> stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
@@ -125,8 +126,9 @@ final class ZLTreeResource extends ZLResource {
 			return false;
 		}
 
+		@Override
 		public boolean endElementHandler(String tag) {
-			final ArrayList stack = myStack;
+			final ArrayList<ZLTreeResource> stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
 				stack.remove(stack.size() - 1);
 			}

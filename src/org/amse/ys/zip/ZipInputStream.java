@@ -1,9 +1,6 @@
 package org.amse.ys.zip;
 
 import java.io.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 
 class ZipInputStream extends InputStream {
 	private final ZipFile myParent;

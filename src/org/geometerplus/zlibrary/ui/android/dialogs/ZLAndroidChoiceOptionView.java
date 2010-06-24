@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLChoiceOptionEntry;
@@ -69,6 +68,7 @@ class ZLAndroidChoiceOptionView extends ZLAndroidOptionView {
 		}
 	}
 
+	@Override
 	protected void _setActive(boolean active) {
 		if (myGroup != null) {
 			myGroup.setEnabled(active);

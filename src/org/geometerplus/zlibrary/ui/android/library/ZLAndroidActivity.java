@@ -30,7 +30,6 @@ import android.content.res.Configuration;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 
 import org.geometerplus.zlibrary.ui.android.R;

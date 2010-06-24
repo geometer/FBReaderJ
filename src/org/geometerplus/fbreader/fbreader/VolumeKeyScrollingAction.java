@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 class VolumeKeyScrollingAction extends FBAction {
 	private final boolean myForward;
 

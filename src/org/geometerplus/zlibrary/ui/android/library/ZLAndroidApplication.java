@@ -47,6 +47,7 @@ public class ZLAndroidApplication extends Application {
 
 	ZLAndroidApplicationWindow myMainWindow;
 
+	@Override
 	public void onCreate() {
 		super.onCreate();
 		new ZLSQLiteConfig(this);
@@ -55,6 +56,7 @@ public class ZLAndroidApplication extends Application {
 		new ZLAndroidLibrary(this);
 	}
 
+	@Override
 	public void onTerminate() {
 		super.onTerminate();
 	}
@@ -71,5 +73,5 @@ public class ZLAndroidApplication extends Application {
 		return myData.get(key);
 	}
 
-	private final HashMap myData = new HashMap();
+	private final HashMap<Object,Object> myData = new HashMap<Object,Object>();
 }

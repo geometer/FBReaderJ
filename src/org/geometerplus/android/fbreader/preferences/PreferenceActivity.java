@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.List;
-
 import android.content.Context;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -35,7 +33,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		super("Preferences");
 	}
 
-	private static final class ColorProfilePreference extends ZLSimplePreference {
+	/*private static final class ColorProfilePreference extends ZLSimplePreference {
 		private final FBReader myFBReader;
 		private final Screen myScreen;
 		private final String myKey;
@@ -63,7 +61,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			myFBReader.setColorProfileName(myKey);
 			myScreen.close();
 		}
-	}
+	}*/
 
 	@Override
 	protected void init() {

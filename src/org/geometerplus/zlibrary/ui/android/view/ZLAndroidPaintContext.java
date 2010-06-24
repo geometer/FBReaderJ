@@ -225,7 +225,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return "Sans";
 	}
 	
-	protected void fillFamiliesList(ArrayList families) {
+	protected void fillFamiliesList(ArrayList<String> families) {
 		// TODO: implement
 		families.add("Sans");
 		families.add("Serif");

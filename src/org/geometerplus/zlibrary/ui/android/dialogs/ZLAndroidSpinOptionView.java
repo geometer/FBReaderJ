@@ -66,12 +66,13 @@ class ZLAndroidSpinOptionView extends ZLAndroidOptionView {
 			layout.setOrientation(LinearLayout.HORIZONTAL);
 			layout.setHorizontalGravity(0x05);
     
-			final ZLSpinOptionEntry spinOption = (ZLSpinOptionEntry)myOption;
+			/*final ZLSpinOptionEntry spinOption = (ZLSpinOptionEntry)myOption;
 			final int min = spinOption.minValue();
 			final int max = spinOption.maxValue();
-			final int value = spinOption.initialValue();
-    
+			final int value = spinOption.initialValue();*/
+
 			Button minusButton = new Button(context) {
+				@Override
 				public boolean onTouchEvent(MotionEvent event) {
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 						setValue(myValue - 1);

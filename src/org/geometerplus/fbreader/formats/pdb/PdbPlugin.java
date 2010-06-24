@@ -35,8 +35,6 @@ public abstract class PdbPlugin extends FormatPlugin {
 	}
 
 	protected static String fileType(final ZLFile file) {
-		ZLFile baseFile = file.getPhysicalFile();
-
 		// TODO: use database instead of option (?)
 		ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();

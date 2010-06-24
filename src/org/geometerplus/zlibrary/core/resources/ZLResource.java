@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.core.resources;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-
 abstract public class ZLResource {
 	public final String Name;
 	

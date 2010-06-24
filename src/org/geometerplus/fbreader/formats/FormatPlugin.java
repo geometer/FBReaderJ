@@ -19,14 +19,9 @@
 
 package org.geometerplus.fbreader.formats;
 
-import java.io.*;
-import java.util.*;
-
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.language.ZLLanguageDetector;
 
 public abstract class FormatPlugin {
 	public abstract boolean acceptsFile(ZLFile file);

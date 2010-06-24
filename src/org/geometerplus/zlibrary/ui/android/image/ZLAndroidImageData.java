@@ -19,9 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import java.util.*;
-import java.lang.ref.WeakReference;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 

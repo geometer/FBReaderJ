@@ -25,7 +25,6 @@ import android.view.*;
 import android.widget.*;
 import android.content.Context;
 
-import org.geometerplus.zlibrary.ui.android.R;
 
 class SimpleContainer extends ViewGroup {
 	private final View myEditText;

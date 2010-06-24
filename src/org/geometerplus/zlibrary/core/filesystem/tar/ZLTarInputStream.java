@@ -24,11 +24,11 @@ import java.io.IOException;
 
 class ZLTarInputStream extends InputStream {
 	private final InputStream myBase;
-	private final String myFileName;
+	//private final String myFileName;
 
 	ZLTarInputStream(InputStream base, String fileName) throws IOException {
 		myBase = base;
-		myFileName = fileName;
+		//myFileName = fileName;
 
 		ZLTarHeader header = new ZLTarHeader();
 		while (header.read(myBase)) {
@@ -51,18 +51,22 @@ class ZLTarInputStream extends InputStream {
 		return myBase.read();
 	}
 
+	@Override
 	public int read(byte b[]) throws IOException {
 		return myBase.read(b);
 	}
 
+	@Override
 	public int read(byte b[], int off, int len) throws IOException {
 		return myBase.read(b, off, len);
 	}
 
+	@Override
 	public long skip(long n) throws IOException {
 		return myBase.skip(n);
 	}
 
+	@Override
 	public int available() throws IOException {
 		return myBase.available();
 	}

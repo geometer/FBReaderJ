@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 class ClearFindResultsAction extends FBAction {
 	ClearFindResultsAction(FBReader fbreader) {
 		super(fbreader);

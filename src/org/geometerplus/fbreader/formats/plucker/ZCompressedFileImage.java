@@ -26,7 +26,6 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZCompressedFileImage extends ZLSingleImage {
@@ -48,7 +47,7 @@ public class ZCompressedFileImage extends ZLSingleImage {
 				return new byte[0];
 			}
 			
-			final ArrayList data = new ArrayList();
+			final ArrayList<byte[]> data = new ArrayList<byte[]>();
 			byte[] buffer;
 			int sizeOfBufferData;
 

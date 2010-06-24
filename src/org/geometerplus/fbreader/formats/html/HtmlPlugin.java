@@ -27,7 +27,6 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class HtmlPlugin extends FormatPlugin {
-	private final static String AUTO = "auto";
 	
 	@Override
 	public boolean acceptsFile(ZLFile file) {

@@ -20,10 +20,9 @@
 package org.geometerplus.zlibrary.core.dialogs;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 public abstract class ZLKeyOptionEntry extends ZLOptionEntry {
-	private final ArrayList/*<String>*/ myActionNames = new ArrayList();
+	private final ArrayList<String> myActionNames = new ArrayList<String>();
 
 	public ZLKeyOptionEntry() {}
 
@@ -35,7 +34,7 @@ public abstract class ZLKeyOptionEntry extends ZLOptionEntry {
 		myActionNames.add(actionName);
 	}
 
-	public final ArrayList getActionNames() {
+	public final ArrayList<String> getActionNames() {
 		return myActionNames;
 	}
 

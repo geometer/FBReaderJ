@@ -23,8 +23,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
-import org.geometerplus.zlibrary.core.util.*;
-
 public class ZLTextFullDecoratedStyle extends ZLTextPartialDecoratedStyle {
 	private final ZLTextFullStyleDecoration myFullDecoration;
 	

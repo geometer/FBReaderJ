@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.core.view;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-
 abstract public class ZLView {
 	public final ZLPaintContext Context;
 

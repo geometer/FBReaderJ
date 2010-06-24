@@ -62,23 +62,23 @@ public class ZLColorOptionBuilder {
 		}
 
 		public ZLColor getColor() {
-			Object color = myData.myCurrentColors.get(myData.myCurrentOptionName);
-			return (color != null) ? (ZLColor)color : initialColor();
+			ZLColor color = myData.myCurrentColors.get(myData.myCurrentOptionName);
+			return (color != null) ? color : initialColor();
 		}
 
 		public ZLColor initialColor() {
-			return ((ZLColorOption)myData.myOptions.get(myData.myCurrentOptionName)).getValue();
+			return myData.myOptions.get(myData.myCurrentOptionName).getValue();
 		}
 
 		public void onAccept(ZLColor color) {
 			onReset(color);
-			final ArrayList optionNames = myData.myOptionNames;
-			final HashMap options = myData.myOptions;
-			final HashMap colors = myData.myCurrentColors;
+			final ArrayList<String> optionNames = myData.myOptionNames;
+			final HashMap<String,ZLColorOption> options = myData.myOptions;
+			final HashMap<String,ZLColor> colors = myData.myCurrentColors;
 			final int len = optionNames.size();
 			for (int i = 0; i < len; i++) {
-				Object name = optionNames.get(i);
-				((ZLColorOption)options.get(name)).setValue((ZLColor)colors.get(name));
+				String name = optionNames.get(i);
+				options.get(name).setValue(colors.get(name));
 			}
 		}
 
@@ -94,7 +94,7 @@ public class ZLColorOptionBuilder {
 			myData = data;
 		}
 		
-		public ArrayList getValues() {
+		public ArrayList<String> getValues() {
 			return myData.myOptionNames;
 		}
 
@@ -109,7 +109,7 @@ public class ZLColorOptionBuilder {
 		}
 
 		public void onValueSelected(int index) {
-			myData.myCurrentOptionName = (String)getValues().get(index);
+			myData.myCurrentOptionName = getValues().get(index);
 			myData.myColorEntry.resetView();
 			myData.myPreviousOptionName = myData.myCurrentOptionName;
 		}
@@ -120,8 +120,8 @@ public class ZLColorOptionBuilder {
 		private ZLColorOptionEntry myColorEntry;
 		private String myCurrentOptionName;
 		private String myPreviousOptionName;
-		private final ArrayList/*<String>*/ myOptionNames = new ArrayList();
-		private final HashMap/*<String,ZLColor>*/ myCurrentColors = new HashMap();
-		private final HashMap/*<String,ZLColorOption>*/ myOptions = new HashMap();
+		private final ArrayList<String> myOptionNames = new ArrayList<String>();
+		private final HashMap<String,ZLColor> myCurrentColors = new HashMap<String,ZLColor>();
+		private final HashMap<String,ZLColorOption> myOptions = new HashMap<String,ZLColorOption>();
 	}		
 }

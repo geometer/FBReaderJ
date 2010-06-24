@@ -25,12 +25,10 @@ import android.app.Application;
 import android.content.res.Resources;
 import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;

@@ -19,14 +19,9 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.io.*;
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
-
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;

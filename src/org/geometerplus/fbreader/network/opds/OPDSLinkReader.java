@@ -41,7 +41,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
 	private HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 
-	private String mySearchType;
+	//private String mySearchType;
 	private final HashMap<String, String> mySearchFields = new HashMap<String, String>();
 
 	private final HashMap<String, Integer> myUrlConditions = new HashMap<String, Integer>();
@@ -88,7 +88,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	}
 
 	public NetworkLink readDocument(ZLFile file) {
-		mySiteName = myTitle = mySummary = myIcon = mySearchType = myAuthenticationType = mySSLCertificate = null;
+		mySiteName = myTitle = mySummary = myIcon = /*mySearchType = */myAuthenticationType = mySSLCertificate = null;
 		myLinks.clear();
 		mySearchFields.clear();
 		myUrlConditions.clear();
@@ -168,7 +168,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		} else if (TAG_SEARCH_DESCRIPTION == tag) {
 			String searchType = attributes.getValue("style");
 			if (searchType != null) {
-				mySearchType = searchType;
+				//mySearchType = searchType;
 				myState = READ_SEARCH_DESCRIPTION;
 			}
 		} else if (myState == READ_SEARCH_DESCRIPTION && TAG_FIELD == tag) {

@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.formats.fb2;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.util.*;

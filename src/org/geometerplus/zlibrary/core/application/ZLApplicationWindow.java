@@ -19,9 +19,6 @@
 
 package org.geometerplus.zlibrary.core.application;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
-
 abstract public class ZLApplicationWindow {
 	private ZLApplication myApplication;
 

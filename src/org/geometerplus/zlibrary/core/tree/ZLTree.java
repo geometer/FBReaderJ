@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.tree;
 
 import java.util.*;
 
-public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
+public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	private int mySize = 1;
 	public final T Parent;
 	public final int Level;
@@ -50,7 +50,7 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 		Parent = parent;
 		if (parent != null) {
 			Level = parent.Level + 1;
-			parent.addSubTree(this, position);
+			parent.addSubTree((T)this, position);
 		} else {
 			Level = nullLevel;
 		}
@@ -100,14 +100,14 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 			subtree = mySubTrees.set(position++, subtree);
 		}
 		mySubTrees.add(subtree);
-		for (ZLTree parent = this; parent != null; parent = parent.Parent) {
+		for (ZLTree<?> parent = this; parent != null; parent = parent.Parent) {
 			parent.mySize += subTreeSize;
 		}
 	}
 
 	public void removeSelf() {
 		final int subTreeSize = getSize();
-		ZLTree parent = Parent;
+		ZLTree<?> parent = Parent;
 		if (parent != null) {
 			parent.mySubTrees.remove(this);
 			if (parent.mySubTrees.isEmpty()) {
@@ -124,7 +124,7 @@ public abstract class ZLTree<T extends ZLTree> implements Iterable<T> {
 		mySubTrees = null;
 		mySize = 1;
 		if (subTreesSize > 0) {
-			for (ZLTree parent = Parent; parent != null; parent = parent.Parent) {
+			for (ZLTree<?> parent = Parent; parent != null; parent = parent.Parent) {
 				parent.mySize -= subTreesSize;
 			}
 		}

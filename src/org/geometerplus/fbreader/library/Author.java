@@ -19,9 +19,6 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
-
 public final class Author {
 	public final String DisplayName;
 	public final String SortKey;

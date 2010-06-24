@@ -24,7 +24,6 @@ import java.io.IOException;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.pdb.PdbPlugin;
-import org.geometerplus.fbreader.formats.pdb.PdbStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class PluckerPlugin extends PdbPlugin {

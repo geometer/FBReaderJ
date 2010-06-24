@@ -20,14 +20,13 @@
 package org.geometerplus.zlibrary.core.dialogs;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class ZLOptionsDialog {
 	private final ZLResource myResource;
-	protected final ArrayList /*ZLDialogContent*/ myTabs = new ArrayList();
+	protected final ArrayList<ZLDialogContent> myTabs = new ArrayList<ZLDialogContent>();
 	protected Runnable myExitAction;
 	protected Runnable myApplyAction;
 	protected ZLStringOption myTabOption;
@@ -53,7 +52,7 @@ public abstract class ZLOptionsDialog {
 	protected void accept() {
 		final int size = myTabs.size();
 		for (int i = 0; i < size; i++) {
-			((ZLDialogContent)myTabs.get(i)).accept();
+			myTabs.get(i).accept();
 		}
 		if (myApplyAction != null) {
 			myApplyAction.run();

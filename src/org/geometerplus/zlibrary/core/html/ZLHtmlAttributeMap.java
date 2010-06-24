@@ -21,8 +21,6 @@ package org.geometerplus.zlibrary.core.html;
 
 import java.nio.charset.CharsetDecoder;
 
-import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
-
 // optimized partially implemented map ZLByteBuffer -> ZLByteBuffer
 // there is no remove() in this implementation
 // put with the same key does not remove old entry

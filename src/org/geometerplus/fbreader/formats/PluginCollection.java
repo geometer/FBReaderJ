@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
-import org.geometerplus.fbreader.formats.html.HtmlPlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
 

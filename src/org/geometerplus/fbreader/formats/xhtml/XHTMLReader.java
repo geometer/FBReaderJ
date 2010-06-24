@@ -20,9 +20,7 @@
 package org.geometerplus.fbreader.formats.xhtml;
 
 import java.util.*;
-import java.io.InputStream;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -30,7 +28,7 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
 
 public class XHTMLReader extends ZLXMLReaderAdapter {
-	private static final HashMap ourTagActions = new HashMap();
+	private static final HashMap<String,XHTMLTagAction> ourTagActions = new HashMap<String,XHTMLTagAction>();
 
 	public static XHTMLTagAction addAction(String tag, XHTMLTagAction action) {
 		XHTMLTagAction old = (XHTMLTagAction)ourTagActions.get(tag);

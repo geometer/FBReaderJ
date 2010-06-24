@@ -209,7 +209,7 @@ abstract class NetworkBaseActivity extends ListActivity
 			return;
 		}
 		if (confirm != null) {
-			final ZLResource resource = myResource.getResource("confirmQuestions");
+			//final ZLResource resource = myResource.getResource("confirmQuestions");
 			final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 			new AlertDialog.Builder(this)
 				.setTitle(networkTree.getName())

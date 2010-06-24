@@ -54,7 +54,12 @@ public abstract class ZLLanguageMatcher {
 	};
 
 	static class ZLLanguagePatternBasedMatcher extends ZLWordBasedMatcher {
-		public ZLLanguagePatternBasedMatcher(ZLFile file, ZLLanguageDetector.LanguageInfo info)  {
+
+		private int myProCounter;
+	    private int myContraCounter;
+	    private	ArrayList<String> myDictionary = new ArrayList<String>();
+
+	    public ZLLanguagePatternBasedMatcher(ZLFile file, ZLLanguageDetector.LanguageInfo info)  {
 			super(info);
 			try{
 			InputStream dictionaryStream = file.getInputStream();
@@ -101,9 +106,5 @@ public abstract class ZLLanguageMatcher {
 		public	int criterion() {
 			return myProCounter * 2000 / (myProCounter + myContraCounter) - 1000;
 		}
-
-		private int myProCounter;
-	    private int myContraCounter;
-	    private	ArrayList/*<String>*/ myDictionary = new ArrayList();
 	};
 }

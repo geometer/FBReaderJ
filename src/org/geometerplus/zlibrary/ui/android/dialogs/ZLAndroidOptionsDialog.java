@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.*;
@@ -94,9 +92,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 
 	public ZLDialogContent createTab(String key) {
 		final Context context = myMainActivity;
-
-		final int index = myTabs.size();
-
 		final ZLDialogContent tab =
 			new ZLAndroidDialogContent(context, getTabResource(key));
 		myTabs.add(tab);
@@ -145,13 +140,13 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 			return textView;
 		}
 
-		public boolean areAllItemsSelectable() {
+		/*public boolean areAllItemsSelectable() {
 			return false;
 		}
 
 		public boolean isSelectable(int position) {
 			return true;
-		}
+		}*/
 
 		public int getCount() {
 			return myTabs.size();
@@ -166,7 +161,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 		}
 	}
 
-	private static class TabButton extends Button {
+	/*private static class TabButton extends Button {
 		private Runnable myAction;
 
 		TabButton(Context context, String text, Runnable action) {
@@ -176,9 +171,10 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 			myAction = action;
 		}
 
+		@Override
 		public boolean onTouchEvent(MotionEvent event) {
 			myAction.run();
 			return true;
 		}
-	}
+	}*/
 }

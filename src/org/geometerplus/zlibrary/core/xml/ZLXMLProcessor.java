@@ -23,7 +23,6 @@ import java.util.*;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLXMLProcessor {
 	public static Map<String,char[]> getEntityMap(List<String> dtdList) {

@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.Map;
-
 import android.content.Context;
 import android.graphics.*;
 import android.view.*;
@@ -104,7 +102,7 @@ public class ZLAndroidWidget extends View {
 	private void onDrawInScrolling(Canvas canvas) {
 		final int w = getWidth();
 		final int h = getHeight();
-		final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
+		//final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
 
 		boolean stopScrolling = false;
 		if (myScrollingInProgress) {

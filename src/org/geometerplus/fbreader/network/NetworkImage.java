@@ -23,7 +23,6 @@ import java.io.*;
 import java.net.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.Paths;

@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.lang.ref.WeakReference;
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 

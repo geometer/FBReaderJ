@@ -20,11 +20,7 @@
 package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
-import java.util.Map.Entry;
 
-import org.geometerplus.zlibrary.core.util.*;
-
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
@@ -34,7 +30,7 @@ public final class ZLKeyBindings {
 	private static final String BINDED_ACTION = "Action";
 
 	private final String myName;
-	private final HashMap myBindingsMap = new HashMap();
+	private final HashMap<String, String> myBindingsMap = new HashMap<String, String>();
 	private	boolean myIsChanged;
 
 	public ZLKeyBindings(String name) {
@@ -78,15 +74,15 @@ public final class ZLKeyBindings {
 		if (!myIsChanged) {
 			return;
 		}
-		
-		final HashMap keymap = new HashMap();
+
+		final HashMap<String, String> keymap = new HashMap<String, String>();
 		new ZLKeyBindingsReader(keymap).readBindings();
-		
+
 		int counter = 0;
-		for (Iterator it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
-			final String key = (String)it.next();
-			final String originalValue = (String)keymap.get(key);
-			final String value = (String)myBindingsMap.get(key);
+		for (Iterator<String> it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
+			final String key = it.next();
+			final String originalValue = keymap.get(key);
+			final String value = myBindingsMap.get(key);
 			if (!value.equals(originalValue)) {
 				new ZLStringOption(myName, BINDED_KEY + counter, "").setValue(key);
 				new ZLStringOption(myName, BINDED_ACTION + counter, "").setValue(value);

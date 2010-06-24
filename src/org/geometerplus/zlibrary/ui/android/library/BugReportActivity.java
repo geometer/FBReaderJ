@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.text.method.ScrollingMovementMethod;
-import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 

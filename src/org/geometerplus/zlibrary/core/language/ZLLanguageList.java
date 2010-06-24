@@ -19,22 +19,20 @@
 
 package org.geometerplus.zlibrary.core.language;
 
-import java.io.File;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class ZLLanguageList {
-	private static ArrayList<String> ourLanguageCodes = new ArrayList();
+	private static ArrayList<String> ourLanguageCodes = new ArrayList<String>();
 
 	private ZLLanguageList() {
 	}
 	
 	public static List<String> languageCodes() {
 		if (ourLanguageCodes.isEmpty()) {
-			TreeSet codes = new TreeSet();
+			TreeSet<String> codes = new TreeSet<String>();
 			for (ZLFile file : patternsFile().children()) {
 				String name = file.getName(false);
 				final int index = name.indexOf("_");

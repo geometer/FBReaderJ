@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
-import java.util.*;
 import org.geometerplus.zlibrary.core.util.*;
 
 import java.nio.ByteBuffer;

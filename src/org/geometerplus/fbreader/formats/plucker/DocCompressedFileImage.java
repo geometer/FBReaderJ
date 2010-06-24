@@ -24,7 +24,6 @@ import java.io.InputStream;
 
 import org.geometerplus.fbreader.formats.pdb.DocDecompressor;
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class DocCompressedFileImage extends ZLSingleImage {

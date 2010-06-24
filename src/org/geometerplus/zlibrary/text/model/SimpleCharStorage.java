@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 final class SimpleCharStorage implements CharStorage {
 	private final int myBlockSize;

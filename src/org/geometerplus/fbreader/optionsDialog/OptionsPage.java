@@ -24,9 +24,9 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.dialogs.*;
 
 class OptionsPage {
-	private final LinkedHashMap /*<ZLOptionEntry, String>*/ myEntries = new LinkedHashMap();
+	private final LinkedHashMap<ZLOptionEntry, String> myEntries = new LinkedHashMap<ZLOptionEntry, String>();
 	protected ComboOptionEntry myComboEntry;
-	
+
 	protected OptionsPage() {
 	}
 
@@ -51,7 +51,7 @@ class OptionsPage {
 		tab.addOptions(entry0Key, entry0, entry1Key, entry1);
 	}
 
-	LinkedHashMap getEntries() {
+	LinkedHashMap<ZLOptionEntry, String> getEntries() {
 		return myEntries;
 	}
 }

@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import android.content.Context;
 import android.preference.Preference;
 

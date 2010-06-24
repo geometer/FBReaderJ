@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.network.authentication;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 import org.geometerplus.fbreader.network.*;
 

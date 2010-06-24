@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import java.util.*;
-
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkCatalogRootTree extends NetworkCatalogTree {

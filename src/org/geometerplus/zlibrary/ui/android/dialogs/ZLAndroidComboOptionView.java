@@ -82,14 +82,15 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 	private class ComboAdapter extends BaseAdapter implements Spinner.OnItemSelectedListener {
 		EditText myEditor;
 
-		public void onItemSelected(AdapterView parent, View v, int position, long id) {
+		public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 			final ZLComboOptionEntry comboEntry = (ZLComboOptionEntry)myOption;
 			comboEntry.onValueSelected(position);
 		}
 
-		public void onNothingSelected(AdapterView parent) {
+		public void onNothingSelected(AdapterView<?> parent) {
 		}
 
+		@Override
 		public View getDropDownView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
 				TextView textView = new TextView(parent.getContext());
@@ -131,7 +132,8 @@ class ZLAndroidComboOptionView extends ZLAndroidOptionView {
 			return position;
 		}
 
-		public boolean stableIds() {
+		@Override
+		public boolean hasStableIds() {
 			return false;
 		}
 	}

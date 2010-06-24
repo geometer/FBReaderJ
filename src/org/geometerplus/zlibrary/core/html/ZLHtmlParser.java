@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.html;
 
 import java.io.*;
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.core.html.ZLHtmlReader;
@@ -31,8 +30,8 @@ final class ZLHtmlParser {
 	private static final byte START_TAG = 1;
 	private static final byte END_TAG = 2;
 	private static final byte TEXT = 3;
-	private static final byte IGNORABLE_WHITESPACE = 4;
-	private static final byte PROCESSING_INSTRUCTION = 5;
+	//private static final byte IGNORABLE_WHITESPACE = 4;
+	//private static final byte PROCESSING_INSTRUCTION = 5;
 	private static final byte COMMENT = 6;
 	private static final byte LANGLE = 7;
 	private static final byte WS_AFTER_START_TAG_NAME = 8;
@@ -77,7 +76,7 @@ final class ZLHtmlParser {
 		final HashMap<ZLByteBuffer,ZLByteBuffer> strings = new HashMap<ZLByteBuffer,ZLByteBuffer>();
 		final ZLHtmlAttributeMap attributes = new ZLHtmlAttributeMap();
 		boolean scriptOpened = false;
-		boolean html = false;
+		//boolean html = false;
 		int bufferOffset = 0;
 		int offset = 0;
 		
@@ -191,9 +190,9 @@ mainSwitchLabel:
 												state = SCRIPT;
 												break mainSwitchLabel;
 											}
-											if (stringTagName.equalsToLCString("html")) {
+											/*if (stringTagName.equalsToLCString("html")) {
 												html = true;
-											}
+											}*/
 										}
 										startPosition = i + 1;
 										break mainSwitchLabel;

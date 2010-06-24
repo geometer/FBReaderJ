@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
-import java.util.ArrayList;
-
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;

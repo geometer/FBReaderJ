@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
-
 public interface ZLTextWritableModel extends ZLTextModel {
 	void createParagraph(byte kind);
 

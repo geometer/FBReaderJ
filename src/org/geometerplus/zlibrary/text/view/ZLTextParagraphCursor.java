@@ -96,7 +96,7 @@ public final class ZLTextParagraphCursor {
 		private static byte[] ourBreaks = new byte[1024];
 		private static final int NO_SPACE = 0;
 		private static final int SPACE = 1;
-		private static final int NON_BREAKABLE_SPACE = 2;
+		//private static final int NON_BREAKABLE_SPACE = 2;
 		private void processTextEntry(final char[] data, final int offset, final int length) {
 			if (length != 0) {
 				if (ourBreaks.length < length) {

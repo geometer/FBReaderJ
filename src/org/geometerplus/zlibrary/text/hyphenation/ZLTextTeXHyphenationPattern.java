@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.text.hyphenation;
 
-import java.util.Arrays;
-
 public final class ZLTextTeXHyphenationPattern {
 	int myLength;
 	final char[] mySymbols;

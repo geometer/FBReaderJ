@@ -27,7 +27,6 @@ import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -180,7 +179,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 		}
 
-		private ZLTree findFirstSelectedItem() {
+		private ZLTree<?> findFirstSelectedItem() {
 			if (myCurrentBook == null) {
 				return null;
 			}
@@ -228,7 +227,8 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			return view;
 		}
 
-		protected boolean runTreeItem(ZLTree tree) {
+		@Override
+		protected boolean runTreeItem(ZLTree<?> tree) {
 			if (super.runTreeItem(tree)) {
 				return true;
 			}

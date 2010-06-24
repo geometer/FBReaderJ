@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.core.filesystem;
 
-import java.io.*;
-
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLResourceFile extends ZLFile {

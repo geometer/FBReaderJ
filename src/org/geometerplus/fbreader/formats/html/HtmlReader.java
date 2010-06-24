@@ -26,9 +26,7 @@ import java.nio.charset.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.html.*;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 
@@ -64,10 +62,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private byte myHyperlinkType;
 	private final char[] SPACE = { ' ' };
 	private String myHrefAttribute = "href";
-	private String mySrcAttribute = "src";
-	private boolean myAdditionalParagraphExists = false;
 	private boolean myOrderedListIsStarted = false;
-	private boolean myUnorderedListIsStarted = false;
+	//private boolean myUnorderedListIsStarted = false;
 	private int myOLCounter = 0;
 	private byte[] myControls = new byte[10];
 	private byte myControlsNumber = 0;
@@ -75,7 +71,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	public HtmlReader(BookModel model) throws UnsupportedEncodingException {
 		super(model);
 		try {	
-			String encoding = model.Book.getEncoding();
+			//String encoding = model.Book.getEncoding();
 			myAttributeDecoder = createDecoder();
 			setByteDecoder(createDecoder());
 		} catch (UnsupportedCharsetException e) {
@@ -225,7 +221,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 				
 			case HtmlTag.UL:
-				myUnorderedListIsStarted = false;
+				//myUnorderedListIsStarted = false;
 				break;
 				
 			default:
@@ -318,7 +314,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 				
 			case HtmlTag.UL:
-				myUnorderedListIsStarted = true;
+				//myUnorderedListIsStarted = true;
 				break;
 				
 			case HtmlTag.LI:

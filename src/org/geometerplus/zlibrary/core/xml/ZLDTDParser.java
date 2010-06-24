@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
@@ -41,7 +40,7 @@ final class ZLDTDParser {
 	private static final byte VALUE = 10;
 	private static final byte WAIT_END_OF_ENTITY = 11;
 
-	public void doIt(final InputStream stream, final HashMap entityMap) throws IOException {
+	public void doIt(final InputStream stream, final HashMap<String,char[]> entityMap) throws IOException {
 		final InputStreamReader streamReader = new InputStreamReader(stream, "us-ascii");
 
 		char[] buffer = new char[8192];

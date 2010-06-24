@@ -22,10 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import android.content.Context;
 import android.app.ListActivity;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -39,7 +36,7 @@ import org.geometerplus.fbreader.fbreader.FBReader;
 
 public class TOCActivity extends ListActivity {
 	private TOCAdapter myAdapter;
-	private ZLTree mySelectedItem;
+	private ZLTree<?> mySelectedItem;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -92,11 +89,9 @@ public class TOCActivity extends ListActivity {
 	}
 
 	private final class TOCAdapter extends ZLTreeAdapter {
-		private final TOCTree myRoot;
 
 		TOCAdapter(TOCTree root) {
 			super(getListView(), root);
-			myRoot = root;
 		}
 
 		@Override
@@ -133,7 +128,7 @@ public class TOCActivity extends ListActivity {
 		}
 
 		@Override
-		protected boolean runTreeItem(ZLTree tree) {
+		protected boolean runTreeItem(ZLTree<?> tree) {
 			if (super.runTreeItem(tree)) {
 				return true;
 			}

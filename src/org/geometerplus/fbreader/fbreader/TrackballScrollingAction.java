@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 class TrackballScrollingAction extends FBAction {
 	private final boolean myForward;
 

@@ -51,7 +51,7 @@ class OPDSLink extends NetworkLink {
 
 	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
 		if (relationAliases != null && relationAliases.size() > 0) {
-			myRelationAliases = new TreeMap(relationAliases);
+			myRelationAliases = new TreeMap<RelationAlias, String>(relationAliases);
 		} else {
 			myRelationAliases = null;
 		}
@@ -59,7 +59,7 @@ class OPDSLink extends NetworkLink {
 
 	final void setUrlConditions(Map<String, Integer> conditions) {
 		if (conditions != null && conditions.size() > 0) {
-			myUrlConditions = new TreeMap(conditions);
+			myUrlConditions = new TreeMap<String, Integer>(conditions);
 		} else {
 			myUrlConditions = null;
 		}
@@ -67,7 +67,7 @@ class OPDSLink extends NetworkLink {
 
 	final void setUrlRewritingRules(List<URLRewritingRule> rules) {
 		if (rules != null && rules.size() > 0) {
-			myUrlRewritingRules = new LinkedList(rules);
+			myUrlRewritingRules = new LinkedList<URLRewritingRule>(rules);
 		} else {
 			myUrlRewritingRules = null;
 		}

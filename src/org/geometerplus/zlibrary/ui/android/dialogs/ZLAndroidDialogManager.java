@@ -22,17 +22,14 @@ package org.geometerplus.zlibrary.ui.android.dialogs;
 import java.util.*;
 
 import android.app.*;
-import android.view.View;
 import android.content.*;
 import android.os.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-import org.geometerplus.zlibrary.ui.android.*;
 
 public class ZLAndroidDialogManager extends ZLDialogManager {
 	private Activity myActivity;
@@ -53,7 +50,7 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		activity.startActivity(intent);
 	}
 
-	public void runActivity(Class activityClass) {
+	public void runActivity(Class<?> activityClass) {
 		myActivity.startActivity(new Intent(myActivity, activityClass));
 	}
 

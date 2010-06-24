@@ -107,7 +107,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
-		myReferences = new LinkedList(references);
+		myReferences = new LinkedList<BookReference>(references);
 	}
 
 	public BookReference reference(int type) {

@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
-import android.view.View;
-
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionView;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
 

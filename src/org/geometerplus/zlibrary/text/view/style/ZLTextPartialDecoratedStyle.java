@@ -24,8 +24,6 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
-import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
-
 class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
 	private final ZLTextStyleDecoration myDecoration;
 

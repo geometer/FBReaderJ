@@ -22,9 +22,10 @@ package org.geometerplus.zlibrary.text.model;
 import java.lang.ref.WeakReference;
 import java.io.*;
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 final class CachedCharStorageException extends RuntimeException {
+	private static final long serialVersionUID = -6373408730045821053L;
+
 	public CachedCharStorageException(String message) {
 		super(message);
 	}
@@ -86,7 +87,7 @@ public final class CachedCharStorage implements CharStorage {
 			blockSize = minimumLength;
 		}
 		char[] block = new char[blockSize];
-		myArray.add(new WeakReference(block));
+		myArray.add(new WeakReference<char[]>(block));
 		return block;
 	}
 

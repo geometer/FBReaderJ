@@ -20,12 +20,8 @@
 package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
@@ -39,8 +35,8 @@ public abstract class ZLApplication {
 
 	private static ZLApplication ourInstance;
 
-	private static final String MouseScrollUpKey = "<MouseScrollDown>";
-	private static final String MouseScrollDownKey = "<MouseScrollUp>";
+	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
+	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
 	
 	public final ZLIntegerRangeOption KeyDelayOption =
@@ -218,7 +214,7 @@ public abstract class ZLApplication {
 		public interface Item {
 		}
 
-		private final ArrayList myItems = new ArrayList();
+		private final ArrayList<Item> myItems = new ArrayList<Item>();
 		private final ZLResource myResource;
 
 		Menu(ZLResource resource) {
@@ -317,17 +313,19 @@ public abstract class ZLApplication {
 		private static final String ITEM = "item";
 		private static final String SUBMENU = "submenu";
 
-		private final ArrayList mySubmenuStack = new ArrayList();
+		private final ArrayList<Menubar.Submenu> mySubmenuStack = new ArrayList<Menubar.Submenu>();
 
+		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if (myMenubar == null) {
 				myMenubar = new Menubar();
 			}
-			final ArrayList stack = mySubmenuStack;
+			final ArrayList<Menubar.Submenu> stack = mySubmenuStack;
 			final Menu menu = stack.isEmpty() ? myMenubar : (Menu)stack.get(stack.size() - 1);
 			if (ITEM == tag) {
 				final String id = attributes.getValue("id");
@@ -343,9 +341,10 @@ public abstract class ZLApplication {
 			return false;
 		}
 
+		@Override
 		public boolean endElementHandler(String tag) {
 			if (SUBMENU == tag) {
-				final ArrayList stack = mySubmenuStack;
+				final ArrayList<Menubar.Submenu> stack = mySubmenuStack;
 				if (!stack.isEmpty()) {
 					stack.remove(stack.size() - 1);
 				}

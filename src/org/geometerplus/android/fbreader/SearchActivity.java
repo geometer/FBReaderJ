@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 

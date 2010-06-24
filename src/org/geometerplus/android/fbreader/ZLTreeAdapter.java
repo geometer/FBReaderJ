@@ -21,10 +21,8 @@ package org.geometerplus.android.fbreader;
 
 import java.util.HashSet;
 
-import android.content.Context;
 import android.view.*;
 import android.widget.*;
-import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
@@ -32,11 +30,11 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
-	private ZLTree myTree;
-	private ZLTree[] myItems;
-	private final HashSet<ZLTree> myOpenItems = new HashSet<ZLTree>();
+	private ZLTree<?> myTree;
+	private ZLTree<?>[] myItems;
+	private final HashSet<ZLTree<?>> myOpenItems = new HashSet<ZLTree<?>>();
 
-	protected ZLTreeAdapter(ListView parent, ZLTree tree) {
+	protected ZLTreeAdapter(ListView parent, ZLTree<?> tree) {
 		myParent = parent;
 		myTree = tree;
 		myItems = new ZLTree[tree.getSize() - 1];
@@ -47,7 +45,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		parent.setOnCreateContextMenuListener(this);
 	}
 
-	protected final void openTree(ZLTree tree) {
+	protected final void openTree(ZLTree<?> tree) {
 		if (tree == null) {
 			return;
 		}
@@ -57,7 +55,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		}
 	}
 
-	public final void expandOrCollapseTree(ZLTree tree) {
+	public final void expandOrCollapseTree(ZLTree<?> tree) {
 		if (!tree.hasChildren()) {
 			return;
 		}
@@ -71,11 +69,11 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		notifyDataSetChanged();
 	}
 
-	public final boolean isOpen(ZLTree tree) {
+	public final boolean isOpen(ZLTree<?> tree) {
 		return myOpenItems.contains(tree);
 	}
 
-	public final void selectItem(ZLTree tree) {
+	public final void selectItem(ZLTree<?> tree) {
 		if (tree == null) {
 			return;
 		}
@@ -86,7 +84,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 			if (parent == null) {
 				break;
 			}
-			for (ZLTree sibling : parent.subTrees()) {
+			for (ZLTree<?> sibling : parent.subTrees()) {
 				if (sibling == tree) {
 					break;
 				}
@@ -103,7 +101,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	private int getCount(ZLTree<?> tree) {
 		int count = 1;
 		if (isOpen(tree)) {
-			for (ZLTree subtree : tree.subTrees()) {
+			for (ZLTree<?> subtree : tree.subTrees()) {
 				count += getCount(subtree);
 			}
 		}
@@ -120,7 +118,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		}
 		--position;
 		int index = 1;
-		for (ZLTree subtree : tree.subTrees()) {
+		for (ZLTree<?> subtree : tree.subTrees()) {
 			int count = getCount(subtree);
 			if (count <= position) {
 				position -= count;
@@ -132,9 +130,9 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	public final ZLTree getItem(int position) {
+	public final ZLTree<?> getItem(int position) {
 		final int index = indexByPosition(position + 1, myTree) - 1;
-		ZLTree item = myItems[index];
+		ZLTree<?> item = myItems[index];
 		if (item == null) {
 			item = myTree.getTreeByParagraphNumber(index + 1);
 			myItems[index] = item;
@@ -154,7 +152,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return indexByPosition(position + 1, myTree);
 	}
 
-	protected boolean runTreeItem(ZLTree tree) {
+	protected boolean runTreeItem(ZLTree<?> tree) {
 		if (!tree.hasChildren()) {
 			return false;
 		}
@@ -162,7 +160,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return true;
 	}
 
-	protected void resetTree(ZLTree tree) {
+	protected void resetTree(ZLTree<?> tree) {
 		myTree = tree;
 		myItems = new ZLTree[tree.getSize() - 1];
 		myOpenItems.clear();
@@ -179,7 +177,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		notifyDataSetChanged();
 	}
 
-	public final void onItemClick(AdapterView parent, View view, int position, long id) {
+	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runTreeItem(getItem(position));
 	}
 
@@ -188,7 +186,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 
 	public abstract View getView(int position, View convertView, ViewGroup parent);
 
-	protected final void setIcon(ImageView imageView, ZLTree tree) {
+	protected final void setIcon(ImageView imageView, ZLTree<?> tree) {
 		if (tree.hasChildren()) {
 			if (isOpen(tree)) {
 				imageView.setImageResource(R.drawable.ic_list_group_open);

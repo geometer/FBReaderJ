@@ -21,13 +21,13 @@ package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
-	private final HashMap myPatternTable = new HashMap();
+	private final HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern> myPatternTable = 
+		new HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern>();
 	private String myLanguage;
-	
+
 	public ZLTextTeXHyphenator() {
 	}
 
@@ -62,8 +62,8 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		}
 
 		byte[] values = new byte[length + 1];
-		
-		final HashMap table = myPatternTable;
+
+		final HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern> table = myPatternTable;
 		ZLTextTeXHyphenationPattern pattern =
 			new ZLTextTeXHyphenationPattern(stringToHyphenate, 0, length, false);
 		for (int offset = 0; offset < length - 1; offset++) {

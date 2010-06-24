@@ -149,12 +149,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
-		final String date;
+		/*final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
 		} else {
 			date = null;
-		}
+		}*/
 
 		final LinkedList<String> tags = new LinkedList<String>();
 		for (ATOMCategory category: entry.Categories) {

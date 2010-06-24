@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import android.content.Context;
-import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLStringOptionEntry;

@@ -38,7 +38,7 @@ public class ZLFontFamilyOptionEntry extends ZLComboOptionEntry {
 		}	
 	}
 
-	public ArrayList getValues() {
+	public ArrayList<String> getValues() {
 		return myContext.fontFamilies();
 	}
 

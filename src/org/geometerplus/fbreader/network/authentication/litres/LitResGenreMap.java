@@ -19,14 +19,13 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.util.LinkedList;
+/*import java.util.LinkedList;
 import java.util.HashMap;
 
 class LitResGenreMap {
 
 	private static LitResGenreMap ourInstance;
 
-	private boolean myInitialized;
 	LinkedList<LitResGenre> myGenresTree;
 	HashMap<String, LitResGenre> myGenresMap;
 	HashMap<LitResGenre, String> myGenresTitles;
@@ -41,3 +40,4 @@ class LitResGenreMap {
 	private LitResGenreMap() {
 	}
 }
+*/

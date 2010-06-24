@@ -20,9 +20,7 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.xml.*;
 

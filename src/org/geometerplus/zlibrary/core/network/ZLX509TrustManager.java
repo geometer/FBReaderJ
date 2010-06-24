@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.network;
 
 import java.io.*;
-import java.net.*;
 import javax.net.ssl.*;
 import java.security.GeneralSecurityException;
 import java.security.cert.*;

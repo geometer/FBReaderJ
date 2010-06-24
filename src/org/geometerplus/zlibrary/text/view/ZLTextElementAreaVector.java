@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.ArrayList;
 
 final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
+	private static final long serialVersionUID = -5045824474350948281L;
+
 	final ArrayList<ZLTextHyperlinkArea> HyperlinkAreas = new ArrayList<ZLTextHyperlinkArea>();
 	private ZLTextHyperlinkArea myCurrentHyperlinkArea;
 

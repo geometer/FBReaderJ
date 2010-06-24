@@ -22,9 +22,7 @@ package org.geometerplus.zlibrary.core.xml;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -35,8 +33,8 @@ final class ZLXMLParser {
 	private static final byte START_TAG = 1;
 	private static final byte END_TAG = 2;
 	private static final byte TEXT = 3;
-	private static final byte IGNORABLE_WHITESPACE = 4;
-	private static final byte PROCESSING_INSTRUCTION = 5;
+	//private static final byte IGNORABLE_WHITESPACE = 4;
+	//private static final byte PROCESSING_INSTRUCTION = 5;
 	private static final byte COMMENT = 6; // tag of form <!-- -->
 	private static final byte END_OF_COMMENT1 = 7;
 	private static final byte END_OF_COMMENT2 = 8;
@@ -172,7 +170,8 @@ final class ZLXMLParser {
 		return value;
 	}
 
-	private static ConcurrentHashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = new ConcurrentHashMap(); // FIXME: concurrency violation
+	private static ConcurrentHashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = 
+		new ConcurrentHashMap<List<String>,HashMap<String,char[]>>(); // FIXME: concurrency violation
 
 	static HashMap<String,char[]> getDTDMap(List<String> dtdList) throws IOException {
 		HashMap<String,char[]> entityMap = ourDTDMaps.get(dtdList);
@@ -194,7 +193,8 @@ final class ZLXMLParser {
 		return entityMap;
 	}
 
-	private final static ConcurrentHashMap ourStringMap = new ConcurrentHashMap();
+	private final static ConcurrentHashMap<ZLMutableString,String> ourStringMap = 
+		new ConcurrentHashMap<ZLMutableString,String>();
 
 	void doIt() throws IOException {
 		final ZLXMLReader xmlReader = myXMLReader;
@@ -737,7 +737,7 @@ mainSwitchLabel:
 		return false;
 	}
 
-	private static boolean processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes, HashMap currentNamespaceMap) {
+	private static boolean processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes, HashMap<String,String> currentNamespaceMap) {
 		if (xmlReader.startElementHandler(tagName, attributes)) {
 			return true;
 		}
@@ -748,7 +748,7 @@ mainSwitchLabel:
 		return false;
 	}
 
-	private static boolean processEndTag(ZLXMLReader xmlReader, String tagName, HashMap currentNamespaceMap) {
+	private static boolean processEndTag(ZLXMLReader xmlReader, String tagName, HashMap<String,String> currentNamespaceMap) {
 		if (currentNamespaceMap != null) {
 			xmlReader.namespaceMapChangedHandler(currentNamespaceMap);
 		}

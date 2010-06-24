@@ -33,7 +33,7 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 	private Context myContext;
 	protected ListView myListView;
 
-	final ArrayList myAndroidViews = new ArrayList();
+	final ArrayList<View> myAndroidViews = new ArrayList<View>();
 	private boolean[] mySelectableMarks = new boolean[10];
 
 	ZLAndroidDialogContent(Context context, ZLResource resource) {
@@ -62,9 +62,9 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 		return myContext;
 	}
 
-	private ArrayList getAndroidViews() {
+	private ArrayList<View> getAndroidViews() {
 		if (myAndroidViews.isEmpty()) {
-			final ArrayList views = Views;
+			final ArrayList<ZLOptionView> views = Views;
 			final int len = views.size();
 			for (int i = 0; i < len; ++i) {
 				final ZLAndroidOptionView v = (ZLAndroidOptionView)views.get(i);
@@ -165,13 +165,13 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 			return (View)getAndroidViews().get(position);
 		}
 
-		public boolean areAllItemsSelectable() {
+		/*public boolean areAllItemsSelectable() {
 			return true;
 		}
 
 		public boolean isSelectable(int position) {
 			return mySelectableMarks[position];
-		}
+		}*/
 
 		public int getCount() {
 			return getAndroidViews().size();

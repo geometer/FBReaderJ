@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 final class FB2Tag {
 	public static final byte UNKNOWN = 0;
@@ -59,9 +58,9 @@ final class FB2Tag {
 	public static final byte LAST_NAME = 32;
 	public static final byte SEQUENCE = 33;
 	public static final byte GENRE = 34;
-	
-	
-	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
+
+
+	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
 	static {	
@@ -105,8 +104,8 @@ final class FB2Tag {
 	}
 
 	public static byte getTagByName(String name) {
-		final HashMap tagByName = ourTagByName;
-		Byte num = (Byte)tagByName.get(name);
+		final HashMap<String,Byte> tagByName = ourTagByName;
+		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String upperCaseName = name.toLowerCase().intern();
 			num = (Byte)tagByName.get(upperCaseName);

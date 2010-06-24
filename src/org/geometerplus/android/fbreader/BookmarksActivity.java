@@ -26,14 +26,12 @@ import android.view.*;
 import android.widget.*;
 import android.content.*;
 import android.app.TabActivity;
-import android.graphics.drawable.Drawable;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.library.*;
 
@@ -45,8 +43,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int DELETE_ITEM_ID = 2;
 
 	List<Bookmark> AllBooksBookmarks;
-	private final List<Bookmark> myThisBookBookmarks = new LinkedList();
-	private final List<Bookmark> mySearchResults = new LinkedList();
+	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
+	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
 
 	private ListView myThisBookView;
 	private ListView myAllBooksView;
@@ -396,7 +394,7 @@ mainLoop:
 			return myCurrentBook ? myBookmarks.size() + 1 : myBookmarks.size();
 		}
 
-		public final void onItemClick(AdapterView parent, View view, int position, long id) {
+		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Bookmark bookmark = getItem(position);
 			if (bookmark != null) {
 				gotoBookmark(bookmark);

@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
@@ -121,7 +120,7 @@ public final class Library {
 	}
 
 	private void collectBooks() {
-		final long start = System.currentTimeMillis();
+		//final long start = System.currentTimeMillis();
 		//android.os.Debug.startMethodTracing("/sdcard/ll0");
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
 		//android.os.Debug.stopMethodTracing();

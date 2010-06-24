@@ -40,7 +40,6 @@ class NCXReader extends ZLXMLReaderAdapter {
 		}
 	}
 
-	private final BookReader myModelReader;
 	private final TreeMap<Integer,NavPoint> myNavigationMap = new TreeMap<Integer,NavPoint>();
 	private final ArrayList<NavPoint> myPointStack = new ArrayList<NavPoint>();
 
@@ -55,7 +54,6 @@ class NCXReader extends ZLXMLReaderAdapter {
 	private String myLocalPathPrefix;
 
 	NCXReader(BookReader modelReader) {
-		myModelReader = modelReader;
 	}
 
 	boolean readFile(String filePath) {

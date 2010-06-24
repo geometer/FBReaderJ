@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-
 class SwitchProfileAction extends FBAction {
 	private String myProfileName;
 

@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.formats.html;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
 public final class HtmlTag {
 	public static final byte UNKNOWN = 0;
@@ -67,7 +66,7 @@ public final class HtmlTag {
 
 	public static final byte TAG_NUMBER = 37;
 	
-	private static final HashMap ourTagByName = new HashMap(256, 0.2f);
+	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
 	static {
@@ -111,8 +110,8 @@ public final class HtmlTag {
 	}
 
 	public static byte getTagByName(String name) {
-		final HashMap tagByName = ourTagByName;
-		Byte num = (Byte)tagByName.get(name);
+		final HashMap<String,Byte> tagByName = ourTagByName;
+		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String lowerCaseName = name.toLowerCase().intern();
 			num = (Byte)tagByName.get(lowerCaseName);

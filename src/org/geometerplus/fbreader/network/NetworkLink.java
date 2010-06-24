@@ -60,7 +60,7 @@ abstract public class NetworkLink {
 		Summary = summary;
 		Icon = icon;
 		OnOption = new ZLBooleanOption(SiteName, "on", true);
-		Links = new TreeMap(links);
+		Links = new TreeMap<String, String>(links);
 	}
 
 	public abstract ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
