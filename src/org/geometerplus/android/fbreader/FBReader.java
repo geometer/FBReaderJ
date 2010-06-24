@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
@@ -200,12 +201,15 @@ public final class FBReader extends ZLAndroidActivity {
 		final ZLView view = fbreader.getCurrentView();
 		return view instanceof ZLTextView
 				&& ((ZLTextView) view).getModel() != null
-				&& ((ZLTextView) view).getModel().getParagraphsNumber() != 0;
+				&& ((ZLTextView) view).getModel().getParagraphsNumber() != 0
+				&& fbreader.Model != null
+				&& fbreader.Model.Book != null;
 	}
 
 	private void setupNavigation() {
 		final View layout = getLayoutInflater().inflate(R.layout.navigate, null);
 		final SeekBar slider = (SeekBar) layout.findViewById(R.id.book_position_slider);
+		final TextView text = (TextView) layout.findViewById(R.id.book_position_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
@@ -231,7 +235,7 @@ public final class FBReader extends ZLAndroidActivity {
 				if (fromUser) {
 					final int page = progress + 1;
 					final int pagesNumber = seekBar.getMax() + 1; 
-					myNavigateDialog.setTitle(makeNavigationTitle(page, pagesNumber));
+					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
 				}
 			}
@@ -245,21 +249,21 @@ public final class FBReader extends ZLAndroidActivity {
 
 		slider.setMax(pagesNumber - 1);
 		slider.setProgress(page - 1);
+		text.setText(makeProgressText(page, pagesNumber));
 
-		myNavigateDialog = new AlertDialog.Builder(this)
-			.setView(layout)
-			.setTitle(makeNavigationTitle(page, pagesNumber))
-			.setIcon(0)
-			.create();
-	}
-
-	private static String makeNavigationTitle(int page, int pagesNumber) {
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		String title = "";
 		if (fbreader.Model != null && fbreader.Model.Book != null) {
 			title = fbreader.Model.Book.getTitle();
 		}
-		return title + ": " + page + " / " + pagesNumber;
+
+		myNavigateDialog = new AlertDialog.Builder(this)
+			.setView(layout)
+			.setTitle(title)
+			.setIcon(0)
+			.create();
+	}
+
+	private static String makeProgressText(int page, int pagesNumber) {
+		return "" + page + " / " + pagesNumber;
 	}
 }
