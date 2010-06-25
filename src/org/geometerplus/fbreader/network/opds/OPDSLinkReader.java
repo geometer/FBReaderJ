@@ -87,6 +87,18 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		return opdsLink;
 	}
 
+	public ICustomNetworkLink createCustomLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
+		if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
+			return null;
+		}
+
+		OPDSCustomLink link = new OPDSCustomLink(siteName, title, summary, icon, links);
+
+		// TODO: read common OPDSLink attributes from special custom.xml file
+
+		return link;
+	}
+
 	public INetworkLink readDocument(ZLFile file) {
 		mySiteName = myTitle = mySummary = myIcon = /*mySearchType = */myAuthenticationType = mySSLCertificate = null;
 		myLinks.clear();

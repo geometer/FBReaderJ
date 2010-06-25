@@ -25,11 +25,11 @@ import java.util.TreeMap;
 
 public abstract class AbstractNetworkLink implements INetworkLink {
 
-	private final String mySiteName;
-	private final String myTitle;
-	private final String mySummary;
-	private final String myIcon;
-	private final TreeMap<String, String> myLinks;
+	protected String mySiteName;
+	protected String myTitle;
+	protected String mySummary;
+	protected String myIcon;
+	protected TreeMap<String, String> myLinks;
 
 
 	/**

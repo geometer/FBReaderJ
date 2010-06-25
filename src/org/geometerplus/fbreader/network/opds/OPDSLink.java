@@ -98,6 +98,9 @@ class OPDSLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
+		if (getLink(URL_SEARCH) == null) {
+			return null;
+		}
 		return createNetworkData(
 			searchURL(ZLNetworkUtil.htmlEncode(pattern)),
 			data
