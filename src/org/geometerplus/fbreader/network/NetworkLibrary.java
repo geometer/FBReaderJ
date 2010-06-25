@@ -42,14 +42,149 @@ public class NetworkLibrary {
 		return ourInstance;
 	}
 
-	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
+	private static class CompositeList extends AbstractSequentialList<INetworkLink> {
 
+		private final ArrayList<ArrayList<? extends INetworkLink>> myLists;
+		private final int mySize;
+		private Comparator<INetworkLink> myComparator;
 
-	private final ArrayList<INetworkLink> myLinks = new ArrayList<INetworkLink>();
-	private final RootTree myRootTree = new RootTree();
+		public CompositeList(ArrayList<ArrayList<? extends INetworkLink>> lists,
+				Comparator<INetworkLink> comparator) {
+			int size = 0;
+			for (ArrayList<? extends INetworkLink> list: lists) {
+				size += list.size();
+			}
+			myLists = lists;
+			mySize = size;
+			myComparator = comparator;
+		}
 
-	private boolean myUpdateChildren = true;
-	private boolean myUpdateVisibility;
+		private class Iterator implements ListIterator<INetworkLink> {
+			private int myIndex;
+			private ArrayList<Integer> myPositions;
+
+			private final INetworkLink getNextByIndex(int index) {
+				final int position = myPositions.get(index);
+				return (position < myLists.get(index).size()) ?
+						myLists.get(index).get(position) :
+						null;
+			}
+
+			private final INetworkLink getPrevByIndex(int index) {
+				final int position = myPositions.get(index);
+				return (position > 0) ?
+						myLists.get(index).get(position - 1) :
+						null;
+			}
+
+			public Iterator() {
+				myPositions = new ArrayList<Integer>(Collections.nCopies(myLists.size(), 0));
+			}
+
+			public Iterator(Iterator it) {
+				myIndex = it.myIndex;
+				myPositions = new ArrayList<Integer>(it.myPositions);
+			}
+
+			public boolean hasNext() {
+				return myIndex < mySize;
+			}
+
+			public boolean hasPrevious() {
+				return myIndex > 0;
+			}
+
+			public int nextIndex() {
+				return myIndex;
+			}
+
+			public int previousIndex() {
+				return myIndex - 1;
+			}
+
+			public INetworkLink next() {
+				final int size = myLists.size();
+				if (size == 0) {
+					throw new NoSuchElementException();
+				}
+				int nextIndex = -1;
+				INetworkLink nextLink = null;;
+				for (nextIndex = 0; nextIndex < size; ++nextIndex) {
+					nextLink = getNextByIndex(nextIndex);
+					if (nextLink != null) {
+						break;
+					}
+				}
+				if (nextLink == null) {
+					throw new NoSuchElementException();
+				}
+				for (int i = nextIndex + 1; i < size; ++i) {
+					INetworkLink link = getNextByIndex(i);
+					if (link != null && myComparator.compare(link, nextLink) < 0) {
+						nextLink = link;
+						nextIndex = i;
+					}
+				}
+				myPositions.set(nextIndex, myPositions.get(nextIndex) + 1);
+				++myIndex;
+				return nextLink;
+			}
+
+			public INetworkLink previous() {
+				final int size = myLists.size();
+				if (size == 0) {
+					throw new NoSuchElementException();
+				}
+				int prevIndex = -1;
+				INetworkLink prevLink = null;;
+				for (prevIndex = 0; prevIndex < size; ++prevIndex) {
+					prevLink = getPrevByIndex(prevIndex);
+					if (prevLink != null) {
+						break;
+					}
+				}
+				if (prevLink == null) {
+					throw new NoSuchElementException();
+				}
+				for (int i = prevIndex + 1; i < size; ++i) {
+					INetworkLink link = getPrevByIndex(i);
+					if (link != null && myComparator.compare(link, prevLink) >= 0) {
+						prevLink = link;
+						prevIndex = i;
+					}
+				}
+				myPositions.set(prevIndex, myPositions.get(prevIndex) - 1);
+				--myIndex;
+				return prevLink;
+			}
+
+			public void add(INetworkLink arg0) { throw new UnsupportedOperationException(); }
+			public void remove() { throw new UnsupportedOperationException(); }
+			public void set(INetworkLink arg0) { throw new UnsupportedOperationException(); }
+		};
+
+		@Override
+		public ListIterator<INetworkLink> listIterator(int location) {
+			if (location < 0 || location > mySize) {
+				throw new IndexOutOfBoundsException();
+			}
+			Iterator it = new Iterator();
+			while (location-- > 0) {
+				it.next();
+			}
+			return it;
+		}
+
+		// returns a copy of iterator
+		public ListIterator<INetworkLink> listIterator(ListIterator<INetworkLink> it) {
+			return new Iterator((Iterator)it);
+		}
+
+		@Override
+		public int size() {
+			return mySize;
+		}
+	}
 
 	private static class LinksComparator implements Comparator<INetworkLink> {
 		public int compare(INetworkLink link1, INetworkLink link2) {
@@ -73,16 +208,49 @@ public class NetworkLibrary {
 		}
 	}
 
+
+	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
+
+	private final ArrayList<INetworkLink> myLoadedLinks = new ArrayList<INetworkLink>();
+	private final ArrayList<ICustomNetworkLink> myCustomLinks = new ArrayList<ICustomNetworkLink>();
+
+	private final CompositeList myLinks;
+
+	private final RootTree myRootTree = new RootTree();
+
+	private boolean myUpdateChildren = true;
+	private boolean myUpdateVisibility;
+
 	private NetworkLibrary() {
 		LinkedList<String> catalogs = readCatalogFileNames();
 		OPDSLinkReader reader = new OPDSLinkReader();
 		for (String fileName: catalogs) {
 			INetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
 			if (link != null) {
-				myLinks.add(link);
+				myLoadedLinks.add(link);
 			}
 		}
-		Collections.sort(myLinks, new LinksComparator());
+
+		Map<String, String> links;
+
+		links = new TreeMap<String, String>();
+		links.put(INetworkLink.URL_MAIN, "http://bookserver.archive.org/catalog/");
+		myCustomLinks.add( reader.createCustomLink("archive.org",
+				"Internet Archive Catalog", null, null, links));
+
+		links = new TreeMap<String, String>();
+		links.put(INetworkLink.URL_MAIN, "http://pragprog.com/magazines.opds");
+		myCustomLinks.add( reader.createCustomLink("pragprog.com",
+				"PragPub Magazine", "The Pragmatic Bookshelf", null, links));
+
+		LinksComparator comparator = new LinksComparator(); 
+		Collections.sort(myLoadedLinks, comparator);
+		Collections.sort(myCustomLinks, comparator);
+
+		ArrayList<ArrayList<? extends INetworkLink>> linksList = new ArrayList<ArrayList<? extends INetworkLink>>();
+		linksList.add(myLoadedLinks);
+		linksList.add(myCustomLinks);
+		myLinks = new CompositeList(linksList, comparator); 
 	}
 
 	private final LinkedList<String> readCatalogFileNames() {
@@ -126,12 +294,13 @@ public class NetworkLibrary {
 	private void makeUpToDate() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		Iterator<FBTree> nodeIterator = myRootTree.subTrees().iterator();
+		ListIterator<FBTree> nodeIterator = myRootTree.subTrees().listIterator();
 		FBTree currentNode = null;
 		int nodeCount = 0;
 
-		for (int i = 0; i < myLinks.size(); ++i) {
-			INetworkLink link = myLinks.get(i);
+		ListIterator<INetworkLink> it = myLinks.listIterator();
+		while (it.hasNext()) {
+			INetworkLink link = it.next();
 			/*if (!link.OnOption.getValue()) {
 				continue;
 			}*/
@@ -153,8 +322,9 @@ public class NetworkLibrary {
 					break;
 				} else {
 					boolean found = false;
-					for (int j = i + 1; j < myLinks.size(); ++j) {
-						if (nodeLink == myLinks.get(j)) {
+					ListIterator<INetworkLink> jt = myLinks.listIterator(it);
+					while (jt.hasNext()) {
+						if (nodeLink == jt.next()) {
 							found = true;
 							break;
 						}
@@ -168,9 +338,10 @@ public class NetworkLibrary {
 					}
 				}
 			}
+			final int nextIndex = nodeIterator.nextIndex();
 			if (!processed) {
-				NetworkCatalogRootTree ptr = new NetworkCatalogRootTree(myRootTree, link, nodeCount++);
-				ptr.Item.onDisplayItem();
+				new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
+				nodeIterator = myRootTree.subTrees().listIterator(nextIndex + 1);
 			}
 		}
 
@@ -225,7 +396,7 @@ public class NetworkLibrary {
 			}
 		};
 
-		for (INetworkLink link: myLinks) {
+		for (INetworkLink link: myLoadedLinks) {
 			//if (link.OnOption.getValue()) {
 			// execute next code only if link is enabled
 			//}
