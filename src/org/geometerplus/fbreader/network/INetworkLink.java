@@ -21,33 +21,31 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-public class NetworkOperationData {
 
-	public interface OnNewItemListener {
-		// return true to interrupt reading; return false to continue reading
-		boolean onNewItem(NetworkLibraryItem item);
-	}
+public interface INetworkLink {
 
-	public final INetworkLink Link;
-	public final OnNewItemListener Listener;
-	public String ResumeURI;
+	String URL_MAIN = "main";
+	String URL_SEARCH = "search";
+	String URL_SIGN_IN = "signIn";
+	String URL_SIGN_OUT = "signOut";
+	String URL_SIGN_UP = "signUp";
+	String URL_REFILL_ACCOUNT = "refillAccount";
+	String URL_RECOVER_PASSWORD = "recoverPassword";
 
-	private int myResumeCount;
+	String getSiteName();
+	String getTitle();
+	String getSummary();
+	String getIcon();
+	String getLink(String urlKey);
 
-	public NetworkOperationData(INetworkLink link, OnNewItemListener listener) {
-		Link = link;
-		Listener = listener;
-	}
 
-	public void clear() {
-		ResumeURI = null;
-	}
+	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
+	ZLNetworkRequest resume(NetworkOperationData data);
 
-	public ZLNetworkRequest resume() {
-		if (++myResumeCount >= 10) { // FIXME: hardcoded resume limit constant!!!
-			return null;
-		}
-		return Link.resume(this);
-	}
+	NetworkLibraryItem libraryItem();
+	NetworkAuthenticationManager authenticationManager();
+
+	String rewriteUrl(String url, boolean isUrlExternal);
 }

@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.NetworkLink;
+import org.geometerplus.fbreader.network.INetworkLink;
 
 
 class LitResUtil {
@@ -37,7 +37,7 @@ class LitResUtil {
 		return url;
 	}
 
-	public static String url(NetworkLink link, String path) {
+	public static String url(INetworkLink link, String path) {
 		return link.rewriteUrl(url(path), false);
 	}
 }

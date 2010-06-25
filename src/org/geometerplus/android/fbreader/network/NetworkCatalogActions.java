@@ -59,7 +59,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (tree instanceof NetworkCatalogRootTree) {
 			return tree.getName();
 		}
-		return tree.getName() + " - " + ((NetworkCatalogTree) tree).Item.Link.SiteName;
+		return tree.getName() + " - " + ((NetworkCatalogTree) tree).Item.Link.getSiteName();
 	}
 
 	@Override
@@ -339,7 +339,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			/*if (!NetworkOperationRunnable::tryConnect()) {
 				return;
 			}*/
-			final NetworkLink link = myTree.Item.Link;
+			final INetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
 				NetworkAuthenticationManager mgr = link.authenticationManager();
 				AuthenticationStatus auth = mgr.isAuthorised(true);

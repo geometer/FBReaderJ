@@ -93,7 +93,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 	 * @param cover         cover url. Can be <code>null</code>.
 	 * @param references    list of references related to this book. Must be not <code>null</code>.
 	 */
-	public NetworkBookItem(NetworkLink link, String id, int index,
+	public NetworkBookItem(INetworkLink link, String id, int index,
 		String title, String summary, /*String language, String date,*/
 		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,
 		String cover,

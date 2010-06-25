@@ -26,13 +26,13 @@ import org.geometerplus.fbreader.network.*;
 
 public abstract class NetworkAuthenticationManager {
 
-	public final NetworkLink Link;
+	public final INetworkLink Link;
 	public final ZLStringOption UserNameOption;
 	public final String SSLCertificate;
 
-	public NetworkAuthenticationManager(NetworkLink link, String sslCertificate) {
+	public NetworkAuthenticationManager(INetworkLink link, String sslCertificate) {
 		Link = link;
-		UserNameOption = new ZLStringOption(link.SiteName, "userName", "");
+		UserNameOption = new ZLStringOption(link.getSiteName(), "userName", "");
 		SSLCertificate = sslCertificate;
 	}
 

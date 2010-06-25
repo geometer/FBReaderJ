@@ -17,13 +17,29 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.tree;
+package org.geometerplus.android.fbreader.network;
 
-import org.geometerplus.fbreader.network.*;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
-public class NetworkCatalogRootTree extends NetworkCatalogTree {
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-	public NetworkCatalogRootTree(RootTree parent, INetworkLink link, int position) {
-		super(parent, (NetworkCatalogItem) link.libraryItem(), position);
+import org.geometerplus.fbreader.network.NetworkDatabase;
+
+public class SQLiteNetworkDatabase extends NetworkDatabase {
+	private final SQLiteDatabase myDatabase;
+
+	public SQLiteNetworkDatabase() {
+		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("network.db", Context.MODE_PRIVATE, null);
+	}
+
+	protected void executeAsATransaction(Runnable actions) {
+		myDatabase.beginTransaction();
+		try {
+			actions.run();
+			myDatabase.setTransactionSuccessful();
+		} finally {
+			myDatabase.endTransaction();
+		}
 	}
 }

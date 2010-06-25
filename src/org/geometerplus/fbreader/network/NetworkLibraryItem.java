@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network;
 
 public abstract class NetworkLibraryItem {
 
-	public final NetworkLink Link;
+	public final INetworkLink Link;
 	public final String Title;
 	public final String Summary;
 	public final String Cover;
@@ -36,7 +36,7 @@ public abstract class NetworkLibraryItem {
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param cover      cover url. Can be <code>null</code>.
 	 */
-	protected NetworkLibraryItem(NetworkLink link, String title, String summary, String cover) {
+	protected NetworkLibraryItem(INetworkLink link, String title, String summary, String cover) {
 		Link = link;
 		Title = title;
 		Summary = summary;

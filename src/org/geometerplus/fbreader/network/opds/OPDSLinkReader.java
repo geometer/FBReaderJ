@@ -50,8 +50,8 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
 	private String mySSLCertificate;
 
-	private NetworkLink link() {
-		if (mySiteName == null || myTitle == null || myLinks.get(NetworkLink.URL_MAIN) == null) {
+	private INetworkLink link() {
+		if (mySiteName == null || myTitle == null || myLinks.get(INetworkLink.URL_MAIN) == null) {
 			return null;
 		}
 
@@ -87,7 +87,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		return opdsLink;
 	}
 
-	public NetworkLink readDocument(ZLFile file) {
+	public INetworkLink readDocument(ZLFile file) {
 		mySiteName = myTitle = mySummary = myIcon = /*mySearchType = */myAuthenticationType = mySSLCertificate = null;
 		myLinks.clear();
 		mySearchFields.clear();

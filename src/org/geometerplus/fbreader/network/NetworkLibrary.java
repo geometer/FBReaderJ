@@ -45,15 +45,15 @@ public class NetworkLibrary {
 	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
 
 
-	private final ArrayList<NetworkLink> myLinks = new ArrayList<NetworkLink>();
+	private final ArrayList<INetworkLink> myLinks = new ArrayList<INetworkLink>();
 	private final RootTree myRootTree = new RootTree();
 
 	private boolean myUpdateChildren = true;
 	private boolean myUpdateVisibility;
 
-	private static class LinksComparator implements Comparator<NetworkLink> {
-		public int compare(NetworkLink link1, NetworkLink link2) {
-			String title1 = link1.Title;
+	private static class LinksComparator implements Comparator<INetworkLink> {
+		public int compare(INetworkLink link1, INetworkLink link2) {
+			String title1 = link1.getTitle();
 			for (int index = 0; index < title1.length(); ++index) {
 				final char ch = title1.charAt(index);
 				if (ch < 128 && Character.isLetter(ch)) {
@@ -61,7 +61,7 @@ public class NetworkLibrary {
 					break;
 				}
 			}
-			String title2 = link2.Title;
+			String title2 = link2.getTitle();
 			for (int index = 0; index < title2.length(); ++index) {
 				final char ch = title2.charAt(index);
 				if (ch < 128 && Character.isLetter(ch)) {
@@ -77,7 +77,7 @@ public class NetworkLibrary {
 		LinkedList<String> catalogs = readCatalogFileNames();
 		OPDSLinkReader reader = new OPDSLinkReader();
 		for (String fileName: catalogs) {
-			NetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
+			INetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
 			if (link != null) {
 				myLinks.add(link);
 			}
@@ -105,14 +105,10 @@ public class NetworkLibrary {
 		return catalogs;
 	}
 
-	public List<NetworkLink> links() {
-		return Collections.unmodifiableList(myLinks);
-	}
-
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
-		for (NetworkLink link: myLinks) {
-			if (host.contains(link.SiteName)) {
+		for (INetworkLink link: myLinks) {
+			if (host.contains(link.getSiteName())) {
 				url = link.rewriteUrl(url, externalUrl);
 			}
 		}
@@ -135,10 +131,10 @@ public class NetworkLibrary {
 		int nodeCount = 0;
 
 		for (int i = 0; i < myLinks.size(); ++i) {
-			NetworkLink link = myLinks.get(i);
-			if (!link.OnOption.getValue()) {
+			INetworkLink link = myLinks.get(i);
+			/*if (!link.OnOption.getValue()) {
 				continue;
-			}
+			}*/
 			boolean processed = false;
 			while (currentNode != null || nodeIterator.hasNext()) {
 				if (currentNode == null) {
@@ -149,7 +145,7 @@ public class NetworkLibrary {
 					++nodeCount;
 					continue;
 				}
-				final NetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
+				final INetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
 				if (nodeLink == link) {
 					currentNode = null;
 					++nodeCount;
@@ -229,14 +225,15 @@ public class NetworkLibrary {
 			}
 		};
 
-		for (NetworkLink link: myLinks) {
-			if (link.OnOption.getValue()) {
-				NetworkOperationData data = new NetworkOperationData(link, synchronizedListener);
-				ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-				if (request != null) {
-					dataList.add(data);
-					requestList.add(request);
-				}
+		for (INetworkLink link: myLinks) {
+			//if (link.OnOption.getValue()) {
+			// execute next code only if link is enabled
+			//}
+			NetworkOperationData data = new NetworkOperationData(link, synchronizedListener);
+			ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
+			if (request != null) {
+				dataList.add(data);
+				requestList.add(request);
 			}
 		}
 

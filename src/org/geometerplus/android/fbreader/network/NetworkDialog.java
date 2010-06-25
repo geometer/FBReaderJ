@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.network.NetworkLink;
+import org.geometerplus.fbreader.network.INetworkLink;
 
 
 abstract class NetworkDialog {
@@ -60,7 +60,7 @@ abstract class NetworkDialog {
 
 	protected final ZLResource myResource;
 
-	protected NetworkLink myLink;
+	protected INetworkLink myLink;
 	protected String myErrorMessage;
 	protected Runnable myOnSuccessRunnable;
 
@@ -68,11 +68,11 @@ abstract class NetworkDialog {
 		myResource = ZLResource.resource("dialog").getResource(key);
 	}
 
-	public static void show(Activity activity, int id, NetworkLink link, Runnable onSuccessRunnable) {
+	public static void show(Activity activity, int id, INetworkLink link, Runnable onSuccessRunnable) {
 		getDialog(id).showInternal(activity, id, link, onSuccessRunnable);
 	}
 
-	private void showInternal(Activity activity, int id, NetworkLink link, Runnable onSuccessRunnable) {
+	private void showInternal(Activity activity, int id, INetworkLink link, Runnable onSuccessRunnable) {
 		myLink = link;
 		myErrorMessage = null;
 		myOnSuccessRunnable = onSuccessRunnable;

@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
-class OPDSLink extends NetworkLink {
+class OPDSLink extends AbstractNetworkLink {
 
 	public interface FeedCondition {
 		int REGULAR = 0;
@@ -94,10 +94,9 @@ class OPDSLink extends NetworkLink {
 	}
 
 	private final String searchURL(String query) {
-		return Links.get(URL_SEARCH).replace("%s", query);
+		return getLink(URL_SEARCH).replace("%s", query);
 	}
 
-	@Override
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
 		return createNetworkData(
 			searchURL(ZLNetworkUtil.htmlEncode(pattern)),
@@ -105,26 +104,22 @@ class OPDSLink extends NetworkLink {
 		);
 	}
 
-	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
 		String url = data.ResumeURI;
 		data.clear();
 		return createNetworkData(url, data);
 	}
 
-	@Override
 	public NetworkLibraryItem libraryItem() {
 		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
-		urlMap.put(NetworkCatalogItem.URL_CATALOG, Links.get(URL_MAIN));
-		return new OPDSCatalogItem(this, Title, Summary, Icon, urlMap);
+		urlMap.put(NetworkCatalogItem.URL_CATALOG, getLink(URL_MAIN));
+		return new OPDSCatalogItem(this, getTitle(), getSummary(), getIcon(), urlMap);
 	}
 
-	@Override
 	public NetworkAuthenticationManager authenticationManager() {
 		return myAuthenticationManager;
 	}
 
-	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
 		if (myUrlRewritingRules == null) {
 			return url;
