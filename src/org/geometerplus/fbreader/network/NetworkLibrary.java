@@ -213,7 +213,6 @@ public class NetworkLibrary {
 
 	private final ArrayList<INetworkLink> myLoadedLinks = new ArrayList<INetworkLink>();
 	private final ArrayList<ICustomNetworkLink> myCustomLinks = new ArrayList<ICustomNetworkLink>();
-
 	private final CompositeList myLinks;
 
 	private final RootTree myRootTree = new RootTree();
@@ -223,7 +222,7 @@ public class NetworkLibrary {
 
 	private NetworkLibrary() {
 		LinkedList<String> catalogs = readCatalogFileNames();
-		OPDSLinkReader reader = new OPDSLinkReader();
+		final OPDSLinkReader reader = new OPDSLinkReader();
 		for (String fileName: catalogs) {
 			INetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
 			if (link != null) {
@@ -231,17 +230,31 @@ public class NetworkLibrary {
 			}
 		}
 
-		Map<String, String> links;
-
-		links = new TreeMap<String, String>();
+		/*final HashMap<String, String> links = new HashMap<String, String>();
 		links.put(INetworkLink.URL_MAIN, "http://bookserver.archive.org/catalog/");
-		myCustomLinks.add( reader.createCustomLink("archive.org",
-				"Internet Archive Catalog", null, null, links));
-
-		links = new TreeMap<String, String>();
+		NetworkDatabase.Instance().saveCustomLink(
+			reader.createCustomLink(
+				ICustomNetworkLink.INVALID_ID,
+				"archive.org", "Internet Archive Catalog", null, null, links
+			)
+		);
+		links.clear();
 		links.put(INetworkLink.URL_MAIN, "http://pragprog.com/magazines.opds");
-		myCustomLinks.add( reader.createCustomLink("pragprog.com",
-				"PragPub Magazine", "The Pragmatic Bookshelf", null, links));
+		NetworkDatabase.Instance().saveCustomLink(
+			reader.createCustomLink(
+				ICustomNetworkLink.INVALID_ID,
+				"pragprog.com", "PragPub Magazine", "The Pragmatic Bookshelf", null, links
+			)
+		);*/
+
+		NetworkDatabase.Instance().loadCustomLinks(myCustomLinks,
+			new NetworkDatabase.ICustomLinksFactory() {
+				public ICustomNetworkLink createCustomLink(int id, String siteName,
+						String title, String summary, String icon, Map<String, String> links) {
+					return reader.createCustomLink(id, siteName, title, summary, icon, links);
+				}
+			}
+		);
 
 		LinksComparator comparator = new LinksComparator(); 
 		Collections.sort(myLoadedLinks, comparator);
@@ -275,9 +288,11 @@ public class NetworkLibrary {
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
-		for (INetworkLink link: myLinks) {
-			if (host.contains(link.getSiteName())) {
-				url = link.rewriteUrl(url, externalUrl);
+		synchronized (myLinks) {
+			for (INetworkLink link: myLinks) {
+				if (host.contains(link.getSiteName())) {
+					url = link.rewriteUrl(url, externalUrl);
+				}
 			}
 		}
 		return url;
@@ -298,50 +313,52 @@ public class NetworkLibrary {
 		FBTree currentNode = null;
 		int nodeCount = 0;
 
-		ListIterator<INetworkLink> it = myLinks.listIterator();
-		while (it.hasNext()) {
-			INetworkLink link = it.next();
-			/*if (!link.OnOption.getValue()) {
-				continue;
-			}*/
-			boolean processed = false;
-			while (currentNode != null || nodeIterator.hasNext()) {
-				if (currentNode == null) {
-					currentNode = nodeIterator.next();
-				}
-				if (!(currentNode instanceof NetworkCatalogTree)) {
-					currentNode = null;
-					++nodeCount;
+		synchronized (myLinks) {
+			ListIterator<INetworkLink> it = myLinks.listIterator();
+			while (it.hasNext()) {
+				INetworkLink link = it.next();
+				/*if (!link.OnOption.getValue()) {
 					continue;
-				}
-				final INetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
-				if (nodeLink == link) {
-					currentNode = null;
-					++nodeCount;
-					processed = true;
-					break;
-				} else {
-					boolean found = false;
-					ListIterator<INetworkLink> jt = myLinks.listIterator(it);
-					while (jt.hasNext()) {
-						if (nodeLink == jt.next()) {
-							found = true;
+				}*/
+				boolean processed = false;
+				while (currentNode != null || nodeIterator.hasNext()) {
+					if (currentNode == null) {
+						currentNode = nodeIterator.next();
+					}
+					if (!(currentNode instanceof NetworkCatalogTree)) {
+						currentNode = null;
+						++nodeCount;
+						continue;
+					}
+					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
+					if (nodeLink == link) {
+						currentNode = null;
+						++nodeCount;
+						processed = true;
+						break;
+					} else {
+						boolean found = false;
+						ListIterator<INetworkLink> jt = myLinks.listIterator(it);
+						while (jt.hasNext()) {
+							if (nodeLink == jt.next()) {
+								found = true;
+								break;
+							}
+						}
+						if (!found) {
+							toRemove.add(currentNode);
+							currentNode = null;
+							++nodeCount;
+						} else {
 							break;
 						}
 					}
-					if (!found) {
-						toRemove.add(currentNode);
-						currentNode = null;
-						++nodeCount;
-					} else {
-						break;
-					}
 				}
-			}
-			final int nextIndex = nodeIterator.nextIndex();
-			if (!processed) {
-				new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
-				nodeIterator = myRootTree.subTrees().listIterator(nextIndex + 1);
+				final int nextIndex = nodeIterator.nextIndex();
+				if (!processed) {
+					new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
+					nodeIterator = myRootTree.subTrees().listIterator(nextIndex + 1);
+				}
 			}
 		}
 
@@ -351,7 +368,6 @@ public class NetworkLibrary {
 			}
 			toRemove.add(currentNode);
 			currentNode = null;
-			//++nodeCount; // TODO: where to increment???
 		}
 
 		for (FBTree tree: toRemove) {
@@ -396,15 +412,17 @@ public class NetworkLibrary {
 			}
 		};
 
-		for (INetworkLink link: myLoadedLinks) {
-			//if (link.OnOption.getValue()) {
-			// execute next code only if link is enabled
-			//}
-			NetworkOperationData data = new NetworkOperationData(link, synchronizedListener);
-			ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null) {
-				dataList.add(data);
-				requestList.add(request);
+		synchronized (myLinks) {
+			for (INetworkLink link: myLinks) {
+				//if (link.OnOption.getValue()) {
+				// execute next code only if link is enabled
+				//}
+				NetworkOperationData data = new NetworkOperationData(link, synchronizedListener);
+				ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
+				if (request != null) {
+					dataList.add(data);
+					requestList.add(request);
+				}
 			}
 		}
 
@@ -425,5 +443,35 @@ public class NetworkLibrary {
 		}
 
 		return null;
+	}
+
+	private ICustomNetworkLink.SaveLinkListener myChangesListener = new ICustomNetworkLink.SaveLinkListener() {
+		public void onSaveLink(ICustomNetworkLink link) {
+			NetworkDatabase.Instance().saveCustomLink(link);
+		}
+	};
+
+	/**
+	 * @return <code>false</code> if this library already contains link with the specified title
+	 * <code>true</code> if links has been inserted into this library
+	 */
+	public boolean addCustomLink(ICustomNetworkLink link) {
+		final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
+		if (index >= 0) {
+			return false;
+		}
+		final int insertAt = -index - 1;
+		myCustomLinks.add(insertAt, link);
+		link.setSaveLinkListener(myChangesListener);
+		link.saveLink();
+		return true;
+	}
+
+	public int getCustomLinksNumber() {
+		return myCustomLinks.size();
+	}
+
+	public ICustomNetworkLink getCustomLink(int index) {
+		return myCustomLinks.get(index);
 	}
 }

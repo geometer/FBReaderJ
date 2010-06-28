@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 
@@ -67,5 +68,9 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 
 	public String getLink(String urlKey) {
 		return myLinks.get(urlKey);
+	}
+
+	public Set<String> getLinkKeys() {
+		return myLinks.keySet();
 	}
 }

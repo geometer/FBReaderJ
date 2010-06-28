@@ -26,8 +26,30 @@ import org.geometerplus.fbreader.network.ICustomNetworkLink;
 
 class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
 
-	OPDSCustomLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
+	private int myId;
+	private SaveLinkListener myListener;
+
+	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
 		super(siteName, title, summary, icon, links);
+		myId = id;
+	}
+
+	public int getId() {
+		return myId;
+	}
+
+	public void setId(int id) {
+		myId = id;
+	}
+
+	public void setSaveLinkListener(SaveLinkListener listener) {
+		myListener = listener;
+	}
+
+	public void saveLink() {
+		if (myListener != null) {
+			myListener.onSaveLink(this);
+		}
 	}
 
 	public final void setIcon(String icon) {

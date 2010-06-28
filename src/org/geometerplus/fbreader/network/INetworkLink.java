@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.Set;
+
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -40,6 +42,7 @@ public interface INetworkLink {
 	String getIcon();
 	String getLink(String urlKey);
 
+	Set<String> getLinkKeys();
 
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);

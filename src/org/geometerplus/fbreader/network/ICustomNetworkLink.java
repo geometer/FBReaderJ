@@ -21,6 +21,18 @@ package org.geometerplus.fbreader.network;
 
 public interface ICustomNetworkLink extends INetworkLink {
 
+	public static final int INVALID_ID = -1;
+
+	int getId();
+	void setId(int id);
+
+	interface SaveLinkListener {
+		void onSaveLink(ICustomNetworkLink link);
+	}
+
+	void setSaveLinkListener(SaveLinkListener listener);
+	void saveLink();
+
 	void setSiteName(String name);
 	void setTitle(String title);
 	void setSummary(String summary);

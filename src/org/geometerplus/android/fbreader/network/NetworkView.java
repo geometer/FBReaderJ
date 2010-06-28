@@ -58,6 +58,8 @@ class NetworkView {
 	}
 
 	public void initialize() {
+		new SQLiteNetworkDatabase();
+
 		NetworkLibrary.Instance().synchronize();
 
 		myActions.add(new NetworkBookActions());

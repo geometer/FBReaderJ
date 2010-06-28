@@ -87,14 +87,15 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		return opdsLink;
 	}
 
-	public ICustomNetworkLink createCustomLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
+	public ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
 		if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
 			return null;
 		}
 
-		OPDSCustomLink link = new OPDSCustomLink(siteName, title, summary, icon, links);
+		OPDSCustomLink link = new OPDSCustomLink(id, siteName, title, summary, icon, links);
 
 		// TODO: read common OPDSLink attributes from special custom.xml file
+		// Does this additional info have to override duplicated settings, received from user??? 
 
 		return link;
 	}
