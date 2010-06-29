@@ -38,7 +38,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private boolean myInitialized;
 
 	private NetworkTree myTree;
-	private SearchItemTree mySearchItem;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -52,7 +51,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		if (!myInitialized) {
 			myInitialized = true;
 			myTree = NetworkLibrary.Instance().getTree();
-			mySearchItem = NetworkView.Instance().getSearchItemTree();
 			setListAdapter(new LibraryAdapter());
 			getListView().invalidateViews();
 		}
@@ -83,15 +81,17 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private final class LibraryAdapter extends BaseAdapter {
 
 		public final int getCount() {
-			return myTree.subTrees().size() + 1; // subtrees + <search item>
+			return myTree.subTrees().size() + 2; // subtrees + <search item>
 		}
 
 		public final NetworkTree getItem(int position) {
 			final int size = myTree.subTrees().size();
 			if (position == 0) {
-				return mySearchItem;
+				return NetworkView.Instance().getSearchItemTree();
 			} else if (position > 0 && position <= size) {
 				return (NetworkTree) myTree.subTrees().get(position - 1);
+			} else if (position == size + 1) {
+				return NetworkView.Instance().getAddCustomCatalogItemTree();
 			}
 			return null;
 		}
@@ -134,7 +134,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			case 1:
 				return onSearchRequested();
 			case 2:
-				NetworkDialog.show(this, NetworkDialog.DIALOG_CUSTOM_CATALOG, null, null);
+				AddCustomCatalogItemActions.addCustomCatalog(this);
 				return true;
 			default:
 				return true;

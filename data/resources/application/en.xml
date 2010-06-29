@@ -44,6 +44,7 @@
 		<node name="searchResults" value="Search results for: %s" />
 		<node name="editCustomCatalog" value="Edit catalog"/>
 		<node name="removeCustomCatalog" value="Remove catalog"/>
+		<node name="addCustomCatalog" value="Add catalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>

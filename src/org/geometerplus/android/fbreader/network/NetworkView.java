@@ -66,6 +66,7 @@ class NetworkView {
 		myActions.add(new NetworkCatalogActions());
 		myActions.add(new SearchItemActions());
 		myActions.add(new RefillAccountActions());
+		myActions.add(new AddCustomCatalogItemActions());
 		myActions.trimToSize();
 
 		myInitialized = true;
@@ -350,8 +351,13 @@ class NetworkView {
 	 */
 
 	private final SearchItemTree mySearchItem = new SearchItemTree();
+	private final AddCustomCatalogItemTree myAddCustomCatalogItem = new AddCustomCatalogItemTree();
 
 	public SearchItemTree getSearchItemTree() {
 		return mySearchItem;
+	}
+
+	public AddCustomCatalogItemTree getAddCustomCatalogItemTree() {
+		return myAddCustomCatalogItem;
 	}
 }
