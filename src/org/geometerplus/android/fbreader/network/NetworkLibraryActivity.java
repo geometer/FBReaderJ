@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -116,6 +117,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
+		addMenuItem(menu, 2, "customCatalogs", 0);
 		return true;
 	}
 
@@ -132,9 +134,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		switch (item.getItemId()) {
 			case 1:
 				return onSearchRequested();
-			default:
+			case 2:
+				startActivity(new Intent(getApplicationContext(), CustomCatalogsActivity.class));
 				return true;
 		}
+		return true;
 	}
 
 	@Override

@@ -46,8 +46,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkImage;
 
 
-abstract class NetworkBaseActivity extends ListActivity 
-		implements NetworkView.EventListener, View.OnCreateContextMenuListener {
+abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 

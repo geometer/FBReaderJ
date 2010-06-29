@@ -58,6 +58,7 @@
 			<node name="signIn" value="Sign in"/>
 			<node name="signOut" value="Sign out (%s)"/>
 			<node name="refillAccount" value="Refill account"/>
+			<node name="customCatalogs" value="Custom catalogs"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -69,6 +70,9 @@
 		<node name="series" value="Series:" />
 		<node name="indexInSeries" value="Index in series:" />
 		<node name="tags" value="Tags:" />
+	</node>
+	<node name="customCatalogsView">
+		<node name="title" value="Custom catalogs" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Book has been downloaded" />
