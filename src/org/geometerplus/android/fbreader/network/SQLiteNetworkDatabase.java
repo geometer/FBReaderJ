@@ -189,6 +189,36 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		});
 	}
 
+	private SQLiteStatement myDeleteAllCustomLinksStatement;
+	private SQLiteStatement myDeleteCustomLinkStatement;
+	@Override
+	protected void deleteCustomLink(final ICustomNetworkLink link) {
+		if (link.getId() == ICustomNetworkLink.INVALID_ID) {
+			return;
+		}
+		executeAsATransaction(new Runnable() {
+			public void run() {
+				final long id = link.getId();
+				if (myDeleteAllCustomLinksStatement == null) {
+					myDeleteAllCustomLinksStatement = myDatabase.compileStatement(
+							"DELETE FROM CustomLinkUrls WHERE link_id = ?");
+				}
+				myDeleteAllCustomLinksStatement.bindLong(1, id);
+				myDeleteAllCustomLinksStatement.execute();
+
+				if (myDeleteCustomLinkStatement == null) {
+					myDeleteCustomLinkStatement = myDatabase.compileStatement(
+						"DELETE FROM CustomLinks WHERE link_id = ?"
+					);
+				}
+				myDeleteCustomLinkStatement.bindLong(1, id);
+				myDeleteCustomLinkStatement.execute();
+
+				link.setId(ICustomNetworkLink.INVALID_ID);
+			}
+		});
+	}
+	
 	private void createTables() {
 		myDatabase.execSQL(
 				"CREATE TABLE CustomLinks(" +

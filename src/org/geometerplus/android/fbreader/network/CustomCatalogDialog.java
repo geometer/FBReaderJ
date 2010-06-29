@@ -19,9 +19,12 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -29,38 +32,32 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkErrors;
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 
 
-class RegisterUserDialog extends NetworkDialog {
+class CustomCatalogDialog extends NetworkDialog {
 
-	private String myLogin;
-	private String myPassword;
-	private String myEmail;
+	private String myTitle;
+	private String myUrl;
+	private String mySummary;
 
-	public RegisterUserDialog() {
-		super("RegisterUserDialog");
+	public CustomCatalogDialog() {
+		super("CustomCatalogDialog");
 	}
 
 	private void clearData() {
-		myLogin = myPassword = myEmail = null;
+		myTitle = myUrl = mySummary = null;
 	}
 
 	public Dialog createDialog(final Activity activity) {
-		final View layout = activity.getLayoutInflater().inflate(R.layout.network_register_user_dialog, null);
+		final View layout = activity.getLayoutInflater().inflate(R.layout.network_custom_catalog_dialog, null);
 
-		setupLabel(layout, R.id.network_register_login_text, "login", R.id.network_register_login);
-		setupLabel(layout, R.id.network_register_password_text, "password", R.id.network_register_password);
-		setupLabel(layout, R.id.network_register_confirm_password_text, "confirmPassword", R.id.network_register_confirm_password);
-		setupLabel(layout, R.id.network_register_email_text, "email", R.id.network_register_email);
+		setupLabel(layout, R.id.network_catalog_title_text, "catalogTitle", R.id.network_catalog_title);
+		setupLabel(layout, R.id.network_catalog_url_text, "catalogUrl", R.id.network_catalog_url);
+		setupLabel(layout, R.id.network_catalog_summary_text, "catalogSummary", R.id.network_catalog_summary);
 
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
@@ -68,6 +65,7 @@ class RegisterUserDialog extends NetworkDialog {
 					return;
 				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.invalidate();
 				library.invalidateVisibility();
 				library.synchronize();
 				NetworkView.Instance().fireModelChanged();
@@ -84,7 +82,7 @@ class RegisterUserDialog extends NetworkDialog {
 							.create().show();
 					} else {
 						myErrorMessage = (String) message.obj;
-						activity.showDialog(NetworkDialog.DIALOG_REGISTER_USER);
+						activity.showDialog(NetworkDialog.DIALOG_CUSTOM_CATALOG);
 						return;
 					}
 				} else if (message.what > 0) {
@@ -98,58 +96,69 @@ class RegisterUserDialog extends NetworkDialog {
 
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					AlertDialog alert = (AlertDialog) dialog;
-					myLogin = ((TextView) alert.findViewById(R.id.network_register_login)).getText().toString().trim();
-					myPassword = ((TextView) alert.findViewById(R.id.network_register_password)).getText().toString();
-					final String confirmPassword = ((TextView) alert.findViewById(R.id.network_register_confirm_password)).getText().toString();
-					myEmail = ((TextView) alert.findViewById(R.id.network_register_email)).getText().toString().trim();
+					myTitle = ((TextView) alert.findViewById(R.id.network_catalog_title)).getText().toString().trim();
+					myUrl = ((TextView) alert.findViewById(R.id.network_catalog_url)).getText().toString().trim();
+					mySummary = ((TextView) alert.findViewById(R.id.network_catalog_summary)).getText().toString().trim();
 
-					if (myLogin.length() == 0) {
-						myLogin = null;
-						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
+					if (myTitle.length() == 0) {
+						myTitle = null;
+						final String err = myResource.getResource("titleIsEmpty").getValue();
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
-					if (!myPassword.equals(confirmPassword)) {
-						final String err = myResource.getResource("differentPasswords").getValue();
-						myPassword = null;
+					if (myUrl.length() == 0) {
+						myUrl = null;
+						final String err = myResource.getResource("urlIsEmpty").getValue();
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
-					if (myEmail.length() == 0) {
-						myEmail = null;
-						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
+					if (mySummary.length() == 0) {
+						mySummary = null;
+					}
+
+					Uri uri = Uri.parse(myUrl);
+					if (uri.getScheme() == null) {
+						myUrl = "http://" + myUrl;
+						uri = Uri.parse(myUrl);
+					}
+
+					String siteName = uri.getHost();
+					if (siteName == null) {
+						final String err = myResource.getResource("invalidUrl").getValue();
 						handler.sendMessage(handler.obtainMessage(-1, err));
 						return;
 					}
-					final int atPos = myEmail.indexOf("@");
-					if (atPos == -1 || myEmail.indexOf(".", atPos) == -1) {
-						final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_INVALID_EMAIL);
-						handler.sendMessage(handler.obtainMessage(-1, err));
-						return;
+					if (siteName.startsWith("www.")) {
+						siteName = siteName.substring(4);
 					}
-					final Runnable runnable = new Runnable() {
-						public void run() {
-							String err = mgr.registerUser(myLogin, myPassword, myEmail);
-							if (err != null) {
-								mgr.logOut();
+
+					if (myLink == null) {
+						final OPDSLinkReader reader = new OPDSLinkReader();
+						final HashMap<String, String> links = new HashMap<String, String>();
+						links.put(INetworkLink.URL_MAIN, myUrl);
+						final ICustomNetworkLink link = reader.createCustomLink(ICustomNetworkLink.INVALID_ID, 
+								siteName, myTitle, mySummary, null, links);
+						myLink = link;
+						if (link != null) {
+							if (!NetworkLibrary.Instance().addCustomLink(link)) {
+								final String err = myResource.getResource("alreadyExists").getValue();
 								handler.sendMessage(handler.obtainMessage(-1, err));
 								return;
 							}
-							if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_FALSE && mgr.needsInitialization()) {
-								err = mgr.initialize();
-								if (err != null) {
-									mgr.logOut();
-									handler.sendMessage(handler.obtainMessage(-2, err));
-									return;
-								}
-							}
-							handler.sendEmptyMessage(1);
+						} else {
+							throw new RuntimeException("Unable to create link!!! Impossible!!!");
 						}
-					};
-					((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, activity);
+					} else {
+						final ICustomNetworkLink link = (ICustomNetworkLink) myLink;
+						link.setSiteName(siteName);
+						link.setTitle(myTitle);
+						link.setSummary(mySummary);
+						link.setLink(INetworkLink.URL_MAIN, myUrl);
+						link.saveLink();
+					}
+					handler.sendEmptyMessage(1);
 				} else {
 					handler.sendEmptyMessage(0);
 				}
@@ -171,12 +180,16 @@ class RegisterUserDialog extends NetworkDialog {
 	}
 
 	public void prepareDialog(Dialog dialog) {
-		((TextView) dialog.findViewById(R.id.network_register_login)).setText((myLogin != null) ? myLogin : "");
-		((TextView) dialog.findViewById(R.id.network_register_password)).setText((myPassword != null) ? myPassword : "");
-		((TextView) dialog.findViewById(R.id.network_register_confirm_password)).setText((myPassword != null) ? myPassword : "");
-		((TextView) dialog.findViewById(R.id.network_register_email)).setText((myEmail != null) ? myEmail : "");
+		if (myLink != null) {
+			if (myTitle == null) myTitle = myLink.getTitle();
+			if (myUrl == null) myUrl = myLink.getLink(INetworkLink.URL_MAIN);
+			if (mySummary == null) mySummary = myLink.getSummary();
+		}
+		((TextView) dialog.findViewById(R.id.network_catalog_title)).setText((myTitle != null) ? myTitle : "");
+		((TextView) dialog.findViewById(R.id.network_catalog_url)).setText((myUrl != null) ? myUrl : "");
+		((TextView) dialog.findViewById(R.id.network_catalog_summary)).setText((mySummary != null) ? mySummary : "");
 
-		final TextView error = (TextView) dialog.findViewById(R.id.network_register_error);
+		final TextView error = (TextView) dialog.findViewById(R.id.network_catalog_error);
 		if (myErrorMessage == null) {
 			error.setVisibility(View.GONE);
 			error.setText("");
@@ -185,7 +198,7 @@ class RegisterUserDialog extends NetworkDialog {
 			error.setText(myErrorMessage);
 		}
 
-		View dlgView = dialog.findViewById(R.id.network_register_user_dialog);
+		View dlgView = dialog.findViewById(R.id.network_custom_catalog_dialog);
 		dlgView.invalidate();
 		dlgView.requestLayout();
 	}

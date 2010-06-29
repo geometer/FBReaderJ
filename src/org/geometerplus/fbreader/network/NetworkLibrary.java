@@ -45,17 +45,11 @@ public class NetworkLibrary {
 	private static class CompositeList extends AbstractSequentialList<INetworkLink> {
 
 		private final ArrayList<ArrayList<? extends INetworkLink>> myLists;
-		private final int mySize;
 		private Comparator<INetworkLink> myComparator;
 
 		public CompositeList(ArrayList<ArrayList<? extends INetworkLink>> lists,
 				Comparator<INetworkLink> comparator) {
-			int size = 0;
-			for (ArrayList<? extends INetworkLink> list: lists) {
-				size += list.size();
-			}
 			myLists = lists;
-			mySize = size;
 			myComparator = comparator;
 		}
 
@@ -87,7 +81,7 @@ public class NetworkLibrary {
 			}
 
 			public boolean hasNext() {
-				return myIndex < mySize;
+				return myIndex < size();
 			}
 
 			public boolean hasPrevious() {
@@ -165,7 +159,7 @@ public class NetworkLibrary {
 
 		@Override
 		public ListIterator<INetworkLink> listIterator(int location) {
-			if (location < 0 || location > mySize) {
+			if (location < 0 || location > size()) {
 				throw new IndexOutOfBoundsException();
 			}
 			Iterator it = new Iterator();
@@ -182,7 +176,11 @@ public class NetworkLibrary {
 
 		@Override
 		public int size() {
-			return mySize;
+			int size = 0;
+			for (ArrayList<? extends INetworkLink> list: myLists) {
+				size += list.size();
+			}
+			return size;
 		}
 	}
 
@@ -332,9 +330,13 @@ public class NetworkLibrary {
 					}
 					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
 					if (nodeLink == link) {
+						if (link instanceof ICustomNetworkLink) {
+							toRemove.add(currentNode);
+						} else {
+							processed = true;
+						}
 						currentNode = null;
 						++nodeCount;
-						processed = true;
 						break;
 					} else {
 						boolean found = false;
@@ -354,8 +356,8 @@ public class NetworkLibrary {
 						}
 					}
 				}
-				final int nextIndex = nodeIterator.nextIndex();
 				if (!processed) {
+					final int nextIndex = nodeIterator.nextIndex();
 					new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
 					nodeIterator = myRootTree.subTrees().listIterator(nextIndex + 1);
 				}
@@ -473,5 +475,15 @@ public class NetworkLibrary {
 
 	public ICustomNetworkLink getCustomLink(int index) {
 		return myCustomLinks.get(index);
+	}
+
+	public void removeCustomLink(ICustomNetworkLink link) {
+		final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
+		if (index < 0) {
+			return;
+		}
+		myCustomLinks.remove(index);
+		NetworkDatabase.Instance().deleteCustomLink(link);
+		link.setSaveLinkListener(null);
 	}
 }

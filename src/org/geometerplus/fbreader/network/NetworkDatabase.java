@@ -41,4 +41,5 @@ public abstract class NetworkDatabase {
 
 	protected abstract void loadCustomLinks(List<ICustomNetworkLink> links, ICustomLinksFactory factory);
 	protected abstract void saveCustomLink(ICustomNetworkLink link);
+	protected abstract void deleteCustomLink(ICustomNetworkLink link);
 }

@@ -116,6 +116,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
+		addMenuItem(menu, 2, "addCustomCatalog", 0);
 		return true;
 	}
 
@@ -132,6 +133,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		switch (item.getItemId()) {
 			case 1:
 				return onSearchRequested();
+			case 2:
+				NetworkDialog.show(this, NetworkDialog.DIALOG_CUSTOM_CATALOG, null, null);
+				return true;
 			default:
 				return true;
 		}

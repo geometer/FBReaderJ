@@ -42,6 +42,8 @@
 		<node name="search" value="Search" />
 		<node name="searchSummary" value="Search for books in catalogs" />
 		<node name="searchResults" value="Search results for: %s" />
+		<node name="editCustomCatalog" value="Edit catalog"/>
+		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
@@ -58,6 +60,7 @@
 			<node name="signIn" value="Sign in"/>
 			<node name="signOut" value="Sign out (%s)"/>
 			<node name="refillAccount" value="Refill account"/>
+			<node name="addCustomCatalog" value="Add catalog"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -301,6 +304,16 @@
 			<node name="confirmPassword" value="Password&#10;confirmation" />
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="Password and password confirmation must be the same." />
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="Custom catalog" />
+			<node name="catalogTitle" value="Title" />
+			<node name="catalogUrl" value="URL" />
+			<node name="catalogSummary" value="Summary" />
+			<node name="titleIsEmpty" value="Title should be non-empty" />
+			<node name="urlIsEmpty" value="URL should be non-empty" />
+			<node name="invalidUrl" value="Invalid URL" />
+			<node name="alreadyExists" value="Specified title already exists" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Purchase book" />

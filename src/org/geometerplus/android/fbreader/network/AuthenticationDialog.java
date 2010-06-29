@@ -61,8 +61,21 @@ class AuthenticationDialog extends NetworkDialog {
 				library.synchronize();
 				NetworkView.Instance().fireModelChanged();
 				if (message.what < 0) {
-					myErrorMessage = (String) message.obj;
-					activity.showDialog(NetworkDialog.DIALOG_AUTHENTICATION);
+					if (message.what == -2) {
+						final ZLResource dialogResource = ZLResource.resource("dialog");
+						final ZLResource boxResource = dialogResource.getResource("networkError");
+						final ZLResource buttonResource = dialogResource.getResource("button");
+						new AlertDialog.Builder(activity)
+							.setTitle(boxResource.getResource("title").getValue())
+							.setMessage((String) message.obj)
+							.setIcon(0)
+							.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+							.create().show();
+					} else {
+						myErrorMessage = (String) message.obj;
+						activity.showDialog(NetworkDialog.DIALOG_AUTHENTICATION);
+						return;
+					}
 				} else if (message.what > 0) {
 					if (myOnSuccessRunnable != null) {
 						myOnSuccessRunnable.run();
@@ -147,6 +160,11 @@ class AuthenticationDialog extends NetworkDialog {
 			.setTitle(myResource.getResource("title").getValue())
 			.setPositiveButton(buttonResource.getResource("ok").getValue(), listener)
 			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+			.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				public void onCancel(DialogInterface dialog) {
+					listener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+				}
+			})
 			.create();
 	}
 
