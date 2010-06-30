@@ -46,12 +46,12 @@
 		<node name="removeCustomCatalog" value="Удалить каталог"/>
 		<node name="addCustomCatalog" value="Добавить каталог"/>
 		<node name="confirmQuestions">
-			<node name="read" value="Do you want to read local copy?"/>
-			<node name="download" value="Do you want to download this book?"/>
-			<node name="readDemo" value="Do you want to read sample?"/>
-			<node name="downloadDemo" value="Do you want to download sample?"/>
-			<node name="buy" value="Do you want to buy this book? (%s)"/>
-			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
+			<node name="read" value="Вы хотите открыть локальную копию?"/>
+			<node name="download" value="Вы хотите скачать эту книгу?"/>
+			<node name="readDemo" value="Вы хотите открыть фрагмент?"/>
+			<node name="downloadDemo" value="Вы хотите скачать фрагмент?"/>
+			<node name="buy" value="Вы хотите купить эту книгу? (%s)"/>
+			<node name="openInBrowser" value="Вы хотите открыть этот каталог в браузере?" />
 		</node>
 		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
