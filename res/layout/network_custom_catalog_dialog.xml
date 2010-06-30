@@ -63,6 +63,7 @@
 					android:layout_height="wrap_content"
 					android:singleLine="true"
 					android:layout_marginTop="5dp"
+					android:inputType="textUri"
 				/>
 				<EditText
 					android:id="@+id/network_catalog_summary"

@@ -116,7 +116,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
-		addMenuItem(menu, 2, "addCustomCatalog", 0);
+		addMenuItem(menu, 2, "addCustomCatalog", android.R.drawable.ic_menu_add);
 		return true;
 	}
 
