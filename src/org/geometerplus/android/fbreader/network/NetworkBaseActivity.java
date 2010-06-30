@@ -109,8 +109,7 @@ abstract class NetworkBaseActivity extends ListActivity
 	// this set is used to track whether this activity will be notified, when specific cover will be synchronized.
 	private HashSet<String> myAwaitedCovers = new HashSet<String>();
 
-	protected void setupCover(final ImageView coverView, NetworkTree tree, int maxWidth, int maxHeight) {
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
 		Bitmap coverBitmap = null;
 		final ZLImage cover = tree.getCover();
 		if (cover != null) {
@@ -141,7 +140,7 @@ abstract class NetworkBaseActivity extends ListActivity
 				data = mgr.getImageData(cover);
 			}
 			if (data != null) {
-				coverBitmap = data.getBitmap(maxWidth, maxHeight);
+				coverBitmap = data.getBitmap(2 * width, 2 * height);
 			}
 		}
 		if (coverBitmap != null) {
@@ -151,6 +150,9 @@ abstract class NetworkBaseActivity extends ListActivity
 		}
 	}
 
+	private int myCoverWidth = -1;
+	private int myCoverHeight = -1;
+
 	protected View setupNetworkTreeItemView(View convertView, final ViewGroup parent, NetworkTree tree) {
 		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
@@ -158,12 +160,18 @@ abstract class NetworkBaseActivity extends ListActivity
 		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
 		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
 
-		view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		final int maxHeight = view.getMeasuredHeight();
-		final int maxWidth = maxHeight * 2 / 3;
+		if (myCoverWidth == -1) {
+			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			myCoverHeight = view.getMeasuredHeight();
+			myCoverWidth = myCoverHeight * 15 / 32;
+			view.requestLayout();
+		}
 
-		final ImageView iconView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-		setupCover(iconView, tree, maxWidth, maxHeight);
+		final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
+		coverView.getLayoutParams().width = myCoverWidth;
+		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		coverView.requestLayout();
+		setupCover(coverView, tree, myCoverWidth, myCoverWidth);
 
 		return view;
 	}
