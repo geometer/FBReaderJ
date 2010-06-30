@@ -165,6 +165,9 @@
 					<node name="show" value="显示为正常滚动条" />
 					<node name="showAsProgress" value="显示为进度滚动条" />
 				</node>
+				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
+					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+				</node>
 			</node>
 			<node name="Scrolling" value="翻阅操作">
 				<node name="flick" value="手指滚动">

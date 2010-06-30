@@ -164,6 +164,9 @@
 					<node name="show" value="Показывать как обычную полосу прокрутки"/>
 					<node name="showAsProgress" value="Закрашивать верхнюю часть полосы"/>
 				</node>
+				<node name="appearanceSettings" value="Внешний вид">
+					<node name="summary" value="Настройки отображения текста"/>
+				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">
 				<node name="flick" value="Листать движением пальца">

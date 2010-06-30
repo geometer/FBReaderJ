@@ -52,6 +52,10 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			myScreen.getDialog().dismiss();
 			ZLPreferenceActivity.this.getListView().invalidateViews();
 		}
+
+		public void setOnPreferenceClickListener(PreferenceScreen.OnPreferenceClickListener onPreferenceClickListener) {
+			myScreen.setOnPreferenceClickListener(onPreferenceClickListener);
+		}
 	}
 
 	protected class Category {

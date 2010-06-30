@@ -165,6 +165,9 @@
 					<node name="show" value="Zeige als normale Bildlaufleiste"/>
 					<node name="showAsProgress" value="Zeige als Fortschrittsbalken"/>
 				</node>
+				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
+					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">
 				<node name="flick" value="Flick scrolling">

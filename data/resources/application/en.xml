@@ -164,6 +164,9 @@
 					<node name="show" value="Show as a usual scrollbar"/>
 					<node name="showAsProgress" value="Show as a progress bar"/>
 				</node>
+				<node name="appearanceSettings" value="Appearance">
+					<node name="summary" value="Text displaying settings"/>
+				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">
 				<node name="flick" value="Flick scrolling">

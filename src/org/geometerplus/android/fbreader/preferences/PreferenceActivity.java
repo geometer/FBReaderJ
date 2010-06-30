@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
+import android.preference.Preference;
+import android.preference.PreferenceScreen;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -80,6 +82,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"path")
 		);
 		final Category lookNFeelCategory = createCategory("LookNFeel");
+
+		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
+		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );
+		appearanceScreen.setOnPreferenceClickListener(
+				new PreferenceScreen.OnPreferenceClickListener() {
+					public boolean onPreferenceClick(Preference preference) {
+						((FBReader) FBReader.Instance()).showOptionsDialogAction();
+						return true;
+					}
+				}
+		);
+
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
