@@ -2,6 +2,7 @@
 
 * New "Navigation" dialog where user can navigate to a specific page 
   (page numbers are computed approximately)
+* New "Custom catalogs" feature: user can manually add OPDS catalogs to the network library
 
 ===== 0.6.6 (May 20, 2010) =====
 
