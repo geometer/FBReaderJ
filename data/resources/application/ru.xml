@@ -42,6 +42,9 @@
 		<node name="search" value="Поиск" />
 		<node name="searchSummary" value="Поиск книг в каталогах" />
 		<node name="searchResults" value="Результаты поиска для: %s" />
+		<node name="editCustomCatalog" value="Изменить каталог"/>
+		<node name="removeCustomCatalog" value="Удалить каталог"/>
+		<node name="addCustomCatalog" value="Добавить каталог"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
@@ -58,6 +61,7 @@
 			<node name="signIn" value="Войти"/>
 			<node name="signOut" value="Выйти (%s)"/>
 			<node name="refillAccount" value="Пополнить счёт"/>
+			<node name="addCustomCatalog" value="Добавить каталог"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -301,6 +305,16 @@
 			<node name="confirmPassword" value="Еще раз пароль" />
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="Вы ввели 2 разных пароля." />
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="Пользовательский каталог" />
+			<node name="catalogTitle" value="Название" />
+			<node name="catalogUrl" value="URL" />
+			<node name="catalogSummary" value="Описание" />
+			<node name="titleIsEmpty" value="Название не может быть пустым" />
+			<node name="urlIsEmpty" value="URL не может быть пустым" />
+			<node name="invalidUrl" value="Неверный URL" />
+			<node name="alreadyExists" value="Заданное название уже существует" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />

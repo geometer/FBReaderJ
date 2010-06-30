@@ -43,6 +43,9 @@
 		<node name="search" value="Suchen" />
 		<node name="searchSummary" value="Suche für Bücher in Katalogen" />
 		<node name="searchResults" value="Suchergebnisse für: %s" />
+		<node name="editCustomCatalog" toBeTranslated="true" value="Edit catalog"/>
+		<node name="removeCustomCatalog" toBeTranslated="true" value="Remove catalog"/>
+		<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Willst du die lokale Kopie lesen?"/>
 			<node name="download" value="Willst du dieses Buch downloaden?"/>
@@ -59,6 +62,7 @@
 			<node name="signIn" value="Einloggen"/>
 			<node name="signOut" value="Ausloggen (%s)"/>
 			<node name="refillAccount" value="Account aufladen"/>
+			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -302,6 +306,16 @@
 			<node name="confirmPassword" value="Passwortbestätigung" />
 			<node name="email" value="Email" />
 			<node name="differentPasswords" value="Passwort und Passwortbestätigung müssen identisch sein." />
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" toBeTranslated="true" value="Custom catalog" />
+			<node name="catalogTitle" toBeTranslated="true" value="Title" />
+			<node name="catalogUrl" toBeTranslated="true" value="URL" />
+			<node name="catalogSummary" toBeTranslated="true" value="Summary" />
+			<node name="titleIsEmpty" toBeTranslated="true" value="Title should be non-empty" />
+			<node name="urlIsEmpty" toBeTranslated="true" value="URL should be non-empty" />
+			<node name="invalidUrl" toBeTranslated="true" value="Invalid URL" />
+			<node name="alreadyExists" toBeTranslated="true" value="Specified title already exists" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Buchkauf" />
