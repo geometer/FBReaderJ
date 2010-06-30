@@ -261,7 +261,7 @@ public final class FBReader extends ZLApplication {
 		}
 	}
 
-	public void showOptionsDialogAction() {
+	public void showOptionsDialog() {
 		new OptionsDialog(this).getDialog().run();
 	}
 }
