@@ -235,16 +235,15 @@ public class BookDownloaderService extends Service {
 		return notification;
 	}
 
-	private void startCallbackActivity() {
-		startActivity(
+	private void sendDownloaderCallback() {
+		sendBroadcast(
 			new Intent(getApplicationContext(), BookDownloaderCallback.class)
-				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 		);
 	}
 
 	private void startFileDownload(final String urlString, final String sslCertificate, final File file, final String title) {
 		myDownloadingURLs.add(urlString);
-		startCallbackActivity();
+		sendDownloaderCallback();
 
 		final int notificationId = NetworkNotifications.Instance().getBookDownloadingId();
 		final Notification progressNotification = createDownloadProgressNotification(title);
@@ -280,7 +279,7 @@ public class BookDownloaderService extends Service {
 					notificationId,
 					createDownloadFinishNotification(file, title, message.what != 0)
 				);
-				startCallbackActivity();
+				sendDownloaderCallback();
 				doStop();
 			}
 		};

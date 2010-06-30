@@ -19,16 +19,16 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.os.Bundle;
-import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-public class BookDownloaderCallback extends Activity {
+public class BookDownloaderCallback extends BroadcastReceiver {
 
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	@Override
+	public void onReceive(Context context, Intent intent) {
 		if (NetworkView.Instance().isInitialized()) {
 			NetworkView.Instance().fireModelChanged();
 		}
-		finish();
 	}
 }
