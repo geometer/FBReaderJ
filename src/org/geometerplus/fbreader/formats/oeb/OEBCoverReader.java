@@ -65,15 +65,17 @@ class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		myReadGuide = false;
 		myImage = null;
 		myCoverXHTML = null;
-		if (!read(file) || myCoverXHTML == null) {
-			return null;
-		}
-		ZLFile coverFile = ZLFile.createFileByPath(myCoverXHTML);
-		final String ext = coverFile.getExtension();
-		if (ext != null && (ext.equals("gif") || ext.equals("jpg") || ext.equals("jpeg"))) {
-			myImage = new ZLFileImage("image/auto", coverFile);
-		} else {
-			new XHTMLImageFinder().read(coverFile);
+		read(file);
+		if (myCoverXHTML != null) {
+			final ZLFile coverFile = ZLFile.createFileByPath(myCoverXHTML);
+			if (coverFile != null) {
+				final String ext = coverFile.getExtension();
+				if (ext != null && (ext.equals("gif") || ext.equals("jpg") || ext.equals("jpeg"))) {
+					myImage = new ZLFileImage("image/auto", coverFile);
+				} else {
+					new XHTMLImageFinder().read(coverFile);
+				}
+			}
 		}
 		return myImage;
 	}
@@ -90,22 +92,20 @@ class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			myReadGuide = true;
 		} else if (myReadGuide && REFERENCE == tag) {
 			final String type = attributes.getValue("type");
-			if (type != null) {
-				if (COVER == type) {
-					final String href = attributes.getValue("href");
-					if (href != null) {
-						myCoverXHTML = myPathPrefix + MiscUtil.decodeHtmlReference(href);
-						return true;
-					}
-				} else if (COVER_IMAGE == type) {
-					final String href = attributes.getValue("href");
-					if (href != null) {
-						myImage = new ZLFileImage(
-							"image/auto",
-							ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href))
-						);
-						return true;
-					}
+			if (COVER == type) {
+				final String href = attributes.getValue("href");
+				if (href != null) {
+					myCoverXHTML = myPathPrefix + MiscUtil.decodeHtmlReference(href);
+					return true;
+				}
+			} else if (COVER_IMAGE == type) {
+				final String href = attributes.getValue("href");
+				if (href != null) {
+					myImage = new ZLFileImage(
+						"image/auto",
+						ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href))
+					);
+					return true;
 				}
 			}
 		}
