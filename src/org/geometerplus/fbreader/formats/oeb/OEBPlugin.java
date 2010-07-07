@@ -23,6 +23,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class OEBPlugin extends FormatPlugin {
 	public boolean acceptsFile(ZLFile file) {
@@ -43,14 +44,21 @@ public class OEBPlugin extends FormatPlugin {
 		return null;
 	}
 
+	@Override
 	public boolean readMetaInfo(Book book) {
 		final ZLFile opfFile = getOpfFile(book.File);
 		return (opfFile != null) ? new OEBMetaInfoReader(book).readMetaInfo(opfFile) : false;
 	}
 	
+	@Override
 	public boolean readModel(BookModel model) {
 		model.Book.File.setCached(true);
 		final ZLFile opfFile = getOpfFile(model.Book.File);
 		return (opfFile != null) ? new OEBBookReader(model).readBook(opfFile) : false;
+	}
+
+	@Override
+	public ZLImage readCover(Book book) {
+		return new OEBCoverReader().readCover(book.File);
 	}
 }

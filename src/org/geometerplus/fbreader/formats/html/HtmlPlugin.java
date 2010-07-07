@@ -25,6 +25,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class HtmlPlugin extends FormatPlugin {
 	
@@ -46,5 +47,10 @@ public class HtmlPlugin extends FormatPlugin {
 		} catch (IOException e) {
 			return false;
 		}
+	}
+
+	@Override
+	public ZLImage readCover(Book book) {
+		return null;
 	}
 }

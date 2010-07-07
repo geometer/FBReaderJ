@@ -23,6 +23,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class FB2Plugin extends FormatPlugin {
 	@Override
@@ -38,5 +39,11 @@ public class FB2Plugin extends FormatPlugin {
 	@Override
 	public boolean readModel(BookModel model) {
 		return new FB2Reader(model).readBook();
+	}
+
+	@Override
+	public ZLImage readCover(Book book) {
+		// TODO: implement
+		return null;
 	}
 }

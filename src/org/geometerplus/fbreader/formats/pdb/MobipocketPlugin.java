@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.formats.pdb;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
 import org.geometerplus.zlibrary.core.util.ZLLanguageUtil;
 
@@ -128,6 +129,104 @@ public class MobipocketPlugin extends PdbPlugin {
 		} catch (IOException e) {
 			//e.printStackTrace();
 			return false;
+		}
+	}
+
+	@Override
+	public ZLImage readCover(Book book) {
+		InputStream stream = null;
+		try {
+			stream = book.File.getInputStream();
+			final PdbHeader header = new PdbHeader(stream);
+			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
+			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
+				return null;
+			}
+			final int length = (int)PdbUtil.readInt(stream);
+			PdbUtil.skip(stream, 104);
+
+			final int exthFlags = (int)PdbUtil.readInt(stream);
+			int coverIndex = -1;
+			int thumbIndex = -1;
+
+			int offset = 132;
+			if ((exthFlags & 0x40) != 0) {
+				PdbUtil.skip(stream, length - 116);
+				offset = length + 20;
+				if (PdbUtil.readInt(stream) != 0x45585448) /* "EXTH" */ {
+					return null;
+				}
+				PdbUtil.skip(stream, 4);
+				final int recordsNumber = (int)PdbUtil.readInt(stream);
+				offset += 8;
+				for (int i = 0; i < recordsNumber; ++i) {
+					final int type = (int)PdbUtil.readInt(stream);
+					final int size = (int)PdbUtil.readInt(stream);
+					offset += size;
+					if (size <= 8) {
+						continue;
+					}
+					switch (type) {
+						default:
+							PdbUtil.skip(stream, size - 8);
+							break;
+						case 201:
+						{
+							if (size == 12) {
+								coverIndex = (int)PdbUtil.readInt(stream);
+							} else {
+								PdbUtil.skip(stream, size - 8);
+							}
+							break;
+						}
+						case 202:
+						{
+							if (size == 12) {
+								thumbIndex = (int)PdbUtil.readInt(stream);
+							} else {
+								PdbUtil.skip(stream, size - 8);
+							}
+							break;
+						}
+					}
+				}
+			}
+			final InputStream tempStream = stream;
+			stream = null;
+			tempStream.close();
+
+			if (coverIndex == -1) {
+				if (thumbIndex == -1) {
+					return null;
+				}
+				coverIndex = thumbIndex;
+			}
+
+			final ZLFile file = book.File;
+			final MobipocketStream mpStream = new MobipocketStream(file);
+
+			// TODO: implement
+			/*int index = pbStream.firstImageLocationIndex(file.path());
+			if (index >= 0) {
+				std::pair<int,int> imageLocation = pbStream.imageLocation(pbStream.header(), index + coverIndex);
+				if ((imageLocation.first > 0) && (imageLocation.second > 0)) {
+					return new ZLFileImage(
+						file,
+						imageLocation.first,
+						imageLocation.second
+					);
+				}
+			}*/
+			return null; 
+		} catch (IOException e) {
+			return null;
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 	}
 }
