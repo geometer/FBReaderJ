@@ -59,8 +59,10 @@ final class FB2Tag {
 	public static final byte SEQUENCE = 33;
 	public static final byte GENRE = 34;
 
+	public static final byte DESCRIPTION = 35;
 
-	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
+
+	private static final HashMap<String, Byte> ourTagByName = new HashMap<String, Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
 	static {	
@@ -101,6 +103,7 @@ final class FB2Tag {
 		ourTagByName.put("author", AUTHOR);
 		ourTagByName.put("lang", LANG);
 		ourTagByName.put("genre", GENRE);
+		ourTagByName.put("description", DESCRIPTION);
 	}
 
 	public static byte getTagByName(String name) {
