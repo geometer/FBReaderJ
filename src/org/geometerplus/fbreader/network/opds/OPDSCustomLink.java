@@ -49,6 +49,8 @@ class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
 	public void saveLink() {
 		if (myListener != null) {
 			myListener.onSaveLink(this);
+		} else {
+			throw new RuntimeException("Unable to save link: SaveLinkListener hasn't been set");
 		}
 	}
 

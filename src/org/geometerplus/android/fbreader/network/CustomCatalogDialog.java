@@ -99,22 +99,25 @@ class CustomCatalogDialog extends NetworkDialog {
 			siteName = siteName.substring(4);
 		}
 
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		if (library.hasCustomLink(myTitle, (ICustomNetworkLink) myLink)) {
+			final String err = myResource.getResource("alreadyExists").getValue();
+			sendError(true, false, err);
+			return;
+		}
+
 		if (myLink == null) {
 			final OPDSLinkReader reader = new OPDSLinkReader();
 			final HashMap<String, String> links = new HashMap<String, String>();
 			links.put(INetworkLink.URL_MAIN, myUrl);
 			final ICustomNetworkLink link = reader.createCustomLink(ICustomNetworkLink.INVALID_ID, 
 					siteName, myTitle, mySummary, null, links);
-			myLink = link;
 			if (link != null) {
-				if (!NetworkLibrary.Instance().addCustomLink(link)) {
-					final String err = myResource.getResource("alreadyExists").getValue();
-					sendError(true, true, err);
-					return;
-				}
+				NetworkLibrary.Instance().addCustomLink(link);
 			} else {
 				throw new RuntimeException("Unable to create link!!! Impossible!!!");
 			}
+			myLink = link;
 		} else {
 			final ICustomNetworkLink link = (ICustomNetworkLink) myLink;
 			link.setSiteName(siteName);

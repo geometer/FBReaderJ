@@ -249,7 +249,9 @@ public class NetworkLibrary {
 			new NetworkDatabase.ICustomLinksFactory() {
 				public ICustomNetworkLink createCustomLink(int id, String siteName,
 						String title, String summary, String icon, Map<String, String> links) {
-					return reader.createCustomLink(id, siteName, title, summary, icon, links);
+					final ICustomNetworkLink link = reader.createCustomLink(id, siteName, title, summary, icon, links);
+					link.setSaveLinkListener(myChangesListener);
+					return link;
 				}
 			}
 		);
@@ -453,20 +455,15 @@ public class NetworkLibrary {
 		}
 	};
 
-	/**
-	 * @return <code>false</code> if this library already contains link with the specified title
-	 * <code>true</code> if links has been inserted into this library
-	 */
-	public boolean addCustomLink(ICustomNetworkLink link) {
+	public void  addCustomLink(ICustomNetworkLink link) {
 		final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
 		if (index >= 0) {
-			return false;
+			throw new RuntimeException("Unable to add link with duplicated title to the library");
 		}
 		final int insertAt = -index - 1;
 		myCustomLinks.add(insertAt, link);
 		link.setSaveLinkListener(myChangesListener);
 		link.saveLink();
-		return true;
 	}
 
 	public int getCustomLinksNumber() {
@@ -485,5 +482,14 @@ public class NetworkLibrary {
 		myCustomLinks.remove(index);
 		NetworkDatabase.Instance().deleteCustomLink(link);
 		link.setSaveLinkListener(null);
+	}
+
+	public boolean hasCustomLink(String title, ICustomNetworkLink exeptFor) {
+		for (ICustomNetworkLink link: myCustomLinks) {
+			if (link != exeptFor && link.getTitle().equals(title)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
