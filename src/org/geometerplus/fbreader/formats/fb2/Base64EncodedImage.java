@@ -21,11 +21,11 @@ package org.geometerplus.fbreader.formats.fb2;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.image.ZLBase64EncodedImage;
 
 import org.geometerplus.fbreader.Paths;
 
-final class Base64EncodedImage extends ZLSingleImage {
+final class Base64EncodedImage extends ZLBase64EncodedImage {
 	private static int ourCounter;
 
 	static void resetCounter() {
@@ -35,12 +35,11 @@ final class Base64EncodedImage extends ZLSingleImage {
 	private final String myDirName;
 	private final int myFileNumber;
 	private OutputStreamWriter myStreamWriter;
-	private boolean myIsDecoded;
 	
 	public Base64EncodedImage(String contentType) {
 		// TODO: use contentType
 		super(contentType);
-		myDirName = Paths.cacheDirectory().intern();
+		myDirName = Paths.cacheDirectory();
 		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;
 		try {
@@ -49,90 +48,16 @@ final class Base64EncodedImage extends ZLSingleImage {
 		}
 	}
 
-	private static byte decodeByte(byte encodedByte) {
-		switch (encodedByte) {
-			case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-			case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
-			case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
-			case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
-			case 'Y': case 'Z':
-				return (byte)(encodedByte - 'A');
-			case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-			case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
-			case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
-			case 's': case 't': case 'u': case 'v': case 'w': case 'x':
-			case 'y': case 'z':
-				return (byte)(encodedByte - 'a' + 26);
-			case '0': case '1': case '2': case '3': case '4':
-			case '5': case '6': case '7': case '8': case '9':
-				return (byte)(encodedByte - '0' + 52);
-			case '+':
-				return 62;
-			case '/':
-				return 63;
-			case '=':
-				return 64;
-		}
-		return -1;
+	@Override
+	protected String encodedFileName() {
+		return myDirName + "/image" + myFileNumber;
 	}
 
-	public byte[] byteData() {
-		try {
-			decode();
-			final File file = new File(myDirName + "/dimage" + myFileNumber);
-			final byte[] data = new byte[(int)file.length()];
-			final FileInputStream stream = new FileInputStream(file);
-			stream.read(data);
-			stream.close();
-			return data;
-		} catch (IOException e) {
-			return null;
-		}
+	@Override
+	protected String decodedFileName() {
+		return myDirName + "/dimage" + myFileNumber;
 	}
-	
-	private void decode() throws IOException {
-		if (myIsDecoded) {
-			return;
-		}
-		myIsDecoded = true;
 
-		int dataLength;
-		byte[] encodedData;
-		FileOutputStream outputStream;
-		
-		final File file = new File(myDirName + "/image" + myFileNumber);
-		outputStream = new FileOutputStream(myDirName + "/dimage" + myFileNumber);
-		dataLength = (int)file.length();
-		final FileInputStream inputStream = new FileInputStream(file);
-		encodedData = new byte[dataLength];
-		inputStream.read(encodedData);
-		inputStream.close();
-		file.delete();
-
-		final byte[] data = new byte[dataLength * 3 / 4 + 4];
-		int dataPos = 0;
-		for (int pos = 0; pos < dataLength; ) {
-			byte n0 = -1, n1 = -1, n2 = -1, n3 = -1;
-			while ((pos < dataLength) && (n0 == -1)) {
-				n0 = decodeByte(encodedData[pos++]);
-			}
-			while ((pos < dataLength) && (n1 == -1)) {
-				n1 = decodeByte(encodedData[pos++]);
-			}
-			while ((pos < dataLength) && (n2 == -1)) {
-				n2 = decodeByte(encodedData[pos++]);
-			}
-			while ((pos < dataLength) && (n3 == -1)) {
-				n3 = decodeByte(encodedData[pos++]);
-			}
-			data[dataPos++] = (byte)(n0 << 2 | n1 >> 4);
-			data[dataPos++] = (byte)(((n1 & 0xf) << 4) | ((n2 >> 2) & 0xf));
-			data[dataPos++] = (byte)(n2 << 6 | n3);
-		}
-		outputStream.write(data, 0, dataPos);
-		outputStream.close();
-	}
-	
 	void addData(char[] data, int offset, int length) {
 		if (myStreamWriter != null) {
 			try {
