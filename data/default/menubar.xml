@@ -6,11 +6,11 @@
 	<item id="bookmarks"/>
 	<item id="night"/>
 	<item id="day"/>
-	<item id="navigate"/>
 	<item id="search"/>
 	<item id="preferences"/>
 	<item id="bookInfo"/>
 	<item id="rotate"/>
 	<item id="increaseFont"/>
 	<item id="decreaseFont"/>
+	<item id="navigate"/>
 </menubar>
