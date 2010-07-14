@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Italian FBReader resources, by Vytek and Neoxx from AndDev.it Translate Team -->
+<!-- Italian FBReaderJ resources, by Vytek and Neoxx from AndDev.it Translate Team -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Autore sconosciuto"/>

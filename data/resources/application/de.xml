@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- German FBReader resources, by Victor Massini -->
+<!-- German FBReaderJ resources, by Victor Massini -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Unbekannter Autor"/>
