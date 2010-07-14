@@ -170,8 +170,9 @@ public final class FBReader extends ZLAndroidActivity {
 			public boolean onLongClick(View v) {
 				if (!myNavigatePanel.getVisibility()) {
 					navigate();
+					return true;
 				}
-				return true;
+				return false;
 			}
 		});
 	}
@@ -284,7 +285,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	public boolean canNavigate() {
+	public final boolean canNavigate() {
 		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
 			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		final ZLView view = fbreader.getCurrentView();
@@ -295,7 +296,7 @@ public final class FBReader extends ZLAndroidActivity {
 				&& fbreader.Model.Book != null;
 	}
 
-	private void createNavigation() {
+	private final void createNavigation() {
 		final ControlPanel panel = myNavigatePanel.ControlPanel;
 
 		final View layout = getLayoutInflater().inflate(R.layout.navigate, panel, false);
@@ -354,7 +355,7 @@ public final class FBReader extends ZLAndroidActivity {
 		panel.setExtension(layout);
 	}
 
-	private void setupNavigation() {
+	private final void setupNavigation() {
 		final ControlPanel panel = myNavigatePanel.ControlPanel;
 
 		final SeekBar slider = (SeekBar) panel.findViewById(R.id.book_position_slider);
@@ -364,9 +365,12 @@ public final class FBReader extends ZLAndroidActivity {
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
 
-		slider.setMax(pagesNumber - 1);
-		slider.setProgress(page - 1);
-		text.setText(makeProgressText(page, pagesNumber));
+		if (slider.getMax() != (pagesNumber - 1)
+				|| slider.getProgress() != (page - 1)) {
+			slider.setMax(pagesNumber - 1);
+			slider.setProgress(page - 1);
+			text.setText(makeProgressText(page, pagesNumber));
+		}
 	}
 
 	private static String makeProgressText(int page, int pagesNumber) {
