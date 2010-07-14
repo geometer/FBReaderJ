@@ -165,6 +165,15 @@ public final class FBReader extends ZLAndroidActivity {
 			createNavigation();
 			myNavigatePanel.registerControlPanel(root, true);
 		}
+
+		findViewById(R.id.main_view).setOnLongClickListener(new View.OnLongClickListener() {
+			public boolean onLongClick(View v) {
+				if (!myNavigatePanel.getVisibility()) {
+					navigate();
+				}
+				return true;
+			}
+		});
 	}
 
 	private PowerManager.WakeLock myWakeLock;
