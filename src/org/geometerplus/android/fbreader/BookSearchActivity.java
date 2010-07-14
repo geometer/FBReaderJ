@@ -32,9 +32,9 @@ public class BookSearchActivity extends SearchActivity {
 		LibraryTabActivity.Instance.showSearchResultsTab(myTree);
 	}
 
-	@Override
+	/*@Override
 	void onFailure() {
-	}
+	}*/
 
 	@Override
 	String getFailureMessageResourceKey() {

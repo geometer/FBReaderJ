@@ -108,9 +108,7 @@ public abstract class ZLApplication {
 	}
 
 	public final void onViewChanged() {
-		for (ButtonPanel panel : myPanels) {
-			panel.hide();
-		}
+		hideAllPanels();
 	}
 
 	protected final void addAction(String actionId, ZLAction action) {
@@ -221,7 +219,12 @@ public abstract class ZLApplication {
 	public final void unregisterButtonPanel(ButtonPanel panel) {
 		myPanels.remove(panel);
 	}
-	
+	public final void hideAllPanels() {
+		for (ButtonPanel panel : myPanels) {
+			panel.hide();
+		}
+	}
+
 	//Menu
 	static class Menu {
 		public interface Item {

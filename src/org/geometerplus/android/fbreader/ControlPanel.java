@@ -57,6 +57,7 @@ public class ControlPanel extends LinearLayout implements View.OnClickListener {
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.control_panel, this, true);
+
 		myPlateLayout = (LinearLayout)findViewById(R.id.tools_plate);
 	}
 
@@ -107,7 +108,11 @@ public class ControlPanel extends LinearLayout implements View.OnClickListener {
 		}
 	};
 
+	public void preparePanel() {
+	}
+
 	public void show(boolean animate) {
+		preparePanel();
 		myVisibilityHandler.sendEmptyMessage(animate ? VisibilityAction.SHOW_ANIMATED : VisibilityAction.SHOW_INSTANTLY);
 	}
 
@@ -137,5 +142,12 @@ public class ControlPanel extends LinearLayout implements View.OnClickListener {
 			}
 		}
 		return false;
+	}
+
+	public void setExtension(View view) {
+		if (view != null) {
+			myPlateLayout.removeAllViews();
+			myPlateLayout.addView(view);
+		}
 	}
 }

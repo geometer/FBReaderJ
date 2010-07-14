@@ -70,7 +70,7 @@ abstract class SearchActivity extends Activity {
 
 	abstract boolean runSearch(String pattern);
 	abstract void onSuccess();
-	abstract void onFailure();
+	//abstract void onFailure();
 	abstract String getWaitMessageResourceKey();
 	abstract String getFailureMessageResourceKey();
 	abstract Activity getParentActivity();

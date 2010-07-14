@@ -19,19 +19,24 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -44,7 +49,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private int myFullScreenFlag;
 
-	private static class TextSearchButtonPanel implements ZLApplication.ButtonPanel {
+	private static class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		boolean Visible;
 		ControlPanel ControlPanel;
 
@@ -60,8 +65,53 @@ public final class FBReader extends ZLAndroidActivity {
 				ControlPanel.updateStates();
 			}
 		}
+
+		public void register() {
+			ZLApplication.Instance().registerButtonPanel(this);
+		}
+
+		public void registerControlPanel(RelativeLayout root, boolean fillWidth) {
+			RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+				fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT
+			);
+			p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			root.addView(ControlPanel, p);
+			ControlPanel.requestLayout();
+		}
+
+		public void destroyControlPanel(RelativeLayout root) {
+			if (ControlPanel != null) {
+				ControlPanel.hide(false);
+				root.removeView(ControlPanel);
+				ControlPanel = null;
+			}
+		}
+
+		public boolean getVisibility() {
+			if (ControlPanel != null) {
+				return ControlPanel.getVisibility() == View.VISIBLE;
+			}
+			return false;
+		}
+
+		public void setVisibility(boolean visibility) {
+			if (ControlPanel != null) {
+				ControlPanel.setVisibility(visibility ? View.VISIBLE : View.GONE);
+			}
+		}
+
+		public void restoreVisibility() {
+			setVisibility(Visible);
+		}
+
+		public void saveVisibility() {
+			Visible = getVisibility();
+		}
 	}
-	private static TextSearchButtonPanel myPanel;
+	private static ControlButtonPanel myTextSearchPanel;
+	private static ControlButtonPanel myNavigatePanel;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -78,9 +128,13 @@ public final class FBReader extends ZLAndroidActivity {
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
-		if (myPanel == null) {
-			myPanel = new TextSearchButtonPanel();
-			ZLApplication.Instance().registerButtonPanel(myPanel);
+		if (myTextSearchPanel == null) {
+			myTextSearchPanel = new ControlButtonPanel();
+			myTextSearchPanel.register();
+		}
+		if (myNavigatePanel == null) {
+			myNavigatePanel = new ControlButtonPanel();
+			myNavigatePanel.register();
 		}
 	}
 
@@ -96,20 +150,20 @@ public final class FBReader extends ZLAndroidActivity {
 			startActivity(new Intent(this, this.getClass()));
 		}
 
-		if (myPanel.ControlPanel == null) {
-			myPanel.ControlPanel = new ControlPanel(this);
+		final RelativeLayout root = (RelativeLayout)FBReader.this.findViewById(R.id.root_view);
+		if (myTextSearchPanel.ControlPanel == null) {
+			myTextSearchPanel.ControlPanel = new ControlPanel(this);
 
-			myPanel.ControlPanel.addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
-			myPanel.ControlPanel.addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
-			myPanel.ControlPanel.addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
+			myTextSearchPanel.ControlPanel.addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
+			myTextSearchPanel.ControlPanel.addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
+			myTextSearchPanel.ControlPanel.addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
 
-			RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-			RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-			p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-			p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-			root.addView(myPanel.ControlPanel, p);
+			myTextSearchPanel.registerControlPanel(root, false);
+		}
+		if (myNavigatePanel.ControlPanel == null) {
+			myNavigatePanel.ControlPanel = new NavigationControlPanel(this);
+			createNavigation();
+			myNavigatePanel.registerControlPanel(root, true);
 		}
 	}
 
@@ -118,9 +172,8 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (myPanel.ControlPanel != null) {
-			myPanel.ControlPanel.setVisibility(myPanel.Visible ? View.VISIBLE : View.GONE);
-		}
+		myTextSearchPanel.restoreVisibility();
+		myNavigatePanel.restoreVisibility();
 		if (ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue()) {
 			myWakeLock =
 				((PowerManager)getSystemService(POWER_SERVICE)).
@@ -136,27 +189,26 @@ public final class FBReader extends ZLAndroidActivity {
 		if (myWakeLock != null) {
 			myWakeLock.release();
 		}
-		if (myPanel.ControlPanel != null) {
-			myPanel.Visible = myPanel.ControlPanel.getVisibility() == View.VISIBLE;
-		}
+		myTextSearchPanel.saveVisibility();
+		myNavigatePanel.saveVisibility();
 		super.onPause();
 	}
 
 	@Override
 	public void onStop() {
-		if (myPanel.ControlPanel != null) {
-			myPanel.ControlPanel.hide(false);
-			myPanel.ControlPanel = null;
-		}
+		final RelativeLayout root = (RelativeLayout)FBReader.this.findViewById(R.id.root_view);
+		myTextSearchPanel.destroyControlPanel(root);
+		myNavigatePanel.destroyControlPanel(root);
 		super.onStop();
 	}
 
 	void showTextSearchControls(boolean show) {
-		if (myPanel.ControlPanel != null) {
+		if (myTextSearchPanel.ControlPanel != null) {
 			if (show) {
-				myPanel.ControlPanel.show(true);
+				ZLApplication.Instance().hideAllPanels();
+				myTextSearchPanel.ControlPanel.show(true);
 			} else {
-				myPanel.ControlPanel.hide(false);
+				myTextSearchPanel.ControlPanel.hide(false);
 			}
 		}
 	}
@@ -169,18 +221,17 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		if (myPanel.ControlPanel != null) {
-			final boolean visible = myPanel.ControlPanel.getVisibility() == View.VISIBLE;
-			myPanel.ControlPanel.hide(false);
-			SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
-			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
-				public void onCancel() {
-					if ((myPanel.ControlPanel != null) && visible) {
-						myPanel.ControlPanel.show(false);
-					}
-				}
-			});
-		}
+		final boolean textSearchVisible = myTextSearchPanel.getVisibility();
+		final boolean navigateVisible = myNavigatePanel.getVisibility();
+		ZLApplication.Instance().hideAllPanels();
+		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
+			public void onCancel() {
+				myTextSearchPanel.setVisibility(textSearchVisible);
+				myNavigatePanel.setVisibility(navigateVisible);
+				manager.setOnCancelListener(null);
+			}
+		});
 		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
 			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
@@ -188,11 +239,40 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 
-	private AlertDialog myNavigateDialog;
+	private static ZLTextPosition myPosition;
 
 	public void navigate() {
-		setupNavigation();
-		myNavigateDialog.show();
+		if (myNavigatePanel.ControlPanel != null) {
+			final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
+			if (myTextSearchPanel.ControlPanel.getVisibility() == View.VISIBLE) {
+				textView.clearFindResults();
+			}
+			myPosition = new ZLTextFixedPosition(textView.getStartCursor());
+			ZLApplication.Instance().hideAllPanels();
+			setupNavigation();
+			myNavigatePanel.ControlPanel.show(true);
+		}
+	}
+
+
+	private boolean myNavigateDragging;
+	private class NavigationControlPanel extends ControlPanel {
+		public NavigationControlPanel(Context context) {
+			super(context);
+		}
+
+		@Override
+		public void preparePanel() {
+			setupNavigation();
+		}
+
+		@Override
+		public void updateStates() {
+			super.updateStates();
+			if (!myNavigateDragging) {
+				setupNavigation();
+			}
+		}
 	}
 
 	public boolean canNavigate() {
@@ -206,8 +286,10 @@ public final class FBReader extends ZLAndroidActivity {
 				&& fbreader.Model.Book != null;
 	}
 
-	private void setupNavigation() {
-		final View layout = getLayoutInflater().inflate(R.layout.navigate, null);
+	private void createNavigation() {
+		final ControlPanel panel = myNavigatePanel.ControlPanel;
+
+		final View layout = getLayoutInflater().inflate(R.layout.navigate, panel, false);
 		final SeekBar slider = (SeekBar) layout.findViewById(R.id.book_position_slider);
 		final TextView text = (TextView) layout.findViewById(R.id.book_position_text);
 
@@ -226,9 +308,11 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
+				myNavigateDragging = false;
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
+				myNavigateDragging = true;
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -241,26 +325,39 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 		});
 
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
-		final ZLTextView textView = (ZLTextView) fbreader.getCurrentView();
+		final Button btnOk = (Button) layout.findViewById(android.R.id.button1);
+		final Button btnCancel = (Button) layout.findViewById(android.R.id.button3);
+		View.OnClickListener listener = new View.OnClickListener() {
+			public void onClick(View v) {
+				if (v == btnCancel && myPosition != null) {
+					((ZLTextView) ZLApplication.Instance().getCurrentView()).gotoPosition(myPosition);
+				}
+				myPosition = null;
+				panel.hide(true);
+			}
+		};
+		btnOk.setOnClickListener(listener);
+		btnCancel.setOnClickListener(listener);
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		btnOk.setText(buttonResource.getResource("ok").getValue());
+		btnCancel.setText(buttonResource.getResource("cancel").getValue());
+
+		panel.setExtension(layout);
+	}
+
+	private void setupNavigation() {
+		final ControlPanel panel = myNavigatePanel.ControlPanel;
+
+		final SeekBar slider = (SeekBar) panel.findViewById(R.id.book_position_slider);
+		final TextView text = (TextView) panel.findViewById(R.id.book_position_text);
+
+		final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
 
 		slider.setMax(pagesNumber - 1);
 		slider.setProgress(page - 1);
 		text.setText(makeProgressText(page, pagesNumber));
-
-		String title = "";
-		if (fbreader.Model != null && fbreader.Model.Book != null) {
-			title = fbreader.Model.Book.getTitle();
-		}
-
-		myNavigateDialog = new AlertDialog.Builder(this)
-			.setView(layout)
-			.setTitle(title)
-			.setIcon(0)
-			.create();
 	}
 
 	private static String makeProgressText(int page, int pagesNumber) {

@@ -35,9 +35,9 @@ public class BookmarkSearchActivity extends SearchActivity {
 		BookmarksActivity.Instance.showSearchResultsTab(myBookmarks);
 	}
 
-	@Override
+	/*@Override
 	void onFailure() {
-	}
+	}*/
 
 	@Override
 	String getFailureMessageResourceKey() {

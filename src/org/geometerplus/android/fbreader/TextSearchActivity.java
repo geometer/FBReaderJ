@@ -27,10 +27,10 @@ public class TextSearchActivity extends SearchActivity {
 		FBReader.Instance.showTextSearchControls(true);
 	}
 
-	@Override
+	/*@Override
 	void onFailure() {
 		FBReader.Instance.showTextSearchControls(false);
-	}
+	}*/
 
 	@Override
 	String getFailureMessageResourceKey() {
