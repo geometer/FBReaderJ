@@ -99,7 +99,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		}
-		reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);
+		// FIXME: initialize network library and use rewriteUrl!!!
+		//reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);
 		intent.setData(Uri.parse(reference));
 		myActivity.startActivity(intent);
 	}
