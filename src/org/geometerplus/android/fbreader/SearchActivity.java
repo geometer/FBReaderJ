@@ -35,6 +35,9 @@ abstract class SearchActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+		manager.setOnCancelListener(null);
+
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
