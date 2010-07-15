@@ -3,14 +3,14 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
-	android:gravity="center_horizontal"
 	android:paddingLeft="9dip"
 	android:paddingRight="9dip"
 >
 	<TextView
 		android:id="@+id/book_position_text"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:gravity="center_horizontal"
 		android:singleLine="true"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:paddingTop="4px"
