@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Italian zlibrary resources, by Vytek and Neoxx from AndDev.it Translate Team -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok" />
+			<node name="cancel" value="Cancella" />
+			<node name="yes" value="Si" />
+			<node name="no" value="No" />
+			<node name="apply" value="Applica" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Errore rete" />
+			<node name="unknownErrorMessage" value="Errore sconosciuto" />
+			<node name="operationTimedOutMessage" value="L' operazione è scaduta" />
+			<node name="somethingWrongMessage" value="Qualcosa è andato storto per&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Impossibile creare la cartella&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Impossibile creare il file&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Impossibile connettersi alla rete" />
+			<node name="couldntConnectMessage" value="Impossibile connettersi all' host&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Impossibile risolvere l'host&#10;%s" />
+			<node name="authenticationFailed" value="Autenticazione fallita" />
+			<node name="unsupportedProtocol" value="Protocollo non supportato" />
+			<node name="invalidURL" value="URL non valido" />
+			<node name="hostCantBeReached" value="L' host %s&#10;non può essere raggiunto" />
+			<node name="connectionRefused" value="La connessiione è stata rifiutata da&#10;%s" />
+			<node name="sslError" value="Errore sottosistema SSL" />
+			<node name="sslConnectErrorMessage" value="Si è verificato un problema con l' handshake SSL/TLS:&#10;%s" />
+			<node name="sslBadKey" value="Certificato SSL difettoso da:&#10;%s" />
+			<node name="sslPeerUnverified" value="Impossibile verificare l'identità dei peer per:&#10;%s" />
+			<node name="sslProtocolError" value="Errore nel funzionamento del protocollo SSL" />
+			<node name="sslBadCertificateFileMessage" value="Impossibile leggere il file che contiene il certificato SSL CA:&#10;%s" />
+			<node name="sslCertificateExpired" value="Il certificato SSL è scaduto:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Il certificato SSL non è ancora valido:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rosso" />
+		<node name="green" value="Verde" />
+		<node name="blue" value="Blu" />
+		<node name="black" value="Nero" />
+		<node name="white" value="Bianco" />
+		<node name="maroon" value="Marrone" />
+		<node name="olive" value="Oliva" />
+		<node name="navy" value="Blu Scuro" />
+		<node name="purple" value="Viola" />
+		<node name="teal" value="Teal" />
+		<node name="silver" value="Argento" />
+		<node name="gray" value="Grigio" />
+		<node name="lime" value="Lime" />
+		<node name="yellow" value="Giallo" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="Ciano" />
+		<node name="custom..." value="Personalizzato..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabo" />
+		<node name="cs" value="Ceco" />
+		<node name="de" value="Tedesco" />
+		<node name="de-traditional" value="Tedesco (traditional orthography)" />
+		<node name="el" value="Greco" />
+		<node name="en" value="Inglese" />
+		<node name="eo" value="Danese" />
+		<node name="es" value="Spagnolo" />
+		<node name="fi" value="Finlandese" />
+		<node name="fr" value="Francese" />
+		<node name="he" value="Ebraico" />
+		<node name="hu" value="Ungherese" />
+		<node name="id" value="Indonesiano" />
+		<node name="it" value="Italiano" />
+		<node name="lt" value="Lituano" />
+		<node name="nl" value="Olandese" />
+		<node name="no" value="Norvegese" />
+		<node name="pt" value="Portoghese" />
+		<node name="ru" value="Russo" />
+		<node name="sv" value="Svedese" />
+		<node name="tr" value="Turco" />
+		<node name="uk" value="Ucraino" />
+		<node name="vi" value="Vietnamita" />
+		<node name="zh" value="Cinese" />
+		<node name="other" value="Altro" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on" />
+		<node name="off" value="off" />
+		<node name="unchanged" value="immutato" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Azione per Tasto" />
+	</node>
+</resources>
