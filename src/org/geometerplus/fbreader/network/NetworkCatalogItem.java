@@ -92,13 +92,14 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
 	public abstract String loadChildren(NetworkOperationData.OnNewItemListener listener); // returns Error Message
 
-	/*public final String loadChildren(final List<NetworkLibraryItem> children) {
-		return loadChildren(new CatalogListener() {
-			public void onNewItem(NetworkLibraryItem item) {
-				children.add(item);
-			}
-		});
-	}*/
+	public boolean supportsResumeLoading() {
+		return false;
+	}
+
+	public String resumeLoading(NetworkOperationData.OnNewItemListener listener) { // returns Error Message
+		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	}
+
 
 	/**
 	 * Method is called each time this item is displayed to the user.

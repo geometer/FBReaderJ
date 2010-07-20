@@ -44,6 +44,9 @@ public interface INetworkLink {
 
 	Set<String> getLinkKeys();
 
+	NetworkOperationData createOperationData(INetworkLink link,
+			NetworkOperationData.OnNewItemListener listener);
+
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);
 

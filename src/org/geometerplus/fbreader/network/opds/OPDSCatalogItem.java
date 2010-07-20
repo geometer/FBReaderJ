@@ -29,6 +29,23 @@ import org.geometerplus.fbreader.network.*;
 
 class OPDSCatalogItem extends NetworkCatalogItem {
 
+	static class State extends NetworkOperationData {
+
+		public String LastLoadedTitle;
+		public boolean Interrupt;
+
+		public State(INetworkLink link, OnNewItemListener listener) {
+			super(link, listener);
+		}
+
+		@Override
+		public void clear() {
+			super.clear();
+			Interrupt = false;
+		}
+	}
+	private State myLoadingState;
+
 	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
 		super(link, title, summary, cover, urlByType);
 	}
@@ -41,21 +58,54 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		super(link, title, summary, cover, urlByType, visibility, catalogType);
 	}
 
-	@Override
-	public String loadChildren(NetworkOperationData.OnNewItemListener listener) {
-
-		final NetworkOperationData data = new NetworkOperationData(Link, listener);
-
-		ZLNetworkRequest networkRequest =
-			((OPDSLink) Link).createNetworkData(URLByType.get(URL_CATALOG), data);
-
+	private String doLoadChildren(NetworkOperationData.OnNewItemListener listener,
+			ZLNetworkRequest networkRequest) {
 		while (networkRequest != null) {
 			final String errorMessage = ZLNetworkManager.Instance().perform(networkRequest);
 			if (errorMessage != null) {
+				myLoadingState = null;
 				return errorMessage;
 			}
-			networkRequest = data.resume();
+			if (myLoadingState.Interrupt) {
+				if (myLoadingState.LastLoadedTitle == null) {
+					// In this case Catalog loading was not interrupted, and 
+					// we must confirm interruption here.
+					if (listener.confirmInterrupt()) {
+						return null;
+					}
+				} else {
+					return null;
+				}
+			}
+			networkRequest = myLoadingState.resume();
 		}
 		return null;
+	}
+
+	@Override
+	public final String loadChildren(NetworkOperationData.OnNewItemListener listener) {
+		OPDSLink opdsLink = (OPDSLink) Link;
+
+		myLoadingState = opdsLink.createOperationData(Link, listener);
+
+		ZLNetworkRequest networkRequest =
+			opdsLink.createNetworkData(URLByType.get(URL_CATALOG), myLoadingState);
+
+		return doLoadChildren(listener, networkRequest);
+	}
+
+	@Override
+	public final boolean supportsResumeLoading() {
+		return true;
+	}
+
+	@Override
+	public final String resumeLoading(NetworkOperationData.OnNewItemListener listener) {
+		if (myLoadingState == null) {
+			return null;
+		}
+		myLoadingState.Listener = listener;
+		ZLNetworkRequest networkRequest = myLoadingState.resume();
+		return doLoadChildren(listener, networkRequest);
 	}
 }

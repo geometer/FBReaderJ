@@ -73,4 +73,9 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	public Set<String> getLinkKeys() {
 		return myLinks.keySet();
 	}
+
+	public NetworkOperationData createOperationData(INetworkLink link,
+			NetworkOperationData.OnNewItemListener listener) {
+		return new NetworkOperationData(link, listener);
+	}
 }

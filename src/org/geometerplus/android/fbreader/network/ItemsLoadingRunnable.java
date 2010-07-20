@@ -30,8 +30,8 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 	private final ItemsLoadingHandler myHandler;
 
-	private final long myUpdateInterval; // in milliseconds
-	private final int myItemsLimit;
+	public final long UpdateInterval; // in milliseconds
+	public final int ItemsLimit;
 
 	private boolean myInterruptRequested;
 	private boolean myInterruptConfirmed;
@@ -42,13 +42,13 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	private Object myFinishedLock = new Object();
 
 
-	public void interrupt() {
+	public void interruptLoading() {
 		synchronized (myInterruptLock) {
 			myInterruptRequested = true;
 		}
 	}
 
-	private boolean confirmInterrupt() {
+	private boolean confirmInterruptLoading() {
 		synchronized (myInterruptLock) {
 			if (myInterruptRequested) {
 				myInterruptConfirmed = true;
@@ -57,7 +57,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		}
 	}
 
-	public boolean tryResume() {
+	public boolean tryResumeLoading() {
 		synchronized (myInterruptLock) {
 			if (!myInterruptConfirmed) {
 				myInterruptRequested = false;
@@ -66,9 +66,15 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		}
 	}
 
-	private boolean isInterrupted() {
+	private boolean isLoadingInterrupted() {
 		synchronized (myInterruptLock) {
 			return myInterruptConfirmed;
+		}
+	}
+
+	private boolean isLoadingInterruptRequested() {
+		synchronized (myInterruptLock) {
+			return myInterruptRequested;
 		}
 	}
 
@@ -79,8 +85,8 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler, long updateIntervalMillis, int itemsLimit) {
 		myHandler = handler;
-		myUpdateInterval = updateIntervalMillis;
-		myItemsLimit = itemsLimit;
+		UpdateInterval = updateIntervalMillis;
+		ItemsLimit = itemsLimit;
 	}
 
 	public abstract String doBefore();
@@ -98,24 +104,29 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		err = doLoading(new NetworkOperationData.OnNewItemListener() {
 			private long myUpdateTime;
 			private int myItemsNumber;
-			public boolean onNewItem(NetworkLibraryItem item) {
+			public void onNewItem(NetworkLibraryItem item) {
 				myHandler.addItem(item);
-				final boolean interrupted = confirmInterrupt();
-				if (interrupted || myItemsNumber++ >= myItemsLimit) {
-					return true;
-				}
+				++myItemsNumber;
 				final long now = System.currentTimeMillis();
 				if (now > myUpdateTime) {
 					myHandler.sendUpdateItems();
-					myUpdateTime = now + myUpdateInterval;
+					myUpdateTime = now + UpdateInterval;
 				}
-				return false;
+			}
+			public boolean requestInterrupt() {
+				return isLoadingInterruptRequested() || myItemsNumber >= ItemsLimit;
+			}
+			public boolean confirmInterrupt() {
+				return confirmInterruptLoading() || myItemsNumber >= ItemsLimit;
 			}
 		});
 		myHandler.sendUpdateItems();
 		myHandler.ensureItemsProcessed();
-		myHandler.sendFinish(err, isInterrupted());
+		myHandler.sendFinish(err, isLoadingInterrupted());
 		myHandler.ensureFinishProcessed();
+	}
+
+	void runFinishHandler() {
 		synchronized (myFinishedLock) {
 			if (myFinishedHandler != null) {
 				myFinishedHandler.sendEmptyMessage(0);
@@ -123,6 +134,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 			myFinished = true;
 		}
 	}
+
 
 	public void runOnFinish(final Runnable runnable) {
 		if (myFinishedHandler != null) {

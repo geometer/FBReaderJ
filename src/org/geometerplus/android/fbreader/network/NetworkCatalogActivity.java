@@ -216,7 +216,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 		if (key != null && NetworkView.Instance().isInitialized()) {
 			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
 			if (runnable != null) {
-				runnable.interrupt();
+				runnable.interruptLoading();
 			}
 		}
 	}

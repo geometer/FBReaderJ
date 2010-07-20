@@ -410,9 +410,15 @@ public class NetworkLibrary {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
-		NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized boolean onNewItem(NetworkLibraryItem item) {
-				return listener.onNewItem(item);
+		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
+			public synchronized void onNewItem(NetworkLibraryItem item) {
+				listener.onNewItem(item);
+			}
+			public synchronized boolean requestInterrupt() {
+				return listener.requestInterrupt();
+			}
+			public synchronized boolean confirmInterrupt() {
+				return listener.confirmInterrupt();
 			}
 		};
 
@@ -421,8 +427,8 @@ public class NetworkLibrary {
 				//if (link.OnOption.getValue()) {
 				// execute next code only if link is enabled
 				//}
-				NetworkOperationData data = new NetworkOperationData(link, synchronizedListener);
-				ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
+				final NetworkOperationData data = link.createOperationData(link, synchronizedListener);
+				final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 				if (request != null) {
 					dataList.add(data);
 					requestList.add(request);

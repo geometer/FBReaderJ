@@ -31,10 +31,14 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfIt
 class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private final String myBaseURL;
-	private final NetworkOperationData myData;
+	private final OPDSCatalogItem.State myData;
 
 	private int myIndex;
 
+	private String myNextURL;
+	private String mySkipUntilTitle;
+
+	private int myItemsToLoad = -1;
 
 	/**
 	 * Creates new OPDSFeedReader instance that can be used to get NetworkLibraryItem objects from OPDS feeds.
@@ -43,15 +47,17 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	 * @param result     network results buffer. Must be created using OPDSLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
-	NetworkOPDSFeedReader(String baseURL, NetworkOperationData result) {
+	NetworkOPDSFeedReader(String baseURL, OPDSCatalogItem.State result) {
 		myBaseURL = baseURL;
 		myData = result;
+		mySkipUntilTitle = myData.LastLoadedTitle;
 		if (!(result.Link instanceof OPDSLink)) {
 			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSLink class.");
 		}
 	}
 
 	public void processFeedStart() {
+		myData.ResumeURI = myBaseURL;
 	}
 
 	private static String filter(String value) {
@@ -64,6 +70,13 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	public void processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 		if (beforeEntries) {
 			myIndex = feed.OpensearchStartIndex - 1;
+			if (feed.OpensearchItemsPerPage > 0) {
+				myItemsToLoad = feed.OpensearchItemsPerPage;
+				final int len = feed.OpensearchTotalResults - myIndex;
+				if (len > 0 && len < myItemsToLoad) {
+					myItemsToLoad = len;
+				}
+			}
 			return;
 		}
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
@@ -72,12 +85,20 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			String type = link.getType();
 			String rel = opdsLink.relation(filter(link.getRel()), type);
 			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
-				myData.ResumeURI = href;
+				myNextURL = href;
 			}
 		}
 	}
 
 	public void processFeedEnd() {
+		if (mySkipUntilTitle != null) {
+			// Last loaded element was not found => resume error => DO NOT RESUME
+			// TODO: notify user about error???
+			// TODO: do reload???
+			myNextURL = null;
+		}
+		myData.ResumeURI = myNextURL;
+		myData.LastLoadedTitle = null;
 	}
 
 
@@ -110,10 +131,38 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 	}
 
+	private boolean tryInterrupt() {
+		if (myData.Listener.requestInterrupt()) {
+			myData.Interrupt = true;
+
+			final int noninterruptableRemainder = 10;
+			if (myItemsToLoad < 0 || myItemsToLoad > noninterruptableRemainder) {
+				if (myData.Listener.confirmInterrupt()) {
+					return true;
+				} else {
+					myData.Interrupt = false;
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean processFeedEntry(OPDSEntry entry) {
+		if (myItemsToLoad >= 0) {
+			--myItemsToLoad;
+		}
+
+		if (mySkipUntilTitle != null) {
+			if (mySkipUntilTitle.equals(entry.Title)) {
+				mySkipUntilTitle = null;
+			}
+			return tryInterrupt();
+		}
+		myData.LastLoadedTitle = entry.Title;
+
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		if (opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.NEVER) {
-			return false;
+			return tryInterrupt();
 		}
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
@@ -137,11 +186,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			item = readCatalogItem(entry);
 		}
 		if (item != null) {
-			//item.dbgEntry = entry;
-			//myData.Items.add(item);
-			return myData.Listener.onNewItem(item);
+			myData.Listener.onNewItem(item);
 		}
-		return false;
+		return tryInterrupt();
 	}
 
 	private static final String AuthorPrefix = "author:";

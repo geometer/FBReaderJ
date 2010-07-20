@@ -77,7 +77,7 @@ class OPDSLink extends AbstractNetworkLink {
 		myAuthenticationManager = mgr;
 	}
 
-	ZLNetworkRequest createNetworkData(String url, final NetworkOperationData result) {
+	ZLNetworkRequest createNetworkData(String url, final OPDSCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
@@ -97,20 +97,24 @@ class OPDSLink extends AbstractNetworkLink {
 		return getLink(URL_SEARCH).replace("%s", query);
 	}
 
+	@Override
+	public OPDSCatalogItem.State createOperationData(INetworkLink link,
+			NetworkOperationData.OnNewItemListener listener) {
+		return new OPDSCatalogItem.State(link, listener);
+	}
+
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
 		if (getLink(URL_SEARCH) == null) {
 			return null;
 		}
 		return createNetworkData(
 			searchURL(ZLNetworkUtil.htmlEncode(pattern)),
-			data
+			(OPDSCatalogItem.State) data
 		);
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		String url = data.ResumeURI;
-		data.clear();
-		return createNetworkData(url, data);
+		return createNetworkData(data.ResumeURI, (OPDSCatalogItem.State) data);
 	}
 
 	public NetworkLibraryItem libraryItem() {

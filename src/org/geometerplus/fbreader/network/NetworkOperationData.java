@@ -25,12 +25,15 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 public class NetworkOperationData {
 
 	public interface OnNewItemListener {
-		// return true to interrupt reading; return false to continue reading
-		boolean onNewItem(NetworkLibraryItem item);
+		void onNewItem(NetworkLibraryItem item);
+
+		// return true to confirm interrupt reading; return false to continue reading
+		boolean requestInterrupt();
+		boolean confirmInterrupt();
 	}
 
 	public final INetworkLink Link;
-	public final OnNewItemListener Listener;
+	public OnNewItemListener Listener;
 	public String ResumeURI;
 
 	private int myResumeCount;
@@ -48,6 +51,8 @@ public class NetworkOperationData {
 		if (++myResumeCount >= 10) { // FIXME: hardcoded resume limit constant!!!
 			return null;
 		}
-		return Link.resume(this);
+		final ZLNetworkRequest request = Link.resume(this);
+		clear();
+		return request;
 	}
 }

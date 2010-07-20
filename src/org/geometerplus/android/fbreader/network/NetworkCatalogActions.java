@@ -288,7 +288,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		public void onFinish(String errorMessage, boolean interrupted) {
-			if (interrupted) {
+			if (interrupted &&
+					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
 				myTree.ChildrenItems.clear();
 				myTree.clear();
 			} else {
@@ -336,11 +337,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		private final NetworkCatalogTree myTree;
 		private final boolean myCheckAuthentication;
+		private final boolean myResumeNotLoad;
 
-		public ExpandCatalogRunnable(ItemsLoadingHandler handler, NetworkCatalogTree tree, boolean checkAuthentication) {
+		public ExpandCatalogRunnable(ItemsLoadingHandler handler,
+				NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
 			super(handler);
 			myTree = tree;
 			myCheckAuthentication = checkAuthentication;
+			myResumeNotLoad = resumeNotLoad;
 		}
 
 		public String getResourceKey() {
@@ -369,6 +373,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		public String doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+			if (myResumeNotLoad) {
+				return myTree.Item.resumeLoading(doWithListener);
+			}
 			return myTree.Item.loadChildren(doWithListener);
 		}
 	}
@@ -380,10 +387,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 		NetworkView.Instance().tryResumeLoading(activity, tree, url, new Runnable() {
 			public void run() {
+				boolean resumeNotLoad = false;
 				if (tree.hasChildren()) {
 					if (tree.isContentValid()) {
-						NetworkView.Instance().openTree(activity, tree, url);
-						return;
+						if (tree.Item.supportsResumeLoading()) {
+							resumeNotLoad = true;
+						} else {
+							NetworkView.Instance().openTree(activity, tree, url);
+							return;
+						}
 					} else {
 						tree.ChildrenItems.clear();
 						tree.clear();
@@ -394,7 +406,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				NetworkView.Instance().startItemsLoading(
 					activity,
 					url,
-					new ExpandCatalogRunnable(handler, tree, true)
+					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
 				NetworkView.Instance().openTree(activity, tree, url);
 			}
@@ -416,7 +428,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		NetworkView.Instance().startItemsLoading(
 			activity,
 			url,
-			new ExpandCatalogRunnable(handler, tree, false)
+			new ExpandCatalogRunnable(handler, tree, false, false)
 		);
 	}
 

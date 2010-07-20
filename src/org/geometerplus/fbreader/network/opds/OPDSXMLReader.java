@@ -173,6 +173,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private final StringBuffer myBuffer = new StringBuffer();
 	private HtmlToString myHtmlToString = new HtmlToString();
 
+	private boolean myFeedMetadataProcessed;
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
@@ -202,6 +203,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					myFeed = new OPDSFeedMetadata();
 					myFeed.readAttributes(attributes);
 					myState = FEED;
+					myFeedMetadataProcessed = false;
 				}
 				break;
 			case FEED:
@@ -236,8 +238,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myEntry.readAttributes(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
-						if (myFeed != null && myFeed.Id != null) {
+						if (myFeed != null && myFeed.Id != null && !myFeedMetadataProcessed) {
 							myFeedReader.processFeedMetadata(myFeed, true);
+							myFeedMetadataProcessed = true;
 						}
 					} 
 				} else if (tagPrefix == myOpenSearchNamespaceId) {
