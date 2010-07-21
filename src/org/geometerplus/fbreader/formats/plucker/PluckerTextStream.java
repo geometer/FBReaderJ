@@ -109,7 +109,6 @@ public class PluckerTextStream extends PdbStream {
 
 		boolean doProcess = false;
 		if (type == 0) {
-			System.out.println(size);
 			doProcess = myBase.read(myFullBuffer, 0, size) == size;
 		} else if (myCompressionVersion == 1) {
 			//doProcess =

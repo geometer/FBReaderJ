@@ -494,7 +494,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		final float charWidth = computeCharWidth(myLettersBuffer, myLettersBufferLength);
-		System.err.println("CHARWIDTH: charWidth = " + charWidth);
 		return charWidth;
 	}
 

@@ -99,7 +99,6 @@ public class ZLNetworkManager {
 	public String perform(ZLNetworkRequest request) {
 		boolean sucess = false;
 		try {
-			System.err.println("PERFORM: " + request.URL);
 			final String error = doBeforeRequest(request);
 			if (error != null) {
 				return error;
@@ -107,9 +106,6 @@ public class ZLNetworkManager {
 			HttpURLConnection httpConnection = null;
 			int response = -1;
 			for (int retryCounter = 0; retryCounter < 3 && response == -1; ++retryCounter) {
-				if (retryCounter > 0) {
-					System.err.println("RETRY: " + retryCounter);
-				}
 				final URL url = new URL(request.URL);
 				final URLConnection connection = url.openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
@@ -135,8 +131,6 @@ public class ZLNetworkManager {
 				}
 				sucess = true;
 			} else {
-				System.err.println("RESPONSE: " + response);
-				System.err.println("RESPONSE MESSAGE: " + httpConnection.getResponseMessage());
 				if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
 					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
 				} else {
