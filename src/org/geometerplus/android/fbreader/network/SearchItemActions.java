@@ -28,8 +28,7 @@ import org.geometerplus.fbreader.network.SearchResult;
 
 class SearchItemActions extends NetworkTreeActions {
 
-	public static final int OPEN_RESULTS_ITEM_ID = 0;
-	public static final int RUN_SEARCH_ITEM_ID = 2;
+	public static final int RUN_SEARCH_ITEM_ID = 0;
 
 
 	@Override
@@ -54,9 +53,8 @@ class SearchItemActions extends NetworkTreeActions {
 
 		if (!isLoading) {
 			addMenuItem(menu, RUN_SEARCH_ITEM_ID, "search");
-		}
-		if (isLoading || tree.hasChildren()) {
-			addMenuItem(menu, OPEN_RESULTS_ITEM_ID, "showResults");
+		} else {
+			addMenuItem(menu, TREE_NO_ACTION, "stoppingNetworkSearch");
 		}
 	}
 
@@ -87,28 +85,10 @@ class SearchItemActions extends NetworkTreeActions {
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
-			case OPEN_RESULTS_ITEM_ID:
-				doExpandCatalog(activity, (SearchItemTree)tree);
-				return true;
 			case RUN_SEARCH_ITEM_ID:
 				activity.onSearchRequested();
 				return true;
 		}
 		return false;
-	}
-
-
-	public void doExpandCatalog(final NetworkBaseActivity activity, final SearchItemTree tree) {
-		if (!NetworkView.Instance().isInitialized()) {
-			return;
-		}
-		NetworkView.Instance().tryResumeLoading(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY, new Runnable() {
-			public void run() {
-				final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-				if (isLoading || tree.hasChildren()) {
-					NetworkView.Instance().openTree(activity, tree, NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-				}
-			}
-		});
 	}
 }

@@ -32,16 +32,9 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 	static class State extends NetworkOperationData {
 
 		public String LastLoadedTitle;
-		public boolean Interrupt;
 
 		public State(INetworkLink link, OnNewItemListener listener) {
 			super(link, listener);
-		}
-
-		@Override
-		public void clear() {
-			super.clear();
-			Interrupt = false;
 		}
 	}
 	private State myLoadingState;
@@ -66,16 +59,8 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 				myLoadingState = null;
 				return errorMessage;
 			}
-			if (myLoadingState.Interrupt) {
-				if (myLoadingState.LastLoadedTitle == null) {
-					// In this case Catalog loading was not interrupted, and 
-					// we must confirm interruption here.
-					if (listener.confirmInterrupt()) {
-						return null;
-					}
-				} else {
-					return null;
-				}
+			if (listener.confirmInterrupt()) {
+				return null;
 			}
 			networkRequest = myLoadingState.resume();
 		}

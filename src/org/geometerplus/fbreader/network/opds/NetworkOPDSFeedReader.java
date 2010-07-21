@@ -132,19 +132,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	}
 
 	private boolean tryInterrupt() {
-		if (myData.Listener.requestInterrupt()) {
-			myData.Interrupt = true;
-
-			final int noninterruptableRemainder = 10;
-			if (myItemsToLoad < 0 || myItemsToLoad > noninterruptableRemainder) {
-				if (myData.Listener.confirmInterrupt()) {
-					return true;
-				} else {
-					myData.Interrupt = false;
-				}
-			}
-		}
-		return false;
+		final int noninterruptableRemainder = 10;
+		return (myItemsToLoad < 0 || myItemsToLoad > noninterruptableRemainder)
+				&& myData.Listener.confirmInterrupt();
 	}
 
 	public boolean processFeedEntry(OPDSEntry entry) {

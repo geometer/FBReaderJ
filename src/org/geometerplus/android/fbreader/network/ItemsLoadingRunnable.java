@@ -72,12 +72,6 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		}
 	}
 
-	private boolean isLoadingInterruptRequested() {
-		synchronized (myInterruptLock) {
-			return myInterruptRequested;
-		}
-	}
-
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler) {
 		this(handler, 1000, 500);
@@ -112,9 +106,6 @@ abstract class ItemsLoadingRunnable implements Runnable {
 					myHandler.sendUpdateItems();
 					myUpdateTime = now + UpdateInterval;
 				}
-			}
-			public boolean requestInterrupt() {
-				return isLoadingInterruptRequested() || myItemsNumber >= ItemsLimit;
 			}
 			public boolean confirmInterrupt() {
 				return confirmInterruptLoading() || myItemsNumber >= ItemsLimit;

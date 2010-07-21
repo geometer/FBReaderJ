@@ -85,6 +85,9 @@ class OPDSLink extends AbstractNetworkLink {
 		return new ZLNetworkRequest(url) {
 			@Override
 			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+				if (result.Listener.confirmInterrupt()) {
+					return null;
+				}
 				new OPDSXMLReader(
 					new NetworkOPDSFeedReader(URL, result)
 				).read(inputStream);

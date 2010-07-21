@@ -28,7 +28,6 @@ public class NetworkOperationData {
 		void onNewItem(NetworkLibraryItem item);
 
 		// return true to confirm interrupt reading; return false to continue reading
-		boolean requestInterrupt();
 		boolean confirmInterrupt();
 	}
 

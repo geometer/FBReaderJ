@@ -414,9 +414,6 @@ public class NetworkLibrary {
 			public synchronized void onNewItem(NetworkLibraryItem item) {
 				listener.onNewItem(item);
 			}
-			public synchronized boolean requestInterrupt() {
-				return listener.requestInterrupt();
-			}
 			public synchronized boolean confirmInterrupt() {
 				return listener.confirmInterrupt();
 			}
@@ -444,6 +441,9 @@ public class NetworkLibrary {
 
 			requestList.clear();
 
+			if (listener.confirmInterrupt()) {
+				return null;
+			}
 			for (NetworkOperationData data: dataList) {
 				ZLNetworkRequest request = data.resume();
 				if (request != null) {
