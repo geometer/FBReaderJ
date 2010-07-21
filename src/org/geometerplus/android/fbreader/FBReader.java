@@ -55,7 +55,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 		@Override
 		public void onShow() {
-			if (FBReader.Instance != null) {
+			if (FBReader.Instance != null && myControlPanel != null) {
 				FBReader.Instance.setupNavigation(myControlPanel);
 			}
 		}
@@ -63,7 +63,7 @@ public final class FBReader extends ZLAndroidActivity {
 		@Override
 		public void updateStates() {
 			super.updateStates();
-			if (!NavigateDragging && FBReader.Instance != null) {
+			if (!NavigateDragging && FBReader.Instance != null && myControlPanel != null) {
 				FBReader.Instance.setupNavigation(myControlPanel);
 			}
 		}
