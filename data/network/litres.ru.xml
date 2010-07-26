@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
-<catalog type="opds">
+<catalog type="opds" hasStableIdentifiers="true">
 	<site>litres.ru</site>
 	<title>Каталог LitRes</title>
 	<summary>Продажа электронных книг.</summary>

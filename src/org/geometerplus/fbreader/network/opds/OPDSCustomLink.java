@@ -30,7 +30,7 @@ class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
 	private SaveLinkListener myListener;
 
 	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
-		super(siteName, title, summary, icon, links);
+		super(siteName, title, summary, icon, links, false);
 		myId = id;
 	}
 

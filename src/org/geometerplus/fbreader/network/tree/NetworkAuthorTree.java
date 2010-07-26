@@ -118,4 +118,9 @@ public class NetworkAuthorTree extends NetworkTree {
 
 		myBooksNumber = books.size();
 	}
+
+	@Override
+	public NetworkLibraryItem getHoldedItem() {
+		return null;
+	}
 }

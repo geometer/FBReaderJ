@@ -99,4 +99,9 @@ public class SearchItemTree extends NetworkTree {
 			throw new RuntimeException("That's impossible!!!");
 		}
 	}
+
+	@Override
+	public NetworkLibraryItem getHoldedItem() {
+		return null;
+	}
 }

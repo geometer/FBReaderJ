@@ -156,4 +156,15 @@ public class NetworkCatalogTree extends NetworkTree {
 			tree.removeSelf();
 		}
 	}
+
+	@Override
+	public NetworkLibraryItem getHoldedItem() {
+		return Item;
+	}
+
+	@Override
+	public void removeItems(Set<NetworkLibraryItem> items) {
+		ChildrenItems.removeAll(items);
+		super.removeItems(items);
+	}
 }

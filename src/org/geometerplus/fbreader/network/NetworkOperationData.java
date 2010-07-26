@@ -25,9 +25,12 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 public class NetworkOperationData {
 
 	public interface OnNewItemListener {
-		void onNewItem(NetworkLibraryItem item);
+		void onNewItem(INetworkLink link, NetworkLibraryItem item);
 
-		// return true to confirm interrupt reading; return false to continue reading
+		void commitItems(INetworkLink link);
+
+		// returns true to confirm interrupt reading; return false to continue reading.
+		// once true has been returned, all next calls must return true.
 		boolean confirmInterrupt();
 	}
 

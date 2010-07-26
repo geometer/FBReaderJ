@@ -36,6 +36,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	private String myTitle;
 	private String mySummary;
 	private String myIcon;
+	private boolean myHasStableIdentifiers;
 
 	private final HashMap<String, String> myLinks = new HashMap<String, String>();
 
@@ -60,7 +61,8 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 			myTitle,
 			mySummary,
 			myIcon,
-			myLinks
+			myLinks,
+			myHasStableIdentifiers
 		);
 
 		/*if (!mySearchType.empty()) {
@@ -102,6 +104,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 
 	public INetworkLink readDocument(ZLFile file) {
 		mySiteName = myTitle = mySummary = myIcon = /*mySearchType = */myAuthenticationType = mySSLCertificate = null;
+		myHasStableIdentifiers = false;
 		myLinks.clear();
 		mySearchFields.clear();
 		myUrlConditions.clear();
@@ -126,6 +129,7 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	}
 
 
+	private static final String TAG_CATALOG = "catalog";
 	private static final String TAG_SITE = "site";
 	private static final String TAG_LINK = "link";
 	private static final String TAG_TITLE = "title";
@@ -163,7 +167,10 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.intern();
-		if (TAG_SITE == tag) {
+		if (TAG_CATALOG == tag) {
+			 final String value = attributes.getValue("hasStableIdentifiers");
+			 myHasStableIdentifiers = value != null && value.equals("true");
+		} else if (TAG_SITE == tag) {
 			myState = READ_SITENAME;
 		} else if (TAG_TITLE == tag) {
 			myState = READ_TITLE;

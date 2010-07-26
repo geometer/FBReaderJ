@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.LinkedList;
+import java.util.Set;
+
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -79,5 +82,34 @@ public abstract class NetworkTree extends FBTree {
 			}
 		}
 		return null;
+	}
+
+
+	public abstract NetworkLibraryItem getHoldedItem();
+
+	public void removeItems(Set<NetworkLibraryItem> items) {
+		if (items.isEmpty() || subTrees().isEmpty()) {
+			return;
+		}
+		final LinkedList<FBTree> treesList = new LinkedList<FBTree>();
+		for (FBTree tree: subTrees()) {
+			final NetworkLibraryItem treeItem = ((NetworkTree)tree).getHoldedItem();
+			if (treeItem != null && items.contains(treeItem)) {
+				treesList.add(tree);
+				items.remove(treeItem);
+			}
+		}
+		for (FBTree tree: treesList) {
+			tree.removeSelf();
+		}
+		if (items.isEmpty()) {
+			return;
+		}
+		treesList.clear();
+		treesList.addAll(subTrees());
+		while (!treesList.isEmpty()) {
+			final NetworkTree tree = (NetworkTree) treesList.remove(treesList.size() - 1);
+			tree.removeItems(items);
+		}
 	}
 }

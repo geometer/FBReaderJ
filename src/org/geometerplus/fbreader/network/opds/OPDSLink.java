@@ -45,8 +45,12 @@ class OPDSLink extends AbstractNetworkLink {
 	private LinkedList<URLRewritingRule> myUrlRewritingRules;
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	OPDSLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
+	private final boolean myHasStableIdentifiers;
+
+	OPDSLink(String siteName, String title, String summary, String icon,
+			Map<String, String> links, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, icon, links);
+		myHasStableIdentifiers = hasStableIdentifiers;
 	}
 
 	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
@@ -88,9 +92,23 @@ class OPDSLink extends AbstractNetworkLink {
 				if (result.Listener.confirmInterrupt()) {
 					return null;
 				}
+
 				new OPDSXMLReader(
 					new NetworkOPDSFeedReader(URL, result)
 				).read(inputStream);
+
+				if (result.Listener.confirmInterrupt()) {
+					if (!myHasStableIdentifiers && result.LastLoadedId != null) {
+						// If current catalog doesn't have stable identifiers
+						// and catalog wasn't completely loaded (i.e. LastLoadedIdentifier is not null)
+						// then reset state to load current page from the beginning 
+						result.LastLoadedId = null;
+					} else {
+						result.Listener.commitItems(OPDSLink.this);
+					}
+				} else {
+					result.Listener.commitItems(OPDSLink.this);
+				}
 				return null;
 			}
 		};

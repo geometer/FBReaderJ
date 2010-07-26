@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import android.os.Message;
 import android.os.Handler;
 
+import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
 
@@ -98,8 +99,8 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		err = doLoading(new NetworkOperationData.OnNewItemListener() {
 			private long myUpdateTime;
 			private int myItemsNumber;
-			public void onNewItem(NetworkLibraryItem item) {
-				myHandler.addItem(item);
+			public void onNewItem(INetworkLink link, NetworkLibraryItem item) {
+				myHandler.addItem(link, item);
 				++myItemsNumber;
 				final long now = System.currentTimeMillis();
 				if (now > myUpdateTime) {
@@ -109,6 +110,9 @@ abstract class ItemsLoadingRunnable implements Runnable {
 			}
 			public boolean confirmInterrupt() {
 				return confirmInterruptLoading() || myItemsNumber >= ItemsLimit;
+			}
+			public void commitItems(INetworkLink link) {
+				myHandler.commitItems(link);
 			}
 		});
 		myHandler.sendUpdateItems();

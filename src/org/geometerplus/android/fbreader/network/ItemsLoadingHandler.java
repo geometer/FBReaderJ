@@ -19,12 +19,16 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import android.os.Message;
 import android.os.Handler;
 
+import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
 
 
@@ -34,15 +38,31 @@ abstract class ItemsLoadingHandler extends Handler {
 	private static final int WHAT_FINISHED = 1;
 
 	private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
+	private final HashMap<INetworkLink, LinkedList<NetworkLibraryItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkLibraryItem>>();
 	private final Object myItemsMonitor = new Object();
 
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
 
 
-	public final void addItem(NetworkLibraryItem item) {
+	public final void addItem(INetworkLink link, NetworkLibraryItem item) {
 		synchronized (myItemsMonitor) {
 			myItems.add(item);
+			LinkedList<NetworkLibraryItem> uncommited = myUncommitedItems.get(link);
+			if (uncommited == null) {
+				uncommited = new LinkedList<NetworkLibraryItem>();
+				myUncommitedItems.put(link, uncommited);
+			}
+			uncommited.add(item);
+		}
+	}
+
+	public final void commitItems(INetworkLink link) {
+		synchronized (myItemsMonitor) {
+			LinkedList<NetworkLibraryItem> uncommited = myUncommitedItems.get(link);
+			if (uncommited != null) {
+				uncommited.clear();
+			}
 		}
 	}
 
@@ -78,8 +98,14 @@ abstract class ItemsLoadingHandler extends Handler {
 	}
 
 	private final void doProcessFinish(String errorMessage, boolean interrupted) {
+		HashSet<NetworkLibraryItem> uncommitedItems = new HashSet<NetworkLibraryItem>();
+		synchronized (myUncommitedItems) {
+			for (LinkedList<NetworkLibraryItem> items: myUncommitedItems.values()) {
+				uncommitedItems.addAll(items);
+			}
+		}
 		synchronized (myFinishMonitor) {
-			onFinish(errorMessage, interrupted);
+			onFinish(errorMessage, interrupted, uncommitedItems);
 			myFinishProcessed = true;
 			myFinishMonitor.notifyAll(); // wake up process, that waits for finish condition (see ensureFinish() method)
 		}
@@ -100,7 +126,7 @@ abstract class ItemsLoadingHandler extends Handler {
 	// callbacks
 	public abstract void onUpdateItems(List<NetworkLibraryItem> items);
 	public abstract void afterUpdateItems();
-	public abstract void onFinish(String errorMessage, boolean interrupted);
+	public abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkLibraryItem> uncommitedItems);
 
 
 	@Override

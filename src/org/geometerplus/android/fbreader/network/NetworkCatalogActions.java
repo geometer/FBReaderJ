@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.List;
+import java.util.Set;
 
 import android.app.AlertDialog;
 import android.os.Message;
@@ -274,6 +275,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			myKey = key;
 		}
 
+		@Override
 		public void onUpdateItems(List<NetworkLibraryItem> items) {
 			for (NetworkLibraryItem item: items) {
 				myTree.ChildrenItems.add(item);
@@ -281,20 +283,26 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 		}
 
+		@Override
 		public void afterUpdateItems() {
 			if (NetworkView.Instance().isInitialized()) {
 				NetworkView.Instance().fireModelChanged();
 			}
 		}
 
-		public void onFinish(String errorMessage, boolean interrupted) {
+		@Override
+		public void onFinish(String errorMessage, boolean interrupted,
+				Set<NetworkLibraryItem> uncommitedItems) {
 			if (interrupted &&
 					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
 				myTree.ChildrenItems.clear();
 				myTree.clear();
 			} else {
+				myTree.removeItems(uncommitedItems);
 				myTree.updateLoadedTime();
-				afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
+				if (!interrupted) {
+					afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
+				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateVisibility();
 				library.synchronize();

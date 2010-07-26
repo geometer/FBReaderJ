@@ -31,7 +31,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 
 	static class State extends NetworkOperationData {
 
-		public String LastLoadedTitle;
+		public String LastLoadedId;
 
 		public State(INetworkLink link, OnNewItemListener listener) {
 			super(link, listener);

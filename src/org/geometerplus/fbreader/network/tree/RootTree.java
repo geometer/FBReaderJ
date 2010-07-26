@@ -19,11 +19,17 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.fbreader.network.NetworkLibraryItem;
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public final class RootTree extends NetworkTree {
 	@Override
 	public String getName() {
+		return null;
+	}
+
+	@Override
+	public NetworkLibraryItem getHoldedItem() {
 		return null;
 	}
 }

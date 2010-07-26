@@ -36,7 +36,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	private int myIndex;
 
 	private String myNextURL;
-	private String mySkipUntilTitle;
+	private String mySkipUntilId;
 
 	private int myItemsToLoad = -1;
 
@@ -50,7 +50,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	NetworkOPDSFeedReader(String baseURL, OPDSCatalogItem.State result) {
 		myBaseURL = baseURL;
 		myData = result;
-		mySkipUntilTitle = myData.LastLoadedTitle;
+		mySkipUntilId = myData.LastLoadedId;
 		if (!(result.Link instanceof OPDSLink)) {
 			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSLink class.");
 		}
@@ -91,14 +91,14 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	}
 
 	public void processFeedEnd() {
-		if (mySkipUntilTitle != null) {
+		if (mySkipUntilId != null) {
 			// Last loaded element was not found => resume error => DO NOT RESUME
 			// TODO: notify user about error???
 			// TODO: do reload???
 			myNextURL = null;
 		}
 		myData.ResumeURI = myNextURL;
-		myData.LastLoadedTitle = null;
+		myData.LastLoadedId = null;
 	}
 
 
@@ -142,13 +142,13 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			--myItemsToLoad;
 		}
 
-		if (mySkipUntilTitle != null) {
-			if (mySkipUntilTitle.equals(entry.Title)) {
-				mySkipUntilTitle = null;
+		if (mySkipUntilId != null) {
+			if (mySkipUntilId.equals(entry.Id.Uri)) {
+				mySkipUntilId = null;
 			}
 			return tryInterrupt();
 		}
-		myData.LastLoadedTitle = entry.Title;
+		myData.LastLoadedId = entry.Id.Uri;
 
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		if (opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.NEVER) {
@@ -176,7 +176,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			item = readCatalogItem(entry);
 		}
 		if (item != null) {
-			myData.Listener.onNewItem(item);
+			myData.Listener.onNewItem(myData.Link, item);
 		}
 		return tryInterrupt();
 	}

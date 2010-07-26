@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.List;
+import java.util.Set;
 
 import android.app.AlertDialog;
 import android.app.Activity;
@@ -62,6 +63,7 @@ public class NetworkSearchActivity extends Activity {
 			myTree = tree;
 		}
 
+		@Override
 		public void onUpdateItems(List<NetworkLibraryItem> items) {
 			SearchResult result = myTree.getSearchResult();
 			for (NetworkLibraryItem item: items) {
@@ -71,6 +73,7 @@ public class NetworkSearchActivity extends Activity {
 			}
 		}
 
+		@Override
 		public void afterUpdateItems() {
 			myTree.updateSubTrees();
 			if (NetworkView.Instance().isInitialized()) {
@@ -78,7 +81,9 @@ public class NetworkSearchActivity extends Activity {
 			}
 		}
 
-		public void onFinish(String errorMessage, boolean interrupted) {
+		@Override
+		public void onFinish(String errorMessage, boolean interrupted,
+				Set<NetworkLibraryItem> uncommitedItems) {
 			if (interrupted) {
 				myTree.setSearchResult(null);
 			} else {

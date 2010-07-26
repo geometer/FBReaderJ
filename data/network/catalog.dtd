@@ -1,0 +1,56 @@
+<!ELEMENT catalog (site,title,summary?,link+,advancedSearch?,relationAliases?,feeds?,authentication?,urlRewritingRules?,icon)>
+<!ATTLIST catalog 
+	type (opds) #REQUIRED
+	hasStableIdentifiers (true|false) "false"
+>
+
+<!ELEMENT site (#PCDATA)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT summary (#PCDATA)>
+<!ELEMENT icon (#PCDATA)>
+
+<!ELEMENT link (#PCDATA)>
+<!ATTLIST link 
+	rel (main|search|signIn|signOut|signUp|refillAccount|recoverPassword) #REQUIRED
+	type CDATA #REQUIRED
+>
+
+<!ELEMENT relationAliases (alias+)>
+<!ELEMENT alias EMPTY>
+<!ATTLIST alias
+	alias CDATA #REQUIRED
+	name CDATA #REQUIRED
+	type CDATA ""
+>
+
+<!ELEMENT advancedSearch (field+)>
+<!ATTLIST advancedSearch
+	style (separateWords|quoted) #REQUIRED
+>
+
+<!ELEMENT field (#PCDATA)>
+<!ATTLIST field
+	name (author|titleOrSeries|tag|annotation) #REQUIRED
+>
+
+<!ELEMENT feeds (condition+)>
+
+<!ELEMENT condition (#PCDATA)>
+<!ATTLIST condition
+	show (never|signedIn) #REQUIRED
+>
+
+<!ELEMENT authentication EMPTY>
+<!ATTLIST authentication
+	type (basic|litres) #REQUIRED
+>
+
+<!ELEMENT urlRewritingRules (rule+)>
+
+<!ELEMENT rule EMPTY>
+<!ATTLIST rule
+	type (addUrlParameter) #REQUIRED
+	apply (always|external|internal) "always"
+	name CDATA #REQUIRED
+	value CDATA #REQUIRED
+>

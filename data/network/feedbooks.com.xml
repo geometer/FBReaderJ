@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE catalog SYSTEM "catalog.dtd">
-<catalog type="opds">
+<catalog type="opds" hasStableIdentifiers="true">
 	<site>feedbooks.com</site>
 	<title>Feedbooks OPDS Catalog</title>
 	<summary>Feedbooks: Food for the mind. A place to discover and publish e-books.</summary>

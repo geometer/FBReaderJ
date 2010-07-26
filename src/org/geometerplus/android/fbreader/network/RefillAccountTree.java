@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkLibraryItem;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -60,5 +61,10 @@ class RefillAccountTree extends NetworkTree {
 	@Override
 	protected ZLImage createCover() {
 		return Cover;
+	}
+
+	@Override
+	public NetworkLibraryItem getHoldedItem() {
+		return null;
 	}
 }

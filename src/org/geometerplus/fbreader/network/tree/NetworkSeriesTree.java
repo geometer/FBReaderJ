@@ -85,4 +85,17 @@ public class NetworkSeriesTree extends NetworkTree {
 		}
 		return null;
 	}
+
+	@Override
+	public NetworkLibraryItem getHoldedItem() {
+		return null;
+	}
+
+	@Override
+	public void removeItems(Set<NetworkLibraryItem> items) {
+		super.removeItems(items);
+		if (subTrees().isEmpty()) {
+			removeSelf();
+		}
+	}
 }
