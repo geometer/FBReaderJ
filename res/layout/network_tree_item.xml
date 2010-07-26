@@ -13,30 +13,47 @@
 		android:layout_height="fill_parent"
 		android:adjustViewBounds="false"
 	/>
-	<LinearLayout
-		android:layout_width="wrap_content"
+	<RelativeLayout
+		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:minHeight="?android:attr/listPreferredItemHeight"
-		android:paddingLeft="8dp"
-		android:orientation="vertical"
+		android:paddingTop="6dp"
 	>
-		<TextView
-			android:id="@+id/network_tree_item_name"
+		<ImageView
+			android:id="@+id/network_tree_item_status"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="6dip"
+			android:layout_marginLeft="4dp"
+			android:layout_marginRight="6dp"
+			android:visibility="gone"
+			android:layout_alignParentRight="true"
 			android:layout_alignParentTop="true"
-			android:singleLine="true"
-			android:textAppearance="?android:attr/textAppearanceLarge"
 		/>
-		<TextView
-			android:id="@+id/network_tree_item_childrenlist"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="5dip"
-			android:layout_below="@id/network_tree_item_name"
-			android:singleLine="true"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-		/>
-	</LinearLayout>
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:paddingLeft="8dp"
+			android:orientation="vertical"
+			android:layout_toLeftOf="@id/network_tree_item_status"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+		>
+			<TextView
+				android:id="@+id/network_tree_item_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:singleLine="true"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+			/>
+			<TextView
+				android:id="@+id/network_tree_item_childrenlist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dip"
+				android:layout_below="@id/network_tree_item_name"
+				android:singleLine="true"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+			/>
+		</LinearLayout>
+	</RelativeLayout>
 </LinearLayout>

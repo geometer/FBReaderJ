@@ -36,6 +36,7 @@ import android.view.ContextMenu;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.*;
@@ -121,6 +122,26 @@ class NetworkBookActions extends NetworkTreeActions {
 			Key = key;
 			Arg = arg;
 		}
+	}
+
+	static int getBookStatus(NetworkBookItem book, BookDownloaderServiceConnection connection) {
+		if (useFullReferences(book)) {
+			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
+			if (reference != null
+					&& connection != null && connection.isBeingDownloaded(reference.URL)) {
+				return R.drawable.ic_list_download;
+			} else if (book.localCopyFileName() != null) {
+				return R.drawable.ic_list_flag;
+			} else if (reference != null) {
+				return R.drawable.ic_list_download;
+			}
+		}
+		if (useBuyReferences(book)
+				&& book.reference(BookReference.Type.BUY) != null
+				|| book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
+			return R.drawable.ic_list_buy;
+		}
+		return 0;
 	}
 
 	static Set<Action> getContextMenuActions(NetworkBookItem book, BookDownloaderServiceConnection connection) {

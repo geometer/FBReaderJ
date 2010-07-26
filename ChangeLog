@@ -1,5 +1,7 @@
 ===== 0.7.0 (??? ??, 2010) =====
 
+* New icon that indicates a status of a book (Paid book / Book can be downloaded / Downloaded book)
+  in the Network Library
 * Catalog's loading resumption nearly from position when "back" key has been pressed
 * New "Navigation" dialog where user can navigate to a specific page (page numbers are 
   computed approximately). This dialog can be called from menu or by long touch of the screen

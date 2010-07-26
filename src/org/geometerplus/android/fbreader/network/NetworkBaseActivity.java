@@ -44,6 +44,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkImage;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 
 abstract class NetworkBaseActivity extends ListActivity 
@@ -172,6 +173,17 @@ abstract class NetworkBaseActivity extends ListActivity
 		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		coverView.requestLayout();
 		setupCover(coverView, tree, myCoverWidth, myCoverWidth);
+
+		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
+		final int status = (tree instanceof NetworkBookTree) ?
+				NetworkBookActions.getBookStatus(((NetworkBookTree) tree).Book, Connection) : 0;
+		if (status != 0) {
+			statusView.setVisibility(View.VISIBLE);
+			statusView.setImageResource(status);
+		} else {
+			statusView.setVisibility(View.GONE);
+		}
+		statusView.requestLayout();
 
 		return view;
 	}
