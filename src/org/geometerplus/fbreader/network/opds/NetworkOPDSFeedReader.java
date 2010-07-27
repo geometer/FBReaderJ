@@ -81,11 +81,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
-			String href = link.getHref();
 			String type = link.getType();
 			String rel = opdsLink.relation(filter(link.getRel()), type);
 			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
-				myNextURL = href;
+				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 		}
 	}
@@ -200,7 +199,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		String cover = null;
 		LinkedList<BookReference> references = new LinkedList<BookReference>();
 		for (ATOMLink link: entry.Links) {
-			final String href = link.getHref();
+			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = link.getType();
 			final String rel = opdsLink.relation(filter(link.getRel()), type);
 			final int referenceType = typeByRelation(rel);
@@ -326,7 +325,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		boolean litresCatalogue = false;
 		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
 		for (ATOMLink link: entry.Links) {
-			final String href = link.getHref();
+			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = link.getType();
 			final String rel = opdsLink.relation(filter(link.getRel()), type);
 			if (type == NetworkImage.MIME_PNG ||
@@ -383,10 +382,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
 		if (url != null) {
-			urlMap.put(NetworkCatalogItem.URL_CATALOG, ZLNetworkUtil.url(myBaseURL, url));
+			urlMap.put(NetworkCatalogItem.URL_CATALOG, url);
 		}
 		if (htmlURL != null) {
-			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, ZLNetworkUtil.url(myBaseURL, htmlURL));
+			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, htmlURL);
 		}
 		if (litresCatalogue) {
 			return new LitResBookshelfItem(

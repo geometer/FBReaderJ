@@ -28,7 +28,8 @@ public class ZLNetworkUtil {
 			return relativePath;
 		}
 
-		if (relativePath.contains("://")) {
+		if (relativePath.contains("://")
+				|| relativePath.matches("(?s)^[a-zA-Z][a-zA-Z0-9+-.]*:.*$")) { // matches Non-relative URI; see rfc3986
 			return relativePath;
 		}
 
