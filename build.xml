@@ -19,10 +19,7 @@
 	<setup />
 
   <target name="native">
-		<exec executable="${ndk.dir}/ndk-build">
-			<arg value="-C"/>
-			<arg value="jni"/>
-		</exec>
+		<exec executable="${ndk.dir}/ndk-build" />
 	</target>
 
   <target name="resources">
@@ -38,8 +35,6 @@
 		<delete dir="res/raw"/>
 		<delete dir="res/drawable"/>
 		<exec executable="${ndk.dir}/ndk-build">
-			<arg value="-C"/>
-			<arg value="jni"/>
 			<arg value="clean"/>
 		</exec>
 		<delete dir="obj"/>
