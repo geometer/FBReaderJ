@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="FBReaderJ" default="help">
+<project name="FBReaderJ" default="package">
 	<property file="local.properties"/>
 	<property file="build.properties"/>
 	<property file="default.properties"/>
 
 	<path id="android.antlibs">
-		<pathelement path="${sdk-location}/tools/lib/anttasks.jar" />
-		<pathelement path="${sdk-location}/tools/lib/sdklib.jar" />
-		<pathelement path="${sdk-location}/tools/lib/androidprefs.jar" />
-		<pathelement path="${sdk-location}/tools/lib/apkbuilder.jar" />
-		<pathelement path="${sdk-location}/tools/lib/jarutils.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/anttasks.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/sdklib.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/androidprefs.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/apkbuilder.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/jarutils.jar" />
 	</path>
 
 	<taskdef name="setup"
@@ -18,10 +18,30 @@
 
 	<setup />
 
+  <target name="native">
+		<exec executable="${ndk.dir}/ndk-build">
+			<arg value="-C"/>
+			<arg value="jni"/>
+		</exec>
+	</target>
+
+  <target name="resources">
+		<exec executable="./createRawResources.py"/>
+	</target>
+
+  <target name="package" depends="native,resources,release">
+	</target>
+
   <target name="clean">
 		<delete dir="gen"/>
 		<delete dir="bin"/>
 		<delete dir="res/raw"/>
 		<delete dir="res/drawable"/>
+		<exec executable="${ndk.dir}/ndk-build">
+			<arg value="-C"/>
+			<arg value="jni"/>
+			<arg value="clean"/>
+		</exec>
+		<delete dir="obj"/>
   </target>
 </project>

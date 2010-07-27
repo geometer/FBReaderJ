@@ -1,14 +1,23 @@
 How to Build for Android
 ------------------------
 
-Requirements: Android SDK 1.6, Android NDK 1.5
+Prerequisites:
 
-1. Compile native code.
-   This step could be skipped, prebuilded native libraries are currently included into the source package.
+1. Android SDK >= 1.6
 
-2. Create 'local.properties' file containing sdk-location definition:
-	sdk-location=<path to the Android SDK folder>
+2. Android NDK >= r4b
 
-3. Run './createRawResources.py'.
+3. python
 
-4. Run 'ant release'.
+To build:
+
+1. Create 'local.properties' file containing sdk.dir && ndk.dir definitions:
+	sdk.dir=<path to the Android SDK folder>/tools
+	ndk.dir=<path to the Android NDK folder>
+E.g., on my computer 'local.properties' consists of 2 lines:
+  sdk.dir=/Users/geometer/android-sdk-mac_86
+  ndk.dir=/Users/geometer/android-ndk-r4b
+
+2. Run 'ant'.
+
+3. Sign your package manually.
