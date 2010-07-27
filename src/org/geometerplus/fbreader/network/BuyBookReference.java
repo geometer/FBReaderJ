@@ -35,6 +35,10 @@ public class BuyBookReference extends BookReference {
 			return price + " \u0440.";
 		} else if (currency.equals("USD")) {
 			return "$" + price;
+		} else if (currency.equals("EUR")) {
+			return "€" + price;
+		} else if (currency.equals("JPY")) {
+			return "¥" + price;
 		}
 		return currency + " " + price;
 	}

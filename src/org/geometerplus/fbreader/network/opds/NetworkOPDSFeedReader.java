@@ -158,12 +158,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		for (ATOMLink link: entry.Links) {
 			final String type = link.getType();
 			final String rel = opdsLink.relation(filter(link.getRel()), type);
-			if (rel == OPDSConstants.REL_ACQUISITION ||
-					rel == OPDSConstants.REL_ACQUISITION_SAMPLE ||
-					rel == OPDSConstants.REL_ACQUISITION_BUY ||
-					rel == OPDSConstants.REL_ACQUISITION_CONDITIONAL ||
-					rel == OPDSConstants.REL_ACQUISITION_SAMPLE_OR_FULL ||
-					(rel == null && formatByMimeType(type) != BookReference.Format.NONE)) {
+			if ((rel != null && rel.startsWith(OPDSConstants.REL_ACQUISITION_PREFIX))
+					|| (rel == null && formatByMimeType(type) != BookReference.Format.NONE)) {
 				hasBookLink = true;
 				break;
 			}

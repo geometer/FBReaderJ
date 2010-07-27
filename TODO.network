@@ -14,9 +14,9 @@ DONE Network library: Объединять книги по сериям
 	** Поддержка тегов <dc:format> внутри link'ов
 	** Поддержка тега <opds:price> (см. пункт 9.1 спецификации)
 	** Определение способа получения ресурсов (Direct / Indirect), предпочитая Direct (см. пункты 5.1 и 9 спецификации)
-	** Проверить высказывание из пункта 7 спецификации: An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
+	DONE Проверить высказывание из пункта 7 спецификации: An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
 	** В Navigation Feeds учесть: The relation "subsection" SHOULD be used if no other relation is more appropriate.
-	** Поддержка дополнительных currency codes (см. пункт 8.6.3.1) 
+	DONE Поддержка дополнительных currency codes (см. пункт 8.6.3.1) 
 
 ?? Читать информацию для custom-каталогов из сети
 	** поиск (пункт 7.5)
