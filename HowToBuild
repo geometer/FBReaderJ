@@ -12,7 +12,7 @@ Prerequisites:
 To build:
 
 1. Create 'local.properties' file containing sdk.dir && ndk.dir definitions:
-	sdk.dir=<path to the Android SDK folder>/tools
+	sdk.dir=<path to the Android SDK folder>
 	ndk.dir=<path to the Android NDK folder>
 E.g., on my computer 'local.properties' consists of 2 lines:
   sdk.dir=/Users/geometer/android-sdk-mac_86
