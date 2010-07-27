@@ -166,4 +166,7 @@ public class BookReference {
 		return null;
 	}
 
+	public String toString() {
+		return "BookReference[type=" + ReferenceType + ";format=" + BookFormat + ";URL=" + URL + "]";
+	}
 }

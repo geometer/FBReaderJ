@@ -34,12 +34,15 @@ abstract class ATOMCommonAttributes {
 	}
 
 	protected final void readAttribute(String name, ZLStringMap source) {
-		final String value = source.getValue(name);
-		if (value != null && value.length() > 0) {
-			if (myAttributes == null) {
-				myAttributes = new ZLStringMap();
+		String value = source.getValue(name);
+		if (value != null) {
+			value = value.trim().intern();
+			if (value.length() > 0) {
+				if (myAttributes == null) {
+					myAttributes = new ZLStringMap();
+				}
+				myAttributes.put(name, value);
 			}
-			myAttributes.put(name, value);
 		}
 	}
 
