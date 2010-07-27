@@ -37,15 +37,15 @@
 		<node name="refillTitle" value="Ricarica account"/>
 		<node name="refillSummary" value="Corrente: %s"/>
 		<node name="alreadyDownloading" value="Sto scaricando il libro" />
-		<node name="alreadyDownloadingDemo" value="Sto scaricando il libro d\'esempio" />
+		<node name="alreadyDownloadingDemo" value="Sto scaricando il libro d'esempio" />
 		<node name="stoppingCatalogLoading" value="Sto fermando il caricamento" />
 		<node name="stoppingNetworkSearch" value="Sto fermando la ricerca" />
 		<node name="search" value="Ricerca" />
 		<node name="searchSummary" value="Cerca libri nei cataloghi" />
 		<node name="searchResults" value="Cerca risultati per: %s" />
-		<node name="editCustomCatalog" toBeTranslated="true" value="Edit catalog"/>
-		<node name="removeCustomCatalog" toBeTranslated="true" value="Remove catalog"/>
-		<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
+		<node name="editCustomCatalog" value="Modifica catalogo"/>
+		<node name="removeCustomCatalog" value="Cancella catalogo"/>
+		<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Vuoi leggere la copia locale?"/>
 			<node name="download" value="Vuoi scaricare questo libro?"/>
@@ -62,7 +62,7 @@
 			<node name="signIn" value="Entra"/>
 			<node name="signOut" value="Esci (%s)"/>
 			<node name="refillAccount" value="Ricarica account"/>
-			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
+			<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -149,8 +149,8 @@
 			</node>
 			<node name="LookNFeel" value="Aspetto &amp; Status">
 				<node name="autoOrientation" value="Rotazione automatica">
-					<node name="summaryOn" value="Il display ruoterà quando l\'utente muove il terminale"/>
-					<node name="summaryOff" value="Il display NON ruoterà quando l\'utente muove il terminale"/>
+					<node name="summaryOn" value="Il display ruoterà quando l'utente muove il terminale"/>
+					<node name="summaryOff" value="Il display NON ruoterà quando l'utente muove il terminale"/>
 				</node>
 				<node name="showStatusBar" value="Mostra barra di stato">
 					<node name="summaryOn" value="Mostra barra di stato in modalità lettura"/>
@@ -165,14 +165,14 @@
 					<node name="show" value="Mostra la barra di scorrimento standard"/>
 					<node name="showAsProgress" value="Mostra come barra di progresso"/>
 				</node>
-				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
-					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+				<node name="appearanceSettings" value="Aspetto">
+					<node name="summary" value="Impostazioni di visualizzazione del testo"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scorrimento">
-				<node name="flick" value="Flick scrolling">
-					<node name="summaryOn" value="Lo scorrimento delle pagine avverrà trascinando lo schermo"/> 
-					<node name="summaryOff" value="Lo scorrimento delle pagine avverrà toccando lo schermo"/> 
+				<node name="flick" value="Scorrimento al tocco">
+					<node name="summaryOn" value="La navigazione tra le pagine avviene con lo sfioramento delle dita sullo schermo"/> 
+					<node name="summaryOff" value="La navigazione tra le pagine avviene toccando lo schermo"/> 
 				</node>
 				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
 					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>
@@ -311,14 +311,14 @@
 			<node name="differentPasswords" value="La Password e la Conferma Password devono essere le stesse." />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" toBeTranslated="true" value="Custom catalog" />
-			<node name="catalogTitle" toBeTranslated="true" value="Title" />
-			<node name="catalogUrl" toBeTranslated="true" value="URL" />
-			<node name="catalogSummary" toBeTranslated="true" value="Summary" />
-			<node name="titleIsEmpty" toBeTranslated="true" value="Title should be non-empty" />
-			<node name="urlIsEmpty" toBeTranslated="true" value="URL should be non-empty" />
-			<node name="invalidUrl" toBeTranslated="true" value="Invalid URL" />
-			<node name="alreadyExists" toBeTranslated="true" value="Specified title already exists" />
+			<node name="title" value="Catalogo personalizzato" />
+			<node name="catalogTitle" value="Titolo" />
+			<node name="catalogUrl" value="URL" />
+			<node name="catalogSummary" value="Sommario" />
+			<node name="titleIsEmpty" value="Il campo Titolo non può essere lasciato vuoto" />
+			<node name="urlIsEmpty" value="Il campo URL non può essere lasciato vuoto" />
+			<node name="invalidUrl" value="URL non valida" />
+			<node name="alreadyExists" value="Il titolo specificato è già esistente"/>
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Libro acquistato" />
@@ -330,7 +330,7 @@
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="textNotFound" value="Spiacente, non c\'è un testo adatto all'interno del libro"/> 
+		<node name="textNotFound" value="Spiacente, non c'è un testo adatto all'interno del libro"/> 
 		<node name="bookNotFound" value="Spiacente, non ci sono libri adatti nella libreria"/>  
 		<node name="bookmarkNotFound" value="Spiacente, non ci sono segnalibri adatti"/>
 		<node name="cannotOpenBook" value="Spiacente, non è possibile aprire il libro in questo momento"/>
