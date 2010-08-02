@@ -53,9 +53,12 @@ class CustomCatalogDialog extends NetworkDialog {
 	protected View createLayout() {
 		final View layout = myActivity.getLayoutInflater().inflate(R.layout.network_custom_catalog_dialog, null);
 
-		setupLabel(layout, R.id.network_catalog_title_text, "catalogTitle", R.id.network_catalog_title);
-		setupLabel(layout, R.id.network_catalog_url_text, "catalogUrl", R.id.network_catalog_url);
-		setupLabel(layout, R.id.network_catalog_summary_text, "catalogSummary", R.id.network_catalog_summary);
+		((TextView) layout.findViewById(R.id.network_catalog_title_text)).setText(myResource.getResource("catalogTitle").getValue());
+		((TextView) layout.findViewById(R.id.network_catalog_url_text)).setText(myResource.getResource("catalogUrl").getValue());
+		((TextView) layout.findViewById(R.id.network_catalog_summary_text)).setText(myResource.getResource("catalogSummary").getValue());
+		((TextView) layout.findViewById(R.id.network_catalog_title_example)).setText(myResource.getResource("catalogTitleExample").getValue());
+		((TextView) layout.findViewById(R.id.network_catalog_url_example)).setText(myResource.getResource("catalogUrlExample").getValue());
+		((TextView) layout.findViewById(R.id.network_catalog_summary_example)).setText(myResource.getResource("catalogSummaryExample").getValue());
 
 		return layout;
 	}
@@ -144,6 +147,11 @@ class CustomCatalogDialog extends NetworkDialog {
 		((TextView) dialog.findViewById(R.id.network_catalog_title)).setText((myTitle != null) ? myTitle : "");
 		((TextView) dialog.findViewById(R.id.network_catalog_url)).setText((myUrl != null) ? myUrl : "");
 		((TextView) dialog.findViewById(R.id.network_catalog_summary)).setText((mySummary != null) ? mySummary : "");
+
+		final int examplesVisibility = (myLink == null) ? View.VISIBLE : View.GONE;
+		dialog.findViewById(R.id.network_catalog_title_example).setVisibility(examplesVisibility);
+		dialog.findViewById(R.id.network_catalog_url_example).setVisibility(examplesVisibility);
+		dialog.findViewById(R.id.network_catalog_summary_example).setVisibility(examplesVisibility);
 
 		final TextView error = (TextView) dialog.findViewById(R.id.network_catalog_error);
 		if (myErrorMessage == null) {

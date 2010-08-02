@@ -28,8 +28,6 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -187,13 +185,4 @@ abstract class NetworkDialog {
 	}
 
 	public abstract void prepareDialog(Dialog dialog);
-
-	protected void setupLabel(View layout, int labelId, String key, int labelForId) {
-		final View viewFor = layout.findViewById(labelForId);
-		viewFor.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		final TextView label = (TextView) layout.findViewById(labelId);
-		label.setText(myResource.getResource(key).getValue());
-		label.getLayoutParams().height = viewFor.getMeasuredHeight();
-	}
 }

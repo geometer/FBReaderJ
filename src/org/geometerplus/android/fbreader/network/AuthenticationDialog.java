@@ -48,8 +48,8 @@ class AuthenticationDialog extends NetworkDialog {
 	public View createLayout() {
 		final View layout = myActivity.getLayoutInflater().inflate(R.layout.network_authentication_dialog, null);
 
-		setupLabel(layout, R.id.network_authentication_login_text, "login", R.id.network_authentication_login);
-		setupLabel(layout, R.id.network_authentication_password_text, "password", R.id.network_authentication_password);
+		((TextView) layout.findViewById(R.id.network_authentication_login_text)).setText(myResource.getResource("login").getValue());
+		((TextView) layout.findViewById(R.id.network_authentication_password_text)).setText(myResource.getResource("password").getValue());
 
 		final TextView registerText = (TextView) layout.findViewById(R.id.network_authentication_register);
 		registerText.setText(myResource.getResource("register").getValue());

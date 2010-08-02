@@ -316,6 +316,9 @@
 			<node name="catalogTitle" value="Titolo" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Sommario" />
+			<node name="catalogTitleExample" toBeTranslated="true" value="Example: My OPDS catalog" />
+			<node name="catalogUrlExample" toBeTranslated="true" value="Example: http://my.library.address/opds" />
+			<node name="catalogSummaryExample" toBeTranslated="true" value="Example: OPDS catalog for my library" />
 			<node name="titleIsEmpty" value="Il campo Titolo non può essere lasciato vuoto" />
 			<node name="urlIsEmpty" value="Il campo URL non può essere lasciato vuoto" />
 			<node name="invalidUrl" value="URL non valida" />

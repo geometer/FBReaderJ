@@ -315,6 +315,9 @@
 			<node name="catalogTitle" value="Название" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Описание" />
+			<node name="catalogTitleExample" value="Пример: Мой OPDS каталог" />
+			<node name="catalogUrlExample" value="Пример: http://my.library.address/opds" />
+			<node name="catalogSummaryExample" value="Пример: OPDS каталог моей библиотеки" />
 			<node name="titleIsEmpty" value="Название не может быть пустым" />
 			<node name="urlIsEmpty" value="URL не может быть пустым" />
 			<node name="invalidUrl" value="Неверный URL" />

@@ -315,6 +315,9 @@
 			<node name="catalogTitle" value="Title" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Summary" />
+			<node name="catalogTitleExample" value="Example: My OPDS catalog" />
+			<node name="catalogUrlExample" value="Example: http://my.library.address/opds" />
+			<node name="catalogSummaryExample" value="Example: OPDS catalog for my library" />
 			<node name="titleIsEmpty" value="Title should be non-empty" />
 			<node name="urlIsEmpty" value="URL should be non-empty" />
 			<node name="invalidUrl" value="Invalid URL" />

@@ -54,10 +54,10 @@ class RegisterUserDialog extends NetworkDialog {
 	public View createLayout() {
 		final View layout = myActivity.getLayoutInflater().inflate(R.layout.network_register_user_dialog, null);
 
-		setupLabel(layout, R.id.network_register_login_text, "login", R.id.network_register_login);
-		setupLabel(layout, R.id.network_register_password_text, "password", R.id.network_register_password);
-		setupLabel(layout, R.id.network_register_confirm_password_text, "confirmPassword", R.id.network_register_confirm_password);
-		setupLabel(layout, R.id.network_register_email_text, "email", R.id.network_register_email);
+		((TextView) layout.findViewById(R.id.network_register_login_text)).setText(myResource.getResource("login").getValue());
+		((TextView) layout.findViewById(R.id.network_register_password_text)).setText(myResource.getResource("password").getValue());
+		((TextView) layout.findViewById(R.id.network_register_confirm_password_text)).setText(myResource.getResource("confirmPassword").getValue());
+		((TextView) layout.findViewById(R.id.network_register_email_text)).setText(myResource.getResource("email").getValue());
 
 		return layout;
 	}
