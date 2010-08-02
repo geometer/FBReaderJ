@@ -60,13 +60,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		myData.ResumeURI = myBaseURL;
 	}
 
-	private static String filter(String value) {
-		if (value == null || value.length() == 0) {
-			return null;
-		}
-		return value;
-	}
-
 	public void processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 		if (beforeEntries) {
 			myIndex = feed.OpensearchStartIndex - 1;
@@ -82,7 +75,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
 			String type = link.getType();
-			String rel = opdsLink.relation(filter(link.getRel()), type);
+			String rel = opdsLink.relation(link.getRel(), type);
 			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
@@ -156,7 +149,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
 			final String type = link.getType();
-			final String rel = opdsLink.relation(filter(link.getRel()), type);
+			final String rel = opdsLink.relation(link.getRel(), type);
 			if ((rel != null && rel.startsWith(OPDSConstants.REL_ACQUISITION_PREFIX))
 					|| (rel == null && formatByMimeType(type) != BookReference.Format.NONE)) {
 				hasBookLink = true;
@@ -201,7 +194,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = link.getType();
-			final String rel = opdsLink.relation(filter(link.getRel()), type);
+			final String rel = opdsLink.relation(link.getRel(), type);
 			final int referenceType = typeByRelation(rel);
 			if (rel == OPDSConstants.REL_COVER) {
 				if (cover == null &&
@@ -235,7 +228,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 						href, BookReference.Format.NONE, BookReference.Type.BUY_IN_BROWSER, price
 					));
 				} else {
-					int format = formatByMimeType(filter(link.getAttribute(OPDSXMLReader.KEY_FORMAT)));
+					int format = formatByMimeType(link.getAttribute(OPDSXMLReader.KEY_FORMAT));
 					if (format != BookReference.Format.NONE) {
 						references.add(new BuyBookReference(
 							href, format, BookReference.Type.BUY, price
@@ -327,7 +320,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = link.getType();
-			final String rel = opdsLink.relation(filter(link.getRel()), type);
+			final String rel = opdsLink.relation(link.getRel(), type);
 			if (type == NetworkImage.MIME_PNG ||
 					type == NetworkImage.MIME_JPEG) {
 				if (rel == OPDSConstants.REL_THUMBNAIL ||
