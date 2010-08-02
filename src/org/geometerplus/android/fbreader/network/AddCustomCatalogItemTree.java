@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.image.ZLFileImage;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
@@ -38,11 +41,17 @@ public class AddCustomCatalogItemTree extends NetworkTree {
 
 	@Override
 	public String getSummary() {
-		return null;
+		return ZLResource.resource("networkView").getResource("addCustomCatalogSummary").getValue();
 	}
 
 	@Override
 	public NetworkLibraryItem getHoldedItem() {
 		return null;
+	}
+
+	@Override
+	protected ZLImage createCover() {
+		ZLResourceFile file = ZLResourceFile.createResourceFile("R.drawable.ic_list_plus");
+		return new ZLFileImage("image/png", file);
 	}
 }

@@ -125,10 +125,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		AndroidResourceFile(String path) {
 			super(path);
-			final String fieldName =
-				path.replace("/", "__").replace(".", "_").replace("-", "_").toLowerCase();
+			final String drawablePrefix = "R.drawable.";
 			try {
-				myResourceId = R.raw.class.getField(fieldName).getInt(null);
+				if (path.startsWith(drawablePrefix)) {
+					final String fieldName = path.substring(drawablePrefix.length());
+					myResourceId = R.drawable.class.getField(fieldName).getInt(null);
+				} else {
+					final String fieldName = path.replace("/", "__").replace(".", "_").replace("-", "_").toLowerCase();
+					myResourceId = R.raw.class.getField(fieldName).getInt(null);
+				}
 				myExists = true;
 			} catch (NoSuchFieldException e) {
 			} catch (IllegalAccessException e) {

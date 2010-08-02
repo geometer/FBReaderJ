@@ -45,6 +45,7 @@
 		<node name="editCustomCatalog" value="Изменить каталог"/>
 		<node name="removeCustomCatalog" value="Удалить каталог"/>
 		<node name="addCustomCatalog" value="Добавить каталог"/>
+		<node name="addCustomCatalogSummary" value="Добавить пользовательский OPDS каталог вручную"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Вы хотите открыть локальную копию?"/>
 			<node name="download" value="Вы хотите скачать эту книгу?"/>

@@ -46,6 +46,7 @@
 		<node name="editCustomCatalog" toBeTranslated="true" value="Edit catalog"/>
 		<node name="removeCustomCatalog" toBeTranslated="true" value="Remove catalog"/>
 		<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
+		<node name="addCustomCatalogSummary" toBeTranslated="true" value="Add custom OPDS catalog manually"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Bạn muốn đọc bản nội bộ?"/>
 			<node name="download" value="Bạn muốn tải về quyển sách này?"/>
