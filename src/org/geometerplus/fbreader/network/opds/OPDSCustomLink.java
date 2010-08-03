@@ -19,9 +19,17 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.util.Map;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
+import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkErrors;
 
 
 class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
@@ -80,5 +88,36 @@ class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
 
 	public final void removeLink(String urlKey) {
 		myLinks.remove(urlKey);
+	}
+
+
+	public String reloadInfo() {
+		return ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
+			@Override
+			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+				final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this);
+				new OPDSXMLReader(info).read(inputStream);
+
+				if (!info.FeedStarted) {
+					return NetworkErrors.errorMessage("notAnOPDS");
+				}
+				if (info.Title == null) {
+					return NetworkErrors.errorMessage("noRequiredInformation");
+				}
+				myTitle = info.Title;
+				if (info.Icon != null) {
+					myIcon = info.Icon;
+				}
+				if (info.Summary != null) {
+					mySummary = info.Summary;
+				}
+				if (info.SearchURL != null) {
+					setLink(URL_SEARCH, info.SearchURL);
+				} else if (info.OpensearchDescriptionURL != null) {
+					// TODO: implement OpensearchDescription reading
+				}
+				return null;
+			}
+		});
 	}
 }

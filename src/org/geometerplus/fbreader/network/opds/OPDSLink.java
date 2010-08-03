@@ -115,7 +115,12 @@ class OPDSLink extends AbstractNetworkLink {
 	}
 
 	private final String searchURL(String query) {
-		return getLink(URL_SEARCH).replace("%s", query);
+		final String url = getLink(URL_SEARCH);
+		final String searchTerms = "{searchTerms}";
+		if (url.contains(searchTerms)) {
+			return url.replace(searchTerms, query);
+		}
+		return url.replace("%s", query);
 	}
 
 	@Override

@@ -136,6 +136,8 @@
 		<node name="button">
 			<node name="buy" value="Купить" />
 			<node name="buyAndDownload" value="Купить и скачать" />
+			<node name="continue" value="Продолжить" />
+			<node name="editUrl" value="Изменить URL" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>
@@ -269,6 +271,7 @@
 			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста..." />
+			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -285,6 +288,8 @@
 			<node name="tooManyRegistrations" value="Слишком много регистраций с вашего IP;&#10;попробуйте еще раз через пару минут" />
 			<node name="noUserEmail" value="Нет пользователя с таким адресом" />
 			<node name="unsupportedOperation" value="Неподдерживаемая операция" />
+			<node name="notAnOPDS" value="Это не OPDS каталог" />
+			<node name="noRequiredInformation" value="Требуемая информация не найдена в каталоге" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Информация" />

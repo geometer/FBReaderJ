@@ -137,6 +137,8 @@
 		<node name="button">
 			<node name="buy" value="Compra" />
 			<node name="buyAndDownload" value="Compra e scarica" />
+			<node name="continue" toBeTranslated="true" value="Continue" />
+			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nome file"/>
@@ -270,6 +272,7 @@
 			<node name="signOut" value="Disconnessione. Attendere prego..." />
 			<node name="purchaseBook" value="Acquisto libro. Attendere prego..." />
 			<node name="registerUser" value="Registrazione nuovo account. Attendere prego..." />
+			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Errore Server Interno" />
@@ -286,6 +289,8 @@
 			<node name="tooManyRegistrations" value="Troppe registrazioni dal tuo IP;&#10;riprova fra qualche minuto" />
 			<node name="noUserEmail" value="Nessun utente è registrato&#10;con questo indirizzo e-mail" />
 			<node name="unsupportedOperation" value="Operazione non supportata" />
+			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
+			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Informazioni" />

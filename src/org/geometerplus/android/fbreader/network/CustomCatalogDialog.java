@@ -19,14 +19,17 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashMap;
-
 import android.app.Dialog;
 import android.app.AlertDialog;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 import android.content.DialogInterface;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -40,6 +43,8 @@ class CustomCatalogDialog extends NetworkDialog {
 	private String myUrl;
 	private String mySummary;
 
+	private boolean myLinkWithoutInfo;
+
 	public CustomCatalogDialog() {
 		super("CustomCatalogDialog");
 	}
@@ -47,6 +52,7 @@ class CustomCatalogDialog extends NetworkDialog {
 	@Override
 	protected void clearData() {
 		myTitle = myUrl = mySummary = null;
+		myLinkWithoutInfo = false;
 	}
 
 	@Override
@@ -72,9 +78,11 @@ class CustomCatalogDialog extends NetworkDialog {
 
 		if (myTitle.length() == 0) {
 			myTitle = null;
-			final String err = myResource.getResource("titleIsEmpty").getValue();
-			sendError(true, false, err);
-			return;
+			if (myLink != null) {
+				final String err = myResource.getResource("titleIsEmpty").getValue();
+				sendError(true, false, err);
+				return;
+			}
 		}
 		if (myUrl.length() == 0) {
 			myUrl = null;
@@ -103,7 +111,7 @@ class CustomCatalogDialog extends NetworkDialog {
 		}
 
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (library.hasCustomLinkTitle(myTitle, (ICustomNetworkLink) myLink)) {
+		if (myLink != null && library.hasCustomLinkTitle(myTitle, (ICustomNetworkLink) myLink)) {
 			final String err = myResource.getResource("titleAlreadyExists").getValue();
 			sendError(true, false, err);
 			return;
@@ -114,27 +122,75 @@ class CustomCatalogDialog extends NetworkDialog {
 			return;
 		}
 
-		if (myLink == null) {
-			final OPDSLinkReader reader = new OPDSLinkReader();
-			final HashMap<String, String> links = new HashMap<String, String>();
-			links.put(INetworkLink.URL_MAIN, myUrl);
-			final ICustomNetworkLink link = reader.createCustomLink(ICustomNetworkLink.INVALID_ID, 
-					siteName, myTitle, mySummary, null, links);
-			if (link != null) {
-				NetworkLibrary.Instance().addCustomLink(link);
-			} else {
-				throw new RuntimeException("Unable to create link!!! Impossible!!!");
-			}
-			myLink = link;
-		} else {
+		if (myLink != null) {
 			final ICustomNetworkLink link = (ICustomNetworkLink) myLink;
 			link.setSiteName(siteName);
 			link.setTitle(myTitle);
 			link.setSummary(mySummary);
 			link.setLink(INetworkLink.URL_MAIN, myUrl);
-			link.saveLink();
+
+			if (myLinkWithoutInfo) {
+				NetworkLibrary.Instance().addCustomLink(link);
+				myLinkWithoutInfo = false;
+			} else {
+				link.saveLink();
+			}
+			sendSuccess(true);
+			return;
 		}
-		sendSuccess(true);
+
+		final OPDSLinkReader reader = new OPDSLinkReader();
+
+		myLinkWithoutInfo = true;
+		myLink = reader.createCustomLinkWithoutInfo(siteName, myUrl);
+
+		final Handler handler = new Handler() {
+			public void handleMessage(Message msg) {
+				final String err = (String) msg.obj;
+				if (err != null) {
+					final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							if (which == DialogInterface.BUTTON_NEGATIVE) {
+								sendSuccess(true);
+							} else {
+								if (which == DialogInterface.BUTTON_NEUTRAL) {
+									myLinkWithoutInfo = false;
+									myLink = null;
+								}
+								sendError(true, false, null);
+							}
+						}
+					};
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					new AlertDialog.Builder(myActivity)
+						.setTitle(boxResource.getResource("title").getValue())
+						.setMessage(err)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("continue").getValue(), listener)
+						.setNeutralButton(buttonResource.getResource("editUrl").getValue(), listener)
+						.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+						.setOnCancelListener(new DialogInterface.OnCancelListener() {
+							public void onCancel(DialogInterface dialog) {
+								listener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+							}
+						})
+						.create().show();
+				} else {
+					sendError(true, false, null);
+				}
+			}
+		};
+
+		final Runnable loadInfoRunnable = new Runnable() {
+			public void run() {
+				final ICustomNetworkLink link = (ICustomNetworkLink) myLink;
+				final String err = link.reloadInfo();
+				handler.sendMessage(handler.obtainMessage(0, err));
+			}
+		}; 
+		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingCatalogInfo", loadInfoRunnable, myActivity);
 	}
 
 	@Override
@@ -149,14 +205,18 @@ class CustomCatalogDialog extends NetworkDialog {
 			if (myUrl == null) myUrl = myLink.getLink(INetworkLink.URL_MAIN);
 			if (mySummary == null) mySummary = myLink.getSummary();
 		}
-		((TextView) dialog.findViewById(R.id.network_catalog_title)).setText((myTitle != null) ? myTitle : "");
-		((TextView) dialog.findViewById(R.id.network_catalog_url)).setText((myUrl != null) ? myUrl : "");
-		((TextView) dialog.findViewById(R.id.network_catalog_summary)).setText((mySummary != null) ? mySummary : "");
+		((TextView) dialog.findViewById(R.id.network_catalog_title)).setText(myTitle);
+		((TextView) dialog.findViewById(R.id.network_catalog_url)).setText(myUrl);
+		((TextView) dialog.findViewById(R.id.network_catalog_summary)).setText(mySummary);
 
-		final int examplesVisibility = (myLink == null) ? View.VISIBLE : View.GONE;
+		final int examplesVisibility = (myLink == null || myLinkWithoutInfo) ? View.VISIBLE : View.GONE;
 		dialog.findViewById(R.id.network_catalog_title_example).setVisibility(examplesVisibility);
 		dialog.findViewById(R.id.network_catalog_url_example).setVisibility(examplesVisibility);
 		dialog.findViewById(R.id.network_catalog_summary_example).setVisibility(examplesVisibility);
+
+		final int groupsVisibility = (myLink != null) ? View.VISIBLE : View.GONE;
+		dialog.findViewById(R.id.network_catalog_title_group).setVisibility(groupsVisibility);
+		dialog.findViewById(R.id.network_catalog_summary_group).setVisibility(groupsVisibility);
 
 		final TextView error = (TextView) dialog.findViewById(R.id.network_catalog_error);
 		if (myErrorMessage == null) {

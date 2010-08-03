@@ -50,6 +50,9 @@ interface OPDSConstants {
 	String MIME_APP_PDF = "application/pdf";
 	String MIME_APP_ATOM = "application/atom+xml";
 
+	// MIME type for Opensearch Description XML document
+	String MIME_APP_OPENSEARCHDESCRIPTION = "application/opensearchdescription+xml";
+
 	// a special MIME type for the litres OPDS catalog
 	String MIME_APP_LITRES = "application/litres+xml";
 

@@ -137,6 +137,8 @@
 		<node name="button">
 			<node name="buy" value="Mua" />
 			<node name="buyAndDownload" value="Mua và Tải về" />
+			<node name="continue" toBeTranslated="true" value="Continue" />
+			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Tên tập tin"/>
@@ -270,6 +272,7 @@
 			<node name="signOut" value="Đang thoát. Xin chờ..." />
 			<node name="purchaseBook" value="Mua sách. Xin chờ..." />
 			<node name="registerUser" value="Đang đăng ký tài khoản. Xin chờ..." />
+			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Lỗi mạng nội bộ " />
@@ -286,6 +289,8 @@
 			<node name="tooManyRegistrations" value="Có quá nhiều đăng ký từ IP của bạn;&#10;thử lại sau vài phút" />
 			<node name="noUserEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định" />
 			<node name="unsupportedOperation" value="Thao tác không được hỗ trợ" />
+			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
+			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Thông tin" />

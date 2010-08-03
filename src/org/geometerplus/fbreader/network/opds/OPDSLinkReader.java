@@ -102,6 +102,12 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		return link;
 	}
 
+	public ICustomNetworkLink createCustomLinkWithoutInfo(String siteName, String url) {
+		final HashMap<String, String> links = new HashMap<String, String>();
+		links.put(INetworkLink.URL_MAIN, url);
+		return new OPDSCustomLink(ICustomNetworkLink.INVALID_ID, siteName, null, null, null, links);
+	}
+
 	public INetworkLink readDocument(ZLFile file) {
 		mySiteName = myTitle = mySummary = myIcon = /*mySearchType = */myAuthenticationType = mySSLCertificate = null;
 		myHasStableIdentifiers = false;

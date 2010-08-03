@@ -34,7 +34,7 @@ public class ATOMFeedMetadata extends ATOMCommonAttributes {
 	public LinkedList<ATOMLink> Links = new LinkedList<ATOMLink>();
 	public ATOMLogo Logo;
 	//public String Rights;   // TODO: implement ATOMTextConstruct
-	//public String Subtitle; // TODO: implement ATOMTextConstruct
+	public String Subtitle; // TODO: implement ATOMTextConstruct
 	public String Title;    // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
 }

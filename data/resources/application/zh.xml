@@ -137,6 +137,8 @@
 		<node name="button">
 			<node name="buy" value="购买" />
 			<node name="buyAndDownload" value="购买 下载" />
+			<node name="continue" toBeTranslated="true" value="Continue" />
+			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="文件" />
@@ -270,6 +272,7 @@
 			<node name="signOut" value="退出. 正在处理,请稍等..." />
 			<node name="purchaseBook" value="书籍购买中. 请等待..." />
 			<node name="registerUser" value="正在注册新账号，请稍等..." />
+			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />
@@ -286,6 +289,8 @@
 			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册" />
 			<node name="noUserEmail" value="你的电子邮箱可以注册&#10;" />
 			<node name="unsupportedOperation" value="非法操作" />
+			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
+			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="信息" />

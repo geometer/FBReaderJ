@@ -137,6 +137,8 @@
 		<node name="button">
 			<node name="buy" value="Vásárlás" />
 			<node name="buyAndDownload" value="Vásárlás és letöltés" />
+			<node name="continue" toBeTranslated="true" value="Continue" />
+			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Fájlnév"/>
@@ -270,6 +272,7 @@
 			<node name="signOut" value="Kijelentkezés. Kérjük, várjon..." />
 			<node name="purchaseBook" value="Könyv vásárlása. Kérjük, várjon..." />
 			<node name="registerUser" value="Fiók létrehozása. Kérjük, várjon..." />
+			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />
@@ -286,6 +289,8 @@
 			<node name="tooManyRegistrations" value="Túl sok regisztrációs kérés erről az IP-címről;&#10;próbálja meg pár perc múlva ismét!" />
 			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel" />
 			<node name="unsupportedOperation" value="nem támogaott művelet" />
+			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
+			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Információ" />

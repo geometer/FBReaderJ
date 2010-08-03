@@ -135,6 +135,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final int OPENSEARCH_ITEMSPERPAGE = 32;
 	private static final int OPENSEARCH_STARTINDEX = 33;
 	private static final int FEC_HACK_SPAN = 34;
+	private static final int F_SUBTITLE = 35;
 
 
 	private static final String TAG_FEED = "feed";
@@ -152,6 +153,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_UPDATED = "updated";
 	private static final String TAG_PRICE = "price";
+	private static final String TAG_SUBTITLE = "subtitle";
 
 	private static final String TAG_HACK_SPAN = "span";
 
@@ -196,6 +198,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 		}
 		myBuffer.delete(0, myBuffer.length());
 
+		boolean interruptReading = false;
 		switch (myState) {
 			case START:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
@@ -229,6 +232,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						//myTitle.readAttributes(attributes);
 						myHtmlToString.setupTextContent(attributes.getValue("type"));
 						myState = F_TITLE;
+					} else if (tag == TAG_SUBTITLE) {
+						//mySubtitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMSubtitle
+						//mySubtitle.readAttributes(attributes);
+						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						myState = F_SUBTITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated();
 						myUpdated.readAttributes(attributes);
@@ -238,8 +246,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myEntry.readAttributes(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
-						if (myFeed != null && myFeed.Id != null && !myFeedMetadataProcessed) {
-							myFeedReader.processFeedMetadata(myFeed, true);
+						if (myFeed != null && !myFeedMetadataProcessed) {
+							interruptReading = myFeedReader.processFeedMetadata(myFeed, true);
 							myFeedMetadataProcessed = true;
 						}
 					} 
@@ -354,13 +362,14 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_SUMMARY:
 			case FE_TITLE:
 			case F_TITLE:
+			case F_SUBTITLE:
 				myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
 				break;
 			default:
 				break;
 		}
 
-		return false;
+		return interruptReading;
 	}
 
 	@Override
@@ -390,8 +399,8 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FEED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
-					if (myFeed != null && myFeed.Id != null) {
-						myFeedReader.processFeedMetadata(myFeed, false);
+					if (myFeed != null) {
+						interruptReading = myFeedReader.processFeedMetadata(myFeed, false);
 					}
 					myFeed = null;
 					myFeedReader.processFeedEnd();
@@ -400,7 +409,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case F_ENTRY:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
-					if (myEntry != null && myEntry.Id != null) {
+					if (myEntry != null) {
 						interruptReading = myFeedReader.processFeedEntry(myEntry);
 					}
 					myEntry = null;
@@ -442,6 +451,18 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 					final String title = myHtmlToString.finishTextContent(bufferContent);
 					if (myFeed != null) {
 						myFeed.Title = title;
+					}
+					myState = FEED;
+				} else {
+					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+				} 
+				break;
+			case F_SUBTITLE:
+				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUBTITLE) {
+					// TODO:implement ATOMTextConstruct & ATOMSubtitle
+					final String subtitle = myHtmlToString.finishTextContent(bufferContent);
+					if (myFeed != null) {
+						myFeed.Subtitle = subtitle;
 					}
 					myState = FEED;
 				} else {

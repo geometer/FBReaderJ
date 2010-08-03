@@ -60,7 +60,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		myData.ResumeURI = myBaseURL;
 	}
 
-	public void processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
+	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 		if (beforeEntries) {
 			myIndex = feed.OpensearchStartIndex - 1;
 			if (feed.OpensearchItemsPerPage > 0) {
@@ -70,7 +70,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 					myItemsToLoad = len;
 				}
 			}
-			return;
+			return false;
 		}
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
@@ -80,6 +80,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 		}
+		return false;
 	}
 
 	public void processFeedEnd() {
@@ -129,9 +130,47 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				&& myData.Listener.confirmInterrupt();
 	}
 
+	private String calculateEntryId(OPDSEntry entry) {
+		if (entry.Id != null) {
+			return entry.Id.Uri;
+		}
+
+		String id = null;
+		int idType = 0;
+
+		final OPDSLink opdsLink = (OPDSLink) myData.Link;
+		for (ATOMLink link: entry.Links) {
+			final String type = link.getType();
+			final String rel = opdsLink.relation(link.getRel(), type);
+
+			if (rel == null && type == OPDSConstants.MIME_APP_ATOM) {
+				return ZLNetworkUtil.url(myBaseURL, link.getHref());
+			}
+			int relType = BookReference.Format.NONE;
+			if (rel == null || rel.equals(OPDSConstants.REL_ACQUISITION_PREFIX)) {
+				relType = formatByMimeType(type);
+			}
+			if (relType != BookReference.Format.NONE
+					&& (id == null || idType < relType)) {
+				id = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				idType = relType;
+			}
+		}
+		return id;
+	}
+
 	public boolean processFeedEntry(OPDSEntry entry) {
 		if (myItemsToLoad >= 0) {
 			--myItemsToLoad;
+		}
+
+		if (entry.Id == null) {
+			final String id = calculateEntryId(entry);
+			if (id == null) {
+				return tryInterrupt();
+			}
+			entry.Id = new ATOMId();
+			entry.Id.Uri = id;
 		}
 
 		if (mySkipUntilId != null) {

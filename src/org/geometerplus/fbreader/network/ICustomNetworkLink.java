@@ -40,4 +40,6 @@ public interface ICustomNetworkLink extends INetworkLink {
 
 	void setLink(String urlKey, String url);
 	void removeLink(String urlKey);
+
+	String reloadInfo();
 }
