@@ -17,6 +17,7 @@
 		android:layout_height="fill_parent"
 		android:minHeight="?android:attr/listPreferredItemHeight"
 		android:paddingLeft="5dip"
+		android:paddingRight="8dp"
 		android:layout_marginTop="5dip"
 		android:layout_marginBottom="5dip"
 		android:orientation="vertical"
@@ -39,6 +40,8 @@
 			android:layout_below="@id/bookmark_item_text"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:ellipsize="marquee"
+			android:marqueeRepeatLimit="marquee_forever"
 		/>
 	</LinearLayout>
 </LinearLayout>

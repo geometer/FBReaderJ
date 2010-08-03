@@ -32,6 +32,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:paddingLeft="8dp"
+			android:paddingRight="8dp"
 			android:orientation="vertical"
 			android:layout_toLeftOf="@id/network_tree_item_status"
 			android:layout_alignParentLeft="true"
@@ -44,6 +45,8 @@
 				android:layout_alignParentTop="true"
 				android:singleLine="true"
 				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:ellipsize="marquee"
+				android:marqueeRepeatLimit="marquee_forever"
 			/>
 			<TextView
 				android:id="@+id/network_tree_item_childrenlist"
@@ -53,6 +56,8 @@
 				android:layout_below="@id/network_tree_item_name"
 				android:singleLine="true"
 				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:ellipsize="marquee"
+				android:marqueeRepeatLimit="marquee_forever"
 			/>
 		</LinearLayout>
 	</RelativeLayout>
