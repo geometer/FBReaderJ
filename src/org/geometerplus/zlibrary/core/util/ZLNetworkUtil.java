@@ -43,6 +43,10 @@ public class ZLNetworkUtil {
 			}
 		} else {
 			int index = baseUrl.lastIndexOf('/'); // FIXME: if (baseUrl.charAt(baseUrl.length() - 1) == '/')
+			while (index > 0 && relativePath.startsWith("../")) {
+				index = baseUrl.lastIndexOf('/', index - 1);
+				relativePath = relativePath.substring(3);
+			}
 			return baseUrl.substring(0, index + 1) + relativePath;
 		}
 	}
