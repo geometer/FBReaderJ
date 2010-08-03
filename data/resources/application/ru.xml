@@ -321,7 +321,8 @@
 			<node name="titleIsEmpty" value="Название не может быть пустым" />
 			<node name="urlIsEmpty" value="URL не может быть пустым" />
 			<node name="invalidUrl" value="Неверный URL" />
-			<node name="alreadyExists" value="Заданное название уже существует" />
+			<node name="titleAlreadyExists" value="Заданное название уже существует" />
+			<node name="siteAlreadyExists" value="Заданный сайт уже существует" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />

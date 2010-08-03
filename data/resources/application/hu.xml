@@ -322,7 +322,8 @@
 			<node name="titleIsEmpty" toBeTranslated="true" value="Title should be non-empty" />
 			<node name="urlIsEmpty" toBeTranslated="true" value="URL should be non-empty" />
 			<node name="invalidUrl" toBeTranslated="true" value="Invalid URL" />
-			<node name="alreadyExists" toBeTranslated="true" value="Specified title already exists" />
+			<node name="titleAlreadyExists" toBeTranslated="true" value="Specified title already exists" />
+			<node name="siteAlreadyExists" toBeTranslated="true" value="Specified site already exists" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Könyv vásárlása" />

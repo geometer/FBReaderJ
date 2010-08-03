@@ -322,7 +322,8 @@
 			<node name="titleIsEmpty" value="Il campo Titolo non può essere lasciato vuoto" />
 			<node name="urlIsEmpty" value="Il campo URL non può essere lasciato vuoto" />
 			<node name="invalidUrl" value="URL non valida" />
-			<node name="alreadyExists" value="Il titolo specificato è già esistente"/>
+			<node name="titleAlreadyExists" value="Il titolo specificato è già esistente"/>
+			<node name="siteAlreadyExists" toBeTranslated="true" value="Specified site already exists" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Libro acquistato" />

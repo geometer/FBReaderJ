@@ -103,8 +103,13 @@ class CustomCatalogDialog extends NetworkDialog {
 		}
 
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (library.hasCustomLink(myTitle, (ICustomNetworkLink) myLink)) {
-			final String err = myResource.getResource("alreadyExists").getValue();
+		if (library.hasCustomLinkTitle(myTitle, (ICustomNetworkLink) myLink)) {
+			final String err = myResource.getResource("titleAlreadyExists").getValue();
+			sendError(true, false, err);
+			return;
+		}
+		if (library.hasCustomLinkSite(siteName, (ICustomNetworkLink) myLink)) {
+			final String err = myResource.getResource("siteAlreadyExists").getValue();
 			sendError(true, false, err);
 			return;
 		}

@@ -475,13 +475,13 @@ public class NetworkLibrary {
 		link.saveLink();
 	}
 
-	public int getCustomLinksNumber() {
+	/*public int getCustomLinksNumber() {
 		return myCustomLinks.size();
 	}
 
 	public ICustomNetworkLink getCustomLink(int index) {
 		return myCustomLinks.get(index);
-	}
+	}*/
 
 	public void removeCustomLink(ICustomNetworkLink link) {
 		final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
@@ -493,9 +493,18 @@ public class NetworkLibrary {
 		link.setSaveLinkListener(null);
 	}
 
-	public boolean hasCustomLink(String title, ICustomNetworkLink exeptFor) {
-		for (ICustomNetworkLink link: myCustomLinks) {
+	public boolean hasCustomLinkTitle(String title, ICustomNetworkLink exeptFor) {
+		for (INetworkLink link: myLinks) {
 			if (link != exeptFor && link.getTitle().equals(title)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasCustomLinkSite(String siteName, ICustomNetworkLink exeptFor) {
+		for (INetworkLink link: myLinks) {
+			if (link != exeptFor && link.getSiteName().equals(siteName)) {
 				return true;
 			}
 		}
