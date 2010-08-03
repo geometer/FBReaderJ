@@ -47,6 +47,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private ATOMUpdated myUpdated;
 	private ATOMPublished myPublished;
 	private DCDate myDCIssued;
+	private ATOMIcon myIcon;
 
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
@@ -136,6 +137,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final int OPENSEARCH_STARTINDEX = 33;
 	private static final int FEC_HACK_SPAN = 34;
 	private static final int F_SUBTITLE = 35;
+	private static final int F_ICON = 36;
 
 
 	private static final String TAG_FEED = "feed";
@@ -154,6 +156,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	private static final String TAG_UPDATED = "updated";
 	private static final String TAG_PRICE = "price";
 	private static final String TAG_SUBTITLE = "subtitle";
+	private static final String TAG_ICON = "icon";
 
 	private static final String TAG_HACK_SPAN = "span";
 
@@ -219,6 +222,10 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myId = new ATOMId();
 						myId.readAttributes(attributes);
 						myState = F_ID;
+					} else if (tag == TAG_ICON) {
+						myIcon = new ATOMIcon();
+						myIcon.readAttributes(attributes);
+						myState = F_ICON;
 					} else if (tag == TAG_LINK) {
 						myLink = new ATOMLink();
 						myLink.readAttributes(attributes);
@@ -424,6 +431,17 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myFeed.Id = myId;
 					}
 					myId = null;
+					myState = FEED;
+				} 
+				break;
+			case F_ICON:
+				if (tagPrefix == myAtomNamespaceId && tag == TAG_ICON) {
+					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
+					if (bufferContent != null && myFeed != null) {
+						myIcon.Uri = bufferContent;
+						myFeed.Icon = myIcon;
+					}
+					myIcon = null;
 					myState = FEED;
 				} 
 				break;
