@@ -1,4 +1,6 @@
 NP: XML-парсер при отсутствии пролога (то есть строчки <?xml ?>) не обрабатывает корневой тег
+    testcase: http://bookserver.archive.org/catalog/
+
 NP: оповещение об изменениях в namespace'ах происходит после того,
     как был обработан тег, объявляющий эти namespace'ы... Нужно сделать:
     1) вызов namespaceMapChangedHandler перед вызовом startElementHandler
