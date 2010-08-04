@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.atom.ATOMLink;
@@ -30,15 +32,16 @@ public class CatalogInfoReader implements OPDSFeedReader {
 	public String Title;
 	public String Summary;
 
-	public String OpensearchDescriptionURL;
-	public String SearchURL;
+	public OpenSearchDescription DirectOpenSearchDescription;
+	private final List<String> myOpensearchDescriptionURLs;
 
 	private final String myBaseURL;
 	private final OPDSLink myLink;
 
-	public CatalogInfoReader(String baseUrl, OPDSLink link) {
+	public CatalogInfoReader(String baseUrl, OPDSLink link, List<String> opensearchDescriptionURLs) {
 		myBaseURL = baseUrl;
 		myLink = link;
+		myOpensearchDescriptionURLs = opensearchDescriptionURLs;
 	}
 
 	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
@@ -51,9 +54,13 @@ public class CatalogInfoReader implements OPDSFeedReader {
 			String rel = myLink.relation(link.getRel(), type);
 			if (rel == "search") {
 				if (type == OPDSConstants.MIME_APP_OPENSEARCHDESCRIPTION) {
-					OpensearchDescriptionURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
+					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
 				} else if (type == OPDSConstants.MIME_APP_ATOM) {
-					SearchURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
+					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
+					OpenSearchDescription descr = new OpenSearchDescription(template, 20, -1, -1);
+					if (descr.isValid()) {
+						DirectOpenSearchDescription = descr;
+					}
 				}
 			}
 		}

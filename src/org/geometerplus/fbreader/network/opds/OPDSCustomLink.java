@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network.opds;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.util.Map;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -92,10 +92,13 @@ class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
 
 
 	public String reloadInfo() {
-		return ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
+		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
+		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
+
+		String err = ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
 			@Override
 			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
-				final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this);
+				final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
 				new OPDSXMLReader(info).read(inputStream);
 
 				if (!info.FeedStarted) {
@@ -111,13 +114,35 @@ class OPDSCustomLink extends OPDSLink implements ICustomNetworkLink {
 				if (info.Summary != null) {
 					mySummary = info.Summary;
 				}
-				if (info.SearchURL != null) {
-					setLink(URL_SEARCH, info.SearchURL);
-				} else if (info.OpensearchDescriptionURL != null) {
-					// TODO: implement OpensearchDescription reading
+				if (info.DirectOpenSearchDescription != null) {
+					descriptions.add(info.DirectOpenSearchDescription);
 				}
 				return null;
 			}
 		});
+
+		// TODO: Use ALL available descriptions and not only Direct
+		if (descriptions.isEmpty() && !opensearchDescriptionURLs.isEmpty()) {
+			LinkedList<ZLNetworkRequest> requests = new LinkedList<ZLNetworkRequest>();
+			for (String url: opensearchDescriptionURLs) {
+				requests.add(new ZLNetworkRequest(url) {
+					@Override
+					public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+						new OpenSearchXMLReader(URL, descriptions, 20).read(inputStream);
+						return null;
+					}
+				});
+			}
+			final String err2 = ZLNetworkManager.Instance().perform(requests);
+			if (err == null) {
+				err = err2;
+			}
+		}
+
+		if (!descriptions.isEmpty()) {
+			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
+			setLink(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
+		}
+		return err;
 	}
 }
