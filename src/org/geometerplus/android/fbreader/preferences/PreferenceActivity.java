@@ -118,6 +118,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 		scrollingCategory.addOption(scrollingPreferences.FlickOption, "flick");
 		scrollingCategory.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
+		scrollingCategory.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 	}

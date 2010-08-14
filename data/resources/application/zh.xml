@@ -181,6 +181,10 @@
 					<node name="summaryOn" value="使用音量键翻页" />
 					<node name="summaryOff" value="音量键仅用于声音" />
 				</node>
+				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
+					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
+				</node>
 				<node name="animated" value="翻阅效果">
 					<node name="summaryOn" value="平滑翻阅" />
 					<node name="summaryOff" value="快速翻阅" />
@@ -321,14 +325,14 @@
 			<node name="catalogTitle" toBeTranslated="true" value="Title" />
 			<node name="catalogUrl" toBeTranslated="true" value="URL" />
 			<node name="catalogSummary" toBeTranslated="true" value="Summary" />
-			<node name="catalogTitleExample" toBeTranslated="true" value="Example: My OPDS catalog" />
-			<node name="catalogUrlExample" toBeTranslated="true" value="Example: http://my.library.address/opds" />
-			<node name="catalogSummaryExample" toBeTranslated="true" value="Example: OPDS catalog for my library" />
+			<node name="catalogTitleExample" toBeTranslated="true" value="E.g.: Project Gutenberg catalog" />
+			<node name="catalogUrlExample" toBeTranslated="true" value="E.g.: http://m.gutenberg.org/" />
+			<node name="catalogSummaryExample" toBeTranslated="true" value="E.g.: Public domain books" />
 			<node name="titleIsEmpty" toBeTranslated="true" value="Title should be non-empty" />
 			<node name="urlIsEmpty" toBeTranslated="true" value="URL should be non-empty" />
 			<node name="invalidUrl" toBeTranslated="true" value="Invalid URL" />
-			<node name="titleAlreadyExists" toBeTranslated="true" value="Specified title already exists" />
-			<node name="siteAlreadyExists" toBeTranslated="true" value="Specified site already exists" />
+			<node name="titleAlreadyExists" toBeTranslated="true" value="Specified title is already in use" />
+			<node name="siteAlreadyExists" toBeTranslated="true" value="Specified site is already in use" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="购买书籍" />

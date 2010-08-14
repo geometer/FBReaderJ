@@ -1,16 +1,16 @@
 ===== 0.7.0 (??? ??, 2010) =====
 
 * Catalog's loading resumption nearly from position when "back" key has been pressed
-* New "Navigation" dialog where user can navigate to a specific page (page numbers are 
-  computed approximately). This dialog can be called from menu or by long touch of the screen
+* New "Navigation" dialog: user can navigate using slider. To see this dialog touch
+  the screen for a long time.
 * Hyphenation for words containing '-' symbol has been fixed
 * New "Custom catalogs" feature: user can manually add OPDS catalogs to the network library
 * Vietnamese interface translation (by Phạm Văn Hùng_Firestork) has been added
 * Italian interface translation (by Vytek and Neoxx from AndDev.it Translate Team) has been added
 * Hungarian interface translation (by L. B. Szabó, based on FBReader translation by Sándor Gábor) has been added
-* Fixed a bug with scrollbars in Android 2.2
-* New icon that indicates a status of a book (Paid book / Book can be downloaded / Downloaded book)
-  in the Network Library
+* Scrollbar is shown on Android 2.2 devices
+* New icon that indicates a status of a book (Paid / Free downloadable / Already downloaded) in Network library
+* An option for inverting volume keys actions has been added
 
 ===== 0.6.6 (May 20, 2010) =====
 

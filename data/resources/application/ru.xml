@@ -176,9 +176,13 @@
 					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
 					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
 				</node>
-				<node name="volumeKeys" value="Использовать клавиши настройки звука">
-					<node name="summaryOn" value="Клавиши увеличения/уменьшения звука перелистывают страницы"/>
-					<node name="summaryOff" value="Клавиши увеличения/уменьшения звука работают как обычно"/>
+				<node name="volumeKeys" value="Использовать кнопки настройки звука">
+					<node name="summaryOn" value="Кнопки увеличения/уменьшения звука перелистывают страницы"/>
+					<node name="summaryOff" value="Кнопки увеличения/уменьшения звука работают как обычно"/>
+				</node>
+				<node name="invertVolumeKeys" value="Перелистывать кнопками в обратную сторону">
+					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
+					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
 				</node>
 				<node name="animated" value="Постепенное перелистывание">
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
@@ -320,14 +324,14 @@
 			<node name="catalogTitle" value="Название" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Описание" />
-			<node name="catalogTitleExample" value="Пример: Мой OPDS каталог" />
-			<node name="catalogUrlExample" value="Пример: http://my.library.address/opds" />
-			<node name="catalogSummaryExample" value="Пример: OPDS каталог моей библиотеки" />
+			<node name="catalogTitleExample" value="Напр.: Epub Books" />
+			<node name="catalogUrlExample" value="Напр.: http://www.epubbooks.ru/index.xml" />
+			<node name="catalogSummaryExample" value="Напр.: Книги на русском языке" />
 			<node name="titleIsEmpty" value="Название не может быть пустым" />
 			<node name="urlIsEmpty" value="URL не может быть пустым" />
 			<node name="invalidUrl" value="Неверный URL" />
-			<node name="titleAlreadyExists" value="Заданное название уже существует" />
-			<node name="siteAlreadyExists" value="Заданный сайт уже существует" />
+			<node name="titleAlreadyExists" value="Такое название уже использовано" />
+			<node name="siteAlreadyExists" value="Этот каталог уже есть в списке" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />
