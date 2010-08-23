@@ -1,64 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/network_authentication_dialog"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:paddingLeft="10dp"
-	android:paddingRight="10dp"
-	android:orientation="vertical"
 >
-	<TextView
-		android:id="@+id/network_authentication_login_text"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:singleLine="true"
-	/>
-	<EditText
-		android:id="@+id/network_authentication_login"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:singleLine="true"
-	/>
-	<TextView
-		android:id="@+id/network_authentication_password_text"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:singleLine="true"
-		android:layout_marginTop="5dp"
-	/>
-	<EditText
-		android:id="@+id/network_authentication_password"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:singleLine="true"
-		android:password="true"
-	/>
-	<TextView
-		android:id="@+id/network_authentication_error"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:visibility="gone"
-		android:textColor="#ff0000"
-		android:layout_marginTop="5dp"
-		android:layout_marginBottom="5dp"
-	/>
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingTop="5dp"
-		android:paddingBottom="5dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:orientation="vertical"
 	>
 		<TextView
-			android:id="@+id/network_authentication_register"
-			android:layout_width="wrap_content"
+			android:id="@+id/network_authentication_login_text"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:singleLine="true"
-			android:textColor="#0000ff"
-			android:textStyle="bold"
-			android:clickable="true"
-			android:focusable="true"
-			android:background="@drawable/link"
 		/>
+		<EditText
+			android:id="@+id/network_authentication_login"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+		/>
+		<TextView
+			android:id="@+id/network_authentication_password_text"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:layout_marginTop="5dp"
+		/>
+		<EditText
+			android:id="@+id/network_authentication_password"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:password="true"
+		/>
+		<TextView
+			android:id="@+id/network_authentication_error"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:textColor="#ff0000"
+			android:layout_marginTop="5dp"
+			android:layout_marginBottom="5dp"
+		/>
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingTop="5dp"
+			android:paddingBottom="5dp"
+		>
+			<TextView
+				android:id="@+id/network_authentication_register"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:textColor="#0000ff"
+				android:textStyle="bold"
+				android:clickable="true"
+				android:focusable="true"
+				android:background="@drawable/link"
+			/>
+		</LinearLayout>
 	</LinearLayout>
-</LinearLayout>
+</ScrollView>
