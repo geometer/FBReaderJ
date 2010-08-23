@@ -108,7 +108,11 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 					}
 				} else if (rel == "search") {
 					if (type == OPDSConstants.MIME_APP_ATOM) {
-						links.put(INetworkLink.URL_SEARCH, href);
+						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
+						if (descr.isValid()) {
+							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
+							links.put(INetworkLink.URL_SEARCH, descr.makeQuery("%s"));
+						}
 					}
 				} else if (rel == OPDSConstants.REL_LINK_SIGN_IN) {
 					links.put(INetworkLink.URL_SIGN_IN, href);
@@ -137,7 +141,6 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 
 			INetworkLink result = link(siteName, title, summary, icon, links, urlConditions, sslCertificate);
 			if (result != null) {
-				//Log.w("FBREADER", "LINK: " + result);
 				myLinksBuffer.add(result);
 			}
 			return false; 

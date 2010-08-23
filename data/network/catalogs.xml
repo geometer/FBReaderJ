@@ -496,8 +496,10 @@ QbLryfO+QuE0tA+V/JYAM6Vcm3zogP+t/FYA+P8BWRrHkBhRBlIAAAAASUVORK5CYII=" />
 		<updated>2010-07-28T13:40:00Z</updated>
 		<title>Smashwords</title>
 		<content>Ebooks from independent authors and publishers</content>
-		<link type="application/atom+xml" href="http://smashwords.com/atom"/>
-	
+		<link type="application/atom+xml" href="http://www.smashwords.com/atom"/>
+
+		<link rel="search" type="application/atom+xml" href="http://www.smashwords.com/atom/search/books/epub/any?query={searchTerms}" />
+
 		<fbreader:advancedSearch style="quoted" author="authorFullName" titleOrSeries="title" tag="categories" annotation="description" />
 	
 		<fbreader:relationAlias alias="x-stanza-cover-image-thumbnail" name="http://opds-spec.org/thumbnail" />

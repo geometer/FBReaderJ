@@ -26,6 +26,10 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 class OpenSearchDescription {
 
+	public static OpenSearchDescription createDefault(String template) {
+		return new OpenSearchDescription(template, 20, -1, -1);
+	}
+
 	public final String Template;
 	public final int IndexOffset;
 	public final int PageOffset;

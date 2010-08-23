@@ -57,7 +57,7 @@ public class CatalogInfoReader implements OPDSFeedReader {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
 				} else if (type == OPDSConstants.MIME_APP_ATOM) {
 					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
-					OpenSearchDescription descr = new OpenSearchDescription(template, 20, -1, -1);
+					final OpenSearchDescription descr = OpenSearchDescription.createDefault(template);
 					if (descr.isValid()) {
 						DirectOpenSearchDescription = descr;
 					}
