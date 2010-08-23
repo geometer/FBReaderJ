@@ -21,18 +21,18 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.xml.*;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+//import org.geometerplus.zlibrary.core.xml.*;
+//import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+//import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+//import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+//import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 
 
-public class OPDSLinkReader extends ZLXMLReaderAdapter {
+public class OPDSLinkReader /*extends ZLXMLReaderAdapter*/ {
 
-	private String mySiteName;
+	/*private String mySiteName;
 	private String myTitle;
 	private String mySummary;
 	private String myIcon;
@@ -65,15 +65,15 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 			myHasStableIdentifiers
 		);
 
-		/*if (!mySearchType.empty()) {
-			opdsLink.setupAdvancedSearch(
-				mySearchType,
-				mySearchFields["titleOrSeries"],
-				mySearchFields["author"],
-				mySearchFields["tag"],
-				mySearchFields["annotation"]
-			);
-		}*/
+//		if (!mySearchType.empty()) {
+//			opdsLink.setupAdvancedSearch(
+//				mySearchType,
+//				mySearchFields["titleOrSeries"],
+//				mySearchFields["author"],
+//				mySearchFields["tag"],
+//				mySearchFields["annotation"]
+//			);
+//		}
 		opdsLink.setRelationAliases(myRelationAliases);
 		opdsLink.setUrlConditions(myUrlConditions);
 		opdsLink.setUrlRewritingRules(myUrlRewritingRules);
@@ -87,9 +87,9 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		opdsLink.setAuthenticationManager(authManager);
 
 		return opdsLink;
-	}
+	}*/
 
-	public ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
+	public static ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
 		if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
 			return null;
 		}
@@ -102,14 +102,15 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 		return link;
 	}
 
-	public ICustomNetworkLink createCustomLinkWithoutInfo(String siteName, String url) {
+	public static ICustomNetworkLink createCustomLinkWithoutInfo(String siteName, String url) {
 		final HashMap<String, String> links = new HashMap<String, String>();
 		links.put(INetworkLink.URL_MAIN, url);
 		return new OPDSCustomLink(ICustomNetworkLink.INVALID_ID, siteName, null, null, null, links);
 	}
 
-	public INetworkLink readDocument(ZLFile file) {
-		mySiteName = myTitle = mySummary = myIcon = /*mySearchType = */myAuthenticationType = mySSLCertificate = null;
+	/*public INetworkLink readDocument(ZLFile file) {
+		mySiteName = myTitle = mySummary = myIcon = myAuthenticationType = mySSLCertificate = null;
+		//mySearchType = null;
 		myHasStableIdentifiers = false;
 		myLinks.clear();
 		mySearchFields.clear();
@@ -335,6 +336,5 @@ public class OPDSLinkReader extends ZLXMLReaderAdapter {
 				myBuffer.append(data, start, length);
 				break;
 		}
-	}
-
+	}*/
 }

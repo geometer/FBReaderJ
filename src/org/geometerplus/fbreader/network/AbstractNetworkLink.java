@@ -78,4 +78,20 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 			NetworkOperationData.OnNewItemListener listener) {
 		return new NetworkOperationData(link, listener);
 	}
+
+	@Override
+	public String toString() {
+		String icon = myIcon;
+		if (icon.length() > 64) {
+			icon = icon.substring(0, 61) + "...";
+		}
+		icon = icon.replaceAll("\n", "");
+		return "AbstractNetworkLink: {"
+			+ "siteName=" + mySiteName
+			+ "; title=" + myTitle
+			+ "; summary=" + mySummary
+			+ "; icon=" + icon
+			+ "; links=" + myLinks
+			+ "}";
+	}
 }

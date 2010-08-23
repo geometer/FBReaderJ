@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.io.*;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
@@ -31,6 +30,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
+import org.geometerplus.fbreader.network.opds.OPDSLinkXMLReader;
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -219,37 +219,14 @@ public class NetworkLibrary {
 	private boolean myUpdateVisibility;
 
 	private NetworkLibrary() {
-		LinkedList<String> catalogs = readCatalogFileNames();
-		final OPDSLinkReader reader = new OPDSLinkReader();
-		for (String fileName: catalogs) {
-			INetworkLink link = reader.readDocument(ZLResourceFile.createResourceFile("data/network/" + fileName));
-			if (link != null) {
-				myLoadedLinks.add(link);
-			}
-		}
-
-		/*final HashMap<String, String> links = new HashMap<String, String>();
-		links.put(INetworkLink.URL_MAIN, "http://bookserver.archive.org/catalog/");
-		NetworkDatabase.Instance().saveCustomLink(
-			reader.createCustomLink(
-				ICustomNetworkLink.INVALID_ID,
-				"archive.org", "Internet Archive Catalog", null, null, links
-			)
-		);
-		links.clear();
-		links.put(INetworkLink.URL_MAIN, "http://pragprog.com/magazines.opds");
-		NetworkDatabase.Instance().saveCustomLink(
-			reader.createCustomLink(
-				ICustomNetworkLink.INVALID_ID,
-				"pragprog.com", "PragPub Magazine", "The Pragmatic Bookshelf", null, links
-			)
-		);*/
+		final OPDSLinkXMLReader reader = new OPDSLinkXMLReader(myLoadedLinks);
+		reader.read(ZLResourceFile.createResourceFile("data/network/catalogs.xml"));
 
 		NetworkDatabase.Instance().loadCustomLinks(myCustomLinks,
 			new NetworkDatabase.ICustomLinksFactory() {
 				public ICustomNetworkLink createCustomLink(int id, String siteName,
 						String title, String summary, String icon, Map<String, String> links) {
-					final ICustomNetworkLink link = reader.createCustomLink(id, siteName, title, summary, icon, links);
+					final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
 					link.setSaveLinkListener(myChangesListener);
 					return link;
 				}
@@ -266,7 +243,7 @@ public class NetworkLibrary {
 		myLinks = new CompositeList(linksList, comparator); 
 	}
 
-	private final LinkedList<String> readCatalogFileNames() {
+	/*private final LinkedList<String> readCatalogFileNames() {
 		final LinkedList<String> catalogs = new LinkedList<String>();
 		final ZLResourceFile catalogsFile = ZLResourceFile.createResourceFile("data/network/catalogs.txt");
 		try {
@@ -284,7 +261,7 @@ public class NetworkLibrary {
 		} catch (IOException ex) {
 		}
 		return catalogs;
-	}
+	}*/
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();

@@ -198,4 +198,15 @@ class OPDSLink extends AbstractNetworkLink {
 		}
 		return rel;
 	}
+
+	@Override
+	public String toString() {
+		return "OPDSLink: {super=" + super.toString()
+			+ "; stableIds=" + myHasStableIdentifiers
+			+ "; authManager=" + (myAuthenticationManager != null ? myAuthenticationManager.getClass().getName() : null)
+			+ "; relationAliases=" + myRelationAliases
+			+ "; urlConditions=" + myUrlConditions
+			+ "; rewritingRules=" + myUrlRewritingRules
+			+ "}";
+	}
 }

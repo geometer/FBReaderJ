@@ -139,10 +139,8 @@ class CustomCatalogDialog extends NetworkDialog {
 			return;
 		}
 
-		final OPDSLinkReader reader = new OPDSLinkReader();
-
 		myLinkWithoutInfo = true;
-		myLink = reader.createCustomLinkWithoutInfo(siteName, myUrl);
+		myLink = OPDSLinkReader.createCustomLinkWithoutInfo(siteName, myUrl);
 
 		final Handler handler = new Handler() {
 			public void handleMessage(Message msg) {

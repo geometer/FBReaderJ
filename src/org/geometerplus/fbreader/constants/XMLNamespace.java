@@ -30,4 +30,6 @@ public interface XMLNamespace {
 	String DublinCoreTerms = "http://purl.org/dc/terms/";
 	String OpenSearch = "http://a9.com/-/spec/opensearch/1.1/";
 	String CalibreMetadata = "http://calibre.kovidgoyal.net/2009/metadata";
+
+	String FBReaderCatalogMetadata = "http://data.fbreader.org/catalog/metadata/";
 }
