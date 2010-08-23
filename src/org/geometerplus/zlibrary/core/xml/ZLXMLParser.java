@@ -104,6 +104,7 @@ final class ZLXMLParser {
 	}
 
 	private final char[] myBuffer;
+	private int myBufferDescriptionLength;
 	private final ZLMutableString myTagName = getMutableString();
 	private final ZLMutableString myCData = getMutableString();
 	private final ZLMutableString myAttributeName = getMutableString();
@@ -125,23 +126,29 @@ final class ZLXMLParser {
 		String encoding = "utf-8";
 		final char[] buffer = getBuffer(bufferSize);
 		myBuffer = buffer;
-		int len;
-		for (len = 0; len < 256; ++len) {
+		boolean found = false;
+		int len = 0;
+		while (len < 256) {
 			char c = (char)stream.read();
+			buffer[len++] = c;
 			if (c == '>') {
+				found = true;
 				break;
 			}
-			buffer[len] = c;
 		}
-		if (len < 256) {
-			String xmlDescription = new String(buffer, 0, len + 1);
-			int index = xmlDescription.indexOf("encoding");
-			if (index > 0) {
-				int startIndex = xmlDescription.indexOf('"', index);
-				if (startIndex > 0) {
-					int endIndex = xmlDescription.indexOf('"', startIndex + 1);
-					if (endIndex > 0) {
-						encoding = xmlDescription.substring(startIndex + 1, endIndex);
+		myBufferDescriptionLength = len;
+		if (found) {
+			final String xmlDescription = new String(buffer, 0, len).trim();
+			if (xmlDescription.startsWith("<?xml") && xmlDescription.endsWith("?>")) {
+				myBufferDescriptionLength = 0;
+				int index = xmlDescription.indexOf("encoding");
+				if (index > 0) {
+					int startIndex = xmlDescription.indexOf('"', index);
+					if (startIndex > 0) {
+						int endIndex = xmlDescription.indexOf('"', startIndex + 1);
+						if (endIndex > 0) {
+							encoding = xmlDescription.substring(startIndex + 1, endIndex);
+						}
 					}
 				}
 			}
@@ -220,7 +227,13 @@ final class ZLXMLParser {
 		byte state = START_DOCUMENT;
 		byte savedState = START_DOCUMENT;
 		while (true) {
-			int count = streamReader.read(buffer);
+			int count;
+			if (myBufferDescriptionLength > 0) {
+				count = myBufferDescriptionLength;
+				myBufferDescriptionLength = 0;
+			} else {
+				count = streamReader.read(buffer);
+			}
 			if (count <= 0) {
 				streamReader.close();
 				return;
