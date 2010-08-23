@@ -41,4 +41,13 @@ class URLRewritingRule {
 		Name = name;
 		Value = value;
 	}
+
+	@Override
+	public String toString() {
+		return "Rule: {type=" + Type
+			+ "; apply=" + Apply
+			+ "; name=" + Name
+			+ "; value=" + Value
+			+ "}";
+	}
 }

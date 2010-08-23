@@ -63,5 +63,10 @@ class RelationAlias implements Comparable<RelationAlias> {
 		}
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "Alias(" + Alias + "; " + Type + ")";
+	}
 }
 
