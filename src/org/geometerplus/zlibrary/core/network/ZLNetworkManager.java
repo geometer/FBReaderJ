@@ -196,4 +196,30 @@ public class ZLNetworkManager {
 		}
 		return message.toString();
 	}
+
+
+	public final String downloadToFile(String url, final File outFile) {
+		return downloadToFile(url, outFile, 8192);
+	}
+
+	public final String downloadToFile(String url, final File outFile, final int bufferSize) {
+		return perform(new ZLNetworkRequest(url) {
+			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+				OutputStream outStream = new FileOutputStream(outFile);
+				try {
+					final byte[] buffer = new byte[bufferSize];
+					while (true) {
+						final int size = inputStream.read(buffer);
+						if (size <= 0) {
+							break;
+						}
+						outStream.write(buffer, 0, size);
+					}
+				} finally {
+					outStream.close();
+				}
+				return null;
+			}
+		});
+	}
 }

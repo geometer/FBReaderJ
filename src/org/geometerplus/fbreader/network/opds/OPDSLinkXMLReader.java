@@ -31,6 +31,7 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 
@@ -45,8 +46,12 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 
-		public LinkReader(NetworkLibrary.OnNewLinkListener listener) {
+		private ATOMUpdated myUpdatedTime;
+		private ATOMUpdated myReadAfterTime;
+
+		public LinkReader(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
 			myListener = listener;
+			myReadAfterTime = readAfter;
 		}
 
 		public void setAuthenticationType(String type) {
@@ -70,6 +75,10 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 			myHasStableIdentifiers = false;
 			myUrlRewritingRules.clear();
 			myRelationAliases.clear();
+		}
+
+		public ATOMUpdated getUpdatedTime() {
+			return myUpdatedTime;
 		}
 
 		private static final String ENTRY_ID_PREFIX = "urn:fbreader-org-catalog:";
@@ -185,13 +194,33 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 			return opdsLink;
 		}
 
-		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) { return false; }
-		public void processFeedStart() {}
-		public void processFeedEnd() {}
+		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
+			myUpdatedTime = feed.Updated;
+			if (myUpdatedTime != null && myReadAfterTime != null
+					&& myUpdatedTime.compareTo(myReadAfterTime) <= 0) {
+				return true;
+			}
+			return myListener == null; // no listener -- no need to proceed
+		}
+
+		public void processFeedStart() {
+			myUpdatedTime = null;
+		}
+
+		public void processFeedEnd() {
+		}
 	}
 
-	public OPDSLinkXMLReader(NetworkLibrary.OnNewLinkListener listener) {
-		super(new LinkReader(listener));
+	public OPDSLinkXMLReader() {
+		super(new LinkReader(null, null));
+	}
+
+	public OPDSLinkXMLReader(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
+		super(new LinkReader(listener, readAfter));
+	}
+
+	public ATOMUpdated getUpdatedTime() {
+		return ((LinkReader) myFeedReader).getUpdatedTime();
 	}
 
 	private String myFBReaderNamespaceId;

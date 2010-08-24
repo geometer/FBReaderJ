@@ -79,6 +79,19 @@ class NetworkView {
 		return null;
 	}
 
+	// This method must be called from background thread
+	public boolean runBackgroundUpdate() {
+		return NetworkLibrary.Instance().runBackgroundUpdate();
+	}
+
+	// This method MUST be called from main thread
+	// This method can be called only after runBackgroundUpdate method has returned true
+	public void finishBackgroundUpdate() {
+		NetworkLibrary library = NetworkLibrary.Instance();
+		library.finishBackgroundUpdate();
+		library.synchronize();
+		fireModelChangedInternal();
+	}
 
 	/*
 	 * NetworkLibraryItem's actions

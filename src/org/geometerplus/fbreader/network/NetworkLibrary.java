@@ -232,15 +232,11 @@ public class NetworkLibrary {
 	public String initialize() {
 		final LinksComparator comparator = new LinksComparator(); 
 
-		final String url = "http://data.fbreader.org/catalogs/generic-1.0.xml";
-
-		final String error = ZLNetworkManager.Instance().perform(
-			OPDSLinkReader.loadOPDSLinksRequest(url, new OnNewLinkListener() {
-				public void onNewLink(INetworkLink link) {
-					addLinkInternal(myLoadedLinks, link, comparator);
-				}
-			})
-		);
+		final String error = OPDSLinkReader.loadOPDSLinks(false, new OnNewLinkListener() {
+			public void onNewLink(INetworkLink link) {
+				addLinkInternal(myLoadedLinks, link, comparator);
+			}
+		});
 
 		if (error != null) {
 			synchronized (myLinks) {
@@ -262,8 +258,83 @@ public class NetworkLibrary {
 			}
 		);
 
+		/*testDate(new ATOMUpdated(2010,  1,  1,  1,  0,  0,  0,  2,  0),
+				 new ATOMUpdated(2009, 12, 31, 23,  0,  0,  0,  0,  0));
+		testDate(new ATOMUpdated(2010, 12, 31, 23, 40,  0,  0, -1, -30),
+				 new ATOMUpdated(2011,  1,  1,  1, 10,  0,  0,  0,  0));
+		testDate(new ATOMUpdated(2010,  1, 31, 23, 40,  0,  0, -1, -30),
+				 new ATOMUpdated(2010,  2,  1,  1, 10,  0,  0,  0,  0));
+		testDate(new ATOMUpdated(2010,  2, 28, 23, 40,  0,  0, -1, -30),
+				 new ATOMUpdated(2010,  3,  1,  1, 10,  0,  0,  0,  0));
+		testDate(new ATOMUpdated(2012,  2, 28, 23, 40,  0,  0, -1, -30),
+				 new ATOMUpdated(2012,  2, 29,  1, 10,  0,  0,  0,  0));
+		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0, -1, -30),
+				 new ATOMUpdated(2012,  2, 16,  1, 10,  0,  0,  0,  0));
+		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30),
+				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));
+		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30),
+				 new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30));
+		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0.001f,  3, 30),
+				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));*/
+
 		return null;
 	}
+
+	/*private void testDate(ATOMDateConstruct date1, ATOMDateConstruct date2) {
+		String sign = " == ";
+		final int diff = date1.compareTo(date2);
+		if (diff > 0) {
+			sign = " > ";
+		} else if (diff < 0) {
+			sign = " < ";
+		}
+		Log.w("FBREADER", "" + date1 + sign + date2);
+	}*/
+
+	private ArrayList<INetworkLink> myBackgroundLinks;
+	private Object myBackgroundLock = new Object();
+
+	// This method must be called from background thread
+	public boolean runBackgroundUpdate() {
+		synchronized (myBackgroundLock) {
+			myBackgroundLinks = new ArrayList<INetworkLink>();
+
+			final String error = OPDSLinkReader.loadOPDSLinks(true, new OnNewLinkListener() {
+				public void onNewLink(INetworkLink link) {
+					myBackgroundLinks.add(link);
+				}
+			});
+
+			if (error != null || myBackgroundLinks.isEmpty()) {
+				myBackgroundLinks = null;
+			}
+
+			if (myBackgroundLinks == null) {
+				return false;
+			} else {
+				Collections.sort(myBackgroundLinks, new LinksComparator());
+				return true;
+			}
+		}
+	}
+
+	// This method MUST be called from main thread
+	// This method can be called only after runBackgroundUpdate method has returned true
+	//
+	// synchronize() method MUST be called after this method
+	public void finishBackgroundUpdate() {
+		synchronized (myBackgroundLock) {
+			if (myBackgroundLinks == null) {
+				throw new RuntimeException("Invalid state: that's impossible!!!");
+			}
+			synchronized (myLinks) {
+				myLoadedLinks.clear();
+				myLoadedLinks.addAll(myBackgroundLinks);
+				invalidate();
+			}
+		}
+	}
+
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();

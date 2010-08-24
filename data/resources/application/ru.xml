@@ -295,6 +295,7 @@
 			<node name="unsupportedOperation" value="Неподдерживаемая операция" />
 			<node name="notAnOPDS" value="Это не OPDS каталог" />
 			<node name="noRequiredInformation" value="Требуемая информация не найдена в каталоге" />
+			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Информация" />

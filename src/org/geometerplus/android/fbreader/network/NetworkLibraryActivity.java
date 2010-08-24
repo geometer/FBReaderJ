@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -59,10 +60,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		tryResume();
-	}
-
-	private void tryResume() {
 		if (!NetworkView.Instance().isInitialized()) {
 			new Initializator().start();
 		} else {
@@ -114,6 +111,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (message.what == 0) {
 				runInitialization(); // run initialization process
 			} else if (message.obj == null) {
+				startService(new Intent(getApplicationContext(), LibraryInitializationService.class));
 				prepareView(); // initialization is complete successfully
 			} else {
 				processResults((String) message.obj); // handle initialization error

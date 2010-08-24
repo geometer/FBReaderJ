@@ -23,6 +23,8 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.image.ZLBase64EncodedImage;
 
+import org.geometerplus.fbreader.Paths;
+
 final class Base64EncodedImage extends ZLBase64EncodedImage {
 
 	private static final String ENCODED_SUFFIX = ".base64";
@@ -36,7 +38,7 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	}
 
 	public static String makeImagesDir() {
-		return NetworkImage.makeImagesDir() + File.separator + "base64";
+		return Paths.networkCacheDirectory() + "/base64";
 	}
 
 	public void setData(String data) {

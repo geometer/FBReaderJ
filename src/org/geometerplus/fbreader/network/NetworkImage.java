@@ -23,7 +23,7 @@ import java.io.*;
 import java.net.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -40,14 +40,10 @@ public final class NetworkImage extends ZLSingleImage {
 	public NetworkImage(String url, String mimeType) {
 		super(mimeType);
 		Url = url;
-		new File(makeImagesDir()).mkdirs();
+		new File(Paths.networkCacheDirectory()).mkdirs();
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
-
-	public static String makeImagesDir() {
-		return Paths.cacheDirectory() + File.separator + "cache";
-	}
 
 	// mimeType string MUST be interned
 	public static String makeImageFileName(String url, String mimeType) {
@@ -65,7 +61,7 @@ public final class NetworkImage extends ZLSingleImage {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
-		path.insert(0, makeImagesDir());
+		path.insert(0, Paths.networkCacheDirectory());
 
 		int index = path.length();
 
@@ -191,24 +187,7 @@ public final class NetworkImage extends ZLSingleImage {
 				return;
 			}
 
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(Url) {
-				public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
-					OutputStream outStream = new FileOutputStream(imageFile);
-					try {
-						final byte[] buffer = new byte[8192];
-						while (true) {
-							final int size = inputStream.read(buffer);
-							if (size <= 0) {
-								break;
-							}
-							outStream.write(buffer, 0, size);
-						}
-					} finally {
-						outStream.close();
-					}
-					return null;
-				}
-			});
+			ZLNetworkManager.Instance().downloadToFile(Url, imageFile);
 		} finally {
 			mySynchronized = true;
 		}

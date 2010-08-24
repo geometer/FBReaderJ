@@ -295,6 +295,7 @@
 			<node name="unsupportedOperation" value="Unsupported operation" />
 			<node name="notAnOPDS" value="This is not an OPDS catalog" />
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" />
+			<node name="cacheDirectoryError" value="Unable to create cache directory" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information" />

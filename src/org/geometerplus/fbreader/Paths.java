@@ -29,4 +29,8 @@ public abstract class Paths {
 	public static String cacheDirectory() {
 		return BooksDirectoryOption.getValue() + "/.FBReader";
 	}
+
+	public static String networkCacheDirectory() {
+		return cacheDirectory() + "/cache";
+	}
 }

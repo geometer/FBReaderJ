@@ -19,17 +19,22 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLConnection;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 
 
 public class OPDSLinkReader {
+
+	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.0.xml";
 
 	public static ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
 		if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
@@ -44,13 +49,71 @@ public class OPDSLinkReader {
 		return new OPDSCustomLink(ICustomNetworkLink.INVALID_ID, siteName, null, null, null, links);
 	}
 
-	public static ZLNetworkRequest loadOPDSLinksRequest(String url, final NetworkLibrary.OnNewLinkListener listener) {
-		return new ZLNetworkRequest(url) {
-			@Override
-			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
-				new OPDSLinkXMLReader(listener).read(inputStream);
-				return null;
+
+	public static String loadOPDSLinks(boolean updateNotLoad, final NetworkLibrary.OnNewLinkListener listener) {
+		final File dirFile = new File(Paths.networkCacheDirectory());
+		if (!dirFile.exists() && !dirFile.mkdirs()) {
+			return NetworkErrors.errorMessage("cacheDirectoryError");
+		}
+
+		final String fileName = "fbreader_catalogs-"
+			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf(File.separator) + 1);
+
+		boolean goodCache = false;
+		File oldCache = null;
+		ATOMUpdated cacheUpdatedTime = null;
+		final File catalogsFile = new File(dirFile, fileName);
+		if (catalogsFile.exists()) {
+			if (updateNotLoad) {
+				try {
+					final OPDSLinkXMLReader reader = new OPDSLinkXMLReader();
+					reader.read(new FileInputStream(catalogsFile));
+					cacheUpdatedTime = reader.getUpdatedTime();
+				} catch (FileNotFoundException e) {
+					throw new RuntimeException("That's impossible!!!", e); 
+				}
+
+				final long diff = System.currentTimeMillis() - catalogsFile.lastModified();
+				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
+				if (diff >= 0 && diff <= valid) {
+					goodCache = true;
+				} else {
+					oldCache = new File(dirFile, "_" + fileName);
+					oldCache.delete();
+					if (!catalogsFile.renameTo(oldCache)) {
+						catalogsFile.delete();
+						oldCache = null;
+					}
+				}
+			} else {
+				goodCache = true;
 			}
-		};
+		}
+
+		String error = null;
+		if (!goodCache) {
+			error = ZLNetworkManager.Instance().downloadToFile(CATALOGS_URL, catalogsFile);
+		}
+
+		if (error != null) {
+			if (oldCache == null) {
+				return error;
+			}
+			catalogsFile.delete();
+			if (!oldCache.renameTo(catalogsFile)) {
+				oldCache.delete();
+				return error;
+			}
+		} else if (oldCache != null) {
+			oldCache.delete();
+			oldCache = null;
+		}
+
+		try {
+			new OPDSLinkXMLReader(listener, cacheUpdatedTime).read(new FileInputStream(catalogsFile));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("That's impossible!!!", e); 
+		}
+		return null;
 	}
 }

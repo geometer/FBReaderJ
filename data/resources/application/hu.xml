@@ -296,6 +296,7 @@
 			<node name="unsupportedOperation" value="nem támogaott művelet" />
 			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
 			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
+			<node name="cacheDirectoryError" toBeTranslated="true" value="Unable to create cache directory" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Információ" />

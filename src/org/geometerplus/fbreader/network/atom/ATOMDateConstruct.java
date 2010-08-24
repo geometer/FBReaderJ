@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-public abstract class ATOMDateConstruct extends ATOMCommonAttributes {
+public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements Comparable<ATOMDateConstruct> {
 
 	public int Year;
 	public int Month;
@@ -277,6 +277,52 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes {
 	@Override
 	public String toString() {
 		return getDateTime(false);
+	}
+
+	private static final int[] DAYS_IN_MONTHS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	private int daysInMonth(int month, int year) {
+		--month;
+		while (month > 11) month -= 12;
+		while (month < 0) month += 12;
+		if (month == 1 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) {
+			return DAYS_IN_MONTHS[1] + 1;
+		}
+		return DAYS_IN_MONTHS[month];
+	}
+
+	public int compareTo(ATOMDateConstruct date) {
+		int dateYear = date.Year;
+		int dateMonth = date.Month;
+		int dateDay = date.Day;
+		int dateHour = date.Hour;
+		int dateMinutes = date.Minutes;
+		if (TZHour != date.TZHour || TZMinutes != date.TZMinutes) {
+			dateMinutes += TZMinutes - date.TZMinutes;
+			while (dateMinutes < 0) { dateMinutes += 60; --dateHour; }
+			while (dateMinutes > 59) { dateMinutes -= 60; ++dateHour; }
+			dateHour += TZHour - date.TZHour;
+			while (dateHour < 0) { dateHour += 24; --dateDay; }
+			while (dateHour > 23) { dateHour -= 24; ++dateDay; }
+			while (dateDay < 1) dateDay += daysInMonth(--dateMonth, dateYear);
+			while (dateDay > daysInMonth(dateMonth, dateYear)) dateDay -= daysInMonth(dateMonth++, dateYear);
+			while (dateMonth < 1) { dateMonth += 12; --dateYear; }
+			while (dateMonth > 12) { dateMonth -= 12; ++dateYear; }
+		}
+		if (Year != dateYear) return Year - dateYear;
+		if (Month != dateMonth) return Month - dateMonth;
+		if (Day != dateDay) return Day - dateDay;
+		if (Hour != dateHour) return Hour - dateHour;
+		if (Minutes != dateMinutes) return Minutes - dateMinutes;
+		if (Seconds != date.Seconds) return Seconds - date.Seconds;
+		return Math.round(100 * SecondFraction) - Math.round(100 * date.SecondFraction);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ATOMDateConstruct)) {
+			return false;
+		}
+		return compareTo((ATOMDateConstruct) obj) == 0;
 	}
 };
 
