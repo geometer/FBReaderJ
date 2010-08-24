@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -30,7 +29,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
-import org.geometerplus.fbreader.network.opds.OPDSLinkXMLReader;
+
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -206,6 +205,11 @@ public class NetworkLibrary {
 		}
 	}
 
+	
+	public interface OnNewLinkListener {
+		void onNewLink(INetworkLink link);
+	}
+
 
 	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
 
@@ -219,49 +223,47 @@ public class NetworkLibrary {
 	private boolean myUpdateVisibility;
 
 	private NetworkLibrary() {
-		final OPDSLinkXMLReader reader = new OPDSLinkXMLReader(myLoadedLinks);
-		reader.read(ZLResourceFile.createResourceFile("data/network/catalogs.xml"));
+		ArrayList<ArrayList<? extends INetworkLink>> linksList = new ArrayList<ArrayList<? extends INetworkLink>>();
+		linksList.add(myLoadedLinks);
+		linksList.add(myCustomLinks);
+		myLinks = new CompositeList(linksList, new LinksComparator());
+	}
 
-		NetworkDatabase.Instance().loadCustomLinks(myCustomLinks,
-			new NetworkDatabase.ICustomLinksFactory() {
-				public ICustomNetworkLink createCustomLink(int id, String siteName,
+	public String initialize() {
+		final LinksComparator comparator = new LinksComparator(); 
+
+		final String url = "http://data.fbreader.org/catalogs/generic-1.0.xml";
+
+		final String error = ZLNetworkManager.Instance().perform(
+			OPDSLinkReader.loadOPDSLinksRequest(url, new OnNewLinkListener() {
+				public void onNewLink(INetworkLink link) {
+					addLinkInternal(myLoadedLinks, link, comparator);
+				}
+			})
+		);
+
+		if (error != null) {
+			synchronized (myLinks) {
+				myLoadedLinks.clear();
+			}
+			return error;
+		}
+
+		NetworkDatabase.Instance().loadCustomLinks(
+			new NetworkDatabase.ICustomLinksHandler() {
+				public void handleCustomLinkData(int id, String siteName,
 						String title, String summary, String icon, Map<String, String> links) {
 					final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
-					link.setSaveLinkListener(myChangesListener);
-					return link;
+					if (link != null) {
+						addLinkInternal(myCustomLinks, link, comparator);
+						link.setSaveLinkListener(myChangesListener);
+					}
 				}
 			}
 		);
 
-		LinksComparator comparator = new LinksComparator(); 
-		Collections.sort(myLoadedLinks, comparator);
-		Collections.sort(myCustomLinks, comparator);
-
-		ArrayList<ArrayList<? extends INetworkLink>> linksList = new ArrayList<ArrayList<? extends INetworkLink>>();
-		linksList.add(myLoadedLinks);
-		linksList.add(myCustomLinks);
-		myLinks = new CompositeList(linksList, comparator); 
+		return null;
 	}
-
-	/*private final LinkedList<String> readCatalogFileNames() {
-		final LinkedList<String> catalogs = new LinkedList<String>();
-		final ZLResourceFile catalogsFile = ZLResourceFile.createResourceFile("data/network/catalogs.txt");
-		try {
-			InputStream stream = catalogsFile.getInputStream();
-			if (stream != null) {
-				Scanner scanner = new Scanner(stream);
-				while (scanner.hasNextLine()) {
-					String line = scanner.nextLine().trim();
-					if (line.length() > 0) {
-						catalogs.add(line);
-					}
-				}
-				scanner.close();
-			}
-		} catch (IOException ex) {
-		}
-		return catalogs;
-	}*/
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
@@ -377,7 +379,6 @@ public class NetworkLibrary {
 	}
 
 	public NetworkTree getTree() {
-		synchronize();
 		return myRootTree;
 	}
 
@@ -441,48 +442,52 @@ public class NetworkLibrary {
 		}
 	};
 
-	public void  addCustomLink(ICustomNetworkLink link) {
-		final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
-		if (index >= 0) {
-			throw new RuntimeException("Unable to add link with duplicated title to the library");
+	private <T extends INetworkLink> void addLinkInternal(ArrayList<T> list, T link, LinksComparator comparator) {
+		synchronized (myLinks) {
+			final int index = Collections.binarySearch(list, link, comparator);
+			if (index >= 0) {
+				throw new RuntimeException("Unable to add link with duplicated title to the library");
+			}
+			final int insertAt = -index - 1;
+			list.add(insertAt, link);
 		}
-		final int insertAt = -index - 1;
-		myCustomLinks.add(insertAt, link);
+	}
+
+	public void addCustomLink(ICustomNetworkLink link) {
+		addLinkInternal(myCustomLinks, link, new LinksComparator());
 		link.setSaveLinkListener(myChangesListener);
 		link.saveLink();
 	}
 
-	/*public int getCustomLinksNumber() {
-		return myCustomLinks.size();
-	}
-
-	public ICustomNetworkLink getCustomLink(int index) {
-		return myCustomLinks.get(index);
-	}*/
-
 	public void removeCustomLink(ICustomNetworkLink link) {
-		final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
-		if (index < 0) {
-			return;
+		synchronized (myLinks) {
+			final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
+			if (index < 0) {
+				return;
+			}
+			myCustomLinks.remove(index);
 		}
-		myCustomLinks.remove(index);
 		NetworkDatabase.Instance().deleteCustomLink(link);
 		link.setSaveLinkListener(null);
 	}
 
 	public boolean hasCustomLinkTitle(String title, ICustomNetworkLink exeptFor) {
-		for (INetworkLink link: myLinks) {
-			if (link != exeptFor && link.getTitle().equals(title)) {
-				return true;
+		synchronized (myLinks) {
+			for (INetworkLink link: myLinks) {
+				if (link != exeptFor && link.getTitle().equals(title)) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 
 	public boolean hasCustomLinkSite(String siteName, ICustomNetworkLink exeptFor) {
-		for (INetworkLink link: myLinks) {
-			if (link != exeptFor && link.getSiteName().equals(siteName)) {
-				return true;
+		synchronized (myLinks) {
+			for (INetworkLink link: myLinks) {
+				if (link != exeptFor && link.getSiteName().equals(siteName)) {
+					return true;
+				}
 			}
 		}
 		return false;

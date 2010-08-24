@@ -57,10 +57,16 @@ class NetworkView {
 		return myInitialized;
 	}
 
-	public void initialize() {
+	public String initialize() {
 		new SQLiteNetworkDatabase();
 
-		NetworkLibrary.Instance().synchronize();
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		final String error = library.initialize();
+		if (error != null) {
+			return error;
+		}
+
+		library.synchronize();
 
 		myActions.add(new NetworkBookActions());
 		myActions.add(new NetworkCatalogActions());
@@ -70,6 +76,7 @@ class NetworkView {
 		myActions.trimToSize();
 
 		myInitialized = true;
+		return null;
 	}
 
 

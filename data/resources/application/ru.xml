@@ -138,6 +138,7 @@
 			<node name="buyAndDownload" value="Купить и скачать" />
 			<node name="continue" value="Продолжить" />
 			<node name="editUrl" value="Изменить URL" />
+			<node name="tryAgain" value="Повторить" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>

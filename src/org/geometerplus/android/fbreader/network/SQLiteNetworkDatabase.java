@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.HashMap;
-import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -77,7 +76,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected void loadCustomLinks(List<ICustomNetworkLink> links, ICustomLinksFactory factory) {
+	protected void loadCustomLinks(ICustomLinksHandler handler) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary,icon FROM CustomLinks", null);
 		final HashMap<String,String> linksMap = new HashMap<String,String>();
 		while (cursor.moveToNext()) {
@@ -94,10 +93,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			}
 			linksCursor.close();
 
-			final ICustomNetworkLink newLink = factory.createCustomLink(id, siteName, title, summary, icon, linksMap);
-			if (newLink != null) {
-				links.add(newLink);
-			}
+			handler.handleCustomLinkData(id, siteName, title, summary, icon, linksMap);
 		}
 		cursor.close();
 	}

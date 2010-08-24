@@ -19,12 +19,15 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.*;
 import android.widget.BaseAdapter;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
@@ -34,8 +37,6 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
-
-	private boolean myInitialized;
 
 	private NetworkTree myTree;
 
@@ -48,8 +49,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private void prepareView() {
-		if (!myInitialized) {
-			myInitialized = true;
+		if (myTree == null) {
 			myTree = NetworkLibrary.Instance().getTree();
 			setListAdapter(new LibraryAdapter());
 			getListView().invalidateViews();
@@ -59,21 +59,73 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		final NetworkView networkView = NetworkView.Instance();
-		if (!networkView.isInitialized()) {
-			final Handler handler = new Handler() {
-				public void handleMessage(Message message) {
-					prepareView();
-				}
-			};
-			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
-				public void run() {
-					networkView.initialize();
-					handler.sendEmptyMessage(0);
-				}
-			}, this);
+		tryResume();
+	}
+
+	private void tryResume() {
+		if (!NetworkView.Instance().isInitialized()) {
+			new Initializator().start();
 		} else {
 			prepareView();
+		}
+	}
+
+	private class Initializator extends Handler {
+
+		final DialogInterface.OnClickListener myListener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					Initializator.this.start();
+				} else {
+					NetworkLibraryActivity.this.finish();
+				}
+			}
+		};
+
+		private void runInitialization() {
+			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
+				public void run() {
+					final String error = NetworkView.Instance().initialize();
+					Initializator.this.end(error);
+				}
+			}, NetworkLibraryActivity.this);
+		}
+
+		private void processResults(String error) {
+			final ZLResource dialogResource = ZLResource.resource("dialog");
+			final ZLResource boxResource = dialogResource.getResource("networkError");
+			final ZLResource buttonResource = dialogResource.getResource("button");
+			new AlertDialog.Builder(NetworkLibraryActivity.this)
+				.setTitle(boxResource.getResource("title").getValue())
+				.setMessage(error)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("tryAgain").getValue(), myListener)
+				.setNegativeButton(buttonResource.getResource("cancel").getValue(), myListener)
+				.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					public void onCancel(DialogInterface dialog) {
+						myListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+					}
+				})
+				.create().show();
+		}
+
+		@Override
+		public void handleMessage(Message message) {
+			if (message.what == 0) {
+				runInitialization(); // run initialization process
+			} else if (message.obj == null) {
+				prepareView(); // initialization is complete successfully
+			} else {
+				processResults((String) message.obj); // handle initialization error
+			}
+		}
+
+		public void start() {
+			sendEmptyMessage(0);
+		}
+
+		private void end(String error) {
+			sendMessage(obtainMessage(1, error));
 		}
 	}
 
@@ -81,6 +133,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private final class LibraryAdapter extends BaseAdapter {
 
 		public final int getCount() {
+			if (!NetworkView.Instance().isInitialized()) {
+				return 0;
+			}
 			return myTree.subTrees().size() + 2; // subtrees + <search item>
 		}
 

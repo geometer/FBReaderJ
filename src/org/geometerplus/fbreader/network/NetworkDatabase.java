@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class NetworkDatabase {
@@ -35,11 +34,11 @@ public abstract class NetworkDatabase {
 
 	protected abstract void executeAsATransaction(Runnable actions);
 
-	public interface ICustomLinksFactory {
-		ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links);
+	public interface ICustomLinksHandler {
+		void handleCustomLinkData(int id, String siteName, String title, String summary, String icon, Map<String, String> links);
 	}
 
-	protected abstract void loadCustomLinks(List<ICustomNetworkLink> links, ICustomLinksFactory factory);
+	protected abstract void loadCustomLinks(ICustomLinksHandler handler);
 	protected abstract void saveCustomLink(ICustomNetworkLink link);
 	protected abstract void deleteCustomLink(ICustomNetworkLink link);
 }

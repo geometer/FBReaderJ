@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -30,6 +29,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.constants.XMLNamespace;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkImage;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
@@ -38,15 +38,15 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 
 	private static class LinkReader implements OPDSFeedReader {
 
-		private List<INetworkLink> myLinksBuffer;
+		private NetworkLibrary.OnNewLinkListener myListener;
 
 		private String myAuthenticationType;
 		private boolean myHasStableIdentifiers;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 
-		public LinkReader(List<INetworkLink> links) {
-			myLinksBuffer = links;
+		public LinkReader(NetworkLibrary.OnNewLinkListener listener) {
+			myListener = listener;
 		}
 
 		public void setAuthenticationType(String type) {
@@ -141,7 +141,7 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 
 			INetworkLink result = link(siteName, title, summary, icon, links, urlConditions, sslCertificate);
 			if (result != null) {
-				myLinksBuffer.add(result);
+				myListener.onNewLink(result);
 			}
 			return false; 
 		}
@@ -190,8 +190,8 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 		public void processFeedEnd() {}
 	}
 
-	public OPDSLinkXMLReader(List<INetworkLink> links) {
-		super(new LinkReader(links));
+	public OPDSLinkXMLReader(NetworkLibrary.OnNewLinkListener listener) {
+		super(new LinkReader(listener));
 	}
 
 	private String myFBReaderNamespaceId;
@@ -274,11 +274,5 @@ public class OPDSLinkXMLReader extends OPDSXMLReader {
 			break;
 		}
 		return super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
-	}
-
-	@Override
-	public boolean endElementHandler(final String tagPrefix, final String tag,
-			final String bufferContent) {
-		return super.endElementHandler(tagPrefix, tag, bufferContent);
 	}
 }
