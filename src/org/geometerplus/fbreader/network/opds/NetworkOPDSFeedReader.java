@@ -74,8 +74,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
-			String type = link.getType();
-			String rel = opdsLink.relation(link.getRel(), type);
+			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final String rel = opdsLink.relation(link.getRel(), type);
 			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
@@ -140,7 +140,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 		final OPDSLink opdsLink = (OPDSLink) myData.Link;
 		for (ATOMLink link: entry.Links) {
-			final String type = link.getType();
+			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 
 			if (rel == null && type == OPDSConstants.MIME_APP_ATOM) {
@@ -187,7 +187,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
-			final String type = link.getType();
+			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 			if ((rel != null && rel.startsWith(OPDSConstants.REL_ACQUISITION_PREFIX))
 					|| (rel == null && formatByMimeType(type) != BookReference.Format.NONE)) {
@@ -232,7 +232,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		LinkedList<BookReference> references = new LinkedList<BookReference>();
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
-			final String type = link.getType();
+			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 			final int referenceType = typeByRelation(rel);
 			if (rel == OPDSConstants.REL_COVER) {
@@ -358,7 +358,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
-			final String type = link.getType();
+			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 			if (type == NetworkImage.MIME_PNG ||
 					type == NetworkImage.MIME_JPEG) {

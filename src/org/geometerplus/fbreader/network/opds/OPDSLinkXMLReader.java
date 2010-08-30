@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.constants.XMLNamespace;
@@ -98,7 +99,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 			final HashMap<String, Integer> urlConditions = new HashMap<String, Integer>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
-				final String type = link.getType();
+				final String type = ZLNetworkUtil.filterMimeType(link.getType());
 				final String rel = link.getRel();
 				if (rel == OPDSConstants.REL_COVER) {
 					if (icon == null &&

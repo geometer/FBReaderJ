@@ -50,8 +50,8 @@ class CatalogInfoReader implements OPDSFeedReader {
 		Summary = feed.Subtitle;
 
 		for (ATOMLink link: feed.Links) {
-			String type = link.getType();
-			String rel = myLink.relation(link.getRel(), type);
+			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final String rel = myLink.relation(link.getRel(), type);
 			if (rel == "search") {
 				if (type == OPDSConstants.MIME_APP_OPENSEARCHDESCRIPTION) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
