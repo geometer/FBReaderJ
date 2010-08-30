@@ -32,6 +32,7 @@ interface OPDSConstants {
 	// Entry level / acquisition links
 	String REL_ACQUISITION_PREFIX = "http://opds-spec.org/acquisition";
 	String REL_ACQUISITION = "http://opds-spec.org/acquisition";
+	String REL_ACQUISITION_OPEN = "http://opds-spec.org/acquisition/open-access";
 	String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
 	String REL_ACQUISITION_BUY = "http://opds-spec.org/acquisition/buy";
 	//String REL_ACQUISITION_BORROW = "http://opds-spec.org/acquisition/borrow";
@@ -40,6 +41,10 @@ interface OPDSConstants {
 	String REL_ACQUISITION_SAMPLE_OR_FULL = "http://data.fbreader.org/acquisition/sampleOrFull";
 
 	// Entry level / other
+	String REL_IMAGE_PREFIX = "http://opds-spec.org/image";
+	//String REL_IMAGE = "http://opds-spec.org/image";
+	String REL_IMAGE_THUMBNAIL = "http://opds-spec.org/image/thumbnail";
+	// FIXME: This relations have been removed from OPDS-1.0 standard. Use RelationAlias instead???
 	String REL_COVER = "http://opds-spec.org/cover";
 	String REL_THUMBNAIL = "http://opds-spec.org/thumbnail";
 

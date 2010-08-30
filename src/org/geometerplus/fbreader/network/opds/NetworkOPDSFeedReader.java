@@ -109,7 +109,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	// returns BookReference.Type value for specified String. String MUST BE interned.
 	private static int typeByRelation(String rel) {
-		if (rel == null || rel == OPDSConstants.REL_ACQUISITION) {
+		if (rel == null || rel == OPDSConstants.REL_ACQUISITION
+				|| rel == OPDSConstants.REL_ACQUISITION_OPEN) {
 			return BookReference.Type.DOWNLOAD_FULL;
 		} else if (rel == OPDSConstants.REL_ACQUISITION_SAMPLE) {
 			return BookReference.Type.DOWNLOAD_DEMO;
@@ -235,15 +236,17 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 			final int referenceType = typeByRelation(rel);
-			if (rel == OPDSConstants.REL_COVER) {
+			if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL
+					|| rel == OPDSConstants.REL_THUMBNAIL) {
+				if (type == NetworkImage.MIME_PNG ||
+						type == NetworkImage.MIME_JPEG) {
+					cover = href;
+				}
+			} else if ((rel != null && rel.startsWith(OPDSConstants.REL_IMAGE_PREFIX))
+					|| rel == OPDSConstants.REL_COVER) {
 				if (cover == null &&
 						(type == NetworkImage.MIME_PNG ||
 						 type == NetworkImage.MIME_JPEG)) {
-					cover = href;
-				}
-			} else if (rel == OPDSConstants.REL_THUMBNAIL) {
-				if (type == NetworkImage.MIME_PNG ||
-						type == NetworkImage.MIME_JPEG) {
 					cover = href;
 				}
 			} else if (referenceType == BookReference.Type.BUY) {
@@ -362,8 +365,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final String rel = opdsLink.relation(link.getRel(), type);
 			if (type == NetworkImage.MIME_PNG ||
 					type == NetworkImage.MIME_JPEG) {
-				if (rel == OPDSConstants.REL_THUMBNAIL ||
-						(coverURL == null && rel == OPDSConstants.REL_COVER)) {
+				if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL ||
+						rel == OPDSConstants.REL_THUMBNAIL ||
+						(coverURL == null && (rel == OPDSConstants.REL_COVER || 
+								(rel != null && rel.startsWith(OPDSConstants.REL_IMAGE_PREFIX))))) {
 					coverURL = href;
 				}
 			} else if (type == OPDSConstants.MIME_APP_ATOM) {
@@ -381,6 +386,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				}
 			} else if (type == OPDSConstants.MIME_TEXT_HTML) {
 				if (rel == OPDSConstants.REL_ACQUISITION ||
+						rel == OPDSConstants.REL_ACQUISITION_OPEN ||
 						rel == ATOMConstants.REL_ALTERNATE ||
 						rel == null) {
 					htmlURL = href;

@@ -101,15 +101,17 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 				final String href = link.getHref();
 				final String type = ZLNetworkUtil.filterMimeType(link.getType());
 				final String rel = link.getRel();
-				if (rel == OPDSConstants.REL_COVER) {
+				if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL
+						|| rel == OPDSConstants.REL_THUMBNAIL) {
+					if (type == NetworkImage.MIME_PNG ||
+							type == NetworkImage.MIME_JPEG) {
+						icon = href;
+					}
+				} else if ((rel != null && rel.startsWith(OPDSConstants.REL_IMAGE_PREFIX))
+						|| rel == OPDSConstants.REL_COVER) {
 					if (icon == null &&
 							(type == NetworkImage.MIME_PNG ||
 							 type == NetworkImage.MIME_JPEG)) {
-						icon = href;
-					}
-				} else if (rel == OPDSConstants.REL_THUMBNAIL) {
-					if (type == NetworkImage.MIME_PNG ||
-							type == NetworkImage.MIME_JPEG) {
 						icon = href;
 					}
 				} else if (rel == null) {
