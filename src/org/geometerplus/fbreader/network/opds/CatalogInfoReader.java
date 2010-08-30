@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 
-public class CatalogInfoReader implements OPDSFeedReader {
+class CatalogInfoReader implements OPDSFeedReader {
 
 	public boolean FeedStarted;
 	public String Icon;

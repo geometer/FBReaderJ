@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 
-public class OPDSLinkXMLReader extends OPDSXMLReader {
+class OPDSLinkXMLReader extends OPDSXMLReader {
 
 	private static class LinkReader implements OPDSFeedReader {
 
