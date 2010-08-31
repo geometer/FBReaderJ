@@ -63,6 +63,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:singleLine="true"
+			android:inputType="textEmailAddress"
 		/>
 		<TextView
 			android:id="@+id/network_register_error"
