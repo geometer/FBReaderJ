@@ -33,8 +33,8 @@ DONE Network library: Объединять книги по сериям
 
 Улучшить поддержку OPDS:
 	DONE Отделение mime-types от параметров (параметры начинаются с ';')
-	** Поддержка тегов <dc:format> внутри link'ов
-	** Поддержка тега <opds:price> (см. пункт 9.1 спецификации)
+	DONE Поддержка тегов <dc:format> внутри link'ов
+	DONE Поддержка тега <opds:price> (см. пункт 9.1 спецификации)
 	** Определение способа получения ресурсов (Direct / Indirect), предпочитая Direct (см. пункты 5.1 и 9 спецификации)
 	DONE Проверить высказывание из пункта 7 спецификации: An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
 	** В Navigation Feeds учесть: The relation "subsection" SHOULD be used if no other relation is more appropriate.

@@ -31,8 +31,6 @@ import org.geometerplus.fbreader.network.atom.*;
 class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 	public static final String KEY_PRICE = "price";
-	public static final String KEY_CURRENCY = "currency";
-	public static final String KEY_FORMAT = "format";
 
 
 	protected final OPDSFeedReader myFeedReader;
@@ -42,12 +40,14 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 	private ATOMAuthor myAuthor;
 	private ATOMId myId;
-	private ATOMLink myLink;
+	private OPDSLink myLink;
 	private ATOMCategory myCategory;
 	private ATOMUpdated myUpdated;
 	private ATOMPublished myPublished;
 	private DCDate myDCIssued;
 	private ATOMIcon myIcon;
+
+	private String myPriceCurrency;
 
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
@@ -249,7 +249,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myIcon.readAttributes(attributes);
 						myState = F_ICON;
 					} else if (tag == TAG_LINK) {
-						myLink = new ATOMLink();
+						myLink = new OPDSLink();
 						myLink.readAttributes(attributes);
 						myState = F_LINK;
 					} else if (tag == TAG_CATEGORY) {
@@ -305,7 +305,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myCategory.readAttributes(attributes);
 						myState = FE_CATEGORY;
 					} else if (tag == TAG_LINK) {
-						myLink = new ATOMLink();
+						myLink = new OPDSLink();
 						myLink.readAttributes(attributes);
 						myState = FE_LINK;
 					} else if (tag == TAG_PUBLISHED) {
@@ -374,8 +374,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FE_LINK:
 				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
-					// FIXME: HACK: price handling must be implemented not through attributes!!!
-					myLink.addAttribute(KEY_CURRENCY, attributes.getValue("currencycode"));
+					myPriceCurrency = attributes.getValue("currencycode");
 					myState = FEL_PRICE;
 				} if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
 					myState = FEL_FORMAT;
@@ -547,8 +546,9 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case FEL_PRICE:
 				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
-					if (bufferContent != null) {
-						myLink.addAttribute(KEY_PRICE, bufferContent.intern());
+					if (bufferContent != null && myPriceCurrency != null) {
+						myLink.Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
+						myPriceCurrency = null;
 					}
 					myState = FE_LINK;
 				}
@@ -556,7 +556,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FEL_FORMAT:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
 					if (bufferContent != null) {
-						myLink.addAttribute(KEY_FORMAT, bufferContent.intern());
+						myLink.Formats.add(bufferContent.intern());
 					}
 					myState = FE_LINK;
 				}

@@ -213,7 +213,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	private static final String AuthorsPrefix = "authors:";
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsNetworkLink = (OPDSNetworkLink) myData.Link;
 		/*final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
@@ -234,7 +234,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
-			final String rel = opdsLink.relation(link.getRel(), type);
+			final String rel = opdsNetworkLink.relation(link.getRel(), type);
 			final int referenceType = typeByRelation(rel);
 			if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL
 					|| rel == OPDSConstants.REL_THUMBNAIL) {
@@ -250,32 +250,25 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 					cover = href;
 				}
 			} else if (referenceType == BookReference.Type.BUY) {
-				// FIXME: HACK: price handling must be implemented not through attributes!!!
-				String price = BuyBookReference.price(
-					link.getAttribute(OPDSXMLReader.KEY_PRICE),
-					link.getAttribute(OPDSXMLReader.KEY_CURRENCY)
-				);
+				final OPDSLink opdsLink = (OPDSLink) link; 
+				String price = null;
+				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
+				if (opdsPrice != null) {
+					price = BuyBookReference.price(opdsPrice.Price, opdsPrice.Currency);
+				}
 				if (price == null) {
 					// FIXME: HACK: price handling must be implemented not through attributes!!!
-					price = BuyBookReference.price(
-						entry.getAttribute(OPDSXMLReader.KEY_PRICE),
-						entry.getAttribute(OPDSXMLReader.KEY_CURRENCY)
-					);
+					price = BuyBookReference.price(entry.getAttribute(OPDSXMLReader.KEY_PRICE), null);
 				}
 				if (price == null) {
 					price = "";
 				}
 				if (type == OPDSConstants.MIME_TEXT_HTML) {
-					references.add(new BuyBookReference(
-						href, BookReference.Format.NONE, BookReference.Type.BUY_IN_BROWSER, price
-					));
+					collectReferences(references, opdsLink, href,
+							BookReference.Type.BUY_IN_BROWSER, price, true);
 				} else {
-					int format = formatByMimeType(link.getAttribute(OPDSXMLReader.KEY_FORMAT));
-					if (format != BookReference.Format.NONE) {
-						references.add(new BuyBookReference(
-							href, format, BookReference.Type.BUY, price
-						));
-					}
+					collectReferences(references, opdsLink, href,
+							BookReference.Type.BUY, price, false);
 				}
 			} else if (referenceType != BookReference.Type.UNKNOWN) {
 				final int format = formatByMimeType(type);
@@ -335,7 +328,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 
 		return new NetworkBookItem(
-			opdsLink,
+			opdsNetworkLink,
 			entry.Id.Uri,
 			myIndex++,
 			entry.Title,
@@ -349,6 +342,25 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			cover,
 			references
 		);
+	}
+
+	private void collectReferences(LinkedList<BookReference> references,
+			OPDSLink opdsLink, String href, int type, String price, boolean addWithoutFormat) {
+		boolean added = false;
+		for (String mime: opdsLink.Formats) {
+			final int format = formatByMimeType(mime);
+			if (format != BookReference.Format.NONE) {
+				references.add(new BuyBookReference(
+					href, format, type, price
+				));
+				added = true;
+			}
+		}
+		if (!added && addWithoutFormat) {
+			references.add(new BuyBookReference(
+				href, BookReference.Format.NONE, type, price
+			));
+		}
 	}
 
 	private NetworkLibraryItem readCatalogItem(OPDSEntry entry) {
