@@ -36,9 +36,9 @@ class CatalogInfoReader implements OPDSFeedReader {
 	private final List<String> myOpensearchDescriptionURLs;
 
 	private final String myBaseURL;
-	private final OPDSLink myLink;
+	private final OPDSNetworkLink myLink;
 
-	public CatalogInfoReader(String baseUrl, OPDSLink link, List<String> opensearchDescriptionURLs) {
+	public CatalogInfoReader(String baseUrl, OPDSNetworkLink link, List<String> opensearchDescriptionURLs) {
 		myBaseURL = baseUrl;
 		myLink = link;
 		myOpensearchDescriptionURLs = opensearchDescriptionURLs;

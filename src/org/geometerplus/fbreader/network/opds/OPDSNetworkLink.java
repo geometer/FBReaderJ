@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
-class OPDSLink extends AbstractNetworkLink {
+class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public interface FeedCondition {
 		int REGULAR = 0;
@@ -47,7 +47,7 @@ class OPDSLink extends AbstractNetworkLink {
 
 	private final boolean myHasStableIdentifiers;
 
-	OPDSLink(String siteName, String title, String summary, String icon,
+	OPDSNetworkLink(String siteName, String title, String summary, String icon,
 			Map<String, String> links, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, icon, links);
 		myHasStableIdentifiers = hasStableIdentifiers;
@@ -104,10 +104,10 @@ class OPDSLink extends AbstractNetworkLink {
 						// then reset state to load current page from the beginning 
 						result.LastLoadedId = null;
 					} else {
-						result.Listener.commitItems(OPDSLink.this);
+						result.Listener.commitItems(OPDSNetworkLink.this);
 					}
 				} else {
-					result.Listener.commitItems(OPDSLink.this);
+					result.Listener.commitItems(OPDSNetworkLink.this);
 				}
 				return null;
 			}
@@ -201,7 +201,7 @@ class OPDSLink extends AbstractNetworkLink {
 
 	@Override
 	public String toString() {
-		return "OPDSLink: {super=" + super.toString()
+		return "OPDSNetworkLink: {super=" + super.toString()
 			+ "; stableIds=" + myHasStableIdentifiers
 			+ "; authManager=" + (myAuthenticationManager != null ? myAuthenticationManager.getClass().getName() : null)
 			+ "; relationAliases=" + myRelationAliases

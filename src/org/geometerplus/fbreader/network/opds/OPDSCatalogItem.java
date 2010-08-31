@@ -69,7 +69,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 
 	@Override
 	public final String loadChildren(NetworkOperationData.OnNewItemListener listener) {
-		OPDSLink opdsLink = (OPDSLink) Link;
+		OPDSNetworkLink opdsLink = (OPDSNetworkLink) Link;
 
 		myLoadingState = opdsLink.createOperationData(Link, listener);
 

@@ -137,9 +137,9 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 				} else if (rel == OPDSConstants.REL_LINK_RECOVER_PASSWORD) {
 					links.put(INetworkLink.URL_RECOVER_PASSWORD, href);
 				} else if (rel == OPDSConstants.REL_CONDITION_NEVER) {
-					urlConditions.put(href, OPDSLink.FeedCondition.NEVER);
+					urlConditions.put(href, OPDSNetworkLink.FeedCondition.NEVER);
 				} else if (rel == OPDSConstants.REL_CONDITION_SIGNED_IN) {
-					urlConditions.put(href, OPDSLink.FeedCondition.SIGNED_IN);
+					urlConditions.put(href, OPDSNetworkLink.FeedCondition.SIGNED_IN);
 				}
 			}
 
@@ -164,7 +164,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 				return null;
 			}
 
-			OPDSLink opdsLink = new OPDSLink(
+			OPDSNetworkLink opdsLink = new OPDSNetworkLink(
 				siteName,
 				title,
 				summary,

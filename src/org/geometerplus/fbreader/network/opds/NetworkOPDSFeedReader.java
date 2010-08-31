@@ -44,15 +44,15 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	 * Creates new OPDSFeedReader instance that can be used to get NetworkLibraryItem objects from OPDS feeds.
 	 *
 	 * @param baseURL    string that contains URL of the OPDS feed, that will be read using this instance of the reader
-	 * @param result     network results buffer. Must be created using OPDSLink corresponding to the OPDS feed, 
+	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
 	NetworkOPDSFeedReader(String baseURL, OPDSCatalogItem.State result) {
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;
-		if (!(result.Link instanceof OPDSLink)) {
-			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSLink class.");
+		if (!(result.Link instanceof OPDSNetworkLink)) {
+			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSNetworkLink class.");
 		}
 	}
 
@@ -72,7 +72,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			}
 			return false;
 		}
-		final OPDSLink opdsLink = (OPDSLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
 		for (ATOMLink link: feed.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -139,7 +139,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		String id = null;
 		int idType = 0;
 
-		final OPDSLink opdsLink = (OPDSLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
 		for (ATOMLink link: entry.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -182,8 +182,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 		myData.LastLoadedId = entry.Id.Uri;
 
-		final OPDSLink opdsLink = (OPDSLink) myData.Link;
-		if (opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.NEVER) {
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		if (opdsLink.getCondition(entry.Id.Uri) == OPDSNetworkLink.FeedCondition.NEVER) {
 			return tryInterrupt();
 		}
 		boolean hasBookLink = false;
@@ -213,7 +213,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	private static final String AuthorsPrefix = "authors:";
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
-		final OPDSLink opdsLink = (OPDSLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
 		/*final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
@@ -352,7 +352,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 	}
 
 	private NetworkLibraryItem readCatalogItem(OPDSEntry entry) {
-		final OPDSLink opdsLink = (OPDSLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
 		String coverURL = null;
 		String url = null;
 		boolean urlIsAlternate = false;
@@ -407,7 +407,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			htmlURL = null;
 		}
 
-		final boolean dependsOnAccount = opdsLink.getCondition(entry.Id.Uri) == OPDSLink.FeedCondition.SIGNED_IN;
+		final boolean dependsOnAccount = opdsLink.getCondition(entry.Id.Uri) == OPDSNetworkLink.FeedCondition.SIGNED_IN;
 
 		final String annotation;
 		if (entry.Summary != null) {
