@@ -80,12 +80,12 @@ class NetworkView {
 	}
 
 	// This method must be called from background thread
-	public boolean runBackgroundUpdate() {
-		return NetworkLibrary.Instance().runBackgroundUpdate();
+	public String runBackgroundUpdate(boolean clearCache) {
+		return NetworkLibrary.Instance().runBackgroundUpdate(clearCache);
 	}
 
 	// This method MUST be called from main thread
-	// This method can be called only after runBackgroundUpdate method has returned true
+	// This method has effect only when runBackgroundUpdate method has returned null
 	public void finishBackgroundUpdate() {
 		NetworkLibrary library = NetworkLibrary.Instance();
 		library.finishBackgroundUpdate();

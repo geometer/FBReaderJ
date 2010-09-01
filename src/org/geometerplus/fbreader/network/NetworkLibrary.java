@@ -232,7 +232,7 @@ public class NetworkLibrary {
 	public String initialize() {
 		final LinksComparator comparator = new LinksComparator(); 
 
-		final String error = OPDSLinkReader.loadOPDSLinks(false, new OnNewLinkListener() {
+		final String error = OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
 			public void onNewLink(INetworkLink link) {
 				addLinkInternal(myLoadedLinks, link, comparator);
 			}
@@ -295,11 +295,12 @@ public class NetworkLibrary {
 	private Object myBackgroundLock = new Object();
 
 	// This method must be called from background thread
-	public boolean runBackgroundUpdate() {
+	public String runBackgroundUpdate(boolean clearCache) {
 		synchronized (myBackgroundLock) {
 			myBackgroundLinks = new ArrayList<INetworkLink>();
 
-			final String error = OPDSLinkReader.loadOPDSLinks(true, new OnNewLinkListener() {
+			final int cacheMode = clearCache ? OPDSLinkReader.CACHE_CLEAR : OPDSLinkReader.CACHE_UPDATE;
+			final String error = OPDSLinkReader.loadOPDSLinks(cacheMode, new OnNewLinkListener() {
 				public void onNewLink(INetworkLink link) {
 					myBackgroundLinks.add(link);
 				}
@@ -309,23 +310,21 @@ public class NetworkLibrary {
 				myBackgroundLinks = null;
 			}
 
-			if (myBackgroundLinks == null) {
-				return false;
-			} else {
+			if (myBackgroundLinks != null) {
 				Collections.sort(myBackgroundLinks, new LinksComparator());
-				return true;
 			}
+			return error;
 		}
 	}
 
 	// This method MUST be called from main thread
-	// This method can be called only after runBackgroundUpdate method has returned true
+	// This method has effect only when runBackgroundUpdate method has returned null.
 	//
 	// synchronize() method MUST be called after this method
 	public void finishBackgroundUpdate() {
 		synchronized (myBackgroundLock) {
 			if (myBackgroundLinks == null) {
-				throw new RuntimeException("Invalid state: that's impossible!!!");
+				return;
 			}
 			synchronized (myLinks) {
 				myLoadedLinks.clear();

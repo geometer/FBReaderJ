@@ -46,7 +46,7 @@ public class LibraryInitializationService extends Service {
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-				if (msg.what > 0) {
+				if (msg.what > 0 && msg.obj == null) {
 					view.finishBackgroundUpdate();
 				}
 				stopSelf();
@@ -55,11 +55,13 @@ public class LibraryInitializationService extends Service {
 
 		final Thread thread = new Thread(new Runnable() {
 			public void run() {
-				boolean result = false; 
+				int code = 0;
+				String result = null;
 				try {
-					result = view.runBackgroundUpdate();
+					result = view.runBackgroundUpdate(false);
+					code = 1;
 				} finally {
-					handler.sendEmptyMessage(result ? 1 : 0);
+					handler.sendMessage(handler.obtainMessage(code, result));
 				}
 			}
 		});

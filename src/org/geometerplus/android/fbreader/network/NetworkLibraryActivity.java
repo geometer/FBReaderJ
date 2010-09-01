@@ -165,11 +165,17 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
 	}
 
+
+	private static final int MENU_SEARCH = 1;
+	private static final int MENU_REFRESH = 2;
+	private static final int MENU_ADD_CATALOG = 3;
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, 1, "networkSearch", R.drawable.ic_menu_networksearch);
-		addMenuItem(menu, 2, "addCustomCatalog", android.R.drawable.ic_menu_add);
+		addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_networksearch);
+		addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", android.R.drawable.ic_menu_add);
+		addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
 		return true;
 	}
 
@@ -177,17 +183,20 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		menu.findItem(1).setEnabled(!searchInProgress);
+		menu.findItem(MENU_SEARCH).setEnabled(!searchInProgress);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case 1:
+			case MENU_SEARCH:
 				return onSearchRequested();
-			case 2:
+			case MENU_ADD_CATALOG:
 				AddCustomCatalogItemActions.addCustomCatalog(this);
+				return true;
+			case MENU_REFRESH:
+				refreshCatalogsList();
 				return true;
 			default:
 				return true;
@@ -207,5 +216,35 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	@Override
 	public void onModelChanged() {
 		getListView().invalidateViews();
+	}
+
+	private void refreshCatalogsList() {
+		final NetworkView view = NetworkView.Instance();
+
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				if (msg.obj == null) {
+					view.finishBackgroundUpdate();
+				} else {
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					new AlertDialog.Builder(NetworkLibraryActivity.this)
+						.setTitle(boxResource.getResource("title").getValue())
+						.setMessage((String) msg.obj)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+						.create().show();
+				}
+			}
+		};
+
+		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("updatingCatalogsList", new Runnable() {
+			public void run() {
+				final String result = view.runBackgroundUpdate(true);
+				handler.sendMessage(handler.obtainMessage(0, result));
+			}
+		}, this);
 	}
 }

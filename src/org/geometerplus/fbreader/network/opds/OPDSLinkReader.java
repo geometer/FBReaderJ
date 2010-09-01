@@ -49,8 +49,11 @@ public class OPDSLinkReader {
 		return new OPDSCustomLink(ICustomNetworkLink.INVALID_ID, siteName, null, null, null, links);
 	}
 
+	public static final int CACHE_LOAD = 0;
+	public static final int CACHE_UPDATE = 1;
+	public static final int CACHE_CLEAR = 2;
 
-	public static String loadOPDSLinks(boolean updateNotLoad, final NetworkLibrary.OnNewLinkListener listener) {
+	public static String loadOPDSLinks(int cacheMode, final NetworkLibrary.OnNewLinkListener listener) {
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
 			return NetworkErrors.errorMessage("cacheDirectoryError");
@@ -64,7 +67,8 @@ public class OPDSLinkReader {
 		ATOMUpdated cacheUpdatedTime = null;
 		final File catalogsFile = new File(dirFile, fileName);
 		if (catalogsFile.exists()) {
-			if (updateNotLoad) {
+			switch (cacheMode) {
+			case CACHE_UPDATE:
 				try {
 					final OPDSLinkXMLReader reader = new OPDSLinkXMLReader();
 					reader.read(new FileInputStream(catalogsFile));
@@ -77,16 +81,23 @@ public class OPDSLinkReader {
 				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
 				if (diff >= 0 && diff <= valid) {
 					goodCache = true;
-				} else {
-					oldCache = new File(dirFile, "_" + fileName);
-					oldCache.delete();
-					if (!catalogsFile.renameTo(oldCache)) {
-						catalogsFile.delete();
-						oldCache = null;
-					}
+					break;
 				}
-			} else {
+				/* FALLTHROUGH */
+			case CACHE_CLEAR:
+				oldCache = new File(dirFile, "_" + fileName);
+				oldCache.delete();
+				if (!catalogsFile.renameTo(oldCache)) {
+					catalogsFile.delete();
+					oldCache = null;
+				}
+				break;
+			case CACHE_LOAD:
 				goodCache = true;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid cacheMode value (" + cacheMode
+						+ ") in OPDSLinkReader.loadOPDSLinks method");
 			}
 		}
 

@@ -64,6 +64,7 @@
 			<node name="signOut" value="Déconnexion (%s)"/>
 			<node name="refillAccount" value="Recréditer le compte"/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
+			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -278,6 +279,7 @@
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
 			<node name="registerUser" value="Inscription en cours. Veuillez patienter..."/>
 			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
+			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
