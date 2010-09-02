@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import android.util.Log;
-
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -380,7 +378,6 @@ public class NetworkLibrary {
 	}
 
 	private void makeUpToDate() {
-		Log.w("FBREADER", "makeUpToDate...");
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
 		ListIterator<FBTree> nodeIterator = myRootTree.subTrees().listIterator();
@@ -407,10 +404,8 @@ public class NetworkLibrary {
 					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
 					if (linksEqual(link, nodeLink)) {
 						if (linkIsInvalid(link, nodeLink)) {
-							Log.w("FBREADER", "invalid link: " + link.getSiteName() + " /// " + link.getTitle());
 							toRemove.add(currentNode);
 						} else {
-							Log.w("FBREADER", "link is ok: " + link.getSiteName() + " /// " + link.getTitle());
 							processed = true;
 						}
 						currentNode = null;
@@ -426,27 +421,16 @@ public class NetworkLibrary {
 								break;
 							}
 						}
-						if (newNodeLink == null) {
-							Log.w("FBREADER", "nodeLink not found: " + nodeLink.getSiteName() + " /// " + nodeLink.getTitle());
+						if (newNodeLink == null || linkIsInvalid(newNodeLink, nodeLink)) {
 							toRemove.add(currentNode);
 							currentNode = null;
 							++nodeCount;
 						} else {
-							if (linkIsInvalid(newNodeLink, nodeLink)) {
-								Log.w("FBREADER", "move nodeLink: " + nodeLink.getSiteName() + " /// " + nodeLink.getTitle());
-								Log.w("FBREADER", "new link will be: " + newNodeLink.getSiteName() + " /// " + newNodeLink.getTitle());
-								toRemove.add(currentNode);
-								currentNode = null;
-								++nodeCount;
-							} else {
-								Log.w("FBREADER", "need node for link: " + link.getSiteName() + " /// " + link.getTitle());
-								break;
-							}
+							break;
 						}
 					}
 				}
 				if (!processed) {
-					Log.w("FBREADER", "create node for link: " + link.getSiteName() + " /// " + link.getTitle());
 					makeValid(link);
 					final int nextIndex = nodeIterator.nextIndex();
 					new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
@@ -460,7 +444,6 @@ public class NetworkLibrary {
 				currentNode = nodeIterator.next();
 			}
 			if (currentNode instanceof NetworkCatalogTree) {
-				Log.w("FBREADER", "remove node: " + currentNode.getName());
 				toRemove.add(currentNode);
 			}
 			currentNode = null;
