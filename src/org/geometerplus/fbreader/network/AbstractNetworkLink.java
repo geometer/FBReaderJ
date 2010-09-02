@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
 
 public abstract class AbstractNetworkLink implements INetworkLink {
 
@@ -93,5 +95,25 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 			+ "; icon=" + icon
 			+ "; links=" + myLinks
 			+ "}";
+	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof AbstractNetworkLink)) {
+			return false;
+		}
+		final AbstractNetworkLink lnk = (AbstractNetworkLink) o;
+		if (!mySiteName.equals(lnk.mySiteName)
+				|| !myTitle.equals(lnk.myTitle)
+				|| !ZLMiscUtil.equals(mySummary, lnk.mySummary)
+				|| !ZLMiscUtil.equals(myIcon, lnk.myIcon)
+				|| !ZLMiscUtil.mapsEquals(myLinks, lnk.myLinks)) {
+			return false;
+		}
+		return true;
 	}
 }

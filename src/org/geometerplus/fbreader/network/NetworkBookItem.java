@@ -52,7 +52,10 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 
 		@Override
 		public boolean equals(Object o) {
-			if (o == null || !(o instanceof AuthorData)) {
+			if (this == o) {
+				return true;
+			}
+			if (!(o instanceof AuthorData)) {
 				return false;
 			}
 			final AuthorData data = (AuthorData) o;

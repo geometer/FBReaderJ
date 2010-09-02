@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
 class URLRewritingRule {
 
 	// rule types:
@@ -49,5 +51,23 @@ class URLRewritingRule {
 			+ "; name=" + Name
 			+ "; value=" + Value
 			+ "}";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof URLRewritingRule)) {
+			return false;
+		}
+		final URLRewritingRule rule = (URLRewritingRule) o;
+		if (Type != rule.Type
+				|| Apply != rule.Apply
+				|| !ZLMiscUtil.equals(Name, rule.Name)
+				|| !ZLMiscUtil.equals(Value, rule.Value)) {
+			return false;
+		}
+		return true;
 	}
 }

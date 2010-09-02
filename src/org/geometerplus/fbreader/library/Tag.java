@@ -51,6 +51,9 @@ public final class Tag {
 
 	@Override
 	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
 		if (!(o instanceof Tag)) {
 			return false;
 		}

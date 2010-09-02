@@ -353,6 +353,12 @@ public class Book {
 
 	@Override
 	public boolean equals(Object o) {
-		return (o instanceof Book) && (myId == ((Book)o).myId);
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Book)) {
+			return false;
+		}
+		return myId == ((Book)o).myId;
 	}
 }

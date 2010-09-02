@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
@@ -160,11 +162,14 @@ public final class Library {
 		}
 
 		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
 			if (!(object instanceof AuthorSeriesPair)) {
 				return false;
 			}
 			AuthorSeriesPair pair = (AuthorSeriesPair)object;
-			return Author.areEquals(myAuthor, pair.myAuthor) && mySeries.equals(pair.mySeries);
+			return ZLMiscUtil.equals(myAuthor, pair.myAuthor) && mySeries.equals(pair.mySeries);
 		}
 
 		public int hashCode() {

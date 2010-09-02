@@ -25,7 +25,10 @@ public class ATOMId extends ATOMCommonAttributes {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == null || !(o instanceof ATOMId)) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof ATOMId)) {
 			return false;
 		}
 		ATOMId id = (ATOMId) o;

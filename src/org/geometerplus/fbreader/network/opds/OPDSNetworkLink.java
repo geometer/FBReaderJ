@@ -24,6 +24,7 @@ import java.net.URLConnection;
 import java.io.InputStream;
 import java.io.IOException;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
@@ -208,5 +209,27 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 			+ "; urlConditions=" + myUrlConditions
 			+ "; rewritingRules=" + myUrlRewritingRules
 			+ "}";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof OPDSNetworkLink)) {
+			return false;
+		}
+		if (!super.equals(o)) {
+			return false;
+		}
+		final OPDSNetworkLink lnk = (OPDSNetworkLink) o;
+		if (myHasStableIdentifiers != lnk.myHasStableIdentifiers
+				|| !ZLMiscUtil.mapsEquals(myRelationAliases, lnk.myRelationAliases)
+				|| !ZLMiscUtil.mapsEquals(myUrlConditions, lnk.myUrlConditions)
+				|| !ZLMiscUtil.listsEquals(myUrlRewritingRules, lnk.myUrlRewritingRules)
+				|| myAuthenticationManager != lnk.myAuthenticationManager) {
+			return false;
+		}
+		return true;
 	}
 }
