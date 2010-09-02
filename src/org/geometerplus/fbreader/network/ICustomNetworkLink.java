@@ -42,4 +42,11 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void removeLink(String urlKey);
 
 	String reloadInfo();
+
+	// returns true if next methods have changed link's data:
+	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink
+	boolean hasChanges();
+
+	// resets hasChanged() result
+	void resetChanges();
 }

@@ -188,9 +188,9 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 
 			NetworkAuthenticationManager authManager = null;
 			if (myAuthenticationType == "basic") {
-				//authManager = new BasicAuthenticationManager(opdsLink, sslCertificate);
+				//authManager = NetworkAuthenticationManager.createManager(opdsLink, sslCertificate, BasicAuthenticationManager.class);
 			} else if (myAuthenticationType == "litres") {
-				authManager = new LitResAuthenticationManager(opdsLink, sslCertificate);
+				authManager = NetworkAuthenticationManager.createManager(opdsLink, sslCertificate, LitResAuthenticationManager.class);
 			}
 			opdsLink.setAuthenticationManager(authManager);
 

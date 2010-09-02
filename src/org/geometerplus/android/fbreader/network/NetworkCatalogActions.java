@@ -466,7 +466,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	private void removeCustomLink(ICustomNetworkLink link) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.removeCustomLink(link);
-		library.invalidate();
+		library.updateChildren();
 		library.synchronize();
 		NetworkView.Instance().fireModelChanged();
 	}

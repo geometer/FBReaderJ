@@ -80,7 +80,7 @@ abstract class NetworkDialog {
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			if (message.arg1 != 0) {
-				library.invalidate();
+				library.invalidateChildren();
 			}
 			library.invalidateVisibility();
 			library.synchronize();

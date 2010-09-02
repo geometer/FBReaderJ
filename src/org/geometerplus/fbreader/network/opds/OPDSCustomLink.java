@@ -26,6 +26,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.INetworkLink;
@@ -36,6 +37,8 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 
 	private int myId;
 	private SaveLinkListener myListener;
+
+	private boolean myHasChanges;
 
 	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
 		super(siteName, title, summary, icon, links, false);
@@ -62,19 +65,32 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		}
 	}
 
+	public boolean hasChanges() {
+		return myHasChanges;
+	}
+
+	public void resetChanges() {
+		myHasChanges = false;
+	}
+
+
 	public final void setIcon(String icon) {
+		myHasChanges = myHasChanges || !ZLMiscUtil.equals(myIcon, icon);
 		myIcon = icon;
 	}
 
 	public final void setSiteName(String name) {
+		myHasChanges = myHasChanges || !ZLMiscUtil.equals(mySiteName, name);
 		mySiteName = name;
 	}
 
 	public final void setSummary(String summary) {
+		myHasChanges = myHasChanges || !ZLMiscUtil.equals(mySummary, summary);
 		mySummary = summary;
 	}
 
 	public final void setTitle(String title) {
+		myHasChanges = myHasChanges || !ZLMiscUtil.equals(myTitle, title);
 		myTitle = title;
 	}
 
@@ -82,12 +98,14 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		if (url == null) {
 			removeLink(urlKey);
 		} else {
-			myLinks.put(urlKey, url);
+			final String oldUrl = myLinks.put(urlKey, url);
+			myHasChanges = myHasChanges || !url.equals(oldUrl);
 		}
 	}
 
 	public final void removeLink(String urlKey) {
-		myLinks.remove(urlKey);
+		final String oldUrl = myLinks.remove(urlKey);
+		myHasChanges = myHasChanges || oldUrl != null;
 	}
 
 

@@ -19,18 +19,38 @@
 
 package org.geometerplus.fbreader.network.authentication;
 
+import java.util.HashMap;
+
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.network.*;
 
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+
 
 public abstract class NetworkAuthenticationManager {
+
+	private static final HashMap<String, NetworkAuthenticationManager> ourManagers = new HashMap<String, NetworkAuthenticationManager>();
+
+	public static NetworkAuthenticationManager createManager(INetworkLink link, String sslCertificate, Class<? extends NetworkAuthenticationManager> managerClass) {
+		NetworkAuthenticationManager mgr = ourManagers.get(link.getSiteName());
+		if (mgr == null) {
+			if (managerClass == LitResAuthenticationManager.class) {
+				mgr = new LitResAuthenticationManager(link, sslCertificate);
+			}
+			if (mgr != null) {
+				ourManagers.put(link.getSiteName(), mgr);
+			}
+		}
+		return mgr;
+	}
+
 
 	public final INetworkLink Link;
 	public final ZLStringOption UserNameOption;
 	public final String SSLCertificate;
 
-	public NetworkAuthenticationManager(INetworkLink link, String sslCertificate) {
+	protected NetworkAuthenticationManager(INetworkLink link, String sslCertificate) {
 		Link = link;
 		UserNameOption = new ZLStringOption(link.getSiteName(), "userName", "");
 		SSLCertificate = sslCertificate;
