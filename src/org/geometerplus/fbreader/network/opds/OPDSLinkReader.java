@@ -69,6 +69,13 @@ public class OPDSLinkReader {
 		if (catalogsFile.exists()) {
 			switch (cacheMode) {
 			case CACHE_UPDATE:
+				final long diff = System.currentTimeMillis() - catalogsFile.lastModified();
+				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
+				if (diff >= 0 && diff <= valid) {
+					return null;
+				}
+				/* FALLTHROUGH */
+			case CACHE_CLEAR:
 				try {
 					final OPDSLinkXMLReader reader = new OPDSLinkXMLReader();
 					reader.read(new FileInputStream(catalogsFile));
@@ -77,14 +84,6 @@ public class OPDSLinkReader {
 					throw new RuntimeException("That's impossible!!!", e); 
 				}
 
-				final long diff = System.currentTimeMillis() - catalogsFile.lastModified();
-				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
-				if (diff >= 0 && diff <= valid) {
-					goodCache = true;
-					break;
-				}
-				/* FALLTHROUGH */
-			case CACHE_CLEAR:
 				oldCache = new File(dirFile, "_" + fileName);
 				oldCache.delete();
 				if (!catalogsFile.renameTo(oldCache)) {
