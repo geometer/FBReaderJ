@@ -9,8 +9,10 @@
 * Italian interface translation (by Vytek and Neoxx from AndDev.it Translate Team) has been added
 * Hungarian interface translation (by L. B. Szabó, based on FBReader translation by Sándor Gábor) has been added
 * Scrollbar is shown on Android 2.2 devices
+* Installation to SD Card is now possible
 * New icon that indicates a status of a book (Paid / Free downloadable / Already downloaded) in Network library
 * An option for inverting volume keys actions has been added
+* A problem with Eken tablet devices has been fixed: status bar is always visible on these tablets now
 
 ===== 0.6.6 (May 20, 2010) =====
 

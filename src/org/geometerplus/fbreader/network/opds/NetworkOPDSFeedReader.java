@@ -76,7 +76,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		for (ATOMLink link: feed.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if (type == OPDSConstants.MIME_APP_ATOM && rel == "next") {
+			if (OPDSConstants.MIME_APP_ATOM.equals(type) && "next".equals(rel)) {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 		}
@@ -97,11 +97,11 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	// returns BookReference.Format value for specified String. String MUST BE interned.
 	private static int formatByMimeType(String mimeType) {
-		if (mimeType == OPDSConstants.MIME_APP_FB2ZIP) {
+		if (OPDSConstants.MIME_APP_FB2ZIP.equals(mimeType)) {
 			return BookReference.Format.FB2_ZIP;
-		} else if (mimeType == OPDSConstants.MIME_APP_EPUB) {
+		} else if (OPDSConstants.MIME_APP_EPUB.equals(mimeType)) {
 			return BookReference.Format.EPUB;
-		} else if (mimeType == OPDSConstants.MIME_APP_MOBI) {
+		} else if (OPDSConstants.MIME_APP_MOBI.equals(mimeType)) {
 			return BookReference.Format.MOBIPOCKET;
 		}
 		return BookReference.Format.NONE;
@@ -109,16 +109,16 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	// returns BookReference.Type value for specified String. String MUST BE interned.
 	private static int typeByRelation(String rel) {
-		if (rel == null || rel == OPDSConstants.REL_ACQUISITION
-				|| rel == OPDSConstants.REL_ACQUISITION_OPEN) {
+		if (rel == null || OPDSConstants.REL_ACQUISITION.equals(rel)
+				|| OPDSConstants.REL_ACQUISITION_OPEN.equals(rel)) {
 			return BookReference.Type.DOWNLOAD_FULL;
-		} else if (rel == OPDSConstants.REL_ACQUISITION_SAMPLE) {
+		} else if (OPDSConstants.REL_ACQUISITION_SAMPLE.equals(rel)) {
 			return BookReference.Type.DOWNLOAD_DEMO;
-		} else if (rel == OPDSConstants.REL_ACQUISITION_CONDITIONAL) {
+		} else if (OPDSConstants.REL_ACQUISITION_CONDITIONAL.equals(rel)) {
 			return BookReference.Type.DOWNLOAD_FULL_CONDITIONAL;
-		} else if (rel == OPDSConstants.REL_ACQUISITION_SAMPLE_OR_FULL) {
+		} else if (OPDSConstants.REL_ACQUISITION_SAMPLE_OR_FULL.equals(rel)) {
 			return BookReference.Type.DOWNLOAD_FULL_OR_DEMO;
-		} else if (rel == OPDSConstants.REL_ACQUISITION_BUY) {
+		} else if (OPDSConstants.REL_ACQUISITION_BUY.equals(rel)) {
 			return BookReference.Type.BUY;
 		} else {
 			return BookReference.Type.UNKNOWN;
@@ -144,11 +144,11 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 
-			if (rel == null && type == OPDSConstants.MIME_APP_ATOM) {
+			if (rel == null && OPDSConstants.MIME_APP_ATOM.equals(type)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 			int relType = BookReference.Format.NONE;
-			if (rel == null || rel.equals(OPDSConstants.REL_ACQUISITION_PREFIX)) {
+			if (rel == null || OPDSConstants.REL_ACQUISITION_PREFIX.equals(rel)) {
 				relType = formatByMimeType(type);
 			}
 			if (relType != BookReference.Format.NONE
@@ -236,20 +236,20 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsNetworkLink.relation(link.getRel(), type);
 			final int referenceType = typeByRelation(rel);
-			if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL
-					|| rel == OPDSConstants.REL_THUMBNAIL) {
-				if (type == NetworkImage.MIME_PNG ||
-						type == NetworkImage.MIME_JPEG) {
+			if (OPDSConstants.REL_IMAGE_THUMBNAIL.equals(rel)
+					|| OPDSConstants.REL_THUMBNAIL.equals(rel)) {
+				if (NetworkImage.MIME_PNG.equals(type) ||
+						NetworkImage.MIME_JPEG.equals(type)) {
 					cover = href;
 				}
 			} else if ((rel != null && rel.startsWith(OPDSConstants.REL_IMAGE_PREFIX))
-					|| rel == OPDSConstants.REL_COVER) {
+					|| OPDSConstants.REL_COVER.equals(rel)) {
 				if (cover == null &&
-						(type == NetworkImage.MIME_PNG ||
-						 type == NetworkImage.MIME_JPEG)) {
+						(NetworkImage.MIME_PNG.equals(type) ||
+						 NetworkImage.MIME_JPEG.equals(type))) {
 					cover = href;
 				}
-			} else if (referenceType == BookReference.Type.BUY) {
+			} else if (BookReference.Type.BUY == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink) link; 
 				String price = null;
 				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
@@ -263,7 +263,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				if (price == null) {
 					price = "";
 				}
-				if (type == OPDSConstants.MIME_TEXT_HTML) {
+				if (OPDSConstants.MIME_TEXT_HTML.equals(type)) {
 					collectReferences(references, opdsLink, href,
 							BookReference.Type.BUY_IN_BROWSER, price, true);
 				} else {
@@ -375,16 +375,16 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if (type == NetworkImage.MIME_PNG ||
-					type == NetworkImage.MIME_JPEG) {
-				if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL ||
-						rel == OPDSConstants.REL_THUMBNAIL ||
-						(coverURL == null && (rel == OPDSConstants.REL_COVER || 
+			if (NetworkImage.MIME_PNG.equals(type) ||
+					NetworkImage.MIME_JPEG.equals(type)) {
+				if (OPDSConstants.REL_IMAGE_THUMBNAIL.equals(rel) ||
+						OPDSConstants.REL_THUMBNAIL.equals(rel) ||
+						(coverURL == null && (OPDSConstants.REL_COVER.equals(rel) || 
 								(rel != null && rel.startsWith(OPDSConstants.REL_IMAGE_PREFIX))))) {
 					coverURL = href;
 				}
-			} else if (type == OPDSConstants.MIME_APP_ATOM) {
-				if (rel == ATOMConstants.REL_ALTERNATE) {
+			} else if (OPDSConstants.MIME_APP_ATOM.equals(type)) {
+				if (ATOMConstants.REL_ALTERNATE.equals(rel)) {
 					if (url == null) {
 						url = href;
 						urlIsAlternate = true;
@@ -392,19 +392,19 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				} else {
 					url = href;
 					urlIsAlternate = false;
-					if (rel == OPDSConstants.REL_CATALOG_AUTHOR) {
+					if (OPDSConstants.REL_CATALOG_AUTHOR.equals(rel)) {
 						catalogType = NetworkCatalogItem.CATALOG_BY_AUTHORS;
 					}
 				}
-			} else if (type == OPDSConstants.MIME_TEXT_HTML) {
-				if (rel == OPDSConstants.REL_ACQUISITION ||
-						rel == OPDSConstants.REL_ACQUISITION_OPEN ||
-						rel == ATOMConstants.REL_ALTERNATE ||
+			} else if (OPDSConstants.MIME_TEXT_HTML.equals(type)) {
+				if (OPDSConstants.REL_ACQUISITION.equals(rel) ||
+						OPDSConstants.REL_ACQUISITION_OPEN.equals(rel) ||
+						ATOMConstants.REL_ALTERNATE.equals(rel) ||
 						rel == null) {
 					htmlURL = href;
 				}
-			} else if (type == OPDSConstants.MIME_APP_LITRES) {
-				if (rel == OPDSConstants.REL_BOOKSHELF) {
+			} else if (OPDSConstants.MIME_APP_LITRES.equals(type)) {
+				if (OPDSConstants.REL_BOOKSHELF.equals(rel)) {
 					litresCatalogue = true;
 					url = href; // FIXME: mimeType ???
 				}
@@ -419,7 +419,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			htmlURL = null;
 		}
 
-		final boolean dependsOnAccount = opdsLink.getCondition(entry.Id.Uri) == OPDSNetworkLink.FeedCondition.SIGNED_IN;
+		final boolean dependsOnAccount =
+            OPDSNetworkLink.FeedCondition.SIGNED_IN == opdsLink.getCondition(entry.Id.Uri);
 
 		final String annotation;
 		if (entry.Summary != null) {
