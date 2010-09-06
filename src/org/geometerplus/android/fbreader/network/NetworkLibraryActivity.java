@@ -57,7 +57,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	static Initializator myInitializator; 
+	private static Initializator myInitializator; 
 
 	@Override
 	public void onResume() {
@@ -72,6 +72,15 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		} else {
 			prepareView();
 		}
+	}
+
+	@Override
+	public void onDestroy() {
+		if (!NetworkView.Instance().isInitialized()
+				&& myInitializator != null) {
+			myInitializator.setActivity(null);
+		}
+		super.onDestroy();
 	}
 
 	private static class Initializator extends Handler {
@@ -90,12 +99,13 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					Initializator.this.start();
-				} else {
+				} else if (myActivity != null) {
 					myActivity.finish();
 				}
 			}
 		};
 
+		// run this method only if myActivity != null
 		private void runInitialization() {
 			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
 				public void run() {
@@ -105,6 +115,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			}, myActivity);
 		}
 
+		// run this method only if myActivity != null
 		private void processResults(String error) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource boxResource = dialogResource.getResource("networkError");
@@ -125,7 +136,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 		@Override
 		public void handleMessage(Message message) {
-			if (message.what == 0) {
+			if (myActivity == null) {
+				return;
+			} else if (message.what == 0) {
 				runInitialization(); // run initialization process
 			} else if (message.obj == null) {
 				myActivity.startService(new Intent(myActivity.getApplicationContext(), LibraryInitializationService.class));
