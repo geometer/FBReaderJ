@@ -1,4 +1,8 @@
-===== 0.7.0 (??? ??, 2010) =====
+===== 0.7.1 (??? ??, 2010) =====
+
+* Support for links in browser with "epub:" protocol (Stanza links)
+
+===== 0.7.0 (Sep 03, 2010) =====
 
 * Catalog's loading resumption nearly from position when "back" key has been pressed
 * New "Navigation" dialog: user can navigate using slider. To see this dialog touch
