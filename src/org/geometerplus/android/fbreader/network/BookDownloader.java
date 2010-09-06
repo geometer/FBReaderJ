@@ -26,6 +26,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.content.Intent;
 
+import org.geometerplus.fbreader.network.BookReference;
+
 
 public class BookDownloader extends Activity {
 
@@ -33,6 +35,10 @@ public class BookDownloader extends Activity {
 		final List<String> path = uri.getPathSegments();
 		if ((path == null) || path.isEmpty()) {
 			return false;
+		}
+
+		if ("epub".equals(uri.getScheme())) {
+			return true;
 		}
 
 		final String fileName = path.get(path.size() - 1).toLowerCase();
@@ -50,7 +56,7 @@ public class BookDownloader extends Activity {
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		final Intent intent = getIntent();
-		final Uri uri = intent.getData();
+		Uri uri = intent.getData();
 		intent.setData(null);
 		if (uri == null || !acceptsUri(uri)) {
 			finish();
@@ -60,6 +66,11 @@ public class BookDownloader extends Activity {
 		if (!intent.hasExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY)) {
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, 
 				BookDownloaderService.Notifications.ALREADY_DOWNLOADING);
+		}
+		if ("epub".equals(uri.getScheme())) {
+			uri = uri.buildUpon().scheme("http").build();
+			intent.putExtra(BookDownloaderService.BOOK_FORMAT_KEY,
+					BookReference.Format.EPUB);
 		}
 
 		startService(
