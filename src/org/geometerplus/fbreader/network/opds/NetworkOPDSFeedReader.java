@@ -148,11 +148,13 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 			int relType = BookReference.Format.NONE;
-			if (rel == null || OPDSConstants.REL_ACQUISITION_PREFIX.equals(rel)) {
+			if (rel == null || rel.startsWith(OPDSConstants.REL_ACQUISITION_PREFIX)
+					|| rel.startsWith(OPDSConstants.REL_FBREADER_ACQUISITION_PREFIX)) {
 				relType = formatByMimeType(type);
 			}
 			if (relType != BookReference.Format.NONE
-					&& (id == null || idType < relType)) {
+					&& (id == null || idType < relType
+							|| (idType == relType && OPDSConstants.REL_ACQUISITION.equals(rel)))) {
 				id = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				idType = relType;
 			}
@@ -190,8 +192,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		for (ATOMLink link: entry.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if ((rel != null && rel.startsWith(OPDSConstants.REL_ACQUISITION_PREFIX))
-					|| (rel == null && formatByMimeType(type) != BookReference.Format.NONE)) {
+			if (rel == null
+					? (formatByMimeType(type) != BookReference.Format.NONE)
+					: (rel.startsWith(OPDSConstants.REL_ACQUISITION_PREFIX)
+							|| rel.startsWith(OPDSConstants.REL_FBREADER_ACQUISITION_PREFIX))) {
 				hasBookLink = true;
 				break;
 			}

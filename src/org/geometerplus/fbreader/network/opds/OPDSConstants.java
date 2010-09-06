@@ -31,6 +31,7 @@ interface OPDSConstants {
 
 	// Entry level / acquisition links
 	String REL_ACQUISITION_PREFIX = "http://opds-spec.org/acquisition";
+	String REL_FBREADER_ACQUISITION_PREFIX = "http://data.fbreader.org/acquisition";
 	String REL_ACQUISITION = "http://opds-spec.org/acquisition";
 	String REL_ACQUISITION_OPEN = "http://opds-spec.org/acquisition/open-access";
 	String REL_ACQUISITION_SAMPLE = "http://opds-spec.org/acquisition/sample";
