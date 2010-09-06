@@ -77,7 +77,7 @@ public class NetworkSearchActivity extends Activity {
 		public void afterUpdateItems() {
 			myTree.updateSubTrees();
 			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChanged();
+				NetworkView.Instance().fireModelChangedAsync();
 			}
 		}
 
@@ -91,7 +91,7 @@ public class NetworkSearchActivity extends Activity {
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().empty());
 			}
 			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChanged();
+				NetworkView.Instance().fireModelChangedAsync();
 			}
 		}
 
@@ -159,7 +159,7 @@ public class NetworkSearchActivity extends Activity {
 		final SearchItemTree tree = NetworkView.Instance().getSearchItemTree();
 
 		tree.setSearchResult(result);
-		NetworkView.Instance().fireModelChanged();
+		NetworkView.Instance().fireModelChangedAsync();
 
 		final SearchHandler handler = new SearchHandler(tree);
 		NetworkView.Instance().startItemsLoading(

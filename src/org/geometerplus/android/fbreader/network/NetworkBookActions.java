@@ -335,7 +335,7 @@ class NetworkBookActions extends NetworkTreeActions {
 						}
 					}
 					if (NetworkView.Instance().isInitialized()) {
-						NetworkView.Instance().fireModelChanged();
+						NetworkView.Instance().fireModelChangedAsync();
 					}
 				}
 			})
@@ -385,7 +385,7 @@ class NetworkBookActions extends NetworkTreeActions {
 							library.synchronize();
 						}
 						if (NetworkView.Instance().isInitialized()) {
-							NetworkView.Instance().fireModelChanged();
+							NetworkView.Instance().fireModelChangedAsync();
 						}
 					}
 				}; // end Handler

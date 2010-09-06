@@ -286,7 +286,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		@Override
 		public void afterUpdateItems() {
 			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChanged();
+				NetworkView.Instance().fireModelChangedAsync();
 			}
 		}
 
@@ -308,7 +308,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				library.synchronize();
 			}
 			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChanged();
+				NetworkView.Instance().fireModelChangedAsync();
 			}
 		}
 
@@ -407,7 +407,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					} else {
 						tree.ChildrenItems.clear();
 						tree.clear();
-						NetworkView.Instance().fireModelChanged();
+						NetworkView.Instance().fireModelChangedAsync();
 					}
 				}
 				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
@@ -431,7 +431,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 		tree.ChildrenItems.clear();
 		tree.clear();
-		NetworkView.Instance().fireModelChanged();
+		NetworkView.Instance().fireModelChangedAsync();
 		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
 		NetworkView.Instance().startItemsLoading(
 			activity,
@@ -468,6 +468,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		library.removeCustomLink(link);
 		library.updateChildren();
 		library.synchronize();
-		NetworkView.Instance().fireModelChanged();
+		NetworkView.Instance().fireModelChangedAsync();
 	}
 }

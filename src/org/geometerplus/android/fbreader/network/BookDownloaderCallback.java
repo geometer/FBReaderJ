@@ -28,7 +28,7 @@ public class BookDownloaderCallback extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if (NetworkView.Instance().isInitialized()) {
-			NetworkView.Instance().fireModelChanged();
+			NetworkView.Instance().fireModelChangedAsync();
 		}
 	}
 }

@@ -75,12 +75,12 @@ public class ItemsLoadingService extends Service {
 				doStop();
 				if (NetworkView.Instance().isInitialized()) {
 					NetworkView.Instance().removeItemsLoadingRunnable(key);
-					NetworkView.Instance().fireModelChanged();
+					NetworkView.Instance().fireModelChangedAsync();
 				}
 			}
 		};
 
-		NetworkView.Instance().fireModelChanged(); // this call is needed to show indeterminate progress bar in title right on downloading start
+		NetworkView.Instance().fireModelChangedAsync(); // this call is needed to show indeterminate progress bar in title right on downloading start
 
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {
