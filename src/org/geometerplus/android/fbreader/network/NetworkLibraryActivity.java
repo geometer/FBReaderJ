@@ -57,24 +57,41 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
+	static Initializator myInitializator; 
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (!NetworkView.Instance().isInitialized()) {
-			new Initializator().start();
+			if (myInitializator == null) {
+				myInitializator = new Initializator(this);
+				myInitializator.start();
+			} else {
+				myInitializator.setActivity(this);
+			}
 		} else {
 			prepareView();
 		}
 	}
 
-	private class Initializator extends Handler {
+	private static class Initializator extends Handler {
+
+		private NetworkLibraryActivity myActivity;
+
+		public Initializator(NetworkLibraryActivity activity) {
+			myActivity = activity;
+		}
+
+		public void setActivity(NetworkLibraryActivity activity) {
+			myActivity = activity;
+		}
 
 		final DialogInterface.OnClickListener myListener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					Initializator.this.start();
 				} else {
-					NetworkLibraryActivity.this.finish();
+					myActivity.finish();
 				}
 			}
 		};
@@ -85,14 +102,14 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 					final String error = NetworkView.Instance().initialize();
 					Initializator.this.end(error);
 				}
-			}, NetworkLibraryActivity.this);
+			}, myActivity);
 		}
 
 		private void processResults(String error) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource boxResource = dialogResource.getResource("networkError");
 			final ZLResource buttonResource = dialogResource.getResource("button");
-			new AlertDialog.Builder(NetworkLibraryActivity.this)
+			new AlertDialog.Builder(myActivity)
 				.setTitle(boxResource.getResource("title").getValue())
 				.setMessage(error)
 				.setIcon(0)
@@ -111,8 +128,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (message.what == 0) {
 				runInitialization(); // run initialization process
 			} else if (message.obj == null) {
-				startService(new Intent(getApplicationContext(), LibraryInitializationService.class));
-				prepareView(); // initialization is complete successfully
+				myActivity.startService(new Intent(myActivity.getApplicationContext(), LibraryInitializationService.class));
+				myActivity.prepareView(); // initialization is complete successfully
 			} else {
 				processResults((String) message.obj); // handle initialization error
 			}
