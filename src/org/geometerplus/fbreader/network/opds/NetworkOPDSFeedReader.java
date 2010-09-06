@@ -393,7 +393,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 						url = href;
 						urlIsAlternate = true;
 					}
-				} else {
+				} else if (url == null
+						|| rel == null || rel.equals(OPDSConstants.REL_SUBSECTION)) {
 					url = href;
 					urlIsAlternate = false;
 					if (OPDSConstants.REL_CATALOG_AUTHOR.equals(rel)) {

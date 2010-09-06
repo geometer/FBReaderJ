@@ -28,6 +28,7 @@ interface OPDSConstants {
 
 	// Entry level / catalog types
 	String REL_CATALOG_AUTHOR = "http://data.fbreader.org/catalog/author";
+	String REL_SUBSECTION = "subsection";
 
 	// Entry level / acquisition links
 	String REL_ACQUISITION_PREFIX = "http://opds-spec.org/acquisition";
