@@ -7,6 +7,7 @@ drawable_res_dir = "res/drawable"
 tree_icons_dir = "icons/tree"
 menu_icons_dir = "icons/menu"
 tabs_icons_dir = "icons/tabs"
+others_icons_dir = "icons/others"
 text_search_icons_dir = "icons/text_search"
 data_dir = "data"
 
@@ -35,4 +36,5 @@ shutil.copyfile("icons/fbreader.png", drawable_res_dir + "/fbreader.png")
 process_data_dir("", tree_icons_dir, drawable_res_dir, 0)
 process_data_dir("", menu_icons_dir, drawable_res_dir, 0)
 process_data_dir("", tabs_icons_dir, drawable_res_dir, 0)
+process_data_dir("", others_icons_dir, drawable_res_dir, 0)
 process_data_dir("text_search_", text_search_icons_dir, drawable_res_dir, 0)

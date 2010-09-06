@@ -324,7 +324,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 		final NetworkDialog dlg = NetworkDialog.getDialog(id);
 		if (dlg != null) {
-			dlg.prepareDialog(dialog);
+			dlg.prepareDialog(this, dialog);
 		}		
 	}
 }

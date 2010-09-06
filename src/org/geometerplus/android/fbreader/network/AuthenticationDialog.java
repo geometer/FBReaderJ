@@ -126,7 +126,7 @@ class AuthenticationDialog extends NetworkDialog {
 	}
 
 	@Override
-	public void prepareDialog(Dialog dialog) {
+	public void prepareDialogInternal(Dialog dialog) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
 		((TextView) dialog.findViewById(R.id.network_authentication_login)).setText(mgr.UserNameOption.getValue());

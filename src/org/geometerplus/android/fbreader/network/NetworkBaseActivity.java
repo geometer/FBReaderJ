@@ -271,7 +271,7 @@ abstract class NetworkBaseActivity extends ListActivity
 
 		final NetworkDialog dlg = NetworkDialog.getDialog(id);
 		if (dlg != null) {
-			dlg.prepareDialog(dialog);
+			dlg.prepareDialog(this, dialog);
 		}		
 	}
 

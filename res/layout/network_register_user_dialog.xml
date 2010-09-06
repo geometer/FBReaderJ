@@ -58,13 +58,28 @@
 			android:singleLine="true"
 			android:layout_marginTop="5dp"
 		/>
-		<EditText
-			android:id="@+id/network_register_email"
+		<RelativeLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:singleLine="true"
-			android:inputType="textEmailAddress"
-		/>
+		>
+			<Button
+				android:id="@+id/network_register_email_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/dropdown"
+				android:layout_alignParentRight="true"
+			/>
+			<EditText
+				android:id="@+id/network_register_email"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:inputType="textEmailAddress"
+				android:layout_toLeftOf="@id/network_register_email_button"
+				android:layout_alignWithParentIfMissing="true"
+				android:layout_alignParentLeft="true"
+			/>
+		</RelativeLayout>
 		<TextView
 			android:id="@+id/network_register_error"
 			android:layout_width="fill_parent"

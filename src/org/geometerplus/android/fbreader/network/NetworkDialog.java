@@ -158,7 +158,6 @@ abstract class NetworkDialog {
 
 	public final Dialog createDialog(final Activity activity) {
 		myActivity = activity;
-
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
@@ -184,5 +183,10 @@ abstract class NetworkDialog {
 			.create();
 	}
 
-	public abstract void prepareDialog(Dialog dialog);
+	public final void prepareDialog(final Activity activity, Dialog dialog) {
+		myActivity = activity;
+		prepareDialogInternal(dialog);
+	}
+
+	protected abstract void prepareDialogInternal(Dialog dialog);
 }

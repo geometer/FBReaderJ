@@ -197,7 +197,7 @@ class CustomCatalogDialog extends NetworkDialog {
 	}
 
 	@Override
-	public void prepareDialog(Dialog dialog) {
+	public void prepareDialogInternal(Dialog dialog) {
 		if (myLink != null) {
 			if (myTitle == null) myTitle = myLink.getTitle();
 			if (myUrl == null) myUrl = myLink.getLink(INetworkLink.URL_MAIN);
