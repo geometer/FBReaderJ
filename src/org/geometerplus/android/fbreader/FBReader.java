@@ -35,6 +35,7 @@ import android.widget.TextView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -42,6 +43,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
 public final class FBReader extends ZLAndroidActivity {
@@ -223,11 +225,15 @@ public final class FBReader extends ZLAndroidActivity {
 		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
 			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
 		final ZLView view = fbreader.getCurrentView();
-		return view instanceof ZLTextView
-				&& ((ZLTextView) view).getModel() != null
-				&& ((ZLTextView) view).getModel().getParagraphsNumber() != 0
-				&& fbreader.Model != null
-				&& fbreader.Model.Book != null;
+		if (!(view instanceof ZLTextView)) {
+			return false;
+		}
+		final ZLTextModel textModel = ((ZLTextView) view).getModel();
+		if (textModel == null || textModel.getParagraphsNumber() == 0) {
+			return false;
+		}
+		final BookModel bookModel = fbreader.Model;
+		return bookModel != null && bookModel.Book != null;
 	}
 
 	private final void createNavigation(View layout) {
