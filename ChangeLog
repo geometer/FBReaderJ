@@ -2,6 +2,7 @@
 
 * Support for links in browser with "epub:" protocol (Stanza links)
 * Using e-mail from gmail accounts at "Sign In" dialog in Network library
+* Some bugfixes
 
 ===== 0.7.0 (Sep 03, 2010) =====
 
