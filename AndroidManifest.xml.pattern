@@ -12,6 +12,29 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="file" />
+				<data android:pathPattern=".*\\.epub" />
+				<data android:pathPattern=".*\\.oeb" />
+				<data android:pathPattern=".*\\.fb2" />
+				<data android:pathPattern=".*\\.fb2\\.zip" />
+				<data android:pathPattern=".*\\.mobi" />
+				<data android:pathPattern=".*\\.prc" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="file" />
+				<data android:mimeType="application/epub+zip" />
+				<data android:mimeType="application/x-pilot-prc" />
+				<data android:mimeType="application/x-mobipocket-ebook" />
+				<data android:mimeType="application/x-fictionbook+xml" />
+				<data android:mimeType="application/x-fictionbook" />
+			</intent-filter>
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.TextSearchActivity" />
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TextSearchActivity">
@@ -50,12 +73,13 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.epub" />
-				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.oeb" />
-				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.fb2" />
-				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.fb2\\.zip" />
-				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.mobi" />
-				<data android:host="*" android:scheme="http" android:pathPattern=".*\\.prc" />
+				<data android:host="*" android:scheme="http" />
+				<data android:pathPattern=".*\\.epub" />
+				<data android:pathPattern=".*\\.oeb" />
+				<data android:pathPattern=".*\\.fb2" />
+				<data android:pathPattern=".*\\.fb2\\.zip" />
+				<data android:pathPattern=".*\\.mobi" />
+				<data android:pathPattern=".*\\.prc" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
@@ -65,6 +89,8 @@
 				<data android:mimeType="application/epub+zip" />
 				<data android:mimeType="application/x-pilot-prc" />
 				<data android:mimeType="application/x-mobipocket-ebook" />
+				<data android:mimeType="application/x-fictionbook+xml" />
+				<data android:mimeType="application/x-fictionbook" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
