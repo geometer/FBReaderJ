@@ -95,4 +95,8 @@ public abstract class BooksDatabase {
 
 	protected abstract ZLTextPosition getStoredPosition(long bookId);
 	protected abstract void storePosition(long bookId, ZLTextPosition position);
+
+	protected abstract boolean insertIntoBookList(long bookId);
+	protected abstract boolean deleteFromBookList(long bookId);
+	protected abstract boolean checkBookList(long bookId);
 }

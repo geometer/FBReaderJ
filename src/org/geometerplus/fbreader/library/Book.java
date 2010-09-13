@@ -73,7 +73,7 @@ public class Book {
 			book.loadLists();
 		}
 
-		if (fileInfos.check(physicalFile) && (book != null)) {
+		if (book != null && fileInfos.check(physicalFile)) {
 			return book;
 		}
 		fileInfos.save();
@@ -343,6 +343,12 @@ public class Book {
 	public void storePosition(ZLTextPosition position) {
 		if (myId != -1) {
 			BooksDatabase.Instance().storePosition(myId, position);
+		}
+	}
+
+	public void insertIntoBookList() {
+		if (myId != -1) {
+			BooksDatabase.Instance().insertIntoBookList(myId);
 		}
 	}
 

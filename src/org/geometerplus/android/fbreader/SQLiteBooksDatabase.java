@@ -58,7 +58,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		if (version >= 8) {
+		final int currentVersion = 9;
+		if (version >= currentVersion) {
 			return;
 		}
 		ZLDialogManager.Instance().wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
@@ -82,12 +83,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables6();
 					case 7:
 						updateTables7();
+					case 8:
+						updateTables8();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
 
 				myDatabase.execSQL("VACUUM");
-				myDatabase.setVersion(8);
+				myDatabase.setVersion(currentVersion);
 			}
 		});
 	}
@@ -768,6 +771,42 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.execute();
 	}
 
+	private SQLiteStatement myInsertIntoBookListStatement;
+	protected boolean insertIntoBookList(long bookId) {
+		if (myInsertIntoBookListStatement == null) {
+			myInsertIntoBookListStatement = myDatabase.compileStatement(
+				"INSERT OR IGNORE INTO BookList(book_id) VALUES (?)"
+			);
+		}
+		myInsertIntoBookListStatement.bindLong(1, bookId);
+		myInsertIntoBookListStatement.execute();
+		return true;
+	}
+
+	private SQLiteStatement myDeleteFromBookListStatement;
+	protected boolean deleteFromBookList(long bookId) {
+		if (myDeleteFromBookListStatement == null) {
+			myDeleteFromBookListStatement = myDatabase.compileStatement(
+				"DELETE FROM BookList WHERE book_id = ?"
+			);
+		}
+		myDeleteFromBookListStatement.bindLong(1, bookId);
+		myDeleteFromBookListStatement.execute();
+		return true;
+	}
+
+	private SQLiteStatement myCheckBookListStatement;
+	protected boolean checkBookList(long bookId) {
+		if (myCheckBookListStatement == null) {
+			myCheckBookListStatement = myDatabase.compileStatement(
+				"SELECT COUNT(*) FROM BookList WHERE book_id = ?"
+			);
+		}
+		myCheckBookListStatement.bindLong(1, bookId);
+		return myCheckBookListStatement.simpleQueryForLong() > 0;
+	}
+
+
 	private void createTables() {
 		myDatabase.execSQL(
 			"CREATE TABLE Books(" +
@@ -1013,5 +1052,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + id);
 			myDatabase.execSQL("DELETE FROM BookTag WHERE book_id=" + id);
 		}
+	}
+
+	private void updateTables8() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookList ( " +
+				"book_id INTEGER UNIQUE NOT NULL REFERENCES Books (book_id))");
 	}
 }

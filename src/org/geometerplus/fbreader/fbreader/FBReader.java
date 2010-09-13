@@ -234,6 +234,7 @@ public final class FBReader extends ZLApplication {
 		}
 		Book book = Book.getByFile(file);
 		if (book != null) {
+			book.insertIntoBookList();
 			return book;
 		}
 		if (file.isArchive()) {

@@ -38,6 +38,7 @@ public final class Library {
 	}
 
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
+	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
 	private final LibraryTree myLibraryByTag = new RootTree();
 	private final LibraryTree myRecentBooks = new RootTree();
@@ -52,6 +53,7 @@ public final class Library {
 		myDoRebuild = true;
 
 		myBooks.clear();
+		myExternalBooks.clear();
 		myLibraryByAuthor.clear();
 		myLibraryByTag.clear();
 		myRecentBooks.clear();
@@ -70,7 +72,7 @@ public final class Library {
 	}
 
 	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
-		Book book = saved.get(fileInfos.getId(bookFile));
+		Book book = saved.remove(fileInfos.getId(bookFile));
 		if (book == null) {
 			doReadMetaInfo = true;
 			book = new Book(bookFile);
@@ -94,6 +96,33 @@ public final class Library {
 		} else if (file.isArchive()) {
 			for (ZLFile entry : fileInfos.archiveEntries(file)) {
 				collectBooks(entry, fileInfos, savedBooks, doReadMetaInfo);
+			}
+		}
+	}
+
+	private void collectExternalBooks(FileInfoSet fileInfos, Map<Long,Book> savedBooks) {
+		final HashSet<ZLPhysicalFile> myUpdatedFiles = new HashSet<ZLPhysicalFile>();
+		final HashSet<Long> files = new HashSet<Long>(savedBooks.keySet());
+		for (Long fileId: files) {
+			final ZLFile bookFile = fileInfos.getFile(fileId);
+			if (bookFile == null) {
+				continue;
+			}
+			final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
+			if (!physicalFile.exists()) {
+				continue;
+			}
+			boolean reloadMetaInfo = false; 
+			if (myUpdatedFiles.contains(physicalFile)) {
+				reloadMetaInfo = true;
+			} else if (!fileInfos.check(physicalFile)) {
+				reloadMetaInfo = true;
+				myUpdatedFiles.add(physicalFile);
+			}
+			final Book book = getBook(bookFile, fileInfos, savedBooks, reloadMetaInfo);
+			if (book != null) {
+				myBooks.add(book);
+				myExternalBooks.add(book);
 			}
 		}
 	}
@@ -146,6 +175,8 @@ public final class Library {
 		myBooks.add(getBook(getHelpFile(), fileInfos, savedBooks, false));
 		//android.os.Debug.stopMethodTracing();
 		//System.err.println("books have been synchronized " + (System.currentTimeMillis() - start));
+
+		collectExternalBooks(fileInfos, savedBooks);
 
 		//android.os.Debug.startMethodTracing("/sdcard/ll4");
 		fileInfos.save();
@@ -315,7 +346,18 @@ public final class Library {
 		db.saveRecentBookIds(ids);
 	}
 
-	public boolean canDeleteBook(Book book) {
+	public static final int REMOVE_DONT_REMOVE = 0x00;
+	public static final int REMOVE_FROM_LIBRARY = 0x01;
+	public static final int REMOVE_FROM_DISK = 0x02;
+	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
+
+	public int getRemoveBookMode(Book book) {
+		synchronize();
+		return (myExternalBooks.contains(book) ? REMOVE_FROM_LIBRARY : REMOVE_DONT_REMOVE)
+			| (canDeleteBookFile(book) ? REMOVE_FROM_DISK : REMOVE_DONT_REMOVE);
+	}
+
+	private boolean canDeleteBookFile(Book book) {
 		ZLFile file = book.File;
 		if (file.getPhysicalFile() == null) {
 			return false;
@@ -329,7 +371,10 @@ public final class Library {
 		return true;
 	}
 
-	public void deleteBook(Book book) {
+	public void removeBook(Book book, int removeMode) {
+		if (removeMode == REMOVE_DONT_REMOVE) {
+			return;
+		}
 		synchronize();
 		myBooks.remove(book);
 		myLibraryByAuthor.removeBook(book);
@@ -341,6 +386,10 @@ public final class Library {
 			db.saveRecentBookIds(ids);
 		}
 		mySearchResult.removeBook(book);
-		book.File.getPhysicalFile().delete();
+
+		BooksDatabase.Instance().deleteFromBookList(book.getId());
+		if ((removeMode & REMOVE_FROM_DISK) != 0) {
+			book.File.getPhysicalFile().delete();
+		}
 	}
 }
