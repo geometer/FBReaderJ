@@ -1,7 +1,6 @@
 ===== 0.7.1 (??? ??, 2010) =====
 
-* Support for reading books from any folders
-  (Books not from the "Library" folder aren't displayed in the Library)
+* Support for reading books from any folders (e.g. opening books via file-manager)
 * Support for links in browser with "epub:" protocol (Stanza links)
 * Using e-mail from gmail accounts at "Sign In" dialog in Network library (only Android 2.0 and greater)
 * Some bugfixes
