@@ -70,6 +70,13 @@ public abstract class ZLAndroidActivity extends Activity {
 			final Uri uri = intent.getData();
 			if (uri != null) {
 				fileToOpen = uri.getPath();
+                final String scheme = uri.getScheme();
+                if ("content".equals(scheme)) {
+                    final File file = new File(fileToOpen);
+                    if (!file.exists()) {
+                        fileToOpen = file.getParent();
+                    }
+                }
 			}
 			intent.setData(null);
 		}
