@@ -120,7 +120,11 @@ public final class Library {
 				myUpdatedFiles.add(physicalFile);
 			}
 			final Book book = getBook(bookFile, fileInfos, savedBooks, reloadMetaInfo);
-			if (book != null) {
+			if (book == null) {
+				continue;
+			}
+			final long bookId = book.getId();
+			if (bookId != -1 && BooksDatabase.Instance().checkBookList(bookId)) {
 				myBooks.add(book);
 				myExternalBooks.add(book);
 			}
