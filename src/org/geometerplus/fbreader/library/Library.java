@@ -109,7 +109,7 @@ public final class Library {
 				continue;
 			}
 			final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
-			if (!physicalFile.exists()) {
+			if (physicalFile == null || !physicalFile.exists()) {
 				continue;
 			}
 			boolean reloadMetaInfo = false; 
