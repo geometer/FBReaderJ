@@ -241,6 +241,7 @@ public final class FBReader extends ZLApplication {
 			for (ZLFile child : file.children()) {
 				book = Book.getByFile(child);
 				if (book != null) {
+					book.insertIntoBookList();
 					return book;
 				}
 			}

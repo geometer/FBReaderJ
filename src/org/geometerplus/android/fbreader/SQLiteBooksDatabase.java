@@ -58,7 +58,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 9;
+		final int currentVersion = 10;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -85,6 +85,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables7();
 					case 8:
 						updateTables8();
+					case 9:
+						updateTables9();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -1058,5 +1060,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookList ( " +
 				"book_id INTEGER UNIQUE NOT NULL REFERENCES Books (book_id))");
+	}
+
+	private void updateTables9() {
+		myDatabase.execSQL("CREATE INDEX BookList_BookIndex ON BookList (book_id)");
 	}
 }
