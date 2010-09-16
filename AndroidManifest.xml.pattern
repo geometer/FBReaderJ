@@ -15,7 +15,6 @@
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="file" />
 				<data android:pathPattern=".*\\.epub" />
 				<data android:pathPattern=".*\\.oeb" />
@@ -23,6 +22,16 @@
 				<data android:pathPattern=".*\\.fb2\\.zip" />
 				<data android:pathPattern=".*\\.mobi" />
 				<data android:pathPattern=".*\\.prc" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="file" />
+				<data android:mimeType="text/plain" android:pathPattern=".*\\.epub" />
+				<data android:mimeType="text/plain" android:pathPattern=".*\\.oeb" />
+				<data android:mimeType="text/plain" android:pathPattern=".*\\.fb2" />
+				<data android:mimeType="text/plain" android:pathPattern=".*\\.mobi" />
+				<data android:mimeType="text/plain" android:pathPattern=".*\\.prc" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
