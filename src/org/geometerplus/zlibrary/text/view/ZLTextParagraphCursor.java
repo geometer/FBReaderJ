@@ -155,7 +155,7 @@ public final class ZLTextParagraphCursor {
 				myOffset += length;
 			}
 		}
-		
+
 		private final void addWord(char[] data, int offset, int len, int paragraphOffset) {
 			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
 			for (int i = myFirstMark; i < myLastMark; ++i) {
@@ -166,8 +166,9 @@ public final class ZLTextParagraphCursor {
 			}
 			myElements.add(word);		
 		}
-	}
 
+	}
+		
 	public final int Index;
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
@@ -187,11 +188,15 @@ public final class ZLTextParagraphCursor {
 		return result;
 	}
 
+	private static final char[] SPACE_ARRAY = { ' ' };
 	void fill() {
 		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
 				new Processor(paragraph, new LineBreaker(Model.getLanguage()), Model.getMarks(), Index, myElements).fill();
+				break;
+			case ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH:
+				myElements.add(new ZLTextWord(SPACE_ARRAY, 0, 1, 0));
 				break;
 			default:
 				break;

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French FBReaderJ resources, by Sébastien Rodriguez -->
+<!-- French FBReaderJ resources
+	 Intial work: Sébastien Rodriguez 
+	 Contributors: Mathias Monnerville <mathias@monnerville.com>
+-->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
@@ -8,7 +11,7 @@
 	</node>
 	<node name="libraryView">
 		<node name="byAuthor" value="Par auteur"/>
-		<node name="byTag" value="Par étiquette"/>
+		<node name="byTag" value="Par genre"/>
 		<node name="recent" value="Récent"/>
 		<node name="searchResults" value="Trouvé(s)"/>
 		<node name="menu">
@@ -41,12 +44,12 @@
 		<node name="stoppingCatalogLoading" value="Arrêt du chargement" />
 		<node name="stoppingNetworkSearch" value="Arrêt de la recherche" />
 		<node name="search" value="Rechercher" />
-		<node name="searchSummary" toBeTranslated="true" value="Search for books in catalogs" />
+		<node name="searchSummary" value="Chercher des livres dans les catalogues" />
 		<node name="searchResults" value="Résultats de la recherche : %s"/>
-		<node name="editCustomCatalog" toBeTranslated="true" value="Edit catalog"/>
-		<node name="removeCustomCatalog" toBeTranslated="true" value="Remove catalog"/>
-		<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
-		<node name="addCustomCatalogSummary" toBeTranslated="true" value="Add custom OPDS catalog manually"/>
+		<node name="editCustomCatalog" value="Editer le catalogue"/>
+		<node name="removeCustomCatalog" value="Supprimer le catalogue"/>
+		<node name="addCustomCatalog" value="Ajouter un catalogue"/>
+		<node name="addCustomCatalogSummary" value="Ajouter un catalogue OPDS personnalisé"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Voulez-vous lire la copie locale?"/>
 			<node name="download" value="Voulez-vous télécharger ce livre?"/>
@@ -63,8 +66,8 @@
 			<node name="signIn" value="Connexion"/>
 			<node name="signOut" value="Déconnexion (%s)"/>
 			<node name="refillAccount" value="Recréditer le compte"/>
-			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
-			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
+			<node name="addCustomCatalog" value="Ajouter catalogue"/>
+			<node name="refreshCatalogsList" value="Rafraîchir"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -130,7 +133,7 @@
 		<node name="search" value="Rechercher"/>
 		<node name="rotate" value="Orienter l'écran"/>
 		<node name="increaseFont" value="Augmenter la taille" />
-		<node name="decreaseFont" value="Diminuier la taille" />
+		<node name="decreaseFont" value="Diminuer la taille" />
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
 	</node>
@@ -138,9 +141,9 @@
 		<node name="button">
 			<node name="buy" value="Acheter"/>
 			<node name="buyAndDownload" value="Acheter et télécharger"/>
-			<node name="continue" toBeTranslated="true" value="Continue" />
-			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
-			<node name="tryAgain" toBeTranslated="true" value="Try again" />
+			<node name="continue" value="Continuer" />
+			<node name="editUrl" value="Editer l'url" />
+			<node name="tryAgain" value="Recommencer" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nom du fichier"/>
@@ -153,45 +156,45 @@
 				<node name="path" value="Répertoires dans lesquels chercher les livres"/>
 			</node>
 			<node name="LookNFeel" value="Look &amp; Comportement">
-				<node name="autoOrientation" value="Rotation Automatique">
-					<node name="summaryOn" value="L'affichage tournera lorsque l'utilisateur bougera l'équipement"/>
-					<node name="summaryOff" value="L'affichage ne tournera pas lorsque l'utilisateur bougera l'équipement"/>
+				<node name="autoOrientation" value="Rotation automatique">
+					<node name="summaryOn" value="Basculer l'affichage du texte pour suivre la rotation de l'écran"/>
+					<node name="summaryOff" value="Garder l'affichage tel quel en ignorant la rotation de l'écran"/>
 				</node>
-				<node name="showStatusBar" value="Afficher la barre de statut">
+				<node name="showStatusBar" value="Barre de statut">
 					<node name="summaryOn" value="Afficher la barre de statut en mode lecture"/>
 					<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
 				</node>
-				<node name="dontTurnScreenOff" value="Empêche l'écran de s'éteindre">
-					<node name="summaryOn" value="L'écran ne s'éteindra pas pendant la lecture"/>
-					<node name="summaryOff" value="L'écran s'éteindra en cas d'inactivité"/>
+				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
+					<node name="summaryOn" value="L'écran reste allumé pendant la lecture"/>
+					<node name="summaryOff" value="L'écran s'éteind en cas d'inactivité"/>
 				</node>
-				<node name="scrollbarType" value="Barre de défilement à droite">
+				<node name="scrollbarType" value="Barre de défilement">
 					<node name="hide" value="Cacher"/>
-					<node name="show" value="Afficher comme une barre de défilement normale"/>
-					<node name="showAsProgress" value="Afficher comme une barre de progression"/>
+					<node name="show" value="Afficher"/>
+					<node name="showAsProgress" value="Indicateur de progression"/>
 				</node>
-				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
-					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+				<node name="appearanceSettings" value="Apparence">
+					<node name="summary" value="Paramètres d'affichage du texte"/>
 				</node>
 			</node>
-			<node name="Scrolling" value="Défilement">
-				<node name="flick" value="Défilement par accoup (Flick)">
-					<node name="summaryOn" value="Les pages défileront par la pression du doigt"/>
-					<node name="summaryOff" value="Les pages défileront par la tape du doigt"/>
+			<node name="Scrolling" value="Navigation">
+				<node name="flick" value="Défiler par accoup (Flick)">
+					<node name="summaryOn" value="Faire glisser le doigt pour changer de page"/>
+					<node name="summaryOff" value="Une pression du doigt change de page"/>
 				</node>
-				<node name="volumeKeys" value="Défilement par les touches de Volume">
-					<node name="summaryOn" value="Utiliser les touches du volume pour le défilement"/>
-					<node name="summaryOff" value="Conserver les touches volume pour le son"/>
+				<node name="volumeKeys" value="Touches du volume">
+					<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>
+					<node name="summaryOff" value="Les touches du volume n'ont pas d'effet sur la navigation"/>
 				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
+				<node name="invertVolumeKeys" value="Inversion touches du volume">
+					<node name="summaryOn" value="Volume + affiche la page suivante"/>
+					<node name="summaryOff" value="Volume + affiche la page précédente"/>
 				</node>
-				<node name="animated" value="Défilement animé">
-					<node name="summaryOn" value="Défilement des pages plus doux"/>
-					<node name="summaryOff" value="Défilement des pages plus rapide"/>
+				<node name="animated" value="Animation changement de page">
+					<node name="summaryOn" value="La transition entre deux pages est plus douce"/>
+					<node name="summaryOff" value="Le changement de page est instantané"/>
 				</node>
-				<node name="horizontal" value="Défilement Horizontal">
+				<node name="horizontal" value="Défilement horizontal">
 					<node name="summaryOn" value="Défilement des pages horizontalement"/>
 					<node name="summaryOff" value="Défilement des pages verticalement"/>
 				</node>
@@ -268,18 +271,18 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Téléchargement de %s"/>
-			<node name="search" value="Recherche en cours. Patientez, s'il-vous plait..."/>
-			<node name="loadingBook" value="Ouverture en cours. Patientez, s'il-vous plait..."/>
-			<node name="loadingBookList" value="Ouverture de la bibliothèque. Patientez, s'il-vous plait..."/>
-			<node name="creatingBooksDatabase" value="Création de la base des livres. Patientez, s'il-vous plait..."/>
-			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres. Patientez, s'il-vous plait..."/>
-			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque. Patientez, s'il-vous plait..." />
+			<node name="search" value="Recherche en cours, veuillez patienter..."/>
+			<node name="loadingBook" value="Ouverture en cours, veuillez patienter..."/>
+			<node name="loadingBookList" value="Ouverture de la bibliothèque, veuillez patienter..."/>
+			<node name="creatingBooksDatabase" value="Création de la base des livres, veuillez patienter..."/>
+			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres, veuillez patienter..."/>
+			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque, veuillez patienter..." />
 			<node name="authentication" value="Authentification. Veuillez patienter..."/>
-			<node name="signOut" value="Déconnexion en cours. Patientez, s'il-vous plait..." />
+			<node name="signOut" value="Déconnexion en cours, veuillez patienter..." />
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
 			<node name="registerUser" value="Inscription en cours. Veuillez patienter..."/>
-			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
-			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
+			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..." />
+			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
@@ -296,9 +299,9 @@
 			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
 			<node name="noUserEmail" value="Aucun utilisateur n'est inscrit&#10;avec l'adresse email indiquée"/>
 			<node name="unsupportedOperation" value="Opération non supportée"/>
-			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
-			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
-			<node name="cacheDirectoryError" toBeTranslated="true" value="Unable to create cache directory" />
+			<node name="notAnOPDS" value="Il ne s'agit pas d'un catalogue OPDS" />
+			<node name="noRequiredInformation" value="Certaines informations requises sont absentes du catalogue" />
+			<node name="cacheDirectoryError" value="Impossible de créer le répertoire contenant le cache" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Information"/>
@@ -325,18 +328,18 @@
 			<node name="differentPasswords" value="Les deux mots de passe indiqués doivent être les mêmes."/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" toBeTranslated="true" value="Custom catalog" />
-			<node name="catalogTitle" toBeTranslated="true" value="Title" />
-			<node name="catalogUrl" toBeTranslated="true" value="URL" />
-			<node name="catalogSummary" toBeTranslated="true" value="Summary" />
-			<node name="catalogTitleExample" toBeTranslated="true" value="E.g.: Project Gutenberg catalog" />
-			<node name="catalogUrlExample" toBeTranslated="true" value="E.g.: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" toBeTranslated="true" value="E.g.: Public domain books" />
-			<node name="titleIsEmpty" toBeTranslated="true" value="Title should be non-empty" />
-			<node name="urlIsEmpty" toBeTranslated="true" value="URL should be non-empty" />
-			<node name="invalidUrl" toBeTranslated="true" value="Invalid URL" />
-			<node name="titleAlreadyExists" toBeTranslated="true" value="Specified title is already in use" />
-			<node name="siteAlreadyExists" toBeTranslated="true" value="Specified site is already in use" />
+			<node name="title" value="Catalogue personalisé" />
+			<node name="catalogTitle" value="Titre" />
+			<node name="catalogUrl" value="Adresse du catalogue sur le réseau" />
+			<node name="catalogSummary" value="Description" />
+			<node name="catalogTitleExample" value="Ex: Catalogue du project Gutenberg" />
+			<node name="catalogUrlExample" value="Ex: http://m.gutenberg.org/" />
+			<node name="catalogSummaryExample" value="Ex: Livres du domaine publique" />
+			<node name="titleIsEmpty" value="Le titre ne devrait pas être vide" />
+			<node name="urlIsEmpty" value="L'adresse ne doit pas être vide" />
+			<node name="invalidUrl" value="Adresse invalide" />
+			<node name="titleAlreadyExists" value="Le titre indiqué est déjà utilisé" />
+			<node name="siteAlreadyExists" value="Le site spécifié est déjà utilisé" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Achat du livre"/>
@@ -348,10 +351,10 @@
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="textNotFound" value="Aucune occurence dans le livre, désolé."/>
-		<node name="bookNotFound" value="Aucun livre correspondant dans la bibliothèque, désolé"/>
-		<node name="bookmarkNotFound" value="Aucun marque-page correspondant, désolé"/>
-		<node name="cannotOpenBook" value="Livre indisponible actuellement, désolé"/>
+		<node name="textNotFound" value="Aucune occurence dans le livre"/>
+		<node name="bookNotFound" value="Aucun livre correspondant dans la bibliothèque"/>
+		<node name="bookmarkNotFound" value="Aucun marque-page correspondant"/>
+		<node name="cannotOpenBook" value="Impossible d'ouvrir le livre"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Base"/>
