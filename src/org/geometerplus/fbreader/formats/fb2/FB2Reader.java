@@ -136,6 +136,8 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 			case FB2Tag.STANZA:
 				beginParagraph(ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
 				endParagraph();
+				beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
+				endParagraph();
 				popKind();
 				break;
 				
