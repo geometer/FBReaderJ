@@ -166,7 +166,6 @@ public final class ZLTextParagraphCursor {
 			}
 			myElements.add(word);		
 		}
-
 	}
 		
 	public final int Index;
