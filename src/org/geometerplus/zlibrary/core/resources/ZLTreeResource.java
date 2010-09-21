@@ -26,7 +26,10 @@ import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 final class ZLTreeResource extends ZLResource {
-	public static ZLTreeResource ourRoot;
+	static ZLTreeResource ourRoot;
+
+    private static long ourTimeStamp = 0;
+    private static String ourLanguage = null;
 
 	private boolean myHasValue;
 	private	String myValue;
@@ -36,13 +39,28 @@ final class ZLTreeResource extends ZLResource {
 		if (ourRoot == null) {
 			ourRoot = new ZLTreeResource("", null);
 			loadData("en");
-			Locale locale = Locale.getDefault();
-			String language = locale.getLanguage();
-			if (!language.equals("en")) {
-				loadData(language);
+			ourLanguage = Locale.getDefault().getLanguage();
+			if (!"en".equals(ourLanguage)) {
+				loadData(ourLanguage);
 			}
 		}
 	}
+
+    private static void updateLanguage() {
+        final long timeStamp = System.currentTimeMillis();
+        if (timeStamp > ourTimeStamp + 1000) {
+            synchronized (ourRoot) { 
+                if (timeStamp > ourTimeStamp + 1000) {
+					ourTimeStamp = timeStamp;
+        			final String language = Locale.getDefault().getLanguage();
+					if (language != null && !language.equals(ourLanguage)) {
+						ourLanguage = language;
+						loadData(ourLanguage);
+					}
+				}
+			}
+		}
+    }
 	
 	public static void loadData(String language) {
 		final String fileName = language + ".xml";
@@ -66,6 +84,7 @@ final class ZLTreeResource extends ZLResource {
 	}
 	
 	public String getValue() {
+		updateLanguage();
 		return myHasValue ? myValue : ZLMissingResource.Value;
 	}
 

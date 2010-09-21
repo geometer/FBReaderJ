@@ -52,9 +52,9 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			myMenuStack.pop();
 		}
 		protected void processItem(ZLApplication.Menubar.PlainItem item) {
-			MenuItem menuItem = myMenuStack.peek().add(0, myItemCount++, Menu.NONE, item.Name);
+			MenuItem menuItem = myMenuStack.peek().add(0, myItemCount++, Menu.NONE, item.getTitle());
 			try {
-				final String fieldName = "ic_menu_" + item.ActionId.toLowerCase();
+				final String fieldName = "ic_menu_" + item.getActionId().toLowerCase();
 				menuItem.setIcon(R.drawable.class.getField(fieldName).getInt(null));
 			} catch (NoSuchFieldException e) {
 			} catch (IllegalAccessException e) {
@@ -62,15 +62,29 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			menuItem.setOnMenuItemClickListener(myMenuListener);
 			myMenuItemMap.put(menuItem, item);
 		}
-		protected void processSepartor(ZLApplication.Menubar.Separator separator) {
-			//myMenuStack.peek().addSeparator(0, myItemCount++);
+	}
+
+	private class MenuUpdater extends ZLApplication.MenuVisitor {
+		private int myItemCount = Menu.FIRST;
+		private Menu myRoot;
+
+		private MenuUpdater(Menu menu) {
+			myRoot = menu;
+		}
+		protected void processSubmenuBeforeItems(ZLApplication.Menubar.Submenu submenu) {
+		}
+		protected void processSubmenuAfterItems(ZLApplication.Menubar.Submenu submenu) {
+		}
+		protected void processItem(ZLApplication.Menubar.PlainItem item) {
+			MenuItem menuItem = myRoot.findItem(myItemCount++);
+			menuItem.setTitle(item.getTitle());
 		}
 	}
 
 	private final MenuItem.OnMenuItemClickListener myMenuListener =
 		new MenuItem.OnMenuItemClickListener() {
 			public boolean onMenuItemClick(MenuItem item) {
-				getApplication().doAction(myMenuItemMap.get(item).ActionId);
+				getApplication().doAction(myMenuItemMap.get(item).getActionId());
 				return true;
 			}
 		};
@@ -87,7 +101,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	@Override
 	protected void refreshMenu() {
 		for (Map.Entry<MenuItem,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
-			final String actionId = entry.getValue().ActionId;
+			final String actionId = entry.getValue().getActionId();
 			final ZLApplication application = getApplication();
 			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}

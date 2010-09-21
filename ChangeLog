@@ -1,3 +1,7 @@
+===== 0.7.5 (Sep 22, 2010) =====
+* Mistyping in Russian help has been fixed
+* On-fly language change has been implemented
+
 ===== 0.7.4 (Sep 20, 2010) =====
 * EMPTY-LINE tag in fb2 files is now supported
 * better support for STANZA tag in fb2
