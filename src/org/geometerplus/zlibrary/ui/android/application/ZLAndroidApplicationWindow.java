@@ -64,23 +64,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
-	private class MenuUpdater extends ZLApplication.MenuVisitor {
-		private int myItemCount = Menu.FIRST;
-		private Menu myRoot;
-
-		private MenuUpdater(Menu menu) {
-			myRoot = menu;
-		}
-		protected void processSubmenuBeforeItems(ZLApplication.Menubar.Submenu submenu) {
-		}
-		protected void processSubmenuAfterItems(ZLApplication.Menubar.Submenu submenu) {
-		}
-		protected void processItem(ZLApplication.Menubar.PlainItem item) {
-			MenuItem menuItem = myRoot.findItem(myItemCount++);
-			menuItem.setTitle(item.getTitle());
-		}
-	}
-
 	private final MenuItem.OnMenuItemClickListener myMenuListener =
 		new MenuItem.OnMenuItemClickListener() {
 			public boolean onMenuItemClick(MenuItem item) {
