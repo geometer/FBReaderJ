@@ -109,24 +109,17 @@ public final class FBView extends ZLTextView {
 		}
 
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		if (preferences.FlickOption.getValue()) {
-			myStartX = x;
-			myStartY = y;
-			setScrollingActive(true);
-			myIsManualScrollingActive = true;
+		if (preferences.HorizontalOption.getValue()) {
+			if (x <= Context.getWidth() / 3) {
+				doScrollPage(false);
+			} else if (x >= Context.getWidth() * 2 / 3) {
+				doScrollPage(true);
+			}
 		} else {
-			if (preferences.HorizontalOption.getValue()) {
-				if (x <= Context.getWidth() / 3) {
-					doScrollPage(false);
-				} else if (x >= Context.getWidth() * 2 / 3) {
-					doScrollPage(true);
-				}
-			} else {
-				if (y <= Context.getHeight() / 3) {
-					doScrollPage(false);
-				} else if (y >= Context.getHeight() * 2 / 3) {
-					doScrollPage(true);
-				}
+			if (y <= Context.getHeight() / 3) {
+				doScrollPage(false);
+			} else if (y >= Context.getHeight() * 2 / 3) {
+				doScrollPage(true);
 			}
 		}
 
@@ -139,8 +132,20 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		// first pressed move passes coordinates where move starts
+		if (!myIsManualScrollingActive) {
+			final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+			if (preferences.FlickOption.getValue()) {
+				myStartX = x;
+				myStartY = y;
+				myIsManualScrollingActive = true;
+			}
+			return true;
+		}
+
 		synchronized (this) {
-			if (isScrollingActive() && myIsManualScrollingActive) {
+			if (myIsManualScrollingActive) {
+				setScrollingActive(true);
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				if (diff > 0) {
@@ -279,7 +284,7 @@ public final class FBView extends ZLTextView {
 	protected boolean isSelectionEnabled() {
 		return myReader.SelectionEnabledOption.getValue();
 	}
-	
+
 	@Override
 	public int scrollbarType() {
 		return myReader.ScrollbarTypeOption.getValue();
