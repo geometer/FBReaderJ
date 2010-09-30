@@ -1,0 +1,10 @@
+default.properties
+build.properties
+local.properties
+bin/
+gen/
+res/drawable/
+res/raw/
+libs/
+obj/
+*~
