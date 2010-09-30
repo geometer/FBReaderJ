@@ -352,7 +352,12 @@ public class ZLAndroidWidget extends View {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
 					if (myPendingPress) {
-						view.onStylusPress(myPressedX, myPressedY);
+						if (y > getHeight() - myFooter.getTapHeight()) {
+							myFooter.setProgress(view, myPressedX);
+						}
+						else {
+							view.onStylusPress(myPressedX, myPressedY);
+						}
 					}
 					view.onStylusRelease(x, y);
 				}
