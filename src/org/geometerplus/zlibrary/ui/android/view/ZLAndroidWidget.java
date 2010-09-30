@@ -157,8 +157,13 @@ public class ZLAndroidWidget extends View {
 			horizontal ? 0 : shift,
 			myPaint
 		);
+
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+			myFooter.onDraw(canvas, getScrollProgress());
+		}
+
 		if (stopScrolling) {
-			final ZLView view = ZLApplication.Instance().getCurrentView();
 			if (myScrollingBound != 0) {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;
@@ -289,6 +294,9 @@ public class ZLAndroidWidget extends View {
 	private void onDrawStatic(Canvas canvas) {
 		drawOnBitmap(myMainBitmap);
 		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
+		if (ZLApplication.Instance().getCurrentView().scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+			myFooter.onDraw(canvas, getScrollProgress());
+		}
 	}
 
 	@Override
