@@ -18,7 +18,10 @@ E.g., on my computer 'local.properties' consists of 2 lines:
   sdk.dir=/Users/geometer/android-sdk-mac_86
   ndk.dir=/Users/geometer/android-ndk-r4b
 
-2. If you use Linux or MacOS, just run 'ant package' and go to step 3.
+2. If you use Linux or MacOS, just run 'ant package' and go to step 3. For debugging 
+purposes, you might want to run 'ant dbg' for building the package in debug mode, signing 
+with your debug key (in this case, you can skip step 3).
+
 If you are Windows user
   2a. Run ndk-build (a program from Android NDK directory) in your project catalog;
       This program only runs from Cygwin >= 1.7, please read NDK docs for details.
