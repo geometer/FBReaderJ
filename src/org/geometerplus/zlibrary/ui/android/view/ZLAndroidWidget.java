@@ -422,7 +422,8 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
+			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -441,7 +442,8 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
+			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -460,7 +462,8 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
+			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
 			return 0;
 		}
 		return view.getScrollbarFullSize();
