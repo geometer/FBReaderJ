@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
+import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
 
 public class ZLAndroidWidget extends View {
 	private final Paint myPaint = new Paint();
@@ -38,6 +39,7 @@ public class ZLAndroidWidget extends View {
 	private int myScrollingShift;
 	private float myScrollingSpeed;
 	private int myScrollingBound;
+	private ZLFooter myFooter = new ZLFooter();
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
