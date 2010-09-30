@@ -67,8 +67,23 @@ public class ZLAndroidWidget extends View {
 		return ZLAndroidPaintContext.Instance();
 	}
 
+	private Point myViewSize = new Point();
+	// ensure children objects has correct information about widget size
+	private void ensureChildrenSizes() {
+		int width = getWidth();
+		int height = getHeight();
+		if (myViewSize.x != width || myViewSize.y != height) {
+			// pass draw area size to footer
+			// it need need height also, because canvas.getHeight() is buggy)
+			myFooter.setDrawAreaSize(width, height);
+			myViewSize.x = width;
+			myViewSize.y = height;
+		}
+	}
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
 		if (myScreenIsTouched) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
 			myScrollingInProgress = false;
@@ -77,12 +92,15 @@ public class ZLAndroidWidget extends View {
 			view.onScrollingFinished(ZLView.PAGE_CENTRAL);
 			setPageToScroll(ZLView.PAGE_CENTRAL);
 		}
+
+		ensureChildrenSizes();
 	}
 
 	@Override
 	protected void onDraw(final Canvas canvas) {
 		super.onDraw(canvas);
 
+		ensureChildrenSizes();
 		final int w = getWidth();
 		final int h = getHeight();
 
