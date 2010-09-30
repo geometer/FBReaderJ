@@ -35,6 +35,7 @@ abstract public class ZLView {
 	public static final int SCROLLBAR_HIDE = 0;
 	public static final int SCROLLBAR_SHOW = 1;
 	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
+	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 
 	abstract public void paint(int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
