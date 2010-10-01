@@ -95,7 +95,7 @@ public class ZLAndroidWidget extends View {
 
 		ensureChildrenSizes();
 		final int w = getWidth();
-		final int h = getHeight();
+		final int h = getTextViewHeight();
 
 		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
 			myMainBitmap = null;
@@ -121,7 +121,7 @@ public class ZLAndroidWidget extends View {
 
 	private void onDrawInScrolling(Canvas canvas) {
 		final int w = getWidth();
-		final int h = getHeight();
+		final int h = getTextViewHeight();
 		//final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
 
 		boolean stopScrolling = false;
@@ -141,7 +141,7 @@ public class ZLAndroidWidget extends View {
 			myScrollingSpeed *= 1.5;
 		}
 		final boolean horizontal =
-			(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+			(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 			(myViewPageToScroll == ZLView.PAGE_LEFT);
 		canvas.drawBitmap(
 			myMainBitmap,
@@ -250,11 +250,11 @@ public class ZLAndroidWidget extends View {
 				break;
 			case ZLView.PAGE_TOP:
 				myScrollingSpeed = 3;
-				myScrollingBound = getHeight();
+				myScrollingBound = getTextViewHeight();
 				break;
 			case ZLView.PAGE_BOTTOM:
 				myScrollingSpeed = -3;
-				myScrollingBound = -getHeight();
+				myScrollingBound = -getTextViewHeight();
 				break;
 		}
 		if (viewPage != ZLView.PAGE_CENTRAL) {
@@ -278,14 +278,10 @@ public class ZLAndroidWidget extends View {
 			mySecondaryBitmapIsUpToDate = true;
 		}
 
-		final int w = getWidth();
-		final int h = getHeight();
 		final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
-
 		Canvas canvas = new Canvas(bitmap);
 		context.beginPaint(canvas);
-		final int scrollbarWidth = view.showScrollbar() ? getVerticalScrollbarWidth() : 0;
-		context.setSize(w, h, scrollbarWidth);
+		context.setSize(getWidth(), getTextViewHeight(), getWidth() - getTextViewWidth());
 		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
 		context.endPaint();
 	}
@@ -418,9 +414,9 @@ public class ZLAndroidWidget extends View {
 			final int from = view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbLength(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
-			final int size = horizontal ? getWidth() : getHeight();
+			final int size = horizontal ? getWidth() : getTextViewHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
 		} else {
@@ -437,9 +433,9 @@ public class ZLAndroidWidget extends View {
 			final int from = view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbPosition(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
-			final int size = horizontal ? getWidth() : getHeight();
+			final int size = horizontal ? getWidth() : getTextViewHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
 		} else {
@@ -453,5 +449,32 @@ public class ZLAndroidWidget extends View {
 			return 0;
 		}
 		return view.getScrollbarFullSize();
+	}
+
+	private int getTextViewHeight() {
+		int height = getHeight();
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+			height -= myFooter.getHeight();
+		}
+		return height;
+	}
+
+	private int getTextViewWidth() {
+		int width = getWidth();
+		ZLView view = ZLApplication.Instance().getCurrentView();
+		if (view != null &&
+			(view.scrollbarType() == ZLView.SCROLLBAR_SHOW || view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_PROGRESS)) {
+			width -= getVerticalScrollbarWidth();
+		}
+		return width;
+	}
+
+	private float getScrollProgress() {
+		// get percentage of page scroll (from 0 to 1)
+		final boolean horizontal =
+			(myViewPageToScroll == ZLView.PAGE_RIGHT) || (myViewPageToScroll == ZLView.PAGE_LEFT);
+		final float pageSize = horizontal ? getTextViewWidth() : getTextViewHeight();
+		return (float)myScrollingShift / pageSize;
 	}
 }
