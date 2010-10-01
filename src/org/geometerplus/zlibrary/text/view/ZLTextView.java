@@ -1433,6 +1433,18 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		gotoPosition(findStart(pageCenter, SizeUnit.PIXEL_UNIT, getTextAreaHeight() / 2));
 		ZLApplication.Instance().repaintView();
 	}
+
+	public String getWordUnderPosition(int x, int y) {
+		String word = "";
+		ZLTextElementArea element = getElementByCoordinates(x, y);
+		if (element != null && element.Element instanceof ZLTextWord) {
+			word = ((ZLTextWord)element.Element).toString();
+			word = word.replaceAll("\\W+$", "");
+			word = word.replaceAll("^\\W+", "");
+		}
+		return word;
+	}
+	
 	public void savePosition() {
 		myStoredTextPositions.add(new ZLTextWordCursor(myCurrentPage.StartCursor));
 		if (myStoredTextPositions.size() > 30) {
