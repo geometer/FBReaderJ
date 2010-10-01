@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
 
@@ -55,6 +56,7 @@ public class ZLAndroidApplication extends Application {
 		return Build.DISPLAY != null && Build.DISPLAY.contains("simenxie");
 	}
 
+	public Activity myMainActivity;
 	ZLAndroidApplicationWindow myMainWindow;
 
 	@Override

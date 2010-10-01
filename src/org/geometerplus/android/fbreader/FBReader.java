@@ -106,6 +106,7 @@ public final class FBReader extends ZLAndroidActivity {
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
+		application.myMainActivity = this;
 		if (myTextSearchPanel == null) {
 			myTextSearchPanel = new TextSearchButtonPanel();
 			myTextSearchPanel.register();
