@@ -326,8 +326,14 @@ public class ZLAndroidWidget extends View {
 	}
 
 
+	public String myLongPressWord;
 	private class LongClickRunnable implements Runnable {
 		public void run() {
+			final ZLView view = ZLApplication.Instance().getCurrentView();
+			if (view instanceof ZLTextView) {
+				myLongPressWord = ((ZLTextView)view).getWordUnderPosition(myPressedX, myPressedY);
+			}
+
 			if (performLongClick()) {
 				myLongClickPerformed = true;
 			}
@@ -520,6 +526,7 @@ public class ZLAndroidWidget extends View {
 	public void loadContextMenu(Menu menu, ArrayList<String> menuActions) {
 		String read_menu[] = {
 				ActionCode.SEARCH,
+				ActionCode.TRANSLATE_WORD,
 				ActionCode.ROTATE,
 				ActionCode.INCREASE_FONT,
 				ActionCode.DECREASE_FONT,
@@ -537,6 +544,9 @@ public class ZLAndroidWidget extends View {
 			String actionId = read_menu[actionIndex];
 			if (app.isActionEnabled(actionId) && app.isActionVisible(actionId)) {
 				String itemText = myMenuResource.getResource(actionId).getValue();
+				if (actionId == ActionCode.TRANSLATE_WORD) {
+					itemText = String.format(itemText, myLongPressWord);
+				}
 				menu.add(0, actionIndex, Menu.NONE, itemText);
 			}
 			menuActions.add(actionId);
