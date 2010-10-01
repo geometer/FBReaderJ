@@ -332,11 +332,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public static final int SCROLLBAR_HIDE = 0;
-	public static final int SCROLLBAR_SHOW = 1;
-	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
-	public abstract int scrollbarType();
-
 	public final boolean showScrollbar() {
 		return scrollbarType() != SCROLLBAR_HIDE;
 	}
