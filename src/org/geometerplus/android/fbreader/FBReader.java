@@ -44,6 +44,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -145,6 +147,11 @@ public final class FBReader extends ZLAndroidActivity {
 
 		findViewById(R.id.main_view).setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
+				final ZLAndroidWidget widget =
+					((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+				if (widget.onLongClick()) {
+					return true;
+				}
 				if (!myNavigatePanel.getVisibility()) {
 					navigate();
 					return true;
@@ -272,7 +279,7 @@ public final class FBReader extends ZLAndroidActivity {
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
 					final int page = progress + 1;
-					final int pagesNumber = seekBar.getMax() + 1; 
+					final int pagesNumber = seekBar.getMax() + 1;
 					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
 				}

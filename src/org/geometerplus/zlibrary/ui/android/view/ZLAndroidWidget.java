@@ -24,10 +24,12 @@ import android.graphics.*;
 import android.view.*;
 import android.util.AttributeSet;
 
+import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
 
 public class ZLAndroidWidget extends View {
@@ -40,6 +42,9 @@ public class ZLAndroidWidget extends View {
 	private float myScrollingSpeed;
 	private int myScrollingBound;
 	private ZLFooter myFooter = new ZLFooter();
+
+	private final int FOOTER_LONG_TAP_REVERT = 0;
+	private final int FOOTER_LONG_TAP_NAVIGATE = 1;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -333,7 +338,7 @@ public class ZLAndroidWidget extends View {
         if (myPendingLongClickRunnable == null) {
             myPendingLongClickRunnable = new LongClickRunnable();
         }
-        postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+        postDelayed(myPendingLongClickRunnable, ViewConfiguration.getLongPressTimeout());
     }
 
 	private boolean myPendingPress;
@@ -499,5 +504,23 @@ public class ZLAndroidWidget extends View {
 			(myViewPageToScroll == ZLView.PAGE_RIGHT) || (myViewPageToScroll == ZLView.PAGE_LEFT);
 		final float pageSize = horizontal ? getTextViewWidth() : getTextViewHeight();
 		return (float)myScrollingShift / pageSize;
+	}
+
+	public boolean onLongClick (){
+		if (myPressedY > getHeight() - myFooter.getTapHeight()) {
+			FBReader reader = (FBReader)FBReader.Instance();
+			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+				final ZLView view = ZLApplication.Instance().getCurrentView();
+				if (view instanceof ZLTextView) {
+					return false; //there will be position revert
+				}
+			}
+			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_NAVIGATE) {
+				final ZLView view = ZLApplication.Instance().getCurrentView();
+				myFooter.setProgress(view, myPressedX);
+				return true;
+			}
+		}
+		return false;
 	}
 }
