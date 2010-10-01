@@ -22,6 +22,10 @@ package org.geometerplus.zlibrary.core.view;
 abstract public class ZLView {
 	public final ZLPaintContext Context;
 
+	public static final int MODE_READ = 0;
+	public static final int MODE_SELECT = 1;
+	protected int myMode = MODE_READ;
+
 	public ZLView(ZLPaintContext context) {
 		Context = context;
 	}
@@ -58,6 +62,10 @@ abstract public class ZLView {
 
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		return false;
+	}
+
+	public void setMode(int mode) {
+		myMode = mode;
 	}
 
 	public abstract boolean showScrollbar();

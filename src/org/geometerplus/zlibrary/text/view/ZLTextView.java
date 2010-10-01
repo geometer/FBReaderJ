@@ -22,10 +22,16 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+
+import android.app.Application;
+import android.text.ClipboardManager;
+import android.widget.Toast;
 
 public abstract class ZLTextView extends ZLTextViewBase {
 	public interface ScrollingMode {
@@ -1296,7 +1302,35 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}*/
 
 	@Override
+	public boolean onStylusPress(int x, int y) {
+		if (myMode == MODE_SELECT) {
+			setMode(MODE_READ);
+			if (!mySelectionModel.isEmpty()){
+				String text = mySelectionModel.getText();
+				ClipboardManager clipboard =
+					(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
+				clipboard.setText(text);
+				mySelectionModel.clear();
+				ZLApplication.Instance().repaintView();
+				return true;
+			}
+			Toast.makeText(ZLAndroidApplication.Instance().myMainActivity,
+					ZLResource.resource("infoMessage").getResource("selectionCanceled").getValue(),
+					Toast.LENGTH_SHORT).show();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public boolean onStylusMovePressed(int x, int y) {
+		if (myMode == MODE_SELECT) {
+			if (!mySelectionModel.isActive()){
+				activateSelection(x, y);
+				return true;
+			}
+		}
+
 		if (mySelectionModel.extendTo(x, y)) {
 			ZLApplication.Instance().repaintView();
 			return true;
