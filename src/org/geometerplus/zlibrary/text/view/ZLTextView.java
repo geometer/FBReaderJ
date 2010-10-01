@@ -374,9 +374,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
-		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
-			return -1;
-		}
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
 		if (paragraphCursor == null) {
 			return -1;
