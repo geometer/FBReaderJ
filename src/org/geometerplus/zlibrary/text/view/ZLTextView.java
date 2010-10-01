@@ -1378,4 +1378,57 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return false;
 	}
+
+	public final synchronized float getProgress(float offset) {
+		// This function returns current progress as percentage(from 0 to 1)
+		// according to current book reading position (myCurrentPage).
+		// The myCurrentPage can be shifted backward or forward(during scrolling).
+		// If the 'offset' is positive, then shifting is backward, negative - forward.
+		// The absolute value of 'offset' represents percentage of shifting (from 0 to 1).
+
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+			return 0;
+		}
+
+		float size = myModel.getTextLength(myModel.getParagraphsNumber() - 1);
+
+		preparePaintInfo(myCurrentPage);
+		float pos = sizeOfTextBeforeCursor(myCurrentPage.EndCursor);
+		if (offset != 0) {
+			if(offset > 0) {
+				pos -= (pos - sizeOfTextBeforeCursor(myCurrentPage.StartCursor)) * offset;
+			}
+			else {
+				preparePaintInfo(myNextPage);
+				pos += (pos - sizeOfTextBeforeCursor(myNextPage.EndCursor)) * offset;
+			}
+		}
+		
+		return pos / size;
+	}
+
+	public final synchronized void setProgress(float progress) {
+		int bookPos = (int)(myModel.getTextLength(myModel.getParagraphsNumber() - 1) * progress);
+		int paraIndex = myModel.findParagraphByTextLength(bookPos);
+		ZLTextParagraphCursor para = ZLTextParagraphCursor.cursor(myModel, paraIndex);
+		int paraPos = bookPos - myModel.getTextLength(paraIndex - 1);
+		int wordIndex = 0;
+		int charIndex = 0;
+		for (; wordIndex < para.getParagraphLength(); wordIndex++) {
+			if (para.getElement(wordIndex) instanceof ZLTextWord) {
+				ZLTextWord word = (ZLTextWord)para.getElement(wordIndex);
+				if (word.getParagraphOffset() + word.Length > paraPos) {
+					if (word.getParagraphOffset() < paraPos) {
+						charIndex = paraPos - word.getParagraphOffset();
+					}
+					break;
+				}
+			}
+		}
+
+		ZLTextWordCursor pageCenter = new ZLTextWordCursor(para);
+		pageCenter.moveTo(wordIndex, charIndex);
+		gotoPosition(findStart(pageCenter, SizeUnit.PIXEL_UNIT, getTextAreaHeight() / 2));
+		ZLApplication.Instance().repaintView();
+	}
 }
