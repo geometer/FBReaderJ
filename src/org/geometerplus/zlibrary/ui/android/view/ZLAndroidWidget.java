@@ -358,7 +358,13 @@ public class ZLAndroidWidget extends View {
 					}
 					if (myPendingPress) {
 						if (y > getHeight() - myFooter.getTapHeight()) {
-							myFooter.setProgress(view, myPressedX);
+							FBReader reader = (FBReader)FBReader.Instance();
+							if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+								if (view instanceof ZLTextView) {
+									((ZLTextView) view).savePosition();
+								}
+								myFooter.setProgress(view, myPressedX);
+							}
 						}
 						else {
 							view.onStylusPress(myPressedX, myPressedY);
@@ -512,7 +518,7 @@ public class ZLAndroidWidget extends View {
 			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
 				final ZLView view = ZLApplication.Instance().getCurrentView();
 				if (view instanceof ZLTextView) {
-					return false; //there will be position revert
+					return ((ZLTextView) view).revertPosition();
 				}
 			}
 			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_NAVIGATE) {

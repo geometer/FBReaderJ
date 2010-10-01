@@ -45,6 +45,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private int myScrollingMode;
 	private int myOverlappingValue;
+	private ArrayList<ZLTextPosition> myStoredTextPositions = new ArrayList<ZLTextPosition>();
 
 	private ZLTextPage myPreviousPage = new ZLTextPage();
 	ZLTextPage myCurrentPage = new ZLTextPage();
@@ -65,6 +66,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myCurrentPage.reset();
 		myPreviousPage.reset();
 		myNextPage.reset();
+		myStoredTextPositions.clear();
 		setScrollingActive(false);
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
@@ -1430,5 +1432,22 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		pageCenter.moveTo(wordIndex, charIndex);
 		gotoPosition(findStart(pageCenter, SizeUnit.PIXEL_UNIT, getTextAreaHeight() / 2));
 		ZLApplication.Instance().repaintView();
+	}
+	public void savePosition() {
+		myStoredTextPositions.add(new ZLTextWordCursor(myCurrentPage.StartCursor));
+		if (myStoredTextPositions.size() > 30) {
+			myStoredTextPositions.remove(0);
+		}
+	}
+
+	public boolean revertPosition() {
+		if (myStoredTextPositions.size() > 0) {
+			final int headIndex = myStoredTextPositions.size() - 1;
+			gotoPosition(myStoredTextPositions.get(headIndex));
+			myStoredTextPositions.remove(headIndex);
+			ZLApplication.Instance().repaintView();
+			return true;
+		}
+		return false;
 	}
 }
