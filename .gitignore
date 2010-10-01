@@ -7,4 +7,5 @@ res/drawable/
 res/raw/
 libs/
 obj/
+.classpath
 *~
