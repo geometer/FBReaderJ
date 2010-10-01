@@ -49,6 +49,8 @@ public abstract class ZLApplication {
 	private Menubar myMenubar;
 	//private ZLTime myLastKeyActionTime;
 
+	public int myBatteryLevel = 0;
+
 	protected ZLApplication() {
 		ourInstance = this;
 		

@@ -31,6 +31,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -105,6 +108,9 @@ public final class FBReader extends ZLAndroidActivity {
 			myNavigatePanel = new NavigationButtonPanel();
 			myNavigatePanel.register();
 		}
+
+		this.registerReceiver(this.myBatInfoReceiver,
+				new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
 
 	@Override
@@ -311,4 +317,10 @@ public final class FBReader extends ZLAndroidActivity {
 	private static String makeProgressText(int page, int pagesNumber) {
 		return "" + page + " / " + pagesNumber;
 	}
+
+	BroadcastReceiver myBatInfoReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			ZLApplication.Instance().myBatteryLevel = intent.getIntExtra("level", 100);
+		}
+	};
 }
