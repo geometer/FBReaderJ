@@ -23,6 +23,10 @@ import android.content.Context;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.ZLOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -99,7 +103,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		}
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
-		lookNFeelCategory.addPreference(new ScrollbarTypePreference(this, lookNFeelCategory.Resource, "scrollbarType"));
+		String[] scrollBarTypes = {"hide", "show", "showAsProgress"};
+		//lookNFeelCategory.addPreference(new StringListPreference(this, lookNFeelCategory.Resource, "scrollbarType"));
+		lookNFeelCategory.addPreference(new StringListPreference(
+			this, lookNFeelCategory.Resource.getResource("scrollbarType"), null,
+			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
 
 		/*
 		final FBReader fbreader = (FBReader)FBReader.Instance();
@@ -124,34 +132,54 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 }
 
-class ScrollbarTypePreference extends ZLStringListPreference {
-	private static final String[] ourCodes = { "hide", "show", "showAsProgress" };
+class StringListPreference extends ZLStringListPreference {
+	private ZLOption myOption;
+	private String[] myCodes;
 
-	private FBReader myReader;
+	StringListPreference(Context context, ZLResource optResource, ZLResource valResource,
+		String [] codes, ZLOption option) {
+		super(context, optResource, valResource);
+		myCodes = codes;
+		myOption = option;
 
-	ScrollbarTypePreference(Context context, ZLResource rootResource, String resourceKey) {
-		super(context, rootResource, resourceKey);
-		myReader = (FBReader)FBReader.Instance();
-		final String[] names = new String[ourCodes.length];
-		final ZLResource r = rootResource.getResource(resourceKey);
-		for (int i = 0; i < ourCodes.length; ++i) {
-			names[i] = r.getResource(ourCodes[i]).getValue();
+		final String[] texts = new String[myCodes.length];
+		valResource = (valResource == null ? optResource : valResource);
+		for (int i = 0; i < myCodes.length; ++i) {
+			texts[i] = valResource.getResource(myCodes[i]).getValue();
 		}
-		setLists(ourCodes, names);
-		setInitialValue(ourCodes[
-			Math.max(0, Math.min(ourCodes.length - 1, myReader.ScrollbarTypeOption.getValue()))
-		]);
+
+		setLists(myCodes, texts);
+
+		if (myOption instanceof ZLIntegerRangeOption) {
+			setInitialValue(myCodes[
+				Math.max(0, Math.min(myCodes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))]);
+		}
+
+		if (myOption instanceof ZLStringOption) {
+			String initVal = ((ZLStringOption)myOption).getValue();
+			for (int i = 0; i < myCodes.length; ++i) {
+				if (myCodes[i].equals(initVal)){
+					setInitialValue(myCodes[i]);
+					break;
+				}
+			}
+		}
 	}
 
 	public void onAccept() {
-		final String value = getValue();
-		int intValue = 0;
-		for (int i = 0; i < ourCodes.length; ++i) {
-			if (value == ourCodes[i]) {
-				intValue = i;
-				break;
+		final String strValue = getValue();
+		if (myOption instanceof ZLIntegerRangeOption) {
+			int intValue = 0;
+			for (int i = 0; i < myCodes.length; ++i) {
+				if (strValue == myCodes[i]) {
+					intValue = i;
+					break;
+				}
 			}
+			((ZLIntegerRangeOption)myOption).setValue(intValue);
 		}
-		myReader.ScrollbarTypeOption.setValue(intValue);
+		if (myOption instanceof ZLStringOption) {
+			((ZLStringOption)myOption).setValue(strValue);
+		}
 	}
 }
