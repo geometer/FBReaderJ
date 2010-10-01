@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="FBReaderJ" default="package">
-	<property file="local.properties"/>
-	<property file="build.properties"/>
-	<property file="default.properties"/>
+	<property file="local.properties" />
+	<property file="build.properties" />
+	<property file="default.properties" />
 
 	<path id="android.antlibs">
 		<pathelement path="${sdk.dir}/tools/lib/anttasks.jar" />
@@ -14,7 +14,7 @@
 
 	<taskdef name="setup"
 		classname="com.android.ant.SetupTask"
-		classpathref="android.antlibs"/>
+		classpathref="android.antlibs" />
 
 	<setup />
 
@@ -23,19 +23,18 @@
 	</target>
 
   <target name="resources">
-		<exec executable="./createRawResources.py"/>
+		<exec executable="./createRawResources.py" />
 	</target>
 
-  <target name="package" depends="native,resources,release">
-	</target>
-  <target name="dbg" depends="native,resources,debug"/>
+  <target name="package" depends="native,resources,release" />
+  <target name="dbg" depends="native,resources,debug" />
 
   <target name="clean">
-		<delete dir="gen"/>
-		<delete dir="bin"/>
-		<delete dir="res/raw"/>
-		<delete dir="res/drawable"/>
-		<delete dir="libs/armeabi"/>
-		<delete dir="obj"/>
+		<delete dir="gen" />
+		<delete dir="bin" />
+		<delete dir="res/raw" />
+		<delete dir="res/drawable" />
+		<delete dir="libs/armeabi" />
+		<delete dir="obj" />
   </target>
 </project>
