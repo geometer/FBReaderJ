@@ -41,17 +41,24 @@ public class ZLAndroidWidget extends View {
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setDrawingCacheEnabled(false);
+		init();
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setDrawingCacheEnabled(false);
+		init();
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
+		init();
+	}
+	private void init() {
 		setDrawingCacheEnabled(false);
+
+		// next line prevent ignoring first onKeyDown DPad event
+		// after any dialog was closed
+		setFocusableInTouchMode(true);
 	}
 
 	public ZLAndroidPaintContext getPaintContext() {
