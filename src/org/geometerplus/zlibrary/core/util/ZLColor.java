@@ -18,6 +18,7 @@
  */
 
 package org.geometerplus.zlibrary.core.util;
+import android.graphics.Color;
 
 /**
  * class Color. Color is presented as the triple of short's (Red, Green, Blue components)
@@ -59,5 +60,9 @@ public final class ZLColor {
 
 	public int hashCode() {
 		return getIntValue();
+	}
+	
+	public int rgb() {
+		return Color.rgb(Red, Green, Blue);
 	}
 }
