@@ -526,6 +526,7 @@ public class ZLAndroidWidget extends View {
 	public void loadContextMenu(Menu menu, ArrayList<String> menuActions) {
 		String read_menu[] = {
 				ActionCode.SEARCH,
+				ActionCode.INITIATE_COPY,
 				ActionCode.TRANSLATE_WORD,
 				ActionCode.ROTATE,
 				ActionCode.INCREASE_FONT,

@@ -24,6 +24,7 @@ public interface ActionCode {
 	String SHOW_PREFERENCES = "preferences";
 	String SHOW_BOOK_INFO = "bookInfo";
 	String TRANSLATE_WORD = "translateWord";
+	String INITIATE_COPY = "initiateCopy";
 	String SHOW_CONTENTS = "toc";
 	String SHOW_BOOKMARKS = "bookmarks";
 	String SHOW_NETWORK_LIBRARY = "networkLibrary";
