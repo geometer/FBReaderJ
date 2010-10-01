@@ -31,6 +31,7 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
@@ -38,14 +39,11 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication(String fileName);
 
-	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
-	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
-
 	@Override
 	protected void onSaveInstanceState(Bundle state) {
 		super.onSaveInstanceState(state);
-		state.putInt(REQUESTED_ORIENTATION_KEY, myOrientation);
-		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
+		new ZLIntegerOption(
+				"View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).setValue(myOrientation);
 	}
 
 	@Override
@@ -53,10 +51,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		super.onCreate(state);
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		if (state != null) {
-			myOrientation = state.getInt(REQUESTED_ORIENTATION_KEY, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-			myChangeCounter = state.getInt(ORIENTATION_CHANGE_COUNTER_KEY);
-		}
+		myOrientation = new ZLIntegerOption(
+				"View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).getValue();
+		myChangeCounter = 0; 
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
