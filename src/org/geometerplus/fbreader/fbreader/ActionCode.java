@@ -31,6 +31,7 @@ public interface ActionCode {
 
 	String SWITCH_TO_NIGHT_PROFILE = "night";
 	String SWITCH_TO_DAY_PROFILE = "day";
+	String SWITCH_PROFILE = "switchProfile";
 
 	String SEARCH = "search";
 	String FIND_PREVIOUS = "findPrevious";

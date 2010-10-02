@@ -32,7 +32,12 @@ class SwitchProfileAction extends FBAction {
 	}
 
 	public void run() {
-		Reader.setColorProfileName(myProfileName);
+		String newProfile = myProfileName;
+		if (myProfileName.equals("")) {
+			newProfile = (Reader.getColorProfileName().equals(ColorProfile.DAY) ?
+				ColorProfile.NIGHT : ColorProfile.DAY);
+		}
+		Reader.setColorProfileName(newProfile);
 		Reader.repaintView();
 	}
 }
