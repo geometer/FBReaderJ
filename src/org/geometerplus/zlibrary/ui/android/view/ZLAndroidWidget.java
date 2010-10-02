@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.view.*;
@@ -49,6 +50,12 @@ public class ZLAndroidWidget extends View {
 	private final int FOOTER_LONG_TAP_REVERT = 0;
 	private final int FOOTER_LONG_TAP_NAVIGATE = 1;
 
+	public ZLTapZones myTapZones = new ZLTapZones();
+	public static final int MODE_READ = 0;
+	public static final int MODE_TAP_ZONES_EDIT = 1;
+	public int myMode = MODE_READ;
+
+	public Activity myMainActivity;
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
@@ -75,6 +82,7 @@ public class ZLAndroidWidget extends View {
 		return ZLAndroidPaintContext.Instance();
 	}
 
+	private Point myTextViewSize = new Point();
 	private Point myViewSize = new Point();
 	// ensure children objects has correct information about widget size
 	private void ensureChildrenSizes() {
@@ -86,6 +94,14 @@ public class ZLAndroidWidget extends View {
 			myFooter.setDrawAreaSize(width, height);
 			myViewSize.x = width;
 			myViewSize.y = height;
+		}
+
+		width = getTextViewWidth();
+		height -= myFooter.getTapHeight();
+		if (myTextViewSize.x != width || myTextViewSize.y != height) {
+			myTapZones.setWatchArea(0, 1, width - 2, height - 3);
+			myTextViewSize.x = width;
+			myTextViewSize.y = height;
 		}
 	}
 
@@ -131,6 +147,10 @@ public class ZLAndroidWidget extends View {
 		} else {
 			onDrawStatic(canvas);
 			ZLApplication.Instance().onRepaintFinished();
+		}
+
+		if (myMode == MODE_TAP_ZONES_EDIT) {
+			myTapZones.draw(canvas);
 		}
 	}
 
@@ -368,20 +388,36 @@ public class ZLAndroidWidget extends View {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
 					if (myPendingPress) {
-						if (y > getHeight() - myFooter.getTapHeight()) {
-							FBReader reader = (FBReader)FBReader.Instance();
-							if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
-								if (view instanceof ZLTextView) {
-									((ZLTextView) view).savePosition();
+						switch(myMode) {
+							case MODE_READ:
+								if (y > getHeight() - myFooter.getTapHeight()) {
+									FBReader reader = (FBReader)FBReader.Instance();
+									if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+										if (view instanceof ZLTextView) {
+											((ZLTextView) view).savePosition();
+										}
+										myFooter.setProgress(view, myPressedX);
+									}
 								}
-								myFooter.setProgress(view, myPressedX);
-							}
-						}
-						else {
-							view.onStylusPress(myPressedX, myPressedY);
+								else {
+									if (!view.onStylusPress(myPressedX, myPressedY)) {
+										myTapZones.doTap(myPressedX, myPressedY);
+									}
+								}
+								break;
+							case MODE_TAP_ZONES_EDIT:
+								myTapZones.onStylusPress(myPressedX, myPressedY);
+								break;
 						}
 					}
-					view.onStylusRelease(x, y);
+					switch(myMode) {
+						case MODE_READ:
+							view.onStylusRelease(x, y);
+							break;
+						case MODE_TAP_ZONES_EDIT:
+							myTapZones.onStylusRelease(x, y);
+							break;
+					}
 				}
 				myPendingPress = false;
 				myScreenIsTouched = false;
@@ -401,12 +437,26 @@ public class ZLAndroidWidget extends View {
 							if (myPendingLongClickRunnable != null) {
 								removeCallbacks(myPendingLongClickRunnable);
 							}
-							view.onStylusMovePressed(myPressedX, myPressedY);
+							switch(myMode) {
+								case MODE_READ:
+									view.onStylusMovePressed(myPressedX, myPressedY);
+									break;
+								case MODE_TAP_ZONES_EDIT:
+									myTapZones.onStylusMovePressed(myPressedX, myPressedY);
+									break;
+							}
 							myPendingPress = false;
 						}
 					}
 					if (!myPendingPress) {
-						view.onStylusMovePressed(x, y);
+						switch(myMode) {
+							case MODE_READ:
+								view.onStylusMovePressed(x, y);
+								break;
+							case MODE_TAP_ZONES_EDIT:
+								myTapZones.onStylusMovePressed(x, y);
+								break;
+						}
 					}
 				}
 				break;
@@ -536,7 +586,27 @@ public class ZLAndroidWidget extends View {
 				ActionCode.DECREASE_FONT,
 				ActionCode.SHOW_NAVIGATION,
 				ActionCode.SHOW_BOOK_INFO,
+				ActionCode.TAP_ZONES,
 		};
+
+		String zones_menu[] = {
+				ActionCode.TAP_ZONE_SELECT_ACTION,
+				ActionCode.TAP_ZONE_ADD,
+				ActionCode.TAP_ZONE_DELETE,
+				ActionCode.TAP_ZONES_SAVE,
+				ActionCode.TAP_ZONES_CANCEL,
+		};
+
+		String actions[];
+		if (myMode == MODE_READ) {
+			actions = read_menu;
+		}
+		else if (myMode == MODE_TAP_ZONES_EDIT) {
+			actions = zones_menu;
+		}
+		else {
+			return;
+		}
 
 		if (myMenuResource == null) {
 			myMenuResource = ZLResource.resource("actions");
@@ -544,8 +614,8 @@ public class ZLAndroidWidget extends View {
 
 		menuActions.clear();
 		ZLApplication app = ZLApplication.Instance();
-		for (int actionIndex = 0; actionIndex < read_menu.length; ++actionIndex) {
-			String actionId = read_menu[actionIndex];
+		for (int actionIndex = 0; actionIndex < actions.length; ++actionIndex) {
+			String actionId = actions[actionIndex];
 			if (app.isActionEnabled(actionId) && app.isActionVisible(actionId)) {
 				String itemText = myMenuResource.getResource(actionId).getValue();
 				if (actionId == ActionCode.TRANSLATE_WORD) {
@@ -573,5 +643,9 @@ public class ZLAndroidWidget extends View {
 			}
 		}
 		return false;
+	}
+
+	public Point getTapPoint() {
+		return new Point(myPressedX, myPressedY);
 	}
 }
