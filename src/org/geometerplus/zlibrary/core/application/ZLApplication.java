@@ -21,8 +21,10 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -38,10 +40,10 @@ public abstract class ZLApplication {
 	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
 	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
-	
+
 	public final ZLIntegerRangeOption KeyDelayOption =
 		new ZLIntegerRangeOption("Options", "KeyDelay", 0, 5000, 250);
-	
+
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
@@ -53,7 +55,7 @@ public abstract class ZLApplication {
 
 	protected ZLApplication() {
 		ourInstance = this;
-		
+
 		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
 	}
 
@@ -121,17 +123,48 @@ public abstract class ZLApplication {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isVisible();
 	}
-	
+
 	public final boolean isActionEnabled(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isEnabled();
 	}
-	
+
 	public final void doAction(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
 			action.checkAndRun();
 		}
+	}
+
+	public String[] getGetSimpleActions() {
+		String[] actions = {
+				ActionCode.PREV_PAGE,
+				ActionCode.NEXT_PAGE,
+				ActionCode.PREV_LINE,
+				ActionCode.NEXT_LINE,
+				ActionCode.PREV_LINK,
+				ActionCode.NEXT_LINK,
+				ActionCode.FOLLOW_HYPERLINK,
+				ActionCode.BACK,
+				ActionCode.ROTATE,
+				ActionCode.SWITCH_PROFILE,
+				ActionCode.SHOW_LIBRARY,
+				ActionCode.SHOW_PREFERENCES,
+				ActionCode.SHOW_BOOK_INFO,
+				ActionCode.INITIATE_COPY,
+				ActionCode.SHOW_CONTENTS,
+				ActionCode.SHOW_BOOKMARKS,
+				ActionCode.SHOW_NETWORK_LIBRARY,
+				ActionCode.SEARCH,
+				ActionCode.FIND_PREVIOUS,
+				ActionCode.FIND_NEXT,
+				ActionCode.SHOW_NAVIGATION,
+				ActionCode.INCREASE_FONT,
+				ActionCode.DECREASE_FONT,
+				ActionCode.NOTHING,
+				ActionCode.DEFAULT,
+		};
+		return actions;
 	}
 
 	//may be protected
@@ -144,6 +177,10 @@ public abstract class ZLApplication {
 			return (action != null) && action.checkAndRun();
 		}
 		return false;
+	}
+
+	public final ZLStringOption getBindingOption(int keyId) {
+		return keyBindings().getOption(keyId);
 	}
 
 	public void navigate() {
@@ -194,7 +231,7 @@ public abstract class ZLApplication {
 		public boolean isEnabled() {
 			return isVisible();
 		}
-		
+
 		public final boolean checkAndRun() {
 			if (isEnabled()) {
 				run();
@@ -202,11 +239,11 @@ public abstract class ZLApplication {
 			}
 			return false;
 		}
-		
+
 		public boolean useKeyDelay() {
 			return true;
 		}
-		
+
 		abstract protected void run();
 	}
 
@@ -253,7 +290,7 @@ public abstract class ZLApplication {
 			}
 			myItems.add(new Menubar.PlainItem(item, title));
 		}
-		
+
 		Menubar.Submenu addSubmenu(String key) {
 			Menubar.Submenu submenu =
 				new Menubar.Submenu(myMenuRes.getResource(key), myActionsRes);
@@ -269,7 +306,7 @@ public abstract class ZLApplication {
 			return (Item)myItems.get(index);
 		}
 	}
-	
+
 	//MenuBar
 	public static final class Menubar extends Menu {
 		public static final class PlainItem implements Item {
@@ -299,7 +336,7 @@ public abstract class ZLApplication {
 				return getMenuRes().getValue();
 			}
 		};
-			
+
 		public Menubar() {
 			super(ZLResource.resource("menu"),
 				ZLResource.resource("actions"));
@@ -333,7 +370,7 @@ public abstract class ZLApplication {
 		protected abstract void processSubmenuAfterItems(Menubar.Submenu submenu);
 		protected abstract void processItem(Menubar.PlainItem item);
 	}
-	
+
 	private class MenubarCreator extends ZLXMLReaderAdapter {
 		private static final String ITEM = "item";
 		private static final String SUBMENU = "submenu";
