@@ -104,6 +104,8 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
 
+		addAction(ActionCode.SPEAK, new SpeakAction(this));
+		
 		BookTextView = new FBView(this);
 		FootnoteView = new FBView(this);
 

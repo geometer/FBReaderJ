@@ -13,4 +13,5 @@
 	<item id="increaseFont"/>
 	<item id="decreaseFont"/>
 	<item id="navigate"/>
+	<item id="speak"/>
 </menubar>
