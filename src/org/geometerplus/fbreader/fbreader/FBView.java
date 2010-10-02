@@ -226,9 +226,9 @@ public final class FBView extends ZLTextView {
 
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		if (diffY > 0) {
-			ZLApplication.Instance().doAction(ActionCode.TRACKBALL_SCROLL_FORWARD);
+			ZLApplication.Instance().doAction(ActionCode.NEXT_PAGE);
 		} else if (diffY < 0) {
-			ZLApplication.Instance().doAction(ActionCode.TRACKBALL_SCROLL_BACKWARD);
+			ZLApplication.Instance().doAction(ActionCode.PREV_PAGE);
 		}
 		return true;
 	}

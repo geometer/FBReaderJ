@@ -96,8 +96,10 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 		
 		addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this));
-		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
-		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));
+		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
+		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
+		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
+		addAction(ActionCode.PREV_LINE, new ScrollAction(this, false, false));
 		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new TrackballScrollingAction(this, true));
 		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new TrackballScrollingAction(this, false));
 		addAction(ActionCode.BACK, new BackAction(this));

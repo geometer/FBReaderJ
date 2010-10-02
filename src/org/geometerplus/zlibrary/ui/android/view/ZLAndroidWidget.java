@@ -319,8 +319,10 @@ public class ZLAndroidWidget extends View {
 	public boolean onTrackballEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			onKeyDown(KeyEvent.KEYCODE_DPAD_CENTER, null);
-		} else {
-			ZLApplication.Instance().getCurrentView().onTrackballRotated((int)(10 * event.getX()), (int)(10 * event.getY()));
+		} else if (event.getY() > 0) {
+			onKeyDown(KeyEvent.KEYCODE_DPAD_DOWN, null);
+		} else if (event.getY() < 0) {
+			onKeyDown(KeyEvent.KEYCODE_DPAD_UP, null);
 		}
 		return true;
 	}

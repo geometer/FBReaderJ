@@ -19,20 +19,30 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class VolumeKeyScrollingAction extends FBAction {
-	private final boolean myForward;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-	VolumeKeyScrollingAction(FBReader fbreader, boolean forward) {
+class ScrollAction extends FBAction {
+	private final boolean myForward;
+	private final boolean myScrollPage;
+
+	ScrollAction(FBReader fbreader, boolean forward, boolean page) {
 		super(fbreader);
 		myForward = forward;
+		myScrollPage = page;
 	}
-		
+
 	public boolean isEnabled() {
-		return ScrollingPreferences.Instance().VolumeKeysOption.getValue();
+		return true;
 	}
 
 	public void run() {
-		boolean isInverted = ScrollingPreferences.Instance().InvertVolumeKeysOption.getValue();
-		Reader.getTextView().doScrollPage(isInverted ? !myForward : myForward);
-	}		
+		if (myScrollPage) {
+			Reader.getTextView().doScrollPage(myForward);
+		}
+		else {
+			Reader.getTextView().scrollPage(myForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			ZLApplication.Instance().repaintView();
+		}
+	}
 }
