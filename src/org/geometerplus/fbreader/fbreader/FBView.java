@@ -108,23 +108,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		if (preferences.HorizontalOption.getValue()) {
-			if (x <= Context.getWidth() / 3) {
-				doScrollPage(false);
-			} else if (x >= Context.getWidth() * 2 / 3) {
-				doScrollPage(true);
-			}
-		} else {
-			if (y <= Context.getHeight() / 3) {
-				doScrollPage(false);
-			} else if (y >= Context.getHeight() * 2 / 3) {
-				doScrollPage(true);
-			}
-		}
-
-		//activateSelection(x, y);
-		return true;
+		return false;
 	}
 
 	public boolean onStylusMovePressed(int x, int y) {
