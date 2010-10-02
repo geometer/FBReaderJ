@@ -57,6 +57,13 @@ public interface ActionCode {
 	String CLEAR_SELECTION = "clearSelection";
 	String OPEN_SELECTED_TEXT_IN_DICTIONARY = "openInDictionary";
 	String FOLLOW_HYPERLINK = "followHyperlink";
+	
+	String TAP_ZONES = "tapZones";
+	String TAP_ZONE_SELECT_ACTION = "tapZoneSelectAction";
+	String TAP_ZONE_ADD = "tapZoneAdd";
+	String TAP_ZONE_DELETE = "tapZoneDelete";
+	String TAP_ZONES_SAVE = "tapZonesSave";
+	String TAP_ZONES_CANCEL = "tapZonesCancel";
 
 	String DEFAULT = "default";
 	String NOTHING = "nothing";

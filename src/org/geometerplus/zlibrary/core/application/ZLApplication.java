@@ -161,6 +161,7 @@ public abstract class ZLApplication {
 				ActionCode.SHOW_NAVIGATION,
 				ActionCode.INCREASE_FONT,
 				ActionCode.DECREASE_FONT,
+				ActionCode.TAP_ZONES,
 				ActionCode.NOTHING,
 				ActionCode.DEFAULT,
 		};

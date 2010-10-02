@@ -110,6 +110,12 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
+		addAction(ActionCode.TAP_ZONES, new TapZoneAction(this, ActionCode.TAP_ZONES));
+		addAction(ActionCode.TAP_ZONE_SELECT_ACTION, new TapZoneAction(this, ActionCode.TAP_ZONE_SELECT_ACTION));
+		addAction(ActionCode.TAP_ZONE_ADD, new TapZoneAction(this, ActionCode.TAP_ZONE_ADD));
+		addAction(ActionCode.TAP_ZONE_DELETE, new TapZoneAction(this, ActionCode.TAP_ZONE_DELETE));
+		addAction(ActionCode.TAP_ZONES_SAVE, new TapZoneAction(this, ActionCode.TAP_ZONES_SAVE));
+		addAction(ActionCode.TAP_ZONES_CANCEL, new TapZoneAction(this, ActionCode.TAP_ZONES_CANCEL));
 
 		addAction(ActionCode.DEFAULT, new DummyAction(this, false));
 		addAction(ActionCode.NOTHING, new DummyAction(this, true));
