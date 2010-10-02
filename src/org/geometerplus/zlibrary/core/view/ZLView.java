@@ -60,10 +60,6 @@ abstract public class ZLView {
 		return false;
 	}
 
-	public boolean onTrackballRotated(int diffX, int diffY) {
-		return false;
-	}
-
 	public void setMode(int mode) {
 		myMode = mode;
 	}

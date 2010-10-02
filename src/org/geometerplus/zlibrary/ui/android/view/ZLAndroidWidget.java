@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
 
@@ -421,17 +420,15 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
 			case KeyEvent.KEYCODE_DPAD_DOWN:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
-				return true;
 			case KeyEvent.KEYCODE_DPAD_UP:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, -1);
-				return true;
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+			case KeyEvent.KEYCODE_CAMERA:
+				return ZLApplication.Instance().doActionByKey(keyCode);
 			default:
-				return false;
+				return super.onKeyDown(keyCode, event);
 		}
 	}
 
@@ -440,11 +437,15 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+			case KeyEvent.KEYCODE_DPAD_UP:
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+			case KeyEvent.KEYCODE_CAMERA:
 				return true;
 			default:
-				return false;
+				return super.onKeyUp(keyCode, event);
 		}
 	}
 

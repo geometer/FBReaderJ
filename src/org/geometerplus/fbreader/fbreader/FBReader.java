@@ -32,6 +32,8 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
 import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
+import android.view.KeyEvent;
+
 public final class FBReader extends ZLApplication {
 	public final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
@@ -65,7 +67,7 @@ public final class FBReader extends ZLApplication {
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
 	public final FBView BookTextView;
 	final FBView FootnoteView;
@@ -115,6 +117,16 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
 		addAction(ActionCode.SWITCH_PROFILE, new SwitchProfileAction(this, ""));
+
+		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_DOWN,	ActionCode.NEXT_PAGE);
+		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_UP,	ActionCode.PREV_PAGE);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_CENTER,	ActionCode.FOLLOW_HYPERLINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_DOWN,	ActionCode.NEXT_LINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_UP,		ActionCode.PREV_LINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_RIGHT,	ActionCode.NEXT_LINE);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_LEFT,	ActionCode.PREV_LINE);
+		myBindings.addKey(KeyEvent.KEYCODE_BACK,		ActionCode.BACK);
+		myBindings.addKey(KeyEvent.KEYCODE_CAMERA,		ActionCode.ROTATE);
 
 		BookTextView = new FBView(this);
 		FootnoteView = new FBView(this);
