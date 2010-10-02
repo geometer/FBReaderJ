@@ -56,4 +56,7 @@ public interface ActionCode {
 	String CLEAR_SELECTION = "clearSelection";
 	String OPEN_SELECTED_TEXT_IN_DICTIONARY = "openInDictionary";
 	String FOLLOW_HYPERLINK = "followHyperlink";
+
+	String DEFAULT = "default";
+	String NOTHING = "nothing";
 };

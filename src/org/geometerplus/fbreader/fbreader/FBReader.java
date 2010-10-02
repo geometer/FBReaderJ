@@ -109,6 +109,9 @@ public final class FBReader extends ZLApplication {
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
 
+		addAction(ActionCode.DEFAULT, new DummyAction(this, false));
+		addAction(ActionCode.NOTHING, new DummyAction(this, true));
+
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
 		addAction(ActionCode.SWITCH_PROFILE, new SwitchProfileAction(this, ""));
