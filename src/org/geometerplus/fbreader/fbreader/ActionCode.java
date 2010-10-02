@@ -42,8 +42,9 @@ public interface ActionCode {
 	String NEXT_PAGE = "nextPage";
 	String PREV_LINE = "prevLine";
 	String NEXT_LINE = "nextLine";
-	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";
-	String TRACKBALL_SCROLL_BACKWARD = "trackballScrollBackward";
+	String PREV_LINK = "prevLink";
+	String NEXT_LINK = "nextLink";
+
 	String SHOW_NAVIGATION = "navigate";
 	String BACK = "back";
 	String ROTATE = "rotate";

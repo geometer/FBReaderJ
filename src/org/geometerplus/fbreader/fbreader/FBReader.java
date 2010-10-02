@@ -100,8 +100,8 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
 		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
 		addAction(ActionCode.PREV_LINE, new ScrollAction(this, false, false));
-		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new TrackballScrollingAction(this, true));
-		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new TrackballScrollingAction(this, false));
+		addAction(ActionCode.NEXT_LINK, new TrackballScrollingAction(this, true));
+		addAction(ActionCode.PREV_LINK, new TrackballScrollingAction(this, false));
 		addAction(ActionCode.BACK, new BackAction(this));
 		addAction(ActionCode.INITIATE_COPY, new InitiateCopyAction(this));
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
