@@ -107,6 +107,7 @@
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
 		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
+		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Könyvtár"/>
 		<node name="toc" value="Tartalom"/>
 		<node name="day" value="Nappali"/>
@@ -137,6 +138,7 @@
 		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
+		<node name="initiateCopy"/>
 		<node name="library"/>
 		<node name="toc"/>
 		<node name="day"/>
@@ -402,6 +404,10 @@
 			<node name="title" value="Könyv vásárlása" />
 			<node name="message" value="Ezt a könyvet már megvásárolta" />
 		</node>
+	</node>
+	<node name="infoMessage">
+		<node name="selectionStarted" value="Select text and click" toBeTranslated="true"/>
+		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="A keresett szöveg sajnos nem található a könyvben"/>

@@ -107,6 +107,7 @@
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
 		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
+		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Knihovna"/>
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
@@ -137,6 +138,7 @@
 		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
+		<node name="initiateCopy"/>
 		<node name="library"/>
 		<node name="toc"/>
 		<node name="day"/>
@@ -402,6 +404,10 @@
 			<node name="title" value="Zakoupit knihu" />
 			<node name="message" value="Kniha je již zakoupena" />
 		</node>
+	</node>
+	<node name="infoMessage">
+		<node name="selectionStarted" value="Select text and click" toBeTranslated="true"/>
+		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="V knize není bohužel žádný vhodný text"/>

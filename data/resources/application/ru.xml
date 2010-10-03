@@ -106,6 +106,7 @@
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
 		<node name="translateWord" value="Перевести: %s"/>
+		<node name="initiateCopy" value="Копировать"/>
 		<node name="library" value="Библиотека"/>
 		<node name="toc" value="Оглавление"/>
 		<node name="day" value="День"/>
@@ -136,6 +137,7 @@
 		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
+		<node name="initiateCopy"/>
 		<node name="library"/>
 		<node name="toc"/>
 		<node name="day"/>
@@ -401,6 +403,10 @@
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Книга уже куплена" />
 		</node>
+	</node>
+	<node name="infoMessage">
+		<node name="selectionStarted" value="Выделите текст и щелкните его"/>
+		<node name="selectionCanceled" value="Выбор текст отменен"/>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="В этой книге нет такого текста"/>

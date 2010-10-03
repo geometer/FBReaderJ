@@ -110,6 +110,7 @@
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
 		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
+		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Bibliothèque"/>
 		<node name="toc" value="Table des matières"/>
 		<node name="day" value="Jour"/>
@@ -140,6 +141,7 @@
 		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
+		<node name="initiateCopy"/>
 		<node name="library"/>
 		<node name="toc"/>
 		<node name="day"/>
@@ -405,6 +407,10 @@
 			<node name="title" value="Achat du livre" />
 			<node name="message" value="Le livre a déjà été acheté" />
 		</node>
+	</node>
+	<node name="infoMessage">
+		<node name="selectionStarted" value="Select text and click" toBeTranslated="true"/>
+		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="Aucune occurence dans le livre"/>
