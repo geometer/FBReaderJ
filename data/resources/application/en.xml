@@ -101,6 +101,17 @@
 			<node name="search" value="Search"/>
 		</node>
 	</node>
+	<node name="keys">
+		<node name="&lt;VolumeDown&gt;" value="Volume Down"/>
+		<node name="&lt;VolumeUp&gt;" value="Volume Up"/>
+		<node name="&lt;Back&gt;" value="Back"/>
+		<node name="&lt;PadCenter&gt;" value="Pad Center"/>
+		<node name="&lt;PadDown&gt;" value="Pad Down"/>
+		<node name="&lt;PadUp&gt;" value="Pad Up"/>
+		<node name="&lt;PadRight&gt;" value="Pad Right"/>
+		<node name="&lt;PadLeft&gt;" value="Pad Left"/>
+		<node name="&lt;Camera&gt;" value="Camera"/>
+	</node>
 	<node name="actions">
 		<node name="preferences-old" value="Settings (more)"/>
 		<node name="preferences" value="Settings"/>
@@ -132,6 +143,19 @@
 		<node name="decreaseFont" value="Zoom out" />
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
+		<node name="prevPage" value="Previous page"/>
+		<node name="nextPage" value="Next page"/>
+		<node name="prevLine" value="Previous line"/>
+		<node name="nextLine" value="Next line"/>
+		<node name="prevLink" value="Previous link"/>
+		<node name="nextLink" value="Next link"/>
+		<node name="followHyperlink" value="Follow link"/>
+		<node name="back" value="Back"/>
+		<node name="switchProfile" value="Switch color profile"/>
+		<node name="findPrevious" value="Find previous"/>
+		<node name="findNext" value="Find next"/>
+		<node name="default" value="Default"/>
+		<node name="nothing" value="Nothing"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>
@@ -183,6 +207,11 @@
 		<node name="Preferences">
 			<node name="Library" value="Library">
 				<node name="path" value="Directories to seek for books"/>
+			</node>
+			<node name="interaction" value="Interaction">
+				<node name="keyBindings" value="Keys">
+					<node name="summary" value="Bind actions to keys"/>
+				</node>
 			</node>
 			<node name="LookNFeel" value="Look &amp; Feel">
 				<node name="autoOrientation" value="Automatic rotation">

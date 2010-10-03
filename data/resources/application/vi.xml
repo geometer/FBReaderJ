@@ -102,6 +102,17 @@
 			<node name="search" value="Tìm"/>
 		</node>
 	</node>
+	<node name="keys">
+		<node name="&lt;VolumeDown&gt;" value="Volume Down" toBeTranslated="true"/>
+		<node name="&lt;VolumeUp&gt;" value="Volume Up" toBeTranslated="true"/>
+		<node name="&lt;Back&gt;" value="Back" toBeTranslated="true"/>
+		<node name="&lt;PadCenter&gt;" value="Pad Center" toBeTranslated="true"/>
+		<node name="&lt;PadDown&gt;" value="Pad Down" toBeTranslated="true"/>
+		<node name="&lt;PadUp&gt;" value="Pad Up" toBeTranslated="true"/>
+		<node name="&lt;PadRight&gt;" value="Pad Right" toBeTranslated="true"/>
+		<node name="&lt;PadLeft&gt;" value="Pad Left" toBeTranslated="true"/>
+		<node name="&lt;Camera&gt;" value="Camera" toBeTranslated="true"/>
+	</node>
 	<node name="actions">
 		<node name="preferences-old" value="Cài đặt (thêm)"/>
 		<node name="preferences" value="Cài đặt"/>
@@ -133,6 +144,19 @@
 		<node name="decreaseFont" value="Thu nhỏ" />
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
+		<node name="prevPage" value="Previous page" toBeTranslated="true"/>
+		<node name="nextPage" value="Next page" toBeTranslated="true"/>
+		<node name="prevLine" value="Previous line" toBeTranslated="true"/>
+		<node name="nextLine" value="Next line" toBeTranslated="true"/>
+		<node name="prevLink" value="Previous link" toBeTranslated="true"/>
+		<node name="nextLink" value="Next link" toBeTranslated="true"/>
+		<node name="followHyperlink" value="Follow link" toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="switchProfile" value="Switch color profile" toBeTranslated="true"/>
+		<node name="findPrevious" value="Find previous" toBeTranslated="true"/>
+		<node name="findNext" value="Find next" toBeTranslated="true"/>
+		<node name="default" value="Default" toBeTranslated="true"/>
+		<node name="nothing" value="Nothing" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>
@@ -184,6 +208,11 @@
 		<node name="Preferences">
 			<node name="Library" value="Thu viện">
 				<node name="path" value="Tìm sách trong các thư mục sau"/>
+			</node>
+			<node name="interaction" value="Interaction" toBeTranslated="true">
+				<node name="keyBindings" value="Keys" toBeTranslated="true">
+					<node name="summary" value="Bind actions to keys" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="LookNFeel" value="Nhìn &amp; Cảm nhận">
 				<node name="autoOrientation" value="Tự xoay">

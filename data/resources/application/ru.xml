@@ -101,6 +101,17 @@
 			<node name="search" value="Поиск"/>
 		</node>
 	</node>
+	<node name="keys">
+		<node name="&lt;VolumeDown&gt;" value="Тише"/>
+		<node name="&lt;VolumeUp&gt;" value="Громче"/>
+		<node name="&lt;Back&gt;" value="Вернуться"/>
+		<node name="&lt;PadCenter&gt;" value="Центр джойстика"/>
+		<node name="&lt;PadDown&gt;" value="Джойстик вниз"/>
+		<node name="&lt;PadUp&gt;" value="Джойстик вверх"/>
+		<node name="&lt;PadRight&gt;" value="Джойстик вправо"/>
+		<node name="&lt;PadLeft&gt;" value="Джойстик влево"/>
+		<node name="&lt;Camera&gt;" value="Камера"/>
+	</node>
 	<node name="actions">
 		<node name="preferences-old" value="Настройки (дополнительно)"/>
 		<node name="preferences" value="Настройки"/>
@@ -132,6 +143,19 @@
 		<node name="decreaseFont" value="Уменьшить шрифт" />
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
+		<node name="prevPage" value="Предыдущая страница"/>
+		<node name="nextPage" value="Следующая страница"/>
+		<node name="prevLine" value="Предыдущая строка"/>
+		<node name="nextLine" value="Следующая строка"/>
+		<node name="prevLink" value="Предыдущая ссылка"/>
+		<node name="nextLink" value="Следующая ссылка"/>
+		<node name="followHyperlink" value="Перейти по ссылке"/>
+		<node name="back" value="Вернуться"/>
+		<node name="switchProfile" value="Сменить цветовой профиль"/>
+		<node name="findPrevious" value="Поиск назад"/>
+		<node name="findNext" value="Поиск дальше"/>
+		<node name="default" value="По умолчанию"/>
+		<node name="nothing" value="Ничего"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>
@@ -183,6 +207,11 @@
 		<node name="Preferences">
 			<node name="Library" value="Библиотека">
 				<node name="path" value="Каталоги для поиска книг"/>
+			</node>
+			<node name="interaction" value="Управление">
+				<node name="keyBindings" value="Кнопки">
+					<node name="summary" value="Настройка действий на кнопки"/>
+				</node>
 			</node>
 			<node name="LookNFeel" value="Внешний вид">
 				<node name="autoOrientation" value="Автоматический поворот">
