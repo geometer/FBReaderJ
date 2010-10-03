@@ -102,7 +102,7 @@
 			<node name="search" value="Keresés"/>
 		</node>
 	</node>
-	<node name="menu">
+	<node name="actions">
 		<node name="preferences-old" value="Beállítások (további)"/>
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
@@ -111,28 +111,58 @@
 		<node name="day" value="Nappali"/>
 		<node name="night" value="Éjjeli"/>
 		<node name="networkLibrary" value="Internetes könyvtár"/>
-		<node name="navigate" value="Navigáció">
-			<node name="toc" value="Tartalomegyzék"/>
-			<node name="gotoHome" value="A dokumentum elejére"/>
-			<node name="gotoPageNumber" value="Ugrás oldalszámra..."/>
-			<node name="gotoSectionStart" value="Ugrás a szövegrész elejére"/>
-			<node name="gotoSectionEnd" value="Ugrás a szövegrész végére"/>
-			<node name="nextTOCSection" value="Ugrás a tartalomjegyzék következő elemére"/>
-			<node name="previousTOCSection" value="Ugrás a tartalomjegyzék előző elemére"/>
-			<node name="undo" value="Vissza"/>
-			<node name="redo" value="Előre"/>
-		</node>
-		<node name="selection" value="Selection">
-			<node name="copyToClipboard" value="Vágólapra másol"/>
-			<node name="openInDictionary" value="Megnyitás szótárban"/>
-			<node name="clearSelection" value="Törlés"/>
-		</node>
+		<node name="navigate" value="Navigáció"/>
+		<node name="toc" value="Tartalomegyzék"/>
+		<node name="gotoHome" value="A dokumentum elejére"/>
+		<node name="gotoPageNumber" value="Ugrás oldalszámra..."/>
+		<node name="gotoSectionStart" value="Ugrás a szövegrész elejére"/>
+		<node name="gotoSectionEnd" value="Ugrás a szövegrész végére"/>
+		<node name="nextTOCSection" value="Ugrás a tartalomjegyzék következő elemére"/>
+		<node name="previousTOCSection" value="Ugrás a tartalomjegyzék előző elemére"/>
+		<node name="undo" value="Vissza"/>
+		<node name="redo" value="Előre"/>
+		<node name="selection" value="Selection"/>
+		<node name="copyToClipboard" value="Vágólapra másol"/>
+		<node name="openInDictionary" value="Megnyitás szótárban"/>
+		<node name="clearSelection" value="Törlés"/>
 		<node name="search" value="Keresés"/>
 		<node name="rotate" value="Kijelző elforgatása"/>
 		<node name="increaseFont" value="Nagyítás" />
 		<node name="decreaseFont" value="Kicsinyítés" />
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
 		<node name="bookmarks" value="Könyvjelzők"/>
+	</node>
+	<node name="menu">
+		<node name="preferences-old"/>
+		<node name="preferences"/>
+		<node name="bookInfo"/>
+		<node name="library"/>
+		<node name="toc"/>
+		<node name="day"/>
+		<node name="night"/>
+		<node name="networkLibrary"/>
+		<node name="navigate">
+			<node name="toc"/>
+			<node name="gotoHome"/>
+			<node name="gotoPageNumber"/>
+			<node name="gotoSectionStart"/>
+			<node name="gotoSectionEnd"/>
+			<node name="nextTOCSection"/>
+			<node name="previousTOCSection"/>
+			<node name="undo"/>
+			<node name="redo"/>
+		</node>
+		<node name="selection">
+			<node name="copyToClipboard"/>
+			<node name="openInDictionary"/>
+			<node name="clearSelection"/>
+		</node>
+		<node name="search"/>
+		<node name="rotate"/>
+		<node name="increaseFont"/>
+		<node name="decreaseFont"/>
+		<node name="toggleFullscreen"/>
+		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">

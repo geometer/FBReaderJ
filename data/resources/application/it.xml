@@ -102,7 +102,7 @@
 			<node name="search" value="Cerca"/>
 		</node>
 	</node>
-	<node name="menu">
+	<node name="actions">
 		<node name="preferences-old" value="Configurazioni (ulteriori)"/>
 		<node name="preferences" value="Configurazioni"/>
 		<node name="bookInfo" value="Info libro"/>
@@ -111,28 +111,60 @@
 		<node name="day" value="Giorno"/>
 		<node name="night" value="Notte"/>
 		<node name="networkLibrary" value="Biblioteca di rete"/>
-		<node name="navigate" value="Naviga">
-			<node name="toc" value="Indice"/>
-			<node name="gotoHome" value="Vai all'inizio del Documento"/>
-			<node name="gotoPageNumber" value="Vai a Pagine..."/>
-			<node name="gotoSectionStart" value="Vai all'inizio della Sezione"/>
-			<node name="gotoSectionEnd" value="Vai alla fine della Sezione"/>
-			<node name="nextTOCSection" value="Vai alla successiva voce TOC"/>
-			<node name="previousTOCSection" value="Vai alla precedente voce TOC"/>
-			<node name="undo" value="Torna indietro"/>
-			<node name="redo" value="Vai avanti"/>
-		</node>
-		<node name="selection" value="Selection">
-			<node name="copyToClipboard" value="Copia negli Appunti"/>
-			<node name="openInDictionary" value="Apri nel Dizionario"/>
-			<node name="clearSelection" value="Cancella"/>
-		</node>
+		<node name="navigate" value="Naviga"/>
+		<node name="toc" value="Indice"/>
+		<node name="gotoHome" value="Vai all'inizio del Documento"/>
+		<node name="gotoPageNumber" value="Vai a Pagine..."/>
+		<node name="gotoSectionStart" value="Vai all'inizio della Sezione"/>
+		<node name="gotoSectionEnd" value="Vai alla fine della Sezione"/>
+		<node name="nextTOCSection" value="Vai alla successiva voce TOC"/>
+		<node name="previousTOCSection" value="Vai alla precedente voce TOC"/>
+		<node name="undo" value="Torna indietro"/>
+		<node name="redo" value="Vai avanti"/>
+		<node name="selection" value="Selection"/>
+		<node name="copyToClipboard" value="Copia negli Appunti"/>
+		<node name="openInDictionary" value="Apri nel Dizionario"/>
+		<node name="clearSelection" value="Cancella"/>
 		<node name="search" value="Cerca"/>
 		<node name="rotate" value="Ruota schermo"/>
 		<node name="increaseFont" value="Zoom +" />
 		<node name="decreaseFont" value="Zoom -" />
 		<node name="toggleFullscreen" value="Tutto schermo"/>
 		<node name="bookmarks" value="Segnalibri"/>
+	</node>
+	<node name="menu">
+		<node name="preferences-old"/>
+		<node name="preferences"/>
+		<node name="bookInfo"/>
+		<node name="translateWord"/>
+		<node name="initiateCopy"/>
+		<node name="library"/>
+		<node name="toc"/>
+		<node name="day"/>
+		<node name="night"/>
+		<node name="networkLibrary"/>
+		<node name="navigate">
+			<node name="toc"/>
+			<node name="gotoHome"/>
+			<node name="gotoPageNumber"/>
+			<node name="gotoSectionStart"/>
+			<node name="gotoSectionEnd"/>
+			<node name="nextTOCSection"/>
+			<node name="previousTOCSection"/>
+			<node name="undo"/>
+			<node name="redo"/>
+		</node>
+		<node name="selection">
+			<node name="copyToClipboard"/>
+			<node name="openInDictionary"/>
+			<node name="clearSelection"/>
+		</node>
+		<node name="search"/>
+		<node name="rotate"/>
+		<node name="increaseFont"/>
+		<node name="decreaseFont"/>
+		<node name="toggleFullscreen"/>
+		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">

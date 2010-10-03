@@ -233,22 +233,30 @@ public abstract class ZLApplication {
 		}
 
 		private final ArrayList<Item> myItems = new ArrayList<Item>();
-		private final ZLResource myResource;
+		private final ZLResource myMenuRes;
+		private final ZLResource myActionsRes;
 
-		Menu(ZLResource resource) {
-			myResource = resource;
+		Menu(ZLResource menu, ZLResource actions) {
+			myMenuRes = menu;
+			myActionsRes = actions;
 		}
 
-		ZLResource getResource() {
-			return myResource;
+		ZLResource getMenuRes() {
+			return myMenuRes;
 		}
 
 		void addItem(String actionId) {
-			myItems.add(new Menubar.PlainItem(myResource.getResource(actionId)));
+			ZLResource item = myMenuRes.getResource(actionId);
+			ZLResource title = item;
+			if (!item.hasValue()) {
+				title = myActionsRes.getResource(actionId);
+			}
+			myItems.add(new Menubar.PlainItem(item, title));
 		}
 		
 		Menubar.Submenu addSubmenu(String key) {
-			Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
+			Menubar.Submenu submenu =
+				new Menubar.Submenu(myMenuRes.getResource(key), myActionsRes);
 			myItems.add(submenu);
 			return submenu;
 		}
@@ -265,33 +273,36 @@ public abstract class ZLApplication {
 	//MenuBar
 	public static final class Menubar extends Menu {
 		public static final class PlainItem implements Item {
-			private final ZLResource myResource;
+			private final ZLResource myItemRes;
+			private final ZLResource myTitleRes;
 
-			public PlainItem(ZLResource resource) {
-				myResource = resource;
+			public PlainItem(ZLResource item, ZLResource title) {
+				myItemRes = item;
+				myTitleRes = title;
 			}
 
             public String getActionId() {
-				return myResource.Name;
+				return myItemRes.Name;
 			}
 
             public String getTitle() {
-				return myResource.getValue();
+				return myTitleRes.getValue();
 			}
 		};
 
 		public static final class Submenu extends Menu implements Item {
-			public Submenu(ZLResource resource) {
-				super(resource);
+			public Submenu(ZLResource menu, ZLResource actions) {
+				super(menu, actions);
 			}
 
 			public String getMenuName() {
-				return getResource().getValue();
+				return getMenuRes().getValue();
 			}
 		};
 			
 		public Menubar() {
-			super(ZLResource.resource("menu"));
+			super(ZLResource.resource("menu"),
+				ZLResource.resource("actions"));
 		}
 	}
 

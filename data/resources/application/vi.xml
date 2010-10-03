@@ -102,7 +102,7 @@
 			<node name="search" value="Tìm"/>
 		</node>
 	</node>
-	<node name="menu">
+	<node name="actions">
 		<node name="preferences-old" value="Cài đặt (thêm)"/>
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
@@ -111,28 +111,58 @@
 		<node name="day" value="Ngày"/>
 		<node name="night" value="Đêm"/>
 		<node name="networkLibrary" value="Thư viện mạng"/>
-		<node name="navigate" value="Định hướng">
-			<node name="toc" value="Mục Lục"/>
-			<node name="gotoHome" value="Đến đầu Tài liệu"/>
-			<node name="gotoPageNumber" value="Đến trang..."/>
-			<node name="gotoSectionStart" value="Đến Đầu Chương"/>
-			<node name="gotoSectionEnd" value="Đến Cuối Chương"/>
-			<node name="nextTOCSection" value="Đến Phần tiếp của ML"/>
-			<node name="previousTOCSection" value="Đến Phần trước của ML"/>
-			<node name="undo" value="Quay Lại"/>
-			<node name="redo" value="Đi Tiếp"/>
-		</node>
-		<node name="selection" value="Lựa chọn">
-			<node name="copyToClipboard" value="Chép vào Clipboard"/>
-			<node name="openInDictionary" value="Mở trong Từ điển"/>
-			<node name="clearSelection" value="Xóa"/>
-		</node>
+		<node name="navigate" value="Định hướng"/>
+		<node name="toc" value="Mục Lục"/>
+		<node name="gotoHome" value="Đến đầu Tài liệu"/>
+		<node name="gotoPageNumber" value="Đến trang..."/>
+		<node name="gotoSectionStart" value="Đến Đầu Chương"/>
+		<node name="gotoSectionEnd" value="Đến Cuối Chương"/>
+		<node name="nextTOCSection" value="Đến Phần tiếp của ML"/>
+		<node name="previousTOCSection" value="Đến Phần trước của ML"/>
+		<node name="undo" value="Quay Lại"/>
+		<node name="redo" value="Đi Tiếp"/>
+		<node name="selection" value="Lựa chọn"/>
+		<node name="copyToClipboard" value="Chép vào Clipboard"/>
+		<node name="openInDictionary" value="Mở trong Từ điển"/>
+		<node name="clearSelection" value="Xóa"/>
 		<node name="search" value="Tìm"/>
 		<node name="rotate" value="Quay màn hình"/>
 		<node name="increaseFont" value="Phóng to" />
 		<node name="decreaseFont" value="Thu nhỏ" />
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
+	</node>
+	<node name="menu">
+		<node name="preferences-old"/>
+		<node name="preferences"/>
+		<node name="bookInfo"/>
+		<node name="library"/>
+		<node name="toc"/>
+		<node name="day"/>
+		<node name="night"/>
+		<node name="networkLibrary"/>
+		<node name="navigate">
+			<node name="toc"/>
+			<node name="gotoHome"/>
+			<node name="gotoPageNumber"/>
+			<node name="gotoSectionStart"/>
+			<node name="gotoSectionEnd"/>
+			<node name="nextTOCSection"/>
+			<node name="previousTOCSection"/>
+			<node name="undo"/>
+			<node name="redo"/>
+		</node>
+		<node name="selection">
+			<node name="copyToClipboard"/>
+			<node name="openInDictionary"/>
+			<node name="clearSelection"/>
+		</node>
+		<node name="search"/>
+		<node name="rotate"/>
+		<node name="increaseFont"/>
+		<node name="decreaseFont"/>
+		<node name="toggleFullscreen"/>
+		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">

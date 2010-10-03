@@ -102,7 +102,7 @@
 			<node name="search" value="搜索" />
 		</node>
 	</node>
-	<node name="menu">
+	<node name="actions">
 		<node name="preferences-old" value="参数设置（更多）" />
 		<node name="preferences" value="参数设置" />
 		<node name="bookInfo" value="书籍信息" />
@@ -111,28 +111,58 @@
 		<node name="day" value="白低黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
-		<node name="navigate" value="导航">
-			<node name="toc" value="内容目录" />
-			<node name="gotoHome" value="翻到图书开始" />
-			<node name="gotoPageNumber" value="翻到某页" />
-			<node name="gotoSectionStart" value="翻到章节开始" />
-			<node name="gotoSectionEnd" value="翻到章节结束" />
-			<node name="nextTOCSection" value="翻到下一章节 " />
-			<node name="previousTOCSection" value="翻到上一章节" />
-			<node name="undo" value="后翻" />
-			<node name="redo" value="前翻" />
-		</node>
-		<node name="selection" value="选择">
-			<node name="copyToClipboard" value="复制到剪贴板" />
-			<node name="openInDictionary" value="打开字典" />
-			<node name="clearSelection" value="清除" />
-		</node>
+		<node name="navigate" value="导航"/>
+		<node name="toc" value="内容目录" />
+		<node name="gotoHome" value="翻到图书开始" />
+		<node name="gotoPageNumber" value="翻到某页" />
+		<node name="gotoSectionStart" value="翻到章节开始" />
+		<node name="gotoSectionEnd" value="翻到章节结束" />
+		<node name="nextTOCSection" value="翻到下一章节 " />
+		<node name="previousTOCSection" value="翻到上一章节" />
+		<node name="undo" value="后翻" />
+		<node name="redo" value="前翻" />
+		<node name="selection" value="选择"/>
+		<node name="copyToClipboard" value="复制到剪贴板" />
+		<node name="openInDictionary" value="打开字典" />
+		<node name="clearSelection" value="清除" />
 		<node name="search" value="查找" />
 		<node name="rotate" value="翻转屏幕" />
 		<node name="increaseFont" value="字体加大" />
 		<node name="decreaseFont" value="字体缩小" />
 		<node name="toggleFullscreen" value="全屏" />
 		<node name="bookmarks" value="书签" />
+	</node>
+	<node name="menu">
+		<node name="preferences-old"/>
+		<node name="preferences"/>
+		<node name="bookInfo"/>
+		<node name="library"/>
+		<node name="toc"/>
+		<node name="day"/>
+		<node name="night"/>
+		<node name="networkLibrary"/>
+		<node name="navigate">
+			<node name="toc"/>
+			<node name="gotoHome"/>
+			<node name="gotoPageNumber"/>
+			<node name="gotoSectionStart"/>
+			<node name="gotoSectionEnd"/>
+			<node name="nextTOCSection"/>
+			<node name="previousTOCSection"/>
+			<node name="undo"/>
+			<node name="redo"/>
+		</node>
+		<node name="selection">
+			<node name="copyToClipboard"/>
+			<node name="openInDictionary"/>
+			<node name="clearSelection"/>
+		</node>
+		<node name="search"/>
+		<node name="rotate"/>
+		<node name="increaseFont"/>
+		<node name="decreaseFont"/>
+		<node name="toggleFullscreen"/>
+		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
