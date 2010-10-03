@@ -180,6 +180,10 @@
 						<node name="normal" value="Обычный"/>
 						<node name="large" value="Большой"/>
 					</node>
+					<node name="footerLongTap" value="Придержать подвал">
+						<node name="longTapRevert" value="Откатить переход"/>
+						<node name="longTapNavigate" value="Сделать переход"/>
+					</node>
 					<node name="showProgress" value="Показывать прогресс">
 						<node name="summaryOn" value="Показывать прогресс в подвале"/>
 						<node name="summaryOff" value="Скрыть прогресс в подвале"/>

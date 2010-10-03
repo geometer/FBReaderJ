@@ -181,6 +181,10 @@
 						<node name="normal" value="Normal" toBeTranslated="true"/>
 						<node name="large" value="Large" toBeTranslated="true"/>
 					</node>
+					<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
+						<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
+						<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+					</node>
 					<node name="showProgress" value="Show progress" toBeTranslated="true">
 						<node name="summaryOn" value="Show progress in footer" toBeTranslated="true"/>
 						<node name="summaryOff" value="Hide progress in footer" toBeTranslated="true"/>

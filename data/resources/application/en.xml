@@ -180,6 +180,10 @@
 						<node name="normal" value="Normal"/>
 						<node name="large" value="Large"/>
 					</node>
+					<node name="footerLongTap" value="Footer long tap">
+						<node name="longTapRevert" value="Revert position"/>
+						<node name="longTapNavigate" value="Go to position"/>
+					</node>
 					<node name="showProgress" value="Show progress">
 						<node name="summaryOn" value="Show progress in footer"/>
 						<node name="summaryOff" value="Hide progress in footer"/>
