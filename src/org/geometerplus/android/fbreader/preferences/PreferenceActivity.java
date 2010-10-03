@@ -98,16 +98,29 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 		);
 
+		final Screen statusLineScreen = lookNFeelCategory.createPreferenceScreen("scrollBar");
+		statusLineScreen.setSummary(statusLineScreen.Resource.getResource("summary").getValue());
+		final Category statusLineCategory = statusLineScreen.createCategory(null);
+
+		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
+		statusLineCategory.addPreference(new StringListPreference(
+			this, statusLineCategory.Resource.getResource("scrollbarType"), null,
+			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
+
+		String[] footerSizes = {"small", "normal", "large"};
+		statusLineCategory.addPreference(new StringListPreference(
+			this, statusLineCategory.Resource.getResource("footerSize"), null,
+			footerSizes, ((FBReader)FBReader.Instance()).FooterSizeOption));
+
+		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowClock, "showClock");
+		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowBattery, "showBattery");
+		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowProgress, "showProgress");
+
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
 			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		}
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
-		String[] scrollBarTypes = {"hide", "show", "showAsProgress"};
-		//lookNFeelCategory.addPreference(new StringListPreference(this, lookNFeelCategory.Resource, "scrollbarType"));
-		lookNFeelCategory.addPreference(new StringListPreference(
-			this, lookNFeelCategory.Resource.getResource("scrollbarType"), null,
-			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
 
 		/*
 		final FBReader fbreader = (FBReader)FBReader.Instance();

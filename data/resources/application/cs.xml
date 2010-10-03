@@ -165,13 +165,34 @@
 					<node name="summaryOn" value="Displej se nevypne během čtení knihy"/>
 					<node name="summaryOff" value="Displej se automaticky vypne v případě nečinnosti"/>
 				</node>
-				<node name="scrollbarType" value="Posuvník na pravé straně">
-					<node name="hide" value="Skrýt"/>
-					<node name="show" value="Zobrazit jako běžný posuvník"/>
-					<node name="showAsProgress" value="Zobrazit jako indikátor průběhu"/>
-				</node>
 				<node name="appearanceSettings" value="Vzhled">
 					<node name="summary" value="Nastavení zobrazení textu"/>
+				</node>
+				<node name="scrollBar" value="Scroll Bar" toBeTranslated="true">
+					<node name="summary" value="Configure scroll bar" toBeTranslated="true"/>
+					<node name="scrollbarType" value="Scroll bar Type" toBeTranslated="true">
+						<node name="hide" value="Hide" toBeTranslated="true"/>
+						<node name="show" value="Vertical slider" toBeTranslated="true"/>
+						<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+						<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+					</node>
+					<node name="footerSize" value="Footer size" toBeTranslated="true">
+						<node name="small" value="Small" toBeTranslated="true"/>
+						<node name="normal" value="Normal" toBeTranslated="true"/>
+						<node name="large" value="Large" toBeTranslated="true"/>
+					</node>
+					<node name="showProgress" value="Show progress" toBeTranslated="true">
+						<node name="summaryOn" value="Show progress in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Hide progress in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showBattery" value="Show battery" toBeTranslated="true">
+						<node name="summaryOn" value="Show battery in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Hide battery in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showClock" value="Show clock" toBeTranslated="true">
+						<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Hide clock in footer" toBeTranslated="true"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="Posunování">
