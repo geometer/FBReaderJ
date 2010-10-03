@@ -160,6 +160,12 @@
 		<node name="findNext" value="Find next" toBeTranslated="true"/>
 		<node name="default" value="Default" toBeTranslated="true"/>
 		<node name="nothing" value="Nothing" toBeTranslated="true"/>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true"/>
+		<node name="tapZoneSelectAction" value="Zone action" toBeTranslated="true"/>
+		<node name="tapZoneAdd" value="Add zone" toBeTranslated="true"/>
+		<node name="tapZoneDelete" value="Delete zone" toBeTranslated="true"/>
+		<node name="tapZonesSave" value="Save changes" toBeTranslated="true"/>
+		<node name="tapZonesCancel" value="Discard changes" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>

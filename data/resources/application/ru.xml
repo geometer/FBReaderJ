@@ -156,6 +156,12 @@
 		<node name="findNext" value="Поиск дальше"/>
 		<node name="default" value="По умолчанию"/>
 		<node name="nothing" value="Ничего"/>
+		<node name="tapZones" value="Зоны экрана"/>
+		<node name="tapZoneSelectAction" value="Действие зоны"/>
+		<node name="tapZoneAdd" value="Добавить зону"/>
+		<node name="tapZoneDelete" value="Удалить зону"/>
+		<node name="tapZonesSave" value="Сохранить"/>
+		<node name="tapZonesCancel" value="Отмена изменений"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>

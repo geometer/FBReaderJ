@@ -156,6 +156,12 @@
 		<node name="findNext" value="Find next"/>
 		<node name="default" value="Default"/>
 		<node name="nothing" value="Nothing"/>
+		<node name="tapZones" value="Tap zones"/>
+		<node name="tapZoneSelectAction" value="Zone action"/>
+		<node name="tapZoneAdd" value="Add zone"/>
+		<node name="tapZoneDelete" value="Delete zone"/>
+		<node name="tapZonesSave" value="Save changes"/>
+		<node name="tapZonesCancel" value="Discard changes"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>
