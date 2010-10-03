@@ -266,14 +266,6 @@
 					<node name="summaryOn" value="Lapozás ujjmozdulatra"/>
 					<node name="summaryOff" value="Lapozás érintésre"/>
 				</node>
-				<node name="volumeKeys" value="Görgetés a hangerő gombokkal">
-					<node name="summaryOn" value="Hangerő gombok használata görgetéshez"/>
-					<node name="summaryOff" value="A hangerő gombok a hangerőt állítják"/>
-				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
-				</node>
 				<node name="animated" value="Animált görgetés">
 					<node name="summaryOn" value="Finomabb görgetés"/>
 					<node name="summaryOff" value="Gyorsabb görgetés"/>

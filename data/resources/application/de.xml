@@ -266,14 +266,6 @@
 					<node name="summaryOn" value="Seiten werden mit Finger flick gescrollt"/>
 					<node name="summaryOff" value="Seiten werden mit Finger tap gescrollt"/>
 				</node>
-				<node name="volumeKeys" value="Lautstärketasten scrolling">
-					<node name="summaryOn" value="Benutze Lautstärketasten zum scrollen"/>
-					<node name="summaryOff" value="Behalte Lautstärketasten für Sound"/>
-				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
-				</node>
 				<node name="animated" value="Animiertes scrollen">
 					<node name="summaryOn" value="Scrolle Seiten smoother"/>
 					<node name="summaryOff" value="Scrolle Seiten schneller"/>

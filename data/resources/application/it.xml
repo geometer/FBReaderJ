@@ -266,14 +266,6 @@
 					<node name="summaryOn" value="La navigazione tra le pagine avviene con lo sfioramento delle dita sullo schermo"/> 
 					<node name="summaryOff" value="La navigazione tra le pagine avviene toccando lo schermo"/> 
 				</node>
-				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
-					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>
-					<node name="summaryOff" value="Lascia i tasti del volume per la regolazione del suono"/>
-				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
-				</node>
 				<node name="animated" value="Scorrimento animato">
 					<node name="summaryOn" value="Scorri le pagine più lentamente"/>
 					<node name="summaryOff" value="Scorri le pagine più velocemente"/>

@@ -266,14 +266,6 @@
 					<node name="summaryOn" value="Posunovat stránky tahem prstem"/>
 					<node name="summaryOff" value="Posunovat stránky klepnutím prstem"/>
 				</node>
-				<node name="volumeKeys" value="Posunování tlačítky ovládání hlasitosti">
-					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
-					<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
-				</node>
-				<node name="invertVolumeKeys" value="Převrátit posunování tlačítky ovládání hlasitosti">
-					<node name="summaryOn" value="Tlačítko nahoru (dolů) posunuje stránku dolů (nahoru)"/>
-					<node name="summaryOff" value="Tlačítko nahoru (dolů) posunuje stránku nahoru (dolů)"/>
-				</node>
 				<node name="animated" value="Animované posunování">
 					<node name="summaryOn" value="Posunovat stránky hladčeji"/>
 					<node name="summaryOff" value="Posunovat stránky rychleji"/>

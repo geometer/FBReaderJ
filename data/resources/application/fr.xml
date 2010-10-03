@@ -269,14 +269,6 @@
 					<node name="summaryOn" value="Faire glisser le doigt pour changer de page"/>
 					<node name="summaryOff" value="Une pression du doigt change de page"/>
 				</node>
-				<node name="volumeKeys" value="Touches du volume">
-					<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>
-					<node name="summaryOff" value="Les touches du volume n'ont pas d'effet sur la navigation"/>
-				</node>
-				<node name="invertVolumeKeys" value="Inversion touches du volume">
-					<node name="summaryOn" value="Volume + affiche la page suivante"/>
-					<node name="summaryOff" value="Volume + affiche la page précédente"/>
-				</node>
 				<node name="animated" value="Animation changement de page">
 					<node name="summaryOn" value="La transition entre deux pages est plus douce"/>
 					<node name="summaryOff" value="Le changement de page est instantané"/>

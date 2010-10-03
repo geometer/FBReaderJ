@@ -265,14 +265,6 @@
 					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
 					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
 				</node>
-				<node name="volumeKeys" value="Использовать кнопки настройки звука">
-					<node name="summaryOn" value="Кнопки увеличения/уменьшения звука перелистывают страницы"/>
-					<node name="summaryOff" value="Кнопки увеличения/уменьшения звука работают как обычно"/>
-				</node>
-				<node name="invertVolumeKeys" value="Перелистывать кнопками в обратную сторону">
-					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
-					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
-				</node>
 				<node name="animated" value="Постепенное перелистывание">
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
 					<node name="summaryOff" value="Страница перелистывается мгновенно"/>

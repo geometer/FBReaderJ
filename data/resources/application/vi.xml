@@ -266,14 +266,6 @@
 					<node name="summaryOn" value="Trang sẽ cuộn khi búng nhẹ"/>
 					<node name="summaryOff" value="Trang sẽ cuộn khi gõ nhẹ ngón tay"/>
 				</node>
-				<node name="volumeKeys" value="Cuộn bằng phím âm lượng">
-					<node name="summaryOn" value="Dùng phím âm lượng để cuộn"/>
-					<node name="summaryOff" value="Giữ phím âm lượng cho âm thanh"/>
-				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
-				</node>
 				<node name="animated" value="Cuộn sinh động">
 					<node name="summaryOn" value="Cuộn trang mượt hơn"/>
 					<node name="summaryOff" value="Cuộn trang nhanh hơn"/>
