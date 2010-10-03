@@ -165,13 +165,34 @@
 					<node name="summaryOn" value="阅读时屏幕不要自动关闭" />
 					<node name="summaryOff" value="无操作时屏幕自动关闭" />
 				</node>
-				<node name="scrollbarType" value="滚动条在右边">
-					<node name="hide" value="隐藏" />
-					<node name="show" value="显示为正常滚动条" />
-					<node name="showAsProgress" value="显示为进度滚动条" />
-				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+				</node>
+				<node name="scrollBar" value="Scroll Bar" toBeTranslated="true">
+					<node name="summary" value="Configure scroll bar" toBeTranslated="true"/>
+					<node name="scrollbarType" value="Scroll bar Type" toBeTranslated="true">
+						<node name="hide" value="Hide" toBeTranslated="true"/>
+						<node name="show" value="Vertical slider" toBeTranslated="true"/>
+						<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+						<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+					</node>
+					<node name="footerSize" value="Footer size" toBeTranslated="true">
+						<node name="small" value="Small" toBeTranslated="true"/>
+						<node name="normal" value="Normal" toBeTranslated="true"/>
+						<node name="large" value="Large" toBeTranslated="true"/>
+					</node>
+					<node name="showProgress" value="Show progress" toBeTranslated="true">
+						<node name="summaryOn" value="Show progress in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Hide progress in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showBattery" value="Show battery" toBeTranslated="true">
+						<node name="summaryOn" value="Show battery in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Hide battery in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showClock" value="Show clock" toBeTranslated="true">
+						<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Hide clock in footer" toBeTranslated="true"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="翻阅操作">
