@@ -105,6 +105,7 @@
 		<node name="preferences-old" value="Настройки (дополнительно)"/>
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
+		<node name="translateWord" value="Перевести: %s"/>
 		<node name="library" value="Библиотека"/>
 		<node name="toc" value="Оглавление"/>
 		<node name="day" value="День"/>
@@ -406,6 +407,7 @@
 		<node name="bookNotFound" value="Нет подходящих книг"/>
 		<node name="bookmarkNotFound" value="Нет подходящих закладок"/>
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
+		<node name="dictNotInstalled" value="ColorDict не установлен!"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="текста по умолчанию"/>

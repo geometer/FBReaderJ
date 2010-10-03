@@ -106,6 +106,7 @@
 		<node name="preferences-old" value="Cài đặt (thêm)"/>
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
+		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="library" value="Thư viện"/>
 		<node name="toc" value="ML"/>
 		<node name="day" value="Ngày"/>
@@ -407,6 +408,7 @@
 		<node name="bookNotFound" value="Xin lỗi, không có quyển nào thích hợp trong thư viện"/>
 		<node name="bookmarkNotFound" value="Xin lỗi, không có đánh dấu thích hợp"/>
 		<node name="cannotOpenBook" value="Xin lỗi, không thể mở sách vào lúc này"/>
+		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Cơ sở"/>

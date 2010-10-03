@@ -106,6 +106,7 @@
 		<node name="preferences-old" value="Einstellungen (mehr)"/>
 		<node name="preferences" value="Einstellungen"/>
 		<node name="bookInfo" value="Buch Info"/>
+		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="library" value="Bibliothek"/>
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Tag"/>
@@ -407,6 +408,7 @@
 		<node name="bookNotFound" value="Es wurden keine passenden Bücher in der Bibliothek gefunden, sorry"/>
 		<node name="bookmarkNotFound" value="Es wurden kein passenden Lesezeichen gefunden, sorry"/>
 		<node name="cannotOpenBook" value="Kann das Buch zurzeit nicht öffnen, sorry"/>
+		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Basis"/>

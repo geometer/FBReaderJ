@@ -106,6 +106,7 @@
 		<node name="preferences-old" value="参数设置（更多）" />
 		<node name="preferences" value="参数设置" />
 		<node name="bookInfo" value="书籍信息" />
+		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="library" value="本地藏书" />
 		<node name="toc" value="目录" />
 		<node name="day" value="白低黑字" />
@@ -407,6 +408,7 @@
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍" />
 		<node name="bookmarkNotFound" value="对不起，找不到对应的书签" />
 		<node name="cannotOpenBook" value="对不起，无法开启本书" />
+		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="基础" />

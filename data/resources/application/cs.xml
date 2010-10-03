@@ -106,6 +106,7 @@
 		<node name="preferences-old" value="Nastavení (další)"/>
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
+		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="library" value="Knihovna"/>
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
@@ -407,6 +408,7 @@
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
 		<node name="bookmarkNotFound" value="Nejsou bohužel žádné vhodné záložky"/>
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
+		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Základ"/>
