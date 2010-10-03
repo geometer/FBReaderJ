@@ -20,18 +20,18 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.Map;
+import java.util.HashSet;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.fbreader.network.*;
 
-
 class OPDSCatalogItem extends NetworkCatalogItem {
 
 	static class State extends NetworkOperationData {
-
 		public String LastLoadedId;
+		public final HashSet<String> LoadedIds = new HashSet<String>();
 
 		public State(INetworkLink link, OnNewItemListener listener) {
 			super(link, listener);

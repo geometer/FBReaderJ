@@ -50,9 +50,6 @@ public class NetworkOperationData {
 	}
 
 	public ZLNetworkRequest resume() {
-		if (++myResumeCount >= 10) { // FIXME: hardcoded resume limit constant!!!
-			return null;
-		}
 		final ZLNetworkRequest request = Link.resume(this);
 		clear();
 		return request;
