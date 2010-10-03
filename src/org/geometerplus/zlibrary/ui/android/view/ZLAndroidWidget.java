@@ -19,12 +19,16 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.*;
 import android.view.*;
 import android.util.AttributeSet;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
@@ -510,6 +514,33 @@ public class ZLAndroidWidget extends View {
 			(myViewPageToScroll == ZLView.PAGE_RIGHT) || (myViewPageToScroll == ZLView.PAGE_LEFT);
 		final float pageSize = horizontal ? getTextViewWidth() : getTextViewHeight();
 		return (float)myScrollingShift / pageSize;
+	}
+
+	ZLResource myMenuResource;
+	public void loadContextMenu(Menu menu, ArrayList<String> menuActions) {
+		String read_menu[] = {
+				ActionCode.SEARCH,
+				ActionCode.ROTATE,
+				ActionCode.INCREASE_FONT,
+				ActionCode.DECREASE_FONT,
+				ActionCode.SHOW_NAVIGATION,
+				ActionCode.SHOW_BOOK_INFO,
+		};
+
+		if (myMenuResource == null) {
+			myMenuResource = ZLResource.resource("actions");
+		}
+
+		menuActions.clear();
+		ZLApplication app = ZLApplication.Instance();
+		for (int actionIndex = 0; actionIndex < read_menu.length; ++actionIndex) {
+			String actionId = read_menu[actionIndex];
+			if (app.isActionEnabled(actionId) && app.isActionVisible(actionId)) {
+				String itemText = myMenuResource.getResource(actionId).getValue();
+				menu.add(0, actionIndex, Menu.NONE, itemText);
+			}
+			menuActions.add(actionId);
+		}
 	}
 
 	public boolean onLongClick (){

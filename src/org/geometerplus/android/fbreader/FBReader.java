@@ -19,12 +19,16 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -113,6 +117,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 		this.registerReceiver(this.myBatInfoReceiver,
 				new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+		registerForContextMenu(findViewById(R.id.main_view));
 	}
 
 	@Override
@@ -152,11 +158,9 @@ public final class FBReader extends ZLAndroidActivity {
 				if (widget.onLongClick()) {
 					return true;
 				}
-				if (!myNavigatePanel.getVisibility()) {
-					navigate();
-					return true;
-				}
-				return false;
+
+				openContextMenu(findViewById(R.id.main_view));
+				return true;
 			}
 		});
 	}
@@ -330,4 +334,20 @@ public final class FBReader extends ZLAndroidActivity {
 			ZLApplication.Instance().myBatteryLevel = intent.getIntExtra("level", 100);
 		}
 	};
+
+	ArrayList<String> myMenuActions = new ArrayList<String>();
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.loadContextMenu(menu, myMenuActions);
+	}
+
+	@Override
+	public boolean  onContextItemSelected(MenuItem item) {
+		super.onContextItemSelected(item);
+		ZLApplication.Instance().doAction(myMenuActions.get(item.getItemId()));
+		return true;
+	}
 }
