@@ -61,8 +61,4 @@ public final class ZLColor {
 	public int hashCode() {
 		return getIntValue();
 	}
-	
-	public int rgb() {
-		return Color.rgb(Red, Green, Blue);
-	}
 }
