@@ -7,6 +7,7 @@ import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -93,8 +94,8 @@ public class ZLFooter {
 
 		// query colors for background and regular text
 		FBReader reader = (FBReader)FBReader.Instance();
-		int bgColor = reader.BookTextView.getBackgroundColor().rgb();
-		int fgColor = reader.BookTextView.getTextColor(FBHyperlinkType.NONE).rgb();
+		int bgColor = ZLAndroidColorUtil.rgb(reader.BookTextView.getBackgroundColor());
+		int fgColor = ZLAndroidColorUtil.rgb(reader.BookTextView.getTextColor(FBHyperlinkType.NONE));
 		if (myLastFgColor != fgColor || myLastBgColor != bgColor) {
 			gaugeChanged = true;
 			infoChanged = true;
