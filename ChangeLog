@@ -1,4 +1,4 @@
-===== 0.7.6 (??? ??, ????) =====
+===== 0.7.6 (Oct 05, 2010) =====
 * Application icon with better resolution has been added
 * Czech localization (by Marek Pavelka) has been added
 * Loading of large catalogs (e.g., Manybooks->Authors->L) has been fixed
