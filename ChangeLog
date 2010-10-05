@@ -2,6 +2,7 @@
 * Application icon with better resolution has been added
 * Czech localization (by Marek Pavelka) has been added
 * Loading of large catalogs (e.g., Manybooks->Authors->L) has been fixed
+* Default e-mail will be used during registration at litres
 
 ===== 0.7.5 (Sep 22, 2010) =====
 * Mistyping in Russian help has been fixed
