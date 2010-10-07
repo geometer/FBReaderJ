@@ -9,6 +9,7 @@ import org.geometerplus.fbreader.fbreader.ScrollingPreferences;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 import android.app.AlertDialog;
 import android.app.Application;
@@ -118,20 +119,20 @@ public class ZLTapZones {
 			if (myViewRect.width() < 3 * myRulerSize || myViewRect.height() < 3 * myRulerSize) {
 				canvas.drawRect(myViewRect, myLinesPaint);
 				if (myViewRect.width() > myRulerSize && myViewRect.height() > myRulerSize) {
-					canvas.drawRect(myViewRect.left + delta2, myViewRect.top + delta2, 
+					canvas.drawRect(myViewRect.left + delta2, myViewRect.top + delta2,
 							myViewRect.right - delta2, myViewRect.bottom - delta2, myFillPaint);
 				}
 				return;
 			}
 
 			// corner rulers
-			canvas.drawRect(myViewRect.left, myViewRect.top, 
+			canvas.drawRect(myViewRect.left, myViewRect.top,
 					myViewRect.left + delta1, myViewRect.top + delta1, myLinesPaint);
-			canvas.drawRect(myViewRect.right - delta1, myViewRect.top, 
+			canvas.drawRect(myViewRect.right - delta1, myViewRect.top,
 					myViewRect.right, myViewRect.top + delta1, myLinesPaint);
-			canvas.drawRect(myViewRect.left, myViewRect.bottom - delta1, 
+			canvas.drawRect(myViewRect.left, myViewRect.bottom - delta1,
 					myViewRect.left + delta1, myViewRect.bottom, myLinesPaint);
-			canvas.drawRect(myViewRect.right - delta1, myViewRect.bottom - delta1, 
+			canvas.drawRect(myViewRect.right - delta1, myViewRect.bottom - delta1,
 					myViewRect.right, myViewRect.bottom, myLinesPaint);
 
 			// lines between rulers
@@ -154,7 +155,7 @@ public class ZLTapZones {
 					myViewRect.right, myViewRect.bottom - delta3, myLinesPaint);
 
 			// center transparent area
-			canvas.drawRect(myViewRect.left + delta1, myViewRect.top + delta1, 
+			canvas.drawRect(myViewRect.left + delta1, myViewRect.top + delta1,
 					myViewRect.right - delta1, myViewRect.bottom - delta1, myFillPaint);
 		}
 
@@ -331,7 +332,7 @@ public class ZLTapZones {
 
 	public void draw(Canvas canvas) {
 		FBReader reader = (FBReader)FBReader.Instance();
-		int color = reader.BookTextView.getTextColor(FBHyperlinkType.INTERNAL).rgb();
+		int color = ZLAndroidColorUtil.rgb(reader.BookTextView.getTextColor(FBHyperlinkType.INTERNAL));
 		myLinesPaint.setColor(color);
 		myFillPaint.setColor(color);
 		myFillPaint.setAlpha(100);
@@ -343,7 +344,7 @@ public class ZLTapZones {
 
 	private void drawGuideLines(Canvas canvas) {
 		FBReader reader = (FBReader)FBReader.Instance();
-		myGuidesPaint.setColor(reader.BookTextView.getTextColor(FBHyperlinkType.NONE).rgb());
+		myGuidesPaint.setColor(ZLAndroidColorUtil.rgb(reader.BookTextView.getTextColor(FBHyperlinkType.NONE)));
 		int dx2 = myWatchArea.width() / 2;
 		int dy2 = myWatchArea.height() / 2;
 		int dx3 = myWatchArea.width() / 3;
@@ -412,7 +413,7 @@ public class ZLTapZones {
 
 	public void setWatchArea(int x, int y, int width, int height) {
 		myWatchArea.set(x, y, x + width, y + height);
-		myRulerSize = (int)(Math.sqrt(myWatchArea.width() * myWatchArea.width() + myWatchArea.height() * myWatchArea.height()) / 38 + 0.5); 
+		myRulerSize = (int)(Math.sqrt(myWatchArea.width() * myWatchArea.width() + myWatchArea.height() * myWatchArea.height()) / 38 + 0.5);
 		for (int zoneIndex = 0; zoneIndex < myZones.size(); zoneIndex++) {
 			myZones.get(zoneIndex).loadViewRect();
 		}
