@@ -184,15 +184,14 @@ public class ZLFooter {
 		if (infoChanged) {
 			String info = "";
 			if (app.FooterShowClock.getValue()) {
-				info += String.format("%02d:%02d", date.getHours(), date.getMinutes());
+				info += (date.getHours() < 10 ? "0" : "") + date.getHours() + ":" +
+				(date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
 			}
 			if (app.FooterShowBattery.getValue()) {
-				info = String.format("%d%%", ZLApplication.Instance().myBatteryLevel) +
-					(info.equals("") ? "" : " ") + info;
+				info = ZLApplication.Instance().myBatteryLevel + "%" + (info.equals("") ? "" : " ") + info;
 			}
 			if (app.FooterShowProgress.getValue()) {
-				info = String.format("%d/%d", pagesProgress, bookLength) +
-					(info.equals("") ? "" : " ") + info;
+				info = pagesProgress + "/" + bookLength + (info.equals("") ? "" : " ") + info;
 			}
 
 			// calculate information text width and size of gauge
