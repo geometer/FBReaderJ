@@ -31,8 +31,8 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 	private final ItemsLoadingHandler myHandler;
 
-	public final long UpdateInterval; // in milliseconds
-	public final int ItemsLimit;
+	private final long myUpdateInterval; // in milliseconds
+	private final int myItemsLimit;
 
 	private boolean myInterruptRequested;
 	private boolean myInterruptConfirmed;
@@ -80,8 +80,8 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler, long updateIntervalMillis, int itemsLimit) {
 		myHandler = handler;
-		UpdateInterval = updateIntervalMillis;
-		ItemsLimit = itemsLimit;
+		myUpdateInterval = updateIntervalMillis;
+		myItemsLimit = itemsLimit;
 	}
 
 	public abstract String doBefore();
@@ -105,11 +105,11 @@ abstract class ItemsLoadingRunnable implements Runnable {
 				final long now = System.currentTimeMillis();
 				if (now > myUpdateTime) {
 					myHandler.sendUpdateItems();
-					myUpdateTime = now + UpdateInterval;
+					myUpdateTime = now + myUpdateInterval;
 				}
 			}
 			public boolean confirmInterrupt() {
-				return confirmInterruptLoading() || myItemsNumber >= ItemsLimit;
+				return confirmInterruptLoading() /*|| myItemsNumber >= ItemsLimit*/;
 			}
 			public void commitItems(INetworkLink link) {
 				myHandler.commitItems(link);
