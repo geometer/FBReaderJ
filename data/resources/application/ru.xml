@@ -162,12 +162,14 @@
 		<node name="tapZoneDelete" value="Удалить зону"/>
 		<node name="tapZonesSave" value="Сохранить"/>
 		<node name="tapZonesCancel" value="Отмена изменений"/>
+		<node name="openFile" value="Открыть файл"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
 		<node name="initiateCopy"/>
+		<node name="openFile"/>
 		<node name="library"/>
 		<node name="toc"/>
 		<node name="day"/>

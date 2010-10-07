@@ -163,12 +163,14 @@
 		<node name="tapZoneDelete" value="Delete zone" toBeTranslated="true"/>
 		<node name="tapZonesSave" value="Save changes" toBeTranslated="true"/>
 		<node name="tapZonesCancel" value="Discard changes" toBeTranslated="true"/>
+		<node name="openFile" value="Open book file" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
 		<node name="initiateCopy"/>
+		<node name="openFile"/>
 		<node name="library"/>
 		<node name="toc"/>
 		<node name="day"/>
