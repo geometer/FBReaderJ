@@ -176,7 +176,7 @@ class RegisterUserDialog extends NetworkDialog {
 	@Override
 	public void prepareDialogInternal(Dialog dialog) {
 		dialog.findViewById(R.id.network_register_email_button).setVisibility((mySystemEmails.size() > 1) ? View.VISIBLE : View.GONE);
-		if (mySystemEmails.size() == 1 && (myEmail == null || myEmail.length() == 0)) {
+		if (!mySystemEmails.isEmpty() && (myEmail == null || myEmail.length() == 0)) {
 			myEmail = mySystemEmails.get(0);
 		}
 
