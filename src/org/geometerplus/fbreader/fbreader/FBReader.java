@@ -42,7 +42,7 @@ public final class FBReader extends ZLApplication {
 	public final ZLStringOption BookmarkSearchPatternOption =
 		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
-	public final ZLBooleanOption UseSeparateBindingsOption = 
+	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
@@ -57,9 +57,9 @@ public final class FBReader extends ZLApplication {
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 	public final ZLIntegerRangeOption FooterSizeOption =
-		new ZLIntegerRangeOption("Options", "footerSize", 0, 2, 0/*small*/); 
+		new ZLIntegerRangeOption("Options", "footerSize", 0, 2, 0/*small*/);
 	public final ZLIntegerRangeOption FooterLongTap =
-		new ZLIntegerRangeOption("Options", "footerLongTap", 0, 1, 0/*revert*/); 
+		new ZLIntegerRangeOption("Options", "footerLongTap", 0, 1, 0/*revert*/);
 
 	final ZLBooleanOption SelectionEnabledOption =
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
@@ -91,12 +91,12 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.SHOW_CONTENTS, new ShowTOCAction(this));
 		addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this));
 		addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this));
-		
+
 		addAction(ActionCode.SEARCH, new SearchAction(this));
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
-		
+
 		addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this));
 		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
 		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
@@ -116,6 +116,7 @@ public final class FBReader extends ZLApplication {
 		addAction(ActionCode.TAP_ZONE_DELETE, new TapZoneAction(this, ActionCode.TAP_ZONE_DELETE));
 		addAction(ActionCode.TAP_ZONES_SAVE, new TapZoneAction(this, ActionCode.TAP_ZONES_SAVE));
 		addAction(ActionCode.TAP_ZONES_CANCEL, new TapZoneAction(this, ActionCode.TAP_ZONES_CANCEL));
+		addAction(ActionCode.OPEN_FILE, new OpenFileAction(this));
 
 		addAction(ActionCode.DEFAULT, new DummyAction(this, false));
 		addAction(ActionCode.NOTHING, new DummyAction(this, true));
@@ -143,7 +144,7 @@ public final class FBReader extends ZLApplication {
 	public void initWindow() {
 		super.initWindow();
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
-			public void run() { 
+			public void run() {
 				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
 				if (book == null) {
 					book = Library.Instance().getRecentBook();
@@ -155,11 +156,11 @@ public final class FBReader extends ZLApplication {
 			}
 		});
 	}
-	
+
 	public void openBook(final Book book, final Bookmark bookmark) {
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
-			public void run() { 
-				openBookInternal(book, bookmark); 
+			public void run() {
+				openBookInternal(book, bookmark);
 			}
 		});
 	}
@@ -210,7 +211,7 @@ public final class FBReader extends ZLApplication {
 		BookTextView.clearCaches();
 		FootnoteView.clearCaches();
 	}
-	
+
 	void openBookInternal(Book book, Bookmark bookmark) {
 		if (book != null) {
 			onViewChanged();
@@ -253,11 +254,11 @@ public final class FBReader extends ZLApplication {
 		}
 		repaintView();
 	}
-	
+
 	public void showBookTextView() {
 		setView(BookTextView);
 	}
-	
+
 	private Book createBookForFile(ZLFile file) {
 		if (file == null) {
 			return null;
