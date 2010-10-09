@@ -174,6 +174,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onPause() {
 		if (myWakeLock != null) {
 			myWakeLock.release();
+			myWakeLock = null;
 		}
 		ControlButtonPanel.saveVisibilities();
 		super.onPause();

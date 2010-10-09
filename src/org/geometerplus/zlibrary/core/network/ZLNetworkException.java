@@ -21,8 +21,7 @@ package org.geometerplus.zlibrary.core.network;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class ZLNetworkErrors {
-
+public class ZLNetworkException extends Exception {
 	// Messages with no parameters:
 	public static final String ERROR_UNKNOWN_ERROR = "unknownErrorMessage";
 	public static final String ERROR_TIMEOUT = "operationTimedOutMessage";
@@ -48,23 +47,18 @@ public class ZLNetworkErrors {
 	public static final String ERROR_SSL_EXPIRED = "sslCertificateExpired";
 	public static final String ERROR_SSL_NOT_YET_VALID = "sslCertificateNotYetValid";
 
-
-	public static ZLResource getResource() {
+	private static ZLResource getResource() {
 		return ZLResource.resource("dialog").getResource("networkError");
 	}
 
-	public static String getTitle() {
-		return getResource().getResource("title").getValue();
-	}
-
-	public static String errorMessage(String key) {
+	private static String errorMessage(String key) {
 		if (key == null) {
 			return "null";
 		}
 		return getResource().getResource(key).getValue();
 	}
 
-	public static String errorMessage(String key, String arg) {
+	private static String errorMessage(String key, String arg) {
 		if (key == null) {
 			return "null";
 		}
@@ -72,5 +66,25 @@ public class ZLNetworkErrors {
 			arg = "null";
 		}
 		return getResource().getResource(key).getValue().replace("%s", arg);
+	}
+
+	final private String myCode;
+
+	public ZLNetworkException(boolean useAsMessage, String str) {
+		super(useAsMessage ? str : errorMessage(str));
+		myCode = useAsMessage ? null : str;
+	}
+
+	public ZLNetworkException(String code) {
+		this(false, code);
+	}
+
+	public ZLNetworkException(String code, String arg) {
+		super(errorMessage(code, arg));
+		myCode = code;
+	}
+
+	public String getCode() {
+		return myCode;
 	}
 }

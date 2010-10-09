@@ -26,10 +26,10 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -91,17 +91,19 @@ class AuthenticationDialog extends NetworkDialog {
 		mgr.UserNameOption.setValue(login);
 		final Runnable runnable = new Runnable() {
 			public void run() {
-				String err = mgr.authorise(password);
-				if (err != null) {
+				try {
+					mgr.authorise(password);
+				} catch (ZLNetworkException e) {
 					mgr.logOut();
-					sendError(true, false, err);
+					sendError(true, false, e.getMessage());
 					return;
 				}
 				if (mgr.needsInitialization()) {
-					err = mgr.initialize();
-					if (err != null) {
+					try {
+						mgr.initialize();
+					} catch (ZLNetworkException e) {
 						mgr.logOut();
-						sendError(true, false, err);
+						sendError(true, false, e.getMessage());
 						return;
 					}
 				}

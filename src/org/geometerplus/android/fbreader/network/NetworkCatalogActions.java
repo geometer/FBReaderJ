@@ -30,6 +30,7 @@ import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
@@ -342,7 +343,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private static class ExpandCatalogRunnable extends ItemsLoadingRunnable {
-
 		private final NetworkCatalogTree myTree;
 		private final boolean myCheckAuthentication;
 		private final boolean myResumeNotLoad;
@@ -359,32 +359,35 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return "downloadingCatalogs";
 		}
 
-		public String doBefore() {
+		@Override
+		public void doBefore() throws ZLNetworkException {
 			/*if (!NetworkOperationRunnable::tryConnect()) {
 				return;
 			}*/
 			final INetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
-				NetworkAuthenticationManager mgr = link.authenticationManager();
-				AuthenticationStatus auth = mgr.isAuthorised(true);
-				if (auth.Message != null) {
-					return auth.Message;
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				final AuthenticationStatus auth = mgr.isAuthorised(true);
+				if (auth.Exception != null) {
+					throw auth.Exception;
 				}
 				if (auth.Status == ZLBoolean3.B3_TRUE && mgr.needsInitialization()) {
-					final String err = mgr.initialize();
-					if (err != null) {
+					try {
+						mgr.initialize();
+					} catch (ZLNetworkException e) {
 						mgr.logOut();
 					}
 				}
 			}
-			return null;
 		}
 
-		public String doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+		@Override
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
 			if (myResumeNotLoad) {
-				return myTree.Item.resumeLoading(doWithListener);
+				myTree.Item.resumeLoading(doWithListener);
+			} else {
+				myTree.Item.loadChildren(doWithListener);
 			}
-			return myTree.Item.loadChildren(doWithListener);
 		}
 	}
 

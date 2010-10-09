@@ -23,8 +23,9 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -226,20 +227,20 @@ public class NetworkLibrary {
 		myLinks = new CompositeList(linksList, new LinksComparator());
 	}
 
-	public String initialize() {
+	public void initialize() throws ZLNetworkException {
 		final LinksComparator comparator = new LinksComparator(); 
 
-		final String error = OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
-			public void onNewLink(INetworkLink link) {
-				addLinkInternal(myLoadedLinks, link, comparator);
-			}
-		});
-
-		if (error != null) {
+		try {
+			OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
+				public void onNewLink(INetworkLink link) {
+					addLinkInternal(myLoadedLinks, link, comparator);
+				}
+			});
+		} catch (ZLNetworkException e) {
 			synchronized (myLinks) {
 				myLoadedLinks.clear();
 			}
-			return error;
+			throw e;
 		}
 
 		NetworkDatabase.Instance().loadCustomLinks(
@@ -273,8 +274,6 @@ public class NetworkLibrary {
 				 new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30));
 		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0.001f,  3, 30),
 				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));*/
-
-		return null;
 	}
 
 	/*private void testDate(ATOMDateConstruct date1, ATOMDateConstruct date2) {
@@ -292,25 +291,29 @@ public class NetworkLibrary {
 	private Object myBackgroundLock = new Object();
 
 	// This method must be called from background thread
-	public String runBackgroundUpdate(boolean clearCache) {
+	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
 		synchronized (myBackgroundLock) {
 			myBackgroundLinks = new ArrayList<INetworkLink>();
 
 			final int cacheMode = clearCache ? OPDSLinkReader.CACHE_CLEAR : OPDSLinkReader.CACHE_UPDATE;
-			final String error = OPDSLinkReader.loadOPDSLinks(cacheMode, new OnNewLinkListener() {
-				public void onNewLink(INetworkLink link) {
-					myBackgroundLinks.add(link);
-				}
-			});
-
-			if (error != null || myBackgroundLinks.isEmpty()) {
+			try {
+				OPDSLinkReader.loadOPDSLinks(cacheMode, new OnNewLinkListener() {
+					public void onNewLink(INetworkLink link) {
+						myBackgroundLinks.add(link);
+					}
+				});
+			} catch (ZLNetworkException e) {
 				myBackgroundLinks = null;
+				throw e;
+			} finally {
+				if (myBackgroundLinks != null) {
+					if (myBackgroundLinks.isEmpty()) {
+						myBackgroundLinks = null;
+					} else {
+						Collections.sort(myBackgroundLinks, new LinksComparator());
+					}
+				}
 			}
-
-			if (myBackgroundLinks != null) {
-				Collections.sort(myBackgroundLinks, new LinksComparator());
-			}
-			return error;
 		}
 	}
 
@@ -485,8 +488,7 @@ public class NetworkLibrary {
 	}
 
 
-	// returns Error Message
-	public String simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) {
+	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
@@ -517,15 +519,12 @@ public class NetworkLibrary {
 		}
 
 		while (requestList.size() != 0) {
-			final String errorMessage = ZLNetworkManager.Instance().perform(requestList);
-			if (errorMessage != null) {
-				return errorMessage;
-			}
+			ZLNetworkManager.Instance().perform(requestList);
 
 			requestList.clear();
 
 			if (listener.confirmInterrupt()) {
-				return null;
+				return;
 			}
 			for (NetworkOperationData data: dataList) {
 				ZLNetworkRequest request = data.resume();
@@ -534,8 +533,6 @@ public class NetworkLibrary {
 				}
 			}
 		}
-
-		return null;
 	}
 
 	private ICustomNetworkLink.SaveLinkListener myChangesListener = new ICustomNetworkLink.SaveLinkListener() {

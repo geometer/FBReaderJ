@@ -20,19 +20,19 @@
 package org.geometerplus.fbreader.network.authentication;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public class AuthenticationStatus {
-
 	public final int Status; // ZLBoolean3 values
-	public final String Message;
+	public final ZLNetworkException Exception;
 
 	public AuthenticationStatus(boolean status) {
 		Status = status ? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE;
-		Message = null;
+		Exception = null;
 	}
 
-	public AuthenticationStatus(String message) {
+	public AuthenticationStatus(ZLNetworkException e) {
 		Status = ZLBoolean3.B3_UNDEFINED;
-		Message = message;
+		Exception = e;
 	}
 }

@@ -22,17 +22,16 @@ package org.geometerplus.android.fbreader.network;
 import android.os.Message;
 import android.os.Handler;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
 
-
 abstract class ItemsLoadingRunnable implements Runnable {
-
 	private final ItemsLoadingHandler myHandler;
 
-	public final long UpdateInterval; // in milliseconds
-	public final int ItemsLimit;
+	private final long myUpdateInterval; // in milliseconds
 
 	private boolean myInterruptRequested;
 	private boolean myInterruptConfirmed;
@@ -75,49 +74,54 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 
 	public ItemsLoadingRunnable(ItemsLoadingHandler handler) {
-		this(handler, 1000, 500);
+		this(handler, 1000);
 	}
 
-	public ItemsLoadingRunnable(ItemsLoadingHandler handler, long updateIntervalMillis, int itemsLimit) {
+	public ItemsLoadingRunnable(ItemsLoadingHandler handler, long updateIntervalMillis) {
 		myHandler = handler;
-		UpdateInterval = updateIntervalMillis;
-		ItemsLimit = itemsLimit;
+		myUpdateInterval = updateIntervalMillis;
 	}
 
-	public abstract String doBefore();
-	public abstract String doLoading(NetworkOperationData.OnNewItemListener doWithListener);
+	public abstract void doBefore() throws ZLNetworkException;
+	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
 
 	public abstract String getResourceKey();
 
-
 	public final void run() {
-		String err = doBefore();
-		if (err != null) {
-			myHandler.sendFinish(err, false);
+		try {
+			doBefore();
+		} catch (ZLNetworkException e) {
+			myHandler.sendFinish(e.getMessage(), false);
 			return;
 		}
-		err = doLoading(new NetworkOperationData.OnNewItemListener() {
-			private long myUpdateTime;
-			private int myItemsNumber;
-			public void onNewItem(INetworkLink link, NetworkLibraryItem item) {
-				myHandler.addItem(link, item);
-				++myItemsNumber;
-				final long now = System.currentTimeMillis();
-				if (now > myUpdateTime) {
-					myHandler.sendUpdateItems();
-					myUpdateTime = now + UpdateInterval;
+		String error = null;
+		try {
+			doLoading(new NetworkOperationData.OnNewItemListener() {
+				private long myUpdateTime;
+				private int myItemsNumber;
+				public void onNewItem(INetworkLink link, NetworkLibraryItem item) {
+					myHandler.addItem(link, item);
+					++myItemsNumber;
+					final long now = System.currentTimeMillis();
+					if (now > myUpdateTime) {
+						myHandler.sendUpdateItems();
+						myUpdateTime = now + myUpdateInterval;
+					}
 				}
-			}
-			public boolean confirmInterrupt() {
-				return confirmInterruptLoading() || myItemsNumber >= ItemsLimit;
-			}
-			public void commitItems(INetworkLink link) {
-				myHandler.commitItems(link);
-			}
-		});
+				public boolean confirmInterrupt() {
+					return confirmInterruptLoading();
+				}
+				public void commitItems(INetworkLink link) {
+					myHandler.commitItems(link);
+				}
+			});
+		} catch (ZLNetworkException e) {
+			error = e.getMessage();
+		}
+
 		myHandler.sendUpdateItems();
 		myHandler.ensureItemsProcessed();
-		myHandler.sendFinish(err, isLoadingInterrupted());
+		myHandler.sendFinish(error, isLoadingInterrupted());
 		myHandler.ensureFinishProcessed();
 	}
 

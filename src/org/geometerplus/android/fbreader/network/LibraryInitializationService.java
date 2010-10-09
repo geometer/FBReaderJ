@@ -25,9 +25,9 @@ import android.os.Message;
 import android.app.Service;
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public class LibraryInitializationService extends Service {
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -56,12 +56,16 @@ public class LibraryInitializationService extends Service {
 		final Thread thread = new Thread(new Runnable() {
 			public void run() {
 				int code = 0;
-				String result = null;
+				String error = null;
 				try {
-					result = view.runBackgroundUpdate(false);
+					try {
+						view.runBackgroundUpdate(false);
+					} catch (ZLNetworkException e) {
+						error = e.getMessage();
+					}
 					code = 1;
 				} finally {
-					handler.sendMessage(handler.obtainMessage(code, result));
+					handler.sendMessage(handler.obtainMessage(code, error));
 				}
 			}
 		});

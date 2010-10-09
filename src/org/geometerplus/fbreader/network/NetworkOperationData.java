@@ -38,8 +38,6 @@ public class NetworkOperationData {
 	public OnNewItemListener Listener;
 	public String ResumeURI;
 
-	private int myResumeCount;
-
 	public NetworkOperationData(INetworkLink link, OnNewItemListener listener) {
 		Link = link;
 		Listener = listener;

@@ -24,12 +24,11 @@ import java.net.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.Paths;
 
-
 public final class NetworkImage extends ZLSingleImage {
-
 	public static final String MIME_PNG = "image/png";
 	public static final String MIME_JPEG = "image/jpeg";
 
@@ -187,7 +186,10 @@ public final class NetworkImage extends ZLSingleImage {
 				return;
 			}
 
-			ZLNetworkManager.Instance().downloadToFile(Url, imageFile);
+			try {
+				ZLNetworkManager.Instance().downloadToFile(Url, imageFile);
+			} catch (ZLNetworkException e) {
+			}
 		} finally {
 			mySynchronized = true;
 		}

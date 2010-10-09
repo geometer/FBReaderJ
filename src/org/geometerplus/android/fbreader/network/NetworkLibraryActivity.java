@@ -29,8 +29,9 @@ import android.view.*;
 import android.widget.BaseAdapter;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.fbreader.network.NetworkTree;
@@ -109,7 +110,12 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		private void runInitialization() {
 			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingNetworkLibrary", new Runnable() {
 				public void run() {
-					final String error = NetworkView.Instance().initialize();
+					String error = null;
+					try {
+						NetworkView.Instance().initialize();
+					} catch (ZLNetworkException e) {
+						error = e.getMessage();
+					}
 					Initializator.this.end(error);
 				}
 			}, myActivity);
@@ -272,8 +278,13 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("updatingCatalogsList", new Runnable() {
 			public void run() {
-				final String result = view.runBackgroundUpdate(true);
-				handler.sendMessage(handler.obtainMessage(0, result));
+				String error = null;
+				try {
+					view.runBackgroundUpdate(true);
+				} catch (ZLNetworkException e) {
+					error = e.getMessage();
+				}
+				handler.sendMessage(handler.obtainMessage(0, error));
 			}
 		}, this);
 	}
