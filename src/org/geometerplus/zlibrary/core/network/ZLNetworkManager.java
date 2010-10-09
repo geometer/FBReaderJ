@@ -97,7 +97,7 @@ public class ZLNetworkManager {
 	}
 
 	public String perform(ZLNetworkRequest request) {
-		boolean sucess = false;
+		boolean success = false;
 		try {
 			final String error = doBeforeRequest(request);
 			if (error != null) {
@@ -129,7 +129,7 @@ public class ZLNetworkManager {
 				} finally {
 					stream.close();
 				}
-				sucess = true;
+				success = true;
 			} else {
 				if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
 					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
@@ -161,8 +161,8 @@ public class ZLNetworkManager {
 			ex.printStackTrace();
 			return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 		} finally {
-			final String err = request.doAfter(sucess);
-			if (sucess && err != null) {
+			final String err = request.doAfter(success);
+			if (success && err != null) {
 				return err;
 			}
 		}
