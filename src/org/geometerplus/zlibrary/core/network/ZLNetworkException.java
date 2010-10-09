@@ -70,7 +70,7 @@ public class ZLNetworkException extends Exception {
 
 	final private String myCode;
 
-	ZLNetworkException(boolean useAsMessage, String str) {
+	public ZLNetworkException(boolean useAsMessage, String str) {
 		super(useAsMessage ? str : errorMessage(str));
 		myCode = useAsMessage ? null : str;
 	}

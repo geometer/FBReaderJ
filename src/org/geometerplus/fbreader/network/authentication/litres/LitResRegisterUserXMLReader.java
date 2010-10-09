@@ -50,7 +50,12 @@ class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 			} else if ("5".equals(error)) {
 				setException(new ZLNetworkException(NetworkException.ERROR_TOO_MANY_REGISTRATIONS));
 			} else {
-				setException(new ZLNetworkException(NetworkException.ERROR_INTERNAL));
+				final String comment = attributes.getValue("coment");
+				if (comment != null) {
+					setException(new ZLNetworkException(true, comment));
+				} else {
+					setException(new ZLNetworkException(NetworkException.ERROR_INTERNAL));
+				}
 			}
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			Sid = attributes.getValue("sid");
