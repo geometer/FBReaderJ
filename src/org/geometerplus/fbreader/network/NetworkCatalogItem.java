@@ -97,7 +97,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	}
 
 	public void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 

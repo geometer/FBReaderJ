@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkErrors;
+import org.geometerplus.fbreader.network.NetworkException;
 
 class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_AUTHORIZATION_FAILED = "catalit-authorization-failed";
@@ -40,7 +40,7 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			setException(new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED));
+			setException(new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED));
 		} else {
 			Account = attributes.getValue("account");
 			BookId = attributes.getValue("art");
@@ -49,16 +49,16 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 			} else if (TAG_PURCHASE_FAILED == tag) {
 				final String error = attributes.getValue("error");
 				if ("1".equals(error)) {
-					setException(new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_NOT_ENOUGH_MONEY));
+					setException(new ZLNetworkException(NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY));
 				} else if ("2".equals(error)) {
-					setException(new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_MISSING_BOOK));
+					setException(new ZLNetworkException(NetworkException.ERROR_PURCHASE_MISSING_BOOK));
 				} else if ("3".equals(error)) {
-					setException(new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED));
+					setException(new ZLNetworkException(NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED));
 				} else {
-					setException(new ZLNetworkException(NetworkErrors.ERROR_INTERNAL));
+					setException(new ZLNetworkException(NetworkException.ERROR_INTERNAL));
 				}
 			} else {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName));
+				setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));
 			}
 		}
 		return true;

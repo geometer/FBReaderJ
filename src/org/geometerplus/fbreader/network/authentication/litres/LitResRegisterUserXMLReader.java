@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkErrors;
+import org.geometerplus.fbreader.network.NetworkException;
 
 class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
@@ -40,22 +40,22 @@ class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_REGISTRATION_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_LOGIN_ALREADY_TAKEN));
+				setException(new ZLNetworkException(NetworkException.ERROR_LOGIN_ALREADY_TAKEN));
 			} else if ("2".equals(error)) {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED));
+				setException(new ZLNetworkException(NetworkException.ERROR_LOGIN_WAS_NOT_SPECIFIED));
 			} else if ("3".equals(error)) {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_PASSWORD_WAS_NOT_SPECIFIED));
+				setException(new ZLNetworkException(NetworkException.ERROR_PASSWORD_WAS_NOT_SPECIFIED));
 			} else if ("4".equals(error)) {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_INVALID_EMAIL));
+				setException(new ZLNetworkException(NetworkException.ERROR_INVALID_EMAIL));
 			} else if ("5".equals(error)) {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_TOO_MANY_REGISTRATIONS));
+				setException(new ZLNetworkException(NetworkException.ERROR_TOO_MANY_REGISTRATIONS));
 			} else {
-				setException(new ZLNetworkException(NetworkErrors.ERROR_INTERNAL));
+				setException(new ZLNetworkException(NetworkException.ERROR_INTERNAL));
 			}
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			Sid = attributes.getValue("sid");
 		} else {
-			setException(new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName));
+			setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));
 		}
 		return true;
 	}

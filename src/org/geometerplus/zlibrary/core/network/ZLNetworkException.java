@@ -19,11 +19,59 @@
 
 package org.geometerplus.zlibrary.core.network;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 public class ZLNetworkException extends Exception {
+	// Messages with no parameters:
+	public static final String ERROR_UNKNOWN_ERROR = "unknownErrorMessage";
+	public static final String ERROR_TIMEOUT = "operationTimedOutMessage";
+	public static final String ERROR_CONNECT_TO_NETWORK = "couldntConnectToNetworkMessage";
+	public static final String ERROR_UNSUPPORTED_PROTOCOL = "unsupportedProtocol";
+	public static final String ERROR_INVALID_URL = "invalidURL";
+	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
+	public static final String ERROR_SSL_SUBSYSTEM = "sslError";
+	public static final String ERROR_SSL_PROTOCOL_ERROR = "sslProtocolError";
+
+	// Messages with one parameter:
+	public static final String ERROR_SOMETHING_WRONG = "somethingWrongMessage";
+	public static final String ERROR_CREATE_DIRECTORY = "couldntCreateDirectoryMessage";
+	public static final String ERROR_CREATE_FILE = "couldntCreateFileMessage";
+	public static final String ERROR_CONNECT_TO_HOST = "couldntConnectMessage";
+	public static final String ERROR_RESOLVE_HOST = "couldntResolveHostMessage";
+	public static final String ERROR_HOST_CANNOT_BE_REACHED = "hostCantBeReached";
+	public static final String ERROR_CONNECTION_REFUSED = "connectionRefused";
+	public static final String ERROR_SSL_CONNECT = "sslConnectErrorMessage";
+	public static final String ERROR_SSL_BAD_KEY = "sslBadKey";
+	public static final String ERROR_SSL_PEER_UNVERIFIED = "sslPeerUnverified";
+	public static final String ERROR_SSL_BAD_FILE = "sslBadCertificateFileMessage";
+	public static final String ERROR_SSL_EXPIRED = "sslCertificateExpired";
+	public static final String ERROR_SSL_NOT_YET_VALID = "sslCertificateNotYetValid";
+
+	private static ZLResource getResource() {
+		return ZLResource.resource("dialog").getResource("networkError");
+	}
+
+	private static String errorMessage(String key) {
+		if (key == null) {
+			return "null";
+		}
+		return getResource().getResource(key).getValue();
+	}
+
+	private static String errorMessage(String key, String arg) {
+		if (key == null) {
+			return "null";
+		}
+		if (arg == null) {
+			arg = "null";
+		}
+		return getResource().getResource(key).getValue().replace("%s", arg);
+	}
+
 	final private String myCode;
 
-	public ZLNetworkException(boolean useAsMessage, String str) {
-		super(useAsMessage ? str : ZLNetworkErrors.errorMessage(str));
+	ZLNetworkException(boolean useAsMessage, String str) {
+		super(useAsMessage ? str : errorMessage(str));
 		myCode = useAsMessage ? null : str;
 	}
 
@@ -32,7 +80,7 @@ public class ZLNetworkException extends Exception {
 	}
 
 	public ZLNetworkException(String code, String arg) {
-		super(ZLNetworkErrors.errorMessage(code, arg));
+		super(errorMessage(code, arg));
 		myCode = code;
 	}
 

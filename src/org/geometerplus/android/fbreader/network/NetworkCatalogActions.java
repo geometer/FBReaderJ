@@ -368,8 +368,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			if (myCheckAuthentication && link.authenticationManager() != null) {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
 				final AuthenticationStatus auth = mgr.isAuthorised(true);
-				if (auth.Message != null) {
-					throw new ZLNetworkException(true, auth.Message);
+				if (auth.Exception != null) {
+					throw auth.Exception;
 				}
 				if (auth.Status == ZLBoolean3.B3_TRUE && mgr.needsInitialization()) {
 					try {

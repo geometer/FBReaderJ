@@ -39,7 +39,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkErrors;
+import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
@@ -123,8 +123,9 @@ class RegisterUserDialog extends NetworkDialog {
 
 		if (myLogin.length() == 0) {
 			myLogin = null;
-			final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
-			sendError(true, false, err);
+			final ZLNetworkException error =
+				new ZLNetworkException(NetworkException.ERROR_LOGIN_WAS_NOT_SPECIFIED);
+			sendError(true, false, error.getMessage());
 			return;
 		}
 		if (!myPassword.equals(myConfirmPassword)) {
@@ -136,14 +137,16 @@ class RegisterUserDialog extends NetworkDialog {
 		}
 		if (myEmail.length() == 0) {
 			myEmail = null;
-			final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
-			sendError(true, false, err);
+			final ZLNetworkException error =
+				new ZLNetworkException(NetworkException.ERROR_EMAIL_WAS_NOT_SPECIFIED);
+			sendError(true, false, error.getMessage());
 			return;
 		}
 		final int atPos = myEmail.indexOf("@");
 		if (atPos == -1 || myEmail.indexOf(".", atPos) == -1) {
-			final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_INVALID_EMAIL);
-			sendError(true, false, err);
+			final ZLNetworkException error =
+				new ZLNetworkException(NetworkException.ERROR_INVALID_EMAIL);
+			sendError(true, false, error.getMessage());
 			return;
 		}
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();

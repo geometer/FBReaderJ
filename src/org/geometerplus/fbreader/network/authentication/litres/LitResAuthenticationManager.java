@@ -72,7 +72,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
 		if (url == null) {
-			return new AuthenticationStatus(NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION));
+			return new AuthenticationStatus(new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION));
 		}
 		url = ZLNetworkUtil.appendParameter(url, "sid", sid);
 
@@ -82,8 +82,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			try {
 				ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 			} catch (ZLNetworkException e) {
-				if (NetworkErrors.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
-					return new AuthenticationStatus(e.getMessage());
+				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
+					return new AuthenticationStatus(e);
 				}
 				mySidChecked = true;
 				mySidUserNameOption.setValue("");
@@ -100,7 +100,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public void authorise(String password) throws ZLNetworkException {
 		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
 		if (url == null) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
 		final String login;
 		synchronized (this) {
@@ -177,12 +177,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 		if (sid.length() == 0) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 		}
 
 		BookReference reference = book.reference(BookReference.Type.BUY);
 		if (reference == null) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
+			throw new ZLNetworkException(NetworkException.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
 		}
 		String query = reference.URL;
 		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
@@ -193,11 +193,11 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			try {
 				ZLNetworkManager.Instance().perform(new LitResNetworkRequest(query, SSLCertificate, xmlReader));
 			} catch (ZLNetworkException e) {
-				if (NetworkErrors.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
+				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
 					mySidChecked = true;
 					mySidUserNameOption.setValue("");
 					mySidOption.setValue("");
-				} else if (NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED.equals(e.getCode())) {
+				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(e.getCode())) {
 					myPurchasedBooks.put(book.Id, book);
 				}
 				throw e;
@@ -207,7 +207,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				}
 			}
 			if (xmlReader.BookId == null || !xmlReader.BookId.equals(book.Id)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, Link.getSiteName());
+				throw new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, Link.getSiteName());
 			}
 			myPurchasedBooks.put(book.Id, book);
 		}
@@ -244,13 +244,13 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		synchronized (this) {
 			final String sid = mySidOption.getValue();
 			if (sid.length() == 0) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
 			if (!sid.equals(myInitializedDataSid)) {
 				mySidChecked = true;
 				mySidUserNameOption.setValue("");
 				mySidOption.setValue("");		
-				throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
 			networkRequest = loadPurchasedBooks();
 		}
@@ -260,7 +260,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				ZLNetworkManager.Instance().perform(networkRequest);
 			} catch (ZLNetworkException e) {
 				//loadPurchasedBooksOnError();
-				if (NetworkErrors.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
+				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
 					mySidChecked = true;
 					mySidUserNameOption.setValue("");
 					mySidOption.setValue("");
@@ -293,7 +293,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		synchronized (this) {
 			sid = mySidOption.getValue();
 			if (sid.length() == 0) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
 			if (sid.equals(myInitializedDataSid)) {
 				return;
@@ -384,7 +384,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public void registerUser(String login, String password, String email) throws ZLNetworkException {
 		String url = Link.getLink(INetworkLink.URL_SIGN_UP);
 		if (url == null) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
 		url = ZLNetworkUtil.appendParameter(url, "new_login", login);
 		url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
@@ -416,7 +416,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public void recoverPassword(String email) throws ZLNetworkException {
 		String url = Link.getLink(INetworkLink.URL_RECOVER_PASSWORD);
 		if (url == null) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
 		url = ZLNetworkUtil.appendParameter(url, "mail", email);
 		final LitResPasswordRecoveryXMLReader xmlReader =  new LitResPasswordRecoveryXMLReader(Link.getSiteName());

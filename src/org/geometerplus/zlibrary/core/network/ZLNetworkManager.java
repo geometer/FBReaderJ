@@ -56,7 +56,7 @@ public class ZLNetworkManager {
 					ZLResourceFile file = ZLResourceFile.createResourceFile(request.SSLCertificate);
 					stream = file.getInputStream();
 				} catch (IOException ex) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_BAD_FILE, request.SSLCertificate);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_FILE, request.SSLCertificate);
 				}
 				try {
 					TrustManager[] managers = new TrustManager[] { new ZLX509TrustManager(stream) };
@@ -64,13 +64,13 @@ public class ZLNetworkManager {
 					context.init(null, managers, null);
 					httpsConnection.setSSLSocketFactory(context.getSocketFactory());
 				} catch (CertificateExpiredException ex) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_EXPIRED, request.SSLCertificate);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_EXPIRED, request.SSLCertificate);
 				} catch (CertificateNotYetValidException ex) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_NOT_YET_VALID, request.SSLCertificate);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_NOT_YET_VALID, request.SSLCertificate);
 				} catch (CertificateException ex) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_BAD_FILE, request.SSLCertificate);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_FILE, request.SSLCertificate);
 				} catch (GeneralSecurityException ex) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_SUBSYSTEM);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_SUBSYSTEM);
 				} finally {
 					try {
 						stream.close();
@@ -92,7 +92,7 @@ public class ZLNetworkManager {
 				final URL url = new URL(request.URL);
 				final URLConnection connection = url.openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_UNSUPPORTED_PROTOCOL);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_UNSUPPORTED_PROTOCOL);
 				}
 				httpConnection = (HttpURLConnection) connection;
 				setCommonHTTPOptions(request, httpConnection);
@@ -109,34 +109,34 @@ public class ZLNetworkManager {
 				success = true;
 			} else {
 				if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_AUTHENTICATION_FAILED);
+					throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
 				} else {
-					throw new ZLNetworkException(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+					throw new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 				}
 			}
 		} catch (SSLHandshakeException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_CONNECT, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_CONNECT, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (SSLKeyException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_BAD_KEY, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_KEY, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (SSLPeerUnverifiedException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_PEER_UNVERIFIED, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_PEER_UNVERIFIED, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (SSLProtocolException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_PROTOCOL_ERROR);
+			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_PROTOCOL_ERROR);
 		} catch (SSLException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_SSL_SUBSYSTEM);
+			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_SUBSYSTEM);
 		} catch (ConnectException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_CONNECTION_REFUSED, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_CONNECTION_REFUSED, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (NoRouteToHostException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_HOST_CANNOT_BE_REACHED, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_HOST_CANNOT_BE_REACHED, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (UnknownHostException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_RESOLVE_HOST, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_RESOLVE_HOST, ZLNetworkUtil.hostFromUrl(request.URL));
 		} catch (MalformedURLException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_INVALID_URL);
+			throw new ZLNetworkException(ZLNetworkException.ERROR_INVALID_URL);
 		} catch (SocketTimeoutException ex) {
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_TIMEOUT);
+			throw new ZLNetworkException(ZLNetworkException.ERROR_TIMEOUT);
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			throw new ZLNetworkException(ZLNetworkErrors.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
+			throw new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 		} finally {
 			request.doAfter(success);
 		}

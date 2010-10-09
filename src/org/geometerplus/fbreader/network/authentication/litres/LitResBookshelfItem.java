@@ -52,7 +52,7 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
 		if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 		}
 		try {
 			if (myForceReload) {
