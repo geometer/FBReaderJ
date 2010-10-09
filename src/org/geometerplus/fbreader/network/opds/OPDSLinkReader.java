@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.net.URL;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
@@ -56,7 +57,14 @@ public class OPDSLinkReader {
 	public static String loadOPDSLinks(int cacheMode, final NetworkLibrary.OnNewLinkListener listener) {
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
-			return NetworkErrors.errorMessage("cacheDirectoryError");
+			try {
+				// Hmm, I'm not sure this solution is good enough; it uses java.net.URL directly instead of ZLNetworkManager
+				//    -- NP
+				new OPDSLinkXMLReader(listener, null).read(new URL(CATALOGS_URL).openStream());
+				return null;
+			} catch (Exception e) {
+				return NetworkErrors.errorMessage("cacheDirectoryError");
+			}
 		}
 
 		final String fileName = "fbreader_catalogs-"
