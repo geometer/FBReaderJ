@@ -359,25 +359,26 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return "downloadingCatalogs";
 		}
 
-		public String doBefore() {
+		@Override
+		public void doBefore() throws ZLNetworkException {
 			/*if (!NetworkOperationRunnable::tryConnect()) {
 				return;
 			}*/
 			final INetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
-				NetworkAuthenticationManager mgr = link.authenticationManager();
-				AuthenticationStatus auth = mgr.isAuthorised(true);
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				final AuthenticationStatus auth = mgr.isAuthorised(true);
 				if (auth.Message != null) {
-					return auth.Message;
+					throw new ZLNetworkException(true, auth.Message);
 				}
 				if (auth.Status == ZLBoolean3.B3_TRUE && mgr.needsInitialization()) {
-					final String err = mgr.initialize();
-					if (err != null) {
+					try {
+						mgr.initialize();
+					} catch (ZLNetworkException e) {
 						mgr.logOut();
 					}
 				}
 			}
-			return null;
 		}
 
 		@Override

@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.authentication;
 import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -60,7 +61,7 @@ public abstract class NetworkAuthenticationManager {
 	 * Common manager methods
 	 */
 	public abstract AuthenticationStatus isAuthorised(boolean useNetwork /* = true */);
-	public abstract String authorise(String password); // returns error message
+	public abstract void authorise(String password) throws ZLNetworkException;
 	public abstract void logOut();
 	public abstract BookReference downloadReference(NetworkBookItem book);
 
@@ -73,9 +74,8 @@ public abstract class NetworkAuthenticationManager {
 		return false;
 	}
 
-	// returns error message
-	public String initialize() {
-		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	public void initialize() throws ZLNetworkException {
+		throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	// returns true if link must be purchased before downloading
@@ -83,9 +83,8 @@ public abstract class NetworkAuthenticationManager {
 		return true;
 	}
 
-	// returns error message
-	public String purchaseBook(NetworkBookItem book) {
-		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	public void purchaseBook(NetworkBookItem book) throws ZLNetworkException {
+		throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	public String currentAccount() {
@@ -113,8 +112,8 @@ public abstract class NetworkAuthenticationManager {
 		return false;
 	}
 
-	public String registerUser(String login, String password, String email) {
-		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	public void registerUser(String login, String password, String email) throws ZLNetworkException {
+		throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	/*
@@ -124,7 +123,7 @@ public abstract class NetworkAuthenticationManager {
 		return false;
 	}
 
-	public String recoverPassword(String email) {
-		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	public void recoverPassword(String email) throws ZLNetworkException {
+		throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 	}
 }

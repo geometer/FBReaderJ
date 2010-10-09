@@ -488,8 +488,7 @@ public class NetworkLibrary {
 	}
 
 
-	// returns Error Message
-	public String simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) {
+	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
@@ -520,15 +519,12 @@ public class NetworkLibrary {
 		}
 
 		while (requestList.size() != 0) {
-			final String errorMessage = ZLNetworkManager.Instance().perform(requestList);
-			if (errorMessage != null) {
-				return errorMessage;
-			}
+			ZLNetworkManager.Instance().perform(requestList);
 
 			requestList.clear();
 
 			if (listener.confirmInterrupt()) {
-				return null;
+				return;
 			}
 			for (NetworkOperationData data: dataList) {
 				ZLNetworkRequest request = data.resume();
@@ -537,8 +533,6 @@ public class NetworkLibrary {
 				}
 			}
 		}
-
-		return null;
 	}
 
 	private ICustomNetworkLink.SaveLinkListener myChangesListener = new ICustomNetworkLink.SaveLinkListener() {

@@ -35,6 +35,7 @@ import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
@@ -391,8 +392,13 @@ class NetworkBookActions extends NetworkTreeActions {
 				}; // end Handler
 				final Runnable runnable = new Runnable() {
 					public void run() {
-						String err = mgr.purchaseBook(book);
-						handler.sendMessage(handler.obtainMessage(0, err));
+						String error = null;
+						try {
+							mgr.purchaseBook(book);
+						} catch (ZLNetworkException e) {
+							error = e.getMessage();
+						}
+						handler.sendMessage(handler.obtainMessage(0, error));
 					}
 				}; // end Runnable
 				((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("purchaseBook", runnable, activity);

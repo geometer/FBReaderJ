@@ -82,40 +82,46 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		myUpdateInterval = updateIntervalMillis;
 	}
 
-	public abstract String doBefore();
+	public abstract void doBefore() throws ZLNetworkException;
 	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
 
 	public abstract String getResourceKey();
 
-
 	public final void run() {
-		String err = doBefore();
-		if (err != null) {
-			myHandler.sendFinish(err, false);
+		try {
+			doBefore();
+		} catch (ZLNetworkException e) {
+			myHandler.sendFinish(e.getMessage(), false);
 			return;
 		}
-		err = doLoading(new NetworkOperationData.OnNewItemListener() {
-			private long myUpdateTime;
-			private int myItemsNumber;
-			public void onNewItem(INetworkLink link, NetworkLibraryItem item) {
-				myHandler.addItem(link, item);
-				++myItemsNumber;
-				final long now = System.currentTimeMillis();
-				if (now > myUpdateTime) {
-					myHandler.sendUpdateItems();
-					myUpdateTime = now + myUpdateInterval;
+		String error = null;
+		try {
+			doLoading(new NetworkOperationData.OnNewItemListener() {
+				private long myUpdateTime;
+				private int myItemsNumber;
+				public void onNewItem(INetworkLink link, NetworkLibraryItem item) {
+					myHandler.addItem(link, item);
+					++myItemsNumber;
+					final long now = System.currentTimeMillis();
+					if (now > myUpdateTime) {
+						myHandler.sendUpdateItems();
+						myUpdateTime = now + myUpdateInterval;
+					}
 				}
-			}
-			public boolean confirmInterrupt() {
-				return confirmInterruptLoading();
-			}
-			public void commitItems(INetworkLink link) {
-				myHandler.commitItems(link);
-			}
-		});
+				public boolean confirmInterrupt() {
+					return confirmInterruptLoading();
+				}
+				public void commitItems(INetworkLink link) {
+					myHandler.commitItems(link);
+				}
+			});
+		} catch (ZLNetworkException e) {
+			error = e.getMessage();
+		}
+
 		myHandler.sendUpdateItems();
 		myHandler.ensureItemsProcessed();
-		myHandler.sendFinish(err, isLoadingInterrupted());
+		myHandler.sendFinish(error, isLoadingInterrupted());
 		myHandler.ensureFinishProcessed();
 	}
 

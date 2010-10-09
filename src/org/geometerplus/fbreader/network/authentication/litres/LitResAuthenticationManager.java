@@ -24,6 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
@@ -95,10 +96,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String authorise(String password) {
+	public void authorise(String password) throws ZLNetworkException {
 		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
 		if (url == null) {
-			return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+			throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 		}
 		final String login;
 		synchronized (this) {
@@ -168,7 +169,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String purchaseBook(NetworkBookItem book) {
+	public void purchaseBook(NetworkBookItem book) throws ZLNetworkException {
 		final String sid;
 		synchronized (this) {
 			sid = mySidOption.getValue();
@@ -285,17 +286,17 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String initialize() {
+	public void initialize() throws ZLNetworkException {
 		final String sid;
 		final LitResNetworkRequest purchasedBooksRequest;
 		final LitResNetworkRequest accountRequest;
 		synchronized (this) {
 			sid = mySidOption.getValue();
 			if (sid.length() == 0) {
-				return NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+				throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
 			}
 			if (sid.equals(myInitializedDataSid)) {
-				return null;
+				return;
 			}
 
 			purchasedBooksRequest = loadPurchasedBooks();
@@ -317,7 +318,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			myInitializedDataSid = sid;
 			loadPurchasedBooksOnSuccess(purchasedBooksRequest);
 			loadAccountOnSuccess(accountRequest);
-			return null;
 		}
 	}
 
@@ -380,10 +380,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String registerUser(String login, String password, String email) {
+	public void registerUser(String login, String password, String email) throws ZLNetworkException {
 		String url = Link.getLink(INetworkLink.URL_SIGN_UP);
 		if (url == null) {
-			return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+			throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 		}
 		url = ZLNetworkUtil.appendParameter(url, "new_login", login);
 		url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
@@ -401,7 +401,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			}
 			mySidOption.setValue(xmlReader.Sid);
 			mySidUserNameOption.setValue(login);
-			return null;
 		}
 	}
 
@@ -412,13 +411,13 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String recoverPassword(String email) {
+	public void recoverPassword(String email) throws ZLNetworkException {
 		String url = Link.getLink(INetworkLink.URL_RECOVER_PASSWORD);
 		if (url == null) {
-			return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+			throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 		}
 		url = ZLNetworkUtil.appendParameter(url, "mail", email);
 		final LitResPasswordRecoveryXMLReader xmlReader =  new LitResPasswordRecoveryXMLReader(Link.getSiteName());
-		return ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
+		ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 	}
 }

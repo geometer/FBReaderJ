@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkErrors;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -148,17 +149,19 @@ class RegisterUserDialog extends NetworkDialog {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
-				String err = mgr.registerUser(myLogin, myPassword, myEmail);
-				if (err != null) {
+				try {
+					mgr.registerUser(myLogin, myPassword, myEmail);
+				} catch (ZLNetworkException e) {
 					mgr.logOut();
-					sendError(true, false, err);
+					sendError(true, false, e.getMessage());
 					return;
 				}
 				if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_FALSE && mgr.needsInitialization()) {
-					err = mgr.initialize();
-					if (err != null) {
+					try {
+						mgr.initialize();
+					} catch (ZLNetworkException e) {
 						mgr.logOut();
-						sendError(false, false, err);
+						sendError(false, false, e.getMessage());
 						return;
 					}
 				}

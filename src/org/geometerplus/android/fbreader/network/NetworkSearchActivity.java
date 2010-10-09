@@ -125,7 +125,6 @@ public class NetworkSearchActivity extends Activity {
 	}
 
 	private static class SearchRunnable extends ItemsLoadingRunnable {
-
 		private final String myPattern;
 
 		public SearchRunnable(ItemsLoadingHandler handler, String pattern) {
@@ -137,8 +136,7 @@ public class NetworkSearchActivity extends Activity {
 			return "searchingNetwork";
 		}
 
-		public String doBefore() {
-			return null;
+		public void doBefore() {
 		}
 
 		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
