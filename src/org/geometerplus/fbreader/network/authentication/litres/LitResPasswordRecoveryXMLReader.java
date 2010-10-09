@@ -38,16 +38,16 @@ class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_PASSWORD_RECOVERY_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_NO_USER_EMAIL);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_NO_USER_EMAIL));
 			} else if ("2".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED));
 			} else {
-				throw new ZLNetworkException(NetworkErrors.ERROR_INTERNAL);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_INTERNAL));
 			}
 		} else if (TAG_PASSWORD_RECOVERY_OK == tag) {
 			// NOP
 		} else {
-			throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+			setException(new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName));
 		}
 		return true;
 	}

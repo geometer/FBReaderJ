@@ -40,7 +40,7 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			setException(new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED));
 		} else {
 			Account = attributes.getValue("account");
 			BookId = attributes.getValue("art");
@@ -49,16 +49,16 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 			} else if (TAG_PURCHASE_FAILED == tag) {
 				final String error = attributes.getValue("error");
 				if ("1".equals(error)) {
-					throw new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_NOT_ENOUGH_MONEY);
+					setException(new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_NOT_ENOUGH_MONEY));
 				} else if ("2".equals(error)) {
-					throw new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_MISSING_BOOK);
+					setException(new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_MISSING_BOOK));
 				} else if ("3".equals(error)) {
-					throw new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED);
+					setException(new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED));
 				} else {
-					throw new ZLNetworkException(NetworkErrors.ERROR_INTERNAL);
+					setException(new ZLNetworkException(NetworkErrors.ERROR_INTERNAL));
 				}
 			} else {
-				throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName));
 			}
 		}
 		return true;

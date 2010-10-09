@@ -40,22 +40,22 @@ class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_REGISTRATION_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_LOGIN_ALREADY_TAKEN);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_LOGIN_ALREADY_TAKEN));
 			} else if ("2".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED));
 			} else if ("3".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_PASSWORD_WAS_NOT_SPECIFIED);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_PASSWORD_WAS_NOT_SPECIFIED));
 			} else if ("4".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_INVALID_EMAIL);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_INVALID_EMAIL));
 			} else if ("5".equals(error)) {
-				throw new ZLNetworkException(NetworkErrors.ERROR_TOO_MANY_REGISTRATIONS);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_TOO_MANY_REGISTRATIONS));
 			} else {
-				throw new ZLNetworkException(NetworkErrors.ERROR_INTERNAL);
+				setException(new ZLNetworkException(NetworkErrors.ERROR_INTERNAL));
 			}
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			Sid = attributes.getValue("sid");
 		} else {
-			throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+			setException(new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName));
 		}
 		return true;
 	}

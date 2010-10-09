@@ -40,13 +40,13 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			setException(new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED));
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			FirstName = attributes.getValue("first-name");
 			LastName = attributes.getValue("first-name");
 			Sid = attributes.getValue("sid");
 		} else {
-			throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+			setException(new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName));
 		}
 		return true;
 	}

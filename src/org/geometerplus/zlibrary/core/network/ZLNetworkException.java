@@ -20,8 +20,11 @@
 package org.geometerplus.zlibrary.core.network;
 
 public class ZLNetworkException extends Exception {
+	final private String myCode;
+
 	public ZLNetworkException(boolean useAsMessage, String str) {
 		super(useAsMessage ? str : ZLNetworkErrors.errorMessage(str));
+		myCode = useAsMessage ? null : str;
 	}
 
 	public ZLNetworkException(String code) {
@@ -30,5 +33,10 @@ public class ZLNetworkException extends Exception {
 
 	public ZLNetworkException(String code, String arg) {
 		super(ZLNetworkErrors.errorMessage(code, arg));
+		myCode = code;
+	}
+
+	public String getCode() {
+		return myCode;
 	}
 }

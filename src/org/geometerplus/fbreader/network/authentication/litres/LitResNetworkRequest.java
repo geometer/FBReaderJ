@@ -37,5 +37,9 @@ class LitResNetworkRequest extends ZLNetworkRequest {
 	@Override
 	public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 		Reader.read(inputStream);
+		ZLNetworkException e = Reader.getException();
+		if (e != null) {
+			throw e;
+		}
 	}
 }
