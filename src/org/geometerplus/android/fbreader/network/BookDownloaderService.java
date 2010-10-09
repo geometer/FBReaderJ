@@ -285,8 +285,7 @@ public class BookDownloaderService extends Service {
 		};
 
 		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate) {
-
-			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 
 				final int fileLength = connection.getContentLength();
@@ -299,7 +298,7 @@ public class BookDownloaderService extends Service {
 				try {
 					outStream = new FileOutputStream(file);
 				} catch (FileNotFoundException ex) {
-					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_CREATE_FILE, file.getPath());
+					throw new ZLNetworkException(ZLNetworkErrors.ERROR_CREATE_FILE, file.getPath());
 				}
 				try {
 					final byte[] buffer = new byte[8192];
@@ -328,19 +327,19 @@ public class BookDownloaderService extends Service {
 				} finally {
 					outStream.close();
 				}
-				return null;
 			}
 		};
 
 		final Thread downloader = new Thread(new Runnable() {
 			public void run() {
-				final String err = ZLNetworkManager.Instance().perform(request);
-				// TODO: show error message to User
-				final boolean success = (err == null);
-				if (!success) {
+				try {
+					ZLNetworkManager.Instance().perform(request);
+				} catch (ZLNetworkException e) {
+					// TODO: show error message to User
 					file.delete();
+					downloadFinishHandler.sendEmptyMessage(0);
 				}
-				downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
+				downloadFinishHandler.sendEmptyMessage(1);
 			}
 		});
 		downloader.setPriority(Thread.MIN_PRIORITY);

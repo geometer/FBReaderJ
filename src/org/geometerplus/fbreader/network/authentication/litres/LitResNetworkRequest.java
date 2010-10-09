@@ -23,11 +23,10 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.net.URLConnection;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
-
 class LitResNetworkRequest extends ZLNetworkRequest {
-
 	public final LitResAuthenticationXMLReader Reader;
 
 	public LitResNetworkRequest(String url, String sslCertificate, LitResAuthenticationXMLReader reader) {
@@ -36,8 +35,7 @@ class LitResNetworkRequest extends ZLNetworkRequest {
 	}
 
 	@Override
-	public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+	public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 		Reader.read(inputStream);
-		return Reader.getErrorMessage();
 	}
 }

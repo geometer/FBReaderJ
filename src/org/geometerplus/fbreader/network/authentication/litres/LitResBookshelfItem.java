@@ -22,9 +22,9 @@ package org.geometerplus.fbreader.network.authentication.litres;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
-
 
 public class LitResBookshelfItem extends NetworkCatalogItem {
 
@@ -49,24 +49,25 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public String loadChildren(NetworkOperationData.OnNewItemListener listener) {
+	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
 		if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
-			return NetworkErrors.errorMessage(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
 		}
-		String error = null;
-		if (myForceReload) {
-			error = mgr.reloadPurchasedBooks();
+		try {
+			if (myForceReload) {
+				mgr.reloadPurchasedBooks();
+			}
+		} finally {
+			myForceReload = true;
+			// TODO: implement asynchronous loading
+			LinkedList<NetworkLibraryItem> children = new LinkedList<NetworkLibraryItem>();
+			mgr.collectPurchasedBooks(children);
+			Collections.sort(children, new NetworkBookItemComparator());
+			for (NetworkLibraryItem item: children) {
+				listener.onNewItem(Link, item);
+			}
+			listener.commitItems(Link);
 		}
-		myForceReload = true;
-		// TODO: implement asynchronous loading
-		LinkedList<NetworkLibraryItem> children = new LinkedList<NetworkLibraryItem>();
-		mgr.collectPurchasedBooks(children);
-		Collections.sort(children, new NetworkBookItemComparator());
-		for (NetworkLibraryItem item: children) {
-			listener.onNewItem(Link, item);
-		}
-		listener.commitItems(Link);
-		return error;
 	}
 }

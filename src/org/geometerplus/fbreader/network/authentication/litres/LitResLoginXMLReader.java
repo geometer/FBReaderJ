@@ -20,12 +20,11 @@
 package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkErrors;
 
-
 class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
-
 	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
 	private static final String TAG_AUTHORIZATION_FAILED = "catalit-authorization-failed";
 
@@ -41,13 +40,13 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			setErrorCode(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			FirstName = attributes.getValue("first-name");
 			LastName = attributes.getValue("first-name");
 			Sid = attributes.getValue("sid");
 		} else {
-			setErrorCode(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+			throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
 		}
 		return true;
 	}

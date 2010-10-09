@@ -25,25 +25,9 @@ import org.geometerplus.fbreader.network.NetworkErrors;
 
 
 class LitResAuthenticationXMLReader extends ZLXMLReaderAdapter {
-
 	public final String HostName;
-
-	private String myErrorMessage;
-
 
 	public LitResAuthenticationXMLReader(String hostName) {
 		HostName = hostName;
-	}
-
-	protected void setErrorCode(String code) {
-		myErrorMessage = NetworkErrors.errorMessage(code);
-	}
-
-	protected void setErrorCode(String code, String arg) {
-		myErrorMessage = NetworkErrors.errorMessage(code, arg);
-	}
-
-	public String getErrorMessage() {
-		return myErrorMessage;
 	}
 }

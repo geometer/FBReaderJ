@@ -22,13 +22,13 @@ package org.geometerplus.android.fbreader.network;
 import android.os.Message;
 import android.os.Handler;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
 
-
 abstract class ItemsLoadingRunnable implements Runnable {
-
 	private final ItemsLoadingHandler myHandler;
 
 	private final long myUpdateInterval; // in milliseconds
@@ -83,7 +83,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	}
 
 	public abstract String doBefore();
-	public abstract String doLoading(NetworkOperationData.OnNewItemListener doWithListener);
+	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
 
 	public abstract String getResourceKey();
 

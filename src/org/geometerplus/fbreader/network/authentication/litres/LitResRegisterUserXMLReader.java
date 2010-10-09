@@ -20,12 +20,11 @@
 package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkErrors;
 
-
 class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
-
 	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
 	private static final String TAG_REGISTRATION_FAILED = "catalit-registration-failed";
 
@@ -41,22 +40,22 @@ class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_REGISTRATION_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_LOGIN_ALREADY_TAKEN);
+				throw new ZLNetworkException(NetworkErrors.ERROR_LOGIN_ALREADY_TAKEN);
 			} else if ("2".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
+				throw new ZLNetworkException(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
 			} else if ("3".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_PASSWORD_WAS_NOT_SPECIFIED);
+				throw new ZLNetworkException(NetworkErrors.ERROR_PASSWORD_WAS_NOT_SPECIFIED);
 			} else if ("4".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_INVALID_EMAIL);
+				throw new ZLNetworkException(NetworkErrors.ERROR_INVALID_EMAIL);
 			} else if ("5".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_TOO_MANY_REGISTRATIONS);
+				throw new ZLNetworkException(NetworkErrors.ERROR_TOO_MANY_REGISTRATIONS);
 			} else {
-				setErrorCode(NetworkErrors.ERROR_INTERNAL);
+				throw new ZLNetworkException(NetworkErrors.ERROR_INTERNAL);
 			}
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			Sid = attributes.getValue("sid");
 		} else {
-			setErrorCode(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+			throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
 		}
 		return true;
 	}

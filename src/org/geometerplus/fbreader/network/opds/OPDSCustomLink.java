@@ -25,6 +25,7 @@ import java.net.URLConnection;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
@@ -109,35 +110,39 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	}
 
 
-	public String reloadInfo() {
+	public void reloadInfo() throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
-		String err = ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
-			@Override
-			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
-				final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
-				new OPDSXMLReader(info).read(inputStream);
-
-				if (!info.FeedStarted) {
-					return NetworkErrors.errorMessage("notAnOPDS");
+		ZLNetworkException error = null;
+		try {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
+				@Override
+				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
+					new OPDSXMLReader(info).read(inputStream);
+        
+					if (!info.FeedStarted) {
+						throw new ZLNetworkException("notAnOPDS");
+					}
+					if (info.Title == null) {
+						throw new ZLNetworkException("noRequiredInformation");
+					}
+					myTitle = info.Title;
+					if (info.Icon != null) {
+						myIcon = info.Icon;
+					}
+					if (info.Summary != null) {
+						mySummary = info.Summary;
+					}
+					if (info.DirectOpenSearchDescription != null) {
+						descriptions.add(info.DirectOpenSearchDescription);
+					}
 				}
-				if (info.Title == null) {
-					return NetworkErrors.errorMessage("noRequiredInformation");
-				}
-				myTitle = info.Title;
-				if (info.Icon != null) {
-					myIcon = info.Icon;
-				}
-				if (info.Summary != null) {
-					mySummary = info.Summary;
-				}
-				if (info.DirectOpenSearchDescription != null) {
-					descriptions.add(info.DirectOpenSearchDescription);
-				}
-				return null;
-			}
-		});
+			});
+		} catch (ZLNetworkException e) {
+			error = e;
+		}
 
 		// TODO: Use ALL available descriptions and not only Direct
 		if (descriptions.isEmpty() && !opensearchDescriptionURLs.isEmpty()) {
@@ -145,15 +150,17 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 			for (String url: opensearchDescriptionURLs) {
 				requests.add(new ZLNetworkRequest(url) {
 					@Override
-					public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+					public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 						new OpenSearchXMLReader(URL, descriptions, 20).read(inputStream);
-						return null;
 					}
 				});
 			}
-			final String err2 = ZLNetworkManager.Instance().perform(requests);
-			if (err == null) {
-				err = err2;
+			try {
+				ZLNetworkManager.Instance().perform(requests);
+			} catch (ZLNetworkException e) {
+				if (error == null) {
+					error = e;
+				}
 			}
 		}
 
@@ -161,6 +168,8 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
 			setLink(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
 		}
-		return err;
+		if (error != null) {
+			throw error;
+		}
 	}
 }

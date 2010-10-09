@@ -50,12 +50,10 @@ public abstract class ZLNetworkRequest {
 		SSLCertificate = sslCertificate;
 	}
 
-	// callbacks return error messages
-	public String doBefore() {
-		return null;
+	public void doBefore() throws ZLNetworkException {
 	}
 	
-	String doHandleStream(URLConnection connection, InputStream inputStream) throws IOException {
+	void doHandleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 		String encoding = connection.getContentEncoding();
 		if (encoding != null) {
 			encoding = encoding.toLowerCase();
@@ -63,12 +61,11 @@ public abstract class ZLNetworkRequest {
 				inputStream = new GZIPInputStream(inputStream);
 			}
 		}
-		return handleStream(connection, inputStream);
+		handleStream(connection, inputStream);
 	}
 
-	public abstract String handleStream(URLConnection connection, InputStream inputStream) throws IOException;
+	public abstract void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException;
 
-	public String doAfter(boolean success) { // returned error message is ignored when `success == false`
-		return null;
+	public void doAfter(boolean success) throws ZLNetworkException {
 	}
 }

@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
@@ -90,14 +90,14 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
 
-	public abstract String loadChildren(NetworkOperationData.OnNewItemListener listener); // returns Error Message
+	public abstract void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException;
 
 	public boolean supportsResumeLoading() {
 		return false;
 	}
 
-	public String resumeLoading(NetworkOperationData.OnNewItemListener listener) { // returns Error Message
-		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	public void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+		throw new ZLNetworkException(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 

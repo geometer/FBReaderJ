@@ -20,12 +20,11 @@
 package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkErrors;
 
-
 class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
-
 	private static final String TAG_PASSWORD_RECOVERY_OK = "catalit-pass-recover-ok";
 	private static final String TAG_PASSWORD_RECOVERY_FAILED = "catalit-pass-recover-failed";
 
@@ -39,16 +38,16 @@ class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_PASSWORD_RECOVERY_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_NO_USER_EMAIL);
+				throw new ZLNetworkException(NetworkErrors.ERROR_NO_USER_EMAIL);
 			} else if ("2".equals(error)) {
-				setErrorCode(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
+				throw new ZLNetworkException(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
 			} else {
-				setErrorCode(NetworkErrors.ERROR_INTERNAL);
+				throw new ZLNetworkException(NetworkErrors.ERROR_INTERNAL);
 			}
 		} else if (TAG_PASSWORD_RECOVERY_OK == tag) {
 			// NOP
 		} else {
-			setErrorCode(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+			throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
 		}
 		return true;
 	}

@@ -20,12 +20,11 @@
 package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkErrors;
 
-
 class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
-
 	private static final String TAG_AUTHORIZATION_FAILED = "catalit-authorization-failed";
 	private static final String TAG_PURCHASE_OK = "catalit-purchase-ok";
 	private static final String TAG_PURCHASE_FAILED = "catalit-purchase-failed";
@@ -41,7 +40,7 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			setErrorCode(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkException(NetworkErrors.ERROR_AUTHENTICATION_FAILED);
 		} else {
 			Account = attributes.getValue("account");
 			BookId = attributes.getValue("art");
@@ -50,16 +49,16 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 			} else if (TAG_PURCHASE_FAILED == tag) {
 				final String error = attributes.getValue("error");
 				if ("1".equals(error)) {
-					setErrorCode(NetworkErrors.ERROR_PURCHASE_NOT_ENOUGH_MONEY);
+					throw new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_NOT_ENOUGH_MONEY);
 				} else if ("2".equals(error)) {
-					setErrorCode(NetworkErrors.ERROR_PURCHASE_MISSING_BOOK);
+					throw new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_MISSING_BOOK);
 				} else if ("3".equals(error)) {
-					setErrorCode(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED);
+					throw new ZLNetworkException(NetworkErrors.ERROR_PURCHASE_ALREADY_PURCHASED);
 				} else {
-					setErrorCode(NetworkErrors.ERROR_INTERNAL);
+					throw new ZLNetworkException(NetworkErrors.ERROR_INTERNAL);
 				}
 			} else {
-				setErrorCode(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
+				throw new ZLNetworkException(NetworkErrors.ERROR_SOMETHING_WRONG, HostName);
 			}
 		}
 		return true;

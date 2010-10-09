@@ -27,6 +27,7 @@ import java.util.Map;
 import java.net.URL;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
@@ -54,23 +55,23 @@ public class OPDSLinkReader {
 	public static final int CACHE_UPDATE = 1;
 	public static final int CACHE_CLEAR = 2;
 
-	public static String loadOPDSLinks(int cacheMode, final NetworkLibrary.OnNewLinkListener listener) {
+	public static void loadOPDSLinks(int cacheMode, final NetworkLibrary.OnNewLinkListener listener) throws ZLNetworkException {
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
 			try {
 				// Hmm, I'm not sure this solution is good enough; it uses java.net.URL directly instead of ZLNetworkManager
 				//    -- NP
 				new OPDSLinkXMLReader(listener, null).read(new URL(CATALOGS_URL).openStream());
-				return null;
+				return;
 			} catch (Exception e) {
-				return NetworkErrors.errorMessage("cacheDirectoryError");
+				throw new ZLNetworkException("cacheDirectoryError");
 			}
 		}
 
 		final String fileName = "fbreader_catalogs-"
 			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf(File.separator) + 1);
 
-		boolean goodCache = false;
+		boolean cacheIsGood = false;
 		File oldCache = null;
 		ATOMUpdated cacheUpdatedTime = null;
 		final File catalogsFile = new File(dirFile, fileName);
@@ -80,7 +81,7 @@ public class OPDSLinkReader {
 				final long diff = System.currentTimeMillis() - catalogsFile.lastModified();
 				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
 				if (diff >= 0 && diff <= valid) {
-					return null;
+					return;
 				}
 				/* FALLTHROUGH */
 			case CACHE_CLEAR:
@@ -100,7 +101,7 @@ public class OPDSLinkReader {
 				}
 				break;
 			case CACHE_LOAD:
-				goodCache = true;
+				cacheIsGood = true;
 				break;
 			default:
 				throw new IllegalArgumentException("Invalid cacheMode value (" + cacheMode
@@ -108,23 +109,25 @@ public class OPDSLinkReader {
 			}
 		}
 
-		String error = null;
-		if (!goodCache) {
-			error = ZLNetworkManager.Instance().downloadToFile(CATALOGS_URL, catalogsFile);
-		}
-
-		if (error != null) {
-			if (oldCache == null) {
-				return error;
+		if (!cacheIsGood) {
+			try {
+				ZLNetworkManager.Instance().downloadToFile(CATALOGS_URL, catalogsFile);
+			} catch (ZLNetworkException e) {
+				if (oldCache == null) {
+					throw e;
+				}
+				catalogsFile.delete();
+				if (!oldCache.renameTo(catalogsFile)) {
+					oldCache.delete();
+					oldCache = null;
+					throw e;
+				}
+			} finally {
+				if (oldCache != null) {
+					oldCache.delete();
+					oldCache = null;
+				}
 			}
-			catalogsFile.delete();
-			if (!oldCache.renameTo(catalogsFile)) {
-				oldCache.delete();
-				return error;
-			}
-		} else if (oldCache != null) {
-			oldCache.delete();
-			oldCache = null;
 		}
 
 		try {
@@ -132,6 +135,5 @@ public class OPDSLinkReader {
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("That's impossible!!!", e); 
 		}
-		return null;
 	}
 }

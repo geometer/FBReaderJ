@@ -30,6 +30,7 @@ import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
@@ -342,7 +343,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private static class ExpandCatalogRunnable extends ItemsLoadingRunnable {
-
 		private final NetworkCatalogTree myTree;
 		private final boolean myCheckAuthentication;
 		private final boolean myResumeNotLoad;
@@ -380,11 +380,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return null;
 		}
 
-		public String doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+		@Override
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
 			if (myResumeNotLoad) {
-				return myTree.Item.resumeLoading(doWithListener);
+				myTree.Item.resumeLoading(doWithListener);
+			} else {
+				myTree.Item.loadChildren(doWithListener);
 			}
-			return myTree.Item.loadChildren(doWithListener);
 		}
 	}
 
