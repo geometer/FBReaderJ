@@ -30,6 +30,7 @@ import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -165,9 +166,9 @@ public class ZLFooter {
 			gaugeChanged = true;
 		}
 
-		int bookLength = 1 + view.getScrollbarFullSize() / 1500;
-		bookLength = Math.max(1, bookLength);
-		int pagesProgress = Math.max(1, (int)((float)bookLength * progress + 0.5));
+		final ZLTextView textView = (ZLTextView)view;
+		final int pagesProgress = textView.computeCurrentPage();
+		final int bookLength = textView.computePageNumber();
 
 		ZLAndroidApplication app = ZLAndroidApplication.Instance();
 		Date date = new Date();
