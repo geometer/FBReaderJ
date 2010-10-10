@@ -44,13 +44,12 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class RegisterUserDialog extends NetworkDialog {
+	private RegistrationUtils myRegistrationUtils;
 
 	private String myLogin;
 	private String myPassword;
 	private String myConfirmPassword;
 	private String myEmail;
-
-	private ArrayList<String> mySystemEmails = new ArrayList<String>();
 
 	public RegisterUserDialog() {
 		super("RegisterUserDialog");
@@ -70,14 +69,14 @@ class RegisterUserDialog extends NetworkDialog {
 		((TextView) layout.findViewById(R.id.network_register_confirm_password_text)).setText(myResource.getResource("confirmPassword").getValue());
 		((TextView) layout.findViewById(R.id.network_register_email_text)).setText(myResource.getResource("email").getValue());
 
-		mySystemEmails.clear();
-		collectEMails(myActivity.getApplicationContext(), mySystemEmails);
+		myRegistrationUtils = new RegistrationUtils(myActivity.getApplicationContext());
+		final List<String> emails = myRegistrationUtils.eMails();
 
-		if (!mySystemEmails.isEmpty()) {
+		if (!emails.isEmpty()) {
 			final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					if (which >= 0 && which < mySystemEmails.size()) {
-						myEmail = mySystemEmails.get(which);
+					if (which >= 0 && which < emails.size()) {
+						myEmail = emails.get(which);
 					}
 					dialog.dismiss();
 				}
@@ -90,10 +89,10 @@ class RegisterUserDialog extends NetworkDialog {
 					myConfirmPassword = ((TextView) layout.findViewById(R.id.network_register_confirm_password)).getText().toString();
 					myEmail = ((TextView) layout.findViewById(R.id.network_register_email)).getText().toString().trim();
 
-					final int selected = mySystemEmails.indexOf(myEmail);
+					final int selected = emails.indexOf(myEmail);
 					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 					final AlertDialog dialog = new AlertDialog.Builder(myActivity)
-						.setSingleChoiceItems(mySystemEmails.toArray(new String[mySystemEmails.size()]), selected, listener)
+						.setSingleChoiceItems(emails.toArray(new String[emails.size()]), selected, listener)
 						.setTitle(myResource.getResource("email").getValue())
 						.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
 						.create();
@@ -181,9 +180,10 @@ class RegisterUserDialog extends NetworkDialog {
 
 	@Override
 	public void prepareDialogInternal(Dialog dialog) {
-		dialog.findViewById(R.id.network_register_email_button).setVisibility((mySystemEmails.size() > 1) ? View.VISIBLE : View.GONE);
-		if (!mySystemEmails.isEmpty() && (myEmail == null || myEmail.length() == 0)) {
-			myEmail = mySystemEmails.get(0);
+		final List<String> emails = myRegistrationUtils.eMails();
+		dialog.findViewById(R.id.network_register_email_button).setVisibility((emails.size() > 1) ? View.VISIBLE : View.GONE);
+		if (!emails.isEmpty() && (myEmail == null || myEmail.length() == 0)) {
+			myEmail = emails.get(0);
 		}
 
 		((TextView) dialog.findViewById(R.id.network_register_login)).setText(myLogin);
@@ -203,36 +203,5 @@ class RegisterUserDialog extends NetworkDialog {
 		View dlgView = dialog.findViewById(R.id.network_register_user_dialog);
 		dlgView.invalidate();
 		dlgView.requestLayout();
-	}
-
-
-	private static void collectEMails(Context context, List<String> emails) {
-		try {
-			final Class<?> cls$AccountManager = Class.forName("android.accounts.AccountManager");
-			final Class<?> cls$Account = Class.forName("android.accounts.Account");
-
-			final Method meth$AccountManager$get = cls$AccountManager.getMethod("get", Context.class);
-			final Method meth$AccountManager$getAccountsByType = cls$AccountManager.getMethod("getAccountsByType", String.class);
-			final Field fld$Account$name = cls$Account.getField("name");
-
-			if (meth$AccountManager$get.getReturnType() == cls$AccountManager
-					&& meth$AccountManager$getAccountsByType.getReturnType().getComponentType() == cls$Account
-					&& fld$Account$name.getType() == String.class) {
-				final Object mgr = meth$AccountManager$get.invoke(null, context);
-				final Object[] accountsByType = (Object[]) meth$AccountManager$getAccountsByType.invoke(mgr, "com.google"); 
-				for (Object a: accountsByType) {
-					final String value = (String) fld$Account$name.get(a);
-					if (value != null && value.length() > 0) {
-						emails.add(value);
-					}
-				}
-			}
-		} catch (ClassNotFoundException e) {
-		} catch (NoSuchMethodException e) {
-		} catch (NoSuchFieldException e) {
-		} catch (IllegalAccessException e) {
-		} catch (IllegalArgumentException e) {
-		} catch (InvocationTargetException e) {
-		}
 	}
 }
