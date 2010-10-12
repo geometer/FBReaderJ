@@ -17,10 +17,6 @@
 	<style id="7" name="Stanza" spaceBefore="6" spaceAfter="6" alignment="left" allowHyphenations="false"/>
 	<style id="8" name="Verse" leftIndent="20" alignment="left" allowHyphenations="false"/>
 	<style id="10" name="Image" spaceBefore="8" alignment="center"/>
-	<style id="23" name="Contents Table" spaceAfter="7" leftIndent="20" firstLineIndentDelta="-20" alignment="left"/>
-	<style id="24" name="Author in Library" fontSizeDelta="-2" alignment="left" allowHyphenations="false"/>
-	<style id="25" name="Book in Library" fontSizeDelta="-2" alignment="left" allowHyphenations="false"/>
-	<style id="26" name="Recent Book List" spaceAfter="3" leftIndent="20" firstLineIndentDelta="-20" alignment="left" lineSpacingPercent="120"/>
 	<style id="9" name="Preformatted text" italic="true" alignment="left" allowHyphenations="false"/>
 
 	<style id="12" partial="true" name="Cite" italic="true"/>
@@ -39,4 +35,10 @@
 	<style id="28" partial="true" name="Bold" bold="true"/>
 	<style id="29" partial="true" name="Definition" italic="true"/>
 	<style id="30" partial="true" name="Definition Description" italic="true"/>
+
+	<!-- Unused styles -->
+	<style id="23" name="Contents Table" spaceAfter="7" leftIndent="20" firstLineIndentDelta="-20" alignment="left"/>
+	<style id="24" name="Author in Library" fontSizeDelta="-2" alignment="left" allowHyphenations="false"/>
+	<style id="25" name="Book in Library" fontSizeDelta="-2" alignment="left" allowHyphenations="false"/>
+	<style id="26" name="Recent Book List" spaceAfter="3" leftIndent="20" firstLineIndentDelta="-20" alignment="left" lineSpacingPercent="120"/>
 </DefaultStyles>
