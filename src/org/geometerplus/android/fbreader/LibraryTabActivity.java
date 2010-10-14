@@ -123,12 +123,6 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	}
 
 	@Override
-	public void onDestroy() {
-		myLibrary.clear();
-		super.onDestroy();
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
