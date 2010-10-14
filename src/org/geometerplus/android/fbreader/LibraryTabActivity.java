@@ -45,6 +45,10 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 
 	private Library myLibrary;
 
+	Library library() {
+		return myLibrary;
+	}
+
 	private ListView createTab(String tag, int viewId, int iconId) {
 		final TabHost host = getTabHost();
 		final String label = myResource.getResource(tag).getValue();
@@ -71,7 +75,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		if (myLibrary == null) {
-			myLibrary = Library.Instance();
+			myLibrary = new Library();
 		}
 		myLibrary.clear();
 		myLibrary.synchronize();

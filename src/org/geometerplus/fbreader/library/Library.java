@@ -28,15 +28,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
-	private static Library ourInstance;
-
-	public static Library Instance() {
-		if (ourInstance == null) {
-			ourInstance = new Library();
-		}
-		return ourInstance;
-	}
-
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
@@ -46,7 +37,7 @@ public final class Library {
 
 	private boolean myDoRebuild = true;
 
-	private Library() {
+	public Library() {
 	}
 
 	public void clear() {
@@ -60,7 +51,7 @@ public final class Library {
 		mySearchResult.clear();
 	}
 
-	public ZLResourceFile getHelpFile() {
+	public static ZLResourceFile getHelpFile() {
 		final ZLResourceFile file = ZLResourceFile.createResourceFile(
 			"data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
 		);
@@ -318,7 +309,7 @@ public final class Library {
 		return myRecentBooks;
 	}
 
-	public Book getRecentBook() {
+	public static Book getRecentBook() {
 		List<Long> recentIds = BooksDatabase.Instance().listRecentBookIds();
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
@@ -338,7 +329,7 @@ public final class Library {
 		return mySearchResult;
 	}
 
-	public void addBookToRecentList(Book book) {
+	public static void addBookToRecentList(Book book) {
 		final BooksDatabase db = BooksDatabase.Instance();
 		final List<Long> ids = db.listRecentBookIds();
 		final Long bookId = book.getId();

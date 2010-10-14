@@ -50,7 +50,7 @@ public class BookSearchActivity extends SearchActivity {
 	boolean runSearch(final String pattern) {
 		final FBReader fbreader = (FBReader)FBReader.Instance();
 		fbreader.BookSearchPatternOption.setValue(pattern);
-		myTree = Library.Instance().searchBooks(pattern);
+		myTree = LibraryTabActivity.Instance.library().searchBooks(pattern);
 		return myTree.hasChildren();
 	}
 
