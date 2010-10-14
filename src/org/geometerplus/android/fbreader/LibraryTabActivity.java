@@ -43,6 +43,8 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	private final ZLResource myResource = ZLResource.resource("libraryView");
 	private Book myCurrentBook;
 
+	private Library myLibrary;
+
 	private ListView createTab(String tag, int viewId, int iconId) {
 		final TabHost host = getTabHost();
 		final String label = myResource.getResource(tag).getValue();
@@ -56,9 +58,9 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	}
 
 	private void createDefaultTabs() {
-		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), Library.Instance().byAuthor(), Type.TREE);
-		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), Library.Instance().byTag(), Type.TREE);
-		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), Library.Instance().recentBooks(), Type.FLAT);
+		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), myLibrary.byAuthor(), Type.TREE);
+		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), myLibrary.byTag(), Type.TREE);
+		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), myLibrary.recentBooks(), Type.FLAT);
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 	}
 
@@ -67,6 +69,12 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		if (myLibrary == null) {
+			myLibrary = Library.Instance();
+		}
+		myLibrary.clear();
+		myLibrary.synchronize();
 
 		setCurrentBook();
 
@@ -112,7 +120,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 
 	@Override
 	public void onDestroy() {
-		Library.Instance().clear();
+		myLibrary.clear();
 		super.onDestroy();
 	}
 
@@ -173,7 +181,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 				menu.setHeaderTitle(tree.getName());
 				final ZLResource resource = ZLResource.resource("libraryView");
 				menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
-				if ((Library.Instance().getRemoveBookMode(((BookTree)tree).Book)
+				if ((myLibrary.getRemoveBookMode(((BookTree)tree).Book)
 						& Library.REMOVE_FROM_DISK) != 0) {
 					menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 				}
@@ -279,7 +287,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		}
 
 		public void onClick(DialogInterface dialog, int which) {
-			Library.Instance().removeBook(myBook, myMode);
+			myLibrary.removeBook(myBook, myMode);
 
 			invalidateView(findViewById(R.id.by_author));
 			invalidateView(findViewById(R.id.by_tag));

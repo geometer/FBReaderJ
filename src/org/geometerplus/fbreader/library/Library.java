@@ -212,9 +212,9 @@ public final class Library {
 		}
 	}
 
-	private static final ArrayList ourNullList = new ArrayList(1);
-	static {
-		ourNullList.add(null);
+	private final ArrayList myNullList = new ArrayList(1);
+	{
+		myNullList.add(null);
 	}
 
 	private TagTree getTagTree(Tag tag, HashMap<Tag,TagTree> tagTreeMap) {
@@ -242,7 +242,7 @@ public final class Library {
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
 			if (authors.isEmpty()) {
-				authors = (List<Author>)ourNullList;
+				authors = (List<Author>)myNullList;
 			}
 			final SeriesInfo seriesInfo = book.getSeriesInfo();
 			for (Author a : authors) {
@@ -267,7 +267,7 @@ public final class Library {
 
 			List<Tag> tags = book.tags();
 			if (tags.isEmpty()) {
-				tags = (List<Tag>)ourNullList;
+				tags = (List<Tag>)myNullList;
 			}
 			for (Tag t : tags) {
 				getTagTree(t, tagTreeMap).createBookSubTree(book, true);

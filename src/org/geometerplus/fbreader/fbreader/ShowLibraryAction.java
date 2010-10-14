@@ -35,16 +35,6 @@ class ShowLibraryAction extends FBAction {
 			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
 		Runnable action = new Runnable() {
 			public void run() {
-				Library library = Library.Instance();
-				library.clear();
-				library.synchronize();
-				// TODO: select current book (author?)
-				/*
-				if (myBookModel != null) {
-					CollectionView.selectBook(myBookModel.Description);
-				}
-				*/
-				//setView(CollectionView);
 				dialogManager.runActivity(LibraryTabActivity.class);
 			}
 		};
