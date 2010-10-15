@@ -43,8 +43,6 @@ public abstract class ZLDialogManager {
 		return ourInstance;
 	} 
 	
-	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
-	
 	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton);
 	
 	public abstract void wait(String key, Runnable runnable);
@@ -57,14 +55,6 @@ public abstract class ZLDialogManager {
 
 	public static String getWaitMessageText(String key) {
 		return getResource().getResource("waitMessage").getResource(key).getValue();
-	}
-	
-	public static String getDialogMessage(String key) {
-		return getResource().getResource(key).getResource("message").getValue();
-	}
-	
-	public static String getDialogTitle(String key) {
-		return getResource().getResource(key).getResource("title").getValue();
 	}
 	
 	protected static ZLResource getResource() {

@@ -62,65 +62,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		runActivity(activityClass, Collections.<String,String>emptyMap());
 	}
 
-	private class MyAlertDialog extends AlertDialog {
-		MyAlertDialog(Context context, boolean cancelable, OnCancelListener listener) {
-			super(context, cancelable, listener);
-		}
-	}
-
-	private void showAlert(int iconId, String key, String message) {
-		final AlertDialog dialog = new MyAlertDialog(myActivity, true, null);
-		dialog.setTitle(getDialogTitle(key));
-		dialog.setMessage(message);
-		dialog.setIcon(iconId);
-		dialog.setButton(getButtonText(OK_BUTTON).replaceAll("&", ""), (AlertListener)null);
-		dialog.show();
-		//AlertDialog.show(myActivity, null, iconId, message, getButtonText(OK_BUTTON).replaceAll("&", ""), null, true, null);
-	}
-
-	private static class AlertListener implements DialogInterface.OnClickListener {
-		private final Runnable myAction0, myAction1, myAction2;
-
-		public AlertListener(Runnable action0, Runnable action1, Runnable action2) {
-			myAction0 = action0;
-			myAction1 = action1;
-			myAction2 = action2;
-		}
-
-		public void onClick(DialogInterface dialog, int which) {
-			Runnable action = null;
-			switch (which) {
-				case DialogInterface.BUTTON1:
-					action = myAction0;
-					break;
-				case DialogInterface.BUTTON2:
-					action = myAction1;
-					break;
-				case DialogInterface.BUTTON3:
-					action = myAction2;
-					break;
-			}
-			if (action != null) {
-				new Handler().post(action);
-			}
-			dialog.dismiss();
-		}
-	}
-
-	public ZLAndroidApplicationWindow createApplicationWindow(ZLApplication application) {
-		// TODO: implement
-		//myApplicationWindow = new ZLAndroidApplicationWindow(activity);
-		//return myApplicationWindow;
-		return null;
-	}
-
-	/*
-	static JButton createButton(String key) {
-		String text = getButtonText(key).replace("&", "");
-		return new JButton(text);
-	}
-	*/
-
 	public ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton) {
 		return new ZLAndroidOptionsDialog(myActivity, getResource().getResource(key), exitAction, applyAction);
 	}
