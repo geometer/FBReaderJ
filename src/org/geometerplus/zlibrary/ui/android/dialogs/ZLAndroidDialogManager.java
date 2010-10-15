@@ -62,10 +62,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		runActivity(activityClass, Collections.<String,String>emptyMap());
 	}
 
-	public void showInformationBox(String key, String message) {
-		showAlert(0, key, message);
-	}
-
 	private class MyAlertDialog extends AlertDialog {
 		MyAlertDialog(Context context, boolean cancelable, OnCancelListener listener) {
 			super(context, cancelable, listener);
@@ -80,30 +76,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		dialog.setButton(getButtonText(OK_BUTTON).replaceAll("&", ""), (AlertListener)null);
 		dialog.show();
 		//AlertDialog.show(myActivity, null, iconId, message, getButtonText(OK_BUTTON).replaceAll("&", ""), null, true, null);
-	}
-
-	public void showErrorBox(String key, String message, final Runnable action) {
-		final AlertDialog dialog = new MyAlertDialog(myActivity, true, null);
-		dialog.setTitle(getDialogTitle(key));
-		dialog.setMessage(message);
-		dialog.setIcon(0);
-		dialog.setButton(getButtonText(OK_BUTTON).replaceAll("&", ""), 
-			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					action.run();
-				}
-			}
-		);
-		dialog.show();
-		/*
-		AlertDialog.show(myActivity, null, 0, message, getButtonText(OK_BUTTON).replaceAll("&", ""),
-			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					action.run();
-				}
-			},
-		true, null);
-		*/
 	}
 
 	private static class AlertListener implements DialogInterface.OnClickListener {
@@ -133,26 +105,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 			}
 			dialog.dismiss();
 		}
-	}
-
-	public void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2) {
-		final AlertListener al = new AlertListener(action0, action1, action2);
-
-		final AlertDialog dialog = new MyAlertDialog(myActivity, true, null);
-		dialog.setTitle(getDialogTitle(key));
-		dialog.setMessage(message);
-		dialog.setIcon(0);
-		if (button0 != null) {
-			dialog.setButton(button0.replaceAll("&", ""), al);
-		}
-		if (button1 != null) {
-			dialog.setButton2(button1.replaceAll("&", ""), al);
-		}
-		if (button2 != null) {
-			dialog.setButton3(button2.replaceAll("&", ""), al);
-		}
-		dialog.show();
-		//AlertDialog.show(myActivity, null, 0, message, button0, al, button1, al, button2, al, true, null);
 	}
 
 	public ZLAndroidApplicationWindow createApplicationWindow(ZLApplication application) {

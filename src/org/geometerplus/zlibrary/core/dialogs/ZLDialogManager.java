@@ -43,24 +43,6 @@ public abstract class ZLDialogManager {
 		return ourInstance;
 	} 
 	
-	public abstract void showInformationBox(String key, String message);
-
-	public final void showInformationBox(String key) {
-		showInformationBox(key, getDialogMessage(key));
-	}
-	
-	public abstract void showErrorBox(String key, String message, Runnable action);
-	
-	public final void showErrorBox(String key, Runnable action) {
-		showErrorBox(key, getDialogMessage(key), action);
-	}
-	
-	public abstract void showQuestionBox(String key, String message, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2);
-
-	public final void showQuestionBox(String key, String button0, Runnable action0, String button1, Runnable action1, String button2, Runnable action2) {
-		showQuestionBox(key, getDialogMessage(key), button0, action0, button1, action1, button2, action2);
-	}
-	
 	public abstract ZLApplicationWindow createApplicationWindow(ZLApplication application);
 	
 	public abstract ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton);
