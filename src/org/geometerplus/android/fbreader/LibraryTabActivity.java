@@ -19,17 +19,22 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.io.File;
+
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -242,10 +247,22 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			finish();
 			final Book book = ((BookTree)tree).Book;
 			if (!book.equals(myCurrentBook)) {
-				((FBReader)FBReader.Instance()).openBook(book, null);
+				ZLFile physicalFile = book.File.getPhysicalFile();
+				startActivity(getFBReaderIntent(physicalFile != null ? new File(physicalFile.getPath()) : null));
 			}
 			return true;
 		}
+	}
+
+	private Intent getFBReaderIntent(final File file) {
+		final Intent intent = new Intent(getApplicationContext(), org.geometerplus.android.fbreader.FBReader.class);
+		intent.setAction(Intent.ACTION_VIEW);
+		if (file != null) {
+			intent.setData(Uri.fromFile(file));
+		} else {
+			intent.setData(Uri.EMPTY);
+		}
+		return intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 
 	private static final int OPEN_BOOK_ITEM_ID = 0;

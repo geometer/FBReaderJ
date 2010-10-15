@@ -48,6 +48,16 @@ public abstract class ZLAndroidActivity extends Activity {
 		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
 	}
 
+	protected abstract String fileNameForEmptyUri();
+
+	private String fileNameFromUri(Uri uri) {
+		if (Uri.EMPTY.equals(uri)) {
+			return fileNameForEmptyUri();
+		} else {
+			return uri.getPath();
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
@@ -69,7 +79,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				fileToOpen = uri.getPath();
+				fileToOpen = fileNameFromUri(uri);
                 final String scheme = uri.getScheme();
                 if ("content".equals(scheme)) {
                     final File file = new File(fileToOpen);
@@ -127,7 +137,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				fileToOpen = uri.getPath();
+				fileToOpen = fileNameFromUri(uri);
 			}
 			intent.setData(null);
 		}
