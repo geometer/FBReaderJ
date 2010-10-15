@@ -105,11 +105,6 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 					this, name, (ZLStringOptionEntry)option
 				);
 				break;
-			case ZLOptionKind.CHOICE:
-				view = new ZLAndroidChoiceOptionView(
-					this, name, (ZLChoiceOptionEntry)option
-				);
-				break;
 			case ZLOptionKind.SPIN:
 				view = new ZLAndroidSpinOptionView(
 					this, name, (ZLSpinOptionEntry)option
@@ -124,11 +119,6 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 				view = new ZLAndroidColorOptionView(
 					this, name, (ZLColorOptionEntry)option
 				);
-				break;
-			case ZLOptionKind.KEY:
-			case ZLOptionKind.ORDER:
-			case ZLOptionKind.MULTILINE:
-				// TODO: implement
 				break;
 		}
 		if (view != null) {
