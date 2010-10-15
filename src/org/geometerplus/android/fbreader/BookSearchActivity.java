@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
 import org.geometerplus.fbreader.library.*;
 
 public class BookSearchActivity extends SearchActivity {
@@ -48,9 +47,9 @@ public class BookSearchActivity extends SearchActivity {
 
 	@Override
 	boolean runSearch(final String pattern) {
-		final FBReader fbreader = (FBReader)FBReader.Instance();
-		fbreader.BookSearchPatternOption.setValue(pattern);
-		myTree = LibraryTabActivity.Instance.library().searchBooks(pattern);
+		final LibraryTabActivity parentActivity = LibraryTabActivity.Instance;
+		parentActivity.BookSearchPatternOption.setValue(pattern);
+		myTree = parentActivity.library().searchBooks(pattern);
 		return myTree.hasChildren();
 	}
 

@@ -83,6 +83,7 @@ public final class FBReader extends ZLAndroidActivity {
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
 
+	@Override
 	protected String fileNameForEmptyUri() {
 		return Library.getHelpFile().getPath();
 	}

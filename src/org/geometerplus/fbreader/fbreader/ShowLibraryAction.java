@@ -19,7 +19,10 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.HashMap;
+
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.bookmodel.BookModel;
 
 import org.geometerplus.android.fbreader.LibraryTabActivity;
 
@@ -33,9 +36,14 @@ class ShowLibraryAction extends FBAction {
 	public void run() {
 		final ZLAndroidDialogManager dialogManager =
 			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
+		final HashMap<String,String> data = new HashMap<String,String>();
+		final BookModel model = Reader.Model;
+		if (model != null) {
+			data.put(LibraryTabActivity.CURRENT_BOOK_PATH_KEY, model.Book.File.getPath());
+		}
 		Runnable action = new Runnable() {
 			public void run() {
-				dialogManager.runActivity(LibraryTabActivity.class);
+				dialogManager.runActivity(LibraryTabActivity.class, data);
 			}
 		};
 		dialogManager.wait("loadingBookList", action);

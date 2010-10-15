@@ -36,17 +36,19 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+	public static final String CURRENT_BOOK_PATH_KEY = "LibraryCurrentBookPath";
+
 	static LibraryTabActivity Instance;
 
+	final ZLStringOption BookSearchPatternOption = new ZLStringOption("BookSearch", "Pattern", "");
 	final ZLStringOption mySelectedTabOption = new ZLStringOption("TabActivity", "SelectedTab", "");
+
 	private final ZLResource myResource = ZLResource.resource("libraryView");
-	private Book myCurrentBook;
+	private String myCurrentBookPath;
 
 	private Library myLibrary;
 
@@ -61,16 +63,17 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		return (ListView)findViewById(viewId);
 	}
 
-	private void setCurrentBook() {
-		final BookModel model = ((FBReader)FBReader.Instance()).Model;
-		myCurrentBook = (model != null) ? model.Book : null;
-	}
-
 	private void createDefaultTabs() {
 		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), myLibrary.byAuthor(), Type.TREE);
 		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), myLibrary.byTag(), Type.TREE);
 		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), myLibrary.recentBooks(), Type.FLAT);
 		findViewById(R.id.search_results).setVisibility(View.GONE);
+	}
+
+	private boolean isSelectedItem(FBTree tree) {
+		return
+			(tree instanceof BookTree) &&
+			((BookTree)tree).Book.File.getPath().equals(myCurrentBookPath);
 	}
 
 	@Override
@@ -85,7 +88,8 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		myLibrary.clear();
 		myLibrary.synchronize();
 
-		setCurrentBook();
+		final Intent intent = getIntent();
+		myCurrentBookPath = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -153,8 +157,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 
 	@Override
 	public boolean onSearchRequested() {
-		final FBReader fbreader = (FBReader)FBReader.Instance();
-		startSearch(fbreader.BookSearchPatternOption.getValue(), true, null, false);
+		startSearch(BookSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 
@@ -192,11 +195,11 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		}
 
 		private ZLTree<?> findFirstSelectedItem() {
-			if (myCurrentBook == null) {
+			if (myCurrentBookPath == null) {
 				return null;
 			}
 			for (FBTree tree : myLibraryTree) {
-				if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(myCurrentBook)) {
+				if (isSelectedItem(tree)) {
 					return tree;
 				}
 			}
@@ -207,7 +210,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 			final LibraryTree tree = (LibraryTree)getItem(position);
-			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(myCurrentBook)) {
+			if (isSelectedItem(tree)) {
 				view.setBackgroundColor(0xff808080);
 			} else {
 				view.setBackgroundColor(0);
@@ -246,7 +249,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 			}
 			finish();
 			final Book book = ((BookTree)tree).Book;
-			if (!book.equals(myCurrentBook)) {
+			if (!book.File.getPath().equals(myCurrentBookPath)) {
 				ZLFile physicalFile = book.File.getPhysicalFile();
 				startActivity(getFBReaderIntent(physicalFile != null ? new File(physicalFile.getPath()) : null));
 			}
