@@ -19,10 +19,21 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.android.fbreader.BookmarksActivity;
+import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
-class ShowBookmarksAction extends RunActivityAction {
-	ShowBookmarksAction(FBReader fbreader) {
-		super(fbreader, BookmarksActivity.class);
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+abstract class RunActivityAction extends FBAction {
+	private final Class<?> myActivityClass;
+
+	RunActivityAction(FBReader fbreader, Class<?> activityClass) {
+		super(fbreader);
+		myActivityClass = activityClass;
+	}
+
+	public void run() {
+		final ZLAndroidDialogManager dialogManager =
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
+		dialogManager.runActivity(myActivityClass);
 	}
 }

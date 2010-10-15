@@ -21,16 +21,8 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-class ShowNetworkLibraryAction extends FBAction {
+class ShowNetworkLibraryAction extends RunActivityAction {
 	ShowNetworkLibraryAction(FBReader fbreader) {
-		super(fbreader);
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(NetworkLibraryActivity.class);
+		super(fbreader, NetworkLibraryActivity.class);
 	}
 }
