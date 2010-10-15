@@ -26,7 +26,8 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+import org.geometerplus.android.util.AndroidUtil;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -35,7 +36,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class AuthenticationDialog extends NetworkDialog {
-
 	public AuthenticationDialog() {
 		super("AuthenticationDialog");
 	}
@@ -110,7 +110,7 @@ class AuthenticationDialog extends NetworkDialog {
 				sendSuccess(false);
 			}
 		};
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("authentication", runnable, myActivity);
+		AndroidUtil.wait("authentication", runnable, myActivity);
 	}
 
 	@Override
@@ -124,7 +124,7 @@ class AuthenticationDialog extends NetworkDialog {
 				}
 			}
 		};
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("signOut", runnable, myActivity);
+		AndroidUtil.wait("signOut", runnable, myActivity);
 	}
 
 	@Override
