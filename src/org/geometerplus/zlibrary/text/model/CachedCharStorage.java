@@ -23,14 +23,6 @@ import java.lang.ref.WeakReference;
 import java.io.*;
 import java.util.*;
 
-final class CachedCharStorageException extends RuntimeException {
-	private static final long serialVersionUID = -6373408730045821053L;
-
-	public CachedCharStorageException(String message) {
-		super(message);
-	}
-}
-
 public final class CachedCharStorage implements CharStorage {
 	private final int myBlockSize;
 	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
@@ -59,7 +51,7 @@ public final class CachedCharStorage implements CharStorage {
 				File file = new File(fileName(index));
 				int size = (int)file.length();
 				if (size < 0) {
-					throw new CachedCharStorageException("Error during reading " + fileName(index));
+					throw new CharStorageReadException("Error during reading " + fileName(index));
 				}
 				block = new char[size / 2];
 				InputStreamReader reader =
@@ -68,13 +60,13 @@ public final class CachedCharStorage implements CharStorage {
 						"UTF-16LE"
 					);
 				if (reader.read(block) != block.length) {
-					throw new CachedCharStorageException("Error during reading " + fileName(index));
+					throw new CharStorageReadException("Error during reading " + fileName(index));
 				}
 				reader.close();
 			} catch (FileNotFoundException e) {
-				throw new CachedCharStorageException("Error during reading " + fileName(index));
+				throw new CharStorageReadException("Error during reading " + fileName(index));
 			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during reading " + fileName(index));
+				throw new CharStorageReadException("Error during reading " + fileName(index));
 			}
 			myArray.set(index, new WeakReference<char[]>(block));
 		}
@@ -96,7 +88,7 @@ public final class CachedCharStorage implements CharStorage {
 		if (index >= 0) {
 			char[] block = myArray.get(index).get();
 			if (block == null) {
-				throw new CachedCharStorageException("Block reference in null during freeze");
+				throw new RuntimeException("Block reference in null during freeze");
 			}
 			try {
 				final OutputStreamWriter writer =
@@ -107,7 +99,7 @@ public final class CachedCharStorage implements CharStorage {
 				writer.write(block);
 				writer.close();
 			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during writing " + fileName(index));
+				throw new CharStorageWriteException("Error during writing " + fileName(index));
 			}
 		}
 	}
