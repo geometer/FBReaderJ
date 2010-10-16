@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.android.util.AndroidUtil;
 
 abstract class SearchActivity extends Activity {
 	@Override
@@ -66,7 +66,7 @@ abstract class SearchActivity extends Activity {
 					}
 				}
 			};
-			((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait(getWaitMessageResourceKey(), runnable, getParentActivity());
+			AndroidUtil.wait(getWaitMessageResourceKey(), runnable, getParentActivity());
 		}
 		finish();
 	}
