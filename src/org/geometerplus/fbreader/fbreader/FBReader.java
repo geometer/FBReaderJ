@@ -33,8 +33,6 @@ import org.geometerplus.fbreader.library.Bookmark;
 import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
 public final class FBReader extends ZLApplication {
-	public final ZLStringOption BookSearchPatternOption =
-		new ZLStringOption("BookSearch", "Pattern", "");
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
 	public final ZLStringOption BookmarkSearchPatternOption =
@@ -116,10 +114,10 @@ public final class FBReader extends ZLApplication {
 			public void run() { 
 				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
 				if (book == null) {
-					book = Library.Instance().getRecentBook();
+					book = Library.getRecentBook();
 				}
 				if ((book == null) || !book.File.exists()) {
-					book = Book.getByFile(Library.Instance().getHelpFile());
+					book = Book.getByFile(Library.getHelpFile());
 				}
 				openBookInternal(book, null);
 			}
@@ -205,7 +203,7 @@ public final class FBReader extends ZLApplication {
 				} else {
 					gotoBookmark(bookmark);
 				}
-				Library.Instance().addBookToRecentList(book);
+				Library.addBookToRecentList(book);
 			}
 		}
 		repaintView();

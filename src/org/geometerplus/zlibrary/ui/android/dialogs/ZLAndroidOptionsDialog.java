@@ -21,11 +21,14 @@ package org.geometerplus.zlibrary.ui.android.dialogs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogInterface {
 	private final String myCaption;
@@ -57,37 +60,18 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 			myExitAction.run();
 		}
 	}
+	
+	private static void runDialog(Activity activity, ZLAndroidDialogInterface dialog) {
+		((ZLAndroidApplication)activity.getApplication()).putData(
+			DialogActivity.DIALOG_KEY, dialog
+		);
+		Intent intent = new Intent();
+		intent.setClass(activity, DialogActivity.class);
+		activity.startActivity(intent);
+	}
 
-	protected String getSelectedTabKey() {
-		/*
-		if (myTabListView != null) {
-			int index = myTabListView.getSelectedItemPosition();
-			if ((index >= 0) && (index <= myTabs.size())) {
-				return ((ZLDialogContent)myTabs.get(index)).getKey();
-			}
-		}
-		*/
-		return "";
-	}
-	
-	protected void selectTab(String key) {
-		/*
-		if (myTabListView != null) {
-			final ArrayList tabs = myTabs;
-			final int len = tabs.size();
-			for (int i = 0; i < len; ++i) {
-				ZLDialogContent tab = (ZLDialogContent)tabs.get(i);
-				if (tab.getKey().equals(key)) {
-					myTabListView.setSelection(i);
-					return;
-				}
-			}
-		}
-		*/
-	}
-	
-	protected void runInternal() {
-		ZLAndroidDialogManager.runDialog(myMainActivity, this);
+	public void run() {
+		runDialog(myMainActivity, this);
 	}
 
 	public ZLDialogContent createTab(String key) {
@@ -103,7 +87,7 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 		final ZLAndroidDialogContent tab =
 			(ZLAndroidDialogContent)myTabListView.getAdapter().getItem(index);
 		final Activity activity = (Activity)myTabListView.getContext();
-		ZLAndroidDialogManager.runDialog(activity, tab);
+		runDialog(activity, tab);
 	}
 
 	private class TabListView extends ListView implements AdapterView.OnItemClickListener {
@@ -140,14 +124,6 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 			return textView;
 		}
 
-		/*public boolean areAllItemsSelectable() {
-			return false;
-		}
-
-		public boolean isSelectable(int position) {
-			return true;
-		}*/
-
 		public int getCount() {
 			return myTabs.size();
 		}
@@ -160,21 +136,4 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 			return position;
 		}
 	}
-
-	/*private static class TabButton extends Button {
-		private Runnable myAction;
-
-		TabButton(Context context, String text, Runnable action) {
-			super(context);
-			setText(text);
-			setFocusable(false);
-			myAction = action;
-		}
-
-		@Override
-		public boolean onTouchEvent(MotionEvent event) {
-			myAction.run();
-			return true;
-		}
-	}*/
 }

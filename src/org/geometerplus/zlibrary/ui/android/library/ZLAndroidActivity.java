@@ -30,7 +30,7 @@ import android.content.res.Configuration;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
@@ -46,6 +46,16 @@ public abstract class ZLAndroidActivity extends Activity {
 		super.onSaveInstanceState(state);
 		state.putInt(REQUESTED_ORIENTATION_KEY, myOrientation);
 		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
+	}
+
+	protected abstract String fileNameForEmptyUri();
+
+	private String fileNameFromUri(Uri uri) {
+		if (Uri.EMPTY.equals(uri)) {
+			return fileNameForEmptyUri();
+		} else {
+			return uri.getPath();
+		}
 	}
 
 	@Override
@@ -69,7 +79,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				fileToOpen = uri.getPath();
+				fileToOpen = fileNameFromUri(uri);
                 final String scheme = uri.getScheme();
                 if ("content".equals(scheme)) {
                     final File file = new File(fileToOpen);
@@ -86,7 +96,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} else if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
+			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
 		ZLApplication.Instance().repaintView();
 	}
@@ -127,13 +137,13 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				fileToOpen = uri.getPath();
+				fileToOpen = fileNameFromUri(uri);
 			}
 			intent.setData(null);
 		}
 
 		if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
+			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
 		ZLApplication.Instance().repaintView();
 	}

@@ -21,16 +21,8 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.android.fbreader.BookmarksActivity;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-class ShowBookmarksAction extends FBAction {
+class ShowBookmarksAction extends RunActivityAction {
 	ShowBookmarksAction(FBReader fbreader) {
-		super(fbreader);
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(BookmarksActivity.class);
+		super(fbreader, BookmarksActivity.class);
 	}
 }

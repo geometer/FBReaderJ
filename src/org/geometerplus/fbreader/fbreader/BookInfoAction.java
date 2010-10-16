@@ -21,20 +21,12 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-class BookInfoAction extends FBAction {
+class BookInfoAction extends RunActivityAction {
 	BookInfoAction(FBReader fbreader) {
-		super(fbreader);
+		super(fbreader, BookInfoActivity.class);
 	}
 
 	public boolean isVisible() {
 		return Reader.Model != null;
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(BookInfoActivity.class);
 	}
 }
