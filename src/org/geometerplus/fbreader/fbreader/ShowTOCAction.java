@@ -21,20 +21,12 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.android.fbreader.TOCActivity;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-class ShowTOCAction extends FBAction {
+class ShowTOCAction extends RunActivityAction {
 	ShowTOCAction(FBReader fbreader) {
-		super(fbreader);
+		super(fbreader, TOCActivity.class);
 	}
 
 	public boolean isVisible() {
 		return (Reader.Model != null) && Reader.Model.TOCTree.hasChildren();
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(TOCActivity.class);
 	}
 }

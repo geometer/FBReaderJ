@@ -48,6 +48,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.library.Library;
 
 public final class FBReader extends ZLAndroidActivity {
 	static FBReader Instance;
@@ -84,6 +85,11 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
+
+	@Override
+	protected String fileNameForEmptyUri() {
+		return Library.getHelpFile().getPath();
+	}
 
 	@Override
 	public void onCreate(Bundle icicle) {

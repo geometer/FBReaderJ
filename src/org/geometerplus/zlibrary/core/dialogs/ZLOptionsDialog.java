@@ -29,13 +29,11 @@ public abstract class ZLOptionsDialog {
 	protected final ArrayList<ZLDialogContent> myTabs = new ArrayList<ZLDialogContent>();
 	protected Runnable myExitAction;
 	protected Runnable myApplyAction;
-	protected ZLStringOption myTabOption;
 	
 	protected ZLOptionsDialog(ZLResource resource, Runnable exitAction, Runnable applyAction) {
 		myResource = resource;
 		myExitAction = exitAction;
 		myApplyAction = applyAction;
-		myTabOption = new ZLStringOption(resource.Name, "SelectedTab", "");
 	}
 	
 	protected void acceptTab(ZLDialogContent tab) {
@@ -59,12 +57,6 @@ public abstract class ZLOptionsDialog {
 		}
 	}
 	
-	protected abstract String getSelectedTabKey();
-	
-	protected abstract void selectTab(String key);
-	
-	protected abstract void runInternal();
-	
 	protected final String getCaption() {
 		return myResource.getResource(ZLDialogManager.DIALOG_TITLE).getValue();
 	}
@@ -75,22 +67,5 @@ public abstract class ZLOptionsDialog {
 	
 	public abstract ZLDialogContent createTab(String key);
 	
-	public void run() {
-		selectTab(myTabOption.getValue());
-		runInternal();
-		myTabOption.setValue(getSelectedTabKey());
-	}
-	
-	/*
-	 * protected:
-	static void addPlatformDependentBuilder(shared_ptr<ZLDialogContentBuilder> builder);
-
-private:
-	static std::vector<shared_ptr<ZLDialogContentBuilder> > ourPlatformDependentBuilders;
-
-public void createPlatformDependentTabs() {
-		
-	}
-
-	 */
+	public abstract void run();
 }

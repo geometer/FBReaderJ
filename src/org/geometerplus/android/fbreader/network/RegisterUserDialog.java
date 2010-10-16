@@ -33,7 +33,7 @@ import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.android.util.AndroidUtil;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
@@ -171,7 +171,7 @@ class RegisterUserDialog extends NetworkDialog {
 				sendSuccess(false);
 			}
 		};
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, myActivity);
+		AndroidUtil.wait("registerUser", runnable, myActivity);
 	}
 
 	@Override

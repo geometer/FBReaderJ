@@ -17,21 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.fbreader.fbreader;
 
-public abstract class ZLChoiceOptionEntry extends ZLOptionEntry {
-	protected ZLChoiceOptionEntry() {
+import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
+
+import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+abstract class RunActivityAction extends FBAction {
+	private final Class<?> myActivityClass;
+
+	RunActivityAction(FBReader fbreader, Class<?> activityClass) {
+		super(fbreader);
+		myActivityClass = activityClass;
 	}
 
-	public int getKind() {
-		return ZLOptionKind.CHOICE;
+	public void run() {
+		final ZLAndroidDialogManager dialogManager =
+			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
+		dialogManager.runActivity(myActivityClass);
 	}
-
-	public abstract String getText(int index);
-
-	public abstract int choiceNumber();
-
-	public abstract int initialCheckedIndex();
-
-	public abstract void onAccept(int index);
 }
