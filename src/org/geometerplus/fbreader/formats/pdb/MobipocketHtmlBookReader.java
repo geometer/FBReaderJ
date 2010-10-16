@@ -27,6 +27,8 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.html.ZLByteBuffer;
 import org.geometerplus.zlibrary.core.html.ZLHtmlAttributeMap;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.formats.html.HtmlReader;
 import org.geometerplus.fbreader.formats.html.HtmlTag;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -59,7 +61,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 	}
 
 	@Override
-	public void startElementHandler(byte tag, int offset, ZLHtmlAttributeMap attributes) {
+	public void startElementHandler(byte tag, int offset, ZLHtmlAttributeMap attributes) throws CharStorageWriteException {
 		final int paragraphIndex = Model.BookTextModel.getParagraphsNumber();
 		myPositionToParagraph.put(offset, paragraphIsOpen() ? paragraphIndex - 1 : paragraphIndex);
 		switch (tag) {
@@ -135,7 +137,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 	}
 
 	@Override
-	public void endElementHandler(byte tag) {
+	public void endElementHandler(byte tag) throws CharStorageWriteException {
 		switch (tag) {
 			case HtmlTag.IMG:
 				break;
@@ -181,7 +183,11 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 			if (length <= 0) {
 				break;
 			}
-			addImage("" + index, new ZLFileImage("image/auto", Model.Book.File, offset, length));
+			try {
+				addImage("" + index, new ZLFileImage("image/auto", Model.Book.File, offset, length));
+			} catch (CharStorageWriteException e) {
+				// TODO: process an exception
+			}
 		}
 	}
 

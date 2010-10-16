@@ -62,7 +62,7 @@ public class PluckerBookReader extends BookReader {
 		//myForcedEntry = null;
 	}
 
-	public boolean readDocument() {
+	public boolean readDocument() throws CharStorageWriteException {
 		try {
 			myStream = new ZLInputStreamWithOffset(myFile.getInputStream());
         
@@ -127,7 +127,7 @@ public class PluckerBookReader extends BookReader {
 			public static final int FT_SUP = 11;
 		};
 
-	private	void readRecord(int recordSize) throws IOException {
+	private	void readRecord(int recordSize) throws IOException, CharStorageWriteException {
 		int uid = PdbUtil.readShort(myStream);
 		if (uid == 1) {
 			myCompressionVersion = (short) PdbUtil.readShort(myStream );
@@ -251,7 +251,7 @@ public class PluckerBookReader extends BookReader {
 		}	
 	}
 	
-    private	void processTextRecord(int size, ArrayList/*<Integer>*/ pars) {
+    private	void processTextRecord(int size, ArrayList/*<Integer>*/ pars) throws CharStorageWriteException {
     	int start = 0;
     	int end = 0;
 
@@ -269,7 +269,7 @@ public class PluckerBookReader extends BookReader {
     	}
     }
     
-    private	void processTextParagraph(char[] data, int start, int end) {
+    private	void processTextParagraph(char[] data, int start, int end) throws CharStorageWriteException {
     	changeFont(FontType.FT_REGULAR);
     	while (popKind()) {}
 
@@ -325,7 +325,7 @@ public class PluckerBookReader extends BookReader {
     	myDelayedControls.clear();
     }
     
-    private	void processTextFunction(char[] ptr, int cur) {
+    private	void processTextFunction(char[] ptr, int cur) throws CharStorageWriteException {
 			switch (ptr[cur]) {
 				case 0x08:
 					safeAddControl(FBTextKind.INTERNAL_HYPERLINK, false);
@@ -422,7 +422,7 @@ public class PluckerBookReader extends BookReader {
 	}	
     }
     
-    private	void setFont(int font, boolean start) {
+    private	void setFont(int font, boolean start) throws CharStorageWriteException {
 			switch (font) {
 				case FontType.FT_REGULAR:
 					break;
@@ -451,7 +451,7 @@ public class PluckerBookReader extends BookReader {
 	    }
     }
 
-    private	void changeFont(int font) {
+    private	void changeFont(int font) throws CharStorageWriteException {
     	if (myFont == font) {
     		return;
     	}
@@ -460,14 +460,14 @@ public class PluckerBookReader extends BookReader {
     	setFont(myFont, true);
     }
 
-    private void safeAddControl(byte kind, boolean start) {
+    private void safeAddControl(byte kind, boolean start) throws CharStorageWriteException {
     	if (myParagraphStarted) {
     		addControl((Byte)kind, (Boolean)start);
     	} else {
     		myDelayedControls.add(new Pair(kind, start));
     	}
     }
-    private void safeAddHyperlinkControl(String id) {
+    private void safeAddHyperlinkControl(String id) throws CharStorageWriteException {
     	if (myParagraphStarted) {
     		addHyperlinkControl(FBTextKind.INTERNAL_HYPERLINK, id);
     	} else {
@@ -475,7 +475,7 @@ public class PluckerBookReader extends BookReader {
     	}
     }
     
-    private void safeBeginParagraph() {
+    private void safeBeginParagraph() throws CharStorageWriteException {
     	if (!myParagraphStarted) {
     		myParagraphStarted = true;
     		myBufferIsEmpty = true;
@@ -501,7 +501,7 @@ public class PluckerBookReader extends BookReader {
     	}
     }
     
-    private void safeEndParagraph() {
+    private void safeEndParagraph() throws CharStorageWriteException {
     	if (myParagraphStarted) {
     		if (myBufferIsEmpty) {
     			final String SPACE = " ";

@@ -17,13 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-
-import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
-
-public abstract class XHTMLTagAction {
-	protected abstract void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException;
-	protected abstract void doAtEnd(XHTMLReader reader) throws CharStorageWriteException;
-};
+public class CharStorageException extends Exception {
+	public CharStorageException(String message) {
+		super(message);
+	}
+}

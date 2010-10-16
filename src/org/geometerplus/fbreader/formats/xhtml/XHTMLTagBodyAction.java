@@ -21,12 +21,14 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 class XHTMLTagBodyAction extends XHTMLTagAction {
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		reader.myInsideBody = true;
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
+	protected void doAtEnd(XHTMLReader reader) throws CharStorageWriteException {
 		reader.getModelReader().endParagraph();
 		reader.myInsideBody = false;
 	}

@@ -57,7 +57,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myParagraphKinds[index] = kind;
 	}
 
-	private char[] getDataBlock(int minimumLength) {
+	private char[] getDataBlock(int minimumLength) throws CharStorageWriteException {
 		char[] block = myCurrentDataBlock;
 		if ((block == null) || (minimumLength > block.length - myBlockOffset)) {
 			if (block != null) {
@@ -70,7 +70,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		return block;
 	}
 
-	public void addControl(byte textKind, boolean isStart) {
+	public void addControl(byte textKind, boolean isStart) throws CharStorageWriteException {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
@@ -81,11 +81,11 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[myBlockOffset++] = (char)kind;
 	}
 
-	public void addText(char[] text) {
+	public void addText(char[] text) throws CharStorageWriteException {
 		addText(text, 0, text.length);
 	}
 
-	public void addText(char[] text, int offset, int length) {
+	public void addText(char[] text, int offset, int length) throws CharStorageWriteException {
 		char[] block = getDataBlock(3 + length);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
@@ -97,7 +97,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 	
-	public void addControl(ZLTextForcedControlEntry entry) {
+	public void addControl(ZLTextForcedControlEntry entry) throws CharStorageWriteException {
 		int len = 2;
 		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
 			len += mask & 1;
@@ -117,7 +117,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		}
 	}
 	
-	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
+	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) throws CharStorageWriteException {
 		final short labelLength = (short)label.length();
 		final char[] block = getDataBlock(3 + labelLength);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -129,7 +129,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + labelLength;
 	}
 	
-	public void addImage(String id, short vOffset) {
+	public void addImage(String id, short vOffset) throws CharStorageWriteException {
 		final int len = id.length();
 		final char[] block = getDataBlock(3 + len);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -141,7 +141,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + len;
 	}
 	
-	public void addFixedHSpace(short length) {
+	public void addFixedHSpace(short length) throws CharStorageWriteException {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;

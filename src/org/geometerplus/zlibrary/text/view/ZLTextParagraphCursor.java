@@ -53,7 +53,7 @@ public final class ZLTextParagraphCursor {
 			myOffset = 0;
 		}
 
-		void fill() {
+		void fill() throws CharStorageReadException {
 			final ArrayList<ZLTextElement> elements = myElements;
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
 				it.next();
@@ -172,13 +172,13 @@ public final class ZLTextParagraphCursor {
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
 
-	private ZLTextParagraphCursor(ZLTextModel model, int index) {
+	private ZLTextParagraphCursor(ZLTextModel model, int index) throws CharStorageReadException {
 		Model = model;
 		Index = Math.min(index, Model.getParagraphsNumber() - 1);
 		fill();
 	}
 	
-	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
+	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) throws CharStorageReadException {
 		ZLTextParagraphCursor result = ZLTextParagraphCursorCache.get(model, index);
 		if (result == null) {
 			result = new ZLTextParagraphCursor(model, index);
@@ -188,7 +188,7 @@ public final class ZLTextParagraphCursor {
 	}
 
 	private static final char[] SPACE_ARRAY = { ' ' };
-	void fill() {
+	void fill() throws CharStorageReadException {
 		ZLTextParagraph	paragraph = Model.getParagraph(Index);
 		switch (paragraph.getKind()) {
 			case ZLTextParagraph.Kind.TEXT_PARAGRAPH:
@@ -222,11 +222,11 @@ public final class ZLTextParagraphCursor {
 		return myElements.size();
 	}
 
-	public ZLTextParagraphCursor previous() {
+	public ZLTextParagraphCursor previous() throws CharStorageReadException {
 		return isFirst() ? null : cursor(Model, Index - 1);
 	}
 
-	public ZLTextParagraphCursor next() {
+	public ZLTextParagraphCursor next() throws CharStorageReadException {
 		return isLast() ? null : cursor(Model, Index + 1);
 	}
 	

@@ -19,15 +19,18 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+
+import org.geometerplus.zlibrary.text.model.CharStorageException;
+
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.library.Book;
 
 public abstract class FormatPlugin {
 	public abstract boolean acceptsFile(ZLFile file);
 	public abstract	boolean readMetaInfo(Book book);
-	public abstract boolean readModel(BookModel model);
+	public abstract boolean readModel(BookModel model) throws CharStorageException;
 	public abstract ZLImage readCover(Book book);
 
 	/*

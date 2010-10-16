@@ -40,5 +40,5 @@ public interface ZLTextModel {
 	int getTextLength(int index);
 	int findParagraphByTextLength(int length);
 	
-	int search(final String text, int startIndex, int endIndex, boolean ignoreCase);
+	int search(final String text, int startIndex, int endIndex, boolean ignoreCase) throws CharStorageReadException;
 }

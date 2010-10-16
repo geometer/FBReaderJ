@@ -19,11 +19,13 @@
 
 package org.geometerplus.fbreader.formats.xhtml;
 
-import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
+import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 
 class XHTMLTagImageAction extends XHTMLTagAction {
@@ -33,7 +35,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 		myNameAttribute = nameAttribute;
 	}
 
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
+	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		String fileName = xmlattributes.getValue(myNameAttribute);
 		if (fileName != null) {
 			fileName = MiscUtil.decodeHtmlReference(fileName);

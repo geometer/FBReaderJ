@@ -23,6 +23,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.model.CharStorageReadException;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
@@ -82,7 +83,11 @@ public final class FBView extends ZLTextView {
 				ZLibrary.Instance().openInBrowser(hyperlink.Id);
 				break;
 			case FBHyperlinkType.INTERNAL:
-				((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+				try {
+					((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+				} catch (CharStorageReadException e) {
+					// TODO: show an error message
+				}
 				break;
 		}
 	}

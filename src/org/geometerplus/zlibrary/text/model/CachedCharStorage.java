@@ -44,7 +44,7 @@ public final class CachedCharStorage implements CharStorage {
 		return myArray.size();
 	}
 
-	public char[] block(int index) {
+	public char[] block(int index) throws CharStorageReadException {
 		char[] block = myArray.get(index).get();
 		if (block == null) {
 			try {
@@ -83,7 +83,7 @@ public final class CachedCharStorage implements CharStorage {
 		return block;
 	}
 
-	public void freezeLastBlock() {
+	public void freezeLastBlock() throws CharStorageWriteException {
 		int index = myArray.size() - 1;
 		if (index >= 0) {
 			char[] block = myArray.get(index).get();

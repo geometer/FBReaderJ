@@ -62,7 +62,7 @@ public class BookReader {
 		myByteDecoder = decoder;
 	}
 	
-	private final void flushTextBufferToParagraph() {
+	private final void flushTextBufferToParagraph() throws CharStorageWriteException {
 		if (myTextBufferLength > 0) {
 			myCurrentTextModel.addText(myTextBuffer, 0, myTextBufferLength);
 			myTextBufferLength = 0;
@@ -72,7 +72,7 @@ public class BookReader {
 		}
 	}
 	
-	public final void addControl(byte kind, boolean start) {
+	public final void addControl(byte kind, boolean start) throws CharStorageWriteException {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl(kind, start);
@@ -83,7 +83,7 @@ public class BookReader {
 	}
 	
 	/*
-	public final void addControl(ZLTextForcedControlEntry entry) {
+	public final void addControl(ZLTextForcedControlEntry entry) throws CharStorageWriteException {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl(entry);
@@ -108,11 +108,11 @@ public class BookReader {
 		return false;
 	}
 	
-	public final void beginParagraph() {
+	public final void beginParagraph() throws CharStorageWriteException {
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 
-	public final void beginParagraph(byte kind) {
+	public final void beginParagraph(byte kind) throws CharStorageWriteException {
 		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			textModel.createParagraph(kind);
@@ -128,7 +128,7 @@ public class BookReader {
 		}		
 	}
 	
-	public final void endParagraph() {
+	public final void endParagraph() throws CharStorageWriteException {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myTextParagraphExists = false;
@@ -184,11 +184,11 @@ public class BookReader {
 		myCurrentTextModel = (ZLTextWritableModel)Model.getFootnoteModel(id);
 	}
 	
-	public final void addData(char[] data) {
+	public final void addData(char[] data) throws CharStorageWriteException {
 		addData(data, 0, data.length, false);
 	}
 
-	public final void addData(char[] data, int offset, int length, boolean direct) {
+	public final void addData(char[] data, int offset, int length, boolean direct) throws CharStorageWriteException {
 		if (!myTextParagraphExists || (length == 0)) {
 			return;
 		}
@@ -268,7 +268,7 @@ public class BookReader {
 			FBHyperlinkType.EXTERNAL : FBHyperlinkType.INTERNAL;
 	}
 
-	public final void addHyperlinkControl(byte kind, String label) {
+	public final void addHyperlinkControl(byte kind, String label) throws CharStorageWriteException {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addHyperlinkControl(kind, hyperlinkType(kind), label);
@@ -277,7 +277,7 @@ public class BookReader {
 		myHyperlinkReference = label;
 	}
 	
-	public final void addHyperlinkLabel(String label) {
+	public final void addHyperlinkLabel(String label) throws CharStorageWriteException {
 		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			int paragraphNumber = textModel.getParagraphsNumber();
@@ -288,7 +288,7 @@ public class BookReader {
 		}
 	}
 	
-	public final void addHyperlinkLabel(String label, int paragraphIndex) {
+	public final void addHyperlinkLabel(String label, int paragraphIndex) throws CharStorageWriteException {
 		Model.addHyperlinkLabel(label, myCurrentTextModel, paragraphIndex);
 	}
 	
@@ -373,11 +373,11 @@ public class BookReader {
 		beginContentsParagraph(-1);
 	}
 	
-	public final void addImageReference(String ref) {
+	public final void addImageReference(String ref) throws CharStorageWriteException {
 		addImageReference(ref, (short)0);
 	}
 
-	public final void addImageReference(String ref, short vOffset) {
+	public final void addImageReference(String ref, short vOffset) throws CharStorageWriteException {
 		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
@@ -394,11 +394,11 @@ public class BookReader {
 		}
 	}
 
-	public final void addImage(String id, ZLImage image) {
+	public final void addImage(String id, ZLImage image) throws CharStorageWriteException {
 		Model.addImage(id, image);
 	}
 
-	public final void addFixedHSpace(short length) {
+	public final void addFixedHSpace(short length) throws CharStorageWriteException {
 		if (myTextParagraphExists) {
 			myCurrentTextModel.addFixedHSpace(length);
 		}

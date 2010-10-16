@@ -46,7 +46,7 @@ public interface ZLTextParagraph {
 		short getFixedHSpaceLength();
 
 		boolean hasNext();
-		void next();
+		void next() throws CharStorageReadException;
 	}
 
 	public EntryIterator iterator();

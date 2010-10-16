@@ -25,7 +25,9 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.util.*;
+
 import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
 
 public final class FB2Reader extends BookReader implements ZLXMLReader {
 	private boolean myInsidePoem = false;
@@ -75,7 +77,11 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		if (image != null) {
 			image.addData(ch, start, length);
 		} else {
-			addData(ch, start, length, false);
+			try {
+				addData(ch, start, length, false);
+			} catch (CharStorageWriteException e) {
+				// TODO: process an exception
+			}
 		}		
 	}
 
@@ -87,11 +93,24 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 		if (image != null) {
 			image.addData(ch, start, length);
 		} else {
-			addData(ch, start, length, true);
+			try {
+				addData(ch, start, length, true);
+			} catch (CharStorageWriteException e) {
+				// TODO: process an exception
+			}
 		}		
 	}
 
 	public boolean endElementHandler(String tagName) {
+		try {
+			return endElementHandlerWithException(tagName);
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+			return true;
+		}
+	}
+
+	public boolean endElementHandlerWithException(String tagName) throws CharStorageWriteException {
 		final byte tag = myTagStack[--myTagStackSize];
 		switch (tag) {
 			case FB2Tag.P:
@@ -197,6 +216,15 @@ public final class FB2Reader extends BookReader implements ZLXMLReader {
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
+		try {
+			return startElementHandlerWithException(tagName, attributes);
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+			return true;
+		}
+	}
+
+	private boolean startElementHandlerWithException(String tagName, ZLStringMap attributes) throws CharStorageWriteException {
 		String id = attributes.getValue("id");
 		if (id != null) {
 			if (!myReadMainText) {

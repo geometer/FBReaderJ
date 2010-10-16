@@ -21,17 +21,19 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.*;
 
 class XHTMLTagPreAction extends XHTMLTagAction {
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
+	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		reader.myPreformatted = true;
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.beginParagraph();
 		modelReader.addControl(FBTextKind.CODE, true);
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
+	protected void doAtEnd(XHTMLReader reader) throws CharStorageWriteException {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.addControl(FBTextKind.CODE, false);
 		modelReader.endParagraph();

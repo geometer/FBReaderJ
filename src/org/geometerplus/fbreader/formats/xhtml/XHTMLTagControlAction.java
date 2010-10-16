@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.BookReader;
 
 class XHTMLTagControlAction extends XHTMLTagAction {
@@ -30,13 +32,13 @@ class XHTMLTagControlAction extends XHTMLTagAction {
 		myControl = control;
 	}
 
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
+	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.pushKind(myControl);
 		modelReader.addControl(myControl, true);
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
+	protected void doAtEnd(XHTMLReader reader) throws CharStorageWriteException {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.addControl(myControl, false);
 		modelReader.popKind();

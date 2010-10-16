@@ -28,6 +28,7 @@ import android.content.*;
 import android.app.TabActivity;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.text.model.CharStorageReadException;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -207,7 +208,11 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 mainLoop:
 		while ((wordCounter < 20) && (sentenceCounter < 3)) {
 			while (cursor.isEndOfParagraph()) {
-				if (!cursor.nextParagraph()) {
+				try {
+					if (!cursor.nextParagraph()) {
+						break mainLoop;
+					}
+				} catch (CharStorageReadException e) {
 					break mainLoop;
 				}
 				if ((builder.length() > 0) && cursor.getParagraphCursor().isEndOfSection()) {

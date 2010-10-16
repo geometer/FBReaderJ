@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.formats.xhtml;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.*;
 
 class XHTMLTagHyperlinkAction extends XHTMLTagAction {
@@ -36,7 +38,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 			text.startsWith("ftp://");
 	}
 
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
+	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		final BookReader modelReader = reader.getModelReader();
 		final String href = xmlattributes.getValue("href");
 		if (myHyperlinkStackSize == myHyperlinkStack.length) {
@@ -69,7 +71,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 		}
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
+	protected void doAtEnd(XHTMLReader reader) throws CharStorageWriteException {
 		byte kind = myHyperlinkStack[--myHyperlinkStackSize];
 		if (kind != FBTextKind.REGULAR) {
 			reader.getModelReader().addControl(kind, false);

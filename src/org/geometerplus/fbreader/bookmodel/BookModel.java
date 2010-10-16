@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.Paths;
 
 public final class BookModel {
-	public static BookModel createModel(Book book) {
+	public static BookModel createModel(Book book) throws CharStorageException {
 		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
 		if (plugin == null) {
 			return null;
@@ -78,7 +78,7 @@ public final class BookModel {
 	private char[] myCurrentLinkBlock;
 	private int myCurrentLinkBlockOffset;
 
-	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
+	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) throws CharStorageWriteException {
 		final String modelId = model.getId();
 		final int labelLength = label.length();
 		final int idLength = (modelId != null) ? modelId.length() : 0;
@@ -107,7 +107,7 @@ public final class BookModel {
 		myCurrentLinkBlockOffset = offset;
 	}
 
-	public Label getLabel(String id) {
+	public Label getLabel(String id) throws CharStorageReadException {
 		final int len = id.length();
 		final int size = myInternalHyperlinks.size();
 

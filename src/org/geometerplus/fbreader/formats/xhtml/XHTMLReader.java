@@ -24,6 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
 
@@ -156,27 +158,45 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	}
 
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
-		String id = attributes.getValue("id");
-		if (id != null) {
-			myModelReader.addHyperlinkLabel(myReferencePrefix + id);
+		try {
+			String id = attributes.getValue("id");
+			if (id != null) {
+				myModelReader.addHyperlinkLabel(myReferencePrefix + id);
+			}
+        
+			XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
+			if (action != null) {
+				action.doAtStart(this, attributes);
+			}
+			return false;
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+			return true;
 		}
-
-		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
-		if (action != null) {
-			action.doAtStart(this, attributes);
-		}
-		return false;
 	}
 
 	public boolean endElementHandler(String tag) {
-		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
-		if (action != null) {
-			action.doAtEnd(this);
+		try {
+			XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
+			if (action != null) {
+				action.doAtEnd(this);
+			}
+			return false;
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+			return true;
 		}
-		return false;
 	}
 
 	public void characterDataHandler(char[] data, int start, int len) {
+		try {
+			characterDataHandlerWithException(data, start, len);
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+		}
+	}
+
+	private void characterDataHandlerWithException(char[] data, int start, int len) throws CharStorageWriteException {
 		if (myPreformatted) {
 			final char first = data[start]; 
 			if ((first == '\r') || (first == '\n')) {

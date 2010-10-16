@@ -23,14 +23,17 @@ import java.util.HashMap;
 import java.io.*;
 import java.nio.charset.*;
 
+import org.geometerplus.zlibrary.core.html.*;
+import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
+import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
+
+import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
-import org.geometerplus.zlibrary.core.html.*;
-import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
-import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 
 public class HtmlReader extends BookReader implements ZLHtmlReader {
@@ -128,10 +131,14 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			}
 			myEntityMap.put(entity, data);
 		}
-		addData(data);
+		try {
+			addData(data);
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+		}
 	}
 
-	private void openControl(byte control) {
+	private void openControl(byte control) throws CharStorageWriteException {
 		addControl(control, true);
 		if (myControlsNumber == myControls.length) {
 			myControls = ZLArrayUtils.createCopy(myControls, myControlsNumber, 2 * myControlsNumber);
@@ -139,7 +146,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		myControls[myControlsNumber++] = control;
 	}
 	
-	private void closeControl(byte control) {
+	private void closeControl(byte control) throws CharStorageWriteException {
 		for (int i = 0; i < myControlsNumber; i++) {
 			addControl(myControls[i], false);
 		}
@@ -162,16 +169,20 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 	
-	private void startNewParagraph() {
+	private void startNewParagraph() throws CharStorageWriteException {
 		endParagraph();
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 	
 	public final void endElementHandler(String tagName) {
-		endElementHandler(HtmlTag.getTagByName(tagName));
+		try {
+			endElementHandler(HtmlTag.getTagByName(tagName));
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+		}
 	}
 
-	public void endElementHandler(byte tag) {
+	public void endElementHandler(byte tag) throws CharStorageWriteException {
 		switch (tag) {
 			case HtmlTag.SCRIPT:
 			case HtmlTag.SELECT:
@@ -230,10 +241,14 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	}
 
 	public final void startElementHandler(String tagName, int offset, ZLHtmlAttributeMap attributes) {
-		startElementHandler(HtmlTag.getTagByName(tagName), offset, attributes);
+		try {
+			startElementHandler(HtmlTag.getTagByName(tagName), offset, attributes);
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+		}
 	}
 
-	public void startElementHandler(byte tag, int offset, ZLHtmlAttributeMap attributes) {
+	public void startElementHandler(byte tag, int offset, ZLHtmlAttributeMap attributes) throws CharStorageWriteException {
 		switch (tag) {
 			case HtmlTag.HTML:
 				break;

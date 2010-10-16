@@ -69,7 +69,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
 			if (paragraphsNumber > 0) {
-				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
+				try {
+					myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
+				} catch (CharStorageReadException e) {
+					processCharStorageProblem(e);
+					myCurrentPage.PaintState = PaintStateEnum.FAILURE;
+				}
 			}
 		}
 	}
@@ -137,7 +142,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (thisSectionOnly) {
 			// TODO: implement
 		}
-		int count = myModel.search(text, startIndex, endIndex, ignoreCase);
+		int count;
+		try {
+			count = myModel.search(text, startIndex, endIndex, ignoreCase);
+		} catch (CharStorageReadException e) {
+			processCharStorageProblem(e);
+			return 0;
+		}
 		myPreviousPage.reset();
 		myNextPage.reset();
 		if (!myCurrentPage.StartCursor.isNull()) {
@@ -379,7 +390,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
-		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
+		try {
+			if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
+				return -1;
+			}
+		} catch (CharStorageReadException e) {
 			return -1;
 		}
 		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
@@ -471,20 +486,24 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (textSize > myLettersBuffer.length) {
 				paragraph = myModel.findParagraphByTextLength((textSize - myLettersBuffer.length) / 2);
 			}
-			while (paragraph < myModel.getParagraphsNumber()
-					&& myLettersBufferLength < myLettersBuffer.length) {
-				ZLTextParagraph.EntryIterator it = myModel.getParagraph(paragraph++).iterator();
-				while (it.hasNext()
+			try {
+				while (paragraph < myModel.getParagraphsNumber()
 						&& myLettersBufferLength < myLettersBuffer.length) {
-					it.next();
-					if (it.getType() == ZLTextParagraph.Entry.TEXT) {
-						final int len = Math.min(it.getTextLength(),
-								myLettersBuffer.length - myLettersBufferLength);
-						System.arraycopy(it.getTextData(), it.getTextOffset(),
-								myLettersBuffer, myLettersBufferLength, len);
-						myLettersBufferLength += len;
+					ZLTextParagraph.EntryIterator it = myModel.getParagraph(paragraph++).iterator();
+					while (it.hasNext()
+							&& myLettersBufferLength < myLettersBuffer.length) {
+						it.next();
+						if (it.getType() == ZLTextParagraph.Entry.TEXT) {
+							final int len = Math.min(it.getTextLength(),
+									myLettersBuffer.length - myLettersBufferLength);
+							System.arraycopy(it.getTextData(), it.getTextOffset(),
+									myLettersBuffer, myLettersBufferLength, len);
+							myLettersBufferLength += len;
+						}
 					}
 				}
+			} catch (CharStorageReadException e) {
+				// just use default text if the current one is unavailable
 			}
 
 			if (myLettersBufferLength == 0) {
@@ -555,14 +574,23 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		} else {
 			preparePaintInfo(myCurrentPage);
 			final ZLTextWordCursor cursor = new ZLTextWordCursor(myCurrentPage.EndCursor);
-			cursor.moveToParagraph(paragraphIndex);
+			try {
+				cursor.moveToParagraph(paragraphIndex);
+			} catch (CharStorageReadException e) {
+				processCharStorageProblem(e);
+				return;
+			}
 			wordIndex = cursor.getParagraphCursor().getParagraphLength();
 		}
 
 		/*System.err.println("SETPAGE: wordIndex = " + wordIndex);
 		System.err.println("<-------------------------------------------<");*/
 
-		gotoPositionByEnd(paragraphIndex, wordIndex, 0);
+		try {
+			gotoPositionByEnd(paragraphIndex, wordIndex, 0);
+		} catch (CharStorageReadException e) {
+			processCharStorageProblem(e);
+		}
 	}
 
 	public void gotoHome() {
@@ -681,7 +709,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
+	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) throws CharStorageReadException {
 		result.setCursor(start);
 		int textAreaHeight = getTextAreaHeight();
 		page.LineInfos.clear();
@@ -1007,17 +1035,21 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	
 	public final synchronized void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
 		if (myModel != null && myModel.getParagraphsNumber() > 0) {
-			myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
-			myPreviousPage.reset();
-			myNextPage.reset();
-			preparePaintInfo(myCurrentPage);
-			if (myCurrentPage.isEmptyPage()) {
-				scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			try {
+				myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
+				myPreviousPage.reset();
+				myNextPage.reset();
+				preparePaintInfo(myCurrentPage);
+				if (myCurrentPage.isEmptyPage()) {
+					scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+				}
+			} catch (CharStorageReadException e) {
+				processCharStorageProblem(e);
 			}
 		}
 	}
 
-	private final synchronized void gotoPositionByEnd(int paragraphIndex, int wordIndex, int charIndex) {
+	private final synchronized void gotoPositionByEnd(int paragraphIndex, int wordIndex, int charIndex) throws CharStorageReadException {
 		if (myModel != null && myModel.getParagraphsNumber() > 0) {
 			myCurrentPage.moveEndCursor(paragraphIndex, wordIndex, charIndex);
 			myPreviousPage.reset();
@@ -1072,95 +1104,103 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			cache.put(info, info);
 		}
 
-		switch (page.PaintState) {
-			default:
-				break;
-			case PaintStateEnum.TO_SCROLL_FORWARD:
-				if (!page.EndCursor.getParagraphCursor().isLast() || !page.EndCursor.isEndOfParagraph()) {
-					final ZLTextWordCursor startCursor = new ZLTextWordCursor();
-					switch (myScrollingMode) {
-						case ScrollingMode.NO_OVERLAPPING:
-							break;
-						case ScrollingMode.KEEP_LINES:
-							page.findLineFromEnd(startCursor, myOverlappingValue);
-							break;
-						case ScrollingMode.SCROLL_LINES:
-							page.findLineFromStart(startCursor, myOverlappingValue);
-							if (startCursor.isEndOfParagraph()) {
-								startCursor.nextParagraph();
-							}
-							break;
-						case ScrollingMode.SCROLL_PERCENTAGE:
-							page.findPercentFromStart(startCursor, getTextAreaHeight(), myOverlappingValue);
-							break;
-					}
-				
-					if (!startCursor.isNull() && startCursor.samePositionAs(page.StartCursor)) {
-						page.findLineFromStart(startCursor, 1);
-					}
-
-					if (!startCursor.isNull()) {
-						final ZLTextWordCursor endCursor = new ZLTextWordCursor();
-						buildInfos(page, startCursor, endCursor);
-						if (!page.isEmptyPage() && ((myScrollingMode != ScrollingMode.KEEP_LINES) || (!endCursor.samePositionAs(page.EndCursor)))) {
-							page.StartCursor.setCursor(startCursor);
-							page.EndCursor.setCursor(endCursor);
-							break;
-						}
-					}
-
-					page.StartCursor.setCursor(page.EndCursor);
-					buildInfos(page, page.StartCursor, page.EndCursor);
-				}
-				break;
-			case PaintStateEnum.TO_SCROLL_BACKWARD:
-				if (!page.StartCursor.getParagraphCursor().isFirst() || !page.StartCursor.isStartOfParagraph()) {
-					switch (myScrollingMode) {
-						case ScrollingMode.NO_OVERLAPPING:
-							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
-							break;
-						case ScrollingMode.KEEP_LINES:
-						{
-							ZLTextWordCursor endCursor = new ZLTextWordCursor();
-							page.findLineFromStart(endCursor, myOverlappingValue);
-							if (!endCursor.isNull() && endCursor.samePositionAs(page.EndCursor)) {
-								page.findLineFromEnd(endCursor, 1);
-							}
-							if (!endCursor.isNull()) {
-								ZLTextWordCursor startCursor = findStart(endCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight());
-								if (startCursor.samePositionAs(page.StartCursor)) {
-									page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
-								} else {
-									page.StartCursor.setCursor(startCursor);
+		try {
+			switch (page.PaintState) {
+				default:
+					break;
+				case PaintStateEnum.FAILURE:
+					// TODO: implement
+					break;
+				case PaintStateEnum.TO_SCROLL_FORWARD:
+					if (!page.EndCursor.getParagraphCursor().isLast() || !page.EndCursor.isEndOfParagraph()) {
+						final ZLTextWordCursor startCursor = new ZLTextWordCursor();
+						switch (myScrollingMode) {
+							case ScrollingMode.NO_OVERLAPPING:
+								break;
+							case ScrollingMode.KEEP_LINES:
+								page.findLineFromEnd(startCursor, myOverlappingValue);
+								break;
+							case ScrollingMode.SCROLL_LINES:
+								page.findLineFromStart(startCursor, myOverlappingValue);
+								if (startCursor.isEndOfParagraph()) {
+									startCursor.nextParagraph();
 								}
-							} else {
-								page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
-							}
-							break;
+								break;
+							case ScrollingMode.SCROLL_PERCENTAGE:
+								page.findPercentFromStart(startCursor, getTextAreaHeight(), myOverlappingValue);
+								break;
 						}
-						case ScrollingMode.SCROLL_LINES:
-							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.LINE_UNIT, myOverlappingValue));
-							break;
-						case ScrollingMode.SCROLL_PERCENTAGE:
-							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight() * myOverlappingValue / 100));
-							break;
-					}
-					buildInfos(page, page.StartCursor, page.EndCursor);
-					if (page.isEmptyPage()) {
-						page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.LINE_UNIT, 1));
+					
+						if (!startCursor.isNull() && startCursor.samePositionAs(page.StartCursor)) {
+							page.findLineFromStart(startCursor, 1);
+						}
+        
+						if (!startCursor.isNull()) {
+							final ZLTextWordCursor endCursor = new ZLTextWordCursor();
+							buildInfos(page, startCursor, endCursor);
+							if (!page.isEmptyPage() && ((myScrollingMode != ScrollingMode.KEEP_LINES) || (!endCursor.samePositionAs(page.EndCursor)))) {
+								page.StartCursor.setCursor(startCursor);
+								page.EndCursor.setCursor(endCursor);
+								break;
+							}
+						}
+        
+						page.StartCursor.setCursor(page.EndCursor);
 						buildInfos(page, page.StartCursor, page.EndCursor);
 					}
-				}
-				break;
-			case PaintStateEnum.START_IS_KNOWN:
-				buildInfos(page, page.StartCursor, page.EndCursor);
-				break;
-			case PaintStateEnum.END_IS_KNOWN:
-				page.StartCursor.setCursor(findStart(page.EndCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
-				buildInfos(page, page.StartCursor, page.EndCursor);
-				break;
+					break;
+				case PaintStateEnum.TO_SCROLL_BACKWARD:
+					if (!page.StartCursor.getParagraphCursor().isFirst() || !page.StartCursor.isStartOfParagraph()) {
+						switch (myScrollingMode) {
+							case ScrollingMode.NO_OVERLAPPING:
+								page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+								break;
+							case ScrollingMode.KEEP_LINES:
+							{
+								ZLTextWordCursor endCursor = new ZLTextWordCursor();
+								page.findLineFromStart(endCursor, myOverlappingValue);
+								if (!endCursor.isNull() && endCursor.samePositionAs(page.EndCursor)) {
+									page.findLineFromEnd(endCursor, 1);
+								}
+								if (!endCursor.isNull()) {
+									ZLTextWordCursor startCursor = findStart(endCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight());
+									if (startCursor.samePositionAs(page.StartCursor)) {
+										page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+									} else {
+										page.StartCursor.setCursor(startCursor);
+									}
+								} else {
+									page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+								}
+								break;
+							}
+							case ScrollingMode.SCROLL_LINES:
+								page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.LINE_UNIT, myOverlappingValue));
+								break;
+							case ScrollingMode.SCROLL_PERCENTAGE:
+								page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight() * myOverlappingValue / 100));
+								break;
+						}
+						buildInfos(page, page.StartCursor, page.EndCursor);
+						if (page.isEmptyPage()) {
+							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.LINE_UNIT, 1));
+							buildInfos(page, page.StartCursor, page.EndCursor);
+						}
+					}
+					break;
+				case PaintStateEnum.START_IS_KNOWN:
+					buildInfos(page, page.StartCursor, page.EndCursor);
+					break;
+				case PaintStateEnum.END_IS_KNOWN:
+					page.StartCursor.setCursor(findStart(page.EndCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+					buildInfos(page, page.StartCursor, page.EndCursor);
+					break;
+			}
+			page.PaintState = PaintStateEnum.READY;
+		} catch (CharStorageReadException e) {
+			processCharStorageProblem(e);
+			page.PaintState = PaintStateEnum.FAILURE;
 		}
-		page.PaintState = PaintStateEnum.READY;
 		// TODO: cache?
 		myLineInfoCache.clear();
 
@@ -1181,14 +1221,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		if (myCurrentPage.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 			myCurrentPage.LineInfos.clear();
-			if (!myCurrentPage.StartCursor.isNull()) {
-				myCurrentPage.StartCursor.rebuild();
-				myCurrentPage.EndCursor.reset();
-				myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
-			} else if (!myCurrentPage.EndCursor.isNull()) {
-				myCurrentPage.EndCursor.rebuild();
-				myCurrentPage.StartCursor.reset();
-				myCurrentPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+			try {
+				if (!myCurrentPage.StartCursor.isNull()) {
+					myCurrentPage.StartCursor.rebuild();
+					myCurrentPage.EndCursor.reset();
+					myCurrentPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+				} else if (!myCurrentPage.EndCursor.isNull()) {
+					myCurrentPage.EndCursor.rebuild();
+					myCurrentPage.StartCursor.reset();
+					myCurrentPage.PaintState = PaintStateEnum.END_IS_KNOWN;
+				}
+			} catch (CharStorageReadException e) {
+				processCharStorageProblem(e);
+				myCurrentPage.PaintState = PaintStateEnum.FAILURE;
 			}
 		}
 
@@ -1240,7 +1285,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private ZLTextWordCursor findStart(ZLTextWordCursor end, int unit, int size) {
+	private ZLTextWordCursor findStart(ZLTextWordCursor end, int unit, int size) throws CharStorageReadException {
 		final ZLTextWordCursor start = new ZLTextWordCursor(end);
 		size -= paragraphSize(start, true, unit);
 		boolean positionChanged = !start.isStartOfParagraph();
@@ -1385,5 +1430,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		}
 		return false;
+	}
+
+	public void processCharStorageProblem(CharStorageReadException e) {
+		// TODO: show an error message
+		e.printStackTrace();
 	}
 }

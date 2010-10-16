@@ -24,6 +24,8 @@ import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
+import org.geometerplus.zlibrary.text.model.CharStorageException;
+import org.geometerplus.zlibrary.text.model.CharStorageReadException;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -158,7 +160,7 @@ public final class FBReader extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	void tryOpenFootnote(String id) {
+	void tryOpenFootnote(String id) throws CharStorageReadException {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
@@ -193,7 +195,11 @@ public final class FBReader extends ZLApplication {
 			Model = null;
 			System.gc();
 			System.gc();
-			Model = BookModel.createModel(book);
+			try {
+				Model = BookModel.createModel(book);
+			} catch (CharStorageException e) {
+				// TODO: show an error message
+			}
 			if (Model != null) {
 				ZLTextHyphenator.Instance().load(book.getLanguage());
 				BookTextView.setModel(Model.BookTextModel);

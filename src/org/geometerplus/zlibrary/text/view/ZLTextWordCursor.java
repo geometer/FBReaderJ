@@ -19,8 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.model.ZLTextMark;
+import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextWordCursor extends ZLTextPosition {
 	private ZLTextParagraphCursor myParagraphCursor;
@@ -113,7 +112,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		myCharIndex = 0;
 	}
 
-	public boolean nextParagraph() {
+	public boolean nextParagraph() throws CharStorageReadException {
 		if (!isNull()) {
 			if (!myParagraphCursor.isLast()) {
 				myParagraphCursor = myParagraphCursor.next();
@@ -124,7 +123,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		return false;
 	}
 
-	public boolean previousParagraph() {
+	public boolean previousParagraph() throws CharStorageReadException {
 		if (!isNull()) {
 			if (!myParagraphCursor.isFirst()) {
 				myParagraphCursor = myParagraphCursor.previous();
@@ -149,7 +148,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		}
 	}
 
-	public void moveToParagraph(int paragraphIndex) {
+	public void moveToParagraph(int paragraphIndex) throws CharStorageReadException {
 		if (!isNull() && (paragraphIndex != myParagraphCursor.Index)) {
 			final ZLTextModel model = myParagraphCursor.Model;
 			paragraphIndex = Math.max(0, Math.min(paragraphIndex, model.getParagraphsNumber() - 1));
@@ -196,7 +195,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		myCharIndex = 0;
 	}
 
-	public void rebuild() {
+	public void rebuild() throws CharStorageReadException {
 		if (!isNull()) {
 			myParagraphCursor.clear();
 			myParagraphCursor.fill();

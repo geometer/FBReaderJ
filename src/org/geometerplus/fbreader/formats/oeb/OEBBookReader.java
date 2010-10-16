@@ -25,6 +25,10 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 
+import org.geometerplus.zlibrary.text.model.CharStorageException;
+import org.geometerplus.zlibrary.text.model.CharStorageReadException;
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
@@ -60,7 +64,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private TreeMap<String,Integer> myFileNumbers = new TreeMap<String,Integer>();
 	private TreeMap<String,Integer> myTOCLabels = new TreeMap<String,Integer>();
 
-	boolean readBook(ZLFile file) {
+	boolean readBook(ZLFile file) throws CharStorageException {
 		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
 
 		myIdToHref.clear();
@@ -93,7 +97,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		return true;
 	}
 
-	private BookModel.Label getTOCLabel(String id) {
+	private BookModel.Label getTOCLabel(String id) throws CharStorageReadException {
 		final int index = id.indexOf('#');
 		final String path = (index >= 0) ? id.substring(0, index) : id;
 		Integer num = myFileNumbers.get(path);
@@ -110,7 +114,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 		return myModelReader.Model.getLabel(num + id.substring(index));
 	}
 
-	private void generateTOC() {
+	private void generateTOC() throws CharStorageReadException {
 		if (myNCXTOCFileName != null) {
 			final NCXReader ncxReader = new NCXReader(myModelReader);
 			if (ncxReader.readFile(myFilePrefix + myNCXTOCFileName)) {
@@ -173,6 +177,15 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 	private int myState;
 
 	public boolean startElementHandler(String tag, ZLStringMap xmlattributes) {
+		try {
+			return startElementHandlerWithException(tag, xmlattributes);
+		} catch (CharStorageWriteException e) {
+			// TODO: process an exception
+			return true;
+		}
+	}
+
+	public boolean startElementHandlerWithException(String tag, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		tag = tag.toLowerCase();
 		if ((myOPFSchemePrefix != null) && tag.startsWith(myOPFSchemePrefix)) {
 			tag = tag.substring(myOPFSchemePrefix.length());

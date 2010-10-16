@@ -21,8 +21,10 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 class XHTMLTagRestartParagraphAction extends XHTMLTagAction {
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
+	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		reader.getModelReader().beginParagraph();
 		reader.getModelReader().endParagraph();
 	}

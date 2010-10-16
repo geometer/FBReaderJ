@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.ArrayList;
 
+import org.geometerplus.zlibrary.text.model.CharStorageReadException;
+
 final class ZLTextPage {
 	final ZLTextWordCursor StartCursor = new ZLTextWordCursor();
 	final ZLTextWordCursor EndCursor = new ZLTextWordCursor();
@@ -46,7 +48,7 @@ final class ZLTextPage {
 		PaintState = PaintStateEnum.START_IS_KNOWN;
 	}
 
-	void moveStartCursor(int paragraphIndex, int wordIndex, int charIndex) {
+	void moveStartCursor(int paragraphIndex, int wordIndex, int charIndex) throws CharStorageReadException {
 		if (StartCursor.isNull()) {
 			StartCursor.setCursor(EndCursor);
 		}
@@ -57,7 +59,7 @@ final class ZLTextPage {
 		PaintState = PaintStateEnum.START_IS_KNOWN;
 	}
 
-	void moveEndCursor(int paragraphIndex, int wordIndex, int charIndex) {
+	void moveEndCursor(int paragraphIndex, int wordIndex, int charIndex) throws CharStorageReadException {
 		if (EndCursor.isNull()) {
 			EndCursor.setCursor(StartCursor);
 		}

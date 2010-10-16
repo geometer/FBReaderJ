@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-public final class CharStorageWriteException extends RuntimeException {
+public final class CharStorageWriteException extends CharStorageException {
 	public CharStorageWriteException(String message) {
 		super(message);
 	}

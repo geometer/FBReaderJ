@@ -19,11 +19,14 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
+import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+
+import org.geometerplus.zlibrary.text.model.CharStorageException;
+
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class OEBPlugin extends FormatPlugin {
 	public boolean acceptsFile(ZLFile file) {
@@ -51,7 +54,7 @@ public class OEBPlugin extends FormatPlugin {
 	}
 	
 	@Override
-	public boolean readModel(BookModel model) {
+	public boolean readModel(BookModel model) throws CharStorageException {
 		model.Book.File.setCached(true);
 		final ZLFile opfFile = getOpfFile(model.Book.File);
 		return (opfFile != null) ? new OEBBookReader(model).readBook(opfFile) : false;

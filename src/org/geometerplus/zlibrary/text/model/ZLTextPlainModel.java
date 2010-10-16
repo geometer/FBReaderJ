@@ -119,7 +119,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 			return myCounter < myLength;
 		}	
 
-		public void next() {
+		public void next() throws CharStorageReadException {
 			int dataOffset = myDataOffset;
 			char[] data = myStorage.block(myDataIndex);
 			if (dataOffset == data.length) {
@@ -252,7 +252,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		return mark;
 	}
 
-	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
+	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) throws CharStorageReadException {
 		int count = 0;
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();

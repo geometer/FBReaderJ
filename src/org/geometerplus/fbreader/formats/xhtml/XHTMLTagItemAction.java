@@ -21,12 +21,14 @@ package org.geometerplus.fbreader.formats.xhtml;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+import org.geometerplus.zlibrary.text.model.CharStorageWriteException;
+
 import org.geometerplus.fbreader.bookmodel.BookReader;
 
 class XHTMLTagItemAction extends XHTMLTagAction {
 	private final char[] BULLET = { '\u2022', '\240' };
 
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
+	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) throws CharStorageWriteException {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.endParagraph();
 		// TODO: increase left indent
@@ -35,7 +37,7 @@ class XHTMLTagItemAction extends XHTMLTagAction {
 		modelReader.addData(BULLET);
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
+	protected void doAtEnd(XHTMLReader reader) throws CharStorageWriteException {
 		reader.getModelReader().endParagraph();
 	}
 }
