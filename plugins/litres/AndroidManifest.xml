@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.fbreader.plugin.network.litres" android:versionCode="101" android:versionName="0.1.1" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="3" />
+	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<application android:label="FBReader LitRes plugin" android:icon="@drawable/fbreader_plugin">
+		<activity android:name=".TestActivity">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.fbreader.action.TEST" />
+				<data android:scheme="http" android:host="data.fbreader.org" android:path="/packages/org.geometerplus.fbreader.plugin.network.litres.apk" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".AuthActivity" android:label="FBReader Authentication" android:configChanges="orientation|keyboardHidden">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.fbreader.action.AUTHENTICATION" />
+			</intent-filter>
+		</activity>
+	</application>
+</manifest>
