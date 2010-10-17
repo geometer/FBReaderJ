@@ -44,7 +44,8 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias, String> myRelationAliases;
 
 	private TreeMap<String, Integer> myUrlConditions;
-	private LinkedList<URLRewritingRule> myUrlRewritingRules;
+	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
+	private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
 	private final boolean myHasStableIdentifiers;
@@ -72,11 +73,13 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	final void setUrlRewritingRules(List<URLRewritingRule> rules) {
-		if (rules != null && rules.size() > 0) {
-			myUrlRewritingRules = new LinkedList<URLRewritingRule>(rules);
-		} else {
-			myUrlRewritingRules = null;
-		}
+		myUrlRewritingRules.clear();
+		myUrlRewritingRules.addAll(rules);
+	}
+
+	final void setExtraData(LinkedHashMap<String,String> extraData) {
+		myExtraData.clear();
+		myExtraData.putAll(extraData);
 	}
 
 	final void setAuthenticationManager(NetworkAuthenticationManager mgr) {
@@ -142,7 +145,7 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	public NetworkLibraryItem libraryItem() {
 		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
 		urlMap.put(NetworkCatalogItem.URL_CATALOG, getLink(URL_MAIN));
-		return new OPDSCatalogItem(this, getTitle(), getSummary(), getIcon(), urlMap);
+		return new OPDSCatalogItem(this, getTitle(), getSummary(), getIcon(), urlMap, myExtraData);
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {
@@ -150,9 +153,6 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public String rewriteUrl(String url, boolean isUrlExternal) {
-		if (myUrlRewritingRules == null) {
-			return url;
-		}
 		for (URLRewritingRule rule: myUrlRewritingRules) {
 			if (rule.Apply != URLRewritingRule.APPLY_ALWAYS) {
 				if ((rule.Apply == URLRewritingRule.APPLY_EXTERNAL && !isUrlExternal)

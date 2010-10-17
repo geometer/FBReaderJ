@@ -39,7 +39,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -402,7 +402,7 @@ class NetworkBookActions extends NetworkTreeActions {
 						handler.sendMessage(handler.obtainMessage(0, error));
 					}
 				}; // end Runnable
-				AndroidUtil.wait("purchaseBook", runnable, activity);
+				UIUtil.wait("purchaseBook", runnable, activity);
 			} // end onClick
 		}; // end listener
 

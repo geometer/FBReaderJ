@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.Map;
-import java.util.HashSet;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -29,7 +28,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 
 class OPDSCatalogItem extends NetworkCatalogItem {
-
 	static class State extends NetworkOperationData {
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
@@ -39,17 +37,16 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		}
 	}
 	private State myLoadingState;
+	private final LinkedHashMap<String,String> myExtraData;
 
-	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
+	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, LinkedHashMap<String,String> extraData) {
 		super(link, title, summary, cover, urlByType);
-	}
-
-	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility) {
-		super(link, title, summary, cover, urlByType, visibility);
+		myExtraData = extraData;
 	}
 
 	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, int catalogType) {
 		super(link, title, summary, cover, urlByType, visibility, catalogType);
+		myExtraData = null;
 	}
 
 	private void doLoadChildren(NetworkOperationData.OnNewItemListener listener,
@@ -66,6 +63,11 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 			}
 			networkRequest = myLoadingState.resume();
 		}
+	}
+
+	@Override
+	public final LinkedHashMap<String,String> extraData() {
+		return myExtraData;
 	}
 
 	@Override

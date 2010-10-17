@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
@@ -194,7 +194,7 @@ class CustomCatalogDialog extends NetworkDialog {
 				handler.sendMessage(handler.obtainMessage(0, error));
 			}
 		}; 
-		AndroidUtil.wait("loadingCatalogInfo", loadInfoRunnable, myActivity);
+		UIUtil.wait("loadingCatalogInfo", loadInfoRunnable, myActivity);
 	}
 
 	@Override

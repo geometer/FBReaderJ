@@ -29,7 +29,7 @@ import android.os.Message;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
-public abstract class AndroidUtil {
+public abstract class UIUtil {
 	private static final Object ourMonitor = new Object();
 	private static ProgressDialog ourProgress;
 	private static class Pair {
