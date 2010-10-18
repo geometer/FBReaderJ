@@ -1,3 +1,7 @@
+===== 0.7.9 (??? ??, 2010) =====
+* List of styles has been fixed in the Options dialog
+* Monospace font has been included in the fonts list
+
 ===== 0.7.8 (Oct 10, 2010) =====
 * Processing of large OPDS feeds (> 500 books in one file) has been fixed
 * Network library doesn't throw an Exception if an SD card is unavailable
