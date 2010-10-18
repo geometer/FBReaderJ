@@ -138,13 +138,17 @@ public class ZLNetworkManager {
 			ex.printStackTrace();
 			throw new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));
 		} finally {
-			request.doAfter(success);
+			if (success) {
+				request.doAfterOnSuccess();
+			} else {
+				request.doAfterOnError();
+			}
 		}
 	}
 
 	public void perform(List<ZLNetworkRequest> requests) throws ZLNetworkException {
 		if (requests.size() == 0) {
-			throw new ZLNetworkException("");
+			return;
 		}
 		if (requests.size() == 1) {
 			perform(requests.get(0));
