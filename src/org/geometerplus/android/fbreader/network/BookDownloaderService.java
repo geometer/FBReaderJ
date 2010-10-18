@@ -332,14 +332,16 @@ public class BookDownloaderService extends Service {
 
 		final Thread downloader = new Thread(new Runnable() {
 			public void run() {
+				boolean success = false;
 				try {
 					ZLNetworkManager.Instance().perform(request);
+					success = true;
 				} catch (ZLNetworkException e) {
 					// TODO: show error message to User
 					file.delete();
-					downloadFinishHandler.sendEmptyMessage(0);
+				} finally {
+					downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
 				}
-				downloadFinishHandler.sendEmptyMessage(1);
 			}
 		});
 		downloader.setPriority(Thread.MIN_PRIORITY);
