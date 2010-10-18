@@ -8,4 +8,5 @@ res/raw/
 libs/
 obj/
 .classpath
+.settings
 *~
