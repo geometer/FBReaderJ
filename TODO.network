@@ -1,3 +1,8 @@
+** убрать Warning-и
+** убрать класс AuthenticationStatus --> вместо этого: возвращаемое значение int (ZLBoolean3) + throws ZLNetworkException
+** сделать общий блок catch (ZLNetworkException e) вместо раздельных там, где возможно
+** сделать константы для строк при вызове new ZLNetworkException
+
 NP: оповещение об изменениях в namespace'ах происходит после того,
     как был обработан тег, объявляющий эти namespace'ы... Нужно сделать:
     1) вызов namespaceMapChangedHandler перед вызовом startElementHandler
