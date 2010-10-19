@@ -34,8 +34,9 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-// TODO: remove this dependency
+// TODO: remove these dependencies
 import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public class ZLFooter {
 	private Point mySize;
@@ -118,7 +119,8 @@ public class ZLFooter {
 		// query colors for background and regular text
 		final ZLTextView view = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		int bgColor = ZLAndroidColorUtil.rgb(view.getBackgroundColor());
-		int fgColor = ZLAndroidColorUtil.rgb(view.getFooterColor());
+		// TODO: separate color option for footer color
+		int fgColor = ZLAndroidColorUtil.rgb(view.getTextColor(FBHyperlinkType.NONE));
 		if (myLastFgColor != fgColor || myLastBgColor != bgColor) {
 			gaugeChanged = true;
 			infoChanged = true;
