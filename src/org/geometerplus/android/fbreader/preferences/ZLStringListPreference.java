@@ -32,7 +32,7 @@ abstract class ZLStringListPreference extends ListPreference implements ZLPrefer
 
 		myResource = rootResource.getResource(resourceKey);
 		setTitle(myResource.getValue());
- 	}
+	}
 
 	protected final void setList(String[] values) {
 		String[] texts = new String[values.length];
