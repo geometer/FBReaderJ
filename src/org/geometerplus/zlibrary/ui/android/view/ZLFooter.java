@@ -101,7 +101,17 @@ public class ZLFooter {
 
 	public void setProgress(ZLView view, int x) {
 		// set progress according to tap coordinate
-		((ZLTextView)view).setProgress(((float)Math.max(myGaugeStart, Math.min(x, myGaugeEnd)) - myGaugeStart) / (myGaugeEnd -myGaugeStart));
+		ZLTextView textView = (ZLTextView)view;
+		float progress = 1.0f *
+			(Math.max(myGaugeStart, Math.min(x, myGaugeEnd)) - myGaugeStart) /
+			(myGaugeEnd - myGaugeStart);
+		int page = (int)(progress * textView.computePageNumber());
+		if (page <= 1) {
+			textView.gotoHome();
+		} else {
+			textView.gotoPage(page);
+		}
+		ZLApplication.Instance().repaintView();
 	}
 
 	private void updateBitmap(float scrollProgress) {
