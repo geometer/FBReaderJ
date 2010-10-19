@@ -220,14 +220,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public String realFontFamilyName(String fontFamily) {
 		// TODO: implement
 		if ("Serif".equals(fontFamily)) {
+			return "serif";
+		}
+		if ("sans-serif".equals(fontFamily)
+				|| "serif".equals(fontFamily)
+				|| "monospace".equals(fontFamily)) {
 			return fontFamily;
 		}
-		return "Sans";
+		return "sans-serif";
 	}
-	
+
 	protected void fillFamiliesList(ArrayList<String> families) {
 		// TODO: implement
-		families.add("Sans");
-		families.add("Serif");
+		families.add("sans-serif");
+		families.add("serif");
+		families.add("monospace");
 	}
 }
