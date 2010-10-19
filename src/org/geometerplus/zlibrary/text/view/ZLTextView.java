@@ -341,39 +341,41 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return scrollbarType() != SCROLLBAR_HIDE;
 	}
 
-	public final synchronized int getScrollbarFullSize() {
+	private final synchronized int getFullCharNumber() {
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 1;
 		}
 		return myModel.getTextLength(myModel.getParagraphsNumber() - 1);
 	}
 
-	public final synchronized int getScrollbarThumbPosition(int viewPage) {
+	private final synchronized int getCurrentCharNumber(int viewPage, boolean startNotEndOfPage) {
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 0;
 		}
-		if (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) {
-			return 0;
-		}
 		ZLTextPage page = getPage(viewPage);
 		preparePaintInfo(page);
-		return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
+		if (startNotEndOfPage) {
+			return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
+		} else {
+			int end = sizeOfTextBeforeCursor(page.EndCursor);
+			if (end == -1) {
+				end = myModel.getTextLength(myModel.getParagraphsNumber() - 1) - 1;
+			}
+			return Math.max(1, end);
+		}
+	}
+
+	public final synchronized int getScrollbarFullSize() {
+		return getFullCharNumber();
+	}
+
+	public final synchronized int getScrollbarThumbPosition(int viewPage) {
+		return scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
 	}
 
 	public final synchronized int getScrollbarThumbLength(int viewPage) {
-		if (myModel == null || myModel.getParagraphsNumber() == 0) {
-			return 0;
-		}
-		ZLTextPage page = getPage(viewPage);
-		preparePaintInfo(page);
-		int start = (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) ? 0 : sizeOfTextBeforeCursor(page.StartCursor);
-		if (start == -1) {
-			start = 0;
-		}
-		int end = sizeOfTextBeforeCursor(page.EndCursor);
-		if (end == -1) {
-			end = myModel.getTextLength(myModel.getParagraphsNumber() - 1) - 1;
-		}
+		int start = scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
+		int end = getCurrentCharNumber(viewPage, false);
 		return Math.max(1, end - start);
 	}
 
@@ -502,14 +504,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final synchronized int computePageNumber() {
-		return computeTextPageNumber(getScrollbarFullSize());
+		return computeTextPageNumber(getFullCharNumber());
 	}
 
 	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(
-			getScrollbarThumbPosition(PAGE_CENTRAL) 
-			+ getScrollbarThumbLength(PAGE_CENTRAL)
-		);
+		return computeTextPageNumber(getCurrentCharNumber(PAGE_CENTRAL, false));
 	}
 
 	public final synchronized void gotoPage(int page) {
