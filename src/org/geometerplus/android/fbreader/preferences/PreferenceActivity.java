@@ -23,10 +23,7 @@ import android.content.Context;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -87,12 +84,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		);
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
+		final FBReader fbReader = (FBReader)FBReader.Instance();
+
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
 		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );
 		appearanceScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						((FBReader) FBReader.Instance()).showOptionsDialog();
+						fbReader.showOptionsDialog();
 						return true;
 					}
 				}
@@ -105,17 +104,17 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineCategory.addPreference(new StringListPreference(
 			this, statusLineCategory.Resource, "scrollbarType",
-			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
+			scrollBarTypes, fbReader.ScrollbarTypeOption));
 
 		statusLineCategory.addPreference(new ZLIntegerRangePreference(
 			this, statusLineCategory.Resource.getResource("footerHeight"),
-			((FBReader)FBReader.Instance()).FooterHeightOption)
+			fbReader.FooterHeightOption)
 		);
 
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
 		statusLineCategory.addPreference(new StringListPreference(
 			this, statusLineCategory.Resource, "footerLongTap",
-			footerLongTaps, ((FBReader)FBReader.Instance()).FooterLongTap));
+			footerLongTaps, fbReader.FooterLongTap));
 
 		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowClock, "showClock");
 		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowBattery, "showBattery");
@@ -128,7 +127,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
 
 		/*
-		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
 		final Category colorProfileCategory = colorProfileScreen.createCategory(null);
 		final ZLResource resource = colorProfileCategory.Resource;
