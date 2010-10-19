@@ -382,8 +382,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
-		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
 		if (paragraphCursor == null) {
 			return -1;
 		}
@@ -393,7 +392,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (paragraphLength > 0) {
 			sizeOfText +=
 				(myModel.getTextLength(paragraphIndex) - sizeOfText)
-				* cursor.getElementIndex()
+				* wordCursor.getElementIndex()
 				/ paragraphLength;
 		}
 		return sizeOfText;
