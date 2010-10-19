@@ -32,11 +32,6 @@ abstract public class ZLView {
 	public static final int PAGE_TOP = 3;
 	public static final int PAGE_BOTTOM = 4;
 
-	public static final int SCROLLBAR_HIDE = 0;
-	public static final int SCROLLBAR_SHOW = 1;
-	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
-	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
-
 	abstract public void paint(int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
 
@@ -61,7 +56,6 @@ abstract public class ZLView {
 	}
 
 	public abstract boolean showScrollbar();
-	public abstract int scrollbarType();
 	public abstract int getScrollbarFullSize();
 	public abstract int getScrollbarThumbPosition(int viewPage);
 	public abstract int getScrollbarThumbLength(int viewPage);

@@ -78,8 +78,8 @@ public class ZLFooter {
 	}
 
 	public int getTapHeight() {
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+		final ZLTextView view = (ZLTextView)ZLApplication.Instance().getCurrentView();
+		if (view.scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
 			return 30;
 		}
 		return 0;

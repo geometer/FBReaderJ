@@ -27,6 +27,9 @@ import android.util.AttributeSet;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
+// TODO: remove this dependency!!!
+import org.geometerplus.zlibrary.text.view.ZLTextView;
+
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
@@ -166,7 +169,7 @@ public class ZLAndroidWidget extends View {
 		);
 
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+		if (((ZLTextView)view).scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
 			myFooter.onDraw(canvas, getScrollProgress());
 		}
 
@@ -301,7 +304,7 @@ public class ZLAndroidWidget extends View {
 	private void onDrawStatic(Canvas canvas) {
 		drawOnBitmap(myMainBitmap);
 		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
-		if (ZLApplication.Instance().getCurrentView().scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+		if (((ZLTextView)ZLApplication.Instance().getCurrentView()).scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
 			myFooter.onDraw(canvas, getScrollProgress());
 		}
 	}
@@ -427,8 +430,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
-			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
+		if (!view.showScrollbar()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -447,8 +449,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
-			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
+		if (!view.showScrollbar()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -467,8 +468,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
-			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
+		if (!view.showScrollbar()) {
 			return 0;
 		}
 		return view.getScrollbarFullSize();
@@ -477,7 +477,7 @@ public class ZLAndroidWidget extends View {
 	private int getTextViewHeight() {
 		int height = getHeight();
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
+		if (((ZLTextView)view).scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
 			height -= myFooter.getHeight();
 		}
 		return height;
@@ -486,8 +486,7 @@ public class ZLAndroidWidget extends View {
 	private int getTextViewWidth() {
 		int width = getWidth();
 		ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view != null &&
-			(view.scrollbarType() == ZLView.SCROLLBAR_SHOW || view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_PROGRESS)) {
+		if (view != null && view.showScrollbar()) {
 			width -= getVerticalScrollbarWidth();
 		}
 		return width;
