@@ -28,7 +28,7 @@ abstract class ZLStringListPreference extends ListPreference implements ZLPrefer
 	private final ZLResource myResource;
 
 	ZLStringListPreference(Context context, ZLResource rootResource, String resourceKey) {
- 		super(context);
+		super(context);
 
 		myResource = rootResource.getResource(resourceKey);
 		setTitle(myResource.getValue());
