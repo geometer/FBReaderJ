@@ -128,7 +128,7 @@ public class ZLAndroidWidget extends View {
 			myScrollingSpeed *= 1.5;
 		}
 		final boolean horizontal =
-			(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+			(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 			(myViewPageToScroll == ZLView.PAGE_LEFT);
 		canvas.drawBitmap(
 			myMainBitmap,
