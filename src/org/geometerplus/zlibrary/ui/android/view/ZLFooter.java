@@ -35,14 +35,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
-import org.geometerplus.fbreader.fbreader.FBReader;
-
 public class ZLFooter {
-	private final int SIZE_SMALL = 0;
-	private final int SIZE_NORMAL = 1;
-	private final int SIZE_LARGE = 2;
-
 	private Point mySize;
 	private Point myDrawAreaSize;
 	private Paint myTextPaint;
@@ -115,38 +108,23 @@ public class ZLFooter {
 		boolean infoChanged = false;
 
 		// query colors for background and regular text
-		FBReader reader = (FBReader)FBReader.Instance();
-		int bgColor = ZLAndroidColorUtil.rgb(reader.BookTextView.getBackgroundColor());
-		int fgColor = ZLAndroidColorUtil.rgb(reader.BookTextView.getTextColor(FBHyperlinkType.NONE));
+		final ZLTextView view = (ZLTextView)ZLApplication.Instance().getCurrentView();
+		int bgColor = ZLAndroidColorUtil.rgb(view.getBackgroundColor());
+		int fgColor = ZLAndroidColorUtil.rgb(view.getFooterColor());
 		if (myLastFgColor != fgColor || myLastBgColor != bgColor) {
 			gaugeChanged = true;
 			infoChanged = true;
 		}
 
-		int size = reader.FooterSizeOption.getValue();
-		int delta = (size == SIZE_SMALL ? 0 : 1);
+		int size = view.getFooterHeight();
+		int delta = size <= 10 ? 0 : 1;
 		if (size != myLastSize) {
-			int fontStyle = Typeface.NORMAL;
-			switch (size) {
-			case SIZE_SMALL:
-				mySize.y = 9;
-				myTextPaint.setTextSize(12);
-				myFgPaint.setStrokeWidth(1);
-				break;
-			case SIZE_NORMAL:
-				mySize.y = 13;
-				myTextPaint.setTextSize(14);
-				myFgPaint.setStrokeWidth(2);
-				fontStyle = Typeface.BOLD;
-				break;
-			case SIZE_LARGE:
-				mySize.y = 15;
-				myTextPaint.setTextSize(16);
-				myFgPaint.setStrokeWidth(2);
-				fontStyle = Typeface.BOLD;
-				break;
-			}
-			myTextPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF, fontStyle));
+			mySize.y = size;
+			myTextPaint.setTextSize(size <= 10 ? size + 3 : size + 1);
+			myFgPaint.setStrokeWidth(size <= 10 ? 1 : 2);
+			myTextPaint.setTypeface(Typeface.create(
+				Typeface.SANS_SERIF, size <= 10 ? Typeface.NORMAL : Typeface.BOLD
+			));
 			myTextPaint.setTextAlign(Paint.Align.RIGHT);
 			myTextPaint.setStyle(Paint.Style.FILL);
 			myTextPaint.setAntiAlias(true);
@@ -160,7 +138,6 @@ public class ZLFooter {
 		}
 		Canvas canvas = new Canvas(myBitmap);
 
-		final ZLView view = ZLApplication.Instance().getCurrentView();
 		float progress = view.getProgress(scrollProgress);
 		if (progress != myLastProgress) {
 			gaugeChanged = true;

@@ -52,6 +52,9 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLColor getSelectedBackgroundColor();
 	public abstract ZLColor getTextColor(byte hyperlinkType);
 	public abstract ZLColor getHighlightingColor();
+	public abstract ZLColor getFooterColor();
+
+	public abstract int getFooterHeight();
 
 	int getTextAreaHeight() {
 		return Context.getHeight() - getTopMargin() - getBottomMargin();

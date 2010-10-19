@@ -107,10 +107,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, statusLineCategory.Resource.getResource("scrollbarType"), null,
 			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
 
-		String[] footerSizes = {"small", "normal", "large"};
-		statusLineCategory.addPreference(new StringListPreference(
-			this, statusLineCategory.Resource.getResource("footerSize"), null,
-			footerSizes, ((FBReader)FBReader.Instance()).FooterSizeOption));
+		statusLineCategory.addPreference(new ZLIntegerRangePreference(
+			this, statusLineCategory.Resource.getResource("footerSize"),
+			((FBReader)FBReader.Instance()).FooterHeightOption)
+		);
 
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
 		statusLineCategory.addPreference(new StringListPreference(

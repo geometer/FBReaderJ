@@ -179,11 +179,7 @@
 						<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
 						<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
 					</node>
-					<node name="footerSize" value="Footer size" toBeTranslated="true">
-						<node name="small" value="Small" toBeTranslated="true"/>
-						<node name="normal" value="Normal" toBeTranslated="true"/>
-						<node name="large" value="Large" toBeTranslated="true"/>
-					</node>
+					<node name="footerHeight" value="Footer height" toBeTranslated="true" />
 					<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
 						<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
 						<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>

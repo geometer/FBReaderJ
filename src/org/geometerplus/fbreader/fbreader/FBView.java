@@ -281,6 +281,17 @@ public final class FBView extends ZLTextView {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
+	@Override
+	public ZLColor getFooterColor() {
+		// TODO: separate color option for footer color
+		return getTextColor(FBHyperlinkType.NONE);
+	}
+
+	@Override
+	public int getFooterHeight() {
+		return myReader.FooterHeightOption.getValue();
+	}
+
 	protected boolean isSelectionEnabled() {
 		return myReader.SelectionEnabledOption.getValue();
 	}

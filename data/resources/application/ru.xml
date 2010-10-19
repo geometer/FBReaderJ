@@ -175,11 +175,7 @@
 						<node name="showAsProgress" value="Вертикальный прогресс"/>
 						<node name="showAsFooter" value="Подвал"/>
 					</node>
-					<node name="footerSize" value="Размер подвала">
-						<node name="small" value="Маленький"/>
-						<node name="normal" value="Обычный"/>
-						<node name="large" value="Большой"/>
-					</node>
+					<node name="footerHeight" value="Высота подвала" />
 					<node name="footerLongTap" value="Придержать подвал">
 						<node name="longTapRevert" value="Откатить переход"/>
 						<node name="longTapNavigate" value="Сделать переход"/>
