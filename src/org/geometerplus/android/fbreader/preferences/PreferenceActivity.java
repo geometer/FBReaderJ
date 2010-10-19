@@ -23,7 +23,6 @@ import android.content.Context;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -102,9 +101,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Category statusLineCategory = statusLineScreen.createCategory(null);
 
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
-		statusLineCategory.addPreference(new StringListPreference(
+		statusLineCategory.addPreference(new ZLChoicePreference(
 			this, statusLineCategory.Resource, "scrollbarType",
-			scrollBarTypes, fbReader.ScrollbarTypeOption));
+			fbReader.ScrollbarTypeOption, scrollBarTypes));
 
 		statusLineCategory.addPreference(new ZLIntegerRangePreference(
 			this, statusLineCategory.Resource.getResource("footerHeight"),
@@ -112,9 +111,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		);
 
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
-		statusLineCategory.addPreference(new StringListPreference(
+		statusLineCategory.addPreference(new ZLChoicePreference(
 			this, statusLineCategory.Resource, "footerLongTap",
-			footerLongTaps, fbReader.FooterLongTap));
+			fbReader.FooterLongTap, footerLongTaps));
 
 		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
 		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
@@ -145,23 +144,5 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingCategory.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
-	}
-}
-
-class StringListPreference extends ZLStringListPreference {
-	private final ZLIntegerRangeOption myOption;
-
-	StringListPreference(Context context, ZLResource resource, String resourceKey, String[] codes, ZLIntegerRangeOption option) {
-		super(context, resource, resourceKey);
-		myOption = option;
-		setList(codes);
-
-		setInitialValue(codes[
-			Math.max(0, Math.min(codes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))
-		]);
-	}
-
-	public void onAccept() {
-		myOption.setValue(findIndexOfValue(getValue()));
 	}
 }
