@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private Canvas myCanvas;
@@ -82,7 +83,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void clear(ZLColor color) {
-		myFillPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
 	}
 
@@ -137,17 +138,17 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public void setTextColor(ZLColor color) {
-		myTextPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		myTextPaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
 
 	public void setLineColor(ZLColor color, int style) {
 		// TODO: use style
-		myLinePaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
 
 	public void setFillColor(ZLColor color, int style) {
 		// TODO: use style
-		myFillPaint.setColor(Color.rgb(color.Red, color.Green, color.Blue));
+		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
 
 	public int getWidth() {

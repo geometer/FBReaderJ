@@ -22,10 +22,13 @@ package org.geometerplus.zlibrary.ui.android.dialogs;
 import android.content.Context;
 import android.view.*;
 import android.widget.*;
+import android.graphics.Color;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.dialogs.ZLColorOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 	private View myContainer;
@@ -179,7 +182,7 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 			myColorArea = new View(context);
 			layout.setPadding(20, 0, 20, 0);
 			myColorArea.setMinimumHeight(60);
-			myColorArea.setBackgroundColor(0xFF000000 + (color.Red << 16) + (color.Green << 8) + color.Blue);
+			myColorArea.setBackgroundColor(ZLAndroidColorUtil.rgb(color));
 			layout.addView(myColorArea, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.FILL_PARENT));
     
 			myContainer = layout;
@@ -190,12 +193,11 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 
 	private void updateColorArea() {
 		if (myColorArea != null) {
-			myColorArea.setBackgroundColor(
-				0xFF000000 |
-				(myRedView.getComponentValue() << 16) |
-				(myGreenView.getComponentValue() << 8) |
+			myColorArea.setBackgroundColor(Color.rgb(
+				myRedView.getComponentValue(),
+				myGreenView.getComponentValue(),
 				myBlueView.getComponentValue()
-			);
+			));
 		}
 	}
 
@@ -211,7 +213,7 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 			myRedView.setComponentValue(color.Red);
 			myGreenView.setComponentValue(color.Green);
 			myBlueView.setComponentValue(color.Blue);
-			myColorArea.setBackgroundColor(0xFF000000 + (color.Red << 16) + (color.Green << 8) + color.Blue);
+			myColorArea.setBackgroundColor(ZLAndroidColorUtil.rgb(color));
 		}
 	}
 
