@@ -75,10 +75,6 @@ public class ZLFooter {
 		myLastSize = -1;
 	}
 
-	public int getHeight() {
-		return mySize.y;
-	}
-
 	public int getTapHeight() {
 		final ZLTextView view = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		if (view.scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
@@ -96,7 +92,7 @@ public class ZLFooter {
 	public void onDraw(Canvas canvas, float scrollProgress) {
 		updateBitmap(scrollProgress);
 		// myDrawAreaSize.y is from View.getHeight, do not use canvas.getHeight it is buggy
-		canvas.drawBitmap(myBitmap, 0, myDrawAreaSize.y - getHeight(), myBgPaint);
+		canvas.drawBitmap(myBitmap, 0, myDrawAreaSize.y - mySize.y, myBgPaint);
 	}
 
 	public void setProgress(ZLView view, int x) {
@@ -128,7 +124,7 @@ public class ZLFooter {
 			infoChanged = true;
 		}
 
-		int size = view.getFooterHeight();
+		int size = view.getFooterArea().getHeight();
 		int delta = size <= 10 ? 0 : 1;
 		if (size != myLastSize) {
 			mySize.y = size;

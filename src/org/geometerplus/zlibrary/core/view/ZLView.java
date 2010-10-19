@@ -26,6 +26,13 @@ abstract public class ZLView {
 		Context = context;
 	}
 
+	abstract public interface FooterArea {
+		int getHeight();
+		void paint();
+	}
+
+	abstract public FooterArea getFooterArea();
+
 	public static final int PAGE_CENTRAL = 0;
 	public static final int PAGE_LEFT = 1;
 	public static final int PAGE_RIGHT = 2;

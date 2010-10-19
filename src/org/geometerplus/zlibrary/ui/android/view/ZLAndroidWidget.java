@@ -27,12 +27,8 @@ import android.util.AttributeSet;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-// TODO: remove this dependency!!!
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
-import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
 
 public class ZLAndroidWidget extends View {
 	private final Paint myPaint = new Paint();
@@ -43,6 +39,7 @@ public class ZLAndroidWidget extends View {
 	private int myScrollingShift;
 	private float myScrollingSpeed;
 	private int myScrollingBound;
+	// TODO: remove this field
 	private ZLFooter myFooter = new ZLFooter();
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
@@ -169,7 +166,7 @@ public class ZLAndroidWidget extends View {
 		);
 
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (((ZLTextView)view).scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
+		if (view.getFooterArea() != null) {
 			myFooter.onDraw(canvas, getScrollProgress());
 		}
 
@@ -304,7 +301,8 @@ public class ZLAndroidWidget extends View {
 	private void onDrawStatic(Canvas canvas) {
 		drawOnBitmap(myMainBitmap);
 		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
-		if (((ZLTextView)ZLApplication.Instance().getCurrentView()).scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (view.getFooterArea() != null) {
 			myFooter.onDraw(canvas, getScrollProgress());
 		}
 	}
@@ -475,12 +473,8 @@ public class ZLAndroidWidget extends View {
 	}
 
 	private int getTextViewHeight() {
-		int height = getHeight();
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (((ZLTextView)view).scrollbarType() == ZLTextView.SCROLLBAR_SHOW_AS_FOOTER) {
-			height -= myFooter.getHeight();
-		}
-		return height;
+		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
+		return footer != null ? getHeight() - footer.getHeight() : getHeight();
 	}
 
 	private int getTextViewWidth() {

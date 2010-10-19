@@ -287,9 +287,30 @@ public final class FBView extends ZLTextView {
 		return getTextColor(FBHyperlinkType.NONE);
 	}
 
-	@Override
-	public int getFooterHeight() {
-		return myReader.FooterHeightOption.getValue();
+	private class Footer implements FooterArea {
+		@Override
+		public int getHeight() {
+			return myReader.FooterHeightOption.getValue();
+		}
+
+		@Override
+		public void paint() {
+		}
+	}
+
+	private FooterArea myFooter;
+
+	public FooterArea getFooterArea() {
+		if (scrollbarType() == SCROLLBAR_SHOW_AS_FOOTER) {
+			if (myFooter == null) {
+				myFooter = new Footer();
+			}
+		} else {
+			if (myFooter != null) {
+				myFooter = null;
+			}
+		}
+		return myFooter;
 	}
 
 	protected boolean isSelectionEnabled() {
