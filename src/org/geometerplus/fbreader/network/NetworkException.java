@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.network;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public abstract class NetworkException extends ZLNetworkException {
+	private static final long serialVersionUID = 8931535868304063605L;
+
 	public static final String ERROR_INTERNAL = "internalError";
 	public static final String ERROR_PURCHASE_NOT_ENOUGH_MONEY = "purchaseNotEnoughMoney";
 	public static final String ERROR_PURCHASE_MISSING_BOOK = "purchaseMissingBook";

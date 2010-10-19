@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.core.network;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class ZLNetworkException extends Exception {
+	private static final long serialVersionUID = 4272384299121648643L;
+
 	// Messages with no parameters:
 	public static final String ERROR_UNKNOWN_ERROR = "unknownErrorMessage";
 	public static final String ERROR_TIMEOUT = "operationTimedOutMessage";

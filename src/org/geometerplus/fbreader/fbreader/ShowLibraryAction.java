@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.HashMap;
 
-import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
 import org.geometerplus.android.fbreader.LibraryTabActivity;

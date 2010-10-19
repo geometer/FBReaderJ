@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
-
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 abstract class RunActivityAction extends FBAction {
