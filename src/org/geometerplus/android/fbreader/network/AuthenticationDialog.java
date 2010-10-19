@@ -93,19 +93,13 @@ class AuthenticationDialog extends NetworkDialog {
 			public void run() {
 				try {
 					mgr.authorise(password);
+					if (mgr.needsInitialization()) {
+						mgr.initialize();
+					}
 				} catch (ZLNetworkException e) {
 					mgr.logOut();
 					sendError(true, false, e.getMessage());
 					return;
-				}
-				if (mgr.needsInitialization()) {
-					try {
-						mgr.initialize();
-					} catch (ZLNetworkException e) {
-						mgr.logOut();
-						sendError(true, false, e.getMessage());
-						return;
-					}
 				}
 				sendSuccess(false);
 			}

@@ -1,6 +1,6 @@
 DONE убрать Warning-и
 ** убрать класс AuthenticationStatus --> вместо этого: возвращаемое значение int (ZLBoolean3) + throws ZLNetworkException
-** сделать общий блок catch (ZLNetworkException e) вместо раздельных там, где возможно
+DONE сделать общий блок catch (ZLNetworkException e) вместо раздельных там, где возможно
 DONE сделать константы для строк при вызове new ZLNetworkException
 
 NP: оповещение об изменениях в namespace'ах происходит после того,
