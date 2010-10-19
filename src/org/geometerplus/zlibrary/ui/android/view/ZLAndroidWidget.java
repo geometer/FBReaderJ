@@ -271,7 +271,7 @@ public class ZLAndroidWidget extends View {
 
 		Canvas canvas = new Canvas(bitmap);
 		context.beginPaint(canvas);
-		final int scrollbarWidth = view.showScrollbar() ? getVerticalScrollbarWidth() : 0;
+		final int scrollbarWidth = view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0;
 		context.setSize(w, h, scrollbarWidth);
 		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
 		context.endPaint();
@@ -398,7 +398,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -417,7 +417,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -436,7 +436,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		return view.getScrollbarFullSize();
