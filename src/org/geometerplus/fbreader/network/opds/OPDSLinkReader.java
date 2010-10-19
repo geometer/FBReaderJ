@@ -68,7 +68,7 @@ public class OPDSLinkReader {
 				}
 			});
 			// TODO: Is this error is needed?
-			//throw new ZLNetworkException("cacheDirectoryError");
+			//throw new ZLNetworkException(NetworkException.ERROR_CACHE_DIRECTORY_ERROR);
 			return;
 		}
 

@@ -42,6 +42,10 @@ public abstract class NetworkException extends ZLNetworkException {
 
 	public static final String ERROR_UNSUPPORTED_OPERATION = "unsupportedOperation";
 
+	public static final String ERROR_NOT_AN_OPDS = "notAnOPDS";
+	public static final String ERROR_NO_REQUIRED_INFORMATION = "noRequiredInformation";
+	public static final String ERROR_CACHE_DIRECTORY_ERROR = "cacheDirectoryError";
+
 	private NetworkException() {
 		super(null);
 	}
