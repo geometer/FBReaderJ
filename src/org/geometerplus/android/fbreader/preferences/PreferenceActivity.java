@@ -152,30 +152,25 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 class StringListPreference extends ZLStringListPreference {
 	private ZLOption myOption;
-	private String[] myCodes;
 
 	StringListPreference(Context context, ZLResource resource, String resourceKey, String[] codes, ZLOption option) {
 		super(context, resource, resourceKey);
 		myCodes = codes;
 		myOption = option;
 
-		final String[] texts = new String[myCodes.length];
-		for (int i = 0; i < myCodes.length; ++i) {
-			texts[i] = resource.getResource(resourceKey).getResource(myCodes[i]).getValue();
-		}
-
-		setLists(myCodes, texts);
+		setList(codes);
 
 		if (myOption instanceof ZLIntegerRangeOption) {
-			setInitialValue(myCodes[
-				Math.max(0, Math.min(myCodes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))]);
+			setInitialValue(codes[
+				Math.max(0, Math.min(myCodes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))
+			]);
 		}
 
 		if (myOption instanceof ZLStringOption) {
 			String initVal = ((ZLStringOption)myOption).getValue();
-			for (int i = 0; i < myCodes.length; ++i) {
-				if (myCodes[i].equals(initVal)){
-					setInitialValue(myCodes[i]);
+			for (int i = 0; i < codes.length; ++i) {
+				if (codes[i].equals(initVal)){
+					setInitialValue(codes[i]);
 					break;
 				}
 			}
@@ -183,19 +178,10 @@ class StringListPreference extends ZLStringListPreference {
 	}
 
 	public void onAccept() {
-		final String strValue = getValue();
 		if (myOption instanceof ZLIntegerRangeOption) {
-			int intValue = 0;
-			for (int i = 0; i < myCodes.length; ++i) {
-				if (strValue == myCodes[i]) {
-					intValue = i;
-					break;
-				}
-			}
-			((ZLIntegerRangeOption)myOption).setValue(intValue);
-		}
-		if (myOption instanceof ZLStringOption) {
-			((ZLStringOption)myOption).setValue(strValue);
+			((ZLIntegerRangeOption)myOption).setValue(findIndexOfValue(getValue()));
+		} else if (myOption instanceof ZLStringOption) {
+			((ZLStringOption)myOption).setValue(getValue);
 		}
 	}
 }
