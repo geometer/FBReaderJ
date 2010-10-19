@@ -68,19 +68,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category libraryCategory = createCategory("Library");
-		/*
-		libraryCategory.addPreference(new InfoPreference(
-			this,
-			libraryCategory.Resource.getResource("path").getValue(),
-			Constants.BOOKS_DIRECTORY)
-		);
-		*/
 		libraryCategory.addPreference(new ZLStringOptionPreference(
 			this,
 			Paths.BooksDirectoryOption,
 			libraryCategory.Resource,
 			"path")
 		);
+
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
 		final FBReader fbReader = (FBReader)FBReader.Instance();
