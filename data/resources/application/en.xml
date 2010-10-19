@@ -169,7 +169,7 @@
 				</node>
 				<node name="scrollBar" value="Scroll Bar">
 					<node name="summary" value="Configure scroll bar"/>
-					<node name="scrollbarType" value="Scroll bar Type">
+					<node name="scrollbarType" value="Scroll bar type">
 						<node name="hide" value="Hide"/>
 						<node name="show" value="Vertical slider"/>
 						<node name="showAsProgress" value="Vertical progress bar"/>

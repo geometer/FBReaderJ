@@ -104,17 +104,17 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineCategory.addPreference(new StringListPreference(
-			this, statusLineCategory.Resource.getResource("scrollbarType"), null,
+			this, statusLineCategory.Resource, "scrollbarType",
 			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
 
 		statusLineCategory.addPreference(new ZLIntegerRangePreference(
-			this, statusLineCategory.Resource.getResource("footerSize"),
+			this, statusLineCategory.Resource.getResource("footerHeight"),
 			((FBReader)FBReader.Instance()).FooterHeightOption)
 		);
 
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
 		statusLineCategory.addPreference(new StringListPreference(
-			this, statusLineCategory.Resource.getResource("footerLongTap"), null,
+			this, statusLineCategory.Resource, "footerLongTap",
 			footerLongTaps, ((FBReader)FBReader.Instance()).FooterLongTap));
 
 		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowClock, "showClock");
@@ -154,16 +154,14 @@ class StringListPreference extends ZLStringListPreference {
 	private ZLOption myOption;
 	private String[] myCodes;
 
-	StringListPreference(Context context, ZLResource optResource, ZLResource valResource,
-		String [] codes, ZLOption option) {
-		super(context, optResource, valResource);
+	StringListPreference(Context context, ZLResource resource, String resourceKey, String[] codes, ZLOption option) {
+		super(context, resource, resourceKey);
 		myCodes = codes;
 		myOption = option;
 
 		final String[] texts = new String[myCodes.length];
-		valResource = (valResource == null ? optResource : valResource);
 		for (int i = 0; i < myCodes.length; ++i) {
-			texts[i] = valResource.getResource(myCodes[i]).getValue();
+			texts[i] = resource.getResource(resourceKey).getResource(myCodes[i]).getValue();
 		}
 
 		setLists(myCodes, texts);
