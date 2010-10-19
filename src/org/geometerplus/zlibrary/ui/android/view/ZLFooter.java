@@ -32,8 +32,10 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+
+// TODO: remove this dependency
+import org.geometerplus.fbreader.fbreader.FBReader;
 
 public class ZLFooter {
 	private Point mySize;
@@ -147,28 +149,28 @@ public class ZLFooter {
 			gaugeChanged = true;
 		}
 
-		ZLAndroidApplication app = ZLAndroidApplication.Instance();
+		FBReader fbReader = (FBReader)FBReader.Instance();
 		Date date = new Date();
 		if (infoChanged ||
-			myLastShowClock != app.FooterShowClock.getValue() ||
-			myLastShowBattery != app.FooterShowBattery.getValue() ||
-			myLastShowProgress != app.FooterShowProgress.getValue() ||
-			(app.FooterShowClock.getValue() && (myLastHours != date.getHours() || myLastMinutes != date.getMinutes())) ||
-			(app.FooterShowProgress.getValue() && (myLastPagesNum != bookLength || myLastPage != pagesProgress)) ||
-			(app.FooterShowBattery.getValue() && (myLastBattery != ZLApplication.Instance().myBatteryLevel))){
+			myLastShowClock != fbReader.FooterShowClock.getValue() ||
+			myLastShowBattery != fbReader.FooterShowBattery.getValue() ||
+			myLastShowProgress != fbReader.FooterShowProgress.getValue() ||
+			(fbReader.FooterShowClock.getValue() && (myLastHours != date.getHours() || myLastMinutes != date.getMinutes())) ||
+			(fbReader.FooterShowProgress.getValue() && (myLastPagesNum != bookLength || myLastPage != pagesProgress)) ||
+			(fbReader.FooterShowBattery.getValue() && (myLastBattery != ZLApplication.Instance().myBatteryLevel))){
 			infoChanged = true;
 		}
 
 		if (infoChanged) {
 			String info = "";
-			if (app.FooterShowClock.getValue()) {
+			if (fbReader.FooterShowClock.getValue()) {
 				info += String.format("%02d:%02d", date.getHours(), date.getMinutes());
 			}
-			if (app.FooterShowBattery.getValue()) {
+			if (fbReader.FooterShowBattery.getValue()) {
 				info = String.format("%d%%", ZLApplication.Instance().myBatteryLevel) +
 					(info.equals("") ? "" : " ") + info;
 			}
-			if (app.FooterShowProgress.getValue()) {
+			if (fbReader.FooterShowProgress.getValue()) {
 				info = String.format("%d/%d", pagesProgress, bookLength) +
 					(info.equals("") ? "" : " ") + info;
 			}
@@ -220,9 +222,9 @@ public class ZLFooter {
 		myLastMinutes = date.getMinutes();
 		myLastFgColor = fgColor;
 		myLastBgColor = bgColor;
-		myLastShowClock = app.FooterShowClock.getValue();
-		myLastShowBattery = app.FooterShowBattery.getValue();
-		myLastShowProgress = app.FooterShowProgress.getValue();
+		myLastShowClock = fbReader.FooterShowClock.getValue();
+		myLastShowBattery = fbReader.FooterShowBattery.getValue();
+		myLastShowProgress = fbReader.FooterShowProgress.getValue();
 		myLastPagesNum = bookLength;
 		myLastPage = pagesProgress;
 		myLastSize = size;

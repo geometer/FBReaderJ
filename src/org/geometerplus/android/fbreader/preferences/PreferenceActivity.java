@@ -116,9 +116,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, statusLineCategory.Resource, "footerLongTap",
 			footerLongTaps, fbReader.FooterLongTap));
 
-		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowClock, "showClock");
-		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowBattery, "showBattery");
-		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowProgress, "showProgress");
+		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
+		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
+		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
 
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {

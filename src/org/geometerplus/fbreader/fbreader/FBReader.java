@@ -53,9 +53,15 @@ public final class FBReader extends ZLApplication {
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 	public final ZLIntegerRangeOption FooterHeightOption =
-		new ZLIntegerRangeOption("Options", "footerHeight", 8, 20, 9); 
+		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9); 
 	public final ZLIntegerRangeOption FooterLongTap =
-		new ZLIntegerRangeOption("Options", "footerLongTap", 0, 1, 0/*revert*/); 
+		new ZLIntegerRangeOption("Options", "FooterLongTap", 0, 1, 0/*revert*/); 
+	public final ZLBooleanOption FooterShowClock =
+		new ZLBooleanOption("Options", "ShowClockInFooter", true);
+	public final ZLBooleanOption FooterShowBattery =
+		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
+	public final ZLBooleanOption FooterShowProgress =
+		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
 
 	final ZLBooleanOption SelectionEnabledOption =
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);

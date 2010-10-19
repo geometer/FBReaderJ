@@ -37,11 +37,6 @@ public class ZLAndroidApplication extends Application {
 	public final ZLBooleanOption AutoOrientationOption = new ZLBooleanOption("LookNFeel", "AutoOrientation", false);
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
 	public final ZLBooleanOption DontTurnScreenOffOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOff", true);
-	
-	public final ZLBooleanOption FooterShowClock = new ZLBooleanOption("scrollBar", "showClock", true);
-	public final ZLBooleanOption FooterShowBattery = new ZLBooleanOption("scrollBar", "showBattery", true);
-	public final ZLBooleanOption FooterShowProgress = new ZLBooleanOption("scrollBar", "showProgress", false);
-
 
 	public static ZLAndroidApplication Instance() {
 		return ourApplication;
