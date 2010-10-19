@@ -486,7 +486,7 @@ public class ZLAndroidWidget extends View {
 	private int getTextViewWidth() {
 		int width = getWidth();
 		ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view != null && view.showScrollbar()) {
+		if (view != null && view.isScrollbarShown()) {
 			width -= getVerticalScrollbarWidth();
 		}
 		return width;
