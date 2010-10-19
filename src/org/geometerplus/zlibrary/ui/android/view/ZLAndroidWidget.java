@@ -405,7 +405,7 @@ public class ZLAndroidWidget extends View {
 			final int from = view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbLength(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
 			final int size = horizontal ? getWidth() : getHeight();
 			final int shift = Math.abs(myScrollingShift);
@@ -424,7 +424,7 @@ public class ZLAndroidWidget extends View {
 			final int from = view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbPosition(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
 			final int size = horizontal ? getWidth() : getHeight();
 			final int shift = Math.abs(myScrollingShift);
