@@ -22,12 +22,15 @@ package org.geometerplus.fbreader.network.opds;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.net.URL;
+import java.net.URLConnection;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
@@ -58,14 +61,15 @@ public class OPDSLinkReader {
 	public static void loadOPDSLinks(int cacheMode, final NetworkLibrary.OnNewLinkListener listener) throws ZLNetworkException {
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
-			try {
-				// Hmm, I'm not sure this solution is good enough; it uses java.net.URL directly instead of ZLNetworkManager
-				//    -- NP
-				new OPDSLinkXMLReader(listener, null).read(new URL(CATALOGS_URL).openStream());
-				return;
-			} catch (Exception e) {
-				throw new ZLNetworkException("cacheDirectoryError");
-			}
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(CATALOGS_URL) {
+				@Override
+				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+					new OPDSLinkXMLReader(listener, null).read(inputStream);
+				}
+			});
+			// TODO: Is this error is needed?
+			//throw new ZLNetworkException("cacheDirectoryError");
+			return;
 		}
 
 		final String fileName = "fbreader_catalogs-"
