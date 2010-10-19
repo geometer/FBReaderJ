@@ -151,37 +151,19 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 }
 
 class StringListPreference extends ZLStringListPreference {
-	private ZLOption myOption;
+	private final ZLIntegerRangeOption myOption;
 
-	StringListPreference(Context context, ZLResource resource, String resourceKey, String[] codes, ZLOption option) {
+	StringListPreference(Context context, ZLResource resource, String resourceKey, String[] codes, ZLIntegerRangeOption option) {
 		super(context, resource, resourceKey);
-		myCodes = codes;
 		myOption = option;
-
 		setList(codes);
 
-		if (myOption instanceof ZLIntegerRangeOption) {
-			setInitialValue(codes[
-				Math.max(0, Math.min(myCodes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))
-			]);
-		}
-
-		if (myOption instanceof ZLStringOption) {
-			String initVal = ((ZLStringOption)myOption).getValue();
-			for (int i = 0; i < codes.length; ++i) {
-				if (codes[i].equals(initVal)){
-					setInitialValue(codes[i]);
-					break;
-				}
-			}
-		}
+		setInitialValue(codes[
+			Math.max(0, Math.min(codes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))
+		]);
 	}
 
 	public void onAccept() {
-		if (myOption instanceof ZLIntegerRangeOption) {
-			((ZLIntegerRangeOption)myOption).setValue(findIndexOfValue(getValue()));
-		} else if (myOption instanceof ZLStringOption) {
-			((ZLStringOption)myOption).setValue(getValue);
-		}
+		myOption.setValue(findIndexOfValue(getValue()));
 	}
 }
