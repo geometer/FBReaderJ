@@ -117,8 +117,12 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 			if (Link.authenticationManager() == null) {
 				return ZLBoolean3.B3_FALSE;
 			}
-			return (Link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE) ?
-				ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+			try {
+				return Link.authenticationManager().isAuthorised(false) ?
+						ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+			} catch (ZLNetworkException e) {
+				return ZLBoolean3.B3_UNDEFINED;
+			}
 		}
 		return ZLBoolean3.B3_FALSE;
 	}

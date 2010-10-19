@@ -36,7 +36,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.AndroidUtil;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkException;
@@ -155,7 +154,7 @@ class RegisterUserDialog extends NetworkDialog {
 				boolean doRestart = true;
 				try {
 					mgr.registerUser(myLogin, myPassword, myEmail);
-					if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_FALSE && mgr.needsInitialization()) {
+					if (mgr.mayBeAuthorised(true) && mgr.needsInitialization()) {
 						doRestart = false;
 						mgr.initialize();
 					}

@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.AndroidUtil;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -60,13 +59,16 @@ class AuthenticationDialog extends NetworkDialog {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
 					NetworkDialog.show(myActivity, NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
 						public void run() {
-							if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_TRUE) {
-								if (myOnSuccessRunnable != null) {
-									myOnSuccessRunnable.run();
+							try {
+								if (mgr.isAuthorised(true)) {
+									if (myOnSuccessRunnable != null) {
+										myOnSuccessRunnable.run();
+									}
+									return;
 								}
-							} else {
-								NetworkDialog.show(myActivity, NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
+							} catch (ZLNetworkException e) {
 							}
+							NetworkDialog.show(myActivity, NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
 						}
 					});
 				}
@@ -112,7 +114,7 @@ class AuthenticationDialog extends NetworkDialog {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
-				if (mgr.isAuthorised(false).Status != ZLBoolean3.B3_FALSE) {
+				if (mgr.mayBeAuthorised(false)) {
 					mgr.logOut();
 					sendCancel(false);
 				}
