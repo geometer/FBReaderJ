@@ -138,14 +138,14 @@ public class ZLFooter {
 		}
 		Canvas canvas = new Canvas(myBitmap);
 
-		float progress = view.getProgress(scrollProgress);
-		if (progress != myLastProgress) {
-			gaugeChanged = true;
-		}
-
 		final ZLTextView textView = (ZLTextView)view;
 		final int pagesProgress = textView.computeCurrentPage();
 		final int bookLength = textView.computePageNumber();
+
+		float progress = 1.0f * pagesProgress / bookLength;
+		if (progress != myLastProgress) {
+			gaugeChanged = true;
+		}
 
 		ZLAndroidApplication app = ZLAndroidApplication.Instance();
 		Date date = new Date();

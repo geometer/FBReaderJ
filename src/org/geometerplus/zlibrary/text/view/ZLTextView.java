@@ -1386,34 +1386,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return false;
 	}
 
-	public final synchronized float getProgress(float offset) {
-		// This function returns current progress as percentage(from 0 to 1)
-		// according to current book reading position (myCurrentPage).
-		// The myCurrentPage can be shifted backward or forward(during scrolling).
-		// If the 'offset' is positive, then shifting is backward, negative - forward.
-		// The absolute value of 'offset' represents percentage of shifting (from 0 to 1).
-
-		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
-			return 0;
-		}
-
-		float size = myModel.getTextLength(myModel.getParagraphsNumber() - 1);
-
-		preparePaintInfo(myCurrentPage);
-		float pos = sizeOfTextBeforeCursor(myCurrentPage.EndCursor);
-		if (offset != 0) {
-			if(offset > 0) {
-				pos -= (pos - sizeOfTextBeforeCursor(myCurrentPage.StartCursor)) * offset;
-			}
-			else {
-				preparePaintInfo(myNextPage);
-				pos += (pos - sizeOfTextBeforeCursor(myNextPage.EndCursor)) * offset;
-			}
-		}
-		
-		return pos / size;
-	}
-
 	public final synchronized void setProgress(float progress) {
 		int bookPos = (int)(myModel.getTextLength(myModel.getParagraphsNumber() - 1) * progress);
 		int paraIndex = myModel.findParagraphByTextLength(bookPos);
