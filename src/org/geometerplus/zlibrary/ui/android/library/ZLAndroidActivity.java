@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.view.*;
+import android.os.PowerManager;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -123,8 +124,36 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	private PowerManager.WakeLock myWakeLock;
+	private boolean myWakeLockToCreate;
+
+	public final void createWakeLock() {
+		if (myWakeLockToCreate) {
+			synchronized (this) {
+				if (myWakeLockToCreate) {
+					myWakeLockToCreate = false;
+					myWakeLock =
+						((PowerManager)getSystemService(POWER_SERVICE)).
+							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+					myWakeLock.acquire();
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		myWakeLockToCreate = ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue();
+		myWakeLock = null;
+	}
+
 	@Override
 	public void onPause() {
+		if (myWakeLock != null) {
+			myWakeLock.release();
+			myWakeLock = null;
+		}
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
 	}

@@ -27,6 +27,7 @@ import android.util.AttributeSet;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
 
@@ -91,6 +92,12 @@ public class ZLAndroidWidget extends View {
 
 	@Override
 	protected void onDraw(final Canvas canvas) {
+		final Context context = getContext();
+		if (context instanceof ZLAndroidActivity) {
+			((ZLAndroidActivity)context).createWakeLock();
+		} else {
+			System.err.println("A surprise: view's context is not a ZLAndroidActivity");
+		}
 		super.onDraw(canvas);
 
 		ensureChildrenSizes();

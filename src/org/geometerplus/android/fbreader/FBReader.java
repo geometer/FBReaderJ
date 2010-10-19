@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -160,28 +159,14 @@ public final class FBReader extends ZLAndroidActivity {
 		});
 	}
 
-	private PowerManager.WakeLock myWakeLock;
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		ControlButtonPanel.restoreVisibilities();
-		if (ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue()) {
-			myWakeLock =
-				((PowerManager)getSystemService(POWER_SERVICE)).
-					newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
-			myWakeLock.acquire();
-		} else {
-			myWakeLock = null;
-		}
 	}
 
 	@Override
 	public void onPause() {
-		if (myWakeLock != null) {
-			myWakeLock.release();
-			myWakeLock = null;
-		}
 		ControlButtonPanel.saveVisibilities();
 		super.onPause();
 	}
