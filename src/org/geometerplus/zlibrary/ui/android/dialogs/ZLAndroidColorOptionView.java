@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.ui.android.dialogs;
 import android.content.Context;
 import android.view.*;
 import android.widget.*;
+import android.graphics.Color;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.dialogs.ZLColorOptionEntry;
@@ -192,12 +193,11 @@ class ZLAndroidColorOptionView extends ZLAndroidOptionView {
 
 	private void updateColorArea() {
 		if (myColorArea != null) {
-			myColorArea.setBackgroundColor(
-				0xFF000000 |
-				(myRedView.getComponentValue() << 16) |
-				(myGreenView.getComponentValue() << 8) |
+			myColorArea.setBackgroundColor(Color.rgb(
+				myRedView.getComponentValue(),
+				myGreenView.getComponentValue(),
 				myBlueView.getComponentValue()
-			);
+			));
 		}
 	}
 
