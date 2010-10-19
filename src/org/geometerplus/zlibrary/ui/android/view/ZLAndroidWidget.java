@@ -166,9 +166,6 @@ public class ZLAndroidWidget extends View {
 		);
 
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.getFooterArea() != null) {
-			myFooter.onDraw(canvas, getScrollProgress());
-		}
 
 		if (stopScrolling) {
 			if (myScrollingBound != 0) {
@@ -198,6 +195,10 @@ public class ZLAndroidWidget extends View {
 			if (myScrollingInProgress) {
 				postInvalidate();
 			}
+		}
+
+		if (view.getFooterArea() != null) {
+			myFooter.onDraw(canvas, getScrollProgress());
 		}
 	}
 

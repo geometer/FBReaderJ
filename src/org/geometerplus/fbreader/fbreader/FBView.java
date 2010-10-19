@@ -301,7 +301,7 @@ public final class FBView extends ZLTextView {
 	private FooterArea myFooter;
 
 	public FooterArea getFooterArea() {
-		if (scrollbarType() == SCROLLBAR_SHOW_AS_FOOTER) {
+		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
 				myFooter = new Footer();
 			}
@@ -317,8 +317,11 @@ public final class FBView extends ZLTextView {
 		return myReader.SelectionEnabledOption.getValue();
 	}
 
+	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
+
 	@Override
 	public int scrollbarType() {
-		return myReader.ScrollbarTypeOption.getValue();
+		int type = myReader.ScrollbarTypeOption.getValue();
+		return (type <= 2) ? type : SCROLLBAR_HIDE;
 	}
 }
