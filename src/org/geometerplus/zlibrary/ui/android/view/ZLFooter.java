@@ -99,7 +99,7 @@ public class ZLFooter {
 
 	public void setProgress(ZLView view, int x) {
 		// set progress according to tap coordinate
-		view.setProgress(((float)Math.max(myGaugeStart, Math.min(x, myGaugeEnd)) - myGaugeStart) / (myGaugeEnd -myGaugeStart));
+		((ZLTextView)view).setProgress(((float)Math.max(myGaugeStart, Math.min(x, myGaugeEnd)) - myGaugeStart) / (myGaugeEnd -myGaugeStart));
 	}
 
 	private void updateBitmap(float scrollProgress) {
