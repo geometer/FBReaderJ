@@ -27,6 +27,7 @@ import android.util.AttributeSet;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View {
@@ -72,6 +73,12 @@ public class ZLAndroidWidget extends View {
 
 	@Override
 	protected void onDraw(final Canvas canvas) {
+		final Context context = getContext();
+		if (context instanceof ZLAndroidActivity) {
+			((ZLAndroidActivity)context).createWakeLock();
+		} else {
+			System.err.println("A surprise: view's context is not a ZLAndroidActivity");
+		}
 		super.onDraw(canvas);
 
 		final int w = getWidth();
@@ -121,7 +128,7 @@ public class ZLAndroidWidget extends View {
 			myScrollingSpeed *= 1.5;
 		}
 		final boolean horizontal =
-			(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+			(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 			(myViewPageToScroll == ZLView.PAGE_LEFT);
 		canvas.drawBitmap(
 			myMainBitmap,
@@ -264,7 +271,7 @@ public class ZLAndroidWidget extends View {
 
 		Canvas canvas = new Canvas(bitmap);
 		context.beginPaint(canvas);
-		final int scrollbarWidth = view.showScrollbar() ? getVerticalScrollbarWidth() : 0;
+		final int scrollbarWidth = view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0;
 		context.setSize(w, h, scrollbarWidth);
 		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
 		context.endPaint();
@@ -391,14 +398,14 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			final int from = view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbLength(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
 			final int size = horizontal ? getWidth() : getHeight();
 			final int shift = Math.abs(myScrollingShift);
@@ -410,14 +417,14 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			final int from = view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbPosition(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) || 
+				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
 			final int size = horizontal ? getWidth() : getHeight();
 			final int shift = Math.abs(myScrollingShift);
@@ -429,7 +436,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (!view.showScrollbar()) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		return view.getScrollbarFullSize();

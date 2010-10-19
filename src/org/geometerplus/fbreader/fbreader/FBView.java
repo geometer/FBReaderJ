@@ -279,7 +279,7 @@ public final class FBView extends ZLTextView {
 	protected boolean isSelectionEnabled() {
 		return myReader.SelectionEnabledOption.getValue();
 	}
-	
+
 	@Override
 	public int scrollbarType() {
 		return myReader.ScrollbarTypeOption.getValue();
