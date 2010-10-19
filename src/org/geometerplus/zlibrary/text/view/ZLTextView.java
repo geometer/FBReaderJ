@@ -335,10 +335,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public static final int SCROLLBAR_HIDE = 0;
 	public static final int SCROLLBAR_SHOW = 1;
 	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
+	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
+
 	public abstract int scrollbarType();
 
 	public final boolean isScrollbarShown() {
-		return scrollbarType() != SCROLLBAR_HIDE;
+		return scrollbarType() == SCROLLBAR_SHOW || scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS;
 	}
 
 	private final synchronized int getFullCharNumber() {
@@ -380,11 +382,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
-		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
-			return -1;
-		}
-		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
 		if (paragraphCursor == null) {
 			return -1;
 		}
@@ -394,7 +392,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (paragraphLength > 0) {
 			sizeOfText +=
 				(myModel.getTextLength(paragraphIndex) - sizeOfText)
-				* cursor.getElementIndex()
+				* wordCursor.getElementIndex()
 				/ paragraphLength;
 		}
 		return sizeOfText;
