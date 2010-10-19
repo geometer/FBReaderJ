@@ -52,7 +52,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	protected abstract String fileNameForEmptyUri();
 
 	private String fileNameFromUri(Uri uri) {
-		if (Uri.EMPTY.equals(uri)) {
+		if (uri.equals(Uri.parse("file:///"))) {
 			return fileNameForEmptyUri();
 		} else {
 			return uri.getPath();
