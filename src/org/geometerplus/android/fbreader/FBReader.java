@@ -47,7 +47,7 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
 
 public final class FBReader extends ZLAndroidActivity {
-	static FBReader Instance;
+	public static FBReader Instance;
 
 	private int myFullScreenFlag;
 
@@ -203,29 +203,11 @@ public final class FBReader extends ZLAndroidActivity {
 		return true;
 	}
 
-
 	public void navigate() {
-		final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
+		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
 		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
 		myNavigatePanel.show(true);
-	}
-
-
-
-	public final boolean canNavigate() {
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
-		final ZLView view = fbreader.getCurrentView();
-		if (!(view instanceof ZLTextView)) {
-			return false;
-		}
-		final ZLTextModel textModel = ((ZLTextView) view).getModel();
-		if (textModel == null || textModel.getParagraphsNumber() == 0) {
-			return false;
-		}
-		final BookModel bookModel = fbreader.Model;
-		return bookModel != null && bookModel.Book != null;
 	}
 
 	private final void createNavigation(View layout) {

@@ -255,7 +255,4 @@ public abstract class ZLAndroidActivity extends Activity {
 			myChangeCounter = 0;
 		}
 	}
-
-	abstract protected void navigate();
-	abstract protected boolean canNavigate();
 }

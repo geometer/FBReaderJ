@@ -144,19 +144,6 @@ public abstract class ZLApplication {
 		return false;
 	}
 
-	public void navigate() {
-		if (myWindow != null) {
-			myWindow.navigate();
-		}
-	}
-
-	public boolean canNavigate() {
-		if (myWindow != null) {
-			return myWindow.canNavigate();
-		}
-		return false;
-	}
-
 	public void rotateScreen() {
 		if (myWindow != null) {
 			myWindow.rotate();
