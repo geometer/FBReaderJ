@@ -24,7 +24,7 @@ import java.io.File;
 import android.net.Uri;
 import android.app.Activity;
 import android.os.Bundle;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.view.*;
@@ -100,6 +100,8 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
 		ZLApplication.Instance().repaintView();
+
+		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
 
 	@Override
@@ -258,4 +260,10 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	abstract protected void navigate();
 	abstract protected boolean canNavigate();
+
+	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			ZLApplication.Instance().myBatteryLevel = intent.getIntExtra("level", 100);
+		}
+	};
 }
