@@ -34,7 +34,6 @@ import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -381,7 +380,7 @@ class NetworkBookActions extends NetworkTreeActions {
 						} else if (downloadBook) {
 							doDownloadBook(activity, book, false);
 						}
-						if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
+						if (!mgr.mayBeAuthorised(true)) {
 							final NetworkLibrary library = NetworkLibrary.Instance();
 							library.invalidateVisibility();
 							library.synchronize();
@@ -430,12 +429,14 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		};
 
-		if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_TRUE) {
-			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, book.Link, buyRunnable);
-			return;
-		} else {
-			buyRunnable.run();
+		try {
+			if (mgr.isAuthorised(true)) {
+				buyRunnable.run();
+				return;
+			}
+		} catch (ZLNetworkException e) {
 		}
+		NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, book.Link, buyRunnable);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {

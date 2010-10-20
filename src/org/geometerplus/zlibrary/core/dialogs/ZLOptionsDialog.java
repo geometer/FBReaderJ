@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.dialogs;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class ZLOptionsDialog {

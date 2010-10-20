@@ -50,7 +50,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public AuthenticationStatus isAuthorised(boolean useNetwork /* = true */) {
+	public boolean isAuthorised(boolean useNetwork /* = true */) throws ZLNetworkException {
 		final String sid;
 		synchronized (this) {
 			boolean authState =
@@ -58,21 +58,21 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				mySidOption.getValue().length() != 0;
 
 			if (mySidChecked || !useNetwork) {
-				return new AuthenticationStatus(authState);
+				return authState;
 			}
 
 			if (!authState) {
 				mySidChecked = true;
 				mySidUserNameOption.setValue("");
 				mySidOption.setValue("");
-				return new AuthenticationStatus(false);
+				return false;
 			}
 			sid = mySidOption.getValue();
 		}
 
 		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
 		if (url == null) {
-			return new AuthenticationStatus(new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION));
+			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
 		url = ZLNetworkUtil.appendParameter(url, "sid", sid);
 
@@ -88,16 +88,16 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		synchronized (this) {
 			if (exception != null) {
 				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
-					return new AuthenticationStatus(exception);
+					throw exception;
 				}
 				mySidChecked = true;
 				mySidUserNameOption.setValue("");
 				mySidOption.setValue("");
-				return new AuthenticationStatus(false);
+				return false;
 			}
 			mySidChecked = true;
 			mySidOption.setValue(xmlReader.Sid);
-			return new AuthenticationStatus(true);
+			return true;
 		}
 	}
 

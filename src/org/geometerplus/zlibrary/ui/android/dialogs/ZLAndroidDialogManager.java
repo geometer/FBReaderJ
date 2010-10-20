@@ -23,10 +23,8 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
-import android.os.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.android.util.AndroidUtil;
 
