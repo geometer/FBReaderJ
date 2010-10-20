@@ -258,9 +258,6 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
-	abstract protected void navigate();
-	abstract protected boolean canNavigate();
-
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			ZLApplication.Instance().myBatteryLevel = intent.getIntExtra("level", 100);

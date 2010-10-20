@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
+
 class ShowNavigationAction extends FBAction {
 	ShowNavigationAction(FBReader fbreader) {
 		super(fbreader);
@@ -26,10 +29,12 @@ class ShowNavigationAction extends FBAction {
 
 	@Override
 	public boolean isVisible() {
-		return Reader.canNavigate();
+		final ZLTextView view = (ZLTextView)Reader.getCurrentView();
+		final ZLTextModel textModel = view.getModel();
+		return textModel != null && textModel.getParagraphsNumber() != 0;
 	}
 
 	public void run() {
-		Reader.navigate();
+		org.geometerplus.android.fbreader.FBReader.Instance.navigate();
 	}
 }
