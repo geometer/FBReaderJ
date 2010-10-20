@@ -165,7 +165,7 @@ public class ZLFooter {
 			myLastShowProgress != fbReader.FooterShowProgress.getValue() ||
 			(fbReader.FooterShowClock.getValue() && (myLastHours != date.getHours() || myLastMinutes != date.getMinutes())) ||
 			(fbReader.FooterShowProgress.getValue() && (myLastPagesNum != bookLength || myLastPage != pagesProgress)) ||
-			(fbReader.FooterShowBattery.getValue() && (myLastBattery != ZLApplication.Instance().myBatteryLevel))){
+			(fbReader.FooterShowBattery.getValue() && (myLastBattery != ZLApplication.Instance().getBatteryLevel()))){
 			infoChanged = true;
 		}
 
@@ -175,7 +175,7 @@ public class ZLFooter {
 				info += String.format("%02d:%02d", date.getHours(), date.getMinutes());
 			}
 			if (fbReader.FooterShowBattery.getValue()) {
-				info = String.format("%d%%", ZLApplication.Instance().myBatteryLevel) +
+				info = String.format("%d%%", ZLApplication.Instance().getBatteryLevel()) +
 					(info.equals("") ? "" : " ") + info;
 			}
 			if (fbReader.FooterShowProgress.getValue()) {
@@ -225,7 +225,7 @@ public class ZLFooter {
 		}
 
 		myLastProgress = progress;
-		myLastBattery = ZLApplication.Instance().myBatteryLevel;
+		myLastBattery = ZLApplication.Instance().getBatteryLevel();
 		myLastHours = date.getHours();
 		myLastMinutes = date.getMinutes();
 		myLastFgColor = fgColor;

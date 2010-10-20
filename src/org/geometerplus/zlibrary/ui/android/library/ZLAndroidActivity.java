@@ -260,7 +260,8 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			ZLApplication.Instance().myBatteryLevel = intent.getIntExtra("level", 100);
+			final int level = intent.getIntExtra("level", 100);
+			((ZLAndroidApplication)getApplication()).myMainWindow.setBatteryLevel(level);
 		}
 	};
 }

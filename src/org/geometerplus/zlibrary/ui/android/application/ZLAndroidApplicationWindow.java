@@ -128,4 +128,12 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	public void close() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
 	}
+
+	private int myBatteryLevel;
+	protected int getBatteryLevel() {
+		return myBatteryLevel;
+	}
+	public void setBatteryLevel(int percent) {
+		myBatteryLevel = percent;
+	}
 }
