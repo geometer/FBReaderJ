@@ -212,6 +212,10 @@ public abstract class ZLApplication {
 		}
 	}
 
+	public int getBatteryLevel() {
+		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
+	}
+
 	//Menu
 	static class Menu {
 		public interface Item {
