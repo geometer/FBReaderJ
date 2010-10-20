@@ -69,7 +69,9 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 
 	void close() {
 		try {
-			myStreamWriter.close();
+			if (myStreamWriter != null) {
+				myStreamWriter.close();
+			}
 		} catch (IOException e) {
 		}
 	}
