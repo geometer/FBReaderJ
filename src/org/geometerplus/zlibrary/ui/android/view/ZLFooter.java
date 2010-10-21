@@ -54,10 +54,6 @@ public class ZLFooter {
 	private int myLastFgColor;
 	private int myInfoWidth;
 	private int myLastSize;
-	private boolean myLastShowClock;
-	private boolean myLastShowBattery;
-	private boolean myLastShowProgress;
-
 
 	public ZLFooter() {
 		mySize = new Point(0, 9);
@@ -108,7 +104,6 @@ public class ZLFooter {
 
 	private void updateBitmap(float scrollProgress) {
 		// if it is first drawing of bitmap or footer size is changed
-		boolean gaugeChanged = false;
 		boolean infoChanged = false;
 
 		// query colors for background and regular text
@@ -117,7 +112,6 @@ public class ZLFooter {
 		// TODO: separate color option for footer color
 		int fgColor = ZLAndroidColorUtil.rgb(view.getTextColor(FBHyperlinkType.NONE));
 		if (myLastFgColor != fgColor || myLastBgColor != bgColor) {
-			gaugeChanged = true;
 			infoChanged = true;
 		}
 
@@ -138,7 +132,6 @@ public class ZLFooter {
 		if (myBitmap == null ||
 			myBitmap.getWidth() != mySize.x || myBitmap.getHeight() != mySize.y) {
 			myBitmap = Bitmap.createBitmap(mySize.x, mySize.y, Bitmap.Config.RGB_565);
-			gaugeChanged = true;
 			infoChanged = true;
 		}
 		Canvas canvas = new Canvas(myBitmap);
@@ -177,7 +170,6 @@ public class ZLFooter {
 
 		if (infoChanged) {
 			// calculate information text width and size of gauge
-			gaugeChanged = true;
 			Rect infoRect = new Rect();
 			myTextPaint.getTextBounds(infoString, 0, infoString.length(), infoRect);
 			myInfoWidth = (infoString.equals("") ? 0 : infoRect.width() + 10);
@@ -189,9 +181,7 @@ public class ZLFooter {
 			// draw info text
 			myTextPaint.setColor(fgColor);
 			canvas.drawText(infoString, mySize.x - 1, mySize.y - delta, myTextPaint);
-		}
 
-		if (gaugeChanged) {
 			// draw info text back ground rectangle
 			myBgPaint.setColor(bgColor);
 			myGaugeRect.set(0, 0, mySize.x - myInfoWidth, mySize.y);
@@ -216,9 +206,6 @@ public class ZLFooter {
 
 		myLastFgColor = fgColor;
 		myLastBgColor = bgColor;
-		myLastShowClock = fbReader.FooterShowClock.getValue();
-		myLastShowBattery = fbReader.FooterShowBattery.getValue();
-		myLastShowProgress = fbReader.FooterShowProgress.getValue();
 		myLastSize = size;
 	}
 }
