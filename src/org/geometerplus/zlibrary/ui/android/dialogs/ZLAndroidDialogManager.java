@@ -45,8 +45,4 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	public void wait(String key, Runnable action) {
 		AndroidUtil.wait(key, action, myActivity);
 	}
-
-	public void startSearch() {
-		myActivity.onSearchRequested();
-	}
 }
