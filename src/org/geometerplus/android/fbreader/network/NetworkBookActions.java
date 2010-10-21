@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.fbreader.FBReaderActivity;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -48,7 +49,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class NetworkBookActions extends NetworkTreeActions {
-
 	private static final String PACKAGE = "org.geometerplus.android.fbreader.network";
 
 	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
@@ -307,7 +307,7 @@ class NetworkBookActions extends NetworkTreeActions {
 				new Intent(Intent.ACTION_VIEW,
 					Uri.fromFile(new File(local)),
 					activity.getApplicationContext(),
-					org.geometerplus.android.fbreader.FBReader.class
+					FBReaderActivity.class
 				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 			);
 		}

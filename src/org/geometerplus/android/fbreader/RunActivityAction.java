@@ -17,34 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import java.util.HashMap;
+import android.content.Intent;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.fbreader.FBAction;
+import org.geometerplus.fbreader.fbreader.FBReader;
 
-import org.geometerplus.android.fbreader.LibraryTabActivity;
+abstract class RunActivityAction extends FBAction {
+	private final FBReaderActivity myBaseActivity;
+	private final Class<?> myActivityClass;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-class ShowLibraryAction extends FBAction {
-	ShowLibraryAction(FBReader fbreader) {
+	RunActivityAction(FBReaderActivity baseActivity, FBReader fbreader, Class<?> activityClass) {
 		super(fbreader);
+		myBaseActivity = baseActivity;
+		myActivityClass = activityClass;
 	}
 
 	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		final HashMap<String,String> data = new HashMap<String,String>();
-		final BookModel model = Reader.Model;
-		if (model != null) {
-			data.put(LibraryTabActivity.CURRENT_BOOK_PATH_KEY, model.Book.File.getPath());
-		}
-		Runnable action = new Runnable() {
-			public void run() {
-				dialogManager.runActivity(LibraryTabActivity.class, data);
-			}
-		};
-		dialogManager.wait("loadingBookList", action);
+		myBaseActivity.startActivity(new Intent(myBaseActivity.getApplicationContext(), myActivityClass));
 	}
 }
