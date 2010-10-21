@@ -161,8 +161,10 @@
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
-					<node name="summaryOn" value="Screen will not be turned off while you read a book"/>
-					<node name="summaryOff" value="Screen will be automatically turned off in case of inactivity"/>
+					<node name="0" value="Always"/>
+					<node name="25" value="If battery level is greater than 25%"/>
+					<node name="50" value="If battery level is greater than 50%"/>
+					<node name="100" value="Never"/>
 				</node>
 				<node name="scrollbarType" value="Scrollbar at right side">
 					<node name="hide" value="Hide"/>

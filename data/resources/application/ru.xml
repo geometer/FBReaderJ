@@ -161,8 +161,10 @@
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
-					<node name="summaryOn" value="Экран не выключится автоматически во время чтения"/>
-					<node name="summaryOff" value="Экран выключится автоматически, если не листать страницы"/>
+					<node name="0" value="Никогда не выключать"/>
+					<node name="25" value="Если батарея заряжена не меньше чем на 25%"/>
+					<node name="50" value="Если батарея заряжена не меньше чем на 50%"/>
+					<node name="100" value="Всегда выключать"/>
 				</node>
 				<node name="scrollbarType" value="Полоса прокрутки справа от текста">
 					<node name="hide" value="Не показывать"/>

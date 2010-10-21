@@ -91,7 +91,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
 			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		}
-		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
+		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
+			this,
+			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption,
+			lookNFeelCategory.Resource,
+			"dontTurnScreenOff"
+		));
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress"};
 		lookNFeelCategory.addPreference(new ZLChoicePreference(
 			this, lookNFeelCategory.Resource, "scrollbarType",
