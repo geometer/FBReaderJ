@@ -45,8 +45,6 @@ public abstract class ZLDialogManager {
 	
 	public abstract void wait(String key, Runnable runnable);
 
-	public abstract void startSearch();
-	
 	public static String getButtonText(String key) {
 		return getResource().getResource("button").getResource(key).getValue();
 	}

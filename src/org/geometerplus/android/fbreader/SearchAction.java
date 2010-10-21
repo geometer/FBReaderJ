@@ -17,13 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBAction;
 
 class SearchAction extends FBAction {
-	SearchAction(FBReaderApp fbreader) {
+	private final FBReader myActivity;
+
+	SearchAction(FBReader activity, FBReaderApp fbreader) {
 		super(fbreader);
+		myActivity = activity;
 	}
 
 	public boolean isVisible() {
@@ -31,6 +35,6 @@ class SearchAction extends FBAction {
 	}
 
 	public void run() {
-		ZLDialogManager.Instance().startSearch();
+		myActivity.onSearchRequested();
 	}
 }
