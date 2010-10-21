@@ -39,9 +39,6 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public class ZLFooter {
-	private Point mySize;
-	private Point myOldSize;
-	private Point myDrawAreaSize;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myBgPaint = new Paint();
 	private final Paint myFgPaint = new Paint();
@@ -53,13 +50,12 @@ public class ZLFooter {
 	private int myLastBgColor;
 	private int myLastFgColor;
 	private int myLastHeight;
+	private int myLastWidth;
 
 	public ZLFooter() {
-		mySize = new Point(0, 9);
-		myOldSize = new Point(0, 0);
-		myDrawAreaSize = new Point(0, 0);
 		myGaugeRect = new Rect();
 		myLastHeight = -1;
+		myLastWidth = -1;
 	}
 
 	public int getTapHeight() {
@@ -68,12 +64,6 @@ public class ZLFooter {
 			return 30;
 		}
 		return 0;
-	}
-
-	public void setDrawAreaSize(int width, int height) {
-		mySize.x = width;
-		myDrawAreaSize.x = width;
-		myDrawAreaSize.y = height;
 	}
 
 	public void setProgress(ZLView view, int x) {
@@ -106,11 +96,12 @@ public class ZLFooter {
 			myLastBgColor = bgColor;
 		}
 
-		int height = view.getFooterArea().getHeight();
+		final int width = bitmap.getWidth();
+		final int height = view.getFooterArea().getHeight();
+
 		int delta = height <= 10 ? 0 : 1;
 		if (height != myLastHeight) {
 			myLastHeight = height;
-			mySize.y = height;
 			myTextPaint.setTextSize(height <= 10 ? height + 3 : height + 1);
 			myFgPaint.setStrokeWidth(height <= 10 ? 1 : 2);
 			myTextPaint.setTypeface(Typeface.create(
@@ -119,13 +110,13 @@ public class ZLFooter {
 			myTextPaint.setTextAlign(Paint.Align.RIGHT);
 			myTextPaint.setStyle(Paint.Style.FILL);
 			myTextPaint.setAntiAlias(true);
-		}
-
-		if (bitmap.getWidth() != myOldSize.x || bitmap.getHeight() != myOldSize.y) {
-			myOldSize.x = bitmap.getWidth();
-			myOldSize.y = bitmap.getHeight();
 			infoChanged = true;
 		}
+		if (width != myLastWidth) {
+			myLastWidth = width;
+			infoChanged = true;
+		}
+
 		Canvas canvas = new Canvas(bitmap);
 
 		final ZLTextView textView = (ZLTextView)view;
@@ -168,15 +159,15 @@ public class ZLFooter {
 
 			// draw info text back ground rectangle
 			myBgPaint.setColor(bgColor);
-			canvas.drawRect(mySize.x - infoWidth, 0, mySize.x, mySize.y, myBgPaint);
+			canvas.drawRect(width - infoWidth, 0, width, height, myBgPaint);
 
 			// draw info text
 			myTextPaint.setColor(fgColor);
-			canvas.drawText(infoString, mySize.x - 1, mySize.y - delta, myTextPaint);
+			canvas.drawText(infoString, width - 1, height - delta, myTextPaint);
 
 			// draw info text back ground rectangle
 			myBgPaint.setColor(bgColor);
-			myGaugeRect.set(0, 0, mySize.x - infoWidth, mySize.y);
+			myGaugeRect.set(0, 0, width - infoWidth, height);
 			canvas.drawRect(myGaugeRect, myBgPaint);
 
 			// draw gauge border line

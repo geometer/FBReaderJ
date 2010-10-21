@@ -69,9 +69,6 @@ public class ZLAndroidWidget extends View {
 		int width = getWidth();
 		int height = getHeight();
 		if (myViewSize.x != width || myViewSize.y != height) {
-			// pass draw area size to footer
-			// it need need height also, because canvas.getHeight() is buggy)
-			myFooter.setDrawAreaSize(width, height);
 			myViewSize.x = width;
 			myViewSize.y = height;
 		}
