@@ -41,9 +41,9 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 public class ZLFooter {
 	private Point mySize;
 	private Point myDrawAreaSize;
-	private Paint myTextPaint;
-	private Paint myBgPaint;
-	private Paint myFgPaint;
+	private final Paint myTextPaint = new Paint();
+	private final Paint myBgPaint = new Paint();
+	private final Paint myFgPaint = new Paint();
 	private float myGaugeStart;
 	private float myGaugeEnd;
 	private Bitmap myBitmap;
@@ -52,19 +52,13 @@ public class ZLFooter {
 	private String myInfoString;
 	private int myLastBgColor;
 	private int myLastFgColor;
-	private int myInfoWidth;
-	private int myLastSize;
+	private int myLastHeight;
 
 	public ZLFooter() {
 		mySize = new Point(0, 9);
 		myDrawAreaSize = new Point(0, 0);
-		myBgPaint = new Paint();
-		myFgPaint = new Paint();
 		myGaugeRect = new Rect();
-		myInfoWidth = 0;
-
-		myTextPaint = new Paint();
-		myLastSize = -1;
+		myLastHeight = -1;
 	}
 
 	public int getTapHeight() {
@@ -103,7 +97,7 @@ public class ZLFooter {
 	}
 
 	private void updateBitmap(float scrollProgress) {
-		// if it is first drawing of bitmap or footer size is changed
+		// if it is first drawing of bitmap or footer height is changed
 		boolean infoChanged = false;
 
 		// query colors for background and regular text
@@ -113,16 +107,19 @@ public class ZLFooter {
 		int fgColor = ZLAndroidColorUtil.rgb(view.getTextColor(FBHyperlinkType.NONE));
 		if (myLastFgColor != fgColor || myLastBgColor != bgColor) {
 			infoChanged = true;
+			myLastFgColor = fgColor;
+			myLastBgColor = bgColor;
 		}
 
-		int size = view.getFooterArea().getHeight();
-		int delta = size <= 10 ? 0 : 1;
-		if (size != myLastSize) {
-			mySize.y = size;
-			myTextPaint.setTextSize(size <= 10 ? size + 3 : size + 1);
-			myFgPaint.setStrokeWidth(size <= 10 ? 1 : 2);
+		int height = view.getFooterArea().getHeight();
+		int delta = height <= 10 ? 0 : 1;
+		if (height != myLastHeight) {
+			myLastHeight = height;
+			mySize.y = height;
+			myTextPaint.setTextSize(height <= 10 ? height + 3 : height + 1);
+			myFgPaint.setStrokeWidth(height <= 10 ? 1 : 2);
 			myTextPaint.setTypeface(Typeface.create(
-				Typeface.SANS_SERIF, size <= 10 ? Typeface.NORMAL : Typeface.BOLD
+				Typeface.SANS_SERIF, height <= 10 ? Typeface.NORMAL : Typeface.BOLD
 			));
 			myTextPaint.setTextAlign(Paint.Align.RIGHT);
 			myTextPaint.setStyle(Paint.Style.FILL);
@@ -169,14 +166,14 @@ public class ZLFooter {
 		}
 
 		if (infoChanged) {
-			// calculate information text width and size of gauge
+			// calculate information text width and height of gauge
 			Rect infoRect = new Rect();
 			myTextPaint.getTextBounds(infoString, 0, infoString.length(), infoRect);
-			myInfoWidth = (infoString.equals("") ? 0 : infoRect.width() + 10);
+			int infoWidth = infoString.equals("") ? 0 : infoRect.width() + 10;
 
 			// draw info text back ground rectangle
 			myBgPaint.setColor(bgColor);
-			canvas.drawRect(mySize.x - myInfoWidth, 0, mySize.x, mySize.y, myBgPaint);
+			canvas.drawRect(mySize.x - infoWidth, 0, mySize.x, mySize.y, myBgPaint);
 
 			// draw info text
 			myTextPaint.setColor(fgColor);
@@ -184,7 +181,7 @@ public class ZLFooter {
 
 			// draw info text back ground rectangle
 			myBgPaint.setColor(bgColor);
-			myGaugeRect.set(0, 0, mySize.x - myInfoWidth, mySize.y);
+			myGaugeRect.set(0, 0, mySize.x - infoWidth, mySize.y);
 			canvas.drawRect(myGaugeRect, myBgPaint);
 
 			// draw gauge border line
@@ -203,9 +200,5 @@ public class ZLFooter {
 			// draw gauge progress
 			canvas.drawRect(myGaugeRect, myFgPaint);
 		}
-
-		myLastFgColor = fgColor;
-		myLastBgColor = bgColor;
-		myLastSize = size;
 	}
 }
