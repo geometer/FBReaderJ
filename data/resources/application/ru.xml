@@ -162,8 +162,8 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
 					<node name="0" value="Никогда не выключать"/>
-					<node name="25" value="Если батарея заряжена не меньше чем на 25%"/>
-					<node name="50" value="Если батарея заряжена не меньше чем на 50%"/>
+					<node name="25" value="Пока батарея заряжена хотя бы на 25%"/>
+					<node name="50" value="Пока батарея заряжена хотя бы на 50%"/>
 					<node name="100" value="Всегда выключать"/>
 				</node>
 				<node name="scrollbarType" value="Полоса прокрутки справа от текста">
