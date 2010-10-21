@@ -24,7 +24,6 @@ import java.util.Date;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
@@ -117,11 +116,8 @@ public class ZLFooter {
 			infoChanged = true;
 		}
 
-		Canvas canvas = new Canvas(bitmap);
-
-		final ZLTextView textView = (ZLTextView)view;
-		final int pagesProgress = textView.computeCurrentPage();
-		final int bookLength = textView.computePageNumber();
+		final int pagesProgress = view.computeCurrentPage();
+		final int bookLength = view.computePageNumber();
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 
@@ -152,6 +148,8 @@ public class ZLFooter {
 		}
 
 		if (infoChanged) {
+			Canvas canvas = new Canvas(bitmap);
+
 			// calculate information text width and height of gauge
 			Rect infoRect = new Rect();
 			myTextPaint.getTextBounds(infoString, 0, infoString.length(), infoRect);
