@@ -28,9 +28,9 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public final class FBView extends ZLTextView {
-	private FBReader myReader;
+	private FBReaderApp myReader;
 
-	FBView(FBReader reader) {
+	FBView(FBReaderApp reader) {
 		super(ZLibrary.Instance().getPaintContext());
 		myReader = reader;
 	}
@@ -82,7 +82,7 @@ public final class FBView extends ZLTextView {
 				ZLibrary.Instance().openInBrowser(hyperlink.Id);
 				break;
 			case FBHyperlinkType.INTERNAL:
-				((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+				((FBReaderApp)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
 				break;
 		}
 	}

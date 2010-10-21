@@ -39,7 +39,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.AndroidUtil;
-import org.geometerplus.android.fbreader.FBReaderActivity;
+import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -307,7 +307,7 @@ class NetworkBookActions extends NetworkTreeActions {
 				new Intent(Intent.ACTION_VIEW,
 					Uri.fromFile(new File(local)),
 					activity.getApplicationContext(),
-					FBReaderActivity.class
+					FBReader.class
 				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 			);
 		}

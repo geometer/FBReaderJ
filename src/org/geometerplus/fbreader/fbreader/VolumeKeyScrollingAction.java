@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 class VolumeKeyScrollingAction extends FBAction {
 	private final boolean myForward;
 
-	VolumeKeyScrollingAction(FBReader fbreader, boolean forward) {
+	VolumeKeyScrollingAction(FBReaderApp fbreader, boolean forward) {
 		super(fbreader);
 		myForward = forward;
 	}

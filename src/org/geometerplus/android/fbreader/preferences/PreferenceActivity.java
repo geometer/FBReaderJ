@@ -33,7 +33,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	/*private static final class ColorProfilePreference extends ZLSimplePreference {
-		private final FBReader myFBReader;
+		private final FBReaderApp myFBReader;
 		private final Screen myScreen;
 		private final String myKey;
 
@@ -42,7 +42,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return r.hasValue() ? r.getValue() : resourceKey;
 		}
 
-		ColorProfilePreference(Context context, FBReader fbreader, Screen screen, String key, String title) {
+		ColorProfilePreference(Context context, FBReaderApp fbreader, Screen screen, String key, String title) {
 			super(context);
 			myFBReader = fbreader;
 			myScreen = screen;
@@ -57,7 +57,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		@Override
 		public void onClick() {
 			myScreen.setSummary(getTitle());
-			myFBReader.setColorProfileName(myKey);
+			myFBReaderApp.setColorProfileName(myKey);
 			myScreen.close();
 		}
 	}*/
@@ -74,7 +74,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
-		final FBReader fbReader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
 		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );

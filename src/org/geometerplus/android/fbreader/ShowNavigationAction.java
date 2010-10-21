@@ -23,12 +23,12 @@ import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.fbreader.fbreader.FBAction;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class ShowNavigationAction extends FBAction {
-	private final FBReaderActivity myActivity;
+	private final FBReader myActivity;
 
-	ShowNavigationAction(FBReaderActivity activity, FBReader fbreader) {
+	ShowNavigationAction(FBReader activity, FBReaderApp fbreader) {
 		super(fbreader);
 		myActivity = activity;
 	}
