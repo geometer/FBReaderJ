@@ -40,13 +40,13 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public class ZLFooter {
 	private Point mySize;
+	private Point myOldSize;
 	private Point myDrawAreaSize;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myBgPaint = new Paint();
 	private final Paint myFgPaint = new Paint();
 	private float myGaugeStart;
 	private float myGaugeEnd;
-	private Bitmap myBitmap;
 	private Rect myGaugeRect;
 
 	private String myInfoString;
@@ -56,6 +56,7 @@ public class ZLFooter {
 
 	public ZLFooter() {
 		mySize = new Point(0, 9);
+		myOldSize = new Point(0, 0);
 		myDrawAreaSize = new Point(0, 0);
 		myGaugeRect = new Rect();
 		myLastHeight = -1;
@@ -75,11 +76,6 @@ public class ZLFooter {
 		myDrawAreaSize.y = height;
 	}
 
-	public Bitmap onDraw(Canvas canvas) {
-		updateBitmap();
-		return myBitmap;
-	}
-
 	public void setProgress(ZLView view, int x) {
 		// set progress according to tap coordinate
 		ZLTextView textView = (ZLTextView)view;
@@ -95,7 +91,7 @@ public class ZLFooter {
 		ZLApplication.Instance().repaintView();
 	}
 
-	private void updateBitmap() {
+	void paint(Bitmap bitmap) {
 		// if it is first drawing of bitmap or footer height is changed
 		boolean infoChanged = false;
 
@@ -125,12 +121,12 @@ public class ZLFooter {
 			myTextPaint.setAntiAlias(true);
 		}
 
-		if (myBitmap == null ||
-			myBitmap.getWidth() != mySize.x || myBitmap.getHeight() != mySize.y) {
-			myBitmap = Bitmap.createBitmap(mySize.x, mySize.y, Bitmap.Config.RGB_565);
+		if (bitmap.getWidth() != myOldSize.x || bitmap.getHeight() != myOldSize.y) {
+			myOldSize.x = bitmap.getWidth();
+			myOldSize.y = bitmap.getHeight();
 			infoChanged = true;
 		}
-		Canvas canvas = new Canvas(myBitmap);
+		Canvas canvas = new Canvas(bitmap);
 
 		final ZLTextView textView = (ZLTextView)view;
 		final int pagesProgress = textView.computeCurrentPage();

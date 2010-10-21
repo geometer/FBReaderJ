@@ -35,6 +35,8 @@ public class ZLAndroidWidget extends View {
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
 	private boolean mySecondaryBitmapIsUpToDate;
+	private Bitmap myFooterBitmap;
+
 	private boolean myScrollingInProgress;
 	private int myScrollingShift;
 	private float myScrollingSpeed;
@@ -300,8 +302,18 @@ public class ZLAndroidWidget extends View {
 	private void drawFooter(Canvas canvas) {
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
 		if (footer != null) {
-			final Bitmap bmp = myFooter.onDraw(canvas);
-			canvas.drawBitmap(bmp, 0, myViewSize.y - footer.getHeight(), myPaint);
+			if (myFooterBitmap != null &&
+				(myFooterBitmap.getWidth() != myViewSize.x ||
+				 myFooterBitmap.getHeight() != footer.getHeight())) {
+				myFooterBitmap = null;
+			}
+			if (myFooterBitmap == null) {
+				myFooterBitmap = Bitmap.createBitmap(myViewSize.x, footer.getHeight(), Bitmap.Config.RGB_565);
+			}
+			myFooter.paint(myFooterBitmap);
+			canvas.drawBitmap(myFooterBitmap, 0, myViewSize.y - footer.getHeight(), myPaint);
+		} else {
+			myFooterBitmap = null;
 		}
 	}
 
