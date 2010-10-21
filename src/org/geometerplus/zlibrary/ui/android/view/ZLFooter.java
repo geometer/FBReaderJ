@@ -35,7 +35,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 // TODO: remove these dependencies
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public class ZLFooter {
@@ -137,7 +137,7 @@ public class ZLFooter {
 		final int pagesProgress = textView.computeCurrentPage();
 		final int bookLength = textView.computePageNumber();
 
-		final FBReader fbReader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 
 		final StringBuilder info = new StringBuilder();
 		if (fbReader.FooterShowProgress.getValue()) {
