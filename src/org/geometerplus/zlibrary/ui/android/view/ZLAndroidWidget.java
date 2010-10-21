@@ -197,9 +197,7 @@ public class ZLAndroidWidget extends View {
 			}
 		}
 
-		if (view.getFooterArea() != null) {
-			myFooter.onDraw(canvas);
-		}
+		drawFooter(canvas);
 	}
 
 	private int myViewPageToScroll = ZLView.PAGE_CENTRAL;
@@ -299,13 +297,17 @@ public class ZLAndroidWidget extends View {
 		context.endPaint();
 	}
 
-	private void onDrawStatic(Canvas canvas) {
-		drawOnBitmap(myMainBitmap);
-		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
+	private void drawFooter(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (view.getFooterArea() != null) {
 			myFooter.onDraw(canvas);
 		}
+	}
+
+	private void onDrawStatic(Canvas canvas) {
+		drawOnBitmap(myMainBitmap);
+		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
+		drawFooter(canvas);
 	}
 
 	@Override
