@@ -75,8 +75,8 @@ public class ZLFooter {
 		myDrawAreaSize.y = height;
 	}
 
-	public void onDraw(Canvas canvas, float scrollProgress) {
-		updateBitmap(scrollProgress);
+	public void onDraw(Canvas canvas) {
+		updateBitmap();
 		// myDrawAreaSize.y is from View.getHeight, do not use canvas.getHeight it is buggy
 		canvas.drawBitmap(myBitmap, 0, myDrawAreaSize.y - mySize.y, myBgPaint);
 	}
@@ -96,7 +96,7 @@ public class ZLFooter {
 		ZLApplication.Instance().repaintView();
 	}
 
-	private void updateBitmap(float scrollProgress) {
+	private void updateBitmap() {
 		// if it is first drawing of bitmap or footer height is changed
 		boolean infoChanged = false;
 

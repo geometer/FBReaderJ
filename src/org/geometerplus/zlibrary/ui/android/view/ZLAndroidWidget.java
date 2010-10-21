@@ -198,7 +198,7 @@ public class ZLAndroidWidget extends View {
 		}
 
 		if (view.getFooterArea() != null) {
-			myFooter.onDraw(canvas, getScrollProgress());
+			myFooter.onDraw(canvas);
 		}
 	}
 
@@ -304,7 +304,7 @@ public class ZLAndroidWidget extends View {
 		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (view.getFooterArea() != null) {
-			myFooter.onDraw(canvas, getScrollProgress());
+			myFooter.onDraw(canvas);
 		}
 	}
 
@@ -485,13 +485,5 @@ public class ZLAndroidWidget extends View {
 			width -= getVerticalScrollbarWidth();
 		}
 		return width;
-	}
-
-	private float getScrollProgress() {
-		// get percentage of page scroll (from 0 to 1)
-		final boolean horizontal =
-			(myViewPageToScroll == ZLView.PAGE_RIGHT) || (myViewPageToScroll == ZLView.PAGE_LEFT);
-		final float pageSize = horizontal ? getTextViewWidth() : getTextViewHeight();
-		return (float)myScrollingShift / pageSize;
 	}
 }
