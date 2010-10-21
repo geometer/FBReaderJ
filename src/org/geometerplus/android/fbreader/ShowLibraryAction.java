@@ -27,8 +27,6 @@ import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
 class ShowLibraryAction extends FBAction {
 	private final FBReader myBaseActivity;
 
@@ -38,9 +36,6 @@ class ShowLibraryAction extends FBAction {
 	}
 
 	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		final HashMap<String,String> data = new HashMap<String,String>();
 		final BookModel model = Reader.Model;
 		Runnable action = new Runnable() {
 			public void run() {
@@ -51,6 +46,6 @@ class ShowLibraryAction extends FBAction {
 				myBaseActivity.startActivity(intent);
 			}
 		};
-		dialogManager.wait("loadingBookList", action);
+		AnroidUtil.wait("loadingBookList", action, myBaseActivity);
 	}
 }
