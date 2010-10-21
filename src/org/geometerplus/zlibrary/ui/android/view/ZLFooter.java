@@ -75,10 +75,9 @@ public class ZLFooter {
 		myDrawAreaSize.y = height;
 	}
 
-	public void onDraw(Canvas canvas) {
+	public Bitmap onDraw(Canvas canvas) {
 		updateBitmap();
-		// myDrawAreaSize.y is from View.getHeight, do not use canvas.getHeight it is buggy
-		canvas.drawBitmap(myBitmap, 0, myDrawAreaSize.y - mySize.y, myBgPaint);
+		return myBitmap;
 	}
 
 	public void setProgress(ZLView view, int x) {

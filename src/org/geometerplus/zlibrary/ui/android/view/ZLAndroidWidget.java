@@ -298,9 +298,10 @@ public class ZLAndroidWidget extends View {
 	}
 
 	private void drawFooter(Canvas canvas) {
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.getFooterArea() != null) {
-			myFooter.onDraw(canvas);
+		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
+		if (footer != null) {
+			final Bitmap bmp = myFooter.onDraw(canvas);
+			canvas.drawBitmap(bmp, 0, myViewSize.y - footer.getHeight(), myPaint);
 		}
 	}
 
