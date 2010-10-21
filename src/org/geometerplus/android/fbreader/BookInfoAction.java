@@ -19,12 +19,12 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
 class BookInfoAction extends RunActivityAction {
-	BookInfoAction(FBReaderActivity baseActivity, FBReader fbreader) {
+	BookInfoAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader, BookInfoActivity.class);
 	}
 

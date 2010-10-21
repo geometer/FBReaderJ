@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 class ChangeFontSizeAction extends FBAction {
 	private final int myDelta;
 
-	ChangeFontSizeAction(FBReader fbreader, int delta) {
+	ChangeFontSizeAction(FBReaderApp fbreader, int delta) {
 		super(fbreader);
 		myDelta = delta;
 	}

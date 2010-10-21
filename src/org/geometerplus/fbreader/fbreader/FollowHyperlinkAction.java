@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 public class FollowHyperlinkAction extends FBAction {
-	FollowHyperlinkAction(FBReader fbreader) {
+	FollowHyperlinkAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

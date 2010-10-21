@@ -43,12 +43,12 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
 
-public final class FBReaderActivity extends ZLAndroidActivity {
-	static FBReaderActivity Instance;
+public final class FBReader extends ZLAndroidActivity {
+	static FBReader Instance;
 
 	private int myFullScreenFlag;
 
@@ -184,7 +184,7 @@ public final class FBReaderActivity extends ZLAndroidActivity {
 		new SQLiteBooksDatabase();
 		final String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
 
-		final FBReader fbReader = new FBReader(args);
+		final FBReaderApp fbReader = new FBReaderApp(args);
 
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new PreferencesAction(this, fbReader));
@@ -210,8 +210,7 @@ public final class FBReaderActivity extends ZLAndroidActivity {
 				manager.setOnCancelListener(null);
 			}
 		});
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}

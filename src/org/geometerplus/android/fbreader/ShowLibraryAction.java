@@ -24,15 +24,15 @@ import java.util.HashMap;
 import android.content.Intent;
 
 import org.geometerplus.fbreader.fbreader.FBAction;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 class ShowLibraryAction extends FBAction {
-	private final FBReaderActivity myBaseActivity;
+	private final FBReader myBaseActivity;
 
-	ShowLibraryAction(FBReaderActivity baseActivity, FBReader fbreader) {
+	ShowLibraryAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(fbreader);
 		myBaseActivity = baseActivity;
 	}

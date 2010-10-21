@@ -32,7 +32,7 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
 import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
-public final class FBReader extends ZLApplication {
+public final class FBReaderApp extends ZLApplication {
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
 	public final ZLStringOption BookmarkSearchPatternOption =
@@ -68,7 +68,7 @@ public final class FBReader extends ZLApplication {
 
 	private final String myArg0;
 
-	public FBReader(String[] args) {
+	public FBReaderApp(String[] args) {
 		myArg0 = (args.length > 0) ? args[0] : null;
 		addAction(ActionCode.QUIT, new QuitAction(this));
 

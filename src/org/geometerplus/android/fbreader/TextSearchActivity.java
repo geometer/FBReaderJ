@@ -21,17 +21,17 @@ package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class TextSearchActivity extends SearchActivity {
 	@Override
 	void onSuccess() {
-		FBReaderActivity.Instance.showTextSearchControls(true);
+		FBReader.Instance.showTextSearchControls(true);
 	}
 
 	/*@Override
 	void onFailure() {
-		FBReaderActivity.Instance.showTextSearchControls(false);
+		FBReader.Instance.showTextSearchControls(false);
 	}*/
 
 	@Override
@@ -46,13 +46,13 @@ public class TextSearchActivity extends SearchActivity {
 
 	@Override
 	boolean runSearch(final String pattern) {
-		final FBReader fbReader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		fbReader.TextSearchPatternOption.setValue(pattern);
 		return fbReader.getTextView().search(pattern, true, false, false, false) != 0;
 	}
 
 	@Override
 	Activity getParentActivity() {
-		return FBReaderActivity.Instance;
+		return FBReader.Instance;
 	}
 }

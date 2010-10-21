@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 
 class SearchAction extends FBAction {
-	SearchAction(FBReader fbreader) {
+	SearchAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 
