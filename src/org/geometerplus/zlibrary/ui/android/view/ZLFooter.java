@@ -49,12 +49,7 @@ public class ZLFooter {
 	private Bitmap myBitmap;
 	private Rect myGaugeRect;
 
-	private float myLastProgress;
-	private int myLastHours;
-	private int myLastPagesNum;
-	private int myLastPage;
-	private int myLastBattery;
-	private int myLastMinutes;
+	private String myInfoString;
 	private int myLastBgColor;
 	private int myLastFgColor;
 	private int myInfoWidth;
@@ -152,45 +147,40 @@ public class ZLFooter {
 		final int pagesProgress = textView.computeCurrentPage();
 		final int bookLength = textView.computePageNumber();
 
-		float progress = 1.0f * pagesProgress / bookLength;
-		if (progress != myLastProgress) {
-			gaugeChanged = true;
-		}
+		final FBReader fbReader = (FBReader)FBReader.Instance();
 
-		FBReader fbReader = (FBReader)FBReader.Instance();
-		Date date = new Date();
-		if (infoChanged ||
-			myLastShowClock != fbReader.FooterShowClock.getValue() ||
-			myLastShowBattery != fbReader.FooterShowBattery.getValue() ||
-			myLastShowProgress != fbReader.FooterShowProgress.getValue() ||
-			(fbReader.FooterShowClock.getValue() && (myLastHours != date.getHours() || myLastMinutes != date.getMinutes())) ||
-			(fbReader.FooterShowProgress.getValue() && (myLastPagesNum != bookLength || myLastPage != pagesProgress)) ||
-			(fbReader.FooterShowBattery.getValue() && (myLastBattery != ZLApplication.Instance().getBatteryLevel()))){
+		final StringBuilder info = new StringBuilder();
+		if (fbReader.FooterShowProgress.getValue()) {
+			info.append(pagesProgress);
+			info.append("/");
+			info.append(bookLength);
+		}
+		if (fbReader.FooterShowBattery.getValue()) {
+			if (info.length() > 0) {
+				info.append(" ");
+			}
+			info.append(ZLApplication.Instance().getBatteryLevel());
+			info.append("%");
+		}
+		if (fbReader.FooterShowClock.getValue()) {
+			if (info.length() > 0) {
+				info.append(" ");
+			}
+			Date date = new Date();
+			info.append(String.format("%02d:%02d", date.getHours(), date.getMinutes()));
+		}
+		final String infoString = info.toString();
+		if (!infoString.equals(myInfoString)) {
+			myInfoString = infoString;
 			infoChanged = true;
 		}
 
 		if (infoChanged) {
-			String info = "";
-			if (fbReader.FooterShowClock.getValue()) {
-				info += String.format("%02d:%02d", date.getHours(), date.getMinutes());
-			}
-			if (fbReader.FooterShowBattery.getValue()) {
-				info = String.format("%d%%", ZLApplication.Instance().getBatteryLevel()) +
-					(info.equals("") ? "" : " ") + info;
-			}
-			if (fbReader.FooterShowProgress.getValue()) {
-				info = String.format("%d/%d", pagesProgress, bookLength) +
-					(info.equals("") ? "" : " ") + info;
-			}
-
 			// calculate information text width and size of gauge
+			gaugeChanged = true;
 			Rect infoRect = new Rect();
-			myTextPaint.getTextBounds(info, 0, info.length(), infoRect);
-			int infoWidth = (info.equals("") ? 0 : infoRect.width() + 10);
-			if (myInfoWidth != infoWidth) {
-				gaugeChanged = true;
-				myInfoWidth = infoWidth;
-			}
+			myTextPaint.getTextBounds(infoString, 0, infoString.length(), infoRect);
+			myInfoWidth = (infoString.equals("") ? 0 : infoRect.width() + 10);
 
 			// draw info text back ground rectangle
 			myBgPaint.setColor(bgColor);
@@ -198,7 +188,7 @@ public class ZLFooter {
 
 			// draw info text
 			myTextPaint.setColor(fgColor);
-			canvas.drawText(info, mySize.x - 1, mySize.y - delta, myTextPaint);
+			canvas.drawText(infoString, mySize.x - 1, mySize.y - delta, myTextPaint);
 		}
 
 		if (gaugeChanged) {
@@ -218,23 +208,17 @@ public class ZLFooter {
 
 			// compute gauge size
 			myGaugeRect.inset(2 + delta, 2 + delta);
-			myGaugeRect.right = myGaugeRect.left + (int)((float)myGaugeRect.width() * progress);
+			myGaugeRect.right = myGaugeRect.left + (int)((float)myGaugeRect.width() * pagesProgress / bookLength);
 
 			// draw gauge progress
 			canvas.drawRect(myGaugeRect, myFgPaint);
 		}
 
-		myLastProgress = progress;
-		myLastBattery = ZLApplication.Instance().getBatteryLevel();
-		myLastHours = date.getHours();
-		myLastMinutes = date.getMinutes();
 		myLastFgColor = fgColor;
 		myLastBgColor = bgColor;
 		myLastShowClock = fbReader.FooterShowClock.getValue();
 		myLastShowBattery = fbReader.FooterShowBattery.getValue();
 		myLastShowProgress = fbReader.FooterShowProgress.getValue();
-		myLastPagesNum = bookLength;
-		myLastPage = pagesProgress;
 		myLastSize = size;
 	}
 }
