@@ -146,36 +146,21 @@ public final class Library {
 	}
 
 	private void collectBooks() {
-		//final long start = System.currentTimeMillis();
-		//android.os.Debug.startMethodTracing("/sdcard/ll0");
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println(physicalFilesList.size() + " files " + (System.currentTimeMillis() - start));
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll2");
 		FileInfoSet fileInfos = new FileInfoSet();
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println("file infos have been loaded " + (System.currentTimeMillis() - start));
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll1");
 		final Map<Long,Book> savedBooks = BooksDatabase.Instance().listBooks(fileInfos);
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println(savedBooks.size() + " saved books " + (System.currentTimeMillis() - start));
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll3");
 		for (ZLPhysicalFile file : physicalFilesList) {
 			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file));
 			file.setCached(false);
 		}
 		myBooks.add(getBook(getHelpFile(), fileInfos, savedBooks, false));
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println("books have been synchronized " + (System.currentTimeMillis() - start));
 
 		collectExternalBooks(fileInfos, savedBooks);
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll4");
 		fileInfos.save();
-		//android.os.Debug.stopMethodTracing();
 	}
 
 	private static class AuthorSeriesPair {
