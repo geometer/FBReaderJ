@@ -17,14 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
+import org.geometerplus.fbreader.fbreader.FBAction;
+import org.geometerplus.fbreader.fbreader.FBReader;
+
 class ShowNavigationAction extends FBAction {
-	ShowNavigationAction(FBReader fbreader) {
+	private final FBReaderActivity myActivity;
+
+	ShowNavigationAction(FBReaderActivity activity, FBReader fbreader) {
 		super(fbreader);
+		myActivity = activity;
 	}
 
 	@Override
@@ -35,6 +41,6 @@ class ShowNavigationAction extends FBAction {
 	}
 
 	public void run() {
-		org.geometerplus.android.fbreader.FBReader.Instance.navigate();
+		myActivity.navigate();
 	}
 }

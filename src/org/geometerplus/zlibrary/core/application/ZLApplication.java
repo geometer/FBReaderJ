@@ -111,7 +111,7 @@ public abstract class ZLApplication {
 		hideAllPanels();
 	}
 
-	protected final void addAction(String actionId, ZLAction action) {
+	public final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
 	}
 
