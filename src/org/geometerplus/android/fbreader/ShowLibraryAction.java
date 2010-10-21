@@ -27,6 +27,8 @@ import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
+import org.geometerplus.android.util.AndroidUtil;
+
 class ShowLibraryAction extends FBAction {
 	private final FBReader myBaseActivity;
 
@@ -46,6 +48,6 @@ class ShowLibraryAction extends FBAction {
 				myBaseActivity.startActivity(intent);
 			}
 		};
-		AnroidUtil.wait("loadingBookList", action, myBaseActivity);
+		AndroidUtil.wait("loadingBookList", action, myBaseActivity);
 	}
 }
