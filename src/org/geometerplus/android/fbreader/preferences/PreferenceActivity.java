@@ -114,7 +114,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
 			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		}
-		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
+		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
+			this,
+			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption,
+			lookNFeelCategory.Resource,
+			"dontTurnScreenOff"
+		));
 
 		/*
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
