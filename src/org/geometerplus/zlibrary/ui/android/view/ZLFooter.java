@@ -21,8 +21,6 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.Date;
 
-import android.graphics.Rect;
-
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -35,14 +33,9 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
-public class ZLFooter {
+class ZLFooter {
 	private float myGaugeStart;
 	private float myGaugeEnd;
-	private Rect myGaugeRect;
-
-	public ZLFooter() {
-		myGaugeRect = new Rect();
-	}
 
 	public int getTapHeight() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -109,11 +102,7 @@ public class ZLFooter {
 
 		final int infoWidth = context.getStringWidth(infoString);
 
-		myGaugeRect.set(0, 0, width - ((infoWidth == 0) ? 0 : infoWidth + 10), height);
-
-		myGaugeRect.right -= (1 - delta);
-		myGaugeRect.inset(1 + delta, 1 + delta);
-		myGaugeStart = myGaugeRect.left;
-		myGaugeEnd = myGaugeRect.right;
+		myGaugeStart = 0;
+		myGaugeEnd = width - ((infoWidth == 0) ? 0 : infoWidth + 10);
 	}
 }
