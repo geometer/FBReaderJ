@@ -24,17 +24,13 @@ import java.util.Date;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-
-import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 // TODO: remove these dependencies
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 class ZLFooter {
-	private float myGaugeStart;
 	private float myGaugeEnd;
 
 	public int getTapHeight() {
@@ -48,9 +44,7 @@ class ZLFooter {
 	public void setProgress(ZLView view, int x) {
 		// set progress according to tap coordinate
 		ZLTextView textView = (ZLTextView)view;
-		float progress = 1.0f *
-			(Math.max(myGaugeStart, Math.min(x, myGaugeEnd)) - myGaugeStart) /
-			(myGaugeEnd - myGaugeStart);
+		float progress = 1.0f * Math.min(x, myGaugeEnd) / myGaugeEnd;
 		int page = (int)(progress * textView.computePageNumber());
 		if (page <= 1) {
 			textView.gotoHome();
@@ -102,7 +96,6 @@ class ZLFooter {
 
 		final int infoWidth = context.getStringWidth(infoString);
 
-		myGaugeStart = 0;
 		myGaugeEnd = width - ((infoWidth == 0) ? 0 : infoWidth + 10);
 	}
 }
