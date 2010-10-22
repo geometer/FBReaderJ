@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -80,7 +81,7 @@ public class ZLFooter {
 		ZLApplication.Instance().repaintView();
 	}
 
-	void paint(Bitmap bitmap) {
+	void paint(ZLPaintContext context, Canvas canvas) {
 		// if it is first drawing of bitmap or footer height is changed
 		boolean infoChanged = false;
 
@@ -95,7 +96,7 @@ public class ZLFooter {
 			myLastBgColor = bgColor;
 		}
 
-		final int width = bitmap.getWidth();
+		final int width = context.getWidth();
 		final int height = view.getFooterArea().getHeight();
 
 		int delta = height <= 10 ? 0 : 1;
@@ -148,8 +149,6 @@ public class ZLFooter {
 		}
 
 		if (infoChanged) {
-			Canvas canvas = new Canvas(bitmap);
-
 			// calculate information text width and height of gauge
 			Rect infoRect = new Rect();
 			myTextPaint.getTextBounds(infoString, 0, infoString.length(), infoRect);

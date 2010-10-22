@@ -304,14 +304,16 @@ public class ZLAndroidWidget extends View {
 			if (myFooterBitmap == null) {
 				myFooterBitmap = Bitmap.createBitmap(myViewSize.x, footer.getHeight(), Bitmap.Config.RGB_565);
 			}
+			final Canvas fCanvas = new Canvas(myFooterBitmap);
 			final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-				new Canvas(myFooterBitmap),
+				//new Canvas(myFooterBitmap),
+				fCanvas,
 				myViewSize.x,
 				footer.getHeight(),
 				getWidth() - getTextViewWidth()
 			);
 			footer.paint(context);
-			myFooter.paint(myFooterBitmap);
+			myFooter.paint(context, fCanvas);
 			canvas.drawBitmap(myFooterBitmap, 0, myViewSize.y - footer.getHeight(), myPaint);
 		} else {
 			myFooterBitmap = null;
