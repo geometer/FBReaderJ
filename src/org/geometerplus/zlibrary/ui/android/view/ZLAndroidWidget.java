@@ -59,17 +59,6 @@ public class ZLAndroidWidget extends View {
 		setDrawingCacheEnabled(false);
 	}
 
-	private Point myViewSize = new Point();
-	// ensure children objects has correct information about widget size
-	private void ensureChildrenSizes() {
-		int width = getWidth();
-		int height = getHeight();
-		if (myViewSize.x != width || myViewSize.y != height) {
-			myViewSize.x = width;
-			myViewSize.y = height;
-		}
-	}
-
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -81,8 +70,6 @@ public class ZLAndroidWidget extends View {
 			view.onScrollingFinished(ZLView.PAGE_CENTRAL);
 			setPageToScroll(ZLView.PAGE_CENTRAL);
 		}
-
-		ensureChildrenSizes();
 	}
 
 	@Override
@@ -95,7 +82,6 @@ public class ZLAndroidWidget extends View {
 		}
 		super.onDraw(canvas);
 
-		ensureChildrenSizes();
 		final int w = getWidth();
 		final int h = getTextViewHeight();
 
@@ -160,9 +146,8 @@ public class ZLAndroidWidget extends View {
 			myPaint
 		);
 
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-
 		if (stopScrolling) {
+			final ZLView view = ZLApplication.Instance().getCurrentView();
 			if (myScrollingBound != 0) {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;
@@ -297,22 +282,22 @@ public class ZLAndroidWidget extends View {
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
 		if (footer != null) {
 			if (myFooterBitmap != null &&
-				(myFooterBitmap.getWidth() != myViewSize.x ||
+				(myFooterBitmap.getWidth() != getWidth() ||
 				 myFooterBitmap.getHeight() != footer.getHeight())) {
 				myFooterBitmap = null;
 			}
 			if (myFooterBitmap == null) {
-				myFooterBitmap = Bitmap.createBitmap(myViewSize.x, footer.getHeight(), Bitmap.Config.RGB_565);
+				myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
 			}
 			final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
 				new Canvas(myFooterBitmap),
-				myViewSize.x,
+				getWidth(),
 				footer.getHeight(),
 				getWidth() - getTextViewWidth()
 			);
 			footer.paint(context);
 			myFooter.paint(context);
-			canvas.drawBitmap(myFooterBitmap, 0, myViewSize.y - footer.getHeight(), myPaint);
+			canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
 		} else {
 			myFooterBitmap = null;
 		}
