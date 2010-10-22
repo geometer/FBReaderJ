@@ -55,10 +55,6 @@ public class ZLAndroidWidget extends View {
 		setDrawingCacheEnabled(false);
 	}
 
-	public ZLAndroidPaintContext getPaintContext() {
-		return ZLAndroidPaintContext.Instance();
-	}
-
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		if (myScreenIsTouched) {
@@ -265,16 +261,13 @@ public class ZLAndroidWidget extends View {
 			mySecondaryBitmapIsUpToDate = true;
 		}
 
-		final int w = getWidth();
-		final int h = getHeight();
-		final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
-
-		Canvas canvas = new Canvas(bitmap);
-		context.beginPaint(canvas);
-		final int scrollbarWidth = view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0;
-		context.setSize(w, h, scrollbarWidth);
-		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
-		context.endPaint();
+		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			new Canvas(bitmap),
+			getWidth(),
+			getHeight(),
+			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+		);
+		view.paint(context, (bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
 	}
 
 	private void onDrawStatic(Canvas canvas) {

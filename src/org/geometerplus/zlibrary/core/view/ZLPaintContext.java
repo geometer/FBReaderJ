@@ -49,10 +49,6 @@ abstract public class ZLPaintContext {
 	private boolean myFontIsItalic;
 	private boolean myFontIsUnderlined;
 
-	public final void resetFont() {
-		myResetFont = true;
-	}
-
 	public final void setFont(String family, int size, boolean bold, boolean italic, boolean underline) {
 		if ((family != null) && !myFontFamily.equals(family)) {
 			myFontFamily = family;

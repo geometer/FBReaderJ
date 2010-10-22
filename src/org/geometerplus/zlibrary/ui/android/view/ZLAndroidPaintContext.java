@@ -32,28 +32,24 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
-	private Canvas myCanvas;
+	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myLinePaint = new Paint();
 	private final Paint myFillPaint = new Paint();
 	private final Paint myOutlinePaint = new Paint();
 
-	private int myWidth;
-	private int myHeight;
-	private int myScrollbarWidth;
-
-	static ZLAndroidPaintContext Instance() {
-		if (ourInstance == null) {
-			ourInstance = new ZLAndroidPaintContext();
-		}
-		return ourInstance;
-	}
-
-	private static ZLAndroidPaintContext ourInstance;
+	private final int myWidth;
+	private final int myHeight;
+	private final int myScrollbarWidth;
 
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
-	private ZLAndroidPaintContext() {
+	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
+		myCanvas = canvas;
+		myWidth = width - scrollbarWidth;
+		myHeight = height;
+		myScrollbarWidth = scrollbarWidth;
+
 		myTextPaint.setLinearText(false);
 		myTextPaint.setAntiAlias(true);
 		myTextPaint.setSubpixelText(false);
@@ -65,21 +61,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myOutlinePaint.setStyle(Paint.Style.STROKE);
 		myOutlinePaint.setPathEffect(new CornerPathEffect(5));
 		myOutlinePaint.setMaskFilter(new EmbossMaskFilter(new float[] {1, 1, 1}, .4f, 6f, 3.5f));
-	}
-
-	void setSize(int width, int height, int scrollbarWidth) {
-		myWidth = width - scrollbarWidth;
-		myHeight = height;
-		myScrollbarWidth = scrollbarWidth;
-	}
-
-	void beginPaint(Canvas canvas) {
-		myCanvas = canvas;
-		resetFont();
-	}
-
-	void endPaint() {
-		myCanvas = null;
 	}
 
 	public void clear(ZLColor color) {

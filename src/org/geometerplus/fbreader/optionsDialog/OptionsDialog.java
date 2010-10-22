@@ -45,7 +45,7 @@ public class OptionsDialog {
 		
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
-		new StyleOptionsPage(myDialog.createTab("Styles"), ZLibrary.Instance().getPaintContext());
+		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getCurrentView().getContext());
 		
 		final ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
