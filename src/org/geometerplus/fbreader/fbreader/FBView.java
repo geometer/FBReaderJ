@@ -339,6 +339,7 @@ public final class FBView extends ZLTextView {
 			context.setLineColor(fgColor);
 			context.setLineWidth(lineWidth);
 			final int gaugeRight = width - ((infoWidth == 0) ? 0 : infoWidth + 10) - 2;
+			myGaugeWidth = gaugeRight;
 			context.drawLine(lineWidth, lineWidth, lineWidth, height - lineWidth);
 			context.drawLine(lineWidth, height - lineWidth, gaugeRight, height - lineWidth);
 			context.drawLine(gaugeRight, height - lineWidth, gaugeRight, lineWidth);
@@ -349,6 +350,12 @@ public final class FBView extends ZLTextView {
 			context.drawLine(1 + 2 * lineWidth, height - 1 - 2 * lineWidth, gaugeInternalRight, height - 1 - 2 * lineWidth);
 			context.drawLine(gaugeInternalRight, height - 1 - 2 * lineWidth, gaugeInternalRight, 1 + 2 * lineWidth);
 			context.drawLine(gaugeInternalRight, 1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth);
+		}
+
+		// TODO: remove
+		int myGaugeWidth = 1;
+		public int getGaugeWidth() {
+			return myGaugeWidth;
 		}
 	}
 

@@ -296,7 +296,6 @@ public class ZLAndroidWidget extends View {
 				view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 			);
 			footer.paint(context);
-			myFooter.paint(context);
 			canvas.drawBitmap(myFooterBitmap, 0, getMainAreaHeight(), myPaint);
 		} else {
 			myFooterBitmap = null;
