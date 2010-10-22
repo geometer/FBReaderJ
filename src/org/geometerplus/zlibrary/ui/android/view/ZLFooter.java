@@ -21,15 +21,12 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.Date;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -39,16 +36,13 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public class ZLFooter {
-	private final Paint myTextPaint = new Paint();
-	private final Paint myBgPaint = new Paint();
-	private final Paint myFgPaint = new Paint();
 	private float myGaugeStart;
 	private float myGaugeEnd;
 	private Rect myGaugeRect;
 
 	private String myInfoString;
-	private int myLastBgColor;
-	private int myLastFgColor;
+	private ZLColor myLastBgColor;
+	private ZLColor myLastFgColor;
 	private int myLastHeight;
 	private int myLastWidth;
 
@@ -81,16 +75,16 @@ public class ZLFooter {
 		ZLApplication.Instance().repaintView();
 	}
 
-	void paint(ZLPaintContext context, Canvas canvas) {
+	void paint(ZLPaintContext context) {
 		// if it is first drawing of bitmap or footer height is changed
 		boolean infoChanged = false;
 
 		// query colors for background and regular text
 		final ZLTextView view = (ZLTextView)ZLApplication.Instance().getCurrentView();
-		int bgColor = ZLAndroidColorUtil.rgb(view.getBackgroundColor());
+		final ZLColor bgColor = view.getBackgroundColor();
 		// TODO: separate color option for footer color
-		int fgColor = ZLAndroidColorUtil.rgb(view.getTextColor(FBHyperlinkType.NONE));
-		if (myLastFgColor != fgColor || myLastBgColor != bgColor) {
+		final ZLColor fgColor = view.getTextColor(FBHyperlinkType.NONE);
+		if (!fgColor.equals(myLastFgColor) || !bgColor.equals(myLastBgColor)) {
 			infoChanged = true;
 			myLastFgColor = fgColor;
 			myLastBgColor = bgColor;
@@ -98,18 +92,16 @@ public class ZLFooter {
 
 		final int width = context.getWidth();
 		final int height = view.getFooterArea().getHeight();
+		final int lineWidth = height <= 10 ? 1 : 2;
+		final int delta = height <= 10 ? 0 : 1;
+		context.setFont(
+			"sans-serif",
+			height <= 10 ? height + 3 : height + 1,
+			height > 10, false, false
+		);
 
-		int delta = height <= 10 ? 0 : 1;
 		if (height != myLastHeight) {
 			myLastHeight = height;
-			myTextPaint.setTextSize(height <= 10 ? height + 3 : height + 1);
-			myFgPaint.setStrokeWidth(height <= 10 ? 1 : 2);
-			myTextPaint.setTypeface(Typeface.create(
-				Typeface.SANS_SERIF, height <= 10 ? Typeface.NORMAL : Typeface.BOLD
-			));
-			myTextPaint.setTextAlign(Paint.Align.RIGHT);
-			myTextPaint.setStyle(Paint.Style.FILL);
-			myTextPaint.setAntiAlias(true);
 			infoChanged = true;
 		}
 		if (width != myLastWidth) {
@@ -149,30 +141,18 @@ public class ZLFooter {
 		}
 
 		if (infoChanged) {
-			// calculate information text width and height of gauge
-			Rect infoRect = new Rect();
-			myTextPaint.getTextBounds(infoString, 0, infoString.length(), infoRect);
-			int infoWidth = infoString.equals("") ? 0 : infoRect.width() + 10;
+			final int infoWidth = context.getStringWidth(infoString);
 
-			// draw info text back ground rectangle
-			myBgPaint.setColor(bgColor);
-			canvas.drawRect(width - infoWidth, 0, width, height, myBgPaint);
+			context.clear(bgColor);
 
 			// draw info text
-			myTextPaint.setColor(fgColor);
-			canvas.drawText(infoString, width - 1, height - delta, myTextPaint);
+			context.setTextColor(fgColor);
+			context.drawString(width - infoWidth, height - delta, infoString);
 
-			// draw info text back ground rectangle
-			myBgPaint.setColor(bgColor);
-			myGaugeRect.set(0, 0, width - infoWidth, height);
-			canvas.drawRect(myGaugeRect, myBgPaint);
+			myGaugeRect.set(0, 0, width - ((infoWidth == 0) ? 0 : infoWidth + 10), height);
 
-			// draw gauge border line
-			myFgPaint.setColor(fgColor);
-			myFgPaint.setStyle(Paint.Style.STROKE);
 			myGaugeRect.right -= (1 - delta);
 			myGaugeRect.inset(1 + delta, 1 + delta);
-			canvas.drawRect(myGaugeRect, myFgPaint);
 			myGaugeStart = myGaugeRect.left;
 			myGaugeEnd = myGaugeRect.right;
 
@@ -180,8 +160,20 @@ public class ZLFooter {
 			myGaugeRect.inset(2 + delta, 2 + delta);
 			myGaugeRect.right = myGaugeRect.left + (int)((float)myGaugeRect.width() * pagesProgress / bookLength);
 
-			// draw gauge progress
-			canvas.drawRect(myGaugeRect, myFgPaint);
+			// draw info text back ground rectangle
+			context.setLineColor(fgColor);
+			context.setLineWidth(lineWidth);
+			final int gaugeRight = width - ((infoWidth == 0) ? 0 : infoWidth + 10) - 2;
+			context.drawLine(lineWidth, lineWidth, lineWidth, height - lineWidth);
+			context.drawLine(lineWidth, height - lineWidth, gaugeRight, height - lineWidth);
+			context.drawLine(gaugeRight, height - lineWidth, gaugeRight, lineWidth);
+			context.drawLine(gaugeRight, lineWidth, lineWidth, lineWidth);
+
+			final int gaugeInternalRight = 1 + 2 * lineWidth + (int)(1.0 * (gaugeRight - 2 - 3 * lineWidth) * pagesProgress / bookLength);
+			context.drawLine(1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth, height - 1 - 2 * lineWidth);
+			context.drawLine(1 + 2 * lineWidth, height - 1 - 2 * lineWidth, gaugeInternalRight, height - 1 - 2 * lineWidth);
+			context.drawLine(gaugeInternalRight, height - 1 - 2 * lineWidth, gaugeInternalRight, 1 + 2 * lineWidth);
+			context.drawLine(gaugeInternalRight, 1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth);
 		}
 	}
 }

@@ -126,6 +126,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: use style
 		myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
+	public void setLineWidth(int width) {
+		myLinePaint.setStrokeWidth(width);
+	}
 
 	public void setFillColor(ZLColor color, int style) {
 		// TODO: use style

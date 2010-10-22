@@ -39,6 +39,8 @@ final class DummyPaintContext extends ZLPaintContext {
 
 	public void setLineColor(ZLColor color, int style) {
 	}
+	public void setLineWidth(int width) {
+	}
 
 	public void setFillColor(ZLColor color, int style) {
 	}

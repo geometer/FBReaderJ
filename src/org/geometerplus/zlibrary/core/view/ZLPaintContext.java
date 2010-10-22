@@ -86,6 +86,7 @@ abstract public class ZLPaintContext {
 		setLineColor(color, LineStyle.SOLID_LINE);
 	}
 	abstract public void setLineColor(ZLColor color, int style);
+	abstract public void setLineWidth(int width);
 
 	final public void setFillColor(ZLColor color) {
 		setFillColor(color, FillStyle.SOLID_FILL);
