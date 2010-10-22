@@ -59,10 +59,6 @@ public class ZLAndroidWidget extends View {
 		setDrawingCacheEnabled(false);
 	}
 
-	public ZLAndroidPaintContext getPaintContext() {
-		return ZLAndroidPaintContext.Instance();
-	}
-
 	private Point myViewSize = new Point();
 	// ensure children objects has correct information about widget size
 	private void ensureChildrenSizes() {
@@ -288,12 +284,13 @@ public class ZLAndroidWidget extends View {
 			mySecondaryBitmapIsUpToDate = true;
 		}
 
-		final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
-		Canvas canvas = new Canvas(bitmap);
-		context.beginPaint(canvas);
-		context.setSize(getWidth(), getTextViewHeight(), getWidth() - getTextViewWidth());
-		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
-		context.endPaint();
+		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			new Canvas(bitmap),
+			getWidth(),
+			getHeight(),
+			getWidth() - getTextViewWidth()
+		);
+		view.paint(context, (bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
 	}
 
 	private void drawFooter(Canvas canvas) {

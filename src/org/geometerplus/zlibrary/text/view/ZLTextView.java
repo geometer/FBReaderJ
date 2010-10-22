@@ -52,8 +52,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
-	public ZLTextView(ZLPaintContext context) {
-		super(context);
+	public ZLTextView() {
  		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
@@ -250,8 +249,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public synchronized void paint(int viewPage) {
-		Context.clear(getBackgroundColor());
+	@Override
+	public synchronized void paint(ZLPaintContext context, int viewPage) {
+		myContext = context;
+		context.clear(getBackgroundColor());
 
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return;
@@ -314,7 +315,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final ZLTextHyperlinkArea hyperlinkArea = getCurrentHyperlinkArea(page);
 		if (hyperlinkArea != null) {
-			hyperlinkArea.draw(Context);
+			hyperlinkArea.draw(context);
 		}
 	}
 
@@ -415,7 +416,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		float charsPerLine = Math.min(effectiveWidth / charWidth,
 				charsPerParagraph * 1.2f);
 
-		final int strHeight = getWordHeight() + Context.getDescent();
+		final int strHeight = getWordHeight() + myContext.getDescent();
 		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore() 
 				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
@@ -497,7 +498,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private final float computeCharWidth(char[] pattern, int length) {
-		return Context.getStringWidth(pattern, 0, length) / ((float) length);
+		return myContext.getStringWidth(pattern, 0, length) / ((float) length);
 	}
 
 	public final synchronized int computePageNumber() {
@@ -573,7 +574,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 
 		if ((page == myCurrentPage) && !mySelectionModel.isEmpty() && (from != to)) {
 			final int paragraphIndex = paragraph.Index;
@@ -709,7 +710,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private ZLTextLineInfo processTextLine(ZLTextParagraphCursor paragraphCursor, 
 		final int startIndex, final int startCharIndex, final int endIndex) {
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
 		if (cachedInfo != null) {
@@ -831,7 +832,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final ZLTextWord word = (ZLTextWord)element;
 				newWidth -= getWordWidth(word, currentCharIndex);
 				int spaceLeft = maxWidth - newWidth;
-				if ((word.Length > 3) && (spaceLeft > 2 * Context.getSpaceWidth())) {
+				if ((word.Length > 3) && (spaceLeft > 2 * context.getSpaceWidth())) {
 					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
@@ -887,7 +888,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
 		y = Math.min(y + info.Height, getBottomLine());
 
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
 
 		setTextStyle(info.StartStyle);

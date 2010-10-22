@@ -65,10 +65,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public ZLAndroidPaintContext getPaintContext() {
-		return getWidget().getPaintContext();
-	}
-
 	public ZLAndroidWidget getWidget() {
 		if (myWidget == null) {
 			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);

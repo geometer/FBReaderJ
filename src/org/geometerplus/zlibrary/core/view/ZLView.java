@@ -20,10 +20,10 @@
 package org.geometerplus.zlibrary.core.view;
 
 abstract public class ZLView {
-	public final ZLPaintContext Context;
+	protected ZLPaintContext myContext = new DummyPaintContext();
 
-	public ZLView(ZLPaintContext context) {
-		Context = context;
+	public final ZLPaintContext getContext() {
+		return myContext;
 	}
 
 	abstract public interface FooterArea {
@@ -39,7 +39,7 @@ abstract public class ZLView {
 	public static final int PAGE_TOP = 3;
 	public static final int PAGE_BOTTOM = 4;
 
-	abstract public void paint(int viewPage);
+	abstract public void paint(ZLPaintContext context, int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
 
 	public boolean onStylusPress(int x, int y) {
