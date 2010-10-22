@@ -283,7 +283,8 @@ public final class FBView extends ZLTextView {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
-	private class Footer implements FooterArea {
+	// TODO: change to private
+	public class Footer implements FooterArea {
 		public int getHeight() {
 			return myReader.FooterHeightOption.getValue();
 		}
@@ -356,6 +357,23 @@ public final class FBView extends ZLTextView {
 		int myGaugeWidth = 1;
 		public int getGaugeWidth() {
 			return myGaugeWidth;
+		}
+
+		public int getTapHeight() {
+			return 30;
+		}
+
+		public void setProgress(int x) {
+			// set progress according to tap coordinate
+			int gaugeWidth = getGaugeWidth();
+			float progress = 1.0f * Math.min(x, gaugeWidth) / gaugeWidth;
+			int page = (int)(progress * computePageNumber());
+			if (page <= 1) {
+				gotoHome();
+			} else {
+				gotoPage(page);
+			}
+			ZLApplication.Instance().repaintView();
 		}
 	}
 

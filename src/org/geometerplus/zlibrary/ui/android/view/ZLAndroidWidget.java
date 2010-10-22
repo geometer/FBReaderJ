@@ -30,6 +30,9 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
+// TODO: remove
+import org.geometerplus.fbreader.fbreader.FBView;
+
 public class ZLAndroidWidget extends View {
 	private final Paint myPaint = new Paint();
 	private Bitmap myMainBitmap;
@@ -41,8 +44,6 @@ public class ZLAndroidWidget extends View {
 	private int myScrollingShift;
 	private float myScrollingSpeed;
 	private int myScrollingBound;
-	// TODO: remove this field
-	private ZLFooter myFooter = new ZLFooter();
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -354,10 +355,10 @@ public class ZLAndroidWidget extends View {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
 					if (myPendingPress) {
-						if (y > getHeight() - myFooter.getTapHeight()) {
-							myFooter.setProgress(view, myPressedX);
-						}
-						else {
+						FBView.Footer f = (FBView.Footer)view.getFooterArea();
+						if (f != null && y > getHeight() - f.getTapHeight()) {
+							f.setProgress(myPressedX);
+						} else {
 							view.onStylusPress(myPressedX, myPressedY);
 						}
 					}
