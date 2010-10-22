@@ -40,16 +40,8 @@ public class ZLFooter {
 	private float myGaugeEnd;
 	private Rect myGaugeRect;
 
-	private String myInfoString;
-	private ZLColor myLastBgColor;
-	private ZLColor myLastFgColor;
-	private int myLastHeight;
-	private int myLastWidth;
-
 	public ZLFooter() {
 		myGaugeRect = new Rect();
-		myLastHeight = -1;
-		myLastWidth = -1;
 	}
 
 	public int getTapHeight() {
@@ -76,19 +68,7 @@ public class ZLFooter {
 	}
 
 	void paint(ZLPaintContext context) {
-		// if it is first drawing of bitmap or footer height is changed
-		boolean infoChanged = false;
-
-		// query colors for background and regular text
 		final ZLTextView view = (ZLTextView)ZLApplication.Instance().getCurrentView();
-		final ZLColor bgColor = view.getBackgroundColor();
-		// TODO: separate color option for footer color
-		final ZLColor fgColor = view.getTextColor(FBHyperlinkType.NONE);
-		if (!fgColor.equals(myLastFgColor) || !bgColor.equals(myLastBgColor)) {
-			infoChanged = true;
-			myLastFgColor = fgColor;
-			myLastBgColor = bgColor;
-		}
 
 		final int width = context.getWidth();
 		final int height = view.getFooterArea().getHeight();
@@ -99,15 +79,6 @@ public class ZLFooter {
 			height <= 10 ? height + 3 : height + 1,
 			height > 10, false, false
 		);
-
-		if (height != myLastHeight) {
-			myLastHeight = height;
-			infoChanged = true;
-		}
-		if (width != myLastWidth) {
-			myLastWidth = width;
-			infoChanged = true;
-		}
 
 		final int pagesProgress = view.computeCurrentPage();
 		final int bookLength = view.computePageNumber();
@@ -135,45 +106,14 @@ public class ZLFooter {
 			info.append(String.format("%02d:%02d", date.getHours(), date.getMinutes()));
 		}
 		final String infoString = info.toString();
-		if (!infoString.equals(myInfoString)) {
-			myInfoString = infoString;
-			infoChanged = true;
-		}
 
-		if (infoChanged) {
-			final int infoWidth = context.getStringWidth(infoString);
+		final int infoWidth = context.getStringWidth(infoString);
 
-			context.clear(bgColor);
+		myGaugeRect.set(0, 0, width - ((infoWidth == 0) ? 0 : infoWidth + 10), height);
 
-			// draw info text
-			context.setTextColor(fgColor);
-			context.drawString(width - infoWidth, height - delta, infoString);
-
-			myGaugeRect.set(0, 0, width - ((infoWidth == 0) ? 0 : infoWidth + 10), height);
-
-			myGaugeRect.right -= (1 - delta);
-			myGaugeRect.inset(1 + delta, 1 + delta);
-			myGaugeStart = myGaugeRect.left;
-			myGaugeEnd = myGaugeRect.right;
-
-			// compute gauge size
-			myGaugeRect.inset(2 + delta, 2 + delta);
-			myGaugeRect.right = myGaugeRect.left + (int)((float)myGaugeRect.width() * pagesProgress / bookLength);
-
-			// draw info text back ground rectangle
-			context.setLineColor(fgColor);
-			context.setLineWidth(lineWidth);
-			final int gaugeRight = width - ((infoWidth == 0) ? 0 : infoWidth + 10) - 2;
-			context.drawLine(lineWidth, lineWidth, lineWidth, height - lineWidth);
-			context.drawLine(lineWidth, height - lineWidth, gaugeRight, height - lineWidth);
-			context.drawLine(gaugeRight, height - lineWidth, gaugeRight, lineWidth);
-			context.drawLine(gaugeRight, lineWidth, lineWidth, lineWidth);
-
-			final int gaugeInternalRight = 1 + 2 * lineWidth + (int)(1.0 * (gaugeRight - 2 - 3 * lineWidth) * pagesProgress / bookLength);
-			context.drawLine(1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth, height - 1 - 2 * lineWidth);
-			context.drawLine(1 + 2 * lineWidth, height - 1 - 2 * lineWidth, gaugeInternalRight, height - 1 - 2 * lineWidth);
-			context.drawLine(gaugeInternalRight, height - 1 - 2 * lineWidth, gaugeInternalRight, 1 + 2 * lineWidth);
-			context.drawLine(gaugeInternalRight, 1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth);
-		}
+		myGaugeRect.right -= (1 - delta);
+		myGaugeRect.inset(1 + delta, 1 + delta);
+		myGaugeStart = myGaugeRect.left;
+		myGaugeEnd = myGaugeRect.right;
 	}
 }

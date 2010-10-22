@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.Date;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -287,6 +289,66 @@ public final class FBView extends ZLTextView {
 		}
 
 		public void paint(ZLPaintContext context) {
+			final ZLColor bgColor = getBackgroundColor();
+			// TODO: separate color option for footer color
+			final ZLColor fgColor = getTextColor(FBHyperlinkType.NONE);
+
+			final int width = context.getWidth();
+			final int height = getHeight();
+			final int lineWidth = height <= 10 ? 1 : 2;
+			final int delta = height <= 10 ? 0 : 1;
+			context.setFont(
+				"sans-serif",
+				height <= 10 ? height + 3 : height + 1,
+				height > 10, false, false
+			);
+
+			final int pagesProgress = computeCurrentPage();
+			final int bookLength = computePageNumber();
+
+			final StringBuilder info = new StringBuilder();
+			if (myReader.FooterShowProgress.getValue()) {
+				info.append(pagesProgress);
+				info.append("/");
+				info.append(bookLength);
+			}
+			if (myReader.FooterShowBattery.getValue()) {
+				if (info.length() > 0) {
+					info.append(" ");
+				}
+				info.append(ZLApplication.Instance().getBatteryLevel());
+				info.append("%");
+			}
+			if (myReader.FooterShowClock.getValue()) {
+				if (info.length() > 0) {
+					info.append(" ");
+				}
+				Date date = new Date();
+				info.append(String.format("%02d:%02d", date.getHours(), date.getMinutes()));
+			}
+			final String infoString = info.toString();
+
+			final int infoWidth = context.getStringWidth(infoString);
+			context.clear(bgColor);
+
+			// draw info text
+			context.setTextColor(fgColor);
+			context.drawString(width - infoWidth, height - delta, infoString);
+
+			// draw gauge
+			context.setLineColor(fgColor);
+			context.setLineWidth(lineWidth);
+			final int gaugeRight = width - ((infoWidth == 0) ? 0 : infoWidth + 10) - 2;
+			context.drawLine(lineWidth, lineWidth, lineWidth, height - lineWidth);
+			context.drawLine(lineWidth, height - lineWidth, gaugeRight, height - lineWidth);
+			context.drawLine(gaugeRight, height - lineWidth, gaugeRight, lineWidth);
+			context.drawLine(gaugeRight, lineWidth, lineWidth, lineWidth);
+
+			final int gaugeInternalRight = 1 + 2 * lineWidth + (int)(1.0 * (gaugeRight - 2 - 3 * lineWidth) * pagesProgress / bookLength);
+			context.drawLine(1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth, height - 1 - 2 * lineWidth);
+			context.drawLine(1 + 2 * lineWidth, height - 1 - 2 * lineWidth, gaugeInternalRight, height - 1 - 2 * lineWidth);
+			context.drawLine(gaugeInternalRight, height - 1 - 2 * lineWidth, gaugeInternalRight, 1 + 2 * lineWidth);
+			context.drawLine(gaugeInternalRight, 1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth);
 		}
 	}
 
