@@ -28,7 +28,7 @@ abstract public class ZLView {
 
 	abstract public interface FooterArea {
 		int getHeight();
-		void paint();
+		void paint(ZLPaintContext context);
 	}
 
 	abstract public FooterArea getFooterArea();
