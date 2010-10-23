@@ -102,6 +102,12 @@ public final class FBView extends ZLTextView {
 			return false;
 		}
 
+		Footer footer = (Footer)getFooterArea();
+		if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+			footer.setProgress(x);
+			return true;
+		}
+
 		final ZLTextHyperlink hyperlink = findHyperlink(x, y, 10);
 		if (hyperlink != null) {
 			selectHyperlink(hyperlink);
@@ -283,8 +289,7 @@ public final class FBView extends ZLTextView {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
-	// TODO: change to private
-	public class Footer implements FooterArea {
+	private class Footer implements FooterArea {
 		public int getHeight() {
 			return myReader.FooterHeightOption.getValue();
 		}

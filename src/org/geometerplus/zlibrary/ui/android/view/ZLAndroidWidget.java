@@ -30,9 +30,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
-// TODO: remove
-import org.geometerplus.fbreader.fbreader.FBView;
-
 public class ZLAndroidWidget extends View {
 	private final Paint myPaint = new Paint();
 	private Bitmap myMainBitmap;
@@ -355,12 +352,7 @@ public class ZLAndroidWidget extends View {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
 					if (myPendingPress) {
-						FBView.Footer f = (FBView.Footer)view.getFooterArea();
-						if (f != null && y > getHeight() - f.getTapHeight()) {
-							f.setProgress(myPressedX);
-						} else {
-							view.onStylusPress(myPressedX, myPressedY);
-						}
+						view.onStylusPress(myPressedX, myPressedY);
 					}
 					view.onStylusRelease(x, y);
 				}
@@ -382,7 +374,7 @@ public class ZLAndroidWidget extends View {
 							if (myPendingLongClickRunnable != null) {
 								removeCallbacks(myPendingLongClickRunnable);
 							}
-							view.onStylusMovePressed(myPressedX, myPressedY);
+							view.onStylusPress(myPressedX, myPressedY);
 							myPendingPress = false;
 						}
 					}
