@@ -102,10 +102,12 @@ public final class FBView extends ZLTextView {
 			return false;
 		}
 
-		Footer footer = (Footer)getFooterArea();
-		if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
-			footer.setProgress(x);
-			return true;
+		if (myReader.FooterIsSensitive.getValue()) {
+			Footer footer = (Footer)getFooterArea();
+			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+				footer.setProgress(x);
+				return true;
+			}
 		}
 
 		final ZLTextHyperlink hyperlink = findHyperlink(x, y, 10);
@@ -117,17 +119,24 @@ public final class FBView extends ZLTextView {
 		}
 
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		if (preferences.HorizontalOption.getValue()) {
-			if (x <= myContext.getWidth() / 3) {
-				doScrollPage(false);
-			} else if (x >= myContext.getWidth() * 2 / 3) {
-				doScrollPage(true);
-			}
+		if (preferences.FlickOption.getValue()) {
+			myStartX = x;
+			myStartY = y;
+			setScrollingActive(true);
+			myIsManualScrollingActive = true;
 		} else {
-			if (y <= myContext.getHeight() / 3) {
-				doScrollPage(false);
-			} else if (y >= myContext.getHeight() * 2 / 3) {
-				doScrollPage(true);
+			if (preferences.HorizontalOption.getValue()) {
+				if (x <= myContext.getWidth() / 3) {
+					doScrollPage(false);
+				} else if (x >= myContext.getWidth() * 2 / 3) {
+					doScrollPage(true);
+				}
+			} else {
+				if (y <= myContext.getHeight() / 3) {
+					doScrollPage(false);
+				} else if (y >= myContext.getHeight() * 2 / 3) {
+					doScrollPage(true);
+				}
 			}
 		}
 
@@ -140,20 +149,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		// first pressed move passes coordinates where move starts
-		if (!myIsManualScrollingActive) {
-			final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-			if (preferences.FlickOption.getValue()) {
-				myStartX = x;
-				myStartY = y;
-				myIsManualScrollingActive = true;
-			}
-			return true;
-		}
-
 		synchronized (this) {
-			if (myIsManualScrollingActive) {
-				setScrollingActive(true);
+			if (isScrollingActive() && myIsManualScrollingActive) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				if (diff > 0) {
@@ -384,6 +381,7 @@ public final class FBView extends ZLTextView {
 
 	private FooterArea myFooter;
 
+	@Override
 	public FooterArea getFooterArea() {
 		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
@@ -397,6 +395,7 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
+	@Override
 	protected boolean isSelectionEnabled() {
 		return myReader.SelectionEnabledOption.getValue();
 	}

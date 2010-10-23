@@ -109,6 +109,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
 		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
 		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
+		statusLineCategory.addOption(fbReader.FooterIsSensitive, "isSensitive");
 
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {

@@ -194,6 +194,10 @@
 						<node name="summaryOn" value="Show clock in footer"/>
 						<node name="summaryOff" value="Hide clock in footer"/>
 					</node>
+					<node name="isSensitive" value="Navigation by tap on footer">
+						<node name="summaryOn" value="Navigation is enabled"/>
+						<node name="summaryOff" value="Navigation is disabled"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">

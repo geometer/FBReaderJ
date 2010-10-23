@@ -62,6 +62,8 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
 	public final ZLBooleanOption FooterShowProgress =
 		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
+	public final ZLBooleanOption FooterIsSensitive =
+		new ZLBooleanOption("Options", "FooterIsSensitive", false);
 
 	final ZLBooleanOption SelectionEnabledOption =
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);

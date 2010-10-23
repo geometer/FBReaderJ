@@ -194,6 +194,10 @@
 						<node name="summaryOn" value="Показывать часы в подвале"/>
 						<node name="summaryOff" value="Скрыть часы в подвале"/>
 					</node>
+					<node name="isSensitive" value="Перемещаться по тексту при пркосновении к подвалу">
+						<node name="summaryOn" value="Перемещение включено"/>
+						<node name="summaryOff" value="Перемещение выключено"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">
