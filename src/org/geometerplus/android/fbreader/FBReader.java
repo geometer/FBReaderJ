@@ -174,6 +174,13 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public void onStop() {
+		ControlButtonPanel.removeControlPanels();
+		super.onStop();
+	}
+
+
+	@Override
+	public void onDestroy() {
 		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
 
 		fbReader.removeAction(ActionCode.SHOW_LIBRARY);
@@ -186,8 +193,7 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.removeAction(ActionCode.SHOW_NAVIGATION);
 		fbReader.removeAction(ActionCode.SEARCH);
 
-		ControlButtonPanel.removeControlPanels();
-		super.onStop();
+		super.onDestroy();
 	}
 
 	void showTextSearchControls(boolean show) {
