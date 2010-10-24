@@ -163,8 +163,8 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Evita spegnimento schermo">
 					<node name="0" value="Always" toBeTranslated="true"/>
-					<node name="25" value="While battery level is greater than 25%" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50%" toBeTranslated="true"/>
+					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
+					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
 					<node name="100" value="Never" toBeTranslated="true"/>
 				</node>
 				<node name="appearanceSettings" value="Aspetto">
