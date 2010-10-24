@@ -19,9 +19,10 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkErrors;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-public final class NetworkErrors extends ZLNetworkErrors {
+public abstract class NetworkException extends ZLNetworkException {
+	private static final long serialVersionUID = 8931535868304063605L;
 
 	public static final String ERROR_INTERNAL = "internalError";
 	public static final String ERROR_PURCHASE_NOT_ENOUGH_MONEY = "purchaseNotEnoughMoney";
@@ -41,4 +42,11 @@ public final class NetworkErrors extends ZLNetworkErrors {
 
 	public static final String ERROR_UNSUPPORTED_OPERATION = "unsupportedOperation";
 
+	public static final String ERROR_NOT_AN_OPDS = "notAnOPDS";
+	public static final String ERROR_NO_REQUIRED_INFORMATION = "noRequiredInformation";
+	public static final String ERROR_CACHE_DIRECTORY_ERROR = "cacheDirectoryError";
+
+	private NetworkException() {
+		super(null);
+	}
 }

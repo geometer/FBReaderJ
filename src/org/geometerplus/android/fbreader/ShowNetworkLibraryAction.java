@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
-class BookInfoAction extends FBAction {
-	BookInfoAction(FBReader fbreader) {
-		super(fbreader);
-	}
-
-	public boolean isVisible() {
-		return Reader.Model != null;
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(BookInfoActivity.class);
+class ShowNetworkLibraryAction extends RunActivityAction {
+	ShowNetworkLibraryAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader, NetworkLibraryActivity.class);
 	}
 }

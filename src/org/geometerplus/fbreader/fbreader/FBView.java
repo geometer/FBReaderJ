@@ -19,19 +19,21 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.Date;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
 public final class FBView extends ZLTextView {
-	private FBReader myReader;
+	private FBReaderApp myReader;
 
-	FBView(FBReader reader) {
-		super(ZLibrary.Instance().getPaintContext());
+	FBView(FBReaderApp reader) {
 		myReader = reader;
 	}
 
@@ -82,7 +84,7 @@ public final class FBView extends ZLTextView {
 				ZLibrary.Instance().openInBrowser(hyperlink.Id);
 				break;
 			case FBHyperlinkType.INTERNAL:
-				((FBReader)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+				((FBReaderApp)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
 				break;
 		}
 	}
@@ -100,6 +102,14 @@ public final class FBView extends ZLTextView {
 			return false;
 		}
 
+		if (myReader.FooterIsSensitive.getValue()) {
+			Footer footer = (Footer)getFooterArea();
+			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+				footer.setProgress(x);
+				return true;
+			}
+		}
+
 		final ZLTextHyperlink hyperlink = findHyperlink(x, y, 10);
 		if (hyperlink != null) {
 			selectHyperlink(hyperlink);
@@ -108,7 +118,30 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		return false;
+		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+		if (preferences.FlickOption.getValue()) {
+			myStartX = x;
+			myStartY = y;
+			setScrollingActive(true);
+			myIsManualScrollingActive = true;
+		} else {
+			if (preferences.HorizontalOption.getValue()) {
+				if (x <= myContext.getWidth() / 3) {
+					doScrollPage(false);
+				} else if (x >= myContext.getWidth() * 2 / 3) {
+					doScrollPage(true);
+				}
+			} else {
+				if (y <= myContext.getHeight() / 3) {
+					doScrollPage(false);
+				} else if (y >= myContext.getHeight() * 2 / 3) {
+					doScrollPage(true);
+				}
+			}
+		}
+
+		//activateSelection(x, y);
+		return true;
 	}
 
 	public boolean onStylusMovePressed(int x, int y) {
@@ -182,8 +215,8 @@ public final class FBView extends ZLTextView {
 					}
 				}
 				if (doScroll) {
-					final int h = Context.getHeight();
-					final int w = Context.getWidth();
+					final int h = myContext.getHeight();
+					final int w = myContext.getWidth();
 					final int minDiff = horizontal ?
 						((w > h) ? w / 4 : w / 3) :
 						((h > w) ? h / 4 : h / 3);
@@ -256,9 +289,121 @@ public final class FBView extends ZLTextView {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
+	private class Footer implements FooterArea {
+		public int getHeight() {
+			return myReader.FooterHeightOption.getValue();
+		}
+
+		public void paint(ZLPaintContext context) {
+			final ZLColor bgColor = getBackgroundColor();
+			// TODO: separate color option for footer color
+			final ZLColor fgColor = getTextColor(FBHyperlinkType.NONE);
+
+			final int width = context.getWidth();
+			final int height = getHeight();
+			final int lineWidth = height <= 10 ? 1 : 2;
+			final int delta = height <= 10 ? 0 : 1;
+			context.setFont(
+				"sans-serif",
+				height <= 10 ? height + 3 : height + 1,
+				height > 10, false, false
+			);
+
+			final int pagesProgress = computeCurrentPage();
+			final int bookLength = computePageNumber();
+
+			final StringBuilder info = new StringBuilder();
+			if (myReader.FooterShowProgress.getValue()) {
+				info.append(pagesProgress);
+				info.append("/");
+				info.append(bookLength);
+			}
+			if (myReader.FooterShowBattery.getValue()) {
+				if (info.length() > 0) {
+					info.append(" ");
+				}
+				info.append(ZLApplication.Instance().getBatteryLevel());
+				info.append("%");
+			}
+			if (myReader.FooterShowClock.getValue()) {
+				if (info.length() > 0) {
+					info.append(" ");
+				}
+				Date date = new Date();
+				info.append(String.format("%02d:%02d", date.getHours(), date.getMinutes()));
+			}
+			final String infoString = info.toString();
+
+			final int infoWidth = context.getStringWidth(infoString);
+			context.clear(bgColor);
+
+			// draw info text
+			context.setTextColor(fgColor);
+			context.drawString(width - infoWidth, height - delta, infoString);
+
+			// draw gauge
+			context.setLineColor(fgColor);
+			context.setLineWidth(lineWidth);
+			final int gaugeRight = width - ((infoWidth == 0) ? 0 : infoWidth + 10) - 2;
+			myGaugeWidth = gaugeRight;
+			context.drawLine(lineWidth, lineWidth, lineWidth, height - lineWidth);
+			context.drawLine(lineWidth, height - lineWidth, gaugeRight, height - lineWidth);
+			context.drawLine(gaugeRight, height - lineWidth, gaugeRight, lineWidth);
+			context.drawLine(gaugeRight, lineWidth, lineWidth, lineWidth);
+
+			final int gaugeInternalRight = 1 + 2 * lineWidth + (int)(1.0 * (gaugeRight - 2 - 3 * lineWidth) * pagesProgress / bookLength);
+			context.drawLine(1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth, height - 1 - 2 * lineWidth);
+			context.drawLine(1 + 2 * lineWidth, height - 1 - 2 * lineWidth, gaugeInternalRight, height - 1 - 2 * lineWidth);
+			context.drawLine(gaugeInternalRight, height - 1 - 2 * lineWidth, gaugeInternalRight, 1 + 2 * lineWidth);
+			context.drawLine(gaugeInternalRight, 1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth);
+		}
+
+		// TODO: remove
+		int myGaugeWidth = 1;
+		public int getGaugeWidth() {
+			return myGaugeWidth;
+		}
+
+		public int getTapHeight() {
+			return 30;
+		}
+
+		public void setProgress(int x) {
+			// set progress according to tap coordinate
+			int gaugeWidth = getGaugeWidth();
+			float progress = 1.0f * Math.min(x, gaugeWidth) / gaugeWidth;
+			int page = (int)(progress * computePageNumber());
+			if (page <= 1) {
+				gotoHome();
+			} else {
+				gotoPage(page);
+			}
+			ZLApplication.Instance().repaintView();
+		}
+	}
+
+	private FooterArea myFooter;
+
+	@Override
+	public FooterArea getFooterArea() {
+		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
+			if (myFooter == null) {
+				myFooter = new Footer();
+			}
+		} else {
+			if (myFooter != null) {
+				myFooter = null;
+			}
+		}
+		return myFooter;
+	}
+
+	@Override
 	protected boolean isSelectionEnabled() {
 		return myReader.SelectionEnabledOption.getValue();
 	}
+
+	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 
 	@Override
 	public int scrollbarType() {

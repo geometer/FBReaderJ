@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
@@ -90,14 +90,14 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
 
-	public abstract String loadChildren(NetworkOperationData.OnNewItemListener listener); // returns Error Message
+	public abstract void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException;
 
 	public boolean supportsResumeLoading() {
 		return false;
 	}
 
-	public String resumeLoading(NetworkOperationData.OnNewItemListener listener) { // returns Error Message
-		return NetworkErrors.errorMessage(NetworkErrors.ERROR_UNSUPPORTED_OPERATION);
+	public void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 
@@ -117,8 +117,12 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 			if (Link.authenticationManager() == null) {
 				return ZLBoolean3.B3_FALSE;
 			}
-			return (Link.authenticationManager().isAuthorised(false).Status == ZLBoolean3.B3_TRUE) ?
-				ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+			try {
+				return Link.authenticationManager().isAuthorised(false) ?
+						ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
+			} catch (ZLNetworkException e) {
+				return ZLBoolean3.B3_UNDEFINED;
+			}
 		}
 		return ZLBoolean3.B3_FALSE;
 	}

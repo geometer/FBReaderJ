@@ -20,30 +20,22 @@
 package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-
-import org.geometerplus.fbreader.network.NetworkErrors;
-
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 class LitResAuthenticationXMLReader extends ZLXMLReaderAdapter {
-
 	public final String HostName;
-
-	private String myErrorMessage;
-
 
 	public LitResAuthenticationXMLReader(String hostName) {
 		HostName = hostName;
 	}
 
-	protected void setErrorCode(String code) {
-		myErrorMessage = NetworkErrors.errorMessage(code);
+	private ZLNetworkException myException;
+
+	protected void setException(ZLNetworkException e) {
+		myException = e;
 	}
 
-	protected void setErrorCode(String code, String arg) {
-		myErrorMessage = NetworkErrors.errorMessage(code, arg);
-	}
-
-	public String getErrorMessage() {
-		return myErrorMessage;
+	public ZLNetworkException getException() {
+		return myException;
 	}
 }

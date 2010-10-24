@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 class QuitAction extends FBAction {
-	QuitAction(FBReader fbreader) {
+	QuitAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 		

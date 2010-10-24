@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 public class FollowHyperlinkAction extends FBAction {
-	FollowHyperlinkAction(FBReader fbreader) {
+	FollowHyperlinkAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

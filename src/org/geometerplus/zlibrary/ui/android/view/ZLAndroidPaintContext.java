@@ -32,28 +32,24 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
-	private Canvas myCanvas;
+	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myLinePaint = new Paint();
 	private final Paint myFillPaint = new Paint();
 	private final Paint myOutlinePaint = new Paint();
 
-	private int myWidth;
-	private int myHeight;
-	private int myScrollbarWidth;
-
-	static ZLAndroidPaintContext Instance() {
-		if (ourInstance == null) {
-			ourInstance = new ZLAndroidPaintContext();
-		}
-		return ourInstance;
-	}
-
-	private static ZLAndroidPaintContext ourInstance;
+	private final int myWidth;
+	private final int myHeight;
+	private final int myScrollbarWidth;
 
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
-	private ZLAndroidPaintContext() {
+	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
+		myCanvas = canvas;
+		myWidth = width - scrollbarWidth;
+		myHeight = height;
+		myScrollbarWidth = scrollbarWidth;
+
 		myTextPaint.setLinearText(false);
 		myTextPaint.setAntiAlias(true);
 		myTextPaint.setSubpixelText(false);
@@ -65,21 +61,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myOutlinePaint.setStyle(Paint.Style.STROKE);
 		myOutlinePaint.setPathEffect(new CornerPathEffect(5));
 		myOutlinePaint.setMaskFilter(new EmbossMaskFilter(new float[] {1, 1, 1}, .4f, 6f, 3.5f));
-	}
-
-	void setSize(int width, int height, int scrollbarWidth) {
-		myWidth = width - scrollbarWidth;
-		myHeight = height;
-		myScrollbarWidth = scrollbarWidth;
-	}
-
-	void beginPaint(Canvas canvas) {
-		myCanvas = canvas;
-		resetFont();
-	}
-
-	void endPaint() {
-		myCanvas = null;
 	}
 
 	public void clear(ZLColor color) {
@@ -144,6 +125,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void setLineColor(ZLColor color, int style) {
 		// TODO: use style
 		myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
+	}
+	public void setLineWidth(int width) {
+		myLinePaint.setStrokeWidth(width);
 	}
 
 	public void setFillColor(ZLColor color, int style) {
@@ -221,14 +205,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public String realFontFamilyName(String fontFamily) {
 		// TODO: implement
 		if ("Serif".equals(fontFamily)) {
+			return "serif";
+		}
+		if ("sans-serif".equals(fontFamily)
+				|| "serif".equals(fontFamily)
+				|| "monospace".equals(fontFamily)) {
 			return fontFamily;
 		}
-		return "Sans";
+		return "sans-serif";
 	}
-	
+
 	protected void fillFamiliesList(ArrayList<String> families) {
 		// TODO: implement
-		families.add("Sans");
-		families.add("Serif");
+		families.add("sans-serif");
+		families.add("serif");
+		families.add("monospace");
 	}
 }

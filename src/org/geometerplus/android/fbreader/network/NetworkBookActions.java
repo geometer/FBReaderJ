@@ -34,10 +34,12 @@ import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+
+import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -47,7 +49,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class NetworkBookActions extends NetworkTreeActions {
-
 	private static final String PACKAGE = "org.geometerplus.android.fbreader.network";
 
 	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
@@ -306,7 +307,7 @@ class NetworkBookActions extends NetworkTreeActions {
 				new Intent(Intent.ACTION_VIEW,
 					Uri.fromFile(new File(local)),
 					activity.getApplicationContext(),
-					org.geometerplus.android.fbreader.FBReader.class
+					FBReader.class
 				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 			);
 		}
@@ -379,7 +380,7 @@ class NetworkBookActions extends NetworkTreeActions {
 						} else if (downloadBook) {
 							doDownloadBook(activity, book, false);
 						}
-						if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
+						if (!mgr.mayBeAuthorised(true)) {
 							final NetworkLibrary library = NetworkLibrary.Instance();
 							library.invalidateVisibility();
 							library.synchronize();
@@ -391,11 +392,16 @@ class NetworkBookActions extends NetworkTreeActions {
 				}; // end Handler
 				final Runnable runnable = new Runnable() {
 					public void run() {
-						String err = mgr.purchaseBook(book);
-						handler.sendMessage(handler.obtainMessage(0, err));
+						String error = null;
+						try {
+							mgr.purchaseBook(book);
+						} catch (ZLNetworkException e) {
+							error = e.getMessage();
+						}
+						handler.sendMessage(handler.obtainMessage(0, error));
 					}
 				}; // end Runnable
-				((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("purchaseBook", runnable, activity);
+				AndroidUtil.wait("purchaseBook", runnable, activity);
 			} // end onClick
 		}; // end listener
 
@@ -423,12 +429,14 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		};
 
-		if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_TRUE) {
-			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, book.Link, buyRunnable);
-			return;
-		} else {
-			buyRunnable.run();
+		try {
+			if (mgr.isAuthorised(true)) {
+				buyRunnable.run();
+				return;
+			}
+		} catch (ZLNetworkException e) {
 		}
+		NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, book.Link, buyRunnable);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {

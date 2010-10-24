@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 class SwitchProfileAction extends FBAction {
 	private String myProfileName;
 
-	SwitchProfileAction(FBReader fbreader, String profileName) {
+	SwitchProfileAction(FBReaderApp fbreader, String profileName) {
 		super(fbreader);
 		myProfileName = profileName;
 	}

@@ -231,25 +231,23 @@
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
-					<node name="summaryOn" value="Screen will not be turned off while you read a book"/>
-					<node name="summaryOff" value="Screen will be automatically turned off in case of inactivity"/>
+					<node name="0" value="Always"/>
+					<node name="25" value="While battery level is greater than 25%"/>
+					<node name="50" value="While battery level is greater than 50%"/>
+					<node name="100" value="Never"/>
 				</node>
 				<node name="appearanceSettings" value="Appearance">
 					<node name="summary" value="Text displaying settings"/>
 				</node>
 				<node name="scrollBar" value="Scroll Bar">
 					<node name="summary" value="Configure scroll bar"/>
-					<node name="scrollbarType" value="Scroll bar Type">
+					<node name="scrollbarType" value="Scroll bar type">
 						<node name="hide" value="Hide"/>
 						<node name="show" value="Vertical slider"/>
 						<node name="showAsProgress" value="Vertical progress bar"/>
 						<node name="showAsFooter" value="Horizontal footer"/>
 					</node>
-					<node name="footerSize" value="Footer size">
-						<node name="small" value="Small"/>
-						<node name="normal" value="Normal"/>
-						<node name="large" value="Large"/>
-					</node>
+					<node name="footerHeight" value="Footer height" />
 					<node name="footerLongTap" value="Footer long tap">
 						<node name="longTapRevert" value="Revert position"/>
 						<node name="longTapNavigate" value="Go to position"/>
@@ -265,6 +263,10 @@
 					<node name="showClock" value="Show clock">
 						<node name="summaryOn" value="Show clock in footer"/>
 						<node name="summaryOff" value="Hide clock in footer"/>
+					</node>
+					<node name="isSensitive" value="Navigation by tap on footer">
+						<node name="summaryOn" value="Navigation is enabled"/>
+						<node name="summaryOff" value="Navigation is disabled"/>
 					</node>
 				</node>
 			</node>

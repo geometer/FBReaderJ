@@ -21,10 +21,10 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-abstract class FBAction extends ZLApplication.ZLAction {
-	protected final FBReader Reader;
+public abstract class FBAction extends ZLApplication.ZLAction {
+	protected final FBReaderApp Reader;
 
-	FBAction(FBReader fbreader) {
+	public FBAction(FBReaderApp fbreader) {
 		Reader = fbreader;
 	}
 }

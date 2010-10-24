@@ -231,8 +231,10 @@
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
-					<node name="summaryOn" value="Экран не выключится автоматически во время чтения"/>
-					<node name="summaryOff" value="Экран выключится автоматически, если не листать страницы"/>
+					<node name="0" value="Никогда не выключать"/>
+					<node name="25" value="Пока батарея заряжена хотя бы на 25%"/>
+					<node name="50" value="Пока батарея заряжена хотя бы на 50%"/>
+					<node name="100" value="Всегда выключать"/>
 				</node>
 				<node name="appearanceSettings" value="Внешний вид">
 					<node name="summary" value="Настройки отображения текста"/>
@@ -245,11 +247,7 @@
 						<node name="showAsProgress" value="Вертикальный прогресс"/>
 						<node name="showAsFooter" value="Подвал"/>
 					</node>
-					<node name="footerSize" value="Размер подвала">
-						<node name="small" value="Маленький"/>
-						<node name="normal" value="Обычный"/>
-						<node name="large" value="Большой"/>
-					</node>
+					<node name="footerHeight" value="Высота подвала" />
 					<node name="footerLongTap" value="Придержать подвал">
 						<node name="longTapRevert" value="Откатить переход"/>
 						<node name="longTapNavigate" value="Сделать переход"/>
@@ -265,6 +263,10 @@
 					<node name="showClock" value="Показывать часы">
 						<node name="summaryOn" value="Показывать часы в подвале"/>
 						<node name="summaryOff" value="Скрыть часы в подвале"/>
+					</node>
+					<node name="isSensitive" value="Перемещаться по тексту при пркосновении к подвалу">
+						<node name="summaryOn" value="Перемещение включено"/>
+						<node name="summaryOff" value="Перемещение выключено"/>
 					</node>
 				</node>
 			</node>

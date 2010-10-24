@@ -19,15 +19,11 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import android.content.Context;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -42,7 +38,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	/*private static final class ColorProfilePreference extends ZLSimplePreference {
-		private final FBReader myFBReader;
+		private final FBReaderApp myFBReader;
 		private final Screen myScreen;
 		private final String myKey;
 
@@ -51,7 +47,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return r.hasValue() ? r.getValue() : resourceKey;
 		}
 
-		ColorProfilePreference(Context context, FBReader fbreader, Screen screen, String key, String title) {
+		ColorProfilePreference(Context context, FBReaderApp fbreader, Screen screen, String key, String title) {
 			super(context);
 			myFBReader = fbreader;
 			myScreen = screen;
@@ -66,7 +62,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		@Override
 		public void onClick() {
 			myScreen.setSummary(getTitle());
-			myFBReader.setColorProfileName(myKey);
+			myFBReaderApp.setColorProfileName(myKey);
 			myScreen.close();
 		}
 	}*/
@@ -74,13 +70,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category libraryCategory = createCategory("Library");
-		/*
-		libraryCategory.addPreference(new InfoPreference(
-			this,
-			libraryCategory.Resource.getResource("path").getValue(),
-			Constants.BOOKS_DIRECTORY)
-		);
-		*/
 		libraryCategory.addPreference(new ZLStringOptionPreference(
 			this,
 			Paths.BooksDirectoryOption,
@@ -116,12 +105,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
 		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );
 		appearanceScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						((FBReader) FBReader.Instance()).showOptionsDialog();
+						fbReader.showOptionsDialog();
 						return true;
 					}
 				}
@@ -132,32 +123,37 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Category statusLineCategory = statusLineScreen.createCategory(null);
 
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
-		statusLineCategory.addPreference(new StringListPreference(
-			this, statusLineCategory.Resource.getResource("scrollbarType"), null,
-			scrollBarTypes, ((FBReader)FBReader.Instance()).ScrollbarTypeOption));
+		statusLineCategory.addPreference(new ZLChoicePreference(
+			this, statusLineCategory.Resource, "scrollbarType",
+			fbReader.ScrollbarTypeOption, scrollBarTypes));
 
-		String[] footerSizes = {"small", "normal", "large"};
-		statusLineCategory.addPreference(new StringListPreference(
-			this, statusLineCategory.Resource.getResource("footerSize"), null,
-			footerSizes, ((FBReader)FBReader.Instance()).FooterSizeOption));
+		statusLineCategory.addPreference(new ZLIntegerRangePreference(
+			this, statusLineCategory.Resource.getResource("footerHeight"),
+			fbReader.FooterHeightOption)
+		);
 
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
-		statusLineCategory.addPreference(new StringListPreference(
-			this, statusLineCategory.Resource.getResource("footerLongTap"), null,
-			footerLongTaps, ((FBReader)FBReader.Instance()).FooterLongTap));
+		statusLineCategory.addPreference(new ZLChoicePreference(
+			this, statusLineCategory.Resource, "footerLongTap",
+			fbReader.FooterLongTap, footerLongTaps));
 
-		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowClock, "showClock");
-		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowBattery, "showBattery");
-		statusLineCategory.addOption(ZLAndroidApplication.Instance().FooterShowProgress, "showProgress");
+		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
+		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
+		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
+		statusLineCategory.addOption(fbReader.FooterIsSensitive, "isSensitive");
 
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
 			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		}
-		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
+		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
+			this,
+			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption,
+			lookNFeelCategory.Resource,
+			"dontTurnScreenOff"
+		));
 
 		/*
-		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
 		final Category colorProfileCategory = colorProfileScreen.createCategory(null);
 		final ZLResource resource = colorProfileCategory.Resource;
@@ -174,57 +170,5 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingCategory.addOption(scrollingPreferences.FlickOption, "flick");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
-	}
-}
-
-class StringListPreference extends ZLStringListPreference {
-	private ZLOption myOption;
-	private String[] myCodes;
-
-	StringListPreference(Context context, ZLResource optResource, ZLResource valResource,
-		String [] codes, ZLOption option) {
-		super(context, optResource, valResource);
-		myCodes = codes;
-		myOption = option;
-
-		final String[] texts = new String[myCodes.length];
-		valResource = (valResource == null ? optResource : valResource);
-		for (int i = 0; i < myCodes.length; ++i) {
-			texts[i] = valResource.getResource(myCodes[i]).getValue();
-		}
-
-		setLists(myCodes, texts);
-
-		if (myOption instanceof ZLIntegerRangeOption) {
-			setInitialValue(myCodes[
-				Math.max(0, Math.min(myCodes.length - 1, ((ZLIntegerRangeOption)myOption).getValue()))]);
-		}
-
-		if (myOption instanceof ZLStringOption) {
-			String initVal = ((ZLStringOption)myOption).getValue();
-			for (int i = 0; i < myCodes.length; ++i) {
-				if (myCodes[i].equals(initVal)){
-					setInitialValue(myCodes[i]);
-					break;
-				}
-			}
-		}
-	}
-
-	public void onAccept() {
-		final String strValue = getValue();
-		if (myOption instanceof ZLIntegerRangeOption) {
-			int intValue = 0;
-			for (int i = 0; i < myCodes.length; ++i) {
-				if (strValue == myCodes[i]) {
-					intValue = i;
-					break;
-				}
-			}
-			((ZLIntegerRangeOption)myOption).setValue(intValue);
-		}
-		if (myOption instanceof ZLStringOption) {
-			((ZLStringOption)myOption).setValue(strValue);
-		}
 	}
 }

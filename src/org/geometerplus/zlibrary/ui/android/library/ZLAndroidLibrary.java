@@ -35,8 +35,6 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-
 import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
 
@@ -61,27 +59,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public void navigate() {
-		if (myActivity != null)	{
-			myActivity.navigate();
-		}
-	}
-
-	public boolean canNavigate() {
-		if (myActivity != null)	{
-			return myActivity.canNavigate();
-		}
-		return false;
-	}
-
 	public void finish() {
 		if ((myActivity != null) && !myActivity.isFinishing()) {
 			myActivity.finish();
 		}
-	}
-
-	public ZLAndroidPaintContext getPaintContext() {
-		return getWidget().getPaintContext();
 	}
 
 	public ZLAndroidWidget getWidget() {

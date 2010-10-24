@@ -26,6 +26,7 @@ import android.app.Application;
 import android.os.Build;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
@@ -37,12 +38,7 @@ public class ZLAndroidApplication extends Application {
 
 	public final ZLBooleanOption AutoOrientationOption = new ZLBooleanOption("LookNFeel", "AutoOrientation", false);
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
-	public final ZLBooleanOption DontTurnScreenOffOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOff", true);
-	
-	public final ZLBooleanOption FooterShowClock = new ZLBooleanOption("scrollBar", "showClock", true);
-	public final ZLBooleanOption FooterShowBattery = new ZLBooleanOption("scrollBar", "showBattery", true);
-	public final ZLBooleanOption FooterShowProgress = new ZLBooleanOption("scrollBar", "showProgress", false);
-
+	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 
 	public static ZLAndroidApplication Instance() {
 		return ourApplication;

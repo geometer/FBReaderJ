@@ -20,15 +20,22 @@
 package org.geometerplus.zlibrary.core.view;
 
 abstract public class ZLView {
-	public final ZLPaintContext Context;
+	protected ZLPaintContext myContext = new DummyPaintContext();
 
 	public static final int MODE_READ = 0;
 	public static final int MODE_SELECT = 1;
 	protected int myMode = MODE_READ;
 
-	public ZLView(ZLPaintContext context) {
-		Context = context;
+	public final ZLPaintContext getContext() {
+		return myContext;
 	}
+
+	abstract public interface FooterArea {
+		int getHeight();
+		void paint(ZLPaintContext context);
+	}
+
+	abstract public FooterArea getFooterArea();
 
 	public static final int PAGE_CENTRAL = 0;
 	public static final int PAGE_LEFT = 1;
@@ -36,12 +43,7 @@ abstract public class ZLView {
 	public static final int PAGE_TOP = 3;
 	public static final int PAGE_BOTTOM = 4;
 
-	public static final int SCROLLBAR_HIDE = 0;
-	public static final int SCROLLBAR_SHOW = 1;
-	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
-	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
-
-	abstract public void paint(int viewPage);
+	abstract public void paint(ZLPaintContext context, int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
 
 	public boolean onStylusPress(int x, int y) {
@@ -64,8 +66,7 @@ abstract public class ZLView {
 		myMode = mode;
 	}
 
-	public abstract boolean showScrollbar();
-	public abstract int scrollbarType();
+	public abstract boolean isScrollbarShown();
 	public abstract int getScrollbarFullSize();
 	public abstract int getScrollbarThumbPosition(int viewPage);
 	public abstract int getScrollbarThumbLength(int viewPage);

@@ -17,21 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.android.fbreader;
 
-public abstract class ZLChoiceOptionEntry extends ZLOptionEntry {
-	protected ZLChoiceOptionEntry() {
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
+
+import org.geometerplus.fbreader.fbreader.FBAction;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+class ShowNavigationAction extends FBAction {
+	private final FBReader myActivity;
+
+	ShowNavigationAction(FBReader activity, FBReaderApp fbreader) {
+		super(fbreader);
+		myActivity = activity;
 	}
 
-	public int getKind() {
-		return ZLOptionKind.CHOICE;
+	@Override
+	public boolean isVisible() {
+		final ZLTextView view = (ZLTextView)Reader.getCurrentView();
+		final ZLTextModel textModel = view.getModel();
+		return textModel != null && textModel.getParagraphsNumber() != 0;
 	}
 
-	public abstract String getText(int index);
-
-	public abstract int choiceNumber();
-
-	public abstract int initialCheckedIndex();
-
-	public abstract void onAccept(int index);
+	public void run() {
+		myActivity.navigate();
+	}
 }

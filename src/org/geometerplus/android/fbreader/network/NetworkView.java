@@ -34,8 +34,9 @@ import android.os.Message;
 import android.view.MenuItem;
 import android.view.Menu;
 
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.*;
 
 class NetworkView {
 	private static NetworkView ourInstance;
@@ -57,15 +58,11 @@ class NetworkView {
 		return myInitialized;
 	}
 
-	public String initialize() {
+	public void initialize() throws ZLNetworkException {
 		new SQLiteNetworkDatabase();
 
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final String error = library.initialize();
-		if (error != null) {
-			return error;
-		}
-
+		library.initialize();
 		library.synchronize();
 
 		myActions.add(new NetworkBookActions());
@@ -76,12 +73,10 @@ class NetworkView {
 		myActions.trimToSize();
 
 		myInitialized = true;
-		return null;
 	}
 
-	// This method must be called from background thread
-	public String runBackgroundUpdate(boolean clearCache) {
-		return NetworkLibrary.Instance().runBackgroundUpdate(clearCache);
+	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
+		NetworkLibrary.Instance().runBackgroundUpdate(clearCache);
 	}
 
 	// This method MUST be called from main thread

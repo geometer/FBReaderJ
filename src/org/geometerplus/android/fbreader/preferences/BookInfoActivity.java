@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageList;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Book;
 
 class BookTitlePreference extends ZLStringPreference {
@@ -93,7 +93,7 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category commonCategory = createCategory(null);
-		myBook = ((FBReader)FBReader.Instance()).Model.Book;
+		myBook = ((FBReaderApp)FBReaderApp.Instance()).Model.Book;
 		if (myBook.File.getPhysicalFile() != null) {
 			commonCategory.addPreference(new InfoPreference(
 				this,
@@ -109,7 +109,7 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	protected void onPause() {
 		super.onPause();
 		if (myBook.save()) {
-			((FBReader)FBReader.Instance()).clearTextCaches();
+			((FBReaderApp)FBReaderApp.Instance()).clearTextCaches();
 			ZLTextHyphenator.Instance().load(myBook.getLanguage());
 		}
 	}

@@ -17,13 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.android.fbreader;
 
-public abstract class ZLMultilineOptionEntry extends ZLTextOptionEntry {
-	protected ZLMultilineOptionEntry() {
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
+
+class BookInfoAction extends RunActivityAction {
+	BookInfoAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader, BookInfoActivity.class);
 	}
 
-	public int getKind() {
-		return ZLOptionKind.MULTILINE;
+	public boolean isVisible() {
+		return Reader.Model != null;
 	}
 }

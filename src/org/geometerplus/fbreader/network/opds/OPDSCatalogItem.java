@@ -22,8 +22,9 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.Map;
 import java.util.HashSet;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -51,24 +52,24 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		super(link, title, summary, cover, urlByType, visibility, catalogType);
 	}
 
-	private String doLoadChildren(NetworkOperationData.OnNewItemListener listener,
-			ZLNetworkRequest networkRequest) {
+	private void doLoadChildren(NetworkOperationData.OnNewItemListener listener,
+			ZLNetworkRequest networkRequest) throws ZLNetworkException {
 		while (networkRequest != null) {
-			final String errorMessage = ZLNetworkManager.Instance().perform(networkRequest);
-			if (errorMessage != null) {
+			try {
+				ZLNetworkManager.Instance().perform(networkRequest);
+			} catch (ZLNetworkException e) {
 				myLoadingState = null;
-				return errorMessage;
+				throw e;
 			}
 			if (listener.confirmInterrupt()) {
-				return null;
+				return;
 			}
 			networkRequest = myLoadingState.resume();
 		}
-		return null;
 	}
 
 	@Override
-	public final String loadChildren(NetworkOperationData.OnNewItemListener listener) {
+	public final void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		OPDSNetworkLink opdsLink = (OPDSNetworkLink) Link;
 
 		myLoadingState = opdsLink.createOperationData(Link, listener);
@@ -76,7 +77,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		ZLNetworkRequest networkRequest =
 			opdsLink.createNetworkData(URLByType.get(URL_CATALOG), myLoadingState);
 
-		return doLoadChildren(listener, networkRequest);
+		doLoadChildren(listener, networkRequest);
 	}
 
 	@Override
@@ -85,12 +86,11 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public final String resumeLoading(NetworkOperationData.OnNewItemListener listener) {
-		if (myLoadingState == null) {
-			return null;
+	public final void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+		if (myLoadingState != null) {
+			myLoadingState.Listener = listener;
+			ZLNetworkRequest networkRequest = myLoadingState.resume();
+			doLoadChildren(listener, networkRequest);
 		}
-		myLoadingState.Listener = listener;
-		ZLNetworkRequest networkRequest = myLoadingState.resume();
-		return doLoadChildren(listener, networkRequest);
 	}
 }

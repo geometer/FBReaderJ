@@ -115,7 +115,7 @@ public abstract class ZLApplication {
 		hideAllPanels();
 	}
 
-	protected final void addAction(String actionId, ZLAction action) {
+	public final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
 	}
 
@@ -185,19 +185,6 @@ public abstract class ZLApplication {
 		return keyBindings().getOption(keyId);
 	}
 
-	public void navigate() {
-		if (myWindow != null) {
-			myWindow.navigate();
-		}
-	}
-
-	public boolean canNavigate() {
-		if (myWindow != null) {
-			return myWindow.canNavigate();
-		}
-		return false;
-	}
-
 	public void rotateScreen() {
 		if (myWindow != null) {
 			myWindow.rotate();
@@ -264,6 +251,10 @@ public abstract class ZLApplication {
 		for (ButtonPanel panel : myPanels) {
 			panel.hide();
 		}
+	}
+
+	public int getBatteryLevel() {
+		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
 	}
 
 	//Menu

@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 class TrackballScrollingAction extends FBAction {
 	private final boolean myForward;
 
-	TrackballScrollingAction(FBReader fbreader, boolean forward) {
+	TrackballScrollingAction(FBReaderApp fbreader, boolean forward) {
 		super(fbreader);
 		myForward = forward;
 	}

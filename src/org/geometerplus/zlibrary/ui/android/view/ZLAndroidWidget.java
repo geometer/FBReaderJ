@@ -33,14 +33,16 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.ui.android.view.ZLFooter;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View {
 	private final Paint myPaint = new Paint();
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
 	private boolean mySecondaryBitmapIsUpToDate;
+	private Bitmap myFooterBitmap;
+
 	private boolean myScrollingInProgress;
 	private int myScrollingShift;
 	private float myScrollingSpeed;
@@ -78,33 +80,6 @@ public class ZLAndroidWidget extends View {
 		setFocusableInTouchMode(true);
 	}
 
-	public ZLAndroidPaintContext getPaintContext() {
-		return ZLAndroidPaintContext.Instance();
-	}
-
-	private Point myTextViewSize = new Point();
-	private Point myViewSize = new Point();
-	// ensure children objects has correct information about widget size
-	private void ensureChildrenSizes() {
-		int width = getWidth();
-		int height = getHeight();
-		if (myViewSize.x != width || myViewSize.y != height) {
-			// pass draw area size to footer
-			// it need need height also, because canvas.getHeight() is buggy)
-			myFooter.setDrawAreaSize(width, height);
-			myViewSize.x = width;
-			myViewSize.y = height;
-		}
-
-		width = getTextViewWidth();
-		height -= myFooter.getTapHeight();
-		if (myTextViewSize.x != width || myTextViewSize.y != height) {
-			myTapZones.setWatchArea(0, 1, width - 2, height - 3);
-			myTextViewSize.x = width;
-			myTextViewSize.y = height;
-		}
-	}
-
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -122,11 +97,17 @@ public class ZLAndroidWidget extends View {
 
 	@Override
 	protected void onDraw(final Canvas canvas) {
+		final Context context = getContext();
+		if (context instanceof ZLAndroidActivity) {
+			((ZLAndroidActivity)context).createWakeLock();
+		} else {
+			System.err.println("A surprise: view's context is not a ZLAndroidActivity");
+		}
 		super.onDraw(canvas);
 
 		ensureChildrenSizes();
 		final int w = getWidth();
-		final int h = getTextViewHeight();
+		final int h = getMainAreaHeight();
 
 		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
 			myMainBitmap = null;
@@ -156,8 +137,7 @@ public class ZLAndroidWidget extends View {
 
 	private void onDrawInScrolling(Canvas canvas) {
 		final int w = getWidth();
-		final int h = getTextViewHeight();
-		//final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
+		final int h = getMainAreaHeight();
 
 		boolean stopScrolling = false;
 		if (myScrollingInProgress) {
@@ -193,11 +173,6 @@ public class ZLAndroidWidget extends View {
 			myPaint
 		);
 
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
-			myFooter.onDraw(canvas, getScrollProgress());
-		}
-
 		if (stopScrolling) {
 			if (myScrollingBound != 0) {
 				Bitmap swap = myMainBitmap;
@@ -227,6 +202,8 @@ public class ZLAndroidWidget extends View {
 				postInvalidate();
 			}
 		}
+
+		drawFooter(canvas);
 	}
 
 	private int myViewPageToScroll = ZLView.PAGE_CENTRAL;
@@ -290,11 +267,11 @@ public class ZLAndroidWidget extends View {
 				break;
 			case ZLView.PAGE_TOP:
 				myScrollingSpeed = 3;
-				myScrollingBound = getTextViewHeight();
+				myScrollingBound = getMainAreaHeight();
 				break;
 			case ZLView.PAGE_BOTTOM:
 				myScrollingSpeed = -3;
-				myScrollingBound = -getTextViewHeight();
+				myScrollingBound = -getMainAreaHeight();
 				break;
 		}
 		if (viewPage != ZLView.PAGE_CENTRAL) {
@@ -318,20 +295,44 @@ public class ZLAndroidWidget extends View {
 			mySecondaryBitmapIsUpToDate = true;
 		}
 
-		final ZLAndroidPaintContext context = ZLAndroidPaintContext.Instance();
-		Canvas canvas = new Canvas(bitmap);
-		context.beginPaint(canvas);
-		context.setSize(getWidth(), getTextViewHeight(), getWidth() - getTextViewWidth());
-		view.paint((bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
-		context.endPaint();
+		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			new Canvas(bitmap),
+			getWidth(),
+			getMainAreaHeight(),
+			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+		);
+		view.paint(context, (bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScroll);
+	}
+
+	private void drawFooter(Canvas canvas) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		final ZLView.FooterArea footer = view.getFooterArea();
+		if (footer != null) {
+			if (myFooterBitmap != null &&
+				(myFooterBitmap.getWidth() != getWidth() ||
+				 myFooterBitmap.getHeight() != footer.getHeight())) {
+				myFooterBitmap = null;
+			}
+			if (myFooterBitmap == null) {
+				myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
+			}
+			final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+				new Canvas(myFooterBitmap),
+				getWidth(),
+				footer.getHeight(),
+				view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+			);
+			footer.paint(context);
+			canvas.drawBitmap(myFooterBitmap, 0, getMainAreaHeight(), myPaint);
+		} else {
+			myFooterBitmap = null;
+		}
 	}
 
 	private void onDrawStatic(Canvas canvas) {
 		drawOnBitmap(myMainBitmap);
 		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
-		if (ZLApplication.Instance().getCurrentView().scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
-			myFooter.onDraw(canvas, getScrollProgress());
-		}
+		drawFooter(canvas);
 	}
 
 	@Override
@@ -501,8 +502,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
-			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -511,7 +511,7 @@ public class ZLAndroidWidget extends View {
 			final boolean horizontal =
 				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
-			final int size = horizontal ? getWidth() : getTextViewHeight();
+			final int size = horizontal ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
 		} else {
@@ -521,8 +521,7 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
-			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
@@ -531,7 +530,7 @@ public class ZLAndroidWidget extends View {
 			final boolean horizontal =
 				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 				(myViewPageToScroll == ZLView.PAGE_LEFT);
-			final int size = horizontal ? getWidth() : getTextViewHeight();
+			final int size = horizontal ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
 		} else {
@@ -541,38 +540,10 @@ public class ZLAndroidWidget extends View {
 
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() != ZLView.SCROLLBAR_SHOW &&
-			view.scrollbarType() != ZLView.SCROLLBAR_SHOW_AS_PROGRESS) {
+		if (!view.isScrollbarShown()) {
 			return 0;
 		}
 		return view.getScrollbarFullSize();
-	}
-
-	private int getTextViewHeight() {
-		int height = getHeight();
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_FOOTER) {
-			height -= myFooter.getHeight();
-		}
-		return height;
-	}
-
-	private int getTextViewWidth() {
-		int width = getWidth();
-		ZLView view = ZLApplication.Instance().getCurrentView();
-		if (view != null &&
-			(view.scrollbarType() == ZLView.SCROLLBAR_SHOW || view.scrollbarType() == ZLView.SCROLLBAR_SHOW_AS_PROGRESS)) {
-			width -= getVerticalScrollbarWidth();
-		}
-		return width;
-	}
-
-	private float getScrollProgress() {
-		// get percentage of page scroll (from 0 to 1)
-		final boolean horizontal =
-			(myViewPageToScroll == ZLView.PAGE_RIGHT) || (myViewPageToScroll == ZLView.PAGE_LEFT);
-		final float pageSize = horizontal ? getTextViewWidth() : getTextViewHeight();
-		return (float)myScrollingShift / pageSize;
 	}
 
 	ZLResource myMenuResource;
@@ -600,11 +571,9 @@ public class ZLAndroidWidget extends View {
 		String actions[];
 		if (myMode == MODE_READ) {
 			actions = read_menu;
-		}
-		else if (myMode == MODE_TAP_ZONES_EDIT) {
+		} else if (myMode == MODE_TAP_ZONES_EDIT) {
 			actions = zones_menu;
-		}
-		else {
+		} else {
 			return;
 		}
 
@@ -647,5 +616,10 @@ public class ZLAndroidWidget extends View {
 
 	public Point getTapPoint() {
 		return new Point(myPressedX, myPressedY);
+	}
+
+	private int getMainAreaHeight() {
+		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
+		return footer != null ? getHeight() - footer.getHeight() : getHeight();
 	}
 }
