@@ -52,8 +52,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
-	public ZLTextView(ZLPaintContext context) {
-		super(context);
+	public ZLTextView() {
  		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
@@ -250,8 +249,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public synchronized void paint(int viewPage) {
-		Context.clear(getBackgroundColor());
+	@Override
+	public synchronized void paint(ZLPaintContext context, int viewPage) {
+		myContext = context;
+		context.clear(getBackgroundColor());
 
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return;
@@ -314,7 +315,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final ZLTextHyperlinkArea hyperlinkArea = getCurrentHyperlinkArea(page);
 		if (hyperlinkArea != null) {
-			hyperlinkArea.draw(Context);
+			hyperlinkArea.draw(context);
 		}
 	}
 
@@ -335,54 +336,53 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public static final int SCROLLBAR_HIDE = 0;
 	public static final int SCROLLBAR_SHOW = 1;
 	public static final int SCROLLBAR_SHOW_AS_PROGRESS = 2;
+
 	public abstract int scrollbarType();
 
-	public final boolean showScrollbar() {
-		return scrollbarType() != SCROLLBAR_HIDE;
+	public final boolean isScrollbarShown() {
+		return scrollbarType() == SCROLLBAR_SHOW || scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS;
 	}
 
-	public final synchronized int getScrollbarFullSize() {
+	private final synchronized int getFullCharNumber() {
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 1;
 		}
 		return myModel.getTextLength(myModel.getParagraphsNumber() - 1);
 	}
 
-	public final synchronized int getScrollbarThumbPosition(int viewPage) {
+	private final synchronized int getCurrentCharNumber(int viewPage, boolean startNotEndOfPage) {
 		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
 			return 0;
 		}
-		if (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) {
-			return 0;
-		}
 		ZLTextPage page = getPage(viewPage);
 		preparePaintInfo(page);
-		return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
+		if (startNotEndOfPage) {
+			return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
+		} else {
+			int end = sizeOfTextBeforeCursor(page.EndCursor);
+			if (end == -1) {
+				end = myModel.getTextLength(myModel.getParagraphsNumber() - 1) - 1;
+			}
+			return Math.max(1, end);
+		}
+	}
+
+	public final synchronized int getScrollbarFullSize() {
+		return getFullCharNumber();
+	}
+
+	public final synchronized int getScrollbarThumbPosition(int viewPage) {
+		return scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
 	}
 
 	public final synchronized int getScrollbarThumbLength(int viewPage) {
-		if (myModel == null || myModel.getParagraphsNumber() == 0) {
-			return 0;
-		}
-		ZLTextPage page = getPage(viewPage);
-		preparePaintInfo(page);
-		int start = (scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS) ? 0 : sizeOfTextBeforeCursor(page.StartCursor);
-		if (start == -1) {
-			start = 0;
-		}
-		int end = sizeOfTextBeforeCursor(page.EndCursor);
-		if (end == -1) {
-			end = myModel.getTextLength(myModel.getParagraphsNumber() - 1) - 1;
-		}
+		int start = scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
+		int end = getCurrentCharNumber(viewPage, false);
 		return Math.max(1, end - start);
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(wordCursor);
-		if (cursor.isEndOfParagraph() && !cursor.nextParagraph()) {
-			return -1;
-		}
-		final ZLTextParagraphCursor paragraphCursor = cursor.getParagraphCursor();
+		final ZLTextParagraphCursor paragraphCursor = wordCursor.getParagraphCursor();
 		if (paragraphCursor == null) {
 			return -1;
 		}
@@ -392,7 +392,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (paragraphLength > 0) {
 			sizeOfText +=
 				(myModel.getTextLength(paragraphIndex) - sizeOfText)
-				* cursor.getElementIndex()
+				* wordCursor.getElementIndex()
 				/ paragraphLength;
 		}
 		return sizeOfText;
@@ -416,7 +416,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		float charsPerLine = Math.min(effectiveWidth / charWidth,
 				charsPerParagraph * 1.2f);
 
-		final int strHeight = getWordHeight() + Context.getDescent();
+		final int strHeight = getWordHeight() + myContext.getDescent();
 		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore() 
 				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
@@ -498,18 +498,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private final float computeCharWidth(char[] pattern, int length) {
-		return Context.getStringWidth(pattern, 0, length) / ((float) length);
+		return myContext.getStringWidth(pattern, 0, length) / ((float) length);
 	}
 
 	public final synchronized int computePageNumber() {
-		return computeTextPageNumber(getScrollbarFullSize());
+		return computeTextPageNumber(getFullCharNumber());
 	}
 
 	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(
-			getScrollbarThumbPosition(PAGE_CENTRAL) 
-			+ getScrollbarThumbLength(PAGE_CENTRAL)
-		);
+		return computeTextPageNumber(getCurrentCharNumber(PAGE_CENTRAL, false));
 	}
 
 	public final synchronized void gotoPage(int page) {
@@ -577,7 +574,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 
 		if ((page == myCurrentPage) && !mySelectionModel.isEmpty() && (from != to)) {
 			final int paragraphIndex = paragraph.Index;
@@ -713,7 +710,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private ZLTextLineInfo processTextLine(ZLTextParagraphCursor paragraphCursor, 
 		final int startIndex, final int startCharIndex, final int endIndex) {
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
 		if (cachedInfo != null) {
@@ -835,7 +832,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final ZLTextWord word = (ZLTextWord)element;
 				newWidth -= getWordWidth(word, currentCharIndex);
 				int spaceLeft = maxWidth - newWidth;
-				if ((word.Length > 3) && (spaceLeft > 2 * Context.getSpaceWidth())) {
+				if ((word.Length > 3) && (spaceLeft > 2 * context.getSpaceWidth())) {
 					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
@@ -891,7 +888,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
 		y = Math.min(y + info.Height, getBottomLine());
 
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
 
 		setTextStyle(info.StartStyle);

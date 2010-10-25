@@ -29,9 +29,11 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.android.util.AndroidUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
@@ -183,12 +185,16 @@ class CustomCatalogDialog extends NetworkDialog {
 
 		final Runnable loadInfoRunnable = new Runnable() {
 			public void run() {
-				final ICustomNetworkLink link = (ICustomNetworkLink) myLink;
-				final String err = link.reloadInfo();
-				handler.sendMessage(handler.obtainMessage(0, err));
+				String error = null;
+				try {
+					((ICustomNetworkLink)myLink).reloadInfo();
+				} catch (ZLNetworkException e) {
+					error = e.getMessage();
+				}
+				handler.sendMessage(handler.obtainMessage(0, error));
 			}
 		}; 
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("loadingCatalogInfo", loadInfoRunnable, myActivity);
+		AndroidUtil.wait("loadingCatalogInfo", loadInfoRunnable, myActivity);
 	}
 
 	@Override

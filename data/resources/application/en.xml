@@ -161,16 +161,43 @@
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
-					<node name="summaryOn" value="Screen will not be turned off while you read a book"/>
-					<node name="summaryOff" value="Screen will be automatically turned off in case of inactivity"/>
-				</node>
-				<node name="scrollbarType" value="Scrollbar at right side">
-					<node name="hide" value="Hide"/>
-					<node name="show" value="Show as a usual scrollbar"/>
-					<node name="showAsProgress" value="Show as a progress bar"/>
+					<node name="0" value="Always"/>
+					<node name="25" value="While battery level is greater than 25 percent"/>
+					<node name="50" value="While battery level is greater than 50 percent"/>
+					<node name="100" value="Never"/>
 				</node>
 				<node name="appearanceSettings" value="Appearance">
 					<node name="summary" value="Text displaying settings"/>
+				</node>
+				<node name="scrollBar" value="Scrollbar">
+					<node name="summary" value="Configure scrollbar"/>
+					<node name="scrollbarType" value="Scrollbar type">
+						<node name="hide" value="Hide"/>
+						<node name="show" value="Vertical slider"/>
+						<node name="showAsProgress" value="Vertical progress bar"/>
+						<node name="showAsFooter" value="Horizontal footer"/>
+					</node>
+					<node name="footerHeight" value="Footer height" />
+					<node name="footerLongTap" value="Footer long tap">
+						<node name="longTapRevert" value="Revert position"/>
+						<node name="longTapNavigate" value="Go to position"/>
+					</node>
+					<node name="showProgress" value="Show page number">
+						<node name="summaryOn" value="Show page number in footer"/>
+						<node name="summaryOff" value="Don't show page number in footer"/>
+					</node>
+					<node name="showBattery" value="Show battery level">
+						<node name="summaryOn" value="Show battery level in footer"/>
+						<node name="summaryOff" value="Don't show battery level in footer"/>
+					</node>
+					<node name="showClock" value="Show clock">
+						<node name="summaryOn" value="Show clock in footer"/>
+						<node name="summaryOff" value="Don't show clock in footer"/>
+					</node>
+					<node name="isSensitive" value="Navigation by tap on footer">
+						<node name="summaryOn" value="Navigation is enabled"/>
+						<node name="summaryOff" value="Navigation is disabled"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">

@@ -33,12 +33,12 @@ import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.android.util.AndroidUtil;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkErrors;
+import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
@@ -122,8 +122,9 @@ class RegisterUserDialog extends NetworkDialog {
 
 		if (myLogin.length() == 0) {
 			myLogin = null;
-			final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_LOGIN_WAS_NOT_SPECIFIED);
-			sendError(true, false, err);
+			final ZLNetworkException error =
+				new ZLNetworkException(NetworkException.ERROR_LOGIN_WAS_NOT_SPECIFIED);
+			sendError(true, false, error.getMessage());
 			return;
 		}
 		if (!myPassword.equals(myConfirmPassword)) {
@@ -135,37 +136,37 @@ class RegisterUserDialog extends NetworkDialog {
 		}
 		if (myEmail.length() == 0) {
 			myEmail = null;
-			final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_EMAIL_WAS_NOT_SPECIFIED);
-			sendError(true, false, err);
+			final ZLNetworkException error =
+				new ZLNetworkException(NetworkException.ERROR_EMAIL_WAS_NOT_SPECIFIED);
+			sendError(true, false, error.getMessage());
 			return;
 		}
 		final int atPos = myEmail.indexOf("@");
 		if (atPos == -1 || myEmail.indexOf(".", atPos) == -1) {
-			final String err = NetworkErrors.errorMessage(NetworkErrors.ERROR_INVALID_EMAIL);
-			sendError(true, false, err);
+			final ZLNetworkException error =
+				new ZLNetworkException(NetworkException.ERROR_INVALID_EMAIL);
+			sendError(true, false, error.getMessage());
 			return;
 		}
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
-				String err = mgr.registerUser(myLogin, myPassword, myEmail);
-				if (err != null) {
-					mgr.logOut();
-					sendError(true, false, err);
-					return;
-				}
-				if (mgr.isAuthorised(true).Status != ZLBoolean3.B3_FALSE && mgr.needsInitialization()) {
-					err = mgr.initialize();
-					if (err != null) {
-						mgr.logOut();
-						sendError(false, false, err);
-						return;
+				boolean doRestart = true;
+				try {
+					mgr.registerUser(myLogin, myPassword, myEmail);
+					if (mgr.mayBeAuthorised(true) && mgr.needsInitialization()) {
+						doRestart = false;
+						mgr.initialize();
 					}
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
+					sendError(doRestart, false, e.getMessage());
+					return;
 				}
 				sendSuccess(false);
 			}
 		};
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).wait("registerUser", runnable, myActivity);
+		AndroidUtil.wait("registerUser", runnable, myActivity);
 	}
 
 	@Override
@@ -176,7 +177,7 @@ class RegisterUserDialog extends NetworkDialog {
 	@Override
 	public void prepareDialogInternal(Dialog dialog) {
 		dialog.findViewById(R.id.network_register_email_button).setVisibility((mySystemEmails.size() > 1) ? View.VISIBLE : View.GONE);
-		if (mySystemEmails.size() == 1 && (myEmail == null || myEmail.length() == 0)) {
+		if (!mySystemEmails.isEmpty() && (myEmail == null || myEmail.length() == 0)) {
 			myEmail = mySystemEmails.get(0);
 		}
 

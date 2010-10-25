@@ -1,10 +1,10 @@
+
 NP: оповещение об изменениях в namespace'ах происходит после того,
     как был обработан тег, объявляющий эти namespace'ы... Нужно сделать:
     1) вызов namespaceMapChangedHandler перед вызовом startElementHandler
     2) вызов namespaceMapChangedHandler после вызова endElementHandler
     3) вызов namespaceMapChangedHandler для пустых тегов <tagname />
 
-** синхронизация ресурсов (последняя - 1700)
 ** Записать изменения в ChangeLog
 
 DONE Network library: Объединять книги по сериям

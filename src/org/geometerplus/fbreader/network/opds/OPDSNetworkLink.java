@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
@@ -89,9 +90,9 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest(url) {
 			@Override
-			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 				if (result.Listener.confirmInterrupt()) {
-					return null;
+					return;
 				}
 
 				new OPDSXMLReader(
@@ -110,7 +111,6 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 				} else {
 					result.Listener.commitItems(OPDSNetworkLink.this);
 				}
-				return null;
 			}
 		};
 	}

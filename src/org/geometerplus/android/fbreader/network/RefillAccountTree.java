@@ -20,8 +20,8 @@
 package org.geometerplus.android.fbreader.network;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
@@ -49,11 +49,14 @@ class RefillAccountTree extends NetworkTree {
 	@Override
 	public String getSummary() {
 		final NetworkAuthenticationManager mgr = Link.authenticationManager();
-		if (mgr.isAuthorised(false).Status == ZLBoolean3.B3_TRUE) {
-			final String account = mgr.currentAccount();
-			if (account != null) {
-				return ZLResource.resource("networkView").getResource("refillSummary").getValue().replace("%s", account);
+		try {
+			if (mgr.isAuthorised(false)) {
+				final String account = mgr.currentAccount();
+				if (account != null) {
+					return ZLResource.resource("networkView").getResource("refillSummary").getValue().replace("%s", account);
+				}
 			}
+		} catch (ZLNetworkException e) {
 		}
 		return null;
 	}

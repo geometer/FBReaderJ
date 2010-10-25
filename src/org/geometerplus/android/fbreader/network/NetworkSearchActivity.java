@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -124,7 +125,6 @@ public class NetworkSearchActivity extends Activity {
 	}
 
 	private static class SearchRunnable extends ItemsLoadingRunnable {
-
 		private final String myPattern;
 
 		public SearchRunnable(ItemsLoadingHandler handler, String pattern) {
@@ -136,12 +136,11 @@ public class NetworkSearchActivity extends Activity {
 			return "searchingNetwork";
 		}
 
-		public String doBefore() {
-			return null;
+		public void doBefore() {
 		}
 
-		public String doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
-			return NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
+			NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
 		}
 	}
 

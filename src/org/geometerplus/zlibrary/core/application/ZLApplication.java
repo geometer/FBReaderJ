@@ -38,10 +38,10 @@ public abstract class ZLApplication {
 	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
 	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
-	
+
 	public final ZLIntegerRangeOption KeyDelayOption =
 		new ZLIntegerRangeOption("Options", "KeyDelay", 0, 5000, 250);
-	
+
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
@@ -51,7 +51,7 @@ public abstract class ZLApplication {
 
 	protected ZLApplication() {
 		ourInstance = this;
-		
+
 		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
 	}
 
@@ -111,20 +111,24 @@ public abstract class ZLApplication {
 		hideAllPanels();
 	}
 
-	protected final void addAction(String actionId, ZLAction action) {
+	public final void addAction(String actionId, ZLAction action) {
 		myIdToActionMap.put(actionId, action);
+	}
+
+	public final void removeAction(String actionId) {
+		myIdToActionMap.remove(actionId);
 	}
 
 	public final boolean isActionVisible(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isVisible();
 	}
-	
+
 	public final boolean isActionEnabled(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isEnabled();
 	}
-	
+
 	public final void doAction(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
@@ -134,25 +138,12 @@ public abstract class ZLApplication {
 
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
-	
-	public final boolean doActionByKey(String key) {		
+
+	public final boolean doActionByKey(String key) {
 		final String actionId = keyBindings().getBinding(key);
 		if (actionId != null) {
 			final ZLAction action = myIdToActionMap.get(keyBindings().getBinding(key));
 			return (action != null) && action.checkAndRun();
-		}
-		return false;
-	}
-
-	public void navigate() {
-		if (myWindow != null) {
-			myWindow.navigate();
-		}
-	}
-
-	public boolean canNavigate() {
-		if (myWindow != null) {
-			return myWindow.canNavigate();
 		}
 		return false;
 	}
@@ -192,7 +183,7 @@ public abstract class ZLApplication {
 		public boolean isEnabled() {
 			return isVisible();
 		}
-		
+
 		public final boolean checkAndRun() {
 			if (isEnabled()) {
 				run();
@@ -200,11 +191,11 @@ public abstract class ZLApplication {
 			}
 			return false;
 		}
-		
+
 		public boolean useKeyDelay() {
 			return true;
 		}
-		
+
 		abstract protected void run();
 	}
 
@@ -223,6 +214,10 @@ public abstract class ZLApplication {
 		for (ButtonPanel panel : myPanels) {
 			panel.hide();
 		}
+	}
+
+	public int getBatteryLevel() {
+		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
 	}
 
 	//Menu
@@ -244,7 +239,7 @@ public abstract class ZLApplication {
 		void addItem(String actionId) {
 			myItems.add(new Menubar.PlainItem(myResource.getResource(actionId)));
 		}
-		
+
 		Menubar.Submenu addSubmenu(String key) {
 			Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
 			myItems.add(submenu);
@@ -259,7 +254,7 @@ public abstract class ZLApplication {
 			return (Item)myItems.get(index);
 		}
 	}
-	
+
 	//MenuBar
 	public static final class Menubar extends Menu {
 		public static final class PlainItem implements Item {
@@ -287,7 +282,7 @@ public abstract class ZLApplication {
 				return getResource().getValue();
 			}
 		};
-			
+
 		public Menubar() {
 			super(ZLResource.resource("menu"));
 		}
@@ -320,7 +315,7 @@ public abstract class ZLApplication {
 		protected abstract void processSubmenuAfterItems(Menubar.Submenu submenu);
 		protected abstract void processItem(Menubar.PlainItem item);
 	}
-	
+
 	private class MenubarCreator extends ZLXMLReaderAdapter {
 		private static final String ITEM = "item";
 		private static final String SUBMENU = "submenu";

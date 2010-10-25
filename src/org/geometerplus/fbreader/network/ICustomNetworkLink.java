@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 public interface ICustomNetworkLink extends INetworkLink {
 
 	public static final int INVALID_ID = -1;
@@ -41,7 +43,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setLink(String urlKey, String url);
 	void removeLink(String urlKey);
 
-	String reloadInfo();
+	void reloadInfo() throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:
 	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink

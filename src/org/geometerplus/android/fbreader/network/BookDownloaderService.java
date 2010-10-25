@@ -42,9 +42,9 @@ import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.network.BookReference;
 
+import org.geometerplus.android.fbreader.FBReader;
 
 public class BookDownloaderService extends Service {
-
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
@@ -191,7 +191,7 @@ public class BookDownloaderService extends Service {
 	}
 
 	private Intent getFBReaderIntent(final File file) {
-		final Intent intent = new Intent(getApplicationContext(), org.geometerplus.android.fbreader.FBReader.class);
+		final Intent intent = new Intent(getApplicationContext(), FBReader.class);
 		if (file != null) {
 			intent.setAction(Intent.ACTION_VIEW).setData(Uri.fromFile(file));
 		}
@@ -285,8 +285,7 @@ public class BookDownloaderService extends Service {
 		};
 
 		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate) {
-
-			public String handleStream(URLConnection connection, InputStream inputStream) throws IOException {
+			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 
 				final int fileLength = connection.getContentLength();
@@ -299,7 +298,7 @@ public class BookDownloaderService extends Service {
 				try {
 					outStream = new FileOutputStream(file);
 				} catch (FileNotFoundException ex) {
-					return ZLNetworkErrors.errorMessage(ZLNetworkErrors.ERROR_CREATE_FILE, file.getPath());
+					throw new ZLNetworkException(ZLNetworkException.ERROR_CREATE_FILE, file.getPath());
 				}
 				try {
 					final byte[] buffer = new byte[8192];
@@ -328,19 +327,21 @@ public class BookDownloaderService extends Service {
 				} finally {
 					outStream.close();
 				}
-				return null;
 			}
 		};
 
 		final Thread downloader = new Thread(new Runnable() {
 			public void run() {
-				final String err = ZLNetworkManager.Instance().perform(request);
-				// TODO: show error message to User
-				final boolean success = (err == null);
-				if (!success) {
+				boolean success = false;
+				try {
+					ZLNetworkManager.Instance().perform(request);
+					success = true;
+				} catch (ZLNetworkException e) {
+					// TODO: show error message to User
 					file.delete();
+				} finally {
+					downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
 				}
-				downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
 			}
 		});
 		downloader.setPriority(Thread.MIN_PRIORITY);

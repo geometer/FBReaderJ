@@ -36,10 +36,6 @@ public final class BookModel {
 			return null;
 		}
 		BookModel model = new BookModel(book);
-		//android.os.Debug.startMethodTracing("bookReadingLT", 1 << 25);
-		//final boolean code = plugin.readModel(model);
-		//android.os.Debug.stopMethodTracing();
-		//if (code) {
 		if (plugin.readModel(model)) {
 			return model;
 		}

@@ -17,20 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import org.geometerplus.android.fbreader.BookmarksActivity;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.android.fbreader.preferences.PreferenceActivity;
 
-class ShowBookmarksAction extends FBAction {
-	ShowBookmarksAction(FBReader fbreader) {
-		super(fbreader);
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(BookmarksActivity.class);
+class PreferencesAction extends RunActivityAction {
+	PreferencesAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader, PreferenceActivity.class);
 	}
 }

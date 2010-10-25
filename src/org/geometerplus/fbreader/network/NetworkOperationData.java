@@ -38,8 +38,6 @@ public class NetworkOperationData {
 	public OnNewItemListener Listener;
 	public String ResumeURI;
 
-	private int myResumeCount;
-
 	public NetworkOperationData(INetworkLink link, OnNewItemListener listener) {
 		Link = link;
 		Listener = listener;
@@ -50,9 +48,6 @@ public class NetworkOperationData {
 	}
 
 	public ZLNetworkRequest resume() {
-		if (++myResumeCount >= 10) { // FIXME: hardcoded resume limit constant!!!
-			return null;
-		}
 		final ZLNetworkRequest request = Link.resume(this);
 		clear();
 		return request;

@@ -17,33 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.android.fbreader;
 
-import java.util.*;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBAction;
 
-public abstract class ZLKeyOptionEntry extends ZLOptionEntry {
-	private final ArrayList<String> myActionNames = new ArrayList<String>();
+class SearchAction extends FBAction {
+	private final FBReader myActivity;
 
-	public ZLKeyOptionEntry() {}
-
-	public int getKind() {
-		return ZLOptionKind.KEY;
+	SearchAction(FBReader activity, FBReaderApp fbreader) {
+		super(fbreader);
+		myActivity = activity;
 	}
 
-	public final void addActionName(String actionName) {
-		myActionNames.add(actionName);
+	public boolean isVisible() {
+		return Reader.Model != null;
 	}
 
-	public final ArrayList<String> getActionNames() {
-		return myActionNames;
+	public void run() {
+		myActivity.onSearchRequested();
 	}
-
-	public abstract void onReset();
-	public abstract void onAccept();
-
-	public abstract int actionIndex(String key);
-
-	public abstract void onValueChanged(String key, int index);
-
-	public abstract void onKeySelected(String key);
 }

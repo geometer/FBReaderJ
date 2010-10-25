@@ -28,15 +28,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
-	private static Library ourInstance;
-
-	public static Library Instance() {
-		if (ourInstance == null) {
-			ourInstance = new Library();
-		}
-		return ourInstance;
-	}
-
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
@@ -46,7 +37,7 @@ public final class Library {
 
 	private boolean myDoRebuild = true;
 
-	private Library() {
+	public Library() {
 	}
 
 	public void clear() {
@@ -60,7 +51,7 @@ public final class Library {
 		mySearchResult.clear();
 	}
 
-	public ZLResourceFile getHelpFile() {
+	public static ZLResourceFile getHelpFile() {
 		final ZLResourceFile file = ZLResourceFile.createResourceFile(
 			"data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
 		);
@@ -155,36 +146,21 @@ public final class Library {
 	}
 
 	private void collectBooks() {
-		//final long start = System.currentTimeMillis();
-		//android.os.Debug.startMethodTracing("/sdcard/ll0");
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println(physicalFilesList.size() + " files " + (System.currentTimeMillis() - start));
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll2");
 		FileInfoSet fileInfos = new FileInfoSet();
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println("file infos have been loaded " + (System.currentTimeMillis() - start));
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll1");
 		final Map<Long,Book> savedBooks = BooksDatabase.Instance().listBooks(fileInfos);
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println(savedBooks.size() + " saved books " + (System.currentTimeMillis() - start));
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll3");
 		for (ZLPhysicalFile file : physicalFilesList) {
 			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file));
 			file.setCached(false);
 		}
 		myBooks.add(getBook(getHelpFile(), fileInfos, savedBooks, false));
-		//android.os.Debug.stopMethodTracing();
-		//System.err.println("books have been synchronized " + (System.currentTimeMillis() - start));
 
 		collectExternalBooks(fileInfos, savedBooks);
 
-		//android.os.Debug.startMethodTracing("/sdcard/ll4");
 		fileInfos.save();
-		//android.os.Debug.stopMethodTracing();
 	}
 
 	private static class AuthorSeriesPair {
@@ -212,9 +188,9 @@ public final class Library {
 		}
 	}
 
-	private static final ArrayList ourNullList = new ArrayList(1);
-	static {
-		ourNullList.add(null);
+	private final ArrayList myNullList = new ArrayList(1);
+	{
+		myNullList.add(null);
 	}
 
 	private TagTree getTagTree(Tag tag, HashMap<Tag,TagTree> tagTreeMap) {
@@ -242,7 +218,7 @@ public final class Library {
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
 			if (authors.isEmpty()) {
-				authors = (List<Author>)ourNullList;
+				authors = (List<Author>)myNullList;
 			}
 			final SeriesInfo seriesInfo = book.getSeriesInfo();
 			for (Author a : authors) {
@@ -267,7 +243,7 @@ public final class Library {
 
 			List<Tag> tags = book.tags();
 			if (tags.isEmpty()) {
-				tags = (List<Tag>)ourNullList;
+				tags = (List<Tag>)myNullList;
 			}
 			for (Tag t : tags) {
 				getTagTree(t, tagTreeMap).createBookSubTree(book, true);
@@ -318,7 +294,7 @@ public final class Library {
 		return myRecentBooks;
 	}
 
-	public Book getRecentBook() {
+	public static Book getRecentBook() {
 		List<Long> recentIds = BooksDatabase.Instance().listRecentBookIds();
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
@@ -338,7 +314,7 @@ public final class Library {
 		return mySearchResult;
 	}
 
-	public void addBookToRecentList(Book book) {
+	public static void addBookToRecentList(Book book) {
 		final BooksDatabase db = BooksDatabase.Instance();
 		final List<Long> ids = db.listRecentBookIds();
 		final Long bookId = book.getId();

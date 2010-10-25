@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 class CancelAction extends FBAction {
-	CancelAction(FBReader fbreader) {
+	CancelAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

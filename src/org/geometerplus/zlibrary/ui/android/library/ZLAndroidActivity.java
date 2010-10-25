@@ -24,13 +24,14 @@ import java.io.File;
 import android.net.Uri;
 import android.app.Activity;
 import android.os.Bundle;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.view.*;
+import android.os.PowerManager;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
@@ -46,6 +47,16 @@ public abstract class ZLAndroidActivity extends Activity {
 		super.onSaveInstanceState(state);
 		state.putInt(REQUESTED_ORIENTATION_KEY, myOrientation);
 		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
+	}
+
+	protected abstract String fileNameForEmptyUri();
+
+	private String fileNameFromUri(Uri uri) {
+		if (uri.equals(Uri.parse("file:///"))) {
+			return fileNameForEmptyUri();
+		} else {
+			return uri.getPath();
+		}
 	}
 
 	@Override
@@ -69,7 +80,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				fileToOpen = uri.getPath();
+				fileToOpen = fileNameFromUri(uri);
                 final String scheme = uri.getScheme();
                 if ("content".equals(scheme)) {
                     final File file = new File(fileToOpen);
@@ -86,7 +97,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} else if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
+			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
 		ZLApplication.Instance().repaintView();
 	}
@@ -113,8 +124,55 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	private PowerManager.WakeLock myWakeLock;
+	private boolean myWakeLockToCreate;
+
+	public final void createWakeLock() {
+		if (myWakeLockToCreate) {
+			synchronized (this) {
+				if (myWakeLockToCreate) {
+					myWakeLockToCreate = false;
+					myWakeLock =
+						((PowerManager)getSystemService(POWER_SERVICE)).
+							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+					myWakeLock.acquire();
+				}
+			}
+		}
+	}
+
+	private final void switchWakeLock(boolean on) {
+		if (on) {
+			if (myWakeLock == null) {
+				myWakeLockToCreate = true;
+			}
+		} else {
+			if (myWakeLock != null) {
+				synchronized (this) {
+					if (myWakeLock != null) {
+						myWakeLock.release();
+						myWakeLock = null;
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		myWakeLockToCreate =
+			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
+			ZLApplication.Instance().getBatteryLevel();
+		switchWakeLock(true);
+
+		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+	}
+
 	@Override
 	public void onPause() {
+		unregisterReceiver(myBatteryInfoReceiver);
+		switchWakeLock(false);
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
 	}
@@ -127,13 +185,13 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
-				fileToOpen = uri.getPath();
+				fileToOpen = fileNameFromUri(uri);
 			}
 			intent.setData(null);
 		}
 
 		if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(new ZLPhysicalFile(new File(fileToOpen)));
+			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
 		ZLApplication.Instance().repaintView();
 	}
@@ -217,6 +275,13 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
-	abstract protected void navigate();
-	abstract protected boolean canNavigate();
+	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			final int level = intent.getIntExtra("level", 100);
+			((ZLAndroidApplication)getApplication()).myMainWindow.setBatteryLevel(level);
+			switchWakeLock(
+				ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() < level
+			);
+		}
+	};
 }

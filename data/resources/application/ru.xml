@@ -161,16 +161,43 @@
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
-					<node name="summaryOn" value="Экран не выключится автоматически во время чтения"/>
-					<node name="summaryOff" value="Экран выключится автоматически, если не листать страницы"/>
-				</node>
-				<node name="scrollbarType" value="Полоса прокрутки справа от текста">
-					<node name="hide" value="Не показывать"/>
-					<node name="show" value="Показывать как обычную полосу прокрутки"/>
-					<node name="showAsProgress" value="Закрашивать верхнюю часть полосы"/>
+					<node name="0" value="Никогда не выключать"/>
+					<node name="25" value="Пока батарея заряжена хотя бы на четверть"/>
+					<node name="50" value="Пока батарея заряжена хотя бы на половину"/>
+					<node name="100" value="Всегда выключать"/>
 				</node>
 				<node name="appearanceSettings" value="Внешний вид">
 					<node name="summary" value="Настройки отображения текста"/>
+				</node>
+				<node name="scrollBar" value="Полоса прокрутки">
+					<node name="summary" value="Настройка полосы прокрутки"/>
+					<node name="scrollbarType" value="Тип полосы прокрутки">
+						<node name="hide" value="Скрыть"/>
+						<node name="show" value="Вертикальный ползунок"/>
+						<node name="showAsProgress" value="Вертикальный прогресс-бар"/>
+						<node name="showAsFooter" value="Подвал"/>
+					</node>
+					<node name="footerHeight" value="Высота подвала" />
+					<node name="footerLongTap" value="Придержать подвал">
+						<node name="longTapRevert" value="Откатить переход"/>
+						<node name="longTapNavigate" value="Сделать переход"/>
+					</node>
+					<node name="showProgress" value="Показывать число страниц">
+						<node name="summaryOn" value="Показывать число страниц в подвале"/>
+						<node name="summaryOff" value="Не показывать число страниц в подвале"/>
+					</node>
+					<node name="showBattery" value="Показать заряд батареи">
+						<node name="summaryOn" value="Показывать заряд батареи в подвале"/>
+						<node name="summaryOff" value="Не показывать заряд батареи в подвале"/>
+					</node>
+					<node name="showClock" value="Показывать часы">
+						<node name="summaryOn" value="Показывать часы в подвале"/>
+						<node name="summaryOff" value="Не показывать часы в подвале"/>
+					</node>
+					<node name="isSensitive" value="Перемещаться по тексту при прикосновении к подвалу">
+						<node name="summaryOn" value="Перемещение включено"/>
+						<node name="summaryOff" value="Перемещение выключено"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">

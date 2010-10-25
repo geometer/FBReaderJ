@@ -37,6 +37,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 
 	private String myNextURL;
 	private String mySkipUntilId;
+	private boolean myFoundNewIds;
 
 	private int myItemsToLoad = -1;
 
@@ -51,6 +52,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;
+		myFoundNewIds = mySkipUntilId != null;
 		if (!(result.Link instanceof OPDSNetworkLink)) {
 			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSNetworkLink class.");
 		}
@@ -90,7 +92,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			// TODO: do reload???
 			myNextURL = null;
 		}
-		myData.ResumeURI = myNextURL;
+		myData.ResumeURI = myFoundNewIds ? myNextURL : null;
 		myData.LastLoadedId = null;
 	}
 
@@ -183,6 +185,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 			return tryInterrupt();
 		}
 		myData.LastLoadedId = entry.Id.Uri;
+		if (!myFoundNewIds && !myData.LoadedIds.contains(entry.Id.Uri)) {
+			myFoundNewIds = true;
+		}
+		myData.LoadedIds.add(entry.Id.Uri);
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
 		if (opdsLink.getCondition(entry.Id.Uri) == OPDSNetworkLink.FeedCondition.NEVER) {
@@ -425,7 +431,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader {
 		}
 
 		final boolean dependsOnAccount =
-            OPDSNetworkLink.FeedCondition.SIGNED_IN == opdsLink.getCondition(entry.Id.Uri);
+			OPDSNetworkLink.FeedCondition.SIGNED_IN == opdsLink.getCondition(entry.Id.Uri);
 
 		final String annotation;
 		if (entry.Summary != null) {
