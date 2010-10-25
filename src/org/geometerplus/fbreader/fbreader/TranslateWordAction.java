@@ -4,7 +4,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-//import org.geometerplus.android.fbreader.FBReader;
 
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
@@ -13,9 +12,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 public class TranslateWordAction extends FBAction {
-	TranslateWordAction(FBReader fbreader) {
+	TranslateWordAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
+
 	private ZLAndroidWidget getWidget() {
 		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 	}

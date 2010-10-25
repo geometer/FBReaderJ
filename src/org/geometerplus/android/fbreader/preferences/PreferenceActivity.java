@@ -132,12 +132,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			fbReader.FooterHeightOption)
 		);
 
-		/*
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
 		statusLineCategory.addPreference(new ZLChoicePreference(
 			this, statusLineCategory.Resource, "footerLongTap",
 			fbReader.FooterLongTap, footerLongTaps));
-		*/
 
 		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
 		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");

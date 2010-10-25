@@ -1,5 +1,5 @@
 package org.geometerplus.android.fbreader;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
@@ -57,7 +57,7 @@ public class OpenFileActivity extends ListActivity {
 			LastPath.setValue(aDirectory.toString());
 			fill(aDirectory.listFiles());
 		}else{
-			final FBReader fbreader = (FBReader)ZLApplication.Instance();
+			final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 			fbreader.openFile(new ZLPhysicalFile(new File(aDirectory.getPath())));
 			fbreader.repaintView();
 			fbreader.showBookTextView();

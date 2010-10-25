@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class InitiateCopyAction extends FBAction {
 
-	InitiateCopyAction(FBReader fbreader) {
+	InitiateCopyAction(FBReaderApp fbreader) {
 		super(fbreader);
 		// TODO Auto-generated constructor stub
 	}

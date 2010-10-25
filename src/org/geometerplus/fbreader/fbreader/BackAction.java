@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 class BackAction extends FBAction {
-	BackAction(FBReader fbreader) {
+	BackAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

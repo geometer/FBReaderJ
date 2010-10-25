@@ -8,7 +8,7 @@ import android.graphics.Point;
 
 public class TapZoneAction extends FBAction {
 	private final String myAction;
-	TapZoneAction(FBReader fbreader, String action) {
+	TapZoneAction(FBReaderApp fbreader, String action) {
 		super(fbreader);
 		myAction = action;
 	}

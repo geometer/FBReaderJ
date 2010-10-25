@@ -26,7 +26,7 @@ class ScrollAction extends FBAction {
 	private final boolean myForward;
 	private final boolean myScrollPage;
 
-	ScrollAction(FBReader fbreader, boolean forward, boolean page) {
+	ScrollAction(FBReaderApp fbreader, boolean forward, boolean page) {
 		super(fbreader);
 		myForward = forward;
 		myScrollPage = page;

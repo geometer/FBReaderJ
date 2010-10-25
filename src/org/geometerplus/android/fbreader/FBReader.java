@@ -34,9 +34,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.content.Context;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -129,6 +126,8 @@ public final class FBReader extends ZLAndroidActivity {
 		
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.OPEN_FILE, new OpenFileAction(this, fbReader));
 	}
 
 	@Override
@@ -207,6 +206,8 @@ public final class FBReader extends ZLAndroidActivity {
 		
 		fbReader.removeAction(ActionCode.SHOW_NAVIGATION);
 		fbReader.removeAction(ActionCode.SEARCH);
+
+		fbReader.removeAction(ActionCode.OPEN_FILE);
 
 		super.onDestroy();
 	}
@@ -323,12 +324,6 @@ public final class FBReader extends ZLAndroidActivity {
 	private static String makeProgressText(int page, int pagesNumber) {
 		return "" + page + " / " + pagesNumber;
 	}
-
-	BroadcastReceiver myBatInfoReceiver = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			ZLApplication.Instance().myBatteryLevel = intent.getIntExtra("level", 100);
-		}
-	};
 
 	ArrayList<String> myMenuActions = new ArrayList<String>();
 	@Override

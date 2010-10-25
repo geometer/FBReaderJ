@@ -17,24 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-import org.geometerplus.android.fbreader.OpenFileActivity;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-
-class OpenFileAction extends FBAction {
-	OpenFileAction(FBReader fbreader) {
-		super(fbreader);
+class OpenFileAction extends RunActivityAction {
+	OpenFileAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader, OpenFileActivity.class);
 	}
 
 	public boolean isVisible() {
 		return true;
-	}
-
-	public void run() {
-		final ZLAndroidDialogManager dialogManager =
-			(ZLAndroidDialogManager)ZLAndroidDialogManager.Instance();
-		dialogManager.runActivity(OpenFileActivity.class);
 	}
 }

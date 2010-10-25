@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.ScrollingPreferences;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -331,7 +331,7 @@ public class ZLTapZones {
 	}
 
 	public void draw(Canvas canvas) {
-		FBReader reader = (FBReader)FBReader.Instance();
+		FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
 		int color = ZLAndroidColorUtil.rgb(reader.BookTextView.getTextColor(FBHyperlinkType.INTERNAL));
 		myLinesPaint.setColor(color);
 		myFillPaint.setColor(color);
@@ -343,7 +343,7 @@ public class ZLTapZones {
 	}
 
 	private void drawGuideLines(Canvas canvas) {
-		FBReader reader = (FBReader)FBReader.Instance();
+		FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
 		myGuidesPaint.setColor(ZLAndroidColorUtil.rgb(reader.BookTextView.getTextColor(FBHyperlinkType.NONE)));
 		int dx2 = myWatchArea.width() / 2;
 		int dy2 = myWatchArea.height() / 2;

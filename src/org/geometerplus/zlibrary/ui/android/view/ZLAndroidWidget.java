@@ -28,10 +28,11 @@ import android.view.*;
 import android.util.AttributeSet;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
@@ -47,7 +48,6 @@ public class ZLAndroidWidget extends View {
 	private int myScrollingShift;
 	private float myScrollingSpeed;
 	private int myScrollingBound;
-	private ZLFooter myFooter = new ZLFooter();
 
 	private final int FOOTER_LONG_TAP_REVERT = 0;
 	private final int FOOTER_LONG_TAP_NAVIGATE = 1;
@@ -91,8 +91,6 @@ public class ZLAndroidWidget extends View {
 			view.onScrollingFinished(ZLView.PAGE_CENTRAL);
 			setPageToScroll(ZLView.PAGE_CENTRAL);
 		}
-
-		ensureChildrenSizes();
 	}
 
 	@Override
@@ -105,7 +103,6 @@ public class ZLAndroidWidget extends View {
 		}
 		super.onDraw(canvas);
 
-		ensureChildrenSizes();
 		final int w = getWidth();
 		final int h = getMainAreaHeight();
 
@@ -174,6 +171,7 @@ public class ZLAndroidWidget extends View {
 		);
 
 		if (stopScrolling) {
+			final ZLView view = ZLApplication.Instance().getCurrentView();
 			if (myScrollingBound != 0) {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;
@@ -392,7 +390,7 @@ public class ZLAndroidWidget extends View {
 						switch(myMode) {
 							case MODE_READ:
 								if (y > getHeight() - myFooter.getTapHeight()) {
-									FBReader reader = (FBReader)FBReader.Instance();
+									FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
 									if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
 										if (view instanceof ZLTextView) {
 											((ZLTextView) view).savePosition();
@@ -598,7 +596,7 @@ public class ZLAndroidWidget extends View {
 
 	public boolean onLongClick (){
 		if (myPressedY > getHeight() - myFooter.getTapHeight()) {
-			FBReader reader = (FBReader)FBReader.Instance();
+			FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
 			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
 				final ZLView view = ZLApplication.Instance().getCurrentView();
 				if (view instanceof ZLTextView) {

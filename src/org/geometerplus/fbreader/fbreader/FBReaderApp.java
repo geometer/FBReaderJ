@@ -94,7 +94,6 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
-		addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this));
 		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
 		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
 		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
@@ -114,7 +113,6 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.TAP_ZONE_DELETE, new TapZoneAction(this, ActionCode.TAP_ZONE_DELETE));
 		addAction(ActionCode.TAP_ZONES_SAVE, new TapZoneAction(this, ActionCode.TAP_ZONES_SAVE));
 		addAction(ActionCode.TAP_ZONES_CANCEL, new TapZoneAction(this, ActionCode.TAP_ZONES_CANCEL));
-		addAction(ActionCode.OPEN_FILE, new OpenFileAction(this));
 
 		addAction(ActionCode.DEFAULT, new DummyAction(this, false));
 		addAction(ActionCode.NOTHING, new DummyAction(this, true));
