@@ -18,6 +18,7 @@
  */
 
 package org.geometerplus.fbreader.fbreader;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 public class FollowHyperlinkAction extends FBAction {
 	FollowHyperlinkAction(FBReaderApp fbreader) {
@@ -26,11 +27,15 @@ public class FollowHyperlinkAction extends FBAction {
 
 	public boolean isEnabled() {
 		FBView view = Reader.getTextView();
-		return (view != null) && (view.getCurrentHyperlink() != null);
+		return (view != null);
 	}
 
 	public void run() {
 		FBView view = Reader.getTextView();
-		view.followHyperlink(view.getCurrentHyperlink());
+		ZLTextHyperlink link = view.getCurrentHyperlink();
+		if (link != null)
+			view.followHyperlink(link);
+		else
+			Reader.getTextView().doScrollPage(true);
 	}
 }

@@ -21,8 +21,13 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.view.KeyEvent;
+
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
@@ -71,6 +76,32 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			libraryCategory.Resource,
 			"path")
 		);
+		final Category interactionCategory = createCategory("interaction");
+		final Screen keyBindingsScreen = interactionCategory.createPreferenceScreen("keyBindings");
+		keyBindingsScreen.setSummary(keyBindingsScreen.Resource.getResource("summary").getValue());
+		final Category keyBindingCategory = keyBindingsScreen.createCategory(null);
+
+		ZLResource keysResource = ZLResource.resource("keys");
+		ZLResource actionsResource = ZLResource.resource("actions");
+		String[] actions = ZLApplication.Instance().getGetSimpleActions();
+		int[] keys = {
+				KeyEvent.KEYCODE_VOLUME_DOWN,
+				KeyEvent.KEYCODE_VOLUME_UP,
+				KeyEvent.KEYCODE_DPAD_CENTER,
+				KeyEvent.KEYCODE_DPAD_UP,
+				KeyEvent.KEYCODE_DPAD_DOWN,
+				KeyEvent.KEYCODE_DPAD_RIGHT,
+				KeyEvent.KEYCODE_DPAD_LEFT,
+				KeyEvent.KEYCODE_BACK,
+				KeyEvent.KEYCODE_CAMERA,
+		};
+
+		for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+			String key = ZLAndroidKeyUtil.getKeyNameByCode(keys[keyIndex]);
+			keyBindingCategory.addPreference(new StringListPreference(
+				this, keysResource.getResource(key), actionsResource,
+				actions, ZLApplication.Instance().getBindingOption(keys[keyIndex])));
+		}
 
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
@@ -101,12 +132,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			fbReader.FooterHeightOption)
 		);
 
-		/*
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
 		statusLineCategory.addPreference(new ZLChoicePreference(
 			this, statusLineCategory.Resource, "footerLongTap",
 			fbReader.FooterLongTap, footerLongTaps));
-		*/
 
 		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
 		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
@@ -139,8 +168,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Category scrollingCategory = createCategory("Scrolling");
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 		scrollingCategory.addOption(scrollingPreferences.FlickOption, "flick");
-		scrollingCategory.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
-		scrollingCategory.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 	}

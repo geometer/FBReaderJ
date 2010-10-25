@@ -19,13 +19,20 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.ArrayList;
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.view.*;
 import android.util.AttributeSet;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
@@ -42,19 +49,35 @@ public class ZLAndroidWidget extends View {
 	private float myScrollingSpeed;
 	private int myScrollingBound;
 
+	private final int FOOTER_LONG_TAP_REVERT = 0;
+	private final int FOOTER_LONG_TAP_NAVIGATE = 1;
+
+	public ZLTapZones myTapZones = new ZLTapZones();
+	public static final int MODE_READ = 0;
+	public static final int MODE_TAP_ZONES_EDIT = 1;
+	public int myMode = MODE_READ;
+
+	public Activity myMainActivity;
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setDrawingCacheEnabled(false);
+		init();
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setDrawingCacheEnabled(false);
+		init();
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
+		init();
+	}
+	private void init() {
 		setDrawingCacheEnabled(false);
+
+		// next line prevent ignoring first onKeyDown DPad event
+		// after any dialog was closed
+		setFocusableInTouchMode(true);
 	}
 
 	@Override
@@ -102,6 +125,10 @@ public class ZLAndroidWidget extends View {
 		} else {
 			onDrawStatic(canvas);
 			ZLApplication.Instance().onRepaintFinished();
+		}
+
+		if (myMode == MODE_TAP_ZONES_EDIT) {
+			myTapZones.draw(canvas);
 		}
 	}
 
@@ -310,15 +337,23 @@ public class ZLAndroidWidget extends View {
 	public boolean onTrackballEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			onKeyDown(KeyEvent.KEYCODE_DPAD_CENTER, null);
-		} else {
-			ZLApplication.Instance().getCurrentView().onTrackballRotated((int)(10 * event.getX()), (int)(10 * event.getY()));
+		} else if (event.getY() > 0) {
+			onKeyDown(KeyEvent.KEYCODE_DPAD_DOWN, null);
+		} else if (event.getY() < 0) {
+			onKeyDown(KeyEvent.KEYCODE_DPAD_UP, null);
 		}
 		return true;
 	}
 
 
+	public String myLongPressWord;
 	private class LongClickRunnable implements Runnable {
 		public void run() {
+			final ZLView view = ZLApplication.Instance().getCurrentView();
+			if (view instanceof ZLTextView) {
+				myLongPressWord = ((ZLTextView)view).getWordUnderPosition(myPressedX, myPressedY);
+			}
+
 			if (performLongClick()) {
 				myLongClickPerformed = true;
 			}
@@ -333,7 +368,7 @@ public class ZLAndroidWidget extends View {
         if (myPendingLongClickRunnable == null) {
             myPendingLongClickRunnable = new LongClickRunnable();
         }
-        postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+        postDelayed(myPendingLongClickRunnable, ViewConfiguration.getLongPressTimeout());
     }
 
 	private boolean myPendingPress;
@@ -352,9 +387,36 @@ public class ZLAndroidWidget extends View {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
 					if (myPendingPress) {
-						view.onStylusPress(myPressedX, myPressedY);
+						switch(myMode) {
+							case MODE_READ:
+								if (y > getHeight() - myFooter.getTapHeight()) {
+									FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
+									if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+										if (view instanceof ZLTextView) {
+											((ZLTextView) view).savePosition();
+										}
+										myFooter.setProgress(view, myPressedX);
+									}
+								}
+								else {
+									if (!view.onStylusPress(myPressedX, myPressedY)) {
+										myTapZones.doTap(myPressedX, myPressedY);
+									}
+								}
+								break;
+							case MODE_TAP_ZONES_EDIT:
+								myTapZones.onStylusPress(myPressedX, myPressedY);
+								break;
+						}
 					}
-					view.onStylusRelease(x, y);
+					switch(myMode) {
+						case MODE_READ:
+							view.onStylusRelease(x, y);
+							break;
+						case MODE_TAP_ZONES_EDIT:
+							myTapZones.onStylusRelease(x, y);
+							break;
+					}
 				}
 				myPendingPress = false;
 				myScreenIsTouched = false;
@@ -374,12 +436,26 @@ public class ZLAndroidWidget extends View {
 							if (myPendingLongClickRunnable != null) {
 								removeCallbacks(myPendingLongClickRunnable);
 							}
-							view.onStylusPress(myPressedX, myPressedY);
+							switch(myMode) {
+								case MODE_READ:
+									view.onStylusMovePressed(myPressedX, myPressedY);
+									break;
+								case MODE_TAP_ZONES_EDIT:
+									myTapZones.onStylusMovePressed(myPressedX, myPressedY);
+									break;
+							}
 							myPendingPress = false;
 						}
 					}
 					if (!myPendingPress) {
-						view.onStylusMovePressed(x, y);
+						switch(myMode) {
+							case MODE_READ:
+								view.onStylusMovePressed(x, y);
+								break;
+							case MODE_TAP_ZONES_EDIT:
+								myTapZones.onStylusMovePressed(x, y);
+								break;
+						}
 					}
 				}
 				break;
@@ -393,17 +469,15 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
 			case KeyEvent.KEYCODE_DPAD_DOWN:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
-				return true;
 			case KeyEvent.KEYCODE_DPAD_UP:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, -1);
-				return true;
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+			case KeyEvent.KEYCODE_CAMERA:
+				return ZLApplication.Instance().doActionByKey(keyCode);
 			default:
-				return false;
+				return super.onKeyDown(keyCode, event);
 		}
 	}
 
@@ -412,11 +486,15 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+			case KeyEvent.KEYCODE_DPAD_UP:
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+			case KeyEvent.KEYCODE_CAMERA:
 				return true;
 			default:
-				return false;
+				return super.onKeyUp(keyCode, event);
 		}
 	}
 
@@ -464,6 +542,78 @@ public class ZLAndroidWidget extends View {
 			return 0;
 		}
 		return view.getScrollbarFullSize();
+	}
+
+	ZLResource myMenuResource;
+	public void loadContextMenu(Menu menu, ArrayList<String> menuActions) {
+		String read_menu[] = {
+				ActionCode.SEARCH,
+				ActionCode.INITIATE_COPY,
+				ActionCode.TRANSLATE_WORD,
+				ActionCode.ROTATE,
+				ActionCode.INCREASE_FONT,
+				ActionCode.DECREASE_FONT,
+				ActionCode.SHOW_NAVIGATION,
+				ActionCode.SHOW_BOOK_INFO,
+				ActionCode.TAP_ZONES,
+		};
+
+		String zones_menu[] = {
+				ActionCode.TAP_ZONE_SELECT_ACTION,
+				ActionCode.TAP_ZONE_ADD,
+				ActionCode.TAP_ZONE_DELETE,
+				ActionCode.TAP_ZONES_SAVE,
+				ActionCode.TAP_ZONES_CANCEL,
+		};
+
+		String actions[];
+		if (myMode == MODE_READ) {
+			actions = read_menu;
+		} else if (myMode == MODE_TAP_ZONES_EDIT) {
+			actions = zones_menu;
+		} else {
+			return;
+		}
+
+		if (myMenuResource == null) {
+			myMenuResource = ZLResource.resource("actions");
+		}
+
+		menuActions.clear();
+		ZLApplication app = ZLApplication.Instance();
+		for (int actionIndex = 0; actionIndex < actions.length; ++actionIndex) {
+			String actionId = actions[actionIndex];
+			if (app.isActionEnabled(actionId) && app.isActionVisible(actionId)) {
+				String itemText = myMenuResource.getResource(actionId).getValue();
+				if (actionId == ActionCode.TRANSLATE_WORD) {
+					itemText = String.format(itemText, myLongPressWord);
+				}
+				menu.add(0, actionIndex, Menu.NONE, itemText);
+			}
+			menuActions.add(actionId);
+		}
+	}
+
+	public boolean onLongClick (){
+		if (myPressedY > getHeight() - myFooter.getTapHeight()) {
+			FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
+			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+				final ZLView view = ZLApplication.Instance().getCurrentView();
+				if (view instanceof ZLTextView) {
+					return ((ZLTextView) view).revertPosition();
+				}
+			}
+			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_NAVIGATE) {
+				final ZLView view = ZLApplication.Instance().getCurrentView();
+				myFooter.setProgress(view, myPressedX);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Point getTapPoint() {
+		return new Point(myPressedX, myPressedY);
 	}
 
 	private int getMainAreaHeight() {

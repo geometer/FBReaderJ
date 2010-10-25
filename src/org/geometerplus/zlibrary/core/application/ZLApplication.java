@@ -21,8 +21,10 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -136,16 +138,53 @@ public abstract class ZLApplication {
 		}
 	}
 
+	public String[] getGetSimpleActions() {
+		String[] actions = {
+				ActionCode.PREV_PAGE,
+				ActionCode.NEXT_PAGE,
+				ActionCode.PREV_LINE,
+				ActionCode.NEXT_LINE,
+				ActionCode.PREV_LINK,
+				ActionCode.NEXT_LINK,
+				ActionCode.FOLLOW_HYPERLINK,
+				ActionCode.BACK,
+				ActionCode.ROTATE,
+				ActionCode.SWITCH_PROFILE,
+				ActionCode.SHOW_LIBRARY,
+				ActionCode.OPEN_FILE,
+				ActionCode.SHOW_PREFERENCES,
+				ActionCode.SHOW_BOOK_INFO,
+				ActionCode.INITIATE_COPY,
+				ActionCode.SHOW_CONTENTS,
+				ActionCode.SHOW_BOOKMARKS,
+				ActionCode.SHOW_NETWORK_LIBRARY,
+				ActionCode.SEARCH,
+				ActionCode.FIND_PREVIOUS,
+				ActionCode.FIND_NEXT,
+				ActionCode.SHOW_NAVIGATION,
+				ActionCode.INCREASE_FONT,
+				ActionCode.DECREASE_FONT,
+				ActionCode.TAP_ZONES,
+				ActionCode.NOTHING,
+				ActionCode.DEFAULT,
+		};
+		return actions;
+	}
+
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
 
-	public final boolean doActionByKey(String key) {
-		final String actionId = keyBindings().getBinding(key);
+	public final boolean doActionByKey(int keyId) {
+		final String actionId = keyBindings().getBinding(keyId);
 		if (actionId != null) {
-			final ZLAction action = myIdToActionMap.get(keyBindings().getBinding(key));
+			final ZLAction action = myIdToActionMap.get(actionId);
 			return (action != null) && action.checkAndRun();
 		}
 		return false;
+	}
+
+	public final ZLStringOption getBindingOption(int keyId) {
+		return keyBindings().getOption(keyId);
 	}
 
 	public void rotateScreen() {
@@ -226,22 +265,30 @@ public abstract class ZLApplication {
 		}
 
 		private final ArrayList<Item> myItems = new ArrayList<Item>();
-		private final ZLResource myResource;
+		private final ZLResource myMenuRes;
+		private final ZLResource myActionsRes;
 
-		Menu(ZLResource resource) {
-			myResource = resource;
+		Menu(ZLResource menu, ZLResource actions) {
+			myMenuRes = menu;
+			myActionsRes = actions;
 		}
 
-		ZLResource getResource() {
-			return myResource;
+		ZLResource getMenuRes() {
+			return myMenuRes;
 		}
 
 		void addItem(String actionId) {
-			myItems.add(new Menubar.PlainItem(myResource.getResource(actionId)));
+			ZLResource item = myMenuRes.getResource(actionId);
+			ZLResource title = item;
+			if (!item.hasValue()) {
+				title = myActionsRes.getResource(actionId);
+			}
+			myItems.add(new Menubar.PlainItem(item, title));
 		}
 
 		Menubar.Submenu addSubmenu(String key) {
-			Menubar.Submenu submenu = new Menubar.Submenu(myResource.getResource(key));
+			Menubar.Submenu submenu =
+				new Menubar.Submenu(myMenuRes.getResource(key), myActionsRes);
 			myItems.add(submenu);
 			return submenu;
 		}
@@ -258,33 +305,36 @@ public abstract class ZLApplication {
 	//MenuBar
 	public static final class Menubar extends Menu {
 		public static final class PlainItem implements Item {
-			private final ZLResource myResource;
+			private final ZLResource myItemRes;
+			private final ZLResource myTitleRes;
 
-			public PlainItem(ZLResource resource) {
-				myResource = resource;
+			public PlainItem(ZLResource item, ZLResource title) {
+				myItemRes = item;
+				myTitleRes = title;
 			}
 
             public String getActionId() {
-				return myResource.Name;
+				return myItemRes.Name;
 			}
 
             public String getTitle() {
-				return myResource.getValue();
+				return myTitleRes.getValue();
 			}
 		};
 
 		public static final class Submenu extends Menu implements Item {
-			public Submenu(ZLResource resource) {
-				super(resource);
+			public Submenu(ZLResource menu, ZLResource actions) {
+				super(menu, actions);
 			}
 
 			public String getMenuName() {
-				return getResource().getValue();
+				return getMenuRes().getValue();
 			}
 		};
 
 		public Menubar() {
-			super(ZLResource.resource("menu"));
+			super(ZLResource.resource("menu"),
+				ZLResource.resource("actions"));
 		}
 	}
 

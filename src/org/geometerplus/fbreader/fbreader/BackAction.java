@@ -19,16 +19,16 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class CancelAction extends FBAction {
-	CancelAction(FBReaderApp fbreader) {
+class BackAction extends FBAction {
+	BackAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 
+	public boolean isEnabled() {
+		return Reader.getCurrentView() != Reader.BookTextView;
+	}
+
 	public void run() {
-		if (Reader.getCurrentView() != Reader.BookTextView) {
-			Reader.showBookTextView();
-		} else {
-			Reader.closeWindow();
-		}
+		Reader.showBookTextView();
 	}
 }

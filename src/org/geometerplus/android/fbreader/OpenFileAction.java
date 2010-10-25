@@ -17,22 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-class VolumeKeyScrollingAction extends FBAction {
-	private final boolean myForward;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-	VolumeKeyScrollingAction(FBReaderApp fbreader, boolean forward) {
-		super(fbreader);
-		myForward = forward;
-	}
-		
-	public boolean isEnabled() {
-		return ScrollingPreferences.Instance().VolumeKeysOption.getValue();
+class OpenFileAction extends RunActivityAction {
+	OpenFileAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader, OpenFileActivity.class);
 	}
 
-	public void run() {
-		boolean isInverted = ScrollingPreferences.Instance().InvertVolumeKeysOption.getValue();
-		Reader.getTextView().doScrollPage(isInverted ? !myForward : myForward);
-	}		
+	public boolean isVisible() {
+		return true;
+	}
 }

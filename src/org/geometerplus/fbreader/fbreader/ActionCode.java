@@ -23,24 +23,30 @@ public interface ActionCode {
 	String SHOW_LIBRARY = "library";
 	String SHOW_PREFERENCES = "preferences";
 	String SHOW_BOOK_INFO = "bookInfo";
+	String TRANSLATE_WORD = "translateWord";
+	String INITIATE_COPY = "initiateCopy";
 	String SHOW_CONTENTS = "toc";
 	String SHOW_BOOKMARKS = "bookmarks";
 	String SHOW_NETWORK_LIBRARY = "networkLibrary";
 
 	String SWITCH_TO_NIGHT_PROFILE = "night";
 	String SWITCH_TO_DAY_PROFILE = "day";
+	String SWITCH_PROFILE = "switchProfile";
 
 	String SEARCH = "search";
 	String FIND_PREVIOUS = "findPrevious";
 	String FIND_NEXT = "findNext";
 	String CLEAR_FIND_RESULTS = "clearFindResults";
 
-	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
-	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
-	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";
-	String TRACKBALL_SCROLL_BACKWARD = "trackballScrollBackward";
+	String PREV_PAGE = "prevPage";
+	String NEXT_PAGE = "nextPage";
+	String PREV_LINE = "prevLine";
+	String NEXT_LINE = "nextLine";
+	String PREV_LINK = "prevLink";
+	String NEXT_LINK = "nextLink";
+
 	String SHOW_NAVIGATION = "navigate";
-	String CANCEL = "cancel";
+	String BACK = "back";
 	String ROTATE = "rotate";
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
@@ -51,4 +57,16 @@ public interface ActionCode {
 	String CLEAR_SELECTION = "clearSelection";
 	String OPEN_SELECTED_TEXT_IN_DICTIONARY = "openInDictionary";
 	String FOLLOW_HYPERLINK = "followHyperlink";
+
+	String TAP_ZONES = "tapZones";
+	String TAP_ZONE_SELECT_ACTION = "tapZoneSelectAction";
+	String TAP_ZONE_ADD = "tapZoneAdd";
+	String TAP_ZONE_DELETE = "tapZoneDelete";
+	String TAP_ZONES_SAVE = "tapZonesSave";
+	String TAP_ZONES_CANCEL = "tapZonesCancel";
+
+	String OPEN_FILE = "openFile";
+
+	String DEFAULT = "default";
+	String NOTHING = "nothing";
 };

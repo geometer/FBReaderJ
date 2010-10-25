@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 
 final class ZLTextSelectionModel {
 	final static class BoundElement extends ZLTextPosition {
@@ -188,7 +189,42 @@ final class ZLTextSelectionModel {
 	}
 
 	String getText() {
-		// TODO: implement
+		if (isEmpty()){
+			return "";
+		}
+		final Range range = getRange();
+		myText.delete(0, myText.length());
+		for (int paraIndex = range.Left.ParagraphIndex; paraIndex <= range.Right.ParagraphIndex; paraIndex++) {
+			ZLTextParagraphCursor para = ZLTextParagraphCursor.cursor(myView.getModel(), paraIndex);
+			if (para.getParagraph().getKind() == ZLTextParagraph.Kind.TEXT_PARAGRAPH) {
+				if (paraIndex > range.Left.ParagraphIndex) {
+					myText.append("\n");
+				}
+
+				for (int wordIndex = 0; wordIndex < para.getParagraphLength(); wordIndex++) {
+					if (paraIndex > range.Left.ParagraphIndex || wordIndex >= range.Left.ElementIndex) {
+						ZLTextElement element = para.getElement(wordIndex);
+						if (element == ZLTextElement.HSpace) {
+							myText.append(" ");
+						}
+						if (element instanceof ZLTextWord) {
+							ZLTextWord word = (ZLTextWord)element;
+							int from = (wordIndex == range.Left.ElementIndex && 
+										paraIndex == range.Left.ParagraphIndex ?
+											range.Left.CharIndex : 0);
+							int to = (wordIndex == range.Right.ElementIndex &&
+										paraIndex == range.Right.ParagraphIndex ?
+											range.Right.CharIndex : word.Length);
+							myText.append(word.Data, word.Offset + from, to - from);
+						}
+						if (paraIndex == range.Right.ParagraphIndex &&
+							wordIndex == range.Right.ElementIndex) {
+							break;
+						}
+					}
+				}
+			}
+		}
 		return myText.toString();
 	}
 
@@ -284,5 +320,9 @@ final class ZLTextSelectionModel {
 			myScrollingTask.cancel();
 		}
 		myScrollingTask = null;
+	}
+
+	boolean isActive() {
+		return myIsActive;
 	}
 }

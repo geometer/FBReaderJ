@@ -22,6 +22,10 @@ package org.geometerplus.zlibrary.core.view;
 abstract public class ZLView {
 	protected ZLPaintContext myContext = new DummyPaintContext();
 
+	public static final int MODE_READ = 0;
+	public static final int MODE_SELECT = 1;
+	protected int myMode = MODE_READ;
+
 	public final ZLPaintContext getContext() {
 		return myContext;
 	}
@@ -58,12 +62,14 @@ abstract public class ZLView {
 		return false;
 	}
 
-	public boolean onTrackballRotated(int diffX, int diffY) {
-		return false;
+	public void setMode(int mode) {
+		myMode = mode;
 	}
 
 	public abstract boolean isScrollbarShown();
 	public abstract int getScrollbarFullSize();
 	public abstract int getScrollbarThumbPosition(int viewPage);
 	public abstract int getScrollbarThumbLength(int viewPage);
+	public abstract float getProgress(float offset);
+	public abstract void  setProgress(float progress);
 }

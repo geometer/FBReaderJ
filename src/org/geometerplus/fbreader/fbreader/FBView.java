@@ -149,8 +149,20 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		// first pressed move passes coordinates where move starts
+		if (myMode == MODE_READ && !myIsManualScrollingActive) {
+			final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+			if (preferences.FlickOption.getValue()) {
+				myStartX = x;
+				myStartY = y;
+				myIsManualScrollingActive = true;
+			}
+			return true;
+		}
+
 		synchronized (this) {
-			if (isScrollingActive() && myIsManualScrollingActive) {
+			if (myIsManualScrollingActive) {
+				setScrollingActive(true);
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				if (diff > 0) {

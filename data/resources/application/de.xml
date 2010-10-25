@@ -102,37 +102,102 @@
 			<node name="search" value="Suchen"/>
 		</node>
 	</node>
-	<node name="menu">
+	<node name="keys">
+		<node name="&lt;VolumeDown&gt;" value="Volume Down" toBeTranslated="true"/>
+		<node name="&lt;VolumeUp&gt;" value="Volume Up" toBeTranslated="true"/>
+		<node name="&lt;Back&gt;" value="Back" toBeTranslated="true"/>
+		<node name="&lt;PadCenter&gt;" value="Pad Center" toBeTranslated="true"/>
+		<node name="&lt;PadDown&gt;" value="Pad Down" toBeTranslated="true"/>
+		<node name="&lt;PadUp&gt;" value="Pad Up" toBeTranslated="true"/>
+		<node name="&lt;PadRight&gt;" value="Pad Right" toBeTranslated="true"/>
+		<node name="&lt;PadLeft&gt;" value="Pad Left" toBeTranslated="true"/>
+		<node name="&lt;Camera&gt;" value="Camera" toBeTranslated="true"/>
+	</node>
+	<node name="actions">
 		<node name="preferences-old" value="Einstellungen (mehr)"/>
 		<node name="preferences" value="Einstellungen"/>
 		<node name="bookInfo" value="Buch Info"/>
+		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
+		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Bibliothek"/>
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Tag"/>
 		<node name="night" value="Nacht"/>
 		<node name="networkLibrary" value="Netzwerk Bibliothek"/>
-		<node name="navigate" value="Navigieren">
-			<node name="toc" value="Inhaltsverzeichnis zeigen"/>
-			<node name="gotoHome" value="Zum Anfang gehen"/>
-			<node name="gotoPageNumber" value="Gehe zur Seite..."/>
-			<node name="gotoSectionStart" value="Zum Anfang des Abschnitts gehen"/>
-			<node name="gotoSectionEnd" value="Zum Ende des Abschnitts gehen"/>
-			<node name="nextTOCSection" value="Zum nächsten Kapitel gehen"/>
-			<node name="previousTOCSection" value="Zum vorherigen Kapitel gehen"/>
-			<node name="undo" value="zurückgehen"/>
-			<node name="redo" value="vorwärts gehen"/>
-		</node>
-		<node name="selection" value="Auswahl">
-			<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>
-			<node name="openInDictionary" value="In die Zwischenablage kopieren"/>
-			<node name="clearSelection" value="Löschen"/>
-		</node>
+		<node name="navigate" value="Navigieren"/>
+		<node name="toc" value="Inhaltsverzeichnis zeigen"/>
+		<node name="gotoHome" value="Zum Anfang gehen"/>
+		<node name="gotoPageNumber" value="Gehe zur Seite..."/>
+		<node name="gotoSectionStart" value="Zum Anfang des Abschnitts gehen"/>
+		<node name="gotoSectionEnd" value="Zum Ende des Abschnitts gehen"/>
+		<node name="nextTOCSection" value="Zum nächsten Kapitel gehen"/>
+		<node name="previousTOCSection" value="Zum vorherigen Kapitel gehen"/>
+		<node name="undo" value="zurückgehen"/>
+		<node name="redo" value="vorwärts gehen"/>
+		<node name="selection" value="Auswahl"/>
+		<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>
+		<node name="openInDictionary" value="In die Zwischenablage kopieren"/>
+		<node name="clearSelection" value="Löschen"/>
 		<node name="search" value="Suche"/>
 		<node name="rotate" value="Bild drehen"/>
 		<node name="increaseFont" value="Schriftgröße erhöhen" />
 		<node name="decreaseFont" value="Schriftgröße verringern" />
 		<node name="toggleFullscreen" value="Vollbildmodus umschalten"/>
 		<node name="bookmarks" value="Lesezeichen"/>
+		<node name="prevPage" value="Previous page" toBeTranslated="true"/>
+		<node name="nextPage" value="Next page" toBeTranslated="true"/>
+		<node name="prevLine" value="Previous line" toBeTranslated="true"/>
+		<node name="nextLine" value="Next line" toBeTranslated="true"/>
+		<node name="prevLink" value="Previous link" toBeTranslated="true"/>
+		<node name="nextLink" value="Next link" toBeTranslated="true"/>
+		<node name="followHyperlink" value="Follow link" toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="switchProfile" value="Switch color profile" toBeTranslated="true"/>
+		<node name="findPrevious" value="Find previous" toBeTranslated="true"/>
+		<node name="findNext" value="Find next" toBeTranslated="true"/>
+		<node name="default" value="Default" toBeTranslated="true"/>
+		<node name="nothing" value="Nothing" toBeTranslated="true"/>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true"/>
+		<node name="tapZoneSelectAction" value="Zone action" toBeTranslated="true"/>
+		<node name="tapZoneAdd" value="Add zone" toBeTranslated="true"/>
+		<node name="tapZoneDelete" value="Delete zone" toBeTranslated="true"/>
+		<node name="tapZonesSave" value="Save changes" toBeTranslated="true"/>
+		<node name="tapZonesCancel" value="Discard changes" toBeTranslated="true"/>
+		<node name="openFile" value="Open book file" toBeTranslated="true"/>
+	</node>
+	<node name="menu">
+		<node name="preferences-old"/>
+		<node name="preferences"/>
+		<node name="bookInfo"/>
+		<node name="initiateCopy"/>
+		<node name="openFile"/>
+		<node name="library"/>
+		<node name="toc"/>
+		<node name="day"/>
+		<node name="night"/>
+		<node name="networkLibrary"/>
+		<node name="navigate">
+			<node name="toc"/>
+			<node name="gotoHome"/>
+			<node name="gotoPageNumber"/>
+			<node name="gotoSectionStart"/>
+			<node name="gotoSectionEnd"/>
+			<node name="nextTOCSection"/>
+			<node name="previousTOCSection"/>
+			<node name="undo"/>
+			<node name="redo"/>
+		</node>
+		<node name="selection">
+			<node name="copyToClipboard"/>
+			<node name="openInDictionary"/>
+			<node name="clearSelection"/>
+		</node>
+		<node name="search"/>
+		<node name="rotate"/>
+		<node name="increaseFont"/>
+		<node name="decreaseFont"/>
+		<node name="toggleFullscreen"/>
+		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -151,6 +216,11 @@
 		<node name="Preferences">
 			<node name="Library" value="Bibliothek">
 				<node name="path" value="Verzeichnis in dem nach Büchern gesucht wird"/>
+			</node>
+			<node name="interaction" value="Interaction" toBeTranslated="true">
+				<node name="keyBindings" value="Keys" toBeTranslated="true">
+					<node name="summary" value="Bind actions to keys" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="LookNFeel" value="Look &amp; Feel">
 				<node name="autoOrientation" value="Automatische Rotation">
@@ -205,14 +275,6 @@
 				<node name="flick" value="Flick scrolling">
 					<node name="summaryOn" value="Seiten werden mit Finger flick gescrollt"/>
 					<node name="summaryOff" value="Seiten werden mit Finger tap gescrollt"/>
-				</node>
-				<node name="volumeKeys" value="Lautstärketasten scrolling">
-					<node name="summaryOn" value="Benutze Lautstärketasten zum scrollen"/>
-					<node name="summaryOff" value="Behalte Lautstärketasten für Sound"/>
-				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
 				</node>
 				<node name="animated" value="Animiertes scrollen">
 					<node name="summaryOn" value="Scrolle Seiten smoother"/>
@@ -374,11 +436,16 @@
 			<node name="message" value="Buch wurde schon gekauft" />
 		</node>
 	</node>
+	<node name="infoMessage">
+		<node name="selectionStarted" value="Select text and click" toBeTranslated="true"/>
+		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
+	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="Es wurde kein passender Text im Buch gefunden, sorry"/>
 		<node name="bookNotFound" value="Es wurden keine passenden Bücher in der Bibliothek gefunden, sorry"/>
 		<node name="bookmarkNotFound" value="Es wurden kein passenden Lesezeichen gefunden, sorry"/>
 		<node name="cannotOpenBook" value="Kann das Buch zurzeit nicht öffnen, sorry"/>
+		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="Basis"/>

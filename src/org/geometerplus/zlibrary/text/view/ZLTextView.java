@@ -22,10 +22,16 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+
+import android.app.Application;
+import android.text.ClipboardManager;
+import android.widget.Toast;
 
 public abstract class ZLTextView extends ZLTextViewBase {
 	public interface ScrollingMode {
@@ -45,6 +51,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private int myScrollingMode;
 	private int myOverlappingValue;
+	private ArrayList<ZLTextPosition> myStoredTextPositions = new ArrayList<ZLTextPosition>();
 
 	private ZLTextPage myPreviousPage = new ZLTextPage();
 	ZLTextPage myCurrentPage = new ZLTextPage();
@@ -64,6 +71,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myCurrentPage.reset();
 		myPreviousPage.reset();
 		myNextPage.reset();
+		myStoredTextPositions.clear();
 		setScrollingActive(false);
 		if (myModel != null) {
 			final int paragraphsNumber = myModel.getParagraphsNumber();
@@ -1299,7 +1307,35 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}*/
 
 	@Override
+	public boolean onStylusPress(int x, int y) {
+		if (myMode == MODE_SELECT) {
+			setMode(MODE_READ);
+			if (!mySelectionModel.isEmpty()){
+				String text = mySelectionModel.getText();
+				ClipboardManager clipboard =
+					(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
+				clipboard.setText(text);
+				mySelectionModel.clear();
+				ZLApplication.Instance().repaintView();
+				return true;
+			}
+			Toast.makeText(ZLAndroidApplication.Instance().myMainActivity,
+					ZLResource.resource("infoMessage").getResource("selectionCanceled").getValue(),
+					Toast.LENGTH_SHORT).show();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public boolean onStylusMovePressed(int x, int y) {
+		if (myMode == MODE_SELECT) {
+			if (!mySelectionModel.isActive()){
+				activateSelection(x, y);
+				return true;
+			}
+		}
+
 		if (mySelectionModel.extendTo(x, y)) {
 			ZLApplication.Instance().repaintView();
 			return true;
@@ -1380,6 +1416,88 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 			}
+		}
+		return false;
+	}
+
+	public final synchronized float getProgress(float offset) {
+		// This function returns current progress as percentage(from 0 to 1)
+		// according to current book reading position (myCurrentPage).
+		// The myCurrentPage can be shifted backward or forward(during scrolling).
+		// If the 'offset' is positive, then shifting is backward, negative - forward.
+		// The absolute value of 'offset' represents percentage of shifting (from 0 to 1).
+
+		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+			return 0;
+		}
+
+		float size = myModel.getTextLength(myModel.getParagraphsNumber() - 1);
+
+		preparePaintInfo(myCurrentPage);
+		float pos = sizeOfTextBeforeCursor(myCurrentPage.EndCursor);
+		if (offset != 0) {
+			if(offset > 0) {
+				pos -= (pos - sizeOfTextBeforeCursor(myCurrentPage.StartCursor)) * offset;
+			}
+			else {
+				preparePaintInfo(myNextPage);
+				pos += (pos - sizeOfTextBeforeCursor(myNextPage.EndCursor)) * offset;
+			}
+		}
+		
+		return pos / size;
+	}
+
+	public final synchronized void setProgress(float progress) {
+		int bookPos = (int)(myModel.getTextLength(myModel.getParagraphsNumber() - 1) * progress);
+		int paraIndex = myModel.findParagraphByTextLength(bookPos);
+		ZLTextParagraphCursor para = ZLTextParagraphCursor.cursor(myModel, paraIndex);
+		int paraPos = bookPos - myModel.getTextLength(paraIndex - 1);
+		int wordIndex = 0;
+		int charIndex = 0;
+		for (; wordIndex < para.getParagraphLength(); wordIndex++) {
+			if (para.getElement(wordIndex) instanceof ZLTextWord) {
+				ZLTextWord word = (ZLTextWord)para.getElement(wordIndex);
+				if (word.getParagraphOffset() + word.Length > paraPos) {
+					if (word.getParagraphOffset() < paraPos) {
+						charIndex = paraPos - word.getParagraphOffset();
+					}
+					break;
+				}
+			}
+		}
+
+		ZLTextWordCursor pageCenter = new ZLTextWordCursor(para);
+		pageCenter.moveTo(wordIndex, charIndex);
+		gotoPosition(findStart(pageCenter, SizeUnit.PIXEL_UNIT, getTextAreaHeight() / 2));
+		ZLApplication.Instance().repaintView();
+	}
+
+	public String getWordUnderPosition(int x, int y) {
+		String word = "";
+		ZLTextElementArea element = getElementByCoordinates(x, y);
+		if (element != null && element.Element instanceof ZLTextWord) {
+			word = ((ZLTextWord)element.Element).toString();
+			word = word.replaceAll("\\W+$", "");
+			word = word.replaceAll("^\\W+", "");
+		}
+		return word;
+	}
+	
+	public void savePosition() {
+		myStoredTextPositions.add(new ZLTextWordCursor(myCurrentPage.StartCursor));
+		if (myStoredTextPositions.size() > 30) {
+			myStoredTextPositions.remove(0);
+		}
+	}
+
+	public boolean revertPosition() {
+		if (myStoredTextPositions.size() > 0) {
+			final int headIndex = myStoredTextPositions.size() - 1;
+			gotoPosition(myStoredTextPositions.get(headIndex));
+			myStoredTextPositions.remove(headIndex);
+			ZLApplication.Instance().repaintView();
+			return true;
 		}
 		return false;
 	}

@@ -19,11 +19,15 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -40,6 +44,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -98,6 +104,7 @@ public final class FBReader extends ZLAndroidActivity {
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
+		application.myMainActivity = this;
 		if (myTextSearchPanel == null) {
 			myTextSearchPanel = new TextSearchButtonPanel();
 			myTextSearchPanel.register();
@@ -106,6 +113,8 @@ public final class FBReader extends ZLAndroidActivity {
 			myNavigatePanel = new NavigationButtonPanel();
 			myNavigatePanel.register();
 		}
+
+		registerForContextMenu(findViewById(R.id.main_view));
 
 		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
@@ -117,6 +126,8 @@ public final class FBReader extends ZLAndroidActivity {
 		
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.OPEN_FILE, new OpenFileAction(this, fbReader));
 	}
 
 	@Override
@@ -151,11 +162,14 @@ public final class FBReader extends ZLAndroidActivity {
 
 		findViewById(R.id.main_view).setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
-				if (!myNavigatePanel.getVisibility()) {
-					navigate();
+				final ZLAndroidWidget widget =
+					((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+				if (widget.onLongClick()) {
 					return true;
 				}
-				return false;
+
+				openContextMenu(findViewById(R.id.main_view));
+				return true;
 			}
 		});
 	}
@@ -192,6 +206,8 @@ public final class FBReader extends ZLAndroidActivity {
 		
 		fbReader.removeAction(ActionCode.SHOW_NAVIGATION);
 		fbReader.removeAction(ActionCode.SEARCH);
+
+		fbReader.removeAction(ActionCode.OPEN_FILE);
 
 		super.onDestroy();
 	}
@@ -263,7 +279,7 @@ public final class FBReader extends ZLAndroidActivity {
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
 					final int page = progress + 1;
-					final int pagesNumber = seekBar.getMax() + 1; 
+					final int pagesNumber = seekBar.getMax() + 1;
 					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
 				}
@@ -307,5 +323,21 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static String makeProgressText(int page, int pagesNumber) {
 		return "" + page + " / " + pagesNumber;
+	}
+
+	ArrayList<String> myMenuActions = new ArrayList<String>();
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.loadContextMenu(menu, myMenuActions);
+	}
+
+	@Override
+	public boolean  onContextItemSelected(MenuItem item) {
+		super.onContextItemSelected(item);
+		ZLApplication.Instance().doAction(myMenuActions.get(item.getItemId()));
+		return true;
 	}
 }

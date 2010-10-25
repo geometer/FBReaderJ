@@ -102,37 +102,102 @@
 			<node name="search" value="搜索" />
 		</node>
 	</node>
-	<node name="menu">
+	<node name="keys">
+		<node name="&lt;VolumeDown&gt;" value="Volume Down" toBeTranslated="true"/>
+		<node name="&lt;VolumeUp&gt;" value="Volume Up" toBeTranslated="true"/>
+		<node name="&lt;Back&gt;" value="Back" toBeTranslated="true"/>
+		<node name="&lt;PadCenter&gt;" value="Pad Center" toBeTranslated="true"/>
+		<node name="&lt;PadDown&gt;" value="Pad Down" toBeTranslated="true"/>
+		<node name="&lt;PadUp&gt;" value="Pad Up" toBeTranslated="true"/>
+		<node name="&lt;PadRight&gt;" value="Pad Right" toBeTranslated="true"/>
+		<node name="&lt;PadLeft&gt;" value="Pad Left" toBeTranslated="true"/>
+		<node name="&lt;Camera&gt;" value="Camera" toBeTranslated="true"/>
+	</node>
+	<node name="actions">
 		<node name="preferences-old" value="参数设置（更多）" />
 		<node name="preferences" value="参数设置" />
 		<node name="bookInfo" value="书籍信息" />
+		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
+		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="本地藏书" />
 		<node name="toc" value="目录" />
 		<node name="day" value="白低黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
-		<node name="navigate" value="导航">
-			<node name="toc" value="内容目录" />
-			<node name="gotoHome" value="翻到图书开始" />
-			<node name="gotoPageNumber" value="翻到某页" />
-			<node name="gotoSectionStart" value="翻到章节开始" />
-			<node name="gotoSectionEnd" value="翻到章节结束" />
-			<node name="nextTOCSection" value="翻到下一章节 " />
-			<node name="previousTOCSection" value="翻到上一章节" />
-			<node name="undo" value="后翻" />
-			<node name="redo" value="前翻" />
-		</node>
-		<node name="selection" value="选择">
-			<node name="copyToClipboard" value="复制到剪贴板" />
-			<node name="openInDictionary" value="打开字典" />
-			<node name="clearSelection" value="清除" />
-		</node>
+		<node name="navigate" value="导航"/>
+		<node name="toc" value="内容目录" />
+		<node name="gotoHome" value="翻到图书开始" />
+		<node name="gotoPageNumber" value="翻到某页" />
+		<node name="gotoSectionStart" value="翻到章节开始" />
+		<node name="gotoSectionEnd" value="翻到章节结束" />
+		<node name="nextTOCSection" value="翻到下一章节 " />
+		<node name="previousTOCSection" value="翻到上一章节" />
+		<node name="undo" value="后翻" />
+		<node name="redo" value="前翻" />
+		<node name="selection" value="选择"/>
+		<node name="copyToClipboard" value="复制到剪贴板" />
+		<node name="openInDictionary" value="打开字典" />
+		<node name="clearSelection" value="清除" />
 		<node name="search" value="查找" />
 		<node name="rotate" value="翻转屏幕" />
 		<node name="increaseFont" value="字体加大" />
 		<node name="decreaseFont" value="字体缩小" />
 		<node name="toggleFullscreen" value="全屏" />
 		<node name="bookmarks" value="书签" />
+		<node name="prevPage" value="Previous page" toBeTranslated="true"/>
+		<node name="nextPage" value="Next page" toBeTranslated="true"/>
+		<node name="prevLine" value="Previous line" toBeTranslated="true"/>
+		<node name="nextLine" value="Next line" toBeTranslated="true"/>
+		<node name="prevLink" value="Previous link" toBeTranslated="true"/>
+		<node name="nextLink" value="Next link" toBeTranslated="true"/>
+		<node name="followHyperlink" value="Follow link" toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="switchProfile" value="Switch color profile" toBeTranslated="true"/>
+		<node name="findPrevious" value="Find previous" toBeTranslated="true"/>
+		<node name="findNext" value="Find next" toBeTranslated="true"/>
+		<node name="default" value="Default" toBeTranslated="true"/>
+		<node name="nothing" value="Nothing" toBeTranslated="true"/>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true"/>
+		<node name="tapZoneSelectAction" value="Zone action" toBeTranslated="true"/>
+		<node name="tapZoneAdd" value="Add zone" toBeTranslated="true"/>
+		<node name="tapZoneDelete" value="Delete zone" toBeTranslated="true"/>
+		<node name="tapZonesSave" value="Save changes" toBeTranslated="true"/>
+		<node name="tapZonesCancel" value="Discard changes" toBeTranslated="true"/>
+		<node name="openFile" value="Open book file" toBeTranslated="true"/>
+	</node>
+	<node name="menu">
+		<node name="preferences-old"/>
+		<node name="preferences"/>
+		<node name="bookInfo"/>
+		<node name="initiateCopy"/>
+		<node name="openFile"/>
+		<node name="library"/>
+		<node name="toc"/>
+		<node name="day"/>
+		<node name="night"/>
+		<node name="networkLibrary"/>
+		<node name="navigate">
+			<node name="toc"/>
+			<node name="gotoHome"/>
+			<node name="gotoPageNumber"/>
+			<node name="gotoSectionStart"/>
+			<node name="gotoSectionEnd"/>
+			<node name="nextTOCSection"/>
+			<node name="previousTOCSection"/>
+			<node name="undo"/>
+			<node name="redo"/>
+		</node>
+		<node name="selection">
+			<node name="copyToClipboard"/>
+			<node name="openInDictionary"/>
+			<node name="clearSelection"/>
+		</node>
+		<node name="search"/>
+		<node name="rotate"/>
+		<node name="increaseFont"/>
+		<node name="decreaseFont"/>
+		<node name="toggleFullscreen"/>
+		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -151,6 +216,11 @@
 		<node name="Preferences">
 			<node name="Library" value="藏书库">
 				<node name="path" value="本地藏书路径" />
+			</node>
+			<node name="interaction" value="Interaction" toBeTranslated="true">
+				<node name="keyBindings" value="Keys" toBeTranslated="true">
+					<node name="summary" value="Bind actions to keys" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="LookNFeel" value="外观和操作">
 				<node name="autoOrientation" value="自动翻转">
@@ -205,14 +275,6 @@
 				<node name="flick" value="手指滚动">
 					<node name="summaryOn" value="滑触翻页" />
 					<node name="summaryOff" value="拍击翻页" />
-				</node>
-				<node name="volumeKeys" value="音量键滚动">
-					<node name="summaryOn" value="使用音量键翻页" />
-					<node name="summaryOff" value="音量键仅用于声音" />
-				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
 				</node>
 				<node name="animated" value="翻阅效果">
 					<node name="summaryOn" value="平滑翻阅" />
@@ -374,11 +436,16 @@
 			<node name="message" value="该书已经买过." />
 		</node>
 	</node>
+	<node name="infoMessage">
+		<node name="selectionStarted" value="Select text and click" toBeTranslated="true"/>
+		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
+	</node>
 	<node name="errorMessage">
 		<node name="textNotFound" value="对不起，本书中找不到对应内容" />
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍" />
 		<node name="bookmarkNotFound" value="对不起，找不到对应的书签" />
 		<node name="cannotOpenBook" value="对不起，无法开启本书" />
+		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
 	</node>
 	<node name="style">
 		<node name="Base" value="基础" />

@@ -19,20 +19,30 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-public class ScrollingPreferences {
-	private static ScrollingPreferences ourInstance;
+class ScrollAction extends FBAction {
+	private final boolean myForward;
+	private final boolean myScrollPage;
 
-	public static ScrollingPreferences Instance() {
-		return (ourInstance != null) ? ourInstance : new ScrollingPreferences();
+	ScrollAction(FBReaderApp fbreader, boolean forward, boolean page) {
+		super(fbreader);
+		myForward = forward;
+		myScrollPage = page;
 	}
 
-	public final ZLBooleanOption FlickOption = new ZLBooleanOption("Scrolling", "Flick", true);
-	public final ZLBooleanOption AnimateOption = new ZLBooleanOption("Scrolling", "ShowAnimated", true);
-	public final ZLBooleanOption HorizontalOption = new ZLBooleanOption("Scrolling", "Horizontal", false);
+	public boolean isEnabled() {
+		return true;
+	}
 
-	private ScrollingPreferences() {
-		ourInstance = this;
+	public void run() {
+		if (myScrollPage) {
+			Reader.getTextView().doScrollPage(myForward);
+		}
+		else {
+			Reader.getTextView().scrollPage(myForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			ZLApplication.Instance().repaintView();
+		}
 	}
 }

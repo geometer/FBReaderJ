@@ -32,13 +32,15 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
 import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
+import android.view.KeyEvent;
+
 public final class FBReaderApp extends ZLApplication {
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
 	public final ZLStringOption BookmarkSearchPatternOption =
 		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
-	public final ZLBooleanOption UseSeparateBindingsOption = 
+	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
@@ -71,7 +73,7 @@ public final class FBReaderApp extends ZLApplication {
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
 	public final FBView BookTextView;
 	final FBView FootnoteView;
@@ -87,23 +89,47 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 		addAction(ActionCode.ROTATE, new RotateAction(this));
-		
+
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
-		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
-		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));
-		addAction(ActionCode.TRACKBALL_SCROLL_FORWARD, new TrackballScrollingAction(this, true));
-		addAction(ActionCode.TRACKBALL_SCROLL_BACKWARD, new TrackballScrollingAction(this, false));
-		addAction(ActionCode.CANCEL, new CancelAction(this));
+		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
+		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
+		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
+		addAction(ActionCode.PREV_LINE, new ScrollAction(this, false, false));
+		addAction(ActionCode.NEXT_LINK, new TrackballScrollingAction(this, true));
+		addAction(ActionCode.PREV_LINK, new TrackballScrollingAction(this, false));
+		addAction(ActionCode.BACK, new BackAction(this));
+		addAction(ActionCode.INITIATE_COPY, new InitiateCopyAction(this));
+
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
+		addAction(ActionCode.TAP_ZONES, new TapZoneAction(this, ActionCode.TAP_ZONES));
+		addAction(ActionCode.TAP_ZONE_SELECT_ACTION, new TapZoneAction(this, ActionCode.TAP_ZONE_SELECT_ACTION));
+		addAction(ActionCode.TAP_ZONE_ADD, new TapZoneAction(this, ActionCode.TAP_ZONE_ADD));
+		addAction(ActionCode.TAP_ZONE_DELETE, new TapZoneAction(this, ActionCode.TAP_ZONE_DELETE));
+		addAction(ActionCode.TAP_ZONES_SAVE, new TapZoneAction(this, ActionCode.TAP_ZONES_SAVE));
+		addAction(ActionCode.TAP_ZONES_CANCEL, new TapZoneAction(this, ActionCode.TAP_ZONES_CANCEL));
+
+		addAction(ActionCode.DEFAULT, new DummyAction(this, false));
+		addAction(ActionCode.NOTHING, new DummyAction(this, true));
 
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
+		addAction(ActionCode.SWITCH_PROFILE, new SwitchProfileAction(this, ""));
+
+		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_DOWN,	ActionCode.NEXT_PAGE);
+		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_UP,	ActionCode.PREV_PAGE);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_CENTER,	ActionCode.FOLLOW_HYPERLINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_DOWN,	ActionCode.NEXT_LINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_UP,		ActionCode.PREV_LINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_RIGHT,	ActionCode.NEXT_LINE);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_LEFT,	ActionCode.PREV_LINE);
+		myBindings.addKey(KeyEvent.KEYCODE_BACK,		ActionCode.BACK);
+		myBindings.addKey(KeyEvent.KEYCODE_CAMERA,		ActionCode.ROTATE);
 
 		BookTextView = new FBView(this);
 		FootnoteView = new FBView(this);
@@ -114,7 +140,7 @@ public final class FBReaderApp extends ZLApplication {
 	public void initWindow() {
 		super.initWindow();
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
-			public void run() { 
+			public void run() {
 				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
 				if (book == null) {
 					book = Library.getRecentBook();
@@ -126,11 +152,11 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		});
 	}
-	
+
 	public void openBook(final Book book, final Bookmark bookmark) {
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
-			public void run() { 
-				openBookInternal(book, bookmark); 
+			public void run() {
+				openBookInternal(book, bookmark);
 			}
 		});
 	}
@@ -181,7 +207,7 @@ public final class FBReaderApp extends ZLApplication {
 		BookTextView.clearCaches();
 		FootnoteView.clearCaches();
 	}
-	
+
 	void openBookInternal(Book book, Bookmark bookmark) {
 		if (book != null) {
 			onViewChanged();
@@ -224,11 +250,11 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		repaintView();
 	}
-	
+
 	public void showBookTextView() {
 		setView(BookTextView);
 	}
-	
+
 	private Book createBookForFile(ZLFile file) {
 		if (file == null) {
 			return null;
