@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.fbreader.*;
 public class OptionsDialog {
 	private ZLOptionsDialog myDialog;
 	
-	public OptionsDialog(FBReader fbreader) {
+	public OptionsDialog(FBReaderApp fbreader) {
 		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
 		ZLDialogContent marginTab = myDialog.createTab("Margins");
@@ -45,7 +45,7 @@ public class OptionsDialog {
 		
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
-		new StyleOptionsPage(myDialog.createTab("Styles"), ZLibrary.Instance().getPaintContext());
+		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getCurrentView().getContext());
 		
 		final ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
@@ -67,9 +67,9 @@ public class OptionsDialog {
 	}
 	
 	private static class OptionsApplyRunnable implements Runnable {
-		private final FBReader myFBReader;
+		private final FBReaderApp myFBReader;
 		
-		public OptionsApplyRunnable(FBReader fbreader) {
+		public OptionsApplyRunnable(FBReaderApp fbreader) {
 			myFBReader = fbreader;
 		}
 		

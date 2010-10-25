@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 class FindNextAction extends FBAction {
-	FindNextAction(FBReader fbreader) {
+	FindNextAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

@@ -24,7 +24,7 @@ import java.io.File;
 import android.net.Uri;
 import android.app.Activity;
 import android.os.Bundle;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.view.*;
@@ -52,7 +52,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	protected abstract String fileNameForEmptyUri();
 
 	private String fileNameFromUri(Uri uri) {
-		if (Uri.EMPTY.equals(uri)) {
+		if (uri.equals(Uri.parse("file:///"))) {
 			return fileNameForEmptyUri();
 		} else {
 			return uri.getPath();
@@ -141,19 +141,38 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	private final void switchWakeLock(boolean on) {
+		if (on) {
+			if (myWakeLock == null) {
+				myWakeLockToCreate = true;
+			}
+		} else {
+			if (myWakeLock != null) {
+				synchronized (this) {
+					if (myWakeLock != null) {
+						myWakeLock.release();
+						myWakeLock = null;
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		myWakeLockToCreate = ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue();
-		myWakeLock = null;
+		myWakeLockToCreate =
+			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
+			ZLApplication.Instance().getBatteryLevel();
+		switchWakeLock(true);
+
+		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
 
 	@Override
 	public void onPause() {
-		if (myWakeLock != null) {
-			myWakeLock.release();
-			myWakeLock = null;
-		}
+		unregisterReceiver(myBatteryInfoReceiver);
+		switchWakeLock(false);
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
 	}
@@ -256,6 +275,13 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
-	abstract protected void navigate();
-	abstract protected boolean canNavigate();
+	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			final int level = intent.getIntExtra("level", 100);
+			((ZLAndroidApplication)getApplication()).myMainWindow.setBatteryLevel(level);
+			switchWakeLock(
+				ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() < level
+			);
+		}
+	};
 }

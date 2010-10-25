@@ -17,19 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
-class ShowNavigationAction extends FBAction {
-	ShowNavigationAction(FBReader fbreader) {
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBAction;
+
+class SearchAction extends FBAction {
+	private final FBReader myActivity;
+
+	SearchAction(FBReader activity, FBReaderApp fbreader) {
 		super(fbreader);
+		myActivity = activity;
 	}
 
-	@Override
 	public boolean isVisible() {
-		return Reader.canNavigate();
+		return Reader.Model != null;
 	}
 
 	public void run() {
-		Reader.navigate();
+		myActivity.onSearchRequested();
 	}
 }

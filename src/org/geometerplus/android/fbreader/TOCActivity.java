@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class TOCActivity extends ListActivity {
 	private TOCAdapter myAdapter;
@@ -46,7 +46,7 @@ public class TOCActivity extends ListActivity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		final FBReader fbreader = (FBReader)ZLApplication.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		final TOCTree root = fbreader.Model.TOCTree;
 		myAdapter = new TOCAdapter(root);
 		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();
@@ -121,7 +121,7 @@ public class TOCActivity extends ListActivity {
 			final TOCTree.Reference reference = tree.getReference();
 			if (reference != null) {
 				finish();
-				final FBReader fbreader = (FBReader)ZLApplication.Instance();
+				final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 				fbreader.BookTextView.gotoPosition(reference.ParagraphIndex, 0, 0);
 				fbreader.showBookTextView();
 			}

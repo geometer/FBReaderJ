@@ -21,6 +21,8 @@ package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
 
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
 public class TextSearchActivity extends SearchActivity {
 	@Override
 	void onSuccess() {
@@ -44,10 +46,9 @@ public class TextSearchActivity extends SearchActivity {
 
 	@Override
 	boolean runSearch(final String pattern) {
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)org.geometerplus.fbreader.fbreader.FBReader.Instance();
-		fbreader.TextSearchPatternOption.setValue(pattern);
-		return fbreader.getTextView().search(pattern, true, false, false, false) != 0;
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		fbReader.TextSearchPatternOption.setValue(pattern);
+		return fbReader.getTextView().search(pattern, true, false, false, false) != 0;
 	}
 
 	@Override

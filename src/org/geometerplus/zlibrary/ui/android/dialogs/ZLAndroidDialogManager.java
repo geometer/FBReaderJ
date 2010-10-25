@@ -23,10 +23,8 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
-import android.os.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -40,27 +38,11 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		myActivity = activity;
 	}
 	
-	public void runActivity(Class<?> activityClass, Map<String,String> data) {
-		Intent intent = new Intent(myActivity.getApplicationContext(), activityClass);
-		for (Map.Entry<String,String> entry : data.entrySet()) {
-			intent.putExtra(entry.getKey(), entry.getValue());
-		}
-		myActivity.startActivity(intent);
-	}
-
-	public void runActivity(Class<?> activityClass) {
-		runActivity(activityClass, Collections.<String,String>emptyMap());
-	}
-
 	public ZLOptionsDialog createOptionsDialog(String key, Runnable exitAction, Runnable applyAction, boolean showApplyButton) {
 		return new ZLAndroidOptionsDialog(myActivity, getResource().getResource(key), exitAction, applyAction);
 	}
 
 	public void wait(String key, Runnable action) {
 		UIUtil.wait(key, action, myActivity);
-	}
-
-	public void startSearch() {
-		myActivity.onSearchRequested();
 	}
 }

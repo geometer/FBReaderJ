@@ -36,6 +36,5 @@ public abstract class ZLibrary {
 	abstract public ZLResourceFile createResourceFile(String path);
 
 	abstract public String getVersionName();
-	abstract public ZLPaintContext getPaintContext();
 	abstract public void openInBrowser(String reference);
 }

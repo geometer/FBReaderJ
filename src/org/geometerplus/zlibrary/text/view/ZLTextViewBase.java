@@ -30,15 +30,14 @@ abstract class ZLTextViewBase extends ZLView {
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 
-	ZLTextViewBase(ZLPaintContext context) {
-		super(context);
+	ZLTextViewBase() {
 		resetTextStyle();
 	}
 
 	final int getWordHeight() {
 		if (myWordHeight == -1) {
 			final ZLTextStyle textStyle = myTextStyle;
-			myWordHeight = (int)(Context.getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
+			myWordHeight = (int)(myContext.getStringHeight() * textStyle.getLineSpacePercent() / 100) + textStyle.getVerticalShift();
 		}
 		return myWordHeight;
 	}
@@ -54,19 +53,19 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLColor getHighlightingColor();
 
 	int getTextAreaHeight() {
-		return Context.getHeight() - getTopMargin() - getBottomMargin();
+		return myContext.getHeight() - getTopMargin() - getBottomMargin();
 	}
 
 	int getTextAreaWidth() {
-		return Context.getWidth() - getLeftMargin() - getRightMargin();
+		return myContext.getWidth() - getLeftMargin() - getRightMargin();
 	}
 
 	int getBottomLine() {
-		return Context.getHeight() - getBottomMargin() - 1;
+		return myContext.getHeight() - getBottomMargin() - 1;
 	}
 
 	int getRightLine() {
-		return Context.getWidth() - getRightMargin() - 1;
+		return myContext.getWidth() - getRightMargin() - 1;
 	}
 
 	final ZLTextStyle getTextStyle() {
@@ -78,7 +77,7 @@ abstract class ZLTextViewBase extends ZLView {
 			myTextStyle = style;
 			myWordHeight = -1;
 		}
-		Context.setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic(), style.isUnderline());
+		myContext.setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic(), style.isUnderline());
 	}
 
 	final void resetTextStyle() {
@@ -111,11 +110,11 @@ abstract class ZLTextViewBase extends ZLView {
 		if (element instanceof ZLTextWord) {
 			return getWordWidth((ZLTextWord)element, charIndex);
 		} else if (element instanceof ZLTextImageElement) {
-			return Context.imageWidth(((ZLTextImageElement)element).ImageData);
+			return myContext.imageWidth(((ZLTextImageElement)element).ImageData);
 		} else if (element == ZLTextElement.IndentElement) {
 			return myTextStyle.getFirstLineIndentDelta();
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
-			return Context.getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;
+			return myContext.getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;
 		}
 		return 0;
 	}
@@ -124,26 +123,25 @@ abstract class ZLTextViewBase extends ZLView {
 		if (element instanceof ZLTextWord) {
 			return getWordHeight();
 		} else if (element instanceof ZLTextImageElement) {
-			final ZLPaintContext context = Context;
-			return context.imageHeight(((ZLTextImageElement)element).ImageData) +
-				Math.max(context.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
+			return myContext.imageHeight(((ZLTextImageElement)element).ImageData) +
+				Math.max(myContext.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
 		}
 		return 0;
 	}
 
 	final int getElementDescent(ZLTextElement element) {
-		return (element instanceof ZLTextWord) ? Context.getDescent() : 0;
+		return (element instanceof ZLTextWord) ? myContext.getDescent() : 0;
 	}
 
 	final int getWordWidth(ZLTextWord word, int start) {
 		return
 			(start == 0) ?
-				word.getWidth(Context) :
-				Context.getStringWidth(word.Data, word.Offset + start, word.Length - start);
+				word.getWidth(myContext) :
+				myContext.getStringWidth(word.Data, word.Offset + start, word.Length - start);
 	}
 
 	final int getWordWidth(ZLTextWord word, int start, int length) {
-		return Context.getStringWidth(word.Data, word.Offset + start, length);
+		return myContext.getStringWidth(word.Data, word.Offset + start, length);
 	}
 
 	private char[] myWordPartArray = new char[20];
@@ -151,12 +149,12 @@ abstract class ZLTextViewBase extends ZLView {
 	final int getWordWidth(ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		if (length == -1) {
 			if (start == 0) {
-				return word.getWidth(Context);
+				return word.getWidth(myContext);
 			}
 			length = word.Length - start;
 		}
 		if (!addHyphenationSign) {
-			return Context.getStringWidth(word.Data, word.Offset + start, length);
+			return myContext.getStringWidth(word.Data, word.Offset + start, length);
 		}
 		char[] part = myWordPartArray;
 		if (length + 1 > part.length) {
@@ -165,7 +163,7 @@ abstract class ZLTextViewBase extends ZLView {
 		}
 		System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 		part[length] = '-';
-		return Context.getStringWidth(part, 0, length + 1);
+		return myContext.getStringWidth(part, 0, length + 1);
 	}
 
 	int getAreaLength(ZLTextParagraphCursor paragraph, ZLTextElementArea area, int toCharIndex) {
@@ -184,7 +182,7 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if ((start == 0) && (length == -1)) {
 			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
@@ -208,7 +206,7 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
-		final ZLPaintContext context = Context;
+		final ZLPaintContext context = myContext;
 		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
