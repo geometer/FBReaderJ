@@ -1,3 +1,13 @@
+===== 0.7.10 (Oct 24, 2010) =====
+* Resources have been updated
+
+===== 0.7.9 (Oct 24, 2010) =====
+* List of styles has been fixed in the Options dialog
+* Monospace font has been included in the fonts list
+* Wakelock will be acquired during first page repainting, not during screen switching on. That prevents from
+power comsumption if FBReader works and the screen was switched on accidentally (but not unlocked).
+* Footer code (by Yuri Chernyavskiy) has been integrated
+
 ===== 0.7.8 (Oct 10, 2010) =====
 * Processing of large OPDS feeds (> 500 books in one file) has been fixed
 * Network library doesn't throw an Exception if an SD card is unavailable

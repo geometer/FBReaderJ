@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.core.dialogs;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class ZLDialogManager {
@@ -47,8 +45,6 @@ public abstract class ZLDialogManager {
 	
 	public abstract void wait(String key, Runnable runnable);
 
-	public abstract void startSearch();
-	
 	public static String getButtonText(String key) {
 		return getResource().getResource("button").getResource(key).getValue();
 	}

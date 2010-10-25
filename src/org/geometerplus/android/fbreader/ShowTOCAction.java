@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.authentication;
+package org.geometerplus.android.fbreader;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public class AuthenticationStatus {
-	public final int Status; // ZLBoolean3 values
-	public final ZLNetworkException Exception;
-
-	public AuthenticationStatus(boolean status) {
-		Status = status ? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE;
-		Exception = null;
+class ShowTOCAction extends RunActivityAction {
+	ShowTOCAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader, TOCActivity.class);
 	}
 
-	public AuthenticationStatus(ZLNetworkException e) {
-		Status = ZLBoolean3.B3_UNDEFINED;
-		Exception = e;
+	public boolean isVisible() {
+		return (Reader.Model != null) && Reader.Model.TOCTree.hasChildren();
 	}
 }

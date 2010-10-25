@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
 class FindPreviousAction extends FBAction {
-	FindPreviousAction(FBReader fbreader) {
+	FindPreviousAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,6 +43,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
 
@@ -58,16 +58,16 @@ public final class FBReader extends ZLAndroidActivity {
 
 		@Override
 		public void onShow() {
-			if (FBReader.Instance != null && myControlPanel != null) {
-				FBReader.Instance.setupNavigation(myControlPanel);
+			if (Instance != null && myControlPanel != null) {
+				Instance.setupNavigation(myControlPanel);
 			}
 		}
 
 		@Override
 		public void updateStates() {
 			super.updateStates();
-			if (!NavigateDragging && FBReader.Instance != null && myControlPanel != null) {
-				FBReader.Instance.setupNavigation(myControlPanel);
+			if (!NavigateDragging && Instance != null && myControlPanel != null) {
+				Instance.setupNavigation(myControlPanel);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public final class FBReader extends ZLAndroidActivity {
 	private static class TextSearchButtonPanel extends ControlButtonPanel {
 		@Override
 		public void onHide() {
-			final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
+			final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 			textView.clearFindResults();
 		}
 	}
@@ -91,11 +91,6 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		/*
-		android.telephony.TelephonyManager tele =
-			(android.telephony.TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-		System.err.println(tele.getNetworkOperator());
-		*/
 		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		myFullScreenFlag =
@@ -111,6 +106,17 @@ public final class FBReader extends ZLAndroidActivity {
 			myNavigatePanel = new NavigationButtonPanel();
 			myNavigatePanel.register();
 		}
+
+		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
+		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new PreferencesAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_BOOK_INFO, new BookInfoAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_CONTENTS, new ShowTOCAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
+		
+		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
+		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 	}
 
 	@Override
@@ -125,7 +131,7 @@ public final class FBReader extends ZLAndroidActivity {
 			startActivity(new Intent(this, this.getClass()));
 		}
 
-		final RelativeLayout root = (RelativeLayout)FBReader.this.findViewById(R.id.root_view);
+		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		if (!myTextSearchPanel.hasControlPanel()) {
 			final ControlPanel panel = new ControlPanel(this);
 
@@ -154,28 +160,14 @@ public final class FBReader extends ZLAndroidActivity {
 		});
 	}
 
-	private PowerManager.WakeLock myWakeLock;
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		ControlButtonPanel.restoreVisibilities();
-		if (ZLAndroidApplication.Instance().DontTurnScreenOffOption.getValue()) {
-			myWakeLock =
-				((PowerManager)getSystemService(POWER_SERVICE)).
-					newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
-			myWakeLock.acquire();
-		} else {
-			myWakeLock = null;
-		}
 	}
 
 	@Override
 	public void onPause() {
-		if (myWakeLock != null) {
-			myWakeLock.release();
-			myWakeLock = null;
-		}
 		ControlButtonPanel.saveVisibilities();
 		super.onPause();
 	}
@@ -184,6 +176,24 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onStop() {
 		ControlButtonPanel.removeControlPanels();
 		super.onStop();
+	}
+
+
+	@Override
+	public void onDestroy() {
+		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
+
+		fbReader.removeAction(ActionCode.SHOW_LIBRARY);
+		fbReader.removeAction(ActionCode.SHOW_PREFERENCES);
+		fbReader.removeAction(ActionCode.SHOW_BOOK_INFO);
+		fbReader.removeAction(ActionCode.SHOW_CONTENTS);
+		fbReader.removeAction(ActionCode.SHOW_BOOKMARKS);
+		fbReader.removeAction(ActionCode.SHOW_NETWORK_LIBRARY);
+		
+		fbReader.removeAction(ActionCode.SHOW_NAVIGATION);
+		fbReader.removeAction(ActionCode.SEARCH);
+
+		super.onDestroy();
 	}
 
 	void showTextSearchControls(boolean show) {
@@ -196,8 +206,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 	protected ZLApplication createApplication(String fileName) {
 		new SQLiteBooksDatabase();
-		String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
-		return new org.geometerplus.fbreader.fbreader.FBReader(args);
+		final String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
+		return new FBReaderApp(args);
 	}
 
 	@Override
@@ -212,35 +222,16 @@ public final class FBReader extends ZLAndroidActivity {
 				manager.setOnCancelListener(null);
 			}
 		});
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 
-
 	public void navigate() {
-		final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
+		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
 		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
 		myNavigatePanel.show(true);
-	}
-
-
-
-	public final boolean canNavigate() {
-		final org.geometerplus.fbreader.fbreader.FBReader fbreader =
-			(org.geometerplus.fbreader.fbreader.FBReader)ZLApplication.Instance();
-		final ZLView view = fbreader.getCurrentView();
-		if (!(view instanceof ZLTextView)) {
-			return false;
-		}
-		final ZLTextModel textModel = ((ZLTextView) view).getModel();
-		if (textModel == null || textModel.getParagraphsNumber() == 0) {
-			return false;
-		}
-		final BookModel bookModel = fbreader.Model;
-		return bookModel != null && bookModel.Book != null;
 	}
 
 	private final void createNavigation(View layout) {

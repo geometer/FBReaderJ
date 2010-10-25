@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
@@ -74,7 +74,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		AllBooksBookmarks = Bookmark.bookmarks();
 		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
-		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 
 		if (fbreader.Model != null) {
 			final long bookId = fbreader.Model.Book.getId();
@@ -130,7 +130,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public boolean onSearchRequested() {
-		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		startSearch(fbreader.BookmarkSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
@@ -284,7 +284,7 @@ mainLoop:
 	}
 
 	private void addBookmark() {
-		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLTextView textView = fbreader.getTextView();
 		final ZLTextWordCursor cursor = textView.getStartCursor();
 
@@ -307,7 +307,7 @@ mainLoop:
 
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.onOpen();
-		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
 		if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != bookId)) {
 			final Book book = Book.getById(bookId);

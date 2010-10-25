@@ -60,10 +60,19 @@ public abstract class NetworkAuthenticationManager {
 	/*
 	 * Common manager methods
 	 */
-	public abstract AuthenticationStatus isAuthorised(boolean useNetwork /* = true */);
+	public abstract boolean isAuthorised(boolean useNetwork /* = true */) throws ZLNetworkException;
 	public abstract void authorise(String password) throws ZLNetworkException;
 	public abstract void logOut();
 	public abstract BookReference downloadReference(NetworkBookItem book);
+
+
+	public final boolean mayBeAuthorised(boolean useNetwork) {
+		try {
+			return isAuthorised(useNetwork);
+		} catch (ZLNetworkException e) {
+		}
+		return true;
+	}
 
 	/*
 	 * Account specific methods (can be called only if authorised!!!)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.zlibrary.ui.android.util;
 
-import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
+import android.graphics.Color;
 
-class BookInfoAction extends RunActivityAction {
-	BookInfoAction(FBReader fbreader) {
-		super(fbreader, BookInfoActivity.class);
-	}
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
-	public boolean isVisible() {
-		return Reader.Model != null;
+public abstract class ZLAndroidColorUtil {
+	public static int rgb(ZLColor color) {
+		return Color.rgb(color.Red, color.Green, color.Blue);
 	}
 }

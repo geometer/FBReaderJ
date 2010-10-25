@@ -162,16 +162,43 @@
 					<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
-					<node name="summaryOn" value="A kijelző nem kapcsol ki olvasás közben"/>
-					<node name="summaryOff" value="A kijelző automatikusan kikapcsol néhány perc tétlenség után"/>
-				</node>
-				<node name="scrollbarType" value="Gördítősáv a jobb oldalon">
-					<node name="hide" value="Elrejtés"/>
-					<node name="show" value="Normál gördítősáv"/>
-					<node name="showAsProgress" value="Folyamatjelző"/>
+					<node name="0" value="Always" toBeTranslated="true"/>
+					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
+					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
+					<node name="100" value="Never" toBeTranslated="true"/>
 				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+				</node>
+				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
+					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
+					<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
+						<node name="hide" value="Hide" toBeTranslated="true"/>
+						<node name="show" value="Vertical slider" toBeTranslated="true"/>
+						<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+						<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+					</node>
+					<node name="footerHeight" value="Footer height"  toBeTranslated="true"/>
+					<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
+						<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
+						<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+					</node>
+					<node name="showProgress" value="Show page number" toBeTranslated="true">
+						<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showBattery" value="Show battery level" toBeTranslated="true">
+						<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showClock" value="Show clock" toBeTranslated="true">
+						<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+					</node>
+					<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
+						<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
+					</node>
 				</node>
 			</node>
 			<node name="Scrolling" value="Görgetés">

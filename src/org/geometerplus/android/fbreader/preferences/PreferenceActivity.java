@@ -19,11 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import android.content.Context;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
-
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
@@ -36,7 +33,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	/*private static final class ColorProfilePreference extends ZLSimplePreference {
-		private final FBReader myFBReader;
+		private final FBReaderApp myFBReader;
 		private final Screen myScreen;
 		private final String myKey;
 
@@ -45,7 +42,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return r.hasValue() ? r.getValue() : resourceKey;
 		}
 
-		ColorProfilePreference(Context context, FBReader fbreader, Screen screen, String key, String title) {
+		ColorProfilePreference(Context context, FBReaderApp fbreader, Screen screen, String key, String title) {
 			super(context);
 			myFBReader = fbreader;
 			myScreen = screen;
@@ -60,7 +57,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		@Override
 		public void onClick() {
 			myScreen.setSummary(getTitle());
-			myFBReader.setColorProfileName(myKey);
+			myFBReaderApp.setColorProfileName(myKey);
 			myScreen.close();
 		}
 	}*/
@@ -68,41 +65,66 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init() {
 		final Category libraryCategory = createCategory("Library");
-		/*
-		libraryCategory.addPreference(new InfoPreference(
-			this,
-			libraryCategory.Resource.getResource("path").getValue(),
-			Constants.BOOKS_DIRECTORY)
-		);
-		*/
 		libraryCategory.addPreference(new ZLStringOptionPreference(
 			this,
 			Paths.BooksDirectoryOption,
 			libraryCategory.Resource,
 			"path")
 		);
+
 		final Category lookNFeelCategory = createCategory("LookNFeel");
+
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
 		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );
 		appearanceScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						((FBReader) FBReader.Instance()).showOptionsDialog();
+						fbReader.showOptionsDialog();
 						return true;
 					}
 				}
 		);
 
+		final Screen statusLineScreen = lookNFeelCategory.createPreferenceScreen("scrollBar");
+		statusLineScreen.setSummary(statusLineScreen.Resource.getResource("summary").getValue());
+		final Category statusLineCategory = statusLineScreen.createCategory(null);
+
+		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
+		statusLineCategory.addPreference(new ZLChoicePreference(
+			this, statusLineCategory.Resource, "scrollbarType",
+			fbReader.ScrollbarTypeOption, scrollBarTypes));
+
+		statusLineCategory.addPreference(new ZLIntegerRangePreference(
+			this, statusLineCategory.Resource.getResource("footerHeight"),
+			fbReader.FooterHeightOption)
+		);
+
+		/*
+		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
+		statusLineCategory.addPreference(new ZLChoicePreference(
+			this, statusLineCategory.Resource, "footerLongTap",
+			fbReader.FooterLongTap, footerLongTaps));
+		*/
+
+		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
+		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
+		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
+		statusLineCategory.addOption(fbReader.FooterIsSensitive, "isSensitive");
+
 		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
 		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
 			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
 		}
-		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().DontTurnScreenOffOption, "dontTurnScreenOff");
-		lookNFeelCategory.addPreference(new ScrollbarTypePreference(this, lookNFeelCategory.Resource, "scrollbarType"));
+		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
+			this,
+			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption,
+			lookNFeelCategory.Resource,
+			"dontTurnScreenOff"
+		));
 
 		/*
-		final FBReader fbreader = (FBReader)FBReader.Instance();
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
 		final Category colorProfileCategory = colorProfileScreen.createCategory(null);
 		final ZLResource resource = colorProfileCategory.Resource;
@@ -121,37 +143,5 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingCategory.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
-	}
-}
-
-class ScrollbarTypePreference extends ZLStringListPreference {
-	private static final String[] ourCodes = { "hide", "show", "showAsProgress" };
-
-	private FBReader myReader;
-
-	ScrollbarTypePreference(Context context, ZLResource rootResource, String resourceKey) {
-		super(context, rootResource, resourceKey);
-		myReader = (FBReader)FBReader.Instance();
-		final String[] names = new String[ourCodes.length];
-		final ZLResource r = rootResource.getResource(resourceKey);
-		for (int i = 0; i < ourCodes.length; ++i) {
-			names[i] = r.getResource(ourCodes[i]).getValue();
-		}
-		setLists(ourCodes, names);
-		setInitialValue(ourCodes[
-			Math.max(0, Math.min(ourCodes.length - 1, myReader.ScrollbarTypeOption.getValue()))
-		]);
-	}
-
-	public void onAccept() {
-		final String value = getValue();
-		int intValue = 0;
-		for (int i = 0; i < ourCodes.length; ++i) {
-			if (value == ourCodes[i]) {
-				intValue = i;
-				break;
-			}
-		}
-		myReader.ScrollbarTypeOption.setValue(intValue);
 	}
 }

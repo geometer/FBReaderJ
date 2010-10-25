@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 class RotateAction extends FBAction {
-	RotateAction(FBReader fbreader) {
+	RotateAction(FBReaderApp fbreader) {
 		super(fbreader);
 	}
 

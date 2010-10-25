@@ -125,15 +125,15 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		return !ZLAndroidApplication.Instance().AutoOrientationOption.getValue();
 	}
 
-	public void navigate() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).navigate();
-	}
-
-	public boolean canNavigate() {
-		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).canNavigate();
-	}
-
 	public void close() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
+	}
+
+	private int myBatteryLevel;
+	protected int getBatteryLevel() {
+		return myBatteryLevel;
+	}
+	public void setBatteryLevel(int percent) {
+		myBatteryLevel = percent;
 	}
 }

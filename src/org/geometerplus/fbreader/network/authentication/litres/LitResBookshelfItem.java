@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
@@ -51,7 +50,10 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
-		if (mgr.isAuthorised(true).Status == ZLBoolean3.B3_FALSE) {
+
+		// TODO: Maybe it's better to call isAuthorised(true) directly 
+		// and let exception fly through???
+		if (!mgr.mayBeAuthorised(true)) {
 			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 		}
 		try {

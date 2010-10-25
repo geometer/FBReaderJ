@@ -258,12 +258,12 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	}
 
 	private Intent getFBReaderIntent(final File file) {
-		final Intent intent = new Intent(getApplicationContext(), org.geometerplus.android.fbreader.FBReader.class);
+		final Intent intent = new Intent(getApplicationContext(), FBReader.class);
 		intent.setAction(Intent.ACTION_VIEW);
 		if (file != null) {
 			intent.setData(Uri.fromFile(file));
 		} else {
-			intent.setData(Uri.EMPTY);
+			intent.setData(Uri.parse("file:///"));
 		}
 		return intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	}

@@ -49,10 +49,6 @@ abstract public class ZLPaintContext {
 	private boolean myFontIsItalic;
 	private boolean myFontIsUnderlined;
 
-	public final void resetFont() {
-		myResetFont = true;
-	}
-
 	public final void setFont(String family, int size, boolean bold, boolean italic, boolean underline) {
 		if ((family != null) && !myFontFamily.equals(family)) {
 			myFontFamily = family;
@@ -90,6 +86,7 @@ abstract public class ZLPaintContext {
 		setLineColor(color, LineStyle.SOLID_LINE);
 	}
 	abstract public void setLineColor(ZLColor color, int style);
+	abstract public void setLineWidth(int width);
 
 	final public void setFillColor(ZLColor color) {
 		setFillColor(color, FillStyle.SOLID_FILL);
@@ -99,6 +96,9 @@ abstract public class ZLPaintContext {
 	abstract public int getWidth();
 	abstract public int getHeight();
 	
+	public final int getStringWidth(String string) {
+		return getStringWidth(string.toCharArray(), 0, string.length());
+	}
 	abstract public int getStringWidth(char[] string, int offset, int length);
 
 	private int mySpaceWidth = -1;
@@ -134,6 +134,9 @@ abstract public class ZLPaintContext {
 	}
 	abstract protected int getDescentInternal();
 
+	public final void drawString(int x, int y, String string) {
+		drawString(x, y, string.toCharArray(), 0, string.length());
+	}
 	abstract public void drawString(int x, int y, char[] string, int offset, int length);
 
 	abstract public int imageWidth(ZLImageData image);

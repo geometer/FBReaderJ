@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,28 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader.preferences;
+
+import android.content.Context;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class ChangeFontSizeAction extends FBAction {
-	private final int myDelta;
+class ZLChoicePreference extends ZLStringListPreference {
+	private final ZLIntegerRangeOption myOption;
 
-	ChangeFontSizeAction(FBReaderApp fbreader, int delta) {
-		super(fbreader);
-		myDelta = delta;
+	ZLChoicePreference(Context context, ZLResource resource, String resourceKey, ZLIntegerRangeOption option, String[] valueResourceKeys) {
+		super(context, resource, resourceKey);
+
+		assert(option.MaxValue - option.MinValue + 1 == valueResourceKeys.length);
+
+		myOption = option;
+		setList(valueResourceKeys);
+
+		setInitialValue(valueResourceKeys[option.getValue() - option.MinValue]);
 	}
 
-	public void run() {
-		ZLIntegerRangeOption option =
-			ZLTextStyleCollection.Instance().getBaseStyle().FontSizeOption;
-		option.setValue(option.getValue() + myDelta);
-		Reader.clearTextCaches();
-		Reader.repaintView();
+	public void onAccept() {
+		myOption.setValue(findIndexOfValue(getValue()));
 	}
 }

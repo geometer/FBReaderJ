@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import android.app.Activity;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
-import org.geometerplus.fbreader.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
 public class BookmarkSearchActivity extends SearchActivity {
@@ -51,7 +51,7 @@ public class BookmarkSearchActivity extends SearchActivity {
 
 	@Override
 	boolean runSearch(String pattern) {
-		final FBReader fbreader = (FBReader)FBReader.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		fbreader.BookmarkSearchPatternOption.setValue(pattern);
 		pattern = pattern.toLowerCase();
 		myBookmarks.clear();

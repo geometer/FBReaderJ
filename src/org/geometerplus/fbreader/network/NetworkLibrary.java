@@ -227,7 +227,11 @@ public class NetworkLibrary {
 		myLinks = new CompositeList(linksList, new LinksComparator());
 	}
 
-	public void initialize() throws ZLNetworkException {
+	private boolean myIsAlreadyInitialized;
+	public synchronized void initialize() throws ZLNetworkException {
+		if (myIsAlreadyInitialized) {
+			return;
+		}
 		final LinksComparator comparator = new LinksComparator(); 
 
 		try {
@@ -243,18 +247,21 @@ public class NetworkLibrary {
 			throw e;
 		}
 
-		NetworkDatabase.Instance().loadCustomLinks(
-			new NetworkDatabase.ICustomLinksHandler() {
-				public void handleCustomLinkData(int id, String siteName,
-						String title, String summary, String icon, Map<String, String> links) {
-					final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
-					if (link != null) {
-						addLinkInternal(myCustomLinks, link, comparator);
-						link.setSaveLinkListener(myChangesListener);
+		final NetworkDatabase db = NetworkDatabase.Instance();
+		if (db != null) {
+			db.loadCustomLinks(
+				new NetworkDatabase.ICustomLinksHandler() {
+					public void handleCustomLinkData(int id, String siteName,
+							String title, String summary, String icon, Map<String, String> links) {
+						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
+						if (link != null) {
+							addLinkInternal(myCustomLinks, link, comparator);
+							link.setSaveLinkListener(myChangesListener);
+						}
 					}
 				}
-			}
-		);
+			);
+		}
 
 		/*testDate(new ATOMUpdated(2010,  1,  1,  1,  0,  0,  0,  2,  0),
 				 new ATOMUpdated(2009, 12, 31, 23,  0,  0,  0,  0,  0));
@@ -274,6 +281,7 @@ public class NetworkLibrary {
 				 new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30));
 		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0.001f,  3, 30),
 				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));*/
+		myIsAlreadyInitialized = true;
 	}
 
 	/*private void testDate(ATOMDateConstruct date1, ATOMDateConstruct date2) {

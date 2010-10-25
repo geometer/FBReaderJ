@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkException;
 
 
 class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
@@ -122,10 +123,10 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 					new OPDSXMLReader(info).read(inputStream);
         
 					if (!info.FeedStarted) {
-						throw new ZLNetworkException("notAnOPDS");
+						throw new ZLNetworkException(NetworkException.ERROR_NOT_AN_OPDS);
 					}
 					if (info.Title == null) {
-						throw new ZLNetworkException("noRequiredInformation");
+						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
 					myTitle = info.Title;
 					if (info.Icon != null) {
