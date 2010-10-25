@@ -232,8 +232,8 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
 					<node name="0" value="Никогда не выключать"/>
-					<node name="25" value="Пока батарея заряжена хотя бы на 25%"/>
-					<node name="50" value="Пока батарея заряжена хотя бы на 50%"/>
+					<node name="25" value="Пока батарея заряжена хотя бы на четверть"/>
+					<node name="50" value="Пока батарея заряжена хотя бы на половину"/>
 					<node name="100" value="Всегда выключать"/>
 				</node>
 				<node name="appearanceSettings" value="Внешний вид">
@@ -244,7 +244,7 @@
 					<node name="scrollbarType" value="Тип полосы прокрутки">
 						<node name="hide" value="Скрыть"/>
 						<node name="show" value="Вертикальный ползунок"/>
-						<node name="showAsProgress" value="Вертикальный прогресс"/>
+						<node name="showAsProgress" value="Вертикальный прогресс-бар"/>
 						<node name="showAsFooter" value="Подвал"/>
 					</node>
 					<node name="footerHeight" value="Высота подвала" />
@@ -252,19 +252,19 @@
 						<node name="longTapRevert" value="Откатить переход"/>
 						<node name="longTapNavigate" value="Сделать переход"/>
 					</node>
-					<node name="showProgress" value="Показывать прогресс">
-						<node name="summaryOn" value="Показывать прогресс в подвале"/>
-						<node name="summaryOff" value="Скрыть прогресс в подвале"/>
+					<node name="showProgress" value="Показывать число страниц">
+						<node name="summaryOn" value="Показывать число страниц в подвале"/>
+						<node name="summaryOff" value="Не показывать число страниц в подвале"/>
 					</node>
-					<node name="showBattery" value="Показать заряд">
-						<node name="summaryOn" value="Показывать заряд в подвале"/>
-						<node name="summaryOff" value="Скрыть заряд в подвале"/>
+					<node name="showBattery" value="Показать заряд батареи">
+						<node name="summaryOn" value="Показывать заряд батареи в подвале"/>
+						<node name="summaryOff" value="Не показывать заряд батареи в подвале"/>
 					</node>
 					<node name="showClock" value="Показывать часы">
 						<node name="summaryOn" value="Показывать часы в подвале"/>
-						<node name="summaryOff" value="Скрыть часы в подвале"/>
+						<node name="summaryOff" value="Не показывать часы в подвале"/>
 					</node>
-					<node name="isSensitive" value="Перемещаться по тексту при пркосновении к подвалу">
+					<node name="isSensitive" value="Перемещаться по тексту при прикосновении к подвалу">
 						<node name="summaryOn" value="Перемещение включено"/>
 						<node name="summaryOff" value="Перемещение выключено"/>
 					</node>

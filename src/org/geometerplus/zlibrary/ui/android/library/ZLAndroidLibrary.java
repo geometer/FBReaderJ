@@ -29,6 +29,7 @@ import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
@@ -37,6 +38,8 @@ import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
 import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
+
+import org.geometerplus.fbreader.network.NetworkLibrary;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
@@ -81,7 +84,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			externalUrl = false;
 		}
 		// FIXME: initialize network library and use rewriteUrl!!!
-		//reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);
+		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
+		try {
+			nLibrary.initialize();
+		} catch (ZLNetworkException e) {
+		}
+		reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);
 		intent.setData(Uri.parse(reference));
 		myActivity.startActivity(intent);
 	}

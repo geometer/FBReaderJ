@@ -47,7 +47,7 @@ public final class FBView extends ZLTextView {
 			scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 		}
 
-		ZLApplication.Instance().repaintView();
+		myReader.repaintView();
 	}
 
 	public void onScrollingFinished(int viewPage) {
@@ -74,7 +74,7 @@ public final class FBView extends ZLTextView {
 			}
 		} else {
 			scrollPage(forward, ZLTextView.ScrollingMode.NO_OVERLAPPING, 0);
-			ZLApplication.Instance().repaintView();
+			myReader.repaintView();
 		}
 	}
 
@@ -84,7 +84,7 @@ public final class FBView extends ZLTextView {
 				ZLibrary.Instance().openInBrowser(hyperlink.Id);
 				break;
 			case FBHyperlinkType.INTERNAL:
-				((FBReaderApp)ZLApplication.Instance()).tryOpenFootnote(hyperlink.Id);
+				myReader.tryOpenFootnote(hyperlink.Id);
 				break;
 		}
 	}
@@ -113,7 +113,7 @@ public final class FBView extends ZLTextView {
 		final ZLTextHyperlink hyperlink = findHyperlink(x, y, 10);
 		if (hyperlink != null) {
 			selectHyperlink(hyperlink);
-			ZLApplication.Instance().repaintView();
+			myReader.repaintView();
 			followHyperlink(hyperlink);
 			return true;
 		}
@@ -171,7 +171,7 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						ZLApplication.Instance().scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
+						myReader.scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
 					}
 				} else if (diff < 0) {
 					ZLTextWordCursor cursor = getEndCursor();
@@ -179,10 +179,10 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						ZLApplication.Instance().scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
+						myReader.scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
 					}
 				} else {
-					ZLApplication.Instance().scrollViewTo(PAGE_CENTRAL, 0);
+					myReader.scrollViewTo(PAGE_CENTRAL, 0);
 				}
 				return true;
 			}
@@ -229,9 +229,9 @@ public final class FBView extends ZLTextView {
 					if (ScrollingPreferences.Instance().AnimateOption.getValue()) {
 						startAutoScrolling(viewPage);
 					} else {
-						ZLApplication.Instance().scrollViewTo(PAGE_CENTRAL, 0);
+						myReader.scrollViewTo(PAGE_CENTRAL, 0);
 						onScrollingFinished(viewPage);
-						ZLApplication.Instance().repaintView();
+						myReader.repaintView();
 						setScrollingActive(false);
 					}
 				}
@@ -239,6 +239,15 @@ public final class FBView extends ZLTextView {
 			}
 		}
 		return false;
+	}
+
+	public boolean onTrackballRotated(int diffX, int diffY) {
+		if (diffY > 0) {
+			myReader.doAction(ActionCode.TRACKBALL_SCROLL_FORWARD);
+		} else if (diffY < 0) {
+			myReader.doAction(ActionCode.TRACKBALL_SCROLL_BACKWARD);
+		}
+		return true;
 	}
 
 	@Override
@@ -322,7 +331,7 @@ public final class FBView extends ZLTextView {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
-				info.append(ZLApplication.Instance().getBatteryLevel());
+				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
 			if (myReader.FooterShowClock.getValue()) {
@@ -378,7 +387,7 @@ public final class FBView extends ZLTextView {
 			} else {
 				gotoPage(page);
 			}
-			ZLApplication.Instance().repaintView();
+			myReader.repaintView();
 		}
 	}
 

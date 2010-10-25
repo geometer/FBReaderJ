@@ -97,8 +97,6 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
 		ZLApplication.Instance().repaintView();
-
-		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
 
 	@Override
@@ -164,10 +162,13 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
 			ZLApplication.Instance().getBatteryLevel();
 		switchWakeLock(true);
+
+		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
 
 	@Override
 	public void onPause() {
+		unregisterReceiver(myBatteryInfoReceiver);
 		switchWakeLock(false);
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
