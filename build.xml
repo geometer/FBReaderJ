@@ -26,9 +26,6 @@
 		<exec executable="./createRawResources.py" />
 	</target>
 
-  <target name="package" depends="native,resources,release">
-	</target>
-  <target name="dbg" depends="native,resources,debug"/>
   <target name="package" depends="native,resources,release" />
   <target name="dbg" depends="native,resources,debug" />
 
