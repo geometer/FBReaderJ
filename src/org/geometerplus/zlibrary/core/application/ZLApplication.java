@@ -359,4 +359,59 @@ public abstract class ZLApplication {
 			return false;
 		}
 	}
+
+	private Timer myTimer;
+	private final HashMap<Runnable,Long> myTimerTaskPeriods = new HashMap<Runnable,Long>();
+	private final HashMap<Runnable,TimerTask> myTimerTasks = new HashMap<Runnable,TimerTask>();
+	private static class MyTimerTask extends TimerTask {
+		private final Runnable myRunnable;
+
+		MyTimerTask(Runnable runnable) {
+			myRunnable = runnable;
+		}
+
+		public void run() {
+			myRunnable.run();
+		}
+	}
+
+	private void addTimerTaskInternal(Runnable runnable, long periodMilliseconds) {
+		final TimerTask task = new MyTimerTask(runnable);
+		myTimer.schedule(task, periodMilliseconds / 2, periodMilliseconds);
+		myTimerTasks.put(runnable, task);
+	}
+
+	public final synchronized void startTimer() {
+		if (myTimer == null) {
+			myTimer = new Timer();
+			for (Map.Entry<Runnable,Long> entry : myTimerTaskPeriods.entrySet()) {
+				addTimerTaskInternal(entry.getKey(), entry.getValue());
+			} 
+		}
+	}
+
+	public final synchronized void stopTimer() {
+		if (myTimer != null) {
+			myTimer.cancel();
+			myTimer = null;
+			myTimerTasks.clear();
+		}
+	}
+
+	public final synchronized void addTimerTask(Runnable runnable, long periodMilliseconds) {
+		removeTimerTask(runnable);
+		myTimerTaskPeriods.put(runnable, periodMilliseconds);
+		if (myTimer != null) {
+			addTimerTaskInternal(runnable, periodMilliseconds);
+		}
+	}	
+
+	public final synchronized void removeTimerTask(Runnable runnable) {
+		TimerTask task = myTimerTasks.get(runnable);
+		if (task != null) {
+			task.cancel();
+			myTimerTasks.remove(runnable);
+		}
+		myTimerTaskPeriods.remove(runnable);
+	}
 }

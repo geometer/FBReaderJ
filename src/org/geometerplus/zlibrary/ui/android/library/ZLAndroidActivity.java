@@ -126,6 +126,7 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	private PowerManager.WakeLock myWakeLock;
 	private boolean myWakeLockToCreate;
+	private boolean myStartTimer;
 
 	public final void createWakeLock() {
 		if (myWakeLockToCreate) {
@@ -138,6 +139,10 @@ public abstract class ZLAndroidActivity extends Activity {
 					myWakeLock.acquire();
 				}
 			}
+		}
+		if (myStartTimer) {
+			ZLApplication.Instance().startTimer();
+			myStartTimer = false;
 		}
 	}
 
@@ -161,10 +166,11 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		myWakeLockToCreate =
+		switchWakeLock(
 			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
-			ZLApplication.Instance().getBatteryLevel();
-		switchWakeLock(true);
+			ZLApplication.Instance().getBatteryLevel()
+		);
+		myStartTimer = true;
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
@@ -172,6 +178,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onPause() {
 		unregisterReceiver(myBatteryInfoReceiver);
+		ZLApplication.Instance().stopTimer();
 		switchWakeLock(false);
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
