@@ -1,3 +1,6 @@
+===== 0.7.14 (??? ??, 2010) =====
+* System settings are now used to format time in footer
+
 ===== 0.7.13 (Oct 28, 2010) =====
 * NoSuchFieldException has been fixed
 * Czech resources have been updated

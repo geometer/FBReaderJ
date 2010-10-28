@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.util.Date;
-
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -332,8 +330,7 @@ public final class FBView extends ZLTextView {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
-				Date date = new Date();
-				info.append(String.format("%02d:%02d", date.getHours(), date.getMinutes()));
+				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			final String infoString = info.toString();
 
