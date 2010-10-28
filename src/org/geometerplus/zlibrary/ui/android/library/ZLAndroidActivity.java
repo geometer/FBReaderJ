@@ -70,6 +70,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().getAttributes().buttonBrightness = 0;
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
