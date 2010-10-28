@@ -1,5 +1,7 @@
-===== 0.7.12 (??? ??, 2010) =====
+===== 0.7.12 (Oct 28, 2010) =====
 * On-timer footer update has been added
+* Keys backlight is now disabled during reading
+* Filemanager associations have been fixed
 
 ===== 0.7.11 (Oct 24, 2010) =====
 * Several craches have been fixed
