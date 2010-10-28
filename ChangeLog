@@ -1,3 +1,7 @@
+===== 0.7.13 (Oct 28, 2010) =====
+* NoSuchFieldException has been fixed
+* Czech resources have been updated
+
 ===== 0.7.12 (Oct 28, 2010) =====
 * On-timer footer update has been added
 * Keys backlight is now disabled during reading
