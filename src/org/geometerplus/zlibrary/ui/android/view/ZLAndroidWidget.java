@@ -336,11 +336,22 @@ public class ZLAndroidWidget extends View {
         postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
     }
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getPointerCount()) {
+			case 1:
+				return onSingleTouchEvent(event);
+			case 2:
+				return onDoubleTouchEvent(event);
+			default:
+				return false;
+		}
+	}
+
 	private boolean myPendingPress;
 	private int myPressedX, myPressedY;
 	private boolean myScreenIsTouched;
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	private boolean onSingleTouchEvent(MotionEvent event) {
 		int x = (int)event.getX();
 		int y = (int)event.getY();
 
@@ -385,6 +396,47 @@ public class ZLAndroidWidget extends View {
 				break;
 		}
 
+		return true;
+	}
+
+	private long myStartDistance2 = -1;
+	private boolean onDoubleTouchEvent(MotionEvent event) {
+		myScreenIsTouched = false;
+		myPendingPress = false;
+		if (!myLongClickPerformed && myPendingLongClickRunnable != null) {
+			removeCallbacks(myPendingLongClickRunnable);
+		}
+		System.err.println(event.getAction() & MotionEvent.ACTION_MASK);
+		switch (event.getAction() & MotionEvent.ACTION_MASK) {
+			case MotionEvent.ACTION_POINTER_UP:
+				myStartDistance2 = -1;
+				break;
+			case MotionEvent.ACTION_POINTER_DOWN:
+				{
+					final long diffX = (long)(event.getX(0) - event.getX(1)); 
+					final long diffY = (long)(event.getY(0) - event.getY(1)); 
+					myStartDistance2 = diffX * diffX + diffY * diffY;
+				}
+				break;
+			case MotionEvent.ACTION_MOVE:
+				{
+					final long diffX = (long)(event.getX(0) - event.getX(1)); 
+					final long diffY = (long)(event.getY(0) - event.getY(1)); 
+					final long distance2 = diffX * diffX + diffY * diffY;
+					if (myStartDistance2 == -1) {
+						myStartDistance2 = distance2;
+					} else if (distance2 > 2 * myStartDistance2) {
+						ZLApplication.Instance().getCurrentView().zoomOut();
+						System.err.println("zoom out");
+						myStartDistance2 *= 2;
+					} else if (distance2 < myStartDistance2 / 2) {
+						ZLApplication.Instance().getCurrentView().zoomIn();
+						System.err.println("zoom in");
+						myStartDistance2 /= 2;
+					}
+				}
+				break;
+		}
 		return true;
 	}
 

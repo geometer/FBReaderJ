@@ -23,8 +23,11 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 
@@ -410,5 +413,23 @@ public final class FBView extends ZLTextView {
 	@Override
 	public int scrollbarType() {
 		return myReader.ScrollbarTypeOption.getValue();
+	}
+
+	void zoom(int delta) {
+		ZLIntegerRangeOption option =
+			ZLTextStyleCollection.Instance().getBaseStyle().FontSizeOption;
+		option.setValue(option.getValue() + delta);
+		myReader.clearTextCaches();
+		ZLApplication.Instance().repaintView();
+	}
+
+	@Override
+	public void zoomIn() {
+		zoom(-1);
+	}
+
+	@Override
+	public void zoomOut() {
+		zoom(1);
 	}
 }
