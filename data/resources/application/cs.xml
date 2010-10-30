@@ -170,9 +170,9 @@
 				<node name="appearanceSettings" value="Vzhled">
 					<node name="summary" value="Nastavení zobrazení textu"/>
 				</node>
-				<node name="scrollBar" value="Scrollbar">
-					<node name="summary" value="Configure scrollbar"/>
-					<node name="scrollbarType" value="Scrollbar type">
+				<node name="scrollBar" value="Posuvník">
+					<node name="summary" value="Nastavení posuvníku"/>
+					<node name="scrollbarType" value="Typ posuvníku">
 						<node name="hide" value="Skrýt"/>
 						<node name="show" value="Svislé šoupátko"/>
 						<node name="showAsProgress" value="Svislý indikátor průběhu"/>
@@ -201,26 +201,26 @@
 					</node>
 				</node>
 			</node>
-			<node name="Scrolling" value="Posunování">
-				<node name="flick" value="Posunování tahem">
-					<node name="summaryOn" value="Posunovat stránky tahem prstem"/>
-					<node name="summaryOff" value="Posunovat stránky klepnutím prstem"/>
+			<node name="Scrolling" value="Posouvání">
+				<node name="flick" value="Posouvání tahem">
+					<node name="summaryOn" value="Posouvat stránky tahem prstem"/>
+					<node name="summaryOff" value="Posouvat stránky klepnutím prstem"/>
 				</node>
-				<node name="volumeKeys" value="Posunování tlačítky ovládání hlasitosti">
+				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
 					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
 					<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
 				</node>
-				<node name="invertVolumeKeys" value="Převrátit posunování tlačítky ovládání hlasitosti">
-					<node name="summaryOn" value="Tlačítko nahoru (dolů) posunuje stránku dolů (nahoru)"/>
-					<node name="summaryOff" value="Tlačítko nahoru (dolů) posunuje stránku nahoru (dolů)"/>
+				<node name="invertVolumeKeys" value="Převrátit posouvání tlačítky ovládání hlasitosti">
+					<node name="summaryOn" value="Tlačítko nahoru (dolů) posouvá stránku dolů (nahoru)"/>
+					<node name="summaryOff" value="Tlačítko nahoru (dolů) posouvá stránku nahoru (dolů)"/>
 				</node>
-				<node name="animated" value="Animované posunování">
-					<node name="summaryOn" value="Posunovat stránky hladčeji"/>
-					<node name="summaryOff" value="Posunovat stránky rychleji"/>
+				<node name="animated" value="Animované posouvání">
+					<node name="summaryOn" value="Posouvat stránky hladčeji"/>
+					<node name="summaryOff" value="Posouvat stránky rychleji"/>
 				</node>
-				<node name="horizontal" value="Vodorovné posunování">
-					<node name="summaryOn" value="Posunovat stránky vodorovně"/>
-					<node name="summaryOff" value="Posunovat stránky svisle"/>
+				<node name="horizontal" value="Vodorovné posouvání">
+					<node name="summaryOn" value="Posouvat stránky vodorovně"/>
+					<node name="summaryOff" value="Posouvat stránky svisle"/>
 				</node>
 			</node>
 		</node>
