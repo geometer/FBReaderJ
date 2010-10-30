@@ -1,5 +1,6 @@
 ===== 0.7.14 (??? ??, 2010) =====
 * System settings are now used to format time in footer
+* Ukrainian hyphenations have been fixed
 
 ===== 0.7.13 (Oct 28, 2010) =====
 * NoSuchFieldException has been fixed
