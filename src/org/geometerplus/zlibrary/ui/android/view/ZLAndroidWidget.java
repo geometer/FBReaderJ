@@ -426,11 +426,11 @@ public class ZLAndroidWidget extends View {
 					if (myStartDistance2 == -1) {
 						myStartDistance2 = distance2;
 					} else if (distance2 > 2 * myStartDistance2) {
-						ZLApplication.Instance().getCurrentView().zoomOut();
+						ZLApplication.Instance().getCurrentView().zoomIn();
 						System.err.println("zoom out");
 						myStartDistance2 *= 2;
 					} else if (distance2 < myStartDistance2 / 2) {
-						ZLApplication.Instance().getCurrentView().zoomIn();
+						ZLApplication.Instance().getCurrentView().zoomOut();
 						System.err.println("zoom in");
 						myStartDistance2 /= 2;
 					}

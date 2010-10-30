@@ -425,11 +425,11 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public void zoomIn() {
-		zoom(-1);
+		zoom(1);
 	}
 
 	@Override
 	public void zoomOut() {
-		zoom(1);
+		zoom(-1);
 	}
 }
