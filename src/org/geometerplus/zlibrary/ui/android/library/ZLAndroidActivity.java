@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.File;
+import java.lang.reflect.*;
 
 import android.net.Uri;
 import android.app.Activity;
@@ -67,6 +68,17 @@ public abstract class ZLAndroidActivity extends Activity {
 		myChangeCounter = 0; 
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		try {
+			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+			final Class<?> cls = attrs.getClass();
+			final Field fld = cls.getField("buttonBrightness");
+			if (fld != null && "float".equals(fld.getType().toString())) {
+				fld.setFloat(attrs, 0);
+			}
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		}
+		//getWindow().getAttributes().buttonBrightness = 0;
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
@@ -123,6 +135,7 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	private PowerManager.WakeLock myWakeLock;
 	private boolean myWakeLockToCreate;
+	private boolean myStartTimer;
 
 	public final void createWakeLock() {
 		if (myWakeLockToCreate) {
@@ -135,6 +148,10 @@ public abstract class ZLAndroidActivity extends Activity {
 					myWakeLock.acquire();
 				}
 			}
+		}
+		if (myStartTimer) {
+			ZLApplication.Instance().startTimer();
+			myStartTimer = false;
 		}
 	}
 
@@ -158,10 +175,11 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		myWakeLockToCreate =
+		switchWakeLock(
 			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
-			ZLApplication.Instance().getBatteryLevel();
-		switchWakeLock(true);
+			ZLApplication.Instance().getBatteryLevel()
+		);
+		myStartTimer = true;
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
@@ -169,6 +187,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onPause() {
 		unregisterReceiver(myBatteryInfoReceiver);
+		ZLApplication.Instance().stopTimer();
 		switchWakeLock(false);
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
