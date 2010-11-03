@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.File;
 
 import android.graphics.*;
 
@@ -101,6 +102,33 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myOutlinePaint);
 	}
 
+	private Typeface createTypeface(String family, int style) {
+		if ("liberation sans".equalsIgnoreCase(family)) {
+			File fontFile = null;
+			switch (style) {
+				case 0:
+					fontFile = new File("/sdcard/fonts/LiberationSans-Regular.ttf");
+					break;
+				case Typeface.BOLD:
+					fontFile = new File("/sdcard/fonts/LiberationSans-Bold.ttf");
+					break;
+				case Typeface.ITALIC:
+					fontFile = new File("/sdcard/fonts/LiberationSans-Italic.ttf");
+					break;
+				case Typeface.ITALIC | Typeface.BOLD:
+					fontFile = new File("/sdcard/fonts/LiberationSans-BoldItalic.ttf");
+					break;
+			}
+			if (fontFile != null && fontFile.exists()) {
+				Typeface tf = Typeface.createFromFile(fontFile);
+				if (tf != null) {
+					return tf;
+				}
+			}
+		}
+		return Typeface.create(family, style);
+	}
+
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
@@ -110,7 +138,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		Typeface typeface = typefaces[style];
 		if (typeface == null) {
-			typeface = Typeface.create(family, style);
+			typeface = createTypeface(family, style);
 			typefaces[style] = typeface;
 		}
 		myTextPaint.setTypeface(typeface);
@@ -204,21 +232,26 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	public String realFontFamilyName(String fontFamily) {
 		// TODO: implement
-		if ("Serif".equals(fontFamily)) {
+		if ("serif".equalsIgnoreCase(fontFamily)) {
 			return "serif";
 		}
-		if ("sans-serif".equals(fontFamily)
-				|| "serif".equals(fontFamily)
-				|| "monospace".equals(fontFamily)) {
-			return fontFamily;
+		if ("sans-serif".equalsIgnoreCase(fontFamily) || "sans serif".equalsIgnoreCase(fontFamily)) {
+			return "sans-serif";
+		}
+		if ("monospace".equalsIgnoreCase(fontFamily)) {
+			return "monospace";
+		}
+		if ("liberation sans".equalsIgnoreCase(fontFamily)) {
+			return "liberation sans";
 		}
 		return "sans-serif";
 	}
 
 	protected void fillFamiliesList(ArrayList<String> families) {
 		// TODO: implement
-		families.add("sans-serif");
-		families.add("serif");
-		families.add("monospace");
+		families.add("Liberation Sans");
+		families.add("Monospace");
+		families.add("Sans Serif");
+		families.add("Serif");
 	}
 }
