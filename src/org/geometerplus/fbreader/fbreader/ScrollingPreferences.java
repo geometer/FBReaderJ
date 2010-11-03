@@ -31,7 +31,7 @@ public class ScrollingPreferences {
 	public final ZLBooleanOption FlickOption = new ZLBooleanOption("Scrolling", "Flick", true);
 	public final ZLBooleanOption VolumeKeysOption = new ZLBooleanOption("Scrolling", "VolumeKeys", true);
 	public final ZLBooleanOption AnimateOption = new ZLBooleanOption("Scrolling", "ShowAnimated", true);
-	public final ZLBooleanOption HorizontalOption = new ZLBooleanOption("Scrolling", "Horizontal", false);
+	public final ZLBooleanOption HorizontalOption = new ZLBooleanOption("Scrolling", "Horizontal", true);
 	public final ZLBooleanOption InvertVolumeKeysOption = new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
 
 	private ScrollingPreferences() {
