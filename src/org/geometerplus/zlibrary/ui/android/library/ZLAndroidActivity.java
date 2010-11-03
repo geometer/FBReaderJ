@@ -60,6 +60,22 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	final void setScreenBrightness(int percent) {
+		if (percent < 0) {
+			percent = 0;
+		} else if (percent > 100) {
+			percent = 100;
+		}
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = percent / 100.0f;
+		getWindow().setAttributes(attrs);
+	}
+
+	final int getScreenBrightness() {
+		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
+		return (level >= 0) ? level : 50;
+	}
+
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);

@@ -110,8 +110,21 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
+	@Override
 	public String getCurrentTimeString() {
 		return DateFormat.getTimeFormat(myApplication.getApplicationContext()).format(new Date());
+	}
+
+	@Override
+	public void setScreenBrightness(int percent) {
+		if (myActivity != null) {
+			myActivity.setScreenBrightness(percent);
+		}
+	}
+
+	@Override
+	public int getScreenBrightness() {
+		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
 	}
 
 	private final class AndroidResourceFile extends ZLResourceFile {
