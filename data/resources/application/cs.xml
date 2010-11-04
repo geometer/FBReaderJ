@@ -162,65 +162,69 @@
 					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
-					<node name="0" value="Always" toBeTranslated="true"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<node name="100" value="Never" toBeTranslated="true"/>
+					<node name="0" value="Vždy"/>
+					<node name="25" value="Pokud je úroveň baterie větší než 25 procent"/>
+					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
+					<node name="100" value="Nikdy"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
 				</node>
 				<node name="appearanceSettings" value="Vzhled">
 					<node name="summary" value="Nastavení zobrazení textu"/>
 				</node>
-				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
-					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
-					<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
-						<node name="hide" value="Hide" toBeTranslated="true"/>
-						<node name="show" value="Vertical slider" toBeTranslated="true"/>
-						<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
-						<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+				<node name="scrollBar" value="Posuvník">
+					<node name="summary" value="Nastavení posuvníku"/>
+					<node name="scrollbarType" value="Typ posuvníku">
+						<node name="hide" value="Skrýt"/>
+						<node name="show" value="Svislé šoupátko"/>
+						<node name="showAsProgress" value="Svislý indikátor průběhu"/>
+						<node name="showAsFooter" value="Vodorovná patička"/>
 					</node>
-					<node name="footerHeight" value="Footer height"  toBeTranslated="true"/>
-					<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
-						<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
-						<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+					<node name="footerHeight" value="Výška patičky" />
+					<node name="footerLongTap" value="Dlouhé klepnutí na patičku">
+						<node name="longTapRevert" value="Vrátit pozici"/>
+						<node name="longTapNavigate" value="Jít na pozici"/>
 					</node>
-					<node name="showProgress" value="Show page number" toBeTranslated="true">
-						<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
-						<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+					<node name="showProgress" value="Zobrazit číslo stránky">
+						<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
+						<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
 					</node>
-					<node name="showBattery" value="Show battery level" toBeTranslated="true">
-						<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
-						<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+					<node name="showBattery" value="Zobrazit úroveň baterie">
+						<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
+						<node name="summaryOff" value="Nezobrazovat úroveň baterie v patičce"/>
 					</node>
-					<node name="showClock" value="Show clock" toBeTranslated="true">
-						<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
-						<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+					<node name="showClock" value="Zobrazit hodiny">
+						<node name="summaryOn" value="Zobrazit hodiny v patičce"/>
+						<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
 					</node>
-					<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
-						<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
+					<node name="isSensitive" value="Navigace klepnutím na patičku">
+						<node name="summaryOn" value="Navigace je povolena"/>
+						<node name="summaryOff" value="Navigace je zakázána"/>
 					</node>
 				</node>
 			</node>
-			<node name="Scrolling" value="Posunování">
-				<node name="flick" value="Posunování tahem">
-					<node name="summaryOn" value="Posunovat stránky tahem prstem"/>
-					<node name="summaryOff" value="Posunovat stránky klepnutím prstem"/>
+			<node name="Scrolling" value="Posouvání">
+				<node name="flick" value="Posouvání tahem">
+					<node name="summaryOn" value="Posouvat stránky tahem prstem"/>
+					<node name="summaryOff" value="Posouvat stránky klepnutím prstem"/>
 				</node>
-				<node name="volumeKeys" value="Posunování tlačítky ovládání hlasitosti">
+				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
 					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
 					<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
 				</node>
-				<node name="invertVolumeKeys" value="Převrátit posunování tlačítky ovládání hlasitosti">
-					<node name="summaryOn" value="Tlačítko nahoru (dolů) posunuje stránku dolů (nahoru)"/>
-					<node name="summaryOff" value="Tlačítko nahoru (dolů) posunuje stránku nahoru (dolů)"/>
+				<node name="invertVolumeKeys" value="Převrátit posouvání tlačítky ovládání hlasitosti">
+					<node name="summaryOn" value="Tlačítko nahoru (dolů) posouvá stránku dolů (nahoru)"/>
+					<node name="summaryOff" value="Tlačítko nahoru (dolů) posouvá stránku nahoru (dolů)"/>
 				</node>
-				<node name="animated" value="Animované posunování">
-					<node name="summaryOn" value="Posunovat stránky hladčeji"/>
-					<node name="summaryOff" value="Posunovat stránky rychleji"/>
+				<node name="animated" value="Animované posouvání">
+					<node name="summaryOn" value="Posouvat stránky hladčeji"/>
+					<node name="summaryOff" value="Posouvat stránky rychleji"/>
 				</node>
-				<node name="horizontal" value="Vodorovné posunování">
-					<node name="summaryOn" value="Posunovat stránky vodorovně"/>
-					<node name="summaryOff" value="Posunovat stránky svisle"/>
+				<node name="horizontal" value="Vodorovné posouvání">
+					<node name="summaryOn" value="Posouvat stránky vodorovně"/>
+					<node name="summaryOff" value="Posouvat stránky svisle"/>
 				</node>
 			</node>
 		</node>
@@ -266,10 +270,10 @@
 				</node>
 				<node name="Styles" value="Styly">
 					<node name="optionsFor" value="Možnosti pro"/>
-					<node name="fontFamily" value="Rodina">
+					<node name="fontFamily" value="Rodina písma">
 						<node name="unchanged" value="&lt;nezměněno&gt;"/>
 					</node>
-					<node name="fontSize" value="VelikostSize"/>
+					<node name="fontSize" value="Velikost písma"/>
 					<node name="fontSizeDifference" value="Rozlišovat velikost"/>
 					<node name="bold" value="Tučně"/>
 					<node name="italic" value="Kurzíva"/>
@@ -288,10 +292,10 @@
 			</node>
 		</node>
 		<node name="deleteBookBox">
-			<node name="message" value="Soubor knihy bude nevratně odebrán. Opravdu chcete pokračovat?"/>
+			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>
 		</node>
 		<node name="redownloadFileBox">
-			<node name="message" value="Soubor již existuje. Stáhnout znovu?"/>
+			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Stahování knihy %s"/>
@@ -381,7 +385,7 @@
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
 	</node>
 	<node name="style">
-		<node name="Base" value="Základ"/>
+		<node name="Base" value="Základní"/>
 		<node name="Regular Paragraph" value="Běžný odstavec"/>
 		<node name="Title" value="Název"/>
 		<node name="Section Title" value="Název části"/>

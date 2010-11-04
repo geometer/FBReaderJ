@@ -1,3 +1,24 @@
+===== 0.7.15 (??? ??, 2010) =====
+* Ukrainian localization (by Dmytro Shevchenko) has been added
+
+===== 0.7.14 (Nov 03, 2010) =====
+* Screen brightness adjustment has been implemented (idea was taken from Aldiko and https://github.com/cujo/FBReaderJ)
+* System settings are now used to format time in footer
+* Ukrainian hyphenations have been fixed
+* Czech resources have been updated
+
+===== 0.7.13 (Oct 28, 2010) =====
+* NoSuchFieldException has been fixed
+* Czech resources have been updated
+
+===== 0.7.12 (Oct 28, 2010) =====
+* On-timer footer update has been added
+* Keys backlight is now disabled during reading
+* Filemanager associations have been fixed
+
+===== 0.7.11 (Oct 24, 2010) =====
+* Several craches have been fixed
+
 ===== 0.7.10 (Oct 24, 2010) =====
 * Resources have been updated
 

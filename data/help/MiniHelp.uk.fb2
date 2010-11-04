@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Про програму FBReaderJ</book-title> <lang>uk</lang></title-info></description>
+<body>
+<title><p>Про програму FBReaderJ &FBReaderVersion;</p></title>
+<p>FBReaderJ &#8211; програма для читення електроних книжок, що працює на платформі <a l:href="http://www.android.com/">Android</a>. Вона представляє з себе клон програми <a l:href="http://www.fbreader.org/">FBReader</a>, написаний на Java тими ж авторами. FBReaderJ дозволяє читати книги у різних форматах: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. В нових версіях буде додано інші форматы, підтримувані оригінальним FBReader. Файли можна читати напряму з архівів <code>zip</code>, <code>tar</code> и <code>gzip</code>.</p>
+<p>Ви можете налаштувати FBReaderJ, аби читати так, як зрчніше саме вам. Кольори, шрифты, налаштування клавіш та багато іншого можна змінити в <code>діалозі налаштувань</code>.</p>
+<p>FBReaderJ розповсюджується вільно, включаючи вихідні тексти, під ліцензією <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<empty-line/>
+<subtitle><p>З чого почати</p></subtitle>
+<p>Є 2 способи додати книжку до бібліотеки FBReaderJ.</p>
+<p>Ви можете покласти файл книги в каталог <code>/sdcard/Books</code> на пристрої (чи інший його підкаталог). Книга з’явиться в списку при наступному відкритті бібліотеки.</p>
+<p>Якщо книга доступна на будь-якому Інтернет-сайті, достатньо просто відкрити відповідне посилання у браузеру прямо на телефоні. Книжка буде завантажена й одразу відкрита у FBReaderJ. Якщо вм знову натиснете на те ж посилання, другий раз книжка завантажуватись не буде, відкриється збережений при першому завантаженні файл.</p>
+<empty-line/>
+<subtitle><p>Посилання</p></subtitle>
+<p>Інформацію про програми FBReader і FBReaderJ та їх свіжі версії можна знайти на <a l:href="http://www.fbreader.org">сайті FBReader'а</a>.</p>
+<p>Якщо ви хочете отримувати повідомлення про нові версії, підпишиться на <a l:href="http://freshmeat.net/projects/fbreaderj">проект FBReaderJ на freshmeat</a>.</p>
+<p>Чтобы связаться с авторами программы, воспользуйтесь <a l:href="http://groups.google.com/group/fbreader">группой FBReader на googlegroups</a>.</p>
+</body>
+</FictionBook>

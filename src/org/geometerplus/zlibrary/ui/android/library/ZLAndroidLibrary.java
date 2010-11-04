@@ -20,12 +20,14 @@
 package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.*;
+import java.util.Date;
 
 import android.app.Application;
 import android.content.res.Resources;
 import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.format.DateFormat;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -106,6 +108,23 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		} catch (Exception e) {
 			return "";
 		}
+	}
+
+	@Override
+	public String getCurrentTimeString() {
+		return DateFormat.getTimeFormat(myApplication.getApplicationContext()).format(new Date());
+	}
+
+	@Override
+	public void setScreenBrightness(int percent) {
+		if (myActivity != null) {
+			myActivity.setScreenBrightness(percent);
+		}
+	}
+
+	@Override
+	public int getScreenBrightness() {
+		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
 	}
 
 	private final class AndroidResourceFile extends ZLResourceFile {
