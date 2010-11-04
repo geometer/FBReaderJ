@@ -262,15 +262,6 @@ public final class FBView extends ZLTextView {
 		return false;
 	}
 
-	public boolean onTrackballRotated(int diffX, int diffY) {
-		if (diffY > 0) {
-			myReader.doAction(ActionCode.TRACKBALL_SCROLL_FORWARD);
-		} else if (diffY < 0) {
-			myReader.doAction(ActionCode.TRACKBALL_SCROLL_BACKWARD);
-		}
-		return true;
-	}
-
 	@Override
 	public int getLeftMargin() {
 		return myReader.LeftMarginOption.getValue();
