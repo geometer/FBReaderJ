@@ -94,19 +94,14 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
-	myOrientation = new ZLIntegerOption(
-		"View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).getValue();
-	myChangeCounter = 0; 
-
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		if (state != null) {
-			myOrientation = state.getInt(REQUESTED_ORIENTATION_KEY, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-			myChangeCounter = state.getInt(ORIENTATION_CHANGE_COUNTER_KEY);
-		}
+	    myOrientation = new ZLIntegerOption(
+		    "View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).getValue();
+	    myChangeCounter = 0; 
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		disableButtonLight();
