@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ukrainian FBReaderJ resources, by Dmytro Shevchenko -->
+<resources>
+	<node name="library">
+		<node name="unknownAuthor" value="Автор не вказаний"/>
+		<node name="booksWithNoTags" value="Книги поза категоріями"/>
+		<node name="demo" value="уривок"/>
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="Автори"/>
+		<node name="byTag" value="Категорії"/>
+		<node name="recent" value="Нещодавні"/>
+		<node name="searchResults" value="Знайдено"/>
+		<node name="menu">
+			<node name="localSearch" value="Пошук"/>
+		</node>
+		<node name="openBook" value="Читати книжку"/>
+		<node name="deleteBook" value="Видалити книжку"/>
+	</node>
+	<node name="networkView">
+		<node name="openCatalog" value="Відкрити теку"/>
+		<node name="showResults" value="Показати результати"/>
+		<node name="showBooks" value="Показати книжки"/>
+		<node name="download" value="Завантажити"/>
+		<node name="read" value="Читати локальну копію"/>
+		<node name="delete" value="Видалити локальну копію"/>
+		<node name="readDemo" value="Читати уривок"/>
+		<node name="deleteDemo" value="Видалити уривок"/>
+		<node name="downloadDemo" value="Завантажити уривок"/>
+		<node name="buy" value="Придбати (%s)"/>
+		<node name="openInBrowser" value="Показати у браузері" />
+		<node name="stopLoading" value="Припинити завантаження" />
+		<node name="stopSearching" value="Припинити пошук" />
+		<node name="signIn" value="Увійти"/>
+		<node name="signOut" value="Вийти (%s)"/>
+		<node name="refillAccount" value="Поповнити рахунок (поточний рахунок: %s)" />
+		<node name="refillTitle" value="Поповнити рахунок"/>
+		<node name="refillSummary" value="Поточний рахунок: %s"/>
+		<node name="alreadyDownloading" value="Книжка завантажується" />
+		<node name="alreadyDownloadingDemo" value="Уривок завантажається" />
+		<node name="stoppingCatalogLoading" value="Зупинка завантаження" />
+		<node name="stoppingNetworkSearch" value="Завершення пошуку" />
+		<node name="search" value="Пошук" />
+		<node name="searchSummary" value="Пошук книжок у каталогах" />
+		<node name="searchResults" value="Результати пошуку для: %s" />
+		<node name="editCustomCatalog" value="Змінити теку"/>
+		<node name="removeCustomCatalog" value="Видалити теку"/>
+		<node name="addCustomCatalog" value="Додати теку"/>
+		<node name="addCustomCatalogSummary" value="Додати OPDS каталог вручну"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Бажаєте відкрити локальну копію?"/>
+			<node name="download" value="Ви хочете завантажити цю книгу?"/>
+			<node name="readDemo" value="Ви хочете відкрити уривок?"/>
+			<node name="downloadDemo" value="Ви хочете завантажити уривок?"/>
+			<node name="buy" value="Ви хочете придбати цю книгу? (%s)"/>
+			<node name="openInBrowser" value="Ви хочете відкрити цю теку у браузері?" />
+		</node>
+		<node name="downloadingCatalogs" value="Йде завантаження каталогів"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="Пошук книжок у мережі"/> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="Пошук в мережі"/>
+			<node name="reload" value="Оновити"/>
+			<node name="signIn" value="Увійти"/>
+			<node name="signOut" value="Вийти (%s)"/>
+			<node name="refillAccount" value="Поповнити рахунок"/>
+			<node name="addCustomCatalog" value="Додати каталог"/>
+			<node name="refreshCatalogsList" value="Оновити каталоги"/>
+		</node>
+	</node>
+	<node name="networkBookView">
+		<node name="bookInfo" value="Інформація про книгу" />
+		<node name="description" value="Опис" />
+		<node name="noDescription" value="Опис відсутній." />
+		<node name="title" value="Назва:" />
+		<node name="authors" value="Автори:" />
+		<node name="series" value="Серія:" />
+		<node name="indexInSeries" value="Номер у серії:" />
+		<node name="tags" value="Категорії:" />
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Книга завантажена" />
+		<node name="tickerError" value="Книгу завантажити не вдалось" />
+		<node name="contentSuccess" value="Завантаження завершене" />
+		<node name="contentError" value="Не вдалось завантажити" />
+		<node name="downloadingStarted" value="Завантаження книги почалось" />
+		<node name="alreadyDownloading" value="Книга вже завантажується" />
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Розгорнути гілку дерева"/>
+		<node name="collapseTree" value="Згорнути гілку дерева"/>
+		<node name="readText" value="Читати главу"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Ця книга"/>
+		<node name="allBooks" value="Усі книги"/>
+		<node name="searchResults" value="Знайдено"/>
+		<node name="new" value="Додати закладку"/>
+		<node name="open" value="Відкрити"/>
+		<node name="edit" value="Поправити закладку"/>
+		<node name="delete" value="Стерти закладку"/>
+		<node name="menu">
+			<node name="search" value="Пошук"/>
+		</node>
+	</node>
+	<node name="menu">
+		<node name="preferences-old" value="Налаштування (додатково)"/>
+		<node name="preferences" value="Налаштування"/>
+		<node name="bookInfo" value="Про книгу"/>
+		<node name="library" value="Бібліотека"/>
+		<node name="toc" value="Зміст"/>
+		<node name="day" value="День"/>
+		<node name="night" value="Ніч"/>
+		<node name="networkLibrary" value="Мережева бібліотека"/>
+		<node name="navigate" value="Перехід">
+			<node name="toc" value="Зміст"/>
+			<node name="gotoHome" value="В початок книги"/>
+			<node name="gotoPageNumber" value="На сторінку..."/>
+			<node name="gotoSectionStart" value="В початок разділу"/>
+			<node name="gotoSectionEnd" value="В кінець розділу"/>
+			<node name="nextTOCSection" value="До наступної глави"/>
+			<node name="previousTOCSection" value="До попередньої глави"/>
+			<node name="undo" value="Назад"/>
+			<node name="redo" value="Вперед"/>
+		</node>
+		<node name="selection" value="Позначка">
+			<node name="copyToClipboard" value="Скопіювати до буфера"/>
+			<node name="openInDictionary" value="Подивитись в словнику"/>
+			<node name="clearSelection" value="Прибрати позначку"/>
+		</node>
+		<node name="search" value="Пошук"/>
+		<node name="rotate" value="Повернути"/>
+		<node name="increaseFont" value="Збільшити шрифт" />
+		<node name="decreaseFont" value="Зменшити шрифт" />
+		<node name="toggleFullscreen" value="На весь екран"/>
+		<node name="bookmarks" value="Закладки"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="buy" value="Придбати" />
+			<node name="buyAndDownload" value="Придбати та завантажити" />
+			<node name="continue" value="Продовжити" />
+			<node name="editUrl" value="Змінити URL" />
+			<node name="tryAgain" value="Повторити" />
+		</node>
+		<node name="BookInfo">
+			<node name="fileName" value="Файл"/>
+			<node name="title" value="Назва"/>
+			<node name="language" value="Мова"/>
+			<node name="encoding" value="Кодування"/>
+		</node>
+		<node name="Preferences">
+			<node name="Library" value="Бібліотека">
+				<node name="path" value="Каталоги для пошуку книг"/>
+			</node>
+			<node name="LookNFeel" value="Зовнішній вигляд">
+				<node name="autoOrientation" value="Автоматичний поворот">
+					<node name="summaryOn" value="Зображення повертається при повороті пристрою"/>
+					<node name="summaryOff" value="Зображення не повертається при повороті пристрою"/>
+				</node>
+				<node name="showStatusBar" value="Показати рядок стану">
+					<node name="summaryOn" value="Рядок стану видно під час читання"/>
+					<node name="summaryOff" value="Рядок стану не видно під час читання"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Verhindert das der Bildschirm sich ausschaltet">
+					<node name="0" value="Always" toBeTranslated="true"/>
+					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
+					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
+					<node name="100" value="Never" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
+				<node name="appearanceSettings" value="Зовнішній вигляд">
+					<node name="summary" value="Налаштування відображення тексту"/>
+				</node>
+				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
+					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
+					<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
+						<node name="hide" value="Hide" toBeTranslated="true"/>
+						<node name="show" value="Vertical slider" toBeTranslated="true"/>
+						<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+						<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+					</node>
+					<node name="footerHeight" value="Footer height"  toBeTranslated="true"/>
+					<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
+						<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
+						<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+					</node>
+					<node name="showProgress" value="Show page number" toBeTranslated="true">
+						<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showBattery" value="Show battery level" toBeTranslated="true">
+						<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+					</node>
+					<node name="showClock" value="Show clock" toBeTranslated="true">
+						<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
+						<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+					</node>
+					<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
+						<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
+			</node>
+			<node name="Scrolling" value="Перегортання сторінок">
+				<node name="flick" value="Гортати рухом пальця">
+					<node name="summaryOn" value="Для переходу на наступну сторінку проведіть пальцем по екрану"/>
+					<node name="summaryOff" value="Для переходу на наступну сторінку торкніться пальцем до екрану"/>
+				</node>
+				<node name="volumeKeys" value="Використання кнопки налаштування звуку">
+					<node name="summaryOn" value="Кнопки збільшення/зменшення звуку перегортають сторінки"/>
+					<node name="summaryOff" value="Кнопки збільшення/зменшення звуку працюють як звичайно"/>
+				</node>
+				<node name="invertVolumeKeys" value="Перегортати кнопками в зворотньому напрямку">
+					<node name="summaryOn" value="Нижня кнопка гортає сторінки вперед"/>
+					<node name="summaryOff" value="Верхня кнопка гортає сторінки вперед"/>
+				</node>
+				<node name="animated" value="Поступове перегортання">
+					<node name="summaryOn" value="Сторінка перегортається поступово"/>
+					<node name="summaryOff" value="Сторінка перегортається миттєво"/>
+				</node>
+				<node name="horizontal" value="Горизонтальне перегортання">
+					<node name="summaryOn" value="При гортанні сторінка рухається по горизонталі"/>
+					<node name="summaryOff" value="При гортанні сторінка рухається по вертикалі"/>
+				</node>
+			</node>
+		</node>
+		<node name="OptionsDialog">
+			<node name="title" value="FBReader - Налаштування"/>
+			<node name="tab">
+				<node name="Library" value="Бібліотека">
+					<node name="bookPath" value="Теки з книжками"/>
+					<node name="lookInSubdirectories" value="Шукати книжки у підкаталогах"/>
+				</node>
+				<node name="Language" value="Мова">
+					<node name="autoDetect" value="Автоматично визначати мову та кодування"/>
+					<node name="defaultLanguage" value="Мова за замовчуванням"/>
+					<node name="defaultEncodingSet" value="Набір кодувань за замовчуванням"/>
+					<node name="defaultEncoding" value="Кодування за замовчуванням"/>
+				</node>
+				<node name="Selection" value="Позначка">
+					<node name="enableSelection" value="Дозволити помічати текст"/>
+				</node>
+				<node name="Margins" value="Відступи">
+					<node name="left" value="Відступ зліва"/>
+					<node name="right" value="Відступ зправа"/>
+					<node name="top" value="Відступ зверху"/>
+					<node name="bottom" value="Відступ знизу"/>
+				</node>
+				<node name="Format" value="Форматування">
+					<node name="optionsFor" value="Налаштування для"/>
+					<node name="lineSpacing" value="Інтервал">
+						<node name="unchanged" value="&lt;не міняти&gt;"/>
+					</node>
+					<node name="firstLineIndent" value="Червона стрічка"/>
+					<node name="alignment" value="Вирівнювання">
+						<node name="left" value="ліве"/>
+						<node name="right" value="праве"/>
+						<node name="center" value="по центру"/>
+						<node name="justify" value="по краях"/>
+						<node name="unchanged" value="&lt;не міняти&gt;"/>
+					</node>
+					<node name="spaceBefore" value="Пропуск перед"/>
+					<node name="spaceAfter" value="Пропуск після"/>
+					<node name="leftIndent" value="Відступ зліва"/>
+					<node name="rightIndent" value="Відступ зправа"/>
+				</node>
+				<node name="Styles" value="Стилі">
+					<node name="optionsFor" value="Налаштування для"/>
+					<node name="fontFamily" value="Шрифт">
+						<node name="unchanged" value="&lt;не міняти&gt;"/>
+					</node>
+					<node name="fontSize" value="Розмір"/>
+					<node name="fontSizeDifference" value="Розмір"/>
+					<node name="bold" value="Жирний"/>
+					<node name="italic" value="Курсив"/>
+					<node name="allowHyphenations" value="Перенесення"/>
+					<node name="autoHyphenations" value="Перенесення"/>
+				</node>
+				<node name="Colors" value="Кольори">
+					<node name="colorFor" value="Колір">
+						<node name="background" value="фону"/>
+						<node name="selectionBackground" value="фону позначки"/>
+						<node name="text" value="звичайного тексту"/>
+						<node name="hyperlink" value="посилання"/>
+						<node name="highlighting" value="фону результатів пошуку"/>
+					</node>
+				</node>
+			</node>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Файл книги буде видалено необоротно. Продовжити?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Файл вже є на пристрої. Завантажити заново?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Завантажується книга %s"/>
+			<node name="search" value="Йде пошук. Зачекайте, будь ласка..."/>
+			<node name="loadingBook" value="Відкривається книга. Зачекайте, будь ласка..."/>
+			<node name="loadingBookList" value="Відкривається бібліотека. Зачекайте, будь ласка..."/>
+			<node name="creatingBooksDatabase" value="Створюється база книг. Зачекайте, будь ласка..."/>
+			<node name="updatingBooksDatabase" value="Оновлюється база книг. Зачекайте, будь ласка..."/>
+			<node name="loadingNetworkLibrary" value="Відкривається бібліотека. Зачекайте, будь ласка..." />
+			<node name="authentication" value="Йде авторизація. Зачекайте, будь ласка..." />
+			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка..." />
+			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..." />
+			<node name="registerUser" value="Реєструємо користувача. Зачекайте, будь ласка..." />
+			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..." />
+			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Внутрішня помилка сервера" />
+			<node name="purchaseNotEnoughMoney" value="Не достатньо коштів на рахунку" />
+			<node name="purchaseMissingBook" value="Книга відсутня у продажу" />
+			<node name="purchaseAlreadyPurchased" value="Книга вже була придбана" />
+			<node name="bookNotPurchased" value="Книгу не було придбано" />
+			<node name="downloadLimitExceeded" value="Вичерпано ліміт завантажень" />
+			<node name="loginAlreadyTaken" value="Це ім’я користувача зайняте" />
+			<node name="loginNotSpecified" value="Введіть ім’я користувача" />
+			<node name="passwordNotSpecified" value="Введіть пароль" />
+			<node name="emailNotSpecified" value="Введіть поштову адресу" />
+			<node name="invalidEMail" value="Некоректна поштова адреса" />
+			<node name="tooManyRegistrations" value="Занадто багато реєстрацій з вашого IP;&#10;спробуйте ще раз через декілька хвилин" />
+			<node name="noUserEmail" value="Нема користувача з такою адресою" />
+			<node name="unsupportedOperation" value="Непідтримувана операція" />
+			<node name="notAnOPDS" value="Це не OPDS каталог" />
+			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі" />
+			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша" />
+		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="Інформація" />
+			<node name="message" value="Каталог порожній" />
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="Результати пошуку" />
+			<node name="message" value="Відповідних книг не знайдено" />
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Авторизація" />
+			<node name="login" value="Ім’я користувача" />
+			<node name="password" value="Пароль" />
+			<node name="skipIP" value="Не прив’язуватись до ip-адреси" />
+			<node name="loginIsEmpty" value="Ім’я користувача не може бути порожнім" />
+			<node name="register" value="Зареєструватися" />
+		</node>
+		<node name="RegisterUserDialog">
+			<node name="title" value="Реєстрація нового користувача" />
+			<node name="login" value="Ім’я користувача" />
+			<node name="password" value="Пароль" />
+			<node name="confirmPassword" value="Ще раз пароль" />
+			<node name="email" value="E-mail" />
+			<node name="differentPasswords" value="Ви ввели 2 різних паролі." />
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="Користувацький каталог" />
+			<node name="catalogTitle" value="Назва" />
+			<node name="catalogUrl" value="URL" />
+			<node name="catalogSummary" value="Опис" />
+			<node name="catalogTitleExample" value="Напр.: Epub Books" />
+			<node name="catalogUrlExample" value="Напр.: http://www.epubbooks.ru/index.xml" />
+			<node name="catalogSummaryExample" value="Напр.: Книжки українською" />
+			<node name="titleIsEmpty" value="Назва не може бути пустою" />
+			<node name="urlIsEmpty" value="URL не може бути пустим" />
+			<node name="invalidUrl" value="Невірний URL" />
+			<node name="titleAlreadyExists" value="Таку назву вже використано" />
+			<node name="siteAlreadyExists" value="Цей каталог вже є у списку" />
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="Придбання книги" />
+			<node name="message" value="Ви впевненні, що хочете придбати книгу&#10;«%s»?" />
+		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="Придбання книги" />
+			<node name="message" value="Книга вже придбана" />
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="textNotFound" value="У цій книзі нема такого тексту"/>
+		<node name="bookNotFound" value="Немає відповідних книг"/>
+		<node name="bookmarkNotFound" value="Нема відповідних закладок"/>
+		<node name="cannotOpenBook" value="Невдається відкрити книгу"/>
+	</node>
+	<node name="style">
+		<node name="Base" value="тексту за замовчуванням"/>
+		<node name="Regular Paragraph" value="звичайного тексту"/>
+		<node name="Title" value="заголовку"/>
+		<node name="Section Title" value="назви глави"/>
+		<node name="Poem Title" value="назви вірша"/>
+		<node name="Subtitle" value="підзаголовку"/>
+		<node name="Annotation" value="анотації"/>
+		<node name="Epigraph" value="епиграфа"/>
+		<node name="Stanza" value="строфи"/>
+		<node name="Verse" value="віршів"/>
+		<node name="Preformatted text" value="тексту всередині &lt;pre&gt;"/>
+		<node name="Image" value="малюнка"/>
+		<node name="Cite" value="цитати"/>
+		<node name="Author" value="імені автора"/>
+		<node name="Date" value="дати"/>
+		<node name="Internal Hyperlink" value="посилання"/>
+		<node name="Footnote" value="виноски"/>
+		<node name="Emphasis" value="виділення (emphasis)"/>
+		<node name="Strong" value="виділення (strong)"/>
+		<node name="Subscript" value="нижнього індекса"/>
+		<node name="Superscript" value="верхнього індекса"/>
+		<node name="Code" value="тексту програми"/>
+		<node name="StrikeThrough" value="закресленого тексту"/>
+		<node name="Italic" value="курсиву"/>
+		<node name="Bold" value="жирного тексту"/>
+		<node name="Definition" value="визначення"/>
+		<node name="Definition Description" value="тексту визначення"/>
+		<node name="Header 1" value="тексу всередині &lt;h1&gt;"/>
+		<node name="Header 2" value="тексту всередині &lt;h2&gt;"/>
+		<node name="Header 3" value="тексту всередині &lt;h3&gt;"/>
+		<node name="Header 4" value="тексту всередині &lt;h4&gt;"/>
+		<node name="Header 5" value="тексту всередині &lt;h5&gt;"/>
+		<node name="Header 6" value="тексту всередині &lt;h6&gt;"/>
+		<node name="External Hyperlink" value="зовнішнього посилання"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="браузері"/>
+		<node name="defaultBrowser" value="браузері"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="невідома помилка"/>
+	<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
+		<node name="encriptedFile" value="файл захищено DRM"/>
+	</node>
+</resources>
