@@ -237,6 +237,10 @@
 					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
 					<node name="100" value="Nikdy"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
 				<node name="appearanceSettings" value="Vzhled">
 					<node name="summary" value="Nastavení zobrazení textu"/>
 				</node>

@@ -1,4 +1,8 @@
-===== 0.7.14 (??? ??, 2010) =====
+===== 0.7.15 (??? ??, 2010) =====
+* Ukrainian localization (by Dmytro Shevchenko) has been added
+
+===== 0.7.14 (Nov 03, 2010) =====
+* Screen brightness adjustment has been implemented (idea was taken from Aldiko and https://github.com/cujo/FBReaderJ)
 * System settings are now used to format time in footer
 * Ukrainian hyphenations have been fixed
 * Czech resources have been updated

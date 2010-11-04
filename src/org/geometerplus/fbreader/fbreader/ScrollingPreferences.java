@@ -30,7 +30,7 @@ public class ScrollingPreferences {
 
 	public final ZLBooleanOption FlickOption = new ZLBooleanOption("Scrolling", "Flick", true);
 	public final ZLBooleanOption AnimateOption = new ZLBooleanOption("Scrolling", "ShowAnimated", true);
-	public final ZLBooleanOption HorizontalOption = new ZLBooleanOption("Scrolling", "Horizontal", false);
+	public final ZLBooleanOption HorizontalOption = new ZLBooleanOption("Scrolling", "Horizontal", true);
 
 	private ScrollingPreferences() {
 		ourInstance = this;

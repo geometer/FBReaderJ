@@ -236,6 +236,10 @@
 					<node name="50" value="Пока батарея заряжена хотя бы на половину"/>
 					<node name="100" value="Всегда выключать"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
+					<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
+					<node name="summaryOff" value="Выключена"/>
+				</node>
 				<node name="appearanceSettings" value="Внешний вид">
 					<node name="summary" value="Настройки отображения текста"/>
 				</node>

@@ -236,6 +236,10 @@
 					<node name="50" value="While battery level is greater than 50 percent"/>
 					<node name="100" value="Never"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
+					<node name="summaryOff" value="Disabled"/>
+				</node>
 				<node name="appearanceSettings" value="Appearance">
 					<node name="summary" value="Text displaying settings"/>
 				</node>

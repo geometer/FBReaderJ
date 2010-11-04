@@ -58,16 +58,30 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
-	@Override
-	public void onCreate(Bundle state) {
-		super.onCreate(state);
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+	private void setScreenBrightnessAuto() {
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = -1.0f;
+		getWindow().setAttributes(attrs);
+	}
 
-		myOrientation = new ZLIntegerOption(
-				"View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).getValue();
-		myChangeCounter = 0; 
+	final void setScreenBrightness(int percent) {
+		if (percent < 1) {
+			percent = 1;
+		} else if (percent > 100) {
+			percent = 100;
+		}
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = percent / 100.0f;
+		getWindow().setAttributes(attrs);
+		((ZLAndroidApplication)getApplication()).ScreenBrightnessLevelOption.setValue(percent);
+	}
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	final int getScreenBrightness() {
+		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
+		return (level >= 0) ? level : 50;
+	}
+
+	private void disableButtonLight() {
 		try {
 			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 			final Class<?> cls = attrs.getClass();
@@ -78,7 +92,24 @@ public abstract class ZLAndroidActivity extends Activity {
 		} catch (NoSuchFieldException e) {
 		} catch (IllegalAccessException e) {
 		}
-		//getWindow().getAttributes().buttonBrightness = 0;
+	}
+
+	myOrientation = new ZLIntegerOption(
+		"View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).getValue();
+	myChangeCounter = 0; 
+
+	@Override
+	public void onCreate(Bundle state) {
+		super.onCreate(state);
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+
+		if (state != null) {
+			myOrientation = state.getInt(REQUESTED_ORIENTATION_KEY, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+			myChangeCounter = state.getInt(ORIENTATION_CHANGE_COUNTER_KEY);
+		}
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		disableButtonLight();
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
@@ -180,6 +211,13 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLApplication.Instance().getBatteryLevel()
 		);
 		myStartTimer = true;
+		final int brightnessLevel =
+			((ZLAndroidApplication)getApplication()).ScreenBrightnessLevelOption.getValue();
+		if (brightnessLevel != 0) {
+			setScreenBrightness(brightnessLevel);
+		} else {
+			setScreenBrightnessAuto();
+		}
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}

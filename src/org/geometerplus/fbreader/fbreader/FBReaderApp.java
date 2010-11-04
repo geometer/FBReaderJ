@@ -35,6 +35,8 @@ import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 import android.view.KeyEvent;
 
 public final class FBReaderApp extends ZLApplication {
+	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
+		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
 	public final ZLStringOption BookmarkSearchPatternOption =

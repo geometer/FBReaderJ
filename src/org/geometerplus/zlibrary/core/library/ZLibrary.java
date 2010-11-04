@@ -37,5 +37,7 @@ public abstract class ZLibrary {
 
 	abstract public String getVersionName();
 	abstract public String getCurrentTimeString();
+	abstract public void setScreenBrightness(int percent);
+	abstract public int getScreenBrightness();
 	abstract public void openInBrowser(String reference);
 }

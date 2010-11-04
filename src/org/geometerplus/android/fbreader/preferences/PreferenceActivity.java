@@ -106,9 +106,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLAndroidApplication androidApp = ZLAndroidApplication.Instance();
 
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
-		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );
+		appearanceScreen.setSummary(appearanceScreen.Resource.getResource("summary").getValue());
 		appearanceScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
@@ -142,16 +143,29 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
 		statusLineCategory.addOption(fbReader.FooterIsSensitive, "isSensitive");
 
-		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
-		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
-			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
+		lookNFeelCategory.addOption(androidApp.AutoOrientationOption, "autoOrientation");
+		if (!androidApp.isAlwaysShowStatusBar()) {
+			lookNFeelCategory.addOption(androidApp.ShowStatusBarOption, "showStatusBar");
 		}
 		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
 			this,
-			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption,
+			androidApp.BatteryLevelToTurnScreenOffOption,
 			lookNFeelCategory.Resource,
 			"dontTurnScreenOff"
 		));
+		lookNFeelCategory.addPreference(new ZLBooleanPreference(
+			this,
+			fbReader.AllowScreenBrightnessAdjustmentOption,
+			lookNFeelCategory.Resource,
+			"allowScreenBrightnessAdjustment"
+		) {
+			public void onAccept() {
+				super.onAccept();
+				if (!isChecked()) {
+					androidApp.ScreenBrightnessLevelOption.setValue(0);
+				}
+			}
+		});
 
 		/*
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
