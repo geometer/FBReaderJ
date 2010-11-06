@@ -173,6 +173,18 @@
 				</node>
 				<node name="appearanceSettings" value="Aspetto">
 					<node name="summary" value="Impostazioni di visualizzazione del testo"/>
+					<node name="margins" value="Margini">
+						<node name="left" value="Margine sinistro"/>
+						<node name="right" value="Margine destro"/>
+						<node name="top" value="Margine superiore"/>
+						<node name="bottom" value="Margine inferiore"/>
+					</node>
+					<node name="format" value="Formato">
+					</node>
+					<node name="styles" value="Stili">
+					</node>
+					<node name="colors" value="Colori">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -243,12 +255,6 @@
 				</node>
 				<node name="Selection" value="Selezione">
 					<node name="enableSelection" value="Abilita selezione testo"/>
-				</node>
-				<node name="Margins" value="Margini">
-					<node name="left" value="Margine sinistro"/>
-					<node name="right" value="Margine destro"/>
-					<node name="top" value="Margine superiore"/>
-					<node name="bottom" value="Margine inferiore"/>
 				</node>
 				<node name="Format" value="Formato">
 					<node name="optionsFor" value="Opzioni per"/>
