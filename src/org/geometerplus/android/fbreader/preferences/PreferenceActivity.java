@@ -79,6 +79,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
 		appearanceScreen.setSummary(appearanceScreen.Resource.getResource("summary").getValue());
+		final Category appearanceCategory = appearanceScreen.createCategory(null);
+		final Screen marginsScreen = appearanceCategory.createPreferenceScreen("margins");
+		final Screen formatScreen = appearanceCategory.createPreferenceScreen("format");
+		final Screen stylesScreen = appearanceCategory.createPreferenceScreen("styles");
+		final Screen colorsScreen = appearanceCategory.createPreferenceScreen("colors");
+		/*
 		appearanceScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
@@ -87,6 +93,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					}
 				}
 		);
+		*/
 
 		final Screen statusLineScreen = lookNFeelCategory.createPreferenceScreen("scrollBar");
 		statusLineScreen.setSummary(statusLineScreen.Resource.getResource("summary").getValue());
