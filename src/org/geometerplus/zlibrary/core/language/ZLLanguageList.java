@@ -55,6 +55,6 @@ public abstract class ZLLanguageList {
 	}
 
 	public	static ZLFile patternsFile() {
-		return ZLResourceFile.createResourceFile("data/languagePatterns.tar");
+		return ZLResourceFile.createResourceFile("languagePatterns.tar");
 	}
 }

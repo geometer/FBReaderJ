@@ -31,7 +31,7 @@ public class ZLTextStyleCollection {
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
 	private ZLTextStyleCollection() {
-		new TextStyleReader(this).read(ZLResourceFile.createResourceFile("data/default/styles.xml"));
+		new TextStyleReader(this).read(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
 	public static ZLTextStyleCollection Instance() {

@@ -24,6 +24,9 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.R;
+
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
 import org.geometerplus.fbreader.network.NetworkTree;
 
@@ -51,7 +54,7 @@ public class AddCustomCatalogItemTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		ZLResourceFile file = ZLResourceFile.createResourceFile("R.drawable.ic_list_plus");
+		ZLResourceFile file = ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createDrawableFile(R.drawable.ic_list_plus);
 		return new ZLFileImage("image/png", file);
 	}
 }
