@@ -34,7 +34,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 
@@ -98,12 +97,11 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
-		final String drawablePrefix = "R.drawable.";
-		if (path.startsWith(drawablePrefix)) {
-			return new AndroidResourceFile(path.substring(drawablePrefix.length()));
-		} else {
-			return new AndroidAssetsFile(path);
-		}
+		return new AndroidAssetsFile(path);
+	}
+
+	public ZLResourceFile createDrawableFile(int drawableId) {
+		return new AndroidDrawableFile(drawableId);
 	}
 
 	@Override
@@ -132,30 +130,24 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
 	}
 
-	private final class AndroidResourceFile extends ZLResourceFile {
-		private boolean myExists;
-		private int myResourceId;
+	private final class AndroidDrawableFile extends ZLResourceFile {
+		private int myId;
 
-		AndroidResourceFile(String fieldName) {
-			super(fieldName);
-			try {
-				myResourceId = R.drawable.class.getField(fieldName).getInt(null);
-				myExists = true;
-			} catch (NoSuchFieldException e) {
-			} catch (IllegalAccessException e) {
-			}
+		AndroidDrawableFile(int drawableId) {
+			super("drawable/" + drawableId);
+			myId = drawableId;
 		}
 
 		@Override
 		public boolean exists() {
-			return myExists;
+			return true;
 		}
 
 		@Override
 		public long size() {
 			try {
 				AssetFileDescriptor descriptor =
-					myApplication.getResources().openRawResourceFd(myResourceId);
+					myApplication.getResources().openRawResourceFd(myId);
 				long length = descriptor.getLength();
 				descriptor.close();
 				return length;
@@ -168,11 +160,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		@Override
 		public InputStream getInputStream() throws IOException {
-			if (!myExists) {
-				throw new IOException("File not found: " + getPath());
-			}
 			try {
-				return myApplication.getResources().openRawResource(myResourceId);
+				return myApplication.getResources().openRawResource(myId);
 			} catch (Resources.NotFoundException e) {
 				throw new IOException(e.getMessage());
 			}
@@ -182,13 +171,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private final class AndroidAssetsFile extends ZLResourceFile {
 		AndroidAssetsFile(String path) {
 			super(path);
-			System.err.println("file " + path + " : " + exists());
 		}
 
 		@Override
 		public boolean exists() {
 			try {
-				AssetFileDescriptor descriptor = myActivity.getAssets().openFd(getPath());
+				AssetFileDescriptor descriptor = myApplication.getAssets().openFd(getPath());
+				if (descriptor == null) {
+					return false;
+				}
 				descriptor.close();
 				return true;
 			} catch (IOException e) {
@@ -199,7 +190,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		@Override
 		public long size() {
 			try {
-				AssetFileDescriptor descriptor = myActivity.getAssets().openFd(getPath());
+				AssetFileDescriptor descriptor = myApplication.getAssets().openFd(getPath());
+				if (descriptor == null) {
+					return 0;
+				}
 				long length = descriptor.getLength();
 				descriptor.close();
 				return length;
@@ -210,7 +204,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		@Override
 		public InputStream getInputStream() throws IOException {
-			return myActivity.getAssets().open(getPath());
+			System.err.println("open: " + getPath());
+			return myApplication.getAssets().open(getPath());
 		}
 	}
 }
