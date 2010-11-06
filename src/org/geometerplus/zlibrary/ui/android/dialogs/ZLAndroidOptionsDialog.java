@@ -34,8 +34,8 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final String myCaption;
 	private final Activity myMainActivity;
 
-	ZLAndroidOptionsDialog(Activity activity, ZLResource resource, Runnable exitAction, Runnable applyAction) {
-		super(resource, exitAction, applyAction);
+	ZLAndroidOptionsDialog(Activity activity, ZLResource resource) {
+		super(resource);
 		myCaption = resource.getResource("title").getValue();
 		myMainActivity = activity;
 	}

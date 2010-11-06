@@ -30,7 +30,7 @@ public class OptionsDialog {
 	private ZLOptionsDialog myDialog;
 	
 	public OptionsDialog(FBReaderApp fbreader) {
-		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
+		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog");
 
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
@@ -53,19 +53,6 @@ public class OptionsDialog {
 	
 	public ZLOptionsDialog getDialog() {
 		return myDialog;
-	}
-	
-	private static class OptionsApplyRunnable implements Runnable {
-		private final FBReaderApp myFBReader;
-		
-		public OptionsApplyRunnable(FBReaderApp fbreader) {
-			myFBReader = fbreader;
-		}
-		
-		public void run() {
-			myFBReader.clearTextCaches();
-			myFBReader.repaintView();
-		}
 	}
 	
 	/*private static class StateOptionEntry extends ZLToggleBooleanOptionEntry {
