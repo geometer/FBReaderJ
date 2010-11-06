@@ -32,10 +32,12 @@ import android.text.format.DateFormat;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidResourceBasedImageData;
 
 import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
@@ -100,8 +102,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return new AndroidAssetsFile(path);
 	}
 
-	public ZLResourceFile createDrawableFile(int drawableId) {
-		return new AndroidDrawableFile(drawableId);
+	public ZLImage createImage(int drawableId) {
+		return new ZLAndroidResourceBasedImageData(myApplication.getResources(), drawableId);
 	}
 
 	@Override
@@ -128,44 +130,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getScreenBrightness() {
 		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
-	}
-
-	private final class AndroidDrawableFile extends ZLResourceFile {
-		private int myId;
-
-		AndroidDrawableFile(int drawableId) {
-			super("drawable/" + drawableId);
-			myId = drawableId;
-		}
-
-		@Override
-		public boolean exists() {
-			return true;
-		}
-
-		@Override
-		public long size() {
-			try {
-				AssetFileDescriptor descriptor =
-					myApplication.getResources().openRawResourceFd(myId);
-				long length = descriptor.getLength();
-				descriptor.close();
-				return length;
-			} catch (IOException e) {
-				return 0;
-			} catch (Resources.NotFoundException e) {
-				return 0;
-			} 
-		}
-
-		@Override
-		public InputStream getInputStream() throws IOException {
-			try {
-				return myApplication.getResources().openRawResource(myId);
-			} catch (Resources.NotFoundException e) {
-				throw new IOException(e.getMessage());
-			}
-		}
 	}
 
 	private final class AndroidAssetsFile extends ZLResourceFile {
@@ -204,7 +168,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		@Override
 		public InputStream getInputStream() throws IOException {
-			System.err.println("open: " + getPath());
 			return myApplication.getAssets().open(getPath());
 		}
 	}
