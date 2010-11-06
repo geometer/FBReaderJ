@@ -66,5 +66,5 @@ public abstract class ZLOptionsDialog {
 	
 	public abstract ZLDialogContent createTab(String key);
 	
-	public abstract void run();
+	public abstract void run(int index);
 }

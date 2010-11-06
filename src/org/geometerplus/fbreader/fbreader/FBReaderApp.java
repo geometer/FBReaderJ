@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
-import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -264,9 +263,5 @@ public final class FBReaderApp extends ZLApplication {
 		if ((Model != null) && (BookTextView != null)) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
 		}
-	}
-
-	public void showOptionsDialog() {
-		new OptionsDialog(this).getDialog().run();
 	}
 }

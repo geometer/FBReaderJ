@@ -70,8 +70,11 @@ class ZLAndroidOptionsDialog extends ZLOptionsDialog implements ZLAndroidDialogI
 		activity.startActivity(intent);
 	}
 
-	public void run() {
-		runDialog(myMainActivity, this);
+	public void run(int index) {
+		//runDialog(myMainActivity, this);
+		final ZLAndroidDialogContent tab = (ZLAndroidDialogContent)myTabs.get(index);
+		//final Activity activity = (Activity)myTabListView.getContext();
+		runDialog(myMainActivity, tab);
 	}
 
 	public ZLDialogContent createTab(String key) {
