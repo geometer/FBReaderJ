@@ -167,8 +167,24 @@
 					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
 					<node name="100" value="Never" toBeTranslated="true"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+					<node name="margins" value="边距">
+						<node name="left" value="左边距" />
+						<node name="right" value="右边距" />
+						<node name="top" value="顶边距" />
+						<node name="bottom" value="底边距" />
+					</node>
+					<node name="format" value="格式">
+					</node>
+					<node name="styles" value="样式">
+					</node>
+					<node name="colors" value="颜色">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -239,12 +255,6 @@
 				</node>
 				<node name="Selection" value="选择项">
 					<node name="enableSelection" value="允许文本选择" />
-				</node>
-				<node name="Margins" value="边距">
-					<node name="left" value="左边距" />
-					<node name="right" value="右边距" />
-					<node name="top" value="顶边距" />
-					<node name="bottom" value="底边距" />
 				</node>
 				<node name="Format" value="格式">
 					<node name="optionsFor" value="基本设置" />

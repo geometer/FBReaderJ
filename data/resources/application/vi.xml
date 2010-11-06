@@ -167,8 +167,24 @@
 					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
 					<node name="100" value="Never" toBeTranslated="true"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+					<node name="margins" value="Canh lề">
+						<node name="left" value="Lề Trái"/>
+						<node name="right" value="Lề Phải"/>
+						<node name="top" value="Lề Trên"/>
+						<node name="bottom" value="Lề Dưới"/>
+					</node>
+					<node name="format" value="Định dạng">
+					</node>
+					<node name="styles" value="Kiểu">
+					</node>
+					<node name="colors" value="Màu">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -239,12 +255,6 @@
 				</node>
 				<node name="Selection" value="Chọn">
 					<node name="enableSelection" value="Bật chọn Văn bản"/>
-				</node>
-				<node name="Margins" value="Canh lề">
-					<node name="left" value="Lề Trái"/>
-					<node name="right" value="Lề Phải"/>
-					<node name="top" value="Lề Trên"/>
-					<node name="bottom" value="Lề Dưới"/>
 				</node>
 				<node name="Format" value="Định dạng">
 					<node name="optionsFor" value="Tùy chọn cho"/>

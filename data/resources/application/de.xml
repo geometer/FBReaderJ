@@ -167,8 +167,24 @@
 					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
 					<node name="100" value="Never" toBeTranslated="true"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+					<node name="margins" value="Ränder">
+						<node name="left" value="Linker Rand"/>
+						<node name="right" value="Rechter Rand"/>
+						<node name="top" value="Oberer Rand"/>
+						<node name="bottom" value="Unterer Rand"/>
+					</node>
+					<node name="format" value="Format">
+					</node>
+					<node name="styles" value="Stile">
+					</node>
+					<node name="colors" value="Farben">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -239,12 +255,6 @@
 				</node>
 				<node name="Selection" value="Auswahl">
 					<node name="enableSelection" value="Textauswahl einschalten"/>
-				</node>
-				<node name="Margins" value="Ränder">
-					<node name="left" value="Linker Rand"/>
-					<node name="right" value="Rechter Rand"/>
-					<node name="top" value="Oberer Rand"/>
-					<node name="bottom" value="Unterer Rand"/>
 				</node>
 				<node name="Format" value="Format">
 					<node name="optionsFor" value="Optionen für"/>

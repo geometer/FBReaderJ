@@ -19,16 +19,29 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Intent;
+
+import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
-class BookInfoAction extends RunActivityAction {
-	BookInfoAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, BookInfoActivity.class);
+class ShowBookInfoAction extends FBAction {
+	private final FBReader myBaseActivity;
+
+	ShowBookInfoAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(fbreader);
+		myBaseActivity = baseActivity;
 	}
 
 	public boolean isVisible() {
 		return Reader.Model != null;
+	}
+
+	public void run() {
+		myBaseActivity.startActivityForResult(
+			new Intent(myBaseActivity.getApplicationContext(), BookInfoActivity.class),
+			FBReader.REPAINT_CODE
+		);
 	}
 }

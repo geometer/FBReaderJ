@@ -93,6 +93,8 @@ public final class FBView extends ZLTextView {
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
+	private boolean myIsBrightnessAdjustmentInProgress;
+	private int myStartBrightness;
 
 	public boolean onStylusPress(int x, int y) {
 		if (super.onStylusPress(x, y)) {
@@ -116,6 +118,14 @@ public final class FBView extends ZLTextView {
 			selectHyperlink(hyperlink);
 			myReader.repaintView();
 			followHyperlink(hyperlink);
+			return true;
+		}
+
+		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
+			myIsBrightnessAdjustmentInProgress = true;
+			myStartY = y;
+			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
+			System.err.println("starting on level: " + myStartBrightness);
 			return true;
 		}
 
@@ -151,6 +161,18 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
+			if (myIsBrightnessAdjustmentInProgress) {
+				if (x >= myContext.getWidth() / 5) {
+					myIsBrightnessAdjustmentInProgress = false;
+				} else {
+					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
+					System.err.println("adjusting to level: " + (myStartBrightness + delta));
+					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
+					System.err.println("adjusted to level: " + ZLibrary.Instance().getScreenBrightness());
+					return true;
+				}
+			}
+
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
@@ -186,6 +208,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
+			myIsBrightnessAdjustmentInProgress = false;
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				setScrollingActive(false);
 				myIsManualScrollingActive = false;
