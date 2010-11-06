@@ -82,8 +82,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	private final String myArg0;
 
-	public FBReaderApp(String[] args) {
-		myArg0 = (args.length > 0) ? args[0] : null;
+	public FBReaderApp(String arg) {
+		myArg0 = arg;
 		addAction(ActionCode.QUIT, new QuitAction(this));
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
