@@ -1,5 +1,6 @@
 ===== 0.7.15 (??? ??, 2010) =====
 * Ukrainian localization (by Dmytro Shevchenko) has been added
+* Default font size depends on display DPI
 
 ===== 0.7.14 (Nov 03, 2010) =====
 * Screen brightness adjustment has been implemented (idea was taken from Aldiko and https://github.com/cujo/FBReaderJ)
