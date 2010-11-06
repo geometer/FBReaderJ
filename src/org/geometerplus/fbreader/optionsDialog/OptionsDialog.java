@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.optionsDialog;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.optionEntries.*;
-//import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.fbreader.*;
@@ -33,16 +32,6 @@ public class OptionsDialog {
 	public OptionsDialog(FBReaderApp fbreader) {
 		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
 
-		ZLDialogContent marginTab = myDialog.createTab("Margins");
-		marginTab.addOptions(
-			"left", new ZLSimpleSpinOptionEntry(fbreader.LeftMarginOption, 1),
-			"right", new ZLSimpleSpinOptionEntry(fbreader.RightMarginOption, 1)
-		);
-		marginTab.addOptions(
-			"top", new ZLSimpleSpinOptionEntry(fbreader.TopMarginOption, 1),
-			"bottom", new ZLSimpleSpinOptionEntry(fbreader.BottomMarginOption, 1)
-		);
-		
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
 		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getCurrentView().getContext());

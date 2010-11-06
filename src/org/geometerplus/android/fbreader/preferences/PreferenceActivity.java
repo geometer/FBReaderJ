@@ -84,10 +84,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Category appearanceCategory = appearanceScreen.createCategory(null);
 		final ZLOptionsDialog dlg = new OptionsDialog(fbReader).getDialog();
 		final Screen marginsScreen = appearanceCategory.createPreferenceScreen("margins");
+		final Category marginsCategory = marginsScreen.createCategory(null);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("left"),
+			fbReader.LeftMarginOption)
+		);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("right"),
+			fbReader.RightMarginOption)
+		);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("top"),
+			fbReader.TopMarginOption)
+		);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("bottom"),
+			fbReader.BottomMarginOption)
+		);
 		final Screen formatScreen = appearanceCategory.createPreferenceScreen("format");
 		final Screen stylesScreen = appearanceCategory.createPreferenceScreen("styles");
 		final Screen colorsScreen = appearanceCategory.createPreferenceScreen("colors");
-		marginsScreen.setOnPreferenceClickListener(
+		formatScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
 						dlg.run(0);
@@ -95,7 +112,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					}
 				}
 		);
-		formatScreen.setOnPreferenceClickListener(
+		stylesScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
 						dlg.run(1);
@@ -103,18 +120,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					}
 				}
 		);
-		stylesScreen.setOnPreferenceClickListener(
-				new PreferenceScreen.OnPreferenceClickListener() {
-					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(2);
-						return true;
-					}
-				}
-		);
 		colorsScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(3);
+						dlg.run(2);
 						return true;
 					}
 				}
