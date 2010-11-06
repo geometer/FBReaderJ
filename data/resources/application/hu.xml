@@ -243,6 +243,18 @@
 				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+					<node name="margins" value="Margók">
+						<node name="left" value="Bal"/>
+						<node name="right" value="Jobb"/>
+						<node name="top" value="Felső"/>
+						<node name="bottom" value="Alsó"/>
+					</node>
+					<node name="format" value="Formátum">
+					</node>
+					<node name="styles" value="Stílusok">
+					</node>
+					<node name="colors" value="Színek">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -305,12 +317,6 @@
 				</node>
 				<node name="Selection" value="Kijelölés">
 					<node name="enableSelection" value="Szövegkijelölés engedélyezése"/>
-				</node>
-				<node name="Margins" value="Margók">
-					<node name="left" value="Bal"/>
-					<node name="right" value="Jobb"/>
-					<node name="top" value="Felső"/>
-					<node name="bottom" value="Alsó"/>
 				</node>
 				<node name="Format" value="Formátum">
 					<node name="optionsFor" value="Beállítások"/>

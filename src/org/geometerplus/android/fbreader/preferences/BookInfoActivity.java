@@ -109,7 +109,6 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	protected void onPause() {
 		super.onPause();
 		if (myBook.save()) {
-			((FBReaderApp)FBReaderApp.Instance()).clearTextCaches();
 			ZLTextHyphenator.Instance().load(myBook.getLanguage());
 		}
 	}
