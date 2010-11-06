@@ -24,8 +24,6 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -55,8 +53,7 @@ public class SearchItemTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		ZLResourceFile file = ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createDrawableFile(R.drawable.ic_list_searchresult);
-		return new ZLFileImage("image/png", file);
+		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createImage(R.drawable.ic_list_searchresult);
 	}
 
 	public void setSearchResult(SearchResult result) {
