@@ -144,7 +144,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 			}
 
 			final String sslCertificate;
-			final String path = "data/network/" + siteName + ".crt";
+			final String path = "network/" + siteName + ".crt";
 			if (ZLResourceFile.createResourceFile(path).exists()) {
 				sslCertificate = path;
 			} else {

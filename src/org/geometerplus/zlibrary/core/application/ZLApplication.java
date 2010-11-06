@@ -52,7 +52,7 @@ public abstract class ZLApplication {
 	protected ZLApplication() {
 		ourInstance = this;
 
-		new MenubarCreator().read(ZLResourceFile.createResourceFile("data/default/menubar.xml"));
+		new MenubarCreator().read(ZLResourceFile.createResourceFile("default/menubar.xml"));
 	}
 
 	final Menubar getMenubar() {

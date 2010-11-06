@@ -53,13 +53,13 @@ public final class Library {
 
 	public static ZLResourceFile getHelpFile() {
 		final ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
+			"help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+		return ZLResourceFile.createResourceFile("help/MiniHelp.en.fb2");
 	}
 
 	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {

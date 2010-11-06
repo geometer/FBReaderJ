@@ -98,7 +98,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
-		return new AndroidResourceFile(path);
+		final String drawablePrefix = "R.drawable.";
+		if (path.startsWith(drawablePrefix)) {
+			return new AndroidResourceFile(path.substring(drawablePrefix.length()));
+		} else {
+			return new AndroidAssetsFile(path);
+		}
 	}
 
 	@Override
@@ -131,17 +136,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		private boolean myExists;
 		private int myResourceId;
 
-		AndroidResourceFile(String path) {
-			super(path);
-			final String drawablePrefix = "R.drawable.";
+		AndroidResourceFile(String fieldName) {
+			super(fieldName);
 			try {
-				if (path.startsWith(drawablePrefix)) {
-					final String fieldName = path.substring(drawablePrefix.length());
-					myResourceId = R.drawable.class.getField(fieldName).getInt(null);
-				} else {
-					final String fieldName = path.replace("/", "__").replace(".", "_").replace("-", "_").toLowerCase();
-					myResourceId = R.raw.class.getField(fieldName).getInt(null);
-				}
+				myResourceId = R.drawable.class.getField(fieldName).getInt(null);
 				myExists = true;
 			} catch (NoSuchFieldException e) {
 			} catch (IllegalAccessException e) {
@@ -178,6 +176,41 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			} catch (Resources.NotFoundException e) {
 				throw new IOException(e.getMessage());
 			}
+		}
+	}
+
+	private final class AndroidAssetsFile extends ZLResourceFile {
+		AndroidAssetsFile(String path) {
+			super(path);
+			System.err.println("file " + path + " : " + exists());
+		}
+
+		@Override
+		public boolean exists() {
+			try {
+				AssetFileDescriptor descriptor = myActivity.getAssets().openFd(getPath());
+				descriptor.close();
+				return true;
+			} catch (IOException e) {
+				return false;
+			} 
+		}
+
+		@Override
+		public long size() {
+			try {
+				AssetFileDescriptor descriptor = myActivity.getAssets().openFd(getPath());
+				long length = descriptor.getLength();
+				descriptor.close();
+				return length;
+			} catch (IOException e) {
+				return 0;
+			} 
+		}
+
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return myActivity.getAssets().open(getPath());
 		}
 	}
 }
