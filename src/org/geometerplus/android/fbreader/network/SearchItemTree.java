@@ -32,6 +32,8 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class SearchItemTree extends NetworkTree {
 
@@ -53,7 +55,7 @@ public class SearchItemTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		ZLResourceFile file = ZLResourceFile.createResourceFile("R.drawable.ic_list_searchresult");
+		ZLResourceFile file = ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createDrawableFile(R.drawable.ic_list_searchresult);
 		return new ZLFileImage("image/png", file);
 	}
 
