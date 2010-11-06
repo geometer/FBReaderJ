@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultStyles>
-	<base family="DroidSerif" fontSize="18"/>
+	<base family="sans-serif" fontSize="18"/>
 	<style id="0" name="Regular Paragraph" firstLineIndentDelta="20" allowHyphenations="true"/>
 	<style id="1" name="Title" fontSizeDelta="10" bold="true" spaceBefore="2" spaceAfter="7" alignment="center" allowHyphenations="false"/>
 	<style id="3" name="Poem Title" fontSizeDelta="2" bold="true" spaceBefore="6" spaceAfter="6" leftIndent="40" allowHyphenations="false"/>
