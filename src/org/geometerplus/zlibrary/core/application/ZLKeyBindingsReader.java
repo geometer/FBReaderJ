@@ -50,6 +50,6 @@ class ZLKeyBindingsReader extends ZLXMLReaderAdapter {
 	}
 
 	public void readBindings() {
-		read(ZLResourceFile.createResourceFile("data/default/keymap.xml"));
+		read(ZLResourceFile.createResourceFile("default/keymap.xml"));
 	}
 }
