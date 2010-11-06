@@ -42,9 +42,9 @@
 		<node name="white" value="Bílá" />
 		<node name="maroon" value="Kaštanová" />
 		<node name="olive" value="Olivová" />
-		<node name="navy" value="Tmavomodrá" />
+		<node name="navy" value="Tmavě modrá" />
 		<node name="purple" value="Purpurová" />
-		<node name="teal" value="Světlomodrá" />
+		<node name="teal" value="Světle modrá" />
 		<node name="silver" value="Stříbrná" />
 		<node name="gray" value="Šedá" />
 		<node name="lime" value="Citrónová" />

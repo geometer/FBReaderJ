@@ -48,6 +48,8 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
 
 public final class FBReader extends ZLAndroidActivity {
+	final static int REPAINT_CODE = 1;
+
 	static FBReader Instance;
 
 	private int myFullScreenFlag;
@@ -109,8 +111,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
-		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new PreferencesAction(this, fbReader));
-		fbReader.addAction(ActionCode.SHOW_BOOK_INFO, new BookInfoAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, fbReader));
+		fbReader.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_CONTENTS, new ShowTOCAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
@@ -178,24 +180,6 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onStop();
 	}
 
-
-	@Override
-	public void onDestroy() {
-		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
-
-		fbReader.removeAction(ActionCode.SHOW_LIBRARY);
-		fbReader.removeAction(ActionCode.SHOW_PREFERENCES);
-		fbReader.removeAction(ActionCode.SHOW_BOOK_INFO);
-		fbReader.removeAction(ActionCode.SHOW_CONTENTS);
-		fbReader.removeAction(ActionCode.SHOW_BOOKMARKS);
-		fbReader.removeAction(ActionCode.SHOW_NETWORK_LIBRARY);
-		
-		fbReader.removeAction(ActionCode.SHOW_NAVIGATION);
-		fbReader.removeAction(ActionCode.SEARCH);
-
-		super.onDestroy();
-	}
-
 	void showTextSearchControls(boolean show) {
 		if (show) {
 			myTextSearchPanel.show(true);
@@ -206,8 +190,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	protected ZLApplication createApplication(String fileName) {
 		new SQLiteBooksDatabase();
-		final String[] args = (fileName != null) ? new String[] { fileName } : new String[0];
-		return new FBReaderApp(args);
+		return new FBReaderApp(fileName);
 	}
 
 	@Override
@@ -225,6 +208,19 @@ public final class FBReader extends ZLAndroidActivity {
 		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case REPAINT_CODE:
+			{
+				final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+				fbreader.clearTextCaches();
+				fbreader.repaintView();
+				break;
+			}
+		}
 	}
 
 	public void navigate() {

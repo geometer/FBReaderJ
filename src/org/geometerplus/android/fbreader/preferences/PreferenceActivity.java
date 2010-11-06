@@ -23,6 +23,8 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
+import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
@@ -75,13 +77,53 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Category lookNFeelCategory = createCategory("LookNFeel");
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLAndroidApplication androidApp = ZLAndroidApplication.Instance();
 
 		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
-		appearanceScreen.setSummary( appearanceScreen.Resource.getResource("summary").getValue() );
-		appearanceScreen.setOnPreferenceClickListener(
+		appearanceScreen.setSummary(appearanceScreen.Resource.getResource("summary").getValue());
+		final Category appearanceCategory = appearanceScreen.createCategory(null);
+		final ZLOptionsDialog dlg = new OptionsDialog(fbReader).getDialog();
+		final Screen marginsScreen = appearanceCategory.createPreferenceScreen("margins");
+		final Category marginsCategory = marginsScreen.createCategory(null);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("left"),
+			fbReader.LeftMarginOption)
+		);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("right"),
+			fbReader.RightMarginOption)
+		);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("top"),
+			fbReader.TopMarginOption)
+		);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("bottom"),
+			fbReader.BottomMarginOption)
+		);
+		final Screen formatScreen = appearanceCategory.createPreferenceScreen("format");
+		final Screen stylesScreen = appearanceCategory.createPreferenceScreen("styles");
+		final Screen colorsScreen = appearanceCategory.createPreferenceScreen("colors");
+		formatScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						fbReader.showOptionsDialog();
+						dlg.run(0);
+						return true;
+					}
+				}
+		);
+		stylesScreen.setOnPreferenceClickListener(
+				new PreferenceScreen.OnPreferenceClickListener() {
+					public boolean onPreferenceClick(Preference preference) {
+						dlg.run(1);
+						return true;
+					}
+				}
+		);
+		colorsScreen.setOnPreferenceClickListener(
+				new PreferenceScreen.OnPreferenceClickListener() {
+					public boolean onPreferenceClick(Preference preference) {
+						dlg.run(2);
 						return true;
 					}
 				}
@@ -113,16 +155,29 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
 		statusLineCategory.addOption(fbReader.FooterIsSensitive, "isSensitive");
 
-		lookNFeelCategory.addOption(ZLAndroidApplication.Instance().AutoOrientationOption, "autoOrientation");
-		if (!ZLAndroidApplication.Instance().isAlwaysShowStatusBar()) {
-			lookNFeelCategory.addOption(ZLAndroidApplication.Instance().ShowStatusBarOption, "showStatusBar");
+		lookNFeelCategory.addOption(androidApp.AutoOrientationOption, "autoOrientation");
+		if (!androidApp.isAlwaysShowStatusBar()) {
+			lookNFeelCategory.addOption(androidApp.ShowStatusBarOption, "showStatusBar");
 		}
 		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
 			this,
-			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption,
+			androidApp.BatteryLevelToTurnScreenOffOption,
 			lookNFeelCategory.Resource,
 			"dontTurnScreenOff"
 		));
+		lookNFeelCategory.addPreference(new ZLBooleanPreference(
+			this,
+			fbReader.AllowScreenBrightnessAdjustmentOption,
+			lookNFeelCategory.Resource,
+			"allowScreenBrightnessAdjustment"
+		) {
+			public void onAccept() {
+				super.onAccept();
+				if (!isChecked()) {
+					androidApp.ScreenBrightnessLevelOption.setValue(0);
+				}
+			}
+		});
 
 		/*
 		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");

@@ -166,8 +166,24 @@
 					<node name="50" value="While battery level is greater than 50 percent"/>
 					<node name="100" value="Never"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
+					<node name="summaryOff" value="Disabled"/>
+				</node>
 				<node name="appearanceSettings" value="Appearance">
 					<node name="summary" value="Text displaying settings"/>
+					<node name="margins" value="Margins">
+						<node name="left" value="Left margin"/>
+						<node name="right" value="Right margin"/>
+						<node name="top" value="Top margin"/>
+						<node name="bottom" value="Bottom margin"/>
+					</node>
+					<node name="format" value="Format">
+					</node>
+					<node name="styles" value="Styles">
+					</node>
+					<node name="colors" value="Colors">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar">
 					<node name="summary" value="Configure scrollbar"/>
@@ -238,12 +254,6 @@
 				</node>
 				<node name="Selection" value="Selection">
 					<node name="enableSelection" value="Enable Text Selection"/>
-				</node>
-				<node name="Margins" value="Margins">
-					<node name="left" value="Left Margin"/>
-					<node name="right" value="Right Margin"/>
-					<node name="top" value="Top Margin"/>
-					<node name="bottom" value="Bottom Margin"/>
 				</node>
 				<node name="Format" value="Format">
 					<node name="optionsFor" value="Options for"/>

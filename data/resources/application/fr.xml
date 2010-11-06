@@ -170,8 +170,24 @@
 					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
 					<node name="100" value="Never" toBeTranslated="true"/>
 				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
 				<node name="appearanceSettings" value="Apparence">
 					<node name="summary" value="Paramètres d'affichage du texte"/>
+					<node name="margins" value="Marge">
+						<node name="left" value="Marge de gauche"/>
+						<node name="right" value="Marge de droite"/>
+						<node name="top" value="Marge du haut"/>
+						<node name="bottom" value="Marge du bas"/>
+					</node>
+					<node name="format" value="Format">
+					</node>
+					<node name="styles" value="Styles">
+					</node>
+					<node name="colors" value="Couleurs">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -242,12 +258,6 @@
 				</node>
 				<node name="Selection" value="Sélection">
 					<node name="enableSelection" value="Activer la sélection de texte"/>
-				</node>
-				<node name="Margins" value="Marge">
-					<node name="left" value="Marge de gauche"/>
-					<node name="right" value="Marge de droite"/>
-					<node name="top" value="Marge du haut"/>
-					<node name="bottom" value="Marge du bas"/>
 				</node>
 				<node name="Format" value="Format">
 					<node name="optionsFor" value="Options pour"/>

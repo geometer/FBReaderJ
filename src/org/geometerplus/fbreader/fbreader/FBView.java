@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.Date;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -96,6 +97,8 @@ public final class FBView extends ZLTextView {
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
+	private boolean myIsBrightnessAdjustmentInProgress;
+	private int myStartBrightness;
 
 	public boolean onStylusPress(int x, int y) {
 		if (super.onStylusPress(x, y)) {
@@ -107,7 +110,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		if (myReader.FooterIsSensitive.getValue()) {
-			Footer footer = (Footer)getFooterArea();
+			Footer footer = getFooterArea();
 			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
 				footer.setProgress(x);
 				return true;
@@ -119,6 +122,14 @@ public final class FBView extends ZLTextView {
 			selectHyperlink(hyperlink);
 			myReader.repaintView();
 			followHyperlink(hyperlink);
+			return true;
+		}
+
+		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
+			myIsBrightnessAdjustmentInProgress = true;
+			myStartY = y;
+			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
+			System.err.println("starting on level: " + myStartBrightness);
 			return true;
 		}
 
@@ -154,6 +165,18 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
+			if (myIsBrightnessAdjustmentInProgress) {
+				if (x >= myContext.getWidth() / 5) {
+					myIsBrightnessAdjustmentInProgress = false;
+				} else {
+					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
+					System.err.println("adjusting to level: " + (myStartBrightness + delta));
+					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
+					System.err.println("adjusted to level: " + ZLibrary.Instance().getScreenBrightness());
+					return true;
+				}
+			}
+
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
@@ -189,6 +212,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
+			myIsBrightnessAdjustmentInProgress = false;
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				setScrollingActive(false);
 				myIsManualScrollingActive = false;
@@ -291,6 +315,12 @@ public final class FBView extends ZLTextView {
 	}
 
 	private class Footer implements FooterArea {
+		private Runnable UpdateTask = new Runnable() {
+			public void run() {
+				ZLApplication.Instance().repaintView();
+			}
+		};
+
 		public int getHeight() {
 			return myReader.FooterHeightOption.getValue();
 		}
@@ -330,8 +360,7 @@ public final class FBView extends ZLTextView {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
-				Date date = new Date();
-				info.append(String.format("%02d:%02d", date.getHours(), date.getMinutes()));
+				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			final String infoString = info.toString();
 
@@ -383,16 +412,18 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	private FooterArea myFooter;
+	private Footer myFooter;
 
 	@Override
-	public FooterArea getFooterArea() {
+	public Footer getFooterArea() {
 		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
 				myFooter = new Footer();
+				ZLApplication.Instance().addTimerTask(myFooter.UpdateTask, 15000);
 			}
 		} else {
 			if (myFooter != null) {
+				ZLApplication.Instance().removeTimerTask(myFooter.UpdateTask);
 				myFooter = null;
 			}
 		}

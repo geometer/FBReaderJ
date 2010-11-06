@@ -9,7 +9,7 @@
 <subtitle><p>Jak začít</p></subtitle>
 <p>Jsou dva způsoby jak přidat knihu do knihovny aplikace FBReaderJ.</p>
 <p>První je zkopírovat soubor s knihou do vašeho zařízení do adresáře <code>/sdcard/Books</code> (nebo jakéhokoliv jeho podadresáře). FBReader přidá tuto knihu automaticky.</p>
-<p>Druhý způsob je kliknout na odkaz na knihu (např. na odkaz na soubor s příponou <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> nebo <code>.fb2.zip</code>) v standardním prohlížeči v Androidu. Kniha bude stažena do zařízení a otevřena v aplikaci FBReaderJ. Pokud kliknete znovu na stejný odkaz, kniha se nebude znovu stahovat, ale pro čtení se použije místní kopie.</p>
+<p>Druhý způsob je klepnout na odkaz na knihu (např. na odkaz na soubor s příponou <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> nebo <code>.fb2.zip</code>) ve standardním prohlížeči v Androidu. Kniha bude stažena do zařízení a otevřena v aplikaci FBReaderJ. Pokud klepnete znovu na stejný odkaz, kniha se nebude znovu stahovat, ale pro čtení se použije místní kopie.</p>
 <empty-line/>
 <subtitle><p>Související stránky</p></subtitle>
 <p>Více informací o aplikacích FBReader a FBReaderJ naleznete na <a l:href="http://www.fbreader.org">stránce FBReader</a>.</p>
