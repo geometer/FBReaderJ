@@ -19,25 +19,22 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public final class ZLAndroidImageManager extends ZLImageManager {
-	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLAndroidImageData) {
-			return (ZLAndroidImageData)image;
-		} else if (image instanceof ZLSingleImage) {
-			ZLSingleImage singleImage = (ZLSingleImage)image;
-			if ("image/palm".equals(singleImage.mimeType())) {
-				return null;
-			}
-			byte[] array = singleImage.byteData();
-			if (array == null) {
-				return null;
-			}
-			return new ZLAndroidArrayBasedImageData(array);
-		} else {
-			//TODO
-			return null;
-		}
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.content.res.Resources;
+
+public final class ZLAndroidResourceBasedImageData extends ZLAndroidImageData implements ZLImage {
+	private final Resources myResources;
+	private final int myId;
+
+	public ZLAndroidResourceBasedImageData(Resources resources, int id) {
+		myResources = resources;
+		myId = id;
+	}
+
+	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
+		return BitmapFactory.decodeResource(myResources, myId, options);
 	}
 }

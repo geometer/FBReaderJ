@@ -24,17 +24,17 @@ import android.graphics.BitmapFactory;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
-public final class ZLAndroidImageData implements ZLImageData {
-	private byte[] myArray;
+public abstract class ZLAndroidImageData implements ZLImageData {
 	private Bitmap myBitmap;
 	private int myRealWidth;
 	private int myRealHeight;
 	private int myLastRequestedWidth;
 	private int myLastRequestedHeight;
 
-	ZLAndroidImageData(byte[] array) {
-		myArray = array;
+	protected ZLAndroidImageData() {
 	}
+
+	protected abstract Bitmap decodeWithOptions(BitmapFactory.Options options);
 
 	public synchronized Bitmap getBitmap(int maxWidth, int maxHeight) {
 		if ((maxWidth == 0) || (maxHeight == 0)) {
@@ -49,7 +49,7 @@ public final class ZLAndroidImageData implements ZLImageData {
 				final BitmapFactory.Options options = new BitmapFactory.Options();
 				if (myRealWidth <= 0) {
 					options.inJustDecodeBounds = true;
-					BitmapFactory.decodeByteArray(myArray, 0, myArray.length, options);
+					decodeWithOptions(options);
 					myRealWidth = options.outWidth;
 					myRealHeight = options.outHeight;
 				}
@@ -60,7 +60,7 @@ public final class ZLAndroidImageData implements ZLImageData {
 					coefficient *= 2;
 				}
 				options.inSampleSize = coefficient;
-				myBitmap = BitmapFactory.decodeByteArray(myArray, 0, myArray.length, options);
+				myBitmap = decodeWithOptions(options);
 				if (myBitmap != null) {
 					myLastRequestedWidth = maxWidth;
 					myLastRequestedHeight = maxHeight;
