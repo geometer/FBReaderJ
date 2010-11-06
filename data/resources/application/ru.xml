@@ -172,6 +172,18 @@
 				</node>
 				<node name="appearanceSettings" value="Внешний вид">
 					<node name="summary" value="Настройки отображения текста"/>
+					<node name="margins" value="Отступы">
+						<node name="left" value="Отступ слева"/>
+						<node name="right" value="Отступ справа"/>
+						<node name="top" value="Отступ сверху"/>
+						<node name="bottom" value="Отступ снизу"/>
+					</node>
+					<node name="format" value="Форматирование">
+					</node>
+					<node name="styles" value="Стили">
+					</node>
+					<node name="colors" value="Цвета">
+					</node>
 				</node>
 				<node name="scrollBar" value="Полоса прокрутки">
 					<node name="summary" value="Настройка полосы прокрутки"/>
@@ -242,12 +254,6 @@
 				</node>
 				<node name="Selection" value="Пометка">
 					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
-				<node name="Margins" value="Отступы">
-					<node name="left" value="Отступ слева"/>
-					<node name="right" value="Отступ справа"/>
-					<node name="top" value="Отступ сверху"/>
-					<node name="bottom" value="Отступ снизу"/>
 				</node>
 				<node name="Format" value="Форматирование">
 					<node name="optionsFor" value="Настройки для"/>

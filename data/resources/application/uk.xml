@@ -173,6 +173,18 @@
 				</node>
 				<node name="appearanceSettings" value="Зовнішній вигляд">
 					<node name="summary" value="Налаштування відображення тексту"/>
+					<node name="margins" value="Відступи">
+						<node name="left" value="Відступ зліва"/>
+						<node name="right" value="Відступ зправа"/>
+						<node name="top" value="Відступ зверху"/>
+						<node name="bottom" value="Відступ знизу"/>
+					</node>
+					<node name="format" value="Форматування">
+					</node>
+					<node name="styles" value="Стилі">
+					</node>
+					<node name="colors" value="Кольори">
+					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
 					<node name="summary" value="Configure scrollbar" toBeTranslated="true"/>
@@ -243,12 +255,6 @@
 				</node>
 				<node name="Selection" value="Позначка">
 					<node name="enableSelection" value="Дозволити помічати текст"/>
-				</node>
-				<node name="Margins" value="Відступи">
-					<node name="left" value="Відступ зліва"/>
-					<node name="right" value="Відступ зправа"/>
-					<node name="top" value="Відступ зверху"/>
-					<node name="bottom" value="Відступ знизу"/>
 				</node>
 				<node name="Format" value="Форматування">
 					<node name="optionsFor" value="Налаштування для"/>

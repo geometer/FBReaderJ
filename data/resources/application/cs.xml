@@ -173,6 +173,18 @@
 				</node>
 				<node name="appearanceSettings" value="Vzhled">
 					<node name="summary" value="Nastavení zobrazení textu"/>
+					<node name="margins" value="Okraje">
+						<node name="left" value="Levý okraj"/>
+						<node name="right" value="Pravý okraj"/>
+						<node name="top" value="Horní okraj"/>
+						<node name="bottom" value="Dolní okraj"/>
+					</node>
+					<node name="format" value="Formát">
+					</node>
+					<node name="styles" value="Styly">
+					</node>
+					<node name="colors" value="Barvy">
+					</node>
 				</node>
 				<node name="scrollBar" value="Posuvník">
 					<node name="summary" value="Nastavení posuvníku"/>
@@ -243,12 +255,6 @@
 				</node>
 				<node name="Selection" value="Výběr">
 					<node name="enableSelection" value="Povolit výběr textu"/>
-				</node>
-				<node name="Margins" value="Okraje">
-					<node name="left" value="Levý okraj"/>
-					<node name="right" value="Pravý okraj"/>
-					<node name="top" value="Horní okraj"/>
-					<node name="bottom" value="Dolní okraj"/>
 				</node>
 				<node name="Format" value="Formát">
 					<node name="optionsFor" value="Možnosti pro"/>
