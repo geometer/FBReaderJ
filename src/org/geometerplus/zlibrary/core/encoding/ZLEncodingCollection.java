@@ -39,7 +39,7 @@ public final class ZLEncodingCollection {
 
 	private ZLEncodingCollection() {
 		new ZLEncodingCollectionReader().read(
-			ZLResourceFile.createResourceFile("data/encodings/Encodings.xml")
+			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
 		);
 	}
 	
