@@ -37,8 +37,6 @@ import android.graphics.Bitmap;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
@@ -113,10 +111,8 @@ abstract class NetworkBaseActivity extends ListActivity
 
 	// this set is used to track whether this activity will be notified, when specific cover will be synchronized.
 	private HashSet<String> myAwaitedCovers = new HashSet<String>();
-	private ZLFileImage myFBReaderIcon = new ZLFileImage(
-		"image/auto",
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createDrawableFile(R.drawable.fbreader)
-	);
+	private ZLImage myFBReaderIcon =
+		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createImage(R.drawable.fbreader);
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
 		Bitmap coverBitmap = null;
