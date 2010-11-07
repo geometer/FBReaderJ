@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.ui.android.view;
 import java.util.*;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.*;
 
@@ -111,18 +113,19 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			typefaces = new Typeface[4];
 			myTypefaces.put(family, typefaces);
 		}
-		Typeface typeface = typefaces[style];
-		if (typeface == null) {
-			File[] table = getFontMap().get(realFontFamilyName(family));
-			if (table != null) {
+		Typeface tf = typefaces[style];
+		if (tf == null) {
+			File[] files = getFontMap().get(realFontFamilyName(family));
+			if (files != null) {
 				try {
-					if (table[style] != null) {
-						typeface = Typeface.createFromFile(table[style]);
+					if (files[style] != null) {
+						tf = createFontFromFile(files[style]);
 					} else {
 						for (int i = 0; i < 4; ++i) {
-							if (table[i] != null) {
-								typeface = Typeface.createFromFile(table[i]);
-								typefaces[i] = typeface;
+							if (files[i] != null) {
+								tf = (typefaces[i] != null) ?
+									typefaces[i] : createFontFromFile(files[i]);
+								typefaces[i] = tf;
 								break;
 							}
 						}
@@ -130,12 +133,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 				} catch (Throwable e) {
 				}
 			}
-			if (typeface == null) {
-				typeface = Typeface.create(family, style);
+			if (tf == null) {
+				tf = Typeface.create(family, style);
 			}
-			typefaces[style] = typeface;
+			typefaces[style] = tf;
 		}
-		myTextPaint.setTypeface(typeface);
+		myTextPaint.setTypeface(tf);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
 	}
@@ -224,16 +227,42 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
+	private static Method ourFontCreationMethod;
+	static {
+		try {
+			ourFontCreationMethod = Typeface.class.getMethod("createFromFile", File.class);
+		} catch (NoSuchMethodException e) {
+			ourFontCreationMethod = null;
+		}
+	}
+
+	private static Typeface createFontFromFile(File file) {
+		if (ourFontCreationMethod == null) {
+			return null;
+		}
+		try {
+			return (Typeface)ourFontCreationMethod.invoke(null, file);
+		} catch (IllegalAccessException e) {
+			return null;
+		} catch (InvocationTargetException e) {
+			return null;
+		}
+	}
+
 	private static Map<String,File[]> ourFontMap;
 	private static Map<String,File[]> getFontMap() {
 		if (ourFontMap == null) {
-			ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
-				new FilenameFilter() {
-					public boolean accept(File dir, String name) {
-						return name.endsWith(".ttf") && !name.startsWith(".");
+			if (ourFontCreationMethod == null) {
+				ourFontMap = new HashMap<String,File[]>();
+			} else {
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
+					new FilenameFilter() {
+						public boolean accept(File dir, String name) {
+							return name.endsWith(".ttf") && !name.startsWith(".");
+						}
 					}
-				}
-			));
+				));
+			}
 		}
 		return ourFontMap;
 	}
