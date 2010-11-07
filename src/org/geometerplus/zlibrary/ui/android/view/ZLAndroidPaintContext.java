@@ -19,14 +19,16 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.io.File;
+import java.io.FilenameFilter;
 
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
+import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -102,33 +104,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myOutlinePaint);
 	}
 
-	private Typeface createTypeface(String family, int style) {
-		if ("liberation sans".equalsIgnoreCase(family)) {
-			File fontFile = null;
-			switch (style) {
-				case 0:
-					fontFile = new File("/sdcard/fonts/LiberationSans-Regular.ttf");
-					break;
-				case Typeface.BOLD:
-					fontFile = new File("/sdcard/fonts/LiberationSans-Bold.ttf");
-					break;
-				case Typeface.ITALIC:
-					fontFile = new File("/sdcard/fonts/LiberationSans-Italic.ttf");
-					break;
-				case Typeface.ITALIC | Typeface.BOLD:
-					fontFile = new File("/sdcard/fonts/LiberationSans-BoldItalic.ttf");
-					break;
-			}
-			if (fontFile != null && fontFile.exists()) {
-				Typeface tf = Typeface.createFromFile(fontFile);
-				if (tf != null) {
-					return tf;
-				}
-			}
-		}
-		return Typeface.create(family, style);
-	}
-
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
@@ -138,7 +113,26 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		Typeface typeface = typefaces[style];
 		if (typeface == null) {
-			typeface = createTypeface(family, style);
+			File[] table = getFontMap().get(realFontFamilyName(family));
+			if (table != null) {
+				try {
+					if (table[style] != null) {
+						typeface = Typeface.createFromFile(table[style]);
+					} else {
+						for (int i = 0; i < 4; ++i) {
+							if (table[i] != null) {
+								typeface = Typeface.createFromFile(table[i]);
+								typefaces[i] = typeface;
+								break;
+							}
+						}
+					}
+				} catch (Throwable e) {
+				}
+			}
+			if (typeface == null) {
+				typeface = Typeface.create(family, style);
+			}
 			typefaces[style] = typeface;
 		}
 		myTextPaint.setTypeface(typeface);
@@ -230,28 +224,45 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
+	private static Map<String,File[]> ourFontMap;
+	private static Map<String,File[]> getFontMap() {
+		System.err.println("getFontMap");
+		if (ourFontMap == null) {
+		System.err.println("getFontMap 1");
+			ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
+				new FilenameFilter() {
+					public boolean accept(File dir, String name) {
+						return name.endsWith(".ttf") && !name.startsWith(".");
+					}
+				}
+			));
+		}
+		return ourFontMap;
+	}
+
 	public String realFontFamilyName(String fontFamily) {
-		// TODO: implement
-		if ("serif".equalsIgnoreCase(fontFamily)) {
+		if ("serif".equalsIgnoreCase(fontFamily) || "droid serif".equalsIgnoreCase(fontFamily)) {
 			return "serif";
 		}
-		if ("sans-serif".equalsIgnoreCase(fontFamily) || "sans serif".equalsIgnoreCase(fontFamily)) {
+		if ("sans-serif".equalsIgnoreCase(fontFamily) || "sans serif".equalsIgnoreCase(fontFamily) || "droid sans".equalsIgnoreCase(fontFamily)) {
 			return "sans-serif";
 		}
-		if ("monospace".equalsIgnoreCase(fontFamily)) {
+		if ("monospace".equalsIgnoreCase(fontFamily) || "droid mono".equalsIgnoreCase(fontFamily)) {
 			return "monospace";
 		}
-		if ("liberation sans".equalsIgnoreCase(fontFamily)) {
-			return "liberation sans";
+		for (String name : getFontMap().keySet()) {
+			if (name.equalsIgnoreCase(fontFamily)) {
+				return name;
+			}
 		}
 		return "sans-serif";
 	}
 
 	protected void fillFamiliesList(ArrayList<String> families) {
-		// TODO: implement
-		families.add("Liberation Sans");
-		families.add("Monospace");
-		families.add("Sans Serif");
-		families.add("Serif");
+		families.add("Droid Sans");
+		families.add("Droid Serif");
+		families.add("Droid Mono");
+		families.addAll(getFontMap().keySet());
+		Collections.sort(families);
 	}
 }
