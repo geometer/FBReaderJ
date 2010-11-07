@@ -226,9 +226,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private static Map<String,File[]> ourFontMap;
 	private static Map<String,File[]> getFontMap() {
-		System.err.println("getFontMap");
 		if (ourFontMap == null) {
-		System.err.println("getFontMap 1");
 			ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
 				new FilenameFilter() {
 					public boolean accept(File dir, String name) {
