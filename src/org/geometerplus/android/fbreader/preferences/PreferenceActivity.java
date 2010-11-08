@@ -167,7 +167,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineCategory.addPreference(new ZLChoicePreference(
 			this, statusLineCategory.Resource, "scrollbarType",
-			fbReader.ScrollbarTypeOption, scrollBarTypes));
+			fbReader.ScrollbarTypeOption, scrollBarTypes)
+		);
 
 		statusLineCategory.addPreference(new ZLIntegerRangePreference(
 			this, statusLineCategory.Resource.getResource("footerHeight"),
@@ -177,12 +178,17 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
 		statusLineCategory.addPreference(new ZLChoicePreference(
 			this, statusLineCategory.Resource, "footerLongTap",
-			fbReader.FooterLongTap, footerLongTaps));
+			fbReader.FooterLongTapOption, footerLongTaps
+		));
 
-		statusLineCategory.addOption(fbReader.FooterShowClock, "showClock");
-		statusLineCategory.addOption(fbReader.FooterShowBattery, "showBattery");
-		statusLineCategory.addOption(fbReader.FooterShowProgress, "showProgress");
-		statusLineCategory.addOption(fbReader.FooterIsSensitive, "isSensitive");
+		statusLineCategory.addOption(fbReader.FooterShowClockOption, "showClock");
+		statusLineCategory.addOption(fbReader.FooterShowBatteryOption, "showBattery");
+		statusLineCategory.addOption(fbReader.FooterShowProgressOption, "showProgress");
+		statusLineCategory.addOption(fbReader.FooterIsSensitiveOption, "isSensitive");
+		statusLineCategory.addPreference(new FontOption(
+			this, statusLineCategory.Resource, "font",
+			fbReader.FooterFontOption)
+		);
 
 		lookNFeelCategory.addOption(androidApp.AutoOrientationOption, "autoOrientation");
 		if (!androidApp.isAlwaysShowStatusBar()) {

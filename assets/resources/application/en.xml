@@ -284,6 +284,7 @@
 						<node name="summaryOn" value="Navigation is enabled"/>
 						<node name="summaryOff" value="Navigation is disabled"/>
 					</node>
+					<node name="font" value="Font"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scrolling">
