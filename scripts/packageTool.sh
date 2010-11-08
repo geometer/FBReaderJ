@@ -25,7 +25,7 @@ buildSourceArchive() {
   ant clean
   rm -rf $dir $archive
   mkdir $dir
-  cp -r data icons src jni build.xml AndroidManifest.xml* res *.properties createRawResources.py libs HowToBuild $0 VERSION ChangeLog $dir
+  cp -r assets icons src jni build.xml AndroidManifest.xml* res *.properties createRawResources.py libs HowToBuild $0 VERSION ChangeLog $dir
   rm -rf `find $dir -name .svn`
   zip -rq $archive $dir/*
   rm -rf $dir
