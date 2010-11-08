@@ -214,6 +214,7 @@
 						<node name="summaryOn" value="Перемещение включено"/>
 						<node name="summaryOff" value="Перемещение выключено"/>
 					</node>
+					<node name="font" value="Шрифт"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Перелистывание страниц">

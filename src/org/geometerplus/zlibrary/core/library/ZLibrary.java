@@ -34,6 +34,7 @@ public abstract class ZLibrary {
 	}
 
 	abstract public ZLResourceFile createResourceFile(String path);
+	abstract public ZLResourceFile createResourceFile(ZLResourceFile parent, String name);
 
 	abstract public String getVersionName();
 	abstract public String getCurrentTimeString();

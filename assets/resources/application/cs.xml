@@ -167,9 +167,9 @@
 					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
 					<node name="100" value="Nikdy"/>
 				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
-					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
-					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
+					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
+					<node name="summaryOff" value="Zakázáno"/>
 				</node>
 				<node name="appearanceSettings" value="Vzhled">
 					<node name="summary" value="Nastavení zobrazení textu"/>
@@ -215,6 +215,7 @@
 						<node name="summaryOn" value="Navigace je povolena"/>
 						<node name="summaryOff" value="Navigace je zakázána"/>
 					</node>
+					<node name="font" value="Font" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Posouvání">
