@@ -19,13 +19,18 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
+import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -108,12 +113,32 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			typefaces = new Typeface[4];
 			myTypefaces.put(family, typefaces);
 		}
-		Typeface typeface = typefaces[style];
-		if (typeface == null) {
-			typeface = Typeface.create(family, style);
-			typefaces[style] = typeface;
+		Typeface tf = typefaces[style];
+		if (tf == null) {
+			File[] files = getFontMap().get(realFontFamilyName(family));
+			if (files != null) {
+				try {
+					if (files[style] != null) {
+						tf = createFontFromFile(files[style]);
+					} else {
+						for (int i = 0; i < 4; ++i) {
+							if (files[i] != null) {
+								tf = (typefaces[i] != null) ?
+									typefaces[i] : createFontFromFile(files[i]);
+								typefaces[i] = tf;
+								break;
+							}
+						}
+					}
+				} catch (Throwable e) {
+				}
+			}
+			if (tf == null) {
+				tf = Typeface.create(family, style);
+			}
+			typefaces[style] = tf;
 		}
-		myTextPaint.setTypeface(typeface);
+		myTextPaint.setTypeface(tf);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
 	}
@@ -202,23 +227,69 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
+	private static Method ourFontCreationMethod;
+	static {
+		try {
+			ourFontCreationMethod = Typeface.class.getMethod("createFromFile", File.class);
+		} catch (NoSuchMethodException e) {
+			ourFontCreationMethod = null;
+		}
+	}
+
+	private static Typeface createFontFromFile(File file) {
+		if (ourFontCreationMethod == null) {
+			return null;
+		}
+		try {
+			return (Typeface)ourFontCreationMethod.invoke(null, file);
+		} catch (IllegalAccessException e) {
+			return null;
+		} catch (InvocationTargetException e) {
+			return null;
+		}
+	}
+
+	private static Map<String,File[]> ourFontMap;
+	private static Map<String,File[]> getFontMap() {
+		if (ourFontMap == null) {
+			if (ourFontCreationMethod == null) {
+				ourFontMap = new HashMap<String,File[]>();
+			} else {
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
+					new FilenameFilter() {
+						public boolean accept(File dir, String name) {
+							return name.endsWith(".ttf") && !name.startsWith(".");
+						}
+					}
+				));
+			}
+		}
+		return ourFontMap;
+	}
+
 	public String realFontFamilyName(String fontFamily) {
-		// TODO: implement
-		if ("Serif".equals(fontFamily)) {
+		if ("serif".equalsIgnoreCase(fontFamily) || "droid serif".equalsIgnoreCase(fontFamily)) {
 			return "serif";
 		}
-		if ("sans-serif".equals(fontFamily)
-				|| "serif".equals(fontFamily)
-				|| "monospace".equals(fontFamily)) {
-			return fontFamily;
+		if ("sans-serif".equalsIgnoreCase(fontFamily) || "sans serif".equalsIgnoreCase(fontFamily) || "droid sans".equalsIgnoreCase(fontFamily)) {
+			return "sans-serif";
+		}
+		if ("monospace".equalsIgnoreCase(fontFamily) || "droid mono".equalsIgnoreCase(fontFamily)) {
+			return "monospace";
+		}
+		for (String name : getFontMap().keySet()) {
+			if (name.equalsIgnoreCase(fontFamily)) {
+				return name;
+			}
 		}
 		return "sans-serif";
 	}
 
 	protected void fillFamiliesList(ArrayList<String> families) {
-		// TODO: implement
-		families.add("sans-serif");
-		families.add("serif");
-		families.add("monospace");
+		families.add("Droid Sans");
+		families.add("Droid Serif");
+		families.add("Droid Mono");
+		families.addAll(getFontMap().keySet());
+		Collections.sort(families);
 	}
 }

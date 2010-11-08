@@ -39,5 +39,6 @@ public abstract class ZLibrary {
 	abstract public String getCurrentTimeString();
 	abstract public void setScreenBrightness(int percent);
 	abstract public int getScreenBrightness();
+	abstract public int getDisplayDPI();
 	abstract public void openInBrowser(String reference);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,9 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.image;
+package org.geometerplus.zlibrary.core.util;
 
-import org.geometerplus.zlibrary.core.image.*;
-
-public final class ZLAndroidImageManager extends ZLImageManager {
-	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLAndroidImageData) {
-			return (ZLAndroidImageData)image;
-		} else if (image instanceof ZLSingleImage) {
-			ZLSingleImage singleImage = (ZLSingleImage)image;
-			if ("image/palm".equals(singleImage.mimeType())) {
-				return null;
-			}
-			byte[] array = singleImage.byteData();
-			if (array == null) {
-				return null;
-			}
-			return new ZLAndroidArrayBasedImageData(array);
-		} else {
-			//TODO
-			return null;
-		}
-	}
+public class ZLTTFInfo {
+	public String FamilyName;
+	public String SubFamilyName;
 }
