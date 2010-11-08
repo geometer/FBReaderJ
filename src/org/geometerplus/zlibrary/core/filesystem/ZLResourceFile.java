@@ -42,7 +42,7 @@ public abstract class ZLResourceFile extends ZLFile {
 	}
 	
 	public String getNameWithExtension() {
-		return myPath;
+		return myPath.substring(myPath.lastIndexOf('/') + 1);
 	}
 
 	public ZLFile getParent() {

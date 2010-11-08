@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.*;
-import java.util.Date;
+import java.util.*;
 
 import android.app.Application;
 import android.content.res.Resources;
@@ -31,6 +31,7 @@ import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -87,7 +88,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		}
-		// FIXME: initialize network library and use rewriteUrl!!!
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
 		try {
 			nLibrary.initialize();
@@ -149,17 +149,38 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 
 		@Override
-		public boolean exists() {
+		protected List<ZLFile> directoryEntries() {
+			try {
+				String[] names = myApplication.getAssets().list(getPath());
+				if (names != null && names.length != 0) {
+					ArrayList<ZLFile> files = new ArrayList<ZLFile>(names.length);
+					for (String n : names) {
+						files.add(new AndroidAssetsFile(getPath() + "/" + n));
+					}
+					return files;
+				}
+			} catch (IOException e) {
+			}
+			return Collections.emptyList();
+		}
+
+		@Override
+		public boolean isDirectory() {
 			try {
 				AssetFileDescriptor descriptor = myApplication.getAssets().openFd(getPath());
 				if (descriptor == null) {
-					return false;
+					return true;
 				}
 				descriptor.close();
-				return true;
-			} catch (IOException e) {
 				return false;
-			} 
+			} catch (IOException e) {
+				return true;
+			}
+		}
+
+		@Override
+		public boolean exists() {
+			return true;
 		}
 
 		@Override
