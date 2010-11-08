@@ -107,6 +107,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
+		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
 		if (typefaces == null) {
@@ -115,7 +116,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		Typeface tf = typefaces[style];
 		if (tf == null) {
-			File[] files = getFontMap().get(realFontFamilyName(family));
+			File[] files = getFontMap().get(family);
 			if (files != null) {
 				try {
 					if (files[style] != null) {

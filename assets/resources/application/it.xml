@@ -215,6 +215,7 @@
 						<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
 						<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
 					</node>
+					<node name="font" value="Font" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Scorrimento">
