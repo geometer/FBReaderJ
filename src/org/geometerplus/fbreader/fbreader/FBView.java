@@ -102,7 +102,7 @@ public final class FBView extends ZLTextView {
 			return false;
 		}
 
-		if (myReader.FooterIsSensitive.getValue()) {
+		if (myReader.FooterIsSensitiveOption.getValue()) {
 			Footer footer = getFooterArea();
 			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
 				footer.setProgress(x);
@@ -328,7 +328,7 @@ public final class FBView extends ZLTextView {
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
 			context.setFont(
-				"sans-serif",
+				myReader.FooterFontOption.getValue(),
 				height <= 10 ? height + 3 : height + 1,
 				height > 10, false, false
 			);
@@ -337,19 +337,19 @@ public final class FBView extends ZLTextView {
 			final int bookLength = computePageNumber();
 
 			final StringBuilder info = new StringBuilder();
-			if (myReader.FooterShowProgress.getValue()) {
+			if (myReader.FooterShowProgressOption.getValue()) {
 				info.append(pagesProgress);
 				info.append("/");
 				info.append(bookLength);
 			}
-			if (myReader.FooterShowBattery.getValue()) {
+			if (myReader.FooterShowBatteryOption.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
 				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
-			if (myReader.FooterShowClock.getValue()) {
+			if (myReader.FooterShowClockOption.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}

@@ -215,6 +215,7 @@
 						<node name="summaryOn" value="Navigace je povolena"/>
 						<node name="summaryOff" value="Navigace je zakázána"/>
 					</node>
+					<node name="font" value="Font" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="Posouvání">
