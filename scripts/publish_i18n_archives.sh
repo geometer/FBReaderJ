@@ -6,14 +6,14 @@ build_language_archive() {
 	lang=$1
 	dir=FBReaderJ-i18n-$lang-$VERSION
 	mkdir $dir
-	cp data/resources/application/$lang.xml $dir/FBReader-$lang.xml
-	cp data/resources/zlibrary/$lang.xml $dir/zlibrary-$lang.xml
-	cp data/help/MiniHelp.$lang.fb2 $dir
+	cp assets/resources/application/$lang.xml $dir/FBReader-$lang.xml
+	cp assets/resources/zlibrary/$lang.xml $dir/zlibrary-$lang.xml
+	cp assets/help/MiniHelp.$lang.fb2 $dir
 	zip -r $dir.zip $dir
 	rm -rf $dir
 }
 
-for file in data/resources/application/*; do
+for file in assets/resources/application/*; do
 	build_language_archive `basename $file .xml`;
 done;
 
