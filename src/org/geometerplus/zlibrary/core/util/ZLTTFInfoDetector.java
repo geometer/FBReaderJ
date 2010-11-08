@@ -42,9 +42,9 @@ public class ZLTTFInfoDetector {
 					if ("bold".equalsIgnoreCase(info.SubFamilyName)) {
 						table[1] = f;
 					} else if ("italic".equalsIgnoreCase(info.SubFamilyName)) {
-						table[3] = f;
-					} else if ("bold italic".equalsIgnoreCase(info.SubFamilyName)) {
 						table[2] = f;
+					} else if ("bold italic".equalsIgnoreCase(info.SubFamilyName)) {
+						table[3] = f;
 					} else {
 						table[0] = f;
 					}
