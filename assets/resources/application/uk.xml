@@ -171,15 +171,16 @@
 					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
 					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
 				</node>
+				<node name="margins" value="Відступи">
+					<node name="summary" value="Text margins" toBeTranslated="true"/>
+					<node name="left" value="Відступ зліва"/>
+					<node name="right" value="Відступ зправа"/>
+					<node name="top" value="Відступ зверху"/>
+					<node name="bottom" value="Відступ знизу"/>
+				</node>
 				<node name="appearanceSettings" value="Зовнішній вигляд">
 					<node name="summary" value="Налаштування відображення тексту"/>
 					<node name="font" value="Font family" toBeTranslated="true"/>
-					<node name="margins" value="Відступи">
-						<node name="left" value="Відступ зліва"/>
-						<node name="right" value="Відступ зправа"/>
-						<node name="top" value="Відступ зверху"/>
-						<node name="bottom" value="Відступ знизу"/>
-					</node>
 					<node name="format" value="Форматування">
 					</node>
 					<node name="styles" value="Стилі">

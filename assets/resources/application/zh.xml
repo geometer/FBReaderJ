@@ -171,15 +171,16 @@
 					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
 					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
 				</node>
+				<node name="margins" value="边距">
+					<node name="summary" value="Text margins" toBeTranslated="true"/>
+					<node name="left" value="左边距" />
+					<node name="right" value="右边距" />
+					<node name="top" value="顶边距" />
+					<node name="bottom" value="底边距" />
+				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
 					<node name="font" value="Font family" toBeTranslated="true"/>
-					<node name="margins" value="边距">
-						<node name="left" value="左边距" />
-						<node name="right" value="右边距" />
-						<node name="top" value="顶边距" />
-						<node name="bottom" value="底边距" />
-					</node>
 					<node name="format" value="格式">
 					</node>
 					<node name="styles" value="样式">

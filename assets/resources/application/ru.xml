@@ -170,15 +170,16 @@
 					<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
 					<node name="summaryOff" value="Выключена"/>
 				</node>
+				<node name="margins" value="Отступы">
+					<node name="summary" value="Поля вокруг текста"/>
+					<node name="left" value="Отступ слева"/>
+					<node name="right" value="Отступ справа"/>
+					<node name="top" value="Отступ сверху"/>
+					<node name="bottom" value="Отступ снизу"/>
+				</node>
 				<node name="appearanceSettings" value="Внешний вид">
 					<node name="summary" value="Настройки отображения текста"/>
 					<node name="font" value="Шрифт"/>
-					<node name="margins" value="Отступы">
-						<node name="left" value="Отступ слева"/>
-						<node name="right" value="Отступ справа"/>
-						<node name="top" value="Отступ сверху"/>
-						<node name="bottom" value="Отступ снизу"/>
-					</node>
 					<node name="format" value="Форматирование">
 					</node>
 					<node name="styles" value="Стили">

@@ -170,15 +170,16 @@
 					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
 					<node name="summaryOff" value="Disabled"/>
 				</node>
+				<node name="margins" value="Margins">
+					<node name="summary" value="Text margins"/>
+					<node name="left" value="Left margin"/>
+					<node name="right" value="Right margin"/>
+					<node name="top" value="Top margin"/>
+					<node name="bottom" value="Bottom margin"/>
+				</node>
 				<node name="appearanceSettings" value="Appearance">
 					<node name="summary" value="Text displaying settings"/>
 					<node name="font" value="Font family"/>
-					<node name="margins" value="Margins">
-						<node name="left" value="Left margin"/>
-						<node name="right" value="Right margin"/>
-						<node name="top" value="Top margin"/>
-						<node name="bottom" value="Bottom margin"/>
-					</node>
 					<node name="format" value="Format">
 					</node>
 					<node name="styles" value="Styles">
