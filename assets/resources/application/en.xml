@@ -180,11 +180,27 @@
 				<node name="appearanceSettings" value="Appearance">
 					<node name="summary" value="Text displaying settings"/>
 					<node name="font" value="Font family"/>
+					<node name="fontSize" value="Font size"/>
+					<node name="bold" value="Bold">
+						<node name="summaryOn" value=""/>
+						<node name="summaryOff" value=""/>
+					</node>
+					<node name="italic" value="Italic">
+						<node name="summaryOn" value=""/>
+						<node name="summaryOff" value=""/>
+					</node>
+					<node name="autoHyphenations" value="Auto hyphenations">
+						<node name="summaryOn" value=""/>
+						<node name="summaryOff" value=""/>
+					</node>
 					<node name="format" value="Format">
+						<node name="summary" value=""/>
 					</node>
 					<node name="styles" value="Styles">
+						<node name="summary" value=""/>
 					</node>
 					<node name="colors" value="Colors">
+						<node name="summary" value=""/>
 					</node>
 				</node>
 				<node name="scrollBar" value="Scrollbar">

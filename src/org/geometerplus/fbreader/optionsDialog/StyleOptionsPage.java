@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.view.ZLTextFontFamilyWithBaseOptionEntry;
-import org.geometerplus.zlibrary.text.view.style.ZLTextBaseStyle;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
 
@@ -61,31 +60,6 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 			}
 		}
 		dialogTab.addOption("optionsFor", myComboEntry);
-
-		{
-			final String name = myComboEntry.initialValue();
-			ZLTextBaseStyle baseStyle = collection.getBaseStyle();
-
-			registerEntry(dialogTab,
-				KEY_FONTSIZE, new ZLSimpleSpinOptionEntry(baseStyle.FontSizeOption, 2),
-				name
-			);
-
-			registerEntry(dialogTab,
-				KEY_BOLD, new ZLSimpleBooleanOptionEntry(baseStyle.BoldOption),
-				name
-			);
-
-			registerEntry(dialogTab,
-				KEY_ITALIC, new ZLSimpleBooleanOptionEntry(baseStyle.ItalicOption),
-				name
-			);
-
-			registerEntry(dialogTab,
-				KEY_AUTOHYPHENATIONS, new ZLSimpleBooleanOptionEntry(baseStyle.AutoHyphenationOption),
-				name
-			);
-		}
 
 		for (int i = 0; i < STYLES_NUMBER; ++i) {
 			ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);

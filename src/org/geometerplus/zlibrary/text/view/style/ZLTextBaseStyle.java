@@ -51,7 +51,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
 		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
-		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 0, 72, fontSize);
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, 72, fontSize);
 	}
 	
 	@Override
