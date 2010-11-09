@@ -67,11 +67,6 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 			ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
 			registerEntry(dialogTab,
-				KEY_FONTFAMILY, new ZLFontFamilyOptionEntry(baseStyle.FontFamilyOption, context),
-				name
-			);
-
-			registerEntry(dialogTab,
 				KEY_FONTSIZE, new ZLSimpleSpinOptionEntry(baseStyle.FontSizeOption, 2),
 				name
 			);

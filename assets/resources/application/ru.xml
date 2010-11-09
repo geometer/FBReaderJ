@@ -172,6 +172,7 @@
 				</node>
 				<node name="appearanceSettings" value="Внешний вид">
 					<node name="summary" value="Настройки отображения текста"/>
+					<node name="font" value="Шрифт"/>
 					<node name="margins" value="Отступы">
 						<node name="left" value="Отступ слева"/>
 						<node name="right" value="Отступ справа"/>

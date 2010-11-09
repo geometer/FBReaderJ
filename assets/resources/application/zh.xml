@@ -173,6 +173,7 @@
 				</node>
 				<node name="appearanceSettings" toBeTranslated="true" value="Appearance">
 					<node name="summary" toBeTranslated="true" value="Text displaying settings"/>
+					<node name="font" value="Font family" toBeTranslated="true"/>
 					<node name="margins" value="边距">
 						<node name="left" value="左边距" />
 						<node name="right" value="右边距" />
@@ -215,7 +216,7 @@
 						<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
 						<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
 					</node>
-					<node name="font" value="Font" toBeTranslated="true"/>
+					<node name="font" value="Font family" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="Scrolling" value="翻阅操作">
