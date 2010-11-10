@@ -34,7 +34,6 @@ import org.geometerplus.fbreader.bookmodel.FBTextKind;
 
 public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 	private final static String KEY_STYLE = "style";
-	private final static String KEY_BASE = "Base";
 
 	private final static String KEY_BOLD = "bold";
 	private final static String KEY_ITALIC = "italic";
@@ -42,18 +41,15 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 	private final static String KEY_FONTSIZE = "fontSize";
 	private final static String KEY_FONTSIZEDIFFERENCE = "fontSizeDifference";
 	private final static String KEY_ALLOWHYPHENATIONS = "allowHyphenations";
-	private final static String KEY_AUTOHYPHENATIONS = "autoHyphenations";
 	
 	public StyleOptionsPage(ZLDialogContent dialogTab, ZLPaintContext context) {
 		final ZLResource styleResource = ZLResource.resource(KEY_STYLE);
 
-		myComboEntry = new ComboOptionEntry(this, styleResource.getResource(KEY_BASE).getValue());
-		myComboEntry.addValue(myComboEntry.initialValue());
+		myComboEntry = new ComboOptionEntry(this, null);
 
 		ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		byte styles[] = { REGULAR, TITLE, SECTION_TITLE, SUBTITLE, H1, H2, H3, H4, H5, H6, ANNOTATION, EPIGRAPH, AUTHOR, POEM_TITLE, STANZA, VERSE, CITE, INTERNAL_HYPERLINK, EXTERNAL_HYPERLINK, FOOTNOTE, ITALIC, EMPHASIS, BOLD, STRONG, DEFINITION, DEFINITION_DESCRIPTION, PREFORMATTED, CODE };
-		final int STYLES_NUMBER = styles.length;
-		for (int i = 0; i < STYLES_NUMBER; ++i) {
+		for (int i = 0; i < styles.length; ++i) {
 			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration != null) {
 				myComboEntry.addValue(styleResource.getResource(decoration.getName()).getValue());
@@ -61,7 +57,7 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 		}
 		dialogTab.addOption("optionsFor", myComboEntry);
 
-		for (int i = 0; i < STYLES_NUMBER; ++i) {
+		for (int i = 0; i < styles.length; ++i) {
 			ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration != null) {
 				final String name = styleResource.getResource(decoration.getName()).getValue();
