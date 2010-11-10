@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.preferences;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -119,6 +120,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		appearanceCategory.addPreference(new ZLBooleanPreference(
 			this, baseStyle.ItalicOption,
 			appearanceCategory.Resource, "italic"
+		));
+		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
+		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
+		for (int i = 0; i < spacings.length; ++i) {
+			final int val = spaceOption.MinValue + i;
+			spacings[i] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+		}
+		appearanceCategory.addPreference(new ZLChoicePreference(
+			this, appearanceCategory.Resource, "lineSpacing",
+			baseStyle.LineSpaceOption, spacings
 		));
 		String[] alignments = { "left", "right", "center", "justify" };
 		appearanceCategory.addPreference(new ZLChoicePreference(

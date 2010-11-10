@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextAlignmentOptionEntry;
 import org.geometerplus.zlibrary.text.view.ZLTextLineSpaceOptionEntry;
-import org.geometerplus.zlibrary.text.view.style.ZLTextBaseStyle;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
 import org.geometerplus.zlibrary.text.view.style.ZLTextFullStyleDecoration;
@@ -33,7 +32,6 @@ import static org.geometerplus.fbreader.bookmodel.FBTextKind.*;
 
 class FormatOptionsPage extends OptionsPage {
 	private static final String KEY_STYLE = "style";
-	private static final String KEY_BASE = "Base";
 
 	private static final String KEY_DUMMY = "";
 	private static final String KEY_LINESPACING = "lineSpacing";
@@ -47,8 +45,7 @@ class FormatOptionsPage extends OptionsPage {
 	public FormatOptionsPage(ZLDialogContent dialogTab) {
 		final ZLResource styleResource = ZLResource.resource(KEY_STYLE);
 
-		myComboEntry = new ComboOptionEntry(this, styleResource.getResource(KEY_BASE).getValue());
-		myComboEntry.addValue(myComboEntry.initialValue());
+		myComboEntry = new ComboOptionEntry(this);
 
 		ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		byte styles[] = { REGULAR, TITLE, SECTION_TITLE, SUBTITLE, H1, H2, H3, H4, H5, H6, ANNOTATION, EPIGRAPH, PREFORMATTED, AUTHOR,/* DATEKIND,*/ POEM_TITLE, STANZA, VERSE };
@@ -60,17 +57,6 @@ class FormatOptionsPage extends OptionsPage {
 			}
 		}
 		dialogTab.addOption("optionsFor", myComboEntry);
-
-		{
-			final String name = myComboEntry.initialValue();
-			ZLTextBaseStyle baseStyle = collection.getBaseStyle();
-
-			registerEntries(dialogTab,
-				KEY_LINESPACING, new ZLTextLineSpaceOptionEntry(baseStyle.LineSpacePercentOption, dialogTab.getResource(KEY_LINESPACING), false),
-				KEY_DUMMY, null,//new ZLSimpleSpinOptionEntry("First Line Indent", baseStyle.firstLineIndentDeltaOption(), -300, 300, 1),
-				name
-			);
-		}
 
 		for (int i = 0; i < stylesNumber; ++i) {
 			ZLTextStyleDecoration d = collection.getDecoration(styles[i]);
@@ -91,13 +77,13 @@ class FormatOptionsPage extends OptionsPage {
 				);
 				
 				registerEntries(dialogTab,
-					KEY_LINESPACING, new ZLTextLineSpaceOptionEntry(decoration.LineSpacePercentOption, dialogTab.getResource(KEY_LINESPACING), true),
+					KEY_LINESPACING, new ZLTextLineSpaceOptionEntry(decoration.LineSpacePercentOption, dialogTab.getResource(KEY_LINESPACING)),
 					KEY_FIRSTLINEINDENT, new ZLSimpleSpinOptionEntry(decoration.FirstLineIndentDeltaOption, 1),
 					name
 				);
 
 				registerEntries(dialogTab,
-					KEY_ALIGNMENT, new ZLTextAlignmentOptionEntry(decoration.AlignmentOption, dialogTab.getResource(KEY_ALIGNMENT), true),
+					KEY_ALIGNMENT, new ZLTextAlignmentOptionEntry(decoration.AlignmentOption, dialogTab.getResource(KEY_ALIGNMENT)),
 					KEY_DUMMY, null,
 					name
 				);

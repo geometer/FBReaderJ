@@ -189,6 +189,7 @@
 						<node name="summaryOn" value=""/>
 						<node name="summaryOff" value=""/>
 					</node>
+					<node name="lineSpacing" value="Line Spacing"/>
 					<node name="alignment" value="Alignment">
 						<node name="left" value="Left"/>
 						<node name="right" value="Right"/>

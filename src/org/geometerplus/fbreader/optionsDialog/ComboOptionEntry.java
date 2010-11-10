@@ -30,11 +30,9 @@ import org.geometerplus.zlibrary.core.dialogs.ZLOptionEntry;
 final class ComboOptionEntry extends ZLComboOptionEntry {
 	private final OptionsPage myPage;
 	private final ArrayList<String> myValues = new ArrayList<String>();
-	private final String myInitialValue;
 	
-	public ComboOptionEntry(final OptionsPage myPage, String myInitialValue) {
+	public ComboOptionEntry(final OptionsPage myPage) {
 		this.myPage = myPage;
-		this.myInitialValue = myInitialValue;
 	}
 
 	public ArrayList<String> getValues() {
@@ -42,7 +40,7 @@ final class ComboOptionEntry extends ZLComboOptionEntry {
 	}
 
 	public String initialValue() {
-		return myInitialValue != null ? myInitialValue : myValues.get(0);
+		return myValues.get(0);
 	}
 
 	public void onAccept(String value) {}

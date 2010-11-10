@@ -44,7 +44,7 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 	public StyleOptionsPage(ZLDialogContent dialogTab, ZLPaintContext context) {
 		final ZLResource styleResource = ZLResource.resource(KEY_STYLE);
 
-		myComboEntry = new ComboOptionEntry(this, null);
+		myComboEntry = new ComboOptionEntry(this);
 
 		ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		byte styles[] = { REGULAR, TITLE, SECTION_TITLE, SUBTITLE, H1, H2, H3, H4, H5, H6, ANNOTATION, EPIGRAPH, AUTHOR, POEM_TITLE, STANZA, VERSE, CITE, INTERNAL_HYPERLINK, EXTERNAL_HYPERLINK, FOOTNOTE, ITALIC, EMPHASIS, BOLD, STRONG, DEFINITION, DEFINITION_DESCRIPTION, PREFORMATTED, CODE };
