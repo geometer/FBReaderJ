@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.optionsDialog;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
 import org.geometerplus.zlibrary.core.optionEntries.ZLFontFamilyOptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBoolean3OptionEntry;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
