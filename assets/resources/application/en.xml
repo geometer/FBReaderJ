@@ -148,10 +148,13 @@
 			<node name="encoding" value="Encoding"/>
 		</node>
 		<node name="Preferences">
-			<node name="Library" value="Library">
-				<node name="path" value="Directories to seek for books"/>
+			<node name="directories" value="Directories">
+				<node name="summary" value="Directories to seek for files"/>
+				<node name="books" value="Books directory"/>
+				<node name="fonts" value="Fonts directory"/>
 			</node>
-			<node name="LookNFeel" value="Look &amp; Feel">
+			<node name="appearance" value="Appearance">
+				<node name="summary" value="Rotation, status bar"/>
 				<node name="autoOrientation" value="Automatic rotation">
 					<node name="summaryOn" value="The display will rotate when user moves the device"/>
 					<node name="summaryOff" value="The display will not rotate when user moves the device"/>
@@ -160,89 +163,91 @@
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
+			</node>
+			<node name="text" value="Text">
+				<node name="summary" value="Font, hyphenations, etc."/>
+				<node name="font" value="Font family"/>
+				<node name="fontSize" value="Font size"/>
+				<node name="fontStyle" value="Font style">
+					<node name="regular" value="Regular"/>
+					<node name="bold" value="Bold"/>
+					<node name="italic" value="Italic"/>
+					<node name="boldItalic" value="Bold Italic"/>
+				</node>
+				<node name="lineSpacing" value="Line Spacing"/>
+				<node name="alignment" value="Alignment">
+					<node name="left" value="Left"/>
+					<node name="right" value="Right"/>
+					<node name="center" value="Center"/>
+					<node name="justify" value="Justify"/>
+				</node>
+				<node name="autoHyphenations" value="Auto hyphenations">
+					<node name="summaryOn" value="Hyphenate words automatically"/>
+					<node name="summaryOff" value="Do not hyphenate words automatically"/>
+				</node>
+				<node name="format" value="Format">
+					<node name="summary" value=""/>
+				</node>
+				<node name="styles" value="Styles">
+					<node name="summary" value=""/>
+				</node>
+				<node name="colors" value="Colors">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+			<node name="margins" value="Margins">
+				<node name="summary" value="Text margins"/>
+				<node name="left" value="Left margin"/>
+				<node name="right" value="Right margin"/>
+				<node name="top" value="Top margin"/>
+				<node name="bottom" value="Bottom margin"/>
+			</node>
+			<node name="scrollBar" value="Scrollbar">
+				<node name="summary" value="Scrollbar &amp; footer settings"/>
+				<node name="scrollbarType" value="Scrollbar type">
+					<node name="hide" value="Hide"/>
+					<node name="show" value="Vertical slider"/>
+					<node name="showAsProgress" value="Vertical progress bar"/>
+					<node name="showAsFooter" value="Horizontal footer"/>
+				</node>
+				<node name="footerHeight" value="Footer height" />
+				<node name="footerLongTap" value="Footer long tap">
+					<node name="longTapRevert" value="Revert position"/>
+					<node name="longTapNavigate" value="Go to position"/>
+				</node>
+				<node name="showProgress" value="Show page number">
+					<node name="summaryOn" value="Show page number in footer"/>
+					<node name="summaryOff" value="Don't show page number in footer"/>
+				</node>
+				<node name="showBattery" value="Show battery level">
+					<node name="summaryOn" value="Show battery level in footer"/>
+					<node name="summaryOff" value="Don't show battery level in footer"/>
+				</node>
+				<node name="showClock" value="Show clock">
+					<node name="summaryOn" value="Show clock in footer"/>
+					<node name="summaryOff" value="Don't show clock in footer"/>
+				</node>
+				<node name="isSensitive" value="Navigation by tap on footer">
+					<node name="summaryOn" value="Navigation is enabled"/>
+					<node name="summaryOff" value="Navigation is disabled"/>
+				</node>
+				<node name="font" value="Font family"/>
+			</node>
+			<node name="display" value="Display">
+				<node name="summary" value="Brightness control, preventing from sleep"/>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
+					<node name="summaryOff" value="Disabled"/>
+				</node>
 				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
 					<node name="0" value="Always"/>
 					<node name="25" value="While battery level is greater than 25 percent"/>
 					<node name="50" value="While battery level is greater than 50 percent"/>
 					<node name="100" value="Never"/>
 				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
-					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
-					<node name="summaryOff" value="Disabled"/>
-				</node>
-				<node name="margins" value="Margins">
-					<node name="summary" value="Text margins"/>
-					<node name="left" value="Left margin"/>
-					<node name="right" value="Right margin"/>
-					<node name="top" value="Top margin"/>
-					<node name="bottom" value="Bottom margin"/>
-				</node>
-				<node name="appearanceSettings" value="Appearance">
-					<node name="summary" value="Text displaying settings"/>
-					<node name="font" value="Font family"/>
-					<node name="fontSize" value="Font size"/>
-					<node name="bold" value="Bold">
-						<node name="summaryOn" value=""/>
-						<node name="summaryOff" value=""/>
-					</node>
-					<node name="italic" value="Italic">
-						<node name="summaryOn" value=""/>
-						<node name="summaryOff" value=""/>
-					</node>
-					<node name="lineSpacing" value="Line Spacing"/>
-					<node name="alignment" value="Alignment">
-						<node name="left" value="Left"/>
-						<node name="right" value="Right"/>
-						<node name="center" value="Center"/>
-						<node name="justify" value="Justify"/>
-					</node>
-					<node name="autoHyphenations" value="Auto hyphenations">
-						<node name="summaryOn" value=""/>
-						<node name="summaryOff" value=""/>
-					</node>
-					<node name="format" value="Format">
-						<node name="summary" value=""/>
-					</node>
-					<node name="styles" value="Styles">
-						<node name="summary" value=""/>
-					</node>
-					<node name="colors" value="Colors">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-				<node name="scrollBar" value="Scrollbar">
-					<node name="summary" value="Configure scrollbar"/>
-					<node name="scrollbarType" value="Scrollbar type">
-						<node name="hide" value="Hide"/>
-						<node name="show" value="Vertical slider"/>
-						<node name="showAsProgress" value="Vertical progress bar"/>
-						<node name="showAsFooter" value="Horizontal footer"/>
-					</node>
-					<node name="footerHeight" value="Footer height" />
-					<node name="footerLongTap" value="Footer long tap">
-						<node name="longTapRevert" value="Revert position"/>
-						<node name="longTapNavigate" value="Go to position"/>
-					</node>
-					<node name="showProgress" value="Show page number">
-						<node name="summaryOn" value="Show page number in footer"/>
-						<node name="summaryOff" value="Don't show page number in footer"/>
-					</node>
-					<node name="showBattery" value="Show battery level">
-						<node name="summaryOn" value="Show battery level in footer"/>
-						<node name="summaryOff" value="Don't show battery level in footer"/>
-					</node>
-					<node name="showClock" value="Show clock">
-						<node name="summaryOn" value="Show clock in footer"/>
-						<node name="summaryOff" value="Don't show clock in footer"/>
-					</node>
-					<node name="isSensitive" value="Navigation by tap on footer">
-						<node name="summaryOn" value="Navigation is enabled"/>
-						<node name="summaryOff" value="Navigation is disabled"/>
-					</node>
-					<node name="font" value="Font family"/>
-				</node>
 			</node>
-			<node name="Scrolling" value="Scrolling">
+			<node name="scrolling" value="Scrolling">
+				<node name="summary" value="How to scroll text"/>
 				<node name="flick" value="Flick scrolling">
 					<node name="summaryOn" value="Pages will be scrolled by finger flick"/>
 					<node name="summaryOff" value="Pages will be scrolled by finger tap"/>
@@ -309,7 +314,6 @@
 					<node name="bold" value="Bold"/>
 					<node name="italic" value="Italic"/>
 					<node name="allowHyphenations" value="Allow Hyphenations"/>
-					<node name="autoHyphenations" value="Auto Hyphenations"/>
 				</node>
 				<node name="Colors" value="Colors">
 					<node name="colorFor" value="Color for">

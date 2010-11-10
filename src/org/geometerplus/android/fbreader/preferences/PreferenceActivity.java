@@ -71,55 +71,44 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init() {
-		final Category libraryCategory = createCategory("Library");
-		libraryCategory.addPreference(new ZLStringOptionPreference(
-			this, Paths.BooksDirectoryOption,
-			libraryCategory.Resource, "path"
-		));
-
-		final Category lookNFeelCategory = createCategory("LookNFeel");
-
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidApplication androidApp = ZLAndroidApplication.Instance();
 
-		final Screen marginsScreen = lookNFeelCategory.createPreferenceScreen("margins");
-		final Category marginsCategory = marginsScreen.createCategory(null);
-		marginsCategory.addPreference(new ZLIntegerRangePreference(
-			this, marginsCategory.Resource.getResource("left"),
-			fbReader.LeftMarginOption
+		final Category optionsCategory = createCategory(null);
+
+		final Screen directoriesScreen = optionsCategory.createPreferenceScreen("directories");
+		final Category directoriesCategory = directoriesScreen.createCategory(null);
+		directoriesCategory.addPreference(new ZLStringOptionPreference(
+			this, Paths.BooksDirectoryOption(),
+			directoriesCategory.Resource, "books"
 		));
-		marginsCategory.addPreference(new ZLIntegerRangePreference(
-			this, marginsCategory.Resource.getResource("right"),
-			fbReader.RightMarginOption
-		));
-		marginsCategory.addPreference(new ZLIntegerRangePreference(
-			this, marginsCategory.Resource.getResource("top"),
-			fbReader.TopMarginOption
-		));
-		marginsCategory.addPreference(new ZLIntegerRangePreference(
-			this, marginsCategory.Resource.getResource("bottom"),
-			fbReader.BottomMarginOption
+		directoriesCategory.addPreference(new ZLStringOptionPreference(
+			this, Paths.FontsDirectoryOption(),
+			directoriesCategory.Resource, "fonts"
 		));
 
-		final Screen appearanceScreen = lookNFeelCategory.createPreferenceScreen("appearanceSettings");
+		final Screen appearanceScreen = optionsCategory.createPreferenceScreen("appearance");
 		final Category appearanceCategory = appearanceScreen.createCategory(null);
+		appearanceCategory.addOption(androidApp.AutoOrientationOption, "autoOrientation");
+		if (!androidApp.isAlwaysShowStatusBar()) {
+			appearanceCategory.addOption(androidApp.ShowStatusBarOption, "showStatusBar");
+		}
+
+		final Screen textScreen = optionsCategory.createPreferenceScreen("text");
+		final Category textCategory = textScreen.createCategory(null);
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
-		appearanceCategory.addPreference(new FontOption(
-			this, appearanceCategory.Resource, "font",
+		textCategory.addPreference(new FontOption(
+			this, textCategory.Resource, "font",
 			baseStyle.FontFamilyOption
 		));
-		appearanceCategory.addPreference(new ZLIntegerRangePreference(
-			this, appearanceCategory.Resource.getResource("fontSize"),
+		textCategory.addPreference(new ZLIntegerRangePreference(
+			this, textCategory.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
 		));
-		appearanceCategory.addPreference(new ZLBooleanPreference(
-			this, baseStyle.BoldOption,
-			appearanceCategory.Resource, "bold"
-		));
-		appearanceCategory.addPreference(new ZLBooleanPreference(
-			this, baseStyle.ItalicOption,
-			appearanceCategory.Resource, "italic"
+		textCategory.addPreference(new FontStylePreference(
+			this, textCategory.Resource, "fontStyle",
+			baseStyle.BoldOption, baseStyle.ItalicOption
 		));
 		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
 		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
@@ -127,24 +116,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			final int val = spaceOption.MinValue + i;
 			spacings[i] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
 		}
-		appearanceCategory.addPreference(new ZLChoicePreference(
-			this, appearanceCategory.Resource, "lineSpacing",
+		textCategory.addPreference(new ZLChoicePreference(
+			this, textCategory.Resource, "lineSpacing",
 			baseStyle.LineSpaceOption, spacings
 		));
 		String[] alignments = { "left", "right", "center", "justify" };
-		appearanceCategory.addPreference(new ZLChoicePreference(
-			this, appearanceCategory.Resource, "alignment",
+		textCategory.addPreference(new ZLChoicePreference(
+			this, textCategory.Resource, "alignment",
 			baseStyle.AlignmentOption, alignments
 		));
-		appearanceCategory.addPreference(new ZLBooleanPreference(
+		textCategory.addPreference(new ZLBooleanPreference(
 			this, baseStyle.AutoHyphenationOption,
-			appearanceCategory.Resource, "autoHyphenations"
+			textCategory.Resource, "autoHyphenations"
 		));
 
 		final ZLOptionsDialog dlg = new OptionsDialog(fbReader).getDialog();
-		final Screen formatScreen = appearanceCategory.createPreferenceScreen("format");
-		final Screen stylesScreen = appearanceCategory.createPreferenceScreen("styles");
-		final Screen colorsScreen = appearanceCategory.createPreferenceScreen("colors");
+		final Screen formatScreen = textCategory.createPreferenceScreen("format");
+		final Screen stylesScreen = textCategory.createPreferenceScreen("styles");
+		final Screen colorsScreen = textCategory.createPreferenceScreen("colors");
 		formatScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
@@ -170,7 +159,26 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 		);
 
-		final Screen statusLineScreen = lookNFeelCategory.createPreferenceScreen("scrollBar");
+		final Screen marginsScreen = optionsCategory.createPreferenceScreen("margins");
+		final Category marginsCategory = marginsScreen.createCategory(null);
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("left"),
+			fbReader.LeftMarginOption
+		));
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("right"),
+			fbReader.RightMarginOption
+		));
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("top"),
+			fbReader.TopMarginOption
+		));
+		marginsCategory.addPreference(new ZLIntegerRangePreference(
+			this, marginsCategory.Resource.getResource("bottom"),
+			fbReader.BottomMarginOption
+		));
+
+		final Screen statusLineScreen = optionsCategory.createPreferenceScreen("scrollBar");
 		final Category statusLineCategory = statusLineScreen.createCategory(null);
 
 		String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
@@ -201,20 +209,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			fbReader.FooterFontOption
 		));
 
-		lookNFeelCategory.addOption(androidApp.AutoOrientationOption, "autoOrientation");
-		if (!androidApp.isAlwaysShowStatusBar()) {
-			lookNFeelCategory.addOption(androidApp.ShowStatusBarOption, "showStatusBar");
-		}
-		lookNFeelCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
-			this,
-			androidApp.BatteryLevelToTurnScreenOffOption,
-			lookNFeelCategory.Resource,
-			"dontTurnScreenOff"
-		));
-		lookNFeelCategory.addPreference(new ZLBooleanPreference(
+		final Screen displayScreen = optionsCategory.createPreferenceScreen("display");
+		final Category displayCategory = displayScreen.createCategory(null);
+		displayCategory.addPreference(new ZLBooleanPreference(
 			this,
 			fbReader.AllowScreenBrightnessAdjustmentOption,
-			lookNFeelCategory.Resource,
+			displayCategory.Resource,
 			"allowScreenBrightnessAdjustment"
 		) {
 			public void onAccept() {
@@ -224,9 +224,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		});
+		displayCategory.addPreference(new BatteryLevelToTurnScreenOffPreference(
+			this,
+			androidApp.BatteryLevelToTurnScreenOffOption,
+			displayCategory.Resource,
+			"dontTurnScreenOff"
+		));
 
 		/*
-		final Screen colorProfileScreen = lookNFeelCategory.createPreferenceScreen("colorProfile");
+		final Screen colorProfileScreen = optionsCategory.createPreferenceScreen("colorProfile");
 		final Category colorProfileCategory = colorProfileScreen.createCategory(null);
 		final ZLResource resource = colorProfileCategory.Resource;
 		colorProfileScreen.setSummary(ColorProfilePreference.createTitle(resource, fbreader.getColorProfileName()));
@@ -237,7 +243,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		*/
 
-		final Category scrollingCategory = createCategory("Scrolling");
+		final Screen scrollingScreen = optionsCategory.createPreferenceScreen("scrolling");
+		final Category scrollingCategory = scrollingScreen.createCategory(null);
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 		scrollingCategory.addOption(scrollingPreferences.FlickOption, "flick");
 		scrollingCategory.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");

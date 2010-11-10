@@ -30,6 +30,8 @@ import android.graphics.Typeface;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 
+import org.geometerplus.fbreader.Paths;
+
 public final class AndroidFontUtil {
 	private static Method ourFontCreationMethod;
 	static {
@@ -59,10 +61,10 @@ public final class AndroidFontUtil {
 			if (ourFontCreationMethod == null) {
 				ourFontMap = new HashMap<String,File[]>();
 			} else {
-				ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(new File(Paths.FontsDirectoryOption().getValue()).listFiles(
 					new FilenameFilter() {
 						public boolean accept(File dir, String name) {
-							return name.endsWith(".ttf") && !name.startsWith(".");
+							return name.toLowerCase().endsWith(".ttf") && !name.startsWith(".");
 						}
 					}
 				));

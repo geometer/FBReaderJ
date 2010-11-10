@@ -148,10 +148,13 @@
 			<node name="encoding" value="Кодировка"/>
 		</node>
 		<node name="Preferences">
-			<node name="Library" value="Библиотека">
-				<node name="path" value="Каталоги для поиска книг"/>
+			<node name="directories" value="Каталоги">
+				<node name="summary" value="Где искать файлы"/>
+				<node name="books" value="Каталог с книгами"/>
+				<node name="fonts" value="Каталог со шрифтами"/>
 			</node>
-			<node name="LookNFeel" value="Внешний вид">
+			<node name="appearance" value="Внешний вид">
+				<node name="summary" value="Поворот, строка состояния"/>
 				<node name="autoOrientation" value="Автоматический поворот">
 					<node name="summaryOn" value="Изображение поворачивается при повороте устройства"/>
 					<node name="summaryOff" value="Изображение не поворачивается при повороте устройства"/>
@@ -160,66 +163,91 @@
 					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
+			</node>
+			<node name="text" value="Текст">
+				<node name="summary" value="Шрифты, переносы, и т.д."/>
+				<node name="font" value="Шрифт"/>
+				<node name="fontSize" value="Размер шрифта"/>
+				<node name="fontStyle" value="Начертание">
+					<node name="regular" value="нормальное"/>
+					<node name="bold" value="жирное"/>
+					<node name="italic" value="курсив"/>
+					<node name="boldItalic" value="жирный курсив"/>
+				</node>
+				<node name="lineSpacing" value="Интервал"/>
+				<node name="alignment" value="Выравнивание">
+					<node name="left" value="левое"/>
+					<node name="right" value="правое"/>
+					<node name="center" value="по центру"/>
+					<node name="justify" value="по краям"/>
+				</node>
+				<node name="autoHyphenations" value="Переносы">
+					<node name="summaryOn" value="Автоматически расставлять переносы"/>
+					<node name="summaryOff" value="Не расставлять переносы"/>
+				</node>
+				<node name="format" value="Форматирование">
+					<node name="summary" value=""/>
+				</node>
+				<node name="styles" value="Стили">
+					<node name="summary" value=""/>
+				</node>
+				<node name="colors" value="Цвета">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+			<node name="margins" value="Отступы">
+				<node name="summary" value="Поля вокруг текста"/>
+				<node name="left" value="Отступ слева"/>
+				<node name="right" value="Отступ справа"/>
+				<node name="top" value="Отступ сверху"/>
+				<node name="bottom" value="Отступ снизу"/>
+			</node>
+			<node name="scrollBar" value="Полоса прокрутки">
+				<node name="summary" value="Индикатор количества прочитанного"/>
+				<node name="scrollbarType" value="Тип полосы прокрутки">
+					<node name="hide" value="Скрыть"/>
+					<node name="show" value="Вертикальный ползунок"/>
+					<node name="showAsProgress" value="Вертикальный прогресс-бар"/>
+					<node name="showAsFooter" value="Подвал"/>
+				</node>
+				<node name="footerHeight" value="Высота подвала" />
+				<node name="footerLongTap" value="Придержать подвал">
+					<node name="longTapRevert" value="Откатить переход"/>
+					<node name="longTapNavigate" value="Сделать переход"/>
+				</node>
+				<node name="showProgress" value="Показывать число страниц">
+					<node name="summaryOn" value="Показывать число страниц в подвале"/>
+					<node name="summaryOff" value="Не показывать число страниц в подвале"/>
+				</node>
+				<node name="showBattery" value="Показать заряд батареи">
+					<node name="summaryOn" value="Показывать заряд батареи в подвале"/>
+					<node name="summaryOff" value="Не показывать заряд батареи в подвале"/>
+				</node>
+				<node name="showClock" value="Показывать часы">
+					<node name="summaryOn" value="Показывать часы в подвале"/>
+					<node name="summaryOff" value="Не показывать часы в подвале"/>
+				</node>
+				<node name="isSensitive" value="Перемещаться по тексту при прикосновении к подвалу">
+					<node name="summaryOn" value="Перемещение включено"/>
+					<node name="summaryOff" value="Перемещение выключено"/>
+				</node>
+				<node name="font" value="Шрифт"/>
+			</node>
+			<node name="display" value="Экран">
+				<node name="summary" value="Яркость, защита от выключения"/>
+				<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
+					<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
+					<node name="summaryOff" value="Выключена"/>
+				</node>
 				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
 					<node name="0" value="Никогда не выключать"/>
 					<node name="25" value="Пока батарея заряжена хотя бы на четверть"/>
 					<node name="50" value="Пока батарея заряжена хотя бы на половину"/>
 					<node name="100" value="Всегда выключать"/>
 				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
-					<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
-					<node name="summaryOff" value="Выключена"/>
-				</node>
-				<node name="margins" value="Отступы">
-					<node name="summary" value="Поля вокруг текста"/>
-					<node name="left" value="Отступ слева"/>
-					<node name="right" value="Отступ справа"/>
-					<node name="top" value="Отступ сверху"/>
-					<node name="bottom" value="Отступ снизу"/>
-				</node>
-				<node name="appearanceSettings" value="Внешний вид">
-					<node name="summary" value="Настройки отображения текста"/>
-					<node name="font" value="Шрифт"/>
-					<node name="format" value="Форматирование">
-					</node>
-					<node name="styles" value="Стили">
-					</node>
-					<node name="colors" value="Цвета">
-					</node>
-				</node>
-				<node name="scrollBar" value="Полоса прокрутки">
-					<node name="summary" value="Настройка полосы прокрутки"/>
-					<node name="scrollbarType" value="Тип полосы прокрутки">
-						<node name="hide" value="Скрыть"/>
-						<node name="show" value="Вертикальный ползунок"/>
-						<node name="showAsProgress" value="Вертикальный прогресс-бар"/>
-						<node name="showAsFooter" value="Подвал"/>
-					</node>
-					<node name="footerHeight" value="Высота подвала" />
-					<node name="footerLongTap" value="Придержать подвал">
-						<node name="longTapRevert" value="Откатить переход"/>
-						<node name="longTapNavigate" value="Сделать переход"/>
-					</node>
-					<node name="showProgress" value="Показывать число страниц">
-						<node name="summaryOn" value="Показывать число страниц в подвале"/>
-						<node name="summaryOff" value="Не показывать число страниц в подвале"/>
-					</node>
-					<node name="showBattery" value="Показать заряд батареи">
-						<node name="summaryOn" value="Показывать заряд батареи в подвале"/>
-						<node name="summaryOff" value="Не показывать заряд батареи в подвале"/>
-					</node>
-					<node name="showClock" value="Показывать часы">
-						<node name="summaryOn" value="Показывать часы в подвале"/>
-						<node name="summaryOff" value="Не показывать часы в подвале"/>
-					</node>
-					<node name="isSensitive" value="Перемещаться по тексту при прикосновении к подвалу">
-						<node name="summaryOn" value="Перемещение включено"/>
-						<node name="summaryOff" value="Перемещение выключено"/>
-					</node>
-					<node name="font" value="Шрифт"/>
-				</node>
 			</node>
-			<node name="Scrolling" value="Перелистывание страниц">
+			<node name="scrolling" value="Перелистывание страниц">
+				<node name="summary" value="Как листать стрницы"/>
 				<node name="flick" value="Листать движением пальца">
 					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
 					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
@@ -286,7 +314,6 @@
 					<node name="bold" value="Жирный"/>
 					<node name="italic" value="Курсив"/>
 					<node name="allowHyphenations" value="Переносы"/>
-					<node name="autoHyphenations" value="Переносы"/>
 				</node>
 				<node name="Colors" value="Цвета">
 					<node name="colorFor" value="Цвет">
