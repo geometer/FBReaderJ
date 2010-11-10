@@ -70,12 +70,6 @@ class FormatOptionsPage extends OptionsPage {
 				KEY_DUMMY, null,//new ZLSimpleSpinOptionEntry("First Line Indent", baseStyle.firstLineIndentDeltaOption(), -300, 300, 1),
 				name
 			);
-
-			registerEntries(dialogTab,
-				KEY_ALIGNMENT, new ZLTextAlignmentOptionEntry(baseStyle.AlignmentOption, dialogTab.getResource(KEY_ALIGNMENT), false),
-				KEY_DUMMY, null,
-				name
-			);
 		}
 
 		for (int i = 0; i < stylesNumber; ++i) {

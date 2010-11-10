@@ -189,6 +189,12 @@
 						<node name="summaryOn" value=""/>
 						<node name="summaryOff" value=""/>
 					</node>
+					<node name="alignment" value="Alignment">
+						<node name="left" value="Left"/>
+						<node name="right" value="Right"/>
+						<node name="center" value="Center"/>
+						<node name="justify" value="Justify"/>
+					</node>
 					<node name="autoHyphenations" value="Auto hyphenations">
 						<node name="summaryOn" value=""/>
 						<node name="summaryOff" value=""/>

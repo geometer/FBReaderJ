@@ -39,8 +39,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		new ZLBooleanOption(GROUP, "Base:italic", false);
 	public final ZLBooleanOption UnderlineOption =
 		new ZLBooleanOption(GROUP, "Base:underline", false);
-	public final ZLIntegerOption AlignmentOption =
-		new ZLIntegerOption(GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
+	public final ZLIntegerRangeOption AlignmentOption =
+		new ZLIntegerRangeOption(GROUP, "Base:alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
 	public final ZLIntegerOption LineSpacePercentOption =
 		new ZLIntegerOption(GROUP, "Base:lineSpacingPercent", 120);
 

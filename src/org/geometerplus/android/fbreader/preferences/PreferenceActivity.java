@@ -120,6 +120,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, baseStyle.ItalicOption,
 			appearanceCategory.Resource, "italic"
 		));
+		String[] alignments = { "left", "right", "center", "justify" };
+		appearanceCategory.addPreference(new ZLChoicePreference(
+			this, appearanceCategory.Resource, "alignment",
+			baseStyle.AlignmentOption, alignments
+		));
 		appearanceCategory.addPreference(new ZLBooleanPreference(
 			this, baseStyle.AutoHyphenationOption,
 			appearanceCategory.Resource, "autoHyphenations"
