@@ -156,7 +156,10 @@ public final class Library {
 			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file));
 			file.setCached(false);
 		}
-		myBooks.add(getBook(getHelpFile(), fileInfos, savedBooks, false));
+		final Book helpBook = getBook(getHelpFile(), fileInfos, savedBooks, false);
+		if (helpBook != null) {
+			myBooks.add(helpBook);
+		}
 
 		collectExternalBooks(fileInfos, savedBooks);
 
@@ -215,9 +218,6 @@ public final class Library {
 		collectBooks();
 		//System.err.println(myBooks.size() + " books " + System.currentTimeMillis() % 20000);
 		for (Book book : myBooks) {
-			if (book == null) {
-				continue;
-			}
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
 			if (authors.isEmpty()) {
