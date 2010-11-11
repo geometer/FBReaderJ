@@ -149,10 +149,13 @@
 			<node name="encoding" value="Kódování"/>
 		</node>
 		<node name="Preferences">
-			<node name="Library" value="Knihovna">
-				<node name="path" value="Adresáře obsahující knihy"/>
+			<node name="directories" value="Directories" toBeTranslated="true">
+				<node name="summary" value="Directories to seek for files" toBeTranslated="true"/>
+				<node name="books" value="Books directory" toBeTranslated="true"/>
+				<node name="fonts" value="Fonts directory" toBeTranslated="true"/>
 			</node>
-			<node name="LookNFeel" value="Vzhled a chování">
+			<node name="appearance" value="Vzhled">
+				<node name="summary" value="Rotation, status bar" toBeTranslated="true"/>
 				<node name="autoOrientation" value="Automatické otáčení">
 					<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
 					<node name="summaryOff" value="Displej se neotočí pokud uživatel pohne zařízením"/>
@@ -161,64 +164,94 @@
 					<node name="summaryOn" value="Zobrazit stavový řádek v režimu čtení"/>
 					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
 				</node>
+			</node>
+			<node name="text" value="Text" toBeTranslated="true">
+				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontStyle" value="Font style" toBeTranslated="true">
+					<node name="regular" value="Regular" toBeTranslated="true"/>
+					<node name="bold" value="Bold" toBeTranslated="true"/>
+					<node name="italic" value="Italic" toBeTranslated="true"/>
+					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
+				</node>
+				<node name="lineSpacing" value="Řádkování"/>
+				<node name="alignment" value="Zarovnání">
+					<node name="left" value="Vlevo"/>
+					<node name="right" value="Vpravo"/>
+					<node name="center" value="Na střed"/>
+					<node name="justify" value="Do bloku"/>
+				</node>
+				<node name="autoHyphenations" value="Automatické dělení slov">
+					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
+					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+				</node>
+				<node name="more" value="More styles" toBeTranslated="true">
+					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
+					<node name="format" value="Formát">
+						<node name="summary" value=""/>
+					</node>
+					<node name="styles" value="Styly">
+						<node name="summary" value=""/>
+					</node>
+				</node>
+				<node name="colors" value="Barvy">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+			<node name="margins" value="Okraje">
+				<node name="summary" value="Text margins" toBeTranslated="true"/>
+				<node name="left" value="Levý okraj"/>
+				<node name="right" value="Pravý okraj"/>
+				<node name="top" value="Horní okraj"/>
+				<node name="bottom" value="Dolní okraj"/>
+			</node>
+			<node name="scrollBar" value="Posuvník">
+				<node name="summary" value="Nastavení posuvníku"/>
+				<node name="scrollbarType" value="Typ posuvníku">
+					<node name="hide" value="Skrýt"/>
+					<node name="show" value="Svislé šoupátko"/>
+					<node name="showAsProgress" value="Svislý indikátor průběhu"/>
+					<node name="showAsFooter" value="Vodorovná patička"/>
+				</node>
+				<node name="footerHeight" value="Výška patičky" />
+				<node name="footerLongTap" value="Dlouhé klepnutí na patičku">
+					<node name="longTapRevert" value="Vrátit pozici"/>
+					<node name="longTapNavigate" value="Jít na pozici"/>
+				</node>
+				<node name="showProgress" value="Zobrazit číslo stránky">
+					<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
+					<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
+				</node>
+				<node name="showBattery" value="Zobrazit úroveň baterie">
+					<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
+					<node name="summaryOff" value="Nezobrazovat úroveň baterie v patičce"/>
+				</node>
+				<node name="showClock" value="Zobrazit hodiny">
+					<node name="summaryOn" value="Zobrazit hodiny v patičce"/>
+					<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
+				</node>
+				<node name="isSensitive" value="Navigace klepnutím na patičku">
+					<node name="summaryOn" value="Navigace je povolena"/>
+					<node name="summaryOff" value="Navigace je zakázána"/>
+				</node>
+				<node name="font" value="Font family" toBeTranslated="true"/>
+			</node>
+			<node name="display" value="Display" toBeTranslated="true">
+				<node name="summary" value="Brightness control, preventing from sleep" toBeTranslated="true"/>
+				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
+					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
+					<node name="summaryOff" value="Zakázáno"/>
+				</node>
 				<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
 					<node name="0" value="Vždy"/>
 					<node name="25" value="Pokud je úroveň baterie větší než 25 procent"/>
 					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
 					<node name="100" value="Nikdy"/>
 				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
-					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
-					<node name="summaryOff" value="Zakázáno"/>
-				</node>
-				<node name="appearanceSettings" value="Vzhled">
-					<node name="summary" value="Nastavení zobrazení textu"/>
-					<node name="margins" value="Okraje">
-						<node name="left" value="Levý okraj"/>
-						<node name="right" value="Pravý okraj"/>
-						<node name="top" value="Horní okraj"/>
-						<node name="bottom" value="Dolní okraj"/>
-					</node>
-					<node name="format" value="Formát">
-					</node>
-					<node name="styles" value="Styly">
-					</node>
-					<node name="colors" value="Barvy">
-					</node>
-				</node>
-				<node name="scrollBar" value="Posuvník">
-					<node name="summary" value="Nastavení posuvníku"/>
-					<node name="scrollbarType" value="Typ posuvníku">
-						<node name="hide" value="Skrýt"/>
-						<node name="show" value="Svislé šoupátko"/>
-						<node name="showAsProgress" value="Svislý indikátor průběhu"/>
-						<node name="showAsFooter" value="Vodorovná patička"/>
-					</node>
-					<node name="footerHeight" value="Výška patičky" />
-					<node name="footerLongTap" value="Dlouhé klepnutí na patičku">
-						<node name="longTapRevert" value="Vrátit pozici"/>
-						<node name="longTapNavigate" value="Jít na pozici"/>
-					</node>
-					<node name="showProgress" value="Zobrazit číslo stránky">
-						<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
-						<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
-					</node>
-					<node name="showBattery" value="Zobrazit úroveň baterie">
-						<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
-						<node name="summaryOff" value="Nezobrazovat úroveň baterie v patičce"/>
-					</node>
-					<node name="showClock" value="Zobrazit hodiny">
-						<node name="summaryOn" value="Zobrazit hodiny v patičce"/>
-						<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
-					</node>
-					<node name="isSensitive" value="Navigace klepnutím na patičku">
-						<node name="summaryOn" value="Navigace je povolena"/>
-						<node name="summaryOff" value="Navigace je zakázána"/>
-					</node>
-					<node name="font" value="Font" toBeTranslated="true"/>
-				</node>
 			</node>
-			<node name="Scrolling" value="Posouvání">
+			<node name="scrolling" value="Posouvání">
+				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
 				<node name="flick" value="Posouvání tahem">
 					<node name="summaryOn" value="Posouvat stránky tahem prstem"/>
 					<node name="summaryOff" value="Posouvat stránky klepnutím prstem"/>
@@ -285,7 +318,6 @@
 					<node name="bold" value="Tučně"/>
 					<node name="italic" value="Kurzíva"/>
 					<node name="allowHyphenations" value="Povolit dělení slov"/>
-					<node name="autoHyphenations" value="Automatické dělení slov"/>
 				</node>
 				<node name="Colors" value="Barvy">
 					<node name="colorFor" value="Barva pro">

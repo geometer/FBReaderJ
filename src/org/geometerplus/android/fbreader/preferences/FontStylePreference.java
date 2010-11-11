@@ -21,24 +21,30 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class ZLChoicePreference extends ZLStringListPreference {
-	private final ZLIntegerRangeOption myOption;
+class FontStylePreference extends ZLStringListPreference {
+	private final ZLBooleanOption myBoldOption;
+	private final ZLBooleanOption myItalicOption;
+	private final String[] myValues = { "regular", "bold", "italic", "boldItalic" };
 
-	ZLChoicePreference(Context context, ZLResource resource, String resourceKey, ZLIntegerRangeOption option, String[] valueResourceKeys) {
+	FontStylePreference(Context context, ZLResource resource, String resourceKey, ZLBooleanOption boldOption, ZLBooleanOption italicOption) {
 		super(context, resource, resourceKey);
 
-		assert(option.MaxValue - option.MinValue + 1 == valueResourceKeys.length);
+		myBoldOption = boldOption;
+		myItalicOption = italicOption;
+		setList(myValues);
 
-		myOption = option;
-		setList(valueResourceKeys);
-
-		setInitialValue(valueResourceKeys[option.getValue() - option.MinValue]);
+		final int intValue =
+			(boldOption.getValue() ? 1 : 0) |
+			(italicOption.getValue() ? 2 : 0);
+		setInitialValue(myValues[intValue]);
 	}
 
 	public void onAccept() {
-		myOption.setValue(myOption.MinValue + findIndexOfValue(getValue()));
+		final int intValue = findIndexOfValue(getValue());
+		myBoldOption.setValue((intValue & 0x1) == 0x1);
+		myItalicOption.setValue((intValue & 0x2) == 0x2);
 	}
 }

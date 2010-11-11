@@ -28,28 +28,24 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class ZLTextLineSpaceOptionEntry extends ZLComboOptionEntry {
 	private static final String KEY_UNCHANGED = "unchanged";
-	private static final ArrayList<String> ourAllValues = new ArrayList<String>();
 	private static final ArrayList<String> ourAllValuesPlusBase = new ArrayList<String>();
 
 	private final ZLIntegerOption myOption;
 	private final ZLResource myResource;
-	private final boolean myAllowBase;
 	
-	public ZLTextLineSpaceOptionEntry(ZLIntegerOption option, final ZLResource resource, boolean allowBase) {
+	public ZLTextLineSpaceOptionEntry(ZLIntegerOption option, final ZLResource resource) {
 		myOption = option;
 		myResource = resource;
-		myAllowBase = allowBase;
 		if (ourAllValuesPlusBase.size() == 0) {
-			for (int i = 5; i <= 20; ++i) {
-				ourAllValues.add("" + (char)(i / 10 + '0') + '.' + (char)(i % 10 + '0'));
-			}
 			ourAllValuesPlusBase.add(myResource.getResource(KEY_UNCHANGED).getValue());
-			ourAllValuesPlusBase.addAll(ourAllValues);
+			for (int i = 5; i <= 20; ++i) {
+				ourAllValuesPlusBase.add("" + (char)(i / 10 + '0') + '.' + (char)(i % 10 + '0'));
+			}
 		}
 	}
 
 	public ArrayList<String> getValues() {
-		return myAllowBase ? ourAllValuesPlusBase : ourAllValues;
+		return ourAllValuesPlusBase;
 	}
 
 	public String initialValue() {
@@ -58,7 +54,7 @@ public class ZLTextLineSpaceOptionEntry extends ZLComboOptionEntry {
 			return ourAllValuesPlusBase.get(0);
 		}
 		final int index = Math.max(0, Math.min(15, (value + 5) / 10 - 5));
-		return ourAllValues.get(index);
+		return ourAllValuesPlusBase.get(index + 1);
 	}
 
 	public void onAccept(String value) {
@@ -66,7 +62,7 @@ public class ZLTextLineSpaceOptionEntry extends ZLComboOptionEntry {
 			myOption.setValue(-1);
 		} else {
 			for (int i = 5; i <= 20; ++i) {
-				if (ourAllValues.get(i - 5).equals(value)) {
+				if (ourAllValuesPlusBase.get(i - 5 + 1).equals(value)) {
 					myOption.setValue(10 * i);
 					break;
 				}

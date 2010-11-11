@@ -19,10 +19,14 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
 class FontOption extends ZLStringListPreference {
 	private final ZLStringOption myOption;
@@ -31,11 +35,23 @@ class FontOption extends ZLStringListPreference {
 		super(context, resource, resourceKey);
 
 		myOption = option;
-		// TODO: full list of fonts
-		setList(new String[] { "Droid Mono", "Droid Sans", "Droid Serif" });
+		final ArrayList<String> fonts = new ArrayList<String>();
+		AndroidFontUtil.fillFamiliesList(fonts);
+		setList((String[])fonts.toArray(new String[fonts.size()]));
 
-		// TODO: get real font name
-		setInitialValue(option.getValue());
+		final String initialValue = AndroidFontUtil.realFontFamilyName(option.getValue());
+		for (String fontName : fonts) {
+			if (initialValue.equals(fontName)) {
+				setInitialValue(fontName);
+				return;
+			}
+		}
+		for (String fontName : fonts) {
+			if (initialValue.equals(AndroidFontUtil.realFontFamilyName(fontName))) {
+				setInitialValue(fontName);
+				return;
+			}
+		}
 	}
 
 	public void onAccept() {

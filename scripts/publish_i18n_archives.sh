@@ -8,7 +8,7 @@ build_language_archive() {
 	mkdir $dir
 	cp assets/resources/application/$lang.xml $dir/FBReader-$lang.xml
 	cp assets/resources/zlibrary/$lang.xml $dir/zlibrary-$lang.xml
-	cp assets/help/MiniHelp.$lang.fb2 $dir
+	cp assets/data/help/MiniHelp.$lang.fb2 $dir
 	zip -r $dir.zip $dir
 	rm -rf $dir
 }
