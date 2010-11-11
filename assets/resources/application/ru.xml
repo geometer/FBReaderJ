@@ -185,11 +185,14 @@
 					<node name="summaryOn" value="Автоматически расставлять переносы"/>
 					<node name="summaryOff" value="Не расставлять переносы"/>
 				</node>
-				<node name="format" value="Форматирование">
-					<node name="summary" value=""/>
-				</node>
-				<node name="styles" value="Стили">
-					<node name="summary" value=""/>
+				<node name="more" value="Другие стили">
+					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов, и т.д."/>
+					<node name="format" value="Форматирование">
+						<node name="summary" value=""/>
+					</node>
+					<node name="styles" value="Стили">
+						<node name="summary" value=""/>
+					</node>
 				</node>
 				<node name="colors" value="Цвета">
 					<node name="summary" value=""/>

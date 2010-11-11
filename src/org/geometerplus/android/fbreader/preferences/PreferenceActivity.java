@@ -131,8 +131,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 
 		final ZLOptionsDialog dlg = new OptionsDialog(fbReader).getDialog();
-		final Screen formatScreen = textCategory.createPreferenceScreen("format");
-		final Screen stylesScreen = textCategory.createPreferenceScreen("styles");
+		final Screen moreStylesScreen = textCategory.createPreferenceScreen("more");
+		final Category moreStylesCategory = moreStylesScreen.createCategory(null);
+		final Screen formatScreen = moreStylesCategory.createPreferenceScreen("format");
+		final Screen stylesScreen = moreStylesCategory.createPreferenceScreen("styles");
 		final Screen colorsScreen = textCategory.createPreferenceScreen("colors");
 		formatScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {

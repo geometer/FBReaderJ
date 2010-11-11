@@ -189,11 +189,14 @@
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
-				<node name="format" value="Format">
-					<node name="summary" value=""/>
-				</node>
-				<node name="styles" value="Styles">
-					<node name="summary" value=""/>
+				<node name="more" value="More styles" toBeTranslated="true">
+					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
+					<node name="format" value="Format">
+						<node name="summary" value=""/>
+					</node>
+					<node name="styles" value="Styles">
+						<node name="summary" value=""/>
+					</node>
 				</node>
 				<node name="colors" value="Couleurs">
 					<node name="summary" value=""/>
