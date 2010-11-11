@@ -1,4 +1,4 @@
-===== 0.7.15 (??? ??, 2010) =====
+===== 0.7.15 (Nov 11, 2010) =====
 * External TTF fonts are supported (for Android version >= 1.6)
 * Ukrainian localization (by Dmytro Shevchenko) has been added
 * Default font size depends on display DPI
