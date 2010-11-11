@@ -22,7 +22,7 @@ public class OpenFileActivity extends ListActivity {
 	private final DISPLAYMODE displayMode = DISPLAYMODE.RELATIVE;
 	private ArrayList<String> directoryEntries = new ArrayList<String>();
 	private File currentDirectory = new File("/");
-	private  ZLStringOption LastPath= new ZLStringOption("Files", "LastPath",Paths.BooksDirectoryOption.getValue());
+	private  ZLStringOption LastPath= new ZLStringOption("Files", "LastPath", Paths.BooksDirectoryOption().getValue());
 
 
 	/** Called when the activity is first created. */
@@ -30,7 +30,7 @@ public class OpenFileActivity extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		if (LastPath.getValue().indexOf(Environment.getExternalStorageDirectory().getName())== -1)
-			LastPath.setValue(Paths.BooksDirectoryOption.getValue());
+			LastPath.setValue(Paths.BooksDirectoryOption().getValue());
 		browseToRoot();
 	}
 
