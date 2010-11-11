@@ -215,9 +215,6 @@ public final class Library {
 		collectBooks();
 		//System.err.println(myBooks.size() + " books " + System.currentTimeMillis() % 20000);
 		for (Book book : myBooks) {
-			if (book == null) {
-				continue;
-			}
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
 			if (authors.isEmpty()) {

@@ -1,3 +1,7 @@
+===== 0.7.16 (Nov 11, 2010) =====
+* Czech resources have been updated
+* An NPE during library starting has been fixed (this NPE only occures on systems with locale "not supported" by FBReader (like Spanish, Finnish, Japan, etc.)
+
 ===== 0.7.15 (Nov 11, 2010) =====
 * External TTF fonts are supported (for Android version >= 1.6)
 * Ukrainian localization (by Dmytro Shevchenko) has been added

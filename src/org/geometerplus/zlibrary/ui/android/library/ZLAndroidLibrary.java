@@ -198,7 +198,23 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		@Override
 		public boolean exists() {
-			return true;
+			try {
+				AssetFileDescriptor descriptor = myApplication.getAssets().openFd(getPath());
+				if (descriptor != null) {
+					descriptor.close();
+					// file exists
+					return true;
+				}
+			} catch (IOException e) {
+			}
+			try {
+				String[] names = myApplication.getAssets().list(getPath());
+				if (names != null && names.length != 0) {
+					return true;
+				}
+			} catch (IOException e) {
+			}
+			return false;
 		}
 
 		@Override
