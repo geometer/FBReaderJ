@@ -123,7 +123,7 @@ public class Book {
 		if ((myTitle == null) || (myTitle.length() == 0)) {
 			setTitle(File.getName(true));
 		}
-		final String demoPathPrefix = Paths.BooksDirectoryOption.getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
+		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
 		if (File.getPath().startsWith(demoPathPrefix)) {
 			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");

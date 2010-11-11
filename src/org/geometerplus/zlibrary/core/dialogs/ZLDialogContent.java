@@ -22,28 +22,12 @@ package org.geometerplus.zlibrary.core.dialogs;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBoolean3OptionEntry;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBooleanOptionEntry;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleStringOptionEntry;
 import org.geometerplus.zlibrary.core.options.*;
 
 public abstract class ZLDialogContent {
 	private final ZLResource myResource;
 	protected final ArrayList<ZLOptionView> Views = new ArrayList<ZLOptionView>();
 
-	private static ZLOptionEntry createEntryByOption(ZLSimpleOption option) {
-		switch (option.getType()) {
-		case ZLSimpleOption.Type.BOOLEAN:
-			return new ZLSimpleBooleanOptionEntry((ZLBooleanOption) option);
-		case ZLSimpleOption.Type.BOOLEAN3:
-			return new ZLSimpleBoolean3OptionEntry((ZLBoolean3Option) option);
-		case ZLSimpleOption.Type.STRING:
-			return new ZLSimpleStringOptionEntry((ZLStringOption) option);
-		default:
-			return null;
-		}
-	}
-	
 	protected ZLDialogContent(ZLResource resource) {
 		myResource = resource;
 	}
@@ -70,10 +54,6 @@ public abstract class ZLDialogContent {
 		addOptionByName(myResource.getResource(key).getValue(), option);
 	}
 	
-	public final void addOption(String key, ZLSimpleOption option) {
-		addOption(key, createEntryByOption(option));
-	}
-	
 	public abstract void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1);
 	
 	public final void addOptions(String key0, ZLOptionEntry option0, String key1, ZLOptionEntry option1) {
@@ -82,10 +62,6 @@ public abstract class ZLDialogContent {
 		addOptionsByNames(resource0.getValue(), option0, resource1.getValue(), option1);
 	}
 	
-	public final void addOptions(String key0, ZLSimpleOption option0, String key1, ZLSimpleOption option1) {
-		addOptions(key0, createEntryByOption(option0), key1, createEntryByOption(option1));
-	}
-
 	protected final void accept() {
 		final int size = Views.size();
 		for (int i = 0; i < size; i++) {
