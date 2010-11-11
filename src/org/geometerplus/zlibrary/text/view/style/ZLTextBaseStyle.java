@@ -39,10 +39,10 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		new ZLBooleanOption(GROUP, "Base:italic", false);
 	public final ZLBooleanOption UnderlineOption =
 		new ZLBooleanOption(GROUP, "Base:underline", false);
-	public final ZLIntegerOption AlignmentOption =
-		new ZLIntegerOption(GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
-	public final ZLIntegerOption LineSpacePercentOption =
-		new ZLIntegerOption(GROUP, "Base:lineSpacingPercent", 120);
+	public final ZLIntegerRangeOption AlignmentOption =
+		new ZLIntegerRangeOption(GROUP, "Base:alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
+	public final ZLIntegerRangeOption LineSpaceOption =
+		new ZLIntegerRangeOption(GROUP, "Base:lineSpacing", 5, 20, 12);
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
@@ -51,7 +51,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
 		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
-		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 0, 72, fontSize);
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, 72, fontSize);
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	
 	@Override
 	public int getLineSpacePercent() {
-		return LineSpacePercentOption.getValue();
+		return LineSpaceOption.getValue() * 10;
 	}
 
 	@Override

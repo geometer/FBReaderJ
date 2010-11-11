@@ -116,16 +116,16 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		Typeface tf = typefaces[style];
 		if (tf == null) {
-			File[] files = getFontMap().get(family);
+			File[] files = AndroidFontUtil.getFontMap().get(family);
 			if (files != null) {
 				try {
 					if (files[style] != null) {
-						tf = createFontFromFile(files[style]);
+						tf = AndroidFontUtil.createFontFromFile(files[style]);
 					} else {
 						for (int i = 0; i < 4; ++i) {
 							if (files[i] != null) {
 								tf = (typefaces[i] != null) ?
-									typefaces[i] : createFontFromFile(files[i]);
+									typefaces[i] : AndroidFontUtil.createFontFromFile(files[i]);
 								typefaces[i] = tf;
 								break;
 							}
@@ -228,69 +228,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		// TODO: implement
 	}
 
-	private static Method ourFontCreationMethod;
-	static {
-		try {
-			ourFontCreationMethod = Typeface.class.getMethod("createFromFile", File.class);
-		} catch (NoSuchMethodException e) {
-			ourFontCreationMethod = null;
-		}
-	}
-
-	private static Typeface createFontFromFile(File file) {
-		if (ourFontCreationMethod == null) {
-			return null;
-		}
-		try {
-			return (Typeface)ourFontCreationMethod.invoke(null, file);
-		} catch (IllegalAccessException e) {
-			return null;
-		} catch (InvocationTargetException e) {
-			return null;
-		}
-	}
-
-	private static Map<String,File[]> ourFontMap;
-	private static Map<String,File[]> getFontMap() {
-		if (ourFontMap == null) {
-			if (ourFontCreationMethod == null) {
-				ourFontMap = new HashMap<String,File[]>();
-			} else {
-				ourFontMap = new ZLTTFInfoDetector().collectFonts(new File("/sdcard/fonts").listFiles(
-					new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							return name.endsWith(".ttf") && !name.startsWith(".");
-						}
-					}
-				));
-			}
-		}
-		return ourFontMap;
-	}
-
 	public String realFontFamilyName(String fontFamily) {
-		if ("serif".equalsIgnoreCase(fontFamily) || "droid serif".equalsIgnoreCase(fontFamily)) {
-			return "serif";
-		}
-		if ("sans-serif".equalsIgnoreCase(fontFamily) || "sans serif".equalsIgnoreCase(fontFamily) || "droid sans".equalsIgnoreCase(fontFamily)) {
-			return "sans-serif";
-		}
-		if ("monospace".equalsIgnoreCase(fontFamily) || "droid mono".equalsIgnoreCase(fontFamily)) {
-			return "monospace";
-		}
-		for (String name : getFontMap().keySet()) {
-			if (name.equalsIgnoreCase(fontFamily)) {
-				return name;
-			}
-		}
-		return "sans-serif";
+		return AndroidFontUtil.realFontFamilyName(fontFamily);
 	}
 
 	protected void fillFamiliesList(ArrayList<String> families) {
-		families.add("Droid Sans");
-		families.add("Droid Serif");
-		families.add("Droid Mono");
-		families.addAll(getFontMap().keySet());
-		Collections.sort(families);
+		AndroidFontUtil.fillFamiliesList(families);
 	}
 }
