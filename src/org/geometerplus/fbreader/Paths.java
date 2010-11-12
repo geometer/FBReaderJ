@@ -24,10 +24,16 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import android.os.Environment;
 
 public abstract class Paths {
-	public static final ZLStringOption BooksDirectoryOption = new ZLStringOption("Files", "BooksDirectory", Environment.getExternalStorageDirectory() + "/Books");
+	public static ZLStringOption BooksDirectoryOption() {
+		return new ZLStringOption("Files", "BooksDirectory", Environment.getExternalStorageDirectory() + "/Books");
+	}
+
+	public static ZLStringOption FontsDirectoryOption() {
+		return new ZLStringOption("Files", "FontsDirectory", Environment.getExternalStorageDirectory() + "/Fonts");
+	}
 
 	public static String cacheDirectory() {
-		return BooksDirectoryOption.getValue() + "/.FBReader";
+		return BooksDirectoryOption().getValue() + "/.FBReader";
 	}
 
 	public static String networkCacheDirectory() {

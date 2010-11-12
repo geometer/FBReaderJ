@@ -53,13 +53,13 @@ public final class Library {
 
 	public static ZLResourceFile getHelpFile() {
 		final ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
+			"data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
-		return ZLResourceFile.createResourceFile("help/MiniHelp.en.fb2");
+		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
 	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
@@ -127,7 +127,7 @@ public final class Library {
 		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		dirQueue.offer(new ZLPhysicalFile(new File(Paths.BooksDirectoryOption.getValue())));
+		dirQueue.offer(new ZLPhysicalFile(new File(Paths.BooksDirectoryOption().getValue())));
 
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {
