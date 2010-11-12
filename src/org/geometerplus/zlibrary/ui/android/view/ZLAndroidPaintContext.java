@@ -116,7 +116,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		Typeface tf = typefaces[style];
 		if (tf == null) {
-			File[] files = AndroidFontUtil.getFontMap().get(family);
+			File[] files = AndroidFontUtil.getFontMap(false).get(family);
 			if (files != null) {
 				try {
 					if (files[style] != null) {
@@ -233,6 +233,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	protected void fillFamiliesList(ArrayList<String> families) {
-		AndroidFontUtil.fillFamiliesList(families);
+		AndroidFontUtil.fillFamiliesList(families, false);
 	}
 }

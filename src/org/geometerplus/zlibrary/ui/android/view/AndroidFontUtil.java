@@ -56,18 +56,41 @@ public final class AndroidFontUtil {
 	}
 
 	private static Map<String,File[]> ourFontMap;
-	public static Map<String,File[]> getFontMap() {
-		if (ourFontMap == null) {
+	private static File[] ourFileList;
+	private static long myTimeStamp;
+	public static Map<String,File[]> getFontMap(boolean forceReload) {
+		final long timeStamp = System.currentTimeMillis();
+		if (forceReload && timeStamp < myTimeStamp + 1000) {
+			forceReload = false;
+		}
+		myTimeStamp = timeStamp;
+		if (ourFontMap == null || forceReload) {
+			boolean rebuildMap = ourFontMap == null;
 			if (ourFontCreationMethod == null) {
-				ourFontMap = new HashMap<String,File[]>();
+				if (rebuildMap) {
+					ourFontMap = new HashMap<String,File[]>();
+				}
 			} else {
-				ourFontMap = new ZLTTFInfoDetector().collectFonts(new File(Paths.FontsDirectoryOption().getValue()).listFiles(
+				final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
 					new FilenameFilter() {
 						public boolean accept(File dir, String name) {
 							return name.toLowerCase().endsWith(".ttf") && !name.startsWith(".");
 						}
 					}
-				));
+				);
+				if (fileList == null) {
+					if (ourFileList != null) {
+						ourFileList = null;
+						rebuildMap = true;
+					}
+				}
+				if (fileList != null && !fileList.equals(ourFileList)) {
+					ourFileList = fileList;
+					rebuildMap = true;
+				}
+				if (rebuildMap) {
+					ourFontMap = new ZLTTFInfoDetector().collectFonts(fileList);
+				}
 			}
 		}
 		return ourFontMap;
@@ -83,7 +106,7 @@ public final class AndroidFontUtil {
 		if ("monospace".equalsIgnoreCase(fontFamily) || "droid mono".equalsIgnoreCase(fontFamily)) {
 			return "monospace";
 		}
-		for (String name : getFontMap().keySet()) {
+		for (String name : getFontMap(false).keySet()) {
 			if (name.equalsIgnoreCase(fontFamily)) {
 				return name;
 			}
@@ -91,11 +114,11 @@ public final class AndroidFontUtil {
 		return "sans-serif";
 	}
 
-	public static void fillFamiliesList(ArrayList<String> families) {
+	public static void fillFamiliesList(ArrayList<String> families, boolean forceReload) {
 		families.add("Droid Sans");
 		families.add("Droid Serif");
 		families.add("Droid Mono");
-		families.addAll(getFontMap().keySet());
+		families.addAll(getFontMap(forceReload).keySet());
 		Collections.sort(families);
 	}
 }
