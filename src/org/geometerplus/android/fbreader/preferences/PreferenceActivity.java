@@ -103,12 +103,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				KeyEvent.KEYCODE_CAMERA,
 		};
 
+		/*
 		for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
 			String key = ZLAndroidKeyUtil.getKeyNameByCode(keys[keyIndex]);
 			keyBindingCategory.addPreference(new StringListPreference(
 				this, keysResource.getResource(key), actionsResource,
 				actions, ZLApplication.Instance().getBindingOption(keys[keyIndex])));
 		}
+		*/
 
 		final Screen directoriesScreen = optionsCategory.createPreferenceScreen("directories");
 		final Category directoriesCategory = directoriesScreen.createCategory(null);

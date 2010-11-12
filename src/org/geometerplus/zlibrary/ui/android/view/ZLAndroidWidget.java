@@ -389,16 +389,16 @@ public class ZLAndroidWidget extends View {
 					if (myPendingPress) {
 						switch(myMode) {
 							case MODE_READ:
-								if (y > getHeight() - myFooter.getTapHeight()) {
+								//if (y > getHeight() - myFooter.getTapHeight()) {
+								if (y > getHeight() - 40) {
 									FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
-									if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+									if (reader.FooterLongTapOption.getValue() == FOOTER_LONG_TAP_REVERT) {
 										if (view instanceof ZLTextView) {
 											((ZLTextView) view).savePosition();
 										}
-										myFooter.setProgress(view, myPressedX);
+										//myFooter.setProgress(view, myPressedX);
 									}
-								}
-								else {
+								} else {
 									if (!view.onStylusPress(myPressedX, myPressedY)) {
 										myTapZones.doTap(myPressedX, myPressedY);
 									}
@@ -595,17 +595,18 @@ public class ZLAndroidWidget extends View {
 	}
 
 	public boolean onLongClick (){
-		if (myPressedY > getHeight() - myFooter.getTapHeight()) {
+		//if (myPressedY > getHeight() - myFooter.getTapHeight()) {
+		if (myPressedY > getHeight() - 40) {
 			FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
-			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_REVERT) {
+			if (reader.FooterLongTapOption.getValue() == FOOTER_LONG_TAP_REVERT) {
 				final ZLView view = ZLApplication.Instance().getCurrentView();
 				if (view instanceof ZLTextView) {
 					return ((ZLTextView) view).revertPosition();
 				}
 			}
-			if (reader.FooterLongTap.getValue() == FOOTER_LONG_TAP_NAVIGATE) {
+			if (reader.FooterLongTapOption.getValue() == FOOTER_LONG_TAP_NAVIGATE) {
 				final ZLView view = ZLApplication.Instance().getCurrentView();
-				myFooter.setProgress(view, myPressedX);
+				//myFooter.setProgress(view, myPressedX);
 				return true;
 			}
 		}
