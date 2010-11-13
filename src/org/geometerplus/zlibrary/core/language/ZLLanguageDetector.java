@@ -64,7 +64,7 @@ public class ZLLanguageDetector {
 		};
 
 	public ZLLanguageDetector() {
-		for (ZLFile file : ZLLanguageList.patternsFile().children()) {
+		for (ZLFile file : ZLLanguageUtil.patternsFile().children()) {
 			final String name = file.getName(true);
 			final int index = name.indexOf('_');
 			if (index != -1) {

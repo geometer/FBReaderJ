@@ -41,6 +41,7 @@ public interface INetworkLink {
 	String getSummary();
 	String getIcon();
 	String getLink(String urlKey);
+	String getLanguage();
 
 	Set<String> getLinkKeys();
 

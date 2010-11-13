@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -43,14 +44,11 @@ public class NetworkLibrary {
 	}
 
 	private static class CompositeList extends AbstractSequentialList<INetworkLink> {
-
 		private final ArrayList<ArrayList<? extends INetworkLink>> myLists;
-		private Comparator<INetworkLink> myComparator;
+		private final Comparator<INetworkLink> myComparator = new LinksComparator();
 
-		public CompositeList(ArrayList<ArrayList<? extends INetworkLink>> lists,
-				Comparator<INetworkLink> comparator) {
+		public CompositeList(ArrayList<ArrayList<? extends INetworkLink>> lists) {
 			myLists = lists;
-			myComparator = comparator;
 		}
 
 		private class Iterator implements ListIterator<INetworkLink> {
@@ -195,7 +193,22 @@ public class NetworkLibrary {
 			return title;
 		}
 
+		private static int languageOrder(String language) {
+			if (language == ZLLanguageUtil.MULTI_LANGUAGE_CODE) {
+				return 1;
+			}
+			if (language.equals(Locale.getDefault().getLanguage())) {
+				return 0;
+			}
+			return 2;
+		}
+
 		public int compare(INetworkLink link1, INetworkLink link2) {
+			final int languageOrder1 = languageOrder(link1.getLanguage());
+			final int languageOrder2 = languageOrder(link2.getLanguage());
+			if (languageOrder1 != languageOrder2) {
+				return languageOrder1 - languageOrder2;
+			}
 			final String title1 = filterLinkTitle(link1.getTitle());
 			final String title2 = filterLinkTitle(link2.getTitle());
 			return title1.compareToIgnoreCase(title2);
@@ -224,7 +237,7 @@ public class NetworkLibrary {
 		ArrayList<ArrayList<? extends INetworkLink>> linksList = new ArrayList<ArrayList<? extends INetworkLink>>();
 		linksList.add(myLoadedLinks);
 		linksList.add(myCustomLinks);
-		myLinks = new CompositeList(linksList, new LinksComparator());
+		myLinks = new CompositeList(linksList);
 	}
 
 	private boolean myIsAlreadyInitialized;
@@ -477,9 +490,7 @@ public class NetworkLibrary {
 	public void synchronize() {
 		if (myUpdateChildren || myInvalidateChildren) {
 			if (myInvalidateChildren) {
-				final LinksComparator cmp = new LinksComparator();
-				//Collections.sort(myLoadedLinks, cmp); // this collection is always sorted
-				Collections.sort(myCustomLinks, cmp);
+				Collections.sort(myCustomLinks, new LinksComparator());
 			}
 			myUpdateChildren = false;
 			myInvalidateChildren = false;
@@ -553,7 +564,8 @@ public class NetworkLibrary {
 		synchronized (myLinks) {
 			final int index = Collections.binarySearch(list, link, comparator);
 			if (index >= 0) {
-				throw new RuntimeException("Unable to add link with duplicated title to the library");
+				return;
+				//throw new RuntimeException("Unable to add link with duplicated title to the library");
 			}
 			final int insertAt = -index - 1;
 			list.add(insertAt, link);
@@ -598,5 +610,13 @@ public class NetworkLibrary {
 			}
 		}
 		return false;
+	}
+
+	public List<String> languages() {
+		final TreeSet<String> languageSet = new TreeSet<String>();
+		for (INetworkLink link : myLoadedLinks) {
+			languageSet.add(link.getLanguage());
+		}
+		return new ArrayList(languageSet);
 	}
 }
