@@ -27,12 +27,14 @@ import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextBaseStyle;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.bookmodel.FBTextKind;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
@@ -133,6 +135,44 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ZLOptionsDialog dlg = new OptionsDialog(fbReader).getDialog();
 		final Screen moreStylesScreen = textCategory.createPreferenceScreen("more");
 		final Category moreStylesCategory = moreStylesScreen.createCategory(null);
+
+		byte styles[] = {
+			FBTextKind.REGULAR,
+			FBTextKind.TITLE,
+			FBTextKind.SECTION_TITLE,
+			FBTextKind.SUBTITLE,
+			FBTextKind.H1,
+			FBTextKind.H2,
+			FBTextKind.H3,
+			FBTextKind.H4,
+			FBTextKind.H5,
+			FBTextKind.H6,
+			FBTextKind.ANNOTATION,
+			FBTextKind.EPIGRAPH,
+			FBTextKind.AUTHOR,
+			FBTextKind.POEM_TITLE,
+			FBTextKind.STANZA,
+			FBTextKind.VERSE,
+			FBTextKind.CITE,
+			FBTextKind.INTERNAL_HYPERLINK,
+			FBTextKind.EXTERNAL_HYPERLINK,
+			FBTextKind.FOOTNOTE,
+			FBTextKind.ITALIC,
+			FBTextKind.EMPHASIS,
+			FBTextKind.BOLD,
+			FBTextKind.STRONG,
+			FBTextKind.DEFINITION,
+			FBTextKind.DEFINITION_DESCRIPTION,
+			FBTextKind.PREFORMATTED,
+			FBTextKind.CODE
+		};
+		for (int i = 0; i < styles.length; ++i) {
+			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
+			if (decoration != null) {
+				final Screen formatScreen = moreStylesCategory.createPreferenceScreen(decoration.getName());
+			}
+		}
+
 		final Screen formatScreen = moreStylesCategory.createPreferenceScreen("format");
 		final Screen stylesScreen = moreStylesCategory.createPreferenceScreen("styles");
 		final Screen colorsScreen = textCategory.createPreferenceScreen("colors");
