@@ -43,145 +43,6 @@ public class NetworkLibrary {
 		return ourInstance;
 	}
 
-	private static class CompositeList extends AbstractSequentialList<INetworkLink> {
-		private final ArrayList<ArrayList<? extends INetworkLink>> myLists;
-		private final Comparator<INetworkLink> myComparator = new LinksComparator();
-
-		public CompositeList(ArrayList<ArrayList<? extends INetworkLink>> lists) {
-			myLists = lists;
-		}
-
-		private class Iterator implements ListIterator<INetworkLink> {
-			private int myIndex;
-			private ArrayList<Integer> myPositions;
-
-			private final INetworkLink getNextByIndex(int index) {
-				final int position = myPositions.get(index);
-				return (position < myLists.get(index).size()) ?
-						myLists.get(index).get(position) :
-						null;
-			}
-
-			private final INetworkLink getPrevByIndex(int index) {
-				final int position = myPositions.get(index);
-				return (position > 0) ?
-						myLists.get(index).get(position - 1) :
-						null;
-			}
-
-			public Iterator() {
-				myPositions = new ArrayList<Integer>(Collections.nCopies(myLists.size(), 0));
-			}
-
-			public Iterator(Iterator it) {
-				myIndex = it.myIndex;
-				myPositions = new ArrayList<Integer>(it.myPositions);
-			}
-
-			public boolean hasNext() {
-				return myIndex < size();
-			}
-
-			public boolean hasPrevious() {
-				return myIndex > 0;
-			}
-
-			public int nextIndex() {
-				return myIndex;
-			}
-
-			public int previousIndex() {
-				return myIndex - 1;
-			}
-
-			public INetworkLink next() {
-				final int size = myLists.size();
-				if (size == 0) {
-					throw new NoSuchElementException();
-				}
-				int nextIndex = -1;
-				INetworkLink nextLink = null;;
-				for (nextIndex = 0; nextIndex < size; ++nextIndex) {
-					nextLink = getNextByIndex(nextIndex);
-					if (nextLink != null) {
-						break;
-					}
-				}
-				if (nextLink == null) {
-					throw new NoSuchElementException();
-				}
-				for (int i = nextIndex + 1; i < size; ++i) {
-					INetworkLink link = getNextByIndex(i);
-					if (link != null && myComparator.compare(link, nextLink) < 0) {
-						nextLink = link;
-						nextIndex = i;
-					}
-				}
-				myPositions.set(nextIndex, myPositions.get(nextIndex) + 1);
-				++myIndex;
-				return nextLink;
-			}
-
-			public INetworkLink previous() {
-				final int size = myLists.size();
-				if (size == 0) {
-					throw new NoSuchElementException();
-				}
-				int prevIndex = -1;
-				INetworkLink prevLink = null;;
-				for (prevIndex = 0; prevIndex < size; ++prevIndex) {
-					prevLink = getPrevByIndex(prevIndex);
-					if (prevLink != null) {
-						break;
-					}
-				}
-				if (prevLink == null) {
-					throw new NoSuchElementException();
-				}
-				for (int i = prevIndex + 1; i < size; ++i) {
-					INetworkLink link = getPrevByIndex(i);
-					if (link != null && myComparator.compare(link, prevLink) >= 0) {
-						prevLink = link;
-						prevIndex = i;
-					}
-				}
-				myPositions.set(prevIndex, myPositions.get(prevIndex) - 1);
-				--myIndex;
-				return prevLink;
-			}
-
-			public void add(INetworkLink arg0) { throw new UnsupportedOperationException(); }
-			public void remove() { throw new UnsupportedOperationException(); }
-			public void set(INetworkLink arg0) { throw new UnsupportedOperationException(); }
-		};
-
-		@Override
-		public ListIterator<INetworkLink> listIterator(int location) {
-			if (location < 0 || location > size()) {
-				throw new IndexOutOfBoundsException();
-			}
-			Iterator it = new Iterator();
-			while (location-- > 0) {
-				it.next();
-			}
-			return it;
-		}
-
-		// returns a copy of iterator
-		public ListIterator<INetworkLink> listIterator(ListIterator<INetworkLink> it) {
-			return new Iterator((Iterator)it);
-		}
-
-		@Override
-		public int size() {
-			int size = 0;
-			for (ArrayList<? extends INetworkLink> list: myLists) {
-				size += list.size();
-			}
-			return size;
-		}
-	}
-
 	private static class LinksComparator implements Comparator<INetworkLink> {
 		private static String filterLinkTitle(String title) {
 			for (int index = 0; index < title.length(); ++index) {
@@ -223,9 +84,7 @@ public class NetworkLibrary {
 
 	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
 
-	private final ArrayList<INetworkLink> myLoadedLinks = new ArrayList<INetworkLink>();
-	private final ArrayList<ICustomNetworkLink> myCustomLinks = new ArrayList<ICustomNetworkLink>();
-	private final CompositeList myLinks;
+	private final ArrayList<INetworkLink> myLinks = new ArrayList<INetworkLink>();
 
 	private final RootTree myRootTree = new RootTree();
 
@@ -234,10 +93,6 @@ public class NetworkLibrary {
 	private boolean myUpdateVisibility;
 
 	private NetworkLibrary() {
-		ArrayList<ArrayList<? extends INetworkLink>> linksList = new ArrayList<ArrayList<? extends INetworkLink>>();
-		linksList.add(myLoadedLinks);
-		linksList.add(myCustomLinks);
-		myLinks = new CompositeList(linksList);
 	}
 
 	private boolean myIsAlreadyInitialized;
@@ -250,13 +105,11 @@ public class NetworkLibrary {
 		try {
 			OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
 				public void onNewLink(INetworkLink link) {
-					addLinkInternal(myLoadedLinks, link, comparator);
+					addLinkInternal(link);
 				}
 			});
 		} catch (ZLNetworkException e) {
-			synchronized (myLinks) {
-				myLoadedLinks.clear();
-			}
+			removeAllLoadedLinks();
 			throw e;
 		}
 
@@ -268,7 +121,7 @@ public class NetworkLibrary {
 							String title, String summary, String icon, Map<String, String> links) {
 						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
 						if (link != null) {
-							addLinkInternal(myCustomLinks, link, comparator);
+							addLinkInternal(link);
 							link.setSaveLinkListener(myChangesListener);
 						}
 					}
@@ -295,6 +148,18 @@ public class NetworkLibrary {
 		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0.001f,  3, 30),
 				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));*/
 		myIsAlreadyInitialized = true;
+	}
+
+	private void removeAllLoadedLinks() {
+		synchronized (myLinks) {
+			final LinkedList<INetworkLink> toRemove = new LinkedList<INetworkLink>();
+			for (INetworkLink link : myLinks) {
+				if (!(link instanceof ICustomNetworkLink)) {
+					toRemove.add(link);
+				}
+			}
+			myLinks.removeAll(myLinks);
+		}
 	}
 
 	/*private void testDate(ATOMDateConstruct date1, ATOMDateConstruct date2) {
@@ -330,8 +195,6 @@ public class NetworkLibrary {
 				if (myBackgroundLinks != null) {
 					if (myBackgroundLinks.isEmpty()) {
 						myBackgroundLinks = null;
-					} else {
-						Collections.sort(myBackgroundLinks, new LinksComparator());
 					}
 				}
 			}
@@ -348,8 +211,8 @@ public class NetworkLibrary {
 				return;
 			}
 			synchronized (myLinks) {
-				myLoadedLinks.clear();
-				myLoadedLinks.addAll(myBackgroundLinks);
+				removeAllLoadedLinks();
+				myLinks.addAll(myBackgroundLinks);
 				updateChildren();
 			}
 		}
@@ -409,9 +272,9 @@ public class NetworkLibrary {
 		int nodeCount = 0;
 
 		synchronized (myLinks) {
-			ListIterator<INetworkLink> it = myLinks.listIterator();
-			while (it.hasNext()) {
-				INetworkLink link = it.next();
+			Collections.sort(myLinks, new LinksComparator());
+			for (int i = 0; i < myLinks.size(); ++i) {
+				INetworkLink link = myLinks.get(i);
 				/*if (!link.OnOption.getValue()) {
 					continue;
 				}*/
@@ -437,9 +300,8 @@ public class NetworkLibrary {
 						break;
 					} else {
 						INetworkLink newNodeLink = null;
-						ListIterator<INetworkLink> jt = myLinks.listIterator(it);
-						while (jt.hasNext()) {
-							final INetworkLink jlnk = jt.next();
+						for (int j = i; j < myLinks.size(); ++j) {
+							final INetworkLink jlnk = myLinks.get(j);
 							if (linksEqual(nodeLink, jlnk)) {
 								newNodeLink = jlnk;
 								break;
@@ -489,9 +351,6 @@ public class NetworkLibrary {
 
 	public void synchronize() {
 		if (myUpdateChildren || myInvalidateChildren) {
-			if (myInvalidateChildren) {
-				Collections.sort(myCustomLinks, new LinksComparator());
-			}
 			myUpdateChildren = false;
 			myInvalidateChildren = false;
 			makeUpToDate();
@@ -560,40 +419,30 @@ public class NetworkLibrary {
 		}
 	};
 
-	private <T extends INetworkLink> void addLinkInternal(ArrayList<T> list, T link, LinksComparator comparator) {
+	private <T extends INetworkLink> void addLinkInternal(T link) {
 		synchronized (myLinks) {
-			final int index = Collections.binarySearch(list, link, comparator);
-			if (index >= 0) {
-				return;
-				//throw new RuntimeException("Unable to add link with duplicated title to the library");
-			}
-			final int insertAt = -index - 1;
-			list.add(insertAt, link);
+			myLinks.add(link);
 		}
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
-		addLinkInternal(myCustomLinks, link, new LinksComparator());
+		addLinkInternal(link);
 		link.setSaveLinkListener(myChangesListener);
 		link.saveLink();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
 		synchronized (myLinks) {
-			final int index = Collections.binarySearch(myCustomLinks, link, new LinksComparator());
-			if (index < 0) {
-				return;
-			}
-			myCustomLinks.remove(index);
+			myLinks.remove(link);
 		}
 		NetworkDatabase.Instance().deleteCustomLink(link);
 		link.setSaveLinkListener(null);
 	}
 
-	public boolean hasCustomLinkTitle(String title, ICustomNetworkLink exeptFor) {
+	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {
 		synchronized (myLinks) {
 			for (INetworkLink link: myLinks) {
-				if (link != exeptFor && link.getTitle().equals(title)) {
+				if (link != exceptFor && link.getTitle().equals(title)) {
 					return true;
 				}
 			}
@@ -601,10 +450,10 @@ public class NetworkLibrary {
 		return false;
 	}
 
-	public boolean hasCustomLinkSite(String siteName, ICustomNetworkLink exeptFor) {
+	public boolean hasCustomLinkSite(String siteName, INetworkLink exceptFor) {
 		synchronized (myLinks) {
 			for (INetworkLink link: myLinks) {
-				if (link != exeptFor && link.getSiteName().equals(siteName)) {
+				if (link != exceptFor && link.getSiteName().equals(siteName)) {
 					return true;
 				}
 			}
@@ -614,7 +463,7 @@ public class NetworkLibrary {
 
 	public List<String> languages() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
-		for (INetworkLink link : myLoadedLinks) {
+		for (INetworkLink link : myLinks) {
 			languageSet.add(link.getLanguage());
 		}
 		return new ArrayList(languageSet);
