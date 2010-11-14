@@ -66,7 +66,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	private void createDefaultTabs() {
 		new LibraryAdapter(createTab("byAuthor", R.id.by_author, R.drawable.ic_tab_library_author), myLibrary.byAuthor(), Type.TREE);
 		new LibraryAdapter(createTab("byTag", R.id.by_tag, R.drawable.ic_tab_library_tag), myLibrary.byTag(), Type.TREE);
-		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), myLibrary.recentBooks(), Type.FLAT);
+		new LibraryAdapter(createTab("recent", R.id.recent, R.drawable.ic_tab_library_recent), myLibrary.recentBooks(), Type.TREE);
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 	}
 
@@ -168,7 +168,6 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 	interface Type {
 		int TREE = 0;
 		int FLAT = 1;
-		int NETWORK = 2;
 	}
 
 	private final class LibraryAdapter extends ZLTreeAdapter {
@@ -226,19 +225,6 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 					break;
 				case Type.TREE:
 					setIcon(iconView, tree);
-					break;
-				case Type.NETWORK:
-					switch (position % 3) {
-						case 0:
-							iconView.setImageResource(R.drawable.ic_list_buy);
-							break;
-						case 1:
-							iconView.setImageResource(R.drawable.ic_list_download);
-							break;
-						case 2:
-							iconView.setImageResource(R.drawable.ic_list_flag);
-							break;
-					}
 					break;
 			}
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());

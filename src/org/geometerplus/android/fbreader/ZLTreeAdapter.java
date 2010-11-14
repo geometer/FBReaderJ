@@ -186,6 +186,9 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 
 	public abstract View getView(int position, View convertView, ViewGroup parent);
 
+	private ZLImage myFBReaderIcon =
+		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createImage(R.drawable.fbreader);
+
 	protected final void setIcon(ImageView imageView, ZLTree<?> tree) {
 		if (tree.hasChildren()) {
 			if (isOpen(tree)) {
@@ -194,8 +197,52 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 				imageView.setImageResource(R.drawable.ic_list_group_closed);
 			}
 		} else {
-			imageView.setImageResource(R.drawable.ic_list_group_empty);
+			imageView.setImageResource(R.drawable.fbreader);
 		}
 		imageView.setPadding(25 * (tree.Level - 1), imageView.getPaddingTop(), 0, imageView.getPaddingBottom());
+	}
+
+	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		Bitmap coverBitmap = null;
+		ZLImage cover = tree.getCover();
+		if (cover == null) { 
+			cover = myFBReaderIcon;
+		}
+		if (cover != null) {
+			ZLAndroidImageData data = null;
+			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
+			if (cover instanceof NetworkImage) {
+				final NetworkImage img = (NetworkImage) cover;
+				if (img.isSynchronized()) {
+					data = mgr.getImageData(img);
+				} else {
+					final Runnable runnable = new Runnable() {
+						public void run() {
+							myAwaitedCovers.remove(img.Url);
+							final ListView view = NetworkBaseActivity.this.getListView();
+							view.invalidateViews();
+						}
+					};
+					final NetworkView networkView = NetworkView.Instance();
+					if (!networkView.isCoverLoading(img.Url)) {
+						networkView.performCoverSynchronization(img, runnable);
+						myAwaitedCovers.add(img.Url);
+					} else if (!myAwaitedCovers.contains(img.Url)) {
+						networkView.addCoverSynchronizationRunnable(img.Url, runnable);
+						myAwaitedCovers.add(img.Url);
+					}
+				}
+			} else {
+				data = mgr.getImageData(cover);
+			}
+			if (data != null) {
+				coverBitmap = data.getBitmap(2 * width, 2 * height);
+			}
+		}
+		if (coverBitmap != null) {
+			coverView.setImageBitmap(coverBitmap);
+		} else {
+			coverView.setImageDrawable(null);
+		}
 	}
 }
