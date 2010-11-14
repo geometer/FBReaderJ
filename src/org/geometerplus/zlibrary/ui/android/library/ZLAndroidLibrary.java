@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.*;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
@@ -108,8 +109,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return new AndroidAssetsFile((AndroidAssetsFile)parent, name);
 	}
 
+	public static ZLImage createImage(Context context, int drawableId) {
+		return new ZLAndroidResourceBasedImageData(context.getResources(), drawableId);
+	}
+
 	public ZLImage createImage(int drawableId) {
-		return new ZLAndroidResourceBasedImageData(myApplication.getResources(), drawableId);
+		return createImage(myApplication, drawableId);
 	}
 
 	@Override
