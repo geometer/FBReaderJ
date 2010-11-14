@@ -70,6 +70,7 @@
 		<node name="lt" value="Lithuanian" />
 		<node name="nl" value="Dutch" />
 		<node name="no" value="Norwegian" />
+		<node name="pl" value="Polish" />
 		<node name="pt" value="Portuguese" />
 		<node name="ru" value="Russian" />
 		<node name="sv" value="Swedish" />
@@ -78,6 +79,7 @@
 		<node name="vi" value="Vietnamese" />
 		<node name="zh" value="Chinese" />
 		<node name="other" value="Other" />
+		<node name="multi" value="Multilanguage" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="on" />

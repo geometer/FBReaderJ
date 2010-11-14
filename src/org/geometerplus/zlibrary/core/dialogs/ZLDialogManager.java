@@ -24,14 +24,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 public abstract class ZLDialogManager {
 	protected static ZLDialogManager ourInstance;
 	
-	public static final String OK_BUTTON = "ok";
-	public static final String CANCEL_BUTTON = "cancel";
-	public static final String YES_BUTTON = "yes";
-	public static final String NO_BUTTON = "no";
-	public static final String APPLY_BUTTON = "apply";
-	
 	public static final String COLOR_KEY = "color";
-	public static final String DIALOG_TITLE = "title";
 	
 	protected ZLDialogManager() {
 		ourInstance = this;
@@ -44,10 +37,6 @@ public abstract class ZLDialogManager {
 	public abstract ZLOptionsDialog createOptionsDialog(String key);
 	
 	public abstract void wait(String key, Runnable runnable);
-
-	public static String getButtonText(String key) {
-		return getResource().getResource("button").getResource(key).getValue();
-	}
 
 	public static String getWaitMessageText(String key) {
 		return getResource().getResource("waitMessage").getResource(key).getValue();

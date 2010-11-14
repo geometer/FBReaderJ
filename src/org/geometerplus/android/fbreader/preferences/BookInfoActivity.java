@@ -25,7 +25,7 @@ import java.util.TreeMap;
 import android.content.Context;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.language.ZLLanguageList;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
@@ -53,8 +53,8 @@ class LanguagePreference extends ZLStringListPreference {
 		super(context, rootResource, resourceKey);
 		myBook = book;
 		final TreeMap<String,String> map = new TreeMap<String,String>();
-		for (String code : ZLLanguageList.languageCodes()) {
-			map.put(ZLLanguageList.languageName(code), code);
+		for (String code : ZLLanguageUtil.languageCodes()) {
+			map.put(ZLLanguageUtil.languageName(code), code);
 		}
 		final int size = map.size();
 		String[] codes = new String[size + 1];
@@ -65,15 +65,15 @@ class LanguagePreference extends ZLStringListPreference {
 			names[index] = entry.getKey();
 			++index;
 		}
-		codes[size] = "other";
-		names[size] = ZLLanguageList.languageName(codes[size]);
+		codes[size] = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
+		names[size] = ZLLanguageUtil.languageName(codes[size]);
 		setLists(codes, names);
 		String language = myBook.getLanguage();
 		if (language == null) {
-			language = "other";
+			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
 		}
 		if (!setInitialValue(language)) {
-			setInitialValue("other");
+			setInitialValue(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
 		}
 	}
 
