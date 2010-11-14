@@ -176,16 +176,32 @@
 					<node name="italic" value="Italic"/>
 					<node name="boldItalic" value="Bold Italic"/>
 				</node>
+				<node name="bold" value="Bold">
+					<node name="on" value="bold"/>
+					<node name="off" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="italic" value="Italic">
+					<node name="on" value="italic"/>
+					<node name="off" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
 				<node name="lineSpacing" value="Line Spacing"/>
 				<node name="alignment" value="Alignment">
 					<node name="left" value="Left"/>
 					<node name="right" value="Right"/>
 					<node name="center" value="Center"/>
 					<node name="justify" value="Justify"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Auto hyphenations">
 					<node name="summaryOn" value="Hyphenate words automatically"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically"/>
+				</node>
+				<node name="allowHyphenations" value="Allow Hyphenations">
+					<node name="on" value="hyphenate words"/>
+					<node name="off" value="don't hyphenate words"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="more" value="More styles">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc."/>
@@ -396,13 +412,6 @@
 						<node name="unchanged" value="&lt;unchanged&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="First Line Indent"/>
-					<node name="alignment" value="Alignment">
-						<node name="left" value="Left"/>
-						<node name="right" value="Right"/>
-						<node name="center" value="Center"/>
-						<node name="justify" value="Justify"/>
-						<node name="unchanged" value="&lt;unchanged&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Space Before"/>
 					<node name="spaceAfter" value="Space After"/>
 					<node name="leftIndent" value="Left Indent"/>
@@ -412,9 +421,6 @@
 					<node name="optionsFor" value="Options for"/>
 					<node name="fontSize" value="Size"/>
 					<node name="fontSizeDifference" value="Size Difference"/>
-					<node name="bold" value="Bold"/>
-					<node name="italic" value="Italic"/>
-					<node name="allowHyphenations" value="Allow Hyphenations"/>
 				</node>
 				<node name="Colors" value="Colors">
 					<node name="colorFor" value="Color for">

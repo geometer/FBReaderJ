@@ -182,6 +182,7 @@
 					<node name="right" value="Vpravo"/>
 					<node name="center" value="Na střed"/>
 					<node name="justify" value="Do bloku"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatické dělení slov">
 					<node name="summaryOn" value="Dělit slova automaticky"/>
@@ -297,13 +298,6 @@
 						<node name="unchanged" value="&lt;nezměněno&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="Odsazení prvního řádku"/>
-					<node name="alignment" value="Zarovnání">
-						<node name="left" value="Vlevo"/>
-						<node name="right" value="Vpravo"/>
-						<node name="center" value="Na střed"/>
-						<node name="justify" value="Do bloku"/>
-						<node name="unchanged" value="&lt;nezměněno&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Mezera před"/>
 					<node name="spaceAfter" value="Mezera za"/>
 					<node name="leftIndent" value="Odsazení vlevo"/>

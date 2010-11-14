@@ -32,7 +32,7 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 	public final ZLIntegerRangeOption RightIndentOption;
 	public final ZLIntegerRangeOption FirstLineIndentDeltaOption;
 
-	public final ZLIntegerOption AlignmentOption;
+	public final ZLIntegerRangeOption AlignmentOption;
 
 	public final ZLIntegerOption LineSpacePercentOption;
 
@@ -43,7 +43,7 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		LeftIndentOption = new ZLIntegerRangeOption(STYLE, name + ":leftIndent", -300, 300, leftIndent);
 		RightIndentOption = new ZLIntegerRangeOption(STYLE, name + ":rightIndent", -300, 300, rightIndent);
 		FirstLineIndentDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":firstLineIndentDelta", -300, 300, firstLineIndentDelta);
-		AlignmentOption = new ZLIntegerOption(STYLE, name + ":alignment", alignment);
+		AlignmentOption = new ZLIntegerRangeOption(STYLE, name + ":alignment", 0, 4, alignment);
 		LineSpacePercentOption = new ZLIntegerOption(STYLE, name + ":lineSpacePercent", lineSpace);
 	}
 

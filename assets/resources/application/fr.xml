@@ -185,6 +185,7 @@
 					<node name="right" value="Droite"/>
 					<node name="center" value="Centré"/>
 					<node name="justify" value="Justifié"/>
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Césures automatiques">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
@@ -302,13 +303,6 @@
 						<node name="unchanged" value="&lt;inchangé&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="Indentation de la première ligne"/>
-					<node name="alignment" value="Alignement">
-						<node name="left" value="Gauche"/>
-						<node name="right" value="Droite"/>
-						<node name="center" value="Centré"/>
-						<node name="justify" value="Justifié"/>
-						<node name="unchanged" value="&lt;inchangé&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Espace avant"/>
 					<node name="spaceAfter" value="Espace après"/>
 					<node name="leftIndent" value="Indentation à gauche"/>

@@ -182,6 +182,7 @@
 					<node name="right" value="Phải"/>
 					<node name="center" value="Giữa"/>
 					<node name="justify" value="Căn chỉnh"/>
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Tự động Tách từ">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
@@ -297,13 +298,6 @@
 						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
-					<node name="alignment" value="Thẳng hàng">
-						<node name="left" value="Trái"/>
-						<node name="right" value="Phải"/>
-						<node name="center" value="Giữa"/>
-						<node name="justify" value="Căn chỉnh"/>
-						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Khoảng trống trước"/>
 					<node name="spaceAfter" value="Khoảng trống sau"/>
 					<node name="leftIndent" value="Lùi Trái"/>

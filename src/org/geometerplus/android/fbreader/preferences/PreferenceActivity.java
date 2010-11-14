@@ -25,9 +25,7 @@ import android.preference.PreferenceScreen;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
-import org.geometerplus.zlibrary.text.view.style.ZLTextBaseStyle;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
+import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
@@ -122,7 +120,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, textCategory.Resource, "lineSpacing",
 			baseStyle.LineSpaceOption, spacings
 		));
-		String[] alignments = { "left", "right", "center", "justify" };
+		final String[] alignments = { "left", "right", "center", "justify" };
 		textCategory.addPreference(new ZLChoicePreference(
 			this, textCategory.Resource, "alignment",
 			baseStyle.AlignmentOption, alignments
@@ -171,11 +169,33 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			if (decoration == null) {
 				continue;
 			}
+			ZLTextFullStyleDecoration fullDecoration =
+				decoration instanceof ZLTextFullStyleDecoration ?
+					(ZLTextFullStyleDecoration)decoration : null;
 			final Screen formatScreen = moreStylesCategory.createPreferenceScreen(decoration.getName());
 			final Category formatCategory = formatScreen.createCategory(null);
 			formatCategory.addPreference(new FontOption(
 				this, textCategory.Resource, "font",
 				decoration.FontFamilyOption, true
+			));
+			formatCategory.addPreference(new ZLBoolean3Preference(
+				this, textCategory.Resource, "bold",
+				decoration.BoldOption
+			));
+			formatCategory.addPreference(new ZLBoolean3Preference(
+				this, textCategory.Resource, "italic",
+				decoration.ItalicOption
+			));
+			if (fullDecoration != null) {
+				final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
+				formatCategory.addPreference(new ZLChoicePreference(
+					this, textCategory.Resource, "alignment",
+					fullDecoration.AlignmentOption, allAlignments
+				));
+			}
+			formatCategory.addPreference(new ZLBoolean3Preference(
+				this, textCategory.Resource, "allowHyphenations",
+				decoration.AllowHyphenationsOption
 			));
 		}
 

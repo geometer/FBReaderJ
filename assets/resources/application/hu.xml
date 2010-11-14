@@ -182,6 +182,7 @@
 					<node name="right" value="Jobbra"/>
 					<node name="center" value="Középre"/>
 					<node name="justify" value="Sorkizárt"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatikus elválasztás">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
@@ -297,13 +298,6 @@
 						<node name="unchanged" value="&lt;változatlan&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="Első sor behúzása"/>
-					<node name="alignment" value="Igazítás">
-						<node name="left" value="Balra"/>
-						<node name="right" value="Jobbra"/>
-						<node name="center" value="Középre"/>
-						<node name="justify" value="Sorkizárt"/>
-						<node name="unchanged" value="&lt;változatlan&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Space Before"/>
 					<node name="spaceAfter" value="Space After"/>
 					<node name="leftIndent" value="Left Indent"/>

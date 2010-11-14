@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.optionsDialog;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.view.ZLTextAlignmentOptionEntry;
 import org.geometerplus.zlibrary.text.view.ZLTextLineSpaceOptionEntry;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
@@ -79,12 +78,6 @@ class FormatOptionsPage extends OptionsPage {
 				registerEntries(dialogTab,
 					KEY_LINESPACING, new ZLTextLineSpaceOptionEntry(decoration.LineSpacePercentOption, dialogTab.getResource(KEY_LINESPACING)),
 					KEY_FIRSTLINEINDENT, new ZLSimpleSpinOptionEntry(decoration.FirstLineIndentDeltaOption, 1),
-					name
-				);
-
-				registerEntries(dialogTab,
-					KEY_ALIGNMENT, new ZLTextAlignmentOptionEntry(decoration.AlignmentOption, dialogTab.getResource(KEY_ALIGNMENT)),
-					KEY_DUMMY, null,
 					name
 				);
 			}

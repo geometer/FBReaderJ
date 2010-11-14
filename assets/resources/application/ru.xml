@@ -181,6 +181,7 @@
 					<node name="right" value="правое"/>
 					<node name="center" value="по центру"/>
 					<node name="justify" value="по краям"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Переносы">
 					<node name="summaryOn" value="Автоматически расставлять переносы"/>
@@ -296,13 +297,6 @@
 						<node name="unchanged" value="&lt;не менять&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="Красная строка"/>
-					<node name="alignment" value="Выравнивание">
-						<node name="left" value="левое"/>
-						<node name="right" value="правое"/>
-						<node name="center" value="по центру"/>
-						<node name="justify" value="по краям"/>
-						<node name="unchanged" value="&lt;не менять&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Пропуск перед"/>
 					<node name="spaceAfter" value="Пропуск после"/>
 					<node name="leftIndent" value="Отступ слева"/>

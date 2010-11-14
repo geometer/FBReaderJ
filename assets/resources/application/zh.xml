@@ -182,6 +182,7 @@
 					<node name="right" value="右" />
 					<node name="center" value="居中" />
 					<node name="justify" value="对齐" />
+					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="autoHyphenations" value="自动断字">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
@@ -297,13 +298,6 @@
 						<node name="unchanged" value="&lt;不变&gt;" />
 					</node>
 					<node name="firstLineIndent" value="首行缩进" />
-					<node name="alignment" value="对齐">
-						<node name="left" value="左" />
-						<node name="right" value="右" />
-						<node name="center" value="居中" />
-						<node name="justify" value="对齐" />
-						<node name="unchanged" value="&lt;不变&gt;" />
-					</node>
 					<node name="spaceBefore" value="段前距" />
 					<node name="spaceAfter" value="段后距" />
 					<node name="leftIndent" value="左缩进" />

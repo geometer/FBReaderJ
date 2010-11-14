@@ -182,6 +182,7 @@
 					<node name="right" value="Rechts"/>
 					<node name="center" value="Zentriert"/>
 					<node name="justify" value="Blocksatz"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatisch trennen">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
@@ -297,13 +298,6 @@
 						<node name="unchanged" value="&lt;unverändert&gt;"/>
 					</node>
 					<node name="firstLineIndent" value="Einzug erste Zeile"/>
-					<node name="alignment" value="Ausrichtung">
-						<node name="left" value="Links"/>
-						<node name="right" value="Rechts"/>
-						<node name="center" value="Zentriert"/>
-						<node name="justify" value="Blocksatz"/>
-						<node name="unchanged" value="&lt;unverändert&gt;"/>
-					</node>
 					<node name="spaceBefore" value="Abstand vor"/>
 					<node name="spaceAfter" value="Abstand nach"/>
 					<node name="leftIndent" value="Einzug linke Linie"/>

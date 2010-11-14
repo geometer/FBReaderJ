@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.optionsDialog;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
-import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBoolean3OptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -32,12 +31,7 @@ import org.geometerplus.fbreader.bookmodel.FBTextKind;
 public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 	private final static String KEY_STYLE = "style";
 
-	private final static String KEY_BOLD = "bold";
-	private final static String KEY_ITALIC = "italic";
-	private final static String KEY_FONTFAMILY = "fontFamily";
-	private final static String KEY_FONTSIZE = "fontSize";
 	private final static String KEY_FONTSIZEDIFFERENCE = "fontSizeDifference";
-	private final static String KEY_ALLOWHYPHENATIONS = "allowHyphenations";
 	
 	public StyleOptionsPage(ZLDialogContent dialogTab, ZLPaintContext context) {
 		final ZLResource styleResource = ZLResource.resource(KEY_STYLE);
@@ -61,21 +55,6 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 
 				registerEntry(dialogTab,
 					KEY_FONTSIZEDIFFERENCE, new ZLSimpleSpinOptionEntry(decoration.FontSizeDeltaOption, 2),
-					name
-				);
-
-				registerEntry(dialogTab,
-					KEY_BOLD, new ZLSimpleBoolean3OptionEntry(decoration.BoldOption),
-					name
-				);
-
-				registerEntry(dialogTab,
-					KEY_ITALIC, new ZLSimpleBoolean3OptionEntry(decoration.ItalicOption),
-					name
-				);
-
-				registerEntry(dialogTab,
-					KEY_ALLOWHYPHENATIONS, new ZLSimpleBoolean3OptionEntry(decoration.AllowHyphenationsOption),
 					name
 				);
 			}
