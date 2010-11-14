@@ -50,7 +50,7 @@ public abstract class ZLDialogContent {
 
 	public abstract void addOptionByName(String name, ZLOptionEntry option);
 	
-	public final void addOption(String key, ZLColorOptionEntry option) {
+	public final void addOption(String key, ZLOptionEntry option) {
 		addOptionByName(myResource.getResource(key).getValue(), option);
 	}
 	
