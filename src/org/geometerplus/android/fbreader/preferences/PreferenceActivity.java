@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import android.content.Intent;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
@@ -70,7 +71,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}*/
 
 	@Override
-	protected void init() {
+	protected void init(Intent intent) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidApplication androidApp = ZLAndroidApplication.Instance();
 
