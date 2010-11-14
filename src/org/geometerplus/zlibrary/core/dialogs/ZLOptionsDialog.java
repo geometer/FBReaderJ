@@ -46,10 +46,6 @@ public abstract class ZLOptionsDialog {
 		}
 	}
 	
-	protected final String getCaption() {
-		return myResource.getResource(ZLDialogManager.DIALOG_TITLE).getValue();
-	}
-	
 	protected final ZLResource getTabResource(String key) {
 		return myResource.getResource("tab").getResource(key);
 	}

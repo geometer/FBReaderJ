@@ -93,6 +93,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 			final String siteName = id.substring(ENTRY_ID_PREFIX.length());
 			final String title = entry.Title;
 			final String summary = entry.Content;
+			final String language = entry.DCLanguage;
 
 			String icon = null; 
 			final HashMap<String, String> links = new HashMap<String, String>();
@@ -151,14 +152,14 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 				sslCertificate = null;
 			}
 
-			INetworkLink result = link(siteName, title, summary, icon, links, urlConditions, sslCertificate);
+			INetworkLink result = link(siteName, title, summary, icon, language, links, urlConditions, sslCertificate);
 			if (result != null) {
 				myListener.onNewLink(result);
 			}
 			return false; 
 		}
 
-		private INetworkLink link(String siteName, String title, String summary, String icon,
+		private INetworkLink link(String siteName, String title, String summary, String icon, String language,
 				Map<String, String> links, HashMap<String, Integer> urlConditions, String sslCertificate) {
 			if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
 				return null;
@@ -169,6 +170,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 				title,
 				summary,
 				icon,
+				language,
 				links,
 				myHasStableIdentifiers
 			);
