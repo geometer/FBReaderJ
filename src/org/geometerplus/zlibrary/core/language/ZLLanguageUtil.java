@@ -24,10 +24,13 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public abstract class ZLLanguageList {
+public abstract class ZLLanguageUtil {
+	public static final String OTHER_LANGUAGE_CODE = "other";
+	public static final String MULTI_LANGUAGE_CODE = "multi";
+
 	private static ArrayList<String> ourLanguageCodes = new ArrayList<String>();
 
-	private ZLLanguageList() {
+	private ZLLanguageUtil() {
 	}
 	
 	public static List<String> languageCodes() {
@@ -54,7 +57,7 @@ public abstract class ZLLanguageList {
 		return ZLResource.resource("language").getResource(code).getValue();
 	}
 
-	public	static ZLFile patternsFile() {
+	public static ZLFile patternsFile() {
 		return ZLResourceFile.createResourceFile("languagePatterns");
 	}
 }

@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 public abstract class BooksDatabase {
 	private static BooksDatabase ourInstance;
 
-	static BooksDatabase Instance() {
+	public static BooksDatabase Instance() {
 		return ourInstance;
 	}
 
@@ -56,7 +56,7 @@ public abstract class BooksDatabase {
 	protected abstract void executeAsATransaction(Runnable actions);
 
 	// returns map fileId -> book
-	protected abstract Map<Long,Book> listBooks(FileInfoSet infos);
+	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos);
 	protected abstract Book loadBook(long bookId);
 	protected abstract Book loadBookByFile(long fileId, ZLFile file);
 
@@ -81,15 +81,15 @@ public abstract class BooksDatabase {
 	protected abstract void removeFileInfo(long fileId);
 	protected abstract void saveFileInfo(FileInfo fileInfo);
 
-	protected abstract List<Long> listRecentBookIds();
+	protected abstract List<Long> loadRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
 	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex) {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex);
 	}
 
-	protected abstract List<Bookmark> listBookmarks(long bookId);
-	protected abstract List<Bookmark> listAllBookmarks();
+	protected abstract List<Bookmark> loadBookmarks(long bookId);
+	protected abstract List<Bookmark> loadAllBookmarks();
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 

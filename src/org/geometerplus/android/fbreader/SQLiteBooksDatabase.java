@@ -39,9 +39,11 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.fbreader.library.*;
 
 final class SQLiteBooksDatabase extends BooksDatabase {
+	private final String myInstanceId;
 	private final SQLiteDatabase myDatabase;
 
-	SQLiteBooksDatabase() {
+	SQLiteBooksDatabase(String instanceId) {
+		myInstanceId = instanceId;
 		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
 	}
@@ -121,6 +123,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected Book loadBook(long bookId) {
+		System.err.println("loading book info for " + bookId + " (" + myInstanceId + ")");
 		Book book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
@@ -133,6 +136,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected Book loadBookByFile(long fileId, ZLFile file) {
+		System.err.println("loading book info for " + file.getPath() + " (" + myInstanceId + ")");
 		if (fileId == -1) {
 			return null;
 		}
@@ -170,7 +174,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Map<Long,Book> listBooks(FileInfoSet infos) {
+	protected Map<Long,Book> loadBooks(FileInfoSet infos) {
+		System.err.println("loading all books info for " + myInstanceId);
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_id,title,encoding,language FROM Books", null
 		);
@@ -531,6 +536,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected Collection<FileInfo> loadFileInfos() {
+		System.err.println("loading all files info for " + myInstanceId);
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_id,name,parent_id,size FROM Files", null
 		);
@@ -628,7 +634,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		});
 	}
 
-	protected List<Long> listRecentBookIds() {
+	protected List<Long> loadRecentBookIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
 		);
@@ -640,7 +646,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	protected List<Bookmark> listBookmarks(long bookId) {
+	protected List<Bookmark> loadBookmarks(long bookId) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE book_id = ?", new String[] { "" + bookId }
@@ -665,7 +671,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
-	protected List<Bookmark> listAllBookmarks() {
+	protected List<Bookmark> loadAllBookmarks() {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
 		Cursor cursor = myDatabase.rawQuery(
