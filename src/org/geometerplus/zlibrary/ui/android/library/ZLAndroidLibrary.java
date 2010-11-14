@@ -206,7 +206,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 					return true;
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 			try {
 				String[] names = myApplication.getAssets().list(getPath());
