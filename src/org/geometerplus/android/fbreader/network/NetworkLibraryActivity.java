@@ -241,6 +241,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 				for (String langCode : NetworkLibrary.Instance().languages()) {
 					System.err.println("Language: " + ZLLanguageUtil.languageName(langCode));
 				}
+				showDialog(R.layout.network_languages_list_dialog);
 				return true;
 			default:
 				return true;
