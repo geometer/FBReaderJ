@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
-	public static final String CURRENT_BOOK_PATH_KEY = "LibraryCurrentBookPath";
+	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 
 	static LibraryTabActivity Instance;
 

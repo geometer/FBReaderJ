@@ -19,18 +19,20 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 import android.content.Context;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Book;
+
+import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -60,7 +62,7 @@ class LanguagePreference extends ZLStringListPreference {
 		String[] codes = new String[size + 1];
 		String[] names = new String[size + 1];
 		int index = 0;
-		for (Map.Entry<String,String> entry : map.entrySet()) {
+		for (TreeMap.Entry<String,String> entry : map.entrySet()) {
 			codes[index] = entry.getValue();
 			names[index] = entry.getKey();
 			++index;
@@ -84,6 +86,9 @@ class LanguagePreference extends ZLStringListPreference {
 }
 
 public class BookInfoActivity extends ZLPreferenceActivity {
+	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
+	public static final String CURRENT_BOOK_ARCHIVE_ENTRY_KEY = "CurrentArchiveEntryPath";
+
 	private Book myBook;
 
 	public BookInfoActivity() {
@@ -91,9 +96,20 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	}
 
 	@Override
-	protected void init() {
+	protected void init(Intent intent) {
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase("LIBRARY");
+		}
+
+		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
+		final String archiveEntry = intent.getStringExtra(CURRENT_BOOK_ARCHIVE_ENTRY_KEY);
+		ZLFile file = ZLFile.createFile(null, path);
+		if (archiveEntry != null) {
+			file = ZLFile.createFile(file, archiveEntry);
+		}
+		myBook = Book.getByFile(file);
+
 		final Category commonCategory = createCategory(null);
-		myBook = ((FBReaderApp)FBReaderApp.Instance()).Model.Book;
 		if (myBook.File.getPhysicalFile() != null) {
 			commonCategory.addPreference(new InfoPreference(
 				this,

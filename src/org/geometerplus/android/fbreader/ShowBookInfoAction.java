@@ -21,8 +21,11 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.bookmodel.BookModel;
 
 import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
@@ -39,9 +42,20 @@ class ShowBookInfoAction extends FBAction {
 	}
 
 	public void run() {
+		final Intent intent = new Intent(myBaseActivity.getApplicationContext(), BookInfoActivity.class);
+		final BookModel model = Reader.Model;
+		if (model != null && model.Book != null) {
+			final ZLFile file = model.Book.File;
+			final ZLFile physicalFile = file.getPhysicalFile();
+			if (physicalFile == null || physicalFile == file) {
+				intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, file.getPath());
+			} else {
+				intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, physicalFile.getPath());
+				intent.putExtra(BookInfoActivity.CURRENT_BOOK_ARCHIVE_ENTRY_KEY, file.getName(false));
+			}
+		}
 		myBaseActivity.startActivityForResult(
-			new Intent(myBaseActivity.getApplicationContext(), BookInfoActivity.class),
-			FBReader.REPAINT_CODE
+			intent, FBReader.REPAINT_CODE
 		);
 	}
 }
