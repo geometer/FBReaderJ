@@ -103,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Beállítások (további)"/>
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
 		<node name="library" value="Könyvtár"/>
@@ -167,7 +166,9 @@
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true">
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
@@ -310,9 +311,6 @@
 				</node>
 				<node name="Styles" value="Stílusok">
 					<node name="optionsFor" value="Beállítások"/>
-					<node name="fontFamily" value="Betűtípus">
-						<node name="unchanged" value="&lt;változatlan&gt;"/>
-					</node>
 					<node name="fontSize" value="Méret"/>
 					<node name="fontSizeDifference" value="Méretkülönbség"/>
 					<node name="bold" value="Félkövér"/>

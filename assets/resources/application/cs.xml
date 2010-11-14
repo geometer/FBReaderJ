@@ -103,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Nastavení (další)"/>
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
 		<node name="library" value="Knihovna"/>
@@ -167,7 +166,9 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Písmo, dělení slov atd."/>
-				<node name="font" value="Rodina písem"/>
+				<node name="font" value="Rodina písem">
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
 				<node name="fontSize" value="Velikost písma"/>
 				<node name="fontStyle" value="Řez písma">
 					<node name="regular" value="Obyčejné"/>
@@ -310,9 +311,6 @@
 				</node>
 				<node name="Styles" value="Styly">
 					<node name="optionsFor" value="Možnosti pro"/>
-					<node name="fontFamily" value="Rodina písma">
-						<node name="unchanged" value="&lt;nezměněno&gt;"/>
-					</node>
 					<node name="fontSize" value="Velikost písma"/>
 					<node name="fontSizeDifference" value="Rozlišovat velikost"/>
 					<node name="bold" value="Tučně"/>

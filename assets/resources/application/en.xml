@@ -103,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Settings (more)"/>
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
@@ -167,7 +166,9 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Font, hyphenations, etc."/>
-				<node name="font" value="Font family"/>
+				<node name="font" value="Font family">
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size"/>
 				<node name="fontStyle" value="Font style">
 					<node name="regular" value="Regular"/>
@@ -409,9 +410,6 @@
 				</node>
 				<node name="Styles" value="Styles">
 					<node name="optionsFor" value="Options for"/>
-					<node name="fontFamily" value="Family">
-						<node name="unchanged" value="&lt;unchanged&gt;"/>
-					</node>
 					<node name="fontSize" value="Size"/>
 					<node name="fontSizeDifference" value="Size Difference"/>
 					<node name="bold" value="Bold"/>

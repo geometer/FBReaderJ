@@ -20,12 +20,10 @@
 package org.geometerplus.fbreader.optionsDialog;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
-import org.geometerplus.zlibrary.core.optionEntries.ZLFontFamilyOptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBoolean3OptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.text.view.ZLTextFontFamilyWithBaseOptionEntry;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
 
@@ -60,11 +58,6 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 			ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration != null) {
 				final String name = styleResource.getResource(decoration.getName()).getValue();
-
-				registerEntry(dialogTab,
-					KEY_FONTFAMILY, new ZLTextFontFamilyWithBaseOptionEntry(decoration.FontFamilyOption, context,  dialogTab.getResource(KEY_FONTFAMILY)),
-					name
-				);
 
 				registerEntry(dialogTab,
 					KEY_FONTSIZEDIFFERENCE, new ZLSimpleSpinOptionEntry(decoration.FontSizeDeltaOption, 2),

@@ -103,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Cài đặt (thêm)"/>
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
 		<node name="library" value="Thư viện"/>
@@ -167,7 +166,9 @@
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true">
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
@@ -310,9 +311,6 @@
 				</node>
 				<node name="Styles" value="Kiểu">
 					<node name="optionsFor" value="Tùy chọn cho"/>
-					<node name="fontFamily" value="Phông">
-						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-					</node>
 					<node name="fontSize" value="Cỡ"/>
 					<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
 					<node name="bold" value="Đậm"/>

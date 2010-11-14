@@ -102,7 +102,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Настройки (дополнительно)"/>
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
 		<node name="library" value="Библиотека"/>
@@ -166,7 +165,9 @@
 			</node>
 			<node name="text" value="Текст">
 				<node name="summary" value="Шрифты, переносы, и т.д."/>
-				<node name="font" value="Шрифт"/>
+				<node name="font" value="Шрифт">
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
 				<node name="fontSize" value="Размер шрифта"/>
 				<node name="fontStyle" value="Начертание">
 					<node name="regular" value="нормальное"/>
@@ -309,9 +310,6 @@
 				</node>
 				<node name="Styles" value="Стили">
 					<node name="optionsFor" value="Настройки для"/>
-					<node name="fontFamily" value="Шрифт">
-						<node name="unchanged" value="&lt;не менять&gt;"/>
-					</node>
 					<node name="fontSize" value="Размер"/>
 					<node name="fontSizeDifference" value="Размер"/>
 					<node name="bold" value="Жирный"/>

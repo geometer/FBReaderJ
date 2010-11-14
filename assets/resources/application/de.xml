@@ -103,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Einstellungen (mehr)"/>
 		<node name="preferences" value="Einstellungen"/>
 		<node name="bookInfo" value="Buch Info"/>
 		<node name="library" value="Bibliothek"/>
@@ -167,7 +166,9 @@
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true">
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
@@ -310,9 +311,6 @@
 				</node>
 				<node name="Styles" value="Stile">
 					<node name="optionsFor" value="Optionen für"/>
-					<node name="fontFamily" value="Familie">
-						<node name="unchanged" value="&lt;unverändert&gt;"/>
-					</node>
 					<node name="fontSize" value="Größe"/>
 					<node name="fontSizeDifference" value="Größenunterschied"/>
 					<node name="bold" value="Fett"/>
