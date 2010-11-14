@@ -82,6 +82,10 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase("LIBRARY");
+		}
+
 		if (myLibrary == null) {
 			myLibrary = new Library();
 		}

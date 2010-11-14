@@ -31,7 +31,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public final static int LATEST = 3;
 
 	public static List<Bookmark> bookmarks() {
-		return BooksDatabase.Instance().listAllBookmarks();
+		return BooksDatabase.Instance().loadAllBookmarks();
 	}
 
 	private long myId;
