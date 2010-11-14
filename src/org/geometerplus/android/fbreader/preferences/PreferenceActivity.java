@@ -178,6 +178,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, textCategory.Resource, "font",
 				decoration.FontFamilyOption, true
 			));
+			formatCategory.addPreference(new ZLIntegerRangePreference(
+				this, textCategory.Resource.getResource("fontSizeDifference"),
+				decoration.FontSizeDeltaOption
+			));
 			formatCategory.addPreference(new ZLBoolean3Preference(
 				this, textCategory.Resource, "bold",
 				decoration.BoldOption
@@ -200,7 +204,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 
 		final Screen formatScreen = moreStylesCategory.createPreferenceScreen("format");
-		final Screen stylesScreen = moreStylesCategory.createPreferenceScreen("styles");
 		final Screen colorsScreen = textCategory.createPreferenceScreen("colors");
 		formatScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
@@ -210,18 +213,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					}
 				}
 		);
-		stylesScreen.setOnPreferenceClickListener(
-				new PreferenceScreen.OnPreferenceClickListener() {
-					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(1);
-						return true;
-					}
-				}
-		);
 		colorsScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(2);
+						dlg.run(1);
 						return true;
 					}
 				}
