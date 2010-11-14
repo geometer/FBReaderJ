@@ -39,7 +39,7 @@ import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 
 public class OPDSLinkReader {
 
-	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.0.xml";
+	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.1.xml";
 
 	public static ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
 		if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {

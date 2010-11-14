@@ -25,15 +25,13 @@ import java.util.TreeMap;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-
 public abstract class AbstractNetworkLink implements INetworkLink {
-
 	protected String mySiteName;
 	protected String myTitle;
 	protected String mySummary;
 	protected String myIcon;
-	protected TreeMap<String, String> myLinks;
-
+	protected final String myLanguage;
+	protected final TreeMap<String, String> myLinks;
 
 	/**
 	 * Creates new NetworkLink instance.
@@ -42,13 +40,15 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
 	 * @param icon       string contains link's icon data/url. Can be <code>null</code>.
+	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param links      map contains URLs with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String icon, Map<String, String> links) {
+	public AbstractNetworkLink(String siteName, String title, String summary, String icon, String language, Map<String, String> links) {
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myIcon = icon;
+		myLanguage = language != null ? language : "multi";
 		myLinks = new TreeMap<String, String>(links);
 	}
 
@@ -66,6 +66,10 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 
 	public String getIcon() {
 		return myIcon;
+	}
+
+	public String getLanguage() {
+		return myLanguage;
 	}
 
 	public String getLink(String urlKey) {
