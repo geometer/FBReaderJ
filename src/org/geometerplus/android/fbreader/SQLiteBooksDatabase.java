@@ -38,11 +38,11 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.library.*;
 
-final class SQLiteBooksDatabase extends BooksDatabase {
+public final class SQLiteBooksDatabase extends BooksDatabase {
 	private final String myInstanceId;
 	private final SQLiteDatabase myDatabase;
 
-	SQLiteBooksDatabase(String instanceId) {
+	public SQLiteBooksDatabase(String instanceId) {
 		myInstanceId = instanceId;
 		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
