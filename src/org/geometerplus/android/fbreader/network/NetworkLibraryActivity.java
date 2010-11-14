@@ -206,6 +206,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private static final int MENU_SEARCH = 1;
 	private static final int MENU_REFRESH = 2;
 	private static final int MENU_ADD_CATALOG = 3;
+	private static final int MENU_LANGUAGES = 4;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -213,6 +214,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_networksearch);
 		addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", android.R.drawable.ic_menu_add);
 		addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
+		addMenuItem(menu, MENU_LANGUAGES, "languages", 0);
 		return true;
 	}
 
