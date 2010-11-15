@@ -18,23 +18,23 @@
 
 	<setup />
 
-  <target name="native">
+	<target name="native">
 		<exec executable="${ndk.dir}/ndk-build" />
 	</target>
 
-  <target name="resources">
+	<target name="resources">
 		<exec executable="./createRawResources.py" />
 	</target>
 
-  <target name="package" depends="native,resources,release" />
-  <target name="dbg" depends="native,resources,debug" />
+	<target name="package" depends="native,resources,release" />
+	<target name="dbg" depends="native,resources,debug" />
 
-  <target name="clean">
+	<target name="clean">
 		<delete dir="gen" />
 		<delete dir="bin" />
 		<delete dir="res/raw" />
 		<delete dir="res/drawable" />
 		<delete dir="libs/armeabi" />
 		<delete dir="obj" />
-  </target>
+	</target>
 </project>
