@@ -1,5 +1,6 @@
 ===== 0.7.18 (??? ??, 2010) =====
 * Local library activity has been moved to a separate process
+* fb2.zip files opening from ASTRO file manager has been fixed
 
 ===== 0.7.17 (Nov 14, 2010) =====
 * Network catalog order has been changed: language is used for ordering
