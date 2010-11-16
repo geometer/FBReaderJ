@@ -1,3 +1,37 @@
+===== 0.7.18 (??? ??, 2010) =====
+* Local library activity has been moved to a separate process
+
+===== 0.7.17 (Nov 14, 2010) =====
+* Network catalog order has been changed: language is used for ordering
+* LitRes authentication has been fixed
+
+===== 0.7.16 (Nov 11, 2010) =====
+* Czech resources have been updated
+* An NPE during library starting has been fixed (this NPE only occures on systems with locale "not supported" by FBReader (like Spanish, Finnish, Japan, etc.)
+
+===== 0.7.15 (Nov 11, 2010) =====
+* External TTF fonts are supported (for Android version >= 1.6)
+* Ukrainian localization (by Dmytro Shevchenko) has been added
+* Default font size depends on display DPI
+
+===== 0.7.14 (Nov 03, 2010) =====
+* Screen brightness adjustment has been implemented (idea was taken from Aldiko and https://github.com/cujo/FBReaderJ)
+* System settings are now used to format time in footer
+* Ukrainian hyphenations have been fixed
+* Czech resources have been updated
+
+===== 0.7.13 (Oct 28, 2010) =====
+* NoSuchFieldException has been fixed
+* Czech resources have been updated
+
+===== 0.7.12 (Oct 28, 2010) =====
+* On-timer footer update has been added
+* Keys backlight is now disabled during reading
+* Filemanager associations have been fixed
+
+===== 0.7.11 (Oct 24, 2010) =====
+* Several craches have been fixed
+
 ===== 0.7.10 (Oct 24, 2010) =====
 * Resources have been updated
 

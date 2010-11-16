@@ -23,7 +23,9 @@ import org.geometerplus.zlibrary.core.image.*;
 
 public final class ZLAndroidImageManager extends ZLImageManager {
 	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLSingleImage) {
+		if (image instanceof ZLAndroidImageData) {
+			return (ZLAndroidImageData)image;
+		} else if (image instanceof ZLSingleImage) {
 			ZLSingleImage singleImage = (ZLSingleImage)image;
 			if ("image/palm".equals(singleImage.mimeType())) {
 				return null;
@@ -32,7 +34,7 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			if (array == null) {
 				return null;
 			}
-			return new ZLAndroidImageData(array);
+			return new ZLAndroidArrayBasedImageData(array);
 		} else {
 			//TODO
 			return null;

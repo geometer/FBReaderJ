@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>O aplikaci FBReaderJ</book-title> <lang>cs</lang></title-info></description>
+<body>
+<title><p>O aplikaci FBReaderJ &FBReaderVersion;</p></title>
+<p>FBReaderJ je čtečka e-knih pro <a l:href="http://www.android.com/">platformu Android</a>. Je to klon <a l:href="http://www.fbreader.org/">čtečky knih FBReader</a> napsaný v Java stejnými autory. FBReaderJ podporuje několik formátů e-knih: <code>oeb</code>, <code>epub</code> a <code>fb2</code>. V budoucích vydáních bude seznam rozšířen o podporu stejných formátů jako v originální aplikaci FBReader. Je podporováno přímé čtení z archivů <code>zip</code>, <code>tar</code> a <code>gzip</code>.</p>
+<p>Můžete si nastavit FBReaderJ tak, abyste mohli číst knihy s potěšením. Barvy, písma a spousta dalších vlastností může být změněna v <code>dialogovém okně předvoleb</code>.</p>
+<p>FBReaderJ je šířen podle podmíneek <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<empty-line/>
+<subtitle><p>Jak začít</p></subtitle>
+<p>Jsou dva způsoby jak přidat knihu do knihovny aplikace FBReaderJ.</p>
+<p>První je zkopírovat soubor s knihou do vašeho zařízení do adresáře <code>/sdcard/Books</code> (nebo jakéhokoliv jeho podadresáře). FBReader přidá tuto knihu automaticky.</p>
+<p>Druhý způsob je klepnout na odkaz na knihu (např. na odkaz na soubor s příponou <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> nebo <code>.fb2.zip</code>) ve standardním prohlížeči v Androidu. Kniha bude stažena do zařízení a otevřena v aplikaci FBReaderJ. Pokud klepnete znovu na stejný odkaz, kniha se nebude znovu stahovat, ale pro čtení se použije místní kopie.</p>
+<empty-line/>
+<subtitle><p>Související stránky</p></subtitle>
+<p>Více informací o aplikacích FBReader a FBReaderJ naleznete na <a l:href="http://www.fbreader.org">stránce FBReader</a>.</p>
+<p>Pokud chcete být upozorňováni na nové verze, přihlašte se k odběru <a l:href="http://freshmeat.net/projects/fbreaderj">projektu FBReaderJ na freshmeat</a>.</p>
+<p>Pokud máte nějaké dotazy nebo návrhy, použijte <a l:href="http://groups.google.com/group/fbreader">skupinu FBReader na googlegroups</a>.</p>
+</body>
+</FictionBook>

@@ -39,6 +39,6 @@ class ZLChoicePreference extends ZLStringListPreference {
 	}
 
 	public void onAccept() {
-		myOption.setValue(findIndexOfValue(getValue()));
+		myOption.setValue(myOption.MinValue + findIndexOfValue(getValue()));
 	}
 }

@@ -88,6 +88,8 @@ public abstract class ZLFile {
 		} else if ((parent instanceof ZLPhysicalFile) && (parent.getParent() == null)) {
 			// parent is a directory
 			file = new ZLPhysicalFile(parent.getPath() + '/' + name);
+		} else if (parent instanceof ZLResourceFile) {
+			file = ZLResourceFile.createResourceFile((ZLResourceFile)parent, name);
 		} else {
 			file = ZLArchiveEntryFile.createArchiveEntryFile(parent, name);
 		}

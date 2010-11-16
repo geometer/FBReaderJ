@@ -20,10 +20,11 @@
 package org.geometerplus.zlibrary.text.view.style;
 
 import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.text.view.ZLTextStyle;
-import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
+import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 public class ZLTextBaseStyle extends ZLTextStyle {
 	private static final String GROUP = "Style";
@@ -38,10 +39,10 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		new ZLBooleanOption(GROUP, "Base:italic", false);
 	public final ZLBooleanOption UnderlineOption =
 		new ZLBooleanOption(GROUP, "Base:underline", false);
-	public final ZLIntegerOption AlignmentOption =
-		new ZLIntegerOption(GROUP, "Base:alignment", ZLTextAlignmentType.ALIGN_JUSTIFY);
-	public final ZLIntegerOption LineSpacePercentOption =
-		new ZLIntegerOption(GROUP, "Base:lineSpacingPercent", 120);
+	public final ZLIntegerRangeOption AlignmentOption =
+		new ZLIntegerRangeOption(GROUP, "Base:alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
+	public final ZLIntegerRangeOption LineSpaceOption =
+		new ZLIntegerRangeOption(GROUP, "Base:lineSpacing", 5, 20, 12);
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
@@ -49,7 +50,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
 		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
-		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 0, 72, fontSize);
+		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, 72, fontSize);
 	}
 	
 	@Override
@@ -94,7 +96,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	
 	@Override
 	public int getLineSpacePercent() {
-		return LineSpacePercentOption.getValue();
+		return LineSpaceOption.getValue() * 10;
 	}
 
 	@Override

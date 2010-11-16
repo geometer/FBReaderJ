@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
-	public static final String CURRENT_BOOK_PATH_KEY = "LibraryCurrentBookPath";
+	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 
 	static LibraryTabActivity Instance;
 
@@ -81,6 +81,10 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase("LIBRARY");
+		}
 
 		if (myLibrary == null) {
 			myLibrary = new Library();

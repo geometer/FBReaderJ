@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Czech zlibrary resources, by Marek Pavelka -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok" />
+			<node name="cancel" value="Zrušit" />
+			<node name="yes" value="Ano" />
+			<node name="no" value="Ne" />
+			<node name="apply" value="Použít" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Chyba sítě" />
+			<node name="unknownErrorMessage" value="Neznámá chyba" />
+			<node name="operationTimedOutMessage" value="Vypršel časový limit operace" />
+			<node name="somethingWrongMessage" value="Něco se pokazilo s&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Nelze vytvořit adresář&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Nelze vytvořit soubor&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Nelze se připojit k síti" />
+			<node name="couldntConnectMessage" value="Nelze se připojit k hostiteli&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Nelze rozlišit hostitele&#10;%s" />
+			<node name="authenticationFailed" value="Selhalo ověření" />
+			<node name="unsupportedProtocol" value="Nepodporovaný protokol" />
+			<node name="invalidURL" value="Neplatná URL" />
+			<node name="hostCantBeReached" value="Hostitel %s&#10;nemůže být dosažen" />
+			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s" />
+			<node name="sslError" value="Chyba SSL subsystému" />
+			<node name="sslConnectErrorMessage" value="Problém s metodou handshake SSL/TLS:&#10;%s" />
+			<node name="sslBadKey" value="Špatný SSL certifikát od:&#10;%s" />
+			<node name="sslPeerUnverified" value="Nelze ověřit identitu partnerského zařízení pro:&#10;%s" />
+			<node name="sslProtocolError" value="Chyba v operaci SSL protokolu" />
+			<node name="sslBadCertificateFileMessage" value="Nelze přečíst soubor SSL CA certifikátu:&#10;%s" />
+			<node name="sslCertificateExpired" value="SSL certifikát vypršel:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL certifikát již není platný:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Červená" />
+		<node name="green" value="Zelená" />
+		<node name="blue" value="Morá" />
+		<node name="black" value="Černá" />
+		<node name="white" value="Bílá" />
+		<node name="maroon" value="Kaštanová" />
+		<node name="olive" value="Olivová" />
+		<node name="navy" value="Tmavě modrá" />
+		<node name="purple" value="Purpurová" />
+		<node name="teal" value="Světle modrá" />
+		<node name="silver" value="Stříbrná" />
+		<node name="gray" value="Šedá" />
+		<node name="lime" value="Citrónová" />
+		<node name="yellow" value="Žlutá" />
+		<node name="magenta" value="Fialová" />
+		<node name="cyan" value="Tyrkysová" />
+		<node name="custom..." value="Vlastní..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabsky" />
+		<node name="cs" value="Česky" />
+		<node name="de" value="Německy" />
+		<node name="de-traditional" value="Německy (tradiční pravopis)" />
+		<node name="el" value="Řecky" />
+		<node name="en" value="Anglicky" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Španělsky" />
+		<node name="fi" value="Finsky" />
+		<node name="fr" value="Francouzsky" />
+		<node name="he" value="Hebrejsky" />
+		<node name="hu" value="Maďarsky" />
+		<node name="id" value="Indonésky" />
+		<node name="it" value="Italsky" />
+		<node name="lt" value="Litevsky" />
+		<node name="nl" value="Dánsky" />
+		<node name="no" value="Norsky" />
+		<node name="pt" value="Portugalsky" />
+		<node name="ru" value="Rusky" />
+		<node name="sv" value="Švédsky" />
+		<node name="tr" value="Turecky" />
+		<node name="uk" value="Ukrajinsky" />
+		<node name="vi" value="Vietnamsky" />
+		<node name="zh" value="Čínsky" />
+		<node name="other" value="Jiný" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="zap" />
+		<node name="off" value="vyp" />
+		<node name="unchanged" value="nezměněno" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Akce pro klávesu" />
+	</node>
+</resources>

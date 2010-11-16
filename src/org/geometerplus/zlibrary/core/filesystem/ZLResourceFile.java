@@ -26,6 +26,10 @@ public abstract class ZLResourceFile extends ZLFile {
 		return ZLibrary.Instance().createResourceFile(path);
 	}
 
+	static ZLResourceFile createResourceFile(ZLResourceFile parent, String name) {
+		return ZLibrary.Instance().createResourceFile(parent, name);
+	}
+
 	private final String myPath;
 	
 	protected ZLResourceFile(String path) {
@@ -33,20 +37,12 @@ public abstract class ZLResourceFile extends ZLFile {
 		init();
 	}
 	
-	public boolean isDirectory() {
-		return false;
-	}
-	
 	public String getPath() {
 		return myPath;
 	}
 	
 	public String getNameWithExtension() {
-		return myPath;
-	}
-
-	public ZLFile getParent() {
-		return null;
+		return myPath.substring(myPath.lastIndexOf('/') + 1);
 	}
 
 	public ZLPhysicalFile getPhysicalFile() {

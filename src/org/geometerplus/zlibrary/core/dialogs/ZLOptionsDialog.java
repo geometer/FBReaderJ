@@ -26,20 +26,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 public abstract class ZLOptionsDialog {
 	private final ZLResource myResource;
 	protected final ArrayList<ZLDialogContent> myTabs = new ArrayList<ZLDialogContent>();
-	protected Runnable myExitAction;
-	protected Runnable myApplyAction;
 	
-	protected ZLOptionsDialog(ZLResource resource, Runnable exitAction, Runnable applyAction) {
+	protected ZLOptionsDialog(ZLResource resource) {
 		myResource = resource;
-		myExitAction = exitAction;
-		myApplyAction = applyAction;
 	}
 	
 	protected void acceptTab(ZLDialogContent tab) {
 		tab.accept();
-		if (myApplyAction != null) {
-			myApplyAction.run();
-		}
 	}
 
 	protected void resetTab(ZLDialogContent tab) {
@@ -51,13 +44,6 @@ public abstract class ZLOptionsDialog {
 		for (int i = 0; i < size; i++) {
 			myTabs.get(i).accept();
 		}
-		if (myApplyAction != null) {
-			myApplyAction.run();
-		}
-	}
-	
-	protected final String getCaption() {
-		return myResource.getResource(ZLDialogManager.DIALOG_TITLE).getValue();
 	}
 	
 	protected final ZLResource getTabResource(String key) {
@@ -66,5 +52,5 @@ public abstract class ZLOptionsDialog {
 	
 	public abstract ZLDialogContent createTab(String key);
 	
-	public abstract void run();
+	public abstract void run(int index);
 }

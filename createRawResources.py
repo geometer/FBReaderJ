@@ -9,7 +9,6 @@ menu_icons_dir = "icons/menu"
 tabs_icons_dir = "icons/tabs"
 others_icons_dir = "icons/others"
 text_search_icons_dir = "icons/text_search"
-data_dir = "data"
 
 def clean_res_dir(dir):
 	if os.path.exists(dir):
@@ -31,7 +30,6 @@ def process_data_dir(prefix, dir, res_dir, replace_dot = 1):
 
 clean_res_dir(raw_res_dir)
 clean_res_dir(drawable_res_dir)
-process_data_dir("data__", data_dir, raw_res_dir)
 shutil.copyfile("icons/fbreader.png", drawable_res_dir + "/fbreader.png")
 process_data_dir("", tree_icons_dir, drawable_res_dir, 0)
 process_data_dir("", menu_icons_dir, drawable_res_dir, 0)

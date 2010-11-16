@@ -30,9 +30,10 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
-import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 
 public final class FBReaderApp extends ZLApplication {
+	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
+		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
 	public final ZLStringOption BookmarkSearchPatternOption =
@@ -42,28 +43,30 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
-		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 1000, 4);
+		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
 	public final ZLIntegerRangeOption RightMarginOption =
-		new ZLIntegerRangeOption("Options", "RightMargin", 0, 1000, 4);
+		new ZLIntegerRangeOption("Options", "RightMargin", 0, 30, 4);
 	public final ZLIntegerRangeOption TopMarginOption =
-		new ZLIntegerRangeOption("Options", "TopMargin", 0, 1000, 0);
+		new ZLIntegerRangeOption("Options", "TopMargin", 0, 30, 0);
 	public final ZLIntegerRangeOption BottomMarginOption =
-		new ZLIntegerRangeOption("Options", "BottomMargin", 0, 1000, 4);
+		new ZLIntegerRangeOption("Options", "BottomMargin", 0, 30, 4);
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 	public final ZLIntegerRangeOption FooterHeightOption =
 		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9); 
-	public final ZLIntegerRangeOption FooterLongTap =
+	public final ZLIntegerRangeOption FooterLongTapOption =
 		new ZLIntegerRangeOption("Options", "FooterLongTap", 0, 1, 0/*revert*/); 
-	public final ZLBooleanOption FooterShowClock =
+	public final ZLBooleanOption FooterShowClockOption =
 		new ZLBooleanOption("Options", "ShowClockInFooter", true);
-	public final ZLBooleanOption FooterShowBattery =
+	public final ZLBooleanOption FooterShowBatteryOption =
 		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-	public final ZLBooleanOption FooterShowProgress =
+	public final ZLBooleanOption FooterShowProgressOption =
 		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-	public final ZLBooleanOption FooterIsSensitive =
+	public final ZLBooleanOption FooterIsSensitiveOption =
 		new ZLBooleanOption("Options", "FooterIsSensitive", false);
+	public final ZLStringOption FooterFontOption =
+		new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
 	final ZLBooleanOption SelectionEnabledOption =
 		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
@@ -80,8 +83,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	private final String myArg0;
 
-	public FBReaderApp(String[] args) {
-		myArg0 = (args.length > 0) ? args[0] : null;
+	public FBReaderApp(String arg) {
+		myArg0 = arg;
 		addAction(ActionCode.QUIT, new QuitAction(this));
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
@@ -262,9 +265,5 @@ public final class FBReaderApp extends ZLApplication {
 		if ((Model != null) && (BookTextView != null)) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
 		}
-	}
-
-	public void showOptionsDialog() {
-		new OptionsDialog(this).getDialog().run();
 	}
 }

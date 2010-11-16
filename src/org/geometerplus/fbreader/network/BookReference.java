@@ -80,7 +80,7 @@ public class BookReference {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
 		}
-		path.insert(0, Paths.BooksDirectoryOption.getValue());
+		path.insert(0, Paths.BooksDirectoryOption().getValue());
 
 		int index = path.length();
 		path.append(uri.getPath());

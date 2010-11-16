@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.optionsDialog;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.optionEntries.*;
-//import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.fbreader.*;
@@ -31,18 +30,8 @@ public class OptionsDialog {
 	private ZLOptionsDialog myDialog;
 	
 	public OptionsDialog(FBReaderApp fbreader) {
-		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog", null, new OptionsApplyRunnable(fbreader), true);
+		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog");
 
-		ZLDialogContent marginTab = myDialog.createTab("Margins");
-		marginTab.addOptions(
-			"left", new ZLSimpleSpinOptionEntry(fbreader.LeftMarginOption, 1),
-			"right", new ZLSimpleSpinOptionEntry(fbreader.RightMarginOption, 1)
-		);
-		marginTab.addOptions(
-			"top", new ZLSimpleSpinOptionEntry(fbreader.TopMarginOption, 1),
-			"bottom", new ZLSimpleSpinOptionEntry(fbreader.BottomMarginOption, 1)
-		);
-		
 		new FormatOptionsPage(myDialog.createTab("Format"));
 			
 		new StyleOptionsPage(myDialog.createTab("Styles"), fbreader.getCurrentView().getContext());
@@ -65,49 +54,4 @@ public class OptionsDialog {
 	public ZLOptionsDialog getDialog() {
 		return myDialog;
 	}
-	
-	private static class OptionsApplyRunnable implements Runnable {
-		private final FBReaderApp myFBReader;
-		
-		public OptionsApplyRunnable(FBReaderApp fbreader) {
-			myFBReader = fbreader;
-		}
-		
-		public void run() {
-			myFBReader.clearTextCaches();
-			myFBReader.repaintView();
-		}
-	}
-	
-	/*private static class StateOptionEntry extends ZLToggleBooleanOptionEntry {
-		private boolean myState;
-		
-		public StateOptionEntry(ZLBooleanOption option) {
-			super(option);
-			myState = option.getValue();
-		}
-	
-		public void onStateChanged(boolean state) {
-			myState = state;
-			super.onStateChanged(state);
-		}
-	}
-
-	private static class SpecialFontSizeEntry extends ZLSimpleSpinOptionEntry {
-		private StateOptionEntry myFirst;
-		private StateOptionEntry mySecond;
-		
-		public SpecialFontSizeEntry(ZLIntegerRangeOption option, int step, StateOptionEntry first, StateOptionEntry second) {
-			super(option, step);
-			myFirst = first;
-			mySecond = second;
-		}
-
-		public void setVisible(boolean state) {
-			super.setVisible(
-					(myFirst.isVisible() && myFirst.myState) ||
-					(mySecond.isVisible() && mySecond.myState)
-			);
-		}	
-	}*/
 }

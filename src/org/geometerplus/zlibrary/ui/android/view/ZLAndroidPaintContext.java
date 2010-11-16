@@ -19,13 +19,18 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
+import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -102,18 +107,39 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
+		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
 		if (typefaces == null) {
 			typefaces = new Typeface[4];
 			myTypefaces.put(family, typefaces);
 		}
-		Typeface typeface = typefaces[style];
-		if (typeface == null) {
-			typeface = Typeface.create(family, style);
-			typefaces[style] = typeface;
+		Typeface tf = typefaces[style];
+		if (tf == null) {
+			File[] files = AndroidFontUtil.getFontMap(false).get(family);
+			if (files != null) {
+				try {
+					if (files[style] != null) {
+						tf = AndroidFontUtil.createFontFromFile(files[style]);
+					} else {
+						for (int i = 0; i < 4; ++i) {
+							if (files[i] != null) {
+								tf = (typefaces[i] != null) ?
+									typefaces[i] : AndroidFontUtil.createFontFromFile(files[i]);
+								typefaces[i] = tf;
+								break;
+							}
+						}
+					}
+				} catch (Throwable e) {
+				}
+			}
+			if (tf == null) {
+				tf = Typeface.create(family, style);
+			}
+			typefaces[style] = tf;
 		}
-		myTextPaint.setTypeface(typeface);
+		myTextPaint.setTypeface(tf);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
 	}
@@ -203,22 +229,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public String realFontFamilyName(String fontFamily) {
-		// TODO: implement
-		if ("Serif".equals(fontFamily)) {
-			return "serif";
-		}
-		if ("sans-serif".equals(fontFamily)
-				|| "serif".equals(fontFamily)
-				|| "monospace".equals(fontFamily)) {
-			return fontFamily;
-		}
-		return "sans-serif";
+		return AndroidFontUtil.realFontFamilyName(fontFamily);
 	}
 
 	protected void fillFamiliesList(ArrayList<String> families) {
-		// TODO: implement
-		families.add("sans-serif");
-		families.add("serif");
-		families.add("monospace");
+		AndroidFontUtil.fillFamiliesList(families, false);
 	}
 }

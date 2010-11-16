@@ -26,40 +26,23 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class ZLTextAlignmentOptionEntry extends ZLComboOptionEntry {
-	private static final String KEY_LEFT = "left";
-	private static final String KEY_RIGHT = "right";
-	private static final String KEY_CENTER = "center";
-	private static final String KEY_JUSTIFY = "justify";
-	private static final String KEY_UNCHANGED = "unchanged";
-	
-	private static final ArrayList<String> ourValues4 = new ArrayList<String>();
 	private static final ArrayList<String> ourValues5 = new ArrayList<String>();
 
 	private	final ZLIntegerOption myOption;
-	private	final boolean myAllowUndefined;
 		
-	public ZLTextAlignmentOptionEntry(ZLIntegerOption option, final ZLResource resource, boolean allowUndefined) {
-		myAllowUndefined = allowUndefined;
+	public ZLTextAlignmentOptionEntry(ZLIntegerOption option, final ZLResource resource) {
 		myOption = option;
 		if (ourValues5.isEmpty()) {
-			ourValues5.add(resource.getResource(KEY_UNCHANGED).getValue());
-			String value = resource.getResource(KEY_LEFT).getValue();
-			ourValues5.add(value);
-			ourValues4.add(value);
-			value = resource.getResource(KEY_RIGHT).getValue();
-			ourValues5.add(value);
-			ourValues4.add(value);
-			value = resource.getResource(KEY_CENTER).getValue();
-			ourValues5.add(value);
-			ourValues4.add(value);
-			value = resource.getResource(KEY_JUSTIFY).getValue();
-			ourValues5.add(value);
-			ourValues4.add(value);
+			ourValues5.add(resource.getResource("unchanged").getValue());
+			ourValues5.add(resource.getResource("left").getValue());
+			ourValues5.add(resource.getResource("rigth").getValue());
+			ourValues5.add(resource.getResource("center").getValue());
+			ourValues5.add(resource.getResource("justify").getValue());
 		}
 	}	
 		
 	public ArrayList<String> getValues() {
-		return myAllowUndefined ? ourValues5 : ourValues4;
+		return ourValues5;
 	}
 
 	public String initialValue() {

@@ -44,7 +44,7 @@ public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 
 		if (language != null) {
 			new ZLTextHyphenationReader(this).read(ZLResourceFile.createResourceFile(
-		  		"data/hyphenationPatterns/" + language + ".pattern"
+		  		"hyphenationPatterns/" + language + ".pattern"
 			)); 
 		}
 	}	

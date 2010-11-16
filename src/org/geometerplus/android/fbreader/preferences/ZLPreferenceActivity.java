@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.preference.*;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -38,6 +39,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			Resource = root.getResource(resourceKey);
 			myScreen = getPreferenceManager().createPreferenceScreen(ZLPreferenceActivity.this);
 			myScreen.setTitle(Resource.getValue());
+			myScreen.setSummary(Resource.getResource("summary").getValue());
 		}
 
 		public void setSummary(CharSequence summary) {
@@ -104,7 +106,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		return new Category(myScreen, myResource, resourceKey);
 	}
 
-	protected abstract void init();
+	protected abstract void init(Intent intent);
 
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -114,7 +116,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
-		init();
+		init(getIntent());
 
 		setPreferenceScreen(myScreen);
 	}
