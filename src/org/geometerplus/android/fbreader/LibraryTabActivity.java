@@ -39,6 +39,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.util.AndroidUtil;
+
 public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 
@@ -89,8 +91,13 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 		if (myLibrary == null) {
 			myLibrary = new Library();
 		}
-		myLibrary.clear();
-		myLibrary.synchronize();
+		final Runnable action = new Runnable() {
+			public void run() {
+				myLibrary.clear();
+				myLibrary.synchronize();
+			}
+		};
+		AndroidUtil.wait("loadingBookList", action, this);
 
 		final Intent intent = getIntent();
 		myCurrentBookPath = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
