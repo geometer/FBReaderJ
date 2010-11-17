@@ -96,6 +96,25 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	private String extractFileNameFromIntent(Intent intent) {
+		String fileToOpen = null;
+		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			final Uri uri = intent.getData();
+			if (uri != null) {
+				fileToOpen = fileNameFromUri(uri);
+                final String scheme = uri.getScheme();
+                if ("content".equals(scheme)) {
+                    final File file = new File(fileToOpen);
+                    if (!file.exists()) {
+                        fileToOpen = file.getParent();
+                    }
+                }
+			}
+			intent.setData(null);
+		}
+		return fileToOpen;
+	}
+
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
@@ -113,22 +132,7 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		getLibrary().setActivity(this);
 
-		final Intent intent = getIntent();
-		String fileToOpen = null;
-		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-			final Uri uri = intent.getData();
-			if (uri != null) {
-				fileToOpen = fileNameFromUri(uri);
-                final String scheme = uri.getScheme();
-                if ("content".equals(scheme)) {
-                    final File file = new File(fileToOpen);
-                    if (!file.exists()) {
-                        fileToOpen = file.getParent();
-                    }
-                }
-			}
-			intent.setData(null);
-		}
+		final String fileToOpen = extractFileNameFromIntent(getIntent());
 
 		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
 			ZLApplication application = createApplication(fileToOpen);
@@ -233,18 +237,11 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 
-		String fileToOpen = null;
-		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-			final Uri uri = intent.getData();
-			if (uri != null) {
-				fileToOpen = fileNameFromUri(uri);
-			}
-			intent.setData(null);
-		}
-
+		final String fileToOpen = extractFileNameFromIntent(intent);
 		if (fileToOpen != null) {
 			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
+
 		ZLApplication.Instance().repaintView();
 	}
 
