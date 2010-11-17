@@ -318,7 +318,7 @@ public class Book {
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
 				}
-            
+
 				long index = 0;
 				database.deleteAllBookAuthors(myId);
 				for (Author author : authors()) {

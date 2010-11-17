@@ -38,11 +38,26 @@
     </target>
 
     <target name="check.native.libs.are.present" depends="init">
-        <echo message="Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present..."/>
-        <condition property="native.lib.is.built" >
-            <available property="native.lib.is.built" file="./libs/armeabi/libDeflatingDecompressor.so" />
+        <echo message="Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
+
+        <!-- Evaluate if it's necessary build 'C' sources and property 'native.lib.is.built' GETS VALUE , otherwise stays UNDEFINED -->
+        <condition property="native.lib.is.built" value="true">
+            <and>
+                <!-- Check if 'DeflatingDecompressor' C++ sources are up to date -->
+                <uptodate property="libDeflatingDecompressor-build-is-not-required" targetfile="libs/armeabi/libDeflatingDecompressor.so">
+                    <srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
+                </uptodate>
+                <!-- Check if 'LineBreak' C++, C sources are up to date -->
+                <uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
+                    <srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
+                </uptodate>
+                <!-- Check if *.so libraries are built and present in folder -->
+                <available file="./libs/armeabi/libDeflatingDecompressor.so" />
+                <available file="./libs/armeabi/libLineBreak.so" />
+            </and>
         </condition>
-        <echo message="Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present? = '${native.lib.is.built}'"/>
+        <echo message="Is property 'native.lib.is.built' evaluated and setup to some VALUE ? value = '${native.lib.is.built}'"/>
+        <echo message="DONE! Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
     </target>
 
     <target name="resources" depends="init, check.native.libs.are.present">
@@ -50,8 +65,12 @@
         <!-- Delete all files from /res/raw , /res/drawable  -->
         <echo message="Clean up folders 'res/raw', 'res/drawable/'..." />
         <delete dir="gen/text_search/" />
-        <delete file="res/raw/**" includes="**" />
-        <delete file="res/drawable/**" includes="**" />
+        <delete dir="res/raw/">
+            <files includes="**"/>
+        </delete>
+        <delete dir="res/drawable/">
+            <files includes="**"/>
+        </delete>
         <echo message="DONE! Clean up folders 'res/raw', 'res/drawable/'..." />
 
         <!-- Copy all /icons/ files into /res/drawable  EXCEPT /icons/text_search folder -->
