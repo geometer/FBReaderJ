@@ -42,7 +42,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private boolean myHasChanges;
 
 	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
-		super(siteName, title, summary, icon, links, false);
+		super(siteName, title, summary, icon, null, links, false);
 		myId = id;
 	}
 

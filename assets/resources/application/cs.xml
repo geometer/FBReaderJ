@@ -149,13 +149,13 @@
 			<node name="encoding" value="Kódování"/>
 		</node>
 		<node name="Preferences">
-			<node name="directories" value="Directories" toBeTranslated="true">
-				<node name="summary" value="Directories to seek for files" toBeTranslated="true"/>
-				<node name="books" value="Books directory" toBeTranslated="true"/>
-				<node name="fonts" value="Fonts directory" toBeTranslated="true"/>
+			<node name="directories" value="Adresáře">
+				<node name="summary" value="Adresáře pro hledání souborů"/>
+				<node name="books" value="Adresář s knihami"/>
+				<node name="fonts" value="Adresář s písmy"/>
 			</node>
 			<node name="appearance" value="Vzhled">
-				<node name="summary" value="Rotation, status bar" toBeTranslated="true"/>
+				<node name="summary" value="Otáčení, stavový řádek"/>
 				<node name="autoOrientation" value="Automatické otáčení">
 					<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
 					<node name="summaryOff" value="Displej se neotočí pokud uživatel pohne zařízením"/>
@@ -165,15 +165,15 @@
 					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
 				</node>
 			</node>
-			<node name="text" value="Text" toBeTranslated="true">
-				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
-				<node name="fontSize" value="Font size" toBeTranslated="true"/>
-				<node name="fontStyle" value="Font style" toBeTranslated="true">
-					<node name="regular" value="Regular" toBeTranslated="true"/>
-					<node name="bold" value="Bold" toBeTranslated="true"/>
-					<node name="italic" value="Italic" toBeTranslated="true"/>
-					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
+			<node name="text" value="Text">
+				<node name="summary" value="Písmo, dělení slov atd."/>
+				<node name="font" value="Rodina písem"/>
+				<node name="fontSize" value="Velikost písma"/>
+				<node name="fontStyle" value="Řez písma">
+					<node name="regular" value="Obyčejné"/>
+					<node name="bold" value="Tučné"/>
+					<node name="italic" value="Kurzíva"/>
+					<node name="boldItalic" value="Tučná kurzíva"/>
 				</node>
 				<node name="lineSpacing" value="Řádkování"/>
 				<node name="alignment" value="Zarovnání">
@@ -183,11 +183,11 @@
 					<node name="justify" value="Do bloku"/>
 				</node>
 				<node name="autoHyphenations" value="Automatické dělení slov">
-					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+					<node name="summaryOn" value="Dělit slova automaticky"/>
+					<node name="summaryOff" value="Nedělit slova automaticky"/>
 				</node>
-				<node name="more" value="More styles" toBeTranslated="true">
-					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
+				<node name="more" value="Další styly">
+					<node name="summary" value="Oddělené nastavení pro názvy, mota atd."/>
 					<node name="format" value="Formát">
 						<node name="summary" value=""/>
 					</node>
@@ -200,7 +200,7 @@
 				</node>
 			</node>
 			<node name="margins" value="Okraje">
-				<node name="summary" value="Text margins" toBeTranslated="true"/>
+				<node name="summary" value="Okraje textu"/>
 				<node name="left" value="Levý okraj"/>
 				<node name="right" value="Pravý okraj"/>
 				<node name="top" value="Horní okraj"/>
@@ -235,10 +235,10 @@
 					<node name="summaryOn" value="Navigace je povolena"/>
 					<node name="summaryOff" value="Navigace je zakázána"/>
 				</node>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Rodina písem"/>
 			</node>
-			<node name="display" value="Display" toBeTranslated="true">
-				<node name="summary" value="Brightness control, preventing from sleep" toBeTranslated="true"/>
+			<node name="display" value="Displej">
+				<node name="summary" value="Ovládání jasu, zabránění usínání"/>
 				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
 					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
 					<node name="summaryOff" value="Zakázáno"/>
@@ -251,7 +251,7 @@
 				</node>
 			</node>
 			<node name="scrolling" value="Posouvání">
-				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
+				<node name="summary" value="Jak posouvat text"/>
 				<node name="flick" value="Posouvání tahem">
 					<node name="summaryOn" value="Posouvat stránky tahem prstem"/>
 					<node name="summaryOff" value="Posouvat stránky klepnutím prstem"/>

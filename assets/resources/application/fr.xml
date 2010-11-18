@@ -152,13 +152,13 @@
 			<node name="encoding" value="Encodage"/>
 		</node>
 		<node name="Preferences">
-			<node name="directories" value="Directories" toBeTranslated="true">
-				<node name="summary" value="Directories to seek for files" toBeTranslated="true"/>
-				<node name="books" value="Books directory" toBeTranslated="true"/>
-				<node name="fonts" value="Fonts directory" toBeTranslated="true"/>
+			<node name="directories" value="Répertoires">
+				<node name="summary" value="Emplacements des livres et des polices"/>
+				<node name="books" value="Répertoire des livres"/>
+				<node name="fonts" value="Répertoire des polices"/>
 			</node>
-			<node name="appearanceSettings" value="Apparence">
-				<node name="summary" value="Rotation, status bar" toBeTranslated="true"/>
+			<node name="appearance" value="Apparence">
+				<node name="summary" value="Rotation, barre de statut"/>
 				<node name="autoOrientation" value="Rotation automatique">
 					<node name="summaryOn" value="Basculer l'affichage du texte pour suivre la rotation de l'écran"/>
 					<node name="summaryOff" value="Garder l'affichage tel quel en ignorant la rotation de l'écran"/>
@@ -168,15 +168,15 @@
 					<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
 				</node>
 			</node>
-			<node name="text" value="Text" toBeTranslated="true">
-				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
-				<node name="fontSize" value="Font size" toBeTranslated="true"/>
-				<node name="fontStyle" value="Font style" toBeTranslated="true">
-					<node name="regular" value="Regular" toBeTranslated="true"/>
-					<node name="bold" value="Bold" toBeTranslated="true"/>
-					<node name="italic" value="Italic" toBeTranslated="true"/>
-					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
+			<node name="text" value="Texte">
+				<node name="summary" value="Polices, césures, etc."/>
+				<node name="font" value="Famille de police"/>
+				<node name="fontSize" value="Taille de police"/>
+				<node name="fontStyle" value="Style de police">
+					<node name="regular" value="Normale"/>
+					<node name="bold" value="Gras"/>
+					<node name="italic" value="Italique"/>
+					<node name="boldItalic" value="Gras italique"/>
 				</node>
 				<node name="lineSpacing" value="Espacement de lignes"/>
 				<node name="alignment" value="Alignement">
@@ -186,11 +186,11 @@
 					<node name="justify" value="Justifié"/>
 				</node>
 				<node name="autoHyphenations" value="Césures automatiques">
-					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+					<node name="summaryOn" value="Mettre automatiquement les traits d'union entre les mots"/>
+					<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
 				</node>
-				<node name="more" value="More styles" toBeTranslated="true">
-					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
+				<node name="more" value="Plus de styles">
+					<node name="summary" value="Paramètres de configuration des titres, épigraphes etc."/>
 					<node name="format" value="Format">
 						<node name="summary" value=""/>
 					</node>
@@ -203,58 +203,58 @@
 				</node>
 			</node>
 			<node name="margins" value="Marge">
-				<node name="summary" value="Text margins" toBeTranslated="true"/>
+				<node name="summary" value="Marges du texte"/>
 				<node name="left" value="Marge de gauche"/>
 				<node name="right" value="Marge de droite"/>
 				<node name="top" value="Marge du haut"/>
 				<node name="bottom" value="Marge du bas"/>
 			</node>
-			<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
-				<node name="summary" value="Scrollbar &amp; footer settings" toBeTranslated="true"/>
-				<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
-					<node name="hide" value="Hide" toBeTranslated="true"/>
-					<node name="show" value="Vertical slider" toBeTranslated="true"/>
-					<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
-					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+			<node name="scrollBar" value="Barre de défilement">
+				<node name="summary" value="Configuration de la barre &amp; pied de page"/>
+				<node name="scrollbarType" value="Nature de la barre de défilement">
+					<node name="hide" value="Cachée"/>
+					<node name="show" value="Curseur vertical"/>
+					<node name="showAsProgress" value="Barre de progression verticale"/>
+					<node name="showAsFooter" value="Pied de page horizontal"/>
 				</node>
-				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
-				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
-					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
-					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+				<node name="footerHeight" value="Hauteur du pied de page"/>
+				<node name="footerLongTap" value="Appui long sur pied de page">
+					<node name="longTapRevert" value="Annuler position"/>
+					<node name="longTapNavigate" value="Aller à la position"/>
 				</node>
-				<node name="showProgress" value="Show page number" toBeTranslated="true">
-					<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+				<node name="showProgress" value="Afficher le numéro de page">
+					<node name="summaryOn" value="Affiche le numéro de la page dans le pied de page"/>
+					<node name="summaryOff" value="N'affiche page le numéro de page"/>
 				</node>
-				<node name="showBattery" value="Show battery level" toBeTranslated="true">
-					<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+				<node name="showBattery" value="Afficher le niveau de batterie">
+					<node name="summaryOn" value="Affiche le niveau de batterie dans le pied de page"/>
+					<node name="summaryOff" value="N'affiche pas le niveau de batterie"/>
 				</node>
-				<node name="showClock" value="Show clock" toBeTranslated="true">
-					<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+				<node name="showClock" value="Afficher l'horloge">
+					<node name="summaryOn" value="Affiche l'horloge dans le pied de page"/>
+					<node name="summaryOff" value="N'affiche pas l'horloge dans le pied de page"/>
 				</node>
-				<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
-					<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
+				<node name="isSensitive" value="Navigation par appui sur le pied de page">
+					<node name="summaryOn" value="Navigation activée"/>
+					<node name="summaryOff" value="Navigation désactivée"/>
 				</node>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Famille de police"/>
 			</node>
-			<node name="display" value="Display" toBeTranslated="true">
-				<node name="summary" value="Brightness control, preventing from sleep" toBeTranslated="true"/>
-				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
-					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
-					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+			<node name="display" value="Affichage">
+				<node name="summary" value="Contrôle de la luminosité, mise en veille de l'écran"/>
+				<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
+					<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
+					<node name="summaryOff" value="Contrôle désactivé"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
-					<node name="0" value="Always" toBeTranslated="true"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<node name="100" value="Never" toBeTranslated="true"/>
+					<node name="0" value="Toujours"/>
+					<node name="25" value="Tant que le niveau de batterie est supérieur à 25%"/>
+					<node name="50" value="Tant que le niveau de batterie est supérieur à 50%"/>
+					<node name="100" value="Jamais"/>
 				</node>
 			</node>
 			<node name="scrolling" value="Navigation">
-				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
+				<node name="summary" value="Modalités de défilement du texte"/>
 				<node name="flick" value="Défiler par accoup (Flick)">
 					<node name="summaryOn" value="Faire glisser le doigt pour changer de page"/>
 					<node name="summaryOff" value="Une pression du doigt change de page"/>
