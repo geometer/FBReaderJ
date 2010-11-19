@@ -97,7 +97,10 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 				myLibrary.synchronize();
 			}
 		};
-		AndroidUtil.wait("loadingBookList", action, this);
+		System.err.println("before");
+        action.run();
+		//AndroidUtil.wait("loadingBookList", action, this);
+		System.err.println("after");
 
 		final Intent intent = getIntent();
 		myCurrentBookPath = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
