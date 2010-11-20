@@ -25,7 +25,7 @@ with your debug key (in this case, you can skip step 3).
 If you are Windows user
   2a. Run ndk-build (a program from Android NDK directory) in your project catalog;
       This program only runs from Cygwin >= 1.7, please read NDK docs for details.
-  2b. Run ./createRawResources.py script.
-  2c. Run 'ant release'.
+      Read and try config cygwin using 'cygwin_installation_and_configuration.pdf'
+  2b. Run 'ant release'.
 
 3. Sign your package manually.
