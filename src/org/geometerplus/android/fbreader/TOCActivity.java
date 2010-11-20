@@ -112,7 +112,7 @@ public class TOCActivity extends ListActivity {
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
 			final TOCTree tree = (TOCTree)getItem(position);
 			view.setBackgroundColor((tree == mySelectedItem) ? 0xff808080 : 0);
-			setIcon(view, (ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
+			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
 			return view;
 		}
