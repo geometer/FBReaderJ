@@ -1,140 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="FBReaderJ" default="package">
-    <property file="local.properties" />
-    <property file="build.properties" />
-    <property file="default.properties" />
+	<property file="local.properties" />
+	<property file="build.properties" />
+	<property file="default.properties" />
 
-    <path id="android.antlibs">
-        <pathelement path="${sdk.dir}/tools/lib/anttasks.jar" />
-        <pathelement path="${sdk.dir}/tools/lib/sdklib.jar" />
-        <pathelement path="${sdk.dir}/tools/lib/androidprefs.jar" />
-        <pathelement path="${sdk.dir}/tools/lib/apkbuilder.jar" />
-        <pathelement path="${sdk.dir}/tools/lib/jarutils.jar" />
-    </path>
+	<path id="android.antlibs">
+		<pathelement path="${sdk.dir}/tools/lib/anttasks.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/sdklib.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/androidprefs.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/apkbuilder.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/jarutils.jar" />
+	</path>
 
-    <taskdef name="setup"
-             classname="com.android.ant.SetupTask"
-             classpathref="android.antlibs" />
-    <setup />
+	<taskdef name="setup"
+		classname="com.android.ant.SetupTask"
+		classpathref="android.antlibs" />
 
-    <target name="init" description="Initialization...">
-        <condition property="Ant17isOnline">
-            <and>
-                <antversion property="ant.version" atleast="1.7.0"/>
-            </and>
-        </condition>
-        <fail message="ANT with version at least 1.7 should be present !!! Update your local '${ant.version}' first.">
-            <condition>
-                <not>
-                    <isset property="Ant17isOnline"/>
-                </not>
-            </condition>
-        </fail>
-    </target>
+	<setup />
 
-    <target name="native" unless="native.lib.is.built">
-        <echo message="Try to build 'libDeflatingDecompressor.so', 'libLineBreak.so'...."/>
-        <exec executable="${ndk.dir}/ndk-build" />
-    </target>
+	<target name="init" description="Initialization...">
+		<condition property="Ant17isOnline">
+			<and>
+				<antversion property="ant.version" atleast="1.7.0"/>
+			</and>
+		</condition>
+		<fail message="ANT with version at least 1.7 should be present !!! Update your local '${ant.version}' first.">
+			<condition>
+				<not>
+					<isset property="Ant17isOnline"/>
+				</not>
+			</condition>
+		</fail>
+	</target>
 
-    <target name="check.native.libs.are.present" depends="init">
-        <echo message="Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
+	<target name="native" unless="native.lib.is.built">
+		<echo message="Try to build 'libDeflatingDecompressor.so', 'libLineBreak.so'...."/>
+		<exec executable="${ndk.dir}/ndk-build" />
+	</target>
 
-        <!-- Evaluate if it's necessary build 'C' sources and property 'native.lib.is.built' GETS VALUE , otherwise stays UNDEFINED -->
-        <condition property="native.lib.is.built" value="true">
-            <and>
-                <!-- Check if 'DeflatingDecompressor' C++ sources are up to date -->
-                <uptodate property="libDeflatingDecompressor-build-is-not-required" targetfile="libs/armeabi/libDeflatingDecompressor.so">
-                    <srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
-                </uptodate>
-                <!-- Check if 'LineBreak' C++, C sources are up to date -->
-                <uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
-                    <srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
-                </uptodate>
-                <!-- Check if *.so libraries are built and present in folder -->
-                <available file="./libs/armeabi/libDeflatingDecompressor.so" />
-                <available file="./libs/armeabi/libLineBreak.so" />
-            </and>
-        </condition>
-        <echo message="Is property 'native.lib.is.built' evaluated and setup to some VALUE ? value = '${native.lib.is.built}'"/>
-        <echo message="DONE! Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
-    </target>
+	<target name="check.native.libs.are.present" depends="init">
+		<echo message="Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
 
-    <target name="resources" depends="init, check.native.libs.are.present">
+		<!-- Evaluate if it's necessary build 'C' sources and property 'native.lib.is.built' GETS VALUE , otherwise stays UNDEFINED -->
+		<condition property="native.lib.is.built" value="true">
+			<and>
+				<!-- Check if 'DeflatingDecompressor' C++ sources are up to date -->
+				<uptodate property="libDeflatingDecompressor-build-is-not-required" targetfile="libs/armeabi/libDeflatingDecompressor.so">
+					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
+				</uptodate>
+				<!-- Check if 'LineBreak' C++, C sources are up to date -->
+				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
+					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
+				</uptodate>
+				<!-- Check if *.so libraries are built and present in folder -->
+				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
+				<available file="./libs/armeabi/libLineBreak.so" />
+			</and>
+		</condition>
+		<echo message="Is property 'native.lib.is.built' evaluated and setup to some VALUE ? value = '${native.lib.is.built}'"/>
+		<echo message="DONE! Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
+	</target>
 
-        <!-- Delete all files from /res/raw , /res/drawable  -->
-        <echo message="Clean up folders 'res/raw', 'res/drawable/'..." />
-        <delete dir="gen/text_search/" />
-        <delete dir="res/raw/">
-            <files includes="**"/>
-        </delete>
-        <delete dir="res/drawable/">
-            <files includes="**"/>
-        </delete>
-        <echo message="DONE! Clean up folders 'res/raw', 'res/drawable/'..." />
+	<target name="resources" depends="init, check.native.libs.are.present">
 
-        <!-- Copy all /icons/ files into /res/drawable  EXCEPT /icons/text_search folder -->
-        <echo message="Copying /icons files to 'res/drawable/' folder" />
-        <copy todir="res/drawable" verbose="false" overwrite="true">
-            <fileset file="icons/fbreader.png" excludes=".svn" />
-            <fileset dir="icons/tree/" includes="**" excludes=".svn" />
-            <fileset dir="icons/menu/" includes="**" excludes=".svn" />
-            <fileset dir="icons/tabs/" includes="**" excludes=".svn" />
-            <fileset dir="icons/others/" includes="**" excludes=".svn" />
-        </copy>
-        <echo message="DONE! Copying /icons files to 'res/drawable/' folder" />
+		<!-- Delete all files from gen/text_search and res/drawable  -->
+		<echo message="Clean up folders 'gen/text_search' and 'res/drawable'..." />
+		<delete dir="gen/text_search/">
+			<files includes="**"/>
+		</delete>
+		<delete dir="res/drawable/">
+			<files includes="**"/>
+		</delete>
+		<echo message="DONE! Clean up folders 'gen/text_search' and 'res/drawable'..." />
 
-        <!-- Copy all icons/text_search and prepare for file name changing -->
-        <echo message="Copying 'search_text' files to temporal folder" />
-        <copy todir="gen/text_search/" verbose="false" overwrite="true">
-            <fileset dir="icons/text_search/" includes="**" excludes=".svn" />
-        </copy>
-        <echo message="DONE! Copying 'search_text' files to temporal folder" />
+		<!-- Copy all icons/ files into res/drawable  EXCEPT /icons/text_search folder -->
+		<echo message="Copying icons files to 'res/drawable/' folder" />
+		<copy todir="res/drawable" verbose="false" overwrite="true">
+			<fileset file="icons/fbreader.png"/>
+			<fileset dir="icons/tree/" includes="**"/>
+			<fileset dir="icons/menu/" includes="**"/>
+			<fileset dir="icons/tabs/" includes="**"/>
+			<fileset dir="icons/others/" includes="**"/>
+		</copy>
+		<echo message="DONE! Copying icons files to 'res/drawable/' folder" />
 
-        <!-- Rename file names like 'close-active.png' to 'close_active.png' -->
-        <echo message="Renaming file names with '*-*' into '*_*' names" />
-        <move todir="gen/text_search/">
-            <fileset dir="gen/text_search/" />
-            <mapper>
-                <mapper type="regexp" from="^([a-z0-9A-Z_:@?=+,!~+%$]+)(-)([a-z0-9A-Z_:@?=+,!~+%$]+)\.(xml|png)$" to="\1_\3.\4" />
-            </mapper>
-        </move>
-        <echo message="DONE! Renaming file names with '*-*' into '*_*' names" />
+		<!-- Copy all icons/text_search and prepare for file name changing -->
+		<echo message="Copying 'search_text' files to temporal folder" />
+		<copy todir="gen/text_search/" verbose="false" overwrite="true">
+			<fileset dir="icons/text_search/" includes="**" />
+		</copy>
+		<echo message="DONE! Copying 'search_text' files to temporal folder" />
 
-        <!-- Append 'text_search_' for changing file name from 'close_active.png' to 'text_search_close_active.png' -->
-        <echo message="Append 'text_search+' to 'xxx_xxx.*' file name..." />
-        <move todir="gen/text_search/">
-            <fileset dir="gen/text_search/" />
-            <mapper>
-                <mapper type="glob" from="*.xml" to="text_search_*.xml" />
-                <mapper type="glob" from="*.png" to="text_search_*.png" />
-            </mapper>
-        </move>
-        <echo message="DONE! Append 'text_search+' to 'xxx_xxx.*' file name..." />
+		<!-- Rename file names like 'close-active.png' to 'close_active.png' -->
+		<echo message="Renaming file names with '*-*' into '*_*' names" />
+		<move todir="gen/text_search/">
+			<fileset dir="gen/text_search/" />
+			<mapper>
+				<mapper type="regexp" from="^([a-z0-9A-Z_:@?=+,!~+%$]+)(-)([a-z0-9A-Z_:@?=+,!~+%$]+)\.(xml|png)$" to="\1_\3.\4" />
+			</mapper>
+		</move>
+		<echo message="DONE! Renaming file names with '*-*' into '*_*' names" />
 
-        <echo message="Copy files like 'text_search_close_active.png' to /res/drawable..." />
-        <copy todir="res/drawable/" verbose="false" overwrite="true">
-            <fileset dir="gen/text_search/" includes="**" excludes=".svn" />
-        </copy>
-        <echo message="DONE! Copy files like 'text_search_close_active.png' to /res/drawable..." />
-        <!--<exec executable="./createRawResources.py" />-->
-        <!--<exec executable="${ndk.dir}/ndk-build" />-->
-    </target>
+		<!-- Append 'text_search_' for changing file name from 'close_active.png' to 'text_search_close_active.png' -->
+		<echo message="Append 'text_search+' to 'xxx_xxx.*' file name..." />
+		<move todir="gen/text_search/">
+			<fileset dir="gen/text_search/" />
+			<mapper>
+				<mapper type="glob" from="*.xml" to="text_search_*.xml" />
+				<mapper type="glob" from="*.png" to="text_search_*.png" />
+			</mapper>
+		</move>
+		<echo message="DONE! Append 'text_search+' to 'xxx_xxx.*' file name..." />
 
-    <target name="package" depends="init, resources, native, release" />
-    <target name="dbg" depends="init, resources, native, debug" />
+		<echo message="Copy files like 'text_search_close_active.png' to /res/drawable..." />
+		<copy todir="res/drawable/" verbose="false" overwrite="true">
+			<fileset dir="gen/text_search/" includes="**" />
+		</copy>
+		<echo message="DONE! Copy files like 'text_search_close_active.png' to /res/drawable..." />
+	</target>
 
-    <target name="clean">
-        <echo message="Clean all temporary folders..." />
-        <delete dir="gen" />
-        <delete dir="bin" />
-        <delete dir="res/raw" />
-        <delete dir="res/drawable" />
-        <delete dir="out" />
-        <delete dir="libs/armeabi" />
-        <delete dir="obj" />
-    </target>
+	<target name="package" depends="init, resources, native, release" />
+	<target name="dbg" depends="init, resources, native, debug" />
 
-    <!--<target name="release" depends="clean, resources, package"/>-->
-
+	<target name="clean">
+		<echo message="Clean all temporary folders..." />
+		<delete dir="gen" />
+		<delete dir="bin" />
+		<delete dir="res/drawable" />
+		<delete dir="out" />
+		<delete dir="libs/armeabi" />
+		<delete dir="obj" />
+	</target>
 </project>

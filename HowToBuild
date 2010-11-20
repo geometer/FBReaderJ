@@ -7,7 +7,7 @@ Prerequisites:
 
 2. Android NDK >= r4b
 
-3. python
+3. Apache Ant >= 1.7.1
 
 To build:
 
