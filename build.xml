@@ -62,23 +62,22 @@
 	</target>
 
 	<target name="resources" depends="init, check.native.libs.are.present">
-
 		<!-- Delete all files from gen/text_search and res/drawable  -->
 		<echo message="Clean up 'res/drawable' folder..." />
 		<delete dir="res/drawable/">
 			<files includes="**"/>
 		</delete>
-		<echo message="DONE! Clean up 'res/drawable' folder..." />
+		<echo message="DONE! Clean up 'res/drawable' folder" />
 
 		<!-- Copy all icons/ files into res/drawable  EXCEPT /icons/text_search folder -->
-		<echo message="Copying icons files to 'res/drawable/' folder" />
+		<echo message="Copying icons files to 'res/drawable/' folder..." />
 		<copy todir="res/drawable" verbose="false" overwrite="true">
-			<fileset file="icons/fbreader.png"/>
-			<fileset dir="icons/tree/" includes="**"/>
-			<fileset dir="icons/menu/" includes="**"/>
-			<fileset dir="icons/tabs/" includes="**"/>
-			<fileset dir="icons/others/" includes="**"/>
-			<fileset dir="icons/text_search/" includes="**"/>
+			<fileset file="icons/fbreader.png" />
+			<fileset dir="icons/tree/" includes="**" />
+			<fileset dir="icons/menu/" includes="**" />
+			<fileset dir="icons/tabs/" includes="**" />
+			<fileset dir="icons/others/" includes="**" />
+			<fileset dir="icons/text_search/" includes="**" />
 		</copy>
 		<echo message="DONE! Copying icons files to 'res/drawable/' folder" />
 	</target>
@@ -93,6 +92,7 @@
 		<delete dir="res/drawable" />
 		<delete dir="out" />
 		<delete dir="obj" />
+		<echo message="DONE! Clean all temporary folders" />
 	</target>
 
 	<target name="distclean" depends="clean">
