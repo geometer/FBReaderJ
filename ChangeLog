@@ -1,6 +1,7 @@
 ===== 0.7.18 (??? ??, 2010) =====
 * Local library activity has been moved to a separate process
-* French resources have been updated
+* French resources have been updated (by Mathias Monnerville)
+* German resources have been updated (by Ingolf Kübler)
 
 ===== 0.7.17 (Nov 14, 2010) =====
 * Network catalog order has been changed: language is used for ordering
