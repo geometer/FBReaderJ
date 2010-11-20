@@ -7,7 +7,9 @@ Prerequisites:
 
 2. Android NDK >= r4b
 
-3. Apache Ant >= 1.7.1
+3. Apache Ant >= 1.7.0
+
+4. (Windows-only) Cygwin >= 1.7
 
 To build:
 
