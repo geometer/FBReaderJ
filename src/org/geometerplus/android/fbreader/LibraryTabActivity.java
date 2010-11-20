@@ -234,7 +234,7 @@ public class LibraryTabActivity extends TabActivity implements MenuItem.OnMenuIt
 					iconView.setVisibility(View.GONE);
 					break;
 				case Type.TREE:
-					setIcon(view, iconView, tree);
+					setIcon(iconView, tree);
 					break;
 			}
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
