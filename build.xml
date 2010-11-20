@@ -19,7 +19,7 @@
 	<setup />
 
 	<target name="init" description="Initialization...">
-		<fail message="ANT with version at least 1.7 should be present !!! Update your local '${ant.version}' first.">
+		<fail message="Ant 1.7.0 or higher is required. Please upgrade your ant.">
 			<condition>
 				<not>
 					<antversion property="ant.version" atleast="1.7.0"/>
@@ -28,70 +28,67 @@
 		</fail>
 	</target>
 
-	<target name="native" unless="native.lib.is.built">
+	<target name="native" unless="native.libraries.are.uptodate">
 		<fail message="Native libraries are not up-to-date. Please run ndk-build manually.">
 			<condition>
 				<os family="windows" />
 			</condition>
 		</fail>
-		<echo message="Try to build 'libDeflatingDecompressor.so', 'libLineBreak.so'...."/>
+		<echo message="Building native libraries..."/>
 		<exec executable="${ndk.dir}/ndk-build" />
+		<echo message="DONE (Building native libraries)"/>
 	</target>
 
-	<target name="check.native.libs.are.present" depends="init">
-		<echo message="Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
-
-		<!-- Evaluate if it's necessary build 'C' sources and property 'native.lib.is.built' GETS VALUE , otherwise stays UNDEFINED -->
-		<condition property="native.lib.is.built" value="true">
+	<target name="check.native.libraries" depends="init">
+		<echo message="Checking if native libraries are up-to-date..."/>
+		<condition property="native.libs.are.uptodate" value="true">
 			<and>
-				<!-- Check if 'DeflatingDecompressor' C++ sources are up to date -->
-				<uptodate property="libDeflatingDecompressor-build-is-not-required" targetfile="libs/armeabi/libDeflatingDecompressor.so">
+				<!-- Check if libDeflatingDecompressor exists and is up to date -->
+				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
+				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor.so">
 					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
 				</uptodate>
-				<!-- Check if 'LineBreak' C++, C sources are up to date -->
+				<!-- Check if libLineBreak exists and is up to date -->
+				<available file="./libs/armeabi/libLineBreak.so" />
 				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
 					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
-				<!-- Check if *.so libraries are built and present in folder -->
-				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
-				<available file="./libs/armeabi/libLineBreak.so" />
 			</and>
 		</condition>
-		<echo message="Is property 'native.lib.is.built' evaluated and setup to some VALUE ? value = '${native.lib.is.built}'"/>
-		<echo message="DONE! Check if Native Libs 'libDeflatingDecompressor.so', 'libLineBreak.so' are present and uptodate..."/>
+		<echo message="DONE (Checking if native libraries are up-to-date)"/>
 	</target>
 
-	<target name="resources" depends="init, check.native.libs.are.present">
-		<!-- Delete all files from gen/text_search and res/drawable  -->
-		<echo message="Clean up 'res/drawable' folder..." />
+	<target name="resources" depends="init, check.native.libraries">
+		<echo message="Cleaning up the 'res/drawable' folder..." />
 		<delete dir="res/drawable/">
 			<files includes="**"/>
 		</delete>
-		<echo message="DONE! Clean up 'res/drawable' folder" />
+		<echo message="DONE (Cleaning up the 'res/drawable' folder)" />
 
-		<!-- Copy all icons/ files into res/drawable  EXCEPT /icons/text_search folder -->
 		<echo message="Copying icons files to 'res/drawable/' folder..." />
 		<copy todir="res/drawable" verbose="false" overwrite="true" flatten="true">
 			<fileset file="icons/fbreader.png" />
 			<fileset dir="icons/" includes="*/*" />
 		</copy>
-		<echo message="DONE! Copying icons files to 'res/drawable/' folder" />
+		<echo message="DONE (Copying icons files to 'res/drawable/' folder)" />
 	</target>
 
 	<target name="package" depends="init, resources, native, release" />
 	<target name="dbg" depends="init, resources, native, debug" />
 
 	<target name="clean">
-		<echo message="Clean all temporary folders..." />
+		<echo message="Deleting temporary files..." />
 		<delete dir="gen" />
 		<delete dir="bin" />
 		<delete dir="res/drawable" />
 		<delete dir="out" />
 		<delete dir="obj" />
-		<echo message="DONE! Clean all temporary folders" />
+		<echo message="DONE (Deleting temporary files)" />
 	</target>
 
 	<target name="distclean" depends="clean">
+		<echo message="Deleting native libraries..." />
 		<delete dir="libs" />
+		<echo message="DONE (Deleting native libraries)" />
 	</target>
 </project>
