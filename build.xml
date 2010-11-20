@@ -19,15 +19,10 @@
 	<setup />
 
 	<target name="init" description="Initialization...">
-		<condition property="Ant17isOnline">
-			<and>
-				<antversion property="ant.version" atleast="1.7.0"/>
-			</and>
-		</condition>
 		<fail message="ANT with version at least 1.7 should be present !!! Update your local '${ant.version}' first.">
 			<condition>
 				<not>
-					<isset property="Ant17isOnline"/>
+					<antversion property="ant.version" atleast="1.7.0"/>
 				</not>
 			</condition>
 		</fail>
