@@ -34,6 +34,11 @@
 	</target>
 
 	<target name="native" unless="native.lib.is.built">
+		<fail message="Native libraries are not up-to-date. Please run ndk-build manually.">
+			<condition>
+				<os family="windows" />
+			</condition>
+		</fail>
 		<echo message="Try to build 'libDeflatingDecompressor.so', 'libLineBreak.so'...."/>
 		<exec executable="${ndk.dir}/ndk-build" />
 	</target>
