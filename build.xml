@@ -41,7 +41,7 @@
 
 	<target name="check.native.libraries" depends="init">
 		<echo message="Checking if native libraries are up-to-date..."/>
-		<condition property="native.libs.are.uptodate" value="true">
+		<condition property="native.libraries.are.uptodate" value="true">
 			<and>
 				<!-- Check if libDeflatingDecompressor exists and is up to date -->
 				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
