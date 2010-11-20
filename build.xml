@@ -71,13 +71,9 @@
 
 		<!-- Copy all icons/ files into res/drawable  EXCEPT /icons/text_search folder -->
 		<echo message="Copying icons files to 'res/drawable/' folder..." />
-		<copy todir="res/drawable" verbose="false" overwrite="true">
+		<copy todir="res/drawable" verbose="false" overwrite="true" flatten="true">
 			<fileset file="icons/fbreader.png" />
-			<fileset dir="icons/tree/" includes="**" />
-			<fileset dir="icons/menu/" includes="**" />
-			<fileset dir="icons/tabs/" includes="**" />
-			<fileset dir="icons/others/" includes="**" />
-			<fileset dir="icons/text_search/" includes="**" />
+			<fileset dir="icons/" includes="*/*" />
 		</copy>
 		<echo message="DONE! Copying icons files to 'res/drawable/' folder" />
 	</target>
