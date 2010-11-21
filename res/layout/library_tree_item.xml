@@ -3,21 +3,21 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"
-	android:paddingLeft="5dp"
+	android:paddingLeft="5dip"
 	android:orientation="horizontal"
 	android:gravity="top|left"
 >
 	<ImageView
 		android:id="@+id/library_tree_item_icon"
 		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:adjustViewBounds="false"
+		android:layout_height="wrap_content"
+		android:paddingTop="10dip"
 	/>
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:minHeight="?android:attr/listPreferredItemHeight"
-		android:paddingLeft="5dp"
+		android:paddingLeft="5dip"
 		android:paddingRight="8dp"
 		android:orientation="vertical"
 	>
@@ -25,7 +25,7 @@
 			android:id="@+id/library_tree_item_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="6dp"
+			android:layout_marginTop="6dip"
 			android:layout_alignParentTop="true"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceLarge"
@@ -36,7 +36,7 @@
 			android:id="@+id/library_tree_item_childrenlist"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="5dp"
+			android:layout_marginTop="5dip"
 			android:layout_below="@id/library_tree_item_name"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceSmall"

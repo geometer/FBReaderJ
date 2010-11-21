@@ -48,6 +48,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity 
 		implements NetworkView.EventListener, View.OnCreateContextMenuListener {
@@ -111,15 +112,15 @@ abstract class NetworkBaseActivity extends ListActivity
 
 	// this set is used to track whether this activity will be notified, when specific cover will be synchronized.
 	private HashSet<String> myAwaitedCovers = new HashSet<String>();
-	private ZLImage myFBReaderIcon =
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createImage(R.drawable.fbreader);
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		if (tree instanceof ZLAndroidTree) {
+			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
+			return;
+		}
+
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
-		if (cover == null) { 
-			cover = myFBReaderIcon;
-		}
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
@@ -154,7 +155,7 @@ abstract class NetworkBaseActivity extends ListActivity
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
 		} else {
-			coverView.setImageDrawable(null);
+			coverView.setImageResource(R.drawable.fbreader);
 		}
 	}
 
@@ -177,6 +178,7 @@ abstract class NetworkBaseActivity extends ListActivity
 
 		final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
 		coverView.getLayoutParams().width = myCoverWidth;
+		coverView.getLayoutParams().height = myCoverHeight;
 		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		coverView.requestLayout();
 		setupCover(coverView, tree, myCoverWidth, myCoverWidth);

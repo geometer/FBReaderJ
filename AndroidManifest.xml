@@ -77,13 +77,19 @@
 		<activity android:name="org.geometerplus.android.fbreader.LibraryTabActivity" android:process=":library" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookSearchActivity" />
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.library.LibraryTopLevelActivity" android:process=":library" android:configChanges="orientation|keyboardHidden">
+			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookSearchActivity" />
+		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.library.LibraryRecentActivity" android:process=":library" android:configChanges="orientation|keyboardHidden">
+			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookSearchActivity" />
+		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookmarkSearchActivity" />
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name="org.geometerplus.android.fbreader.preferences.BookInfoActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.BookInfoActivity" android:process=":library" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.network.BookDownloader" android:process=":bookDownloader" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />

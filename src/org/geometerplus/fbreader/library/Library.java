@@ -254,6 +254,7 @@ public final class Library {
 		}
 
 		final BooksDatabase db = BooksDatabase.Instance();
+		myRecentBooks.clear();
 		for (long id : db.loadRecentBookIds()) {
 			Book book = bookById.get(id);
 			if (book != null) {
@@ -293,7 +294,15 @@ public final class Library {
 	}
 
 	public LibraryTree recentBooks() {
-		synchronize();
+		if (!myRecentBooks.hasChildren()) {
+			final BooksDatabase db = BooksDatabase.Instance();
+			for (long id : db.loadRecentBookIds()) {
+				Book book = Book.getById(id);
+				if (book != null) {
+					myRecentBooks.createBookSubTree(book, true);
+				}
+			}
+		}
 		return myRecentBooks;
 	}
 

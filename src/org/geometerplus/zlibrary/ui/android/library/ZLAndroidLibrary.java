@@ -23,7 +23,6 @@ import java.io.*;
 import java.util.*;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
@@ -35,12 +34,10 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidResourceBasedImageData;
 
 import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
@@ -107,14 +104,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public ZLResourceFile createResourceFile(ZLResourceFile parent, String name) {
 		return new AndroidAssetsFile((AndroidAssetsFile)parent, name);
-	}
-
-	public static ZLImage createImage(Context context, int drawableId) {
-		return new ZLAndroidResourceBasedImageData(context.getResources(), drawableId);
-	}
-
-	public ZLImage createImage(int drawableId) {
-		return createImage(myApplication, drawableId);
 	}
 
 	@Override
