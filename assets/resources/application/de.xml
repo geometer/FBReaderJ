@@ -150,12 +150,12 @@
 			<node name="encoding" value="Codierung"/>
 		</node>
 		<node name="Preferences">
-			<node name="directories" value="Verzeichnisse"/>
+			<node name="directories" value="Verzeichnisse">
 				<node name="summary" value="Verzeichnisse in den Dateien gesucht werden."/>
 				<node name="books" value="Verzeichnis der Bücher"/>
 				<node name="fonts" value="Verzeichnis für Schriftarten (Fonts)"/>
 			</node>
-			<node name="appearance" value="Aussehen"/>
+			<node name="appearance" value="Aussehen">
 				<node name="summary" value="Ausrichtung, Statuszeile" />
 				<node name="autoOrientation" value="Automatische Rotation">
 					<node name="summaryOn" value="Das Bild wird automatisch gedreht wenn das Gerät gedreht wird."/>
@@ -166,7 +166,7 @@
 					<node name="summaryOff" value="Statusbar im Lesemodus verstecken."/>
 				</node>
 			</node>
-			<node name="text" value="Text Darstellung"/>
+			<node name="text" value="Text Darstellung">
 				<node name="summary" value="Zeichensatz, Silbentrennung, etc."/>
 				<node name="font" value="Schriftart"/>
 				<node name="fontSize" value="Schriftgröße"/>
@@ -183,20 +183,20 @@
 					<node name="center" value="Zentriert"/>
 					<node name="justify" value="Blocksatz"/>
 				</node>
-				<node name="autoHyphenations" value="Automatisch trennen"/>
+				<node name="autoHyphenations" value="Automatisch trennen">
 					<node name="summaryOn" value="Automatische Silbentrennung."/>
 					<node name="summaryOff" value="Keine automatische Silbentrennung."/>
 				</node>
-				<node name="more" value="Weitere Formatierungen ..."/>
+				<node name="more" value="Weitere Formatierungen ...">
 					<node name="summary" value="Detailierte Einstellungen für Überschiften, Inhalte, etc."/>
 					<node name="format" value="Absatzformate">
 						<node name="summary" value="Zeilenabstände und Einzüge festlegen."/>
 					</node>
-					<node name="styles" value="Schriftarten"/>
+					<node name="styles" value="Schriftarten">
 						<node name="summary" value="Schriftarten festlegen."/>
 					</node>
 				</node>
-				<node name="colors" value="Farben"/>
+				<node name="colors" value="Farben">
 					<node name="summary" value="Farben festlegen."/>
 				</node>
 			</node>
@@ -207,9 +207,9 @@
 				<node name="top" value="Oberer Rand"/>
 				<node name="bottom" value="Unterer Rand"/>
 			</node>
-			<node name="scrollBar" value="Bildlaufleiste"/>
+			<node name="scrollBar" value="Bildlaufleiste">
 				<node name="summary" value="Einstellungen für Bildlaufleiste (Scrollbar) &amp; Fußleiste."/>
-				<node name="scrollbarType" value="Art der Bildlaufleiste"/>
+				<node name="scrollbarType" value="Art der Bildlaufleiste">
 					<node name="hide" value="Keine"/>
 					<node name="show" value="Vertical"/>
 					<node name="showAsProgress" value="Vertical progressiv"/>
@@ -224,27 +224,27 @@
 					<node name="summaryOn" value="Seitennummer in der Fußleiste anzeigen."/>
 					<node name="summaryOff" value="Keine Seitennummer in der Fußzeile anzeigen."/>
 				</node>
-				<node name="showBattery" value="Akkustatus"/>
+				<node name="showBattery" value="Akkustatus">
 					<node name="summaryOn" value="Akkustatus in der Fußleiste anzeigen."/>
 					<node name="summaryOff" value="Keinen Akkustatus in der Fußleiste anzeigen."/>
 				</node>
-				<node name="showClock" value="Uhr anzeigen"/>
+				<node name="showClock" value="Uhr anzeigen">
 					<node name="summaryOn" value="Uhr in der Fußleiste anzeigen."/>
 					<node name="summaryOff" value="Keine Uhr in der Fußleiste anzeigen."/>
 				</node>
-				<node name="isSensitive" value="Navigation beim Antippen der Fußleiste"/>
+				<node name="isSensitive" value="Navigation beim Antippen der Fußleiste">
 					<node name="summaryOn" value="Navigation ist aktiviert."/>
 					<node name="summaryOff" value="Navigation ist nicht aktiviert."/>
 				</node>
 				<node name="font" value="Schriftart"/>
 			</node>
-			<node name="display" value="Bildschirm"/>
+			<node name="display" value="Bildschirm">
 				<node name="summary" value="Helligkeit, automatische Abschaltung."/>
-				<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung"/>
+				<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
 					<node name="summaryOn" value="mit den Finger durch hoch/runter-schieben am linken Bidschirmrand."/>
 					<node name="summaryOff" value="Abgeschaltet."/>
 				</node>
-				<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern"/>
+				<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern">
 					<node name="0" value="Immer"/>
 					<node name="25" value="Wenn der Akkuladezustand größer 25 Prozent ist."/>
 					<node name="50" value="Wenn der Akkuladezustand größer 50 Prozent ist."/>
