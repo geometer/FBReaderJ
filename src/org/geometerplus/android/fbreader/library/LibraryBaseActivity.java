@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -33,27 +33,22 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class LibraryBaseActivity extends ListActivity {
-	private final ZLResource myResource = ZLResource.resource("libraryView");
+	protected final ZLResource myResource = ZLResource.resource("libraryView");
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setListAdapter(new LibraryAdapter());
 	}
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 	}
 
-	private final class LibraryAdapter extends BaseAdapter {
-		private final ArrayList<TopLevelTree> myItems = new ArrayList<TopLevelTree>();
+	protected final class LibraryAdapter extends BaseAdapter {
+		private final List<FBTree> myItems;
 
-		public LibraryAdapter() {
-			myItems.add(new TopLevelTree(myResource.getResource("searchResults")));
-			myItems.add(new TopLevelTree(myResource.getResource("recent")));
-			myItems.add(new TopLevelTree(myResource.getResource("byAuthor")));
-			myItems.add(new TopLevelTree(myResource.getResource("byTag")));
-			myItems.add(new TopLevelTree(myResource.getResource("fileTree")));
+		public LibraryAdapter(List<FBTree> items) {
+			myItems = items;
 		}
 
 		@Override
@@ -70,9 +65,6 @@ public class LibraryBaseActivity extends ListActivity {
 		public final long getItemId(int position) {
 			return position;
 		}
-
-		//private ZLImage myFBReaderIcon =
-		//	ZLAndroidLibrary.Instance().createImage(R.drawable.fbreader);
 
 		private int myCoverWidth = -1;
 		private int myCoverHeight = -1;
@@ -109,9 +101,6 @@ public class LibraryBaseActivity extends ListActivity {
 	private void setupCover(final ImageView coverView, FBTree tree, int width, int height) {
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
-		if (cover == null) { 
-			cover = myFBReaderIcon;
-		}
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
@@ -123,26 +112,8 @@ public class LibraryBaseActivity extends ListActivity {
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
 		} else {
-			coverView.setImageDrawable(null);
+			coverView.setImageResource(R.drawable.fbreader);
 		}
 	}
 	*/
-}
-
-class TopLevelTree extends FBTree {
-	private final ZLResource myResource;
-
-	public TopLevelTree(ZLResource resource) {
-		myResource = resource;
-	}
-
-	@Override
-	public String getName() {
-		return myResource.getValue();
-	}
-
-	@Override
-	public String getSummary() {
-		return myResource.getResource("summary").getValue();
-	}
 }
