@@ -59,17 +59,14 @@ public class LibraryBaseActivity extends ListActivity {
 			myItems = items;
 		}
 
-		@Override
 		public final int getCount() {
 			return myItems.size();
 		}
 
-		@Override
 		public final FBTree getItem(int position) {
 			return myItems.get(position);
 		}
 
-		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
@@ -77,7 +74,6 @@ public class LibraryBaseActivity extends ListActivity {
 		private int myCoverWidth = -1;
 		private int myCoverHeight = -1;
 
-		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final FBTree tree = getItem(position);
 			final View view = (convertView != null) ?  convertView :
