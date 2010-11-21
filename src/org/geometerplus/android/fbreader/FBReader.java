@@ -20,9 +20,11 @@
 package org.geometerplus.android.fbreader;
 
 import java.util.LinkedList;
+import java.io.File;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -48,6 +51,8 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
 
 public final class FBReader extends ZLAndroidActivity {
+	public static final String BOOK_PATH_KEY = "BookPath";
+
 	final static int REPAINT_CODE = 1;
 
 	static FBReader Instance;
@@ -85,9 +90,33 @@ public final class FBReader extends ZLAndroidActivity {
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
 
+	private String fileNameFromUri(Uri uri) {
+		if (uri.equals(Uri.parse("file:///"))) {
+			return Library.getHelpFile().getPath();
+		} else {
+			return uri.getPath();
+		}
+	}
+
 	@Override
-	protected String fileNameForEmptyUri() {
-		return Library.getHelpFile().getPath();
+	protected ZLFile fileFromIntent(Intent intent) {
+		String fileToOpen = intent.getStringExtra(BOOK_PATH_KEY);
+		//intent.putExtra(BOOK_PATH_KEY, (String)null);
+		if (fileToOpen == null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+			final Uri uri = intent.getData();
+			if (uri != null) {
+				fileToOpen = fileNameFromUri(uri);
+				final String scheme = uri.getScheme();
+				if ("content".equals(scheme)) {
+					final File file = new File(fileToOpen);
+					if (!file.exists()) {
+						fileToOpen = file.getParent();
+					}
+				}
+			}
+			intent.setData(null);
+		}
+		return fileToOpen != null ? ZLFile.createFileByPath(fileToOpen) : null;
 	}
 
 	@Override
@@ -188,11 +217,11 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	protected ZLApplication createApplication(String fileName) {
+	protected ZLApplication createApplication(ZLFile file) {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase("READER");
 		}
-		return new FBReaderApp(fileName);
+		return new FBReaderApp(file != null ? file.getPath() : null);
 	}
 
 	@Override

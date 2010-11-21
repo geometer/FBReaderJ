@@ -39,12 +39,16 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-public class LibraryBaseActivity extends ListActivity {
+abstract class LibraryBaseActivity extends ListActivity {
+	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
+	protected String mySelectedBookPath;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 	}
 
 	@Override

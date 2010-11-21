@@ -41,7 +41,7 @@ class ShowLibraryAction extends FBAction {
 		final BookModel model = Reader.Model;
 		Intent intent = new Intent(myBaseActivity.getApplicationContext(), LibraryTopLevelActivity.class);
 		if (model != null && model.Book != null) {
-			//intent.putExtra(LibraryTopLevelActivity.CURRENT_BOOK_PATH_KEY, model.Book.File.getPath());
+			intent.putExtra(LibraryTopLevelActivity.SELECTED_BOOK_PATH_KEY, model.Book.File.getPath());
 		}
 		myBaseActivity.startActivity(intent);
 	}

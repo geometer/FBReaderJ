@@ -29,6 +29,7 @@ import android.widget.ListView;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.Library;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -36,12 +37,17 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
+	static Library Library;
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase("LIBRARY_NG");
+		}
+		if (Library == null) {
+			Library = new Library();
 		}
 
 		final ArrayList<FBTree> items = new ArrayList<FBTree>();
@@ -58,10 +64,12 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			R.drawable.ic_tab_library_recent,
 			new Runnable() {
 				public void run() {
-					startActivity(new Intent(
+					final Intent intent = new Intent(
 						LibraryTopLevelActivity.this,
 						LibraryRecentActivity.class
-					));
+					);
+					intent.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath);
+					startActivity(intent);
 				}
 			}
 		));
@@ -90,6 +98,12 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			}
 		));
 		setListAdapter(new LibraryAdapter(items));
+	}
+
+	@Override
+	public void onDestroy() {
+		Library = null;
+		super.onDestroy();
 	}
 
 	@Override

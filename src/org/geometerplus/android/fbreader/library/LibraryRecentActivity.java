@@ -23,11 +23,11 @@ import android.os.Bundle;
 
 import org.geometerplus.fbreader.library.Library;
 
-public class LibraryRecentActivity extends LibraryBaseActivity {
+public class LibraryRecentActivity extends LibraryTreeActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		setListAdapter(new LibraryAdapter(new Library().recentBooks().subTrees()));
+		setListAdapter(new LibraryAdapter(LibraryTopLevelActivity.Library.recentBooks().subTrees()));
 	}
 }
