@@ -22,15 +22,22 @@ package org.geometerplus.android.fbreader.library;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryBaseActivity extends ListActivity {
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
@@ -42,6 +49,7 @@ public class LibraryBaseActivity extends ListActivity {
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
+		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 	}
 
 	protected final class LibraryAdapter extends BaseAdapter {
@@ -90,30 +98,27 @@ public class LibraryBaseActivity extends ListActivity {
 			coverView.getLayoutParams().height = myCoverHeight;
 			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			coverView.requestLayout();
-			coverView.setImageResource(R.drawable.fbreader);
-			//setupCover(coverView, tree, myCoverWidth, myCoverWidth);
 
+			if (tree instanceof ZLAndroidTree) {
+				coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
+			} else {
+				Bitmap coverBitmap = null;
+				ZLImage cover = tree.getCover();
+				if (cover != null) {
+					final ZLAndroidImageData data =
+						((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(cover);
+					if (data != null) {
+						coverBitmap = data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
+					}
+				}
+				if (coverBitmap != null) {
+					coverView.setImageBitmap(coverBitmap);
+				} else {
+					coverView.setImageResource(R.drawable.fbreader);
+				}
+			}
+                
 			return view;
 		}
 	}
-
-	/*
-	private void setupCover(final ImageView coverView, FBTree tree, int width, int height) {
-		Bitmap coverBitmap = null;
-		ZLImage cover = tree.getCover();
-		if (cover != null) {
-			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
-			data = mgr.getImageData(cover);
-			if (data != null) {
-				coverBitmap = data.getBitmap(2 * width, 2 * height);
-			}
-		}
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else {
-			coverView.setImageResource(R.drawable.fbreader);
-		}
-	}
-	*/
 }

@@ -22,15 +22,14 @@ package org.geometerplus.android.fbreader.network;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.NetworkLibraryItem;
 import org.geometerplus.fbreader.network.NetworkTree;
 
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-public class AddCustomCatalogItemTree extends NetworkTree {
-
+public class AddCustomCatalogItemTree extends NetworkTree implements ZLAndroidTree {
 	public AddCustomCatalogItemTree() {
 		super(1);
 	}
@@ -50,8 +49,7 @@ public class AddCustomCatalogItemTree extends NetworkTree {
 		return null;
 	}
 
-	@Override
-	protected ZLImage createCover() {
-		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).createImage(R.drawable.ic_list_plus);
+	public int getCoverResourceId() {
+		return R.drawable.ic_list_plus;
 	}
 }

@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.Paths;
 
 public final class BookModel {
 	public static BookModel createModel(Book book) {
-		FormatPlugin plugin = PluginCollection.instance().getPlugin(book.File);
+		FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin == null) {
 			return null;
 		}

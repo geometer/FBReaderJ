@@ -21,31 +21,93 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase("LIBRARY_NG");
+		}
+
 		final ArrayList<FBTree> items = new ArrayList<FBTree>();
-		items.add(new TopLevelTree(myResource.getResource("searchResults")));
-		items.add(new TopLevelTree(myResource.getResource("recent")));
-		items.add(new TopLevelTree(myResource.getResource("byAuthor")));
-		items.add(new TopLevelTree(myResource.getResource("byTag")));
-		items.add(new TopLevelTree(myResource.getResource("fileTree")));
+		items.add(new TopLevelTree(
+			myResource.getResource("searchResults"),
+			R.drawable.ic_tab_library_results,
+			new Runnable() {
+				public void run() {
+				}
+			}
+		));
+		items.add(new TopLevelTree(
+			myResource.getResource("recent"),
+			R.drawable.ic_tab_library_recent,
+			new Runnable() {
+				public void run() {
+					startActivity(new Intent(
+						LibraryTopLevelActivity.this,
+						LibraryRecentActivity.class
+					));
+				}
+			}
+		));
+		items.add(new TopLevelTree(
+			myResource.getResource("byAuthor"),
+			R.drawable.ic_tab_library_author,
+			new Runnable() {
+				public void run() {
+				}
+			}
+		));
+		items.add(new TopLevelTree(
+			myResource.getResource("byTag"),
+			R.drawable.ic_tab_library_tag,
+			new Runnable() {
+				public void run() {
+				}
+			}
+		));
+		items.add(new TopLevelTree(
+			myResource.getResource("fileTree"),
+			R.drawable.fbreader,
+			new Runnable() {
+				public void run() {
+				}
+			}
+		));
 		setListAdapter(new LibraryAdapter(items));
+	}
+
+	@Override
+	public void onListItemClick(ListView listView, View view, int position, long rowId) {
+		TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);
+		tree.getAction().run();
 	}
 }
 
-class TopLevelTree extends FBTree {
+class TopLevelTree extends FBTree implements ZLAndroidTree {
 	private final ZLResource myResource;
+	private final int myCoverResourceId;
+	private final Runnable myAction;
 
-	public TopLevelTree(ZLResource resource) {
+	public TopLevelTree(ZLResource resource, int coverResourceId, Runnable action) {
 		myResource = resource;
+		myCoverResourceId = coverResourceId;
+		myAction = action;
 	}
 
 	@Override
@@ -56,5 +118,13 @@ class TopLevelTree extends FBTree {
 	@Override
 	public String getSummary() {
 		return myResource.getResource("summary").getValue();
+	}
+
+	public int getCoverResourceId() {
+		return myCoverResourceId;
+	}
+
+	public Runnable getAction() {
+		return myAction;
 	}
 }

@@ -48,6 +48,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity 
 		implements NetworkView.EventListener, View.OnCreateContextMenuListener {
@@ -113,6 +114,11 @@ abstract class NetworkBaseActivity extends ListActivity
 	private HashSet<String> myAwaitedCovers = new HashSet<String>();
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		if (tree instanceof ZLAndroidTree) {
+			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
+			return;
+		}
+
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
