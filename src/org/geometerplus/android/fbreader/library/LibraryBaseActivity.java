@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.library;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.*;
@@ -48,6 +49,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 	}
 
@@ -119,6 +121,24 @@ abstract class LibraryBaseActivity extends ListActivity {
 			}
                 
 			return view;
+		}
+	}
+
+	protected class OpenTreeRunnable implements Runnable {
+		private final String myTreePath;
+		private final String mySelectedBookPath;
+
+		public OpenTreeRunnable(String treePath, String selectedBookPath) {
+			myTreePath = treePath;
+			mySelectedBookPath = selectedBookPath;
+		}
+
+		public void run() {
+			startActivity(
+				new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
+					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+					.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
+			);
 		}
 	}
 }

@@ -19,17 +19,49 @@
 
 package org.geometerplus.android.fbreader.library;
 
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.BookTree;
 
 import org.geometerplus.android.fbreader.FBReader;
 
-abstract class LibraryTreeActivity extends LibraryBaseActivity {
+public class LibraryTreeActivity extends LibraryBaseActivity {
+	static final String TREE_PATH_KEY = "TreePath";
+
+	static final String PATH_FAVORITES = "favorites";
+	static final String PATH_RECENT = "recent";
+	static final String PATH_BY_AUTHOR = "author";
+	static final String PATH_BY_TAG = "tag";
+
+	@Override
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+
+		final String[] path = getIntent().getStringExtra(TREE_PATH_KEY).split("\000");
+
+		final Library library = LibraryTopLevelActivity.Library;
+		LibraryTree root = null;
+		if (path.length == 1) {
+			if (PATH_RECENT.equals(path[0])) {
+				root = library.recentBooks();
+			} else if (PATH_BY_AUTHOR.equals(path[0])) {
+				root = library.byAuthor();
+			} else if (PATH_BY_TAG.equals(path[0])) {
+				root = library.byTag();
+			} else if (PATH_FAVORITES.equals(path[0])) {
+			}
+		}
+
+		if (root != null) {
+			setListAdapter(new LibraryAdapter(root.subTrees()));
+		}
+	}
+
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		LibraryTree tree = (LibraryTree)((LibraryAdapter)getListAdapter()).getItem(position);

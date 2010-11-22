@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -42,6 +43,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase("LIBRARY_NG");
@@ -60,34 +62,24 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			}
 		));
 		items.add(new TopLevelTree(
+			myResource.getResource("favorites"),
+			R.drawable.ic_tab_library_recent,
+			new OpenTreeRunnable(LibraryTreeActivity.PATH_FAVORITES, mySelectedBookPath)
+		));
+		items.add(new TopLevelTree(
 			myResource.getResource("recent"),
 			R.drawable.ic_tab_library_recent,
-			new Runnable() {
-				public void run() {
-					final Intent intent = new Intent(
-						LibraryTopLevelActivity.this,
-						LibraryRecentActivity.class
-					);
-					intent.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath);
-					startActivity(intent);
-				}
-			}
+			new OpenTreeRunnable(LibraryTreeActivity.PATH_RECENT, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("byAuthor"),
 			R.drawable.library_by_author,
-			new Runnable() {
-				public void run() {
-				}
-			}
+			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_AUTHOR, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("byTag"),
 			R.drawable.library_by_tag,
-			new Runnable() {
-				public void run() {
-				}
-			}
+			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_TAG, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
