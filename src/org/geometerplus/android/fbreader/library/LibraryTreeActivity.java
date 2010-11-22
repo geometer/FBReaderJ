@@ -24,8 +24,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.BookTree;
 
 import org.geometerplus.android.fbreader.FBReader;
@@ -38,33 +38,44 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	static final String PATH_BY_AUTHOR = "author";
 	static final String PATH_BY_TAG = "tag";
 
+	private String myTreePathString;
+	private String mySelectedBookPath;
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		final String[] path = getIntent().getStringExtra(TREE_PATH_KEY).split("\000");
+		myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
+		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+
+		final String[] path = myTreePathString.split("\000");
 
 		final Library library = LibraryTopLevelActivity.Library;
-		LibraryTree root = null;
-		if (path.length == 1) {
-			if (PATH_RECENT.equals(path[0])) {
-				root = library.recentBooks();
-			} else if (PATH_BY_AUTHOR.equals(path[0])) {
-				root = library.byAuthor();
-			} else if (PATH_BY_TAG.equals(path[0])) {
-				root = library.byTag();
-			} else if (PATH_FAVORITES.equals(path[0])) {
-			}
+		FBTree tree = null;
+		if (PATH_RECENT.equals(path[0])) {
+			tree = library.recentBooks();
+		} else if (PATH_BY_AUTHOR.equals(path[0])) {
+			tree = library.byAuthor();
+		} else if (PATH_BY_TAG.equals(path[0])) {
+			tree = library.byTag();
+		} else if (PATH_FAVORITES.equals(path[0])) {
 		}
 
-		if (root != null) {
-			setListAdapter(new LibraryAdapter(root.subTrees()));
+		for (int i = 1; i < path.length; ++i) {
+			if (tree == null) {
+				break;
+			}
+			tree = tree.getSubTreeByName(path[i]);
+		}
+
+		if (tree != null) {
+			setListAdapter(new LibraryAdapter(tree.subTrees()));
 		}
 	}
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		LibraryTree tree = (LibraryTree)((LibraryAdapter)getListAdapter()).getItem(position);
+		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
 			startActivity(
 				new Intent(getApplicationContext(), FBReader.class)
@@ -72,6 +83,11 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 					.putExtra(FBReader.BOOK_PATH_KEY, ((BookTree)tree).Book.File.getPath())
 					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
 			);
+		} else {
+			new OpenTreeRunnable(
+				myTreePathString + "\000" + tree.getName(),
+				mySelectedBookPath
+			).run();
 		}
 	}
 }
