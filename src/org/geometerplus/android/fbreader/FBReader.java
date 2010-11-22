@@ -101,7 +101,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
 		String fileToOpen = intent.getStringExtra(BOOK_PATH_KEY);
-		//intent.putExtra(BOOK_PATH_KEY, (String)null);
+		/*
 		if (fileToOpen == null && Intent.ACTION_VIEW.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
@@ -116,6 +116,7 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 			intent.setData(null);
 		}
+		*/
 		return fileToOpen != null ? ZLFile.createFileByPath(fileToOpen) : null;
 	}
 

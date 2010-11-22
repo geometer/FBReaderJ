@@ -19,16 +19,11 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.File;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ListView;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.BookTree;
 
@@ -39,21 +34,12 @@ abstract class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		LibraryTree tree = (LibraryTree)((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
-			final Book book = ((BookTree)tree).Book;
-			startActivity(getFBReaderIntent(book.File));
+			startActivity(
+				new Intent(getApplicationContext(), FBReader.class)
+					.setAction(Intent.ACTION_VIEW)
+					.putExtra(FBReader.BOOK_PATH_KEY, ((BookTree)tree).Book.File.getPath())
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+			);
 		}
-	}
-
-	private Intent getFBReaderIntent(final ZLFile file) {
-		final Intent intent = new Intent(getApplicationContext(), FBReader.class);
-		intent.setAction(Intent.ACTION_VIEW);
-		final ZLFile physicalFile = file.getPhysicalFile();
-		if (physicalFile != null) {
-			intent.setData(Uri.fromFile(new File(physicalFile.getPath())));
-		} else {
-			intent.setData(Uri.parse("file:///"));
-		}
-		intent.putExtra(FBReader.BOOK_PATH_KEY, file.getPath());
-		return intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 }

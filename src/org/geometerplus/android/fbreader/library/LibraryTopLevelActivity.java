@@ -75,7 +75,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("byAuthor"),
-			R.drawable.ic_tab_library_author,
+			R.drawable.library_by_author,
 			new Runnable() {
 				public void run() {
 				}
@@ -83,7 +83,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("byTag"),
-			R.drawable.ic_tab_library_tag,
+			R.drawable.library_by_tag,
 			new Runnable() {
 				public void run() {
 				}
