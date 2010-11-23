@@ -43,7 +43,6 @@ public class ZLFontFamilyOptionEntry extends ZLComboOptionEntry {
 	}
 
 	public String initialValue() {
-		final ArrayList<String> allValues = getValues();
 		final String value = myOption.getValue();
 		for (String v : getValues()) {
 			if (value.equals(myContext.realFontFamilyName(v))) {

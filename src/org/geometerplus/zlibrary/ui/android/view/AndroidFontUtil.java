@@ -27,7 +27,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.Typeface;
 
-import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 
 import org.geometerplus.fbreader.Paths;

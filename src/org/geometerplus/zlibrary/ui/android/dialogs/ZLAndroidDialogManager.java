@@ -19,10 +19,7 @@
 
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
-import java.util.*;
-
 import android.app.*;
-import android.content.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 
