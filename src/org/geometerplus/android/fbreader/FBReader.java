@@ -190,7 +190,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	protected ZLApplication createApplication(String fileName) {
 		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase("READER");
+			new SQLiteBooksDatabase(this, "READER");
 		}
 		return new FBReaderApp(fileName);
 	}
