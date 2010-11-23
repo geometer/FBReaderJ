@@ -18,23 +18,77 @@
 
 	<setup />
 
-  <target name="native">
+	<target name="init" description="Initialization...">
+		<fail message="Ant 1.7.0 or higher is required. Please upgrade your ant.">
+			<condition>
+				<not>
+					<antversion property="ant.version" atleast="1.7.0"/>
+				</not>
+			</condition>
+		</fail>
+	</target>
+
+	<target name="native" unless="native.libraries.are.uptodate">
+		<fail message="Native libraries are not up-to-date. Please run ndk-build manually.">
+			<condition>
+				<os family="windows" />
+			</condition>
+		</fail>
+		<echo message="Building native libraries..."/>
 		<exec executable="${ndk.dir}/ndk-build" />
+		<echo message="DONE (Building native libraries)"/>
 	</target>
 
-  <target name="resources">
-		<exec executable="./createRawResources.py" />
+	<target name="check.native.libraries" depends="init">
+		<echo message="Checking if native libraries are up-to-date..."/>
+		<condition property="native.libraries.are.uptodate" value="true">
+			<and>
+				<!-- Check if libDeflatingDecompressor exists and is up to date -->
+				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
+				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor.so">
+					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
+				</uptodate>
+				<!-- Check if libLineBreak exists and is up to date -->
+				<available file="./libs/armeabi/libLineBreak.so" />
+				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
+					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
+				</uptodate>
+			</and>
+		</condition>
+		<echo message="DONE (Checking if native libraries are up-to-date)"/>
 	</target>
 
-  <target name="package" depends="native,resources,release" />
-  <target name="dbg" depends="native,resources,debug" />
+	<target name="resources" depends="init, check.native.libraries">
+		<echo message="Cleaning up the 'res/drawable' folder..." />
+		<delete dir="res/drawable/">
+			<files includes="**"/>
+		</delete>
+		<echo message="DONE (Cleaning up the 'res/drawable' folder)" />
 
-  <target name="clean">
+		<echo message="Copying icons files to 'res/drawable/' folder..." />
+		<copy todir="res/drawable" verbose="false" overwrite="true" flatten="true">
+			<fileset file="icons/fbreader.png" />
+			<fileset dir="icons/" includes="*/*" />
+		</copy>
+		<echo message="DONE (Copying icons files to 'res/drawable/' folder)" />
+	</target>
+
+	<target name="package" depends="init, resources, native, release" />
+	<target name="dbg" depends="init, resources, native, debug" />
+
+	<target name="clean">
+		<echo message="Deleting temporary files..." />
 		<delete dir="gen" />
 		<delete dir="bin" />
-		<delete dir="res/raw" />
 		<delete dir="res/drawable" />
-		<delete dir="libs/armeabi" />
+		<delete dir="out" />
 		<delete dir="obj" />
-  </target>
+		<echo message="DONE (Deleting temporary files)" />
+	</target>
+
+	<target name="distclean" depends="clean">
+		<echo message="Deleting native libraries..." />
+		<delete dir="libs" />
+		<echo message="DONE (Deleting native libraries)" />
+	</target>
 </project>

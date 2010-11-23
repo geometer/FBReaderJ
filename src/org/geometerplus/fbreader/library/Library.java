@@ -156,7 +156,10 @@ public final class Library {
 			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file));
 			file.setCached(false);
 		}
-		myBooks.add(getBook(getHelpFile(), fileInfos, savedBooks, false));
+		final Book helpBook = getBook(getHelpFile(), fileInfos, savedBooks, false);
+		if (helpBook != null) {
+			myBooks.add(helpBook);
+		}
 
 		collectExternalBooks(fileInfos, savedBooks);
 
