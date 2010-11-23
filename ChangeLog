@@ -2,6 +2,7 @@
 * Local library activity has been moved to a separate process
 * French resources have been updated (by Mathias Monnerville)
 * German resources have been updated (by Ingolf Kübler)
+* Font directory option is only shown if external fonts are supported
 
 ===== 0.7.17 (Nov 14, 2010) =====
 * Network catalog order has been changed: language is used for ordering

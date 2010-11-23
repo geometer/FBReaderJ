@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextBaseStyle;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
 import org.geometerplus.fbreader.optionsDialog.OptionsDialog;
 import org.geometerplus.fbreader.fbreader.*;
@@ -83,10 +84,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, Paths.BooksDirectoryOption(),
 			directoriesCategory.Resource, "books"
 		));
-		directoriesCategory.addPreference(new ZLStringOptionPreference(
-			this, Paths.FontsDirectoryOption(),
-			directoriesCategory.Resource, "fonts"
-		));
+		if (AndroidFontUtil.areExternalFontsSupported()) {
+			directoriesCategory.addPreference(new ZLStringOptionPreference(
+				this, Paths.FontsDirectoryOption(),
+				directoriesCategory.Resource, "fonts"
+			));
+		}
 
 		final Screen appearanceScreen = optionsCategory.createPreferenceScreen("appearance");
 		final Category appearanceCategory = appearanceScreen.createCategory(null);

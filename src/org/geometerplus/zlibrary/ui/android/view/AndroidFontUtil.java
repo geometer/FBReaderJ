@@ -42,6 +42,10 @@ public final class AndroidFontUtil {
 		}
 	}
 
+	public static boolean areExternalFontsSupported() {
+		return ourFontCreationMethod != null;
+	}
+
 	public static Typeface createFontFromFile(File file) {
 		if (ourFontCreationMethod == null) {
 			return null;
