@@ -21,9 +21,6 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.*;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.*;
 

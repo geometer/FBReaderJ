@@ -22,7 +22,7 @@ package org.geometerplus.android.util;
 import java.util.Queue;
 import java.util.LinkedList;
 
-import android.app.Activity;
+import android.content.Context;
 import android.app.ProgressDialog;
 import android.os.Handler;
 import android.os.Message;
@@ -58,12 +58,12 @@ public abstract class AndroidUtil {
 			}
 		}
 	};
-	public static void wait(String key, Runnable action, Activity activity) {
+	public static void wait(String key, Runnable action, Context context) {
 		synchronized (ourMonitor) {
 			final String message = ZLDialogManager.getWaitMessageText(key);
 			ourTaskQueue.offer(new Pair(action, message));
 			if (ourProgress == null) {
-				ourProgress = ProgressDialog.show(activity, null, message, true, false);
+				ourProgress = ProgressDialog.show(context, null, message, true, false);
 			} else {
 				return;
 			}
