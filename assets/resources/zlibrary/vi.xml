@@ -71,6 +71,7 @@
 		<node name="lt" value="Tiếng Lát-vi" />
 		<node name="nl" value="Tiếng Hà Lan" />
 		<node name="no" value="Tiếng Nauy" />
+		<node name="pl" toBeTranslated="true" value="Polish" />
 		<node name="pt" value="Tiếng Bồ Đào Nha" />
 		<node name="ru" value="Tiếng Nga" />
 		<node name="sv" value="Tiếng Thụy Điển" />
