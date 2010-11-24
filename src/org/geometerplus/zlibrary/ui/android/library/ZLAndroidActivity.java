@@ -207,10 +207,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 
-		final String fileToOpen = extractFileNameFromIntent(intent);
-		if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
-		}
+		ZLApplication.Instance().openFile(fileFromIntent(intent));
 	}
 
 	private static ZLAndroidLibrary getLibrary() {
