@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.optionsDialog;
 
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
-import org.geometerplus.zlibrary.core.optionEntries.ZLFontFamilyOptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleBoolean3OptionEntry;
 import org.geometerplus.zlibrary.core.optionEntries.ZLSimpleSpinOptionEntry;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -37,7 +36,7 @@ public class StyleOptionsPage extends OptionsPage implements FBTextKind {
 	private final static String KEY_BOLD = "bold";
 	private final static String KEY_ITALIC = "italic";
 	private final static String KEY_FONTFAMILY = "fontFamily";
-	private final static String KEY_FONTSIZE = "fontSize";
+	//private final static String KEY_FONTSIZE = "fontSize";
 	private final static String KEY_FONTSIZEDIFFERENCE = "fontSizeDifference";
 	private final static String KEY_ALLOWHYPHENATIONS = "allowHyphenations";
 	

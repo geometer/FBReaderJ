@@ -68,6 +68,7 @@
 			<node name="refillAccount" value="Recréditer le compte"/>
 			<node name="addCustomCatalog" value="Ajouter catalogue"/>
 			<node name="refreshCatalogsList" value="Rafraîchir"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -276,8 +277,6 @@
 					<node name="summaryOff" value="Défilement des pages verticalement"/>
 				</node>
 			</node>
-		</node>
-		<node name="Preferences">
 		</node>
 		<node name="OptionsDialog">
 			<node name="title" value="FBReader - Options"/>

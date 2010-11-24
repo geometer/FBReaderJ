@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.library;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLibrary {
 	public static ZLibrary Instance() {

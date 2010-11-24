@@ -100,7 +100,6 @@ public class NetworkLibrary {
 		if (myIsAlreadyInitialized) {
 			return;
 		}
-		final LinksComparator comparator = new LinksComparator(); 
 
 		try {
 			OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
@@ -466,6 +465,6 @@ public class NetworkLibrary {
 		for (INetworkLink link : myLinks) {
 			languageSet.add(link.getLanguage());
 		}
-		return new ArrayList(languageSet);
+		return new ArrayList<String>(languageSet);
 	}
 }

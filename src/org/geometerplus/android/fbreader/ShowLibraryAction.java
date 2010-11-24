@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.HashMap;
-
 import android.content.Intent;
 
 import org.geometerplus.fbreader.fbreader.FBAction;

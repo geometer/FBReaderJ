@@ -37,7 +37,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -45,7 +44,6 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
@@ -101,22 +99,6 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
 		String fileToOpen = intent.getStringExtra(BOOK_PATH_KEY);
-		/*
-		if (fileToOpen == null && Intent.ACTION_VIEW.equals(intent.getAction())) {
-			final Uri uri = intent.getData();
-			if (uri != null) {
-				fileToOpen = fileNameFromUri(uri);
-				final String scheme = uri.getScheme();
-				if ("content".equals(scheme)) {
-					final File file = new File(fileToOpen);
-					if (!file.exists()) {
-						fileToOpen = file.getParent();
-					}
-				}
-			}
-			intent.setData(null);
-		}
-		*/
 		return fileToOpen != null ? ZLFile.createFileByPath(fileToOpen) : null;
 	}
 
