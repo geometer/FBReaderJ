@@ -209,7 +209,7 @@ final class ZLTextSelectionModel {
 						}
 						if (element instanceof ZLTextWord) {
 							ZLTextWord word = (ZLTextWord)element;
-							int from = (wordIndex == range.Left.ElementIndex && 
+							int from = (wordIndex == range.Left.ElementIndex &&
 										paraIndex == range.Left.ParagraphIndex ?
 											range.Left.CharIndex : 0);
 							int to = (wordIndex == range.Right.ElementIndex &&

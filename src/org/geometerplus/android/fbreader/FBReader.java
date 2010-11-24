@@ -321,7 +321,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		final ZLAndroidWidget widget = 
+		final ZLAndroidWidget widget =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 		widget.loadContextMenu(menu, myMenuActions);
 	}

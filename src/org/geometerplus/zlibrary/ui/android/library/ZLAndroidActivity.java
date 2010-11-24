@@ -120,7 +120,7 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	    myOrientation = new ZLIntegerOption(
 		    "View", "ScreenOrientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED).getValue();
-	    myChangeCounter = 0; 
+	    myChangeCounter = 0;
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		disableButtonLight();
