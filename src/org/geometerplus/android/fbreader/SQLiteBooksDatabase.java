@@ -28,24 +28,24 @@ import android.database.SQLException;
 import android.database.Cursor;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.library.*;
+
+import org.geometerplus.android.util.AndroidUtil;
 
 public final class SQLiteBooksDatabase extends BooksDatabase {
 	private final String myInstanceId;
 	private final SQLiteDatabase myDatabase;
 
-	public SQLiteBooksDatabase(String instanceId) {
+	public SQLiteBooksDatabase(Context context, String instanceId) {
 		myInstanceId = instanceId;
-		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
-		migrate();
+		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
+		migrate(context);
 	}
 
 	protected void executeAsATransaction(Runnable actions) {
@@ -58,13 +58,13 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	private void migrate() {
+	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
 		final int currentVersion = 10;
 		if (version >= currentVersion) {
 			return;
 		}
-		ZLDialogManager.Instance().wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
+		AndroidUtil.wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
 			public void run() {
 				myDatabase.beginTransaction();
 
@@ -96,7 +96,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				myDatabase.execSQL("VACUUM");
 				myDatabase.setVersion(currentVersion);
 			}
-		});
+		}, context);
 	}
 
 	private static void bindString(SQLiteStatement statement, int index, String value) {

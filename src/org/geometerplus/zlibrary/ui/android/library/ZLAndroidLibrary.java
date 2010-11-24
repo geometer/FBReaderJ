@@ -23,7 +23,6 @@ import java.io.*;
 import java.util.*;
 
 import android.app.Application;
-import android.content.res.Resources;
 import android.content.res.AssetFileDescriptor;
 import android.content.Intent;
 import android.net.Uri;

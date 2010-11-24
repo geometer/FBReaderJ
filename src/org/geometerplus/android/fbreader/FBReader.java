@@ -38,7 +38,6 @@ import android.widget.TextView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -48,7 +47,6 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
@@ -204,7 +202,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	protected ZLApplication createApplication(String fileName) {
 		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase("READER");
+			new SQLiteBooksDatabase(this, "READER");
 		}
 		return new FBReaderApp(fileName);
 	}
