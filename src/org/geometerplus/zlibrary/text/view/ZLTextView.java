@@ -1099,7 +1099,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 							page.findPercentFromStart(startCursor, getTextAreaHeight(), myOverlappingValue);
 							break;
 					}
-	
+
 					if (!startCursor.isNull() && startCursor.samePositionAs(page.StartCursor)) {
 						page.findLineFromStart(startCursor, 1);
 					}
@@ -1211,7 +1211,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		final int endElementIndex =
 			beforeCurrentPosition ? cursor.getElementIndex() : paragraphCursor.getParagraphLength();
-	
+
 		resetTextStyle();
 
 		int size = 0;
@@ -1444,7 +1444,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				pos += (pos - sizeOfTextBeforeCursor(myNextPage.EndCursor)) * offset;
 			}
 		}
-	
+
 		return pos / size;
 	}
 
