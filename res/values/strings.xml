@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="empty_string"></string>
+
+
+
+
+	<string name="back">back</string>
+	<string name="file_manager">File manager</string>
+	<string name="filter">filter</string>
+
+	<string name="ok">ok</string>
+	<string name="cancel">cancel</string>
+
+	<string name="typeTXT">.txt</string>
+	<string name="typeFB2">.fb2</string>
+	<string name="typePDF">.pdf</string>
+	<string name="typeDOC">.doc</string>
+	<string name="typeODT">.odt</string>
+	<string name="typeDOCX">.docx</string>
+	<string name="checkBoxAll">all types</string>
 </resources>
