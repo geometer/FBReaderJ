@@ -52,7 +52,7 @@ class LanguagePreference extends ZLStringListPreference {
 	private final Book myBook;
 
 	LanguagePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
-		super(context, rootResource.getResource(resourceKey), null);
+		super(context, rootResource, resourceKey);
 		myBook = book;
 		final TreeMap<String,String> map = new TreeMap<String,String>();
 		for (String code : ZLLanguageUtil.languageCodes()) {

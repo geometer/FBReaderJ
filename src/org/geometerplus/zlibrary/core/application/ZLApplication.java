@@ -147,7 +147,6 @@ public abstract class ZLApplication {
 				ActionCode.ROTATE,
 				ActionCode.SWITCH_PROFILE,
 				ActionCode.SHOW_LIBRARY,
-				ActionCode.OPEN_FILE,
 				ActionCode.SHOW_PREFERENCES,
 				ActionCode.SHOW_BOOK_INFO,
 				ActionCode.INITIATE_COPY,

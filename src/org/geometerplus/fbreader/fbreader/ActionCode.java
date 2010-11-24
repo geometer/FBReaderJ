@@ -65,8 +65,6 @@ public interface ActionCode {
 	String TAP_ZONES_SAVE = "tapZonesSave";
 	String TAP_ZONES_CANCEL = "tapZonesCancel";
 
-	String OPEN_FILE = "openFile";
-
 	String DEFAULT = "default";
 	String NOTHING = "nothing";
 };
