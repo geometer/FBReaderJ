@@ -39,22 +39,22 @@ public final class ZLKeyBindings {
 		loadCustomBindings();
 		myIsChanged = false;
 	}
-	
+
 	public void bindKey(String key, String actionId) {
 		myBindingsMap.put(key, actionId);
 		myIsChanged = true;
 	}
-	
+
 	public String getBinding(String key) {
 		return (String)myBindingsMap.get(key);
 	}
-	
+
 	/*
 	public Set getKeys() {
 		return myBindingsMap.keySet();
 	}
 	*/
-	
+
 	private	void loadCustomBindings() {
 		final int size =
 			new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
