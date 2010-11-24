@@ -26,8 +26,6 @@ import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
-import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
-import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;

@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.optionsDialog;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.optionEntries.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;

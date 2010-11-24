@@ -64,6 +64,7 @@
 			<node name="refillAccount" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
+			<node name="languages" value="Фильтр по языку"/>
 		</node>
 	</node>
 	<node name="networkBookView">
