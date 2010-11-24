@@ -273,7 +273,7 @@ public final class FBReader extends ZLAndroidActivity {
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
 					final int page = progress + 1;
-					final int pagesNumber = seekBar.getMax() + 1; 
+					final int pagesNumber = seekBar.getMax() + 1;
 					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
 				}
