@@ -90,16 +90,6 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 		}
 		ZLAndroidOptionView view = null;
 		switch (option.getKind()) {
-			case ZLOptionKind.BOOLEAN:
-				view = new ZLAndroidBooleanOptionView(
-					this, name, (ZLBooleanOptionEntry)option
-				);
-				break;
-			case ZLOptionKind.BOOLEAN3:
-				view = new ZLAndroidBoolean3OptionView(
-					this, name, (ZLBoolean3OptionEntry)option
-				);
-				break;
 			case ZLOptionKind.STRING:
 				view = new ZLAndroidStringOptionView(
 					this, name, (ZLStringOptionEntry)option

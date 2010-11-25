@@ -20,8 +20,6 @@
 package org.geometerplus.zlibrary.core.dialogs;
 
 public interface ZLOptionKind {
-	int	BOOLEAN = 1;
-	int	BOOLEAN3 = 2;
 	int	STRING = 3;
 	int	SPIN = 4;
 	int	COMBO = 5;
