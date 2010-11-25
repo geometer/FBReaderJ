@@ -39,8 +39,7 @@ class ScrollAction extends FBAction {
 	public void run() {
 		if (myScrollPage) {
 			Reader.getTextView().doScrollPage(myForward);
-		}
-		else {
+		} else {
 			Reader.getTextView().scrollPage(myForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			ZLApplication.Instance().repaintView();
 		}
