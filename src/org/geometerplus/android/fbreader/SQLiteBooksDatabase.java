@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.util.UIUtil;
 
 public final class SQLiteBooksDatabase extends BooksDatabase {
 	private final String myInstanceId;
@@ -64,7 +64,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (version >= currentVersion) {
 			return;
 		}
-		AndroidUtil.wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
+		UIUtil.wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
 			public void run() {
 				myDatabase.beginTransaction();
 
