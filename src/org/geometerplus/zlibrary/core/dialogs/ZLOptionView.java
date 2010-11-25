@@ -33,21 +33,12 @@ public abstract class ZLOptionView {
 
 	protected abstract void reset();
 
-	public final void setActive(boolean active) {
-		if (myInitialized) {
-			_setActive(active);
-		}
-	}
-
-	protected abstract void _setActive(boolean active);
-
 	public final void setVisible(boolean visible) {
 		if (visible) {
 			if (!myInitialized) {
 				createItem();
 				myInitialized = true;
 			}
-			setActive(myOption.isActive());
 			show();
 		} else {
 			if (myInitialized) {
