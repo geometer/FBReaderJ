@@ -29,8 +29,6 @@ public abstract class ZLOptionEntry {
 		myIsActive = true;
 	}
 
-	public abstract int getKind();
-
 	public final void setView(ZLOptionView view) {
 		myView = view;
 	}

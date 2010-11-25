@@ -89,17 +89,14 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 			name = name.replaceAll("&", "");
 		}
 		ZLAndroidOptionView view = null;
-		switch (option.getKind()) {
-			case ZLOptionKind.COMBO:
-				view = new ZLAndroidComboOptionView(
-					this, name, (ZLComboOptionEntry)option
-				);
-				break;
-			case ZLOptionKind.COLOR:
-				view = new ZLAndroidColorOptionView(
-					this, name, (ZLColorOptionEntry)option
-				);
-				break;
+		if (option instanceof ZLComboOptionEntry) {
+			view = new ZLAndroidComboOptionView(
+				this, name, (ZLComboOptionEntry)option
+			);
+		} else if (option instanceof ZLColorOptionEntry) {
+			view = new ZLAndroidColorOptionView(
+				this, name, (ZLColorOptionEntry)option
+			);
 		}
 		if (view != null) {
 			view.setVisible(option.isVisible());
