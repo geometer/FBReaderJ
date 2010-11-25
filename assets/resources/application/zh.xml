@@ -115,7 +115,6 @@
 		<node name="&lt;Camera&gt;" value="Camera" toBeTranslated="true"/>
 	</node>
 	<node name="actions">
-		<node name="preferences-old" value="参数设置（更多）" />
 		<node name="preferences" value="参数设置" />
 		<node name="bookInfo" value="书籍信息" />
 		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
@@ -165,40 +164,6 @@
 		<node name="tapZonesSave" value="Save changes" toBeTranslated="true"/>
 		<node name="tapZonesCancel" value="Discard changes" toBeTranslated="true"/>
 		<node name="openFile" value="Open book file" toBeTranslated="true"/>
-	</node>
-	<node name="menu">
-		<node name="preferences-old"/>
-		<node name="preferences"/>
-		<node name="bookInfo"/>
-		<node name="initiateCopy"/>
-		<node name="openFile"/>
-		<node name="library"/>
-		<node name="toc"/>
-		<node name="day"/>
-		<node name="night"/>
-		<node name="networkLibrary"/>
-		<node name="navigate">
-			<node name="toc"/>
-			<node name="gotoHome"/>
-			<node name="gotoPageNumber"/>
-			<node name="gotoSectionStart"/>
-			<node name="gotoSectionEnd"/>
-			<node name="nextTOCSection"/>
-			<node name="previousTOCSection"/>
-			<node name="undo"/>
-			<node name="redo"/>
-		</node>
-		<node name="selection">
-			<node name="copyToClipboard"/>
-			<node name="openInDictionary"/>
-			<node name="clearSelection"/>
-		</node>
-		<node name="search"/>
-		<node name="rotate"/>
-		<node name="increaseFont"/>
-		<node name="decreaseFont"/>
-		<node name="toggleFullscreen"/>
-		<node name="bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">

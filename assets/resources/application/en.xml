@@ -114,7 +114,6 @@
 		<node name="&lt;Camera&gt;" value="Camera"/>
 	</node>
 	<node name="actions">
-		<node name="preferences-old" value="Settings (more)"/>
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="translateWord" value="Translate: %s"/>
@@ -166,7 +165,6 @@
 		<node name="openFile" value="Open book file"/>
 	</node>
 	<node name="menu">
-		<node name="preferences-old"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
 		<node name="initiateCopy"/>
