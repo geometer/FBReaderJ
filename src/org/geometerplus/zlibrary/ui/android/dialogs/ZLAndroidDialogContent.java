@@ -107,15 +107,6 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 		addView(view);
 	}
 
-	public void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1) {
-		if (option0 != null) {
-			addOptionByName(name0, option0);
-		}
-		if (option1 != null) {
-			addOptionByName(name1, option1);
-		}
-	}
-
 	void addAndroidView(View view, boolean isSelectable) {
 		if (view != null) {
 			boolean[] marks = mySelectableMarks;
