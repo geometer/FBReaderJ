@@ -40,17 +40,5 @@ abstract class ZLAndroidOptionView extends ZLOptionView {
 		myTab.invalidateView();
 	}
 
-	protected final void hide() {
-		myIsVisible = false;
-		myTab.invalidateView();
-	}
-
-	protected void _setActive(boolean active) {
-		// TODO: implement
-	}
-
-	protected final void createItem() {
-	}
-
 	abstract void addAndroidViews();
 }

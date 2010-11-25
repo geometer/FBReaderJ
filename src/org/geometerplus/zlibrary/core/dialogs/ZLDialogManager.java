@@ -34,8 +34,6 @@ public abstract class ZLDialogManager {
 		return ourInstance;
 	} 
 	
-	public abstract ZLOptionsDialog createOptionsDialog(String key);
-	
 	public abstract void wait(String key, Runnable runnable);
 	
 	protected static ZLResource getResource() {
