@@ -26,7 +26,7 @@ class VolumeKeyScrollingAction extends FBAction {
 		super(fbreader);
 		myForward = forward;
 	}
-		
+
 	public boolean isEnabled() {
 		return ScrollingPreferences.Instance().VolumeKeysOption.getValue();
 	}
@@ -34,5 +34,5 @@ class VolumeKeyScrollingAction extends FBAction {
 	public void run() {
 		boolean isInverted = ScrollingPreferences.Instance().InvertVolumeKeysOption.getValue();
 		Reader.getTextView().doScrollPage(isInverted ? !myForward : myForward);
-	}		
+	}
 }

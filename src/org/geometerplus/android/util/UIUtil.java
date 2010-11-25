@@ -22,14 +22,14 @@ package org.geometerplus.android.util;
 import java.util.Queue;
 import java.util.LinkedList;
 
-import android.app.Activity;
+import android.content.Context;
 import android.app.ProgressDialog;
 import android.os.Handler;
 import android.os.Message;
 
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public abstract class AndroidUtil {
+public abstract class UIUtil {
 	private static final Object ourMonitor = new Object();
 	private static ProgressDialog ourProgress;
 	private static class Pair {
@@ -58,12 +58,13 @@ public abstract class AndroidUtil {
 			}
 		}
 	};
-	public static void wait(String key, Runnable action, Activity activity) {
+	public static void wait(String key, Runnable action, Context context) {
 		synchronized (ourMonitor) {
-			final String message = ZLDialogManager.getWaitMessageText(key);
+			final String message =
+				ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
 			ourTaskQueue.offer(new Pair(action, message));
 			if (ourProgress == null) {
-				ourProgress = ProgressDialog.show(activity, null, message, true, false);
+				ourProgress = ProgressDialog.show(context, null, message, true, false);
 			} else {
 				return;
 			}

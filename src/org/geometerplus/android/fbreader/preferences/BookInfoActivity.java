@@ -98,7 +98,7 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init(Intent intent) {
 		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase("LIBRARY");
+			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
 		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);

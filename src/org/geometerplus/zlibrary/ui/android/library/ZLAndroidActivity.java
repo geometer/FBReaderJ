@@ -241,8 +241,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (fileToOpen != null) {
 			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
 		}
-
-		ZLApplication.Instance().repaintView();
+		// ZLApplication.Instance().repaintView();
 	}
 
 	private static ZLAndroidLibrary getLibrary() {
