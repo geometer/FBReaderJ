@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.dialogs.ZLOptionsDialog;
 
@@ -122,7 +123,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		textCategory.addPreference(new ZLChoicePreference(
 			this, textCategory.Resource, "lineSpacing",
-			baseStyle.LineSpaceOption, spacings
+			spaceOption, spacings
 		));
 		final String[] alignments = { "left", "right", "center", "justify" };
 		textCategory.addPreference(new ZLChoicePreference(
@@ -201,6 +202,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					this, textCategory.Resource, "alignment",
 					fullDecoration.AlignmentOption, allAlignments
 				));
+			}
+			formatCategory.addPreference(new ZLBoolean3Preference(
+				this, textCategory.Resource, "allowHyphenations",
+				decoration.AllowHyphenationsOption
+			));
+			if (fullDecoration != null) {
 				formatCategory.addPreference(new ZLIntegerRangePreference(
 					this, textCategory.Resource.getResource("spaceBefore"),
 					fullDecoration.SpaceBeforeOption
@@ -221,28 +228,29 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					this, textCategory.Resource.getResource("firstLineIndent"),
 					fullDecoration.FirstLineIndentDeltaOption
 				));
+				final ZLIntegerOption spacePercentOption = fullDecoration.LineSpacePercentOption;
+				final int[] spacingValues = new int[17];
+				final String[] spacingKeys = new String[17];
+				spacingValues[0] = -1;
+				spacingKeys[0] = "unchanged";
+				for (int j = 1; j < spacingValues.length; ++j) {
+					final int val = 4 + j;
+					spacingValues[j] = 10 * val;
+					spacingKeys[j] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+				}
+				formatCategory.addPreference(new ZLIntegerChoicePreference(
+					this, textCategory.Resource, "lineSpacing",
+					spacePercentOption, spacingValues, spacingKeys
+				));
 			}
-			formatCategory.addPreference(new ZLBoolean3Preference(
-				this, textCategory.Resource, "allowHyphenations",
-				decoration.AllowHyphenationsOption
-			));
 				
 		}
 
-		final Screen formatScreen = moreStylesCategory.createPreferenceScreen("format");
 		final Screen colorsScreen = textCategory.createPreferenceScreen("colors");
-		formatScreen.setOnPreferenceClickListener(
-				new PreferenceScreen.OnPreferenceClickListener() {
-					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(0);
-						return true;
-					}
-				}
-		);
 		colorsScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(1);
+						dlg.run(0);
 						return true;
 					}
 				}

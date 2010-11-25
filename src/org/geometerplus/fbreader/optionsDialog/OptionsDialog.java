@@ -31,8 +31,6 @@ public class OptionsDialog {
 	public OptionsDialog(FBReaderApp fbreader) {
 		myDialog = ZLDialogManager.Instance().createOptionsDialog("OptionsDialog");
 
-		new FormatOptionsPage(myDialog.createTab("Format"));
-			
 		final ZLDialogContent colorsTab = myDialog.createTab("Colors");
 		final String colorKey = "colorFor";
 		final ZLResource resource = colorsTab.getResource(colorKey);
