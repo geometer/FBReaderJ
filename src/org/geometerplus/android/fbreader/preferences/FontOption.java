@@ -31,15 +31,22 @@ import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 class FontOption extends ZLStringListPreference {
 	private final ZLStringOption myOption;
 
-	FontOption(Context context, ZLResource resource, String resourceKey, ZLStringOption option) {
+	private static String UNCHANGED = "unchanged";
+
+	FontOption(Context context, ZLResource resource, String resourceKey, ZLStringOption option, boolean includeDummyValue) {
 		super(context, resource, resourceKey);
 
 		myOption = option;
 		final ArrayList<String> fonts = new ArrayList<String>();
 		AndroidFontUtil.fillFamiliesList(fonts, true);
+		if (includeDummyValue) {
+			fonts.add(0, UNCHANGED);
+		}
 		setList((String[])fonts.toArray(new String[fonts.size()]));
 
-		final String initialValue = AndroidFontUtil.realFontFamilyName(option.getValue());
+		final String optionValue = option.getValue();
+		final String initialValue = optionValue.length() > 0 ?
+			AndroidFontUtil.realFontFamilyName(optionValue) : UNCHANGED;
 		for (String fontName : fonts) {
 			if (initialValue.equals(fontName)) {
 				setInitialValue(fontName);
@@ -55,6 +62,7 @@ class FontOption extends ZLStringListPreference {
 	}
 
 	public void onAccept() {
-		myOption.setValue(getValue());
+		final String value = getValue();
+		myOption.setValue(UNCHANGED.equals(value) ? "" : value);
 	}
 }

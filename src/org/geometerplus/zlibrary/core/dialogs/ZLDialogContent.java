@@ -53,14 +53,6 @@ public abstract class ZLDialogContent {
 		addOptionByName(myResource.getResource(key).getValue(), option);
 	}
 	
-	public abstract void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1);
-	
-	public final void addOptions(String key0, ZLOptionEntry option0, String key1, ZLOptionEntry option1) {
-		final ZLResource resource0 = myResource.getResource(key0);
-		final ZLResource resource1 = myResource.getResource(key1);
-		addOptionsByNames(resource0.getValue(), option0, resource1.getValue(), option1);
-	}
-	
 	protected final void accept() {
 		final int size = Views.size();
 		for (int i = 0; i < size; i++) {
