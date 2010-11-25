@@ -127,7 +127,7 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
-		fbReader.addAction(ActionCode.TRANSLATE_WORD, new TranslateAction(this, fbReader));
+		fbReader.addAction(ActionCode.TRANSLATE, new TranslateAction(this, fbReader));
 	}
 
 	@Override
