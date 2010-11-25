@@ -65,6 +65,7 @@
 			<node name="refillAccount" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -103,7 +104,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Beállítások (további)"/>
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
 		<node name="library" value="Könyvtár"/>
@@ -167,31 +167,150 @@
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true">
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="Méretkülönbség"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="Sorköz"/>
+				<node name="bold" value="Félkövér">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="italic" value="Dőlt">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Sorköz">
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
 				<node name="alignment" value="Igazítás">
 					<node name="left" value="Balra"/>
 					<node name="right" value="Jobbra"/>
 					<node name="center" value="Középre"/>
 					<node name="justify" value="Sorkizárt"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatikus elválasztás">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="Elválasztás engedélyezése">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Első sor behúzása"/>
+				<node name="spaceBefore" value="Space Before"/>
+				<node name="spaceAfter" value="Space After"/>
+				<node name="leftIndent" value="Left Indent"/>
+				<node name="rightIndent" value="Right Indent"/>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
-					<node name="format" value="Formátum">
+					<node name="Regular Paragraph" value="Bekezdés">
 						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Stílusok">
+					<node name="Title" value="Cím">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="Rész címe">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="Vers címe">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="Alcím">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="Fülszöveg">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="Mottó">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="Versszak">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="Verssor">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="Formázott szöveg">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="Kép">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="Idézet">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="Szerző">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="Dátum">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="Belső hivatkozás">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="Lábjegyzet">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="Kiemelés">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="Hangsúlyos">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="Alsó index">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="Felső index">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="Kód">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="Áthúzás">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="Dőlt">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="Félkövér">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="Definíció">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="Definíció leírása">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="Címsor 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="Címsor 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="Címsor 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="Címsor 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="Címsor 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="Címsor 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="Külső hiperhivatkozás">
 						<node name="summary" value=""/>
 					</node>
 				</node>
@@ -275,12 +394,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Opciók"/>
 			<node name="tab">
-				<node name="Library" value="Könyvtár">
-					<node name="bookPath" value="Könyvek helye"/>
-					<node name="lookInSubdirectories" value="Keresés az almappákban is"/>
-				</node>
 				<node name="Language" value="Nyelv">
 					<node name="autoDetect" value="Nyelv és kódolás automatikus felismerése"/>
 					<node name="defaultLanguage" value="Alapértelmezett nyelv"/>
@@ -289,35 +403,6 @@
 				</node>
 				<node name="Selection" value="Kijelölés">
 					<node name="enableSelection" value="Szövegkijelölés engedélyezése"/>
-				</node>
-				<node name="Format" value="Formátum">
-					<node name="optionsFor" value="Beállítások"/>
-					<node name="lineSpacing" value="Sorköz">
-						<node name="unchanged" value="&lt;változatlan&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Első sor behúzása"/>
-					<node name="alignment" value="Igazítás">
-						<node name="left" value="Balra"/>
-						<node name="right" value="Jobbra"/>
-						<node name="center" value="Középre"/>
-						<node name="justify" value="Sorkizárt"/>
-						<node name="unchanged" value="&lt;változatlan&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Space Before"/>
-					<node name="spaceAfter" value="Space After"/>
-					<node name="leftIndent" value="Left Indent"/>
-					<node name="rightIndent" value="Right Indent"/>
-				</node>
-				<node name="Styles" value="Stílusok">
-					<node name="optionsFor" value="Beállítások"/>
-					<node name="fontFamily" value="Betűtípus">
-						<node name="unchanged" value="&lt;változatlan&gt;"/>
-					</node>
-					<node name="fontSize" value="Méret"/>
-					<node name="fontSizeDifference" value="Méretkülönbség"/>
-					<node name="bold" value="Félkövér"/>
-					<node name="italic" value="Dőlt"/>
-					<node name="allowHyphenations" value="Elválasztás engedélyezése"/>
 				</node>
 				<node name="Colors" value="Színek">
 					<node name="colorFor" value="Szín">
@@ -422,42 +507,6 @@
 		<node name="bookNotFound" value="A keresett könyv sajnos nem található meg a könyvtárban"/>
 		<node name="bookmarkNotFound" value="Sajnos nem találhatóak könyvjelzők"/>
 		<node name="cannotOpenBook" value="A könyv sajnos jelenleg nem nyitható meg"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="Alap"/>
-		<node name="Regular Paragraph" value="Bekezdés"/>
-		<node name="Title" value="Cím"/>
-		<node name="Section Title" value="Rész címe"/>
-		<node name="Poem Title" value="Vers címe"/>
-		<node name="Subtitle" value="Alcím"/>
-		<node name="Annotation" value="Fülszöveg"/>
-		<node name="Epigraph" value="Mottó"/>
-		<node name="Stanza" value="Versszak"/>
-		<node name="Verse" value="Verssor"/>
-		<node name="Preformatted text" value="Formázott szöveg"/>
-		<node name="Image" value="Kép"/>
-		<node name="Cite" value="Idézet"/>
-		<node name="Author" value="Szerző"/>
-		<node name="Date" value="Dátum"/>
-		<node name="Internal Hyperlink" value="Belső hivatkozás"/>
-		<node name="Footnote" value="Lábjegyzet"/>
-		<node name="Emphasis" value="Kiemelés"/>
-		<node name="Strong" value="Hangsúlyos"/>
-		<node name="Subscript" value="Alsó index"/>
-		<node name="Superscript" value="Felső index"/>
-		<node name="Code" value="Kód"/>
-		<node name="StrikeThrough" value="Áthúzás"/>
-		<node name="Italic" value="Dőlt"/>
-		<node name="Bold" value="Félkövér"/>
-		<node name="Definition" value="Definíció"/>
-		<node name="Definition Description" value="Definíció leírása"/>
-		<node name="Header 1" value="Címsor 1"/>
-		<node name="Header 2" value="Címsor 2"/>
-		<node name="Header 3" value="Címsor 3"/>
-		<node name="Header 4" value="Címsor 4"/>
-		<node name="Header 5" value="Címsor 5"/>
-		<node name="Header 6" value="Címsor 6"/>
-		<node name="External Hyperlink" value="Külső hiperhivatkozás"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Böngésző"/>

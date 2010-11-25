@@ -19,10 +19,7 @@
 
 package org.geometerplus.zlibrary.ui.android.dialogs;
 
-import java.util.*;
-
 import android.app.*;
-import android.content.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 
@@ -38,10 +35,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 		myActivity = activity;
 	}
 	
-	public ZLOptionsDialog createOptionsDialog(String key) {
-		return new ZLAndroidOptionsDialog(myActivity, getResource().getResource(key));
-	}
-
 	public void wait(String key, Runnable action) {
 		UIUtil.wait(key, action, myActivity);
 	}

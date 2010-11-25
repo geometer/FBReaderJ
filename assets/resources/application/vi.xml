@@ -65,6 +65,7 @@
 			<node name="refillAccount" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -103,7 +104,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Cài đặt (thêm)"/>
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
 		<node name="library" value="Thư viện"/>
@@ -167,31 +167,150 @@
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true">
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="Cách dòng"/>
+				<node name="bold" value="Đậm">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
+				<node name="italic" value="Nghiêng">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Cách dòng">
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
 				<node name="alignment" value="Thẳng hàng">
 					<node name="left" value="Trái"/>
 					<node name="right" value="Phải"/>
 					<node name="center" value="Giữa"/>
 					<node name="justify" value="Căn chỉnh"/>
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Tự động Tách từ">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="Cho phép Tách từ">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
+				<node name="spaceBefore" value="Khoảng trống trước"/>
+				<node name="spaceAfter" value="Khoảng trống sau"/>
+				<node name="leftIndent" value="Lùi Trái"/>
+				<node name="rightIndent" value="Lùi Phải"/>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
-					<node name="format" value="Định dạng">
+					<node name="Regular Paragraph" value="Đoạn văn Thường">
 						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Kiểu">
+					<node name="Title" value="Tiêu đề">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="Tiêu đề Đoạn">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="Tiêu đề Thơ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="Chú thích">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="Chú giải">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="Đề từ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="Khổ thơ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="Câu thơ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="Văn bản định dạng">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="Ảnh">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="Trích dẫn">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="Tác giả">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="Ngày tháng">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="Siêu liên kết trong">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="Chú thích cuối trang">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="Nhấn mạnh">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="Mạnh">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="Chữ,số dưới">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="Chữ,số trên">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="Mã">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="StrikeThrough">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="Nghiêng">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="Đậm">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="Định nghĩa">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="Mô tả Định nghĩa">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="Đầu trang 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="Đầu trang 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="Đầu trang 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="Đầu trang 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="Đầu trang 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="Đầu trang 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="Siêu liên kết ngoài">
 						<node name="summary" value=""/>
 					</node>
 				</node>
@@ -275,12 +394,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="Tùy chọn - FBreader"/>
 			<node name="tab">
-				<node name="Library" value="Thu viện">
-					<node name="bookPath" value="Đường dẫn Sách"/>
-					<node name="lookInSubdirectories" value="Tìm Sách trong các Thư mục con"/>
-				</node>
 				<node name="Language" value="Ngôn ngữ">
 					<node name="autoDetect" value="Tự động chọn Ngôn ngữ và Cách mã hóa"/>
 					<node name="defaultLanguage" value="Ngôn ngữ Mặc định"/>
@@ -289,35 +403,6 @@
 				</node>
 				<node name="Selection" value="Chọn">
 					<node name="enableSelection" value="Bật chọn Văn bản"/>
-				</node>
-				<node name="Format" value="Định dạng">
-					<node name="optionsFor" value="Tùy chọn cho"/>
-					<node name="lineSpacing" value="Cách dòng">
-						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
-					<node name="alignment" value="Thẳng hàng">
-						<node name="left" value="Trái"/>
-						<node name="right" value="Phải"/>
-						<node name="center" value="Giữa"/>
-						<node name="justify" value="Căn chỉnh"/>
-						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Khoảng trống trước"/>
-					<node name="spaceAfter" value="Khoảng trống sau"/>
-					<node name="leftIndent" value="Lùi Trái"/>
-					<node name="rightIndent" value="Lùi Phải"/>
-				</node>
-				<node name="Styles" value="Kiểu">
-					<node name="optionsFor" value="Tùy chọn cho"/>
-					<node name="fontFamily" value="Phông">
-						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-					</node>
-					<node name="fontSize" value="Cỡ"/>
-					<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
-					<node name="bold" value="Đậm"/>
-					<node name="italic" value="Nghiêng"/>
-					<node name="allowHyphenations" value="Cho phép Tách từ"/>
 				</node>
 				<node name="Colors" value="Màu">
 					<node name="colorFor" value="Màu cho">
@@ -422,42 +507,6 @@
 		<node name="bookNotFound" value="Xin lỗi, không có quyển nào thích hợp trong thư viện"/>
 		<node name="bookmarkNotFound" value="Xin lỗi, không có đánh dấu thích hợp"/>
 		<node name="cannotOpenBook" value="Xin lỗi, không thể mở sách vào lúc này"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="Cơ sở"/>
-		<node name="Regular Paragraph" value="Đoạn văn Thường"/>
-		<node name="Title" value="Tiêu đề"/>
-		<node name="Section Title" value="Tiêu đề Đoạn"/>
-		<node name="Poem Title" value="Tiêu đề Thơ"/>
-		<node name="Subtitle" value="Chú thích"/>
-		<node name="Annotation" value="Chú giải"/>
-		<node name="Epigraph" value="Đề từ"/>
-		<node name="Stanza" value="Khổ thơ"/>
-		<node name="Verse" value="Câu thơ"/>
-		<node name="Preformatted text" value="Văn bản định dạng"/>
-		<node name="Image" value="Ảnh"/>
-		<node name="Cite" value="Trích dẫn"/>
-		<node name="Author" value="Tác giả"/>
-		<node name="Date" value="Ngày tháng"/>
-		<node name="Internal Hyperlink" value="Siêu liên kết trong"/>
-		<node name="Footnote" value="Chú thích cuối trang"/>
-		<node name="Emphasis" value="Nhấn mạnh"/>
-		<node name="Strong" value="Mạnh"/>
-		<node name="Subscript" value="Chữ,số dưới"/>
-		<node name="Superscript" value="Chữ,số trên"/>
-		<node name="Code" value="Mã"/>
-		<node name="StrikeThrough" value="StrikeThrough"/>
-		<node name="Italic" value="Nghiêng"/>
-		<node name="Bold" value="Đậm"/>
-		<node name="Definition" value="Định nghĩa"/>
-		<node name="Definition Description" value="Mô tả Định nghĩa"/>
-		<node name="Header 1" value="Đầu trang 1"/>
-		<node name="Header 2" value="Đầu trang 2"/>
-		<node name="Header 3" value="Đầu trang 3"/>
-		<node name="Header 4" value="Đầu trang 4"/>
-		<node name="Header 5" value="Đầu trang 5"/>
-		<node name="Header 6" value="Đầu trang 6"/>
-		<node name="External Hyperlink" value="Siêu liên kết ngoài"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

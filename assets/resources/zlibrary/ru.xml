@@ -70,6 +70,7 @@
 		<node name="lt" value="литовский" />
 		<node name="nl" value="голландский" />
 		<node name="no" value="норвежский" />
+		<node name="pl" value="польский" />
 		<node name="pt" value="португальский" />
 		<node name="ru" value="русский" />
 		<node name="sv" value="шведский" />

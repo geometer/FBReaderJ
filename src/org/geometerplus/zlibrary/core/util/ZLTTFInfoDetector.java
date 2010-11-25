@@ -107,20 +107,20 @@ public class ZLTTFInfoDetector {
 
 	private static class TableInfo {
 		final String Name;
-		final int CheckSum;
+		//final int CheckSum;
 		final int Offset;
 		final int Length;
 
 		TableInfo(byte[] buffer, int off) throws IOException {
 			Name = new String(buffer, off, 4, "ascii");
-			CheckSum = getInt32(buffer, off + 4);
+			//CheckSum = getInt32(buffer, off + 4);
 			Offset = getInt32(buffer, off + 8);
 			Length = getInt32(buffer, off + 12);
 		}
 
-		void print(PrintStream writer) {
+		/*void print(PrintStream writer) {
 			writer.println(Name + " : " + Offset + " : " + Length + " : " + CheckSum);
-		}
+		}*/
 	}
 
 	byte[] readTable(TableInfo info) throws IOException {
@@ -190,7 +190,7 @@ public class ZLTTFInfoDetector {
 		return fontInfo;
 	}
 
-	private int readFontProperties(TableInfo fdscInfo) throws IOException {
+	/*private int readFontProperties(TableInfo fdscInfo) throws IOException {
 		if (fdscInfo == null || fdscInfo.Offset < myPosition || fdscInfo.Length <= 16) {
 			return 0;
 		}
@@ -198,5 +198,5 @@ public class ZLTTFInfoDetector {
 		System.err.println(getInt32(buffer, 0));
 		System.err.println(getInt32(buffer, 4));
 		return 0;
-	}
+	}*/
 }

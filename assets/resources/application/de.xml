@@ -66,6 +66,7 @@
 			<node name="refillAccount" value="Konto aufladen"/>
 			<node name="addCustomCatalog" value="Katalog hinzufügen"/>
 			<node name="refreshCatalogsList" value="Liste der Kataloge aktualisieren"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -104,7 +105,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Einstellungen (mehr)"/>
 		<node name="preferences" value="Einstellungen"/>
 		<node name="bookInfo" value="Buchinformation"/>
 		<node name="library" value="Bibliothek"/>
@@ -168,32 +168,151 @@
 			</node>
 			<node name="text" value="Text Darstellung">
 				<node name="summary" value="Zeichensatz, Silbentrennung, etc."/>
-				<node name="font" value="Schriftart"/>
+				<node name="font" value="Schriftart">
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
 				<node name="fontSize" value="Schriftgröße"/>
+				<node name="fontSizeDifference" value="Größenunterschied"/>
 				<node name="fontStyle" value="Schriftschnitt">
 					<node name="regular" value="Normal"/>
 					<node name="bold" value="Fett"/>
 					<node name="italic" value="Kursiv"/>
 					<node name="boldItalic" value="Fett &amp; Kursiv"/>
 				</node>
-				<node name="lineSpacing" value="Zeilenabstand"/>
+				<node name="bold" value="Fett">
+					<node name="on" value="Fett"/>
+					<node name="off" value="Normal"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
+				<node name="italic" value="Kursiv">
+					<node name="on" value="Kursiv"/>
+					<node name="off" value="Normal"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Zeilenabstand">
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
 				<node name="alignment" value="Ausrichtung">
 					<node name="left" value="Links"/>
 					<node name="right" value="Rechts"/>
 					<node name="center" value="Zentriert"/>
 					<node name="justify" value="Blocksatz"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatisch trennen">
 					<node name="summaryOn" value="Automatische Silbentrennung."/>
 					<node name="summaryOff" value="Keine automatische Silbentrennung."/>
 				</node>
+				<node name="allowHyphenations" value="Trennen erlauben">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Einzug erste Zeile"/>
+				<node name="spaceBefore" value="Abstand vor"/>
+				<node name="spaceAfter" value="Abstand nach"/>
+				<node name="leftIndent" value="Einzug linker Rand"/>
+				<node name="rightIndent" value="Einzug rechter Rand"/>
 				<node name="more" value="Weitere Formatierungen ...">
 					<node name="summary" value="Detailierte Einstellungen für Überschiften, Inhalte, etc."/>
-					<node name="format" value="Absatzformate">
-						<node name="summary" value="Zeilenabstände und Einzüge festlegen."/>
+					<node name="Regular Paragraph" value="Normaler Absatz">
+						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Schriftarten">
-						<node name="summary" value="Schriftarten festlegen."/>
+					<node name="Title" value="Titel">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="Abschnittstitel">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="Titel des Gedichts">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="Untertitel">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="Anmerkung">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="Inschrift">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="Strophe">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="Vers">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="Vorformatierter Text">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="Bild">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="Zitieren">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="Autor">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="Datum">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="Interner Hyperlink">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="Fußnote">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="Betonung">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="Stark">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="Tiefgestellt">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="Hochgestellt">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="Code">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="Durchgestrichen">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="Kursiv">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="Fett">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="Definition">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="Beschreibung der Definition">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="Überschrift 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="Überschrift 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="Überschrift 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="Überschrift 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="Überschrift 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="Überschrift 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="Externer Hyperlink">
+						<node name="summary" value=""/>
 					</node>
 				</node>
 				<node name="colors" value="Farben">
@@ -276,12 +395,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Optionen"/>
 			<node name="tab">
-				<node name="Library" value="Bibliotek">
-					<node name="bookPath" value="Buch Verzeichnis"/>
-					<node name="lookInSubdirectories" value="Bücher in Unterverzeichnissen suchen"/>
-				</node>
 				<node name="Language" value="Sprache">
 					<node name="autoDetect" value="Automatisch Sprache und Codierung erkennen"/>
 					<node name="defaultLanguage" value="Standardsprache"/>
@@ -290,35 +404,6 @@
 				</node>
 				<node name="Selection" value="Auswahl">
 					<node name="enableSelection" value="Textauswahl einschalten"/>
-				</node>
-				<node name="Format" value="Format">
-					<node name="optionsFor" value="Optionen für"/>
-					<node name="lineSpacing" value="Zeilenabstand">
-						<node name="unchanged" value="&lt;unverändert&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Einzug erste Zeile"/>
-					<node name="alignment" value="Ausrichtung">
-						<node name="left" value="Links"/>
-						<node name="right" value="Rechts"/>
-						<node name="center" value="Zentriert"/>
-						<node name="justify" value="Blocksatz"/>
-						<node name="unchanged" value="&lt;unverändert&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Abstand vor"/>
-					<node name="spaceAfter" value="Abstand nach"/>
-					<node name="leftIndent" value="Einzug linker Rand"/>
-					<node name="rightIndent" value="Einzug rechter Rand"/>
-				</node>
-				<node name="Styles" value="Schriftarten">
-					<node name="optionsFor" value="Optionen für"/>
-					<node name="fontFamily" value="Schriftfamilie">
-						<node name="unchanged" value="&lt;unverändert&gt;"/>
-					</node>
-					<node name="fontSize" value="Größe"/>
-					<node name="fontSizeDifference" value="Größenunterschied"/>
-					<node name="bold" value="Fett"/>
-					<node name="italic" value="Kursiv"/>
-					<node name="allowHyphenations" value="Trennen erlauben"/>
 				</node>
 				<node name="Colors" value="Farben">
 					<node name="colorFor" value="Farbe für">
@@ -423,42 +508,6 @@
 		<node name="bookNotFound" value="Es wurden keine passenden Bücher in der Bibliothek gefunden."/>
 		<node name="bookmarkNotFound" value="Es wurden kein passenden Lesezeichen gefunden."/>
 		<node name="cannotOpenBook" value="Das Buch kann zurzeit nicht geöffnet werden."/>
-	</node>
-	<node name="style">
-		<node name="Base" value="Basis"/>
-		<node name="Regular Paragraph" value="Normaler Absatz"/>
-		<node name="Title" value="Titel"/>
-		<node name="Section Title" value="Abschnittstitel"/>
-		<node name="Poem Title" value="Titel des Gedichts"/>
-		<node name="Subtitle" value="Untertitel"/>
-		<node name="Annotation" value="Anmerkung"/>
-		<node name="Epigraph" value="Inschrift"/>
-		<node name="Stanza" value="Strophe"/>
-		<node name="Verse" value="Vers"/>
-		<node name="Preformatted text" value="Vorformatierter Text"/>
-		<node name="Image" value="Bild"/>
-		<node name="Cite" value="Zitieren"/>
-		<node name="Author" value="Autor"/>
-		<node name="Date" value="Datum"/>
-		<node name="Internal Hyperlink" value="Interner Hyperlink"/>
-		<node name="Footnote" value="Fußnote"/>
-		<node name="Emphasis" value="Betonung"/>
-		<node name="Strong" value="Stark"/>
-		<node name="Subscript" value="Tiefgestellt"/>
-		<node name="Superscript" value="Hochgestellt"/>
-		<node name="Code" value="Code"/>
-		<node name="StrikeThrough" value="Durchgestrichen"/>
-		<node name="Italic" value="Kursiv"/>
-		<node name="Bold" value="Fett"/>
-		<node name="Definition" value="Definition"/>
-		<node name="Definition Description" value="Beschreibung der Definition"/>
-		<node name="Header 1" value="Überschrift 1"/>
-		<node name="Header 2" value="Überschrift 2"/>
-		<node name="Header 3" value="Überschrift 3"/>
-		<node name="Header 4" value="Überschrift 4"/>
-		<node name="Header 5" value="Überschrift 5"/>
-		<node name="Header 6" value="Überschrift 6"/>
-		<node name="External Hyperlink" value="Externer Hyperlink"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

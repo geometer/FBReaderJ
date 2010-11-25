@@ -65,6 +65,7 @@
 			<node name="refillAccount" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -103,7 +104,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Nastavení (další)"/>
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
 		<node name="library" value="Knihovna"/>
@@ -167,31 +167,150 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Písmo, dělení slov atd."/>
-				<node name="font" value="Rodina písem"/>
+				<node name="font" value="Rodina písem">
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
 				<node name="fontSize" value="Velikost písma"/>
+				<node name="fontSizeDifference" value="Rozlišovat velikost"/>
 				<node name="fontStyle" value="Řez písma">
 					<node name="regular" value="Obyčejné"/>
 					<node name="bold" value="Tučné"/>
 					<node name="italic" value="Kurzíva"/>
 					<node name="boldItalic" value="Tučná kurzíva"/>
 				</node>
-				<node name="lineSpacing" value="Řádkování"/>
+				<node name="bold" value="Tučně">
+					<node name="on" value="tučně"/>
+					<node name="off" value="obyčejné"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
+				<node name="italic" value="Kurzíva">
+					<node name="on" value="kurzíva"/>
+					<node name="off" value="obyčejné"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Řádkování">
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
 				<node name="alignment" value="Zarovnání">
 					<node name="left" value="Vlevo"/>
 					<node name="right" value="Vpravo"/>
 					<node name="center" value="Na střed"/>
 					<node name="justify" value="Do bloku"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatické dělení slov">
 					<node name="summaryOn" value="Dělit slova automaticky"/>
 					<node name="summaryOff" value="Nedělit slova automaticky"/>
 				</node>
+				<node name="allowHyphenations" value="Povolit dělení slov">
+					<node name="on" value="dělit slova"/>
+					<node name="off" value="nedělit slova"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Odsazení prvního řádku"/>
+				<node name="spaceBefore" value="Mezera před"/>
+				<node name="spaceAfter" value="Mezera za"/>
+				<node name="leftIndent" value="Odsazení vlevo"/>
+				<node name="rightIndent" value="Odsazení vpravo"/>
 				<node name="more" value="Další styly">
 					<node name="summary" value="Oddělené nastavení pro názvy, mota atd."/>
-					<node name="format" value="Formát">
+					<node name="Regular Paragraph" value="Běžný odstavec">
 						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Styly">
+					<node name="Title" value="Název">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="Název části">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="Název básně">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="Podtitul">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="Anotace">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="Moto">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="Sloka">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="Verš">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="Předformátovaný text">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="Obrázek">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="Citát">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="Autor">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="Datum">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="Vnitřní odkaz">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="Poznámka pod čarou">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="Zvýraznění">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="Silně">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="Dolní index">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="Horní index">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="Kód">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="Přeškrtnutí">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="Kurzíva">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="Tučné">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="Definice">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="Popis definice">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="Hlavička 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="Hlavička 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="Hlavička 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="Hlavička 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="Hlavička 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="Hlavička 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="Vnější odkaz">
 						<node name="summary" value=""/>
 					</node>
 				</node>
@@ -275,12 +394,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Možnosti"/>
 			<node name="tab">
-				<node name="Library" value="Knihovna">
-					<node name="bookPath" value="Cesta"/>
-					<node name="lookInSubdirectories" value="Hledat knihy v podadresářích"/>
-				</node>
 				<node name="Language" value="Jazyk">
 					<node name="autoDetect" value="Automaticky rozpoznávat jazyk a kódování"/>
 					<node name="defaultLanguage" value="Výchozí jazyk"/>
@@ -289,35 +403,6 @@
 				</node>
 				<node name="Selection" value="Výběr">
 					<node name="enableSelection" value="Povolit výběr textu"/>
-				</node>
-				<node name="Format" value="Formát">
-					<node name="optionsFor" value="Možnosti pro"/>
-					<node name="lineSpacing" value="Řádkování">
-						<node name="unchanged" value="&lt;nezměněno&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Odsazení prvního řádku"/>
-					<node name="alignment" value="Zarovnání">
-						<node name="left" value="Vlevo"/>
-						<node name="right" value="Vpravo"/>
-						<node name="center" value="Na střed"/>
-						<node name="justify" value="Do bloku"/>
-						<node name="unchanged" value="&lt;nezměněno&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Mezera před"/>
-					<node name="spaceAfter" value="Mezera za"/>
-					<node name="leftIndent" value="Odsazení vlevo"/>
-					<node name="rightIndent" value="Odsazení vpravo"/>
-				</node>
-				<node name="Styles" value="Styly">
-					<node name="optionsFor" value="Možnosti pro"/>
-					<node name="fontFamily" value="Rodina písma">
-						<node name="unchanged" value="&lt;nezměněno&gt;"/>
-					</node>
-					<node name="fontSize" value="Velikost písma"/>
-					<node name="fontSizeDifference" value="Rozlišovat velikost"/>
-					<node name="bold" value="Tučně"/>
-					<node name="italic" value="Kurzíva"/>
-					<node name="allowHyphenations" value="Povolit dělení slov"/>
 				</node>
 				<node name="Colors" value="Barvy">
 					<node name="colorFor" value="Barva pro">
@@ -422,42 +507,6 @@
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
 		<node name="bookmarkNotFound" value="Nejsou bohužel žádné vhodné záložky"/>
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="Základní"/>
-		<node name="Regular Paragraph" value="Běžný odstavec"/>
-		<node name="Title" value="Název"/>
-		<node name="Section Title" value="Název části"/>
-		<node name="Poem Title" value="Název básně"/>
-		<node name="Subtitle" value="Podtitul"/>
-		<node name="Annotation" value="Anotace"/>
-		<node name="Epigraph" value="Moto"/>
-		<node name="Stanza" value="Sloka"/>
-		<node name="Verse" value="Verš"/>
-		<node name="Preformatted text" value="Předformátovaný text"/>
-		<node name="Image" value="Obrázek"/>
-		<node name="Cite" value="Citát"/>
-		<node name="Author" value="Autor"/>
-		<node name="Date" value="Datum"/>
-		<node name="Internal Hyperlink" value="Vnitřní odkaz"/>
-		<node name="Footnote" value="Poznámka pod čarou"/>
-		<node name="Emphasis" value="Zvýraznění"/>
-		<node name="Strong" value="Silně"/>
-		<node name="Subscript" value="Dolní index"/>
-		<node name="Superscript" value="Horní index"/>
-		<node name="Code" value="Kód"/>
-		<node name="StrikeThrough" value="Přeškrtnutí"/>
-		<node name="Italic" value="Kurzíva"/>
-		<node name="Bold" value="Tučné"/>
-		<node name="Definition" value="Definice"/>
-		<node name="Definition Description" value="Popis definice"/>
-		<node name="Header 1" value="Hlavička 1"/>
-		<node name="Header 2" value="Hlavička 2"/>
-		<node name="Header 3" value="Hlavička 3"/>
-		<node name="Header 4" value="Hlavička 4"/>
-		<node name="Header 5" value="Hlavička 5"/>
-		<node name="Header 6" value="Hlavička 6"/>
-		<node name="External Hyperlink" value="Vnější odkaz"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

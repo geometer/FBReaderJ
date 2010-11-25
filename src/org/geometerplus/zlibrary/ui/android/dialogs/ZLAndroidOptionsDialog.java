@@ -22,21 +22,17 @@ package org.geometerplus.zlibrary.ui.android.dialogs;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.*;
-import android.widget.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-class ZLAndroidOptionsDialog extends ZLOptionsDialog {
-	private final String myCaption;
+public class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final Activity myMainActivity;
 
-	ZLAndroidOptionsDialog(Activity activity, ZLResource resource) {
+	public ZLAndroidOptionsDialog(Activity activity, ZLResource resource) {
 		super(resource);
-		myCaption = resource.getResource("title").getValue();
 		myMainActivity = activity;
 	}
 

@@ -64,6 +64,7 @@
 			<node name="refillAccount" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
+			<node name="languages" value="Фильтр по языку"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -102,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Настройки (дополнительно)"/>
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
 		<node name="library" value="Библиотека"/>
@@ -166,31 +166,150 @@
 			</node>
 			<node name="text" value="Текст">
 				<node name="summary" value="Шрифты, переносы, и т.д."/>
-				<node name="font" value="Шрифт"/>
+				<node name="font" value="Шрифт">
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
 				<node name="fontSize" value="Размер шрифта"/>
+				<node name="fontSizeDifference" value="Размер"/>
 				<node name="fontStyle" value="Начертание">
 					<node name="regular" value="нормальное"/>
 					<node name="bold" value="жирное"/>
 					<node name="italic" value="курсив"/>
 					<node name="boldItalic" value="жирный курсив"/>
 				</node>
-				<node name="lineSpacing" value="Интервал"/>
+				<node name="bold" value="Жирный шрифт">
+					<node name="on" value="использовать жирное начертание"/>
+					<node name="off" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
+				<node name="italic" value="Курсив">
+					<node name="on" value="использовать курсивное начертание"/>
+					<node name="off" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Интервал">
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
 				<node name="alignment" value="Выравнивание">
 					<node name="left" value="левое"/>
 					<node name="right" value="правое"/>
 					<node name="center" value="по центру"/>
 					<node name="justify" value="по краям"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Переносы">
 					<node name="summaryOn" value="Автоматически расставлять переносы"/>
 					<node name="summaryOff" value="Не расставлять переносы"/>
 				</node>
+				<node name="allowHyphenations" value="Переносы">
+					<node name="on" value="разрешить переносы"/>
+					<node name="off" value="запретить переносы"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Красная строка"/>
+				<node name="spaceBefore" value="Пропуск перед"/>
+				<node name="spaceAfter" value="Пропуск после"/>
+				<node name="leftIndent" value="Отступ слева"/>
+				<node name="rightIndent" value="Отступ справа"/>
 				<node name="more" value="Другие стили">
 					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов, и т.д."/>
-					<node name="format" value="Форматирование">
+					<node name="Regular Paragraph" value="обычного текста">
 						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Стили">
+					<node name="Title" value="заголовка">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="названия главы">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="названия стихотворения">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="подзаголовка">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="аннотации">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="эпиграфа">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="строфы">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="стихов">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="текста внутри &lt;pre&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="рисунка">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="цитаты">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="имени автора">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="даты">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="ссылки">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="сноски">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="выделения (emphasis)">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="выделения (strong)">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="нижнего индекса">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="верхнего индекса">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="текста программы">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="зачеркнутого текста">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="курсива">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="жирного текста">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="определения">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="текста определения">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="текста внутри &lt;h1&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="текста внутри &lt;h2&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="текста внутри &lt;h3&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="текста внутри &lt;h4&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="текста внутри &lt;h5&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="текста внутри &lt;h6&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="внешней ссылки">
 						<node name="summary" value=""/>
 					</node>
 				</node>
@@ -274,12 +393,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Настройки"/>
 			<node name="tab">
-				<node name="Library" value="Библиотека">
-					<node name="bookPath" value="Каталоги с книгами"/>
-					<node name="lookInSubdirectories" value="Искать книги в подкаталогах"/>
-				</node>
 				<node name="Language" value="Язык">
 					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
 					<node name="defaultLanguage" value="Язык по умолчанию"/>
@@ -288,35 +402,6 @@
 				</node>
 				<node name="Selection" value="Пометка">
 					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
-				<node name="Format" value="Форматирование">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="lineSpacing" value="Интервал">
-						<node name="unchanged" value="&lt;не менять&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Красная строка"/>
-					<node name="alignment" value="Выравнивание">
-						<node name="left" value="левое"/>
-						<node name="right" value="правое"/>
-						<node name="center" value="по центру"/>
-						<node name="justify" value="по краям"/>
-						<node name="unchanged" value="&lt;не менять&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Пропуск перед"/>
-					<node name="spaceAfter" value="Пропуск после"/>
-					<node name="leftIndent" value="Отступ слева"/>
-					<node name="rightIndent" value="Отступ справа"/>
-				</node>
-				<node name="Styles" value="Стили">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="fontFamily" value="Шрифт">
-						<node name="unchanged" value="&lt;не менять&gt;"/>
-					</node>
-					<node name="fontSize" value="Размер"/>
-					<node name="fontSizeDifference" value="Размер"/>
-					<node name="bold" value="Жирный"/>
-					<node name="italic" value="Курсив"/>
-					<node name="allowHyphenations" value="Переносы"/>
 				</node>
 				<node name="Colors" value="Цвета">
 					<node name="colorFor" value="Цвет">
@@ -421,42 +506,6 @@
 		<node name="bookNotFound" value="Нет подходящих книг"/>
 		<node name="bookmarkNotFound" value="Нет подходящих закладок"/>
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="текста по умолчанию"/>
-		<node name="Regular Paragraph" value="обычного текста"/>
-		<node name="Title" value="заголовка"/>
-		<node name="Section Title" value="названия главы"/>
-		<node name="Poem Title" value="названия стихотворения"/>
-		<node name="Subtitle" value="подзаголовка"/>
-		<node name="Annotation" value="аннотации"/>
-		<node name="Epigraph" value="эпиграфа"/>
-		<node name="Stanza" value="строфы"/>
-		<node name="Verse" value="стихов"/>
-		<node name="Preformatted text" value="текста внутри &lt;pre&gt;"/>
-		<node name="Image" value="рисунка"/>
-		<node name="Cite" value="цитаты"/>
-		<node name="Author" value="имени автора"/>
-		<node name="Date" value="даты"/>
-		<node name="Internal Hyperlink" value="ссылки"/>
-		<node name="Footnote" value="сноски"/>
-		<node name="Emphasis" value="выделения (emphasis)"/>
-		<node name="Strong" value="выделения (strong)"/>
-		<node name="Subscript" value="нижнего индекса"/>
-		<node name="Superscript" value="верхнего индекса"/>
-		<node name="Code" value="текста программы"/>
-		<node name="StrikeThrough" value="зачеркнутого текста"/>
-		<node name="Italic" value="курсива"/>
-		<node name="Bold" value="жирного текста"/>
-		<node name="Definition" value="определения"/>
-		<node name="Definition Description" value="текста определения"/>
-		<node name="Header 1" value="текста внутри &lt;h1&gt;"/>
-		<node name="Header 2" value="текста внутри &lt;h2&gt;"/>
-		<node name="Header 3" value="текста внутри &lt;h3&gt;"/>
-		<node name="Header 4" value="текста внутри &lt;h4&gt;"/>
-		<node name="Header 5" value="текста внутри &lt;h5&gt;"/>
-		<node name="Header 6" value="текста внутри &lt;h6&gt;"/>
-		<node name="External Hyperlink" value="внешней ссылки"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>

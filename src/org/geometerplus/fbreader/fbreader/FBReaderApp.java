@@ -39,7 +39,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLStringOption BookmarkSearchPatternOption =
 		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
-	public final ZLBooleanOption UseSeparateBindingsOption = 
+	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
@@ -54,9 +54,9 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 	public final ZLIntegerRangeOption FooterHeightOption =
-		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9); 
+		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9);
 	public final ZLIntegerRangeOption FooterLongTapOption =
-		new ZLIntegerRangeOption("Options", "FooterLongTap", 0, 1, 0/*revert*/); 
+		new ZLIntegerRangeOption("Options", "FooterLongTap", 0, 1, 0/*revert*/);
 	public final ZLBooleanOption FooterShowClockOption =
 		new ZLBooleanOption("Options", "ShowClockInFooter", true);
 	public final ZLBooleanOption FooterShowBatteryOption =
@@ -90,7 +90,7 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 		addAction(ActionCode.ROTATE, new RotateAction(this));
-		
+
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
@@ -117,7 +117,7 @@ public final class FBReaderApp extends ZLApplication {
 	public void initWindow() {
 		super.initWindow();
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
-			public void run() { 
+			public void run() {
 				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
 				if (book == null) {
 					book = Library.getRecentBook();
@@ -129,11 +129,11 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		});
 	}
-	
+
 	public void openBook(final Book book, final Bookmark bookmark) {
 		ZLDialogManager.Instance().wait("loadingBook", new Runnable() {
-			public void run() { 
-				openBookInternal(book, bookmark); 
+			public void run() {
+				openBookInternal(book, bookmark);
 			}
 		});
 	}
@@ -184,7 +184,7 @@ public final class FBReaderApp extends ZLApplication {
 		BookTextView.clearCaches();
 		FootnoteView.clearCaches();
 	}
-	
+
 	void openBookInternal(Book book, Bookmark bookmark) {
 		if (book != null) {
 			onViewChanged();
@@ -227,11 +227,11 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		repaintView();
 	}
-	
+
 	public void showBookTextView() {
 		setView(BookTextView);
 	}
-	
+
 	private Book createBookForFile(ZLFile file) {
 		if (file == null) {
 			return null;

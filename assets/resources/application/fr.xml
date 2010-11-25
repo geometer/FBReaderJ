@@ -68,6 +68,7 @@
 			<node name="refillAccount" value="Recréditer le compte"/>
 			<node name="addCustomCatalog" value="Ajouter catalogue"/>
 			<node name="refreshCatalogsList" value="Rafraîchir"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -106,7 +107,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Paramètres avancés"/>
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
 		<node name="library" value="Bibliothèque"/>
@@ -170,31 +170,150 @@
 			</node>
 			<node name="text" value="Texte">
 				<node name="summary" value="Polices, césures, etc."/>
-				<node name="font" value="Famille de police"/>
+				<node name="font" value="Famille de police">
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
+				</node>
 				<node name="fontSize" value="Taille de police"/>
+				<node name="fontSizeDifference" value="Différence de taille"/>
 				<node name="fontStyle" value="Style de police">
 					<node name="regular" value="Normale"/>
 					<node name="bold" value="Gras"/>
 					<node name="italic" value="Italique"/>
 					<node name="boldItalic" value="Gras italique"/>
 				</node>
-				<node name="lineSpacing" value="Espacement de lignes"/>
+				<node name="bold" value="Gras">
+					<node name="on" value="gras"/>
+					<node name="off" value="normale"/>
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
+				</node>
+				<node name="italic" value="Italique">
+					<node name="on" value="italique"/>
+					<node name="off" value="normale"/>
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Espacement de lignes">
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
+				</node>
 				<node name="alignment" value="Alignement">
 					<node name="left" value="Gauche"/>
 					<node name="right" value="Droite"/>
 					<node name="center" value="Centré"/>
 					<node name="justify" value="Justifié"/>
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Césures automatiques">
 					<node name="summaryOn" value="Mettre automatiquement les traits d'union entre les mots"/>
 					<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
 				</node>
+				<node name="allowHyphenations" value="Autoriser les césures">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;inchangé&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Indentation de la première ligne"/>
+				<node name="spaceBefore" value="Espace avant"/>
+				<node name="spaceAfter" value="Espace après"/>
+				<node name="leftIndent" value="Indentation à gauche"/>
+				<node name="rightIndent" value="Indentation à droite"/>
 				<node name="more" value="Plus de styles">
 					<node name="summary" value="Paramètres de configuration des titres, épigraphes etc."/>
-					<node name="format" value="Format">
+					<node name="Regular Paragraph" value="Paragraphe normal">
 						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Styles">
+					<node name="Title" value="Titre">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="Titre de section">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="Titre de poême">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="Sous-titre">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="Annotation">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="Epigraphe">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="Strophe">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="Vers">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="Texte préformatté">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="Image">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="Citation">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="Auteur">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="Date">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="Lien interne">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="Bas de page">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="Emphase">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="Fort">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="Indice">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="Exposant">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="Code">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="Texte barré">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="Italique">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="Gras">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="Définition">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="Définition Description">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="Entête 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="Entête 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="Entête 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="Entête 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="Entête 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="Entête 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="Lien externe">
 						<node name="summary" value=""/>
 					</node>
 				</node>
@@ -277,15 +396,8 @@
 				</node>
 			</node>
 		</node>
-		<node name="Preferences">
-		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Options"/>
 			<node name="tab">
-				<node name="Library" value="Bibliothèque">
-					<node name="bookPath" value="Emplacement des livres"/>
-					<node name="lookInSubdirectories" value="Chercher des livres dans les sous-répertoires"/>
-				</node>
 				<node name="Language" value="Langue">
 					<node name="autoDetect" value="Détection automatique de la langue et de l'encodage"/>
 					<node name="defaultLanguage" value="Langue par défaut"/>
@@ -294,35 +406,6 @@
 				</node>
 				<node name="Selection" value="Sélection">
 					<node name="enableSelection" value="Activer la sélection de texte"/>
-				</node>
-				<node name="Format" value="Format">
-					<node name="optionsFor" value="Options pour"/>
-					<node name="lineSpacing" value="Espacement de lignes">
-						<node name="unchanged" value="&lt;inchangé&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Indentation de la première ligne"/>
-					<node name="alignment" value="Alignement">
-						<node name="left" value="Gauche"/>
-						<node name="right" value="Droite"/>
-						<node name="center" value="Centré"/>
-						<node name="justify" value="Justifié"/>
-						<node name="unchanged" value="&lt;inchangé&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Espace avant"/>
-					<node name="spaceAfter" value="Espace après"/>
-					<node name="leftIndent" value="Indentation à gauche"/>
-					<node name="rightIndent" value="Indentation à droite"/>
-				</node>
-				<node name="Styles" value="Styles">
-					<node name="optionsFor" value="Options pour"/>
-					<node name="fontFamily" value="Famille de police">
-						<node name="unchanged" value="&lt;inchangé&gt;"/>
-					</node>
-					<node name="fontSize" value="Taille de police"/>
-					<node name="fontSizeDifference" value="Différence de taille"/>
-					<node name="bold" value="Gras"/>
-					<node name="italic" value="Italique"/>
-					<node name="allowHyphenations" value="Autoriser les césures"/>
 				</node>
 				<node name="Colors" value="Couleurs">
 					<node name="colorFor" value="Couleur pour">
@@ -427,42 +510,6 @@
 		<node name="bookNotFound" value="Aucun livre correspondant dans la bibliothèque"/>
 		<node name="bookmarkNotFound" value="Aucun marque-page correspondant"/>
 		<node name="cannotOpenBook" value="Impossible d'ouvrir le livre"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="Base"/>
-		<node name="Regular Paragraph" value="Paragraphe normal"/>
-		<node name="Title" value="Titre"/>
-		<node name="Section Title" value="Titre de section"/>
-		<node name="Poem Title" value="Titre de poême"/>
-		<node name="Subtitle" value="Sous-titre"/>
-		<node name="Annotation" value="Annotation"/>
-		<node name="Epigraph" value="Epigraphe"/>
-		<node name="Stanza" value="Strophe"/>
-		<node name="Verse" value="Vers"/>
-		<node name="Preformatted text" value="Texte préformatté"/>
-		<node name="Image" value="Image"/>
-		<node name="Cite" value="Citation"/>
-		<node name="Author" value="Auteur"/>
-		<node name="Date" value="Date"/>
-		<node name="Internal Hyperlink" value="Lien interne"/>
-		<node name="Footnote" value="Bas de page"/>
-		<node name="Emphasis" value="Emphase"/>
-		<node name="Strong" value="Fort"/>
-		<node name="Subscript" value="Indice"/>
-		<node name="Superscript" value="Exposant"/>
-		<node name="Code" value="Code"/>
-		<node name="StrikeThrough" value="Texte barré"/>
-		<node name="Italic" value="Italique"/>
-		<node name="Bold" value="Gras"/>
-		<node name="Definition" value="Définition"/>
-		<node name="Definition Description" value="Définition Description"/>
-		<node name="Header 1" value="Entête 1"/>
-		<node name="Header 2" value="Entête 2"/>
-		<node name="Header 3" value="Entête 3"/>
-		<node name="Header 4" value="Entête 4"/>
-		<node name="Header 5" value="Entête 5"/>
-		<node name="Header 6" value="Entête 6"/>
-		<node name="External Hyperlink" value="Lien externe"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>

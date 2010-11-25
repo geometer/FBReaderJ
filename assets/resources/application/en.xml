@@ -103,7 +103,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Settings (more)"/>
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
@@ -167,32 +166,151 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Font, hyphenations, etc."/>
-				<node name="font" value="Font family"/>
+				<node name="font" value="Font family">
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size"/>
+				<node name="fontSizeDifference" value="Font size difference"/>
 				<node name="fontStyle" value="Font style">
 					<node name="regular" value="Regular"/>
 					<node name="bold" value="Bold"/>
 					<node name="italic" value="Italic"/>
 					<node name="boldItalic" value="Bold Italic"/>
 				</node>
-				<node name="lineSpacing" value="Line Spacing"/>
+				<node name="bold" value="Bold">
+					<node name="on" value="bold"/>
+					<node name="off" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="italic" value="Italic">
+					<node name="on" value="italic"/>
+					<node name="off" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Line Spacing">
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
 				<node name="alignment" value="Alignment">
 					<node name="left" value="Left"/>
 					<node name="right" value="Right"/>
 					<node name="center" value="Center"/>
 					<node name="justify" value="Justify"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Auto hyphenations">
 					<node name="summaryOn" value="Hyphenate words automatically"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically"/>
 				</node>
+				<node name="allowHyphenations" value="Allow Hyphenations">
+					<node name="on" value="hyphenate words"/>
+					<node name="off" value="don't hyphenate words"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="First Line Indent"/>
+				<node name="spaceBefore" value="Space Before"/>
+				<node name="spaceAfter" value="Space After"/>
+				<node name="leftIndent" value="Left Indent"/>
+				<node name="rightIndent" value="Right Indent"/>
 				<node name="more" value="More styles">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc."/>
-					<node name="format" value="Format">
-						<node name="summary" value=""/>
+					<node name="Regular Paragraph" value="Regular Paragraph">
+						<node name="summary" value="missing"/>
 					</node>
-					<node name="styles" value="Styles">
-						<node name="summary" value=""/>
+					<node name="Title" value="Title">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Section Title" value="Section Title">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Poem Title" value="Poem Title">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Subtitle" value="Subtitle">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Annotation" value="Annotation">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Epigraph" value="Epigraph">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Stanza" value="Stanza">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Verse" value="Verse">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Preformatted text" value="Preformatted text">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Image" value="Image">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Cite" value="Cite">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Author" value="Author">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Date" value="Date">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Internal Hyperlink" value="Internal Hyperlink">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Footnote" value="Footnote">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Emphasis" value="Emphasis">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Strong" value="Strong">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Subscript" value="Subscript">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Superscript" value="Superscript">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Code" value="Code">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="StrikeThrough" value="StrikeThrough">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Italic" value="Italic">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Bold" value="Bold">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Definition" value="Definition">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Definition Description" value="Definition Description">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Header 1" value="Header 1">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Header 2" value="Header 2">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Header 3" value="Header 3">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Header 4" value="Header 4">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Header 5" value="Header 5">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="Header 6" value="Header 6">
+						<node name="summary" value="missing"/>
+					</node>
+					<node name="External Hyperlink" value="External Hyperlink">
+						<node name="summary" value="missing"/>
 					</node>
 				</node>
 				<node name="colors" value="Colors">
@@ -275,12 +393,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Options"/>
 			<node name="tab">
-				<node name="Library" value="Library">
-					<node name="bookPath" value="Book Path"/>
-					<node name="lookInSubdirectories" value="Look for Books in Subdirectories"/>
-				</node>
 				<node name="Language" value="Language">
 					<node name="autoDetect" value="Automatically Detect Language and Encoding"/>
 					<node name="defaultLanguage" value="Default Language"/>
@@ -289,35 +402,6 @@
 				</node>
 				<node name="Selection" value="Selection">
 					<node name="enableSelection" value="Enable Text Selection"/>
-				</node>
-				<node name="Format" value="Format">
-					<node name="optionsFor" value="Options for"/>
-					<node name="lineSpacing" value="Line Spacing">
-						<node name="unchanged" value="&lt;unchanged&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="First Line Indent"/>
-					<node name="alignment" value="Alignment">
-						<node name="left" value="Left"/>
-						<node name="right" value="Right"/>
-						<node name="center" value="Center"/>
-						<node name="justify" value="Justify"/>
-						<node name="unchanged" value="&lt;unchanged&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Space Before"/>
-					<node name="spaceAfter" value="Space After"/>
-					<node name="leftIndent" value="Left Indent"/>
-					<node name="rightIndent" value="Right Indent"/>
-				</node>
-				<node name="Styles" value="Styles">
-					<node name="optionsFor" value="Options for"/>
-					<node name="fontFamily" value="Family">
-						<node name="unchanged" value="&lt;unchanged&gt;"/>
-					</node>
-					<node name="fontSize" value="Size"/>
-					<node name="fontSizeDifference" value="Size Difference"/>
-					<node name="bold" value="Bold"/>
-					<node name="italic" value="Italic"/>
-					<node name="allowHyphenations" value="Allow Hyphenations"/>
 				</node>
 				<node name="Colors" value="Colors">
 					<node name="colorFor" value="Color for">
@@ -422,42 +506,6 @@
 		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
 		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="Base"/>
-		<node name="Regular Paragraph" value="Regular Paragraph"/>
-		<node name="Title" value="Title"/>
-		<node name="Section Title" value="Section Title"/>
-		<node name="Poem Title" value="Poem Title"/>
-		<node name="Subtitle" value="Subtitle"/>
-		<node name="Annotation" value="Annotation"/>
-		<node name="Epigraph" value="Epigraph"/>
-		<node name="Stanza" value="Stanza"/>
-		<node name="Verse" value="Verse"/>
-		<node name="Preformatted text" value="Preformatted text"/>
-		<node name="Image" value="Image"/>
-		<node name="Cite" value="Cite"/>
-		<node name="Author" value="Author"/>
-		<node name="Date" value="Date"/>
-		<node name="Internal Hyperlink" value="Internal Hyperlink"/>
-		<node name="Footnote" value="Footnote"/>
-		<node name="Emphasis" value="Emphasis"/>
-		<node name="Strong" value="Strong"/>
-		<node name="Subscript" value="Subscript"/>
-		<node name="Superscript" value="Superscript"/>
-		<node name="Code" value="Code"/>
-		<node name="StrikeThrough" value="StrikeThrough"/>
-		<node name="Italic" value="Italic"/>
-		<node name="Bold" value="Bold"/>
-		<node name="Definition" value="Definition"/>
-		<node name="Definition Description" value="Definition Description"/>
-		<node name="Header 1" value="Header 1"/>
-		<node name="Header 2" value="Header 2"/>
-		<node name="Header 3" value="Header 3"/>
-		<node name="Header 4" value="Header 4"/>
-		<node name="Header 5" value="Header 5"/>
-		<node name="Header 6" value="Header 6"/>
-		<node name="External Hyperlink" value="External Hyperlink"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

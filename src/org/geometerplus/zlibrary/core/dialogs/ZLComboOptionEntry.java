@@ -32,10 +32,6 @@ public abstract class ZLComboOptionEntry extends ZLOptionEntry {
 		myEditable = editable;
 	}
 
-	public int getKind() {
-		return ZLOptionKind.COMBO;
-	}
-
 	public void onValueSelected(int index) {}
 
 	public final void onStringValueSelected(String value) {

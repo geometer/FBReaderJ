@@ -65,6 +65,7 @@
 			<node name="refillAccount" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
+			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -103,7 +104,6 @@
 		</node>
 	</node>
 	<node name="menu">
-		<node name="preferences-old" value="Налаштування (додатково)"/>
 		<node name="preferences" value="Налаштування"/>
 		<node name="bookInfo" value="Про книгу"/>
 		<node name="library" value="Бібліотека"/>
@@ -167,31 +167,150 @@
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Font family" toBeTranslated="true">
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="Розмір"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="Інтервал"/>
+				<node name="bold" value="Жирний">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
+				<node name="italic" value="Курсив">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Інтервал">
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
 				<node name="alignment" value="Вирівнювання">
 					<node name="left" value="ліве"/>
 					<node name="right" value="праве"/>
 					<node name="center" value="по центру"/>
 					<node name="justify" value="по краях"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Перенесення">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="Перенесення">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="Червона стрічка"/>
+				<node name="spaceBefore" value="Пропуск перед"/>
+				<node name="spaceAfter" value="Пропуск після"/>
+				<node name="leftIndent" value="Відступ зліва"/>
+				<node name="rightIndent" value="Відступ зправа"/>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
-					<node name="format" value="Форматування">
+					<node name="Regular Paragraph" value="звичайного тексту">
 						<node name="summary" value=""/>
 					</node>
-					<node name="styles" value="Стилі">
+					<node name="Title" value="заголовку">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="назви глави">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="назви вірша">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="підзаголовку">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="анотації">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="епиграфа">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="строфи">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="віршів">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="тексту всередині &lt;pre&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="малюнка">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="цитати">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="імені автора">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="дати">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="посилання">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="виноски">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="виділення (emphasis)">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="виділення (strong)">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="нижнього індекса">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="верхнього індекса">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="тексту програми">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="закресленого тексту">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="курсиву">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="жирного тексту">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="визначення">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="тексту визначення">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="тексу всередині &lt;h1&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="тексту всередині &lt;h2&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="тексту всередині &lt;h3&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="тексту всередині &lt;h4&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="тексту всередині &lt;h5&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="тексту всередині &lt;h6&gt;">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="зовнішнього посилання">
 						<node name="summary" value=""/>
 					</node>
 				</node>
@@ -275,12 +394,7 @@
 			</node>
 		</node>
 		<node name="OptionsDialog">
-			<node name="title" value="FBReader - Налаштування"/>
 			<node name="tab">
-				<node name="Library" value="Бібліотека">
-					<node name="bookPath" value="Теки з книжками"/>
-					<node name="lookInSubdirectories" value="Шукати книжки у підкаталогах"/>
-				</node>
 				<node name="Language" value="Мова">
 					<node name="autoDetect" value="Автоматично визначати мову та кодування"/>
 					<node name="defaultLanguage" value="Мова за замовчуванням"/>
@@ -289,35 +403,6 @@
 				</node>
 				<node name="Selection" value="Позначка">
 					<node name="enableSelection" value="Дозволити помічати текст"/>
-				</node>
-				<node name="Format" value="Форматування">
-					<node name="optionsFor" value="Налаштування для"/>
-					<node name="lineSpacing" value="Інтервал">
-						<node name="unchanged" value="&lt;не міняти&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Червона стрічка"/>
-					<node name="alignment" value="Вирівнювання">
-						<node name="left" value="ліве"/>
-						<node name="right" value="праве"/>
-						<node name="center" value="по центру"/>
-						<node name="justify" value="по краях"/>
-						<node name="unchanged" value="&lt;не міняти&gt;"/>
-					</node>
-					<node name="spaceBefore" value="Пропуск перед"/>
-					<node name="spaceAfter" value="Пропуск після"/>
-					<node name="leftIndent" value="Відступ зліва"/>
-					<node name="rightIndent" value="Відступ зправа"/>
-				</node>
-				<node name="Styles" value="Стилі">
-					<node name="optionsFor" value="Налаштування для"/>
-					<node name="fontFamily" value="Шрифт">
-						<node name="unchanged" value="&lt;не міняти&gt;"/>
-					</node>
-					<node name="fontSize" value="Розмір"/>
-					<node name="fontSizeDifference" value="Розмір"/>
-					<node name="bold" value="Жирний"/>
-					<node name="italic" value="Курсив"/>
-					<node name="allowHyphenations" value="Перенесення"/>
 				</node>
 				<node name="Colors" value="Кольори">
 					<node name="colorFor" value="Колір">
@@ -422,42 +507,6 @@
 		<node name="bookNotFound" value="Немає відповідних книг"/>
 		<node name="bookmarkNotFound" value="Нема відповідних закладок"/>
 		<node name="cannotOpenBook" value="Невдається відкрити книгу"/>
-	</node>
-	<node name="style">
-		<node name="Base" value="тексту за замовчуванням"/>
-		<node name="Regular Paragraph" value="звичайного тексту"/>
-		<node name="Title" value="заголовку"/>
-		<node name="Section Title" value="назви глави"/>
-		<node name="Poem Title" value="назви вірша"/>
-		<node name="Subtitle" value="підзаголовку"/>
-		<node name="Annotation" value="анотації"/>
-		<node name="Epigraph" value="епиграфа"/>
-		<node name="Stanza" value="строфи"/>
-		<node name="Verse" value="віршів"/>
-		<node name="Preformatted text" value="тексту всередині &lt;pre&gt;"/>
-		<node name="Image" value="малюнка"/>
-		<node name="Cite" value="цитати"/>
-		<node name="Author" value="імені автора"/>
-		<node name="Date" value="дати"/>
-		<node name="Internal Hyperlink" value="посилання"/>
-		<node name="Footnote" value="виноски"/>
-		<node name="Emphasis" value="виділення (emphasis)"/>
-		<node name="Strong" value="виділення (strong)"/>
-		<node name="Subscript" value="нижнього індекса"/>
-		<node name="Superscript" value="верхнього індекса"/>
-		<node name="Code" value="тексту програми"/>
-		<node name="StrikeThrough" value="закресленого тексту"/>
-		<node name="Italic" value="курсиву"/>
-		<node name="Bold" value="жирного тексту"/>
-		<node name="Definition" value="визначення"/>
-		<node name="Definition Description" value="тексту визначення"/>
-		<node name="Header 1" value="тексу всередині &lt;h1&gt;"/>
-		<node name="Header 2" value="тексту всередині &lt;h2&gt;"/>
-		<node name="Header 3" value="тексту всередині &lt;h3&gt;"/>
-		<node name="Header 4" value="тексту всередині &lt;h4&gt;"/>
-		<node name="Header 5" value="тексту всередині &lt;h5&gt;"/>
-		<node name="Header 6" value="тексту всередині &lt;h6&gt;"/>
-		<node name="External Hyperlink" value="зовнішнього посилання"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>

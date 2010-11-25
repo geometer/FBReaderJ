@@ -21,16 +21,11 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.*;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
-import org.geometerplus.zlibrary.core.util.ZLTTFInfo;
-import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
