@@ -99,7 +99,7 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 			);
 		}
 		if (view != null) {
-			view.setVisible(option.isVisible());
+			view.setVisible();
 		}
 		addView(view);
 	}

@@ -21,11 +21,6 @@ package org.geometerplus.zlibrary.core.dialogs;
 
 public abstract class ZLOptionEntry {
 	private ZLOptionView myView;
-	private	boolean myIsVisible;
-
-	public ZLOptionEntry() {
-		myIsVisible = true;
-	}
 
 	public final void setView(ZLOptionView view) {
 		myView = view;
@@ -34,17 +29,6 @@ public abstract class ZLOptionEntry {
 	public final void resetView() {
 		if (myView != null) {
 			myView.reset();
-		}
-	}
-
-	public final boolean isVisible() {
-		return myIsVisible;
-	}
-
-	public void setVisible(boolean visible) {
-		myIsVisible = visible;
-		if (myView != null) {
-			myView.setVisible(visible);
 		}
 	}
 }
