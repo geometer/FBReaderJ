@@ -90,11 +90,6 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 		}
 		ZLAndroidOptionView view = null;
 		switch (option.getKind()) {
-			case ZLOptionKind.STRING:
-				view = new ZLAndroidStringOptionView(
-					this, name, (ZLStringOptionEntry)option
-				);
-				break;
 			case ZLOptionKind.SPIN:
 				view = new ZLAndroidSpinOptionView(
 					this, name, (ZLSpinOptionEntry)option

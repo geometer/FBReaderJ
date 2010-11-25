@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.dialogs;
 
 public interface ZLOptionKind {
-	int	STRING = 3;
 	int	SPIN = 4;
 	int	COMBO = 5;
 	int	COLOR = 6;
