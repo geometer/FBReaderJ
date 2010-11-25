@@ -37,10 +37,6 @@ public abstract class ZLDialogManager {
 	public abstract ZLOptionsDialog createOptionsDialog(String key);
 	
 	public abstract void wait(String key, Runnable runnable);
-
-	public static String getWaitMessageText(String key) {
-		return getResource().getResource("waitMessage").getResource(key).getValue();
-	}
 	
 	protected static ZLResource getResource() {
 		return ZLResource.resource("dialog");

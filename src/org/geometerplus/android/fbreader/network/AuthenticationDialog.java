@@ -27,7 +27,7 @@ import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -106,7 +106,7 @@ class AuthenticationDialog extends NetworkDialog {
 				sendSuccess(false);
 			}
 		};
-		AndroidUtil.wait("authentication", runnable, myActivity);
+		UIUtil.wait("authentication", runnable, myActivity);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ class AuthenticationDialog extends NetworkDialog {
 				}
 			}
 		};
-		AndroidUtil.wait("signOut", runnable, myActivity);
+		UIUtil.wait("signOut", runnable, myActivity);
 	}
 
 	@Override
