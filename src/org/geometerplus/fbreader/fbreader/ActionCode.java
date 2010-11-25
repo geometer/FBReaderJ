@@ -47,8 +47,10 @@ public interface ActionCode {
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";
 	String FULLSCREEN_ON = "onFullscreen";
 	String QUIT = "quit";
+
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
-	String OPEN_SELECTED_TEXT_IN_DICTIONARY = "openInDictionary";
+	String TRANSLATE = "translate";
+
 	String FOLLOW_HYPERLINK = "followHyperlink";
 };
