@@ -171,6 +171,7 @@
 					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
@@ -197,9 +198,6 @@
 				<node name="leftIndent" value="Lùi Trái"/>
 				<node name="rightIndent" value="Lùi Phải"/>
 				<node name="Styles" value="Kiểu">
-					<node name="optionsFor" value="Tùy chọn cho"/>
-					<node name="fontSize" value="Cỡ"/>
-					<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
 					<node name="bold" value="Đậm"/>
 					<node name="italic" value="Nghiêng"/>
 					<node name="allowHyphenations" value="Cho phép Tách từ"/>

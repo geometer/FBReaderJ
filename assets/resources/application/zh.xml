@@ -171,6 +171,7 @@
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="大小差异" />
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
@@ -197,9 +198,6 @@
 				<node name="leftIndent" value="左缩进" />
 				<node name="rightIndent" value="右缩进" />
 				<node name="Styles" value="样式">
-					<node name="optionsFor" value="选项" />
-					<node name="fontSize" value="大小" />
-					<node name="fontSizeDifference" value="大小差异" />
 					<node name="bold" value="加粗" />
 					<node name="italic" value="倾斜" />
 					<node name="allowHyphenations" value="允许断字" />

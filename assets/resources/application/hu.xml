@@ -171,11 +171,22 @@
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="Méretkülönbség"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
+				</node>
+				<node name="bold" value="Félkövér">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="italic" value="Dőlt">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Sorköz">
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
@@ -191,19 +202,16 @@
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="Elválasztás engedélyezése">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
 				<node name="firstLineIndent" value="Első sor behúzása"/>
 				<node name="spaceBefore" value="Space Before"/>
 				<node name="spaceAfter" value="Space After"/>
 				<node name="leftIndent" value="Left Indent"/>
 				<node name="rightIndent" value="Right Indent"/>
-				<node name="Styles" value="Stílusok">
-					<node name="optionsFor" value="Beállítások"/>
-					<node name="fontSize" value="Méret"/>
-					<node name="fontSizeDifference" value="Méretkülönbség"/>
-					<node name="bold" value="Félkövér"/>
-					<node name="italic" value="Dőlt"/>
-					<node name="allowHyphenations" value="Elválasztás engedélyezése"/>
-				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
 					<node name="Regular Paragraph" value="Bekezdés">

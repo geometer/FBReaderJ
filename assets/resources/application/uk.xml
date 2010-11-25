@@ -171,6 +171,7 @@
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
 				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSizeDifference" value="Розмір"/>
 				<node name="fontStyle" value="Font style" toBeTranslated="true">
 					<node name="regular" value="Regular" toBeTranslated="true"/>
 					<node name="bold" value="Bold" toBeTranslated="true"/>
@@ -197,9 +198,6 @@
 				<node name="leftIndent" value="Відступ зліва"/>
 				<node name="rightIndent" value="Відступ зправа"/>
 				<node name="Styles" value="Стилі">
-					<node name="optionsFor" value="Налаштування для"/>
-					<node name="fontSize" value="Розмір"/>
-					<node name="fontSizeDifference" value="Розмір"/>
 					<node name="bold" value="Жирний"/>
 					<node name="italic" value="Курсив"/>
 					<node name="allowHyphenations" value="Перенесення"/>

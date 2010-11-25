@@ -170,6 +170,7 @@
 					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
 				<node name="fontSize" value="Размер шрифта"/>
+				<node name="fontSizeDifference" value="Размер"/>
 				<node name="fontStyle" value="Начертание">
 					<node name="regular" value="нормальное"/>
 					<node name="bold" value="жирное"/>
@@ -196,9 +197,6 @@
 				<node name="leftIndent" value="Отступ слева"/>
 				<node name="rightIndent" value="Отступ справа"/>
 				<node name="Styles" value="Стили">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="fontSize" value="Размер"/>
-					<node name="fontSizeDifference" value="Размер"/>
 					<node name="bold" value="Жирный"/>
 					<node name="italic" value="Курсив"/>
 					<node name="allowHyphenations" value="Переносы"/>
