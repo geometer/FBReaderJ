@@ -177,6 +177,16 @@
 					<node name="italic" value="курсив"/>
 					<node name="boldItalic" value="жирный курсив"/>
 				</node>
+				<node name="bold" value="Жирный шрифт">
+					<node name="on" value="использовать жирное начертание"/>
+					<node name="off" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
+				<node name="italic" value="Курсив">
+					<node name="on" value="использовать курсивное начертание"/>
+					<node name="off" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
 				<node name="lineSpacing" value="Интервал">
 					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
@@ -191,16 +201,16 @@
 					<node name="summaryOn" value="Автоматически расставлять переносы"/>
 					<node name="summaryOff" value="Не расставлять переносы"/>
 				</node>
+				<node name="allowHyphenations" value="Переносы">
+					<node name="on" value="разрешить переносы"/>
+					<node name="off" value="запретить переносы"/>
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
 				<node name="firstLineIndent" value="Красная строка"/>
 				<node name="spaceBefore" value="Пропуск перед"/>
 				<node name="spaceAfter" value="Пропуск после"/>
 				<node name="leftIndent" value="Отступ слева"/>
 				<node name="rightIndent" value="Отступ справа"/>
-				<node name="Styles" value="Стили">
-					<node name="bold" value="Жирный"/>
-					<node name="italic" value="Курсив"/>
-					<node name="allowHyphenations" value="Переносы"/>
-				</node>
 				<node name="more" value="Другие стили">
 					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов, и т.д."/>
 					<node name="Regular Paragraph" value="обычного текста">

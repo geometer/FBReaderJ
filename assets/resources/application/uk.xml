@@ -178,6 +178,16 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
+				<node name="bold" value="Жирний">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
+				<node name="italic" value="Курсив">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
 				<node name="lineSpacing" value="Інтервал">
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
@@ -192,16 +202,16 @@
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="Перенесення">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
 				<node name="firstLineIndent" value="Червона стрічка"/>
 				<node name="spaceBefore" value="Пропуск перед"/>
 				<node name="spaceAfter" value="Пропуск після"/>
 				<node name="leftIndent" value="Відступ зліва"/>
 				<node name="rightIndent" value="Відступ зправа"/>
-				<node name="Styles" value="Стилі">
-					<node name="bold" value="Жирний"/>
-					<node name="italic" value="Курсив"/>
-					<node name="allowHyphenations" value="Перенесення"/>
-				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
 					<node name="Regular Paragraph" value="звичайного тексту">

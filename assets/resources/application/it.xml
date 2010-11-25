@@ -178,6 +178,16 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
+				<node name="bold" value="Grassetto">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;non cambiare&gt;"/>
+				</node>
+				<node name="italic" value="Corsivo">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;non cambiare&gt;"/>
+				</node>
 				<node name="lineSpacing" value="Interlinea">
 					<node name="unchanged" value="&lt;non cambiare&gt;"/>
 				</node>
@@ -192,16 +202,16 @@
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="Permetti divisione in sillabe"> 
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;non cambiare&gt;"/>
+				</node>
 				<node name="firstLineIndent" value="Rientro alla prima riga"/>
 				<node name="spaceBefore" value="Spazio prima"/>
 				<node name="spaceAfter" value="Spazio dopo"/>
 				<node name="leftIndent" value="Rientro sinistro"/>
 				<node name="rightIndent" value="Rientro destro"/>
-				<node name="Styles" value="Stili">
-					<node name="bold" value="Grassetto"/>
-					<node name="italic" value="Corsivo"/>
-					<node name="allowHyphenations" value="Permetti divisione in sillabe"/> 
-				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
 					<node name="Regular Paragraph" value="Paragrafo Regolare">

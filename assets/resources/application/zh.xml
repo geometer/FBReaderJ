@@ -178,6 +178,16 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
+				<node name="bold" value="加粗">
+					<node name="on" value="bold" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
+				<node name="italic" value="倾斜">
+					<node name="on" value="italic" toBeTranslated="true"/>
+					<node name="off" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
 				<node name="lineSpacing" value="行间距">
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
@@ -192,16 +202,16 @@
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 				</node>
+				<node name="allowHyphenations" value="允许断字">
+					<node name="on" value="hyphenate words" toBeTranslated="true"/>
+					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
 				<node name="firstLineIndent" value="首行缩进" />
 				<node name="spaceBefore" value="段前距" />
 				<node name="spaceAfter" value="段后距" />
 				<node name="leftIndent" value="左缩进" />
 				<node name="rightIndent" value="右缩进" />
-				<node name="Styles" value="样式">
-					<node name="bold" value="加粗" />
-					<node name="italic" value="倾斜" />
-					<node name="allowHyphenations" value="允许断字" />
-				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
 					<node name="Regular Paragraph" value="连续段落" >
