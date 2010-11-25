@@ -1,9 +1,12 @@
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
+
+import org.geometerplus.fbreader.fbreader.FBAction;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
@@ -11,9 +14,12 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.widget.Toast;
 
-public class TranslateWordAction extends FBAction {
-	TranslateWordAction(FBReaderApp fbreader) {
+class TranslateAction extends FBAction {
+	private final FBReader myBaseActivity;
+
+	TranslateAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(fbreader);
+		myBaseActivity = baseActivity;
 	}
 
 	private ZLAndroidWidget getWidget() {
@@ -31,11 +37,11 @@ public class TranslateWordAction extends FBAction {
 				"com.socialnmobile.colordict.activity.Main"));
 		intent.putExtra(SearchManager.QUERY, getWidget().myLongPressWord);
 		try {
-			ZLAndroidApplication.Instance().myMainActivity.startActivity(intent);
+			myBaseActivity.startActivity(intent);
 		}
 		catch(ActivityNotFoundException e){
 			Toast.makeText(
-					ZLAndroidApplication.Instance().myMainActivity,
+					myBaseActivity,
 					ZLResource.resource("errorMessage").getResource("dictNotInstalled").getValue(),
 					Toast.LENGTH_LONG
 				).show();
