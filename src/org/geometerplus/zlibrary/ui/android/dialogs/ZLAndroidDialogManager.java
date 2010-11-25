@@ -23,7 +23,7 @@ import android.app.*;
 
 import org.geometerplus.zlibrary.core.dialogs.*;
 
-import org.geometerplus.android.util.AndroidUtil;
+import org.geometerplus.android.util.UIUtil;
 
 public class ZLAndroidDialogManager extends ZLDialogManager {
 	private Activity myActivity;
@@ -40,6 +40,6 @@ public class ZLAndroidDialogManager extends ZLDialogManager {
 	}
 
 	public void wait(String key, Runnable action) {
-		AndroidUtil.wait(key, action, myActivity);
+		UIUtil.wait(key, action, myActivity);
 	}
 }
