@@ -71,6 +71,7 @@
 		<node name="lt" value="Lituano" />
 		<node name="nl" value="Olandese" />
 		<node name="no" value="Norvegese" />
+		<node name="pl" toBeTranslated="true" value="Polish" />
 		<node name="pt" value="Portoghese" />
 		<node name="ru" value="Russo" />
 		<node name="sv" value="Svedese" />
