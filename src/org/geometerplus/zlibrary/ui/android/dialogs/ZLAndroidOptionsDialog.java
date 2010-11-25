@@ -28,13 +28,11 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-class ZLAndroidOptionsDialog extends ZLOptionsDialog {
-	//private final String myCaption;
+public class ZLAndroidOptionsDialog extends ZLOptionsDialog {
 	private final Activity myMainActivity;
 
-	ZLAndroidOptionsDialog(Activity activity, ZLResource resource) {
+	public ZLAndroidOptionsDialog(Activity activity, ZLResource resource) {
 		super(resource);
-		//myCaption = resource.getResource("title").getValue();
 		myMainActivity = activity;
 	}
 
