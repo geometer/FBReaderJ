@@ -139,4 +139,4 @@
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
 		<service android:name="org.geometerplus.android.fbreader.network.LibraryInitializationService" android:process=":networkLibrary" />
 	</application>
-</manifest> 
+</manifest>

@@ -83,7 +83,7 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name="org.geometerplus.android.fbreader.preferences.BookInfoActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.BookInfoActivity" android:process=":library" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.network.BookDownloader" android:process=":bookDownloader" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
