@@ -25,10 +25,6 @@ public abstract class ZLColorOptionEntry extends ZLOptionEntry {
 	protected ZLColorOptionEntry() {
 	}
 
-	public int getKind() {
-		return ZLOptionKind.COLOR;
-	}
-
 	public void onReset(ZLColor color) {
 	}
 

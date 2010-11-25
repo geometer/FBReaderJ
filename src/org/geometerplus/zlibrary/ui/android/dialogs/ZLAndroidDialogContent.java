@@ -89,51 +89,19 @@ class ZLAndroidDialogContent extends ZLDialogContent implements ZLAndroidDialogI
 			name = name.replaceAll("&", "");
 		}
 		ZLAndroidOptionView view = null;
-		switch (option.getKind()) {
-			case ZLOptionKind.BOOLEAN:
-				view = new ZLAndroidBooleanOptionView(
-					this, name, (ZLBooleanOptionEntry)option
-				);
-				break;
-			case ZLOptionKind.BOOLEAN3:
-				view = new ZLAndroidBoolean3OptionView(
-					this, name, (ZLBoolean3OptionEntry)option
-				);
-				break;
-			case ZLOptionKind.STRING:
-				view = new ZLAndroidStringOptionView(
-					this, name, (ZLStringOptionEntry)option
-				);
-				break;
-			case ZLOptionKind.SPIN:
-				view = new ZLAndroidSpinOptionView(
-					this, name, (ZLSpinOptionEntry)option
-				);
-				break;
-			case ZLOptionKind.COMBO:
-				view = new ZLAndroidComboOptionView(
-					this, name, (ZLComboOptionEntry)option
-				);
-				break;
-			case ZLOptionKind.COLOR:
-				view = new ZLAndroidColorOptionView(
-					this, name, (ZLColorOptionEntry)option
-				);
-				break;
+		if (option instanceof ZLComboOptionEntry) {
+			view = new ZLAndroidComboOptionView(
+				this, name, (ZLComboOptionEntry)option
+			);
+		} else if (option instanceof ZLColorOptionEntry) {
+			view = new ZLAndroidColorOptionView(
+				this, name, (ZLColorOptionEntry)option
+			);
 		}
 		if (view != null) {
-			view.setVisible(option.isVisible());
+			view.setVisible();
 		}
 		addView(view);
-	}
-
-	public void addOptionsByNames(String name0, ZLOptionEntry option0, String name1, ZLOptionEntry option1) {
-		if (option0 != null) {
-			addOptionByName(name0, option0);
-		}
-		if (option1 != null) {
-			addOptionByName(name1, option1);
-		}
 	}
 
 	void addAndroidView(View view, boolean isSelectable) {
