@@ -41,20 +41,25 @@ class TranslateAction extends FBAction {
 		myBaseActivity = baseActivity;
 	}
 
+	/*
 	private ZLAndroidWidget getWidget() {
 		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 	}
+	*/
 
 	public boolean isVisible() {
-		return Reader.Model != null && getWidget().myLongPressWord != "";
+		return true;
+		//return Reader.Model != null;// && getWidget().myLongPressWord != "";
 	}
 
 	public void run() {
 		Intent intent = new Intent(Intent.ACTION_SEARCH);
-		intent.setComponent(
-			new ComponentName("com.socialnmobile.colordict",
-				"com.socialnmobile.colordict.activity.Main"));
-		intent.putExtra(SearchManager.QUERY, getWidget().myLongPressWord);
+		intent.setComponent(new ComponentName(
+			"com.socialnmobile.colordict",
+			"com.socialnmobile.colordict.activity.Main"
+		));
+		//intent.putExtra(SearchManager.QUERY, getWidget().myLongPressWord);
+		intent.putExtra(SearchManager.QUERY, "biology");
 		try {
 			myBaseActivity.startActivity(intent);
 		}
