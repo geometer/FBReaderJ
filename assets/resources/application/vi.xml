@@ -177,7 +177,9 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="Cách dòng"/>
+				<node name="lineSpacing" value="Cách dòng">
+					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				</node>
 				<node name="alignment" value="Thẳng hàng">
 					<node name="left" value="Trái"/>
 					<node name="right" value="Phải"/>
@@ -188,6 +190,19 @@
 				<node name="autoHyphenations" value="Tự động Tách từ">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+				</node>
+				<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
+				<node name="spaceBefore" value="Khoảng trống trước"/>
+				<node name="spaceAfter" value="Khoảng trống sau"/>
+				<node name="leftIndent" value="Lùi Trái"/>
+				<node name="rightIndent" value="Lùi Phải"/>
+				<node name="Styles" value="Kiểu">
+					<node name="optionsFor" value="Tùy chọn cho"/>
+					<node name="fontSize" value="Cỡ"/>
+					<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
+					<node name="bold" value="Đậm"/>
+					<node name="italic" value="Nghiêng"/>
+					<node name="allowHyphenations" value="Cho phép Tách từ"/>
 				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
@@ -380,25 +395,6 @@
 				</node>
 				<node name="Selection" value="Chọn">
 					<node name="enableSelection" value="Bật chọn Văn bản"/>
-				</node>
-				<node name="Format" value="Định dạng">
-					<node name="optionsFor" value="Tùy chọn cho"/>
-					<node name="lineSpacing" value="Cách dòng">
-						<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
-					<node name="spaceBefore" value="Khoảng trống trước"/>
-					<node name="spaceAfter" value="Khoảng trống sau"/>
-					<node name="leftIndent" value="Lùi Trái"/>
-					<node name="rightIndent" value="Lùi Phải"/>
-				</node>
-				<node name="Styles" value="Kiểu">
-					<node name="optionsFor" value="Tùy chọn cho"/>
-					<node name="fontSize" value="Cỡ"/>
-					<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
-					<node name="bold" value="Đậm"/>
-					<node name="italic" value="Nghiêng"/>
-					<node name="allowHyphenations" value="Cho phép Tách từ"/>
 				</node>
 				<node name="Colors" value="Màu">
 					<node name="colorFor" value="Màu cho">

@@ -177,7 +177,9 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="行间距"/>
+				<node name="lineSpacing" value="行间距">
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
 				<node name="alignment" value="对齐">
 					<node name="left" value="左" />
 					<node name="right" value="右" />
@@ -188,6 +190,19 @@
 				<node name="autoHyphenations" value="自动断字">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+				</node>
+				<node name="firstLineIndent" value="首行缩进" />
+				<node name="spaceBefore" value="段前距" />
+				<node name="spaceAfter" value="段后距" />
+				<node name="leftIndent" value="左缩进" />
+				<node name="rightIndent" value="右缩进" />
+				<node name="Styles" value="样式">
+					<node name="optionsFor" value="选项" />
+					<node name="fontSize" value="大小" />
+					<node name="fontSizeDifference" value="大小差异" />
+					<node name="bold" value="加粗" />
+					<node name="italic" value="倾斜" />
+					<node name="allowHyphenations" value="允许断字" />
 				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
@@ -380,25 +395,6 @@
 				</node>
 				<node name="Selection" value="选择项">
 					<node name="enableSelection" value="允许文本选择" />
-				</node>
-				<node name="Format" value="格式">
-					<node name="optionsFor" value="基本设置" />
-					<node name="lineSpacing" value="行间距">
-						<node name="unchanged" value="&lt;不变&gt;" />
-					</node>
-					<node name="firstLineIndent" value="首行缩进" />
-					<node name="spaceBefore" value="段前距" />
-					<node name="spaceAfter" value="段后距" />
-					<node name="leftIndent" value="左缩进" />
-					<node name="rightIndent" value="右缩进" />
-				</node>
-				<node name="Styles" value="样式">
-					<node name="optionsFor" value="选项" />
-					<node name="fontSize" value="大小" />
-					<node name="fontSizeDifference" value="大小差异" />
-					<node name="bold" value="加粗" />
-					<node name="italic" value="倾斜" />
-					<node name="allowHyphenations" value="允许断字" />
 				</node>
 				<node name="Colors" value="颜色">
 					<node name="colorFor" value="颜色设置">

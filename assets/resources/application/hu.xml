@@ -177,7 +177,9 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="Sorköz"/>
+				<node name="lineSpacing" value="Sorköz">
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
 				<node name="alignment" value="Igazítás">
 					<node name="left" value="Balra"/>
 					<node name="right" value="Jobbra"/>
@@ -188,6 +190,19 @@
 				<node name="autoHyphenations" value="Automatikus elválasztás">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+				</node>
+				<node name="firstLineIndent" value="Első sor behúzása"/>
+				<node name="spaceBefore" value="Space Before"/>
+				<node name="spaceAfter" value="Space After"/>
+				<node name="leftIndent" value="Left Indent"/>
+				<node name="rightIndent" value="Right Indent"/>
+				<node name="Styles" value="Stílusok">
+					<node name="optionsFor" value="Beállítások"/>
+					<node name="fontSize" value="Méret"/>
+					<node name="fontSizeDifference" value="Méretkülönbség"/>
+					<node name="bold" value="Félkövér"/>
+					<node name="italic" value="Dőlt"/>
+					<node name="allowHyphenations" value="Elválasztás engedélyezése"/>
 				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
@@ -380,25 +395,6 @@
 				</node>
 				<node name="Selection" value="Kijelölés">
 					<node name="enableSelection" value="Szövegkijelölés engedélyezése"/>
-				</node>
-				<node name="Format" value="Formátum">
-					<node name="optionsFor" value="Beállítások"/>
-					<node name="lineSpacing" value="Sorköz">
-						<node name="unchanged" value="&lt;változatlan&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Első sor behúzása"/>
-					<node name="spaceBefore" value="Space Before"/>
-					<node name="spaceAfter" value="Space After"/>
-					<node name="leftIndent" value="Left Indent"/>
-					<node name="rightIndent" value="Right Indent"/>
-				</node>
-				<node name="Styles" value="Stílusok">
-					<node name="optionsFor" value="Beállítások"/>
-					<node name="fontSize" value="Méret"/>
-					<node name="fontSizeDifference" value="Méretkülönbség"/>
-					<node name="bold" value="Félkövér"/>
-					<node name="italic" value="Dőlt"/>
-					<node name="allowHyphenations" value="Elválasztás engedélyezése"/>
 				</node>
 				<node name="Colors" value="Színek">
 					<node name="colorFor" value="Szín">

@@ -176,7 +176,9 @@
 					<node name="italic" value="курсив"/>
 					<node name="boldItalic" value="жирный курсив"/>
 				</node>
-				<node name="lineSpacing" value="Интервал"/>
+				<node name="lineSpacing" value="Интервал">
+					<node name="unchanged" value="&lt;не менять&gt;"/>
+				</node>
 				<node name="alignment" value="Выравнивание">
 					<node name="left" value="левое"/>
 					<node name="right" value="правое"/>
@@ -187,6 +189,19 @@
 				<node name="autoHyphenations" value="Переносы">
 					<node name="summaryOn" value="Автоматически расставлять переносы"/>
 					<node name="summaryOff" value="Не расставлять переносы"/>
+				</node>
+				<node name="firstLineIndent" value="Красная строка"/>
+				<node name="spaceBefore" value="Пропуск перед"/>
+				<node name="spaceAfter" value="Пропуск после"/>
+				<node name="leftIndent" value="Отступ слева"/>
+				<node name="rightIndent" value="Отступ справа"/>
+				<node name="Styles" value="Стили">
+					<node name="optionsFor" value="Настройки для"/>
+					<node name="fontSize" value="Размер"/>
+					<node name="fontSizeDifference" value="Размер"/>
+					<node name="bold" value="Жирный"/>
+					<node name="italic" value="Курсив"/>
+					<node name="allowHyphenations" value="Переносы"/>
 				</node>
 				<node name="more" value="Другие стили">
 					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов, и т.д."/>
@@ -379,25 +394,6 @@
 				</node>
 				<node name="Selection" value="Пометка">
 					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
-				<node name="Format" value="Форматирование">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="lineSpacing" value="Интервал">
-						<node name="unchanged" value="&lt;не менять&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Красная строка"/>
-					<node name="spaceBefore" value="Пропуск перед"/>
-					<node name="spaceAfter" value="Пропуск после"/>
-					<node name="leftIndent" value="Отступ слева"/>
-					<node name="rightIndent" value="Отступ справа"/>
-				</node>
-				<node name="Styles" value="Стили">
-					<node name="optionsFor" value="Настройки для"/>
-					<node name="fontSize" value="Размер"/>
-					<node name="fontSizeDifference" value="Размер"/>
-					<node name="bold" value="Жирный"/>
-					<node name="italic" value="Курсив"/>
-					<node name="allowHyphenations" value="Переносы"/>
 				</node>
 				<node name="Colors" value="Цвета">
 					<node name="colorFor" value="Цвет">

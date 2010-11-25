@@ -177,7 +177,9 @@
 					<node name="italic" value="Italic" toBeTranslated="true"/>
 					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
 				</node>
-				<node name="lineSpacing" value="Interlinea"/>
+				<node name="lineSpacing" value="Interlinea">
+					<node name="unchanged" value="&lt;non cambiare&gt;"/>
+				</node>
 				<node name="alignment" value="Allineamento">
 					<node name="left" value="Sinistra"/>
 					<node name="right" value="Destra"/>
@@ -188,6 +190,19 @@
 				<node name="autoHyphenations" value="Divisione in sillabe automatica">
 					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+				</node>
+				<node name="firstLineIndent" value="Rientro alla prima riga"/>
+				<node name="spaceBefore" value="Spazio prima"/>
+				<node name="spaceAfter" value="Spazio dopo"/>
+				<node name="leftIndent" value="Rientro sinistro"/>
+				<node name="rightIndent" value="Rientro destro"/>
+				<node name="Styles" value="Stili">
+					<node name="optionsFor" value="Impostazioni per"/>
+					<node name="fontSize" value="Dimensione"/>
+					<node name="fontSizeDifference" value="Dimensione differente"/>
+					<node name="bold" value="Grassetto"/>
+					<node name="italic" value="Corsivo"/>
+					<node name="allowHyphenations" value="Permetti divisione in sillabe"/> 
 				</node>
 				<node name="more" value="More styles" toBeTranslated="true">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
@@ -380,25 +395,6 @@
 				</node>
 				<node name="Selection" value="Selezione">
 					<node name="enableSelection" value="Abilita selezione testo"/>
-				</node>
-				<node name="Format" value="Formato">
-					<node name="optionsFor" value="Opzioni per"/>
-					<node name="lineSpacing" value="Interlinea">
-						<node name="unchanged" value="&lt;non cambiare&gt;"/>
-					</node>
-					<node name="firstLineIndent" value="Rientro alla prima riga"/>
-					<node name="spaceBefore" value="Spazio prima"/>
-					<node name="spaceAfter" value="Spazio dopo"/>
-					<node name="leftIndent" value="Rientro sinistro"/>
-					<node name="rightIndent" value="Rientro destro"/>
-				</node>
-				<node name="Styles" value="Stili">
-					<node name="optionsFor" value="Impostazioni per"/>
-					<node name="fontSize" value="Dimensione"/>
-					<node name="fontSizeDifference" value="Dimensione differente"/>
-					<node name="bold" value="Grassetto"/>
-					<node name="italic" value="Corsivo"/>
-					<node name="allowHyphenations" value="Permetti divisione in sillabe"/> 
 				</node>
 				<node name="Colors" value="Colori">
 					<node name="colorFor" value="Colore per">
