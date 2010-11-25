@@ -23,8 +23,6 @@ public interface ActionCode {
 	String SHOW_LIBRARY = "library";
 	String SHOW_PREFERENCES = "preferences";
 	String SHOW_BOOK_INFO = "bookInfo";
-	String TRANSLATE_WORD = "translateWord";
-	String INITIATE_COPY = "initiateCopy";
 	String SHOW_CONTENTS = "toc";
 	String SHOW_BOOKMARKS = "bookmarks";
 	String SHOW_NETWORK_LIBRARY = "networkLibrary";
@@ -54,6 +52,7 @@ public interface ActionCode {
 	String FULLSCREEN_ON = "onFullscreen";
 	String QUIT = "quit";
 
+	String INITIATE_COPY = "initiateCopy";
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
 	String TRANSLATE = "translate";
