@@ -176,6 +176,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			ZLTextFullStyleDecoration fullDecoration =
 				decoration instanceof ZLTextFullStyleDecoration ?
 					(ZLTextFullStyleDecoration)decoration : null;
+
 			final Screen formatScreen = moreStylesCategory.createPreferenceScreen(decoration.getName());
 			final Category formatCategory = formatScreen.createCategory(null);
 			formatCategory.addPreference(new FontOption(
@@ -200,11 +201,32 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					this, textCategory.Resource, "alignment",
 					fullDecoration.AlignmentOption, allAlignments
 				));
+				formatCategory.addPreference(new ZLIntegerRangePreference(
+					this, textCategory.Resource.getResource("spaceBefore"),
+					fullDecoration.SpaceBeforeOption
+				));
+				formatCategory.addPreference(new ZLIntegerRangePreference(
+					this, textCategory.Resource.getResource("spaceAfter"),
+					fullDecoration.SpaceAfterOption
+				));
+				formatCategory.addPreference(new ZLIntegerRangePreference(
+					this, textCategory.Resource.getResource("leftIndent"),
+					fullDecoration.LeftIndentOption
+				));
+				formatCategory.addPreference(new ZLIntegerRangePreference(
+					this, textCategory.Resource.getResource("rightIndent"),
+					fullDecoration.RightIndentOption
+				));
+				formatCategory.addPreference(new ZLIntegerRangePreference(
+					this, textCategory.Resource.getResource("firstLineIndent"),
+					fullDecoration.FirstLineIndentDeltaOption
+				));
 			}
 			formatCategory.addPreference(new ZLBoolean3Preference(
 				this, textCategory.Resource, "allowHyphenations",
 				decoration.AllowHyphenationsOption
 			));
+				
 		}
 
 		final Screen formatScreen = moreStylesCategory.createPreferenceScreen("format");

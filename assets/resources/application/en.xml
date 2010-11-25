@@ -204,6 +204,11 @@
 					<node name="off" value="don't hyphenate words"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
+				<node name="firstLineIndent" value="First Line Indent"/>
+				<node name="spaceBefore" value="Space Before"/>
+				<node name="spaceAfter" value="Space After"/>
+				<node name="leftIndent" value="Left Indent"/>
+				<node name="rightIndent" value="Right Indent"/>
 				<node name="more" value="More styles">
 					<node name="summary" value="Separate settings for titles, epigraphs, etc."/>
 					<node name="format" value="Format">
@@ -409,11 +414,6 @@
 					<node name="lineSpacing" value="Line Spacing">
 						<node name="unchanged" value="&lt;unchanged&gt;"/>
 					</node>
-					<node name="firstLineIndent" value="First Line Indent"/>
-					<node name="spaceBefore" value="Space Before"/>
-					<node name="spaceAfter" value="Space After"/>
-					<node name="leftIndent" value="Left Indent"/>
-					<node name="rightIndent" value="Right Indent"/>
 				</node>
 				<node name="Colors" value="Colors">
 					<node name="colorFor" value="Color for">

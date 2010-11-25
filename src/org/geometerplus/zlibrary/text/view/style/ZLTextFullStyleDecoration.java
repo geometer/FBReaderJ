@@ -47,10 +47,6 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		LineSpacePercentOption = new ZLIntegerOption(STYLE, name + ":lineSpacePercent", lineSpace);
 	}
 
-	public boolean isFullDecoration() {
-		return true;
-	}
-
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
 		return new ZLTextFullDecoratedStyle(base, this, hyperlink);
 	}

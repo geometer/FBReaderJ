@@ -37,19 +37,6 @@ class OptionsPage {
 		}
 		tab.addOption(entryKey, entry);
 	}
-	
-	protected void registerEntries(ZLDialogContent tab, final String entry0Key,
-		ZLOptionEntry entry0, final String entry1Key, ZLOptionEntry entry1, final String name) {
-		if (entry0 != null) {
-			entry0.setVisible(false);
-			myEntries.put(entry0, name);
-		}
-		if (entry1 != null) {
-			entry1.setVisible(false);
-			myEntries.put(entry1, name);
-		}
-		tab.addOptions(entry0Key, entry0, entry1Key, entry1);
-	}
 
 	LinkedHashMap<ZLOptionEntry, String> getEntries() {
 		return myEntries;
