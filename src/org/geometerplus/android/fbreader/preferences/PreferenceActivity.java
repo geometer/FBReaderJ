@@ -230,17 +230,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = optionsCategory.createPreferenceScreen("colors");
 		final Category colorsCategory = colorsScreen.createCategory(null);
+		final ColorProfile profile = fbReader.getColorProfile();
 		colorsCategory.addPreference(new ZLColorPreference(
-			this, colorsCategory.Resource, "background"
+			this, colorsCategory.Resource, "background", profile.BackgroundOption
 		));
 		colorsCategory.addPreference(new ZLColorPreference(
-			this, colorsCategory.Resource, "highlighting"
+			this, colorsCategory.Resource, "highlighting", profile.HighlightingOption
 		));
 		colorsCategory.addPreference(new ZLColorPreference(
-			this, colorsCategory.Resource, "text"
+			this, colorsCategory.Resource, "text", profile.RegularTextOption
 		));
 		colorsCategory.addPreference(new ZLColorPreference(
-			this, colorsCategory.Resource, "hyperlink"
+			this, colorsCategory.Resource, "hyperlink", profile.HyperlinkTextOption
 		));
 
 		final Screen marginsScreen = optionsCategory.createPreferenceScreen("margins");
