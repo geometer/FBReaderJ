@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.util.HashMap;
-
 import android.app.Application;
 import android.os.Build;
 
