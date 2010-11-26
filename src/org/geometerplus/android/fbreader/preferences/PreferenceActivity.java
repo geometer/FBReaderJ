@@ -44,36 +44,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		super("Preferences");
 	}
 
-	/*private static final class ColorProfilePreference extends ZLSimplePreference {
-		private final FBReaderApp myFBReader;
-		private final Screen myScreen;
-		private final String myKey;
-
-		static final String createTitle(ZLResource resource, String resourceKey) {
-			final ZLResource r = resource.getResource(resourceKey);
-			return r.hasValue() ? r.getValue() : resourceKey;
-		}
-
-		ColorProfilePreference(Context context, FBReaderApp fbreader, Screen screen, String key, String title) {
-			super(context);
-			myFBReader = fbreader;
-			myScreen = screen;
-			myKey = key;
-			setTitle(title);
-		}
-
-		@Override
-		public void onAccept() {
-		}
-
-		@Override
-		public void onClick() {
-			myScreen.setSummary(getTitle());
-			myFBReaderApp.setColorProfileName(myKey);
-			myScreen.close();
-		}
-	}*/
-
 	@Override
 	protected void init(Intent intent) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -248,8 +218,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				
 		}
 
-		final Screen colorsScreen = textCategory.createPreferenceScreen("colors");
-		colorsScreen.setOnPreferenceClickListener(
+		final Screen oldColorsScreen = textCategory.createPreferenceScreen("colors");
+		oldColorsScreen.setOnPreferenceClickListener(
 				new PreferenceScreen.OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
 						dlg.run(0);
@@ -257,6 +227,21 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					}
 				}
 		);
+
+		final Screen colorsScreen = optionsCategory.createPreferenceScreen("colors");
+		final Category colorsCategory = colorsScreen.createCategory(null);
+		colorsCategory.addPreference(new ZLColorPreference(
+			this, colorsCategory.Resource, "background"
+		));
+		colorsCategory.addPreference(new ZLColorPreference(
+			this, colorsCategory.Resource, "highlighting"
+		));
+		colorsCategory.addPreference(new ZLColorPreference(
+			this, colorsCategory.Resource, "text"
+		));
+		colorsCategory.addPreference(new ZLColorPreference(
+			this, colorsCategory.Resource, "hyperlink"
+		));
 
 		final Screen marginsScreen = optionsCategory.createPreferenceScreen("margins");
 		final Category marginsCategory = marginsScreen.createCategory(null);
