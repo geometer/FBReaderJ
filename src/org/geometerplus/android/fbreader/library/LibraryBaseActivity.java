@@ -25,6 +25,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
@@ -133,7 +134,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 			mySelectedBookPath = selectedBookPath;
 			
 			// TODO delete later 
-			// Log.v();
+			Log.v(FileManager.FILE_MANAGER_LOG_TAG, "===" + myTreePath + mySelectedBookPath);
 		}
 
 		public void run() {

@@ -37,8 +37,6 @@ import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
-import org.geometerplus.android.fbreader.fmanager.FileManager;
-import org.geometerplus.android.fbreader.fmanager.FilterView;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
@@ -112,7 +110,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private void runFileManager(){
 		Log.v(FileManager.FILE_MANAGER_LOG_TAG, "runFileManager()");
 		Intent i = new Intent(this, FileManager.class);
-        startActivityForResult(i, 1);
+        startActivity(i);
 	}
 }
 
