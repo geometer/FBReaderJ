@@ -131,6 +131,9 @@ abstract class LibraryBaseActivity extends ListActivity {
 		public OpenTreeRunnable(String treePath, String selectedBookPath) {
 			myTreePath = treePath;
 			mySelectedBookPath = selectedBookPath;
+			
+			// TODO delete later 
+			// Log.v();
 		}
 
 		public void run() {

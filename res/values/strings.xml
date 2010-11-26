@@ -5,9 +5,18 @@
 
 
 
-	<string name="back">back</string>
-	<string name="file_manager">File manager</string>
-	<string name="filter">filter</string>
+	<!-- fmanager -->
+	<string name="fmanager_activity">filter</string>
+	<string name="filter_activity">filter</string>
+
+	<string name="fmanagerBackButton">back</string>
+	<string name="fmanagerFBHomeButton">fbhome</string>
+	<string name="fmanagerCardButton">sdcard</string>
+	<string name="fmanagerRootButton">root</string>
+	<string name="fmanagerFilterButton">filter</string>
+
+	<string name="fmanagerOkButton">ok</string>
+	<string name="fmanagerCancelButton">cancel</string>
 
 	<string name="ok">ok</string>
 	<string name="cancel">cancel</string>

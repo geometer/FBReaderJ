@@ -94,14 +94,14 @@
 				<Button 
 			    	android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:id="@+id/cancelButton"
-			        android:text="@string/cancel"
+			        android:id="@+id/okButton"
+			        android:text="@string/ok"
 			        android:layout_weight="1"/>
 				<Button 
 			    	android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:id="@+id/okButton"
-			        android:text="@string/ok"
+			        android:id="@+id/cancelButton"
+			        android:text="@string/cancel"
 			        android:layout_weight="1"/>
 			</LinearLayout>	
         </TableRow>

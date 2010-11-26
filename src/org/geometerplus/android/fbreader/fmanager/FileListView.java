@@ -9,6 +9,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,9 +29,9 @@ public class FileListView {
 
 	private ListView myListView;
 
-	private String myCurDir = START_DIR;
+	private String myCurDir = ".";
 
-	private String myCurFile = START_DIR;
+	private String myCurFile = ".";
 
 	private List<String> myHistory = new ArrayList<String>();
 	
@@ -78,10 +79,9 @@ public class FileListView {
 				view.setSelected(true);
 				
 				myCurFile = ((TextView) view).getText().toString();
-				if (new File(myCurDir + "/" + myCurFile).isDirectory()){
+				if (new File(myCurDir + "/" + myCurFile).isDirectory())
 					myHistory.add(myCurFile);
-					goAtDir(myCurDir + "/" + myCurFile);
-				}
+				goAtDir(myCurDir + "/" + myCurFile);
 			}
 		});
 
@@ -104,11 +104,14 @@ public class FileListView {
 	// **************************************************************************//
 	// Publics //
 	// **************************************************************************//
+	public String getPathToFile(){
+		if (myCurDir.equals(myCurFile))
+			return null;
+		return myCurDir + "/" + myCurFile;
+	}
+	
 	public void goAtBack(){
-		if (!myCurDir.equals(START_DIR)){
-			back();
-			goAtDir(myCurDir);
-		}
+		back();
 	}
 	
 	public void setFilter(String filterTypes){
@@ -131,26 +134,49 @@ public class FileListView {
 	// **************************************************************************//
 	
 	private void back(){
-		String dir = myHistory.remove(myHistory.size() - 1);
-		myCurDir = myCurDir.substring(0, myCurDir.length() - dir.length() - 1);
+		if (myHistory.size() > 0){
+			
+		// TODO delete later 
+			for (String s : myHistory){
+				Log.v(FileManager.FILE_MANAGER_LOG_TAG, "histiry : " + s);
+			}
+			
+			String dir = myHistory.remove(myHistory.size() - 1);
+			myCurDir = myCurDir.substring(0, myCurDir.length() - dir.length() - 1);
+			goAtDir(myCurDir);
+		}
 	}
 	
 	private void init(String path){
-		File file = new File(path);
-		myFilter.setPreferences(file, myFilterTypes);
-		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
-		myCurFilterThread.start();
-	}
-	
-	private void goAtDir(String path) {
 		myProgressDialog.show();
 		File file = new File(path);
 		myCurDir = path;
-		myCurFilterThread.interrupt();
 		myFilter.setPreferences(file, myFilterTypes);
 		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
 		myCurFilterThread.start();
 		
+		for(String dir : START_DIR.split("[\\/]+")){
+			myCurFile = dir;
+			myCurDir += "/" + dir;
+			
+			Log.v(FileManager.FILE_MANAGER_LOG_TAG, "file: " + myCurFile + "\t dir: " + myCurDir);
+
+			myHistory.add(myCurFile);
+			goAtDir(myCurDir);
+		}
+	}
+	
+	public void goAtDir(String path) {
+		if (new File(path).isDirectory()){
+
+			myProgressDialog.show();
+			File file = new File(path);
+			myCurDir = path;
+			myCurFilterThread.interrupt();
+			myFilter.setPreferences(file, myFilterTypes);
+			myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
+			myCurFilterThread.start();
+		}
 	}
 	
 	// **************************************************************************//
@@ -160,10 +186,9 @@ public class FileListView {
 	// **************************************************************************//
 	// Private Statics //
 	// **************************************************************************//
-	private static final String START_DIR = ".";
+	private static final String START_DIR = "sdcard/Books";
 	
 	// **************************************************************************//
 	// Internal Classes //
 	// **************************************************************************//
-
 }

@@ -14,40 +14,66 @@
      limitations under the License.
 -->
 
-<TableLayout 
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
  	android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
     
-    <TableRow>
-		<LinearLayout 
-			xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:orientation="horizontal"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1">
-			<Button 
-		    	android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:id="@+id/filterButton"
-		        android:text="@string/filter"
-		        android:layout_weight="1"/>
-			<Button 
-		    	android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:id="@+id/backButton"
-		        android:text="@string/back"
-		        android:layout_weight="1"/>
-		</LinearLayout>	
-    </TableRow>
-    
-    <TableRow>
-		<ListView 
-		    android:id="@+id/fileList1"
-		   	android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"/>     
-     </TableRow>
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
 
- </TableLayout>
+		<ImageButton android:id="@+id/fmanagerFBHomeButton"
+			android:src="@drawable/home"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		
+		<ImageButton android:id="@+id/fmanagerCardButton"
+			android:src="@drawable/sdcard"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		
+		<ImageButton android:id="@+id/fmanagerRootButton"
+			android:src="@drawable/root"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		
+		<ImageButton android:id="@+id/fmanagerFilterButton"
+			android:src="@drawable/filter"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		
+		<ImageButton android:id="@+id/fmanagerBackButton"
+			android:src="@drawable/back"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"/>
+	</LinearLayout>	
+    
+	<ListView 
+	    android:id="@+id/fileList1"
+	   	android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"/>  
+	
+	<LinearLayout 
+		xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+		<Button 
+	    	android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/fmanagerOkButton"
+	        android:text="@string/fmanagerOkButton"
+	        android:layout_weight="1"/>
+		<Button 
+	    	android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/fmanagerCancelButton"
+	        android:text="@string/fmanagerCancelButton"
+	        android:layout_weight="1"/>
+	</LinearLayout>	
+ </LinearLayout>
 

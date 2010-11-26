@@ -21,8 +21,10 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
@@ -35,6 +37,8 @@ import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.fmanager.FileManager;
+import org.geometerplus.android.fbreader.fmanager.FilterView;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
@@ -86,6 +90,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			R.drawable.fbreader,
 			new Runnable() {
 				public void run() {
+					runFileManager();
 				}
 			}
 		));
@@ -102,6 +107,12 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);
 		tree.getAction().run();
+	}
+	
+	private void runFileManager(){
+		Log.v(FileManager.FILE_MANAGER_LOG_TAG, "runFileManager()");
+		Intent i = new Intent(this, FileManager.class);
+        startActivityForResult(i, 1);
 	}
 }
 
