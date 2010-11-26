@@ -25,7 +25,6 @@ import android.preference.PreferenceScreen;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogContent;
 import org.geometerplus.zlibrary.core.optionEntries.ZLColorOptionBuilder;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -33,7 +32,6 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidOptionsDialog;
 
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
@@ -107,7 +105,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			textCategory.Resource, "autoHyphenations"
 		));
 
-		final ZLAndroidOptionsDialog dlg = getDialog(fbReader);
 		final Screen moreStylesScreen = textCategory.createPreferenceScreen("more");
 		final Category moreStylesCategory = moreStylesScreen.createCategory(null);
 
@@ -218,16 +215,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				
 		}
 
-		final Screen oldColorsScreen = textCategory.createPreferenceScreen("colors");
-		oldColorsScreen.setOnPreferenceClickListener(
-				new PreferenceScreen.OnPreferenceClickListener() {
-					public boolean onPreferenceClick(Preference preference) {
-						dlg.run(0);
-						return true;
-					}
-				}
-		);
-
 		final Screen colorsScreen = optionsCategory.createPreferenceScreen("colors");
 		final Category colorsCategory = colorsScreen.createCategory(null);
 		final ColorProfile profile = fbReader.getColorProfile();
@@ -336,28 +323,5 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingCategory.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingCategory.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingCategory.addOption(scrollingPreferences.HorizontalOption, "horizontal");
-	}
-
-	private ZLAndroidOptionsDialog getDialog(FBReaderApp fbreader) {
-		ZLAndroidOptionsDialog dialog = new ZLAndroidOptionsDialog(
-			this,
-			ZLResource.resource("dialog").getResource("OptionsDialog")
-		);
-
-		final ZLDialogContent colorsTab = dialog.createTab("Colors");
-		final String colorKey = "colorFor";
-		final ZLResource resource = colorsTab.getResource(colorKey);
-		final ZLColorOptionBuilder builder = new ZLColorOptionBuilder();
-		final String BACKGROUND = resource.getResource("background").getValue();
-		final ColorProfile profile = fbreader.getColorProfile();
-		builder.addOption(BACKGROUND, profile.BackgroundOption);
-		builder.addOption(resource.getResource("highlighting").getValue(), profile.HighlightingOption);
-		builder.addOption(resource.getResource("text").getValue(), profile.RegularTextOption);
-		builder.addOption(resource.getResource("hyperlink").getValue(), profile.HyperlinkTextOption);
-		builder.setInitial(BACKGROUND);
-		colorsTab.addOption(colorKey, builder.comboEntry());
-		colorsTab.addOption("", builder.colorEntry());
-
-		return dialog;
 	}
 }

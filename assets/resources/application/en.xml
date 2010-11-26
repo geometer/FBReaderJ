@@ -313,9 +313,6 @@
 						<node name="summary" value="missing"/>
 					</node>
 				</node>
-				<node name="colors" value="Colors">
-					<node name="summary" value=""/>
-				</node>
 			</node>
 			<node name="colors" value="Colors">
 				<node name="summary" value="Color settings"/>
@@ -410,15 +407,6 @@
 				</node>
 				<node name="Selection" value="Selection">
 					<node name="enableSelection" value="Enable Text Selection"/>
-				</node>
-				<node name="Colors" value="Colors">
-					<node name="colorFor" value="Color for">
-						<node name="background" value="Background"/>
-						<node name="selectionBackground" value="Selection Background"/>
-						<node name="text" value="Regular Text"/>
-						<node name="hyperlink" value="Hyperlink Text"/>
-						<node name="highlighting" value="Search Results Background"/>
-					</node>
 				</node>
 			</node>
 		</node>
