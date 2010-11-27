@@ -313,9 +313,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="Цвета">
-					<node name="summary" value=""/>
-				</node>
+			</node>
+			<node name="colors" value="Цвета">
+				<node name="summary" value="Настройки цвета"/>
+				<node name="background" value="Фон"/>
+				<node name="selectionBackground" value="Фон пометки"/>
+				<node name="text" value="Обычный текст"/>
+				<node name="hyperlink" value="Гиперссылка"/>
+				<node name="highlighting" value="Фон результатов поиска"/>
+				<node name="footer" value="Подвал"/>
 			</node>
 			<node name="margins" value="Отступы">
 				<node name="summary" value="Поля вокруг текста"/>
@@ -333,6 +339,11 @@
 					<node name="showAsFooter" value="Подвал"/>
 				</node>
 				<node name="footerHeight" value="Высота подвала" />
+				<node name="footerColor" value="Цвет подвала"/>
+				<node name="tocMarks" value="Показывать метки по главам">
+					<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
+					<node name="summaryOff" value="Подвал без пометок"/>
+				</node>
 				<node name="footerLongTap" value="Придержать подвал">
 					<node name="longTapRevert" value="Откатить переход"/>
 					<node name="longTapNavigate" value="Сделать переход"/>
@@ -402,15 +413,6 @@
 				</node>
 				<node name="Selection" value="Пометка">
 					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
-				<node name="Colors" value="Цвета">
-					<node name="colorFor" value="Цвет">
-						<node name="background" value="фона"/>
-						<node name="selectionBackground" value="фона пометки"/>
-						<node name="text" value="обычного текста"/>
-						<node name="hyperlink" value="ссылки"/>
-						<node name="highlighting" value="фона результатов поиска"/>
-					</node>
 				</node>
 			</node>
 		</node>

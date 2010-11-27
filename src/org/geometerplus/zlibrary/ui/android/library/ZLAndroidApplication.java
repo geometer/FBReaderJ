@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.util.HashMap;
-
 import android.app.Application;
 import android.os.Build;
 
@@ -65,23 +63,4 @@ public class ZLAndroidApplication extends Application {
 		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);
 	}
-
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-	}
-
-	public void putData(Object key, Object value) {
-		myData.put(key, value);
-	}
-
-	public void removeData(Object key) {
-		myData.remove(key);
-	}
-
-	public Object getData(Object key) {
-		return myData.get(key);
-	}
-
-	private final HashMap<Object,Object> myData = new HashMap<Object,Object>();
 }

@@ -314,9 +314,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="Colori">
-					<node name="summary" value=""/>
-				</node>
+			</node>
+			<node name="colors" value="Colori">
+				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="background" value="Sfondo"/>
+				<node name="selectionBackground" value="Seleziona Sfondo"/>
+				<node name="text" value="Testo Regolare"/>
+				<node name="hyperlink" value="Testo Hyperlink"/>
+				<node name="highlighting" value="Risultati Ricerca Sfondo"/>
+				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="Margini">
 				<node name="summary" value="Text margins" toBeTranslated="true"/>
@@ -334,6 +340,11 @@
 					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
 				</node>
 				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
 				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
 					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
 					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
@@ -403,15 +414,6 @@
 				</node>
 				<node name="Selection" value="Selezione">
 					<node name="enableSelection" value="Abilita selezione testo"/>
-				</node>
-				<node name="Colors" value="Colori">
-					<node name="colorFor" value="Colore per">
-						<node name="background" value="Sfondo"/>
-						<node name="selectionBackground" value="Seleziona Sfondo"/>
-						<node name="text" value="Testo Regolare"/>
-						<node name="hyperlink" value="Testo Hyperlink"/>
-						<node name="highlighting" value="Risultati Ricerca Sfondo"/>
-					</node>
 				</node>
 			</node>
 		</node>
