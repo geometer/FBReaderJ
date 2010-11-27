@@ -317,9 +317,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="Couleurs">
-					<node name="summary" value=""/>
-				</node>
+			</node>
+			<node name="colors" value="Couleurs">
+				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="background" value="Arrière-plan"/>
+				<node name="selectionBackground" value="Arrière-plan de sélection"/>
+				<node name="text" value="Texte normal"/>
+				<node name="hyperlink" value="Text d'hyperlien"/>
+				<node name="highlighting" value="Arrière-plan des résultats de recherche"/>
+				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="Marge">
 				<node name="summary" value="Marges du texte"/>
@@ -337,6 +343,11 @@
 					<node name="showAsFooter" value="Pied de page horizontal"/>
 				</node>
 				<node name="footerHeight" value="Hauteur du pied de page"/>
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
 				<node name="footerLongTap" value="Appui long sur pied de page">
 					<node name="longTapRevert" value="Annuler position"/>
 					<node name="longTapNavigate" value="Aller à la position"/>
@@ -406,15 +417,6 @@
 				</node>
 				<node name="Selection" value="Sélection">
 					<node name="enableSelection" value="Activer la sélection de texte"/>
-				</node>
-				<node name="Colors" value="Couleurs">
-					<node name="colorFor" value="Couleur pour">
-						<node name="background" value="Arrière-plan"/>
-						<node name="selectionBackground" value="Arrière-plan de sélection"/>
-						<node name="text" value="Texte normal"/>
-						<node name="hyperlink" value="Text d'hyperlien"/>
-						<node name="highlighting" value="Arrière-plan des résultats de recherche"/>
-					</node>
 				</node>
 			</node>
 		</node>

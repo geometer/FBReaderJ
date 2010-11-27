@@ -314,9 +314,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="颜色">
-					<node name="summary" value=""/>
-				</node>
+			</node>
+			<node name="colors" value="颜色">
+				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="background" value="背景色" />
+				<node name="selectionBackground" value="选择背景色" />
+				<node name="text" value="普通文本" />
+				<node name="hyperlink" value="超链接文本" />
+				<node name="highlighting" value="搜索结果背景" />
+				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="边距">
 				<node name="summary" value="Text margins" toBeTranslated="true"/>
@@ -334,6 +340,11 @@
 					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
 				</node>
 				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
 				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
 					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
 					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
@@ -403,15 +414,6 @@
 				</node>
 				<node name="Selection" value="选择项">
 					<node name="enableSelection" value="允许文本选择" />
-				</node>
-				<node name="Colors" value="颜色">
-					<node name="colorFor" value="颜色设置">
-						<node name="background" value="背景色" />
-						<node name="selectionBackground" value="选择背景色" />
-						<node name="text" value="普通文本" />
-						<node name="hyperlink" value="超链接文本" />
-						<node name="highlighting" value="搜索结果背景" />
-					</node>
 				</node>
 			</node>
 		</node>

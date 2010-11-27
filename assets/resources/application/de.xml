@@ -315,9 +315,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="Farben">
-					<node name="summary" value="Farben festlegen."/>
-				</node>
+			</node>
+			<node name="colors" value="Farben">
+				<node name="summary" value="Farben festlegen."/>
+				<node name="background" value="Hintergrund"/>
+				<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
+				<node name="text" value="Normalen Text"/>
+				<node name="hyperlink" value="Hyperlinks"/>
+				<node name="highlighting" value="Hintergrund der Suchergebnisse"/>
+				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="Ränder">
 				<node name="summary" value="seitenränder festlegen"/>
@@ -335,6 +341,11 @@
 					<node name="showAsFooter" value="Horizontal"/>
 				</node>
 				<node name="footerHeight" value="Höhe der Fußleiste"/>
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
 				<node name="footerLongTap" value="Aktion bei langem antippen der Fußleiste">
 					<node name="longTapRevert" value="Zur Position zurückkehren"/> <!-- not found in v 0.7.17. Context has to been checked -->
 					<node name="longTapNavigate" value="Gehe zur Position"/>       <!-- not found in v 0.7.17. Context has to been checked -->
@@ -404,15 +415,6 @@
 				</node>
 				<node name="Selection" value="Auswahl">
 					<node name="enableSelection" value="Textauswahl einschalten"/>
-				</node>
-				<node name="Colors" value="Farben">
-					<node name="colorFor" value="Farbe für">
-						<node name="background" value="Hintergrund"/>
-						<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
-						<node name="text" value="Normalen Text"/>
-						<node name="hyperlink" value="Hyperlinks"/>
-						<node name="highlighting" value="Hintergrund der Suchergebnisse"/>
-					</node>
 				</node>
 			</node>
 		</node>

@@ -203,7 +203,9 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 			final Rect bounds = getBounds();
 			final float x = myLabelOnRight ? bounds.width() - myTextWidth - 6 : 6;
 			final float y = (bounds.height() + myPaint.getTextSize()) / 2;
-			canvas.drawText(myText, x, y, myOutlinePaint);
+			if (myLabelOnRight) {
+				canvas.drawText(myText, x, y, myOutlinePaint);
+			}
 			canvas.drawText(myText, x, y, myPaint);
 		}
 
