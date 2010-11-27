@@ -314,9 +314,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="Barvy">
-					<node name="summary" value=""/>
-				</node>
+			</node>
+			<node name="colors" value="Barvy">
+				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="background" value="Pozadí"/>
+				<node name="selectionBackground" value="Pozadí výběru"/>
+				<node name="text" value="Běžný text"/>
+				<node name="hyperlink" value="Hypertextový odkaz"/>
+				<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
+				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="Okraje">
 				<node name="summary" value="Okraje textu"/>
@@ -334,6 +340,11 @@
 					<node name="showAsFooter" value="Vodorovná patička"/>
 				</node>
 				<node name="footerHeight" value="Výška patičky" />
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
 				<node name="footerLongTap" value="Dlouhé klepnutí na patičku">
 					<node name="longTapRevert" value="Vrátit pozici"/>
 					<node name="longTapNavigate" value="Jít na pozici"/>
@@ -403,15 +414,6 @@
 				</node>
 				<node name="Selection" value="Výběr">
 					<node name="enableSelection" value="Povolit výběr textu"/>
-				</node>
-				<node name="Colors" value="Barvy">
-					<node name="colorFor" value="Barva pro">
-						<node name="background" value="Pozadí"/>
-						<node name="selectionBackground" value="Pozadí výběru"/>
-						<node name="text" value="Běžný text"/>
-						<node name="hyperlink" value="Hypertextový odkaz"/>
-						<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
-					</node>
 				</node>
 			</node>
 		</node>

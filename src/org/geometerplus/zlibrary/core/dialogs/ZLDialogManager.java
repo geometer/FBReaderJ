@@ -24,8 +24,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 public abstract class ZLDialogManager {
 	protected static ZLDialogManager ourInstance;
 	
-	public static final String COLOR_KEY = "color";
-	
 	protected ZLDialogManager() {
 		ourInstance = this;
 	}
@@ -35,8 +33,4 @@ public abstract class ZLDialogManager {
 	} 
 	
 	public abstract void wait(String key, Runnable runnable);
-	
-	protected static ZLResource getResource() {
-		return ZLResource.resource("dialog");
-	}
 }
