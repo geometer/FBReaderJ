@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/color_preference_color"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-  android:layout_gravity="right"
-	android:paddingTop="10dip"
-	android:paddingBottom="10dip"
-/>
