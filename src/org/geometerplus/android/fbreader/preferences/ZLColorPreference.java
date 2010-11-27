@@ -148,7 +148,6 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 		private final String myText;
 		private final Paint myPaint;
 		private final Paint myOutlinePaint;
-		private final float myTextWidth;
 		private boolean myLabelOnRight;
 
 		public SeekBarDrawable(Drawable base, String text, boolean labelOnRight) {
@@ -157,7 +156,6 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 
 			myPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			myPaint.setTypeface(Typeface.DEFAULT_BOLD);
-			myPaint.setTextSize(20);
 			myPaint.setColor(Color.BLACK);
 			myPaint.setAlpha(255);
 
@@ -166,7 +164,6 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 			myOutlinePaint.setStrokeWidth(3);
 			myOutlinePaint.setColor(0xFFAAAAAA);
 
-			myTextWidth = myOutlinePaint.measureText(myText);
 			myLabelOnRight = labelOnRight;
 		}
 
@@ -201,11 +198,15 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 			myBase.draw(canvas);
 
 			final Rect bounds = getBounds();
-			final float x = myLabelOnRight ? bounds.width() - myTextWidth - 6 : 6;
-			final float y = (bounds.height() + myPaint.getTextSize()) / 2;
-			if (myLabelOnRight) {
-				canvas.drawText(myText, x, y, myOutlinePaint);
-			}
+			final int textSize = bounds.height() * 2 / 3;
+			myPaint.setTextSize(textSize);
+			myOutlinePaint.setTextSize(textSize);
+			final Rect textBounds = new Rect();
+			myPaint.getTextBounds("a", 0, 1, textBounds);
+			final float textWidth = myOutlinePaint.measureText(myText);
+			final float x = myLabelOnRight ? bounds.width() - textWidth - 6 : 6;
+			final float y = bounds.height() / 2 + textBounds.height();
+			canvas.drawText(myText, x, y, myOutlinePaint);
 			canvas.drawText(myText, x, y, myPaint);
 		}
 
