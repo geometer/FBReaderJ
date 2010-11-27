@@ -1,3 +1,6 @@
+* Footer style has been changed: filled rectangle is now used
+* Footer color option has been added
+* TOC marks in footer have been added (this is an optional feature)
 * Dependent options
 
 ===== 0.7.18 (??? ??, 2010) =====
