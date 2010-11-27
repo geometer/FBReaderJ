@@ -321,6 +321,7 @@
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
+				<node name="footer" value="Footer" />
 			</node>
 			<node name="margins" value="Margins">
 				<node name="summary" value="Text margins"/>
@@ -338,7 +339,7 @@
 					<node name="showAsFooter" value="Horizontal footer"/>
 				</node>
 				<node name="footerHeight" value="Footer height" />
-				<node name="color" value="Color" />
+				<node name="footerColor" value="Footer color" />
 				<node name="tocMarks" value="Show TOC marks">
 					<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>

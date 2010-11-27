@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.graphics.*;
 import android.graphics.drawable.*;
 import android.preference.DialogPreference;
 import android.view.View;
@@ -45,11 +45,14 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 	ZLColorPreference(Context context, ZLResource resource, String resourceKey, ZLColorOption option) {
 		super(context, null);
 		myOption = option;
-		//setWidgetLayoutResource(R.layout.color_preference_widget);
 		final String title = resource.getResource(resourceKey).getValue();
 		setTitle(title);
 		setDialogTitle(title);
 		setDialogLayoutResource(R.layout.color_dialog);
+
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		setPositiveButtonText(buttonResource.getResource("ok").getValue());
+		setNegativeButtonText(buttonResource.getResource("cancel").getValue());
 	}
 
 	@Override
@@ -58,12 +61,27 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 
 		myRedSlider = (SeekBar)view.findViewById(R.id.color_red);
 		myRedSlider.setProgress(color.Red);
+		myRedSlider.setProgressDrawable(new SeekBarDrawable(
+			myRedSlider.getProgressDrawable(),
+			ZLResource.resource("color").getResource("red").getValue(),
+			color.Red < 128
+		));
 
 		myGreenSlider = (SeekBar)view.findViewById(R.id.color_green);
 		myGreenSlider.setProgress(color.Green);
+		myGreenSlider.setProgressDrawable(new SeekBarDrawable(
+			myGreenSlider.getProgressDrawable(),
+			ZLResource.resource("color").getResource("green").getValue(),
+			color.Green < 128
+		));
 
 		myBlueSlider = (SeekBar)view.findViewById(R.id.color_blue);
 		myBlueSlider.setProgress(color.Blue);
+		myBlueSlider.setProgressDrawable(new SeekBarDrawable(
+			myBlueSlider.getProgressDrawable(),
+			ZLResource.resource("color").getResource("blue").getValue(),
+			color.Blue < 128
+		));
 
 		final View colorBox = view.findViewById(R.id.color_box);
 		colorBox.setBackgroundDrawable(myPreviewDrawable);
@@ -123,5 +141,83 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 	*/
 
 	public void onAccept() {
+	}
+
+	static class SeekBarDrawable extends Drawable {
+		private final Drawable myBase;
+		private final String myText;
+		private final Paint myPaint;
+		private final Paint myOutlinePaint;
+		private final float myTextWidth;
+		private boolean myLabelOnRight;
+
+		public SeekBarDrawable(Drawable base, String text, boolean labelOnRight) {
+			myBase = base;
+			myText = text;
+
+			myPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			myPaint.setTypeface(Typeface.DEFAULT_BOLD);
+			myPaint.setTextSize(20);
+			myPaint.setColor(Color.BLACK);
+			myPaint.setAlpha(255);
+
+			myOutlinePaint = new Paint(myPaint);
+			myOutlinePaint.setStyle(Paint.Style.STROKE);
+			myOutlinePaint.setStrokeWidth(3);
+			myOutlinePaint.setColor(0xFFAAAAAA);
+
+			myTextWidth = myOutlinePaint.measureText(myText);
+			myLabelOnRight = labelOnRight;
+		}
+
+		@Override
+		protected void onBoundsChange(Rect bounds) {
+			myBase.setBounds(bounds);
+		}
+		
+		@Override
+		protected boolean onStateChange(int[] state) {
+			invalidateSelf();
+			return false;
+		}
+		
+		@Override
+		public boolean isStateful() {
+			return true;
+		}
+		
+		@Override
+		protected boolean onLevelChange(int level) {
+			if (level < 4000) {
+				myLabelOnRight = true;
+			} else if (level > 6000) {
+				myLabelOnRight = false;
+			}
+			return myBase.setLevel(level);
+		}
+		
+		@Override
+		public void draw(Canvas canvas) {
+			myBase.draw(canvas);
+
+			final Rect bounds = getBounds();
+			final float x = myLabelOnRight ? bounds.width() - myTextWidth - 6 : 6;
+			final float y = (bounds.height() + myPaint.getTextSize()) / 2;
+			canvas.drawText(myText, x, y, myOutlinePaint);
+			canvas.drawText(myText, x, y, myPaint);
+		}
+
+		@Override
+		public int getOpacity() {
+			return PixelFormat.TRANSLUCENT;
+		}
+
+		@Override
+		public void setAlpha(int alpha) {
+		}
+
+		@Override
+		public void setColorFilter(ColorFilter cf) {
+		}
 	}
 }

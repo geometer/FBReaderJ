@@ -208,6 +208,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				
 		}
 
+		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
+
 		final Screen colorsScreen = createPreferenceScreen("colors");
 		colorsScreen.addPreference(new ZLColorPreference(
 			this, colorsScreen.Resource, "background", profile.BackgroundOption
@@ -221,6 +223,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addPreference(new ZLColorPreference(
 			this, colorsScreen.Resource, "hyperlink", profile.HyperlinkTextOption
 		));
+		footerPreferences.add(colorsScreen.addPreference(new ZLColorPreference(
+			this, colorsScreen.Resource, "footer", profile.FooterFillOption
+		)));
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
@@ -242,8 +247,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
 
-		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
-
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
 			this, statusLineScreen.Resource, "scrollbarType",
@@ -263,7 +266,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			fbReader.FooterHeightOption
 		)));
 		footerPreferences.add(statusLineScreen.addPreference(new ZLColorPreference(
-			this, statusLineScreen.Resource, "color", profile.FooterFillOption
+			this, statusLineScreen.Resource, "footerColor", profile.FooterFillOption
 		)));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowTOCMarksOption, "tocMarks"));
 
