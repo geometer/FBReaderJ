@@ -549,7 +549,7 @@ public class ZLAndroidWidget extends View {
 		String read_menu[] = {
 				ActionCode.SEARCH,
 				ActionCode.INITIATE_COPY,
-				ActionCode.TRANSLATE_WORD,
+				ActionCode.TRANSLATE,
 				ActionCode.ROTATE,
 				ActionCode.INCREASE_FONT,
 				ActionCode.DECREASE_FONT,
@@ -585,7 +585,7 @@ public class ZLAndroidWidget extends View {
 			String actionId = actions[actionIndex];
 			if (app.isActionEnabled(actionId) && app.isActionVisible(actionId)) {
 				String itemText = myMenuResource.getResource(actionId).getValue();
-				if (actionId == ActionCode.TRANSLATE_WORD) {
+				if (actionId == ActionCode.TRANSLATE) {
 					itemText = String.format(itemText, myLongPressWord);
 				}
 				menu.add(0, actionIndex, Menu.NONE, itemText);
