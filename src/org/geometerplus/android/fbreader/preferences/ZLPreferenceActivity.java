@@ -46,8 +46,24 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			myScreen.setSummary(summary);
 		}
 
-		protected Category createCategory(String resourceKey) {
-			return new Category(myScreen, Resource, resourceKey);
+		public Screen createPreferenceScreen(String resourceKey) {
+			Screen screen = new Screen(Resource, resourceKey);
+			myScreen.addPreference(screen.myScreen);
+			return screen;
+		}
+
+		public ZLPreference addPreference(ZLPreference preference) {
+			myScreen.addPreference((Preference)preference);
+			myPreferences.add(preference);
+			return preference;
+		}
+
+		public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
+			ZLBooleanPreference preference =
+				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
+			myScreen.addPreference(preference);
+			myPreferences.add(preference);
+			return preference;
 		}
 
 		public void close() {
@@ -60,51 +76,38 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		}
 	}
 
-	protected class Category {
-		public final ZLResource Resource;
-		private final PreferenceGroup myGroup;
-
-		private Category(PreferenceScreen screen, ZLResource root, String resourceKey) {
-			if (resourceKey != null) {
-				Resource = root.getResource(resourceKey);
-				myGroup = new PreferenceCategory(ZLPreferenceActivity.this);
-				myGroup.setTitle(Resource.getValue());
-				screen.addPreference(myGroup);
-			} else {
-				Resource = root;
-				myGroup = screen;
-			}
-		}
-
-		Screen createPreferenceScreen(String resourceKey) {
-			Screen screen = new Screen(Resource, resourceKey);
-			myGroup.addPreference(screen.myScreen);
-			return screen;
-		}
-
-		void addPreference(ZLPreference preference) {
-			myGroup.addPreference((Preference)preference);
-			myPreferences.add(preference);
-		}
-
-		void addOption(ZLBooleanOption option, String resourceKey) {
-			ZLBooleanPreference preference =
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
-			myGroup.addPreference(preference);
-			myPreferences.add(preference);
-		}
-	}
-
 	private PreferenceScreen myScreen;
-	private final ZLResource myResource;
+	final ZLResource Resource;
 
 	ZLPreferenceActivity(String resourceKey) {
-		myResource = ZLResource.resource("dialog").getResource(resourceKey);
+		Resource = ZLResource.resource("dialog").getResource(resourceKey);
 	}
 
-	protected Category createCategory(String resourceKey) {
-		return new Category(myScreen, myResource, resourceKey);
+	Screen createPreferenceScreen(String resourceKey) {
+		Screen screen = new Screen(Resource, resourceKey);
+		myScreen.addPreference(screen.myScreen);
+		return screen;
 	}
+
+	public ZLPreference addPreference(ZLPreference preference) {
+		myScreen.addPreference((Preference)preference);
+		myPreferences.add(preference);
+		return preference;
+	}
+
+	public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
+		ZLBooleanPreference preference =
+			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
+		myScreen.addPreference(preference);
+		myPreferences.add(preference);
+		return preference;
+	}
+
+	/*
+	protected Category createCategory() {
+		return new CategoryImpl(myScreen, Resource);
+	}
+	*/
 
 	protected abstract void init(Intent intent);
 

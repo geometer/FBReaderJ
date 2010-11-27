@@ -58,6 +58,7 @@ public class ColorProfile {
 	public final ZLColorOption HighlightingOption;
 	public final ZLColorOption RegularTextOption;
 	public final ZLColorOption HyperlinkTextOption;
+	public final ZLColorOption FooterFillOption;
 
 	private ColorProfile(String name, ColorProfile base) {
 		this(name);
@@ -66,6 +67,7 @@ public class ColorProfile {
 		HighlightingOption.setValue(base.HighlightingOption.getValue());
 		RegularTextOption.setValue(base.RegularTextOption.getValue());
 		HyperlinkTextOption.setValue(base.HyperlinkTextOption.getValue());
+		FooterFillOption.setValue(base.FooterFillOption.getValue());
 	}
 
 	private ColorProfile(String name) {
@@ -80,6 +82,8 @@ public class ColorProfile {
 				new ZLColorOption("Colors", name + ":Text", new ZLColor(192, 192, 192));
 			HyperlinkTextOption =
 				new ZLColorOption("Colors", name + ":Hyperlink", new ZLColor(60, 142, 224));
+			FooterFillOption =
+				new ZLColorOption("Colors", name + ":FooterFillOption", new ZLColor(85, 85, 85));
 		} else {
 			BackgroundOption =
 				new ZLColorOption("Colors", name + ":Background", new ZLColor(255, 255, 255));
@@ -91,6 +95,8 @@ public class ColorProfile {
 				new ZLColorOption("Colors", name + ":Text", new ZLColor(0, 0, 0));
 			HyperlinkTextOption =
 				new ZLColorOption("Colors", name + ":Hyperlink", new ZLColor(60, 139, 255));
+			FooterFillOption =
+				new ZLColorOption("Colors", name + ":FooterFillOption", new ZLColor(170, 170, 170));
 		}
 	}
 }
