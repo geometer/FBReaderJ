@@ -1,3 +1,9 @@
+* Footer style has been changed: filled rectangle is now used
+* Footer color option has been added
+* TOC marks in footer have been added (this is an optional feature)
+* Dependent options
+* Color picker dialog (idea was taken from http://www.anddev.org/announce_color_picker_dialog-t10771.html)
+
 ===== 0.7.18 (??? ??, 2010) =====
 * Local library activity has been moved to a separate process
 * French resources have been updated (by Mathias Monnerville)

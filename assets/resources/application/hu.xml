@@ -314,9 +314,15 @@
 						<node name="summary" value=""/>
 					</node>
 				</node>
-				<node name="colors" value="Színek">
-					<node name="summary" value=""/>
-				</node>
+			</node>
+			<node name="colors" value="Színek">
+				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="background" value="Háttér"/>
+				<node name="selectionBackground" value="Kijelölés háttere"/>
+				<node name="text" value="Szöveg"/>
+				<node name="hyperlink" value="Hiperhivatkozás"/>
+				<node name="highlighting" value="Találatok kiemelése"/>
+				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="Margók">
 				<node name="summary" value="Text margins" toBeTranslated="true"/>
@@ -334,6 +340,11 @@
 					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
 				</node>
 				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
 				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
 					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
 					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
@@ -403,15 +414,6 @@
 				</node>
 				<node name="Selection" value="Kijelölés">
 					<node name="enableSelection" value="Szövegkijelölés engedélyezése"/>
-				</node>
-				<node name="Colors" value="Színek">
-					<node name="colorFor" value="Szín">
-						<node name="background" value="Háttér"/>
-						<node name="selectionBackground" value="Kijelölés háttere"/>
-						<node name="text" value="Szöveg"/>
-						<node name="hyperlink" value="Hiperhivatkozás"/>
-						<node name="highlighting" value="Találatok kiemelése"/>
-					</node>
 				</node>
 			</node>
 		</node>
