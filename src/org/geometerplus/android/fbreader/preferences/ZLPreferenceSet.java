@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.android.fbreader.preferences;
 
-public abstract class ZLOptionView {
-	protected final String myName;
-	protected final ZLOptionEntry myOption;
-	private boolean myInitialized;
+import java.util.LinkedList;
 
-	protected ZLOptionView(String name, ZLOptionEntry option) {
-		myName = name;
-		myOption = option;
-		myInitialized = false;
-		myOption.setView(this);
+import android.preference.Preference;
+
+class ZLPreferenceSet {
+	private final LinkedList<ZLPreference> myPreferences = new LinkedList<ZLPreference>();
+
+	final void add(ZLPreference preference) {
+		myPreferences.add(preference);
 	}
 
-	protected abstract void reset();
-
-	public final void setVisible() {
-		myInitialized = true;
-		show();
-	}
-
-	protected abstract void show();
-
-	public final void onAccept() {
-		if (myInitialized) {
-			_onAccept();
+	final void setEnabled(boolean enable) {
+		for (ZLPreference preference : myPreferences) {
+			((Preference)preference).setEnabled(enable);
 		}
 	}
-
-	protected abstract void _onAccept();
 }
