@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
+import android.content.Intent;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -57,6 +58,9 @@ class AuthenticationDialog extends NetworkDialog {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (mgr.registrationSupported()) {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
+					final Intent intent = new Intent(myActivity.getApplicationContext(), UserRegistrationActivity.class);
+					myActivity.startActivity(intent);
+					/*
 					NetworkDialog.show(myActivity, NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
 						public void run() {
 							try {
@@ -71,6 +75,7 @@ class AuthenticationDialog extends NetworkDialog {
 							NetworkDialog.show(myActivity, NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
 						}
 					});
+					*/
 				}
 			}
 		});
