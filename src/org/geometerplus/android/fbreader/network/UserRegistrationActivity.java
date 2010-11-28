@@ -99,7 +99,6 @@ public class UserRegistrationActivity extends Activity {
 				final String password = getViewText(R.id.user_registration_password);
 				final String confirmPassword = getViewText(R.id.user_registration_confirm_password);
 				final String email = getViewText(R.id.user_registration_email);
-				final ZLResource networkErrorResource = ZLResource.resource("dialog").getResource("networkError");
 
 				if (userName.length() == 0) {
 					setErrorMessageFromResource("usernameNotSpecified");
@@ -111,6 +110,7 @@ public class UserRegistrationActivity extends Activity {
 				}
 				if (password.length() == 0) {
 					setErrorMessageFromResource("passwordNotSpecified");
+					return;
 				}
 				if (email.length() == 0) {
 					setErrorMessageFromResource("emailNotSpecified");
@@ -121,12 +121,16 @@ public class UserRegistrationActivity extends Activity {
 					setErrorMessageFromResource("invalidEMail");
 					return;
 				}
+				final Intent data = new Intent();
+				data.putExtra("userName", userName);
+				setResult(RESULT_OK, data);
 				finish();
 			}
 		});
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				setResult(RESULT_CANCELED);
 				finish();
 			}
 		});

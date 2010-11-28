@@ -77,6 +77,15 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 		setupTitle();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.err.println("requestCode = " + requestCode);
+		System.err.println("resultCode = " + resultCode);
+		if (data != null) {
+			System.err.println("uri = " + data.getStringExtra("userName"));
+		}
+	}
+
 	private final void setupTitle() {
 		String title = null;
 		final NetworkView networkView = NetworkView.Instance();

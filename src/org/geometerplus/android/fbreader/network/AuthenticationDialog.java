@@ -62,7 +62,7 @@ class AuthenticationDialog extends NetworkDialog {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
 					System.err.println(myLink.getLink("main"));
 					final Intent intent = new Intent("android.fbreader.action.NETWORK_LIBRARY_REGISTER", Uri.parse(myLink.getLink(INetworkLink.URL_MAIN)));
-					myActivity.startActivity(intent);
+					myActivity.startActivityForResult(intent, 387);
 					/*
 					NetworkDialog.show(myActivity, NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
 						public void run() {
