@@ -123,7 +123,6 @@ public final class FBView extends ZLTextView {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
 			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
-			System.err.println("starting on level: " + myStartBrightness);
 			return true;
 		}
 
@@ -164,9 +163,7 @@ public final class FBView extends ZLTextView {
 					myIsBrightnessAdjustmentInProgress = false;
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
-					System.err.println("adjusting to level: " + (myStartBrightness + delta));
 					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
-					System.err.println("adjusted to level: " + ZLibrary.Instance().getScreenBrightness());
 					return true;
 				}
 			}

@@ -209,14 +209,12 @@ public final class Library {
 	}
 
 	private void build() {
-		//System.err.println("before build: " + System.currentTimeMillis() % 20000);
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 		final HashMap<Long,Book> bookById = new HashMap<Long,Book>();
 
 		collectBooks();
-		//System.err.println(myBooks.size() + " books " + System.currentTimeMillis() % 20000);
 		for (Book book : myBooks) {
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
@@ -268,7 +266,6 @@ public final class Library {
 				}
 			}
 		});
-		//System.err.println("after build: " + System.currentTimeMillis() % 20000);
 	}
 
 	public void synchronize() {
