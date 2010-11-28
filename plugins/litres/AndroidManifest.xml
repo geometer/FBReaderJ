@@ -23,7 +23,7 @@
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="android.fbreader.action.NETWORK_LIBRARY_REGISTER" />
-				<data android:scheme="http" android:host="data.fbreader.org" android:path="/catalogs/" />
+				<data android:scheme="http" android:host="data.fbreader.org" android:path="/catalogs/litres" />
 			</intent-filter>
 		</activity>
 	</application>

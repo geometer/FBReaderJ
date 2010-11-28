@@ -518,4 +518,18 @@
 		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
 		<node name="encriptedFile" value="DRM-protected File"/>
 	</node>
+	<node name="userRegistration">
+		<node name="title" value="Register User" />
+		<node name="login" value="Username" />
+		<node name="password" value="Password" />
+		<node name="confirmPassword" value="Password&#10;confirmation" />
+		<node name="email" value="E-mail" />
+		<node name="error">
+			<node name="usernameNotSpecified" value="Please, enter a username" />
+			<node name="passwordNotSpecified" value="Please, enter a non-empty password" />
+			<node name="passwordDoesNotMatch" value="Password and password confirmation must be the same." />
+			<node name="emailNotSpecified" value="Please, enter an e-mail address" />
+			<node name="invalidEMail" value="Invalid e-mail address" />
+		</node>
+	</node>
 </resources>
