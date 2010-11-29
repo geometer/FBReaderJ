@@ -22,17 +22,18 @@ package org.geometerplus.android.fbreader.network;
 import java.util.List;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.content.Intent;
-import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -133,9 +134,7 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 					setErrorMessageFromResource("invalidEMail");
 					return;
 				}
-				final Intent data = new Intent();
 				final String[] result = { null };
-				result[0] = "Registration is not implemented yet";
 				final Runnable runnable = new Runnable() {
 					public void run() {
 						try {
@@ -152,16 +151,21 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 						}
 					}
 				};
-				UIUtil.wait("registerUser", runnable, UserRegistrationActivity.this);
-				if (result[0] == null) {
-					data.putExtra(USER_REGISTRATION_USERNAME, userName);
-					data.putExtra(USER_REGISTRATION_PASSWORD, password);
-					data.putExtra(USER_REGISTRATION_EMAIL, email);
-					setResult(RESULT_OK, data);
-					finish();
-				} else {
-					setErrorMessage(result[0]);
-				}
+				final Runnable postRunnable = new Runnable() {
+					public void run() {
+						if (result[0] == null) {
+							final Intent data = new Intent();
+							data.putExtra(USER_REGISTRATION_USERNAME, userName);
+							data.putExtra(USER_REGISTRATION_PASSWORD, password);
+							data.putExtra(USER_REGISTRATION_EMAIL, email);
+							setResult(RESULT_OK, data);
+							finish();
+						} else {
+							setErrorMessage(result[0]);
+						}
+					}
+				};
+				runWithMessage("registerUser", runnable, postRunnable);
 			}
 		});
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -233,4 +237,23 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 		UIUtil.wait("registerUser", runnable, myActivity);
 	}
 */
+	synchronized void runWithMessage(String key, final Runnable action, final Runnable postAction) {
+		final String message =
+			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
+		final ProgressDialog progress = ProgressDialog.show(this, null, message, true, false);
+
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				progress.dismiss();
+				postAction.run();
+			}
+		};
+
+		new Thread(new Runnable() {
+			public void run() {
+				action.run();
+				handler.sendEmptyMessage(0);
+			}
+		}).start();
+	}
 }
