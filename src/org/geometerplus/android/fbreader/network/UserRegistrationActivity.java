@@ -36,8 +36,13 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+
+import org.geometerplus.fbreader.network.authentication.litres.LitResRegisterUserXMLReader;
+import org.geometerplus.fbreader.network.authentication.litres.LitResNetworkRequest;
 
 public class UserRegistrationActivity extends Activity implements UserRegistrationConstants {
 	private final ZLResource myResource = ZLResource.resource("userRegistration");
@@ -54,8 +59,12 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 		return findTextView(resourceId).getText().toString().trim();
 	}
 
+	private void setViewText(int resourceId, String text) {
+		findTextView(resourceId).setText(text);
+	}
+
 	private void setViewTextFromResource(int resourceId, String fbResourceKey) {
-		findTextView(resourceId).setText(myResource.getResource(fbResourceKey).getValue());
+		setViewText(resourceId, myResource.getResource(fbResourceKey).getValue());
 	}
 
 	private void setErrorMessage(String errorMessage) {
@@ -82,11 +91,15 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 		setViewTextFromResource(R.id.user_registration_confirm_password_text, "confirmPassword");
 		setViewTextFromResource(R.id.user_registration_email_text, "email");
 
+		setViewText(R.id.user_registration_login, "q");
+		setViewText(R.id.user_registration_password, "q");
+		setViewText(R.id.user_registration_confirm_password, "q");
+
 		final TextView errorLabel = findTextView(R.id.user_registration_error);
 		errorLabel.setVisibility(View.GONE);
 		errorLabel.setText("");
 
-		final String url = getIntent().getData().toString();
+		final String signUpURL = getIntent().getData().toString();
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final Button okButton = findButton(R.id.user_registration_ok_button);
@@ -123,23 +136,23 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 				final Intent data = new Intent();
 				final String[] result = { null };
 				result[0] = "Registration is not implemented yet";
-				/*
-				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				final Runnable runnable = new Runnable() {
 					public void run() {
 						try {
-							mgr.registerUser(userName, password, email);
-							if (mgr.mayBeAuthorised(true) && mgr.needsInitialization()) {
-								mgr.initialize();
-							}
+							String url = signUpURL;
+							url = ZLNetworkUtil.appendParameter(url, "new_login", userName);
+							url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
+							url = ZLNetworkUtil.appendParameter(url, "mail", email);
+            
+							final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader("litres.ru");
+            
+							ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, null, xmlReader));
 						} catch (ZLNetworkException e) {
-							mgr.logOut();
 							result[0] = e.getMessage();
 						}
 					}
 				};
 				UIUtil.wait("registerUser", runnable, UserRegistrationActivity.this);
-				*/
 				if (result[0] == null) {
 					data.putExtra(USER_REGISTRATION_USERNAME, userName);
 					data.putExtra(USER_REGISTRATION_PASSWORD, password);

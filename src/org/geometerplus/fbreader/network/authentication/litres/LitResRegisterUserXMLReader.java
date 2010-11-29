@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkException;
 
-class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
+public class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
 	private static final String TAG_REGISTRATION_FAILED = "catalit-registration-failed";
 
