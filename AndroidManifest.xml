@@ -83,6 +83,10 @@
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryTreeActivity" android:process=":library" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookSearchActivity" />
 		</activity>
+		
+		<activity android:name="org.geometerplus.android.fbreader.library.FileManager" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.FilterView" android:process=":library"/>
+
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookmarkSearchActivity" />
@@ -144,8 +148,5 @@
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" />
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
 		<service android:name="org.geometerplus.android.fbreader.network.LibraryInitializationService" android:process=":networkLibrary" />
-		
-		<activity android:name="org.geometerplus.android.fbreader.fmanager.FileManager" android:process=":library" android:label="@string/fmanager_activity"></activity>
-		<activity android:name="org.geometerplus.android.fbreader.fmanager.FilterView" android:process=":library" android:label="@string/filter_activity"></activity>
 </application>
 </manifest> 
