@@ -21,12 +21,13 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
-import org.geometerplus.fbreader.network.NetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 	private static final String TAG_AUTHORIZATION_OK = "catalit-authorization-ok";
 	private static final String TAG_REGISTRATION_FAILED = "catalit-registration-failed";
+
+	private final ZLResource myResource = ZLResource.resource("userRegistration").getResource("error");
 
 	public String Sid;
 
@@ -40,27 +41,29 @@ public class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 		if (TAG_REGISTRATION_FAILED == tag) {
 			final String error = attributes.getValue("error");
 			if ("1".equals(error)) {
-				setException(new ZLNetworkException(NetworkException.ERROR_LOGIN_ALREADY_TAKEN));
+				setErrorMessage(myResource.getResource("usernameAlreadyTaken").getValue());
 			} else if ("2".equals(error)) {
-				setException(new ZLNetworkException(NetworkException.ERROR_LOGIN_WAS_NOT_SPECIFIED));
+				setErrorMessage(myResource.getResource("usernameNotSpecified").getValue());
 			} else if ("3".equals(error)) {
-				setException(new ZLNetworkException(NetworkException.ERROR_PASSWORD_WAS_NOT_SPECIFIED));
+				setErrorMessage(myResource.getResource("passwordNotSpecified").getValue());
 			} else if ("4".equals(error)) {
-				setException(new ZLNetworkException(NetworkException.ERROR_INVALID_EMAIL));
+				setErrorMessage(myResource.getResource("invalidEMail").getValue());
 			} else if ("5".equals(error)) {
-				setException(new ZLNetworkException(NetworkException.ERROR_TOO_MANY_REGISTRATIONS));
+				setErrorMessage(myResource.getResource("tooManyRegistrations").getValue());
+			} else if ("6".equals(error)) {
+				setErrorMessage(myResource.getResource("emailAlreadyTaken").getValue());
 			} else {
 				final String comment = attributes.getValue("coment");
 				if (comment != null) {
-					setException(new ZLNetworkException(true, comment));
+					setErrorMessage(comment);
 				} else {
-					setException(new ZLNetworkException(NetworkException.ERROR_INTERNAL));
+					setErrorMessage(myResource.getResource("errorDuringRegistration").getValue().replace("%s", error));
 				}
 			}
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			Sid = attributes.getValue("sid");
 		} else {
-			setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));
+			setErrorMessage(myResource.getResource("somethingWrong").getValue().replace("%s", HostName));
 		}
 		return true;
 	}

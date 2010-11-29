@@ -35,6 +35,10 @@ class LitResAuthenticationXMLReader extends ZLXMLReaderAdapter {
 		myException = e;
 	}
 
+	protected void setErrorMessage(String errorMessage) {
+		myException = new ZLNetworkException(true, errorMessage);
+	}
+
 	public ZLNetworkException getException() {
 		return myException;
 	}

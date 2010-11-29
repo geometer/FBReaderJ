@@ -13,17 +13,11 @@
 				<data android:scheme="http" android:host="data.fbreader.org" android:path="/packages/org.geometerplus.fbreader.plugin.network.litres.apk" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".AuthActivity" android:label="FBReader Authentication" android:configChanges="orientation|keyboardHidden">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-				<action android:name="android.fbreader.action.AUTHENTICATION" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".RegisterDialogActivity" android:configChanges="orientation|keyboardHidden">
+		<activity android:name="org.geometerplus.android.fbreader.network.UserRegistrationActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="android.fbreader.action.NETWORK_LIBRARY_REGISTER" />
-				<data android:scheme="http" android:host="data.fbreader.org" android:path="/catalogs/litres" />
+				<data android:scheme="https" android:host="robot.litres.ru" />
 			</intent-filter>
 		</activity>
 	</application>

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tools_dir=~/android-sdk-mac_86/tools
+tools_dir=~/android-sdk-mac_x86/tools
 signed_jar=bin/FBReaderJ-plugin-litres.apk
 unsigned_jar=bin/FBReaderJ-plugin-litres-unsigned.apk
 

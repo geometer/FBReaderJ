@@ -60,7 +60,7 @@
 			<node name="networkSearch" value="Network search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
-			<node name="signUp" value="Register"/>
+			<node name="signUp" value="Sign up"/>
 			<node name="signOut" value="Sign out (%s)"/>
 			<node name="refillAccount" value="Refill account"/>
 			<node name="addCustomCatalog" value="Add catalog"/>
@@ -445,12 +445,6 @@
 			<node name="purchaseAlreadyPurchased" value="Already purchased" />
 			<node name="bookNotPurchased" value="Book was not purchased" />
 			<node name="downloadLimitExceeded" value="Download limit exceeded" />
-			<node name="loginAlreadyTaken" value="Username is already in use" />
-			<node name="loginNotSpecified" value="Please, enter a username" />
-			<node name="passwordNotSpecified" value="Please, enter a non-empty password" />
-			<node name="emailNotSpecified" value="Please, enter an e-mail address" />
-			<node name="invalidEMail" value="Invalid e-mail address" />
-			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" />
 			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address" />
 			<node name="unsupportedOperation" value="Unsupported operation" />
 			<node name="notAnOPDS" value="This is not an OPDS catalog" />
@@ -526,11 +520,17 @@
 		<node name="confirmPassword" value="Password&#10;confirmation" />
 		<node name="email" value="E-mail" />
 		<node name="error">
+			<node name="usernameAlreadyTaken" value="Username is already in use" />
 			<node name="usernameNotSpecified" value="Please, enter a username" />
-			<node name="passwordNotSpecified" value="Please, enter a non-empty password" />
+			<node name="passwordNotSpecified" value="Please, enter a password" />
 			<node name="passwordsDoNotMatch" value="The entered passwords do not match" />
 			<node name="emailNotSpecified" value="Please, enter an e-mail address" />
+			<node name="emailAlreadyTaken" value="E-mail address is already in use" />
 			<node name="invalidEMail" value="Invalid e-mail address" />
+			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" />
+			<node name="invalidEMail" value="Invalid e-mail address" />
+			<node name="errorDuringRegistation" value="Error %s is occured" />
+			<node name="somethingWrong" value="Something goes wrong for&#10;%s" />
 		</node>
 	</node>
 </resources>
