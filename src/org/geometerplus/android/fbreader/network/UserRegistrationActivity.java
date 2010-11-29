@@ -145,7 +145,7 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
             
 							final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader("litres.ru");
             
-							ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, null, xmlReader));
+							ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, "network/litres.ru.crt", xmlReader));
 						} catch (ZLNetworkException e) {
 							result[0] = e.getMessage();
 						}
