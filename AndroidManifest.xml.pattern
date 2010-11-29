@@ -138,7 +138,7 @@
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="android.fbreader.action.NETWORK_LIBRARY_REGISTER" />
-				<data android:scheme="http" android:host="data.fbreader.org" android:pathPattern="/catalogs/litres.*" />
+				<data android:scheme="https" android:host="robot.litres.ru" />
 			</intent-filter>
 		</activity>
 		<service android:name="org.geometerplus.android.fbreader.network.ItemsLoadingService" android:process=":networkLibrary" />

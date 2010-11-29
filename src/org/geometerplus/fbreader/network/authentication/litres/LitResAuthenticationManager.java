@@ -30,9 +30,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.*;
 
-
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
-
 	private boolean mySidChecked;
 
 	private ZLStringOption mySidUserNameOption;

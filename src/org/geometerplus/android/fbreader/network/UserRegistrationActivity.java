@@ -19,32 +19,27 @@
 
 package org.geometerplus.android.fbreader.network;
 
-//import java.lang.reflect.*;
-//import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
-//import android.app.Dialog;
 import android.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-//import android.content.Context;
 import android.content.Intent;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-//import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-//import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-//import org.geometerplus.fbreader.network.NetworkException;
-//import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-public class UserRegistrationActivity extends Activity {
+public class UserRegistrationActivity extends Activity implements UserRegistrationConstants {
 	private final ZLResource myResource = ZLResource.resource("userRegistration");
 
 	private TextView findTextView(int resourceId) {
@@ -63,10 +58,14 @@ public class UserRegistrationActivity extends Activity {
 		findTextView(resourceId).setText(myResource.getResource(fbResourceKey).getValue());
 	}
 
-	private void setErrorMessageFromResource(String resourceKey) {
+	private void setErrorMessage(String errorMessage) {
 		final TextView errorLabel = findTextView(R.id.user_registration_error);
 		errorLabel.setVisibility(View.VISIBLE);
-		errorLabel.setText(myResource.getResource("error").getResource(resourceKey).getValue());
+		errorLabel.setText(errorMessage);
+	}
+
+	private void setErrorMessageFromResource(String resourceKey) {
+		setErrorMessage(myResource.getResource("error").getResource(resourceKey).getValue());
 	}
 
 	@Override
@@ -87,7 +86,7 @@ public class UserRegistrationActivity extends Activity {
 		errorLabel.setVisibility(View.GONE);
 		errorLabel.setText("");
 
-		final Intent intent = getIntent();
+		final String url = getIntent().getData().toString();
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final Button okButton = findButton(R.id.user_registration_ok_button);
@@ -105,7 +104,7 @@ public class UserRegistrationActivity extends Activity {
 					return;
 				}
 				if (!password.equals(confirmPassword)) {
-					setErrorMessageFromResource("passwordDoesNotMatch");
+					setErrorMessageFromResource("passwordsDoNotMatch");
 					return;
 				}
 				if (password.length() == 0) {
@@ -122,9 +121,34 @@ public class UserRegistrationActivity extends Activity {
 					return;
 				}
 				final Intent data = new Intent();
-				data.putExtra("userName", userName);
-				setResult(RESULT_OK, data);
-				finish();
+				final String[] result = { null };
+				result[0] = "Registration is not implemented yet";
+				/*
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+				final Runnable runnable = new Runnable() {
+					public void run() {
+						try {
+							mgr.registerUser(userName, password, email);
+							if (mgr.mayBeAuthorised(true) && mgr.needsInitialization()) {
+								mgr.initialize();
+							}
+						} catch (ZLNetworkException e) {
+							mgr.logOut();
+							result[0] = e.getMessage();
+						}
+					}
+				};
+				UIUtil.wait("registerUser", runnable, UserRegistrationActivity.this);
+				*/
+				if (result[0] == null) {
+					data.putExtra(USER_REGISTRATION_USERNAME, userName);
+					data.putExtra(USER_REGISTRATION_PASSWORD, password);
+					data.putExtra(USER_REGISTRATION_EMAIL, email);
+					setResult(RESULT_OK, data);
+					finish();
+				} else {
+					setErrorMessage(result[0]);
+				}
 			}
 		});
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -194,11 +218,6 @@ public class UserRegistrationActivity extends Activity {
 			}
 		};
 		UIUtil.wait("registerUser", runnable, myActivity);
-	}
-
-	@Override
-	protected void onNegative(DialogInterface dialog) {
-		sendCancel(false);
 	}
 */
 }
