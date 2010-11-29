@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,10 +38,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class FileListView {
 	private Activity myParent;
-	private ListView myListView;
 	private String myCurDir = ".";
 	private String myCurFile = ".";
-	private List<String> myHistory = new ArrayList<String>();
 	private String myFilterTypes = "";
 
 	// Members for dynamic loading //
@@ -54,7 +52,6 @@ public class FileListView {
 	
 	public FileListView(Activity parent, ListView listView) {
 		myParent = parent;
-		myListView = listView;
 
 		// set parameters ProgressDialog
 		myProgressDialog = new ProgressDialog(myParent);
@@ -62,29 +59,26 @@ public class FileListView {
 		myProgressDialog.setMessage("Retrieving data ...");
 		
 		myAdapter = new ArrayAdapter<String>(myParent, R.layout.list_item);
-		myListView.setAdapter(myAdapter);
+		listView.setAdapter(myAdapter);
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
 		myFilter = new SmartFilter(myParent, myOrders, myReturnRes);
+
+		final String startPath = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
+		final String fileTypes = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
+		fill(startPath, fileTypes);
 		
-		init(myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH));
-		
-		myListView.setTextFilterEnabled(true);
-		myListView.setOnItemClickListener(new OnItemClickListener() {
+		listView.setTextFilterEnabled(true);
+		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				view.setSelected(true);
-				
+		
+				myCurDir = startPath;
 				myCurFile = ((TextView) view).getText().toString();
-				if (new File(myCurDir + "/" + myCurFile).isDirectory())
-					myHistory.add(myCurFile);
 				goAtDir(myCurDir + "/" + myCurFile);
 			}
 		});
 
-	}
-
-	public ListView getListView() {
-		return myListView;
 	}
 
 	public String getFilterTypes(){
@@ -97,9 +91,6 @@ public class FileListView {
 		return myCurDir + "/" + myCurFile;
 	}
 	
-	public void goAtBack(){
-		back();
-	}
 	
 	public void setFilter(String filterTypes){
 		if (!myFilterTypes.equals(filterTypes)){
@@ -108,50 +99,32 @@ public class FileListView {
 		}
 	}
 	
-	private void back(){
-		if (myHistory.size() > 0){
-			
-		// TODO delete later 
-			for (String s : myHistory){
-				Log.v(FileManager.FILE_MANAGER_LOG_TAG, "histiry : " + s);
-			}
-			
-			String dir = myHistory.remove(myHistory.size() - 1);
+	public void back(){
+		String[] dirs = myCurDir.split("[\\/]+"); 
+		if (dirs.length > 1){
+			String dir = dirs[dirs.length - 1];
 			myCurDir = myCurDir.substring(0, myCurDir.length() - dir.length() - 1);
-			goAtDir(myCurDir);
-		}
-	}
-	
-	private void init(String path){
-		myProgressDialog.show();
-		File file = new File(path);
-		myCurDir = path;
-		myFilter.setPreferences(file, myFilterTypes);
-		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
-		myCurFilterThread.start();
-		
-		for(String dir : myCurDir.split("[\\/]+")){
-			myCurFile = dir;
-			myCurDir += "/" + dir;
-			
-			Log.v(FileManager.FILE_MANAGER_LOG_TAG, "file: " + myCurFile + "\t dir: " + myCurDir);
-
-			myHistory.add(myCurFile);
 			goAtDir(myCurDir);
 		}
 	}
 	
 	public void goAtDir(String path) {
 		if (new File(path).isDirectory()){
-
-			myProgressDialog.show();
-			File file = new File(path);
-			myCurDir = path;
 			myCurFilterThread.interrupt();
-			myFilter.setPreferences(file, myFilterTypes);
-			myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
-			myCurFilterThread.start();
+			Intent i = new Intent(myParent, FileManager.class);
+			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
+			i.putExtra(FileManager.FILE_MANAGER_TYPE, myFilterTypes);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+		    myParent.startActivity(i);
 		}
 	}
 	
+	private void fill(String path, String fileTypes){
+		myProgressDialog.show();
+		File file = new File(path);
+		myCurDir = path;
+		myFilter.setPreferences(file, fileTypes);
+		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
+		myCurFilterThread.start();
+	}
 }

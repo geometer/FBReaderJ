@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.library;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -83,6 +84,9 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 					.putExtra(FBReader.BOOK_PATH_KEY, ((BookTree)tree).Book.File.getPath())
 					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
 			);
+			// TODO delete later
+			Log.v(FileManager.FILE_MANAGER_LOG_TAG, " asasasa + " + ((BookTree)tree).Book.File.getPath());
+			
 		} else {
 			new OpenTreeRunnable(
 				myTreePathString + "\000" + tree.getName(),

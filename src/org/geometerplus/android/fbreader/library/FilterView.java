@@ -35,8 +35,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class FilterView extends Activity{
-	ZLResource resource = ZLResource.resource("fmanagerView").getResource("types");
-	List<CheckBox> myListChBox = new ArrayList<CheckBox>();
+	private List<CheckBox> myListChBox = new ArrayList<CheckBox>();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,8 @@ public class FilterView extends Activity{
 	}
 
 	private void setCurrentTypes(){
-		String types = getIntent().getAction();
+		// TODO
+		String types = getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
 		if (types.equals(""))
 			return;
 		for (String type : types.split("[\\s]+")) {

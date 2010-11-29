@@ -19,11 +19,16 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.io.File;
+
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,10 +42,6 @@ public final class FileManager extends Activity {
 	private static String SDCARD_DIR = "./sdcard";
 	
 	private FileListView myFileListView;
-	
-	
-	// TODO new
-	public static String FILE_MANAGER_PATH = "fm_path";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,6 @@ public final class FileManager extends Activity {
 		
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
 		myFileListView = new FileListView(this, fileList);
-		
-		
 		
 		fbhomeButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -92,20 +91,22 @@ public final class FileManager extends Activity {
 		
 		backButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				myFileListView.goAtBack();
+				myFileListView.back();
 			}
 		});
 		
 		okButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// TODO
-				finish();
+				String path = myFileListView.getPathToFile();
+				if (path != null){
+					Log.v(FILE_MANAGER_LOG_TAG, "paht to book : " + path);
+					launchFBReaderView(path);
+				}
 			}
 		});
 
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// TODO
 				finish();
 			}
 		});
@@ -113,10 +114,17 @@ public final class FileManager extends Activity {
 		
 	}
 
-    protected void launchFilterView() {
-        // TODO refact
+	private void launchFBReaderView(String path){
+		Intent i = new Intent(this, FBReader.class);
+		i.setAction(Intent.ACTION_VIEW);
+		i.putExtra(FBReader.BOOK_PATH_KEY, path);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(i);
+	}
+	
+    private void launchFilterView() {
     	Intent i = new Intent(this, FilterView.class);
-        i.setAction(myFileListView.getFilterTypes());
+        i.putExtra(FILE_MANAGER_TYPE, myFileListView.getFilterTypes());
         startActivityForResult(i, 1);
     }
 
@@ -126,6 +134,9 @@ public final class FileManager extends Activity {
 		if (data != null)
 			myFileListView.setFilter(data.getAction());
 	}
+	
+	public static String FILE_MANAGER_PATH = "file_manager.path";
+	public static String FILE_MANAGER_TYPE = "file_manager.type";
 	
 	public static String FILE_MANAGER_LOG_TAG = "FileManager";
 }
