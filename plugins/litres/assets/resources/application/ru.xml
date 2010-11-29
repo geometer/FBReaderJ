@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="userRegistration">
+		<node name="title" value="Новый пользователь" />
+		<node name="login" value="Имя пользователя" />
+		<node name="password" value="Пароль" />
+		<node name="confirmPassword" value="Еще раз пароль" />
+		<node name="email" value="E-mail" />
+		<node name="error">
+			<node name="usernameAlreadyTaken" value="Это имя пользователя занято" />
+			<node name="usernameNotSpecified" value="Введите имя пользователя" />
+			<node name="passwordNotSpecified" value="Введите пароль" />
+			<node name="passwordsDoNotMatch" value="Вы ввели 2 разных пароля" />
+			<node name="emailNotSpecified" value="Введите e-mail" />
+			<node name="emailAlreadyTaken" value="Пользователь с таким e-mail уже зарегистрирован" />
+			<node name="invalidEMail" value="Некорректный e-mail" />
+			<node name="tooManyRegistrations" value="Слишком много регистраций с вашего IP;&#10;попробуйте еще раз через пару минут" />
+			<node name="errorDuringRegistation" value="Ошибка номер %s" />
+			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
+		</node>
+		<node name="waitMessage">
+			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста..." />
+		</node>
+	</node>
+</resources>

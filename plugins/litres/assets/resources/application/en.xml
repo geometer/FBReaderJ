@@ -15,7 +15,6 @@
 			<node name="emailAlreadyTaken" value="E-mail address is already in use" />
 			<node name="invalidEMail" value="Invalid e-mail address" />
 			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" />
-			<node name="invalidEMail" value="Invalid e-mail address" />
 			<node name="errorDuringRegistation" value="Error %s is occured" />
 			<node name="somethingWrong" value="Something goes wrong for&#10;%s" />
 		</node>
