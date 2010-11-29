@@ -133,13 +133,6 @@
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.network.NetworkSearchActivity" />
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkCatalogActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name="org.geometerplus.android.fbreader.network.UserRegistrationActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-				<action android:name="android.fbreader.action.NETWORK_LIBRARY_REGISTER" />
-				<data android:scheme="https" android:host="robot.litres.ru" />
-			</intent-filter>
-		</activity>
 		<service android:name="org.geometerplus.android.fbreader.network.ItemsLoadingService" android:process=":networkLibrary" />
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" />
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
