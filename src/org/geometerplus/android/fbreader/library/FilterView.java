@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.library;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
@@ -34,7 +35,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class FilterView extends Activity{
-	
+	ZLResource resource = ZLResource.resource("fmanagerView").getResource("types");
 	List<CheckBox> myListChBox = new ArrayList<CheckBox>();
 	
 	@Override
@@ -42,16 +43,16 @@ public class FilterView extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filter);
 
-		myListChBox.add((CheckBox) findViewById(R.id.checkboxTypeTXT));
-		myListChBox.add((CheckBox) findViewById(R.id.checkboxTypeFB2));
-		myListChBox.add((CheckBox) findViewById(R.id.checkboxTypePDF));
-		myListChBox.add((CheckBox) findViewById(R.id.checkboxTypeDOC));
-		myListChBox.add((CheckBox) findViewById(R.id.checkboxTypeDOCX));
-		myListChBox.add((CheckBox) findViewById(R.id.checkboxTypeODT));
+		myListChBox.add(getCheckBox(R.id.checkboxTypeTXT, "txt"));
+		myListChBox.add(getCheckBox(R.id.checkboxTypeFB2, "fb2"));
+		myListChBox.add(getCheckBox(R.id.checkboxTypePDF, "pdf"));
+		myListChBox.add(getCheckBox(R.id.checkboxTypeDOC, "doc"));
+		myListChBox.add(getCheckBox(R.id.checkboxTypeDOCX, "docx"));
+		myListChBox.add(getCheckBox(R.id.checkboxTypeODT, "odt"));
 		
 		setCurrentTypes();
 		
-		CheckBox checkBoxAll = (CheckBox)findViewById(R.id.checkboxAll);
+		CheckBox checkBoxAll = getCheckBox(R.id.checkboxAll, "all");
 		checkBoxAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				for (CheckBox ch : myListChBox){
@@ -60,10 +61,9 @@ public class FilterView extends Activity{
 			}
 		});
 		
-		
-		Button cancelButton = (Button) findViewById(R.id.cancelButton);
-		Button okButton = (Button) findViewById(R.id.okButton);
-		
+		Button okButton = FileUtils.getOkBtn(this, R.id.okButton);
+		Button cancelButton = FileUtils.getCancelBtn(this, R.id.cancelButton);
+
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				finish();
@@ -95,5 +95,12 @@ public class FilterView extends Activity{
 				}
 			}
 		}
+	}
+	
+	private CheckBox getCheckBox(int id, String keyName){
+		ZLResource resource = ZLResource.resource("fmanagerView").getResource("types");
+		CheckBox chBox =  (CheckBox) findViewById(id);
+		chBox.setText(resource.getResource(keyName).getValue());
+		return chBox;
 	}
 }

@@ -107,8 +107,6 @@ public class SmartFilter implements Runnable {
 				// В реальных условиях здесь
 				// код будет красивее
 				// timeKiller() - работаем c файлом
-				// FIXME delete later!!!
-//				timeKiller(); // TODO DELETE LATER
 
 				String fileName = null;
 				if (file.isDirectory())

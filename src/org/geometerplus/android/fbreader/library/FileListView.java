@@ -37,8 +37,6 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FileListView {
-	private static final String START_DIR = "sdcard/Books";
-	
 	private Activity myParent;
 	private ListView myListView;
 	private String myCurDir = ".";
@@ -54,7 +52,6 @@ public class FileListView {
 	private Thread myCurFilterThread;
 	private ProgressDialog myProgressDialog;
 	
-
 	public FileListView(Activity parent, ListView listView) {
 		myParent = parent;
 		myListView = listView;
@@ -69,7 +66,7 @@ public class FileListView {
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
 		myFilter = new SmartFilter(myParent, myOrders, myReturnRes);
 		
-		init(myCurDir);
+		init(myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH));
 		
 		myListView.setTextFilterEnabled(true);
 		myListView.setOnItemClickListener(new OnItemClickListener() {
@@ -133,7 +130,7 @@ public class FileListView {
 		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
 		myCurFilterThread.start();
 		
-		for(String dir : START_DIR.split("[\\/]+")){
+		for(String dir : myCurDir.split("[\\/]+")){
 			myCurFile = dir;
 			myCurDir += "/" + dir;
 			

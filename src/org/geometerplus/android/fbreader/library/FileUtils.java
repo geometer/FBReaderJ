@@ -27,8 +27,34 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileUtils {
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import android.app.Activity;
+import android.widget.Button;
+import android.widget.ImageButton;
+
+public class FileUtils {
+	
+	public static Button getOkBtn(Activity parent, int id){
+		return getBtn(parent, id, "ok");
+	}
+
+	public static Button getCancelBtn(Activity parent, int id){
+		return getBtn(parent, id, "cancel");
+	}
+	
+	public static Button getBtn(Activity parent, int id, String keyName){
+		Button btn = (Button)parent.findViewById(id);
+		btn.setText(ZLResource.resource("dialog").getResource("button").getResource(keyName).getValue());
+		return btn;
+	}
+
+	public static ImageButton getImgBtn(Activity parent, int id, int resId){
+		ImageButton imgBtn = (ImageButton) parent.findViewById(id);
+		imgBtn.setImageResource(resId);
+		return imgBtn;
+	}
+	
 	// unstable - not testing
 	public static void copyRecursive(String src, String path)
 			throws IOException {

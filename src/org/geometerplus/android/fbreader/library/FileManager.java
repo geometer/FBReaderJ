@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
@@ -37,6 +38,10 @@ public final class FileManager extends Activity {
 	
 	private FileListView myFileListView;
 	
+	
+	// TODO new
+	public static String FILE_MANAGER_PATH = "fm_path";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(FILE_MANAGER_LOG_TAG, "onCreate()");
@@ -44,18 +49,19 @@ public final class FileManager extends Activity {
 		setContentView(R.layout.file_manager);
 		
 		// Obtain handles to UI objects
-		ImageButton fbhomeButton = (ImageButton) findViewById(R.id.fmanagerFBHomeButton);
-		ImageButton cardButton = (ImageButton) findViewById(R.id.fmanagerCardButton);
-		ImageButton rootButton = (ImageButton) findViewById(R.id.fmanagerRootButton);
-		ImageButton filterButton = (ImageButton) findViewById(R.id.fmanagerFilterButton);
-		ImageButton backButton = (ImageButton) findViewById(R.id.fmanagerBackButton);
+		ImageButton fbhomeButton = FileUtils.getImgBtn(this, R.id.fmanagerFBHomeButton, R.drawable.home); 
+		ImageButton cardButton = FileUtils.getImgBtn(this, R.id.fmanagerCardButton, R.drawable.sdcard);
+		ImageButton rootButton = FileUtils.getImgBtn(this, R.id.fmanagerRootButton, R.drawable.root);
+		ImageButton filterButton = FileUtils.getImgBtn(this, R.id.fmanagerFilterButton, R.drawable.filter);
+		ImageButton backButton = FileUtils.getImgBtn(this, R.id.fmanagerBackButton, R.drawable.back);
 		
-		Button okButton = (Button) findViewById(R.id.fmanagerOkButton);
-		Button cancelButton = (Button) findViewById(R.id.fmanagerCancelButton);
+		Button okButton = FileUtils.getOkBtn(this, R.id.fmanagerOkButton);
+		Button cancelButton = FileUtils.getCancelBtn(this, R.id.fmanagerCancelButton); 
 		
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
 		myFileListView = new FileListView(this, fileList);
-
+		
+		
 		
 		fbhomeButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -108,7 +114,8 @@ public final class FileManager extends Activity {
 	}
 
     protected void launchFilterView() {
-        Intent i = new Intent(this, FilterView.class);
+        // TODO refact
+    	Intent i = new Intent(this, FilterView.class);
         i.setAction(myFileListView.getFilterTypes());
         startActivityForResult(i, 1);
     }
@@ -119,7 +126,6 @@ public final class FileManager extends Activity {
 		if (data != null)
 			myFileListView.setFilter(data.getAction());
 	}
-
 	
 	public static String FILE_MANAGER_LOG_TAG = "FileManager";
 }
