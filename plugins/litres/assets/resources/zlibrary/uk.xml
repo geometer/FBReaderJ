@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ukrainian zlibrary resources, by Dmytro Shevchenko -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="ОК"/>
+			<node name="cancel" value="Відмінити"/>
+		</node>
+	</node>
+</resources>

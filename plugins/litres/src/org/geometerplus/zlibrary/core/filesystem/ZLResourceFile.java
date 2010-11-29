@@ -22,7 +22,16 @@ package org.geometerplus.zlibrary.core.filesystem;
 import java.io.InputStream;
 import java.io.IOException;
 
+import android.content.Context;
+
 public class ZLResourceFile {
+	private static Context ourContext;
+
+	public static void init(Context context) {
+		System.err.println("init context = " + context);
+		ourContext = context;
+	}
+
 	public static ZLResourceFile createResourceFile(String path) {
 		return new ZLResourceFile(path);
 	}
@@ -34,7 +43,7 @@ public class ZLResourceFile {
 	}
 
 	public InputStream getInputStream() throws IOException {
-		//return myApplication.getAssets().open(myPath);
-		return null;
+		System.err.println("InputStream requested, context = " + ourContext);
+		return ourContext.getAssets().open(myPath);
 	}
 }

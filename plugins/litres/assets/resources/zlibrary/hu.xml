@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hungarian zlibrary resources, by L. B. Szabó. Based on FBReader translation by Sándor Gábor -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK" />
+			<node name="cancel" value="Mégsem" />
+		</node>
+	</node>
+</resources>

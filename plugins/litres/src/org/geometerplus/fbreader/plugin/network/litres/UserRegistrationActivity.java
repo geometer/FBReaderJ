@@ -34,13 +34,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 public class UserRegistrationActivity extends Activity implements UserRegistrationConstants {
-	private final ZLResource myResource = ZLResource.resource("userRegistration");
+	private ZLResource myResource;
 
 	private TextView findTextView(int resourceId) {
 		return (TextView)findViewById(resourceId);
@@ -75,6 +76,9 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		ZLResourceFile.init(getApplicationContext());
+		myResource = ZLResource.resource("userRegistration");
 
 		//Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 

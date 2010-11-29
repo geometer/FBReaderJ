@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- German zlibrary resources, by Victor Massini-->
+<!-- Updated by Ingolf Kübler 2010/11/17 -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK" />
+			<node name="cancel" value="Abbruch" />
+		</node>
+	</node>
+</resources>

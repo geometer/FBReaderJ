@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Chinese zlibrary resources, by http://shucang.com/ -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="确定" />
+			<node name="cancel" value="取消" />
+		</node>
+	</node>
+</resources>
