@@ -434,7 +434,6 @@
 			<node name="authentication" value="Authentication. Please, wait..." />
 			<node name="signOut" value="Signing out. Please, wait..." />
 			<node name="purchaseBook" value="Purchase book. Please, wait..." />
-			<node name="registerUser" value="Registering new account. Please, wait..." />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
 		</node>

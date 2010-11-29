@@ -4,6 +4,88 @@
 		<node name="button">
 			<node name="ok" value="ОК"/>
 			<node name="cancel" value="Отменить"/>
+			<node name="yes" value="Да"/>
+			<node name="no" value="Нет"/>
+			<node name="apply" value="Применить"/>
 		</node>
+		<node name="networkError">
+			<node name="title" value="Ошибка при работе с сетью" />
+			<node name="unknownErrorMessage" value="Неизвестная ошибка" />
+			<node name="operationTimedOutMessage" value="Отведенное время истекло" />
+			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Не удалось создать файл&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Не удалось соединиться с сетью" />
+			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Не удается найти сайт&#10;%s" />
+			<node name="authenticationFailed" value="Ошибка авторизации" />
+			<node name="unsupportedProtocol" value="Неизвестный протокол" />
+			<node name="invalidURL" value="Неправильный URL" />
+			<node name="hostCantBeReached" value="Сайт %s недоступен" />
+			<node name="connectionRefused" value="Соединение закрыто сайтом&#10;%s" />
+			<node name="sslError" value="Ошибка подсистемы SSL" />
+			<node name="sslConnectErrorMessage" value="Проблема установления SSL/TLS соединения:&#10;%s" />
+			<node name="sslBadKey" value="Плохой SSL сертификат получен от:&#10;%s" />
+			<node name="sslPeerUnverified" value="Невозможно проверить подлинность сайта:&#10;%s" />
+			<node name="sslProtocolError" value="Ошибка в работе протокола SSL" />
+			<node name="sslBadCertificateFileMessage" value="Не могу прочитать файл сертификата SSL CA:&#10;%s" />
+			<node name="sslCertificateExpired" value="Истек срок действия сертификата SSL:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Срок действия сертификата SSL еще не наступил:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Красный"/>
+		<node name="green" value="Зеленый"/>
+		<node name="blue" value="Синий"/>
+		<node name="black" value="Черный"/>
+		<node name="white" value="Белый"/>
+		<node name="maroon" value="Бордовый"/>
+		<node name="olive" value="Оливковый"/>
+		<node name="navy" value="Темно-синий"/>
+		<node name="purple" value="Фиолетовый"/>
+		<node name="teal" value="Темно-голубой"/>
+		<node name="silver" value="Серебристый"/>
+		<node name="gray" value="Серый"/>
+		<node name="lime" value="Светло-зеленый"/>
+		<node name="yellow" value="Желтый"/>
+		<node name="magenta" value="Пурпурный"/>
+		<node name="cyan" value="Голубой"/>
+		<node name="custom..." value="Настроить..."/>
+	</node>
+	<node name="language">
+		<node name="ar" value="арабский" />
+		<node name="cs" value="чешский" />
+		<node name="de" value="немецкий" />
+		<node name="de-traditional" value="немецкий (старая орфография)" />
+		<node name="el" value="греческий" />
+		<node name="en" value="английский" />
+		<node name="eo" value="эсперанто" />
+		<node name="es" value="испанский" />
+		<node name="fi" value="финский" />
+		<node name="fr" value="французский" />
+		<node name="he" value="иврит" />
+		<node name="hu" value="венгерский" />
+		<node name="id" value="индонезийский" />
+		<node name="it" value="итальянский" />
+		<node name="lt" value="литовский" />
+		<node name="nl" value="голландский" />
+		<node name="no" value="норвежский" />
+		<node name="pl" value="польский" />
+		<node name="pt" value="португальский" />
+		<node name="ru" value="русский" />
+		<node name="sv" value="шведский" />
+		<node name="tr" value="турецкий" />
+		<node name="uk" value="украинский" />
+		<node name="vi" value="вьетнамский" />
+		<node name="zh" value="китайский" />
+		<node name="other" value="другой" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="включить"/>
+		<node name="off" value="выключить"/>
+		<node name="unchanged" value="не менять"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Действие для"/>
 	</node>
 </resources>

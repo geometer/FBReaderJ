@@ -141,7 +141,7 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 							url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
 							url = ZLNetworkUtil.appendParameter(url, "mail", email);
             
-							final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader("litres.ru");
+							final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader("litres.ru", myResource.getResource("error"));
             
 							ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, "network/litres.ru.crt", xmlReader));
 						} catch (ZLNetworkException e) {
@@ -237,7 +237,7 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 */
 	synchronized void runWithMessage(String key, final Runnable action, final Runnable postAction) {
 		final String message =
-			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
+			myResource.getResource("waitMessage").getResource(key).getValue();
 		final ProgressDialog progress = ProgressDialog.show(this, null, message, true, false);
 
 		final Handler handler = new Handler() {

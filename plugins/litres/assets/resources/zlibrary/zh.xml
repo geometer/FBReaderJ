@@ -5,6 +5,88 @@
 		<node name="button">
 			<node name="ok" value="确定" />
 			<node name="cancel" value="取消" />
+			<node name="yes" value="是" />
+			<node name="no" value="否" />
+			<node name="apply" value="应用" />
 		</node>
+		<node name="networkError">
+			<node name="title" value="网络错误" />
+			<node name="unknownErrorMessage" value="未知错误" />
+			<node name="operationTimedOutMessage" value="操作超时" />
+			<node name="somethingWrongMessage" value="出错 %s" />
+			<node name="couldntCreateDirectoryMessage" value="无法创建目录 %s" />
+			<node name="couldntCreateFileMessage" value="无法创建文件 %s" />
+			<node name="couldntConnectToNetworkMessage" value="无法连接到网络" />
+			<node name="couldntConnectMessage" value="无法连接到主机%s" />
+			<node name="couldntResolveHostMessage" value="无法解析主机 %s" />
+			<node name="authenticationFailed" value="无法辨识" />
+			<node name="unsupportedProtocol" value="不支持的协议" />
+			<node name="invalidURL" value="无效网址" />
+			<node name="hostCantBeReached" value="网站无法访问 %s" />
+			<node name="connectionRefused" value="连接被拒绝&#10;%s" />
+			<node name="sslError" value="SSL系统错误." />
+			<node name="sslConnectErrorMessage" value="SSL/TLS 连接出现问题:&#10;%s" />
+			<node name="sslBadKey" value="来自:&#10;%s错误的SSL验证消息." />
+			<node name="sslPeerUnverified" value="无法验证所用ID:&#10;%s" />
+			<node name="sslProtocolError" value="执行SSL协议时发生错误." />
+			<node name="sslBadCertificateFileMessage" value="无法读取 SSL CA 证书文件:&#10;%s" />
+			<node name="sslCertificateExpired" value="SSL证书已经过期:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL证书无效:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="红色" />
+		<node name="green" value="绿色" />
+		<node name="blue" value="蓝色" />
+		<node name="black" value="黑色" />
+		<node name="white" value="白色" />
+		<node name="maroon" value="栗色" />
+		<node name="olive" value="橄榄色" />
+		<node name="navy" value="海军色" />
+		<node name="purple" value="紫色" />
+		<node name="teal" value="水鸭色" />
+		<node name="silver" value="银色" />
+		<node name="gray" value="灰色" />
+		<node name="lime" value="石灰色" />
+		<node name="yellow" value="黄色" />
+		<node name="magenta" value="品红色" />
+		<node name="cyan" value="青色" />
+		<node name="custom..." value="定制..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="阿拉伯语" />
+		<node name="cs" value="捷克语" />
+		<node name="de" value="德语" />
+		<node name="de-traditional" value="德语 (传统正字法)" />
+		<node name="el" value="希腊语" />
+		<node name="en" value="英语" />
+		<node name="eo" value="世界语" />
+		<node name="es" value="西班牙语" />
+		<node name="fi" value="芬兰语" />
+		<node name="fr" value="法语" />
+		<node name="he" value="希伯来语" />
+		<node name="hu" value="匈牙利语" />
+		<node name="id" value="印度语" />
+		<node name="it" value="意大利语" />
+		<node name="lt" value="立陶宛语" />
+		<node name="nl" value="荷兰语" />
+		<node name="no" value="挪威语" />
+		<node name="pl" value="波兰语" />
+		<node name="pt" value="葡萄牙语" />
+		<node name="ru" value="俄罗斯语" />
+		<node name="sv" value="瑞典语" />
+		<node name="tr" value="土耳其语" />
+		<node name="uk" value="乌克兰语" />
+		<node name="vi" value="越南语" />
+		<node name="zh" value="中文" />
+		<node name="other" value="其他" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="开" />
+		<node name="off" value="关" />
+		<node name="unchanged" value="不变" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="按键设置快捷操作" />
 	</node>
 </resources>

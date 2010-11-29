@@ -4,6 +4,89 @@
 		<node name="button">
 			<node name="ok" value="Ok" />
 			<node name="cancel" value="Cancel" />
+			<node name="yes" value="Yes" />
+			<node name="no" value="No" />
+			<node name="apply" value="Apply" />
 		</node>
+		<node name="networkError">
+			<node name="title" value="Network error" />
+			<node name="unknownErrorMessage" value="Unknown error" />
+			<node name="operationTimedOutMessage" value="Operation is timed out" />
+			<node name="somethingWrongMessage" value="Something goes wrong for&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Couldn&apos;t create a directory&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Couldn&apos;t create a file&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Couldn&apos;t connect to the network" />
+			<node name="couldntConnectMessage" value="Couldn&apos;t connect to host&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Couldn&apos;t resolve host&#10;%s" />
+			<node name="authenticationFailed" value="Authentication failed" />
+			<node name="unsupportedProtocol" value="Unsupported protocol" />
+			<node name="invalidURL" value="Invalid URL" />
+			<node name="hostCantBeReached" value="Host %s&#10;cannot be reached" />
+			<node name="connectionRefused" value="Connection was refused by&#10;%s" />
+			<node name="sslError" value="SSL subsystem error" />
+			<node name="sslConnectErrorMessage" value="SSL/TLS handshake problem occurred:&#10;%s" />
+			<node name="sslBadKey" value="Bad SSL certificate from:&#10;%s" />
+			<node name="sslPeerUnverified" value="Unable to verify peer's identity for:&#10;%s" />
+			<node name="sslProtocolError" value="Error in the operation of the SSL protocol" />
+			<node name="sslBadCertificateFileMessage" value="Couldn&apos;t read the SSL CA certificate file:&#10;%s" />
+			<node name="sslCertificateExpired" value="SSL certificate has expired:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL certificate is not yet valid:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Red" />
+		<node name="green" value="Green" />
+		<node name="blue" value="Blue" />
+		<node name="black" value="Black" />
+		<node name="white" value="White" />
+		<node name="maroon" value="Maroon" />
+		<node name="olive" value="Olive" />
+		<node name="navy" value="Navy" />
+		<node name="purple" value="Purple" />
+		<node name="teal" value="Teal" />
+		<node name="silver" value="Silver" />
+		<node name="gray" value="Gray" />
+		<node name="lime" value="Lime" />
+		<node name="yellow" value="Yellow" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="Cyan" />
+		<node name="custom..." value="Custom..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic" />
+		<node name="cs" value="Czech" />
+		<node name="de" value="German" />
+		<node name="de-traditional" value="German (traditional orthography)" />
+		<node name="el" value="Greek" />
+		<node name="en" value="English" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Spanish" />
+		<node name="fi" value="Finnish" />
+		<node name="fr" value="French" />
+		<node name="he" value="Hebrew" />
+		<node name="hu" value="Hungarian" />
+		<node name="id" value="Indonesian" />
+		<node name="it" value="Italian" />
+		<node name="lt" value="Lithuanian" />
+		<node name="nl" value="Dutch" />
+		<node name="no" value="Norwegian" />
+		<node name="pl" value="Polish" />
+		<node name="pt" value="Portuguese" />
+		<node name="ru" value="Russian" />
+		<node name="sv" value="Swedish" />
+		<node name="tr" value="Turkish" />
+		<node name="uk" value="Ukrainian" />
+		<node name="vi" value="Vietnamese" />
+		<node name="zh" value="Chinese" />
+		<node name="other" value="Other" />
+		<node name="multi" value="Multilanguage" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on" />
+		<node name="off" value="off" />
+		<node name="unchanged" value="unchanged" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Action for Key" />
 	</node>
 </resources>
