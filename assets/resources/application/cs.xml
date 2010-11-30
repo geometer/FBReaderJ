@@ -62,6 +62,7 @@
 			<node name="reload" value="Znovu načíst"/>
 			<node name="signIn" value="Přihlásit"/>
 			<node name="signOut" value="Odhlásit (%s)"/>
+			<node name="signUp" value="Přihlásit" />
 			<node name="refillAccount" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>

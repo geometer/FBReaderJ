@@ -62,6 +62,7 @@
 			<node name="reload" value="Tải lại"/>
 			<node name="signIn" value="Đăng nhập"/>
 			<node name="signOut" value="Đăng xuất (%s)"/>
+			<node name="signUp" value="Đăng ký" />
 			<node name="refillAccount" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>

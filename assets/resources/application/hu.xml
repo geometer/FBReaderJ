@@ -62,6 +62,7 @@
 			<node name="reload" value="Újratöltés"/>
 			<node name="signIn" value="Bejelentkezés"/>
 			<node name="signOut" value="Kijelentkezés (%s)"/>
+			<node name="signUp" value="Regisztráció" />
 			<node name="refillAccount" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>

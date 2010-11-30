@@ -63,6 +63,7 @@
 			<node name="reload" value="Neu laden"/>
 			<node name="signIn" value="Einloggen"/>
 			<node name="signOut" value="Ausloggen (%s)"/>
+			<node name="signUp" value="Anmelden" />
 			<node name="refillAccount" value="Konto aufladen"/>
 			<node name="addCustomCatalog" value="Katalog hinzufügen"/>
 			<node name="refreshCatalogsList" value="Liste der Kataloge aktualisieren"/>

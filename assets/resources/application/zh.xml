@@ -62,6 +62,7 @@
 			<node name="reload" value="重新加载" />
 			<node name="signIn" value="登录"/>
 			<node name="signOut" value="退出 (%s)"/>
+			<node name="signUp" value="注册" />
 			<node name="refillAccount" toBeTranslated="true" value="Refill account"/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>

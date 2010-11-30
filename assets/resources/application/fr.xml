@@ -65,6 +65,7 @@
 			<node name="reload" value="Recharger"/>
 			<node name="signIn" value="Connexion"/>
 			<node name="signOut" value="Déconnexion (%s)"/>
+			<node name="signUp" value="Inscription"/>
 			<node name="refillAccount" value="Recréditer le compte"/>
 			<node name="addCustomCatalog" value="Ajouter catalogue"/>
 			<node name="refreshCatalogsList" value="Rafraîchir"/>
