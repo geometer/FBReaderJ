@@ -132,7 +132,11 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 					setErrorMessageFromResource("invalidEMail");
 					return;
 				}
+
+				final LitResRegisterUserXMLReader xmlReader =
+					new LitResRegisterUserXMLReader("litres.ru", myResource.getResource("error"));
 				final String[] result = { null };
+
 				final Runnable runnable = new Runnable() {
 					public void run() {
 						try {
@@ -140,9 +144,7 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 							url = ZLNetworkUtil.appendParameter(url, "new_login", userName);
 							url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
 							url = ZLNetworkUtil.appendParameter(url, "mail", email);
-            
-							final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader("litres.ru", myResource.getResource("error"));
-            
+
 							ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, "network/litres.ru.crt", xmlReader));
 						} catch (ZLNetworkException e) {
 							result[0] = e.getMessage();
@@ -154,8 +156,9 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 						if (result[0] == null) {
 							final Intent data = new Intent();
 							data.putExtra(USER_REGISTRATION_USERNAME, userName);
-							data.putExtra(USER_REGISTRATION_PASSWORD, password);
-							data.putExtra(USER_REGISTRATION_EMAIL, email);
+							//data.putExtra(USER_REGISTRATION_PASSWORD, password);
+							//data.putExtra(USER_REGISTRATION_EMAIL, email);
+							data.putExtra(USER_REGISTRATION_LITRES_SID, xmlReader.Sid);
 							setResult(RESULT_OK, data);
 							finish();
 						} else {

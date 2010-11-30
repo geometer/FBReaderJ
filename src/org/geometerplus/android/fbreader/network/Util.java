@@ -23,13 +23,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-abstract class Util {
+import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+
+abstract class Util implements UserRegistrationConstants {
 	static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		activity.startActivityForResult(new Intent(
 			"android.fbreader.action.NETWORK_LIBRARY_REGISTER",
 			Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
-		), 387);
+		), USER_REGISTRATION_REQUEST_CODE);
+	}
+
+	static void runAfterRegistration(NetworkAuthenticationManager mgr, Intent data) throws ZLNetworkException {
+		final String userName = data.getStringExtra(USER_REGISTRATION_USERNAME);
+		final String litresSid = data.getStringExtra(USER_REGISTRATION_LITRES_SID);
+		mgr.initUser(userName, litresSid);
+		if (userName.length() > 0 && litresSid.length() > 0) {
+			try {
+				mgr.initialize();
+			} catch (ZLNetworkException e) {
+				mgr.logOut();
+				throw e;
+			}
+		}
 	}
 }

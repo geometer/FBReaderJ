@@ -121,6 +121,8 @@ public abstract class NetworkAuthenticationManager {
 		return false;
 	}
 
+	public abstract void initUser(String userName, String sid);
+
 	/*
 	 * Password Recovery
 	 */

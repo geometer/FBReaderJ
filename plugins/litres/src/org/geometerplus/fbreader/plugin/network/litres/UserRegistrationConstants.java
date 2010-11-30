@@ -23,4 +23,5 @@ public interface UserRegistrationConstants {
 	String USER_REGISTRATION_USERNAME = "userName";
 	String USER_REGISTRATION_PASSWORD = "password";
 	String USER_REGISTRATION_EMAIL = "eMail";
+	String USER_REGISTRATION_LITRES_SID = "litres:sid";
 }

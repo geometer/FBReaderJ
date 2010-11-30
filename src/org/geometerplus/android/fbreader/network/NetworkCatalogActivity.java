@@ -26,14 +26,14 @@ import android.view.*;
 import android.widget.BaseAdapter;
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-
-public class NetworkCatalogActivity extends NetworkBaseActivity {
-
+public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
 	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
@@ -79,10 +79,19 @@ public class NetworkCatalogActivity extends NetworkBaseActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.err.println("requestCode = " + requestCode);
-		System.err.println("resultCode = " + resultCode);
-		if (data != null) {
-			System.err.println("uri = " + data.getStringExtra("userName"));
+		switch (requestCode) {
+			case USER_REGISTRATION_REQUEST_CODE:
+				if (resultCode == RESULT_OK && data != null) {
+					try {
+						Util.runAfterRegistration(
+							((NetworkCatalogTree)myTree).Item.Link.authenticationManager(),
+							data
+						);
+					} catch (ZLNetworkException e) {
+						// TODO: show an error message
+					}
+				}
+				break;
 		}
 	}
 

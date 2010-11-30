@@ -40,11 +40,17 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private String myAccount;
 	private final HashMap<String, NetworkLibraryItem> myPurchasedBooks = new HashMap<String, NetworkLibraryItem>();
 
-
 	public LitResAuthenticationManager(INetworkLink link, String sslCertificate) {
 		super(link, sslCertificate);
 		mySidUserNameOption = new ZLStringOption(link.getSiteName(), "sidUserName", "");
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
+	}
+
+	@Override
+	public synchronized void initUser(String userName, String sid) {
+		mySidChecked = true;
+		mySidUserNameOption.setValue(userName);
+		mySidOption.setValue(sid);
 	}
 
 	@Override

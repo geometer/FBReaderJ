@@ -20,7 +20,10 @@
 package org.geometerplus.android.fbreader.network;
 
 public interface UserRegistrationConstants {
+	int USER_REGISTRATION_REQUEST_CODE = 12345;
+
 	String USER_REGISTRATION_USERNAME = "userName";
 	String USER_REGISTRATION_PASSWORD = "password";
 	String USER_REGISTRATION_EMAIL = "eMail";
+	String USER_REGISTRATION_LITRES_SID = "litres:sid";
 }
