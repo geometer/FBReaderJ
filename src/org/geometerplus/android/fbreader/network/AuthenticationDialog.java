@@ -61,22 +61,6 @@ class AuthenticationDialog extends NetworkDialog {
 				if (mgr.registrationSupported()) {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
 					Util.runRegistrationDialog(myActivity, myLink);
-					/*
-					NetworkDialog.show(myActivity, NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
-						public void run() {
-							try {
-								if (mgr.isAuthorised(true)) {
-									if (myOnSuccessRunnable != null) {
-										myOnSuccessRunnable.run();
-									}
-									return;
-								}
-							} catch (ZLNetworkException e) {
-							}
-							NetworkDialog.show(myActivity, NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
-						}
-					});
-					*/
 				}
 			}
 		});

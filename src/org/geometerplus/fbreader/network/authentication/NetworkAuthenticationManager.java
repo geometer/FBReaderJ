@@ -121,10 +121,6 @@ public abstract class NetworkAuthenticationManager {
 		return false;
 	}
 
-	public void registerUser(String login, String password, String email) throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
-	}
-
 	/*
 	 * Password Recovery
 	 */

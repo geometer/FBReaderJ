@@ -401,25 +401,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return true;
 	}
 
+	/*
 	@Override
 	public void registerUser(String login, String password, String email) throws ZLNetworkException {
-		String url = Link.getLink(INetworkLink.URL_SIGN_UP);
-		if (url == null) {
-			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
-		}
-		url = ZLNetworkUtil.appendParameter(url, "new_login", login);
-		url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
-		url = ZLNetworkUtil.appendParameter(url, "mail", email);
-
-		final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader(Link.getSiteName());
-
-		ZLNetworkException exception = null;
-		try {
-			ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
-		} catch (ZLNetworkException e) {
-			exception = e;
-		}
-
 		synchronized (this) {
 			mySidChecked = true;
 			if (exception != null) {
@@ -431,6 +415,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			mySidUserNameOption.setValue(login);
 		}
 	}
+	*/
 
 	@Override
 	public boolean passwordRecoverySupported() {
