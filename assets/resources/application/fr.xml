@@ -438,7 +438,6 @@
 			<node name="authentication" value="Authentification. Veuillez patienter..."/>
 			<node name="signOut" value="Déconnexion en cours, veuillez patienter..." />
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
-			<node name="registerUser" value="Inscription en cours. Veuillez patienter..."/>
 			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..." />
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
 		</node>

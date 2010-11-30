@@ -435,7 +435,6 @@
 			<node name="authentication" value="Bejelentkezés. Kérjük, várjon..." />
 			<node name="signOut" value="Kijelentkezés. Kérjük, várjon..." />
 			<node name="purchaseBook" value="Könyv vásárlása. Kérjük, várjon..." />
-			<node name="registerUser" value="Fiók létrehozása. Kérjük, várjon..." />
 			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
 		</node>

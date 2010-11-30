@@ -436,7 +436,6 @@
 			<node name="authentication" value="Authentifizierung. Bitte warten..." />
 			<node name="signOut" value="Buch wird ausgetragen. Bitte warten..." />
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..." />
-			<node name="registerUser" value="Neues Benutzerkonto wird registriert. Bitte warten..." />
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
 		</node>

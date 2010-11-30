@@ -435,7 +435,6 @@
 			<node name="authentication" value="Ověřování. Čekejte..." />
 			<node name="signOut" value="Odhlašování. Čekejte..." />
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..." />
-			<node name="registerUser" value="Registrace nového účtu. Čekejte..." />
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..." />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
 		</node>

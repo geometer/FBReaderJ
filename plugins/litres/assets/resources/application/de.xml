@@ -35,7 +35,7 @@
 			<node name="somethingWrong" value="Something goes wrong for&#10;%s" toBeTranslated="true" />
 		</node>
 		<node name="waitMessage">
-			<node name="registerUser" value="Registering new account. Please, wait..." toBeTranslated="true" />
+			<node name="registerUser" value="Neues Benutzerkonto wird registriert. Bitte warten..." />
 		</node>
 	</node>
 </resources>
