@@ -62,6 +62,7 @@
 			<node name="reload" value="Оновити"/>
 			<node name="signIn" value="Увійти"/>
 			<node name="signOut" value="Вийти (%s)"/>
+			<node name="signUp" value="Зареєструватися" />
 			<node name="refillAccount" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
@@ -434,7 +435,6 @@
 			<node name="authentication" value="Йде авторизація. Зачекайте, будь ласка..." />
 			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка..." />
 			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..." />
-			<node name="registerUser" value="Реєструємо користувача. Зачекайте, будь ласка..." />
 			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..." />
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
 		</node>
@@ -445,12 +445,6 @@
 			<node name="purchaseAlreadyPurchased" value="Книга вже була придбана" />
 			<node name="bookNotPurchased" value="Книгу не було придбано" />
 			<node name="downloadLimitExceeded" value="Вичерпано ліміт завантажень" />
-			<node name="loginAlreadyTaken" value="Це ім’я користувача зайняте" />
-			<node name="loginNotSpecified" value="Введіть ім’я користувача" />
-			<node name="passwordNotSpecified" value="Введіть пароль" />
-			<node name="emailNotSpecified" value="Введіть поштову адресу" />
-			<node name="invalidEMail" value="Некоректна поштова адреса" />
-			<node name="tooManyRegistrations" value="Занадто багато реєстрацій з вашого IP;&#10;спробуйте ще раз через декілька хвилин" />
 			<node name="noUserEmail" value="Нема користувача з такою адресою" />
 			<node name="unsupportedOperation" value="Непідтримувана операція" />
 			<node name="notAnOPDS" value="Це не OPDS каталог" />
@@ -472,14 +466,6 @@
 			<node name="skipIP" value="Не прив’язуватись до ip-адреси" />
 			<node name="loginIsEmpty" value="Ім’я користувача не може бути порожнім" />
 			<node name="register" value="Зареєструватися" />
-		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Реєстрація нового користувача" />
-			<node name="login" value="Ім’я користувача" />
-			<node name="password" value="Пароль" />
-			<node name="confirmPassword" value="Ще раз пароль" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="Ви ввели 2 різних паролі." />
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Користувацький каталог" />
