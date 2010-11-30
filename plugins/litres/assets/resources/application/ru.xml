@@ -16,7 +16,6 @@
 			<node name="invalidEMail" value="Некорректный e-mail" />
 			<node name="tooManyRegistrations" value="Слишком много регистраций с вашего IP;&#10;попробуйте еще раз через пару минут" />
 			<node name="errorDuringRegistation" value="Ошибка номер %s" />
-			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста..." />

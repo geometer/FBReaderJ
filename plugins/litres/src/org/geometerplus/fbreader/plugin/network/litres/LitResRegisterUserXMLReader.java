@@ -67,7 +67,7 @@ public class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			Sid = attributes.getValue("sid");
 		} else {
-			setErrorMessage(myResource.getResource("somethingWrong").getValue().replace("%s", HostName));
+			setException(new ZLNetworkException("somethingWrongMessage", HostName));
 		}
 		return true;
 	}

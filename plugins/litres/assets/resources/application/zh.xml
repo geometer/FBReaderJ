@@ -17,7 +17,6 @@
 			<node name="invalidEMail" value="无效的电子邮箱" />
 			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册" />
 			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
-			<node name="somethingWrong" value="Something goes wrong for&#10;%s" toBeTranslated="true" />
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="正在注册新账号，请稍等..." />

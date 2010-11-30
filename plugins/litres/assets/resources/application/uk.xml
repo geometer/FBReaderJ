@@ -17,7 +17,6 @@
 			<node name="invalidEMail" value="Некоректна поштова адреса" />
 			<node name="tooManyRegistrations" value="Занадто багато реєстрацій з вашого IP;&#10;спробуйте ще раз через декілька хвилин" />
 			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
-			<node name="somethingWrongMessage" value="Помилка при роботі з&#10;%s" />
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Реєструємо користувача. Зачекайте, будь ласка..." />

@@ -31,7 +31,6 @@
 			<node name="invalidEMail" value="Invalid e-mail address" toBeTranslated="true" />
 			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true" />
 			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
-			<node name="somethingWrong" value="Something goes wrong for&#10;%s" toBeTranslated="true" />
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Đang đăng ký tài khoản. Xin chờ..." />
