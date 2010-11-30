@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,15 +33,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 public final class FileManager extends Activity {
-	private static String FB_HOME_DIR = "./sdcard/Books";
-	private static String ROOT_DIR = ".";
-	private static String SDCARD_DIR = "./sdcard";
+	private static String ROOT_DIR = Environment.getRootDirectory().getPath();
+	private static String SDCARD_DIR = Environment.getExternalStorageDirectory().getPath();
+	private static String FB_HOME_DIR = SDCARD_DIR + "/" + "Books";
+	public static String DEFAULT_START_PATH = FB_HOME_DIR;
 	
 	private FileListView myFileListView;
 
 	public static String FILE_MANAGER_PATH = "file_manager.path";
 	public static String FILE_MANAGER_TYPE = "file_manager.type";
-	public static String DEFAULT_START_PATH = FB_HOME_DIR;
 	public static String FILE_MANAGER_LOG_TAG = "FileManager";
 	
 	
@@ -58,13 +59,16 @@ public final class FileManager extends Activity {
 		
 		Button okButton = FileUtils.getOkBtn(this, R.id.fmanagerOkButton);
 		Button cancelButton = FileUtils.getCancelBtn(this, R.id.fmanagerCancelButton); 
+
+		Log.v(FILE_MANAGER_LOG_TAG, "paths : " + ROOT_DIR + "," + SDCARD_DIR + "," + FB_HOME_DIR); // TODO delete later
 		
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
 		myFileListView = new FileListView(this, fileList);
 	
+		
 		setPathListener(fbhomeButton, FB_HOME_DIR);
-		setPathListener(cardButton, ROOT_DIR);
-		setPathListener(rootButton, SDCARD_DIR);
+		setPathListener(cardButton, SDCARD_DIR);
+		setPathListener(rootButton, ROOT_DIR);
 		
 		filterButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -101,8 +105,6 @@ public final class FileManager extends Activity {
 	private void launchFBReaderView(){
 		String path = myFileListView.getPathToFile();
 		if (path != null){
-			Log.v(FILE_MANAGER_LOG_TAG, "paht to book : " + path); // TODO delete later
-			path = path.substring(1);
 			Intent i = new Intent(this, FBReader.class);
 			i.setAction(Intent.ACTION_VIEW);
 			i.putExtra(FBReader.BOOK_PATH_KEY, path);

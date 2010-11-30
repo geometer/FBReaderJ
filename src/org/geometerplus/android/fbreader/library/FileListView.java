@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,7 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class FileListView {
 	private Activity myParent;
-	private String myCurDir = ".";
+	private String myCurDir = "/";
 	private String myCurFile = null;
 	private String myTypes = "";
 
@@ -95,10 +96,9 @@ public class FileListView {
 	}
 	
 	public void back(){
-		String[] dirs = myCurDir.split("[\\/]+"); 
-		if (dirs.length > 1){
-			String dir = dirs[dirs.length - 1];
-			myCurDir = myCurDir.substring(0, myCurDir.length() - dir.length() - 1);
+		File file = new File(myCurDir);
+		if (file.getParent() != null){
+			myCurDir = file.getParent(); 
 			goAtDir(myCurDir);
 		}
 	}
