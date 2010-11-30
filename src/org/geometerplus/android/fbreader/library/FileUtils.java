@@ -55,10 +55,9 @@ public class FileUtils {
 		return imgBtn;
 	}
 	
-	// unstable - not testing
+	// unstable - not testing 		// TODO
 	public static void copyRecursive(String src, String path)
 			throws IOException {
-		// TODO
 		File file = new File(src);
 		if (file.isDirectory()) {
 			path += src;

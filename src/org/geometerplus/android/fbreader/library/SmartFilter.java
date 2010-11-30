@@ -34,11 +34,7 @@ public class SmartFilter implements Runnable {
 
 	private File myFile;
 	private String myNewTypes;
-
-	private String myCurPath = "";
 	private List<String> myCurFiles = new ArrayList<String>();
-	private String myCurTypes = "";
-	
 
 	public SmartFilter(Activity parent, List<String> orders, Runnable action) {
 		myParent = parent;
@@ -53,61 +49,16 @@ public class SmartFilter implements Runnable {
 	}
 
 	public void run() {
-		getOrders();
+		try {
+			getOrders();
+		} catch (Exception e) {
+			Log.e(FileManager.FILE_MANAGER_LOG_TAG, e.getMessage());
+		}
 	}
 	
 	private void getOrders() {
-		try {
-			if (myCurPath.equals(myFile.getPath())
-					&& compareTypes(myCurTypes, myNewTypes))
-				getOrderInCurrentDir();
-			else
-				getOrderInNewDir();
-		} catch (Exception e) {
-			Log.e("BACKGROUND_PROC", e.getMessage());
-		}
-	}
-
-	private void getOrderInCurrentDir() {
-		String delTypes = "";
-		for (String curType : myCurTypes.split("[\\s]+")) {
-			if (myNewTypes.indexOf(curType.trim()) < 0)
-				delTypes += curType + " ";
-		}
-
-		List<String> newListFiles = new ArrayList<String>();
-		for (String file : myCurFiles) {
-			if (!Thread.currentThread().isInterrupted()) {
-
-				// В реальных условиях здесь
-				// код будет красивее
-				// timeKiller() - работаем c файлом
-				// FIXME delete later!!!
-//				timeKiller(); // TODO DELETE LATER
-
-				String fileName = null;
-				if (!condition(file, delTypes))
-					fileName = file;
-				if (!Thread.currentThread().isInterrupted() && fileName != null) {
-					myOrders.add(fileName);
-					newListFiles.add(fileName);
-				}
-				myParent.runOnUiThread(myAction);
-			}
-			myCurFiles = newListFiles;
-			myParent.runOnUiThread(myAction);
-		}
-	}
-
-	private void getOrderInNewDir() {
-		myCurPath = myFile.getPath();
 		for (File file : myFile.listFiles()) {
 			if (!Thread.currentThread().isInterrupted()) {
-
-				// В реальных условиях здесь
-				// код будет красивее
-				// timeKiller() - работаем c файлом
-
 				String fileName = null;
 				if (file.isDirectory())
 					fileName = file.getName();
@@ -117,7 +68,6 @@ public class SmartFilter implements Runnable {
 					myOrders.add(fileName);
 					myCurFiles.add(fileName);
 				}
-
 				myParent.runOnUiThread(myAction);
 			}
 		}
@@ -136,17 +86,5 @@ public class SmartFilter implements Runnable {
 				return true;
 		}
 		return false;
-	}
-
-	private boolean compareTypes(String curTypes, String newTypes) {
-		if (newTypes.equals(""))
-			return false;
-		if (newTypes.length() > curTypes.length())
-			return false;
-		for (String newType : newTypes.split("[\\s]+")) {
-			if (curTypes.indexOf(newType.trim()) < 0)
-				return false;
-		}
-		return true;
 	}
 }

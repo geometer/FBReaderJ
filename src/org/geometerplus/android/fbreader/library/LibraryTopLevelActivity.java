@@ -110,7 +110,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private void runFileManager(){
 		Log.v(FileManager.FILE_MANAGER_LOG_TAG, "runFileManager()");
 		Intent i = new Intent(this, FileManager.class);
-		i.putExtra(FileManager.FILE_MANAGER_PATH, "/sdcard/Books");
+		i.putExtra(FileManager.FILE_MANAGER_PATH, FileManager.DEFAULT_START_PATH);
 		i.putExtra(FileManager.FILE_MANAGER_TYPE, "");
 		startActivity(i);
 	}

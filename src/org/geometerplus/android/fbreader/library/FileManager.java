@@ -19,16 +19,11 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.File;
-
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.fbreader.library.BookTree;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +37,12 @@ public final class FileManager extends Activity {
 	private static String SDCARD_DIR = "./sdcard";
 	
 	private FileListView myFileListView;
+
+	public static String FILE_MANAGER_PATH = "file_manager.path";
+	public static String FILE_MANAGER_TYPE = "file_manager.type";
+	public static String DEFAULT_START_PATH = FB_HOME_DIR;
+	public static String FILE_MANAGER_LOG_TAG = "FileManager";
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,6 @@ public final class FileManager extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.file_manager);
 		
-		// Obtain handles to UI objects
 		ImageButton fbhomeButton = FileUtils.getImgBtn(this, R.id.fmanagerFBHomeButton, R.drawable.home); 
 		ImageButton cardButton = FileUtils.getImgBtn(this, R.id.fmanagerCardButton, R.drawable.sdcard);
 		ImageButton rootButton = FileUtils.getImgBtn(this, R.id.fmanagerRootButton, R.drawable.root);
@@ -61,27 +61,10 @@ public final class FileManager extends Activity {
 		
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
 		myFileListView = new FileListView(this, fileList);
-		
-		fbhomeButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO
-				myFileListView.goAtDir(FB_HOME_DIR);
-			}
-		});
-		
-		cardButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO
-				myFileListView.goAtDir(SDCARD_DIR);
-			}
-		});
-		
-		rootButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO
-				myFileListView.goAtDir(ROOT_DIR);
-			}
-		});
+	
+		setPathListener(fbhomeButton, FB_HOME_DIR);
+		setPathListener(cardButton, ROOT_DIR);
+		setPathListener(rootButton, SDCARD_DIR);
 		
 		filterButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -97,36 +80,16 @@ public final class FileManager extends Activity {
 		
 		okButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String path = myFileListView.getPathToFile();
-				if (path != null){
-					Log.v(FILE_MANAGER_LOG_TAG, "paht to book : " + path);
-					launchFBReaderView(path);
-				}
+				launchFBReaderView();
 			}
 		});
-
+		
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}
 		});
-
-		
 	}
-
-	private void launchFBReaderView(String path){
-		Intent i = new Intent(this, FBReader.class);
-		i.setAction(Intent.ACTION_VIEW);
-		i.putExtra(FBReader.BOOK_PATH_KEY, path);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(i);
-	}
-	
-    private void launchFilterView() {
-    	Intent i = new Intent(this, FilterView.class);
-        i.putExtra(FILE_MANAGER_TYPE, myFileListView.getFilterTypes());
-        startActivityForResult(i, 1);
-    }
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -135,8 +98,33 @@ public final class FileManager extends Activity {
 			myFileListView.setFilter(data.getAction());
 	}
 	
-	public static String FILE_MANAGER_PATH = "file_manager.path";
-	public static String FILE_MANAGER_TYPE = "file_manager.type";
+	private void launchFBReaderView(){
+		String path = myFileListView.getPathToFile();
+		if (path != null){
+			Log.v(FILE_MANAGER_LOG_TAG, "paht to book : " + path); // TODO delete later
+			path = path.substring(1);
+			Intent i = new Intent(this, FBReader.class);
+			i.setAction(Intent.ACTION_VIEW);
+			i.putExtra(FBReader.BOOK_PATH_KEY, path);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(i);
+		}
+		else
+			finish();
+	}
 	
-	public static String FILE_MANAGER_LOG_TAG = "FileManager";
+    private void launchFilterView() {
+    	Intent i = new Intent(this, FilterView.class);
+        i.putExtra(FILE_MANAGER_TYPE, myFileListView.getTypes());
+        startActivityForResult(i, 1);
+    }
+    
+    private void setPathListener(ImageButton imgBtn, final String path){
+    	imgBtn.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				myFileListView.goAtDir(path);
+			}
+		});
+    }
 }
+

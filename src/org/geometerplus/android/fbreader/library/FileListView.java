@@ -39,8 +39,8 @@ import android.widget.AdapterView.OnItemClickListener;
 public class FileListView {
 	private Activity myParent;
 	private String myCurDir = ".";
-	private String myCurFile = ".";
-	private String myFilterTypes = "";
+	private String myCurFile = null;
+	private String myTypes = "";
 
 	// Members for dynamic loading //
 	private ArrayAdapter<String> myAdapter;
@@ -63,9 +63,9 @@ public class FileListView {
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
 		myFilter = new SmartFilter(myParent, myOrders, myReturnRes);
 
-		final String startPath = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
-		final String fileTypes = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
-		fill(startPath, fileTypes);
+		myCurDir = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
+		myTypes = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
+		fill(myCurDir);
 		
 		listView.setTextFilterEnabled(true);
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -73,28 +73,23 @@ public class FileListView {
 					int position, long id) {
 				view.setSelected(true);
 		
-				myCurDir = startPath;
 				myCurFile = ((TextView) view).getText().toString();
 				goAtDir(myCurDir + "/" + myCurFile);
 			}
 		});
-
 	}
 
-	public String getFilterTypes(){
-		return myFilterTypes;
+	public String getTypes(){
+		return myTypes;
 	}
 
 	public String getPathToFile(){
-		if (myCurDir.equals(myCurFile))
-			return null;
-		return myCurDir + "/" + myCurFile;
+		return myCurFile != null ? myCurDir + "/" + myCurFile : null;
 	}
 	
-	
 	public void setFilter(String filterTypes){
-		if (!myFilterTypes.equals(filterTypes)){
-			myFilterTypes = filterTypes;
+		if (!myTypes.equals(filterTypes)){
+			myTypes = filterTypes;
 			goAtDir(myCurDir);
 		}
 	}
@@ -110,20 +105,21 @@ public class FileListView {
 	
 	public void goAtDir(String path) {
 		if (new File(path).isDirectory()){
+			myCurFile = null;
 			myCurFilterThread.interrupt();
 			Intent i = new Intent(myParent, FileManager.class);
 			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
-			i.putExtra(FileManager.FILE_MANAGER_TYPE, myFilterTypes);
+			i.putExtra(FileManager.FILE_MANAGER_TYPE, myTypes);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		    myParent.startActivity(i);
 		}
 	}
 	
-	private void fill(String path, String fileTypes){
+	private void fill(String path){
 		myProgressDialog.show();
 		File file = new File(path);
 		myCurDir = path;
-		myFilter.setPreferences(file, fileTypes);
+		myFilter.setPreferences(file, myTypes);
 		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
 		myCurFilterThread.start();
 	}

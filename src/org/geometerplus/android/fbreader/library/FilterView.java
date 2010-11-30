@@ -83,7 +83,6 @@ public class FilterView extends Activity{
 	}
 
 	private void setCurrentTypes(){
-		// TODO
 		String types = getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
 		if (types.equals(""))
 			return;
