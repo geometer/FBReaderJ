@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Czech FBReaderJ resources, by Marek Pavelka -->
+<resources>
+		<node name="RegisterUserDialog">
+			<node name="title" value="Registrace uživatele" />
+			<node name="login" value="Uživatelské jméno" />
+			<node name="password" value="Heslo" />
+			<node name="confirmPassword" value="Potvrzení&#10;hesla" />
+			<node name="email" value="E-mail" />
+			<node name="differentPasswords" value="Heslo a potvrzení hesla se musí shodovat." />
+		</node>
+	<node name="userRegistration">
+		<node name="title" value="Register User" toBeTranslated="true" />
+		<node name="login" value="Username" toBeTranslated="true" />
+		<node name="password" value="Password" toBeTranslated="true" />
+		<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true" />
+		<node name="email" value="E-mail" toBeTranslated="true" />
+		<node name="error">
+			<node name="usernameAlreadyTaken" value="Username is already in use" toBeTranslated="true" />
+			<node name="usernameNotSpecified" value="Please, enter a username" toBeTranslated="true" />
+			<node name="passwordNotSpecified" value="Please, enter a password" toBeTranslated="true" />
+			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true" />
+			<node name="emailNotSpecified" value="Please, enter an e-mail address" toBeTranslated="true" />
+			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
+			<node name="invalidEMail" value="Invalid e-mail address" toBeTranslated="true" />
+			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true" />
+			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
+			<node name="somethingWrong" value="Something goes wrong for&#10;%s" toBeTranslated="true" />
+		</node>
+		<node name="waitMessage">
+			<node name="registerUser" value="Registering new account. Please, wait..." toBeTranslated="true" />
+		</node>
+	</node>
+</resources>

@@ -473,14 +473,6 @@
 			<node name="loginIsEmpty" value="Tên người dùng không được rỗng" />
 			<node name="register" value="Đăng ký" />
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Đăng ký" />
-			<node name="login" value="Người dùng" />
-			<node name="password" value="Mật khẩu" />
-			<node name="confirmPassword" value="Mật khẩu&#10;xác nhận" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="Mật khẩu và mật khẩu xác nhận phải giống nhau." />
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" toBeTranslated="true" value="Custom catalog" />
 			<node name="catalogTitle" toBeTranslated="true" value="Title" />

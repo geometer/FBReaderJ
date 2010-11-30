@@ -473,14 +473,6 @@
 			<node name="loginIsEmpty" value="Il campo Username non può essere vuoto" />
 			<node name="register" value="Registrati" />
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Utente Registrato" />
-			<node name="login" value="Username" />
-			<node name="password" value="Password" />
-			<node name="confirmPassword" value="Conferma&#10;password" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="La Password e la Conferma Password devono essere le stesse." />
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Catalogo personalizzato" />
 			<node name="catalogTitle" value="Titolo" />

@@ -476,14 +476,6 @@
 			<node name="loginIsEmpty" value="L'identifiant ne doit pas être vide"/>
 			<node name="register" value="Inscription"/>
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Inscription"/>
-			<node name="login" value="Identifiant"/>
-			<node name="password" value="Mot de passe"/>
-			<node name="confirmPassword" value="Confirmer&#10;le mot de passe"/>
-			<node name="email" value="Email"/>
-			<node name="differentPasswords" value="Les deux mots de passe indiqués doivent être les mêmes."/>
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Catalogue personalisé" />
 			<node name="catalogTitle" value="Titre" />

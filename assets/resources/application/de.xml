@@ -474,14 +474,6 @@
 			<node name="loginIsEmpty" value="Es sollte ein Benutzername angegeben werden." />
 			<node name="register" value="Anmelden" />
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Registrierter Benutzer" />
-			<node name="login" value="Benutzername" />
-			<node name="password" value="Passwort" />
-			<node name="confirmPassword" value="Passwortbestätigung" />
-			<node name="email" value="Email" />
-			<node name="differentPasswords" value="Passwort und Passwortbestätigung müssen identisch sein." />
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Benutzerspezifischer Katalog" />
 			<node name="catalogTitle" value="Titel" />

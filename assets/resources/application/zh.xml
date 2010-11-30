@@ -473,14 +473,6 @@
 			<node name="loginIsEmpty" value="用户名不允许为空" />
 			<node name="register" value="注册" />
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="注册用户" />
-			<node name="login" value="用户名" />
-			<node name="password" value="密码" />
-			<node name="confirmPassword" value="密码确认" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="密码和密码确认必须一致." />
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" toBeTranslated="true" value="Custom catalog" />
 			<node name="catalogTitle" toBeTranslated="true" value="Title" />

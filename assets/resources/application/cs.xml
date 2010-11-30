@@ -473,14 +473,6 @@
 			<node name="loginIsEmpty" value="Uživatelské jméno by nemělo být prázdné" />
 			<node name="register" value="Přihlásit" />
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Registrace uživatele" />
-			<node name="login" value="Uživatelské jméno" />
-			<node name="password" value="Heslo" />
-			<node name="confirmPassword" value="Potvrzení&#10;hesla" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="Heslo a potvrzení hesla se musí shodovat." />
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Vlastní katalog" />
 			<node name="catalogTitle" value="Název" />

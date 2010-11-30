@@ -473,14 +473,6 @@
 			<node name="loginIsEmpty" value="A felhasználónév nem lehet üres" />
 			<node name="register" value="Regisztráció" />
 		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Felhasználó létrehozása" />
-			<node name="login" value="Felhasználónév" />
-			<node name="password" value="Jelszó" />
-			<node name="confirmPassword" value="Jelszó&#10;megerősítése" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="A két jelszónak meg kell egyeznie." />
-		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" toBeTranslated="true" value="Custom catalog" />
 			<node name="catalogTitle" toBeTranslated="true" value="Title" />
