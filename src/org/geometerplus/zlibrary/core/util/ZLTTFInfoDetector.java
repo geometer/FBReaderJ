@@ -189,14 +189,4 @@ public class ZLTTFInfoDetector {
 		}
 		return fontInfo;
 	}
-
-	/*private int readFontProperties(TableInfo fdscInfo) throws IOException {
-		if (fdscInfo == null || fdscInfo.Offset < myPosition || fdscInfo.Length <= 16) {
-			return 0;
-		}
-		byte[] buffer = readTable(fdscInfo);
-		System.err.println(getInt32(buffer, 0));
-		System.err.println(getInt32(buffer, 4));
-		return 0;
-	}*/
 }

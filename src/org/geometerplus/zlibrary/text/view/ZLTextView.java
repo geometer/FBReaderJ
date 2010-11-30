@@ -425,18 +425,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
 
-		/*System.err.println("PAGE: textWidth = " + textWidth);
-		System.err.println("PAGE: textHeight = " + textHeight);
-		System.err.println("PAGE: indentWidth = " + indentWidth);
-		System.err.println("PAGE: strHeight = " + strHeight);
-		System.err.println("PAGE: lang = " + getLanguage());
-		System.err.println("PAGE: charWidth = " + charWidth);
-		System.err.println("PAGE: effectiveWidth = " + effectiveWidth);
-		System.err.println("PAGE: effectiveHeight = " + effectiveHeight);
-		System.err.println("PAGE: linesPerPage = " + linesPerPage);
-		System.err.println("PAGE: charsPerParagraph = " + charsPerParagraph + " (factor = " + 1.0f / charsPerParagraph + ")");
-		System.err.println("PAGE: charsPerLine = " + charsPerLine);*/
-
 		return charsPerLine * linesPerPage;
 	}
 
@@ -445,18 +433,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return 1;
 		}
 
-//		System.err.println(">------------------------------------------->");
-
 		final float factor = 1.0f / computeCharsPerPage();
 		final float pages = textSize * factor;
-		int result = Math.max((int) (pages + 1.0f - 0.5f * factor), 1);
-
-		/*System.err.println("PAGE: textSize = " + textSize);
-		System.err.println("PAGE: factor = " + factor);
-		System.err.println("PAGE: pages = " + pages);
-		System.err.println("PAGE: result = " + result);
-		System.err.println("<-------------------------------------------<");*/
-		return result;
+		return Math.max((int) (pages + 1.0f - 0.5f * factor), 1);
 	}
 
 	private static final char[] ourDefaultLetters = "System developers have used modeling languages for decades to specify, visualize, construct, and document systems. The Unified Modeling Language (UML) is one of those languages. UML makes it possible for team members to collaborate by providing a common language that applies to a multitude of different systems. Essentially, it enables you to communicate solutions in a consistent, tool-supported language.".toCharArray();
@@ -521,34 +500,22 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final float factor = computeCharsPerPage();
 		final float textSize = page * factor;
 
-		/*System.err.println(">------------------------------------------->");
-		System.err.println("SETPAGE: page = " + page);
-		System.err.println("SETPAGE: factor = " + factor);
-		System.err.println("SETPAGE: textSize = " + textSize);*/
-
 		int intTextSize = (int) textSize;
 		int paragraphIndex = myModel.findParagraphByTextLength(intTextSize);
 
 		if (paragraphIndex > 0 && myModel.getTextLength(paragraphIndex) > intTextSize) {
-			/*System.err.println("SETPAGE: drop overlength paragraph: " + paragraphIndex + " (" + myModel.getTextLength(paragraphIndex) + ")");*/
 			--paragraphIndex;
 		}
 		intTextSize = myModel.getTextLength(paragraphIndex);
 
 		int sizeOfTextBefore = myModel.getTextLength(paragraphIndex - 1);
 		while (paragraphIndex > 0 && intTextSize == sizeOfTextBefore) {
-			/*System.err.println("SETPAGE: drop empty paragraph: " + paragraphIndex);*/
 			--paragraphIndex;
 			intTextSize = sizeOfTextBefore;
 			sizeOfTextBefore = myModel.getTextLength(paragraphIndex - 1);
 		}
 
 		final int paragraphLength = intTextSize - sizeOfTextBefore;
-
-		/*System.err.println("SETPAGE: paragraphIndex = " + paragraphIndex);
-		System.err.println("SETPAGE: intTextSize = " + intTextSize);
-		System.err.println("SETPAGE: sizeOfTextBefore = " + sizeOfTextBefore);
-		System.err.println("SETPAGE: paragraphLength = " + paragraphLength);*/
 
 		final int wordIndex;
 		if (paragraphLength == 0) {
@@ -559,9 +526,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			cursor.moveToParagraph(paragraphIndex);
 			wordIndex = cursor.getParagraphCursor().getParagraphLength();
 		}
-
-		/*System.err.println("SETPAGE: wordIndex = " + wordIndex);
-		System.err.println("<-------------------------------------------<");*/
 
 		gotoPositionByEnd(paragraphIndex, wordIndex, 0);
 	}
