@@ -4,35 +4,21 @@
 	 Contributors: Mathias Monnerville <mathias@monnerville.com>
 -->
 <resources>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Inscription"/>
-			<node name="login" value="Identifiant"/>
-			<node name="password" value="Mot de passe"/>
-			<node name="confirmPassword" value="Confirmer&#10;le mot de passe"/>
-			<node name="email" value="Email"/>
-			<node name="differentPasswords" value="Les deux mots de passe indiqués doivent être les mêmes."/>
-		</node>
-			<node name="loginAlreadyTaken" value="Identifiant déjà utilisé"/>
-			<node name="loginNotSpecified" value="Veuillez entrer un identifiant"/>
+	<node name="userRegistration">
+		<node name="title" value="Inscription"/>
+		<node name="login" value="Identifiant"/>
+		<node name="password" value="Mot de passe"/>
+		<node name="confirmPassword" value="Confirmer&#10;le mot de passe"/>
+		<node name="email" value="Email"/>
+		<node name="error">
+			<node name="usernameAlreadyTaken" value="Identifiant déjà utilisé"/>
+			<node name="usernameNotSpecified" value="Veuillez entrer un identifiant"/>
 			<node name="passwordNotSpecified" value="Veuillez entrer un mot de passe non vide"/>
+			<node name="passwordsDoNotMatch" value="Les deux mots de passe indiqués doivent être les mêmes."/>
 			<node name="emailNotSpecified" value="Veuillez entrer une adresse email"/>
+			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
 			<node name="invalidEMail" value="Adresse email invalide"/>
 			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
-	<node name="userRegistration">
-		<node name="title" value="Register User" toBeTranslated="true" />
-		<node name="login" value="Username" toBeTranslated="true" />
-		<node name="password" value="Password" toBeTranslated="true" />
-		<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true" />
-		<node name="email" value="E-mail" toBeTranslated="true" />
-		<node name="error">
-			<node name="usernameAlreadyTaken" value="Username is already in use" toBeTranslated="true" />
-			<node name="usernameNotSpecified" value="Please, enter a username" toBeTranslated="true" />
-			<node name="passwordNotSpecified" value="Please, enter a password" toBeTranslated="true" />
-			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true" />
-			<node name="emailNotSpecified" value="Please, enter an e-mail address" toBeTranslated="true" />
-			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
-			<node name="invalidEMail" value="Invalid e-mail address" toBeTranslated="true" />
-			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true" />
 			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
 		</node>
 		<node name="waitMessage">

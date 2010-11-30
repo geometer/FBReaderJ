@@ -1,35 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Italian FBReaderJ resources, by Vytek and Neoxx from AndDev.it Translate Team -->
 <resources>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Utente Registrato" />
-			<node name="login" value="Username" />
-			<node name="password" value="Password" />
-			<node name="confirmPassword" value="Conferma&#10;password" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="La Password e la Conferma Password devono essere le stesse." />
-		</node>
-			<node name="loginAlreadyTaken" value="Il nome utente è già in uso" />
-			<node name="loginNotSpecified" value="Perfavore, inserisci il tuo nome utente" />
+	<node name="userRegistration">
+		<node name="title" value="Utente Registrato" />
+		<node name="login" value="Username" />
+		<node name="password" value="Password" />
+		<node name="confirmPassword" value="Conferma&#10;password" />
+		<node name="email" value="E-mail" />
+		<node name="error">
+			<node name="usernameAlreadyTaken" value="Il nome utente è già in uso" />
+			<node name="usernameNotSpecified" value="Perfavore, inserisci il tuo nome utente" />
 			<node name="passwordNotSpecified" value="Perfavore, inserisci una password non vuota" />
+			<node name="passwordsDoNotMatch" value="La Password e la Conferma Password devono essere le stesse." />
 			<node name="emailNotSpecified" value="Perfavore, inserisci un indirizzo e-mail" />
+			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
 			<node name="invalidEMail" value="Indirizzo e-mail non valido" />
 			<node name="tooManyRegistrations" value="Troppe registrazioni dal tuo IP;&#10;riprova fra qualche minuto" />
-	<node name="userRegistration">
-		<node name="title" value="Register User" toBeTranslated="true" />
-		<node name="login" value="Username" toBeTranslated="true" />
-		<node name="password" value="Password" toBeTranslated="true" />
-		<node name="confirmPassword" value="Password&#10;confirmation" toBeTranslated="true" />
-		<node name="email" value="E-mail" toBeTranslated="true" />
-		<node name="error">
-			<node name="usernameAlreadyTaken" value="Username is already in use" toBeTranslated="true" />
-			<node name="usernameNotSpecified" value="Please, enter a username" toBeTranslated="true" />
-			<node name="passwordNotSpecified" value="Please, enter a password" toBeTranslated="true" />
-			<node name="passwordsDoNotMatch" value="The entered passwords do not match" toBeTranslated="true" />
-			<node name="emailNotSpecified" value="Please, enter an e-mail address" toBeTranslated="true" />
-			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
-			<node name="invalidEMail" value="Invalid e-mail address" toBeTranslated="true" />
-			<node name="tooManyRegistrations" value="Too many registrations from your IP;&#10;try again in a few minutes" toBeTranslated="true" />
 			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
 		</node>
 		<node name="waitMessage">
