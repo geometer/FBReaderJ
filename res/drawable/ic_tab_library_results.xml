@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:state_pressed="false" android:drawable="@drawable/ic_tab_selected_library_results" />
+    <item android:drawable="@drawable/ic_tab_unselected_library_results" />
+</selector>
+
