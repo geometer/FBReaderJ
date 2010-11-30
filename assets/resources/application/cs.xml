@@ -446,12 +446,6 @@
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena" />
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena" />
 			<node name="downloadLimitExceeded" value="Překročen limit stahování" />
-			<node name="loginAlreadyTaken" value="Uživatelské jméno se již používá" />
-			<node name="loginNotSpecified" value="Zadejte uživatelské jméno" />
-			<node name="passwordNotSpecified" value="Zadejte neprázdné heslo" />
-			<node name="emailNotSpecified" value="Zadejte e-mailovou adresu" />
-			<node name="invalidEMail" value="Neplatná e-mailová adresa" />
-			<node name="tooManyRegistrations" value="Příliš mnoho registrací z vaší IP;&#10;zkuste to znovu za pár minut" />
 			<node name="noUserEmail" value="Žádný uživatel nebyl zaregistrován&#10;se zadanou e-mailovou adresou" />
 			<node name="unsupportedOperation" value="Nepodporovaná operace" />
 			<node name="notAnOPDS" value="Toto není OPDS katalog" />

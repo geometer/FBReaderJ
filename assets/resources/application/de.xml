@@ -447,12 +447,6 @@
 			<node name="purchaseAlreadyPurchased" value="Das Duch wurde bereits gekauft." />
 			<node name="bookNotPurchased" value="Das Buch wurde nicht gekauft." />
 			<node name="downloadLimitExceeded" value="Download-Limit ist überschritten." />
-			<node name="loginAlreadyTaken" value="Benutzername wird bereits verwendet." />
-			<node name="loginNotSpecified" value="Bitte den Benutzernamen eingeben." />
-			<node name="passwordNotSpecified" value="Bitte ein Passwort eingeben." />
-			<node name="emailNotSpecified" value="Bitte eine Email-Adresse eingeben." />
-			<node name="invalidEMail" value="Ungültige Email-Adresse." />
-			<node name="tooManyRegistrations" value="Zu viele Registrierungen von Ihrer IP-Adresse;&#10;bitte in einigen Minuten noch einmal versuchen." />
 			<node name="noUserEmail" value="Es gibt keinen registrierten Nutzer mit dieser Email-Adresse&#10;" />
 			<node name="unsupportedOperation" value="Operation wird nicht unterstützt." />
 			<node name="notAnOPDS" value="Dies sit kein OPDS Katalog." />

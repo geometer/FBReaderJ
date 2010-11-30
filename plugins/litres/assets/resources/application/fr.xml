@@ -12,6 +12,12 @@
 			<node name="email" value="Email"/>
 			<node name="differentPasswords" value="Les deux mots de passe indiqués doivent être les mêmes."/>
 		</node>
+			<node name="loginAlreadyTaken" value="Identifiant déjà utilisé"/>
+			<node name="loginNotSpecified" value="Veuillez entrer un identifiant"/>
+			<node name="passwordNotSpecified" value="Veuillez entrer un mot de passe non vide"/>
+			<node name="emailNotSpecified" value="Veuillez entrer une adresse email"/>
+			<node name="invalidEMail" value="Adresse email invalide"/>
+			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
 	<node name="userRegistration">
 		<node name="title" value="Register User" toBeTranslated="true" />
 		<node name="login" value="Username" toBeTranslated="true" />

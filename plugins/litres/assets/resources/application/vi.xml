@@ -9,6 +9,12 @@
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="Mật khẩu và mật khẩu xác nhận phải giống nhau." />
 		</node>
+			<node name="loginAlreadyTaken" value="Tài khoản đã có thể dùng" />
+			<node name="loginNotSpecified" value="Xin nhập tên người dùng" />
+			<node name="passwordNotSpecified" value="Xin nhập mật khẩu" />
+			<node name="emailNotSpecified" value="Xin nhập 1 địa chỉ email" />
+			<node name="invalidEMail" value="Địa chỉ email sai" />
+			<node name="tooManyRegistrations" value="Có quá nhiều đăng ký từ IP của bạn;&#10;thử lại sau vài phút" />
 	<node name="userRegistration">
 		<node name="title" value="Register User" toBeTranslated="true" />
 		<node name="login" value="Username" toBeTranslated="true" />

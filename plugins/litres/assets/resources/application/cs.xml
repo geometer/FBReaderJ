@@ -9,6 +9,12 @@
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="Heslo a potvrzení hesla se musí shodovat." />
 		</node>
+			<node name="loginAlreadyTaken" value="Uživatelské jméno se již používá" />
+			<node name="loginNotSpecified" value="Zadejte uživatelské jméno" />
+			<node name="passwordNotSpecified" value="Zadejte neprázdné heslo" />
+			<node name="emailNotSpecified" value="Zadejte e-mailovou adresu" />
+			<node name="invalidEMail" value="Neplatná e-mailová adresa" />
+			<node name="tooManyRegistrations" value="Příliš mnoho registrací z vaší IP;&#10;zkuste to znovu za pár minut" />
 	<node name="userRegistration">
 		<node name="title" value="Register User" toBeTranslated="true" />
 		<node name="login" value="Username" toBeTranslated="true" />

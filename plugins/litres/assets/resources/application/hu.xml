@@ -9,6 +9,12 @@
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="A két jelszónak meg kell egyeznie." />
 		</node>
+			<node name="loginAlreadyTaken" value="Ez a felhasználónév már foglalt" />
+			<node name="loginNotSpecified" value="Adjon meg felhasználónevet" />
+			<node name="passwordNotSpecified" value="Adjon meg jelszót" />
+			<node name="emailNotSpecified" value="Adjon meg egy érvényes e-mail címet" />
+			<node name="invalidEMail" value="Érvénytelen e-mail cím" />
+			<node name="tooManyRegistrations" value="Túl sok regisztrációs kérés erről az IP-címről;&#10;próbálja meg pár perc múlva ismét!" />
 	<node name="userRegistration">
 		<node name="title" value="Register User" toBeTranslated="true" />
 		<node name="login" value="Username" toBeTranslated="true" />

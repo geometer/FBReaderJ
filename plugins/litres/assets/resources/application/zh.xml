@@ -9,6 +9,12 @@
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="密码和密码确认必须一致." />
 		</node>
+			<node name="loginAlreadyTaken" value="用户名已经存在" />
+			<node name="loginNotSpecified" value="请输入用户名" />
+			<node name="passwordNotSpecified" value="请输入密码" />
+			<node name="emailNotSpecified" value="请输入你的电子邮箱" />
+			<node name="invalidEMail" value="无效的电子邮箱" />
+			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册" />
 	<node name="userRegistration">
 		<node name="title" value="Register User" toBeTranslated="true" />
 		<node name="login" value="Username" toBeTranslated="true" />

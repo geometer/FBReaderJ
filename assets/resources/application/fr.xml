@@ -449,12 +449,6 @@
 			<node name="purchaseAlreadyPurchased" value="Déjà acheté"/>
 			<node name="bookNotPurchased" value="Le livre n'a pas été acheté"/>
 			<node name="downloadLimitExceeded" value="Limite de téléchargement atteinte"/>
-			<node name="loginAlreadyTaken" value="Identifiant déjà utilisé"/>
-			<node name="loginNotSpecified" value="Veuillez entrer un identifiant"/>
-			<node name="passwordNotSpecified" value="Veuillez entrer un mot de passe non vide"/>
-			<node name="emailNotSpecified" value="Veuillez entrer une adresse email"/>
-			<node name="invalidEMail" value="Adresse email invalide"/>
-			<node name="tooManyRegistrations" value="Trop d'inscriptions depuis votre IP ;&#10;essayer à nouvea dans quelques minutes"/>
 			<node name="noUserEmail" value="Aucun utilisateur n'est inscrit&#10;avec l'adresse email indiquée"/>
 			<node name="unsupportedOperation" value="Opération non supportée"/>
 			<node name="notAnOPDS" value="Il ne s'agit pas d'un catalogue OPDS" />

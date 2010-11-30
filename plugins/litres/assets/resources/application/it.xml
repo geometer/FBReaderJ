@@ -9,6 +9,12 @@
 			<node name="email" value="E-mail" />
 			<node name="differentPasswords" value="La Password e la Conferma Password devono essere le stesse." />
 		</node>
+			<node name="loginAlreadyTaken" value="Il nome utente è già in uso" />
+			<node name="loginNotSpecified" value="Perfavore, inserisci il tuo nome utente" />
+			<node name="passwordNotSpecified" value="Perfavore, inserisci una password non vuota" />
+			<node name="emailNotSpecified" value="Perfavore, inserisci un indirizzo e-mail" />
+			<node name="invalidEMail" value="Indirizzo e-mail non valido" />
+			<node name="tooManyRegistrations" value="Troppe registrazioni dal tuo IP;&#10;riprova fra qualche minuto" />
 	<node name="userRegistration">
 		<node name="title" value="Register User" toBeTranslated="true" />
 		<node name="login" value="Username" toBeTranslated="true" />
