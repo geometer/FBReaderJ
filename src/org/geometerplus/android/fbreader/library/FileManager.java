@@ -60,12 +60,9 @@ public final class FileManager extends Activity {
 		Button okButton = FileUtils.getOkBtn(this, R.id.fmanagerOkButton);
 		Button cancelButton = FileUtils.getCancelBtn(this, R.id.fmanagerCancelButton); 
 
-		Log.v(FILE_MANAGER_LOG_TAG, "paths : " + ROOT_DIR + "," + SDCARD_DIR + "," + FB_HOME_DIR); // TODO delete later
-		
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
 		myFileListView = new FileListView(this, fileList);
 	
-		
 		setPathListener(fbhomeButton, FB_HOME_DIR);
 		setPathListener(cardButton, SDCARD_DIR);
 		setPathListener(rootButton, ROOT_DIR);
