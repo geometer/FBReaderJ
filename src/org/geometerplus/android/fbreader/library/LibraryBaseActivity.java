@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -115,8 +116,14 @@ abstract class LibraryBaseActivity extends ListActivity {
 				}
 				if (coverBitmap != null) {
 					coverView.setImageBitmap(coverBitmap);
+				} else if (tree instanceof AuthorTree) {
+					coverView.setImageResource(R.drawable.ic_list_library_author);
+				} else if (tree instanceof TagTree) {
+					coverView.setImageResource(R.drawable.ic_list_library_tag);
+				} else if (tree instanceof BookTree) {
+					coverView.setImageResource(R.drawable.ic_list_library_book);
 				} else {
-					coverView.setImageResource(R.drawable.fbreader);
+					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 			}
                 

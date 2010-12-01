@@ -153,8 +153,10 @@ abstract class NetworkBaseActivity extends ListActivity
 		}
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
+		} else if (tree instanceof NetworkBookTree) {
+			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else {
-			coverView.setImageResource(R.drawable.fbreader);
+			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}
 	}
 

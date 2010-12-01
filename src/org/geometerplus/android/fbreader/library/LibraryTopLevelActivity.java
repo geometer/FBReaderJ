@@ -55,7 +55,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		final ArrayList<FBTree> items = new ArrayList<FBTree>();
 		items.add(new TopLevelTree(
 			myResource.getResource("searchResults"),
-			R.drawable.ic_tab_library_results,
+			R.drawable.ic_list_library_books,
 			new Runnable() {
 				public void run() {
 				}
@@ -63,27 +63,27 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("favorites"),
-			R.drawable.ic_tab_library_recent,
+			R.drawable.ic_list_library_favorites,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_FAVORITES, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("recent"),
-			R.drawable.ic_tab_library_recent,
+			R.drawable.ic_list_library_recent,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_RECENT, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("byAuthor"),
-			R.drawable.library_by_author,
+			R.drawable.ic_list_library_authors,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_AUTHOR, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("byTag"),
-			R.drawable.library_by_tag,
+			R.drawable.ic_list_library_tags,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_TAG, mySelectedBookPath)
 		));
 		items.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
-			R.drawable.fbreader,
+			R.drawable.ic_list_library_folder,
 			new Runnable() {
 				public void run() {
 				}
