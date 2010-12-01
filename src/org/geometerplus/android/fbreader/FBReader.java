@@ -98,8 +98,14 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
-		String fileToOpen = intent.getStringExtra(BOOK_PATH_KEY);
-		return fileToOpen != null ? ZLFile.createFileByPath(fileToOpen) : null;
+		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
+		if (filePath == null) {
+			final Uri data = intent.getData();
+			if (data != null) {
+				filePath = data.getPath();
+			}
+		}
+		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
 	}
 
 	@Override
