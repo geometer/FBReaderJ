@@ -496,6 +496,9 @@
 			<node name="titleAlreadyExists" value="Der angegeben Titel existiert bereits." />
 			<node name="siteAlreadyExists" value="Die angegeben Web-Seite existiert bereits." />
 		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Language filter" toBeTranslated="true" />
+		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Buchkauf" />
 			<node name="message" value="Wollen Sie das Buch&#10;&#8220;%s&#8221;&#10;wirklich kaufen?" />
