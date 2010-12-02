@@ -206,7 +206,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private static final int MENU_SEARCH = 1;
 	private static final int MENU_REFRESH = 2;
 	private static final int MENU_ADD_CATALOG = 3;
-	private static final int MENU_LANGUAGES = 4;
+	private static final int MENU_LANGUAGE_FILTER = 4;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,7 +214,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_networksearch);
 		addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", android.R.drawable.ic_menu_add);
 		addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
-		addMenuItem(menu, MENU_LANGUAGES, "languages", 0);
+		addMenuItem(menu, MENU_LANGUAGE_FILTER, "languages", 0);
 		return true;
 	}
 
@@ -224,6 +224,49 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 		menu.findItem(MENU_SEARCH).setEnabled(!searchInProgress);
 		return true;
+	}
+
+	private void runLanguageFilterDialog() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		final List<String> allLanguageCodes = library.languageCodes();
+		Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
+		final Collection<String> activeLanguageCodes = library.activeLanguageCodes();
+		final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
+		final boolean[] checked = new boolean[allLanguageCodes.size()];
+
+		for (int i = 0; i < allLanguageCodes.size(); ++i) {
+			final String code = allLanguageCodes.get(i);
+			languageNames[i] = ZLLanguageUtil.languageName(code);
+			checked[i] = activeLanguageCodes.contains(code);
+		}
+
+		final DialogInterface.OnMultiChoiceClickListener listener =
+			new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					checked[which] = isChecked;
+				}
+			};
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+			.setMultiChoiceItems(languageNames, checked, listener)
+			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
+			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+					for (int i = 0; i < checked.length; ++i) {
+						if (checked[i]) {
+							newActiveCodes.add(allLanguageCodes.get(i));
+						}
+					}
+					library.setActiveLanguageCodes(newActiveCodes);
+					library.invalidateChildren();
+					library.synchronize();
+					NetworkView.Instance().fireModelChanged();
+				}
+			})
+			.create();
+		dialog.show();
 	}
 
 	@Override
@@ -237,47 +280,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			case MENU_REFRESH:
 				refreshCatalogsList();
 				return true;
-			case MENU_LANGUAGES:
-			{
-				final List<String> allLanguageCodes = NetworkLibrary.Instance().languageCodes();
-				Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
-				final Collection<String> activeLanguageCodes = NetworkLibrary.Instance().activeLanguageCodes();
-				final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
-				final boolean[] checked = new boolean[allLanguageCodes.size()];
-
-				for (int i = 0; i < allLanguageCodes.size(); ++i) {
-					final String code = allLanguageCodes.get(i);
-					languageNames[i] = ZLLanguageUtil.languageName(code);
-					checked[i] = activeLanguageCodes.contains(code);
-				}
-
-				final DialogInterface.OnMultiChoiceClickListener listener =
-					new DialogInterface.OnMultiChoiceClickListener() {
-						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-							checked[which] = isChecked;
-						}
-					};
-				final ZLResource dialogResource = ZLResource.resource("dialog");
-				final AlertDialog dialog = new AlertDialog.Builder(this)
-					.setMultiChoiceItems(languageNames, checked, listener)
-					.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
-					.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-							for (int i = 0; i < checked.length; ++i) {
-								if (checked[i]) {
-									newActiveCodes.add(allLanguageCodes.get(i));
-								}
-							}
-							NetworkLibrary.Instance().setActiveLanguageCodes(newActiveCodes);
-							NetworkLibrary.Instance().invalidateChildren();
-							((BaseAdapter)getListAdapter()).notifyDataSetInvalidated();
-						}
-					})
-					.create();
-				dialog.show();
+			case MENU_LANGUAGE_FILTER:
+				runLanguageFilterDialog();
 				return true;
-			}
 			default:
 				return true;
 		}
