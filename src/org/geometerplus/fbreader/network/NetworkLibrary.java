@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
@@ -81,10 +82,70 @@ public class NetworkLibrary {
 		void onNewLink(INetworkLink link);
 	}
 
-
 	public final ZLStringOption NetworkSearchPatternOption = new ZLStringOption("NetworkSearch", "Pattern", "");
 
 	private final ArrayList<INetworkLink> myLinks = new ArrayList<INetworkLink>();
+
+	public List<String> languageCodes() {
+		final TreeSet<String> languageSet = new TreeSet<String>();
+		for (INetworkLink link : myLinks) {
+			languageSet.add(link.getLanguage());
+		}
+		return new ArrayList<String>(languageSet);
+	}
+
+	private ZLStringOption myActiveLanguageCodesOption;
+	private ZLStringOption activeLanguageCodesOption() {
+ 		if (myActiveLanguageCodesOption == null) {
+			final TreeSet<String> defaultCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+			defaultCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
+			myActiveLanguageCodesOption =
+				new ZLStringOption(
+					"Options",
+					"ActiveLanguages",
+					commaSeparatedString(defaultCodes)
+				);
+		}
+		return myActiveLanguageCodesOption;
+	}
+
+	public Collection<String> activeLanguageCodes() {
+		return Arrays.asList(activeLanguageCodesOption().getValue().split(","));
+	}
+
+	public void setActiveLanguageCodes(Collection<String> codes) {
+		final TreeSet<String> allCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+		allCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
+		allCodes.removeAll(languageCodes());
+		allCodes.addAll(codes);
+		activeLanguageCodesOption().setValue(commaSeparatedString(allCodes));
+	}
+
+	private String commaSeparatedString(Collection<String> codes) {
+		final StringBuilder builder = new StringBuilder();
+		for (String code : codes) {
+			builder.append(code);
+			builder.append(",");
+		}
+		if (builder.length() > 0) {
+			builder.delete(builder.length() - 1, builder.length());
+		}
+		return builder.toString();
+	}
+
+	private List<INetworkLink> activeLinks() {
+		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
+		final Collection<String> codes = activeLanguageCodes();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink ||
+					codes.contains(link.getLanguage())) {
+					filteredList.add(link);
+				}
+			}
+		}
+		return filteredList;
+	}
 
 	private final RootTree myRootTree = new RootTree();
 
@@ -157,7 +218,7 @@ public class NetworkLibrary {
 					toRemove.add(link);
 				}
 			}
-			myLinks.removeAll(myLinks);
+			myLinks.removeAll(toRemove);
 		}
 	}
 
@@ -221,7 +282,7 @@ public class NetworkLibrary {
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
 		synchronized (myLinks) {
-			for (INetworkLink link: myLinks) {
+			for (INetworkLink link : myLinks) {
 				if (host.contains(link.getSiteName())) {
 					url = link.rewriteUrl(url, externalUrl);
 				}
@@ -271,12 +332,10 @@ public class NetworkLibrary {
 		int nodeCount = 0;
 
 		synchronized (myLinks) {
-			Collections.sort(myLinks, new LinksComparator());
-			for (int i = 0; i < myLinks.size(); ++i) {
-				INetworkLink link = myLinks.get(i);
-				/*if (!link.OnOption.getValue()) {
-					continue;
-				}*/
+			final ArrayList<INetworkLink> links = new ArrayList<INetworkLink>(activeLinks());
+			Collections.sort(links, new LinksComparator());
+			for (int i = 0; i < links.size(); ++i) {
+				INetworkLink link = links.get(i);
 				boolean processed = false;
 				while (currentNode != null || nodeIterator.hasNext()) {
 					if (currentNode == null) {
@@ -299,8 +358,8 @@ public class NetworkLibrary {
 						break;
 					} else {
 						INetworkLink newNodeLink = null;
-						for (int j = i; j < myLinks.size(); ++j) {
-							final INetworkLink jlnk = myLinks.get(j);
+						for (int j = i; j < links.size(); ++j) {
+							final INetworkLink jlnk = links.get(j);
 							if (linksEqual(nodeLink, jlnk)) {
 								newNodeLink = jlnk;
 								break;
@@ -334,13 +393,13 @@ public class NetworkLibrary {
 			currentNode = null;
 		}
 
-		for (FBTree tree: toRemove) {
+		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
 	}
 
 	private void updateVisibility() {
-		for (FBTree tree: myRootTree.subTrees()) {
+		for (FBTree tree : myRootTree.subTrees()) {
 			if (!(tree instanceof NetworkCatalogTree)) {
 				continue;
 			}
@@ -382,10 +441,7 @@ public class NetworkLibrary {
 		};
 
 		synchronized (myLinks) {
-			for (INetworkLink link: myLinks) {
-				//if (link.OnOption.getValue()) {
-				// execute next code only if link is enabled
-				//}
+			for (INetworkLink link : activeLinks()) {
 				final NetworkOperationData data = link.createOperationData(link, synchronizedListener);
 				final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 				if (request != null) {
@@ -403,7 +459,7 @@ public class NetworkLibrary {
 			if (listener.confirmInterrupt()) {
 				return;
 			}
-			for (NetworkOperationData data: dataList) {
+			for (NetworkOperationData data : dataList) {
 				ZLNetworkRequest request = data.resume();
 				if (request != null) {
 					requestList.add(request);
@@ -440,7 +496,7 @@ public class NetworkLibrary {
 
 	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {
 		synchronized (myLinks) {
-			for (INetworkLink link: myLinks) {
+			for (INetworkLink link : myLinks) {
 				if (link != exceptFor && link.getTitle().equals(title)) {
 					return true;
 				}
@@ -451,20 +507,12 @@ public class NetworkLibrary {
 
 	public boolean hasCustomLinkSite(String siteName, INetworkLink exceptFor) {
 		synchronized (myLinks) {
-			for (INetworkLink link: myLinks) {
+			for (INetworkLink link : myLinks) {
 				if (link != exceptFor && link.getSiteName().equals(siteName)) {
 					return true;
 				}
 			}
 		}
 		return false;
-	}
-
-	public List<String> languages() {
-		final TreeSet<String> languageSet = new TreeSet<String>();
-		for (INetworkLink link : myLinks) {
-			languageSet.add(link.getLanguage());
-		}
-		return new ArrayList<String>(languageSet);
 	}
 }

@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -54,21 +54,19 @@ class LanguagePreference extends ZLStringListPreference {
 	LanguagePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
 		myBook = book;
-		final TreeMap<String,String> map = new TreeMap<String,String>();
-		for (String code : ZLLanguageUtil.languageCodes()) {
-			map.put(ZLLanguageUtil.languageName(code), code);
-		}
-		final int size = map.size();
-		String[] codes = new String[size + 1];
-		String[] names = new String[size + 1];
+		final TreeSet<String> set = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+		set.addAll(ZLLanguageUtil.languageCodes());
+		set.add(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
+
+		final int size = set.size();
+		String[] codes = new String[size];
+		String[] names = new String[size];
 		int index = 0;
-		for (TreeMap.Entry<String,String> entry : map.entrySet()) {
-			codes[index] = entry.getValue();
-			names[index] = entry.getKey();
+		for (String code : set) {
+			codes[index] = code;
+			names[index] = ZLLanguageUtil.languageName(code);
 			++index;
 		}
-		codes[size] = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
-		names[size] = ZLLanguageUtil.languageName(codes[size]);
 		setLists(codes, names);
 		String language = myBook.getLanguage();
 		if (language == null) {

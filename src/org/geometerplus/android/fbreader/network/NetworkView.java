@@ -199,7 +199,6 @@ class NetworkView {
 	 */
 
 	private static class MinPriorityThreadFactory implements ThreadFactory {
-
 		private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
 
 		public Thread newThread(Runnable r) {

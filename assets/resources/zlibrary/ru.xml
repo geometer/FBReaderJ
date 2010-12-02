@@ -79,6 +79,7 @@
 		<node name="vi" value="вьетнамский" />
 		<node name="zh" value="китайский" />
 		<node name="other" value="другой" />
+		<node name="multi" value="многоязычный" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="включить"/>

@@ -24,7 +24,7 @@ import java.io.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
-import org.geometerplus.zlibrary.core.util.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -57,7 +57,7 @@ public class MobipocketPlugin extends PdbPlugin {
 			final int fullNameOffset = (int)PdbUtil.readInt(stream);
 			final int fullNameLength = (int)PdbUtil.readInt(stream);
 			final int languageCode = (int)PdbUtil.readInt(stream);
-			book.setLanguage(ZLLanguageUtil.languageByCode(languageCode & 0xFF, (languageCode >> 8) & 0xFF));
+			book.setLanguage(ZLLanguageUtil.languageByIntCode(languageCode & 0xFF, (languageCode >> 8) & 0xFF));
 			PdbUtil.skip(stream, 32);
 			int offset = 132;
 			if ((PdbUtil.readInt(stream) & 0x40) != 0) {

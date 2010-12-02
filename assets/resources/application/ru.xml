@@ -494,6 +494,9 @@
 			<node name="titleAlreadyExists" value="Такое название уже использовано" />
 			<node name="siteAlreadyExists" value="Этот каталог уже есть в списке" />
 		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Показывать каталоги, язык которых" />
+		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
