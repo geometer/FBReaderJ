@@ -19,9 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -242,6 +240,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			case MENU_LANGUAGES:
 			{
 				final List<String> allLanguageCodes = NetworkLibrary.Instance().languageCodes();
+				Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
 				final Collection<String> activeLanguageCodes = NetworkLibrary.Instance().activeLanguageCodes();
 				final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
 				final boolean[] checked = new boolean[allLanguageCodes.size()];

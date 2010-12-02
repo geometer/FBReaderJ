@@ -114,7 +114,10 @@ public class NetworkLibrary {
 	}
 
 	public void setActiveLanguageCodes(Collection<String> codes) {
-		activeLanguageCodesOption().setValue(commaSeparatedString(codes));
+		final TreeSet<String> allCodes = new TreeSet<String>(ZLibrary.Instance().defaultLanguageCodes());
+		allCodes.removeAll(languageCodes());
+		allCodes.addAll(codes);
+		activeLanguageCodesOption().setValue(commaSeparatedString(allCodes));
 	}
 
 	private String commaSeparatedString(Collection<String> codes) {
