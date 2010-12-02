@@ -80,6 +80,7 @@
 		<node name="vi" value="Vietnamsky" />
 		<node name="zh" value="Čínsky" />
 		<node name="other" value="Jiný" />
+		<node name="multi" value="Multilanguage" toBeTranslated="true" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="zap" />
