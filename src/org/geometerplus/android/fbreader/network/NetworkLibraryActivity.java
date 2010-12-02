@@ -263,7 +263,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 					.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
 					.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							final ArrayList<String> newActiveCodes = new ArrayList<String>();
+							final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
 							for (int i = 0; i < checked.length; ++i) {
 								if (checked[i]) {
 									newActiveCodes.add(allLanguageCodes.get(i));
