@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,8 +30,10 @@ import android.os.Message;
 import android.view.*;
 import android.widget.BaseAdapter;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -39,7 +43,6 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
-
 	private NetworkTree myTree;
 
 	@Override
@@ -85,7 +88,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private static class Initializator extends Handler {
-
 		private NetworkLibraryActivity myActivity;
 
 		public Initializator(NetworkLibraryActivity activity) {
@@ -165,7 +167,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 
 	private final class LibraryAdapter extends BaseAdapter {
-
 		public final int getCount() {
 			if (!NetworkView.Instance().isInitialized()) {
 				return 0;
@@ -178,7 +179,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (position == 0) {
 				return NetworkView.Instance().getSearchItemTree();
 			} else if (position > 0 && position <= size) {
-				return (NetworkTree) myTree.subTrees().get(position - 1);
+				return (NetworkTree)myTree.subTrees().get(position - 1);
 			} else if (position == size + 1) {
 				return NetworkView.Instance().getAddCustomCatalogItemTree();
 			}
@@ -205,6 +206,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private static final int MENU_SEARCH = 1;
 	private static final int MENU_REFRESH = 2;
 	private static final int MENU_ADD_CATALOG = 3;
+	private static final int MENU_LANGUAGE_FILTER = 4;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -212,6 +214,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_networksearch);
 		addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", android.R.drawable.ic_menu_add);
 		addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
+		addMenuItem(menu, MENU_LANGUAGE_FILTER, "languages", 0);
 		return true;
 	}
 
@@ -221,6 +224,49 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
 		menu.findItem(MENU_SEARCH).setEnabled(!searchInProgress);
 		return true;
+	}
+
+	private void runLanguageFilterDialog() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		final List<String> allLanguageCodes = library.languageCodes();
+		Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
+		final Collection<String> activeLanguageCodes = library.activeLanguageCodes();
+		final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
+		final boolean[] checked = new boolean[allLanguageCodes.size()];
+
+		for (int i = 0; i < allLanguageCodes.size(); ++i) {
+			final String code = allLanguageCodes.get(i);
+			languageNames[i] = ZLLanguageUtil.languageName(code);
+			checked[i] = activeLanguageCodes.contains(code);
+		}
+
+		final DialogInterface.OnMultiChoiceClickListener listener =
+			new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					checked[which] = isChecked;
+				}
+			};
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+			.setMultiChoiceItems(languageNames, checked, listener)
+			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
+			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+					for (int i = 0; i < checked.length; ++i) {
+						if (checked[i]) {
+							newActiveCodes.add(allLanguageCodes.get(i));
+						}
+					}
+					library.setActiveLanguageCodes(newActiveCodes);
+					library.invalidateChildren();
+					library.synchronize();
+					NetworkView.Instance().fireModelChanged();
+				}
+			})
+			.create();
+		dialog.show();
 	}
 
 	@Override
@@ -233,6 +279,9 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 				return true;
 			case MENU_REFRESH:
 				refreshCatalogsList();
+				return true;
+			case MENU_LANGUAGE_FILTER:
+				runLanguageFilterDialog();
 				return true;
 			default:
 				return true;
