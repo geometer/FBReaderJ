@@ -24,8 +24,10 @@ import java.util.*;
 
 import android.app.Application;
 import android.content.res.AssetFileDescriptor;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 
@@ -145,6 +147,33 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		DisplayMetrics metrics = new DisplayMetrics();
 		myActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		return (int)(160 * metrics.density);
+	}
+
+	@Override
+	public Collection<String> defaultLanguageCodes() {
+		final TreeSet<String> set = new TreeSet<String>();
+		set.add(Locale.getDefault().getLanguage());
+		final TelephonyManager manager = (TelephonyManager)myApplication.getSystemService(Context.TELEPHONY_SERVICE);
+		if (manager != null) {
+			final String country0 = manager.getSimCountryIso().toLowerCase();
+			final String country1 = manager.getNetworkCountryIso().toLowerCase();
+			for (Locale locale : Locale.getAvailableLocales()) {
+				final String country = locale.getCountry().toLowerCase();
+				if (country != null && country.length() > 0 &&
+					(country.equals(country0) || country.equals(country1))) {
+					set.add(locale.getLanguage());
+				}
+			}
+			if ("ru".equals(country0) || "ru".equals(country1)) {
+				set.add("ru");
+			} else if ("by".equals(country0) || "by".equals(country1)) {
+				set.add("ru");
+			} else if ("ua".equals(country0) || "ua".equals(country1)) {
+				set.add("ru");
+			}
+		}
+		set.add("multi");
+		return set;
 	}
 
 	private final class AndroidAssetsFile extends ZLResourceFile {

@@ -494,6 +494,9 @@
 			<node name="titleAlreadyExists" value="Specified title is already in use" />
 			<node name="siteAlreadyExists" value="Specified site is already in use" />
 		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Language filter" />
+		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Purchase book" />
 			<node name="message" value="Are you sure you want to buy&#10;&#8220;%s&#8221;&#10;book?" />
