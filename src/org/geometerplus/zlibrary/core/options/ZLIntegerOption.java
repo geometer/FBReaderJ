@@ -36,7 +36,6 @@ public final class ZLIntegerOption extends ZLOption {
 				try {
 					myValue = Integer.parseInt(value);
 				} catch (NumberFormatException e) {
-					// System.err.println(e);
 				}
 			}
 			myIsSynchronized = true;

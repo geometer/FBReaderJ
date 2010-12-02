@@ -72,7 +72,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		/*
 		final Cursor cursor = myDatabase.rawQuery("SELECT groupName,name FROM config WHERE groupName LIKE ? GROUP BY name", new String[] { "/%" });
 		while (cursor.moveToNext()) {
-			System.err.println(cursor.getString(0) + " = " + cursor.getString(1));
+			println(cursor.getString(0) + " = " + cursor.getString(1));
 		}
 		cursor.close();
 		*/

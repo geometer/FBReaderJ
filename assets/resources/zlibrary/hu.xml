@@ -80,6 +80,7 @@
 		<node name="vi" value="Vietnami" />
 		<node name="zh" value="Kínai" />
 		<node name="other" value="Egyéb" />
+		<node name="multi" value="Multilanguage" toBeTranslated="true" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="be" />

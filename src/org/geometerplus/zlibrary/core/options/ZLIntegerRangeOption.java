@@ -52,7 +52,6 @@ public final class ZLIntegerRangeOption extends ZLOption {
 					}
 					myValue = intValue;
 				} catch (NumberFormatException e) {
-					// System.err.println(e);
 				}
 			}
 			myIsSynchronized = true;
