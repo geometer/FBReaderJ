@@ -81,6 +81,7 @@
 		<node name="vi" value="Vietnamesisch" />
 		<node name="zh" value="Chinesisch" />
 		<node name="other" value="Andere" />
+		<node name="multi" value="Multilanguage" toBeTranslated="true" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="ein" />

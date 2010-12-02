@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.library;
 
+import java.util.Collection;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public abstract class ZLibrary {
@@ -41,4 +43,5 @@ public abstract class ZLibrary {
 	abstract public int getScreenBrightness();
 	abstract public int getDisplayDPI();
 	abstract public void openInBrowser(String reference);
+	abstract public Collection<String> defaultLanguageCodes();
 }
