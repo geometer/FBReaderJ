@@ -50,6 +50,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		}
 		if (Library == null) {
 			Library = new Library();
+			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
 		final ArrayList<FBTree> items = new ArrayList<FBTree>();

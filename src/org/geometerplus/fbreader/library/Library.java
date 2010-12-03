@@ -28,6 +28,9 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
+	public static final int STATE_NOT_INITIALIZED = 0;
+	public static final int STATE_FULLY_INITIALIZED = 1;
+
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
@@ -35,20 +38,28 @@ public final class Library {
 	private final LibraryTree myRecentBooks = new RootTree();
 	private final LibraryTree mySearchResult = new RootTree();
 
-	private boolean myDoRebuild = true;
+	private volatile int myState = STATE_NOT_INITIALIZED;
 
 	public Library() {
 	}
 
-	public void clear() {
-		myDoRebuild = true;
+	public boolean hasState(int state) {
+		return myState >= state;
+	}
 
-		myBooks.clear();
-		myExternalBooks.clear();
-		myLibraryByAuthor.clear();
-		myLibraryByTag.clear();
-		myRecentBooks.clear();
-		mySearchResult.clear();
+	public void waitForState(int state) {
+		while (myState < state) {
+			synchronized(this) {
+				if (myState < state) {
+					System.err.println("waiting for: " + state + " (" + myState + ")");
+					try {
+						wait();
+					} catch (InterruptedException e) {
+					}
+					System.err.println("found: " + state + " (" + myState + ")");
+				}
+			}
+		}
 	}
 
 	public static ZLResourceFile getHelpFile() {
@@ -252,7 +263,6 @@ public final class Library {
 		}
 
 		final BooksDatabase db = BooksDatabase.Instance();
-		myRecentBooks.clear();
 		for (long id : db.loadRecentBookIds()) {
 			Book book = bookById.get(id);
 			if (book != null) {
@@ -269,37 +279,32 @@ public final class Library {
 		});
 	}
 
-	public void synchronize() {
-		if (myDoRebuild) {
+	public synchronized void synchronize() {
+		if (myState == STATE_NOT_INITIALIZED) {
+			System.err.println("building: start");
 			build();
 
 			myLibraryByAuthor.sortAllChildren();
 			myLibraryByTag.sortAllChildren();
 
-			myDoRebuild = false;
+			myState = STATE_FULLY_INITIALIZED;
+			notifyAll();
+			System.err.println("building: done");
 		}
 	}
 
 	public LibraryTree byAuthor() {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return myLibraryByAuthor;
 	}
 
 	public LibraryTree byTag() {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return myLibraryByTag;
 	}
 
 	public LibraryTree recentBooks() {
-		if (!myRecentBooks.hasChildren()) {
-			final BooksDatabase db = BooksDatabase.Instance();
-			for (long id : db.loadRecentBookIds()) {
-				Book book = Book.getById(id);
-				if (book != null) {
-					myRecentBooks.createBookSubTree(book, true);
-				}
-			}
-		}
+		waitForState(STATE_FULLY_INITIALIZED);
 		return myRecentBooks;
 	}
 
@@ -309,7 +314,7 @@ public final class Library {
 	}
 
 	public LibraryTree searchBooks(String pattern) {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		mySearchResult.clear();
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
@@ -341,7 +346,7 @@ public final class Library {
 	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
 	public int getRemoveBookMode(Book book) {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return (myExternalBooks.contains(book) ? REMOVE_FROM_LIBRARY : REMOVE_DONT_REMOVE)
 			| (canDeleteBookFile(book) ? REMOVE_FROM_DISK : REMOVE_DONT_REMOVE);
 	}
@@ -364,7 +369,7 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		myBooks.remove(book);
 		myLibraryByAuthor.removeBook(book);
 		myLibraryByTag.removeBook(book);

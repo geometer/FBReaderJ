@@ -39,6 +39,7 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class LibraryBaseActivity extends ListActivity {
@@ -141,6 +142,13 @@ abstract class LibraryBaseActivity extends ListActivity {
 		}
 
 		public void run() {
+			if (!LibraryTopLevelActivity.Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				UIUtil.wait("loadingBookList", new Runnable() {
+					public void run() {
+						LibraryTopLevelActivity.Library.waitForState(Library.STATE_FULLY_INITIALIZED);
+					}
+				}, LibraryBaseActivity.this);
+			}
 			startActivity(
 				new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)

@@ -2,8 +2,10 @@
 * Database updating in backgorund
 * Watch filesystem after loading
 * Covers loading in background
-* Wait messages (?)
+DONE Wait messages
 * Favorites
 * Search
 * File view
 * Activity caption
+* Book deleting
+* Show book info activity instead of immediate opening/menu
