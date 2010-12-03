@@ -127,7 +127,7 @@ abstract class NetworkBaseActivity extends ListActivity
 				final NetworkImage img = (NetworkImage) cover;
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
-				} else {
+				} else if (!myAwaitedCovers.contains(img.Url)) {
 					final Runnable runnable = new Runnable() {
 						public void run() {
 							myAwaitedCovers.remove(img.Url);
@@ -138,11 +138,10 @@ abstract class NetworkBaseActivity extends ListActivity
 					final NetworkView networkView = NetworkView.Instance();
 					if (!networkView.isCoverLoading(img.Url)) {
 						networkView.performCoverSynchronization(img, runnable);
-						myAwaitedCovers.add(img.Url);
-					} else if (!myAwaitedCovers.contains(img.Url)) {
+					} else {
 						networkView.addCoverSynchronizationRunnable(img.Url, runnable);
-						myAwaitedCovers.add(img.Url);
 					}
+					myAwaitedCovers.add(img.Url);
 				}
 			} else {
 				data = mgr.getImageData(cover);
