@@ -35,7 +35,6 @@ public final class NetworkImage extends ZLSingleImage {
 	public final String Url;
 	private volatile boolean mySynchronized;
 
-	// mimeType string MUST be interned
 	public NetworkImage(String url, String mimeType) {
 		super(mimeType);
 		Url = url;
@@ -44,7 +43,6 @@ public final class NetworkImage extends ZLSingleImage {
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	// mimeType string MUST be interned
 	public static String makeImageFileName(String url, String mimeType) {
 		URI uri;
 		try {
@@ -84,9 +82,9 @@ public final class NetworkImage extends ZLSingleImage {
 		}
 
 		String ext = null;
-		if (mimeType == MIME_PNG) {
+		if (MIME_PNG.equals(mimeType)) {
 			ext = ".png";
-		} else if (mimeType == MIME_JPEG) {
+		} else if (MIME_JPEG.equals(mimeType)) {
 			if (path.length() > 5 && path.substring(path.length() - 5).equals(".jpeg")) {
 				ext = ".jpeg";
 			} else {
@@ -218,5 +216,4 @@ public final class NetworkImage extends ZLSingleImage {
 			return null;
 		}
 	}
-
 }
