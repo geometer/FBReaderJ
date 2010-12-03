@@ -136,11 +136,7 @@ abstract class NetworkBaseActivity extends ListActivity
 						}
 					};
 					final NetworkView networkView = NetworkView.Instance();
-					if (!networkView.isCoverLoading(img.Url)) {
-						networkView.performCoverSynchronization(img, runnable);
-					} else {
-						networkView.addCoverSynchronizationRunnable(img.Url, runnable);
-					}
+					networkView.performCoverSynchronization(img, runnable);
 					myAwaitedCovers.add(img.Url);
 				}
 			} else {
