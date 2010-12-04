@@ -250,17 +250,6 @@ class NetworkView {
 		});
 	}
 
-	public final boolean isCoverLoading(String coverUrl) {
-		return myOnCoverSyncRunnables.containsKey(coverUrl);
-	}
-
-	public void addCoverSynchronizationRunnable(String coverUrl, Runnable finishRunnable) {
-		final LinkedList<Runnable> runnables = myOnCoverSyncRunnables.get(coverUrl);
-		if (runnables != null && finishRunnable != null) {
-			runnables.add(finishRunnable);
-		}
-	}
-
 	/*
 	 * Open Network URL in browser
 	 */

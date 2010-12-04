@@ -192,8 +192,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			if (cover instanceof NetworkImage) {
 				final NetworkImage img = (NetworkImage) cover;
 				final NetworkView networkView = NetworkView.Instance();
-				if (networkView.isInitialized() && networkView.isCoverLoading(img.Url)) {
-					networkView.addCoverSynchronizationRunnable(img.Url, new Runnable() {
+				//if (networkView.isInitialized() && networkView.isCoverLoading(img.Url)) {
+				if (networkView.isInitialized()) {
+					//networkView.addCoverSynchronizationRunnable(img.Url, new Runnable() {
+					networkView.performCoverSynchronization(img, new Runnable() {
 						public void run() {
 							img.synchronizeFast();
 							final ZLAndroidImageData data = mgr.getImageData(img);
