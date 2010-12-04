@@ -17,22 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
-
-import java.util.LinkedList;
+package org.geometerplus.android.fbreader.library;
 
 import android.app.Activity;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
-public class BookmarkSearchActivity extends SearchActivity {
-	private final LinkedList<Bookmark> myBookmarks = new LinkedList<Bookmark>();
+import org.geometerplus.android.fbreader.SearchActivity;
+
+public class BookSearchActivity extends SearchActivity {
+	//private LibraryTree myTree;
 
 	@Override
 	public void onSuccess() {
-		BookmarksActivity.Instance.showSearchResultsTab(myBookmarks);
+		//LibraryTabActivity.Instance.showSearchResultsTab(myTree);
 	}
 
 	/*@Override
@@ -41,7 +39,7 @@ public class BookmarkSearchActivity extends SearchActivity {
 
 	@Override
 	public String getFailureMessageResourceKey() {
-		return "bookmarkNotFound";
+		return "bookNotFound";
 	}
 
 	@Override
@@ -50,21 +48,18 @@ public class BookmarkSearchActivity extends SearchActivity {
 	}
 
 	@Override
-	public boolean runSearch(String pattern) {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		fbreader.BookmarkSearchPatternOption.setValue(pattern);
-		pattern = pattern.toLowerCase();
-		myBookmarks.clear();
-		for (Bookmark bookmark : BookmarksActivity.Instance.AllBooksBookmarks) {
-			if (ZLMiscUtil.matchesIgnoreCase(bookmark.getText(), pattern)) {
-				myBookmarks.add(bookmark);
-			}
-		}	
-		return !myBookmarks.isEmpty();
+	public boolean runSearch(final String pattern) {
+		/*
+		final LibraryTabActivity parentActivity = LibraryTabActivity.Instance;
+		parentActivity.BookSearchPatternOption.setValue(pattern);
+		myTree = parentActivity.library().searchBooks(pattern);
+		return myTree.hasChildren();
+		*/
+		return false;
 	}
 
 	@Override
 	public Activity getParentActivity() {
-		return BookmarksActivity.Instance;
+		return null;//LibraryTabActivity.Instance;
 	}
 }

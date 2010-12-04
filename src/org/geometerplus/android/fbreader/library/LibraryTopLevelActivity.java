@@ -108,6 +108,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 	@Override
 	public boolean onSearchRequested() {
+		System.err.println("onSearchRequested");
 		startSearch(BookSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
