@@ -27,19 +27,18 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.constants.XMLNamespace;
+import org.geometerplus.fbreader.constants.XMLNamespaces;
+import org.geometerplus.fbreader.constants.MimeTypes;
+
 import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 
-class OPDSLinkXMLReader extends OPDSXMLReader {
-
+class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeTypes {
 	private static class LinkReader implements OPDSFeedReader {
-
 		private NetworkLibrary.OnNewLinkListener myListener;
 
 		private String myAuthenticationType;
@@ -102,44 +101,39 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 				final String href = link.getHref();
 				final String type = ZLNetworkUtil.filterMimeType(link.getType());
 				final String rel = link.getRel();
-				if (rel == OPDSConstants.REL_IMAGE_THUMBNAIL
-						|| rel == OPDSConstants.REL_THUMBNAIL) {
-					if (type == NetworkImage.MIME_PNG ||
-							type == NetworkImage.MIME_JPEG) {
+				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
+					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
 						icon = href;
 					}
-				} else if ((rel != null && rel.startsWith(OPDSConstants.REL_IMAGE_PREFIX))
-						|| rel == OPDSConstants.REL_COVER) {
-					if (icon == null &&
-							(type == NetworkImage.MIME_PNG ||
-							 type == NetworkImage.MIME_JPEG)) {
+				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
+					if (icon == null && (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG)) {
 						icon = href;
 					}
 				} else if (rel == null) {
-					if (type == OPDSConstants.MIME_APP_ATOM) {
+					if (type == MIME_APP_ATOM) {
 						links.put(INetworkLink.URL_MAIN, href);
 					}
 				} else if (rel == "search") {
-					if (type == OPDSConstants.MIME_APP_ATOM) {
+					if (type == MIME_APP_ATOM) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
 						if (descr.isValid()) {
 							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
 							links.put(INetworkLink.URL_SEARCH, descr.makeQuery("%s"));
 						}
 					}
-				} else if (rel == OPDSConstants.REL_LINK_SIGN_IN) {
+				} else if (rel == REL_LINK_SIGN_IN) {
 					links.put(INetworkLink.URL_SIGN_IN, href);
-				} else if (rel == OPDSConstants.REL_LINK_SIGN_OUT) {
+				} else if (rel == REL_LINK_SIGN_OUT) {
 					links.put(INetworkLink.URL_SIGN_OUT, href);
-				} else if (rel == OPDSConstants.REL_LINK_SIGN_UP) {
+				} else if (rel == REL_LINK_SIGN_UP) {
 					links.put(INetworkLink.URL_SIGN_UP, href);
-				} else if (rel == OPDSConstants.REL_LINK_REFILL_ACCOUNT) {
+				} else if (rel == REL_LINK_REFILL_ACCOUNT) {
 					links.put(INetworkLink.URL_REFILL_ACCOUNT, href);
-				} else if (rel == OPDSConstants.REL_LINK_RECOVER_PASSWORD) {
+				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
 					links.put(INetworkLink.URL_RECOVER_PASSWORD, href);
-				} else if (rel == OPDSConstants.REL_CONDITION_NEVER) {
+				} else if (rel == REL_CONDITION_NEVER) {
 					urlConditions.put(href, OPDSNetworkLink.FeedCondition.NEVER);
-				} else if (rel == OPDSConstants.REL_CONDITION_SIGNED_IN) {
+				} else if (rel == REL_CONDITION_SIGNED_IN) {
 					urlConditions.put(href, OPDSNetworkLink.FeedCondition.SIGNED_IN);
 				}
 			}
@@ -238,7 +232,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader {
 
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
 			final String value = entry.getValue();
-			if (value == XMLNamespace.FBReaderCatalogMetadata) {
+			if (value == XMLNamespaces.FBReaderCatalogMetadata) {
 				myFBReaderNamespaceId = intern(entry.getKey());
 			}
 		}

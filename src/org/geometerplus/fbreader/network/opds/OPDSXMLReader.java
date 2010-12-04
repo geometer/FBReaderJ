@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.constants.XMLNamespace;
+import org.geometerplus.fbreader.constants.XMLNamespaces;
 
 import org.geometerplus.fbreader.network.atom.*;
 
@@ -86,15 +86,15 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
 			final String value = entry.getValue();
-			if (value == XMLNamespace.DublinCoreTerms) {
+			if (value == XMLNamespaces.DublinCoreTerms) {
 				myDublinCoreNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespace.Atom) {
+			} else if (value == XMLNamespaces.Atom) {
 				myAtomNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespace.OpenSearch) {
+			} else if (value == XMLNamespaces.OpenSearch) {
 				myOpenSearchNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespace.CalibreMetadata) {
+			} else if (value == XMLNamespaces.CalibreMetadata) {
 				myCalibreNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespace.Opds) {
+			} else if (value == XMLNamespaces.Opds) {
 				myOpdsNamespaceId = intern(entry.getKey());
 			}
 		}

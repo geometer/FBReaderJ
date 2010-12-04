@@ -24,13 +24,12 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.constants.XMLNamespace;
+import org.geometerplus.fbreader.constants.XMLNamespaces;
+import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
 
-class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
-
+class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespaces, MimeTypes {
 	private class XHTMLImageFinder extends ZLXMLReaderAdapter {
-
 		private static final String IMG = "img";
 
 		@Override
@@ -40,7 +39,7 @@ class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				final String src = attributes.getValue("src");
 				if (src != null) {
 					myImage = new ZLFileImage(
-						"image/auto",
+						MIME_IMAGE_AUTO,
 						ZLFile.createFileByPath(myPathPrefix + src)
 					);
 					return true;
@@ -49,7 +48,6 @@ class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			return false;
 		}
 	}
-
 
 	private ZLImage myImage;
 	private String myPathPrefix;
@@ -71,7 +69,7 @@ class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
 			if (coverFile != null) {
 				final String ext = coverFile.getExtension();
 				if (ext != null && (ext.equals("gif") || ext.equals("jpg") || ext.equals("jpeg"))) {
-					myImage = new ZLFileImage("image/auto", coverFile);
+					myImage = new ZLFileImage(MIME_IMAGE_AUTO, coverFile);
 				} else {
 					new XHTMLImageFinder().read(coverFile);
 				}
@@ -102,7 +100,7 @@ class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespace {
 				final String href = attributes.getValue("href");
 				if (href != null) {
 					myImage = new ZLFileImage(
-						"image/auto",
+						MIME_IMAGE_AUTO,
 						ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href))
 					);
 					return true;

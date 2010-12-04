@@ -19,11 +19,12 @@
 
 package org.geometerplus.fbreader.formats.xhtml;
 
-import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.fbreader.constants.MimeTypes;
+import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 
 class XHTMLTagImageAction extends XHTMLTagAction {
@@ -46,7 +47,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 				}
 				final String imageName = imageFile.getName(false);
 				modelReader.addImageReference(imageName, (short)0);
-				modelReader.addImage(imageName, new ZLFileImage("image/auto", imageFile));
+				modelReader.addImage(imageName, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, imageFile));
 				if (flag) {
 					modelReader.beginParagraph();
 				}

@@ -27,7 +27,8 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-import org.geometerplus.fbreader.constants.XMLNamespace;
+import org.geometerplus.fbreader.constants.XMLNamespaces;
+import org.geometerplus.fbreader.constants.MimeTypes;
 
 class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 
@@ -62,7 +63,7 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 
 		for (Map.Entry<String,String> entry : namespaces.entrySet()) {
 			final String value = entry.getValue();
-			if (value == XMLNamespace.OpenSearch) {
+			if (value == XMLNamespaces.OpenSearch) {
 				myOpenSearchNamespaceId = intern(entry.getKey());
 			}
 		}
@@ -109,7 +110,7 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 			if (tagPrefix == myOpenSearchNamespaceId && tag == TAG_URL) {
 				final String type = attributes.getValue("type");
 				final String rel = attributes.getValue("rel");
-				if (type == OPDSConstants.MIME_APP_ATOM
+				if (type == MimeTypes.MIME_APP_ATOM
 						&& (rel == null || rel == "results")) {
 					final String template = ZLNetworkUtil.url(myBaseURL, attributes.getValue("template"));
 					final int indexOffset = parseInt(attributes.getValue("indexOffset"));

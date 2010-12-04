@@ -25,11 +25,10 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.constants.XMLNamespace;
-
+import org.geometerplus.fbreader.constants.XMLNamespaces;
+import org.geometerplus.fbreader.constants.MimeTypes;
 
 public class FB2CoverReader extends ZLXMLReaderAdapter {
-
 	private boolean myReadCoverPage;
 	private String myImageReference;
 	private Base64EncodedImage myImage;
@@ -53,7 +52,7 @@ public class FB2CoverReader extends ZLXMLReaderAdapter {
 	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
 		myXLinkPrefix = null;
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
-			if (XMLNamespace.XLink.equals(entry.getValue())) {
+			if (XMLNamespaces.XLink.equals(entry.getValue())) {
 				myXLinkPrefix = entry.getKey() + ":";
 				break;
 			}
@@ -84,7 +83,7 @@ public class FB2CoverReader extends ZLXMLReaderAdapter {
 				final String contentType = attributes.getValue("content-type");
 				if (id != null && contentType != null && myImageReference.equals(id)) {
 					// FIXME: make different Base64EncodedImage constructor to use another cache for covers
-					myImage = new Base64EncodedImage((contentType != null) ? contentType : "image/auto");
+					myImage = new Base64EncodedImage((contentType != null) ? contentType : MimeTypes.MIME_IMAGE_AUTO);
 				}
 			}
 			break;

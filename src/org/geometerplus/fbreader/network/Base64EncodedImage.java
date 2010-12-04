@@ -23,10 +23,10 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.image.ZLBase64EncodedImage;
 
+import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.Paths;
 
 final class Base64EncodedImage extends ZLBase64EncodedImage {
-
 	private static final String ENCODED_SUFFIX = ".base64";
 
 	private String myDecodedFileName;
@@ -44,9 +44,9 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	public void setData(String data) {
 		myDecodedFileName = makeImagesDir() + File.separator + Integer.toHexString(data.hashCode());
 		String type = mimeType();
-		if (type == NetworkImage.MIME_PNG) {
+		if (type == MimeTypes.MIME_IMAGE_PNG) {
 			myDecodedFileName += ".png";
-		} else if (type == NetworkImage.MIME_JPEG) {
+		} else if (type == MimeTypes.MIME_IMAGE_JPEG) {
 			myDecodedFileName += ".jpg";
 		}
 

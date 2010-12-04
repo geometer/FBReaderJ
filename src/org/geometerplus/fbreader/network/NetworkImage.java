@@ -22,18 +22,15 @@ package org.geometerplus.fbreader.network;
 import java.io.*;
 import java.net.*;
 
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLSingleImage {
-	public static final String MIME_PNG = "image/png";
-	public static final String MIME_JPEG = "image/jpeg";
-
+public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 	public final String Url;
-	private volatile boolean mySynchronized;
 
 	public NetworkImage(String url, String mimeType) {
 		super(mimeType);
@@ -82,9 +79,9 @@ public final class NetworkImage extends ZLSingleImage {
 		}
 
 		String ext = null;
-		if (MIME_PNG.equals(mimeType)) {
+		if (MIME_IMAGE_PNG.equals(mimeType)) {
 			ext = ".png";
-		} else if (MIME_JPEG.equals(mimeType)) {
+		} else if (MIME_IMAGE_JPEG.equals(mimeType)) {
 			if (path.length() > 5 && path.substring(path.length() - 5).equals(".jpeg")) {
 				ext = ".jpeg";
 			} else {
@@ -136,10 +133,6 @@ public final class NetworkImage extends ZLSingleImage {
 		return makeImageFileName(Url, mimeType());
 	}
 
-	public boolean isSynchronized() {
-		return mySynchronized;
-	}
-
 	public void synchronize() {
 		synchronizeInternal(false);
 	}
@@ -149,7 +142,7 @@ public final class NetworkImage extends ZLSingleImage {
 	}
 
 	private final void synchronizeInternal(boolean doFast) {
-		if (mySynchronized) {
+		if (isSynchronized()) {
 			return;
 		}
 		try {
@@ -189,13 +182,13 @@ public final class NetworkImage extends ZLSingleImage {
 			} catch (ZLNetworkException e) {
 			}
 		} finally {
-			mySynchronized = true;
+			setSynchronized();
 		}
 	}
 
 	@Override
 	public byte [] byteData() {
-		if (!mySynchronized) {
+		if (!isSynchronized()) {
 			return null;
 		}
 		final String fileName = getFileName();

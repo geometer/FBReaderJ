@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.html.ZLByteBuffer;
 import org.geometerplus.zlibrary.core.html.ZLHtmlAttributeMap;
 
+import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.formats.html.HtmlReader;
 import org.geometerplus.fbreader.formats.html.HtmlTag;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -181,7 +182,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 			if (length <= 0) {
 				break;
 			}
-			addImage("" + index, new ZLFileImage("image/auto", Model.Book.File, offset, length));
+			addImage("" + index, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, Model.Book.File, offset, length));
 		}
 	}
 

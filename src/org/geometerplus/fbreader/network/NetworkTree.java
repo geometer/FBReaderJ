@@ -22,12 +22,12 @@ package org.geometerplus.fbreader.network;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.geometerplus.fbreader.tree.FBTree;
-
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public abstract class NetworkTree extends FBTree {
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.constants.MimeTypes;
 
+public abstract class NetworkTree extends FBTree {
 	protected NetworkTree(int level) {
 		super(level);
 	}
@@ -51,27 +51,30 @@ public abstract class NetworkTree extends FBTree {
 		return createCover(item.Cover, null);
 	}
 
+	private static final String DATA_PREFIX = "data:";
+
 	public static ZLImage createCover(String url, String mimeType) {
 		if (url == null) {
 			return null;
 		}
 		if (mimeType == null) {
-			mimeType = "image/auto";
+			mimeType = MimeTypes.MIME_IMAGE_AUTO;
 		}
 		if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://")) {
 			return new NetworkImage(url, mimeType);
-		} else if (url.startsWith("data:")) {
+		} else if (url.startsWith(DATA_PREFIX)) {
 			int commaIndex = url.indexOf(',');
 			if (commaIndex == -1) {
 				return null;
 			}
-			if (mimeType == "image/auto") {
+			if (mimeType == MimeTypes.MIME_IMAGE_AUTO) {
 				int index = url.indexOf(';');
 				if (index == -1 || index > commaIndex) {
 					index = commaIndex;
 				}
-				if (url.startsWith("image/", 5)) { // 11 -- length of "data:image/"; 5 -- length of "data:"
-					mimeType = url.substring(5, index);
+	 			// string starts with "data:image/"
+				if (url.startsWith(MimeTypes.MIME_IMAGE_PREFIX, DATA_PREFIX.length())) {
+					mimeType = url.substring(DATA_PREFIX.length(), index);
 				}
 			}
 			int key = url.indexOf("base64");
