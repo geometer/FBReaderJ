@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashSet;
-
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
