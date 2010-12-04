@@ -31,7 +31,13 @@ public class InitializationService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		LibraryTopLevelActivity.Library.synchronize();
+		final Thread libraryInitializer = new Thread(new Runnable() {
+			public void run() {
+				LibraryTopLevelActivity.Library.synchronize();
+			}
+		});
+		libraryInitializer.setPriority(Thread.MIN_PRIORITY);
+		libraryInitializer.start();
 	}
 
 	@Override
