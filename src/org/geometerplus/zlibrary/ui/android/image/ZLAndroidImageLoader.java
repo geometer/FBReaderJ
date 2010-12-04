@@ -46,7 +46,9 @@ public class ZLAndroidImageLoader {
 	public void startImageLoading(final ZLLoadableImage image, Runnable postLoadingRunnable) {
 		LinkedList<Runnable> runnables = myOnImageSyncRunnables.get(image.getId());
 		if (runnables != null) {
-			runnables.add(postLoadingRunnable);
+			if (!runnables.contains(postLoadingRunnable)) {
+				runnables.add(postLoadingRunnable);
+			}
 			return;
 		}
 

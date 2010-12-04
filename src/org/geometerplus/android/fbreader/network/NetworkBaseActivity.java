@@ -21,15 +21,10 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.HashSet;
 
-import android.app.ListActivity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.*;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.ListView;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -56,7 +51,6 @@ abstract class NetworkBaseActivity extends ListActivity
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	public BookDownloaderServiceConnection Connection;
-
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -109,9 +103,11 @@ abstract class NetworkBaseActivity extends ListActivity
 	public void onModelChanged() {
 	}
 
-
-	// this set is used to track whether this activity will be notified, when specific cover will be synchronized.
-	private HashSet<String> myAwaitedCovers = new HashSet<String>();
+	private final Runnable myInvalidateViewsRunnable = new Runnable() {
+		public void run() {
+			getListView().invalidateViews();
+		}
+	};
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
 		if (tree instanceof ZLAndroidTree) {
@@ -128,16 +124,8 @@ abstract class NetworkBaseActivity extends ListActivity
 				final ZLLoadableImage img = (ZLLoadableImage)cover;
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
-				} else if (!myAwaitedCovers.contains(img.getId())) {
-					final Runnable runnable = new Runnable() {
-						public void run() {
-							myAwaitedCovers.remove(img.getId());
-							final ListView view = NetworkBaseActivity.this.getListView();
-							view.invalidateViews();
-						}
-					};
-					ZLAndroidImageLoader.Instance().startImageLoading(img, runnable);
-					myAwaitedCovers.add(img.getId());
+				} else {
+					ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
 				}
 			} else {
 				data = mgr.getImageData(cover);
