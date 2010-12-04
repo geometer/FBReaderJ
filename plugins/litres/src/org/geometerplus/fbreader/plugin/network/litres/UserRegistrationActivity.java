@@ -212,32 +212,7 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 			});
 		}
 	}
-/*
-	@Override
-	protected void onPositive(DialogInterface dialog) {
-		AlertDialog alert = (AlertDialog) dialog;
 
-		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-		final Runnable runnable = new Runnable() {
-			public void run() {
-				boolean doRestart = true;
-				try {
-					mgr.registerUser(myLogin, myPassword, myEmail);
-					if (mgr.mayBeAuthorised(true) && mgr.needsInitialization()) {
-						doRestart = false;
-						mgr.initialize();
-					}
-				} catch (ZLNetworkException e) {
-					mgr.logOut();
-					sendError(doRestart, false, e.getMessage());
-					return;
-				}
-				sendSuccess(false);
-			}
-		};
-		UIUtil.wait("registerUser", runnable, myActivity);
-	}
-*/
 	synchronized void runWithMessage(String key, final Runnable action, final Runnable postAction) {
 		final String message =
 			myResource.getResource("waitMessage").getResource(key).getValue();
