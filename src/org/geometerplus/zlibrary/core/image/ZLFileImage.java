@@ -38,21 +38,35 @@ public class ZLFileImage extends ZLSingleImage {
 		this(mimeType, file, 0, (int)file.size());
 	}
 
-	public byte [] byteData() {
+	@Override
+	public byte[] byteData() {
+		InputStream stream = null;
 		try {
-			final InputStream stream = myFile.getInputStream();
+			stream = myFile.getInputStream();
 			int toSkip = myOffset - (int)stream.skip(myOffset);
 			while (--toSkip >= 0) {
 				stream.read();
 			}
 
 			byte[] buffer = new byte[myLength];
-			stream.read(buffer);
-			stream.close();
+			int len = 0;
+			while (len < myLength) {
+				final int part = stream.read(buffer);
+				if (part <= 0) {
+					return new byte[0];
+				}
+				len += part;
+			}
 			return buffer;
 		} catch (IOException e) {
+			return new byte[0];
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
 		}
-		
-		return new byte[0];
 	}
 }

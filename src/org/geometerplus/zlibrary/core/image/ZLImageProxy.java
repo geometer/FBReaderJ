@@ -24,8 +24,12 @@ import org.geometerplus.zlibrary.core.constants.MimeTypes;
 public abstract class ZLImageProxy extends ZLLoadableImage {
 	private ZLSingleImage myImage;
 
+	public ZLImageProxy(String mimeType) {
+		super(mimeType);
+	}
+
 	public ZLImageProxy() {
-		super(MimeTypes.MIME_IMAGE_AUTO);
+		this(MimeTypes.MIME_IMAGE_AUTO);
 	}
 
 	public abstract ZLSingleImage getRealImage();
