@@ -50,14 +50,13 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 		final String[] path = myTreePathString.split("\000");
 
-		final Library library = LibraryTopLevelActivity.Library;
 		FBTree tree = null;
 		if (PATH_RECENT.equals(path[0])) {
-			tree = library.recentBooks();
+			tree = Library.recentBooks();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = library.byAuthor();
+			tree = Library.byAuthor();
 		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = library.byTag();
+			tree = Library.byTag();
 		} else if (PATH_FAVORITES.equals(path[0])) {
 		}
 

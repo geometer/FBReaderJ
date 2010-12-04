@@ -38,8 +38,6 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
-	static Library Library;
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);

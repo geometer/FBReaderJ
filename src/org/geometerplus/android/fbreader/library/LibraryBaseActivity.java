@@ -45,6 +45,8 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class LibraryBaseActivity extends ListActivity {
+	static Library Library;
+
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
@@ -160,11 +162,11 @@ abstract class LibraryBaseActivity extends ListActivity {
 		}
 
 		public void run() {
-			if (!LibraryTopLevelActivity.Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
+			if (!Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
 				UIUtil.runWithMessage(LibraryBaseActivity.this, "loadingBookList",
 				new Runnable() {
 					public void run() {
-						LibraryTopLevelActivity.Library.waitForState(Library.STATE_FULLY_INITIALIZED);
+						Library.waitForState(Library.STATE_FULLY_INITIALIZED);
 					}
 				},
 				new Runnable() {
