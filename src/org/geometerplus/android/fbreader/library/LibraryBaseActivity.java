@@ -21,10 +21,10 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import android.app.ListActivity;
+import android.app.*;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
+import android.os.*;
 import android.view.*;
 import android.widget.*;
 
@@ -161,17 +161,22 @@ abstract class LibraryBaseActivity extends ListActivity {
 
 		public void run() {
 			if (!LibraryTopLevelActivity.Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				UIUtil.wait("loadingBookList", new Runnable() {
+				UIUtil.runWithMessage(LibraryBaseActivity.this, "loadingBookList",
+				new Runnable() {
 					public void run() {
 						LibraryTopLevelActivity.Library.waitForState(Library.STATE_FULLY_INITIALIZED);
 					}
-				}, LibraryBaseActivity.this);
+				},
+				new Runnable() {
+					public void run() {
+						startActivity(
+							new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
+								.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+								.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
+						);
+					}
+				});
 			}
-			startActivity(
-				new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
-			);
 		}
 	}
 }
