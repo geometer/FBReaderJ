@@ -1,7 +1,7 @@
 * Partial loading from database
 * Database updating in backgorund
 * Watch filesystem after loading
-* Covers loading in background
+DONE Covers loading in background
 DONE Wait messages
 * Favorites
 * Search
