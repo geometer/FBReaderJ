@@ -21,12 +21,11 @@ package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.xml.*;
-
-import org.geometerplus.fbreader.constants.XMLNamespaces;
-import org.geometerplus.fbreader.constants.MimeTypes;
 
 public class FB2CoverReader extends ZLXMLReaderAdapter {
 	private boolean myReadCoverPage;

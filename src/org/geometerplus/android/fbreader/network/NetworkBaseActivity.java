@@ -38,13 +38,13 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
@@ -123,21 +123,21 @@ abstract class NetworkBaseActivity extends ListActivity
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
-			if (cover instanceof NetworkImage) {
-				final NetworkImage img = (NetworkImage) cover;
+			if (cover instanceof ZLLoadableImage) {
+				final ZLLoadableImage img = (ZLLoadableImage)cover;
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
-				} else if (!myAwaitedCovers.contains(img.Url)) {
+				} else if (!myAwaitedCovers.contains(img.getId())) {
 					final Runnable runnable = new Runnable() {
 						public void run() {
-							myAwaitedCovers.remove(img.Url);
+							myAwaitedCovers.remove(img.getId());
 							final ListView view = NetworkBaseActivity.this.getListView();
 							view.invalidateViews();
 						}
 					};
 					final NetworkView networkView = NetworkView.Instance();
 					networkView.performCoverSynchronization(img, runnable);
-					myAwaitedCovers.add(img.Url);
+					myAwaitedCovers.add(img.getId());
 				}
 			} else {
 				data = mgr.getImageData(cover);

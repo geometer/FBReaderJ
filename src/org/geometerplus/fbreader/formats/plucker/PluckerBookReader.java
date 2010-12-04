@@ -23,12 +23,12 @@ import java.io.IOException;
 import java.util.*;
 import java.util.zip.*;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.ZLInputStreamWithOffset;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.pdb.*;
 

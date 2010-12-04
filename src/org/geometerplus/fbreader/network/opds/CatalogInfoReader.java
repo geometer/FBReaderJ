@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 
 class CatalogInfoReader implements OPDSFeedReader {

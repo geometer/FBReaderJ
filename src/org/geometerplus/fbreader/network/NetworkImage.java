@@ -22,11 +22,11 @@ package org.geometerplus.fbreader.network;
 import java.io.*;
 import java.net.*;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.Paths;
 
 public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
@@ -133,10 +133,17 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 		return makeImageFileName(Url, mimeType());
 	}
 
+	@Override
+	public String getId() {
+		return Url;
+	}
+
+	@Override
 	public void synchronize() {
 		synchronizeInternal(false);
 	}
 
+	@Override
 	public void synchronizeFast() {
 		synchronizeInternal(true);
 	}

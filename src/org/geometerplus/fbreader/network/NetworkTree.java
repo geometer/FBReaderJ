@@ -22,10 +22,10 @@ package org.geometerplus.fbreader.network;
 import java.util.LinkedList;
 import java.util.Set;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.constants.MimeTypes;
 
 public abstract class NetworkTree extends FBTree {
 	protected NetworkTree(int level) {

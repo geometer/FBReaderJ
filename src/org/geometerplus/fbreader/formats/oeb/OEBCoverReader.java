@@ -19,13 +19,13 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.constants.XMLNamespaces;
-import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
 
 class OEBCoverReader extends ZLXMLReaderAdapter implements XMLNamespaces, MimeTypes {

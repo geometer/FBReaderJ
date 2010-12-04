@@ -23,12 +23,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-
-import org.geometerplus.fbreader.constants.XMLNamespaces;
-import org.geometerplus.fbreader.constants.MimeTypes;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;

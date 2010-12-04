@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -189,8 +190,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
-			if (cover instanceof NetworkImage) {
-				final NetworkImage img = (NetworkImage) cover;
+			if (cover instanceof ZLLoadableImage) {
+				final ZLLoadableImage img = (ZLLoadableImage)cover;
 				final NetworkView networkView = NetworkView.Instance();
 				if (networkView.isInitialized()) {
 					networkView.performCoverSynchronization(img, new Runnable() {

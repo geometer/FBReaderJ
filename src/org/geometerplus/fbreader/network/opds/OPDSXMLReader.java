@@ -21,15 +21,12 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.*;
-
-import org.geometerplus.fbreader.constants.XMLNamespaces;
 
 import org.geometerplus.fbreader.network.atom.*;
 
-
 class OPDSXMLReader extends ZLXMLReaderAdapter {
-
 	public static final String KEY_PRICE = "price";
 
 

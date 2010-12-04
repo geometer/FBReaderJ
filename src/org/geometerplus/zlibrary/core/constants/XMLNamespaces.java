@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.constants;
+package org.geometerplus.zlibrary.core.constants;
 
 public interface XMLNamespaces {
 	String DublinCorePrefix = "http://purl.org/dc/elements";

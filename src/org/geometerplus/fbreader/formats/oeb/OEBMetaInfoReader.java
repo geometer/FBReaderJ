@@ -21,11 +21,11 @@ package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.constants.XMLNamespaces;
 
 class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private final Book myBook;

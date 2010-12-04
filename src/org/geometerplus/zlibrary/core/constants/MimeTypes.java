@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.constants;
+package org.geometerplus.zlibrary.core.constants;
 
 public interface MimeTypes {
 	// MIME types / application
@@ -35,6 +35,8 @@ public interface MimeTypes {
 
 	// MIME types / text
 	String MIME_TEXT_HTML = "text/html";
+	String MIME_TEXT_XHTML = "text/xhtml";
+	String MIME_TEXT_PLAIN = "text/plain";
 
 	// MIME images
 	String MIME_IMAGE_PREFIX = "image/";

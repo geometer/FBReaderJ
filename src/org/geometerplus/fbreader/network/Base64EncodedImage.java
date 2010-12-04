@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.network;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLBase64EncodedImage;
 
-import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.Paths;
 
 final class Base64EncodedImage extends ZLBase64EncodedImage {

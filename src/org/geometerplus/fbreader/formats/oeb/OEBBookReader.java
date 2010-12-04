@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
@@ -28,8 +30,6 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
-import org.geometerplus.fbreader.constants.XMLNamespaces;
-import org.geometerplus.fbreader.constants.MimeTypes;
 
 class Reference {
 	public final String Title;

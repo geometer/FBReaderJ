@@ -36,4 +36,5 @@ public abstract class ZLLoadableImage extends ZLSingleImage {
 
 	public abstract void synchronize();
 	public abstract void synchronizeFast();
+	public abstract String getId();
 }

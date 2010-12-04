@@ -23,11 +23,11 @@ import java.util.*;
 import java.io.*;
 import java.nio.charset.CharsetDecoder;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.html.ZLByteBuffer;
 import org.geometerplus.zlibrary.core.html.ZLHtmlAttributeMap;
 
-import org.geometerplus.fbreader.constants.MimeTypes;
 import org.geometerplus.fbreader.formats.html.HtmlReader;
 import org.geometerplus.fbreader.formats.html.HtmlTag;
 import org.geometerplus.fbreader.bookmodel.BookModel;
