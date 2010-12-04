@@ -41,6 +41,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
@@ -122,7 +123,7 @@ abstract class NetworkBaseActivity extends ListActivity
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
 			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
+			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 			if (cover instanceof ZLLoadableImage) {
 				final ZLLoadableImage img = (ZLLoadableImage)cover;
 				if (img.isSynchronized()) {
@@ -135,8 +136,7 @@ abstract class NetworkBaseActivity extends ListActivity
 							view.invalidateViews();
 						}
 					};
-					final NetworkView networkView = NetworkView.Instance();
-					networkView.performCoverSynchronization(img, runnable);
+					ZLAndroidImageLoader.Instance().startImageLoading(img, runnable);
 					myAwaitedCovers.add(img.getId());
 				}
 			} else {

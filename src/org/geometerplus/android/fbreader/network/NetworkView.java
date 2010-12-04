@@ -196,62 +196,6 @@ class NetworkView {
 	}
 
 	/*
-	 * Loading covers
-	 */
-
-	private static class MinPriorityThreadFactory implements ThreadFactory {
-		private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
-
-		public Thread newThread(Runnable r) {
-			final Thread th = myDefaultThreadFactory.newThread(r);
-			th.setPriority(Thread.MIN_PRIORITY);
-			return th;
-		}
-	}
-
-	private static final int COVER_LOADING_THREADS_NUMBER = 3; // TODO: how many threads ???
-
-	private final ExecutorService myPool = Executors.newFixedThreadPool(COVER_LOADING_THREADS_NUMBER, new MinPriorityThreadFactory());
-
-	private final HashMap<String, LinkedList<Runnable>> myOnCoverSyncRunnables = new HashMap<String, LinkedList<Runnable>>();
-
-	private class CoverSynchronizedHandler extends Handler {
-		@Override
-		public void handleMessage(Message message) {
-			final String imageUrl = (String) message.obj;
-			final LinkedList<Runnable> runables = myOnCoverSyncRunnables.remove(imageUrl);
-			for (Runnable runnable: runables) {
-				runnable.run();
-			}
-		}
-
-		public void fireMessage(String imageUrl) {
-			sendMessage(obtainMessage(0, imageUrl));
-		}
-	};
-
-	private final CoverSynchronizedHandler myCoverSynchronizedHandler = new CoverSynchronizedHandler();
-
-	public void performCoverSynchronization(final ZLLoadableImage image, Runnable finishRunnable) {
-		LinkedList<Runnable> runnables = myOnCoverSyncRunnables.get(image.getId());
-		if (runnables != null) {
-			runnables.add(finishRunnable);
-			return;
-		}
-
-		runnables = new LinkedList<Runnable>();
-		runnables.add(finishRunnable);
-		myOnCoverSyncRunnables.put(image.getId(), runnables);
-
-		myPool.execute(new Runnable() {
-			public void run() {
-				image.synchronize();
-				myCoverSynchronizedHandler.fireMessage(image.getId());
-			}
-		});
-	}
-
-	/*
 	 * Open Network URL in browser
 	 */
 
