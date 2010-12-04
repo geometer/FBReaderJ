@@ -22,9 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 import android.content.Context;
 import android.content.Intent;
