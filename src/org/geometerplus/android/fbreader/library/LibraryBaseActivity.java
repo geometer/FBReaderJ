@@ -162,22 +162,25 @@ abstract class LibraryBaseActivity extends ListActivity {
 		}
 
 		public void run() {
-			if (!Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
+			final Runnable postRunnable = new Runnable() {
+				public void run() {
+					startActivity(
+						new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
+							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+							.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
+					);
+				}
+			};
+			if (Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				postRunnable.run();
+			} else {
 				UIUtil.runWithMessage(LibraryBaseActivity.this, "loadingBookList",
 				new Runnable() {
 					public void run() {
 						Library.waitForState(Library.STATE_FULLY_INITIALIZED);
 					}
 				},
-				new Runnable() {
-					public void run() {
-						startActivity(
-							new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
-								.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-								.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
-						);
-					}
-				});
+				postRunnable);
 			}
 		}
 	}
