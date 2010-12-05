@@ -51,12 +51,10 @@ public final class Library {
 		while (myState < state) {
 			synchronized(this) {
 				if (myState < state) {
-					System.err.println("waiting for: " + state + " (" + myState + ")");
 					try {
 						wait();
 					} catch (InterruptedException e) {
 					}
-					System.err.println("found: " + state + " (" + myState + ")");
 				}
 			}
 		}
@@ -281,7 +279,6 @@ public final class Library {
 
 	public synchronized void synchronize() {
 		if (myState == STATE_NOT_INITIALIZED) {
-			System.err.println("building: start");
 			build();
 
 			myLibraryByAuthor.sortAllChildren();
@@ -289,7 +286,6 @@ public final class Library {
 
 			myState = STATE_FULLY_INITIALIZED;
 			notifyAll();
-			System.err.println("building: done");
 		}
 	}
 

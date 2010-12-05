@@ -21,45 +21,5 @@ package org.geometerplus.android.fbreader.library;
 
 import android.app.Activity;
 
-import org.geometerplus.fbreader.library.*;
-
-import org.geometerplus.android.fbreader.SearchActivity;
-
-public class BookSearchActivity extends SearchActivity {
-	//private LibraryTree myTree;
-
-	@Override
-	public void onSuccess() {
-		//LibraryTabActivity.Instance.showSearchResultsTab(myTree);
-	}
-
-	/*@Override
-	public void onFailure() {
-	}*/
-
-	@Override
-	public String getFailureMessageResourceKey() {
-		return "bookNotFound";
-	}
-
-	@Override
-	public String getWaitMessageResourceKey() {
-		return "search";
-	}
-
-	@Override
-	public boolean runSearch(final String pattern) {
-		/*
-		final LibraryTabActivity parentActivity = LibraryTabActivity.Instance;
-		parentActivity.BookSearchPatternOption.setValue(pattern);
-		myTree = parentActivity.library().searchBooks(pattern);
-		return myTree.hasChildren();
-		*/
-		return false;
-	}
-
-	@Override
-	public Activity getParentActivity() {
-		return null;//LibraryTabActivity.Instance;
-	}
+public class BookSearchActivity extends Activity {
 }

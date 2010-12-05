@@ -30,7 +30,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Library;
@@ -41,9 +40,6 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
-	private final ZLStringOption BookSearchPatternOption =
-		new ZLStringOption("BookSearch", "Pattern", "");
-
 	private LinkedList<FBTree> myItems;
 	private TopLevelTree mySearchResultsItem;
 
@@ -102,13 +98,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);
 		tree.run();
-	}
-
-	@Override
-	public boolean onSearchRequested() {
-		System.err.println("onSearchRequested");
-		startSearch(BookSearchPatternOption.getValue(), true, null, false);
-		return true;
 	}
 
 	public void onNewIntent(Intent intent) {
