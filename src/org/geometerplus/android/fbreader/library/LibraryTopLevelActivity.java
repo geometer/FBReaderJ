@@ -86,6 +86,8 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			}
 		));
 		setListAdapter(new LibraryAdapter(myItems));
+
+		onNewIntent(getIntent());
 	}
 
 	@Override
@@ -100,31 +102,30 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		tree.run();
 	}
 
+	private void setSearchResults(Intent intent) {
+		if (myItems.get(0) == mySearchResultsItem) {
+			myItems.remove(0);
+		}
+		mySearchResultsItem = new TopLevelTree(
+			myResource.getResource("searchResults"),
+	   		intent.getStringExtra(SearchManager.QUERY),
+			R.drawable.ic_list_library_books,
+			new OpenTreeRunnable(LibraryTreeActivity.PATH_SEARCH_RESULTS, mySelectedBookPath)
+		);
+		myItems.add(0, mySearchResultsItem);
+		getListView().invalidateViews();
+		mySearchResultsItem.run();
+	}
+
 	public void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-	   	   	final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			BookSearchPatternOption.setValue(pattern);
-			FBTree searchResultsItem = Library.searchBooks(pattern);
-			if (searchResultsItem.hasChildren()) {
-				if (myItems.get(0) == mySearchResultsItem) {
-					myItems.remove(0);
-				}
-				mySearchResultsItem = new TopLevelTree(
-					myResource.getResource("searchResults"),
-					pattern,
-					R.drawable.ic_list_library_books,
-					new OpenTreeRunnable(LibraryTreeActivity.PATH_SEARCH_RESULTS, mySelectedBookPath)
-				);
-				myItems.add(0, mySearchResultsItem);
-				getListView().invalidateViews();
-				mySearchResultsItem.run();
+			if (runSearch(intent)) {
+				setSearchResults(intent);
 			} else {
-				Toast.makeText(
-					this,
-					ZLResource.resource("errorMessage").getResource("bookNotFound").getValue(),
-					Toast.LENGTH_SHORT
-				).show();
+				showNotFoundToast();
 			}
+		} else if (ACTION_FOUND.equals(intent.getAction())) {
+			setSearchResults(intent);
 		}
 	}
 }

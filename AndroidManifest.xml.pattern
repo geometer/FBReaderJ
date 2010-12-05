@@ -60,13 +60,6 @@
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.library.BookSearchActivity" android:process=":library">
-			<intent-filter>
-				<action android:name="android.intent.action.SEARCH" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
-		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.BookmarkSearchActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
@@ -82,7 +75,10 @@
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryTreeActivity" android:process=":library" android:configChanges="orientation|keyboardHidden">
-			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.library.BookSearchActivity" />
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:configChanges="orientation|keyboardHidden">

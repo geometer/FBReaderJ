@@ -73,6 +73,25 @@ abstract class LibraryBaseActivity extends ListActivity {
 		return true;
 	}
 
+	protected static final String ACTION_FOUND = "fbreader.library.intent.FOUND";
+
+	protected boolean runSearch(Intent intent) {
+	   	final String pattern = intent.getStringExtra(SearchManager.QUERY);
+		if (pattern == null || pattern.length() == 0) {
+			return false;
+		}
+		BookSearchPatternOption.setValue(pattern);
+		return Library.searchBooks(pattern).hasChildren();
+	}
+
+	protected void showNotFoundToast() {
+		Toast.makeText(
+			this,
+			ZLResource.resource("errorMessage").getResource("bookNotFound").getValue(),
+			Toast.LENGTH_SHORT
+		).show();
+	}
+
 	protected final class LibraryAdapter extends BaseAdapter {
 		private final List<FBTree> myItems;
 
