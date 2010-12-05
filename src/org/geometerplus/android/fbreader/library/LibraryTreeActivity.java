@@ -48,8 +48,16 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			// TODO: implement
-			finish();
+			if (runSearch(intent)) {
+				startActivity(intent
+					.setAction(ACTION_FOUND)
+					.setClass(getApplicationContext(), LibraryTopLevelActivity.class)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+				);
+			} else {
+				showNotFoundToast();
+				finish();
+			}
 		} else {
 			myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
 			mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
