@@ -19,13 +19,15 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -39,7 +41,11 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
-	final ZLStringOption BookSearchPatternOption = new ZLStringOption("BookSearch", "Pattern", "");
+	private final ZLStringOption BookSearchPatternOption =
+		new ZLStringOption("BookSearch", "Pattern", "");
+
+	private LinkedList<FBTree> myItems;
+	private TopLevelTree mySearchResultsItem;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -54,36 +60,28 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		final ArrayList<FBTree> items = new ArrayList<FBTree>();
-		items.add(new TopLevelTree(
-			myResource.getResource("searchResults"),
-			R.drawable.ic_list_library_books,
-			new Runnable() {
-				public void run() {
-				}
-			}
-		));
-		items.add(new TopLevelTree(
+		myItems = new LinkedList<FBTree>();
+		myItems.add(new TopLevelTree(
 			myResource.getResource("favorites"),
 			R.drawable.ic_list_library_favorites,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_FAVORITES, mySelectedBookPath)
 		));
-		items.add(new TopLevelTree(
+		myItems.add(new TopLevelTree(
 			myResource.getResource("recent"),
 			R.drawable.ic_list_library_recent,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_RECENT, mySelectedBookPath)
 		));
-		items.add(new TopLevelTree(
+		myItems.add(new TopLevelTree(
 			myResource.getResource("byAuthor"),
 			R.drawable.ic_list_library_authors,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_AUTHOR, mySelectedBookPath)
 		));
-		items.add(new TopLevelTree(
+		myItems.add(new TopLevelTree(
 			myResource.getResource("byTag"),
 			R.drawable.ic_list_library_tags,
 			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_TAG, mySelectedBookPath)
 		));
-		items.add(new TopLevelTree(
+		myItems.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
@@ -91,7 +89,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 				}
 			}
 		));
-		setListAdapter(new LibraryAdapter(items));
+		setListAdapter(new LibraryAdapter(myItems));
 	}
 
 	@Override
@@ -103,7 +101,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);
-		tree.getAction().run();
+		tree.run();
 	}
 
 	@Override
@@ -112,17 +110,51 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		startSearch(BookSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
+
+	public void onNewIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	   	   	final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			BookSearchPatternOption.setValue(pattern);
+			FBTree searchResultsItem = Library.searchBooks(pattern);
+			if (searchResultsItem.hasChildren()) {
+				if (myItems.get(0) == mySearchResultsItem) {
+					myItems.remove(0);
+				}
+				mySearchResultsItem = new TopLevelTree(
+					myResource.getResource("searchResults"),
+					pattern,
+					R.drawable.ic_list_library_books,
+					new OpenTreeRunnable(LibraryTreeActivity.PATH_SEARCH_RESULTS, mySelectedBookPath)
+				);
+				myItems.add(0, mySearchResultsItem);
+				getListView().invalidateViews();
+				mySearchResultsItem.run();
+			} else {
+				Toast.makeText(
+					this,
+					ZLResource.resource("errorMessage").getResource("bookNotFound").getValue(),
+					Toast.LENGTH_SHORT
+				).show();
+			}
+		}
+	}
 }
 
 class TopLevelTree extends FBTree implements ZLAndroidTree {
 	private final ZLResource myResource;
+	private final String myParameter;
 	private final int myCoverResourceId;
 	private final Runnable myAction;
 
-	public TopLevelTree(ZLResource resource, int coverResourceId, Runnable action) {
+	public TopLevelTree(ZLResource resource, String parameter, int coverResourceId, Runnable action) {
 		myResource = resource;
+		myParameter = parameter;
 		myCoverResourceId = coverResourceId;
 		myAction = action;
+	}
+
+	public TopLevelTree(ZLResource resource, int coverResourceId, Runnable action) {
+		this(resource, null, coverResourceId, action);
 	}
 
 	@Override
@@ -132,14 +164,15 @@ class TopLevelTree extends FBTree implements ZLAndroidTree {
 
 	@Override
 	public String getSummary() {
-		return myResource.getResource("summary").getValue();
+		final String summary = myResource.getResource("summary").getValue();
+		return myParameter == null ? summary : summary.replace("%s", myParameter);
 	}
 
 	public int getCoverResourceId() {
 		return myCoverResourceId;
 	}
 
-	public Runnable getAction() {
-		return myAction;
+	public void run() {
+		myAction.run();
 	}
 }

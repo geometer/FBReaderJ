@@ -34,6 +34,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	static final String TREE_PATH_KEY = "TreePath";
 
 	static final String PATH_FAVORITES = "favorites";
+	static final String PATH_SEARCH_RESULTS = "searchResults";
 	static final String PATH_RECENT = "recent";
 	static final String PATH_BY_AUTHOR = "author";
 	static final String PATH_BY_TAG = "tag";
@@ -53,6 +54,8 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		FBTree tree = null;
 		if (PATH_RECENT.equals(path[0])) {
 			tree = Library.recentBooks();
+		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
+			tree = Library.searchResults();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
 			tree = Library.byAuthor();
 		} else if (PATH_BY_TAG.equals(path[0])) {

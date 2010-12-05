@@ -313,6 +313,10 @@ public final class Library {
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
 
+	public LibraryTree searchResults() {
+		return mySearchResult;
+	}
+
 	public LibraryTree searchBooks(String pattern) {
 		waitForState(STATE_FULLY_INITIALIZED);
 		mySearchResult.clear();
