@@ -11,3 +11,5 @@ DONE Search
 * Show book info activity instead of immediate opening/menu
 * Main menu
 * Context menu
+* Reload book info from file
+* Reload book info for all the files
