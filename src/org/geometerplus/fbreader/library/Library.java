@@ -354,13 +354,19 @@ public final class Library {
 		db.saveRecentBookIds(ids);
 	}
 
-	public static void addBookToFavorites(Book book) {
-		final BooksDatabase db = BooksDatabase.Instance();
-		final List<Long> ids = db.loadFavoritesIds();
-		final Long bookId = book.getId();
-		if (!ids.contains(bookId)) {
-			ids.add(bookId);
-			db.saveFavoritesIds(ids);
+	public void addBookToFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		if (!myFavorites.containsBook(book)) {
+			myFavorites.createBookSubTree(book, true);
+			myFavorites.sortAllChildren();
+			BooksDatabase.Instance().addToFavorites(book.getId());
+		}
+	}
+
+	public void removeBookFromFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		if (myFavorites.removeBook(book)) {
+			BooksDatabase.Instance().removeFromFavorites(book.getId());
 		}
 	}
 
@@ -404,6 +410,7 @@ public final class Library {
 			db.saveRecentBookIds(ids);
 		}
 		mySearchResult.removeBook(book);
+		myFavorites.removeBook(book);
 
 		BooksDatabase.Instance().deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {

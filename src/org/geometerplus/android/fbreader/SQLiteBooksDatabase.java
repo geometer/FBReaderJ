@@ -648,22 +648,26 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	private SQLiteStatement mySaveFavoritesStatement;
-	protected void saveFavoritesIds(final List<Long> ids) {
-		if (mySaveFavoritesStatement == null) {
-			mySaveFavoritesStatement = myDatabase.compileStatement(
-				"INSERT INTO Favorites (book_id) VALUES (?)"
+	private SQLiteStatement myAddToFavoritesStatement;
+	protected void addToFavorites(long bookId) {
+		if (myAddToFavoritesStatement == null) {
+			myAddToFavoritesStatement = myDatabase.compileStatement(
+				"INSERT OR IGNORE INTO Favorites(book_id) VALUES (?)"
 			);
 		}
-		executeAsATransaction(new Runnable() {
-			public void run() {
-				myDatabase.delete("Favorites", null, null);
-				for (long id : ids) {
-					mySaveFavoritesStatement.bindLong(1, id);
-					mySaveFavoritesStatement.execute();
-				}
-			}
-		});
+		myAddToFavoritesStatement.bindLong(1, bookId);
+		myAddToFavoritesStatement.execute();
+	}
+
+	private SQLiteStatement myRemoveFromFavoritesStatement;
+	protected void removeFromFavorites(long bookId) {
+		if (myRemoveFromFavoritesStatement == null) {
+			myRemoveFromFavoritesStatement = myDatabase.compileStatement(
+				"DELETE FROM Favorites WHERE book_id = ?"
+			);
+		}
+		myRemoveFromFavoritesStatement.bindLong(1, bookId);
+		myRemoveFromFavoritesStatement.execute();
 	}
 
 	protected List<Long> loadFavoritesIds() {
