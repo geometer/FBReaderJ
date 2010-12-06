@@ -58,24 +58,24 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
-			myResource.getResource("favorites"),
+			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(LibraryTreeActivity.PATH_FAVORITES, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_FAVORITES, mySelectedBookPath)
 		));
 		myItems.add(new TopLevelTree(
-			myResource.getResource("recent"),
+			myResource.getResource(PATH_RECENT),
 			R.drawable.ic_list_library_recent,
-			new OpenTreeRunnable(LibraryTreeActivity.PATH_RECENT, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_RECENT, mySelectedBookPath)
 		));
 		myItems.add(new TopLevelTree(
-			myResource.getResource("byAuthor"),
+			myResource.getResource(PATH_BY_AUTHOR),
 			R.drawable.ic_list_library_authors,
-			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_AUTHOR, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_BY_AUTHOR, mySelectedBookPath)
 		));
 		myItems.add(new TopLevelTree(
-			myResource.getResource("byTag"),
+			myResource.getResource(PATH_BY_TAG),
 			R.drawable.ic_list_library_tags,
-			new OpenTreeRunnable(LibraryTreeActivity.PATH_BY_TAG, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_BY_TAG, mySelectedBookPath)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
@@ -106,11 +106,12 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		if (myItems.get(0) == mySearchResultsItem) {
 			myItems.remove(0);
 		}
+		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 		mySearchResultsItem = new TopLevelTree(
-			myResource.getResource("searchResults"),
-	   		intent.getStringExtra(SearchManager.QUERY),
+			myResource.getResource(PATH_SEARCH_RESULTS),
+			pattern,
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryTreeActivity.PATH_SEARCH_RESULTS, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_SEARCH_RESULTS, pattern, mySelectedBookPath)
 		);
 		myItems.add(0, mySearchResultsItem);
 		getListView().invalidateViews();

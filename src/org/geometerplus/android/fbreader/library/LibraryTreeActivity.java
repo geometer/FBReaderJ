@@ -31,14 +31,6 @@ import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
-	static final String TREE_PATH_KEY = "TreePath";
-
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "author";
-	static final String PATH_BY_TAG = "tag";
-
 	private String myTreePathString;
 	private String mySelectedBookPath;
 
@@ -59,11 +51,23 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 				finish();
 			}
 		} else {
-			myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
-			mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+			myTreePathString = intent.getStringExtra(TREE_PATH_KEY);
+			mySelectedBookPath = intent.getStringExtra(SELECTED_BOOK_PATH_KEY);
         
 			final String[] path = myTreePathString.split("\000");
         
+			String title = null;
+			if (path.length == 1) {
+				title = myResource.getResource(path[0]).getResource("summary").getValue();
+				final String parameter = intent.getStringExtra(PARAMETER_KEY);
+				if (parameter != null) {
+					title = title.replace("%s", parameter);
+				}
+			} else {
+				title = path[path.length - 1];
+			}
+			setTitle(title);
+
 			FBTree tree = null;
 			if (PATH_RECENT.equals(path[0])) {
 				tree = Library.recentBooks();

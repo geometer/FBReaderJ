@@ -46,11 +46,20 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class LibraryBaseActivity extends ListActivity {
+	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+	static final String TREE_PATH_KEY = "TreePath";
+	static final String PARAMETER_KEY = "Parameter";
+
+	static final String PATH_FAVORITES = "favorites";
+	static final String PATH_SEARCH_RESULTS = "searchResults";
+	static final String PATH_RECENT = "recent";
+	static final String PATH_BY_AUTHOR = "byAuthor";
+	static final String PATH_BY_TAG = "byTag";
+
 	static Library Library;
+
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
-
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
@@ -182,10 +191,16 @@ abstract class LibraryBaseActivity extends ListActivity {
 
 	protected class OpenTreeRunnable implements Runnable {
 		private final String myTreePath;
+		private final String myParameter;
 		private final String mySelectedBookPath;
 
 		public OpenTreeRunnable(String treePath, String selectedBookPath) {
+			this(treePath, null, selectedBookPath);
+		}
+
+		public OpenTreeRunnable(String treePath, String parameter, String selectedBookPath) {
 			myTreePath = treePath;
+			myParameter = parameter;
 			mySelectedBookPath = selectedBookPath;
 		}
 
@@ -195,7 +210,8 @@ abstract class LibraryBaseActivity extends ListActivity {
 					startActivity(
 						new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-							.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
+							.putExtra(TREE_PATH_KEY, myTreePath)
+							.putExtra(PARAMETER_KEY, myParameter)
 					);
 				}
 			};
