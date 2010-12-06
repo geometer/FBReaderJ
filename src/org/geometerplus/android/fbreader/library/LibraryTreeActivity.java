@@ -78,6 +78,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			} else if (PATH_BY_TAG.equals(path[0])) {
 				tree = Library.byTag();
 			} else if (PATH_FAVORITES.equals(path[0])) {
+				tree = Library.favorites();
 			}
         
 			for (int i = 1; i < path.length; ++i) {

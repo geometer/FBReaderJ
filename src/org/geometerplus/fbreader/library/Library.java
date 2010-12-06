@@ -36,6 +36,7 @@ public final class Library {
 	private final LibraryTree myLibraryByAuthor = new RootTree();
 	private final LibraryTree myLibraryByTag = new RootTree();
 	private final LibraryTree myRecentBooks = new RootTree();
+	private final LibraryTree myFavorites = new RootTree();
 	private final LibraryTree mySearchResult = new RootTree();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
@@ -268,6 +269,14 @@ public final class Library {
 			}
 		}
 
+		for (long id : db.loadFavoritesIds()) {
+			Book book = bookById.get(id);
+			if (book != null) {
+				myFavorites.createBookSubTree(book, true);
+			}
+		}
+		myFavorites.sortAllChildren();
+
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (Book book : myBooks) {
@@ -309,6 +318,11 @@ public final class Library {
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
 
+	public LibraryTree favorites() {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myFavorites;
+	}
+
 	public LibraryTree searchResults() {
 		return mySearchResult;
 	}
@@ -338,6 +352,16 @@ public final class Library {
 			ids.remove(12);
 		}
 		db.saveRecentBookIds(ids);
+	}
+
+	public static void addBookToFavorites(Book book) {
+		final BooksDatabase db = BooksDatabase.Instance();
+		final List<Long> ids = db.loadFavoritesIds();
+		final Long bookId = book.getId();
+		if (!ids.contains(bookId)) {
+			ids.add(bookId);
+			db.saveFavoritesIds(ids);
+		}
 	}
 
 	public static final int REMOVE_DONT_REMOVE = 0x00;

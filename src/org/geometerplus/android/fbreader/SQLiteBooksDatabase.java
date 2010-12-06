@@ -60,7 +60,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 10;
+		final int currentVersion = 11;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -89,6 +89,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables8();
 					case 9:
 						updateTables9();
+					case 10:
+						updateTables10();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -646,6 +648,36 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
+	private SQLiteStatement mySaveFavoritesStatement;
+	protected void saveFavoritesIds(final List<Long> ids) {
+		if (mySaveFavoritesStatement == null) {
+			mySaveFavoritesStatement = myDatabase.compileStatement(
+				"INSERT INTO Favorites (book_id) VALUES (?)"
+			);
+		}
+		executeAsATransaction(new Runnable() {
+			public void run() {
+				myDatabase.delete("Favorites", null, null);
+				for (long id : ids) {
+					mySaveFavoritesStatement.bindLong(1, id);
+					mySaveFavoritesStatement.execute();
+				}
+			}
+		});
+	}
+
+	protected List<Long> loadFavoritesIds() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Favorites", null
+		);
+		final LinkedList<Long> ids = new LinkedList<Long>();
+		while (cursor.moveToNext()) {
+			ids.add(cursor.getLong(0));
+		}
+		cursor.close();
+		return ids;
+	}
+
 	protected List<Bookmark> loadBookmarks(long bookId) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
@@ -1070,5 +1102,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables9() {
 		myDatabase.execSQL("CREATE INDEX BookList_BookIndex ON BookList (book_id)");
+	}
+
+	private void updateTables10() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Favorites(" +
+				"book_id INTEGER UNIQUE NOT NULL REFERENCES Books(book_id))");
 	}
 }
