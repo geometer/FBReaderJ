@@ -45,10 +45,10 @@ public abstract class ZLLanguageUtil {
 				return 0;
 			}
 			if (MULTI_LANGUAGE_CODE.equals(code0)) {
-				return -1;
+				return 1;
 			}
 			if (MULTI_LANGUAGE_CODE.equals(code1)) {
-				return 1;
+				return -1;
 			}
 			if (OTHER_LANGUAGE_CODE.equals(code0)) {
 				return 1;

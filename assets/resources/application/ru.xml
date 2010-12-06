@@ -481,7 +481,7 @@
 			<node name="siteAlreadyExists" value="Этот каталог уже есть в списке" />
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Показывать каталоги, язык которых" />
+			<node name="title" value="Фильтр по языку" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />
