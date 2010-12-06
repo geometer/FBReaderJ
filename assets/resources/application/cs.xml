@@ -79,7 +79,7 @@
 			<node name="refillAccount" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
-			<node name="languages" toBeTranslated="true" value="Language filter"/>
+			<node name="languages" value="Filtr jazyků"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -510,7 +510,7 @@
 			<node name="siteAlreadyExists" value="Zadaná stránka se již používá" />
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Language filter" toBeTranslated="true" />
+			<node name="title" value="Filtr jazyků" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Zakoupit knihu" />
