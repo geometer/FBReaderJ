@@ -25,6 +25,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.util.Log;
+
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class SmartFilter implements Runnable {
@@ -33,11 +37,13 @@ public class SmartFilter implements Runnable {
 	private Runnable myAction;
 //	private List<String> myOrders;
 
-	private File myFile;
+//	private File myFile;
 	private String myNewTypes;
 //	private List<String> myCurFiles = new ArrayList<String>();
-
 	private List<FileOrder> myOrders;
+	
+	private ZLFile myFile;
+	
 	
 	public SmartFilter(Activity parent, List<FileOrder> orders, Runnable action) {
 		myParent = parent;
@@ -45,7 +51,7 @@ public class SmartFilter implements Runnable {
 		myAction = action;
 	}
 	
-	public void setPreferences(File file, String types) {
+	public void setPreferences(ZLFile file, String types) {
 		myFile = file;
 		myNewTypes = types;
 		((ReturnRes) myAction).refresh();
@@ -55,24 +61,27 @@ public class SmartFilter implements Runnable {
 		try {
 			getOrders();
 		} catch (Exception e) {
-			Log.e(FileManager.FILE_MANAGER_LOG_TAG, e.getMessage());
+			Log.e(FileManager.LOG, e.getMessage());
 		}
 	}
 	
 	private void getOrders() {
 		if (myFile == null)
 			myParent.runOnUiThread(myAction);
+	
+		// TODO
 		
-		for (File file : myFile.listFiles()) {
+		for (ZLFile file : myFile.children()) {
 			if (!Thread.currentThread().isInterrupted()) {
-				String fileName = null;
-				if (file.isDirectory())
-					fileName = file.getName();
-				else if (condition(file, myNewTypes))
-					fileName = file.getName();
-				if (!Thread.currentThread().isInterrupted() && fileName != null) {
-					myOrders.add(new FileOrder(fileName, fileName, R.drawable.ic_list_library_folder));
-//					myCurFiles.add(fileName);
+				
+				
+				if (file.isDirectory()){
+					// FIXME later strange dir = full path
+					String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
+					myOrders.add(new FileOrder(name, name, R.drawable.ic_list_library_folder));
+				}
+				if (PluginCollection.Instance().getPlugin(file) != null){
+					myOrders.add(new FileOrder(file.getName(false), file.getName(false), R.drawable.ic_list_library_book));
 				}
 				myParent.runOnUiThread(myAction);
 			}
