@@ -13,3 +13,4 @@
 * В качестве summary у книжки показывать ее title
 * По long-tap на книжке -- меню как в LibraryTreeActivity
 * По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
+* Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
