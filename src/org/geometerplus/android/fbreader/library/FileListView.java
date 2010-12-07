@@ -30,6 +30,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,57 +47,58 @@ public class FileListView {
 	private String myCurFile = null;
 	private String myTypes = "";
 
-	// Members for dynamic loading //
-//	private ArrayAdapter<String> myAdapter;
-//	private List<String> myOrders = Collections.synchronizedList(new ArrayList<String>());
 	private SmartFilter myFilter;
 	private ReturnRes myReturnRes;
 	private Thread myCurFilterThread;
 	private ProgressDialog myProgressDialog;
 	
-	private static final String BACK_DIR = "..";
-
-	//new 
 	private FManagerAdapter myAdapter;
 	private List<FileOrder> myOrders = Collections.synchronizedList(new ArrayList<FileOrder>());
 	
 	public FileListView(Activity parent, ListView listView) {
+		
 		myParent = parent;
 
 		// set parameters ProgressDialog
 		myProgressDialog = new ProgressDialog(myParent);
 		myProgressDialog.setTitle("Please wait...");
 		myProgressDialog.setMessage("Retrieving data ...");
-		
-		myAdapter = myAdapter = new FManagerAdapter(myOrders, myParent, R.layout.library_ng_tree_item); // new ArrayAdapter<String>(myParent, R.layout.list_item);
+
+		myAdapter = new FManagerAdapter(myParent, myOrders, R.layout.library_ng_tree_item); // new ArrayAdapter<String>(myParent, R.layout.list_item);
 		listView.setAdapter(myAdapter);
 
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
 		myFilter = new SmartFilter(myParent, myOrders, myReturnRes);
 
+		
 		myCurDir = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
 		myTypes = myParent.getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
 		
-		
-		if (myCurDir == null){
+		if (myCurDir == null || myCurDir.equals("")){
+			Log.v(FileManager.LOG, "FileListView - 2");
+
 			myCurDir = "";
 			myOrders.add(new FileOrder(FileManager.FB_HOME_DIR, FileManager.FB_HOME_DIR, R.drawable.home));
 			myOrders.add(new FileOrder(FileManager.SDCARD_DIR, FileManager.SDCARD_DIR, R.drawable.sdcard));
 			myOrders.add(new FileOrder(FileManager.ROOT_DIR, FileManager.ROOT_DIR, R.drawable.root));
 			initfill();
 		}
-		else
+		else{
+			Log.v(FileManager.LOG, "FileListView - 3");
 			fill(myCurDir);
-		
+		}
+			
+		Log.v(FileManager.LOG, "FileListView - 4");
+
 		listView.setTextFilterEnabled(true);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				view.setSelected(true);
 		
-//				myCurFile = ((TextView) view).getText().toString();
 				myCurFile = ((TextView)view.findViewById(R.id.library_ng_tree_item_name)).getText().toString();
-			
+				if (myCurFile.substring(0, 1).equals("/"))
+					myCurFile = myCurFile.substring(1);
 				goAtDir(myCurDir + "/" + myCurFile);
 			}
 		});
@@ -126,22 +128,21 @@ public class FileListView {
 	}
 	
 	public void goAtDir(String path) {
+		Log.v(FileManager.LOG, "gotAtDir :" + path);
 		File file = new File(path);
-		if (file.getName().equals(BACK_DIR))
-			myParent.finish();
-		else if (file.isDirectory()){
+		if (file.isDirectory()){
 			myCurFile = null;
-//			myCurFilterThread.interrupt();
+			if (myCurFilterThread != null)
+				myCurFilterThread.interrupt();
 			Intent i = new Intent(myParent, FileManager.class);
 			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
 			i.putExtra(FileManager.FILE_MANAGER_TYPE, myTypes);
-//			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // TODO delete later
-		    myParent.startActivity(i);
+			myParent.startActivity(i);
 		}
+		Log.v(FileManager.LOG, "gotAtDir");
 	}
 
 	private void initfill(){
-		myOrders.add(0, new FileOrder(BACK_DIR, BACK_DIR, R.drawable.back)); // FIXME critical
 		for (FileOrder o : myOrders){
 			myAdapter.add(o);
 		}
@@ -151,38 +152,39 @@ public class FileListView {
 		myProgressDialog.show();
 		File file = new File(path);
 		myCurDir = path;
-		myFilter.setPreferences(file, myTypes);
-		myOrders.add(0, new FileOrder(BACK_DIR, BACK_DIR, R.drawable.back)); // FIXME critical
+//		myFilter.setPreferences(file, myTypes);
 		myCurFilterThread = new Thread(null, myFilter, "MagentoBackground");
 		myCurFilterThread.start();
 	}
-	
-	private class FManagerAdapter extends ArrayAdapter<FileOrder>{
-		List<FileOrder> myOOOrders;
 		
-		public FManagerAdapter(List<FileOrder> orders, Context context, int textViewResourceId) {
-			super(context, textViewResourceId);
-			myOOOrders = orders;
-		}
+}
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			//return super.getView(position, convertView, parent);
-            View view = convertView;
-            if (view == null) {
-                LayoutInflater vi = (LayoutInflater) myParent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = vi.inflate(R.layout.library_ng_tree_item, null);
-            }
-            FileOrder order = myOOOrders.get(position);
-            if (order != null) {
-            	((ImageView)view.findViewById(R.id.library_ng_tree_item_icon)).setImageResource(order.getIcon());
-            	((TextView)view.findViewById(R.id.library_ng_tree_item_name)).setText(order.getName());
-    			((TextView)view.findViewById(R.id.library_ng_tree_item_childrenlist)).setText(order.getPath());
-            }
-            return view;
-		}
-
+class FManagerAdapter extends ArrayAdapter<FileOrder>{
+	private Context myParent;
+	private List<FileOrder> myOOOrders;
+	
+	public FManagerAdapter(Context context, List<FileOrder> orders, int textViewResourceId) {
+		super(context, textViewResourceId);
+		myParent = context;
+		myOOOrders = orders;
 	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
+        if (view == null) {
+            LayoutInflater vi = (LayoutInflater) myParent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = vi.inflate(R.layout.library_ng_tree_item, null);
+        }
+        FileOrder order = myOOOrders.get(position);
+        if (order != null) {
+        	((ImageView)view.findViewById(R.id.library_ng_tree_item_icon)).setImageResource(order.getIcon());
+        	((TextView)view.findViewById(R.id.library_ng_tree_item_name)).setText(order.getName());
+			((TextView)view.findViewById(R.id.library_ng_tree_item_childrenlist)).setText(order.getPath());
+        }
+        return view;
+	}
+
 }
 
 class FileOrder{
