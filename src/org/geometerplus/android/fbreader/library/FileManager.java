@@ -81,10 +81,11 @@ public final class FileManager extends Activity {
 		myCurDir = getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
 		myTypes = getIntent().getExtras().getString(FileManager.FILE_MANAGER_TYPE);
 		
-		if (myCurDir.equals(""))
+		if (myCurDir.equals("")) {
 			initfill();
-		else
+		} else {
 			fill(myCurDir);
+		}
 			
 		fileList.setTextFilterEnabled(true);
 		fileList.setOnItemClickListener(new OnItemClickListener() {
