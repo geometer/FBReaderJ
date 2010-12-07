@@ -10,3 +10,6 @@
 * Фильтровать файлы: показывать только те, для которых найдется plugin в PluginCollection
 * Уметь заходить внутрь zip'ов
 * Показывать у книг обложки в качестве иконок (это уже сделано в LibraryTreeActivity)
+* В качестве summary у книжки показывать ее title
+* По long-tap на книжке -- меню как в LibraryTreeActivity
+* По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
