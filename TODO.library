@@ -3,7 +3,8 @@
 * Watch filesystem after loading
 DONE Covers loading in background
 DONE Wait messages
-* Favorites
+DONE Favorites
+* Show text if the favorites list is empty
 DONE Search
 * Show wait message during search
 * File view

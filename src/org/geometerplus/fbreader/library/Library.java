@@ -354,6 +354,11 @@ public final class Library {
 		db.saveRecentBookIds(ids);
 	}
 
+	public boolean isBookInFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myFavorites.containsBook(book);
+	}
+
 	public void addBookToFavorites(Book book) {
 		waitForState(STATE_FULLY_INITIALIZED);
 		if (!myFavorites.containsBook(book)) {

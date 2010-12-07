@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -72,11 +73,6 @@ abstract class LibraryBaseActivity extends ListActivity {
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
-	}
-
-	@Override
 	public boolean onSearchRequested() {
 		startSearch(BookSearchPatternOption.getValue(), true, null, false);
 		return true;
@@ -101,23 +97,43 @@ abstract class LibraryBaseActivity extends ListActivity {
 		).show();
 	}
 
-	protected final class LibraryAdapter extends BaseAdapter {
+	protected final class LibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private final List<FBTree> myItems;
 
 		public LibraryAdapter(List<FBTree> items) {
 			myItems = items;
 		}
 
+		@Override
 		public final int getCount() {
 			return myItems.size();
 		}
 
+		@Override
 		public final FBTree getItem(int position) {
 			return myItems.get(position);
 		}
 
+		@Override
 		public final long getItemId(int position) {
 			return position;
+		}
+
+		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			final LibraryTree tree = (LibraryTree)getItem(position);
+			if (tree instanceof BookTree) {
+				menu.setHeaderTitle(tree.getName());
+				menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
+				if (Library.isBookInFavorites(((BookTree)tree).Book)) {
+					menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
+				} else {
+					menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
+				}
+				if ((Library.getRemoveBookMode(((BookTree)tree).Book) & Library.REMOVE_FROM_DISK) != 0) {
+					menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
+                }
+			}
 		}
 
 		private int myCoverWidth = -1;
@@ -187,6 +203,45 @@ abstract class LibraryBaseActivity extends ListActivity {
                 
 			return view;
 		}
+	}
+
+	protected void openBook(Book book) {
+		startActivity(
+			new Intent(getApplicationContext(), FBReader.class)
+				.setAction(Intent.ACTION_VIEW)
+				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+		);
+	}
+
+	private static final int OPEN_BOOK_ITEM_ID = 0;
+	private static final int ADD_TO_FAVORITES_ITEM_ID = 1;
+	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
+	private static final int DELETE_BOOK_ITEM_ID = 3;
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
+		if (tree instanceof BookTree) {
+			final BookTree bookTree = (BookTree)tree;
+			switch (item.getItemId()) {
+				case OPEN_BOOK_ITEM_ID:
+					openBook(bookTree.Book);
+					return true;
+				case ADD_TO_FAVORITES_ITEM_ID:
+					Library.addBookToFavorites(bookTree.Book);
+					return true;
+				case REMOVE_FROM_FAVORITES_ITEM_ID:
+					Library.removeBookFromFavorites(bookTree.Book);
+					getListView().invalidateViews();
+					return true;
+				case DELETE_BOOK_ITEM_ID:
+					// TODO: implement
+					return true;
+			}
+		}
+		return super.onContextItemSelected(item);
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
