@@ -1,3 +1,4 @@
+* Перейти от использования java.io.File к использованию org.geometerplus.zlibrary.core.filesystem.ZLFile
 * Верхний уровень файл-менеджера должен состоять из 3 каталогов:
   -- root (/)
   -- sdcard (берется из Environment)
