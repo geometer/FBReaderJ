@@ -1,8 +1,16 @@
 * Partial loading from database
 * Database updating in backgorund
 * Watch filesystem after loading
-* Covers loading in background
-* Wait messages (?)
+DONE Covers loading in background
+DONE Wait messages
 * Favorites
-* Search
+DONE Search
+* Show wait message during search
 * File view
+* Activity caption
+* Book deleting
+* Show book info activity instead of immediate opening/menu
+* Main menu
+* Context menu
+* Reload book info from file
+* Reload book info for all the files

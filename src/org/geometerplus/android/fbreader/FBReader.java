@@ -46,6 +46,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
@@ -96,24 +97,14 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
-		String fileToOpen = intent.getStringExtra(BOOK_PATH_KEY);
-		/*
-		if (fileToOpen == null && Intent.ACTION_VIEW.equals(intent.getAction())) {
-			final Uri uri = intent.getData();
-			if (uri != null) {
-				fileToOpen = fileNameFromUri(uri);
-				final String scheme = uri.getScheme();
-				if ("content".equals(scheme)) {
-					final File file = new File(fileToOpen);
-					if (!file.exists()) {
-						fileToOpen = file.getParent();
-					}
-				}
+		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
+		if (filePath == null) {
+			final Uri data = intent.getData();
+			if (data != null) {
+				filePath = data.getPath();
 			}
-			intent.setData(null);
 		}
-		*/
-		return fileToOpen != null ? ZLFile.createFileByPath(fileToOpen) : null;
+		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
 	}
 
 	@Override
@@ -216,7 +207,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	protected ZLApplication createApplication(ZLFile file) {
 		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase("READER");
+			new SQLiteBooksDatabase(this, "READER");
 		}
 		return new FBReaderApp(file != null ? file.getPath() : null);
 	}
@@ -287,7 +278,7 @@ public final class FBReader extends ZLAndroidActivity {
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
 					final int page = progress + 1;
-					final int pagesNumber = seekBar.getMax() + 1; 
+					final int pagesNumber = seekBar.getMax() + 1;
 					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
 				}

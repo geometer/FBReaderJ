@@ -41,7 +41,6 @@ public final class ZLColorOption extends ZLOption {
 						myValue = new ZLColor(intValue);
 					}
 				} catch (NumberFormatException e) {
-					// System.err.println(e);
 				}
 			}
 			myIsSynchronized = true;

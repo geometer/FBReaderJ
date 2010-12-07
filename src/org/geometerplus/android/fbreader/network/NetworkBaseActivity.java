@@ -19,17 +19,10 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashSet;
-
-import android.app.ListActivity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.*;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.ListView;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -38,14 +31,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
@@ -56,7 +49,6 @@ abstract class NetworkBaseActivity extends ListActivity
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	public BookDownloaderServiceConnection Connection;
-
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -109,9 +101,11 @@ abstract class NetworkBaseActivity extends ListActivity
 	public void onModelChanged() {
 	}
 
-
-	// this set is used to track whether this activity will be notified, when specific cover will be synchronized.
-	private HashSet<String> myAwaitedCovers = new HashSet<String>();
+	private final Runnable myInvalidateViewsRunnable = new Runnable() {
+		public void run() {
+			getListView().invalidateViews();
+		}
+	};
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
 		if (tree instanceof ZLAndroidTree) {
@@ -123,27 +117,13 @@ abstract class NetworkBaseActivity extends ListActivity
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
 			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
-			if (cover instanceof NetworkImage) {
-				final NetworkImage img = (NetworkImage) cover;
+			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+			if (cover instanceof ZLLoadableImage) {
+				final ZLLoadableImage img = (ZLLoadableImage)cover;
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
 				} else {
-					final Runnable runnable = new Runnable() {
-						public void run() {
-							myAwaitedCovers.remove(img.Url);
-							final ListView view = NetworkBaseActivity.this.getListView();
-							view.invalidateViews();
-						}
-					};
-					final NetworkView networkView = NetworkView.Instance();
-					if (!networkView.isCoverLoading(img.Url)) {
-						networkView.performCoverSynchronization(img, runnable);
-						myAwaitedCovers.add(img.Url);
-					} else if (!myAwaitedCovers.contains(img.Url)) {
-						networkView.addCoverSynchronizationRunnable(img.Url, runnable);
-						myAwaitedCovers.add(img.Url);
-					}
+					ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
 				}
 			} else {
 				data = mgr.getImageData(cover);
@@ -154,8 +134,10 @@ abstract class NetworkBaseActivity extends ListActivity
 		}
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
+		} else if (tree instanceof NetworkBookTree) {
+			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else {
-			coverView.setImageResource(R.drawable.fbreader);
+			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}
 	}
 

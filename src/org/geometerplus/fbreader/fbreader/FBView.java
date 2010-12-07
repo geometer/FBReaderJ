@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
+import org.geometerplus.fbreader.bookmodel.TOCTree;
 
 public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
@@ -122,7 +123,6 @@ public final class FBView extends ZLTextView {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
 			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
-			System.err.println("starting on level: " + myStartBrightness);
 			return true;
 		}
 
@@ -163,9 +163,7 @@ public final class FBView extends ZLTextView {
 					myIsBrightnessAdjustmentInProgress = false;
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
-					System.err.println("adjusting to level: " + (myStartBrightness + delta));
 					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
-					System.err.println("adjusted to level: " + ZLibrary.Instance().getScreenBrightness());
 					return true;
 				}
 			}
@@ -319,11 +317,17 @@ public final class FBView extends ZLTextView {
 		}
 
 		public void paint(ZLPaintContext context) {
+			if (myReader.Model == null) {
+				return;
+			}
+
 			final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(FBHyperlinkType.NONE);
+			final ZLColor fillColor = myReader.getColorProfile().FooterFillOption.getValue();
 
-			final int width = context.getWidth();
+			final int left = getLeftMargin();
+			final int right = context.getWidth() - getRightMargin();
 			final int height = getHeight();
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
@@ -362,23 +366,40 @@ public final class FBView extends ZLTextView {
 
 			// draw info text
 			context.setTextColor(fgColor);
-			context.drawString(width - infoWidth, height - delta, infoString);
+			context.drawString(right - infoWidth, height - delta, infoString);
 
 			// draw gauge
+			final int gaugeRight = right - (infoWidth == 0 ? 0 : infoWidth + 10);
+			myGaugeWidth = gaugeRight - left - 2 * lineWidth;
+
 			context.setLineColor(fgColor);
 			context.setLineWidth(lineWidth);
-			final int gaugeRight = width - ((infoWidth == 0) ? 0 : infoWidth + 10) - 2;
-			myGaugeWidth = gaugeRight;
-			context.drawLine(lineWidth, lineWidth, lineWidth, height - lineWidth);
-			context.drawLine(lineWidth, height - lineWidth, gaugeRight, height - lineWidth);
+			context.drawLine(left, lineWidth, left, height - lineWidth);
+			context.drawLine(left, height - lineWidth, gaugeRight, height - lineWidth);
 			context.drawLine(gaugeRight, height - lineWidth, gaugeRight, lineWidth);
-			context.drawLine(gaugeRight, lineWidth, lineWidth, lineWidth);
+			context.drawLine(gaugeRight, lineWidth, left, lineWidth);
 
-			final int gaugeInternalRight = 1 + 2 * lineWidth + (int)(1.0 * (gaugeRight - 2 - 3 * lineWidth) * pagesProgress / bookLength);
-			context.drawLine(1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth, height - 1 - 2 * lineWidth);
-			context.drawLine(1 + 2 * lineWidth, height - 1 - 2 * lineWidth, gaugeInternalRight, height - 1 - 2 * lineWidth);
-			context.drawLine(gaugeInternalRight, height - 1 - 2 * lineWidth, gaugeInternalRight, 1 + 2 * lineWidth);
-			context.drawLine(gaugeInternalRight, 1 + 2 * lineWidth, 1 + 2 * lineWidth, 1 + 2 * lineWidth);
+			final int gaugeInternalRight =
+				left + lineWidth + (int)(1.0 * myGaugeWidth * pagesProgress / bookLength);
+
+			context.setFillColor(fillColor);
+			context.fillRectangle(left + lineWidth, height - 2 * lineWidth, gaugeInternalRight, 2 * lineWidth);
+
+			if (myReader.FooterShowTOCMarksOption.getValue()) {
+				TOCTree toc = myReader.Model.TOCTree;
+				if (toc != null) {
+					final int fullLength = sizeOfFullText();
+					for (TOCTree tocItem : toc) {
+						TOCTree.Reference reference = tocItem.getReference();
+						if (reference != null) {
+							final int refCoord = sizeOfTextBeforeParagraph(reference.ParagraphIndex);
+							final int xCoord =
+								left + 2 * lineWidth + (int)(1.0 * myGaugeWidth * refCoord / fullLength);
+							context.drawLine(xCoord, height - lineWidth, xCoord, lineWidth);
+						}
+					}
+				}
+			}
 		}
 
 		// TODO: remove

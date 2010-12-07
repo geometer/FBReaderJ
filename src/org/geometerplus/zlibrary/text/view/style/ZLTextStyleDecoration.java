@@ -56,10 +56,6 @@ public class ZLTextStyleDecoration {
 		return new ZLTextPartialDecoratedStyle(base, this, hyperlink);
 	}
 	
-	public boolean isFullDecoration() {
-		return false;
-	}
-
 	public String getName() {
 		return myName;
 	}

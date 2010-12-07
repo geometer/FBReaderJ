@@ -21,27 +21,37 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import android.app.ListActivity;
+import android.app.*;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.os.*;
 import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class LibraryBaseActivity extends ListActivity {
+	static Library Library;
+	static final ZLStringOption BookSearchPatternOption =
+		new ZLStringOption("BookSearch", "Pattern", "");
+
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
@@ -57,6 +67,31 @@ abstract class LibraryBaseActivity extends ListActivity {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		return true;
+	}
+
+	protected static final String ACTION_FOUND = "fbreader.library.intent.FOUND";
+
+	protected boolean runSearch(Intent intent) {
+	   	final String pattern = intent.getStringExtra(SearchManager.QUERY);
+		if (pattern == null || pattern.length() == 0) {
+			return false;
+		}
+		BookSearchPatternOption.setValue(pattern);
+		return Library.searchBooks(pattern).hasChildren();
+	}
+
+	protected void showNotFoundToast() {
+		Toast.makeText(
+			this,
+			ZLResource.resource("errorMessage").getResource("bookNotFound").getValue(),
+			Toast.LENGTH_SHORT
+		).show();
 	}
 
 	protected final class LibraryAdapter extends BaseAdapter {
@@ -80,6 +115,12 @@ abstract class LibraryBaseActivity extends ListActivity {
 
 		private int myCoverWidth = -1;
 		private int myCoverHeight = -1;
+
+		private final Runnable myInvalidateViewsRunnable = new Runnable() {
+			public void run() {
+				getListView().invalidateViews();
+			}
+		};
 
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final FBTree tree = getItem(position);
@@ -108,16 +149,32 @@ abstract class LibraryBaseActivity extends ListActivity {
 				Bitmap coverBitmap = null;
 				ZLImage cover = tree.getCover();
 				if (cover != null) {
-					final ZLAndroidImageData data =
-						((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(cover);
+					ZLAndroidImageData data = null;
+					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+					if (cover instanceof ZLLoadableImage) {
+						final ZLLoadableImage img = (ZLLoadableImage)cover;
+						if (img.isSynchronized()) {
+							data = mgr.getImageData(img);
+						} else {
+							ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
+						}
+					} else {
+						data = mgr.getImageData(cover);
+					}
 					if (data != null) {
 						coverBitmap = data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
 					}
 				}
 				if (coverBitmap != null) {
 					coverView.setImageBitmap(coverBitmap);
+				} else if (tree instanceof AuthorTree) {
+					coverView.setImageResource(R.drawable.ic_list_library_author);
+				} else if (tree instanceof TagTree) {
+					coverView.setImageResource(R.drawable.ic_list_library_tag);
+				} else if (tree instanceof BookTree) {
+					coverView.setImageResource(R.drawable.ic_list_library_book);
 				} else {
-					coverView.setImageResource(R.drawable.fbreader);
+					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 			}
                 
@@ -135,11 +192,26 @@ abstract class LibraryBaseActivity extends ListActivity {
 		}
 
 		public void run() {
-			startActivity(
-				new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
-			);
+			final Runnable postRunnable = new Runnable() {
+				public void run() {
+					startActivity(
+						new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
+							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+							.putExtra(LibraryTreeActivity.TREE_PATH_KEY, myTreePath)
+					);
+				}
+			};
+			if (Library.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				postRunnable.run();
+			} else {
+				UIUtil.runWithMessage(LibraryBaseActivity.this, "loadingBookList",
+				new Runnable() {
+					public void run() {
+						Library.waitForState(Library.STATE_FULLY_INITIALIZED);
+					}
+				},
+				postRunnable);
+			}
 		}
 	}
 }

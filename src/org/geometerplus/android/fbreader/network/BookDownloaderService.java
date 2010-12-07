@@ -163,14 +163,6 @@ public class BookDownloaderService extends Service {
 				return;
 			}
 			// TODO: question box: redownload?
-			/*
-			ZLDialogManager.Instance().showQuestionBox(
-				"redownloadBox", "Redownload?",
-				"no", null,
-				"yes", null,
-				null, null
-			);
-			*/
 			doStop();
 			startActivity(getFBReaderIntent(fileFile));
 			return;

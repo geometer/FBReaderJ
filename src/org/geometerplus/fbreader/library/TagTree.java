@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-final class TagTree extends LibraryTree {
+public final class TagTree extends LibraryTree {
 	private final Tag myTag;
 
 	TagTree(LibraryTree parent, Tag tag) {

@@ -35,6 +35,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	static final String TREE_PATH_KEY = "TreePath";
 
 	static final String PATH_FAVORITES = "favorites";
+	static final String PATH_SEARCH_RESULTS = "searchResults";
 	static final String PATH_RECENT = "recent";
 	static final String PATH_BY_AUTHOR = "author";
 	static final String PATH_BY_TAG = "tag";
@@ -46,31 +47,46 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
-		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
-
-		final String[] path = myTreePathString.split("\000");
-
-		final Library library = LibraryTopLevelActivity.Library;
-		FBTree tree = null;
-		if (PATH_RECENT.equals(path[0])) {
-			tree = library.recentBooks();
-		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = library.byAuthor();
-		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = library.byTag();
-		} else if (PATH_FAVORITES.equals(path[0])) {
-		}
-
-		for (int i = 1; i < path.length; ++i) {
-			if (tree == null) {
-				break;
+		final Intent intent = getIntent();
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			if (runSearch(intent)) {
+				startActivity(intent
+					.setAction(ACTION_FOUND)
+					.setClass(getApplicationContext(), LibraryTopLevelActivity.class)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+				);
+			} else {
+				showNotFoundToast();
+				finish();
 			}
-			tree = tree.getSubTreeByName(path[i]);
-		}
-
-		if (tree != null) {
-			setListAdapter(new LibraryAdapter(tree.subTrees()));
+		} else {
+			myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
+			mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+        
+			final String[] path = myTreePathString.split("\000");
+        
+			FBTree tree = null;
+			if (PATH_RECENT.equals(path[0])) {
+				tree = Library.recentBooks();
+			} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
+				tree = Library.searchResults();
+			} else if (PATH_BY_AUTHOR.equals(path[0])) {
+				tree = Library.byAuthor();
+			} else if (PATH_BY_TAG.equals(path[0])) {
+				tree = Library.byTag();
+			} else if (PATH_FAVORITES.equals(path[0])) {
+			}
+        
+			for (int i = 1; i < path.length; ++i) {
+				if (tree == null) {
+					break;
+				}
+				tree = tree.getSubTreeByName(path[i]);
+			}
+        
+			if (tree != null) {
+				setListAdapter(new LibraryAdapter(tree.subTrees()));
+			}
 		}
 	}
 
