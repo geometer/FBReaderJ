@@ -33,9 +33,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 public final class FileManager extends Activity {
-	private static String ROOT_DIR = Environment.getRootDirectory().getPath();
-	private static String SDCARD_DIR = Environment.getExternalStorageDirectory().getPath();
-	private static String FB_HOME_DIR = SDCARD_DIR + "/" + "Books";
+	public static String ROOT_DIR = Environment.getRootDirectory().getPath();
+	public static String SDCARD_DIR = Environment.getExternalStorageDirectory().getPath();
+	public static String FB_HOME_DIR = SDCARD_DIR + "/" + "Books";
 	public static String DEFAULT_START_PATH = FB_HOME_DIR;
 	
 	private FileListView myFileListView;
@@ -49,47 +49,48 @@ public final class FileManager extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(FILE_MANAGER_LOG_TAG, "onCreate()");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.file_manager);
+		setContentView(R.layout.fmanager);
+//		setContentView(R.layout.file_manager);
 		
-		ImageButton fbhomeButton = FileUtils.getImgBtn(this, R.id.fmanagerFBHomeButton, R.drawable.home); 
-		ImageButton cardButton = FileUtils.getImgBtn(this, R.id.fmanagerCardButton, R.drawable.sdcard);
-		ImageButton rootButton = FileUtils.getImgBtn(this, R.id.fmanagerRootButton, R.drawable.root);
-		ImageButton filterButton = FileUtils.getImgBtn(this, R.id.fmanagerFilterButton, R.drawable.filter);
-		ImageButton backButton = FileUtils.getImgBtn(this, R.id.fmanagerBackButton, R.drawable.back);
-		
-		Button okButton = FileUtils.getOkBtn(this, R.id.fmanagerOkButton);
-		Button cancelButton = FileUtils.getCancelBtn(this, R.id.fmanagerCancelButton); 
+//		ImageButton fbhomeButton = FileUtils.getImgBtn(this, R.id.fmanagerFBHomeButton, R.drawable.home); 
+//		ImageButton cardButton = FileUtils.getImgBtn(this, R.id.fmanagerCardButton, R.drawable.sdcard);
+//		ImageButton rootButton = FileUtils.getImgBtn(this, R.id.fmanagerRootButton, R.drawable.root);
+//		ImageButton filterButton = FileUtils.getImgBtn(this, R.id.fmanagerFilterButton, R.drawable.filter);
+//		ImageButton backButton = FileUtils.getImgBtn(this, R.id.fmanagerBackButton, R.drawable.back);
+//		
+//		Button okButton = FileUtils.getOkBtn(this, R.id.fmanagerOkButton);
+//		Button cancelButton = FileUtils.getCancelBtn(this, R.id.fmanagerCancelButton); 
 
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
 		myFileListView = new FileListView(this, fileList);
 	
-		setPathListener(fbhomeButton, FB_HOME_DIR);
-		setPathListener(cardButton, SDCARD_DIR);
-		setPathListener(rootButton, ROOT_DIR);
-		
-		filterButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				launchFilterView();
-			}
-		});
-		
-		backButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				myFileListView.back();
-			}
-		});
-		
-		okButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				launchFBReaderView();
-			}
-		});
-		
-		cancelButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				finish();
-			}
-		});
+//		setPathListener(fbhomeButton, FB_HOME_DIR);
+//		setPathListener(cardButton, SDCARD_DIR);
+//		setPathListener(rootButton, ROOT_DIR);
+//		
+//		filterButton.setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//				launchFilterView();
+//			}
+//		});
+//		
+//		backButton.setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//				myFileListView.back();
+//			}
+//		});
+//		
+//		okButton.setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//				launchFBReaderView();
+//			}
+//		});
+//		
+//		cancelButton.setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//				finish();
+//			}
+//		});
 	}
 
 	@Override

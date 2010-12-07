@@ -25,18 +25,21 @@ import java.util.List;
 
 import android.app.Activity;
 import android.util.Log;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class SmartFilter implements Runnable {
 
 	private Activity myParent;
 	private Runnable myAction;
-	private List<String> myOrders;
+//	private List<String> myOrders;
 
 	private File myFile;
 	private String myNewTypes;
-	private List<String> myCurFiles = new ArrayList<String>();
+//	private List<String> myCurFiles = new ArrayList<String>();
 
-	public SmartFilter(Activity parent, List<String> orders, Runnable action) {
+	private List<FileOrder> myOrders;
+	
+	public SmartFilter(Activity parent, List<FileOrder> orders, Runnable action) {
 		myParent = parent;
 		myOrders = orders;
 		myAction = action;
@@ -57,6 +60,9 @@ public class SmartFilter implements Runnable {
 	}
 	
 	private void getOrders() {
+		if (myFile == null)
+			myParent.runOnUiThread(myAction);
+		
 		for (File file : myFile.listFiles()) {
 			if (!Thread.currentThread().isInterrupted()) {
 				String fileName = null;
@@ -65,8 +71,8 @@ public class SmartFilter implements Runnable {
 				else if (condition(file, myNewTypes))
 					fileName = file.getName();
 				if (!Thread.currentThread().isInterrupted() && fileName != null) {
-					myOrders.add(fileName);
-					myCurFiles.add(fileName);
+					myOrders.add(new FileOrder(fileName, fileName, R.drawable.ic_list_library_folder));
+//					myCurFiles.add(fileName);
 				}
 				myParent.runOnUiThread(myAction);
 			}

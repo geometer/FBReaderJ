@@ -27,11 +27,15 @@ import android.widget.ArrayAdapter;
 public class ReturnRes implements Runnable {
 
 	private int myCurIdx = 0;
-	private List<String> myOrders;
-	private ArrayAdapter<String> myAdapter;
+//	private List<String> myOrders;
+//	private ArrayAdapter<String> myAdapter;
 	private ProgressDialog myProgressDialog;
+	private List<FileOrder> myOrders;
+	private ArrayAdapter<FileOrder> myAdapter;
 
-	public ReturnRes(List<String> orders, ArrayAdapter<String> adapter,
+	
+	
+	public ReturnRes(List<FileOrder> orders, ArrayAdapter<FileOrder> adapter,
 			ProgressDialog pd) {
 		myOrders = orders;
 		myAdapter = adapter;
