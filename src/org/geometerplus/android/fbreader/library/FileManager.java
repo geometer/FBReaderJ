@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +45,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public final class FileManager extends Activity {
+public final class FileManager extends ListActivity {
 	private String myCurDir = "/";
 	private String myCurFile = null;
 	private String myTypes = "";
@@ -63,7 +63,7 @@ public final class FileManager extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(LOG, "onCreate()");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fmanager);
+		//setContentView(R.layout.fmanager);
 
 		myProgressDialog = new ProgressDialog(this);
 		myProgressDialog.setTitle("Please wait...");
@@ -71,9 +71,11 @@ public final class FileManager extends Activity {
 
 		
 		
-		ListView fileList = (ListView) findViewById(R.id.fileList1);
+		//ListView fileList = (ListView) findViewById(R.id.fileList1);
+		final ListView fileList = getListView();
 		myAdapter = new FManagerAdapter(this, myOrders, R.layout.library_tree_item);
-		fileList.setAdapter(myAdapter);
+		//fileList.setAdapter(myAdapter);
+		setListAdapter(myAdapter);
 
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
 		myFilter = new SmartFilter(this, myOrders, myReturnRes);
