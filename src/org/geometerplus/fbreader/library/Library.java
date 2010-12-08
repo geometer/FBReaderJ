@@ -36,6 +36,7 @@ public final class Library {
 	private final LibraryTree myLibraryByAuthor = new RootTree();
 	private final LibraryTree myLibraryByTag = new RootTree();
 	private final LibraryTree myRecentBooks = new RootTree();
+	private final LibraryTree myFavorites = new RootTree();
 	private final LibraryTree mySearchResult = new RootTree();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
@@ -268,6 +269,14 @@ public final class Library {
 			}
 		}
 
+		for (long id : db.loadFavoritesIds()) {
+			Book book = bookById.get(id);
+			if (book != null) {
+				myFavorites.createBookSubTree(book, true);
+			}
+		}
+		myFavorites.sortAllChildren();
+
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (Book book : myBooks) {
@@ -309,6 +318,11 @@ public final class Library {
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
 
+	public LibraryTree favorites() {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myFavorites;
+	}
+
 	public LibraryTree searchResults() {
 		return mySearchResult;
 	}
@@ -338,6 +352,27 @@ public final class Library {
 			ids.remove(12);
 		}
 		db.saveRecentBookIds(ids);
+	}
+
+	public boolean isBookInFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myFavorites.containsBook(book);
+	}
+
+	public void addBookToFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		if (!myFavorites.containsBook(book)) {
+			myFavorites.createBookSubTree(book, true);
+			myFavorites.sortAllChildren();
+			BooksDatabase.Instance().addToFavorites(book.getId());
+		}
+	}
+
+	public void removeBookFromFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		if (myFavorites.removeBook(book)) {
+			BooksDatabase.Instance().removeFromFavorites(book.getId());
+		}
 	}
 
 	public static final int REMOVE_DONT_REMOVE = 0x00;
@@ -380,6 +415,7 @@ public final class Library {
 			db.saveRecentBookIds(ids);
 		}
 		mySearchResult.removeBook(book);
+		myFavorites.removeBook(book);
 
 		BooksDatabase.Instance().deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {

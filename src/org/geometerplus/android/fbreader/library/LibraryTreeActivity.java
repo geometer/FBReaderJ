@@ -29,17 +29,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.BookTree;
 
-import org.geometerplus.android.fbreader.FBReader;
-
 public class LibraryTreeActivity extends LibraryBaseActivity {
-	static final String TREE_PATH_KEY = "TreePath";
-
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "author";
-	static final String PATH_BY_TAG = "tag";
-
 	private String myTreePathString;
 	private String mySelectedBookPath;
 
@@ -59,34 +49,50 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 				showNotFoundToast();
 				finish();
 			}
+			return;
+		}
+
+		myTreePathString = intent.getStringExtra(TREE_PATH_KEY);
+		mySelectedBookPath = intent.getStringExtra(SELECTED_BOOK_PATH_KEY);
+        
+		final String[] path = myTreePathString.split("\000");
+        
+		String title = null;
+		if (path.length == 1) {
+			title = myResource.getResource(path[0]).getResource("summary").getValue();
+			final String parameter = intent.getStringExtra(PARAMETER_KEY);
+			if (parameter != null) {
+				title = title.replace("%s", parameter);
+			}
 		} else {
-			myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
-			mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+			title = path[path.length - 1];
+		}
+		setTitle(title);
+
+		FBTree tree = null;
+		if (PATH_RECENT.equals(path[0])) {
+			tree = Library.recentBooks();
+		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
+			tree = Library.searchResults();
+		} else if (PATH_BY_AUTHOR.equals(path[0])) {
+			tree = Library.byAuthor();
+		} else if (PATH_BY_TAG.equals(path[0])) {
+			tree = Library.byTag();
+		} else if (PATH_FAVORITES.equals(path[0])) {
+			tree = Library.favorites();
+		}
         
-			final String[] path = myTreePathString.split("\000");
-        
-			FBTree tree = null;
-			if (PATH_RECENT.equals(path[0])) {
-				tree = Library.recentBooks();
-			} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-				tree = Library.searchResults();
-			} else if (PATH_BY_AUTHOR.equals(path[0])) {
-				tree = Library.byAuthor();
-			} else if (PATH_BY_TAG.equals(path[0])) {
-				tree = Library.byTag();
-			} else if (PATH_FAVORITES.equals(path[0])) {
+		for (int i = 1; i < path.length; ++i) {
+			if (tree == null) {
+				break;
 			}
+			tree = tree.getSubTreeByName(path[i]);
+		}
         
-			for (int i = 1; i < path.length; ++i) {
-				if (tree == null) {
-					break;
-				}
-				tree = tree.getSubTreeByName(path[i]);
-			}
-        
-			if (tree != null) {
-				setListAdapter(new LibraryAdapter(tree.subTrees()));
-			}
+		if (tree != null) {
+			final LibraryAdapter adapter = new LibraryAdapter(tree.subTrees());
+			setListAdapter(adapter);
+			getListView().setOnCreateContextMenuListener(adapter);
 		}
 	}
 
@@ -94,12 +100,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
-			startActivity(
-				new Intent(getApplicationContext(), FBReader.class)
-					.setAction(Intent.ACTION_VIEW)
-					.putExtra(FBReader.BOOK_PATH_KEY, ((BookTree)tree).Book.File.getPath())
-					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-			);
+			openBook(((BookTree)tree).Book);
 		} else {
 			new OpenTreeRunnable(
 				myTreePathString + "\000" + tree.getName(),

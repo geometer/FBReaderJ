@@ -3,14 +3,16 @@
 * Watch filesystem after loading
 DONE Covers loading in background
 DONE Wait messages
-* Favorites
+DONE Favorites
+* Show text if the favorites list is empty
 DONE Search
 * Show wait message during search
 * File view
-* Activity caption
+DONE Activity caption
 * Book deleting
 * Show book info activity instead of immediate opening/menu
 * Main menu
 * Context menu
 * Reload book info from file
 * Reload book info for all the files
+* Highlight current book
