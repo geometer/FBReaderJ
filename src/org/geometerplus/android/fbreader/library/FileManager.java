@@ -123,9 +123,9 @@ public final class FileManager extends ListActivity {
 	}
 
 	private void initfill(){
-		myOrders.add(new FileOrder(FileManager.ROOT_DIR, FileManager.ROOT_DIR, R.drawable.root));
-		myOrders.add(new FileOrder(FileManager.SDCARD_DIR, FileManager.SDCARD_DIR, R.drawable.sdcard));
-		myOrders.add(new FileOrder(FileManager.FB_HOME_DIR, FileManager.FB_HOME_DIR, R.drawable.home));
+		myOrders.add(new FileOrder(FileManager.ROOT_DIR, FileManager.ROOT_DIR, R.drawable.ic_list_library_folder));
+		myOrders.add(new FileOrder(FileManager.SDCARD_DIR, FileManager.SDCARD_DIR, R.drawable.ic_list_library_folder));
+		myOrders.add(new FileOrder(FileManager.FB_HOME_DIR, FileManager.FB_HOME_DIR, R.drawable.ic_list_library_folder));
 
 		for (FileOrder o : myOrders){
 			myAdapter.add(o);
