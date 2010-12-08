@@ -148,10 +148,10 @@ abstract class LibraryBaseActivity extends ListActivity {
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final FBTree tree = getItem(position);
 			final View view = (convertView != null) ?  convertView :
-				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_ng_tree_item, parent, false);
+				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
-			((TextView)view.findViewById(R.id.library_ng_tree_item_name)).setText(tree.getName());
-			((TextView)view.findViewById(R.id.library_ng_tree_item_childrenlist)).setText(tree.getSecondString());
+			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
+			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 
 			if (myCoverWidth == -1) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -160,7 +160,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 				view.requestLayout();
 			}
 
-			final ImageView coverView = (ImageView)view.findViewById(R.id.library_ng_tree_item_icon);
+			final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
 			coverView.getLayoutParams().width = myCoverWidth;
 			coverView.getLayoutParams().height = myCoverHeight;
 			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

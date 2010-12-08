@@ -8,7 +8,7 @@
 	android:gravity="top|left"
 >
 	<ImageView
-		android:id="@+id/library_ng_tree_item_icon"
+		android:id="@+id/library_tree_item_icon"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:adjustViewBounds="false"
@@ -26,7 +26,7 @@
 			android:orientation="vertical"
 		>
 			<TextView
-				android:id="@+id/library_ng_tree_item_name"
+				android:id="@+id/library_tree_item_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentTop="true"
@@ -36,11 +36,11 @@
 				android:marqueeRepeatLimit="marquee_forever"
 			/>
 			<TextView
-				android:id="@+id/library_ng_tree_item_childrenlist"
+				android:id="@+id/library_tree_item_childrenlist"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dip"
-				android:layout_below="@id/library_ng_tree_item_name"
+				android:layout_below="@id/library_tree_item_name"
 				android:singleLine="true"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:ellipsize="marquee"
