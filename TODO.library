@@ -12,7 +12,7 @@ DONE Activity caption
 * Book deleting
 * Show book info activity instead of immediate opening/menu
 * Main menu
-* Context menu
+DONE Context menu
 * Reload book info from file
 * Reload book info for all the files
 * Highlight current book
