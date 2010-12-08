@@ -26,9 +26,14 @@ import java.util.List;
 import android.app.Activity;
 import android.util.Log;
 
+import org.amse.ys.zip.LocalFileHeader;
+import org.amse.ys.zip.ZipFile;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.zlibrary.core.filesystem.ZLArchiveEntryFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class SmartFilter implements Runnable {
@@ -68,17 +73,19 @@ public class SmartFilter implements Runnable {
 	private void getOrders() {
 		if (myFile == null)
 			myParent.runOnUiThread(myAction);
-	
-		// TODO
-		
+
 		for (ZLFile file : myFile.children()) {
 			if (!Thread.currentThread().isInterrupted()) {
-				
-				
+		
 				if (file.isDirectory()){
 					// FIXME later strange dir = full path
 					String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
 					myOrders.add(new FileOrder(name, name, R.drawable.ic_list_library_folder));
+				}
+				if (file.isArchive()){
+					// FIXME later strange dir = full path
+					String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
+					myOrders.add(new FileOrder(name, name, R.drawable.fbreader));
 				}
 				if (PluginCollection.Instance().getPlugin(file) != null){
 					myOrders.add(new FileOrder(file.getName(false), file.getName(false), R.drawable.ic_list_library_book));

@@ -28,9 +28,11 @@ import java.util.List;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.ListActivity;
@@ -58,23 +60,17 @@ public final class FileManager extends ListActivity {
 	private FManagerAdapter myAdapter;
 	private List<FileOrder> myOrders = Collections.synchronizedList(new ArrayList<FileOrder>());
 	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(LOG, "onCreate()");
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.fmanager);
 
 		myProgressDialog = new ProgressDialog(this);
 		myProgressDialog.setTitle("Please wait...");
 		myProgressDialog.setMessage("Retrieving data ...");
 
-		
-		
-		//ListView fileList = (ListView) findViewById(R.id.fileList1);
 		final ListView fileList = getListView();
 		myAdapter = new FManagerAdapter(this, myOrders, R.layout.library_tree_item);
-		//fileList.setAdapter(myAdapter);
 		setListAdapter(myAdapter);
 
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
@@ -91,11 +87,8 @@ public final class FileManager extends ListActivity {
 			
 		fileList.setTextFilterEnabled(true);
 		fileList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				view.setSelected(true);
-		
-				myCurFile = ((TextView)view.findViewById(R.id.library_tree_item_name)).getText().toString();
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				myCurFile = ((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).getText().toString();
 				if (myCurFile.substring(0, 1).equals("/"))
 					myCurFile = myCurFile.substring(1);
 				goAtDir(myCurDir + "/" + myCurFile);
@@ -104,12 +97,11 @@ public final class FileManager extends ListActivity {
 	}
 	
 	public void goAtDir(String path) {
-		Log.v(FileManager.LOG, "gotAtDir :" + path);
-//		File file = new File(path);
-
-		ZLFile file = ZLFile.createFileByPath(path);
+		Log.v(FileManager.LOG, "gotAtDir: 	" + path);
+		path = normalize(path);
 		
-		if (file.isDirectory()) {
+		ZLFile file = ZLFile.createFileByPath(path);
+		if (file.isDirectory() || file.isArchive()) {
 			myCurFile = null;
 			if (myCurFilterThread != null)
 				myCurFilterThread.interrupt();
@@ -117,15 +109,25 @@ public final class FileManager extends ListActivity {
 			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
 			i.putExtra(FileManager.FILE_MANAGER_TYPE, myTypes);
 			startActivity(i);
-		} else {
+		}
+		else {
 			launchFBReaderView(path);
 		}
 	}
 
 	private void initfill(){
-		myOrders.add(new FileOrder(FileManager.ROOT_DIR, FileManager.ROOT_DIR, R.drawable.ic_list_library_folder));
-		myOrders.add(new FileOrder(FileManager.SDCARD_DIR, FileManager.SDCARD_DIR, R.drawable.ic_list_library_folder));
-		myOrders.add(new FileOrder(FileManager.FB_HOME_DIR, FileManager.FB_HOME_DIR, R.drawable.ic_list_library_folder));
+		ZLResource resource = ZLResource.resource("fmanagerView");
+		String nameRoot = resource.getResource("root").getValue();
+		String nameSdcard = resource.getResource("sdcard").getValue();
+		String nameBooks = resource.getResource("books").getValue();
+		
+		String pathRoot = "/";
+		String pathSdcard = Environment.getExternalStorageDirectory().getPath();
+		String pathBook = Paths.BooksDirectoryOption().getValue();
+		
+		myOrders.add(new FileOrder(nameRoot, pathRoot, R.drawable.ic_list_library_folder));
+		myOrders.add(new FileOrder(nameSdcard, pathSdcard, R.drawable.ic_list_library_folder));
+		myOrders.add(new FileOrder(nameBooks, pathBook, R.drawable.ic_list_library_folder));
 
 		for (FileOrder o : myOrders){
 			myAdapter.add(o);
@@ -141,60 +143,33 @@ public final class FileManager extends ListActivity {
 		myCurFilterThread.start();
 	}
 
-	public void setFilter(String filterTypes){
-		if (!myTypes.equals(filterTypes)){
-			myTypes = filterTypes;
-			goAtDir(myCurDir);
-		}
+	private void launchFBReaderView(String path){
+		Log.v(FileManager.LOG, "launchFBReaderView 1: 	" + path);
+		
+		Intent i = new Intent(this, FBReader.class);
+		i.setAction(Intent.ACTION_VIEW);
+		i.putExtra(FBReader.BOOK_PATH_KEY, path);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(i);
 	}
 	
-	public static String ROOT_DIR = "/"; //Environment.getRootDirectory().getPath();
-	public static String SDCARD_DIR = Environment.getExternalStorageDirectory().getPath();
-//	public static String FB_HOME_DIR = SDCARD_DIR + "/" + "Books";
-	public static String FB_HOME_DIR = Paths.BooksDirectoryOption().getValue();
+	private String normalize(String path){
+		Log.v(FileManager.LOG, "normalize 1: 	" + path);
 
+		if (ZLFile.createFileByPath(path).exists())
+			return path;
+		else if(path.contains(".zip")){
+			int idx = path.indexOf(".zip") + 5;
+			String str = path.substring(0, idx - 1) + ":" + path.substring(idx);
+			path = str;
+		}
+		Log.v(FileManager.LOG, "normalize 2: 	" + path);
+		return path;
+	}
 	
 	public static String FILE_MANAGER_PATH = "file_manager.path";
 	public static String FILE_MANAGER_TYPE = "file_manager.type";
 	public static String LOG = "FileManager";
 
-	
-	
-	
-	
-	
-	
-//	@Override
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		super.onActivityResult(requestCode, resultCode, data);
-//		if (data != null)
-//			myFileListView.setFilter(data.getAction());
-//	}
-//	
-
-	private void launchFBReaderView(String path){
-		if (path != null){
-			Intent i = new Intent(this, FBReader.class);
-			i.setAction(Intent.ACTION_VIEW);
-			i.putExtra(FBReader.BOOK_PATH_KEY, path);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(i);
-		}
-	}
-//	
-//    private void launchFilterView() {
-//    	Intent i = new Intent(this, FilterView.class);
-//        i.putExtra(FILE_MANAGER_TYPE, myFileListView.getTypes());
-//        startActivityForResult(i, 1);
-//    }
-//    
-//    private void setPathListener(ImageButton imgBtn, final String path){
-//    	imgBtn.setOnClickListener(new View.OnClickListener() {
-//			public void onClick(View v) {
-//				myFileListView.goAtDir(path);
-//			}
-//		});
-//    }
-	
 }
 

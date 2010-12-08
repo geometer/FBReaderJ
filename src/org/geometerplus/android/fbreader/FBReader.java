@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import java.util.LinkedList;
 
+import org.geometerplus.android.fbreader.library.FileManager;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Library;
@@ -39,6 +40,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
