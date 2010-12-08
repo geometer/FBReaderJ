@@ -169,6 +169,9 @@ class FManagerAdapter extends ArrayAdapter<FileOrder>{
 		myOOOrders = orders;
 	}
 
+	private int myCoverWidth = -1;
+	private int myCoverHeight = -1;
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
@@ -178,9 +181,23 @@ class FManagerAdapter extends ArrayAdapter<FileOrder>{
         }
         FileOrder order = myOOOrders.get(position);
         if (order != null) {
-        	((ImageView)view.findViewById(R.id.library_tree_item_icon)).setImageResource(order.getIcon());
         	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(order.getPath());
+
+			if (myCoverWidth == -1) {
+				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+				myCoverHeight = view.getMeasuredHeight();
+				myCoverWidth = myCoverHeight * 15 / 32;
+				view.requestLayout();
+			}
+
+			final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
+			coverView.getLayoutParams().width = myCoverWidth;
+			coverView.getLayoutParams().height = myCoverHeight;
+			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			coverView.requestLayout();
+
+        	coverView.setImageResource(order.getIcon());
         }
         return view;
 	}

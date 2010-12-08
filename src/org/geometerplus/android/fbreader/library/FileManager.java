@@ -109,7 +109,7 @@ public final class FileManager extends ListActivity {
 
 		ZLFile file = ZLFile.createFileByPath(path);
 		
-		if (file.isDirectory()){
+		if (file.isDirectory()) {
 			myCurFile = null;
 			if (myCurFilterThread != null)
 				myCurFilterThread.interrupt();
@@ -117,9 +117,9 @@ public final class FileManager extends ListActivity {
 			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
 			i.putExtra(FileManager.FILE_MANAGER_TYPE, myTypes);
 			startActivity(i);
-		}
-		else
+		} else {
 			launchFBReaderView(path);
+		}
 	}
 
 	private void initfill(){
