@@ -64,7 +64,7 @@ public class FileListView {
 		myProgressDialog.setTitle("Please wait...");
 		myProgressDialog.setMessage("Retrieving data ...");
 
-		myAdapter = new FManagerAdapter(myParent, myOrders, R.layout.library_ng_tree_item); // new ArrayAdapter<String>(myParent, R.layout.list_item);
+		myAdapter = new FManagerAdapter(myParent, myOrders, R.layout.library_tree_item); // new ArrayAdapter<String>(myParent, R.layout.list_item);
 		listView.setAdapter(myAdapter);
 
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
@@ -96,7 +96,7 @@ public class FileListView {
 					int position, long id) {
 				view.setSelected(true);
 		
-				myCurFile = ((TextView)view.findViewById(R.id.library_ng_tree_item_name)).getText().toString();
+				myCurFile = ((TextView)view.findViewById(R.id.library_tree_item_name)).getText().toString();
 				if (myCurFile.substring(0, 1).equals("/"))
 					myCurFile = myCurFile.substring(1);
 				goAtDir(myCurDir + "/" + myCurFile);
@@ -174,13 +174,13 @@ class FManagerAdapter extends ArrayAdapter<FileOrder>{
         View view = convertView;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) myParent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.library_ng_tree_item, null);
+            view = vi.inflate(R.layout.library_tree_item, null);
         }
         FileOrder order = myOOOrders.get(position);
         if (order != null) {
-        	((ImageView)view.findViewById(R.id.library_ng_tree_item_icon)).setImageResource(order.getIcon());
-        	((TextView)view.findViewById(R.id.library_ng_tree_item_name)).setText(order.getName());
-			((TextView)view.findViewById(R.id.library_ng_tree_item_childrenlist)).setText(order.getPath());
+        	((ImageView)view.findViewById(R.id.library_tree_item_icon)).setImageResource(order.getIcon());
+        	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
+			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(order.getPath());
         }
         return view;
 	}

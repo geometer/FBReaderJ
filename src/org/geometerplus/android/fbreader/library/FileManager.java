@@ -72,7 +72,7 @@ public final class FileManager extends Activity {
 		
 		
 		ListView fileList = (ListView) findViewById(R.id.fileList1);
-		myAdapter = new FManagerAdapter(this, myOrders, R.layout.library_ng_tree_item);
+		myAdapter = new FManagerAdapter(this, myOrders, R.layout.library_tree_item);
 		fileList.setAdapter(myAdapter);
 
 		myReturnRes = new ReturnRes(myOrders, myAdapter, myProgressDialog);
@@ -93,7 +93,7 @@ public final class FileManager extends Activity {
 					int position, long id) {
 				view.setSelected(true);
 		
-				myCurFile = ((TextView)view.findViewById(R.id.library_ng_tree_item_name)).getText().toString();
+				myCurFile = ((TextView)view.findViewById(R.id.library_tree_item_name)).getText().toString();
 				if (myCurFile.substring(0, 1).equals("/"))
 					myCurFile = myCurFile.substring(1);
 				goAtDir(myCurDir + "/" + myCurFile);
