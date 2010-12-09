@@ -59,15 +59,10 @@ public class SmartFilter implements Runnable {
 
 		for (ZLFile file : myFile.children()) {
 			if (!Thread.currentThread().isInterrupted()) {
-				String path = file.getPath();
-				String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1); 
-				
-				if (file.isDirectory())
-					myOrders.add(new FileOrder(name, path, R.drawable.ic_list_library_folder));
-				else if (file.isArchive())
-					myOrders.add(new FileOrder(name, path, R.drawable.fbreader));
+				if (file.isDirectory() || file.isArchive())
+					myOrders.add(new FileOrder(file));
 				else if (PluginCollection.Instance().getPlugin(file) != null)
-					myOrders.add(new FileOrder(name, path, R.drawable.ic_list_library_book));
+					myOrders.add(new FileOrder(file));
 				myParent.runOnUiThread(myReturnRes);
 			}
 		}

@@ -34,18 +34,6 @@
 	</node>
 	
 	<node name="fmanagerView">
-		<node name="fmanager_activity" value="filter"/>
-		<node name="filter_activity" value="filter"/>
-
-		<node name="fmanagerBackButton" value="back"/>
-		<node name="fmanagerFBHomeButton" value="fbhome"/>
-		<node name="fmanagerCardButton" value="sdcard"/>
-		<node name="fmanagerRootButton" value="root"/>
-		<node name="fmanagerFilterButton" value="filter"/>
-
-		<node name="fmanagerOkButton" value="ok"/>
-		<node name="fmanagerCancelButton" value="cancel"/>
-		
 		<node name="root" value="Root"/>
 		<node name="sdcard" value="Sdcard"/>
 		<node name="books" value="Books directory"/>
@@ -54,19 +42,6 @@
 			<node name="title" value="Please wait..."/>
 			<node name="message" value="Retrieving data ..."/>
 		</node>
-
-
-		<node name="types">
-			<node name="txt" value=".txt"/>
-			<node name="fb2" value=".fb2"/>
-			<node name="pdf" value=".pdf"/>
-			<node name="doc" value=".doc"/>
-			<node name="odt" value=".odt"/>
-			<node name="docx" value=".docx"/>
-			<node name="all" value="all types"/>
-		</node>
-		
-
 	</node>
 	
 	<node name="networkView">

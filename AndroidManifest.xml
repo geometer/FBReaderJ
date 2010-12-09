@@ -83,7 +83,6 @@
 		</activity>
 		
 		<activity android:name="org.geometerplus.android.fbreader.library.FileManager" android:process=":library"/>
-		<activity android:name="org.geometerplus.android.fbreader.library.FilterView" android:process=":library"/>
 
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:configChanges="orientation|keyboardHidden">
