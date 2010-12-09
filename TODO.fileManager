@@ -1,19 +1,19 @@
-DONE(partly) Перейти от использования java.io.File к использованию org.geometerplus.zlibrary.core.filesystem.ZLFile
+DONE Перейти от использования java.io.File к использованию org.geometerplus.zlibrary.core.filesystem.ZLFile
 DONE Верхний уровень файл-менеджера должен состоять из 3 каталогов:
   -- root (/)
   -- sdcard (берется из Environment)
   -- My Books (берется из опции)
-* Названия этих каталогов должны быть локализованы
+DONE Названия этих каталогов должны быть локализованы
 DONE Каталог '..' не нужен
 DONE Иконки:
 	-- у каталогов: ic_list_library_folder
   -- у книг: для начала, ic_list_library_book
 DONE Иконки верхнего уровня тоже должны быть ic_list_library_folder
 DONE Фильтровать файлы: показывать только те, для которых найдется plugin в PluginCollection
-* Уметь заходить внутрь zip'ов
+DONE Уметь заходить внутрь zip'ов
 * Показывать у книг обложки в качестве иконок (это уже сделано в LibraryTreeActivity)
-* В качестве summary у книжки показывать ее title
+DONE В качестве summary у книжки показывать ее title
 * По long-tap на книжке -- меню как в LibraryTreeActivity
-* По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
-* Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
-* Локализовать все сообщения
+DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
+DONE(PARTLY) Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
+DONE(PARTLY) Локализовать все сообщения

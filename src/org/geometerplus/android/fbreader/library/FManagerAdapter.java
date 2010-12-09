@@ -2,7 +2,6 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import org.amse.ys.zip.ZipFile;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
@@ -19,13 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FManagerAdapter extends ArrayAdapter<FileOrder>{
-	private Context myParent;
-	private List<FileOrder> myOOOrders;
+	private List<FileOrder> myOrders;
 	
 	public FManagerAdapter(Context context, List<FileOrder> orders, int textViewResourceId) {
 		super(context, textViewResourceId);
-		myParent = context;
-		myOOOrders = orders;
+		myOrders = orders;
 	}
 
 	private int myCoverWidth = -1;
@@ -36,7 +33,7 @@ public class FManagerAdapter extends ArrayAdapter<FileOrder>{
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
         
-        FileOrder order = myOOOrders.get(position);
+        FileOrder order = myOrders.get(position);
         if (order != null) {
         	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(order.getPath());
@@ -72,12 +69,20 @@ class FileOrder{
 	}
 	
 	public FileOrder(ZLFile file){
-		myName = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);;
 		myPath = file.getPath();
-		if (file.isDirectory() || file.isArchive())
+
+		if (file.isDirectory() || file.isArchive()){
+			myName = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
 			myIcon = R.drawable.ic_list_library_folder;
-		else if(PluginCollection.Instance().getPlugin(file) != null)
+		}
+		else if(PluginCollection.Instance().getPlugin(file) != null){
 			myIcon = R.drawable.ic_list_library_book;
+			Book book = Book.getByFile(file);
+			myName = book.getTitle();
+			FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
+			ZLImage image = plugin.readCover(book);
+		
+		}
 	}
 	
 	public String getName() {

@@ -19,15 +19,13 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.tree.FBTree;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.BookTree;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	private String myTreePathString;

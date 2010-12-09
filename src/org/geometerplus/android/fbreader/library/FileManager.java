@@ -72,7 +72,7 @@ public final class FileManager extends ListActivity {
 		});
 	}
 	
-	public void step(String path) {
+	private void step(String path) {
 		ZLFile file = ZLFile.createFileByPath(path);
 		if (file.isDirectory() || file.isArchive()) {
 			if (myCurFilterThread != null)			// TODO question!
@@ -129,6 +129,6 @@ public final class FileManager extends ListActivity {
 		pd.setMessage(resource.getResource("progress_dialog").getResource("message").getValue());
 		return pd;
 	}
-
+	
 }
 

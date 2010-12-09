@@ -23,10 +23,11 @@ import java.util.List;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SmartFilter implements Runnable {
 	private Activity myParent;
@@ -57,15 +58,29 @@ public class SmartFilter implements Runnable {
 		if (myFile == null)
 			myParent.runOnUiThread(myReturnRes);
 
-		for (ZLFile file : myFile.children()) {
-			if (!Thread.currentThread().isInterrupted()) {
-				if (file.isDirectory() || file.isArchive())
-					myOrders.add(new FileOrder(file));
-				else if (PluginCollection.Instance().getPlugin(file) != null)
-					myOrders.add(new FileOrder(file));
-				myParent.runOnUiThread(myReturnRes);
+		try{
+			for (ZLFile file : myFile.children()) {
+				if (!Thread.currentThread().isInterrupted()) {
+					if (file.isDirectory() || file.isArchive())
+						myOrders.add(new FileOrder(file));
+					else if (PluginCollection.Instance().getPlugin(file) != null)
+						myOrders.add(new FileOrder(file));
+					myParent.runOnUiThread(myReturnRes);
+				}
 			}
+			myParent.runOnUiThread(myReturnRes);
+		}catch (Exception e) {
+			Log.v(FileManager.LOG, "Exception");
+			myParent.runOnUiThread(myReturnRes);
+			showPermissionDeniedToast();
+			myParent.finish();
 		}
-		myParent.runOnUiThread(myReturnRes);
+	}
+	
+	protected void showPermissionDeniedToast() {
+		Toast.makeText(myParent,
+			ZLResource.resource("fmanagerView").getResource("permission_denied").getValue(),
+			Toast.LENGTH_SHORT
+		).show();
 	}
 }
