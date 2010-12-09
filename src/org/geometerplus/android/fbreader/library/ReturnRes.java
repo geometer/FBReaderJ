@@ -25,16 +25,11 @@ import android.app.ProgressDialog;
 import android.widget.ArrayAdapter;
 
 public class ReturnRes implements Runnable {
-
 	private int myCurIdx = 0;
-//	private List<String> myOrders;
-//	private ArrayAdapter<String> myAdapter;
 	private ProgressDialog myProgressDialog;
 	private List<FileOrder> myOrders;
 	private ArrayAdapter<FileOrder> myAdapter;
 
-	
-	
 	public ReturnRes(List<FileOrder> orders, ArrayAdapter<FileOrder> adapter,
 			ProgressDialog pd) {
 		myOrders = orders;
@@ -42,6 +37,10 @@ public class ReturnRes implements Runnable {
 		myProgressDialog = pd;
 	}
 
+	public List<FileOrder> getOrders(){
+		return myOrders;
+	}
+	
 	public void refresh() {
 		myCurIdx = 0;
 		myOrders.clear();

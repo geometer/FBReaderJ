@@ -19,47 +19,30 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.util.Log;
 
-import org.amse.ys.zip.LocalFileHeader;
-import org.amse.ys.zip.ZipFile;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.zlibrary.core.filesystem.ZLArchiveEntryFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
-import org.geometerplus.zlibrary.ui.android.R;
-
 public class SmartFilter implements Runnable {
-
 	private Activity myParent;
-	private Runnable myAction;
-//	private List<String> myOrders;
-
-//	private File myFile;
-	private String myNewTypes;
-//	private List<String> myCurFiles = new ArrayList<String>();
+	private ReturnRes myReturnRes;
 	private List<FileOrder> myOrders;
-	
 	private ZLFile myFile;
-	
-	
-	public SmartFilter(Activity parent, List<FileOrder> orders, Runnable action) {
+
+	public SmartFilter(Activity parent, ReturnRes returnRes) {
 		myParent = parent;
-		myOrders = orders;
-		myAction = action;
+		myOrders = returnRes.getOrders();
+		myReturnRes = returnRes;
 	}
 	
-	public void setPreferences(ZLFile file, String types) {
+	public void setPreferences(ZLFile file) {
 		myFile = file;
-		myNewTypes = types;
-		((ReturnRes) myAction).refresh();
+		myReturnRes.refresh();
 	}
 
 	public void run() {
@@ -72,41 +55,22 @@ public class SmartFilter implements Runnable {
 	
 	private void getOrders() {
 		if (myFile == null)
-			myParent.runOnUiThread(myAction);
+			myParent.runOnUiThread(myReturnRes);
 
 		for (ZLFile file : myFile.children()) {
 			if (!Thread.currentThread().isInterrupted()) {
-		
-				if (file.isDirectory()){
-					// FIXME later strange dir = full path
-					String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
-					myOrders.add(new FileOrder(name, name, R.drawable.ic_list_library_folder));
-				}
-				if (file.isArchive()){
-					// FIXME later strange dir = full path
-					String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
-					myOrders.add(new FileOrder(name, name, R.drawable.fbreader));
-				}
-				if (PluginCollection.Instance().getPlugin(file) != null){
-					myOrders.add(new FileOrder(file.getName(false), file.getName(false), R.drawable.ic_list_library_book));
-				}
-				myParent.runOnUiThread(myAction);
+				String path = file.getPath();
+				String name = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1); 
+				
+				if (file.isDirectory())
+					myOrders.add(new FileOrder(name, path, R.drawable.ic_list_library_folder));
+				else if (file.isArchive())
+					myOrders.add(new FileOrder(name, path, R.drawable.fbreader));
+				else if (PluginCollection.Instance().getPlugin(file) != null)
+					myOrders.add(new FileOrder(name, path, R.drawable.ic_list_library_book));
+				myParent.runOnUiThread(myReturnRes);
 			}
 		}
-		myParent.runOnUiThread(myAction);
-	}
-
-	private boolean condition(File file, String types) {
-		return condition(file.getName(), types);
-	}
-
-	private boolean condition(String val, String types) {
-		if (types.equals(""))
-			return true;
-		for (String type : types.split("[\\s]+")) {
-			if (val.endsWith(type))
-				return true;
-		}
-		return false;
+		myParent.runOnUiThread(myReturnRes);
 	}
 }
