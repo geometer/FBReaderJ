@@ -47,10 +47,10 @@ public class FManagerAdapter extends ArrayAdapter<FileOrder>{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-
-		FileOrder order = myOrders.get(position);
-		if (order != null) {
-			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
+        
+        FileOrder order = myOrders.get(position);
+        if (order != null) {
+        	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(order.getPath());
 
 			if (myCoverWidth == -1) {
@@ -72,6 +72,7 @@ public class FManagerAdapter extends ArrayAdapter<FileOrder>{
 				Log.v(FileManager.LOG, "isBook");
 				Book book = order.getBook();
 				FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+
 				Bitmap coverBitmap = null;
 				ZLImage cover = plugin.readCover(book);
 				if (cover != null) {
@@ -119,7 +120,7 @@ class FileOrder{
 		myPath = path;
 		myIcon = icon;
 	}
-
+	
 	public FileOrder(ZLFile file){
 		myPath = file.getPath();
 		
@@ -133,7 +134,7 @@ class FileOrder{
 			myIcon = -1;
 		}
 	}
-
+	
 	public String getName() {
 		return myName;
 	}
