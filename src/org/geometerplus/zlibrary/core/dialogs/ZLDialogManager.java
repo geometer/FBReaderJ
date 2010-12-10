@@ -19,18 +19,16 @@
 
 package org.geometerplus.zlibrary.core.dialogs;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 public abstract class ZLDialogManager {
 	protected static ZLDialogManager ourInstance;
-	
+
 	protected ZLDialogManager() {
 		ourInstance = this;
 	}
-	
+
 	public static ZLDialogManager Instance() {
 		return ourInstance;
 	} 
-	
+
 	public abstract void wait(String key, Runnable runnable);
 }

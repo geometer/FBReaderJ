@@ -20,12 +20,9 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.style.*;
 

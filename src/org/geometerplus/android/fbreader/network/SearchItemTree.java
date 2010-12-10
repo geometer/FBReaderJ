@@ -23,7 +23,6 @@ import java.util.Set;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;

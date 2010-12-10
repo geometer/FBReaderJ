@@ -21,10 +21,14 @@ package org.geometerplus.android.fbreader;
 
 import java.util.LinkedList;
 
-import org.geometerplus.android.fbreader.library.FileManager;
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.library.Library;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.*;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -36,17 +40,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-import android.app.SearchManager;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 
 public final class FBReader extends ZLAndroidActivity {
@@ -89,13 +84,13 @@ public final class FBReader extends ZLAndroidActivity {
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
 
-	private String fileNameFromUri(Uri uri) {
+	/*private String fileNameFromUri(Uri uri) {
 		if (uri.equals(Uri.parse("file:///"))) {
 			return Library.getHelpFile().getPath();
 		} else {
 			return uri.getPath();
 		}
-	}
+	}*/
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {

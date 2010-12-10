@@ -87,7 +87,7 @@ public final class FileManager extends ListActivity {
 	}
 
 	private void initfill(List<FileOrder> orders, FManagerAdapter adapter){
-		// FIXME не работает, если сразу добавлять в адаптер.
+		// FIXME does not work if I try to add FileOrders directly into the adapter
 		ZLResource resource = ZLResource.resource("fmanagerView");
 		String nameRoot = resource.getResource("root").getValue();
 		String nameSdcard = resource.getResource("sdcard").getValue();
