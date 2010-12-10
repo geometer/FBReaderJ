@@ -106,17 +106,14 @@ abstract class LibraryBaseActivity extends ListActivity {
 			myItems = items;
 		}
 
-		@Override
 		public final int getCount() {
 			return myItems.size();
 		}
 
-		@Override
 		public final FBTree getItem(int position) {
 			return myItems.get(position);
 		}
 
-		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
