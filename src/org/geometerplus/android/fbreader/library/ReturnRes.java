@@ -36,7 +36,7 @@ public class ReturnRes implements Runnable {
 		myAdapter = adapter;
 		myProgressDialog = pd;
 	}
-
+	
 	public List<FileOrder> getOrders(){
 		return myOrders;
 	}
