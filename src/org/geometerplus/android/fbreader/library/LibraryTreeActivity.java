@@ -69,15 +69,15 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 		FBTree tree = null;
 		if (PATH_RECENT.equals(path[0])) {
-			tree = Library.recentBooks();
+			tree = LibraryInstance.recentBooks();
 		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-			tree = Library.searchResults();
+			tree = LibraryInstance.searchResults();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = Library.byAuthor();
+			tree = LibraryInstance.byAuthor();
 		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = Library.byTag();
+			tree = LibraryInstance.byTag();
 		} else if (PATH_FAVORITES.equals(path[0])) {
-			tree = Library.favorites();
+			tree = LibraryInstance.favorites();
 		}
         
 		for (int i = 1; i < path.length; ++i) {

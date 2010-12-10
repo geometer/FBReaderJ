@@ -30,7 +30,6 @@ import android.os.Message;
 import android.view.*;
 import android.widget.BaseAdapter;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;

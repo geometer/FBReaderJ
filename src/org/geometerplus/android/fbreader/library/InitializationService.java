@@ -33,7 +33,7 @@ public class InitializationService extends Service {
 	public void onStart(Intent intent, int startId) {
 		final Thread libraryInitializer = new Thread(new Runnable() {
 			public void run() {
-				LibraryTopLevelActivity.Library.synchronize();
+				LibraryTopLevelActivity.LibraryInstance.synchronize();
 			}
 		});
 		libraryInitializer.setPriority(Thread.MIN_PRIORITY);
