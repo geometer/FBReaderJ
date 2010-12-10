@@ -1,0 +1,85 @@
+<ScrollView 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TableLayout 
+    	android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <TableRow>
+            <TextView
+            	android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your choice ..."/>
+        </TableRow>
+     
+        <TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxTypeTXT"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+
+        <TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxTypeFB2"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+
+        <TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxTypePDF"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+
+        <TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxTypeDOC"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+        
+       	<TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxTypeDOCX"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+
+       	<TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxTypeODT"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+
+       	<TableRow>
+        	<CheckBox
+        		android:id="@+id/checkboxAll"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>    
+        </TableRow>
+
+        <TableRow>
+			<LinearLayout 
+				xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:orientation="horizontal"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1">
+				<Button 
+			    	android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:id="@+id/okButton"
+			        android:layout_weight="1"/>
+				<Button 
+			    	android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:id="@+id/cancelButton"
+			        android:layout_weight="1"/>
+			</LinearLayout>	
+        </TableRow>
+       	 
+    </TableLayout>
+</ScrollView>
