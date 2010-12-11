@@ -19,20 +19,41 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.List;
+import java.util.*;
 
-class ZLTextHyperlinkArea extends ZLTextWordArea {
-	final ZLTextHyperlink Hyperlink;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-	ZLTextHyperlinkArea(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
-		super(list, fromIndex);
-		Hyperlink = hyperlink;
+class ZLTextWordArea {
+	private final List<ZLTextElementArea> myList;
+	private final int myFromIndex;
+	private int myToIndex;
+	private ZLTextHorizontalConvexHull myHull;
+
+	ZLTextWordArea(List<ZLTextElementArea> list, int fromIndex) {
+		myList = list;
+		myFromIndex = fromIndex;
+		myToIndex = fromIndex + 1;
 	}
 
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextHyperlinkArea)) {
-			return false;
+	void extend() {
+		++myToIndex;
+	}
+
+	public List<ZLTextElementArea> textAreas() {
+		return myList.subList(myFromIndex, myToIndex);
+	}
+
+	public void draw(ZLPaintContext context) {
+		if (myHull == null) {
+			myHull = new ZLTextHorizontalConvexHull(textAreas());
 		}
-		return Hyperlink == ((ZLTextHyperlinkArea)other).Hyperlink;
+		myHull.draw(context);
+	}
+
+	public int distanceTo(int x, int y) {
+		if (myHull == null) {
+			myHull = new ZLTextHorizontalConvexHull(textAreas());
+		}
+		return myHull.distanceTo(x, y);
 	}
 }
