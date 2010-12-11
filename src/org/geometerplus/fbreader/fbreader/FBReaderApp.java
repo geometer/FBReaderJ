@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
@@ -42,8 +43,8 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
-	public final ZLIntegerRangeOption TextModeOption =
-		new ZLIntegerRangeOption("Options", "TextMode", 0, 1, 0);
+	public final ZLIntegerRangeOption TextViewModeOption =
+		new ZLIntegerRangeOption("Options", "TextViewMode", 0, 1, 0);
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
 	public final ZLIntegerRangeOption RightMarginOption =
@@ -97,6 +98,9 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
+
+		addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS, new SwitchTextViewModeAction(this, ZLTextViewMode.MODE_VISIT_HYPERLINKS));
+		addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS, new SwitchTextViewModeAction(this, ZLTextViewMode.MODE_VISIT_ALL_WORDS));
 
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));

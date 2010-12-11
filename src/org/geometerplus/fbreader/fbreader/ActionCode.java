@@ -35,6 +35,9 @@ public interface ActionCode {
 	String FIND_NEXT = "findNext";
 	String CLEAR_FIND_RESULTS = "clearFindResults";
 
+	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
+	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
+
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
 	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";

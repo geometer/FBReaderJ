@@ -19,12 +19,24 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class QuitAction extends FBAction {
-	QuitAction(FBReaderApp fbreader) {
+class SwitchTextViewModeAction extends FBAction {
+	private final int myMode;
+
+	SwitchTextViewModeAction(FBReaderApp fbreader, int mode) {
 		super(fbreader);
+		myMode = mode;
 	}
 		
+	@Override
+	public boolean isEnabled() {
+		return Reader.TextViewModeOption.getValue() != myMode;
+	}
+
+	@Override
 	public void run() {
-		Reader.closeWindow();
+		Reader.TextViewModeOption.setValue(myMode);
+		Reader.BookTextView.resetRegionPointer();
+		Reader.FootnoteView.resetRegionPointer();
+		Reader.repaintView();
 	}		
 }

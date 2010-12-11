@@ -259,7 +259,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public int getMode() {
-		return myReader.TextModeOption.getValue();
+		return myReader.TextViewModeOption.getValue();
 	}
 
 	@Override

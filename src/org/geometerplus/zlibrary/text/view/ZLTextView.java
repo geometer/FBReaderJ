@@ -1331,6 +1331,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	public void resetRegionPointer() {
+		myCurrentSelectedElement = null;
+	}
+
 	protected boolean moveRegionPointer(boolean forward) {
 		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
