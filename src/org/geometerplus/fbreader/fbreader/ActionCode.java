@@ -40,8 +40,6 @@ public interface ActionCode {
 
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
-	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";
-	String TRACKBALL_SCROLL_BACKWARD = "trackballScrollBackward";
 	String SHOW_NAVIGATION = "navigate";
 	String CANCEL = "cancel";
 	String ROTATE = "rotate";
