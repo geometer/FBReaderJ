@@ -215,6 +215,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, colorsScreen.Resource, "background", profile.BackgroundOption
 		));
 		colorsScreen.addPreference(new ZLColorPreference(
+			this, colorsScreen.Resource, "selectionBackground", profile.SelectionBackgroundOption
+		));
+		colorsScreen.addPreference(new ZLColorPreference(
 			this, colorsScreen.Resource, "highlighting", profile.HighlightingOption
 		));
 		colorsScreen.addPreference(new ZLColorPreference(
