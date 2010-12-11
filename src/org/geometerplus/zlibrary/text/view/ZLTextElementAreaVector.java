@@ -22,13 +22,13 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.ArrayList;
 
 final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
-	final ArrayList<ZLTextHyperlinkArea> HyperlinkAreas = new ArrayList<ZLTextHyperlinkArea>();
-	private ZLTextHyperlinkArea myCurrentHyperlinkArea;
+	final ArrayList<ZLTextWordArea> WordAreas = new ArrayList<ZLTextWordArea>();
+	private ZLTextWordArea myCurrentWordArea;
 
 	@Override
 	public void clear() {
-		HyperlinkAreas.clear();
-		myCurrentHyperlinkArea = null;
+		WordAreas.clear();
+		myCurrentWordArea = null;
 		super.clear();
 	}
 
@@ -36,13 +36,13 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 	public boolean add(ZLTextElementArea area) {
 		final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
 		if (hyperlink.Id == null) {
-			myCurrentHyperlinkArea = null;
+			myCurrentWordArea = null;
 		} else {
-			if ((myCurrentHyperlinkArea == null) || (myCurrentHyperlinkArea.Hyperlink != hyperlink)) {
-				myCurrentHyperlinkArea = new ZLTextHyperlinkArea(hyperlink, this, size());
-				HyperlinkAreas.add(myCurrentHyperlinkArea);
+			if ((myCurrentWordArea == null) || (((ZLTextHyperlinkArea)myCurrentWordArea).Hyperlink != hyperlink)) {
+				myCurrentWordArea = new ZLTextHyperlinkArea(hyperlink, this, size());
+				WordAreas.add(myCurrentWordArea);
 			} else {
-				myCurrentHyperlinkArea.extend();
+				myCurrentWordArea.extend();
 			}
 		}
 		return super.add(area);
