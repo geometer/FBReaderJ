@@ -1307,16 +1307,18 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected ZLTextHyperlink findHyperlink(int x, int y, int maxDistance) {
-		ZLTextElementRegion area = null;
-		int distance = Integer.MAX_VALUE;
-		for (ZLTextElementRegion a : myCurrentPage.TextElementMap.ElementRegions) {
-			final int d = a.distanceTo(x, y);
-			if ((d < distance) && (d <= maxDistance)) {
-				area = a;
-				distance = d;
+		ZLTextHyperlinkRegion hyperlinkRegion = null;
+		int distance = maxDistance + 1;
+		for (ZLTextElementRegion region : myCurrentPage.TextElementMap.ElementRegions) {
+			if (region instanceof ZLTextHyperlinkRegion) {
+				final int d = region.distanceTo(x, y);
+				if (d < distance) {
+					hyperlinkRegion = (ZLTextHyperlinkRegion)region;
+					distance = d;
+				}
 			}
 		}
-		return (area instanceof ZLTextHyperlinkRegion) ? ((ZLTextHyperlinkRegion)area).Hyperlink : null;
+		return (hyperlinkRegion != null) ? hyperlinkRegion.Hyperlink : null;
 	}
 
 	protected void selectHyperlink(ZLTextHyperlink hyperlink) {
@@ -1329,26 +1331,50 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	protected boolean moveHyperlinkPointer(boolean forward) {
+	protected boolean moveRegionPointer(boolean forward) {
 		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
-		if (!elementRegions.isEmpty()) {
-			final int index = elementRegions.indexOf(myCurrentSelectedElement);
-			if (index == -1) {
-				myCurrentSelectedElement = elementRegions.get(forward ? 0 : elementRegions.size() - 1);
-				return true;
+		if (elementRegions.isEmpty()) {
+			return false;
+		}
+
+		int index = elementRegions.indexOf(myCurrentSelectedElement);
+		if (index == -1) {
+			index = forward ? 0 : elementRegions.size() - 1;
+		} else {
+			if (forward) {
+				if (index == elementRegions.size() - 1) {
+					return false;
+				}
+				++index;
 			} else {
+				if (index == 0) {
+					return false;
+				}
+				--index;
+			}
+		}
+
+		switch (getMode()) {
+			case MODE_VISIT_ALL_WORDS:
+				myCurrentSelectedElement = elementRegions.get(index);
+				return true;
+			case MODE_VISIT_HYPERLINKS:
 				if (forward) {
-					if (index + 1 < elementRegions.size()) {
-						myCurrentSelectedElement = elementRegions.get(index + 1);
-						return true;
+					for (; index < elementRegions.size(); ++index) {
+						if (elementRegions.get(index) instanceof ZLTextHyperlinkRegion) {
+							myCurrentSelectedElement = elementRegions.get(index);
+							return true;
+						}
 					}
 				} else {
-					if (index > 0) {
-						myCurrentSelectedElement = elementRegions.get(index - 1);
-						return true;
+					for (; index >= 0; --index) {
+						if (elementRegions.get(index) instanceof ZLTextHyperlinkRegion) {
+							myCurrentSelectedElement = elementRegions.get(index);
+							return true;
+						}
 					}
 				}
-			}
+				return false;
 		}
 		return false;
 	}

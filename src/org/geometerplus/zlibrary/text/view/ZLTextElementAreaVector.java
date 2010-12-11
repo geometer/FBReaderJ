@@ -36,9 +36,21 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 	public boolean add(ZLTextElementArea area) {
 		final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
 		if (hyperlink.Id == null) {
-			myCurrentElementRegion = null;
+			if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
+				if (!(myCurrentElementRegion instanceof ZLTextWordRegion) ||
+					((ZLTextWordRegion)myCurrentElementRegion).Word != area.Element) {
+					myCurrentElementRegion =
+						new ZLTextWordRegion((ZLTextWord)area.Element, this, size());
+					ElementRegions.add(myCurrentElementRegion);
+				} else {
+					myCurrentElementRegion.extend();
+				}
+			} else {
+				myCurrentElementRegion = null;
+			}
 		} else {
-			if ((myCurrentElementRegion == null) || (((ZLTextHyperlinkRegion)myCurrentElementRegion).Hyperlink != hyperlink)) {
+			if (!(myCurrentElementRegion instanceof ZLTextHyperlinkRegion) ||
+				((ZLTextHyperlinkRegion)myCurrentElementRegion).Hyperlink != hyperlink) {
 				myCurrentElementRegion = new ZLTextHyperlinkRegion(hyperlink, this, size());
 				ElementRegions.add(myCurrentElementRegion);
 			} else {

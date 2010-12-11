@@ -42,6 +42,8 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
+	public final ZLIntegerRangeOption TextModeOption =
+		new ZLIntegerRangeOption("Options", "TextMode", 0, 1, 0);
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
 	public final ZLIntegerRangeOption RightMarginOption =
