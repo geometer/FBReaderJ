@@ -241,7 +241,12 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onTrackballRotated(int diffX, int diffY) {
+		if (diffY == 0) {
+			return true;
+		}
+
 		final boolean forward = diffY > 0;
+
 		if (!moveRegionPointer(forward)) {
 			scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 		}
