@@ -23,13 +23,13 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-class ZLTextWordArea {
+abstract class ZLTextElementRegion {
 	private final List<ZLTextElementArea> myList;
 	private final int myFromIndex;
 	private int myToIndex;
 	private ZLTextHorizontalConvexHull myHull;
 
-	ZLTextWordArea(List<ZLTextElementArea> list, int fromIndex) {
+	ZLTextElementRegion(List<ZLTextElementArea> list, int fromIndex) {
 		myList = list;
 		myFromIndex = fromIndex;
 		myToIndex = fromIndex + 1;

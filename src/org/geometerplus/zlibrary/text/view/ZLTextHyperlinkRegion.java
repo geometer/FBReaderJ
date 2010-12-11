@@ -21,18 +21,18 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.List;
 
-class ZLTextHyperlinkArea extends ZLTextWordArea {
+class ZLTextHyperlinkRegion extends ZLTextElementRegion {
 	final ZLTextHyperlink Hyperlink;
 
-	ZLTextHyperlinkArea(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
+	ZLTextHyperlinkRegion(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
 		super(list, fromIndex);
 		Hyperlink = hyperlink;
 	}
 
 	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextHyperlinkArea)) {
+		if (!(other instanceof ZLTextHyperlinkRegion)) {
 			return false;
 		}
-		return Hyperlink == ((ZLTextHyperlinkArea)other).Hyperlink;
+		return Hyperlink == ((ZLTextHyperlinkRegion)other).Hyperlink;
 	}
 }

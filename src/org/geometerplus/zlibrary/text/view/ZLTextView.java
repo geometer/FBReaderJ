@@ -313,9 +313,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			++index;
 		}
 
-		final ZLTextWordArea selectedWordArea = getCurrentWordArea(page);
-		if (selectedWordArea != null) {
-			selectedWordArea.draw(context);
+		final ZLTextElementRegion selectedElementRegion = getCurrentElementRegion(page);
+		if (selectedElementRegion != null) {
+			selectedElementRegion.draw(context);
 		}
 	}
 
@@ -1290,39 +1290,39 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private ZLTextWordArea myCurrentSelectedElement;
+	private ZLTextElementRegion myCurrentSelectedElement;
 
-	private ZLTextWordArea getCurrentWordArea(ZLTextPage page) {
-		final ArrayList<ZLTextWordArea> wordAreas = page.TextElementMap.WordAreas;
-		final int index = wordAreas.indexOf(myCurrentSelectedElement);
+	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
+		final ArrayList<ZLTextElementRegion> elementRegions = page.TextElementMap.ElementRegions;
+		final int index = elementRegions.indexOf(myCurrentSelectedElement);
 		if (index == -1) {
 			return null;
 		}
-		return wordAreas.get(index);
+		return elementRegions.get(index);
 	}
 
 	public ZLTextHyperlink getCurrentHyperlink() {
-		final ZLTextWordArea area = getCurrentWordArea(myCurrentPage);
-		return (area instanceof ZLTextHyperlinkArea) ? ((ZLTextHyperlinkArea)area).Hyperlink : null;
+		final ZLTextElementRegion area = getCurrentElementRegion(myCurrentPage);
+		return (area instanceof ZLTextHyperlinkRegion) ? ((ZLTextHyperlinkRegion)area).Hyperlink : null;
 	}
 
 	protected ZLTextHyperlink findHyperlink(int x, int y, int maxDistance) {
-		ZLTextWordArea area = null;
+		ZLTextElementRegion area = null;
 		int distance = Integer.MAX_VALUE;
-		for (ZLTextWordArea a : myCurrentPage.TextElementMap.WordAreas) {
+		for (ZLTextElementRegion a : myCurrentPage.TextElementMap.ElementRegions) {
 			final int d = a.distanceTo(x, y);
 			if ((d < distance) && (d <= maxDistance)) {
 				area = a;
 				distance = d;
 			}
 		}
-		return (area instanceof ZLTextHyperlinkArea) ? ((ZLTextHyperlinkArea)area).Hyperlink : null;
+		return (area instanceof ZLTextHyperlinkRegion) ? ((ZLTextHyperlinkRegion)area).Hyperlink : null;
 	}
 
 	protected void selectHyperlink(ZLTextHyperlink hyperlink) {
-		for (ZLTextWordArea area : myCurrentPage.TextElementMap.WordAreas) {
-			if (area instanceof ZLTextHyperlinkArea &&
-				((ZLTextHyperlinkArea)area).Hyperlink == hyperlink) {
+		for (ZLTextElementRegion area : myCurrentPage.TextElementMap.ElementRegions) {
+			if (area instanceof ZLTextHyperlinkRegion &&
+				((ZLTextHyperlinkRegion)area).Hyperlink == hyperlink) {
 				myCurrentSelectedElement = area;
 				break;
 			}
@@ -1330,21 +1330,21 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected boolean moveHyperlinkPointer(boolean forward) {
-		final ArrayList<ZLTextWordArea> wordAreas = myCurrentPage.TextElementMap.WordAreas;
-		if (!wordAreas.isEmpty()) {
-			final int index = wordAreas.indexOf(myCurrentSelectedElement);
+		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
+		if (!elementRegions.isEmpty()) {
+			final int index = elementRegions.indexOf(myCurrentSelectedElement);
 			if (index == -1) {
-				myCurrentSelectedElement = wordAreas.get(forward ? 0 : wordAreas.size() - 1);
+				myCurrentSelectedElement = elementRegions.get(forward ? 0 : elementRegions.size() - 1);
 				return true;
 			} else {
 				if (forward) {
-					if (index + 1 < wordAreas.size()) {
-						myCurrentSelectedElement = wordAreas.get(index + 1);
+					if (index + 1 < elementRegions.size()) {
+						myCurrentSelectedElement = elementRegions.get(index + 1);
 						return true;
 					}
 				} else {
 					if (index > 0) {
-						myCurrentSelectedElement = wordAreas.get(index - 1);
+						myCurrentSelectedElement = elementRegions.get(index - 1);
 						return true;
 					}
 				}
