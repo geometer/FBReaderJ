@@ -57,7 +57,6 @@ public interface ActionCode {
 	String INITIATE_COPY = "initiateCopy";
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
-	String TRANSLATE = "translate";
 
 	String TAP_ZONES = "tapZones";
 	String TAP_ZONE_SELECT_ACTION = "tapZoneSelectAction";

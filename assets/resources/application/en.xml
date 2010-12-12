@@ -116,7 +116,6 @@
 	<node name="actions">
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
-		<node name="translateWord" value="Translate: %s"/>
 		<node name="initiateCopy" value="Copy"/>
 		<node name="library" value="Library"/>
 		<node name="toc" value="TOC"/>
@@ -165,7 +164,6 @@
 		<node name="openFile" value="Open book file"/>
 	</node>
 	<node name="menu">
-		<node name="translate" value="Translate"/>
 		<node name="preferences"/>
 		<node name="bookInfo"/>
 		<node name="initiateCopy"/>

@@ -117,7 +117,6 @@
 	<node name="actions">
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
-		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Knihovna"/>
 		<node name="toc" value="Obsah"/>

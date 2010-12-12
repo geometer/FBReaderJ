@@ -116,7 +116,6 @@
 	<node name="actions">
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
-		<node name="translateWord" value="Перевести: %s"/>
 		<node name="initiateCopy" value="Копировать"/>
 		<node name="library" value="Библиотека"/>
 		<node name="toc" value="Оглавление"/>

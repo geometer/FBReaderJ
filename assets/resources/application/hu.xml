@@ -117,7 +117,6 @@
 	<node name="actions">
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
-		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Könyvtár"/>
 		<node name="toc" value="Tartalom"/>

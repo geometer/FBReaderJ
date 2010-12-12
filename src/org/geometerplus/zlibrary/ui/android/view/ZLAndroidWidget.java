@@ -346,14 +346,8 @@ public class ZLAndroidWidget extends View {
 	}
 
 
-	public String myLongPressWord;
 	private class LongClickRunnable implements Runnable {
 		public void run() {
-			final ZLView view = ZLApplication.Instance().getCurrentView();
-			if (view instanceof ZLTextView) {
-				myLongPressWord = ((ZLTextView)view).getWordUnderPosition(myPressedX, myPressedY);
-			}
-
 			if (performLongClick()) {
 				myLongClickPerformed = true;
 			}
@@ -549,7 +543,6 @@ public class ZLAndroidWidget extends View {
 		String read_menu[] = {
 				ActionCode.SEARCH,
 				ActionCode.INITIATE_COPY,
-				ActionCode.TRANSLATE,
 				ActionCode.ROTATE,
 				ActionCode.INCREASE_FONT,
 				ActionCode.DECREASE_FONT,
@@ -585,16 +578,13 @@ public class ZLAndroidWidget extends View {
 			String actionId = actions[actionIndex];
 			if (app.isActionEnabled(actionId) && app.isActionVisible(actionId)) {
 				String itemText = myMenuResource.getResource(actionId).getValue();
-				if (actionId == ActionCode.TRANSLATE) {
-					itemText = String.format(itemText, myLongPressWord);
-				}
 				menu.add(0, actionIndex, Menu.NONE, itemText);
 			}
 			menuActions.add(actionId);
 		}
 	}
 
-	public boolean onLongClick (){
+	public boolean onLongClick() {
 		//if (myPressedY > getHeight() - myFooter.getTapHeight()) {
 		if (myPressedY > getHeight() - 40) {
 			FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();

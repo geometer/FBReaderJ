@@ -120,7 +120,6 @@
 	<node name="actions">
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
-		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Bibliothèque"/>
 		<node name="toc" value="Table des matières"/>

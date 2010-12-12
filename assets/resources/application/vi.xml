@@ -117,7 +117,6 @@
 	<node name="actions">
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
-		<node name="translateWord" value="Translate: %s" toBeTranslated="true"/>
 		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="Thư viện"/>
 		<node name="toc" value="ML"/>
