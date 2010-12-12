@@ -84,6 +84,10 @@ abstract class ZLTextElementRegion {
 			myList.get(myFromIndex).YStart >= other.myList.get(other.myToIndex - 1).YEnd;
 	}
 
+	public boolean isOver(ZLTextElementRegion other) {
+		return other == null || other.isUnder(this);
+	}
+
 	public boolean isExactlyUnder(ZLTextElementRegion other) {
 		if (other == null) {
 			return true;
@@ -101,10 +105,6 @@ abstract class ZLTextElementRegion {
 			}
 		}
 		return false;
-	}
-
-	public boolean isOver(ZLTextElementRegion other) {
-		return other == null || other.isUnder(this);
 	}
 
 	public boolean isExactlyOver(ZLTextElementRegion other) {
