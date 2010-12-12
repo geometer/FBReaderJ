@@ -109,7 +109,6 @@ public final class FBReaderApp extends ZLApplication {
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
-		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
 
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
@@ -170,7 +169,7 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	void tryOpenFootnote(String id) {
+	public void tryOpenFootnote(String id) {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {

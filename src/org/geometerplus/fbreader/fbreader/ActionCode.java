@@ -52,5 +52,5 @@ public interface ActionCode {
 	String CLEAR_SELECTION = "clearSelection";
 	String TRANSLATE = "translate";
 
-	String FOLLOW_HYPERLINK = "followHyperlink";
-};
+	String PROCESS_HYPERLINK = "processHyperlink";
+}

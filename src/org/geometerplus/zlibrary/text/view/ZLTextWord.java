@@ -98,10 +98,6 @@ public final class ZLTextWord extends ZLTextElement {
 	}
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = Offset; i < Offset + Length; i++) {
-			sb.append(Data[i]);
-		}	
-		return sb.toString();
+		return new String(Data, Offset, Length);
 	}
 }

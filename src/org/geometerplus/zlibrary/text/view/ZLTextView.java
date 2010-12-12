@@ -1306,6 +1306,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return (area instanceof ZLTextHyperlinkRegion) ? ((ZLTextHyperlinkRegion)area).Hyperlink : null;
 	}
 
+	public String getSelectedText() {
+		final ZLTextElementRegion area = getCurrentElementRegion(myCurrentPage);
+		if (area instanceof ZLTextWordRegion) {
+			return ((ZLTextWordRegion)area).Word.toString();
+		}
+		return null;
+	}
+
 	protected ZLTextHyperlink findHyperlink(int x, int y, int maxDistance) {
 		ZLTextHyperlinkRegion hyperlinkRegion = null;
 		int distance = maxDistance + 1;
