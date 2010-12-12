@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.zlibrary.text.view;
 
-class QuitAction extends FBAction {
-	QuitAction(FBReaderApp fbreader) {
-		super(fbreader);
+import java.util.List;
+
+class ZLTextWordRegion extends ZLTextElementRegion {
+	final ZLTextWord Word;
+
+	ZLTextWordRegion(ZLTextWord word, List<ZLTextElementArea> list, int fromIndex) {
+		super(list, fromIndex);
+		Word = word;
 	}
-		
-	public void run() {
-		Reader.closeWindow();
-	}		
+
+	public boolean equals(Object other) {
+		if (!(other instanceof ZLTextWordRegion)) {
+			return false;
+		}
+		return Word == ((ZLTextWordRegion)other).Word;
+	}
 }

@@ -76,7 +76,7 @@
 		<node name="authors" value="作者:" />
 		<node name="series" value="系列:" />
 		<node name="indexInSeries" value="系列序号:" />
-		<node name="tags" value="Tags:" />
+		<node name="tags" toBeTranslated="true" value="Tags:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="下载成功" />

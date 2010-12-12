@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
@@ -44,6 +45,8 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
+	public final ZLIntegerRangeOption TextViewModeOption =
+		new ZLIntegerRangeOption("Options", "TextViewMode", 0, 1, 0);
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
 	public final ZLIntegerRangeOption RightMarginOption =
@@ -89,7 +92,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public FBReaderApp(String arg) {
 		myArg0 = arg;
-		addAction(ActionCode.QUIT, new QuitAction(this));
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
@@ -98,6 +100,9 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
+
+		addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS, new SwitchTextViewModeAction(this, ZLTextViewMode.MODE_VISIT_HYPERLINKS));
+		addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS, new SwitchTextViewModeAction(this, ZLTextViewMode.MODE_VISIT_ALL_WORDS));
 
 		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
 		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
@@ -111,7 +116,6 @@ public final class FBReaderApp extends ZLApplication {
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
-		addAction(ActionCode.FOLLOW_HYPERLINK, new FollowHyperlinkAction(this));
 		addAction(ActionCode.TAP_ZONES, new TapZoneAction(this, ActionCode.TAP_ZONES));
 		addAction(ActionCode.TAP_ZONE_SELECT_ACTION, new TapZoneAction(this, ActionCode.TAP_ZONE_SELECT_ACTION));
 		addAction(ActionCode.TAP_ZONE_ADD, new TapZoneAction(this, ActionCode.TAP_ZONE_ADD));
@@ -192,7 +196,7 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	void tryOpenFootnote(String id) {
+	public void tryOpenFootnote(String id) {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {

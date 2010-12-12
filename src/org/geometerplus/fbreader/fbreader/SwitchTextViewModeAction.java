@@ -19,19 +19,24 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-class TrackballScrollingAction extends FBAction {
-	private final boolean myForward;
+class SwitchTextViewModeAction extends FBAction {
+	private final int myMode;
 
-	TrackballScrollingAction(FBReaderApp fbreader, boolean forward) {
+	SwitchTextViewModeAction(FBReaderApp fbreader, int mode) {
 		super(fbreader);
-		myForward = forward;
+		myMode = mode;
 	}
 		
+	@Override
 	public boolean isEnabled() {
-		return true;
+		return Reader.TextViewModeOption.getValue() != myMode;
 	}
 
+	@Override
 	public void run() {
-		Reader.getTextView().doShortScroll(myForward);
+		Reader.TextViewModeOption.setValue(myMode);
+		Reader.BookTextView.resetRegionPointer();
+		Reader.FootnoteView.resetRegionPointer();
+		Reader.repaintView();
 	}		
 }

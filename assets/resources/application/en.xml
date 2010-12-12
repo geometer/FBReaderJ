@@ -175,6 +175,8 @@
 		<node name="day"/>
 		<node name="night"/>
 		<node name="networkLibrary"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode"/>
+		<node name="dictionaryMode" value="Dictionary mode"/>
 		<node name="navigate">
 			<node name="toc"/>
 			<node name="gotoHome"/>

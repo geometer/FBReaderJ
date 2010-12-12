@@ -36,6 +36,9 @@ public interface ActionCode {
 	String FIND_NEXT = "findNext";
 	String CLEAR_FIND_RESULTS = "clearFindResults";
 
+	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
+	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
+
 	String PREV_PAGE = "prevPage";
 	String NEXT_PAGE = "nextPage";
 	String PREV_LINE = "prevLine";
@@ -50,14 +53,11 @@ public interface ActionCode {
 	String DECREASE_FONT = "decreaseFont";
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";
 	String FULLSCREEN_ON = "onFullscreen";
-	String QUIT = "quit";
 
 	String INITIATE_COPY = "initiateCopy";
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
 	String TRANSLATE = "translate";
-
-	String FOLLOW_HYPERLINK = "followHyperlink";
 
 	String TAP_ZONES = "tapZones";
 	String TAP_ZONE_SELECT_ACTION = "tapZoneSelectAction";
@@ -68,4 +68,6 @@ public interface ActionCode {
 
 	String DEFAULT = "default";
 	String NOTHING = "nothing";
-};
+
+	String PROCESS_HYPERLINK = "processHyperlink";
+}

@@ -17,25 +17,28 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
-import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
+package org.geometerplus.zlibrary.text.view;
 
-public class FollowHyperlinkAction extends FBAction {
-	FollowHyperlinkAction(FBReaderApp fbreader) {
-		super(fbreader);
+import java.util.List;
+
+class ZLTextHyperlinkRegion extends ZLTextElementRegion {
+	static Filter Filter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return region instanceof ZLTextHyperlinkRegion;
+		}
+	};
+
+	final ZLTextHyperlink Hyperlink;
+
+	ZLTextHyperlinkRegion(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
+		super(list, fromIndex);
+		Hyperlink = hyperlink;
 	}
 
-	public boolean isEnabled() {
-		FBView view = Reader.getTextView();
-		return (view != null);
-	}
-
-	public void run() {
-		FBView view = Reader.getTextView();
-		ZLTextHyperlink link = view.getCurrentHyperlink();
-		if (link != null)
-			view.followHyperlink(link);
-		else
-			Reader.getTextView().doScrollPage(true);
+	public boolean equals(Object other) {
+		if (!(other instanceof ZLTextHyperlinkRegion)) {
+			return false;
+		}
+		return Hyperlink == ((ZLTextHyperlinkRegion)other).Hyperlink;
 	}
 }
