@@ -9,6 +9,7 @@
 * TOC marks in footer have been added (this is an optional feature)
 * Dependent options
 * Color picker dialog (idea was taken from http://www.anddev.org/announce_color_picker_dialog-t10771.html)
+* Network library: language filter has been added
 
 ===== 0.7.17 (Nov 14, 2010) =====
 * Network catalog order has been changed: language is used for ordering
