@@ -42,6 +42,5 @@ public abstract class ZLibrary {
 	abstract public void setScreenBrightness(int percent);
 	abstract public int getScreenBrightness();
 	abstract public int getDisplayDPI();
-	abstract public void openInBrowser(String reference);
 	abstract public Collection<String> defaultLanguageCodes();
 }

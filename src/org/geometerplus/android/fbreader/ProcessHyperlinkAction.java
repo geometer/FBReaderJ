@@ -19,8 +19,15 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.net.Uri;
+import android.widget.Toast;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
@@ -28,12 +35,10 @@ import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 
-import android.app.SearchManager;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.widget.Toast;
+import org.geometerplus.android.fbreader.network.BookDownloader;
+import org.geometerplus.android.fbreader.network.BookDownloaderService;
 
 class ProcessHyperlinkAction extends FBAction {
 	private final FBReader myBaseActivity;
@@ -55,7 +60,7 @@ class ProcessHyperlinkAction extends FBAction {
 		if (hyperlink != null) {
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
-					ZLibrary.Instance().openInBrowser(hyperlink.Id);
+					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
 					Reader.tryOpenFootnote(hyperlink.Id);
@@ -90,11 +95,12 @@ class ProcessHyperlinkAction extends FBAction {
 			}
 		}
 	}
-	/*
+
+	private void openInBrowser(String urlString) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		boolean externalUrl = true;
-		if (BookDownloader.acceptsUri(Uri.parse(reference))) {
-			intent.setClass(myActivity, BookDownloader.class);
+		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
+			intent.setClass(myBaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		}
@@ -103,8 +109,7 @@ class ProcessHyperlinkAction extends FBAction {
 			nLibrary.initialize();
 		} catch (ZLNetworkException e) {
 		}
-		reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);
-		intent.setData(Uri.parse(reference));
-		myActivity.startActivity(intent);
-	*/
+		intent.setData(Uri.parse(NetworkLibrary.Instance().rewriteUrl(urlString, externalUrl)));
+		myBaseActivity.startActivity(intent);
+	}
 }
