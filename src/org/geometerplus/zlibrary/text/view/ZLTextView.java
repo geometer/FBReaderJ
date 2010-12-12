@@ -1290,11 +1290,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private ZLTextElementRegion myCurrentSelectedElement;
+	private ZLTextElementRegion mySelectedRegion;
 
 	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
 		final ArrayList<ZLTextElementRegion> elementRegions = page.TextElementMap.ElementRegions;
-		final int index = elementRegions.indexOf(myCurrentSelectedElement);
+		final int index = elementRegions.indexOf(mySelectedRegion);
 		if (index == -1) {
 			return null;
 		}
@@ -1325,60 +1325,125 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		for (ZLTextElementRegion area : myCurrentPage.TextElementMap.ElementRegions) {
 			if (area instanceof ZLTextHyperlinkRegion &&
 				((ZLTextHyperlinkRegion)area).Hyperlink == hyperlink) {
-				myCurrentSelectedElement = area;
+				mySelectedRegion = area;
 				break;
 			}
 		}
 	}
 
 	public void resetRegionPointer() {
-		myCurrentSelectedElement = null;
+		mySelectedRegion = null;
 	}
 
-	protected boolean moveRegionPointer(boolean forward) {
+	protected interface Direction {
+		int LEFT = 0;
+		int RIGHT = 1;
+		int UP = 2;
+		int DOWN = 3;
+	}
+
+	protected boolean moveRegionPointer(int direction) {
 		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
 			return false;
 		}
 
-		int index = elementRegions.indexOf(myCurrentSelectedElement);
-		if (index == -1) {
-			index = forward ? 0 : elementRegions.size() - 1;
-		} else {
-			if (forward) {
+		int index = elementRegions.indexOf(mySelectedRegion);
+		mySelectedRegion = index >= 0 ? elementRegions.get(index) : null;
+
+		switch (direction) {
+			case Direction.LEFT:
+			case Direction.UP:
+				if (index == -1) {
+					index = elementRegions.size() - 1;
+				} else if (index == 0) {
+					return false;
+				} else {
+					--index;
+				}
+				break;
+			case Direction.RIGHT:
+			case Direction.DOWN:
 				if (index == elementRegions.size() - 1) {
 					return false;
+				} else {
+					++index;
 				}
-				++index;
-			} else {
-				if (index == 0) {
-					return false;
-				}
-				--index;
-			}
+				break;
 		}
 
+		ZLTextElementRegion.Filter filter;
 		switch (getMode()) {
+			default:
 			case MODE_VISIT_ALL_WORDS:
-				myCurrentSelectedElement = elementRegions.get(index);
-				return true;
+				filter = ZLTextElementRegion.Filter;
+				break;
 			case MODE_VISIT_HYPERLINKS:
-				if (forward) {
-					for (; index < elementRegions.size(); ++index) {
-						if (elementRegions.get(index) instanceof ZLTextHyperlinkRegion) {
-							myCurrentSelectedElement = elementRegions.get(index);
-							return true;
-						}
-					}
-				} else {
-					for (; index >= 0; --index) {
-						if (elementRegions.get(index) instanceof ZLTextHyperlinkRegion) {
-							myCurrentSelectedElement = elementRegions.get(index);
-							return true;
-						}
+				filter = ZLTextHyperlinkRegion.Filter;
+				break;
+		}
+
+		switch (direction) {
+			case Direction.LEFT:
+				for (; index >= 0; --index) {
+					final ZLTextElementRegion candidate = elementRegions.get(index);
+					if (filter.accepts(candidate) && candidate.isAtLeftOf(mySelectedRegion)) {
+						mySelectedRegion = candidate;
+						return true;
 					}
 				}
-				return false;
+				break;
+			case Direction.RIGHT:
+				for (; index < elementRegions.size(); ++index) {
+					final ZLTextElementRegion candidate = elementRegions.get(index);
+					if (filter.accepts(candidate) && candidate.isAtRightOf(mySelectedRegion)) {
+						mySelectedRegion = candidate;
+						return true;
+					}
+				}
+				break;
+			case Direction.DOWN:
+			{
+				ZLTextElementRegion firstCandidate = null;
+				for (; index < elementRegions.size(); ++index) {
+					final ZLTextElementRegion candidate = elementRegions.get(index);
+					if (!filter.accepts(candidate)) {
+						continue;
+					}
+					if (candidate.isExactlyUnder(mySelectedRegion)) {
+						mySelectedRegion = candidate;
+						return true;
+					}
+					if (firstCandidate == null && candidate.isUnder(mySelectedRegion)) {
+						firstCandidate = candidate;
+					}
+				}
+				if (firstCandidate != null) {
+					mySelectedRegion = firstCandidate;
+					return true;
+				}
+				break;
+			}
+			case Direction.UP:
+				ZLTextElementRegion firstCandidate = null;
+				for (; index >= 0; --index) {
+					final ZLTextElementRegion candidate = elementRegions.get(index);
+					if (!filter.accepts(candidate)) {
+						continue;
+					}
+					if (candidate.isExactlyOver(mySelectedRegion)) {
+						mySelectedRegion = candidate;
+						return true;
+					}
+					if (firstCandidate == null && candidate.isOver(mySelectedRegion)) {
+						firstCandidate = candidate;
+					}
+				}
+				if (firstCandidate != null) {
+					mySelectedRegion = firstCandidate;
+					return true;
+				}
+				break;
 		}
 		return false;
 	}

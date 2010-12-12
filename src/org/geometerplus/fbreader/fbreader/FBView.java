@@ -241,14 +241,20 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onTrackballRotated(int diffX, int diffY) {
-		if (diffY == 0) {
+		if (diffX == 0 && diffY == 0) {
 			return true;
 		}
 
-		final boolean forward = diffY > 0;
+		final int direction = (diffY != 0) ?
+			(diffY > 0 ? Direction.DOWN : Direction.UP) :
+			(diffX > 0 ? Direction.RIGHT : Direction.LEFT);
 
-		if (!moveRegionPointer(forward)) {
-			scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+		if (!moveRegionPointer(direction)) {
+			if (direction == Direction.DOWN) {
+				scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			} else if (direction == Direction.UP) {
+				scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			}
 		}
 
 		myReader.repaintView();

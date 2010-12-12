@@ -24,6 +24,16 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 abstract class ZLTextElementRegion {
+	static interface Filter {
+		boolean accepts(ZLTextElementRegion region);
+	}
+
+	static Filter Filter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return true;
+		}
+	};
+
 	private final List<ZLTextElementArea> myList;
 	private final int myFromIndex;
 	private int myToIndex;
@@ -37,23 +47,67 @@ abstract class ZLTextElementRegion {
 
 	void extend() {
 		++myToIndex;
+		myHull = null;
 	}
 
-	public List<ZLTextElementArea> textAreas() {
+	private List<ZLTextElementArea> textAreas() {
 		return myList.subList(myFromIndex, myToIndex);
+	}
+	private ZLTextHorizontalConvexHull convexHull() {
+		if (myHull == null) {
+			myHull = new ZLTextHorizontalConvexHull(textAreas());
+		}
+		return myHull;
 	}
 
 	public void draw(ZLPaintContext context) {
-		if (myHull == null) {
-			myHull = new ZLTextHorizontalConvexHull(textAreas());
-		}
-		myHull.draw(context);
+		convexHull().draw(context);
 	}
 
 	public int distanceTo(int x, int y) {
-		if (myHull == null) {
-			myHull = new ZLTextHorizontalConvexHull(textAreas());
+		return convexHull().distanceTo(x, y);
+	}
+
+	public boolean isAtRightOf(ZLTextElementRegion other) {
+		return
+			other == null ||
+			myList.get(myFromIndex).XStart >= other.myList.get(other.myToIndex - 1).XEnd;
+	}
+
+	public boolean isAtLeftOf(ZLTextElementRegion other) {
+		return other == null || other.isAtRightOf(this);
+	}
+
+	public boolean isUnder(ZLTextElementRegion other) {
+		return
+			other == null ||
+			myList.get(myFromIndex).YStart >= other.myList.get(other.myToIndex - 1).YEnd;
+	}
+
+	public boolean isExactlyUnder(ZLTextElementRegion other) {
+		if (other == null) {
+			return true;
 		}
-		return myHull.distanceTo(x, y);
+		if (!isUnder(other)) {
+			return false;
+		}
+		final List<ZLTextElementArea> areas0 = textAreas();
+		final List<ZLTextElementArea> areas1 = other.textAreas();
+		for (ZLTextElementArea i : areas0) {
+			for (ZLTextElementArea j : areas1) {
+				if (i.XStart <= j.XEnd && j.XStart <= i.XEnd) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean isOver(ZLTextElementRegion other) {
+		return other == null || other.isUnder(this);
+	}
+
+	public boolean isExactlyOver(ZLTextElementRegion other) {
+		return other == null || other.isExactlyUnder(this);
 	}
 }
