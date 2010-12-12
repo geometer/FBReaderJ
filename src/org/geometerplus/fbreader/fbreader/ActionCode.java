@@ -50,7 +50,6 @@ public interface ActionCode {
 
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
-	String TRANSLATE = "translate";
 
 	String PROCESS_HYPERLINK = "processHyperlink";
 }
