@@ -108,8 +108,8 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
 		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
 		addAction(ActionCode.PREV_LINE, new ScrollAction(this, false, false));
-		addAction(ActionCode.NEXT_LINK, new TrackballScrollingAction(this, true));
-		addAction(ActionCode.PREV_LINK, new TrackballScrollingAction(this, false));
+		//addAction(ActionCode.NEXT_LINK, new TrackballScrollingAction(this, true));
+		//addAction(ActionCode.PREV_LINK, new TrackballScrollingAction(this, false));
 		addAction(ActionCode.BACK, new BackAction(this));
 		addAction(ActionCode.INITIATE_COPY, new InitiateCopyAction(this));
 
@@ -132,7 +132,7 @@ public final class FBReaderApp extends ZLApplication {
 
 		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_DOWN,	ActionCode.NEXT_PAGE);
 		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_UP,	ActionCode.PREV_PAGE);
-		myBindings.addKey(KeyEvent.KEYCODE_DPAD_CENTER,	ActionCode.FOLLOW_HYPERLINK);
+		myBindings.addKey(KeyEvent.KEYCODE_DPAD_CENTER,	ActionCode.PROCESS_HYPERLINK);
 		myBindings.addKey(KeyEvent.KEYCODE_DPAD_DOWN,	ActionCode.NEXT_LINK);
 		myBindings.addKey(KeyEvent.KEYCODE_DPAD_UP,		ActionCode.PREV_LINK);
 		myBindings.addKey(KeyEvent.KEYCODE_DPAD_RIGHT,	ActionCode.NEXT_LINE);

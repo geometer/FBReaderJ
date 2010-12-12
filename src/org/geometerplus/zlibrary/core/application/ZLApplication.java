@@ -142,7 +142,6 @@ public abstract class ZLApplication {
 				ActionCode.NEXT_LINE,
 				ActionCode.PREV_LINK,
 				ActionCode.NEXT_LINK,
-				ActionCode.FOLLOW_HYPERLINK,
 				ActionCode.BACK,
 				ActionCode.ROTATE,
 				ActionCode.SWITCH_PROFILE,
