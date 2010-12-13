@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
-import android.R.bool;
 import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -71,7 +70,7 @@ public class FManagerAdapter extends ArrayAdapter<FileItem> {
         FileItem item = myItems.get(position);
         if (item != null) {
         	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
-			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getPath());
+			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getSummary());
 
 			if (myCoverWidth == -1) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -154,7 +153,7 @@ class FileItem {
 
 		final Book book = getBook();
 		if (book != null) {
-			return book.getTitle();
+			return book.File.getName(false);
 		}
 
 		if (!myFile.isArchive()) {
@@ -169,8 +168,12 @@ class FileItem {
 		return fileName.substring(fileName.lastIndexOf('/') + 1);
 	}
 
-	public String getPath() {
-		return myFile.getPath();
+	public String getSummary() {
+		final Book book = getBook();
+		if (book != null) {
+			return book.getTitle();
+		}
+		return null;
 	}
 
 	public int getIcon() {

@@ -56,6 +56,7 @@ public final class FileManager extends ListActivity {
 		final String path = extras != null ? extras.getString(FileManager.FILE_MANAGER_PATH) : null;
 
 		if (path == null) {
+			setTitle(ZLResource.resource("libraryView").getResource("fileTree").getValue());
 			initfill(items, adapter);
 		} else {
 			setTitle(path);
@@ -71,7 +72,24 @@ public final class FileManager extends ListActivity {
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				step(((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).getText().toString());
+				
+				String currentPath = getTitle().toString();
+				String fileName = ((TextView)view.findViewById(R.id.library_tree_item_name)).getText().toString();
+				ZLResource resource = ZLResource.resource("fmanagerView");
+				if (currentPath.equals(ZLResource.resource("libraryView").getResource("fileTree").getValue())){
+					if (fileName.equals(resource.getResource("root").getValue())){ 
+						currentPath = "/";
+					}else if (fileName.equals(resource.getResource("sdcard").getValue())){
+						currentPath = Environment.getExternalStorageDirectory().getPath();
+					}else if (fileName.equals(resource.getResource("books").getValue())){
+						currentPath = Paths.BooksDirectoryOption().getValue();
+					}else{
+						System.err.println(" item exception ");
+					}
+				}else{
+					currentPath += (ZLFile.createFileByPath(currentPath).isArchive()) ? ":" + fileName : "/" + fileName;
+				}
+				step(currentPath);
 			}
 		});
 	}
