@@ -58,6 +58,7 @@ public final class FileManager extends ListActivity {
 		if (path == null) {
 			initfill(items, adapter);
 		} else {
+			setTitle(path);
 			final ReturnRes returnRes = new ReturnRes(items, adapter);
 			final SmartFilter filter = new SmartFilter(
 				this,

@@ -51,32 +51,27 @@ public class SmartFilter implements Runnable {
 	}
 	
 	private void getItems() {
-		if (myFile == null)
-			myParent.runOnUiThread(myReturnRes);
-
-		try{
+		try {
 			for (ZLFile file : myFile.children()) {
 				if (!Thread.currentThread().isInterrupted()) {
-					if (file.isDirectory() || file.isArchive())
+					if (file.isDirectory() ||
+						file.isArchive() ||
+						PluginCollection.Instance().getPlugin(file) != null) {
 						myItems.add(new FileItem(file));
-					else if (PluginCollection.Instance().getPlugin(file) != null)
-						myItems.add(new FileItem(file));
-					myParent.runOnUiThread(myReturnRes);
+						myParent.runOnUiThread(myReturnRes);
+					}
 				}
 			}
-			myParent.runOnUiThread(myReturnRes);
-		}catch (Exception e) {
-			Log.v(FileManager.LOG, "Exception");
-			myParent.runOnUiThread(myReturnRes);
-			showPermissionDeniedToast();
+		} catch (Exception e) {
+			myParent.runOnUiThread(new Runnable() {
+				public void run() {
+					Toast.makeText(myParent,
+						ZLResource.resource("fmanagerView").getResource("permission_denied").getValue(),
+						Toast.LENGTH_SHORT
+					).show();
+				}
+			});
 			myParent.finish();
 		}
-	}
-	
-	protected void showPermissionDeniedToast() {
-		Toast.makeText(myParent,
-			ZLResource.resource("fmanagerView").getResource("permission_denied").getValue(),
-			Toast.LENGTH_SHORT
-		).show();
 	}
 }

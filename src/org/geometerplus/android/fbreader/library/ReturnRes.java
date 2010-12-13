@@ -27,8 +27,6 @@ public class ReturnRes implements Runnable {
 	private final List<FileItem> myItems;
 	private final ArrayAdapter<FileItem> myAdapter;
 
-	private int myCurIdx = 0;
-
 	public ReturnRes(List<FileItem> items, ArrayAdapter<FileItem> adapter) {
 		myItems = items;
 		myAdapter = adapter;
@@ -39,13 +37,10 @@ public class ReturnRes implements Runnable {
 	}
 	
 	public void run() {
-		if (myItems != null && myItems.size() > 0) {
-			myAdapter.notifyDataSetChanged();
-			int i = myCurIdx;
-			for (i = myCurIdx; i < myItems.size(); i++) {
-				myAdapter.add(myItems.get(i));
+		if (myItems != null) {
+			for (FileItem item : myItems.subList(myAdapter.getCount(), myItems.size())) {
+				myAdapter.add(item);
 			}
-			myCurIdx = i;
 		}
 		myAdapter.notifyDataSetChanged();
 	}

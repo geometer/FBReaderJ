@@ -1,17 +1,19 @@
-DONE Верхний уровень файл-менеджера должен состоять из 3 каталогов:
-  -- root (/)
-  -- sdcard (берется из Environment)
-  -- My Books (берется из опции)
-DONE Названия этих каталогов должны быть локализованы
-DONE Фильтровать файлы: показывать только те, для которых найдется plugin в PluginCollection
-DONE Уметь заходить внутрь zip'ов
-DONE Показывать у книг обложки в качестве иконок (это уже сделано в LibraryTreeActivity)
-* Показывать текущий путь в заголовке activity
-* В качестве name у книжки показывать file name (не path), в качестве summary -- title
-* В качестве name у каталога (архива) показывать file name (не path), summary не нужен
-* По long-tap на книжке -- меню как в LibraryTreeActivity
-DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
-DONE(PARTLY) Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
-DONE(PARTLY) Локализовать все сообщения
-* Отдельная иконка для архивов
-* Архивы в архивах
+VR:
+	* У корневой activity показывать то же имя, что в соответствующем item в top level ("File Tree")
+	* В качестве name у книжки показывать file name (не path), в качестве summary -- title
+	* В качестве name у каталога (архива) показывать file name (не path), summary не нужен
+
+	* отнаследовать FManagerAdapter от BaseAdapter (вместо ArrayAdapter)
+	* убрать ReturnRes внутрь SmartFilter
+	* По long-tap на книжке -- меню как в LibraryTreeActivity
+	DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
+
+NP:
+	DONE Названия этих каталогов должны быть локализованы
+	DONE Показывать у книг обложки в качестве иконок (это уже сделано в LibraryTreeActivity)
+	DONE Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
+	* Локализовать все сообщения
+	* Отдельная иконка для архивов
+	* Архивы в архивах
+	* filesystem: return special result (exception?) if directory is not readable
+	* Общий предок для 2 BaseAdapter
