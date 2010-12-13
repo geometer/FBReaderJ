@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -31,14 +29,12 @@ import android.widget.Toast;
 
 public class SmartFilter implements Runnable {
 	private final Activity myParent;
-	private final List<FileItem> myItems;
-	private final ReturnRes myReturnRes;
+	private FManagerAdapter myAdapter;
 	private final ZLFile myFile;
-
-	public SmartFilter(Activity parent, ReturnRes returnRes, ZLFile file) {
+	
+	public SmartFilter(Activity parent, FManagerAdapter adapter, ZLFile file) {
 		myParent = parent;
-		myItems = returnRes.getItems();
-		myReturnRes = returnRes;
+		myAdapter = adapter;
 		myFile = file;
 	}
 	
@@ -57,8 +53,13 @@ public class SmartFilter implements Runnable {
 					if (file.isDirectory() ||
 						file.isArchive() ||
 						PluginCollection.Instance().getPlugin(file) != null) {
-						myItems.add(new FileItem(file));
-						myParent.runOnUiThread(myReturnRes);
+							myAdapter.add(new FileItem(file));
+//							myAdapter.notifyDataSetChanged();	// TODO question!
+							myParent.runOnUiThread(new Runnable() {
+								public void run() {
+									myAdapter.notifyDataSetChanged();
+								}
+							});
 					}
 				}
 			}
@@ -74,4 +75,5 @@ public class SmartFilter implements Runnable {
 			myParent.finish();
 		}
 	}
+
 }

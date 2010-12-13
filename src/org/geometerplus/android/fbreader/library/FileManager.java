@@ -19,10 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -48,8 +44,7 @@ public final class FileManager extends ListActivity {
 		Log.v(LOG, "onCreate()");
 		super.onCreate(savedInstanceState);
 
-		List<FileItem> items = Collections.synchronizedList(new ArrayList<FileItem>());
-		FManagerAdapter adapter = new FManagerAdapter(this, items, R.layout.library_tree_item);
+		FManagerAdapter adapter = new FManagerAdapter(this);
 		setListAdapter(adapter);
 		
 		final Bundle extras = getIntent().getExtras();
@@ -57,15 +52,10 @@ public final class FileManager extends ListActivity {
 
 		if (path == null) {
 			setTitle(ZLResource.resource("libraryView").getResource("fileTree").getValue());
-			initfill(items, adapter);
+			initfill(adapter);
 		} else {
 			setTitle(path);
-			final ReturnRes returnRes = new ReturnRes(items, adapter);
-			final SmartFilter filter = new SmartFilter(
-				this,
-				returnRes,
-				ZLFile.createFileByPath(path)
-			);
+			final SmartFilter filter = new SmartFilter(this, adapter, ZLFile.createFileByPath(path));
 			new Thread(filter).start();
 		}
 			
@@ -105,8 +95,7 @@ public final class FileManager extends ListActivity {
 		}
 	}
 
-	private void initfill(List<FileItem> items, FManagerAdapter adapter){
-		// FIXME does not work if I try to add FileItems directly into the adapter
+	private void initfill(FManagerAdapter adapter){
 		ZLResource resource = ZLResource.resource("fmanagerView");
 		String nameRoot = resource.getResource("root").getValue();
 		String nameSdcard = resource.getResource("sdcard").getValue();
@@ -116,13 +105,10 @@ public final class FileManager extends ListActivity {
 		final ZLFile sdCard = ZLFile.createFileByPath(Environment.getExternalStorageDirectory().getPath());
 		final ZLFile booksDirectory = ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue());
 		
-		items.add(new FileItem(root, nameRoot));
-		items.add(new FileItem(sdCard, nameSdcard));
-		items.add(new FileItem(booksDirectory, nameBooks));
-
-		for (FileItem o : items){
-			adapter.add(o);
-		}
+		adapter.add(new FileItem(root, nameRoot));
+		adapter.add(new FileItem(sdCard, nameSdcard));
+		adapter.add(new FileItem(booksDirectory, nameBooks));
+		adapter.notifyDataSetChanged();
 	}
 	
 	private void openBook(String path){

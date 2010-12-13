@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.geometerplus.fbreader.formats.FormatPlugin;
@@ -39,20 +41,37 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FManagerAdapter extends ArrayAdapter<FileItem> {
-	private List<FileItem> myItems;
+public class FManagerAdapter extends BaseAdapter {
+	private List<FileItem> myItems = Collections.synchronizedList(new ArrayList<FileItem>());;
 	private Context myParent;
 	
-	public FManagerAdapter(Context context, List<FileItem> items, int textViewResourceId) {
-		super(context, textViewResourceId);
+	public FManagerAdapter(Context context) {
 		myParent = context;
-		myItems = items;
 	}
 
+	public void add(FileItem item){
+		myItems.add(item);
+	}
+	
+	@Override
+	public int getCount() {
+		return myItems.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return myItems.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+	
 	private int myCoverWidth = -1;
 	private int myCoverHeight = -1;
 	private Runnable myInvalidateViewsRunnable = new Runnable() {

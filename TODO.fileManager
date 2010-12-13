@@ -3,8 +3,8 @@ VR:
 	DONE В качестве name у книжки показывать file name (не path), в качестве summary -- title
 	DONE В качестве name у каталога (архива) показывать file name (не path), summary не нужен
 
-	* отнаследовать FManagerAdapter от BaseAdapter (вместо ArrayAdapter)
-	* убрать ReturnRes внутрь SmartFilter
+	DONE отнаследовать FManagerAdapter от BaseAdapter (вместо ArrayAdapter)
+	DONE (ReturnRes перестал существовать как класс - причина: измения в FManagerAdaper) убрать ReturnRes внутрь SmartFilter
 	* По long-tap на книжке -- меню как в LibraryTreeActivity
 	DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
 
