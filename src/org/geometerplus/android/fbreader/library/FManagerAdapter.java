@@ -45,13 +45,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FManagerAdapter extends ArrayAdapter<FileItem>{
-	private List<FileItem> myOrders;
+	private List<FileItem> myItems;
 	private Context myParent;
 	
-	public FManagerAdapter(Context context, List<FileItem> orders, int textViewResourceId) {
+	public FManagerAdapter(Context context, List<FileItem> items, int textViewResourceId) {
 		super(context, textViewResourceId);
 		myParent = context;
-		myOrders = orders;
+		myItems = items;
 	}
 
 	private int myCoverWidth = -1;
@@ -67,10 +67,10 @@ public class FManagerAdapter extends ArrayAdapter<FileItem>{
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
         
-        FileItem order = myOrders.get(position);
-        if (order != null) {
-        	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
-			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(order.getPath());
+        FileItem item = myItems.get(position);
+        if (item != null) {
+        	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
+			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getPath());
 
 			if (myCoverWidth == -1) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -85,11 +85,11 @@ public class FManagerAdapter extends ArrayAdapter<FileItem>{
 			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			coverView.requestLayout();
 			
-			if (order.getBook() == null) {
+			if (item.getBook() == null) {
 				coverView.setImageResource(R.drawable.ic_list_library_folder);
 			} else {
 				Log.v(FileManager.LOG, "isBook");
-				Book book = order.getBook();
+				Book book = item.getBook();
 				FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 
 				Bitmap coverBitmap = null;

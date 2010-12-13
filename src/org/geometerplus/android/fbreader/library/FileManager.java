@@ -42,7 +42,6 @@ import android.widget.AdapterView.OnItemClickListener;
 public final class FileManager extends ListActivity {
 	public static String FILE_MANAGER_PATH = "file_manager.path";
 	public static String LOG = "FileManager";
-	private Thread myCurFilterThread;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,15 +51,17 @@ public final class FileManager extends ListActivity {
 		List<FileItem> items = Collections.synchronizedList(new ArrayList<FileItem>());
 		FManagerAdapter adapter = new FManagerAdapter(this, items, R.layout.library_tree_item);
 		setListAdapter(adapter);
-
-		ReturnRes returnRes = new ReturnRes(items, adapter);
-		SmartFilter filter = new SmartFilter(this, returnRes);
 		
-		String path = getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
-		if (path.equals("")) {
+		final Bundle extras = getIntent().getExtras();
+		final String path = extras != null ? extras.getString(FileManager.FILE_MANAGER_PATH) : null;
+
+		if (path == null) {
 			initfill(items, adapter);
 		} else {
-			fill(path, filter);
+			final ReturnRes returnRes = new ReturnRes(items, adapter);
+			final SmartFilter filter = new SmartFilter(this, returnRes);
+			filter.setPreferences(ZLFile.createFileByPath(path));
+			new Thread(filter).start();
 		}
 			
 		getListView().setTextFilterEnabled(true);
@@ -74,14 +75,10 @@ public final class FileManager extends ListActivity {
 	private void step(String path) {
 		ZLFile file = ZLFile.createFileByPath(path);
 		if (file.isDirectory() || file.isArchive()) {
-			if (myCurFilterThread != null) {		// TODO question!
-				myCurFilterThread.interrupt();
-			}
 			Intent i = new Intent(this, FileManager.class);
 			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
 			startActivity(i);
-		}
-		else {
+		} else {
 			openBook(path);
 		}
 	}
@@ -106,13 +103,6 @@ public final class FileManager extends ListActivity {
 		}
 	}
 	
-	private void fill(String path, SmartFilter filter){
-		ZLFile file = ZLFile.createFileByPath(path);
-		filter.setPreferences(file);
-		myCurFilterThread = new Thread(null, filter, "MagentoBackground");
-		myCurFilterThread.start();
-	}
-
 	private void openBook(String path){
 		Intent i = new Intent(this, FBReader.class);
 		i.setAction(Intent.ACTION_VIEW);
