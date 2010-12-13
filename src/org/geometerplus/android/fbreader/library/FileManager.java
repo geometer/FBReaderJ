@@ -50,17 +50,17 @@ public final class FileManager extends ListActivity {
 		Log.v(LOG, "onCreate()");
 		super.onCreate(savedInstanceState);
 
-		List<FileOrder> orders = Collections.synchronizedList(new ArrayList<FileOrder>());
-		FManagerAdapter adapter = new FManagerAdapter(this, orders, R.layout.library_tree_item);
+		List<FileItem> items = Collections.synchronizedList(new ArrayList<FileItem>());
+		FManagerAdapter adapter = new FManagerAdapter(this, items, R.layout.library_tree_item);
 		setListAdapter(adapter);
 
 		ProgressDialog progressDialog = initProgressDialog();
-		ReturnRes returnRes = new ReturnRes(orders, adapter, progressDialog);
+		ReturnRes returnRes = new ReturnRes(items, adapter, progressDialog);
 		SmartFilter filter = new SmartFilter(this, returnRes);
 		
 		String path = getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
 		if (path.equals("")) 
-			initfill(orders, adapter);
+			initfill(items, adapter);
 		else 
 			fill(path, filter, progressDialog);
 			
@@ -86,22 +86,22 @@ public final class FileManager extends ListActivity {
 		}
 	}
 
-	private void initfill(List<FileOrder> orders, FManagerAdapter adapter){
-		// FIXME does not work if I try to add FileOrders directly into the adapter
+	private void initfill(List<FileItem> items, FManagerAdapter adapter){
+		// FIXME does not work if I try to add FileItems directly into the adapter
 		ZLResource resource = ZLResource.resource("fmanagerView");
 		String nameRoot = resource.getResource("root").getValue();
 		String nameSdcard = resource.getResource("sdcard").getValue();
 		String nameBooks = resource.getResource("books").getValue();
 		
-		String pathRoot = "/";
-		String pathSdcard = Environment.getExternalStorageDirectory().getPath();
-		String pathBook = Paths.BooksDirectoryOption().getValue();
+		final ZLFile root = ZLFile.createFileByPath("/");
+		final ZLFile sdCard = ZLFile.createFileByPath(Environment.getExternalStorageDirectory().getPath());
+		final ZLFile booksDirectory = ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue());
 		
-		orders.add(new FileOrder(nameRoot, pathRoot, R.drawable.ic_list_library_folder));
-		orders.add(new FileOrder(nameSdcard, pathSdcard, R.drawable.ic_list_library_folder));
-		orders.add(new FileOrder(nameBooks, pathBook, R.drawable.ic_list_library_folder));
+		items.add(new FileItem(root, nameRoot));
+		items.add(new FileItem(sdCard, nameSdcard));
+		items.add(new FileItem(booksDirectory, nameBooks));
 
-		for(FileOrder o : orders){
+		for (FileItem o : items){
 			adapter.add(o);
 		}
 	}

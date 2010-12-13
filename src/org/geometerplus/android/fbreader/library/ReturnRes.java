@@ -27,33 +27,33 @@ import android.widget.ArrayAdapter;
 public class ReturnRes implements Runnable {
 	private int myCurIdx = 0;
 	private ProgressDialog myProgressDialog;
-	private List<FileOrder> myOrders;
-	private ArrayAdapter<FileOrder> myAdapter;
+	private List<FileItem> myItems;
+	private ArrayAdapter<FileItem> myAdapter;
 
-	public ReturnRes(List<FileOrder> orders, ArrayAdapter<FileOrder> adapter,
+	public ReturnRes(List<FileItem> items, ArrayAdapter<FileItem> adapter,
 			ProgressDialog pd) {
-		myOrders = orders;
+		myItems = items;
 		myAdapter = adapter;
 		myProgressDialog = pd;
 	}
 	
-	public List<FileOrder> getOrders(){
-		return myOrders;
+	public List<FileItem> getItems(){
+		return myItems;
 	}
 	
 	public void refresh() {
 		myCurIdx = 0;
-		myOrders.clear();
+		myItems.clear();
 		myAdapter.clear();
 		myAdapter.notifyDataSetChanged();
 	}
 	
 	public void run() {
-		if (myOrders != null && myOrders.size() > 0) {
+		if (myItems != null && myItems.size() > 0) {
 			myAdapter.notifyDataSetChanged();
 			int i = myCurIdx;
-			for (i = myCurIdx; i < myOrders.size(); i++) {
-				myAdapter.add(myOrders.get(i));
+			for (i = myCurIdx; i < myItems.size(); i++) {
+				myAdapter.add(myItems.get(i));
 			}
 			myCurIdx = i;
 		}

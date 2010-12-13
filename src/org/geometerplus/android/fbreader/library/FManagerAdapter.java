@@ -44,11 +44,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FManagerAdapter extends ArrayAdapter<FileOrder>{
-	private List<FileOrder> myOrders;
+public class FManagerAdapter extends ArrayAdapter<FileItem>{
+	private List<FileItem> myOrders;
 	private Context myParent;
 	
-	public FManagerAdapter(Context context, List<FileOrder> orders, int textViewResourceId) {
+	public FManagerAdapter(Context context, List<FileItem> orders, int textViewResourceId) {
 		super(context, textViewResourceId);
 		myParent = context;
 		myOrders = orders;
@@ -67,7 +67,7 @@ public class FManagerAdapter extends ArrayAdapter<FileOrder>{
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
         
-        FileOrder order = myOrders.get(position);
+        FileItem order = myOrders.get(position);
         if (order != null) {
         	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(order.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(order.getPath());
@@ -128,45 +128,75 @@ public class FManagerAdapter extends ArrayAdapter<FileOrder>{
 }
 
 
-class FileOrder{
-	private String myName;
-	private String myPath;
-	private int myIcon;
+class FileItem {
+	private final ZLFile myFile;
+	private final String myName;
+
 	private Book myBook = null; 
+	private boolean myBookIsSynchronized = false;
 	
-	public FileOrder(String name, String path, int icon){
+	public FileItem(ZLFile file, String name) {
+		myFile = file;
 		myName = name;
-		myPath = path;
-		myIcon = icon;
 	}
 	
-	public FileOrder(ZLFile file){
-		myPath = file.getPath();
-		
-		if (file.isDirectory() || file.isArchive()){
-			myName = file.getName(false).substring(file.getName(false).lastIndexOf('/') + 1);
-			myIcon = R.drawable.ic_list_library_folder;
-		}
-		else if(PluginCollection.Instance().getPlugin(file) != null){
-			myBook = Book.getByFile(file);
-			myName = myBook.getTitle();
-			myIcon = -1;
-		}
+	public FileItem(ZLFile file) {
+		this(file, null);
 	}
 	
 	public String getName() {
-		return myName;
+		if (myName != null) {
+			return myName;
+		}
+
+		if (myFile.isDirectory()) {
+			final String fileName = myFile.getName(false);
+			return fileName.substring(fileName.lastIndexOf('/') + 1);
+		}
+
+		final Book book = getBook();
+		if (book != null) {
+			return book.getTitle();
+		}
+
+		if (!myFile.isArchive()) {
+			System.err.println(
+				"File " + myFile.getPath() +
+				" that is not a directory, not a book and not a archive " +
+				"has been found in getIcon()"
+			);
+		}
+
+		final String fileName = myFile.getName(false);
+		return fileName.substring(fileName.lastIndexOf('/') + 1);
 	}
 
 	public String getPath() {
-		return myPath;
+		return myFile.getPath();
 	}
 
 	public int getIcon() {
-		return myIcon;
+		if (myFile.isDirectory()) {
+			return R.drawable.ic_list_library_folder;
+		} else if (PluginCollection.Instance().getPlugin(myFile) != null) {
+			return R.drawable.ic_list_library_book;
+		} else if (myFile.isArchive()) {
+			return R.drawable.ic_list_library_folder;
+		} else {
+			System.err.println(
+				"File " + myFile.getPath() +
+				" that is not a directory, not a book and not a archive " +
+				"has been found in getIcon()"
+			);
+			return R.drawable.ic_list_library_book;
+		}
 	}
 
-	public Book getBook(){
+	public Book getBook() {
+		if (myBook == null && !myBookIsSynchronized) {
+			myBook = Book.getByFile(myFile);
+			myBookIsSynchronized = true;
+		}
 		return myBook;
 	}
 }

@@ -32,12 +32,12 @@ import android.widget.Toast;
 public class SmartFilter implements Runnable {
 	private Activity myParent;
 	private ReturnRes myReturnRes;
-	private List<FileOrder> myOrders;
+	private List<FileItem> myItems;
 	private ZLFile myFile;
 
 	public SmartFilter(Activity parent, ReturnRes returnRes) {
 		myParent = parent;
-		myOrders = returnRes.getOrders();
+		myItems = returnRes.getItems();
 		myReturnRes = returnRes;
 	}
 	
@@ -48,13 +48,13 @@ public class SmartFilter implements Runnable {
 
 	public void run() {
 		try {
-			getOrders();
+			getItems();
 		} catch (Exception e) {
 			Log.e(FileManager.LOG, e.getMessage());
 		}
 	}
 	
-	private void getOrders() {
+	private void getItems() {
 		if (myFile == null)
 			myParent.runOnUiThread(myReturnRes);
 
@@ -62,9 +62,9 @@ public class SmartFilter implements Runnable {
 			for (ZLFile file : myFile.children()) {
 				if (!Thread.currentThread().isInterrupted()) {
 					if (file.isDirectory() || file.isArchive())
-						myOrders.add(new FileOrder(file));
+						myItems.add(new FileItem(file));
 					else if (PluginCollection.Instance().getPlugin(file) != null)
-						myOrders.add(new FileOrder(file));
+						myItems.add(new FileItem(file));
 					myParent.runOnUiThread(myReturnRes);
 				}
 			}
