@@ -44,7 +44,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FManagerAdapter extends ArrayAdapter<FileItem>{
+public class FManagerAdapter extends ArrayAdapter<FileItem> {
 	private List<FileItem> myItems;
 	private Context myParent;
 	
@@ -58,6 +58,7 @@ public class FManagerAdapter extends ArrayAdapter<FileItem>{
 	private int myCoverHeight = -1;
 	private Runnable myInvalidateViewsRunnable = new Runnable() {
 		public void run() {
+			System.err.println("run myInvalidateViewsRunnable");
 			((ListActivity)myParent).getListView().invalidateViews();
 		}
 	};
@@ -85,42 +86,37 @@ public class FManagerAdapter extends ArrayAdapter<FileItem>{
 			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			coverView.requestLayout();
 			
-			if (item.getBook() == null) {
-				coverView.setImageResource(R.drawable.ic_list_library_folder);
-			} else {
-				Log.v(FileManager.LOG, "isBook");
-				Book book = item.getBook();
-				FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+			final ZLImage cover = item.getCover();
+			Bitmap coverBitmap = null;
+			if (cover != null) {
+				System.err.println("cover != null");
+				
+				ZLAndroidImageData data = null;
+				final ZLAndroidImageManager mgr =
+					(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 
-				Bitmap coverBitmap = null;
-				ZLImage cover = plugin.readCover(book);
-				if (cover != null) {
-					Log.v(FileManager.LOG, "cover != null");
-					
-					ZLAndroidImageData data = null;
-					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-					if (cover instanceof ZLLoadableImage) {
-						Log.v(FileManager.LOG, "cover != null");
-						
-						final ZLLoadableImage img = (ZLLoadableImage)cover;
-						if (img.isSynchronized()) {
-							data = mgr.getImageData(img);
-						} else {
-							ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
-						}
+				if (cover instanceof ZLLoadableImage) {
+					System.err.println("cover instanceof ZLLoadableImage");
+					final ZLLoadableImage loadableImage = (ZLLoadableImage)cover;
+					if (loadableImage.isSynchronized()) {
+						data = mgr.getImageData(loadableImage);
 					} else {
-						data = mgr.getImageData(cover);
+						System.err.println("startImageLoading");
+						ZLAndroidImageLoader.Instance().startImageLoading(loadableImage, myInvalidateViewsRunnable);
 					}
-					if (data != null) {
-						Log.v(FileManager.LOG, "data != null");
-						coverBitmap = data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
-					}
+				} else {
+					data = mgr.getImageData(cover);
 				}
-				if (coverBitmap != null) {
-					coverView.setImageBitmap(coverBitmap);
-				}else{
-					coverView.setImageResource(R.drawable.ic_list_library_book);
+				if (data != null) {
+					Log.v(FileManager.LOG, "data != null");
+					coverBitmap = data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
 				}
+			}
+
+			if (coverBitmap != null) {
+				coverView.setImageBitmap(coverBitmap);
+			} else {
+				coverView.setImageResource(item.getIcon());
 			}
         }
         return view;
@@ -133,7 +129,9 @@ class FileItem {
 	private final String myName;
 
 	private Book myBook = null; 
-	private boolean myBookIsSynchronized = false;
+	private boolean myBookIsInitialized = false;
+	private ZLImage myCover = null;
+	private boolean myCoverIsInitialized = false;
 	
 	public FileItem(ZLFile file, String name) {
 		myFile = file;
@@ -192,10 +190,22 @@ class FileItem {
 		}
 	}
 
-	public Book getBook() {
-		if (myBook == null && !myBookIsSynchronized) {
+	public ZLImage getCover() {
+		if (!myCoverIsInitialized) {
+			myCoverIsInitialized = true;
+			final Book book = getBook();
+			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(myFile);
+			if (book != null && plugin != null) {
+				myCover = plugin.readCover(book);
+			}
+		}
+		return myCover;
+	}
+
+	private Book getBook() {
+		if (!myBookIsInitialized) {
+			myBookIsInitialized = true;
 			myBook = Book.getByFile(myFile);
-			myBookIsSynchronized = true;
 		}
 		return myBook;
 	}
