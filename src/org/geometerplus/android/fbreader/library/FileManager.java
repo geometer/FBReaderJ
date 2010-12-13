@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -54,15 +53,15 @@ public final class FileManager extends ListActivity {
 		FManagerAdapter adapter = new FManagerAdapter(this, items, R.layout.library_tree_item);
 		setListAdapter(adapter);
 
-		ProgressDialog progressDialog = initProgressDialog();
-		ReturnRes returnRes = new ReturnRes(items, adapter, progressDialog);
+		ReturnRes returnRes = new ReturnRes(items, adapter);
 		SmartFilter filter = new SmartFilter(this, returnRes);
 		
 		String path = getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
-		if (path.equals("")) 
+		if (path.equals("")) {
 			initfill(items, adapter);
-		else 
-			fill(path, filter, progressDialog);
+		} else {
+			fill(path, filter);
+		}
 			
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnItemClickListener(new OnItemClickListener() {
@@ -75,8 +74,9 @@ public final class FileManager extends ListActivity {
 	private void step(String path) {
 		ZLFile file = ZLFile.createFileByPath(path);
 		if (file.isDirectory() || file.isArchive()) {
-			if (myCurFilterThread != null)			// TODO question!
+			if (myCurFilterThread != null) {		// TODO question!
 				myCurFilterThread.interrupt();
+			}
 			Intent i = new Intent(this, FileManager.class);
 			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
 			startActivity(i);
@@ -106,8 +106,7 @@ public final class FileManager extends ListActivity {
 		}
 	}
 	
-	private void fill(String path, SmartFilter filter, ProgressDialog progressDialog){
-		progressDialog.show();
+	private void fill(String path, SmartFilter filter){
 		ZLFile file = ZLFile.createFileByPath(path);
 		filter.setPreferences(file);
 		myCurFilterThread = new Thread(null, filter, "MagentoBackground");
@@ -121,14 +120,4 @@ public final class FileManager extends ListActivity {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(i);
 	}
-	
-	private ProgressDialog initProgressDialog(){
-		ZLResource resource = ZLResource.resource("fmanagerView");
-		ProgressDialog pd = new ProgressDialog(this);
-		pd.setTitle(resource.getResource("progress_dialog").getResource("title").getValue());
-		pd.setMessage(resource.getResource("progress_dialog").getResource("message").getValue());
-		return pd;
-	}
-	
 }
-

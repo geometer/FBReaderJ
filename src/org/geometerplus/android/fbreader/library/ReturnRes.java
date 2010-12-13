@@ -21,23 +21,20 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.widget.ArrayAdapter;
 
 public class ReturnRes implements Runnable {
-	private int myCurIdx = 0;
-	private ProgressDialog myProgressDialog;
-	private List<FileItem> myItems;
-	private ArrayAdapter<FileItem> myAdapter;
+	private final List<FileItem> myItems;
+	private final ArrayAdapter<FileItem> myAdapter;
 
-	public ReturnRes(List<FileItem> items, ArrayAdapter<FileItem> adapter,
-			ProgressDialog pd) {
+	private int myCurIdx = 0;
+
+	public ReturnRes(List<FileItem> items, ArrayAdapter<FileItem> adapter) {
 		myItems = items;
 		myAdapter = adapter;
-		myProgressDialog = pd;
 	}
 	
-	public List<FileItem> getItems(){
+	public List<FileItem> getItems() {
 		return myItems;
 	}
 	
@@ -58,6 +55,5 @@ public class ReturnRes implements Runnable {
 			myCurIdx = i;
 		}
 		myAdapter.notifyDataSetChanged();
-		myProgressDialog.dismiss();
 	}
-};
+}
