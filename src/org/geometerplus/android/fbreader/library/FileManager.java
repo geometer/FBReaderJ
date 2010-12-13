@@ -59,8 +59,11 @@ public final class FileManager extends ListActivity {
 			initfill(items, adapter);
 		} else {
 			final ReturnRes returnRes = new ReturnRes(items, adapter);
-			final SmartFilter filter = new SmartFilter(this, returnRes);
-			filter.setPreferences(ZLFile.createFileByPath(path));
+			final SmartFilter filter = new SmartFilter(
+				this,
+				returnRes,
+				ZLFile.createFileByPath(path)
+			);
 			new Thread(filter).start();
 		}
 			

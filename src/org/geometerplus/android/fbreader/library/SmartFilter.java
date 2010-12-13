@@ -30,22 +30,18 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class SmartFilter implements Runnable {
-	private Activity myParent;
-	private ReturnRes myReturnRes;
-	private List<FileItem> myItems;
-	private ZLFile myFile;
+	private final Activity myParent;
+	private final List<FileItem> myItems;
+	private final ReturnRes myReturnRes;
+	private final ZLFile myFile;
 
-	public SmartFilter(Activity parent, ReturnRes returnRes) {
+	public SmartFilter(Activity parent, ReturnRes returnRes, ZLFile file) {
 		myParent = parent;
 		myItems = returnRes.getItems();
 		myReturnRes = returnRes;
+		myFile = file;
 	}
 	
-	public void setPreferences(ZLFile file) {
-		myFile = file;
-		myReturnRes.refresh();
-	}
-
 	public void run() {
 		try {
 			getItems();

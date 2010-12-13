@@ -38,13 +38,6 @@ public class ReturnRes implements Runnable {
 		return myItems;
 	}
 	
-	public void refresh() {
-		myCurIdx = 0;
-		myItems.clear();
-		myAdapter.clear();
-		myAdapter.notifyDataSetChanged();
-	}
-	
 	public void run() {
 		if (myItems != null && myItems.size() > 0) {
 			myAdapter.notifyDataSetChanged();
