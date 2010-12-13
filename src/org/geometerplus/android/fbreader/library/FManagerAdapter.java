@@ -29,6 +29,7 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
@@ -38,14 +39,16 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FManagerAdapter extends BaseAdapter {
+public class FManagerAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private List<FileItem> myItems = Collections.synchronizedList(new ArrayList<FileItem>());;
 	private Context myParent;
 	
@@ -63,13 +66,39 @@ public class FManagerAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public FileItem getItem(int position) {
 		return myItems.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		Log.v(FileManager.LOG, "onCreateContextMenu");
+		
+		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+		final FileItem fileItem = getItem(position);
+		if (fileItem.getCover() != null) {
+			ZLResource resource = ZLResource.resource("libraryView");
+			
+//			menu.setHeaderTitle("test");
+			menu.add(0, FileManager.OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+			menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
+			menu.add(0, FileManager.ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+			menu.add(0, FileManager.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+
+//			if (LibraryInstance.isBookInFavorites() {
+//				menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
+//			} else {
+//				menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
+//			}
+//			if ((LibraryInstance.getRemoveBookMode(((BookTree)tree).Book) & Library.REMOVE_FROM_DISK) != 0) {
+//				menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
+//            }
+		}
 	}
 	
 	private int myCoverWidth = -1;
@@ -143,7 +172,7 @@ public class FManagerAdapter extends BaseAdapter {
 
 
 class FileItem {
-	private final ZLFile myFile;
+	public final ZLFile myFile;
 	private final String myName;
 
 	private Book myBook = null; 

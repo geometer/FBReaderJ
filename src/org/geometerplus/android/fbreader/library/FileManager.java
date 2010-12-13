@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -83,6 +84,38 @@ public final class FileManager extends ListActivity {
 			}
 		});
 	}
+	
+	public static final int OPEN_BOOK_ITEM_ID = 0;
+	public static final int ADD_TO_FAVORITES_ITEM_ID = 1;
+	public static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
+	public static final int DELETE_BOOK_ITEM_ID = 3;
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		Log.v(FileManager.LOG, "onContextItemSelected");
+		
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		FileItem fileItem = ((FManagerAdapter)getListAdapter()).getItem(position);
+		if (fileItem.getCover() != null) {
+			switch (item.getItemId()) {
+				case OPEN_BOOK_ITEM_ID:
+					openBook(fileItem.myFile.getPath());
+					return true;
+				case ADD_TO_FAVORITES_ITEM_ID:
+					//LibraryInstance.addBookToFavorites(bookTree.Book);
+					return true;
+				case REMOVE_FROM_FAVORITES_ITEM_ID:
+					//LibraryInstance.removeBookFromFavorites(bookTree.Book);
+					getListView().invalidateViews();
+					return true;
+				case DELETE_BOOK_ITEM_ID:
+					// TODO: implement
+					return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+
 	
 	private void step(String path) {
 		ZLFile file = ZLFile.createFileByPath(path);
