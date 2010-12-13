@@ -51,7 +51,7 @@ import android.widget.TextView;
 public class FManagerAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private List<FileItem> myItems = Collections.synchronizedList(new ArrayList<FileItem>());;
 	private Context myParent;
-	
+
 	public FManagerAdapter(Context context) {
 		myParent = context;
 	}
@@ -59,7 +59,7 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 	public void add(FileItem item){
 		myItems.add(item);
 	}
-	
+
 	@Override
 	public int getCount() {
 		return myItems.size();
@@ -74,16 +74,16 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 	public long getItemId(int position) {
 		return position;
 	}
-	
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		Log.v(FileManager.LOG, "onCreateContextMenu");
-		
+
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		final FileItem fileItem = getItem(position);
 		if (fileItem.getCover() != null) {
 			ZLResource resource = ZLResource.resource("libraryView");
-			
+
 //			menu.setHeaderTitle("test");
 			menu.add(0, FileManager.OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 			menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
@@ -100,7 +100,7 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 //            }
 		}
 	}
-	
+
 	private int myCoverWidth = -1;
 	private int myCoverHeight = -1;
 	private Runnable myInvalidateViewsRunnable = new Runnable() {
@@ -114,7 +114,7 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-        
+
         FileItem item = myItems.get(position);
         if (item != null) {
         	((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
@@ -132,12 +132,12 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 			coverView.getLayoutParams().height = myCoverHeight;
 			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			coverView.requestLayout();
-			
+
 			final ZLImage cover = item.getCover();
 			Bitmap coverBitmap = null;
 			if (cover != null) {
 				System.err.println("cover != null");
-				
+
 				ZLAndroidImageData data = null;
 				final ZLAndroidImageManager mgr =
 					(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
@@ -174,42 +174,26 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 class FileItem {
 	public final ZLFile myFile;
 	private final String myName;
+	private final String mySummary;
 
-	private Book myBook = null; 
+	private Book myBook = null;
 	private boolean myBookIsInitialized = false;
 	private ZLImage myCover = null;
 	private boolean myCoverIsInitialized = false;
-	
-	public FileItem(ZLFile file, String name) {
+
+	public FileItem(ZLFile file, String name, String summary) {
 		myFile = file;
 		myName = name;
+		mySummary = summary;
 	}
-	
+
 	public FileItem(ZLFile file) {
-		this(file, null);
+		this(file, null, null);
 	}
-	
+
 	public String getName() {
 		if (myName != null) {
 			return myName;
-		}
-
-		if (myFile.isDirectory()) {
-			final String fileName = myFile.getName(false);
-			return fileName.substring(fileName.lastIndexOf('/') + 1);
-		}
-
-		final Book book = getBook();
-		if (book != null) {
-			return book.File.getName(false);
-		}
-
-		if (!myFile.isArchive()) {
-			System.err.println(
-				"File " + myFile.getPath() +
-				" that is not a directory, not a book and not a archive " +
-				"has been found in getIcon()"
-			);
 		}
 
 		final String fileName = myFile.getName(false);
@@ -217,10 +201,15 @@ class FileItem {
 	}
 
 	public String getSummary() {
+		if (mySummary != null) {
+			return mySummary;
+		}
+
 		final Book book = getBook();
 		if (book != null) {
 			return book.getTitle();
 		}
+
 		return null;
 	}
 
@@ -251,6 +240,10 @@ class FileItem {
 			}
 		}
 		return myCover;
+	}
+
+	public ZLFile getFile() {
+		return myFile;
 	}
 
 	private Book getBook() {

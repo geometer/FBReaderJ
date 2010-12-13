@@ -19,12 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.fbreader.Paths;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,11 +28,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.fbreader.Paths;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public final class FileManager extends ListActivity {
 	public static String FILE_MANAGER_PATH = "file_manager.path";
 	public static String LOG = "FileManager";
+
+	private final ZLResource myResource = ZLResource.resource("fileManagerView");
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,10 @@ public final class FileManager extends ListActivity {
 
 		if (path == null) {
 			setTitle(ZLResource.resource("libraryView").getResource("fileTree").getValue());
-			initfill(adapter);
+			addItem(Paths.BooksDirectoryOption().getValue(), "books");
+			addItem("/", "root");
+			addItem(Environment.getExternalStorageDirectory().getPath(), "sdcard");
+			//adapter.notifyDataSetChanged();
 		} else {
 			setTitle(path);
 			final SmartFilter filter = new SmartFilter(this, adapter, ZLFile.createFileByPath(path));
@@ -61,26 +65,9 @@ public final class FileManager extends ListActivity {
 		}
 			
 		getListView().setTextFilterEnabled(true);
-		getListView().setOnItemClickListener(new OnItemClickListener() {
+		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				
-				String currentPath = getTitle().toString();
-				String fileName = ((TextView)view.findViewById(R.id.library_tree_item_name)).getText().toString();
-				ZLResource resource = ZLResource.resource("fmanagerView");
-				if (currentPath.equals(ZLResource.resource("libraryView").getResource("fileTree").getValue())){
-					if (fileName.equals(resource.getResource("root").getValue())){ 
-						currentPath = "/";
-					}else if (fileName.equals(resource.getResource("sdcard").getValue())){
-						currentPath = Environment.getExternalStorageDirectory().getPath();
-					}else if (fileName.equals(resource.getResource("books").getValue())){
-						currentPath = Paths.BooksDirectoryOption().getValue();
-					}else{
-						System.err.println(" item exception ");
-					}
-				}else{
-					currentPath += (ZLFile.createFileByPath(currentPath).isArchive()) ? ":" + fileName : "/" + fileName;
-				}
-				step(currentPath);
+				step(((FManagerAdapter)getListAdapter()).getItem(position).getFile());
 			}
 		});
 	}
@@ -115,35 +102,26 @@ public final class FileManager extends ListActivity {
 		}
 		return super.onContextItemSelected(item);
 	}
-
 	
-	private void step(String path) {
-		ZLFile file = ZLFile.createFileByPath(path);
+	private void step(ZLFile file) {
 		if (file.isDirectory() || file.isArchive()) {
 			Intent i = new Intent(this, FileManager.class);
-			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
+			i.putExtra(FileManager.FILE_MANAGER_PATH, file.getPath());
 			startActivity(i);
 		} else {
-			openBook(path);
+			openBook(file.getPath());
 		}
 	}
 
-	private void initfill(FManagerAdapter adapter){
-		ZLResource resource = ZLResource.resource("fmanagerView");
-		String nameRoot = resource.getResource("root").getValue();
-		String nameSdcard = resource.getResource("sdcard").getValue();
-		String nameBooks = resource.getResource("books").getValue();
-		
-		final ZLFile root = ZLFile.createFileByPath("/");
-		final ZLFile sdCard = ZLFile.createFileByPath(Environment.getExternalStorageDirectory().getPath());
-		final ZLFile booksDirectory = ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue());
-		
-		adapter.add(new FileItem(root, nameRoot));
-		adapter.add(new FileItem(sdCard, nameSdcard));
-		adapter.add(new FileItem(booksDirectory, nameBooks));
-		adapter.notifyDataSetChanged();
+	private void addItem(String path, String resourceKey) {
+		final ZLResource resource = myResource.getResource(resourceKey);
+		((FManagerAdapter)getListAdapter()).add(new FileItem(
+			ZLFile.createFileByPath(path),
+			resource.getValue(),
+			resource.getResource("summary").getValue()
+		));
 	}
-	
+
 	private void openBook(String path){
 		Intent i = new Intent(this, FBReader.class);
 		i.setAction(Intent.ACTION_VIEW);

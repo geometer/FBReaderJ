@@ -67,7 +67,7 @@ public class SmartFilter implements Runnable {
 			myParent.runOnUiThread(new Runnable() {
 				public void run() {
 					Toast.makeText(myParent,
-						ZLResource.resource("fmanagerView").getResource("permission_denied").getValue(),
+						ZLResource.resource("fileManagerView").getResource("permission_denied").getValue(),
 						Toast.LENGTH_SHORT
 					).show();
 				}
