@@ -60,22 +60,18 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 		myItems.add(item);
 	}
 
-	@Override
 	public int getCount() {
 		return myItems.size();
 	}
 
-	@Override
 	public FileItem getItem(int position) {
 		return myItems.get(position);
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
-	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		Log.v(FileManager.LOG, "onCreateContextMenu");
 
@@ -110,7 +106,6 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 		}
 	};
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
