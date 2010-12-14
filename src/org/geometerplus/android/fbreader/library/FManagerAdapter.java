@@ -107,7 +107,6 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 			catch (Exception e) {
 				Log.v(FileManager.LOG, "FileManager.LibraryInstance.isBookInFavorites(book) = exception");
 			}
-			
 		}
 	}
 
