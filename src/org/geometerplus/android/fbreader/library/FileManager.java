@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public final class FileManager extends ListActivity {
-	public static String FILE_MANAGER_PATH = "file_manager.path";
+	public static String FILE_MANAGER_PATH = "FileManagerPath";
 	public static String LOG = "FileManager";
 
 	private final ZLResource myResource = ZLResource.resource("fileManagerView");
@@ -50,14 +50,13 @@ public final class FileManager extends ListActivity {
 		setListAdapter(adapter);
 		
 		final Bundle extras = getIntent().getExtras();
-		final String path = extras != null ? extras.getString(FileManager.FILE_MANAGER_PATH) : null;
+		final String path = extras != null ? extras.getString(FILE_MANAGER_PATH) : null;
 
 		if (path == null) {
 			setTitle(ZLResource.resource("libraryView").getResource("fileTree").getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "books");
 			addItem("/", "root");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "sdcard");
-			//adapter.notifyDataSetChanged();
 		} else {
 			setTitle(path);
 			final SmartFilter filter = new SmartFilter(this, adapter, ZLFile.createFileByPath(path));
@@ -67,7 +66,7 @@ public final class FileManager extends ListActivity {
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				step(((FManagerAdapter)getListAdapter()).getItem(position).getFile());
+				runItem(((FManagerAdapter)getListAdapter()).getItem(position));
 			}
 		});
 	}
@@ -103,10 +102,11 @@ public final class FileManager extends ListActivity {
 		return super.onContextItemSelected(item);
 	}
 	
-	private void step(ZLFile file) {
+	private void runItem(FileItem item) {
+		final ZLFile file = item.getFile();
 		if (file.isDirectory() || file.isArchive()) {
 			Intent i = new Intent(this, FileManager.class);
-			i.putExtra(FileManager.FILE_MANAGER_PATH, file.getPath());
+			i.putExtra(FILE_MANAGER_PATH, file.getPath());
 			startActivity(i);
 		} else {
 			openBook(file.getPath());
