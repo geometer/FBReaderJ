@@ -19,9 +19,15 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
@@ -29,89 +35,91 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-
 public final class FileManager extends ListActivity {
-	public static String FILE_MANAGER_PATH = "file_manager.path";
+	public static String FILE_MANAGER_PATH = "FileManagerPath";
 	public static String LOG = "FileManager";
-	private Thread myCurFilterThread;
+
+	private final ZLResource myResource = ZLResource.resource("fileManagerView");
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(LOG, "onCreate()");
 		super.onCreate(savedInstanceState);
 
-		List<FileOrder> orders = Collections.synchronizedList(new ArrayList<FileOrder>());
-		FManagerAdapter adapter = new FManagerAdapter(this, orders, R.layout.library_tree_item);
+		FManagerAdapter adapter = new FManagerAdapter(this);
 		setListAdapter(adapter);
-
-		ProgressDialog progressDialog = initProgressDialog();
-		ReturnRes returnRes = new ReturnRes(orders, adapter, progressDialog);
-		SmartFilter filter = new SmartFilter(this, returnRes);
 		
-		String path = getIntent().getExtras().getString(FileManager.FILE_MANAGER_PATH);
-		if (path.equals("")) 
-			initfill(orders, adapter);
-		else 
-			fill(path, filter, progressDialog);
+		final Bundle extras = getIntent().getExtras();
+		final String path = extras != null ? extras.getString(FILE_MANAGER_PATH) : null;
+
+		if (path == null) {
+			setTitle(ZLResource.resource("libraryView").getResource("fileTree").getValue());
+			addItem(Paths.BooksDirectoryOption().getValue(), "books");
+			addItem("/", "root");
+			addItem(Environment.getExternalStorageDirectory().getPath(), "sdcard");
+		} else {
+			setTitle(path);
+			final SmartFilter filter = new SmartFilter(this, adapter, ZLFile.createFileByPath(path));
+			new Thread(filter).start();
+		}
 			
 		getListView().setTextFilterEnabled(true);
-		getListView().setOnItemClickListener(new OnItemClickListener() {
+		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				step(((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).getText().toString());
+				runItem(((FManagerAdapter)getListAdapter()).getItem(position));
 			}
 		});
 	}
 	
-	private void step(String path) {
-		ZLFile file = ZLFile.createFileByPath(path);
-		if (file.isDirectory() || file.isArchive()) {
-			if (myCurFilterThread != null)			// TODO question!
-				myCurFilterThread.interrupt();
-			Intent i = new Intent(this, FileManager.class);
-			i.putExtra(FileManager.FILE_MANAGER_PATH, path);
-			startActivity(i);
-		}
-		else {
-			openBook(path);
-		}
-	}
+	public static final int OPEN_BOOK_ITEM_ID = 0;
+	public static final int ADD_TO_FAVORITES_ITEM_ID = 1;
+	public static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
+	public static final int DELETE_BOOK_ITEM_ID = 3;
 
-	private void initfill(List<FileOrder> orders, FManagerAdapter adapter){
-		// FIXME does not work if I try to add FileOrders directly into the adapter
-		ZLResource resource = ZLResource.resource("fmanagerView");
-		String nameRoot = resource.getResource("root").getValue();
-		String nameSdcard = resource.getResource("sdcard").getValue();
-		String nameBooks = resource.getResource("books").getValue();
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		Log.v(FileManager.LOG, "onContextItemSelected");
 		
-		String pathRoot = "/";
-		String pathSdcard = Environment.getExternalStorageDirectory().getPath();
-		String pathBook = Paths.BooksDirectoryOption().getValue();
-		
-		orders.add(new FileOrder(nameRoot, pathRoot, R.drawable.ic_list_library_folder));
-		orders.add(new FileOrder(nameSdcard, pathSdcard, R.drawable.ic_list_library_folder));
-		orders.add(new FileOrder(nameBooks, pathBook, R.drawable.ic_list_library_folder));
-
-		for(FileOrder o : orders){
-			adapter.add(o);
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		FileItem fileItem = ((FManagerAdapter)getListAdapter()).getItem(position);
+		if (fileItem.getCover() != null) {
+			switch (item.getItemId()) {
+				case OPEN_BOOK_ITEM_ID:
+					openBook(fileItem.myFile.getPath());
+					return true;
+				case ADD_TO_FAVORITES_ITEM_ID:
+					//LibraryInstance.addBookToFavorites(bookTree.Book);
+					return true;
+				case REMOVE_FROM_FAVORITES_ITEM_ID:
+					//LibraryInstance.removeBookFromFavorites(bookTree.Book);
+					getListView().invalidateViews();
+					return true;
+				case DELETE_BOOK_ITEM_ID:
+					// TODO: implement
+					return true;
+			}
 		}
+		return super.onContextItemSelected(item);
 	}
 	
-	private void fill(String path, SmartFilter filter, ProgressDialog progressDialog){
-		progressDialog.show();
-		ZLFile file = ZLFile.createFileByPath(path);
-		filter.setPreferences(file);
-		myCurFilterThread = new Thread(null, filter, "MagentoBackground");
-		myCurFilterThread.start();
+	private void runItem(FileItem item) {
+		final ZLFile file = item.getFile();
+		if (file.isDirectory() || file.isArchive()) {
+			Intent i = new Intent(this, FileManager.class);
+			i.putExtra(FILE_MANAGER_PATH, file.getPath());
+			startActivity(i);
+		} else {
+			openBook(file.getPath());
+		}
+	}
+
+	private void addItem(String path, String resourceKey) {
+		final ZLResource resource = myResource.getResource(resourceKey);
+		((FManagerAdapter)getListAdapter()).add(new FileItem(
+			ZLFile.createFileByPath(path),
+			resource.getValue(),
+			resource.getResource("summary").getValue()
+		));
 	}
 
 	private void openBook(String path){
@@ -121,14 +129,4 @@ public final class FileManager extends ListActivity {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(i);
 	}
-	
-	private ProgressDialog initProgressDialog(){
-		ZLResource resource = ZLResource.resource("fmanagerView");
-		ProgressDialog pd = new ProgressDialog(this);
-		pd.setTitle(resource.getResource("progress_dialog").getResource("title").getValue());
-		pd.setMessage(resource.getResource("progress_dialog").getResource("message").getValue());
-		return pd;
-	}
-	
 }
-

@@ -1,19 +1,19 @@
-DONE Перейти от использования java.io.File к использованию org.geometerplus.zlibrary.core.filesystem.ZLFile
-DONE Верхний уровень файл-менеджера должен состоять из 3 каталогов:
-  -- root (/)
-  -- sdcard (берется из Environment)
-  -- My Books (берется из опции)
-DONE Названия этих каталогов должны быть локализованы
-DONE Каталог '..' не нужен
-DONE Иконки:
-	-- у каталогов: ic_list_library_folder
-  -- у книг: для начала, ic_list_library_book
-DONE Иконки верхнего уровня тоже должны быть ic_list_library_folder
-DONE Фильтровать файлы: показывать только те, для которых найдется plugin в PluginCollection
-DONE Уметь заходить внутрь zip'ов
-* Показывать у книг обложки в качестве иконок (это уже сделано в LibraryTreeActivity)
-DONE В качестве summary у книжки показывать ее title
-* По long-tap на книжке -- меню как в LibraryTreeActivity
-DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
-DONE(PARTLY) Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
-DONE(PARTLY) Локализовать все сообщения
+VR:
+	DONE У корневой activity показывать то же имя, что в соответствующем item в top level ("File Tree")
+	DONE В качестве name у книжки показывать file name (не path), в качестве summary -- title
+	DONE В качестве name у каталога (архива) показывать file name (не path), summary не нужен
+
+	DONE отнаследовать FManagerAdapter от BaseAdapter (вместо ArrayAdapter)
+	DONE (ReturnRes перестал существовать как класс - причина: измения в FManagerAdaper) убрать ReturnRes внутрь SmartFilter
+	* По long-tap на книжке -- меню как в LibraryTreeActivity
+	DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
+
+NP:
+	DONE Названия этих каталогов должны быть локализованы
+	DONE Показывать у книг обложки в качестве иконок (это уже сделано в LibraryTreeActivity)
+	DONE Показывать (в Toast) локализованное сообщение, если в каталог перейти не удается (permission denied)
+	* Локализовать все сообщения
+	* Отдельная иконка для архивов
+	* Архивы в архивах
+	* filesystem: return special result (exception?) if directory is not readable
+	* Общий предок для 2 BaseAdapter

@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -30,57 +28,52 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class SmartFilter implements Runnable {
-	private Activity myParent;
-	private ReturnRes myReturnRes;
-	private List<FileOrder> myOrders;
-	private ZLFile myFile;
-
-	public SmartFilter(Activity parent, ReturnRes returnRes) {
+	private final Activity myParent;
+	private FManagerAdapter myAdapter;
+	private final ZLFile myFile;
+	
+	public SmartFilter(Activity parent, FManagerAdapter adapter, ZLFile file) {
 		myParent = parent;
-		myOrders = returnRes.getOrders();
-		myReturnRes = returnRes;
+		myAdapter = adapter;
+		myFile = file;
 	}
 	
-	public void setPreferences(ZLFile file) {
-		myFile = file;
-		myReturnRes.refresh();
-	}
-
 	public void run() {
 		try {
-			getOrders();
+			getItems();
 		} catch (Exception e) {
 			Log.e(FileManager.LOG, e.getMessage());
 		}
 	}
 	
-	private void getOrders() {
-		if (myFile == null)
-			myParent.runOnUiThread(myReturnRes);
-
-		try{
+	private void getItems() {
+		try {
 			for (ZLFile file : myFile.children()) {
 				if (!Thread.currentThread().isInterrupted()) {
-					if (file.isDirectory() || file.isArchive())
-						myOrders.add(new FileOrder(file));
-					else if (PluginCollection.Instance().getPlugin(file) != null)
-						myOrders.add(new FileOrder(file));
-					myParent.runOnUiThread(myReturnRes);
+					if (file.isDirectory() ||
+						file.isArchive() ||
+						PluginCollection.Instance().getPlugin(file) != null) {
+							myAdapter.add(new FileItem(file));
+//							myAdapter.notifyDataSetChanged();	// TODO question!
+							myParent.runOnUiThread(new Runnable() {
+								public void run() {
+									myAdapter.notifyDataSetChanged();
+								}
+							});
+					}
 				}
 			}
-			myParent.runOnUiThread(myReturnRes);
-		}catch (Exception e) {
-			Log.v(FileManager.LOG, "Exception");
-			myParent.runOnUiThread(myReturnRes);
-			showPermissionDeniedToast();
+		} catch (Exception e) {
+			myParent.runOnUiThread(new Runnable() {
+				public void run() {
+					Toast.makeText(myParent,
+						ZLResource.resource("fileManagerView").getResource("permission_denied").getValue(),
+						Toast.LENGTH_SHORT
+					).show();
+				}
+			});
 			myParent.finish();
 		}
 	}
-	
-	protected void showPermissionDeniedToast() {
-		Toast.makeText(myParent,
-			ZLResource.resource("fmanagerView").getResource("permission_denied").getValue(),
-			Toast.LENGTH_SHORT
-		).show();
-	}
+
 }
