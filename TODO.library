@@ -16,3 +16,8 @@ DONE Context menu
 * Reload book info from file
 * Reload book info for all the files
 * Highlight current book
+* Bug: search with no results clears search results subtree; should not
+* garbage in Boris Akunin, Сказки для идиотов
+* tags in the same book
+* Bug: b1.zip (paths in zips?)
+* Bug: b1.zip, archive inside archive
