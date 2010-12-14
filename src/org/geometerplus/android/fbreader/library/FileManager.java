@@ -84,7 +84,8 @@ public final class FileManager extends ListActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		FileItem fileItem = ((FManagerAdapter)getListAdapter()).getItem(position);
+		FManagerAdapter adapter = (FManagerAdapter)getListAdapter();
+		FileItem fileItem = adapter.getItem(position);
 		if (fileItem.getBook() != null) {
 			Book book = fileItem.getBook(); 
 			switch (item.getItemId()) {
@@ -99,7 +100,11 @@ public final class FileManager extends ListActivity {
 					getListView().invalidateViews();
 					return true;
 				case DELETE_BOOK_ITEM_ID:
-					// TODO: implement
+					// TODO: implemen
+					// TODO проверить (если книга была в избранных), то ((FManagerAdapter)getListAdapter())
+					adapter.remove(fileItem);
+					adapter.notifyDataSetChanged();
+					fileItem.getBook().File.getPhysicalFile().delete();
 					return true;
 			}
 		}
