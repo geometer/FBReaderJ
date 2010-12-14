@@ -7,6 +7,7 @@ VR:
 	DONE (ReturnRes перестал существовать как класс - причина: измения в FManagerAdaper) убрать ReturnRes внутрь SmartFilter
 	* По long-tap на книжке -- меню как в LibraryTreeActivity
 	DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
+	* Bug: при нажатии на epub-file открывается архив; должна открываться книга
 
 NP:
 	DONE Названия этих каталогов должны быть локализованы
