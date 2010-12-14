@@ -108,7 +108,9 @@ public final class FileManager extends ListActivity {
 	
 	private void runItem(FileItem item) {
 		final ZLFile file = item.getFile();
-		if (file.isDirectory() || file.isArchive()) {
+		if (file.isArchive() && file.getPath().endsWith("epub")){
+			openBook(file.getPath());
+		}else if (file.isDirectory() || file.isArchive()) {
 			Intent i = new Intent(this, FileManager.class);
 			i.putExtra(FILE_MANAGER_PATH, file.getPath());
 			startActivity(i);

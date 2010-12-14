@@ -88,6 +88,11 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 			menu.setHeaderTitle(fileItem.getName());
 
 			menu.add(0, FileManager.OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+			
+			if (FileManager.LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				Log.v(FileManager.LOG, "FileManager.LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)");
+			} 
+			
 			try{
 				if (FileManager.LibraryInstance.isBookInFavorites(book)) {
 					menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
