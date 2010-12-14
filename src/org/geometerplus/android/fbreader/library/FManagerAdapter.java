@@ -23,9 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -51,7 +54,7 @@ import android.widget.TextView;
 public class FManagerAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private List<FileItem> myItems = Collections.synchronizedList(new ArrayList<FileItem>());;
 	private Context myParent;
-
+	
 	public FManagerAdapter(Context context) {
 		myParent = context;
 	}
@@ -77,27 +80,28 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		Log.v(FileManager.LOG, "onCreateContextMenu");
-
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		final FileItem fileItem = getItem(position);
-		if (fileItem.getCover() != null) {
+		if (fileItem.getBook() != null) {
+			Book book = fileItem.getBook(); 
 			ZLResource resource = ZLResource.resource("libraryView");
+			menu.setHeaderTitle(fileItem.getName());
 
-//			menu.setHeaderTitle("test");
 			menu.add(0, FileManager.OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
-			menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
-			menu.add(0, FileManager.ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
-			menu.add(0, FileManager.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
-
-//			if (LibraryInstance.isBookInFavorites() {
-//				menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
-//			} else {
-//				menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
-//			}
-//			if ((LibraryInstance.getRemoveBookMode(((BookTree)tree).Book) & Library.REMOVE_FROM_DISK) != 0) {
-//				menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
-//            }
+			try{
+				if (FileManager.LibraryInstance.isBookInFavorites(book)) {
+					menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
+				} else {
+					menu.add(0, FileManager.ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+				}
+				if ((FileManager.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+					menu.add(0, FileManager.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+				}
+			}
+			catch (Exception e) {
+				Log.v(FileManager.LOG, "FileManager.LibraryInstance.isBookInFavorites(book) = exception");
+			}
+			
 		}
 	}
 
@@ -172,7 +176,7 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 
 
 class FileItem {
-	public final ZLFile myFile;
+	private final ZLFile myFile;
 	private final String myName;
 	private final String mySummary;
 
@@ -246,7 +250,7 @@ class FileItem {
 		return myFile;
 	}
 
-	private Book getBook() {
+	public Book getBook() {
 		if (!myBookIsInitialized) {
 			myBookIsInitialized = true;
 			myBook = Book.getByFile(myFile);
