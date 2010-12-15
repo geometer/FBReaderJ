@@ -527,6 +527,7 @@
 		<node name="bookNotFound" value="Нет подходящих книг"/>
 		<node name="bookmarkNotFound" value="Нет подходящих закладок"/>
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
+		<node name="dictNotInstalled" value="Не установлен поддерживаемый словарь"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
