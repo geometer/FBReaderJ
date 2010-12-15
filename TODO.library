@@ -21,4 +21,4 @@ DONE Highlight current book
 * duplicate tags in the same book
 * Bug: b1.zip (paths in zips?)
 * Bug: b1.zip, archive inside archive
-* Open help if the current book is deleted from library
+* Open the help file if the current book is deleted from library
