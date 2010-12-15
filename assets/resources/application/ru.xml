@@ -6,15 +6,31 @@
 		<node name="demo" value="фрагмент"/>
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="Авторы"/>
-		<node name="byTag" value="Категории"/>
-		<node name="recent" value="Недавние"/>
-		<node name="searchResults" value="Найдено"/>
+		<node name="byAuthor" value="Авторы">
+			<node name="summary" value="Книги, разложенные по авторам"/>
+		</node>
+		<node name="byTag" value="Категории">
+			<node name="summary" value="Книги, разложенные по категориям"/>
+		</node>
+		<node name="recent" value="Недавние">
+			<node name="summary" value="Книги, которые недавно открывались"/>
+		</node>
+		<node name="favorites" value="Избранное">
+			<node name="summary" value="Мои любимые книги"/>
+		</node>
+		<node name="searchResults" value="Найдено">
+			<node name="summary" value="Результаты поиска для: %s" />
+		</node>
+		<node name="fileTree" value="Файловая система">
+			<node name="summary" value="Файлы на моем устройстве"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
 		</node>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="deleteBook" value="Удалить книгу"/>
+		<node name="addToFavorites" value="Добавить в избранное"/>
+		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
@@ -214,103 +230,103 @@
 				<node name="rightIndent" value="Отступ справа"/>
 				<node name="more" value="Другие стили">
 					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов, и т.д."/>
-					<node name="Regular Paragraph" value="обычного текста">
+					<node name="Regular Paragraph" value="Обычный текст">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Title" value="заголовка">
+					<node name="Title" value="Заголовок">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Section Title" value="названия главы">
+					<node name="Section Title" value="Название главы">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Poem Title" value="названия стихотворения">
+					<node name="Poem Title" value="Название стихотворения">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Subtitle" value="подзаголовка">
+					<node name="Subtitle" value="Подзаголовок">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Annotation" value="аннотации">
+					<node name="Annotation" value="Аннотация">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Epigraph" value="эпиграфа">
+					<node name="Epigraph" value="Эпиграф">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Stanza" value="строфы">
+					<node name="Stanza" value="Строфа">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Verse" value="стихов">
+					<node name="Verse" value="Стихи">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Preformatted text" value="текста внутри &lt;pre&gt;">
+					<node name="Preformatted text" value="Текст внутри &lt;pre&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Image" value="рисунка">
+					<node name="Image" value="Рисунок">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Cite" value="цитаты">
+					<node name="Cite" value="Цитата">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Author" value="имени автора">
+					<node name="Author" value="Имя автора">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Date" value="даты">
+					<node name="Date" value="Дата">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Internal Hyperlink" value="ссылки">
+					<node name="Internal Hyperlink" value="Ссылка">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Footnote" value="сноски">
+					<node name="Footnote" value="Сноска">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Emphasis" value="выделения (emphasis)">
+					<node name="Emphasis" value="Выделение (emphasis)">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Strong" value="выделения (strong)">
+					<node name="Strong" value="Выделение (strong)">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Subscript" value="нижнего индекса">
+					<node name="Subscript" value="Нижний индекс">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Superscript" value="верхнего индекса">
+					<node name="Superscript" value="Верхний индекс">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Code" value="текста программы">
+					<node name="Code" value="Текст программы">
 						<node name="summary" value=""/>
 					</node>
-					<node name="StrikeThrough" value="зачеркнутого текста">
+					<node name="StrikeThrough" value="Зачеркнутый текст">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Italic" value="курсива">
+					<node name="Italic" value="Курсив">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Bold" value="жирного текста">
+					<node name="Bold" value="Жирный текст">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Definition" value="определения">
+					<node name="Definition" value="Определение">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Definition Description" value="текста определения">
+					<node name="Definition Description" value="Текст определения">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Header 1" value="текста внутри &lt;h1&gt;">
+					<node name="Header 1" value="Текст внутри &lt;h1&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Header 2" value="текста внутри &lt;h2&gt;">
+					<node name="Header 2" value="Текст внутри &lt;h2&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Header 3" value="текста внутри &lt;h3&gt;">
+					<node name="Header 3" value="Текст внутри &lt;h3&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Header 4" value="текста внутри &lt;h4&gt;">
+					<node name="Header 4" value="Текст внутри &lt;h4&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Header 5" value="текста внутри &lt;h5&gt;">
+					<node name="Header 5" value="Текст внутри &lt;h5&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Header 6" value="текста внутри &lt;h6&gt;">
+					<node name="Header 6" value="Текст внутри &lt;h6&gt;">
 						<node name="summary" value=""/>
 					</node>
-					<node name="External Hyperlink" value="внешней ссылки">
+					<node name="External Hyperlink" value="Внешняя ссылка">
 						<node name="summary" value=""/>
 					</node>
 				</node>

@@ -7,15 +7,31 @@
 		<node name="demo" value="minta"/>
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="Szerzők"/>
-		<node name="byTag" value="Címkék"/>
-		<node name="recent" value="Legutóbbi"/>
-		<node name="searchResults" value="Találatok"/>
+		<node name="byAuthor" value="Szerzők">
+			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		</node>
+		<node name="byTag" value="Címkék">
+			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+		</node>
+		<node name="recent" value="Legutóbbi">
+			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+		</node>
+		<node name="favorites" value="Favorites" toBeTranslated="true">
+			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		</node>
+		<node name="searchResults" value="Találatok">
+			<node name="summary" value="Keresés az eredmények között: %s" />
+		</node>
+		<node name="fileTree" value="File tree" toBeTranslated="true">
+			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Helyi keresés"/>
 		</node>
 		<node name="openBook" value="Könyv megnyitása"/>
 		<node name="deleteBook" value="Könyv törlése"/>
+		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Katalógus megnyitása"/>

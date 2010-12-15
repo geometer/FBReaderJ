@@ -46,6 +46,15 @@ public abstract class LibraryTree extends FBTree {
 		return new BookTree(this, book, showAuthors);
 	}
 
+	public boolean containsBook(Book book) {
+		for (FBTree tree : this) {
+			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {

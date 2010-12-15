@@ -36,7 +36,7 @@ public class PluginCollection {
 	public ZLStringOption DefaultEncodingOption;
 	public ZLBooleanOption LanguageAutoDetectOption;
 	
-	public static PluginCollection instance() {
+	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
 			ourInstance.myPlugins.add(new FB2Plugin());

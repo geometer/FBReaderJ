@@ -8,15 +8,31 @@
 		<node name="demo" value="Auszug"/>
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="Nach Autor"/>
-		<node name="byTag" value="Nach Tags"/>
-		<node name="recent" value="Verlauf"/>
-		<node name="searchResults" value="Gefunden"/>
+		<node name="byAuthor" value="Nach Autor">
+			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		</node>
+		<node name="byTag" value="Nach Tags">
+			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+		</node>
+		<node name="recent" value="Verlauf">
+			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+		</node>
+		<node name="favorites" value="Favorites" toBeTranslated="true">
+			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		</node>
+		<node name="searchResults" value="Gefunden">
+			<node name="summary" value="Suchergebnisse für: %s" />
+		</node>
+		<node name="fileTree" value="File tree" toBeTranslated="true">
+			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Lokale Suche"/>
 		</node>
 		<node name="openBook" value="Buch zum lesen öffnen"/>
 		<node name="deleteBook" value="Buch löschen"/>
+		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Katalog öffnen"/>

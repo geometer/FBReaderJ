@@ -86,4 +86,26 @@ public abstract class UIUtil {
 			}
 		}).start();
 	}
+
+	public static void runWithMessage(Context context, String key, final Runnable action, final Runnable postAction) {
+		final String message =
+			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
+		final ProgressDialog progress = ProgressDialog.show(context, null, message, true, false);
+
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				progress.dismiss();
+				postAction.run();
+			}
+		};
+
+		final Thread runner = new Thread(new Runnable() {
+			public void run() {
+				action.run();
+				handler.sendEmptyMessage(0);
+			}
+		});
+		runner.setPriority(Thread.MIN_PRIORITY);
+		runner.start();
+	}
 }

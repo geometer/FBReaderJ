@@ -116,7 +116,7 @@ public class Book {
 	}
 
 	boolean readMetaInfo() {
-		final FormatPlugin plugin = PluginCollection.instance().getPlugin(File);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
 		if ((plugin == null) || !plugin.readMetaInfo(this)) {
 			return false;
 		}

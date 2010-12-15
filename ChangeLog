@@ -2,7 +2,10 @@
 * Refilling LitRes account via SMS has been implemented
 * One-click book purchasing at LitRes has been implemented
 
-===== 0.7.18 (??? ??, 2010) =====
+===== 0.99.0 (??? ??, 2010) =====
+* New Library view (like network library view)
+* 'Favorites' item in library view
+* File tree item in library view
 * Local library activity has been moved to a separate process
 * French resources have been updated (by Mathias Monnerville)
 * German resources have been updated (by Ingolf Kübler)

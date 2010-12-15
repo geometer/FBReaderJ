@@ -21,13 +21,13 @@ package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.constants.XMLNamespace;
 
-class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespace {
+class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private final Book myBook;
 
 	private String myDCMetadataTag = "dc-metadata";
