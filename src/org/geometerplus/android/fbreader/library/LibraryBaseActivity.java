@@ -164,6 +164,14 @@ abstract class LibraryBaseActivity extends ListActivity {
 			final View view = (convertView != null) ?  convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
+			if (tree instanceof BookTree &&
+				mySelectedBookPath != null &&
+				mySelectedBookPath.equals(((BookTree)tree).Book.File.getPath())) {
+				view.setBackgroundColor(0xff808080);
+			} else {
+				view.setBackgroundColor(0);
+			}
+
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 
