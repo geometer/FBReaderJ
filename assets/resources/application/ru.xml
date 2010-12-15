@@ -6,36 +6,26 @@
 		<node name="demo" value="фрагмент"/>
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="By author" toBeTranslated="true">
-			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		<node name="byAuthor" value="Авторы">
+			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
-		<node name="byTag" value="By tag" toBeTranslated="true">
-			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+		<node name="byTag" value="Категории">
+			<node name="summary" value="Книги, разложенные по категориям"/>
 		</node>
-		<node name="recent" value="Recent" toBeTranslated="true">
-			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+		<node name="recent" value="Недавние">
+			<node name="summary" value="Книги, которые недавно открывались"/>
 		</node>
-		<node name="favorites" value="Favorites" toBeTranslated="true">
-			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		<node name="favorites" value="Избранное">
+			<node name="summary" value="Мои любимые книги"/>
 		</node>
-		<node name="searchResults" value="Found" toBeTranslated="true">
-			<node name="summary" value="Search results for: %s" toBeTranslated="true"/>
+		<node name="searchResults" value="Найдено">
+			<node name="searchResults" value="Результаты поиска для: %s" />
 		</node>
-		<node name="fileTree" value="File tree" toBeTranslated="true">
-			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		<node name="fileTree" value="Файловая система">
+			<node name="summary" value="Файлы на моем устройстве"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Local search" toBeTranslated="true"/>
-		</node>
-		<node name="openBook" value="Open book" toBeTranslated="true"/>
-		<node name="deleteBook" value="Delete book" toBeTranslated="true"/>
-		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-
-		<node name="byAuthor" value="Авторы"/>
-		<node name="byTag" value="Категории"/>
-		<node name="recent" value="Недавние"/>
-		<node name="searchResults" value="Найдено"/>
+		<node name="addToFavorites" value="Добавить в избранное"/>
+		<node name="removeFromFavorites" value="Убрать из избранного"/>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
 		</node>
