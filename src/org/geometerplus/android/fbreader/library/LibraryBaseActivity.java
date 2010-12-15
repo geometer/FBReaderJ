@@ -68,7 +68,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 
 	private static int CHILD_LIST_REQUEST = 0;
 	private static int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	private static int RESULT_INVALIDATE_VIEWS = 1;
+	private static int RESULT_DO_INVALIDATE_VIEWS = 1;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -80,9 +80,9 @@ abstract class LibraryBaseActivity extends ListActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_INVALIDATE_VIEWS) {
+		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
 			getListView().invalidateViews();
-			setResult(RESULT_INVALIDATE_VIEWS);
+			setResult(RESULT_DO_INVALIDATE_VIEWS);
 		}
 	} 
 
@@ -278,7 +278,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 		public void onClick(DialogInterface dialog, int which) {
 			Library.removeBook(myBook, myMode);
 			getListView().invalidateViews();
-			setResult(RESULT_INVALIDATE_VIEWS);
+			setResult(RESULT_DO_INVALIDATE_VIEWS);
 		}
 	}
 
