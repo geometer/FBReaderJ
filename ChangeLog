@@ -1,6 +1,5 @@
-* Integration with ColorDict has been implemented
-
 ===== 0.99.0 (??? ??, 2010) =====
+* Integration with ColorDict has been implemented
 * New Library view (like network library view)
 * 'Favorites' item in library view
 * File tree item in library view
