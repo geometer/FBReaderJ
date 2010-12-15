@@ -1,0 +1,23 @@
+* Partial loading from database
+* Database updating in backgorund
+* Watch filesystem after loading
+DONE Covers loading in background
+DONE Wait messages
+DONE Favorites
+* Show text if the favorites list is empty
+DONE Search
+* Show wait message during search
+* File view
+DONE Activity caption
+DONE Book deleting
+* Show book info activity instead of immediate opening/menu
+* Main menu
+DONE Context menu
+* Reload book info from file
+* Reload book info for all the files
+* Highlight current book
+* Bug: search with no results clears search results subtree; should not
+* garbage in Boris Akunin, Сказки для идиотов
+* tags in the same book
+* Bug: b1.zip (paths in zips?)
+* Bug: b1.zip, archive inside archive

@@ -7,15 +7,31 @@
 		<node name="demo" value="esempio"/>
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="Per autore"/>
-		<node name="byTag" value="Per etichetta"/>
-		<node name="recent" value="Recenti"/>
-		<node name="searchResults" value="Trovato"/>
+		<node name="byAuthor" value="Per autore">
+			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		</node>
+		<node name="byTag" value="Per etichetta">
+			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+		</node>
+		<node name="recent" value="Recenti">
+			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+		</node>
+		<node name="favorites" value="Favorites" toBeTranslated="true">
+			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		</node>
+		<node name="searchResults" value="Trovato">
+			<node name="summary" value="Cerca risultati per: %s" />
+		</node>
+		<node name="fileTree" value="File tree" toBeTranslated="true">
+			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Ricerca locale"/>
 		</node>
 		<node name="openBook" value="Apri libro"/>
 		<node name="deleteBook" value="Cancella libro"/>
+		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Apri catalogo"/>

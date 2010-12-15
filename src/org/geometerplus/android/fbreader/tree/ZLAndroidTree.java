@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,8 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.image;
+package org.geometerplus.android.fbreader.tree;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.content.res.Resources;
-
-public final class ZLAndroidResourceBasedImageData extends ZLAndroidImageData implements ZLImage {
-	private final Resources myResources;
-	private final int myId;
-
-	public ZLAndroidResourceBasedImageData(Resources resources, int id) {
-		myResources = resources;
-		myId = id;
-	}
-
-	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		return BitmapFactory.decodeResource(myResources, myId, options);
-	}
+public interface ZLAndroidTree {
+	int getCoverResourceId();
 }

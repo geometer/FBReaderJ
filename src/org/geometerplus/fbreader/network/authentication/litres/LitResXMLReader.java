@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.*;
@@ -157,7 +158,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			} else if (TAG_BOOK_TITLE == tag) {
 				myState = BOOK_TITLE;
 			} else if (TAG_ANNOTATION == tag) {
-				myHtmlToString.setupTextContent("text/xhtml");
+				myHtmlToString.setupTextContent(MimeTypes.MIME_TEXT_XHTML);
 				myState = ANNOTATION;
 			} else if (TAG_DATE == tag) {
 				myState = DATE;

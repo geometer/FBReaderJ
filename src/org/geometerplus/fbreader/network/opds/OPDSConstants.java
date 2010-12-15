@@ -60,20 +60,4 @@ interface OPDSConstants {
 	// Entry level / OPDS Link Conditions
 	String REL_CONDITION_NEVER = "http://data.fbreader.org/condition/never";
 	String REL_CONDITION_SIGNED_IN = "http://data.fbreader.org/condition/signed-in";
-
-	// MIME types / application
-	String MIME_APP_FB2ZIP = "application/fb2+zip";
-	String MIME_APP_EPUB = "application/epub+zip";
-	String MIME_APP_MOBI = "application/x-mobipocket-ebook";
-	String MIME_APP_PDF = "application/pdf";
-	String MIME_APP_ATOM = "application/atom+xml";
-
-	// MIME type for Opensearch Description XML document
-	String MIME_APP_OPENSEARCHDESCRIPTION = "application/opensearchdescription+xml";
-
-	// a special MIME type for the litres OPDS catalog
-	String MIME_APP_LITRES = "application/litres+xml";
-
-	// MIME types / text
-	String MIME_TEXT_HTML = "text/html";
 }

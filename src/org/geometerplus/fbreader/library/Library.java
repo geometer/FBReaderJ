@@ -28,27 +28,37 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
+	public static final int STATE_NOT_INITIALIZED = 0;
+	public static final int STATE_FULLY_INITIALIZED = 1;
+
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
 	private final LibraryTree myLibraryByTag = new RootTree();
 	private final LibraryTree myRecentBooks = new RootTree();
+	private final LibraryTree myFavorites = new RootTree();
 	private final LibraryTree mySearchResult = new RootTree();
 
-	private boolean myDoRebuild = true;
+	private volatile int myState = STATE_NOT_INITIALIZED;
 
 	public Library() {
 	}
 
-	public void clear() {
-		myDoRebuild = true;
+	public boolean hasState(int state) {
+		return myState >= state;
+	}
 
-		myBooks.clear();
-		myExternalBooks.clear();
-		myLibraryByAuthor.clear();
-		myLibraryByTag.clear();
-		myRecentBooks.clear();
-		mySearchResult.clear();
+	public void waitForState(int state) {
+		while (myState < state) {
+			synchronized(this) {
+				if (myState < state) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		}
 	}
 
 	public static ZLResourceFile getHelpFile() {
@@ -259,6 +269,14 @@ public final class Library {
 			}
 		}
 
+		for (long id : db.loadFavoritesIds()) {
+			Book book = bookById.get(id);
+			if (book != null) {
+				myFavorites.createBookSubTree(book, true);
+			}
+		}
+		myFavorites.sortAllChildren();
+
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (Book book : myBooks) {
@@ -268,29 +286,30 @@ public final class Library {
 		});
 	}
 
-	public void synchronize() {
-		if (myDoRebuild) {
+	public synchronized void synchronize() {
+		if (myState == STATE_NOT_INITIALIZED) {
 			build();
 
 			myLibraryByAuthor.sortAllChildren();
 			myLibraryByTag.sortAllChildren();
 
-			myDoRebuild = false;
+			myState = STATE_FULLY_INITIALIZED;
+			notifyAll();
 		}
 	}
 
 	public LibraryTree byAuthor() {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return myLibraryByAuthor;
 	}
 
 	public LibraryTree byTag() {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return myLibraryByTag;
 	}
 
 	public LibraryTree recentBooks() {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return myRecentBooks;
 	}
 
@@ -299,8 +318,17 @@ public final class Library {
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
 
+	public LibraryTree favorites() {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myFavorites;
+	}
+
+	public LibraryTree searchResults() {
+		return mySearchResult;
+	}
+
 	public LibraryTree searchBooks(String pattern) {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		mySearchResult.clear();
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
@@ -326,13 +354,34 @@ public final class Library {
 		db.saveRecentBookIds(ids);
 	}
 
+	public boolean isBookInFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myFavorites.containsBook(book);
+	}
+
+	public void addBookToFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		if (!myFavorites.containsBook(book)) {
+			myFavorites.createBookSubTree(book, true);
+			myFavorites.sortAllChildren();
+			BooksDatabase.Instance().addToFavorites(book.getId());
+		}
+	}
+
+	public void removeBookFromFavorites(Book book) {
+		waitForState(STATE_FULLY_INITIALIZED);
+		if (myFavorites.removeBook(book)) {
+			BooksDatabase.Instance().removeFromFavorites(book.getId());
+		}
+	}
+
 	public static final int REMOVE_DONT_REMOVE = 0x00;
 	public static final int REMOVE_FROM_LIBRARY = 0x01;
 	public static final int REMOVE_FROM_DISK = 0x02;
 	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
 	public int getRemoveBookMode(Book book) {
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		return (myExternalBooks.contains(book) ? REMOVE_FROM_LIBRARY : REMOVE_DONT_REMOVE)
 			| (canDeleteBookFile(book) ? REMOVE_FROM_DISK : REMOVE_DONT_REMOVE);
 	}
@@ -355,7 +404,7 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		synchronize();
+		waitForState(STATE_FULLY_INITIALIZED);
 		myBooks.remove(book);
 		myLibraryByAuthor.removeBook(book);
 		myLibraryByTag.removeBook(book);
@@ -366,6 +415,7 @@ public final class Library {
 			db.saveRecentBookIds(ids);
 		}
 		mySearchResult.removeBook(book);
+		myFavorites.removeBook(book);
 
 		BooksDatabase.Instance().deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {

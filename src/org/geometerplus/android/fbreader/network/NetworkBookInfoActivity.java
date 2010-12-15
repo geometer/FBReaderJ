@@ -36,7 +36,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
@@ -188,31 +190,24 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		final ZLImage cover = NetworkTree.createCover(myBook);
 		if (cover != null) {
 			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager) ZLAndroidImageManager.Instance();
-			if (cover instanceof NetworkImage) {
-				final NetworkImage img = (NetworkImage) cover;
-				final NetworkView networkView = NetworkView.Instance();
-				if (networkView.isInitialized()
-						&& networkView.isCoverLoading(img.Url)) {
-					networkView.addCoverSynchronizationRunnable(img.Url, new Runnable() {
-						public void run() {
-							img.synchronizeFast();
-							final ZLAndroidImageData data = mgr.getImageData(img);
-							if (data != null) {
-								final Bitmap coverBitmap = data.getBitmap(maxWidth, maxHeight);
-								if (coverBitmap != null) {
-									coverView.setImageBitmap(coverBitmap);
-									coverView.setVisibility(View.VISIBLE);
-									rootView.invalidate();
-									rootView.requestLayout();
-								}
+			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+			if (cover instanceof ZLLoadableImage) {
+				final ZLLoadableImage img = (ZLLoadableImage)cover;
+				ZLAndroidImageLoader.Instance().startImageLoading(img, new Runnable() {
+					public void run() {
+						img.synchronizeFast();
+						final ZLAndroidImageData data = mgr.getImageData(img);
+						if (data != null) {
+							final Bitmap coverBitmap = data.getBitmap(maxWidth, maxHeight);
+							if (coverBitmap != null) {
+								coverView.setImageBitmap(coverBitmap);
+								coverView.setVisibility(View.VISIBLE);
+								rootView.invalidate();
+								rootView.requestLayout();
 							}
 						}
-					});
-				} else {
-					img.synchronizeFast();
-					data = mgr.getImageData(img);
-				}
+					}
+				});
 			} else {
 				data = mgr.getImageData(cover);
 			}

@@ -6,15 +6,31 @@
 		<node name="demo" value="sample"/>
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="By author"/>
-		<node name="byTag" value="By tag"/>
-		<node name="recent" value="Recent"/>
-		<node name="searchResults" value="Found"/>
+		<node name="byAuthor" value="By author">
+			<node name="summary" value="Books sorted by author"/>
+		</node>
+		<node name="byTag" value="By tag">
+			<node name="summary" value="Books sorted by tag"/>
+		</node>
+		<node name="recent" value="Recent">
+			<node name="summary" value="Recently opened books"/>
+		</node>
+		<node name="favorites" value="Favorites">
+			<node name="summary" value="My selected books"/>
+		</node>
+		<node name="searchResults" value="Found">
+			<node name="summary" value="Search results for: %s"/>
+		</node>
+		<node name="fileTree" value="File tree">
+			<node name="summary" value="Browse file system"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Local search"/>
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="deleteBook" value="Delete book"/>
+		<node name="addToFavorites" value="Add to favorites"/>
+		<node name="removeFromFavorites" value="Remove from favorites"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>

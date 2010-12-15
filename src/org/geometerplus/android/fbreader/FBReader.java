@@ -21,9 +21,11 @@ package org.geometerplus.android.fbreader;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.io.File;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -38,6 +40,7 @@ import android.widget.TextView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -52,6 +55,8 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.library.Library;
 
 public final class FBReader extends ZLAndroidActivity {
+	public static final String BOOK_PATH_KEY = "BookPath";
+
 	final static int REPAINT_CODE = 1;
 
 	static FBReader Instance;
@@ -89,9 +94,24 @@ public final class FBReader extends ZLAndroidActivity {
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
 
+	private String fileNameFromUri(Uri uri) {
+		if (uri.equals(Uri.parse("file:///"))) {
+			return Library.getHelpFile().getPath();
+		} else {
+			return uri.getPath();
+		}
+	}
+
 	@Override
-	protected String fileNameForEmptyUri() {
-		return Library.getHelpFile().getPath();
+	protected ZLFile fileFromIntent(Intent intent) {
+		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
+		if (filePath == null) {
+			final Uri data = intent.getData();
+			if (data != null) {
+				filePath = data.getPath();
+			}
+		}
+		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
 	}
 
 	@Override
@@ -200,11 +220,11 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	protected ZLApplication createApplication(String fileName) {
+	protected ZLApplication createApplication(ZLFile file) {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
 		}
-		return new FBReaderApp(fileName);
+		return new FBReaderApp(file != null ? file.getPath() : null);
 	}
 
 	@Override
