@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.options;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-public final class ZLBoolean3Option extends ZLOption implements ZLSimpleOption {
+public final class ZLBoolean3Option extends ZLOption {
 	private int myValue;
 	private final int myDefaultValue;
 
@@ -29,10 +29,6 @@ public final class ZLBoolean3Option extends ZLOption implements ZLSimpleOption {
 		super(group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
-	}
-
-	public int getType() {
-		return Type.BOOLEAN3;
 	}
 
 	public int getValue() {

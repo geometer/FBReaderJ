@@ -279,7 +279,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 						filePath = Model.Book.File.getPath();
 						filePath = filePath.substring(0, filePath.lastIndexOf('\\') + 1) + ref;
 					}
-					addImage(ref, new ZLFileImage("image/auto", ZLFile.createFileByPath(filePath)));
+					addImage(ref, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, ZLFile.createFileByPath(filePath)));
 				}
 				*/
 				break;

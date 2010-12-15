@@ -25,34 +25,34 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class TextSearchActivity extends SearchActivity {
 	@Override
-	void onSuccess() {
+	public void onSuccess() {
 		FBReader.Instance.showTextSearchControls(true);
 	}
 
 	/*@Override
-	void onFailure() {
+	public void onFailure() {
 		FBReader.Instance.showTextSearchControls(false);
 	}*/
 
 	@Override
-	String getFailureMessageResourceKey() {
+	public String getFailureMessageResourceKey() {
 		return "textNotFound";
 	}
 
 	@Override
-	String getWaitMessageResourceKey() {
+	public String getWaitMessageResourceKey() {
 		return "search";
 	}
 
 	@Override
-	boolean runSearch(final String pattern) {
+	public boolean runSearch(final String pattern) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		fbReader.TextSearchPatternOption.setValue(pattern);
 		return fbReader.getTextView().search(pattern, true, false, false, false) != 0;
 	}
 
 	@Override
-	Activity getParentActivity() {
+	public Activity getParentActivity() {
 		return FBReader.Instance;
 	}
 }

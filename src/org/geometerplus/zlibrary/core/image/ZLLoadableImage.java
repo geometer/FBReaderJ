@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.options;
+package org.geometerplus.zlibrary.core.image;
 
-public interface ZLSimpleOption {
-	public interface Type {
-		int BOOLEAN = 1;
-		int BOOLEAN3 = 2;
-		int STRING = 3;
+public abstract class ZLLoadableImage extends ZLSingleImage {
+	private volatile boolean myIsSynchronized;
+
+	public ZLLoadableImage(String mimeType) {
+		super(mimeType);
 	}
 
-	int getType();
+	public final boolean isSynchronized() {
+		return myIsSynchronized;
+	}
+
+	protected final void setSynchronized() {
+		myIsSynchronized = true;
+	}
+
+	public abstract void synchronize();
+	public abstract void synchronizeFast();
+	public abstract String getId();
 }

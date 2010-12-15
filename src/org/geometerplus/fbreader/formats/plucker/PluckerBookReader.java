@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.zip.*;
 
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.ZLInputStreamWithOffset;
 import org.geometerplus.zlibrary.core.image.*;
@@ -201,17 +202,16 @@ public class PluckerBookReader extends BookReader {
 				case 2: // image
 				case 3: // compressed image
 				{
-					final String mime = "image/palm";
 					ZLImage image = null;
 					if (type == 2) {
 						//System.out.println("non-compressed image");
-						image = new PluckerFileImage(mime, myFile, myStream.offset(), recordSize - 8);
+						image = new PluckerFileImage(MimeTypes.MIME_IMAGE_PALM, myFile, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 1) {
 						//System.out.println("DocCompressedImage");
-						image = new DocCompressedFileImage(mime, myFile, myStream.offset(), recordSize - 8);
+						image = new DocCompressedFileImage(MimeTypes.MIME_IMAGE_PALM, myFile, myStream.offset(), recordSize - 8);
 					} else if (myCompressionVersion == 2) {
 						//System.out.println("ZCompressedImage");
-						image = new ZCompressedFileImage(mime, myFile, myStream.offset() + 2, recordSize - 10);
+						image = new ZCompressedFileImage(MimeTypes.MIME_IMAGE_PALM, myFile, myStream.offset() + 2, recordSize - 10);
 					}
 					if (image != null) {
 						addImage(fromNumber(uid), image);

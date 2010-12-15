@@ -24,16 +24,14 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.geometerplus.zlibrary.core.html.*;
-
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 
+import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
-
 public class HtmlToString {
-
 	private String myLastOpenedTag;
 	private String myTextType;
 	private StringBuilder myTextContent = new StringBuilder();
@@ -61,8 +59,8 @@ public class HtmlToString {
 			result = new String(contentArray);
 		}
 		if (result != null) {
-			if (myTextType == ATOMConstants.TYPE_HTML || myTextType == ATOMConstants.TYPE_XHTML
-					|| myTextType == "text/html" || myTextType == "text/xhtml") {
+			if (myTextType == ATOMConstants.TYPE_HTML || myTextType == ATOMConstants.TYPE_XHTML ||
+				myTextType == MimeTypes.MIME_TEXT_HTML || myTextType == MimeTypes.MIME_TEXT_XHTML) {
 				myHtmlToStringReader.readFromString(result);
 				result = myHtmlToStringReader.getString();
 			}
@@ -73,7 +71,7 @@ public class HtmlToString {
 	}
 
 	public void processTextContent(boolean closeTag, String tag, ZLStringMap attributes, String bufferContent) {
-		if (myTextType == ATOMConstants.TYPE_XHTML || myTextType == "text/xhtml") {
+		if (myTextType == ATOMConstants.TYPE_XHTML || myTextType == MimeTypes.MIME_TEXT_XHTML) {
 			if (bufferContent != null) {
 				myTextContent.append(bufferContent);
 			}

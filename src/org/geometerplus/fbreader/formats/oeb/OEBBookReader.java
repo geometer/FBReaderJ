@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
@@ -28,7 +30,6 @@ import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
-import org.geometerplus.fbreader.constants.XMLNamespace;
 
 class Reference {
 	public final String Title;
@@ -40,7 +41,7 @@ class Reference {
 	}
 }
 
-class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
+class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private static final char[] Dots = new char[] {'.', '.', '.'};
 
 	private final BookReader myModelReader;
@@ -216,7 +217,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespace {
 					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
 					final String imageName = imageFile.getName(false);
 					myModelReader.addImageReference(imageName, (short)0);
-					myModelReader.addImage(imageName, new ZLFileImage("image/auto", imageFile));
+					myModelReader.addImage(imageName, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, imageFile));
 				}
 			}
 		} else if ((myState == READ_TOUR) && (SITE == tag)) {
