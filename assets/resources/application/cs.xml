@@ -20,7 +20,7 @@
 			<node name="summary" value="My selected books" toBeTranslated="true"/>
 		</node>
 		<node name="searchResults" value="Nalezené">
-			<node name="summary" value="Search results for: %s" toBeTranslated="true"/>
+			<node name="summary" value="Hledat výsledky pro: %s" />
 		</node>
 		<node name="fileTree" value="File tree" toBeTranslated="true">
 			<node name="summary" value="Browse file system" toBeTranslated="true"/>
@@ -30,6 +30,8 @@
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="deleteBook" value="Odstranit knihu"/>
+		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Otevřít katalog"/>
