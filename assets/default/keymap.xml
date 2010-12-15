@@ -3,6 +3,6 @@
 	<binding key="&lt;VolumeDown&gt;" action="volumeKeyScrollForward"/>
 	<binding key="&lt;VolumeUp&gt;" action="volumeKeyScrollBackward"/>
 	<binding key="&lt;Back&gt;" action="cancel"/>
-	<binding key="&lt;Enter&gt;" action="followHyperlink"/>
-	<binding key="&lt;PadCenter&gt;" action="followHyperlink"/>
+	<binding key="&lt;Enter&gt;" action="processHyperlink"/>
+	<binding key="&lt;PadCenter&gt;" action="processHyperlink"/>
 </keymap>

@@ -22,15 +22,13 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.ArrayList;
 
 final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
-	private static final long serialVersionUID = -5045824474350948281L;
-
-	final ArrayList<ZLTextHyperlinkArea> HyperlinkAreas = new ArrayList<ZLTextHyperlinkArea>();
-	private ZLTextHyperlinkArea myCurrentHyperlinkArea;
+	final ArrayList<ZLTextElementRegion> ElementRegions = new ArrayList<ZLTextElementRegion>();
+	private ZLTextElementRegion myCurrentElementRegion;
 
 	@Override
 	public void clear() {
-		HyperlinkAreas.clear();
-		myCurrentHyperlinkArea = null;
+		ElementRegions.clear();
+		myCurrentElementRegion = null;
 		super.clear();
 	}
 
@@ -38,13 +36,25 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 	public boolean add(ZLTextElementArea area) {
 		final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
 		if (hyperlink.Id == null) {
-			myCurrentHyperlinkArea = null;
-		} else {
-			if ((myCurrentHyperlinkArea == null) || (myCurrentHyperlinkArea.Hyperlink != hyperlink)) {
-				myCurrentHyperlinkArea = new ZLTextHyperlinkArea(hyperlink, this, size());
-				HyperlinkAreas.add(myCurrentHyperlinkArea);
+			if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
+				if (!(myCurrentElementRegion instanceof ZLTextWordRegion) ||
+					((ZLTextWordRegion)myCurrentElementRegion).Word != area.Element) {
+					myCurrentElementRegion =
+						new ZLTextWordRegion((ZLTextWord)area.Element, this, size());
+					ElementRegions.add(myCurrentElementRegion);
+				} else {
+					myCurrentElementRegion.extend();
+				}
 			} else {
-				myCurrentHyperlinkArea.extend();
+				myCurrentElementRegion = null;
+			}
+		} else {
+			if (!(myCurrentElementRegion instanceof ZLTextHyperlinkRegion) ||
+				((ZLTextHyperlinkRegion)myCurrentElementRegion).Hyperlink != hyperlink) {
+				myCurrentElementRegion = new ZLTextHyperlinkRegion(hyperlink, this, size());
+				ElementRegions.add(myCurrentElementRegion);
+			} else {
+				myCurrentElementRegion.extend();
 			}
 		}
 		return super.add(area);

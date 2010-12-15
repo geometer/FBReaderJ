@@ -396,6 +396,12 @@ public class ZLAndroidWidget extends View {
 			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
 				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+				ZLApplication.Instance().getCurrentView().onTrackballRotated(-1, 0);
+				return true;
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+				ZLApplication.Instance().getCurrentView().onTrackballRotated(1, 0);
+				return true;
 			case KeyEvent.KEYCODE_DPAD_DOWN:
 				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
 				return true;

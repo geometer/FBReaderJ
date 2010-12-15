@@ -126,6 +126,8 @@
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
 		<node name="networkLibrary" value="Network library"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode"/>
+		<node name="dictionaryMode" value="Dictionary mode"/>
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>

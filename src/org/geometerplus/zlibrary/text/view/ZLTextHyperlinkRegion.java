@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,28 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.zlibrary.text.view;
 
-class QuitAction extends FBAction {
-	QuitAction(FBReaderApp fbreader) {
-		super(fbreader);
+import java.util.List;
+
+class ZLTextHyperlinkRegion extends ZLTextElementRegion {
+	static Filter Filter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return region instanceof ZLTextHyperlinkRegion;
+		}
+	};
+
+	final ZLTextHyperlink Hyperlink;
+
+	ZLTextHyperlinkRegion(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
+		super(list, fromIndex);
+		Hyperlink = hyperlink;
 	}
-		
-	public void run() {
-		Reader.closeWindow();
-	}		
+
+	public boolean equals(Object other) {
+		if (!(other instanceof ZLTextHyperlinkRegion)) {
+			return false;
+		}
+		return Hyperlink == ((ZLTextHyperlinkRegion)other).Hyperlink;
+	}
 }
