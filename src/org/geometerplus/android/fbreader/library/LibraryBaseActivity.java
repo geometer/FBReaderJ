@@ -241,17 +241,10 @@ abstract class LibraryBaseActivity extends ListActivity {
 					openBook(book);
 					return true;
 				case ADD_TO_FAVORITES_ITEM_ID:
-<<<<<<< HEAD
-					LibraryInstance.addBookToFavorites(bookTree.Book);
-					return true;
-				case REMOVE_FROM_FAVORITES_ITEM_ID:
-					LibraryInstance.removeBookFromFavorites(bookTree.Book);
-=======
 					Library.addBookToFavorites(book);
 					return true;
 				case REMOVE_FROM_FAVORITES_ITEM_ID:
 					Library.removeBookFromFavorites(book);
->>>>>>> master
 					getListView().invalidateViews();
 					return true;
 				case DELETE_BOOK_ITEM_ID:
