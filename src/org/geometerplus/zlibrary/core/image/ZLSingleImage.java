@@ -26,7 +26,7 @@ public abstract class ZLSingleImage implements ZLImage {
 		myMimeType = mimeType;
 	}
 
-	public abstract byte [] byteData();
+	public abstract byte[] byteData();
 	
 	public final String mimeType() {
 		return myMimeType;

@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
+public final class ZLStringOption extends ZLOption {
 	private final String myDefaultValue;
 	private String myValue;
 
@@ -27,10 +27,6 @@ public final class ZLStringOption extends ZLOption implements ZLSimpleOption {
 		super(group, optionName);
 		myDefaultValue = (defaultValue != null) ? defaultValue.intern() : "";
 		myValue = myDefaultValue;
-	}
-
-	public int getType() {
-		return Type.STRING;
 	}
 
 	public String getValue() {

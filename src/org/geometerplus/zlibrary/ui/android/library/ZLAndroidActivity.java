@@ -19,10 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.io.File;
 import java.lang.reflect.*;
 
-import android.net.Uri;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.*;
@@ -38,7 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract ZLApplication createApplication(String fileName);
+	protected abstract ZLApplication createApplication(ZLFile file);
 
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
@@ -48,16 +46,6 @@ public abstract class ZLAndroidActivity extends Activity {
 		super.onSaveInstanceState(state);
 		state.putInt(REQUESTED_ORIENTATION_KEY, myOrientation);
 		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
-	}
-
-	protected abstract String fileNameForEmptyUri();
-
-	private String fileNameFromUri(Uri uri) {
-		if (uri.equals(Uri.parse("file:///"))) {
-			return fileNameForEmptyUri();
-		} else {
-			return uri.getPath();
-		}
 	}
 
 	private void setScreenBrightnessAuto() {
@@ -96,24 +84,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
-	private String extractFileNameFromIntent(Intent intent) {
-		String fileToOpen = null;
-		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-			final Uri uri = intent.getData();
-			if (uri != null) {
-				fileToOpen = fileNameFromUri(uri);
-                final String scheme = uri.getScheme();
-                if ("content".equals(scheme)) {
-                    final File file = new File(fileToOpen);
-                    if (!file.exists()) {
-                        fileToOpen = file.getParent();
-                    }
-                }
-			}
-			intent.setData(null);
-		}
-		return fileToOpen;
-	}
+	protected abstract ZLFile fileFromIntent(Intent intent);
 
 	@Override
 	public void onCreate(Bundle state) {
@@ -132,14 +103,13 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		getLibrary().setActivity(this);
 
-		final String fileToOpen = extractFileNameFromIntent(getIntent());
-
+		final ZLFile fileToOpen = fileFromIntent(getIntent());
 		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
 			ZLApplication application = createApplication(fileToOpen);
 			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
-		} else if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
+		} else {
+			ZLApplication.Instance().openFile(fileToOpen);
 		}
 		ZLApplication.Instance().repaintView();
 	}
@@ -237,11 +207,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 
-		final String fileToOpen = extractFileNameFromIntent(intent);
-		if (fileToOpen != null) {
-			ZLApplication.Instance().openFile(ZLFile.createFileByPath(fileToOpen));
-		}
-		// ZLApplication.Instance().repaintView();
+		ZLApplication.Instance().openFile(fileFromIntent(intent));
 	}
 
 	private static ZLAndroidLibrary getLibrary() {

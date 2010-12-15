@@ -31,26 +31,26 @@ public class BookmarkSearchActivity extends SearchActivity {
 	private final LinkedList<Bookmark> myBookmarks = new LinkedList<Bookmark>();
 
 	@Override
-	void onSuccess() {
+	public void onSuccess() {
 		BookmarksActivity.Instance.showSearchResultsTab(myBookmarks);
 	}
 
 	/*@Override
-	void onFailure() {
+	public void onFailure() {
 	}*/
 
 	@Override
-	String getFailureMessageResourceKey() {
+	public String getFailureMessageResourceKey() {
 		return "bookmarkNotFound";
 	}
 
 	@Override
-	String getWaitMessageResourceKey() {
+	public String getWaitMessageResourceKey() {
 		return "search";
 	}
 
 	@Override
-	boolean runSearch(String pattern) {
+	public boolean runSearch(String pattern) {
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		fbreader.BookmarkSearchPatternOption.setValue(pattern);
 		pattern = pattern.toLowerCase();
@@ -64,7 +64,7 @@ public class BookmarkSearchActivity extends SearchActivity {
 	}
 
 	@Override
-	Activity getParentActivity() {
+	public Activity getParentActivity() {
 		return BookmarksActivity.Instance;
 	}
 }

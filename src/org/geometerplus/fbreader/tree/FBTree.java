@@ -47,6 +47,18 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 
 	public abstract String getName();
 
+	public final FBTree getSubTreeByName(String name) {
+		if (name == null) {
+			return null;
+		}
+		for (FBTree t : subTrees()) {
+			if (name.equals(t.getName())) {
+				return t;
+			}
+		}
+		return null;
+	}
+
 	protected String getSortKey() {
 		return getName();
 	}
