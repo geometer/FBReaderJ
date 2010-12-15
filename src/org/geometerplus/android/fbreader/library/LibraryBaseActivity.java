@@ -249,10 +249,10 @@ abstract class LibraryBaseActivity extends ListActivity {
 					openBook(book);
 					return true;
 				case ADD_TO_FAVORITES_ITEM_ID:
-					Library.addBookToFavorites(book);
+					LibraryInstance.addBookToFavorites(book);
 					return true;
 				case REMOVE_FROM_FAVORITES_ITEM_ID:
-					Library.removeBookFromFavorites(book);
+					LibraryInstance.removeBookFromFavorites(book);
 					getListView().invalidateViews();
 					return true;
 				case DELETE_BOOK_ITEM_ID:
@@ -273,7 +273,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 		}
 
 		public void onClick(DialogInterface dialog, int which) {
-			Library.removeBook(myBook, myMode);
+			LibraryInstance.removeBook(myBook, myMode);
 			getListView().invalidateViews();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
 		}
