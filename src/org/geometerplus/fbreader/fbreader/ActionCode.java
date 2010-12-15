@@ -35,10 +35,11 @@ public interface ActionCode {
 	String FIND_NEXT = "findNext";
 	String CLEAR_FIND_RESULTS = "clearFindResults";
 
+	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
+	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
+
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
-	String TRACKBALL_SCROLL_FORWARD = "trackballScrollForward";
-	String TRACKBALL_SCROLL_BACKWARD = "trackballScrollBackward";
 	String SHOW_NAVIGATION = "navigate";
 	String CANCEL = "cancel";
 	String ROTATE = "rotate";
@@ -46,9 +47,9 @@ public interface ActionCode {
 	String DECREASE_FONT = "decreaseFont";
 	String TOGGLE_FULLSCREEN = "toggleFullscreen";
 	String FULLSCREEN_ON = "onFullscreen";
-	String QUIT = "quit";
+
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
-	String OPEN_SELECTED_TEXT_IN_DICTIONARY = "openInDictionary";
-	String FOLLOW_HYPERLINK = "followHyperlink";
-};
+
+	String PROCESS_HYPERLINK = "processHyperlink";
+}
