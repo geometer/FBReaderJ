@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.library.BookTree;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	private String myTreePathString;
-	private String mySelectedBookPath;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -52,7 +51,6 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		}
 
 		myTreePathString = intent.getStringExtra(TREE_PATH_KEY);
-		mySelectedBookPath = intent.getStringExtra(SELECTED_BOOK_PATH_KEY);
         
 		final String[] path = myTreePathString.split("\000");
         
@@ -101,10 +99,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		if (tree instanceof BookTree) {
 			openBook(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(
-				myTreePathString + "\000" + tree.getName(),
-				mySelectedBookPath
-			).run();
+			new OpenTreeRunnable(myTreePathString + "\000" + tree.getName()).run();
 		}
 	}
 }

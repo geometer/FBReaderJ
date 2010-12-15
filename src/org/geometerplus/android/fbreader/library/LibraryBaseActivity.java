@@ -64,7 +64,7 @@ abstract class LibraryBaseActivity extends ListActivity {
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
-	protected String mySelectedBookPath;
+	private String mySelectedBookPath;
 
 	private static int CHILD_LIST_REQUEST = 0;
 	private static int RESULT_DONT_INVALIDATE_VIEWS = 0;
@@ -290,16 +290,14 @@ abstract class LibraryBaseActivity extends ListActivity {
 	protected class OpenTreeRunnable implements Runnable {
 		private final String myTreePath;
 		private final String myParameter;
-		private final String mySelectedBookPath;
 
-		public OpenTreeRunnable(String treePath, String selectedBookPath) {
-			this(treePath, null, selectedBookPath);
+		public OpenTreeRunnable(String treePath) {
+			this(treePath, null);
 		}
 
-		public OpenTreeRunnable(String treePath, String parameter, String selectedBookPath) {
+		public OpenTreeRunnable(String treePath, String parameter) {
 			myTreePath = treePath;
 			myParameter = parameter;
-			mySelectedBookPath = selectedBookPath;
 		}
 
 		public void run() {
