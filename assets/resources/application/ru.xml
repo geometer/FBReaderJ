@@ -19,18 +19,18 @@
 			<node name="summary" value="Мои любимые книги"/>
 		</node>
 		<node name="searchResults" value="Найдено">
-			<node name="searchResults" value="Результаты поиска для: %s" />
+			<node name="summary" value="Результаты поиска для: %s" />
 		</node>
 		<node name="fileTree" value="Файловая система">
 			<node name="summary" value="Файлы на моем устройстве"/>
 		</node>
-		<node name="addToFavorites" value="Добавить в избранное"/>
-		<node name="removeFromFavorites" value="Убрать из избранного"/>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
 		</node>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="deleteBook" value="Удалить книгу"/>
+		<node name="addToFavorites" value="Добавить в избранное"/>
+		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
