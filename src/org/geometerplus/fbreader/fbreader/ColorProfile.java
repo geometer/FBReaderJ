@@ -70,33 +70,37 @@ public class ColorProfile {
 		FooterFillOption.setValue(base.FooterFillOption.getValue());
 	}
 
+	private static ZLColorOption createOption(String profileName, String optionName, int r, int g, int b) {
+		return new ZLColorOption("Colors", profileName + ':' + optionName, new ZLColor(r, g, b));
+	}
+
 	private ColorProfile(String name) {
 		if (NIGHT.equals(name)) {
 			BackgroundOption =
-				new ZLColorOption("Colors", name + ":Background", new ZLColor(0, 0, 0));
+				createOption(name, "Background", 0, 0, 0);
 			SelectionBackgroundOption =
-				new ZLColorOption("Colors", name + ":SelectionBackground", new ZLColor(82, 131, 194));
+				createOption(name, "SelectionBackground", 82, 131, 194);
 			HighlightingOption =
-				new ZLColorOption("Colors", name + ":Highlighting", new ZLColor(96, 96, 128));
+				createOption(name, "Highlighting", 96, 96, 128);
 			RegularTextOption =
-				new ZLColorOption("Colors", name + ":Text", new ZLColor(192, 192, 192));
+				createOption(name, "Text", 192, 192, 192);
 			HyperlinkTextOption =
-				new ZLColorOption("Colors", name + ":Hyperlink", new ZLColor(60, 142, 224));
+				createOption(name, "Hyperlink", 60, 142, 224);
 			FooterFillOption =
-				new ZLColorOption("Colors", name + ":FooterFillOption", new ZLColor(85, 85, 85));
+				createOption(name, "FooterFillOption", 85, 85, 85);
 		} else {
 			BackgroundOption =
-				new ZLColorOption("Colors", name + ":Background", new ZLColor(255, 255, 255));
+				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =
-				new ZLColorOption("Colors", name + ":SelectionBackground", new ZLColor(82, 131, 194));
+				createOption(name, "SelectionBackground", 82, 131, 194);
 			HighlightingOption =
-				new ZLColorOption("Colors", name + ":Highlighting", new ZLColor(255, 192, 128));
+				createOption(name, "Highlighting", 255, 192, 128);
 			RegularTextOption =
-				new ZLColorOption("Colors", name + ":Text", new ZLColor(0, 0, 0));
+				createOption(name, "Text", 0, 0, 0);
 			HyperlinkTextOption =
-				new ZLColorOption("Colors", name + ":Hyperlink", new ZLColor(60, 139, 255));
+				createOption(name, "Hyperlink", 60, 139, 255);
 			FooterFillOption =
-				new ZLColorOption("Colors", name + ":FooterFillOption", new ZLColor(170, 170, 170));
+				createOption(name, "FooterFillOption", 170, 170, 170);
 		}
 	}
 }

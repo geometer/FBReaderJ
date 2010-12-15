@@ -79,24 +79,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myWidget;
 	}
 
-	public void openInBrowser(String reference) {
-		final Intent intent = new Intent(Intent.ACTION_VIEW);
-		boolean externalUrl = true;
-		if (BookDownloader.acceptsUri(Uri.parse(reference))) {
-			intent.setClass(myActivity, BookDownloader.class);
-			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
-			externalUrl = false;
-		}
-		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
-		try {
-			nLibrary.initialize();
-		} catch (ZLNetworkException e) {
-		}
-		reference = NetworkLibrary.Instance().rewriteUrl(reference, externalUrl);
-		intent.setData(Uri.parse(reference));
-		myActivity.startActivity(intent);
-	}
-
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidAssetsFile(path);
