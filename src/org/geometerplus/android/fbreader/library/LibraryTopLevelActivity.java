@@ -60,22 +60,22 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(PATH_FAVORITES, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_FAVORITES)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_RECENT),
 			R.drawable.ic_list_library_recent,
-			new OpenTreeRunnable(PATH_RECENT, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_RECENT)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_AUTHOR),
 			R.drawable.ic_list_library_authors,
-			new OpenTreeRunnable(PATH_BY_AUTHOR, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_BY_AUTHOR)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TAG),
 			R.drawable.ic_list_library_tags,
-			new OpenTreeRunnable(PATH_BY_TAG, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_BY_TAG)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
@@ -111,7 +111,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			myResource.getResource(PATH_SEARCH_RESULTS),
 			pattern,
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(PATH_SEARCH_RESULTS, pattern, mySelectedBookPath)
+			new OpenTreeRunnable(PATH_SEARCH_RESULTS, pattern)
 		);
 		myItems.add(0, mySearchResultsItem);
 		getListView().invalidateViews();
