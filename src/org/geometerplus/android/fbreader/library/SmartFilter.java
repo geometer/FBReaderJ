@@ -19,13 +19,14 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.fbreader.formats.PluginCollection;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 public class SmartFilter implements Runnable {
 	private final Activity myParent;

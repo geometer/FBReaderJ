@@ -27,13 +27,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.fbreader.Paths;
+
+import org.geometerplus.android.fbreader.FBReader;
+
 
 public final class FileManager extends ListActivity {
 	public static String FILE_MANAGER_PATH = "FileManagerPath";
