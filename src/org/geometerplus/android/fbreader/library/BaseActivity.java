@@ -56,6 +56,7 @@ abstract class BaseActivity extends ListActivity {
 
 	static Library LibraryInstance;
 
+	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	/*private*/ String mySelectedBookPath;
 
 	@Override
@@ -66,15 +67,50 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected void openBook(Book book) {
-		openBook(book.File.getPath());
-	}
-
-	protected void openBook(String path){
 		startActivity(
 			new Intent(getApplicationContext(), FBReader.class)
 				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, path)
+				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
 				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
 		);
+	}
+
+	protected void createBookContextMenu(ContextMenu menu, Book book) {
+		menu.setHeaderTitle(book.getTitle());
+		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
+		if (LibraryInstance.isBookInFavorites(book)) {
+			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
+		} else {
+			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
+		}
+		if ((LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
+        }
+	}
+
+	private final Runnable myInvalidateViewsRunnable = new Runnable() {
+		public void run() {
+			getListView().invalidateViews();
+		}
+	};
+
+	protected Bitmap getCoverBitmap(ZLImage cover, int width, int height) {
+		if (cover == null) {
+			return null;
+		}
+
+		ZLAndroidImageData data = null;
+		final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+		if (cover instanceof ZLLoadableImage) {
+			final ZLLoadableImage img = (ZLLoadableImage)cover;
+			if (img.isSynchronized()) {
+				data = mgr.getImageData(img);
+			} else {
+				ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
+			}
+		} else {
+			data = mgr.getImageData(cover);
+		}
+		return data != null ? data.getBitmap(2 * width, 2 * height) : null;
 	}
 }

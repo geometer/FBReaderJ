@@ -24,6 +24,15 @@
 		<node name="fileTree" value="File tree">
 			<node name="summary" value="Browse file system"/>
 		</node>
+		<node name="fileTreeRoot" value="Device">
+			<node name="summary" value="Full file system of the device"/>
+		</node>
+		<node name="fileTreeCard" value="Memory card">
+			<node name="summary" value="Memory card inserted into the device"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader library">
+			<node name="summary" value="FBReader books directory"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Local search"/>
 		</node>
@@ -31,18 +40,7 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
-	</node>
-	<node name="fileManagerView">
-		<node name="root" value="Device">
-			<node name="summary" value="Full file system of the device"/>
-		</node>
-		<node name="sdcard" value="Memory card">
-			<node name="summary" value="Memory card inserted into the device"/>
-		</node>
-		<node name="books" value="FBReader library">
-			<node name="summary" value="FBReader books directory"/>
-		</node>
-		<node name="permission_denied" value="Permission denied..." />
+		<node name="permissionDenied" value="Permission denied"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>
