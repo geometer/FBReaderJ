@@ -126,9 +126,6 @@ abstract class LibraryBaseActivity extends BaseActivity {
 			}
 		}
 
-		private int myCoverWidth = -1;
-		private int myCoverHeight = -1;
-
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final FBTree tree = getItem(position);
 			final View view = (convertView != null) ?  convertView :
@@ -145,23 +142,12 @@ abstract class LibraryBaseActivity extends BaseActivity {
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 
-			if (myCoverWidth == -1) {
-				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-				myCoverHeight = view.getMeasuredHeight();
-				myCoverWidth = myCoverHeight * 15 / 32;
-				view.requestLayout();
-			}
-
-			final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
-			coverView.getLayoutParams().width = myCoverWidth;
-			coverView.getLayoutParams().height = myCoverHeight;
-			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			coverView.requestLayout();
+			final ImageView coverView = getCoverView(view);
 
 			if (tree instanceof ZLAndroidTree) {
 				coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
 			} else {
-				final Bitmap coverBitmap = getCoverBitmap(tree.getCover(), myCoverWidth, myCoverHeight);
+				final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
 				if (coverBitmap != null) {
 					coverView.setImageBitmap(coverBitmap);
 				} else if (tree instanceof AuthorTree) {

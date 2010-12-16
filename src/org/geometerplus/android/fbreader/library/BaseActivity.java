@@ -88,13 +88,31 @@ abstract class BaseActivity extends ListActivity {
         }
 	}
 
+	private int myCoverWidth = -1;
+	private int myCoverHeight = -1;
 	private final Runnable myInvalidateViewsRunnable = new Runnable() {
 		public void run() {
 			getListView().invalidateViews();
 		}
 	};
 
-	protected Bitmap getCoverBitmap(ZLImage cover, int width, int height) {
+	protected ImageView getCoverView(View parent) {
+		if (myCoverWidth == -1) {
+			parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			myCoverHeight = parent.getMeasuredHeight();
+			myCoverWidth = myCoverHeight * 15 / 32;
+			parent.requestLayout();
+		}
+
+		final ImageView coverView = (ImageView)parent.findViewById(R.id.library_tree_item_icon);
+		coverView.getLayoutParams().width = myCoverWidth;
+		coverView.getLayoutParams().height = myCoverHeight;
+		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		coverView.requestLayout();
+		return coverView;
+	}
+
+	protected Bitmap getCoverBitmap(ZLImage cover) {
 		if (cover == null) {
 			return null;
 		}
@@ -111,6 +129,6 @@ abstract class BaseActivity extends ListActivity {
 		} else {
 			data = mgr.getImageData(cover);
 		}
-		return data != null ? data.getBitmap(2 * width, 2 * height) : null;
+		return data != null ? data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight) : null;
 	}
 }

@@ -165,31 +165,17 @@ public final class FileManager extends BaseActivity {
 			}
 		}
 
-		private int myCoverWidth = -1;
-		private int myCoverHeight = -1;
-
 		public View getView(int position, View convertView, ViewGroup parent) {
+            final FileItem item = myItems.get(position);
+
 			final View view = (convertView != null) ?  convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-            FileItem item = myItems.get(position);
 
             ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getSummary());
 
-			if (myCoverWidth == -1) {
-				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-				myCoverHeight = view.getMeasuredHeight();
-				myCoverWidth = myCoverHeight * 15 / 32;
-				view.requestLayout();
-			}
-
-			final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
-			coverView.getLayoutParams().width = myCoverWidth;
-			coverView.getLayoutParams().height = myCoverHeight;
-			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			coverView.requestLayout();
-
-			final Bitmap coverBitmap = getCoverBitmap(item.getCover(), myCoverWidth, myCoverHeight);
+			final ImageView coverView = getCoverView(view);
+			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
 			if (coverBitmap != null) {
 				coverView.setImageBitmap(coverBitmap);
 			} else {
