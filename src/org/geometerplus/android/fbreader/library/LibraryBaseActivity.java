@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.library;
 import java.util.List;
 
 import android.app.*;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -63,14 +64,27 @@ abstract class LibraryBaseActivity extends ListActivity {
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
-	protected String mySelectedBookPath;
+	private String mySelectedBookPath;
+
+	private static int CHILD_LIST_REQUEST = 0;
+	private static int RESULT_DONT_INVALIDATE_VIEWS = 0;
+	private static int RESULT_DO_INVALIDATE_VIEWS = 1;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		setResult(RESULT_DONT_INVALIDATE_VIEWS);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
+		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
+			getListView().invalidateViews();
+			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		}
+	} 
 
 	@Override
 	public boolean onSearchRequested() {
@@ -147,6 +161,14 @@ abstract class LibraryBaseActivity extends ListActivity {
 			final View view = (convertView != null) ?  convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
+			if (tree instanceof BookTree &&
+				mySelectedBookPath != null &&
+				mySelectedBookPath.equals(((BookTree)tree).Book.File.getPath())) {
+				view.setBackgroundColor(0xff808080);
+			} else {
+				view.setBackgroundColor(0);
+			}
+
 			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 
@@ -221,49 +243,77 @@ abstract class LibraryBaseActivity extends ListActivity {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
-			final BookTree bookTree = (BookTree)tree;
+			final Book book = ((BookTree)tree).Book;
 			switch (item.getItemId()) {
 				case OPEN_BOOK_ITEM_ID:
-					openBook(bookTree.Book);
+					openBook(book);
 					return true;
 				case ADD_TO_FAVORITES_ITEM_ID:
-					LibraryInstance.addBookToFavorites(bookTree.Book);
+					LibraryInstance.addBookToFavorites(book);
 					return true;
 				case REMOVE_FROM_FAVORITES_ITEM_ID:
-					LibraryInstance.removeBookFromFavorites(bookTree.Book);
+					LibraryInstance.removeBookFromFavorites(book);
 					getListView().invalidateViews();
 					return true;
 				case DELETE_BOOK_ITEM_ID:
-					// TODO: implement
+					tryToDeleteBook(book);
 					return true;
 			}
 		}
 		return super.onContextItemSelected(item);
 	}
 
+	private class BookDeleter implements DialogInterface.OnClickListener {
+		private final Book myBook;
+		private final int myMode;
+
+		BookDeleter(Book book, int removeMode) {
+			myBook = book;
+			myMode = removeMode;
+		}
+
+		public void onClick(DialogInterface dialog, int which) {
+			LibraryInstance.removeBook(myBook, myMode);
+			getListView().invalidateViews();
+			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		}
+	}
+
+	private void tryToDeleteBook(Book book) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
+		new AlertDialog.Builder(this)
+			.setTitle(book.getTitle())
+			.setMessage(boxResource.getResource("message").getValue())
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book, Library.REMOVE_FROM_DISK))
+			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+			.create().show();
+	}
+
 	protected class OpenTreeRunnable implements Runnable {
 		private final String myTreePath;
 		private final String myParameter;
-		private final String mySelectedBookPath;
 
-		public OpenTreeRunnable(String treePath, String selectedBookPath) {
-			this(treePath, null, selectedBookPath);
+		public OpenTreeRunnable(String treePath) {
+			this(treePath, null);
 		}
 
-		public OpenTreeRunnable(String treePath, String parameter, String selectedBookPath) {
+		public OpenTreeRunnable(String treePath, String parameter) {
 			myTreePath = treePath;
 			myParameter = parameter;
-			mySelectedBookPath = selectedBookPath;
 		}
 
 		public void run() {
 			final Runnable postRunnable = new Runnable() {
 				public void run() {
-					startActivity(
+					startActivityForResult(
 						new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 							.putExtra(TREE_PATH_KEY, myTreePath)
-							.putExtra(PARAMETER_KEY, myParameter)
+							.putExtra(PARAMETER_KEY, myParameter),
+						CHILD_LIST_REQUEST
 					);
 				}
 			};

@@ -56,6 +56,15 @@ public final class ZLTextWord extends ZLTextElement {
 		myParagraphOffset = paragraphOffset;
 	}
 
+	public boolean isAWord() {
+		for (int i = Offset; i < Offset + Length; ++i) {
+			if (Character.isLetterOrDigit(Data[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Mark getMark() {
 		return myMark;
 	}
@@ -89,10 +98,6 @@ public final class ZLTextWord extends ZLTextElement {
 	}
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = Offset; i < Offset + Length; i++) {
-			sb.append(Data[i]);
-		}	
-		return sb.toString();
+		return new String(Data, Offset, Length);
 	}
 }

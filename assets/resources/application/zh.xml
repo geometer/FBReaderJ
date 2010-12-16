@@ -7,15 +7,31 @@
 		<node name="demo" value="试读本" />
 	</node>
 	<node name="libraryView">
-		<node name="byAuthor" value="作者" />
-		<node name="byTag" value="标签" />
-		<node name="recent" value="最近" />
-		<node name="searchResults" value="搜索结果" />
+		<node name="byAuthor" value="作者">
+			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		</node>
+		<node name="byTag" value="标签">
+			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+		</node>
+		<node name="recent" value="最近">
+			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+		</node>
+		<node name="favorites" value="Favorites" toBeTranslated="true">
+			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		</node>
+		<node name="searchResults" value="搜索结果">
+			<node name="summary" value="搜索结果: %s" />
+		</node>
+		<node name="fileTree" value="File tree" toBeTranslated="true">
+			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="本地搜索" />
 		</node>
 		<node name="openBook" value="打开图书" />
 		<node name="deleteBook" value="删除图书" />
+		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="打开书库目录" />
@@ -76,7 +92,7 @@
 		<node name="authors" value="作者:" />
 		<node name="series" value="系列:" />
 		<node name="indexInSeries" value="系列序号:" />
-		<node name="tags" value="Tags:" />
+		<node name="tags" toBeTranslated="true" value="Tags:" />
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="下载成功" />
