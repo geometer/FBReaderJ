@@ -101,7 +101,7 @@ public final class FileManager extends ListActivity {
 					return true;
 				case DELETE_BOOK_ITEM_ID:
 					// TODO: implemen
-					// TODO проверить (если книга была в избранных), то ((FManagerAdapter)getListAdapter())
+					// TODO: if book is in favorites list do ((FManagerAdapter)getListAdapter())
 					adapter.remove(fileItem);
 					adapter.notifyDataSetChanged();
 					fileItem.getBook().File.getPhysicalFile().delete();
