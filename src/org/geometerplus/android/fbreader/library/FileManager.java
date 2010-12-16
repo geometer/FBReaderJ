@@ -39,15 +39,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public final class FileManager extends ListActivity {
+public final class FileManager extends BaseActivity {
 	public static String FILE_MANAGER_PATH = "FileManagerPath";
-	public static String LOG = "FileManager";
-	public static Library LibraryInstance;
 	private final ZLResource myResource = ZLResource.resource("fileManagerView");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.v(LOG, "onCreate()");
 		super.onCreate(savedInstanceState);
 
 		FManagerAdapter adapter = new FManagerAdapter(this);
@@ -76,11 +73,6 @@ public final class FileManager extends ListActivity {
 		});
 	}
 	
-	public static final int OPEN_BOOK_ITEM_ID = 0;
-	public static final int ADD_TO_FAVORITES_ITEM_ID = 1;
-	public static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
-	public static final int DELETE_BOOK_ITEM_ID = 3;
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
@@ -131,13 +123,5 @@ public final class FileManager extends ListActivity {
 			resource.getValue(),
 			resource.getResource("summary").getValue()
 		));
-	}
-
-	private void openBook(String path){
-		Intent i = new Intent(this, FBReader.class);
-		i.setAction(Intent.ACTION_VIEW);
-		i.putExtra(FBReader.BOOK_PATH_KEY, path);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(i);
 	}
 }

@@ -47,8 +47,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-abstract class LibraryBaseActivity extends ListActivity {
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+abstract class LibraryBaseActivity extends BaseActivity {
 	static final String TREE_PATH_KEY = "TreePath";
 	static final String PARAMETER_KEY = "Parameter";
 
@@ -58,13 +57,10 @@ abstract class LibraryBaseActivity extends ListActivity {
 	static final String PATH_BY_AUTHOR = "byAuthor";
 	static final String PATH_BY_TAG = "byTag";
 
-	static Library LibraryInstance;
-
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
-	private String mySelectedBookPath;
 
 	private static int CHILD_LIST_REQUEST = 0;
 	private static int RESULT_DONT_INVALIDATE_VIEWS = 0;
@@ -74,8 +70,6 @@ abstract class LibraryBaseActivity extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);
-		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 	}
 
 	@Override
@@ -223,20 +217,6 @@ abstract class LibraryBaseActivity extends ListActivity {
 			return view;
 		}
 	}
-
-	protected void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-		);
-	}
-
-	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 1;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
-	private static final int DELETE_BOOK_ITEM_ID = 3;
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {

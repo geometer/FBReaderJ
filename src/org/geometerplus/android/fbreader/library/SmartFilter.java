@@ -39,11 +39,11 @@ public class SmartFilter implements Runnable {
 	}
 	
 	public void run() {
-		try {
+		//try {
 			getItems();
-		} catch (Exception e) {
-			Log.e(FileManager.LOG, e.getMessage());
-		}
+		//} catch (Exception e) {
+		//	Log.e(FileManager.LOG, e.getMessage());
+		//}
 	}
 	
 	private void getItems() {

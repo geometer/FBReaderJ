@@ -90,18 +90,13 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 			menu.add(0, FileManager.OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 			menu.add(0, FileManager.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 			
-			try{
-				if (FileManager.LibraryInstance.isBookInFavorites(book)) {
-					menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
-				} else {
-					menu.add(0, FileManager.ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
-				}
-				if ((FileManager.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
-					menu.add(0, FileManager.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
-				}
+			if (FileManager.LibraryInstance.isBookInFavorites(book)) {
+				menu.add(0, FileManager.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
+			} else {
+				menu.add(0, FileManager.ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 			}
-			catch (Exception e) {
-				Log.v(FileManager.LOG, "FileManager.LibraryInstance.isBookInFavorites(book) = exception");
+			if ((FileManager.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+				menu.add(0, FileManager.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 			}
 		}
 	}
@@ -159,7 +154,6 @@ public class FManagerAdapter extends BaseAdapter implements View.OnCreateContext
 					data = mgr.getImageData(cover);
 				}
 				if (data != null) {
-					Log.v(FileManager.LOG, "data != null");
 					coverBitmap = data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
 				}
 			}

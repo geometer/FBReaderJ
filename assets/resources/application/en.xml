@@ -42,10 +42,6 @@
 		<node name="books" value="FBReader library">
 			<node name="summary" value="FBReader books directory"/>
 		</node>
-		<node name="progress_dialog">
-			<node name="title" value="Please wait..."/>
-			<node name="message" value="Retrieving data ..."/>
-		</node>
 		<node name="permission_denied" value="Permission denied..." />
 	</node>
 	<node name="networkView">
