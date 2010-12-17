@@ -103,6 +103,24 @@
 		<node name="indexInSeries" value="Index in series:" />
 		<node name="tags" value="Címkék:" />
 	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Könyv adatai" />
+		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="title" value="Cím:" />
+		<node name="authors" value="Szerzők:" />
+		<node name="series" value="Sorozat:" />
+		<node name="indexInSeries" value="Index in series:" />
+		<node name="tags" value="Címkék:" />
+		<node name="name" toBeTranslated="true" value="Name:" />
+		<node name="type" toBeTranslated="true" value="Type:" />
+		<node name="size" toBeTranslated="true" value="Size:" />
+		<node name="time" toBeTranslated="true" value="Last modified:" />
+		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="menu">
+			<node name="edit" toBeTranslated="true" value="Edit" />
+		</node>
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Könyv letöltve" />
 		<node name="tickerError" value="Hiba a könyv letöltése közben" />

@@ -102,6 +102,24 @@
 		<node name="indexInSeries" value="Index in series:" />
 		<node name="tags" value="Tags:" />
 	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Book Info" />
+		<node name="fileInfo" value="File Info" />
+		<node name="title" value="Title:" />
+		<node name="authors" value="Authors:" />
+		<node name="series" value="Series:" />
+		<node name="indexInSeries" value="Index in series:" />
+		<node name="tags" value="Tags:" />
+		<node name="name" value="Name:" />
+		<node name="type" value="Type:" />
+		<node name="size" value="Size:" />
+		<node name="time" value="Last modified:" />
+		<node name="sizeInBytes" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="menu">
+			<node name="edit" value="Edit" />
+		</node>
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Book has been downloaded" />
 		<node name="tickerError" value="Book download error" />

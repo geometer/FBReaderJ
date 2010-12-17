@@ -104,6 +104,24 @@
 		<node name="indexInSeries" value="Seriennummer:" />
 		<node name="tags" value="Tags:" />
 	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Buchinformation" />
+		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="title" value="Titel:" />
+		<node name="authors" value="Autor(en):" />
+		<node name="series" value="Serie:" />
+		<node name="indexInSeries" value="Seriennummer:" />
+		<node name="tags" value="Tags:" />
+		<node name="name" toBeTranslated="true" value="Name:" />
+		<node name="type" toBeTranslated="true" value="Type:" />
+		<node name="size" toBeTranslated="true" value="Size:" />
+		<node name="time" toBeTranslated="true" value="Last modified:" />
+		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="menu">
+			<node name="edit" toBeTranslated="true" value="Edit" />
+		</node>
+	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Buch wurde runtergeladen." />
 		<node name="tickerError" value="Fehler beim herunterladen des Buches." />
