@@ -7,11 +7,11 @@ DONE Favorites
 DONE Show text if the favorites list is empty
 DONE Search
 * Show wait message during search
-* File view
+DONE File manager
 DONE Activity caption
 DONE Book deleting
 * Show book info activity instead of immediate opening/menu
-* Main menu
+DONE Main menu
 DONE Context menu
 * Reload book info from file
 * Reload book info for all the files

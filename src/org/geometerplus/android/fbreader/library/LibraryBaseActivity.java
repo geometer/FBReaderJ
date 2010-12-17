@@ -43,7 +43,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-abstract class LibraryBaseActivity extends BaseActivity {
+abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
 	static final String TREE_PATH_KEY = "TreePath";
 	static final String PARAMETER_KEY = "Parameter";
 
@@ -62,7 +62,7 @@ abstract class LibraryBaseActivity extends BaseActivity {
 			getListView().invalidateViews();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
 		}
-	} 
+	}
 
 	@Override
 	public boolean onSearchRequested() {
@@ -84,6 +84,30 @@ abstract class LibraryBaseActivity extends BaseActivity {
 	protected void showNotFoundToast() {
 		UIUtil.showErrorMessage(this, "bookNotFound");
 	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
+        return true;
+    }
+
+    private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+        final MenuItem item = menu.add(0, index, Menu.NONE, label);
+        item.setOnMenuItemClickListener(this);
+        item.setIcon(iconId);
+        return item;
+    }
+
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1:
+                return onSearchRequested();
+            default:
+                return true;
+        }
+    }
 
 	protected final class LibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private final List<FBTree> myItems;
@@ -141,7 +165,7 @@ abstract class LibraryBaseActivity extends BaseActivity {
 					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 			}
-                
+
 			return view;
 		}
 	}
@@ -170,7 +194,7 @@ abstract class LibraryBaseActivity extends BaseActivity {
 			myTreePath = treePath;
 			myParameter = parameter;
 		}
-		
+
 		public void run() {
 			startActivityForResult(
 				new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
