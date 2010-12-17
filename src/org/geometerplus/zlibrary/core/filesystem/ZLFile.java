@@ -35,15 +35,15 @@ public abstract class ZLFile {
 		int	ARCHIVE = 0xff00;
 	};
 	
-	private String myNameWithoutExtension;
 	private String myExtension;
+	private String myShortName;
 	protected int myArchiveType;
 	private boolean myIsCached;
 	protected void init() {
-		final String name = getNameWithExtension();
+		final String name = getLongName();
 		final int index = name.lastIndexOf('.');
-		myNameWithoutExtension = (index != -1) ? name.substring(0, index) : name;
-		myExtension = (index != -1) ? name.substring(index + 1).toLowerCase().intern() : "";
+		myExtension = (index > 0) ? name.substring(index + 1).toLowerCase().intern() : "";
+		myShortName = name.substring(name.lastIndexOf('/') + 1);
 
 		/*
 		if (lowerCaseName.endsWith(".gz")) {
@@ -140,11 +140,12 @@ public abstract class ZLFile {
 		return (0 != (myArchiveType & ArchiveType.ARCHIVE));
 	}
 
-	protected abstract String getNameWithExtension();
-	public final String getName(boolean hideExtension) {
-		return hideExtension ? myNameWithoutExtension : getNameWithExtension();
+	public abstract String getLongName();
+
+	public final String getShortName() {
+		return myShortName;
 	}
-	
+
 	public final String getExtension() {
 		return myExtension;
 	}

@@ -65,7 +65,7 @@ public class ZLLanguageDetector {
 
 	public ZLLanguageDetector() {
 		for (ZLFile file : ZLLanguageUtil.patternsFile().children()) {
-			final String name = file.getName(true);
+			final String name = file.getShortName();
 			final int index = name.indexOf('_');
 			if (index != -1) {
 				final String language = name.substring(0, index);

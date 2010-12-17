@@ -19,6 +19,6 @@ DONE Highlight current book
 * Bug: search with no results clears search results subtree; should not
 * garbage in Boris Akunin, Сказки для идиотов
 * duplicate tags in the same book
-* Bug: b1.zip (paths in zips?)
-* Bug: b1.zip, archive inside archive
+DONE Bug: b1.zip (paths in zips?)
+DONE Bug: b1.zip, archive inside archive
 * Open the help file if the current book is deleted from library

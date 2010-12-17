@@ -8,5 +8,5 @@ VR:
 NP:
 	DONE Локализовать все сообщения
 	* Отдельная иконка для архивов
-	* Архивы в архивах
+	DONE Архивы в архивах
 	* filesystem: return special result (exception?) if directory is not readable

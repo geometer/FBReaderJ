@@ -145,7 +145,7 @@ public final class FileInfoSet {
 		}
 		FileInfo info = myInfosByFile.get(file);
 		if (info == null) {
-			info = get(file.getName(false), get(file.getParent()));
+			info = get(file.getLongName(), get(file.getParent()));
 			myInfosByFile.put(file, info);
 		}
 		return info;
