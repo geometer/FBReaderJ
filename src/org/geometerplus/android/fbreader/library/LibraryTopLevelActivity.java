@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
@@ -58,7 +59,15 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(PATH_FAVORITES)
+			new OpenTreeRunnable(new StartTreeActivityRunnable(PATH_FAVORITES, null) {
+				public void run() {
+					if (LibraryInstance.favorites().hasChildren()) {
+						super.run();
+					} else {
+						UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
+					}
+				}
+			})
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_RECENT),

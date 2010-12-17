@@ -540,6 +540,7 @@
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
 		<node name="dictNotInstalled" value="Supported dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
+		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

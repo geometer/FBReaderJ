@@ -162,33 +162,44 @@ abstract class LibraryBaseActivity extends BaseActivity {
 		getListView().invalidateViews();
 	}
 
-	protected class OpenTreeRunnable implements Runnable {
+	protected class StartTreeActivityRunnable implements Runnable {
 		private final String myTreePath;
 		private final String myParameter;
+
+		public StartTreeActivityRunnable(String treePath, String parameter) {
+			myTreePath = treePath;
+			myParameter = parameter;
+		}
+		
+		public void run() {
+			startActivityForResult(
+				new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
+					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+					.putExtra(TREE_PATH_KEY, myTreePath)
+					.putExtra(PARAMETER_KEY, myParameter),
+				CHILD_LIST_REQUEST
+			);
+		}
+	}
+
+	protected class OpenTreeRunnable implements Runnable {
+		private final Runnable myPostRunnable;
 
 		public OpenTreeRunnable(String treePath) {
 			this(treePath, null);
 		}
 
 		public OpenTreeRunnable(String treePath, String parameter) {
-			myTreePath = treePath;
-			myParameter = parameter;
+			this(new StartTreeActivityRunnable(treePath, parameter));
+		}
+
+		public OpenTreeRunnable(Runnable postRunnable) {
+			myPostRunnable = postRunnable;
 		}
 
 		public void run() {
-			final Runnable postRunnable = new Runnable() {
-				public void run() {
-					startActivityForResult(
-						new Intent(LibraryBaseActivity.this, LibraryTreeActivity.class)
-							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-							.putExtra(TREE_PATH_KEY, myTreePath)
-							.putExtra(PARAMETER_KEY, myParameter),
-						CHILD_LIST_REQUEST
-					);
-				}
-			};
 			if (LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				postRunnable.run();
+				myPostRunnable.run();
 			} else {
 				UIUtil.runWithMessage(LibraryBaseActivity.this, "loadingBookList",
 				new Runnable() {
@@ -196,7 +207,7 @@ abstract class LibraryBaseActivity extends BaseActivity {
 						LibraryInstance.waitForState(Library.STATE_FULLY_INITIALIZED);
 					}
 				},
-				postRunnable);
+				myPostRunnable);
 			}
 		}
 	}
