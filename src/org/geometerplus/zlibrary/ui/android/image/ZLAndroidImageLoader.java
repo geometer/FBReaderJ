@@ -30,20 +30,8 @@ import android.os.Message;
 
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
-public class ZLAndroidImageLoader {
-	private static ZLAndroidImageLoader ourInstance;
-
-	public static ZLAndroidImageLoader Instance() {
-		if (ourInstance == null) {
-			ourInstance = new ZLAndroidImageLoader();
-		}
-		return ourInstance;
-	}
-
-	private ZLAndroidImageLoader() {
-	}
-
-	public void startImageLoading(final ZLLoadableImage image, Runnable postLoadingRunnable) {
+class ZLAndroidImageLoader {
+	void startImageLoading(final ZLLoadableImage image, Runnable postLoadingRunnable) {
 		LinkedList<Runnable> runnables = myOnImageSyncRunnables.get(image.getId());
 		if (runnables != null) {
 			if (!runnables.contains(postLoadingRunnable)) {

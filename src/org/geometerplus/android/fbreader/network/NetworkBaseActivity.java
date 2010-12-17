@@ -34,7 +34,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.NetworkTree;
@@ -122,7 +121,7 @@ abstract class NetworkBaseActivity extends ListActivity
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
 				} else {
-					ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
+					img.startSynchronization(myInvalidateViewsRunnable);
 				}
 			} else {
 				data = mgr.getImageData(cover);
