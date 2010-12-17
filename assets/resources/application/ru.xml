@@ -32,6 +32,22 @@
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
+	<node name="fileManagerView">
+		<node name="root" value="Устройство">
+			<node name="summary" value="Просмотр файловой системы устройства целиком"/>
+		</node>
+		<node name="sdcard" value="Карта памяти">
+			<node name="summary" value="Просмотр съемной карты памяти"/>
+		</node>
+		<node name="books" value="Библиотека FBReader">
+			<node name="summary" value="Просмотр каталога с книгами FBReader"/>
+		</node>
+		<node name="progress_dialog">
+			<node name="title" value="Подождите, пожалуйста..."/>
+			<node name="message" value="Получение данных..."/>
+		</node>
+		<node name="permission_denied" value="Нет доступа..." />
+	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
 		<node name="showResults" value="Показать результаты"/>
