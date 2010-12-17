@@ -40,7 +40,6 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
-		<node name="permissionDenied" value="Нет доступа к файлам" />
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
@@ -540,6 +539,7 @@
 		<node name="bookmarkNotFound" value="Нет подходящих закладок"/>
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
 		<node name="dictNotInstalled" value="Не установлен поддерживаемый словарь"/>
+		<node name="permissionDenied" value="Нет доступа к файлам" />
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>

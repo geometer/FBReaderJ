@@ -41,7 +41,6 @@
 		<node name="deleteBook" value="Könyv törlése"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Katalógus megnyitása"/>
@@ -538,6 +537,7 @@
 		<node name="bookNotFound" value="A keresett könyv sajnos nem található meg a könyvtárban"/>
 		<node name="bookmarkNotFound" value="Sajnos nem találhatóak könyvjelzők"/>
 		<node name="cannotOpenBook" value="A könyv sajnos jelenleg nem nyitható meg"/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Böngésző"/>

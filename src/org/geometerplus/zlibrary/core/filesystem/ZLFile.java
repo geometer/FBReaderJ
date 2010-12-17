@@ -132,6 +132,10 @@ public abstract class ZLFile {
 	public abstract ZLPhysicalFile getPhysicalFile();
 	public abstract InputStream getInputStream() throws IOException;
 
+	public boolean isReadable() {
+		return true;
+	}
+
 	public final boolean isCompressed() {
 		return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
 	}

@@ -82,11 +82,7 @@ abstract class LibraryBaseActivity extends BaseActivity {
 	}
 
 	protected void showNotFoundToast() {
-		Toast.makeText(
-			this,
-			ZLResource.resource("errorMessage").getResource("bookNotFound").getValue(),
-			Toast.LENGTH_SHORT
-		).show();
+		UIUtil.showErrorMessage(this, "bookNotFound");
 	}
 
 	protected final class LibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
