@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashSet;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -206,11 +207,15 @@ public class BookStatusActivity extends Activity {
 				(series == null || series.Index <= 0) ? null : String.valueOf(series.Index));
 
 		buffer.delete(0, buffer.length());
-		for (Tag tag: book.tags()) {
-			if (buffer.length() > 0) {
-				buffer.append(", ");
+		final HashSet<String> tagNames = new HashSet<String>();
+		for (Tag tag : book.tags()) {
+			if (!tagNames.contains(tag.Name)) {
+				if (buffer.length() > 0) {
+					buffer.append(", ");
+				}
+				buffer.append(tag.Name);
+				tagNames.add(tag.Name);
 			}
-			buffer.append(tag.Name);
 		}
 		setupInfoPair(R.id.book_tags, "tags", buffer);
 	}
