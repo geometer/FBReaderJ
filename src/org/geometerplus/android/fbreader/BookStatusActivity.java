@@ -47,7 +47,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Author;
@@ -57,20 +56,26 @@ import org.geometerplus.fbreader.library.Tag;
 
 import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
-
 public class BookStatusActivity extends Activity {
+	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 
-	private ZLResource myResource = ZLResource.resource("bookInfo");
+	private final ZLResource myResource = ZLResource.resource("bookInfo");
+	private Book myBook;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Thread.setDefaultUncaughtExceptionHandler(
+			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
+		);
 
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		if (fbreader == null || fbreader.Model == null || fbreader.Model.Book == null) {
-			finish();
-			return;
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
+
+		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
+		final ZLFile file = ZLFile.createFileByPath(path);
+		myBook = Book.getByFile(file);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -80,11 +85,9 @@ public class BookStatusActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		final ZLFile bookFile = ((FBReaderApp)FBReaderApp.Instance()).Model.Book.File;
-		final Book book = Book.getByFile(bookFile); 
-		setupCover(book);
-		setupBookInfo(book);
-		setupFileInfo(book);
+		setupCover(myBook);
+		setupBookInfo(myBook);
+		setupFileInfo(myBook);
 
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
@@ -119,11 +122,7 @@ public class BookStatusActivity extends Activity {
 
 	private void startEditDialog() {
 		final Intent intent = new Intent(getApplicationContext(), BookInfoActivity.class);
-		final BookModel model = ((FBReaderApp)FBReaderApp.Instance()).Model;
-		if (model != null && model.Book != null) {
-			final ZLFile file = model.Book.File;
-			intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, file.getPath());
-		}
+		intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, myBook.File.getPath());
 		startActivity(intent);
 	}
 
