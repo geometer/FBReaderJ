@@ -31,7 +31,6 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -47,65 +46,72 @@ import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
 	public static String FILE_MANAGER_PATH = "FileManagerPath";
+	
+	private String myPath;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		FManagerAdapter adapter = new FManagerAdapter();
+		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
 
 		final Bundle extras = getIntent().getExtras();
-		final String path = extras != null ? extras.getString(FILE_MANAGER_PATH) : null;
+		myPath = extras != null ? extras.getString(FILE_MANAGER_PATH) : null;
 
-		if (path == null) {
+		if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
-			setTitle(path);
-			final SmartFilter filter = new SmartFilter(ZLFile.createFileByPath(path));
-			new Thread(filter).start();
+			setTitle(myPath);
+			startUpdate();
 		}
 
 		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				runItem(((FManagerAdapter)getListAdapter()).getItem(position));
+				runItem(((FileListAdapter)getListAdapter()).getItem(position));
 			}
 		});
 	}
 
+	private void startUpdate() {
+		new Thread(
+			new SmartFilter(ZLFile.createFileByPath(myPath))
+		).start();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
+		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
+			if (myPath != null) {
+				((FileListAdapter)getListAdapter()).clear();
+				startUpdate();
+			}
+			getListView().invalidateViews();
+			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		}
+	} 
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FManagerAdapter adapter = (FManagerAdapter)getListAdapter();
-		final FileItem fileItem = adapter.getItem(position);
+		final FileItem fileItem = ((FileListAdapter)getListAdapter()).getItem(position);
 		final Book book = fileItem.getBook(); 
 		if (book != null) {
-			switch (item.getItemId()) {
-				case OPEN_BOOK_ITEM_ID:
-					openBook(book);
-					return true;
-				case ADD_TO_FAVORITES_ITEM_ID:
-					LibraryInstance.addBookToFavorites(book);
-					return true;
-				case REMOVE_FROM_FAVORITES_ITEM_ID:
-					LibraryInstance.removeBookFromFavorites(book);
-					getListView().invalidateViews();
-					return true;
-				case DELETE_BOOK_ITEM_ID:
-					// TODO: implemen
-					// TODO: if book is in favorites list do ((FManagerAdapter)getListAdapter())
-					adapter.remove(fileItem);
-					adapter.notifyDataSetChanged();
-					book.File.getPhysicalFile().delete();
-					return true;
-			}
+			return onContextItemSelected(item.getItemId(), book);
 		}
 		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	protected void deleteBook(Book book, int mode) {
+		super.deleteBook(book, mode);
+		((FileListAdapter)getListAdapter()).deleteFile(book.File);
+		getListView().invalidateViews();
 	}
 
 	private void runItem(FileItem item) {
@@ -114,42 +120,49 @@ public final class FileManager extends BaseActivity {
 		if (book != null) {
 			openBook(book);
 		} else if (file.isDirectory() || file.isArchive()) {
-			startActivity(
+			startActivityForResult(
 				new Intent(this, FileManager.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(FILE_MANAGER_PATH, file.getPath())
+					.putExtra(FILE_MANAGER_PATH, file.getPath()),
+				CHILD_LIST_REQUEST
 			);
 		}
 	}
 
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = myResource.getResource(resourceKey);
-		((FManagerAdapter)getListAdapter()).add(new FileItem(
+		((FileListAdapter)getListAdapter()).add(new FileItem(
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
 		));
 	}
 
-	private final class FManagerAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-		private List<FileItem> myItems = Collections.synchronizedList(new ArrayList<FileItem>());
+	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+		private List<FileItem> myItems = new ArrayList<FileItem>();
 
-		public FManagerAdapter() {
+		public synchronized void clear() {
+			myItems.clear();
 		}
 
-		public void add(FileItem item){
+		public synchronized void add(FileItem item){
 			myItems.add(item);
 		}
 
-		public void remove(FileItem item){
-			myItems.remove(item);
+		public synchronized void deleteFile(ZLFile file) {
+			for (FileItem item : myItems) {
+				if (file.equals(item.getFile())) {
+					myItems.remove(item);
+					break;
+				}
+			}
 		}
 
-		public int getCount() {
+		public synchronized int getCount() {
 			return myItems.size();
 		}
 
-		public FileItem getItem(int position) {
+		public synchronized FileItem getItem(int position) {
 			return myItems.get(position);
 		}
 
@@ -166,16 +179,17 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-            final FileItem item = myItems.get(position);
-
-			final View view = (convertView != null) ?  convertView :
-				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-
-            ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
-			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getSummary());
-
+            final FileItem item = getItem(position);
+			final View view = createView(convertView, parent, item.getName(), item.getSummary());
+			if (mySelectedBookPath != null &&
+				mySelectedBookPath.equals(item.getFile().getPath())) {
+				view.setBackgroundColor(0xff808080);
+			} else {
+				view.setBackgroundColor(0);
+			}
 			final ImageView coverView = getCoverView(view);
 			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+
 			if (coverBitmap != null) {
 				coverView.setImageBitmap(coverBitmap);
 			} else {
@@ -185,7 +199,6 @@ public final class FileManager extends BaseActivity {
             return view;
 		}
 	}
-
 
 	private final class FileItem {
 		private final ZLFile myFile;
@@ -204,7 +217,22 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public FileItem(ZLFile file) {
-			this(file, null, null);
+			if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
+				final List<ZLFile> children = file.children();
+				if (children.size() == 1) {
+					final ZLFile child = children.get(0);
+					if (child.getPath().endsWith(".fb2")) {
+						final String fileName = file.getName(false);
+						myFile = child;
+						myName = fileName.substring(fileName.lastIndexOf('/') + 1);
+						mySummary = null;
+						return;
+					}
+				} 
+			}
+			myFile = file;
+			myName = null;
+			mySummary = null;
 		}
 
 		public String getName() {
@@ -285,7 +313,7 @@ public final class FileManager extends BaseActivity {
 					if (file.isDirectory() ||
 						file.isArchive() ||
 						PluginCollection.Instance().getPlugin(file) != null) {
-							final FManagerAdapter adapter = (FManagerAdapter)getListAdapter();
+							final FileListAdapter adapter = (FileListAdapter)getListAdapter();
 							adapter.add(new FileItem(file));
 //							adapter.notifyDataSetChanged();	// TODO question!
 							runOnUiThread(new Runnable() {

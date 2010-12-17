@@ -56,16 +56,6 @@ abstract class LibraryBaseActivity extends BaseActivity {
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
-	private static int CHILD_LIST_REQUEST = 0;
-	private static int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	private static int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-		setResult(RESULT_DONT_INVALIDATE_VIEWS);
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
@@ -128,9 +118,7 @@ abstract class LibraryBaseActivity extends BaseActivity {
 
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final FBTree tree = getItem(position);
-			final View view = (convertView != null) ?  convertView :
-				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-
+			final View view = createView(convertView, parent, tree.getName(), tree.getSecondString());
 			if (tree instanceof BookTree &&
 				mySelectedBookPath != null &&
 				mySelectedBookPath.equals(((BookTree)tree).Book.File.getPath())) {
@@ -138,9 +126,6 @@ abstract class LibraryBaseActivity extends BaseActivity {
 			} else {
 				view.setBackgroundColor(0);
 			}
-
-			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 
 			final ImageView coverView = getCoverView(view);
 
@@ -170,53 +155,15 @@ abstract class LibraryBaseActivity extends BaseActivity {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
-			final Book book = ((BookTree)tree).Book;
-			switch (item.getItemId()) {
-				case OPEN_BOOK_ITEM_ID:
-					openBook(book);
-					return true;
-				case ADD_TO_FAVORITES_ITEM_ID:
-					LibraryInstance.addBookToFavorites(book);
-					return true;
-				case REMOVE_FROM_FAVORITES_ITEM_ID:
-					LibraryInstance.removeBookFromFavorites(book);
-					getListView().invalidateViews();
-					return true;
-				case DELETE_BOOK_ITEM_ID:
-					tryToDeleteBook(book);
-					return true;
-			}
+			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
 		return super.onContextItemSelected(item);
 	}
 
-	private class BookDeleter implements DialogInterface.OnClickListener {
-		private final Book myBook;
-		private final int myMode;
-
-		BookDeleter(Book book, int removeMode) {
-			myBook = book;
-			myMode = removeMode;
-		}
-
-		public void onClick(DialogInterface dialog, int which) {
-			LibraryInstance.removeBook(myBook, myMode);
-			getListView().invalidateViews();
-			setResult(RESULT_DO_INVALIDATE_VIEWS);
-		}
-	}
-
-	private void tryToDeleteBook(Book book) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
-		new AlertDialog.Builder(this)
-			.setTitle(book.getTitle())
-			.setMessage(boxResource.getResource("message").getValue())
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book, Library.REMOVE_FROM_DISK))
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
+	@Override
+	protected void deleteBook(Book book, int mode) {
+		super.deleteBook(book, mode);
+		getListView().invalidateViews();
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
