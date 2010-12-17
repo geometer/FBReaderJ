@@ -275,7 +275,7 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public String getName() {
-			return myName != null ? myName : myFile.getLongName();
+			return myName != null ? myName : myFile.getShortName();
 		}
 
 		public String getSummary() {
