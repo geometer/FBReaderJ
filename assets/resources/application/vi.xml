@@ -41,7 +41,6 @@
 		<node name="deleteBook" value="Xóa sách"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Mở danh mục"/>
@@ -570,6 +569,8 @@
 		<node name="bookmarkNotFound" value="Xin lỗi, không có đánh dấu thích hợp"/>
 		<node name="cannotOpenBook" value="Xin lỗi, không thể mở sách vào lúc này"/>
 		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
+		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

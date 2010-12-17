@@ -60,7 +60,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 11;
+		final int currentVersion = 12;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -91,6 +91,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables9();
 					case 10:
 						updateTables10();
+					case 11:
+						updateTables11();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -568,7 +570,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		final String[] parameters = { null };
 		FileInfo current = null;
 		for (ZLFile f : fileStack) {
-			parameters[0] = f.getName(false);
+			parameters[0] = f.getLongName();
 			final Cursor cursor = myDatabase.rawQuery(
 				(current == null) ?
 					"SELECT file_id,size FROM Files WHERE name = ?" :
@@ -1112,5 +1114,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS Favorites(" +
 				"book_id INTEGER UNIQUE NOT NULL REFERENCES Books(book_id))");
+	}
+
+	private void updateTables11() {
+		myDatabase.execSQL("UPDATE Files SET size = size + 1");
 	}
 }

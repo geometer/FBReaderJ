@@ -64,7 +64,7 @@ public abstract class ZLLanguageUtil {
 		if (ourLanguageCodes.isEmpty()) {
 			TreeSet<String> codes = new TreeSet<String>();
 			for (ZLFile file : patternsFile().children()) {
-				String name = file.getName(false);
+				String name = file.getShortName();
 				final int index = name.indexOf("_");
 				if (index != -1) {
 					String str = name.substring(0, index);

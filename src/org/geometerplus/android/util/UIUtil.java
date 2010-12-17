@@ -26,6 +26,7 @@ import android.content.Context;
 import android.app.ProgressDialog;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -107,5 +108,13 @@ public abstract class UIUtil {
 		});
 		runner.setPriority(Thread.MIN_PRIORITY);
 		runner.start();
+	}
+
+	public static void showErrorMessage(Context context, String resourceKey) {
+		Toast.makeText(
+			context,
+			ZLResource.resource("errorMessage").getResource(resourceKey).getValue(),
+			Toast.LENGTH_SHORT
+		).show();
 	}
 }

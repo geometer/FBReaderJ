@@ -221,9 +221,8 @@ public final class FileManager extends BaseActivity {
 				if (children.size() == 1) {
 					final ZLFile child = children.get(0);
 					if (child.getPath().endsWith(".fb2")) {
-						final String fileName = file.getName(false);
 						myFile = child;
-						myName = fileName.substring(fileName.lastIndexOf('/') + 1);
+						myName = file.getLongName();
 						mySummary = null;
 						return;
 					}
@@ -235,12 +234,7 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public String getName() {
-			if (myName != null) {
-				return myName;
-			}
-
-			final String fileName = myFile.getName(false);
-			return fileName.substring(fileName.lastIndexOf('/') + 1);
+			return myName != null ? myName : myFile.getLongName();
 		}
 
 		public String getSummary() {
@@ -304,34 +298,31 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public void run() {
-			try {
-				for (ZLFile file : myFile.children()) {
-					if (Thread.currentThread().isInterrupted()) {
-						break;
-					}
-					if (file.isDirectory() ||
-						file.isArchive() ||
-						PluginCollection.Instance().getPlugin(file) != null) {
-							final FileListAdapter adapter = (FileListAdapter)getListAdapter();
-							adapter.add(new FileItem(file));
-//							adapter.notifyDataSetChanged();	// TODO question!
-							runOnUiThread(new Runnable() {
-								public void run() {
-									adapter.notifyDataSetChanged();
-								}
-							});
-					}
-				}
-			} catch (Exception e) {
+			if (!myFile.isReadable()) {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						Toast.makeText(FileManager.this,
-							myResource.getResource("permissionDenied").getValue(),
-							Toast.LENGTH_SHORT
-						).show();
+						UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 					}
 				});
 				finish();
+				return;
+			}
+
+			for (ZLFile file : myFile.children()) {
+				if (Thread.currentThread().isInterrupted()) {
+					break;
+				}
+				if (file.isDirectory() || file.isArchive() ||
+					PluginCollection.Instance().getPlugin(file) != null) {
+					final FileListAdapter adapter = (FileListAdapter)getListAdapter();
+					adapter.add(new FileItem(file));
+//					adapter.notifyDataSetChanged();	// TODO question!
+					runOnUiThread(new Runnable() {
+						public void run() {
+							adapter.notifyDataSetChanged();
+						}
+					});
+				}
 			}
 		}
 	}

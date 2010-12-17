@@ -41,7 +41,6 @@
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Otevřít katalog"/>
@@ -570,6 +569,8 @@
 		<node name="bookmarkNotFound" value="Nejsou bohužel žádné vhodné záložky"/>
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
 		<node name="dictNotInstalled" value="ColorDict is not installed!" toBeTranslated="true"/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
+		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

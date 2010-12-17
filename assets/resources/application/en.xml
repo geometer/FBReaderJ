@@ -40,7 +40,6 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
-		<node name="permissionDenied" value="Permission denied"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>
@@ -604,6 +603,8 @@
 		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
 		<node name="dictNotInstalled" value="ColorDict is not installed!"/>
+		<node name="permissionDenied" value="Permission denied, sorry"/>
+		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

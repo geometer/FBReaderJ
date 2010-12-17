@@ -95,7 +95,9 @@ public final class Library {
 		if (book != null) {
 			myBooks.add(book);
 		} else if (file.isArchive()) {
+			System.err.println("ARCHIVE: " + file.getPath());
 			for (ZLFile entry : fileInfos.archiveEntries(file)) {
+				System.err.println("ENTRY: " + entry.getPath());
 				collectBooks(entry, fileInfos, savedBooks, doReadMetaInfo);
 			}
 		}
