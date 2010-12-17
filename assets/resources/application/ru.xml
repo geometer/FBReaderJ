@@ -540,6 +540,7 @@
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
 		<node name="dictNotInstalled" value="Не установлен поддерживаемый словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам" />
+		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
