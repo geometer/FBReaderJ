@@ -11,5 +11,6 @@ VR:
 NP:
 	DONE Локализовать все сообщения
 	* Отдельная иконка для архивов
+	* Отдельная иконка для каталогов, к которым нет доступа (?) -- с замочком на папке
 	DONE Архивы в архивах
-	* filesystem: return special result (exception?) if directory is not readable
+	DONE filesystem: return special result (exception?) if directory is not readable

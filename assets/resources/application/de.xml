@@ -42,7 +42,6 @@
 		<node name="deleteBook" value="Buch löschen"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Katalog öffnen"/>
@@ -539,6 +538,7 @@
 		<node name="bookNotFound" value="Es wurden keine passenden Bücher in der Bibliothek gefunden."/>
 		<node name="bookmarkNotFound" value="Es wurden kein passenden Lesezeichen gefunden."/>
 		<node name="cannotOpenBook" value="Das Buch kann zurzeit nicht geöffnet werden."/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

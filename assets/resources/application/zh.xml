@@ -41,7 +41,6 @@
 		<node name="deleteBook" value="删除图书" />
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="打开书库目录" />
@@ -538,6 +537,7 @@
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍" />
 		<node name="bookmarkNotFound" value="对不起，找不到对应的书签" />
 		<node name="cannotOpenBook" value="对不起，无法开启本书" />
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />

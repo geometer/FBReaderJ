@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader;
 import android.os.*;
 import android.app.*;
 import android.content.Intent;
-import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -48,13 +47,7 @@ public abstract class SearchActivity extends Activity {
 			};
 			final Handler failureHandler = new Handler() {
 				public void handleMessage(Message message) {
-					Toast.makeText(
-						getParentActivity(),
-						ZLResource.resource("errorMessage").getResource(
-							getFailureMessageResourceKey()
-						).getValue(),
-						Toast.LENGTH_SHORT
-					).show();
+					UIUtil.showErrorMessage(getParentActivity(), getFailureMessageResourceKey());
 				}
 			};
 			final Runnable runnable = new Runnable() {

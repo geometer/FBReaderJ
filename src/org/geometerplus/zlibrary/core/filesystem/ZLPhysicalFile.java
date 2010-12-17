@@ -49,6 +49,11 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile.isDirectory();
 	}
 	
+	@Override
+	public boolean isReadable() {
+		return myFile.canRead();
+	}
+
 	public boolean delete() {
 		return myFile.delete();
 	}
