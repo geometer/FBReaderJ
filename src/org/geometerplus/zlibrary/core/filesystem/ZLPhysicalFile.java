@@ -83,10 +83,8 @@ public final class ZLPhysicalFile extends ZLFile {
 		return new FileInputStream(myFile);
 	}
 
-	public boolean rename(String newName){
-		String oldPath = 
-			myFile.getPath().substring(0, myFile.getPath().length() - myFile.getName().length());
-		File newFile = new File(oldPath + newName);
+	public boolean rename(String newName) {
+		final File newFile = new File(myFile.getParent(), newName);
 		return myFile.renameTo(newFile);
 	}
 	
