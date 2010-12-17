@@ -56,8 +56,7 @@ public final class FileManager extends BaseActivity {
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
 
-		final Bundle extras = getIntent().getExtras();
-		myPath = extras != null ? extras.getString(FILE_MANAGER_PATH) : null;
+		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 
 		if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
