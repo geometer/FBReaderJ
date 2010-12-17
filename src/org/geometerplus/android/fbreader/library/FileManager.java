@@ -33,6 +33,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.ui.android.R;
+
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
