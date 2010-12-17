@@ -31,7 +31,6 @@ import android.os.Message;
 import android.view.MenuItem;
 import android.view.Menu;
 
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
