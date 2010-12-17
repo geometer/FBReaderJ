@@ -25,7 +25,7 @@ import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.*;
+import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
@@ -33,10 +33,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
@@ -47,8 +43,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-abstract class LibraryBaseActivity extends ListActivity {
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+abstract class LibraryBaseActivity extends BaseActivity {
 	static final String TREE_PATH_KEY = "TreePath";
 	static final String PARAMETER_KEY = "Parameter";
 
@@ -58,25 +53,8 @@ abstract class LibraryBaseActivity extends ListActivity {
 	static final String PATH_BY_AUTHOR = "byAuthor";
 	static final String PATH_BY_TAG = "byTag";
 
-	static Library LibraryInstance;
-
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
-
-	protected final ZLResource myResource = ZLResource.resource("libraryView");
-	private String mySelectedBookPath;
-
-	private static int CHILD_LIST_REQUEST = 0;
-	private static int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	private static int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-		setResult(RESULT_DONT_INVALIDATE_VIEWS);
-		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
@@ -118,17 +96,14 @@ abstract class LibraryBaseActivity extends ListActivity {
 			myItems = items;
 		}
 
-		@Override
 		public final int getCount() {
 			return myItems.size();
 		}
 
-		@Override
 		public final FBTree getItem(int position) {
 			return myItems.get(position);
 		}
 
-		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
@@ -137,33 +112,13 @@ abstract class LibraryBaseActivity extends ListActivity {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final LibraryTree tree = (LibraryTree)getItem(position);
 			if (tree instanceof BookTree) {
-				menu.setHeaderTitle(tree.getName());
-				menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
-				if (LibraryInstance.isBookInFavorites(((BookTree)tree).Book)) {
-					menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
-				} else {
-					menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
-				}
-				if ((LibraryInstance.getRemoveBookMode(((BookTree)tree).Book) & Library.REMOVE_FROM_DISK) != 0) {
-					menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
-                }
+				createBookContextMenu(menu, ((BookTree)tree).Book);
 			}
 		}
 
-		private int myCoverWidth = -1;
-		private int myCoverHeight = -1;
-
-		private final Runnable myInvalidateViewsRunnable = new Runnable() {
-			public void run() {
-				getListView().invalidateViews();
-			}
-		};
-
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final FBTree tree = getItem(position);
-			final View view = (convertView != null) ?  convertView :
-				LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-
+			final View view = createView(convertView, parent, tree.getName(), tree.getSecondString());
 			if (tree instanceof BookTree &&
 				mySelectedBookPath != null &&
 				mySelectedBookPath.equals(((BookTree)tree).Book.File.getPath())) {
@@ -172,44 +127,12 @@ abstract class LibraryBaseActivity extends ListActivity {
 				view.setBackgroundColor(0);
 			}
 
-			((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-			((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
-
-			if (myCoverWidth == -1) {
-				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-				myCoverHeight = view.getMeasuredHeight();
-				myCoverWidth = myCoverHeight * 15 / 32;
-				view.requestLayout();
-			}
-
-			final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
-			coverView.getLayoutParams().width = myCoverWidth;
-			coverView.getLayoutParams().height = myCoverHeight;
-			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			coverView.requestLayout();
+			final ImageView coverView = getCoverView(view);
 
 			if (tree instanceof ZLAndroidTree) {
 				coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
 			} else {
-				Bitmap coverBitmap = null;
-				ZLImage cover = tree.getCover();
-				if (cover != null) {
-					ZLAndroidImageData data = null;
-					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-					if (cover instanceof ZLLoadableImage) {
-						final ZLLoadableImage img = (ZLLoadableImage)cover;
-						if (img.isSynchronized()) {
-							data = mgr.getImageData(img);
-						} else {
-							ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
-						}
-					} else {
-						data = mgr.getImageData(cover);
-					}
-					if (data != null) {
-						coverBitmap = data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
-					}
-				}
+				final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
 				if (coverBitmap != null) {
 					coverView.setImageBitmap(coverBitmap);
 				} else if (tree instanceof AuthorTree) {
@@ -227,72 +150,20 @@ abstract class LibraryBaseActivity extends ListActivity {
 		}
 	}
 
-	protected void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-		);
-	}
-
-	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 1;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
-	private static final int DELETE_BOOK_ITEM_ID = 3;
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
-			final Book book = ((BookTree)tree).Book;
-			switch (item.getItemId()) {
-				case OPEN_BOOK_ITEM_ID:
-					openBook(book);
-					return true;
-				case ADD_TO_FAVORITES_ITEM_ID:
-					LibraryInstance.addBookToFavorites(book);
-					return true;
-				case REMOVE_FROM_FAVORITES_ITEM_ID:
-					LibraryInstance.removeBookFromFavorites(book);
-					getListView().invalidateViews();
-					return true;
-				case DELETE_BOOK_ITEM_ID:
-					tryToDeleteBook(book);
-					return true;
-			}
+			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
 		return super.onContextItemSelected(item);
 	}
 
-	private class BookDeleter implements DialogInterface.OnClickListener {
-		private final Book myBook;
-		private final int myMode;
-
-		BookDeleter(Book book, int removeMode) {
-			myBook = book;
-			myMode = removeMode;
-		}
-
-		public void onClick(DialogInterface dialog, int which) {
-			LibraryInstance.removeBook(myBook, myMode);
-			getListView().invalidateViews();
-			setResult(RESULT_DO_INVALIDATE_VIEWS);
-		}
-	}
-
-	private void tryToDeleteBook(Book book) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
-		new AlertDialog.Builder(this)
-			.setTitle(book.getTitle())
-			.setMessage(boxResource.getResource("message").getValue())
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book, Library.REMOVE_FROM_DISK))
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
+	@Override
+	protected void deleteBook(Book book, int mode) {
+		super.deleteBook(book, mode);
+		getListView().invalidateViews();
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
