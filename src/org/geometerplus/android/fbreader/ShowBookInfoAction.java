@@ -46,13 +46,7 @@ class ShowBookInfoAction extends FBAction {
 		final BookModel model = Reader.Model;
 		if (model != null && model.Book != null) {
 			final ZLFile file = model.Book.File;
-			final ZLFile physicalFile = file.getPhysicalFile();
-			if (physicalFile == null || physicalFile == file) {
-				intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, file.getPath());
-			} else {
-				intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, physicalFile.getPath());
-				intent.putExtra(BookInfoActivity.CURRENT_BOOK_ARCHIVE_ENTRY_KEY, file.getName(false));
-			}
+			intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, file.getPath());
 		}
 		myBaseActivity.startActivityForResult(
 			intent, FBReader.REPAINT_CODE

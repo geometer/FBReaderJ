@@ -215,7 +215,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 				if ((type != null) && (COVER_IMAGE.equals(type))) {
 					myModelReader.setMainTextModel();
 					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
-					final String imageName = imageFile.getName(false);
+					final String imageName = imageFile.getLongName();
 					myModelReader.addImageReference(imageName, (short)0);
 					myModelReader.addImage(imageName, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, imageFile));
 				}

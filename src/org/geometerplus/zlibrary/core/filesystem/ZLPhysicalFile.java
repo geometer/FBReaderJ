@@ -59,7 +59,7 @@ public final class ZLPhysicalFile extends ZLFile {
 	}
 	
 	@Override
-	public String getNameWithExtension() {
+	public String getLongName() {
 		return isDirectory() ? getPath() : myFile.getName();
 	}
 

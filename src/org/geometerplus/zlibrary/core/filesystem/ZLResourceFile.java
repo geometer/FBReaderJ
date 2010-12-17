@@ -37,14 +37,17 @@ public abstract class ZLResourceFile extends ZLFile {
 		init();
 	}
 	
+	@Override
 	public String getPath() {
 		return myPath;
 	}
 	
-	public String getNameWithExtension() {
+	@Override
+	public String getLongName() {
 		return myPath.substring(myPath.lastIndexOf('/') + 1);
 	}
 
+	@Override
 	public ZLPhysicalFile getPhysicalFile() {
 		return null;
 	}

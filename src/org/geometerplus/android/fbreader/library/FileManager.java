@@ -221,9 +221,8 @@ public final class FileManager extends BaseActivity {
 				if (children.size() == 1) {
 					final ZLFile child = children.get(0);
 					if (child.getPath().endsWith(".fb2")) {
-						final String fileName = file.getName(false);
 						myFile = child;
-						myName = fileName.substring(fileName.lastIndexOf('/') + 1);
+						myName = file.getLongName();
 						mySummary = null;
 						return;
 					}
@@ -235,12 +234,7 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public String getName() {
-			if (myName != null) {
-				return myName;
-			}
-
-			final String fileName = myFile.getName(false);
-			return fileName.substring(fileName.lastIndexOf('/') + 1);
+			return myName != null ? myName : myFile.getLongName();
 		}
 
 		public String getSummary() {
