@@ -40,6 +40,9 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
+		<node name="renameFile" value="Rename file"/>
+		<node name="moveFile" value="Move file"/>
+		<node name="deleteFile" value="Delete file"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>

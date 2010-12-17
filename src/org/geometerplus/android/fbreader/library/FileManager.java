@@ -45,6 +45,11 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
+	public static String LOG = "FileManager";
+	
+	private static final int DELETE_FILE_ITEM_ID = 10;
+	private static final int RENAME_FILE_ITEM_ID = 11;
+	private static final int MOVE_FILE_ITEM_ID = 12;
 	public static String FILE_MANAGER_PATH = "FileManagerPath";
 	
 	private String myPath;
@@ -98,14 +103,37 @@ public final class FileManager extends BaseActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FileItem fileItem = ((FileListAdapter)getListAdapter()).getItem(position);
+		FileListAdapter adapter = ((FileListAdapter)getListAdapter()); 
+		final FileItem fileItem = adapter.getItem(position);
 		final Book book = fileItem.getBook(); 
 		if (book != null) {
 			return onContextItemSelected(item.getItemId(), book);
+		}else{
+			switch (item.getItemId()) {
+				case MOVE_FILE_ITEM_ID:
+					
+					return true;
+				case RENAME_FILE_ITEM_ID:
+					fileItem.getFile().getPhysicalFile().rename("bac1ca.zip");
+					adapter.notifyDataSetChanged();
+					return true;
+				case DELETE_FILE_ITEM_ID:
+					adapter.remove(fileItem);
+					adapter.notifyDataSetChanged();
+					deleteFileItem(fileItem);
+					return true;
+				}
 		}
 		return super.onContextItemSelected(item);
 	}
 
+	private void deleteFileItem(FileItem fileItem){
+		ZLFile file = fileItem.getFile();
+		if(file != null){
+			file.getPhysicalFile().delete();
+		}
+	}
+	
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
@@ -147,6 +175,10 @@ public final class FileManager extends BaseActivity {
 		public synchronized void add(FileItem item){
 			myItems.add(item);
 		}
+		
+		public synchronized void remove(FileItem fileItem) {
+			myItems.remove(fileItem);
+		}
 
 		public synchronized void deleteFile(ZLFile file) {
 			for (FileItem item : myItems) {
@@ -171,9 +203,18 @@ public final class FileManager extends BaseActivity {
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			final Book book = getItem(position).getBook();
-			if (book != null) {
-				createBookContextMenu(menu, book); 
+			final FileItem item = getItem(position);
+
+			if (!item.getFile().isDirectory()){
+				final Book book = item.getBook();
+				if (book != null) {
+					createBookContextMenu(menu, book); 
+				}
+				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("renameFile").getValue());
+				menu.add(0, MOVE_FILE_ITEM_ID, 0, myResource.getResource("moveFile").getValue());
+				if (book == null) {
+					menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("deleteFile").getValue());
+				}
 			}
 		}
 
