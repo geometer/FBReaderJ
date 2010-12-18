@@ -189,6 +189,9 @@
 			<node name="continue" value="Continuer" />
 			<node name="editUrl" value="Editer l'url" />
 			<node name="tryAgain" value="Recommencer" />
+			<node name="openBook" value="Read" toBeTranslated="true" />
+			<node name="editInfo" value="Edit" toBeTranslated="true" />
+			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nom du fichier"/>

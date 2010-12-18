@@ -186,6 +186,9 @@
 			<node name="continue" value="Pokračovat" />
 			<node name="editUrl" value="Upravit URL" />
 			<node name="tryAgain" value="Zkusit znovu" />
+			<node name="openBook" value="Read" toBeTranslated="true" />
+			<node name="editInfo" value="Edit" toBeTranslated="true" />
+			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Název souboru"/>
