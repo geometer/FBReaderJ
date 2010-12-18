@@ -37,6 +37,7 @@
 			<node name="localSearch" value="Local search"/>
 		</node>
 		<node name="openBook" value="Open book"/>
+		<node name="showBookInfo" value="Book info"/>
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>

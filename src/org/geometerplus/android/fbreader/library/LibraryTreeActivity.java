@@ -96,7 +96,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
 		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
-			openBook(((BookTree)tree).Book);
+			showBookInfo(((BookTree)tree).Book);
 		} else {
 			new OpenTreeRunnable(myTreePathString + "\000" + tree.getName()).run();
 		}

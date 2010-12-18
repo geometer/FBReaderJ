@@ -38,7 +38,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
 import org.geometerplus.android.fbreader.FBReader;
@@ -117,7 +116,7 @@ public final class FileManager extends BaseActivity {
 		final ZLFile file = item.getFile();
 		final Book book = item.getBook();
 		if (book != null) {
-			openBook(book);
+			showBookInfo(book);
 		} else if (file.isDirectory() || file.isArchive()) {
 			startActivityForResult(
 				new Intent(this, FileManager.class)

@@ -38,6 +38,7 @@
 			<node name="localSearch" value="Пошук"/>
 		</node>
 		<node name="openBook" value="Читати книжку"/>
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="Видалити книжку"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>

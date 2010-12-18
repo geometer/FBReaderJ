@@ -41,6 +41,7 @@
 			<node name="localSearch" value="Recherche locale"/>
 		</node>
 		<node name="openBook" value="Ouvrir ce livre"/>
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="Supprimer ce livre"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>

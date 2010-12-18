@@ -38,6 +38,7 @@
 			<node name="localSearch" value="本地搜索" />
 		</node>
 		<node name="openBook" value="打开图书" />
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="删除图书" />
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>

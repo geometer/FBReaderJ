@@ -28,13 +28,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -54,10 +50,12 @@ import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity {
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
+	public static final String HIDE_OPEN_BUTTON_KEY = "hideOpenButton";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
 	private ZLImage myImage;
+	private boolean myHideOpenButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +65,7 @@ public class BookInfoActivity extends Activity {
 		);
 
 		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
+		myHideOpenButton = getIntent().getBooleanExtra(HIDE_OPEN_BUTTON_KEY, false);
 		final ZLFile file = ZLFile.createFileByPath(path);
 
 		myImage = Library.getCover(file);
@@ -89,51 +88,51 @@ public class BookInfoActivity extends Activity {
 		setupBookInfo(myBook);
 		setupFileInfo(myBook);
 
-		setButtonText(R.id.book_info_button_open, "open");
-		setButtonText(R.id.book_info_button_edit, "edit");
-		setButtonText(R.id.book_info_button_reload, "reload");
+		if (myHideOpenButton) {
+			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
+		} else {
+			setupButton(R.id.book_info_button_open, "open", new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					startActivity(
+						new Intent(getApplicationContext(), FBReader.class)
+							.setAction(Intent.ACTION_VIEW)
+							.putExtra(FBReader.BOOK_PATH_KEY, myBook.File.getPath())
+							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+					);
+				}
+			});
+		}
+		setupButton(R.id.book_info_button_edit, "edit", new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(
+					new Intent(getApplicationContext(), EditBookInfoActivity.class)
+						.putExtra(CURRENT_BOOK_PATH_KEY, myBook.File.getPath())
+				);
+			}
+		});
+		setupButton(R.id.book_info_button_reload, "reload", new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO: implement
+			}
+		});
 
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
 	}
 
-	private void setButtonText(int buttonId, String resourceKey) {
+	private Button findButton(int buttonId) {
+		return (Button)findViewById(buttonId);
+	}
+
+	private void setupButton(int buttonId, String resourceKey, View.OnClickListener listener) {
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		((TextView)findViewById(buttonId)).setText(
-			buttonResource.getResource(resourceKey).getValue()
-		);
-	}
-
-	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
-		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
-	}
-
-	private static final int MENU_EDIT = 1;
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, MENU_EDIT, "edit", android.R.drawable.ic_menu_edit);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_EDIT:
-			startEditDialog();
-			return true;
-		default:
-			return true;
-		}
-	}
-
-	private void startEditDialog() {
-		final Intent intent = new Intent(getApplicationContext(), EditBookInfoActivity.class);
-		intent.putExtra(CURRENT_BOOK_PATH_KEY, myBook.File.getPath());
-		startActivity(intent);
+		final Button button = findButton(buttonId);
+		button.setText(buttonResource.getResource(resourceKey).getValue());
+		button.setOnClickListener(listener);
 	}
 
 	private void setupInfoPair(int id, String key, CharSequence value) {

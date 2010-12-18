@@ -37,6 +37,7 @@
 			<node name="localSearch" value="Поиск"/>
 		</node>
 		<node name="openBook" value="Читать книгу"/>
+		<node name="showBookInfo" value="Информация о книге"/>
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>

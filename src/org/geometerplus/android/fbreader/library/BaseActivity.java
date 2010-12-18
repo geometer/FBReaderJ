@@ -39,7 +39,9 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
+
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.BookInfoActivity;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -49,9 +51,10 @@ import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 abstract class BaseActivity extends ListActivity {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 1;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 2;
-	private static final int DELETE_BOOK_ITEM_ID = 3;
+	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
+	private static final int ADD_TO_FAVORITES_ITEM_ID = 2;
+	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 3;
+	private static final int DELETE_BOOK_ITEM_ID = 4;
 
 	protected static final int CHILD_LIST_REQUEST = 0;
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
@@ -75,13 +78,14 @@ abstract class BaseActivity extends ListActivity {
 			new Intent(getApplicationContext(), FBReader.class)
 				.setAction(Intent.ACTION_VIEW)
 				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 		);
 	}
 
 	protected void createBookContextMenu(ContextMenu menu, Book book) {
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
+		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
 		if (LibraryInstance.isBookInFavorites(book)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
 		} else {
@@ -177,10 +181,20 @@ abstract class BaseActivity extends ListActivity {
 		LibraryInstance.removeBook(book, mode);
 	}
 
+	protected void showBookInfo(Book book) {
+		startActivity(
+			new Intent(getApplicationContext(), BookInfoActivity.class)
+				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath())
+		);
+	}
+
 	protected boolean onContextItemSelected(int itemId, Book book) {
 		switch (itemId) {
 			case OPEN_BOOK_ITEM_ID:
 				openBook(book);
+				return true;
+			case SHOW_BOOK_INFO_ITEM_ID:
+				showBookInfo(book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
 				LibraryInstance.addBookToFavorites(book);

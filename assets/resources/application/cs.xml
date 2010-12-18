@@ -38,6 +38,7 @@
 			<node name="localSearch" value="Místní hledání"/>
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
