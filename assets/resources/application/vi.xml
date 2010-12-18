@@ -156,6 +156,8 @@
 		<node name="day" value="Ngày"/>
 		<node name="night" value="Đêm"/>
 		<node name="networkLibrary" value="Thư viện mạng"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
+		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Định hướng">
 			<node name="toc" value="Mục Lục"/>
 			<node name="gotoHome" value="Đến đầu Tài liệu"/>

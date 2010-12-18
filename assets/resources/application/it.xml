@@ -156,6 +156,8 @@
 		<node name="day" value="Giorno"/>
 		<node name="night" value="Notte"/>
 		<node name="networkLibrary" value="Biblioteca di rete"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
+		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Naviga">
 			<node name="toc" value="Indice"/>
 			<node name="gotoHome" value="Vai all'inizio del Documento"/>

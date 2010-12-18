@@ -156,6 +156,8 @@
 		<node name="day" value="День"/>
 		<node name="night" value="Ніч"/>
 		<node name="networkLibrary" value="Мережева бібліотека"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
+		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Перехід">
 			<node name="toc" value="Зміст"/>
 			<node name="gotoHome" value="В початок книги"/>
