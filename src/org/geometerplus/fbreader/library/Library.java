@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.io.File;
 import java.util.*;
-//import java.lang.ref.WeakReference;
+import java.lang.ref.WeakReference;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -430,19 +430,11 @@ public final class Library {
 		}
 	}
 
-	/*
 	private static final HashMap<String,WeakReference<ZLImage>> ourCoverMap =
 		new HashMap<String,WeakReference<ZLImage>>();
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
-	*/
 
 	public static ZLImage getCover(ZLFile file) {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
-		if (plugin != null) {
-			return plugin.readCover(file);
-		}
-		return null;
-		/*
 		synchronized(ourCoverMap) {
 			final String path = file.getPath();
 			final WeakReference<ZLImage> ref = ourCoverMap.get(path);
@@ -466,6 +458,5 @@ public final class Library {
 			}
 			return image;
 		}
-		*/
 	}
 }
