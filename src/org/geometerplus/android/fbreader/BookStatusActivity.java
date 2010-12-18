@@ -38,7 +38,6 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -49,10 +48,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
-import org.geometerplus.fbreader.library.Author;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.SeriesInfo;
-import org.geometerplus.fbreader.library.Tag;
+import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
 
@@ -61,6 +57,7 @@ public class BookStatusActivity extends Activity {
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
+	private ZLImage myImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +66,15 @@ public class BookStatusActivity extends Activity {
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
+		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
+		final ZLFile file = ZLFile.createFileByPath(path);
+
+		myImage = Library.getCover(file);
+
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
-		final ZLFile file = ZLFile.createFileByPath(path);
 		myBook = Book.getByFile(file);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -138,7 +138,7 @@ public class BookStatusActivity extends Activity {
 	}
 
 	private void setupCover(Book book) {
-		final ImageView coverView = (ImageView) findViewById(R.id.book_cover);
+		final ImageView coverView = (ImageView)findViewById(R.id.book_cover);
 
 		final int maxHeight = 250; // FIXME: hardcoded constant
 		final int maxWidth = maxHeight * 3 / 4;
@@ -146,21 +146,15 @@ public class BookStatusActivity extends Activity {
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
-		if (plugin == null) {
+		if (myImage == null) {
 			return;
 		}
 
-		final ZLImage image = plugin.readCover(book);
-		if (image == null) {
-			return;
-		}
-
-		if (image instanceof ZLLoadableImage) {
-			((ZLLoadableImage)image).synchronize();
+		if (myImage instanceof ZLLoadableImage) {
+			((ZLLoadableImage)myImage).synchronize();
 		}
 		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
+			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(myImage);
 		if (data == null) {
 			return;
 		}
