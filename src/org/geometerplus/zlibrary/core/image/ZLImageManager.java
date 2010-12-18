@@ -31,19 +31,8 @@ public abstract class ZLImageManager {
 	}
 
 	public abstract ZLImageData getImageData(ZLImage image);
+	protected abstract void startImageLoading(ZLLoadableImage image, Runnable postLoadingRunnable);
 	
-/*	protected final static class Color {
-		public final byte Red;
-		public final byte Green;
-		public final byte Blue;
-		
-		public Color(final byte red, final byte green, final byte blue) {
-			Red = red;
-			Green = green;
-			Blue = blue;
-		}
-	}
-*/	
 	protected final static class PalmImageHeader {
 		public final int Width;
 		public final int Height;

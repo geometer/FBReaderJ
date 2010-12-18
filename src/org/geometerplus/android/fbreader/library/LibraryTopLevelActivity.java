@@ -48,7 +48,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY_NG");
+			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 		if (LibraryInstance == null) {
 			LibraryInstance = new Library();

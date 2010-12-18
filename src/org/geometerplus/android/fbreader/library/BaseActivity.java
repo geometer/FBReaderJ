@@ -36,7 +36,6 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageLoader;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
@@ -138,7 +137,7 @@ abstract class BaseActivity extends ListActivity {
 			if (img.isSynchronized()) {
 				data = mgr.getImageData(img);
 			} else {
-				ZLAndroidImageLoader.Instance().startImageLoading(img, myInvalidateViewsRunnable);
+				img.startSynchronization(myInvalidateViewsRunnable);
 			}
 		} else {
 			data = mgr.getImageData(cover);
