@@ -19,10 +19,11 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Message;
 import android.os.Handler;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.PluginUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
@@ -46,6 +48,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int OPEN_CATALOG_ITEM_ID = 0;
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
 	public static final int RELOAD_ITEM_ID = 2;
+	public static final int SIGNUP_ITEM_ID = 3;
 	public static final int SIGNIN_ITEM_ID = 4;
 	public static final int SIGNOUT_ITEM_ID = 5;
 	public static final int REFILL_ACCOUNT_ITEM_ID = 6;
@@ -159,6 +162,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
 		addOptionsItem(menu, RELOAD_ITEM_ID, "reload");
 		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
+		addOptionsItem(menu, SIGNUP_ITEM_ID, "signUp");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
 		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount");
 		return true;
@@ -197,6 +201,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 		}
 		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
+		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn);
 		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
 		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill);
 		return true;
@@ -244,6 +249,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return true;
 			case SIGNIN_ITEM_ID:
 				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
+				return true;
+			case SIGNUP_ITEM_ID:
+				Util.runRegistrationDialog(activity, ((NetworkCatalogTree)tree).Item.Link);
 				return true;
 			case SIGNOUT_ITEM_ID:
 				doSignOut(activity, (NetworkCatalogTree)tree);
@@ -386,6 +394,22 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
+	private void processExtraData(NetworkBaseActivity activity, LinkedHashMap<String,String> extraData) {
+		if (extraData != null && !extraData.isEmpty()) {
+			for (Map.Entry<String,String> entry : extraData.entrySet()) {
+				if ("androidActivity".equals(entry.getKey())) {
+					installPlugin(activity, entry.getValue());
+				}
+			}
+		}
+	}
+
+	private void installPlugin(NetworkBaseActivity activity, String pkg) {
+		if (!PluginUtil.isPluginInstalled(activity, pkg)) {
+			PluginUtil.installPackageFromMarket(activity, pkg);
+		}
+	}
+
 	public void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
 		if (url == null) {
@@ -408,6 +432,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						NetworkView.Instance().fireModelChangedAsync();
 					}
 				}
+
 				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
 				NetworkView.Instance().startItemsLoading(
 					activity,
@@ -415,6 +440,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
 				NetworkView.Instance().openTree(activity, tree, url);
+
+				processExtraData(activity, tree.Item.extraData());
 			}
 		});
 	}

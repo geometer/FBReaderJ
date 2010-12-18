@@ -30,9 +30,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.*;
 
-
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
-
 	private boolean mySidChecked;
 
 	private ZLStringOption mySidUserNameOption;
@@ -42,11 +40,17 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private String myAccount;
 	private final HashMap<String, NetworkLibraryItem> myPurchasedBooks = new HashMap<String, NetworkLibraryItem>();
 
-
 	public LitResAuthenticationManager(INetworkLink link, String sslCertificate) {
 		super(link, sslCertificate);
 		mySidUserNameOption = new ZLStringOption(link.getSiteName(), "sidUserName", "");
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
+	}
+
+	@Override
+	public synchronized void initUser(String userName, String sid) {
+		mySidChecked = true;
+		mySidUserNameOption.setValue(userName);
+		mySidOption.setValue(sid);
 	}
 
 	@Override
@@ -403,25 +407,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return true;
 	}
 
+	/*
 	@Override
 	public void registerUser(String login, String password, String email) throws ZLNetworkException {
-		String url = Link.getLink(INetworkLink.URL_SIGN_UP);
-		if (url == null) {
-			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
-		}
-		url = ZLNetworkUtil.appendParameter(url, "new_login", login);
-		url = ZLNetworkUtil.appendParameter(url, "new_pwd1", password);
-		url = ZLNetworkUtil.appendParameter(url, "mail", email);
-
-		final LitResRegisterUserXMLReader xmlReader = new LitResRegisterUserXMLReader(Link.getSiteName());
-
-		ZLNetworkException exception = null;
-		try {
-			ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
-		} catch (ZLNetworkException e) {
-			exception = e;
-		}
-
 		synchronized (this) {
 			mySidChecked = true;
 			if (exception != null) {
@@ -433,6 +421,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			mySidUserNameOption.setValue(login);
 		}
 	}
+	*/
 
 	@Override
 	public boolean passwordRecoverySupported() {

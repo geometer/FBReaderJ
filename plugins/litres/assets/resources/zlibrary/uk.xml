@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ukrainian zlibrary resources, by Dmytro Shevchenko -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="ОК"/>
+			<node name="cancel" value="Відмінити"/>
+			<node name="yes" value="Так"/>
+			<node name="no" value="Ні"/>
+			<node name="apply" value="Застосувати"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Помилка при роботі з мережею" />
+			<node name="unknownErrorMessage" value="Невідома помилка" />
+			<node name="operationTimedOutMessage" value="Відведений час вичерпаний" />
+			<node name="somethingWrongMessage" value="Помилка при роботі з&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Не вдалося створити теку&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Не вдалося створити файл&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Не вдалося з’єднатися з мережею" />
+			<node name="couldntConnectMessage" value="Не вдалося з’єднатися з сайтом&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Не вдається знайти сайт&#10;%s" />
+			<node name="authenticationFailed" value="Помилка авторизації" />
+			<node name="unsupportedProtocol" value="Невідомий протокол" />
+			<node name="invalidURL" value="Неправильний URL" />
+			<node name="hostCantBeReached" value="Сайт %s недоступний" />
+			<node name="connectionRefused" value="З’єднання закрите сайтом&#10;%s" />
+			<node name="sslError" value="Помилка підсистеми SSL" />
+			<node name="sslConnectErrorMessage" value="Проблема встановлення SSL/TLS з’єднання:&#10;%s" />
+			<node name="sslBadKey" value="Поганий SSL сертифікат отримано від:&#10;%s" />
+			<node name="sslPeerUnverified" value="Неможливо перевірити справжність сайту:&#10;%s" />
+			<node name="sslProtocolError" value="Помилка в роботі протоколу SSL" />
+			<node name="sslBadCertificateFileMessage" value="Не можу прочитати файл сертифікату SSL CA:&#10;%s" />
+			<node name="sslCertificateExpired" value="Закінчився термін дії сертифіката SSL:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Термін дії сертифіката SSL ще не настав:&#10;%s" />
+		</node>
+	</node>
+</resources>

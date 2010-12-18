@@ -89,6 +89,7 @@
 			<node name="reload" value="Neu laden"/>
 			<node name="signIn" value="Einloggen"/>
 			<node name="signOut" value="Ausloggen (%s)"/>
+			<node name="signUp" value="Anmelden" />
 			<node name="refillAccount" value="Konto aufladen"/>
 			<node name="addCustomCatalog" value="Katalog hinzufügen"/>
 			<node name="refreshCatalogsList" value="Liste der Kataloge aktualisieren"/>
@@ -186,6 +187,9 @@
 			<node name="continue" value="Fortsetzen" />
 			<node name="editUrl" value="URL bearbeiten" />
 			<node name="tryAgain" value="Erneut versuchen" />
+			<node name="openBook" value="Read" toBeTranslated="true" />
+			<node name="editInfo" value="Edit" toBeTranslated="true" />
+			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Dateiname"/>
@@ -479,7 +483,6 @@
 			<node name="authentication" value="Authentifizierung. Bitte warten..." />
 			<node name="signOut" value="Buch wird ausgetragen. Bitte warten..." />
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..." />
-			<node name="registerUser" value="Neues Benutzerkonto wird registriert. Bitte warten..." />
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
 		</node>
@@ -490,12 +493,6 @@
 			<node name="purchaseAlreadyPurchased" value="Das Duch wurde bereits gekauft." />
 			<node name="bookNotPurchased" value="Das Buch wurde nicht gekauft." />
 			<node name="downloadLimitExceeded" value="Download-Limit ist überschritten." />
-			<node name="loginAlreadyTaken" value="Benutzername wird bereits verwendet." />
-			<node name="loginNotSpecified" value="Bitte den Benutzernamen eingeben." />
-			<node name="passwordNotSpecified" value="Bitte ein Passwort eingeben." />
-			<node name="emailNotSpecified" value="Bitte eine Email-Adresse eingeben." />
-			<node name="invalidEMail" value="Ungültige Email-Adresse." />
-			<node name="tooManyRegistrations" value="Zu viele Registrierungen von Ihrer IP-Adresse;&#10;bitte in einigen Minuten noch einmal versuchen." />
 			<node name="noUserEmail" value="Es gibt keinen registrierten Nutzer mit dieser Email-Adresse&#10;" />
 			<node name="unsupportedOperation" value="Operation wird nicht unterstützt." />
 			<node name="notAnOPDS" value="Dies sit kein OPDS Katalog." />
@@ -517,14 +514,6 @@
 			<node name="skipIP" value="Nicht an IP-Adresse binden" />
 			<node name="loginIsEmpty" value="Es sollte ein Benutzername angegeben werden." />
 			<node name="register" value="Anmelden" />
-		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Registrierter Benutzer" />
-			<node name="login" value="Benutzername" />
-			<node name="password" value="Passwort" />
-			<node name="confirmPassword" value="Passwortbestätigung" />
-			<node name="email" value="Email" />
-			<node name="differentPasswords" value="Passwort und Passwortbestätigung müssen identisch sein." />
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Benutzerspezifischer Katalog" />
