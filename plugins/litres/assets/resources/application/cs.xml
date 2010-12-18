@@ -13,10 +13,10 @@
 			<node name="passwordNotSpecified" value="Zadejte neprázdné heslo" />
 			<node name="passwordsDoNotMatch" value="Heslo a potvrzení hesla se musí shodovat." />
 			<node name="emailNotSpecified" value="Zadejte e-mailovou adresu" />
-			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
+			<node name="emailAlreadyTaken" value="E-mailová adresa se již používá" />
 			<node name="invalidEMail" value="Neplatná e-mailová adresa" />
 			<node name="tooManyRegistrations" value="Příliš mnoho registrací z vaší IP;&#10;zkuste to znovu za pár minut" />
-			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
+			<node name="errorDuringRegistation" value="Došlo k chybě %s" />
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Registrace nového účtu. Čekejte..." />
