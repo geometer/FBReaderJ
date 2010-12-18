@@ -136,6 +136,11 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 	}
 
 	@Override
+	public int sourceType() {
+		return SourceType.NETWORK;
+	}
+
+	@Override
 	public String getId() {
 		return Url;
 	}

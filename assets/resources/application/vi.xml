@@ -38,6 +38,7 @@
 			<node name="localSearch" value="Tìm nội bộ"/>
 		</node>
 		<node name="openBook" value="Mở sách"/>
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="Xóa sách"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
@@ -102,6 +103,24 @@
 		<node name="series" value="Bộ sách:" />
 		<node name="indexInSeries" value="Chỉ mục trong bộ:" />
 		<node name="tags" value="Từ khóa:" />
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Thông tin sách" />
+		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="title" value="Tiêu đề:" />
+		<node name="authors" value="Tác giả:" />
+		<node name="series" value="Bộ sách:" />
+		<node name="indexInSeries" value="Chỉ mục trong bộ:" />
+		<node name="tags" value="Từ khóa:" />
+		<node name="name" toBeTranslated="true" value="Name:" />
+		<node name="type" toBeTranslated="true" value="Type:" />
+		<node name="size" toBeTranslated="true" value="Size:" />
+		<node name="time" toBeTranslated="true" value="Last modified:" />
+		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="menu">
+			<node name="edit" toBeTranslated="true" value="Edit" />
+		</node>
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Sách đã được tải về" />

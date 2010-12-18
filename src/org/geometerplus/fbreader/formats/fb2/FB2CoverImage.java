@@ -41,6 +41,11 @@ class FB2CoverImage extends ZLImageProxy {
 	}
 
 	@Override
+	public int sourceType() {
+		return SourceType.DISK;
+	}
+
+	@Override
 	public String getId() {
 		return myFile.getPath();
 	}
