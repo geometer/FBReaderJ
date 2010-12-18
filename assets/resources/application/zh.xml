@@ -88,6 +88,7 @@
 			<node name="reload" value="重新加载" />
 			<node name="signIn" value="登录"/>
 			<node name="signOut" value="退出 (%s)"/>
+			<node name="signUp" value="注册" />
 			<node name="refillAccount" toBeTranslated="true" value="Refill account"/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
@@ -215,6 +216,9 @@
 			<node name="continue" toBeTranslated="true" value="Continue" />
 			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
 			<node name="tryAgain" toBeTranslated="true" value="Try again" />
+			<node name="openBook" value="Read" toBeTranslated="true" />
+			<node name="editInfo" value="Edit" toBeTranslated="true" />
+			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="文件" />
@@ -505,7 +509,6 @@
 			<node name="authentication" value="验证中.请等待..." />
 			<node name="signOut" value="退出. 正在处理,请稍等..." />
 			<node name="purchaseBook" value="书籍购买中. 请等待..." />
-			<node name="registerUser" value="正在注册新账号，请稍等..." />
 			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
 		</node>
@@ -516,12 +519,6 @@
 			<node name="purchaseAlreadyPurchased" value="已购买书籍" />
 			<node name="bookNotPurchased" value="未购买书籍" />
 			<node name="downloadLimitExceeded" value="超过下载限制" />
-			<node name="loginAlreadyTaken" value="用户名已经存在" />
-			<node name="loginNotSpecified" value="请输入用户名" />
-			<node name="passwordNotSpecified" value="请输入密码" />
-			<node name="emailNotSpecified" value="请输入你的电子邮箱" />
-			<node name="invalidEMail" value="无效的电子邮箱" />
-			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册" />
 			<node name="noUserEmail" value="你的电子邮箱可以注册&#10;" />
 			<node name="unsupportedOperation" value="非法操作" />
 			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
@@ -543,14 +540,6 @@
 			<node name="skipIP" value="不绑定到IP地址" />
 			<node name="loginIsEmpty" value="用户名不允许为空" />
 			<node name="register" value="注册" />
-		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="注册用户" />
-			<node name="login" value="用户名" />
-			<node name="password" value="密码" />
-			<node name="confirmPassword" value="密码确认" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="密码和密码确认必须一致." />
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" toBeTranslated="true" value="Custom catalog" />

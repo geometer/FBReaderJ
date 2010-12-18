@@ -1,3 +1,7 @@
+* LitRes integration has been moved to a separate plugin to avoid questions about "strange permissions required by FBReader"
+* Refilling LitRes account via SMS has been implemented
+* One-click book purchasing at LitRes has been implemented
+
 ===== 0.99.0 (??? ??, 2010) =====
 * New book info activity: with large cover image, annotation, etc.
 * Integration with ColorDict has been implemented

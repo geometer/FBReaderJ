@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Chinese zlibrary resources, by http://shucang.com/ -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="确定" />
+			<node name="cancel" value="取消" />
+			<node name="yes" value="是" />
+			<node name="no" value="否" />
+			<node name="apply" value="应用" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="网络错误" />
+			<node name="unknownErrorMessage" value="未知错误" />
+			<node name="operationTimedOutMessage" value="操作超时" />
+			<node name="somethingWrongMessage" value="出错 %s" />
+			<node name="couldntCreateDirectoryMessage" value="无法创建目录 %s" />
+			<node name="couldntCreateFileMessage" value="无法创建文件 %s" />
+			<node name="couldntConnectToNetworkMessage" value="无法连接到网络" />
+			<node name="couldntConnectMessage" value="无法连接到主机%s" />
+			<node name="couldntResolveHostMessage" value="无法解析主机 %s" />
+			<node name="authenticationFailed" value="无法辨识" />
+			<node name="unsupportedProtocol" value="不支持的协议" />
+			<node name="invalidURL" value="无效网址" />
+			<node name="hostCantBeReached" value="网站无法访问 %s" />
+			<node name="connectionRefused" value="连接被拒绝&#10;%s" />
+			<node name="sslError" value="SSL系统错误." />
+			<node name="sslConnectErrorMessage" value="SSL/TLS 连接出现问题:&#10;%s" />
+			<node name="sslBadKey" value="来自:&#10;%s错误的SSL验证消息." />
+			<node name="sslPeerUnverified" value="无法验证所用ID:&#10;%s" />
+			<node name="sslProtocolError" value="执行SSL协议时发生错误." />
+			<node name="sslBadCertificateFileMessage" value="无法读取 SSL CA 证书文件:&#10;%s" />
+			<node name="sslCertificateExpired" value="SSL证书已经过期:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL证书无效:&#10;%s" />
+		</node>
+	</node>
+</resources>

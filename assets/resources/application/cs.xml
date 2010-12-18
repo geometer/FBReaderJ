@@ -88,6 +88,7 @@
 			<node name="reload" value="Znovu načíst"/>
 			<node name="signIn" value="Přihlásit"/>
 			<node name="signOut" value="Odhlásit (%s)"/>
+			<node name="signUp" value="Přihlásit" />
 			<node name="refillAccount" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
@@ -215,6 +216,9 @@
 			<node name="continue" value="Pokračovat" />
 			<node name="editUrl" value="Upravit URL" />
 			<node name="tryAgain" value="Zkusit znovu" />
+			<node name="openBook" value="Read" toBeTranslated="true" />
+			<node name="editInfo" value="Edit" toBeTranslated="true" />
+			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Název souboru"/>
@@ -505,7 +509,6 @@
 			<node name="authentication" value="Ověřování. Čekejte..." />
 			<node name="signOut" value="Odhlašování. Čekejte..." />
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..." />
-			<node name="registerUser" value="Registrace nového účtu. Čekejte..." />
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..." />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
 		</node>
@@ -516,12 +519,6 @@
 			<node name="purchaseAlreadyPurchased" value="Již zakoupena" />
 			<node name="bookNotPurchased" value="Kniha nebyla zakoupena" />
 			<node name="downloadLimitExceeded" value="Překročen limit stahování" />
-			<node name="loginAlreadyTaken" value="Uživatelské jméno se již používá" />
-			<node name="loginNotSpecified" value="Zadejte uživatelské jméno" />
-			<node name="passwordNotSpecified" value="Zadejte neprázdné heslo" />
-			<node name="emailNotSpecified" value="Zadejte e-mailovou adresu" />
-			<node name="invalidEMail" value="Neplatná e-mailová adresa" />
-			<node name="tooManyRegistrations" value="Příliš mnoho registrací z vaší IP;&#10;zkuste to znovu za pár minut" />
 			<node name="noUserEmail" value="Žádný uživatel nebyl zaregistrován&#10;se zadanou e-mailovou adresou" />
 			<node name="unsupportedOperation" value="Nepodporovaná operace" />
 			<node name="notAnOPDS" value="Toto není OPDS katalog" />
@@ -543,14 +540,6 @@
 			<node name="skipIP" value="Nevázat na IP adresu" />
 			<node name="loginIsEmpty" value="Uživatelské jméno by nemělo být prázdné" />
 			<node name="register" value="Přihlásit" />
-		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Registrace uživatele" />
-			<node name="login" value="Uživatelské jméno" />
-			<node name="password" value="Heslo" />
-			<node name="confirmPassword" value="Potvrzení&#10;hesla" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="Heslo a potvrzení hesla se musí shodovat." />
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="Vlastní katalog" />

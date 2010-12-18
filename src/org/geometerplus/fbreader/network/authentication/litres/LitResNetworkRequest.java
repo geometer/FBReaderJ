@@ -26,7 +26,7 @@ import java.net.URLConnection;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
-class LitResNetworkRequest extends ZLNetworkRequest {
+public class LitResNetworkRequest extends ZLNetworkRequest {
 	public final LitResAuthenticationXMLReader Reader;
 
 	public LitResNetworkRequest(String url, String sslCertificate, LitResAuthenticationXMLReader reader) {

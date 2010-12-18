@@ -19,9 +19,7 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
@@ -43,7 +41,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 		private String myAuthenticationType;
 		private boolean myHasStableIdentifiers;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
-		private HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
+		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
+		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>(); 
 
 		private ATOMUpdated myUpdatedTime;
 		private ATOMUpdated myReadAfterTime;
@@ -69,11 +68,16 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			myRelationAliases.put(alias, relation);
 		}
 
+		public void putExtraData(String name, String value) {
+			myExtraData.put(name, value);
+		}
+
 		public void clear() {
 			myAuthenticationType = null;
 			myHasStableIdentifiers = false;
 			myUrlRewritingRules.clear();
 			myRelationAliases.clear();
+			myExtraData.clear();
 		}
 
 		public ATOMUpdated getUpdatedTime() {
@@ -180,6 +184,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			opdsLink.setRelationAliases(myRelationAliases);
 			opdsLink.setUrlConditions(urlConditions);
 			opdsLink.setUrlRewritingRules(myUrlRewritingRules);
+			opdsLink.setExtraData(myExtraData);
 
 			NetworkAuthenticationManager authManager = null;
 			if (myAuthenticationType == "basic") {
@@ -243,6 +248,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	private static final String FBREADER_STABLE_IDENTIFIERS = "hasStableIdentifiers";
 	private static final String FBREADER_REWRITING_RULE = "urlRewritingRule";
 	private static final String FBREADER_RELATION_ALIAS = "relationAlias";
+	private static final String FBREADER_EXTRA = "extra";
 
 	@Override
 	public boolean startElementHandler(final String tagPrefix, final String tag,
@@ -296,6 +302,12 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
 					((LinkReader) myFeedReader).setHasStableIdentifiers(true);
 					return false;
+				} else if (tag == FBREADER_EXTRA) {
+					final String name = attributes.getValue("name");
+					final String value = attributes.getValue("value");
+					if (name != null && value != null) {
+						((LinkReader) myFeedReader).putExtraData(name, value);
+					}
 				}
 			}
 			break;

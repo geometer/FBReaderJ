@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- German zlibrary resources, by Victor Massini-->
+<!-- Updated by Ingolf Kübler 2010/11/17 -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK" />
+			<node name="cancel" value="Abbruch" />
+			<node name="yes" value="Ja" />
+			<node name="no" value="Nein" />
+			<node name="apply" value="Übernehmen" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Netzwerk Fehler" />
+			<node name="unknownErrorMessage" value="Unbekannter Fehler." />
+			<node name="operationTimedOutMessage" value="Zeitüberschreitung." />
+			<node name="somethingWrongMessage" value="Serverfehler bei&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Verzeichnis&#10;%s konnte nicht erstellt werden." />
+			<node name="couldntCreateFileMessage" value="Datei&#10;%s konnte nicht erstellt werden." />
+			<node name="couldntConnectToNetworkMessage" value="Keine Verbindung zum Netzwerk." />
+			<node name="couldntConnectMessage" value="Keine Verbindung zum Server&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Der Servername&#10;%s konnte nicht aufgelöst werden." />
+			<node name="authenticationFailed" value="Die Authentifikation ist fehlgeschlagen." />
+			<node name="unsupportedProtocol" value="Das Protokoll wird nicht unterstützt." />
+			<node name="invalidURL" value="Die URL ist ungültig." />
+			<node name="hostCantBeReached" value="Der Server %s&#10; kann nicht erreicht werden." />
+			<node name="connectionRefused" value="Die Verbindung zu&#10;%s&#10;wurde verweigert." />
+			<node name="sslError" value="Fehler im SSL Subsystem." />
+			<node name="sslConnectErrorMessage" value="Es ist ein SSL/TLS Handshake-Problem mit&#10;%s&#10;aufgetreten." />
+			<node name="sslBadKey" value="Das SSL Zertifikat von&#10;%s&#10;ist ungültig." />
+			<node name="sslPeerUnverified" value="Die Identität der Gegenstelle&#10;%s&#10; kann nicht überprüft werden." />
+			<node name="sslProtocolError" value="Fehler im SSL Protokoll." />
+			<node name="sslBadCertificateFileMessage" value="Die SSL-CA-Zertifikat-Datei:&#10;%s kann nicht gelesen werden." />
+			<node name="sslCertificateExpired" value="Das SSL-Zertifikat ist abgelaufen:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Das SSL-Zertifikat ist noch nicht gültig:&#10;%s" />
+		</node>
+	</node>
+</resources>

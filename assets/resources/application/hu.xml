@@ -88,6 +88,7 @@
 			<node name="reload" value="Újratöltés"/>
 			<node name="signIn" value="Bejelentkezés"/>
 			<node name="signOut" value="Kijelentkezés (%s)"/>
+			<node name="signUp" value="Regisztráció" />
 			<node name="refillAccount" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
@@ -215,6 +216,9 @@
 			<node name="continue" toBeTranslated="true" value="Continue" />
 			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
 			<node name="tryAgain" toBeTranslated="true" value="Try again" />
+			<node name="openBook" value="Read" toBeTranslated="true" />
+			<node name="editInfo" value="Edit" toBeTranslated="true" />
+			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Fájlnév"/>
@@ -505,7 +509,6 @@
 			<node name="authentication" value="Bejelentkezés. Kérjük, várjon..." />
 			<node name="signOut" value="Kijelentkezés. Kérjük, várjon..." />
 			<node name="purchaseBook" value="Könyv vásárlása. Kérjük, várjon..." />
-			<node name="registerUser" value="Fiók létrehozása. Kérjük, várjon..." />
 			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
 		</node>
@@ -516,12 +519,6 @@
 			<node name="purchaseAlreadyPurchased" value="Már megvásárolva" />
 			<node name="bookNotPurchased" value="A könyv nincs megvásárolva" />
 			<node name="downloadLimitExceeded" value="Túllépte a letöltési korlátot" />
-			<node name="loginAlreadyTaken" value="Ez a felhasználónév már foglalt" />
-			<node name="loginNotSpecified" value="Adjon meg felhasználónevet" />
-			<node name="passwordNotSpecified" value="Adjon meg jelszót" />
-			<node name="emailNotSpecified" value="Adjon meg egy érvényes e-mail címet" />
-			<node name="invalidEMail" value="Érvénytelen e-mail cím" />
-			<node name="tooManyRegistrations" value="Túl sok regisztrációs kérés erről az IP-címről;&#10;próbálja meg pár perc múlva ismét!" />
 			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel" />
 			<node name="unsupportedOperation" value="nem támogaott művelet" />
 			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
@@ -543,14 +540,6 @@
 			<node name="skipIP" value="IP-címhez kötés nem lehetséges" />
 			<node name="loginIsEmpty" value="A felhasználónév nem lehet üres" />
 			<node name="register" value="Regisztráció" />
-		</node>
-		<node name="RegisterUserDialog">
-			<node name="title" value="Felhasználó létrehozása" />
-			<node name="login" value="Felhasználónév" />
-			<node name="password" value="Jelszó" />
-			<node name="confirmPassword" value="Jelszó&#10;megerősítése" />
-			<node name="email" value="E-mail" />
-			<node name="differentPasswords" value="A két jelszónak meg kell egyeznie." />
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" toBeTranslated="true" value="Custom catalog" />

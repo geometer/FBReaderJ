@@ -21,9 +21,11 @@ package org.geometerplus.android.fbreader.network;
 
 import android.app.Dialog;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
-import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -32,6 +34,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.INetworkLink;
 
 
 class AuthenticationDialog extends NetworkDialog {
@@ -57,20 +60,7 @@ class AuthenticationDialog extends NetworkDialog {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (mgr.registrationSupported()) {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
-					NetworkDialog.show(myActivity, NetworkDialog.DIALOG_REGISTER_USER, myLink, new Runnable() {
-						public void run() {
-							try {
-								if (mgr.isAuthorised(true)) {
-									if (myOnSuccessRunnable != null) {
-										myOnSuccessRunnable.run();
-									}
-									return;
-								}
-							} catch (ZLNetworkException e) {
-							}
-							NetworkDialog.show(myActivity, NetworkDialog.DIALOG_AUTHENTICATION, myLink, myOnSuccessRunnable);
-						}
-					});
+					Util.runRegistrationDialog(myActivity, myLink);
 				}
 			}
 		});

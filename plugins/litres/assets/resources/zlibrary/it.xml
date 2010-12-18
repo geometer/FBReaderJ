@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Italian zlibrary resources, by Vytek and Neoxx from AndDev.it Translate Team -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok" />
+			<node name="cancel" value="Cancella" />
+			<node name="yes" value="Si" />
+			<node name="no" value="No" />
+			<node name="apply" value="Applica" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Errore rete" />
+			<node name="unknownErrorMessage" value="Errore sconosciuto" />
+			<node name="operationTimedOutMessage" value="L' operazione è scaduta" />
+			<node name="somethingWrongMessage" value="Qualcosa è andato storto per&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Impossibile creare la cartella&#10;%s" />
+			<node name="couldntCreateFileMessage" value="Impossibile creare il file&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="Impossibile connettersi alla rete" />
+			<node name="couldntConnectMessage" value="Impossibile connettersi all' host&#10;%s" />
+			<node name="couldntResolveHostMessage" value="Impossibile risolvere l'host&#10;%s" />
+			<node name="authenticationFailed" value="Autenticazione fallita" />
+			<node name="unsupportedProtocol" value="Protocollo non supportato" />
+			<node name="invalidURL" value="URL non valido" />
+			<node name="hostCantBeReached" value="L' host %s&#10;non può essere raggiunto" />
+			<node name="connectionRefused" value="La connessiione è stata rifiutata da&#10;%s" />
+			<node name="sslError" value="Errore sottosistema SSL" />
+			<node name="sslConnectErrorMessage" value="Si è verificato un problema con l' handshake SSL/TLS:&#10;%s" />
+			<node name="sslBadKey" value="Certificato SSL difettoso da:&#10;%s" />
+			<node name="sslPeerUnverified" value="Impossibile verificare l'identità dei peer per:&#10;%s" />
+			<node name="sslProtocolError" value="Errore nel funzionamento del protocollo SSL" />
+			<node name="sslBadCertificateFileMessage" value="Impossibile leggere il file che contiene il certificato SSL CA:&#10;%s" />
+			<node name="sslCertificateExpired" value="Il certificato SSL è scaduto:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="Il certificato SSL non è ancora valido:&#10;%s" />
+		</node>
+	</node>
+</resources>

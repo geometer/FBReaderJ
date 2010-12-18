@@ -91,7 +91,7 @@ public class BookInfoActivity extends Activity {
 		if (myHideOpenButton) {
 			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
 		} else {
-			setupButton(R.id.book_info_button_open, "open", new View.OnClickListener() {
+			setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					startActivity(
@@ -103,7 +103,7 @@ public class BookInfoActivity extends Activity {
 				}
 			});
 		}
-		setupButton(R.id.book_info_button_edit, "edit", new View.OnClickListener() {
+		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				startActivity(
@@ -112,7 +112,7 @@ public class BookInfoActivity extends Activity {
 				);
 			}
 		});
-		setupButton(R.id.book_info_button_reload, "reload", new View.OnClickListener() {
+		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				// TODO: implement
