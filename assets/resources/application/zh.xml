@@ -38,6 +38,7 @@
 			<node name="localSearch" value="本地搜索" />
 		</node>
 		<node name="openBook" value="打开图书" />
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="删除图书" />
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
@@ -102,6 +103,24 @@
 		<node name="series" value="系列:" />
 		<node name="indexInSeries" value="系列序号:" />
 		<node name="tags" toBeTranslated="true" value="Tags:" />
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="书籍信息" />
+		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="title" value="书名:" />
+		<node name="authors" value="作者:" />
+		<node name="series" value="系列:" />
+		<node name="indexInSeries" value="系列序号:" />
+		<node name="tags" toBeTranslated="true" value="Tags:" />
+		<node name="name" toBeTranslated="true" value="Name:" />
+		<node name="type" toBeTranslated="true" value="Type:" />
+		<node name="size" toBeTranslated="true" value="Size:" />
+		<node name="time" toBeTranslated="true" value="Last modified:" />
+		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="menu">
+			<node name="edit" toBeTranslated="true" value="Edit" />
+		</node>
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="下载成功" />

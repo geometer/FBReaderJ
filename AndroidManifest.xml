@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="800" android:versionName="0.8.0" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="9900" android:versionName="0.99.0" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="3" />
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -53,6 +53,7 @@
 			</intent-filter>
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.TextSearchActivity" />
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
 		<activity android:name="org.geometerplus.android.fbreader.TextSearchActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
@@ -88,7 +89,7 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name="org.geometerplus.android.fbreader.preferences.BookInfoActivity" android:process=":library" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.EditBookInfoActivity" android:process=":library" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.network.BookDownloader" android:process=":bookDownloader" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
