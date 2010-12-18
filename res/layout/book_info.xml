@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/book_info_root"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical"
 >
+	<LinearLayout
+		android:id="@+id/book_button_panel"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:orientation="horizontal"
+		android:paddingLeft="2dip"
+		android:paddingRight="2dip"
+		android:baselineAligned="false"
+	>
+		<LinearLayout
+			android:layout_weight="0.31"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+		/>
+		<Button
+			android:id="@+id/book_button_open"
+			android:layout_width="0dip"
+			android:layout_weight="1"
+			android:maxLines="2"
+			android:layout_height="wrap_content"
+		/>
+		<Button
+			android:id="@+id/book_button_edit"
+			android:layout_width="0dip"
+			android:layout_weight="1"
+			android:maxLines="2"
+			android:layout_height="wrap_content"
+		/>
+		<Button
+			android:id="@+id/book_button_reload"
+			android:layout_width="0dip"
+			android:layout_weight="1"
+			android:maxLines="2"
+			android:layout_height="wrap_content"
+		/>
+		<LinearLayout
+			android:layout_width="0dip"
+			android:layout_weight="0.31"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+		/>
+	</LinearLayout>
 	<ScrollView
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
+		android:layout_alignParentTop="true"
+		android:layout_above="@id/book_button_panel"
+		android:layout_marginBottom="4dip"
 	>
 		<LinearLayout
 			android:layout_width="fill_parent"
@@ -60,4 +106,4 @@
 			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
-</LinearLayout>
+</RelativeLayout>

@@ -185,6 +185,7 @@
 			<node name="continue" value="Continue" />
 			<node name="editUrl" value="Edit URL" />
 			<node name="tryAgain" value="Try again" />
+			<node name="reload" value="Reload" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="File name"/>
