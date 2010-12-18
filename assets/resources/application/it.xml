@@ -38,6 +38,7 @@
 			<node name="localSearch" value="Ricerca locale"/>
 		</node>
 		<node name="openBook" value="Apri libro"/>
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="Cancella libro"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
@@ -103,6 +104,24 @@
 		<node name="series" value="Serie:" />
 		<node name="indexInSeries" value="Indice in serie:" />
 		<node name="tags" value="Etichette:" />
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Info Libro" />
+		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="title" value="Titolo:" />
+		<node name="authors" value="Autori:" />
+		<node name="series" value="Serie:" />
+		<node name="indexInSeries" value="Indice in serie:" />
+		<node name="tags" value="Etichette:" />
+		<node name="name" toBeTranslated="true" value="Name:" />
+		<node name="type" toBeTranslated="true" value="Type:" />
+		<node name="size" toBeTranslated="true" value="Size:" />
+		<node name="time" toBeTranslated="true" value="Last modified:" />
+		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="menu">
+			<node name="edit" toBeTranslated="true" value="Edit" />
+		</node>
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Il libro è stato scaricato" />

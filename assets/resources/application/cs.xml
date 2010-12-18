@@ -38,6 +38,7 @@
 			<node name="localSearch" value="Místní hledání"/>
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
+		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
@@ -103,6 +104,24 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Díl v sérii:" />
 		<node name="tags" value="Štítky:" />
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Informace o knize" />
+		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="title" value="Název:" />
+		<node name="authors" value="Autoři:" />
+		<node name="series" value="Série:" />
+		<node name="indexInSeries" value="Díl v sérii:" />
+		<node name="tags" value="Štítky:" />
+		<node name="name" toBeTranslated="true" value="Name:" />
+		<node name="type" toBeTranslated="true" value="Type:" />
+		<node name="size" toBeTranslated="true" value="Size:" />
+		<node name="time" toBeTranslated="true" value="Last modified:" />
+		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="menu">
+			<node name="edit" toBeTranslated="true" value="Edit" />
+		</node>
 	</node>
 	<node name="bookDownloader">
 		<node name="tickerSuccess" value="Kniha byla stažena" />

@@ -3,6 +3,7 @@
 * One-click book purchasing at LitRes has been implemented
 
 ===== 0.99.0 (??? ??, 2010) =====
+* New book info activity: with large cover image, annotation, etc.
 * Integration with ColorDict has been implemented
 * New Library view (like network library view)
 * 'Favorites' item in library view

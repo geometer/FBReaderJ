@@ -57,7 +57,7 @@ public class PluckerPlugin extends PdbPlugin {
 	}
 
 	@Override
-	public ZLImage readCover(Book book) {
+	public ZLImage readCover(ZLFile file) {
 		return null;
 	}
 }

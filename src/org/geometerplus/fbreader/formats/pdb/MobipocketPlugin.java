@@ -133,10 +133,10 @@ public class MobipocketPlugin extends PdbPlugin {
 	}
 
 	@Override
-	public ZLImage readCover(Book book) {
+	public ZLImage readCover(ZLFile file) {
 		InputStream stream = null;
 		try {
-			stream = book.File.getInputStream();
+			stream = file.getInputStream();
 			final PdbHeader header = new PdbHeader(stream);
 			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
 			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
@@ -202,11 +202,10 @@ public class MobipocketPlugin extends PdbPlugin {
 				coverIndex = thumbIndex;
 			}
 
-			final ZLFile file = book.File;
-			final MobipocketStream mpStream = new MobipocketStream(file);
-
 			// TODO: implement
-			/*int index = pbStream.firstImageLocationIndex(file.path());
+			/*final MobipocketStream mpStream = new MobipocketStream(file);
+
+			int index = pbStream.firstImageLocationIndex(file.path());
 			if (index >= 0) {
 				std::pair<int,int> imageLocation = pbStream.imageLocation(pbStream.header(), index + coverIndex);
 				if ((imageLocation.first > 0) && (imageLocation.second > 0)) {
