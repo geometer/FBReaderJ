@@ -156,6 +156,8 @@
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
+		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
 			<node name="gotoHome" value="Přejít na začátek dokumentu"/>

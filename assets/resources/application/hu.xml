@@ -156,6 +156,8 @@
 		<node name="day" value="Nappali"/>
 		<node name="night" value="Éjjeli"/>
 		<node name="networkLibrary" value="Internetes könyvtár"/>
+		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
+		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Navigáció">
 			<node name="toc" value="Tartalomegyzék"/>
 			<node name="gotoHome" value="A dokumentum elejére"/>
