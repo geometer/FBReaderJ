@@ -37,7 +37,7 @@ public final class Library {
 	private final LibraryTree myLibraryByTag = new RootTree();
 	private final LibraryTree myRecentBooks = new RootTree();
 	private final LibraryTree myFavorites = new RootTree();
-	private final LibraryTree mySearchResult = new RootTree();
+	private LibraryTree mySearchResult = new RootTree();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
 
@@ -329,17 +329,20 @@ public final class Library {
 
 	public LibraryTree searchBooks(String pattern) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		mySearchResult.clear();
+		final RootTree newSearchResults = new RootTree();
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
 			for (Book book : myBooks) {
 				if (book.matches(pattern)) {
-					mySearchResult.createBookSubTree(book, true);
+					newSearchResults.createBookSubTree(book, true);
 				}
 			}
-			mySearchResult.sortAllChildren();
+			newSearchResults.sortAllChildren();
+			if (newSearchResults.hasChildren()) {
+				mySearchResult = newSearchResults;
+			}
 		}
-		return mySearchResult;
+		return newSearchResults;
 	}
 
 	public static void addBookToRecentList(Book book) {
