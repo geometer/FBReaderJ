@@ -268,11 +268,7 @@ public final class FileManager extends BaseActivity {
 		public ZLImage getCover() {
 			if (!myCoverIsInitialized) {
 				myCoverIsInitialized = true;
-				final Book book = getBook();
-				final FormatPlugin plugin = PluginCollection.Instance().getPlugin(myFile);
-				if (book != null && plugin != null) {
-					myCover = plugin.readCover(book);
-				}
+				myCover = Library.getCover(myFile);
 			}
 			return myCover;
 		}

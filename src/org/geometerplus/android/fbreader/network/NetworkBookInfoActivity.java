@@ -24,10 +24,8 @@ import java.util.Set;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-//import android.util.StringBuilderPrinter;
 import android.view.View;
 import android.widget.ImageView;
-//import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -43,9 +41,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.*;
 
-
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
-
 	private NetworkBookItem myBook;
 
 	private final ZLResource myResource = ZLResource.resource("networkBookView");
@@ -79,27 +75,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		setupInfo();
 		setupCover();
 		setupButtons();
-
-		/*LinearLayout layout = (LinearLayout) findViewById(R.id.network_book_cover).getParent();
-		TextView detailsTitle = new TextView(this, null, android.R.attr.listSeparatorTextViewStyle);
-		TextView details = new TextView(this);
-		detailsTitle.setText("Debug Details");
-
-		StringBuilder builder = new StringBuilder();
-		StringBuilderPrinter printer = new StringBuilderPrinter(builder);
-		
-		printer.println("Id = " + myBook.Id);
-		printer.println("Index = " + myBook.Index);
-		printer.println("Cover = " + myBook.Cover);
-		printer.println("References (" + myBook.myReferences.size() + "):");
-		for (BookReference ref: myBook.myReferences) {
-			printer.println( ref.toString() );
-		}
-
-		details.setText(builder.toString());
-
-		layout.addView(detailsTitle);
-		layout.addView(details);*/
 	}
 
 	@Override

@@ -60,11 +60,6 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	protected ZLImage createCover() {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(Book.File);
-		if (plugin != null) {
-			return plugin.readCover(Book);
-		}
-
-		return null;
+		return Library.getCover(Book.File);
 	}
 }
