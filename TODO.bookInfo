@@ -1,0 +1,4 @@
+* buttons:
+  open, edit, reload -- if called from library mode
+  edit, reload -- if called from book mode
+* show annotation
