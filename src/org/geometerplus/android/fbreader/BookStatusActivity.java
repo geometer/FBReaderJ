@@ -89,13 +89,23 @@ public class BookStatusActivity extends Activity {
 		setupBookInfo(myBook);
 		setupFileInfo(myBook);
 
+		setButtonText(R.id.book_info_button_open, "open");
+		setButtonText(R.id.book_info_button_edit, "edit");
+		setButtonText(R.id.book_info_button_reload, "reload");
+
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
 	}
 
+	private void setButtonText(int buttonId, String resourceKey) {
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		((TextView)findViewById(buttonId)).setText(
+			buttonResource.getResource(resourceKey).getValue()
+		);
+	}
 
-	protected MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
 		final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
 		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
 	}
@@ -151,7 +161,10 @@ public class BookStatusActivity extends Activity {
 		}
 
 		if (myImage instanceof ZLLoadableImage) {
-			((ZLLoadableImage)myImage).synchronize();
+			final ZLLoadableImage loadableImage = (ZLLoadableImage)myImage;
+			if (!loadableImage.isSynchronized()) {
+				loadableImage.synchronize();
+			}
 		}
 		final ZLAndroidImageData data =
 			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(myImage);

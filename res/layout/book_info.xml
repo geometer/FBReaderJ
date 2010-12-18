@@ -6,7 +6,7 @@
 	android:layout_height="fill_parent"
 >
 	<LinearLayout
-		android:id="@+id/book_button_panel"
+		android:id="@+id/book_info_button_panel"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
@@ -22,21 +22,21 @@
 			android:orientation="horizontal"
 		/>
 		<Button
-			android:id="@+id/book_button_open"
+			android:id="@+id/book_info_button_open"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:maxLines="2"
 			android:layout_height="wrap_content"
 		/>
 		<Button
-			android:id="@+id/book_button_edit"
+			android:id="@+id/book_info_button_edit"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:maxLines="2"
 			android:layout_height="wrap_content"
 		/>
 		<Button
-			android:id="@+id/book_button_reload"
+			android:id="@+id/book_info_button_reload"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:maxLines="2"
@@ -53,7 +53,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_alignParentTop="true"
-		android:layout_above="@id/book_button_panel"
+		android:layout_above="@id/book_info_button_panel"
 		android:layout_marginBottom="4dip"
 	>
 		<LinearLayout
