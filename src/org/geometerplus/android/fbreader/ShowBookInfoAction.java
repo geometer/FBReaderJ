@@ -39,9 +39,9 @@ class ShowBookInfoAction extends FBAction {
 
 	public void run() {
 		myBaseActivity.startActivityForResult(
-			new Intent(myBaseActivity.getApplicationContext(), BookStatusActivity.class)
+			new Intent(myBaseActivity.getApplicationContext(), BookInfoActivity.class)
 				.putExtra(
-					BookStatusActivity.CURRENT_BOOK_PATH_KEY,
+					BookInfoActivity.CURRENT_BOOK_PATH_KEY,
 					Reader.Model.Book.File.getPath()
 				),
 			FBReader.REPAINT_CODE

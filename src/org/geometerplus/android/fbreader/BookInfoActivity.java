@@ -50,9 +50,9 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.preferences.BookInfoActivity;
+import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
-public class BookStatusActivity extends Activity {
+public class BookInfoActivity extends Activity {
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
@@ -131,8 +131,8 @@ public class BookStatusActivity extends Activity {
 	}
 
 	private void startEditDialog() {
-		final Intent intent = new Intent(getApplicationContext(), BookInfoActivity.class);
-		intent.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, myBook.File.getPath());
+		final Intent intent = new Intent(getApplicationContext(), EditBookInfoActivity.class);
+		intent.putExtra(CURRENT_BOOK_PATH_KEY, myBook.File.getPath());
 		startActivity(intent);
 	}
 

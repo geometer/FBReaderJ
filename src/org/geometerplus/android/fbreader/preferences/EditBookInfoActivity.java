@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.library.Book;
 
+import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 class BookTitlePreference extends ZLStringPreference {
@@ -83,12 +84,10 @@ class LanguagePreference extends ZLStringListPreference {
 	}
 }
 
-public class BookInfoActivity extends ZLPreferenceActivity {
-	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
-
+public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private Book myBook;
 
-	public BookInfoActivity() {
+	public EditBookInfoActivity() {
 		super("BookInfo");
 	}
 
@@ -98,17 +97,10 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
+		final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
 		final ZLFile file = ZLFile.createFileByPath(path);
 		myBook = Book.getByFile(file);
 
-		if (myBook.File.getPhysicalFile() != null) {
-			addPreference(new InfoPreference(
-				this,
-				Resource.getResource("fileName").getValue(),
-				myBook.File.getPath())
-			);
-		}
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 	}
