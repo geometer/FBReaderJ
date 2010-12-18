@@ -85,7 +85,6 @@ class LanguagePreference extends ZLStringListPreference {
 
 public class BookInfoActivity extends ZLPreferenceActivity {
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
-	public static final String CURRENT_BOOK_ARCHIVE_ENTRY_KEY = "CurrentArchiveEntryPath";
 
 	private Book myBook;
 
@@ -100,11 +99,7 @@ public class BookInfoActivity extends ZLPreferenceActivity {
 		}
 
 		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
-		final String archiveEntry = intent.getStringExtra(CURRENT_BOOK_ARCHIVE_ENTRY_KEY);
-		ZLFile file = ZLFile.createFile(null, path);
-		if (archiveEntry != null) {
-			file = ZLFile.createFile(file, archiveEntry);
-		}
+		final ZLFile file = ZLFile.createFileByPath(path);
 		myBook = Book.getByFile(file);
 
 		if (myBook.File.getPhysicalFile() != null) {

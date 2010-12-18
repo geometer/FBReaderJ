@@ -77,7 +77,6 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 
 	protected final ZLFile myParent;
 	protected final String myName;
-	private String myShortName;
 	
 	protected ZLArchiveEntryFile(ZLFile parent, String name) {
 		myParent = parent;
@@ -101,17 +100,8 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 	}
 	
 	@Override
-	public String getNameWithExtension() {
-		if (myShortName == null) {
-			final String name = myName;
-			final int index = name.lastIndexOf('/');
-			if (index == -1) {
-				myShortName = name;
-			} else {
-				myShortName = name.substring(index + 1);
-			}
-		}
-		return myShortName;
+	public String getLongName() {
+		return myName;
 	}
 
 	@Override

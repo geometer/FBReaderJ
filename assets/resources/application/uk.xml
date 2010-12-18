@@ -25,6 +25,15 @@
 		<node name="fileTree" value="File tree" toBeTranslated="true">
 			<node name="summary" value="Browse file system" toBeTranslated="true"/>
 		</node>
+		<node name="fileTreeRoot" value="Device" toBeTranslated="true">
+			<node name="summary" value="Full file system of the device" toBeTranslated="true"/>
+		</node>
+		<node name="fileTreeCard" value="Memory card" toBeTranslated="true">
+			<node name="summary" value="Memory card inserted into the device" toBeTranslated="true"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader library" toBeTranslated="true">
+			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Пошук"/>
 		</node>
@@ -514,6 +523,8 @@
 		<node name="bookNotFound" value="Немає відповідних книг"/>
 		<node name="bookmarkNotFound" value="Нема відповідних закладок"/>
 		<node name="cannotOpenBook" value="Невдається відкрити книгу"/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
+		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>

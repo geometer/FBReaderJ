@@ -23,6 +23,7 @@ import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.*;
 
 public final class ZLAndroidImageManager extends ZLImageManager {
+	@Override
 	public ZLAndroidImageData getImageData(ZLImage image) {
 		if (image instanceof ZLAndroidImageData) {
 			return (ZLAndroidImageData)image;
@@ -40,5 +41,15 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			//TODO
 			return null;
 		}
+	}
+
+	private ZLAndroidImageLoader myLoader;
+
+	@Override
+	protected void startImageLoading(ZLLoadableImage image, Runnable postLoadingRunnable) {
+		if (myLoader == null) {
+			myLoader = new ZLAndroidImageLoader();
+		}
+		myLoader.startImageLoading(image, postLoadingRunnable);
 	}
 }

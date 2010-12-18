@@ -34,6 +34,10 @@ public abstract class ZLLoadableImage extends ZLSingleImage {
 		myIsSynchronized = true;
 	}
 
+	public void startSynchronization(Runnable postSynchronizationAction) {
+		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
+	}
+
 	public abstract void synchronize();
 	public abstract void synchronizeFast();
 	public abstract String getId();

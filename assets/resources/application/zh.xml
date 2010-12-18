@@ -25,6 +25,15 @@
 		<node name="fileTree" value="File tree" toBeTranslated="true">
 			<node name="summary" value="Browse file system" toBeTranslated="true"/>
 		</node>
+		<node name="fileTreeRoot" value="Device" toBeTranslated="true">
+			<node name="summary" value="Full file system of the device" toBeTranslated="true"/>
+		</node>
+		<node name="fileTreeCard" value="Memory card" toBeTranslated="true">
+			<node name="summary" value="Memory card inserted into the device" toBeTranslated="true"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader library" toBeTranslated="true">
+			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="本地搜索" />
 		</node>
@@ -514,6 +523,8 @@
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍" />
 		<node name="bookmarkNotFound" value="对不起，找不到对应的书签" />
 		<node name="cannotOpenBook" value="对不起，无法开启本书" />
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
+		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />
