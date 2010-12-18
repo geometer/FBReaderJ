@@ -39,7 +39,7 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 				if (src != null) {
 					myImage = new ZLFileImage(
 						MIME_IMAGE_AUTO,
-						ZLFile.createFileByPath(myPathPrefix + src)
+						ZLFile.createFileByPath(myXHTMLPathPrefix + src)
 					);
 					return true;
 				}
@@ -50,6 +50,7 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 
 	private ZLFileImage myImage;
 	private String myPathPrefix;
+	private String myXHTMLPathPrefix;
 	private String myCoverXHTML;
 	private boolean myReadGuide;
 
@@ -66,6 +67,7 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 				if ("gif".equals(ext) || "jpg".equals(ext) || "jpeg".equals(ext)) {
 					myImage = new ZLFileImage(MIME_IMAGE_AUTO, coverFile);
 				} else {
+					myXHTMLPathPrefix = MiscUtil.htmlDirectoryPrefix(coverFile);
 					new XHTMLImageFinder().read(coverFile);
 				}
 			}
