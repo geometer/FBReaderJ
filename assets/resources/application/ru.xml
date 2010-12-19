@@ -107,6 +107,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Информация о книге" />
 		<node name="fileInfo" value="Информация о файле" />
+		<node name="annotation" value="Аннотация" />
 		<node name="title" value="Название:" />
 		<node name="authors" value="Авторы:" />
 		<node name="series" value="Серия:" />

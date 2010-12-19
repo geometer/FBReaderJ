@@ -108,6 +108,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Thông tin sách" />
 		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="annotation" value="Chú giải" />
 		<node name="title" value="Tiêu đề:" />
 		<node name="authors" value="Tác giả:" />
 		<node name="series" value="Bộ sách:" />

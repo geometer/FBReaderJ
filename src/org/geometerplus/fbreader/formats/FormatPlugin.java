@@ -29,6 +29,7 @@ public abstract class FormatPlugin {
 	public abstract	boolean readMetaInfo(Book book);
 	public abstract boolean readModel(BookModel model);
 	public abstract ZLImage readCover(ZLFile file);
+	public abstract String readAnnotation(ZLFile file);
 
 	/*
 	public static void detectEncodingAndLanguage(Book book, InputStream stream) throws IOException {	

@@ -41,9 +41,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
@@ -86,6 +83,7 @@ public class BookInfoActivity extends Activity {
 
 		setupCover(myBook);
 		setupBookInfo(myBook);
+		setupAnnotation(myBook);
 		setupFileInfo(myBook);
 
 		if (myHideOpenButton) {
@@ -214,6 +212,19 @@ public class BookInfoActivity extends Activity {
 			}
 		}
 		setupInfoPair(R.id.book_tags, "tags", buffer);
+	}
+
+	private void setupAnnotation(Book book) {
+		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
+		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
+		final String annotation = Library.getAnnotation(book.File);	
+		if (annotation == null) {
+			titleView.setVisibility(View.GONE);
+			bodyView.setVisibility(View.GONE);
+		} else {
+			titleView.setText(myResource.getResource("annotation").getValue());
+			bodyView.setText(annotation);
+		}
 	}
 
 	private void setupFileInfo(Book book) {

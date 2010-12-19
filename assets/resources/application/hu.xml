@@ -108,6 +108,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Könyv adatai" />
 		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="annotation" value="Fülszöveg" />
 		<node name="title" value="Cím:" />
 		<node name="authors" value="Szerzők:" />
 		<node name="series" value="Sorozat:" />

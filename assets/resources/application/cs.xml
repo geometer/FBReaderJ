@@ -108,6 +108,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize" />
 		<node name="fileInfo" value="Informace o souboru" />
+		<node name="annotation" value="Anotace" />
 		<node name="title" value="Název:" />
 		<node name="authors" value="Autoři:" />
 		<node name="series" value="Série:" />
