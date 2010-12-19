@@ -26,16 +26,18 @@ import java.net.URLConnection;
 public abstract class ZLNetworkRequest {
 	public final String URL;
 	public final String SSLCertificate;
+	public final String PostData;
 
 	public boolean FollowRedirects = true;
 
 	protected ZLNetworkRequest(String url) {
-		this(url, null);
+		this(url, null, null);
 	}
 
-	protected ZLNetworkRequest(String url, String sslCertificate) {
+	protected ZLNetworkRequest(String url, String sslCertificate, String postData) {
 		URL = url;
 		SSLCertificate = sslCertificate;
+		PostData = postData;
 	}
 
 	public void doBefore() throws ZLNetworkException {

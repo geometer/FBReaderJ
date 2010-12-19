@@ -88,16 +88,39 @@ public class ZLNetworkManager {
 			HttpURLConnection httpConnection = null;
 			int response = -1;
 			for (int retryCounter = 0; retryCounter < 3 && response == -1; ++retryCounter) {
-				final URL url = new URL(request.URL);
-				final URLConnection connection = url.openConnection();
+				final URLConnection connection = new URL(request.URL).openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_UNSUPPORTED_PROTOCOL);
 				}
-				httpConnection = (HttpURLConnection) connection;
+				httpConnection = (HttpURLConnection)connection;
 				setCommonHTTPOptions(request, httpConnection);
-				httpConnection.connect();
+				if (request.PostData != null) {
+					httpConnection.setRequestMethod("POST");
+					httpConnection.setRequestProperty(
+						"Content-Length",
+						Integer.toString(request.PostData.getBytes().length)
+					);
+					httpConnection.setRequestProperty(
+						"Content-Type", 
+						"application/x-www-form-urlencoded"
+					);
+					httpConnection.setUseCaches (false);
+					httpConnection.setDoInput(true);
+					httpConnection.setDoOutput(true);
+					final OutputStreamWriter writer =
+						new OutputStreamWriter(httpConnection.getOutputStream());
+					try {
+						writer.write(request.PostData);
+						writer.flush();
+					} finally {
+						writer.close();
+					}
+				} else {
+					httpConnection.connect();
+				}
 				response = httpConnection.getResponseCode();
 			}
+			System.err.println("RESPONSE: " + response);
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {
