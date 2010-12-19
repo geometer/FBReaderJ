@@ -52,7 +52,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param cover      cover url. Can be <code>null</code>.
 	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 */
-	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
+	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType) {
 		this(link, title, summary, cover, urlByType, VISIBLE_ALWAYS, CATALOG_OTHER);
 	}
 
