@@ -24,15 +24,8 @@ import java.io.IOException;
 import java.net.URLConnection;
 
 public abstract class ZLNetworkRequest {
-	public static final int AUTHENTICATION_NO_AUTH = 0;
-	public static final int AUTHENTICATION_BASIC = 1;
-
 	public final String URL;
 	public final String SSLCertificate;
-
-	public int AuthenticationMethod = AUTHENTICATION_NO_AUTH;
-	public String UserName;
-	public String Password;
 
 	public boolean FollowRedirects = true;
 
