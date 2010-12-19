@@ -152,6 +152,7 @@ public class ZLNetworkManager {
 		}
 		if (requests.size() == 1) {
 			perform(requests.get(0));
+			return;
 		}
 		HashSet<String> errors = new HashSet<String>();
 		// TODO: implement concurrent execution !!!
