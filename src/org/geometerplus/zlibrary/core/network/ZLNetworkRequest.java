@@ -43,8 +43,6 @@ public abstract class ZLNetworkRequest {
 	
 	public abstract void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException;
 
-	public void doAfterOnSuccess() throws ZLNetworkException {
-	}
-	public void doAfterOnError() {
+	public void doAfter(boolean success) throws ZLNetworkException {
 	}
 }
