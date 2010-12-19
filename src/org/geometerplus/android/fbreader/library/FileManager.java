@@ -303,7 +303,9 @@ public final class FileManager extends BaseActivity {
 				return;
 			}
 
-			for (ZLFile file : myFile.children()) {
+			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
+			Collections.sort(children, new FileComparator());
+			for (ZLFile file : children) {
 				if (Thread.currentThread().isInterrupted()) {
 					break;
 				}
@@ -319,6 +321,12 @@ public final class FileManager extends BaseActivity {
 					});
 				}
 			}
+		}
+	}
+
+	private static class FileComparator implements Comparator<ZLFile> {
+		public int compare(ZLFile f0, ZLFile f1) {
+			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
 		}
 	}
 }
