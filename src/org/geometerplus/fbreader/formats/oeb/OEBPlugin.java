@@ -66,7 +66,6 @@ public class OEBPlugin extends FormatPlugin {
 	@Override
 	public String readAnnotation(ZLFile file) {
 		final ZLFile opfFile = getOpfFile(file);
-		//return (opfFile != null) ? new OEBAnnotationReader().readAnnotation(opfFile) : null;
-		return null;
+		return (opfFile != null) ? new OEBAnnotationReader().readAnnotation(opfFile) : null;
 	}
 }
