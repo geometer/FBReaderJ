@@ -81,17 +81,6 @@ public class ZLNetworkManager {
 		// TODO: handle Authentication
 	}
 
-	private static void doHandleStream(ZLNetworkRequest request, URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-		String encoding = connection.getContentEncoding();
-		if (encoding != null) {
-			encoding = encoding.toLowerCase();
-			if (encoding.equals("gzip")) {
-				inputStream = new GZIPInputStream(inputStream);
-			}
-		}
-		request.handleStream(connection, inputStream);
-	}
-
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
 		boolean success = false;
 		try {
@@ -112,7 +101,10 @@ public class ZLNetworkManager {
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {
-					doHandleStream(request, httpConnection, stream);
+					if ("gzip".equalsIgnoreCase(httpConnection.getContentEncoding())) {
+						stream = new GZIPInputStream(stream);
+					}
+					request.handleStream(httpConnection, stream);
 				} finally {
 					stream.close();
 				}
