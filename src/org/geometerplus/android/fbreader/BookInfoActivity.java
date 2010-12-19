@@ -46,6 +46,8 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity {
+	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
+
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 	public static final String HIDE_OPEN_BUTTON_KEY = "hideOpenButton";
 
@@ -231,14 +233,20 @@ public class BookInfoActivity extends Activity {
 		((TextView)findViewById(R.id.file_info_title)).setText(myResource.getResource("fileInfo").getValue());
 
 		setupInfoPair(R.id.file_name, "name", book.File.getPath());
-		setupInfoPair(R.id.file_type, "type", book.File.getExtension());
-
-		final ZLFile physFile = book.File.getPhysicalFile();
-		final File file = physFile == null ? null : new File(physFile.getPath());
-		if (file != null && file.exists() && file.isFile()) {
-			setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
-			setupInfoPair(R.id.file_time, "time", formatDate(file.lastModified()));
+		if (ENABLE_EXTENDED_FILE_INFO) {
+			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
+        
+			final ZLFile physFile = book.File.getPhysicalFile();
+			final File file = physFile == null ? null : new File(physFile.getPath());
+			if (file != null && file.exists() && file.isFile()) {
+				setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
+				setupInfoPair(R.id.file_time, "time", formatDate(file.lastModified()));
+			} else {
+				setupInfoPair(R.id.file_size, "size", null);
+				setupInfoPair(R.id.file_time, "time", null);
+			}
 		} else {
+			setupInfoPair(R.id.file_type, "type", null);
 			setupInfoPair(R.id.file_size, "size", null);
 			setupInfoPair(R.id.file_time, "time", null);
 		}
