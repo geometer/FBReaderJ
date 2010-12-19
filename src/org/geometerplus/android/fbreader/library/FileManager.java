@@ -91,6 +91,8 @@ public final class FileManager extends BaseActivity {
 			}
 			getListView().invalidateViews();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		} else if (requestCode == BOOK_INFO_REQUEST) {
+			getListView().invalidateViews();
 		}
 	} 
 
@@ -203,8 +205,6 @@ public final class FileManager extends BaseActivity {
 		private final String myName;
 		private final String mySummary;
 
-		private Book myBook = null;
-		private boolean myBookIsInitialized = false;
 		private ZLImage myCover = null;
 		private boolean myCoverIsInitialized = false;
 
@@ -277,11 +277,7 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public Book getBook() {
-			if (!myBookIsInitialized) {
-				myBookIsInitialized = true;
-				myBook = Book.getByFile(myFile);
-			}
-			return myBook;
+			return Book.getByFile(myFile);
 		}
 	}
 

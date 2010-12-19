@@ -57,6 +57,7 @@ abstract class BaseActivity extends ListActivity {
 	private static final int DELETE_BOOK_ITEM_ID = 4;
 
 	protected static final int CHILD_LIST_REQUEST = 0;
+	protected static final int BOOK_INFO_REQUEST = 1;
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
 
@@ -182,9 +183,10 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected void showBookInfo(Book book) {
-		startActivity(
+		startActivityForResult(
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath())
+				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
+			BOOK_INFO_REQUEST
 		);
 	}
 
