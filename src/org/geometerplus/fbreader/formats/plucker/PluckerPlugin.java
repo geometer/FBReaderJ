@@ -60,4 +60,9 @@ public class PluckerPlugin extends PdbPlugin {
 	public ZLImage readCover(ZLFile file) {
 		return null;
 	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		return null;
+	}
 }

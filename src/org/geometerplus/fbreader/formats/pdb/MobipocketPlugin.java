@@ -228,4 +228,9 @@ public class MobipocketPlugin extends PdbPlugin {
 			}
 		}
 	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		return null;
+	}
 }

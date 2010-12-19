@@ -109,6 +109,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Buchinformation" />
 		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="annotation" value="Anmerkung" />
 		<node name="title" value="Titel:" />
 		<node name="authors" value="Autor(en):" />
 		<node name="series" value="Serie:" />

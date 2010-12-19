@@ -88,6 +88,16 @@
 				<include layout="@layout/book_info_pair" android:id="@+id/book_tags" />
 			</LinearLayout>
 			<TextView
+				android:id="@+id/book_info_annotation_title"
+				style="?android:attr/listSeparatorTextViewStyle"
+			/>
+			<TextView
+				android:id="@+id/book_info_annotation_body"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+			/>
+			<TextView
 				android:id="@+id/file_info_title"
 				style="?android:attr/listSeparatorTextViewStyle"
 			/>

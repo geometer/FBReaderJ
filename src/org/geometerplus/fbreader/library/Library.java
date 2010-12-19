@@ -459,4 +459,9 @@ public final class Library {
 			return image;
 		}
 	}
+
+	public static String getAnnotation(ZLFile file) {
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
+		return plugin != null ? plugin.readAnnotation(file) : null;
+	}
 }

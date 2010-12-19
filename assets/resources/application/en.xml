@@ -110,6 +110,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Book Info" />
 		<node name="fileInfo" value="File Info" />
+		<node name="annotation" value="Annotation" />
 		<node name="title" value="Title:" />
 		<node name="authors" value="Authors:" />
 		<node name="series" value="Series:" />

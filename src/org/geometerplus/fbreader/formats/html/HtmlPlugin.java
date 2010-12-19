@@ -53,4 +53,9 @@ public class HtmlPlugin extends FormatPlugin {
 	public ZLImage readCover(ZLFile file) {
 		return null;
 	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		return null;
+	}
 }

@@ -8,40 +8,40 @@
 	</node>
 	<node name="libraryView">
 		<node name="byAuthor" value="Podle autora">
-			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
 		<node name="byTag" value="Podle štítku">
-			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+			<node name="summary" value="Knihy seřazeny podle štítku"/>
 		</node>
-		<node name="recent" value="Poslední">
-			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+		<node name="recent" value="Nedávné">
+			<node name="summary" value="Nedávno otevřené knihy"/>
 		</node>
-		<node name="favorites" value="Favorites" toBeTranslated="true">
-			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		<node name="favorites" value="Oblíbené">
+			<node name="summary" value="Mé oblíbené knihy"/>
 		</node>
 		<node name="searchResults" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s" />
 		</node>
-		<node name="fileTree" value="File tree" toBeTranslated="true">
-			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		<node name="fileTree" value="Strom souborů">
+			<node name="summary" value="Procházet systém souborů"/>
 		</node>
-		<node name="fileTreeRoot" value="Device" toBeTranslated="true">
-			<node name="summary" value="Full file system of the device" toBeTranslated="true"/>
+		<node name="fileTreeRoot" value="Zařízení">
+			<node name="summary" value="Plný systém souborů zařízení"/>
 		</node>
-		<node name="fileTreeCard" value="Memory card" toBeTranslated="true">
-			<node name="summary" value="Memory card inserted into the device" toBeTranslated="true"/>
+		<node name="fileTreeCard" value="Paměťová karta">
+			<node name="summary" value="Paměťová karta vložena do zařízení"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
+		<node name="fileTreeLibrary" value="Knihovna FBReader">
+			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Místní hledání"/>
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
-		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
+		<node name="showBookInfo" value="Informace o knize"/>
 		<node name="deleteBook" value="Odstranit knihu"/>
-		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
+		<node name="addToFavorites" value="Přidat do oblíbených"/>
+		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Otevřít katalog"/>
@@ -107,20 +107,21 @@
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize" />
-		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="fileInfo" value="Informace o souboru" />
+		<node name="annotation" value="Anotace" />
 		<node name="title" value="Název:" />
 		<node name="authors" value="Autoři:" />
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Díl v sérii:" />
 		<node name="tags" value="Štítky:" />
-		<node name="name" toBeTranslated="true" value="Name:" />
-		<node name="type" toBeTranslated="true" value="Type:" />
-		<node name="size" toBeTranslated="true" value="Size:" />
-		<node name="time" toBeTranslated="true" value="Last modified:" />
-		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
-		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="name" value="Jméno:" />
+		<node name="type" value="Typ:" />
+		<node name="size" value="Velikost:" />
+		<node name="time" value="Naposledy změněno:" />
+		<node name="sizeInBytes" value="%s B" />
+		<node name="sizeInKiloBytes" value="%s kB" />
 		<node name="menu">
-			<node name="edit" toBeTranslated="true" value="Edit" />
+			<node name="edit" value="Upravit" />
 		</node>
 	</node>
 	<node name="bookDownloader">
@@ -156,8 +157,8 @@
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
-		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
-		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
+		<node name="hyperlinksOnlyMode" value="Standardní režim"/>
+		<node name="dictionaryMode" value="Režim slovníku"/>
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
 			<node name="gotoHome" value="Přejít na začátek dokumentu"/>
@@ -188,9 +189,9 @@
 			<node name="continue" value="Pokračovat" />
 			<node name="editUrl" value="Upravit URL" />
 			<node name="tryAgain" value="Zkusit znovu" />
-			<node name="openBook" value="Read" toBeTranslated="true" />
-			<node name="editInfo" value="Edit" toBeTranslated="true" />
-			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+			<node name="openBook" value="Číst" />
+			<node name="editInfo" value="Upravit" />
+			<node name="reloadInfo" value="Znovu načíst" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Název souboru"/>
@@ -236,7 +237,7 @@
 				<node name="italic" value="Kurzíva">
 					<node name="on" value="kurzíva"/>
 					<node name="off" value="obyčejné"/>
-					<node name="unchanged" value="&lt;unchanged&gt;"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Řádkování">
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
@@ -366,13 +367,13 @@
 				</node>
 			</node>
 			<node name="colors" value="Barvy">
-				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="summary" value="Nastavení barev"/>
 				<node name="background" value="Pozadí"/>
 				<node name="selectionBackground" value="Pozadí výběru"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>
 				<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
-				<node name="footer" value="Footer" toBeTranslated="true"/>
+				<node name="footer" value="Patička"/>
 			</node>
 			<node name="margins" value="Okraje">
 				<node name="summary" value="Okraje textu"/>
@@ -390,10 +391,10 @@
 					<node name="showAsFooter" value="Vodorovná patička"/>
 				</node>
 				<node name="footerHeight" value="Výška patičky" />
-				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
-				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
-					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				<node name="footerColor" value="Barva patičky"/>
+				<node name="tocMarks" value="Zobrazit značky obsahu">
+					<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
+					<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
 				</node>
 				<node name="footerLongTap" value="Dlouhé klepnutí na patičku">
 					<node name="longTapRevert" value="Vrátit pozici"/>
@@ -547,8 +548,8 @@
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
 		<node name="bookmarkNotFound" value="Nejsou bohužel žádné vhodné záložky"/>
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
-		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
-		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
+		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

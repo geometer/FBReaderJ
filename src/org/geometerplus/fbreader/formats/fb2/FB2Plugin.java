@@ -45,4 +45,9 @@ public class FB2Plugin extends FormatPlugin {
 	public ZLImage readCover(ZLFile file) {
 		return new FB2CoverReader().readCover(file);
 	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		return new FB2AnnotationReader().readAnnotation(file);
+	}
 }
