@@ -51,7 +51,7 @@ public interface INetworkLink {
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);
 
-	NetworkLibraryItem libraryItem();
+	NetworkCatalogItem libraryItem();
 	NetworkAuthenticationManager authenticationManager();
 
 	String rewriteUrl(String url, boolean isUrlExternal);
