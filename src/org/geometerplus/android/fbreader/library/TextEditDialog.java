@@ -1,7 +1,5 @@
 package org.geometerplus.android.fbreader.library;
 
-import java.io.File;
-
 import org.geometerplus.android.fbreader.library.FileManager.FileItem;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -15,6 +13,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class TextEditDialog extends Dialog{
 	private Context myContext;
@@ -98,12 +97,29 @@ class RenameDialog extends TextEditDialog{
 	
 	public void okAction()  {
 		String newName = getText();
-		if (!myItem.getFile().getShortName().equals(newName)){
-			myItem.getFile().getPhysicalFile().rename(newName);
+		ZLFile file = myItem.getFile();
+		if (file.getShortName().equals(newName)){
+			dismiss();
+		}
+		
+		if (correctName(file, newName)){
+			file.getPhysicalFile().rename(newName);
 			myItem.update();
 			((ListActivity)myContext).getListView().invalidateViews();
+			dismiss();
+		}else{
+			Toast.makeText(myContext, 
+					myResource.getResource("fileExists").getValue(),
+					Toast.LENGTH_SHORT).show();
 		}
-		dismiss();
+	}
+	
+	private boolean correctName(ZLFile file, String newName){
+		for(ZLFile f : file.getParent().children()){
+			if (f.getShortName().equals(newName))
+				return false;
+		}
+		return true;
 	}
 }
 
