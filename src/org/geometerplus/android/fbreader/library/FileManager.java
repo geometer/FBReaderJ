@@ -131,7 +131,7 @@ public final class FileManager extends BaseActivity {
 					
 					return true;
 				case RENAME_FILE_ITEM_ID:
-					RenameDialog d = new RenameDialog(this, fileItem.getFile());
+					Dialog d = new RenameDialog(this, fileItem);
 					d.show();
 					return true;
 				case DELETE_FILE_ITEM_ID:
@@ -257,9 +257,9 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
-	private final class FileItem {
+	public final class FileItem {
 		private final ZLFile myFile;
-		private final String myName;
+		private String myName;
 		private final String mySummary;
 
 		private Book myBook = null;
@@ -342,6 +342,10 @@ public final class FileManager extends BaseActivity {
 			}
 			return myBook;
 		}
+		
+		public void update(){
+			myName = myFile.getShortName();
+		}
 	}
 
 	private final class SmartFilter implements Runnable {
@@ -386,71 +390,6 @@ public final class FileManager extends BaseActivity {
 	private static class FileComparator implements Comparator<ZLFile> {
 		public int compare(ZLFile f0, ZLFile f1) {
 			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
-		}
-	}
-	
-	class RenameDialog extends Dialog{
-		private ZLFile myFile;
-		private Context myContext;
-		
-		private EditText myEditText; 
-		
-		
-		RenameDialog(Context context, ZLFile file) {
-			super(context);
-			myFile = file;
-			myContext = context;
-			
-			setTitle(myResource.getResource("renameFile").getValue());
-			fill();
-		}
-
-		private void fill(){
-	    	LinearLayout ll = new LinearLayout(myContext);
-	        ll.setOrientation(LinearLayout.VERTICAL);
-	         
-	        myEditText = new EditText(myContext);
-	        myEditText.setText(myFile.getShortName());
-	        ll.addView(myEditText);
-	
-	        LinearLayout btnLayout = new LinearLayout(myContext);
-	        btnLayout.setOrientation(LinearLayout.HORIZONTAL);
-	        ll.addView(btnLayout, LayoutParams.FILL_PARENT);
-	        
-	        Button ok = new Button(myContext);
-	        ok.setText(myResource.getResource("renameBtn").getValue());
-	        ok.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					okAction();
-				}
-			});
-	        
-	        Button cancel = new Button(myContext);
-	        cancel.setText(myResource.getResource("cancelBtn").getValue());
-	        cancel.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					cancelAction();
-				}
-			});
-	        
-	        
-	        btnLayout.addView(ok, LayoutParams.WRAP_CONTENT);
-	        btnLayout.addView(cancel, LayoutParams.FILL_PARENT);
-	        btnLayout.setGravity(0x11);
-	        setContentView(ll);
-		}
-		
-		protected void cancelAction(){
-			cancel();
-		}
-		
-		public void okAction()  {
-			String newName = myEditText.getText().toString();
-			if (!myFile.getShortName().equals(newName)){
-				myFile.getPhysicalFile().rename(newName);
-				getListView().invalidateViews();
-			}
-			cancel();
 		}
 	}
 	
