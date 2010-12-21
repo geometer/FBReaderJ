@@ -19,16 +19,13 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.android.fbreader.library.FileManager.FileItem;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -176,12 +173,19 @@ class MkDirDialog extends TextEditDialog{
 	
 	public void okAction()  {
 		String newName = getText();
+		ZLFile file = ZLFile.createFileByPath(myPath);
 		if (newName == ""){
 			dismiss();
 			return;
+		}else if (!file.isDirectory()){
+			Toast.makeText(myContext, 
+					myResource.getResource("messNotDir").getValue(),
+					Toast.LENGTH_SHORT).show();
+			dismiss();
+			return;
 		}
-		
-		if (correctName(ZLFile.createFileByPath(myPath), newName)){
+			
+		if (correctName(file, newName)){
 			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
 			((Activity) myContext).startActivityForResult(
 					new Intent(myContext, FileManager.class)
@@ -192,7 +196,7 @@ class MkDirDialog extends TextEditDialog{
 			dismiss();
 		}else{
 			Toast.makeText(myContext, 
-					myResource.getResource("fileExists").getValue(),
+					myResource.getResource("messFileExists").getValue(),
 					Toast.LENGTH_SHORT).show();
 		}
 	}

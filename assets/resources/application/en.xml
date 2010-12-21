@@ -55,7 +55,7 @@
 		<node name="newDirectory" value="New directory"/>
 		<node name="messFileExists" value="File already exists"/>	
 		<node name="messFileMoved" value="File moved"/>
-		<node name="messNotDir" value="This is not a directory. Moving is not possibl."/>		
+		<node name="messNotDir" value="This is not a directory."/>		
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>

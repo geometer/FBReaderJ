@@ -92,9 +92,6 @@ public final class FileManager extends BaseActivity {
 		});
 	}
 	
-	
-	
-
 	@Override
 	protected void onRestart() {
 		super.onRestart();
