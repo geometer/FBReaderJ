@@ -252,8 +252,14 @@ public final class FileManager extends BaseActivity {
 		public int getIcon() {
 			if (getBook() != null) {
 				return R.drawable.ic_list_library_book;
-			} else if (myFile.isDirectory() || myFile.isArchive()) {
-				return R.drawable.ic_list_library_folder;
+			} else if (myFile.isDirectory()) {
+				if (myFile.isReadable()) {
+					return R.drawable.ic_list_library_folder;
+				} else {
+					return R.drawable.ic_list_library_permission_denied;
+				}
+			} else if (myFile.isArchive()) {
+				return R.drawable.ic_list_library_zip;
 			} else {
 				System.err.println(
 					"File " + myFile.getPath() +
