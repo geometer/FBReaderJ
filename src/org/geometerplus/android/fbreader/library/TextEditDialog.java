@@ -23,9 +23,12 @@ import org.geometerplus.android.fbreader.library.FileManager.FileItem;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -95,20 +98,20 @@ public class TextEditDialog extends Dialog{
 }
 
 class RenameDialog extends TextEditDialog{
-	private FileItem myItem;
+	private ZLFile myFile;
 	private Context myContext;
 	
 	private static ZLResource myResource = ZLResource.resource("libraryView");
 	
-	RenameDialog(Context context, FileItem item) {
+	RenameDialog(Context context, ZLFile file) {
 		super(context,
 				myResource.getResource("renameFile").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("rename").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue()
 				);
 		myContext = context;
-		myItem = item;
-		setText(myItem.getFile().getShortName());
+		myFile = file;
+		setText(myFile.getShortName());
 	}
 
 	protected void cancelAction(){
@@ -117,15 +120,19 @@ class RenameDialog extends TextEditDialog{
 	
 	public void okAction()  {
 		String newName = getText();
-		ZLFile file = myItem.getFile();
-		if (file.getShortName().equals(newName)){
+		if (newName == ""){
 			dismiss();
+			return;
 		}
 		
-		if (correctName(file, newName)){
-			file.getPhysicalFile().rename(newName);
-			myItem.update();
-			((ListActivity)myContext).getListView().invalidateViews();
+		if (correctName(myFile, newName)){
+			myFile.getPhysicalFile().rename(newName);
+			((Activity) myContext).startActivityForResult(
+					new Intent(myContext, FileManager.class)
+						.putExtra(FileManager.FILE_MANAGER_PATH, myFile.getParent().getPath())
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+					FileManager.CHILD_LIST_REQUEST
+			);
 			dismiss();
 		}else{
 			Toast.makeText(myContext, 
@@ -135,6 +142,8 @@ class RenameDialog extends TextEditDialog{
 	}
 	
 	private boolean correctName(ZLFile file, String newName){
+		if (file.isDirectory())
+			return true;			// ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
 		for(ZLFile f : file.getParent().children()){
 			if (f.getShortName().equals(newName))
 				return false;
@@ -142,4 +151,60 @@ class RenameDialog extends TextEditDialog{
 		return true;
 	}
 }
+
+
+class MkDirDialog extends TextEditDialog{
+	private Context myContext;
+	private String myPath;
+	
+	private static ZLResource myResource = ZLResource.resource("libraryView");
+	
+	MkDirDialog(Context context, String curPath) {
+		super(context,
+				myResource.getResource("newDirectory").getValue(),
+				ZLResource.resource("dialog").getResource("button").getResource("create").getValue(),
+				ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue()
+				);
+		myContext = context;
+		myPath = curPath;
+		setText(myResource.getResource("newDirectory").getValue());
+	}
+
+	protected void cancelAction(){
+		cancel();
+	}
+	
+	public void okAction()  {
+		String newName = getText();
+		if (newName == ""){
+			dismiss();
+			return;
+		}
+		
+		if (correctName(ZLFile.createFileByPath(myPath), newName)){
+			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
+			((Activity) myContext).startActivityForResult(
+					new Intent(myContext, FileManager.class)
+						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+					FileManager.CHILD_LIST_REQUEST
+			);
+			dismiss();
+		}else{
+			Toast.makeText(myContext, 
+					myResource.getResource("fileExists").getValue(),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private boolean correctName(ZLFile file, String newDir){
+		for(ZLFile f : file.children()){
+			if (f.getShortName().equals(newDir))
+				return false;
+		}
+		return true;
+	}
+	
+}
+
 

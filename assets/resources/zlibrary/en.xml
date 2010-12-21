@@ -8,6 +8,7 @@
 			<node name="no" value="No" />
 			<node name="apply" value="Apply" />
 			<node name="rename" value="Rename"/>
+			<node name="create" value="Create"/>		
 		</node>
 		<node name="networkError">
 			<node name="title" value="Network error" />

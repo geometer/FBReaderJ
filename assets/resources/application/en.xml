@@ -43,11 +43,15 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
-		<node name="renameFile" value="Rename file"/>
 		
+		<node name="renameFile" value="Rename file"/>
 		<node name="moveFile" value="Move file"/>
 		<node name="deleteFile" value="Delete file"/>
-		<node name="fileExists" value="File already exists"/>
+		<node name="renameDir" value="Rename directory"/>
+		<node name="deleteDir" value="Delete directory"/>
+		
+		<node name="newDirectory" value="New directory"/>
+		<node name="fileExists" value="File already exists"/>		
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>

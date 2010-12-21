@@ -200,4 +200,8 @@ public abstract class ZLFile {
 			}
 		}
 	}
+	
+	public void mkdir(){
+		new File(getPath()).mkdir();
+	}
 }
