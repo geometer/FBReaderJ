@@ -19,10 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +35,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -94,6 +90,18 @@ public final class FileManager extends BaseActivity {
 				runItem(((FileListAdapter)getListAdapter()).getItem(position));
 			}
 		});
+	}
+	
+	
+	
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		if (myPath != null){
+			((FileListAdapter)getListAdapter()).clear();
+			startUpdate();
+		}
 	}
 
 	private void startUpdate() {
@@ -191,7 +199,6 @@ public final class FileManager extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        // TODO
         if (myPath != null){
             if (myInsertPath != null){
             	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
@@ -211,21 +218,24 @@ public final class FileManager extends BaseActivity {
         return item;
     }
     
+    
+    private Runnable messFileMoved = new Runnable() {
+		public void run() {
+			Toast.makeText(FileManager.this,
+					myResource.getResource("messFileMoved").getValue(), 
+					Toast.LENGTH_SHORT).show();
+		}
+	};
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 	    	case 0:
 	    		try {
-	    			// TODO
 	    			FileUtil.moveFile(myInsertPath, myPath);
 	    			myInsertPath = null;
 	    			finish();
-					runOnUiThread(new Runnable() {
-						public void run() {
-							Toast.makeText(FileManager.this, "file is moving", Toast.LENGTH_SHORT).show();
-						}
-					});
-	    			
+					runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
     				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
     			}

@@ -6,32 +6,29 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-import android.widget.Toast;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class FileUtil {
 	
 	public static void copyFile(String src, String targetDirectory) throws IOException {
+		final ZLResource myResource = ZLResource.resource("libraryView");
+
 		if (ZLFile.createFileByPath(targetDirectory).isDirectory()){
 			ZLFile srcFile = ZLFile.createFileByPath(src);
 			String srcName = srcFile.getShortName();
 			
 			for (ZLFile f : ZLFile.createFileByPath(targetDirectory).children()){
 				if (f.getShortName().equals(srcName))
-					throw new IOException ("file is already exists!");
+					throw new IOException (myResource.getResource("messFileExists").getValue());
 			}
-			
 			String target = targetDirectory + "/" + srcFile.getShortName(); 
-			//Log.v(FileManager.LOG, "src: " + src + " targer " + target);
-			
 			FileChannel ic = new FileInputStream(src).getChannel();
 			FileChannel oc = new FileOutputStream(target).getChannel();
 			ic.transferTo(0, ic.size(), oc);
 			ic.close();
 			oc.close();
 		}else{
-			// TODO
-			throw new IOException("Is not a directory!");
+			throw new IOException(myResource.getResource("messNotDir").getValue());
 		}
 	}
 	

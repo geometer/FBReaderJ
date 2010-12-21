@@ -136,14 +136,14 @@ class RenameDialog extends TextEditDialog{
 			dismiss();
 		}else{
 			Toast.makeText(myContext, 
-					myResource.getResource("fileExists").getValue(),
+					myResource.getResource("messFileExists").getValue(),
 					Toast.LENGTH_SHORT).show();
 		}
 	}
 	
 	private boolean correctName(ZLFile file, String newName){
 		if (file.isDirectory())
-			return true;			// ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
+			return true;			// FIXME  ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
 		for(ZLFile f : file.getParent().children()){
 			if (f.getShortName().equals(newName))
 				return false;

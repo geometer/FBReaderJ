@@ -53,7 +53,9 @@
 		<node name="deleteDir" value="Delete directory"/>
 		
 		<node name="newDirectory" value="New directory"/>
-		<node name="fileExists" value="File already exists"/>		
+		<node name="messFileExists" value="File already exists"/>	
+		<node name="messFileMoved" value="File moved"/>
+		<node name="messNotDir" value="This is not a directory. Moving is not possibl."/>		
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>
