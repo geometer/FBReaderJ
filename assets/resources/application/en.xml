@@ -35,6 +35,8 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Local search"/>
+			<node name="mkdir" value="New directory"/>
+			<node name="sorting" value="Sorting"/>
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>

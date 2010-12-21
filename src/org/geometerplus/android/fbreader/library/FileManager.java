@@ -48,6 +48,7 @@ import android.preference.EditTextPreference;
 import android.sax.TextElementListener;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,6 +183,36 @@ public final class FileManager extends BaseActivity {
 		));
 	}
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
+        addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
+
+        return true;
+    }
+
+    private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+        final MenuItem item = menu.add(0, index, Menu.NONE, label);
+        item.setIcon(iconId);
+        return item;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        	case 1:
+        		Log.v(LOG, "onOptionsItemSelected");
+	            return true;
+        	case 2:
+        		Log.v(LOG, "onOptionsItemSelected");
+	            return true;
+        	default:
+        		return super.onOptionsItemSelected(item);
+        }
+    }
+	
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 
