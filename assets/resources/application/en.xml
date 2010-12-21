@@ -42,8 +42,6 @@
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
 		<node name="renameFile" value="Rename file"/>
-		<node name="renameBtn" value="Rename"/>
-		<node name="cancelBtn" value="Cancel"/>
 		
 		<node name="moveFile" value="Move file"/>
 		<node name="deleteFile" value="Delete file"/>
