@@ -82,6 +82,8 @@ public final class FileManager extends BaseActivity {
 			setTitle(myPath);
 			startUpdate();
 		}
+		if (myInsertPath != null)
+			setTitle(myResource.getResource("moveFile").getValue());
 
 		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
@@ -199,11 +201,13 @@ public final class FileManager extends BaseActivity {
         if (myPath != null){
             if (myInsertPath != null){
             	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
-            }else{
-               	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
-                addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
-                addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);
+            	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
             }
+//            }else{
+//               	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
+//                addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
+//                addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);
+//            }
         }
         return true;
     }
@@ -238,7 +242,7 @@ public final class FileManager extends BaseActivity {
     			}
 	    		return true;
         	case 1:
-        		new MkDirDialog(this, myPath).show();
+        		new MkDirDialog(this, myPath, myInsertPath).show();
         		return true;
         	case 2:
 	            return true;

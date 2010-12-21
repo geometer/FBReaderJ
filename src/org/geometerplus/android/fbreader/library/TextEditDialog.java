@@ -153,10 +153,11 @@ class RenameDialog extends TextEditDialog{
 class MkDirDialog extends TextEditDialog{
 	private Context myContext;
 	private String myPath;
+	private String myInsertPath;
 	
 	private static ZLResource myResource = ZLResource.resource("libraryView");
 	
-	MkDirDialog(Context context, String curPath) {
+	MkDirDialog(Context context, String curPath, String insertPath) {
 		super(context,
 				myResource.getResource("newDirectory").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("create").getValue(),
@@ -164,6 +165,7 @@ class MkDirDialog extends TextEditDialog{
 				);
 		myContext = context;
 		myPath = curPath;
+		myInsertPath = insertPath;
 		setText(myResource.getResource("newDirectory").getValue());
 	}
 
@@ -190,6 +192,7 @@ class MkDirDialog extends TextEditDialog{
 			((Activity) myContext).startActivityForResult(
 					new Intent(myContext, FileManager.class)
 						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+						.putExtra(FileManager.FILE_MANAGER_INSERT_MODE, myInsertPath)
 						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
 					FileManager.CHILD_LIST_REQUEST
 			);
