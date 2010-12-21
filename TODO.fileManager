@@ -7,6 +7,7 @@ VR:
 	* Пока идет update, надо показывать progress-колечко в правом верхнем углу экрана
 	* А правда, что весь этот update в отдельном треде -- обман по существу, ведь список файлов уже получен, так?
 	* ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception.
+	* ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
 NP:
 	DONE Локализовать все сообщения
 	* Отдельная иконка для архивов
