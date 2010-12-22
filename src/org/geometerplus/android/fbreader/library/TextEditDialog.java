@@ -108,7 +108,11 @@ class RenameDialog extends TextEditDialog{
 				);
 		myContext = context;
 		myFile = file;
-		setText(myFile.getShortName());
+		
+		String extension = myFile.getExtension(); 
+		String name = myFile.getShortName();
+		name = name.substring(0, name.indexOf(extension) - 1);
+		setText(name);
 	}
 
 	protected void cancelAction(){
@@ -121,8 +125,8 @@ class RenameDialog extends TextEditDialog{
 			dismiss();
 			return;
 		}
-		
-		if (!corractName(myFile, newName)){
+		newName += "." + myFile.getExtension();
+		if (newName.startsWith(".")){
 			Toast.makeText(myContext, 
 					myResource.getResource("messFileIncorrect").getValue(),
 					Toast.LENGTH_SHORT).show();
@@ -141,13 +145,6 @@ class RenameDialog extends TextEditDialog{
 					myResource.getResource("messFileExists").getValue(),
 					Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	private boolean corractName(ZLFile file, String newName){
-		String extension = "." + file.getExtension();
-		if (extension.length() >= newName.length())
-			return false;
-		return newName.contains(extension);
 	}
 	
 	private boolean consistInParent(ZLFile file, String newName){
