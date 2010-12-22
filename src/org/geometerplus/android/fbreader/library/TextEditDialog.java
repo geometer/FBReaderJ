@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -109,10 +110,14 @@ class RenameDialog extends TextEditDialog{
 		myContext = context;
 		myFile = file;
 		
-		String extension = myFile.getExtension(); 
-		String name = myFile.getShortName();
-		name = name.substring(0, name.indexOf(extension) - 1);
-		setText(name);
+		if(myFile.isDirectory()){
+			setText(myFile.getShortName());
+		}else{
+			String extension = myFile.getExtension(); 
+			String name = myFile.getShortName();
+			name = name.substring(0, name.indexOf(extension) - 1);
+			setText(name);
+		}
 	}
 
 	protected void cancelAction(){
@@ -125,7 +130,9 @@ class RenameDialog extends TextEditDialog{
 			dismiss();
 			return;
 		}
-		newName += "." + myFile.getExtension();
+		if (!myFile.isDirectory())
+			newName += "." + myFile.getExtension();
+		Log.v(FileManager.LOG, "step 4");
 		if (newName.startsWith(".")){
 			Toast.makeText(myContext, 
 					myResource.getResource("messFileIncorrect").getValue(),
@@ -148,9 +155,16 @@ class RenameDialog extends TextEditDialog{
 	}
 	
 	private boolean consistInParent(ZLFile file, String newName){
-		if (file.isDirectory())
-			return true;			// FIXME  ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
-		for(ZLFile f : file.getParent().children()){
+		ZLFile parent;
+		if (file.isDirectory()){					// FIXME  ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
+			String path = file.getPath();
+			path = path.substring(0, path.lastIndexOf("/"));
+			parent = ZLFile.createFileByPath(path);
+			Log.v(FileManager.LOG, "parent: " + path);
+		}else{
+			parent = file.getParent();
+		}
+		for(ZLFile f : parent.children()){
 			if (f.getShortName().equals(newName))
 				return false;
 		}
