@@ -211,7 +211,68 @@ class MkDirDialog extends TextEditDialog{
 		}
 		return true;
 	}
-	
 }
 
 
+class DeleteFileDialog extends TextEditDialog{
+	private Context myContext;
+	private String myPath;
+	private String myInsertPath;
+	
+	private static ZLResource myResource = ZLResource.resource("libraryView");
+	
+	DeleteFileDialog(Context context, String curPath, String insertPath) {
+		super(context,
+				myResource.getResource("newDirectory").getValue(),
+				ZLResource.resource("dialog").getResource("button").getResource("create").getValue(),
+				ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue()
+				);
+		myContext = context;
+		myPath = curPath;
+		myInsertPath = insertPath;
+		setText(myResource.getResource("newDirectory").getValue());
+	}
+
+	protected void cancelAction(){
+		cancel();
+	}
+	
+	public void okAction()  {
+		String newName = getText();
+		ZLFile file = ZLFile.createFileByPath(myPath);
+		if (newName == ""){
+			dismiss();
+			return;
+		}else if (!file.isDirectory()){
+			Toast.makeText(myContext, 
+					myResource.getResource("messNotDir").getValue(),
+					Toast.LENGTH_SHORT).show();
+			dismiss();
+			return;
+		}
+			
+		if (correctName(file, newName)){
+			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
+			((Activity) myContext).startActivityForResult(
+					new Intent(myContext, FileManager.class)
+						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+						.putExtra(FileManager.FILE_MANAGER_INSERT_MODE, myInsertPath)
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+					FileManager.CHILD_LIST_REQUEST
+			);
+			dismiss();
+		}else{
+			Toast.makeText(myContext, 
+					myResource.getResource("messFileExists").getValue(),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private boolean correctName(ZLFile file, String newDir){
+		for(ZLFile f : file.children()){
+			if (f.getShortName().equals(newDir))
+				return false;
+		}
+		return true;
+	}
+}

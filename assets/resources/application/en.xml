@@ -51,8 +51,8 @@
 		<node name="deleteFile" value="Delete file"/>
 		<node name="renameDir" value="Rename directory"/>
 		<node name="deleteDir" value="Delete directory"/>
-		
 		<node name="newDirectory" value="New directory"/>
+		
 		<node name="messFileExists" value="File already exists"/>	
 		<node name="messFileMoved" value="File moved"/>
 		<node name="messNotDir" value="This is not a directory."/>		
@@ -484,6 +484,9 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
+		</node>
+		<node name="deleteFileBox">
+			<node name="message" value="The file will be removed irreversibly. Are you sure?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="File already exists. Redownload?"/>
