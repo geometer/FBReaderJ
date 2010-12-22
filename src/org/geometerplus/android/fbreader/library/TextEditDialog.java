@@ -122,7 +122,12 @@ class RenameDialog extends TextEditDialog{
 			return;
 		}
 		
-		if (correctName(myFile, newName)){
+		if (!corractName(myFile, newName)){
+			Toast.makeText(myContext, 
+					myResource.getResource("messFileIncorrect").getValue(),
+					Toast.LENGTH_SHORT).show();
+		}
+		else if (consistInParent(myFile, newName)){
 			myFile.getPhysicalFile().rename(newName);
 			((Activity) myContext).startActivityForResult(
 					new Intent(myContext, FileManager.class)
@@ -138,7 +143,14 @@ class RenameDialog extends TextEditDialog{
 		}
 	}
 	
-	private boolean correctName(ZLFile file, String newName){
+	private boolean corractName(ZLFile file, String newName){
+		String extension = "." + file.getExtension();
+		if (extension.length() >= newName.length())
+			return false;
+		return newName.contains(extension);
+	}
+	
+	private boolean consistInParent(ZLFile file, String newName){
 		if (file.isDirectory())
 			return true;			// FIXME  ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
 		for(ZLFile f : file.getParent().children()){
@@ -187,7 +199,7 @@ class MkDirDialog extends TextEditDialog{
 			return;
 		}
 			
-		if (correctName(file, newName)){
+		if (consistInParent(file, newName)){
 			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
 			((Activity) myContext).startActivityForResult(
 					new Intent(myContext, FileManager.class)
@@ -204,71 +216,7 @@ class MkDirDialog extends TextEditDialog{
 		}
 	}
 	
-	private boolean correctName(ZLFile file, String newDir){
-		for(ZLFile f : file.children()){
-			if (f.getShortName().equals(newDir))
-				return false;
-		}
-		return true;
-	}
-}
-
-
-class DeleteFileDialog extends TextEditDialog{
-	private Context myContext;
-	private String myPath;
-	private String myInsertPath;
-	
-	private static ZLResource myResource = ZLResource.resource("libraryView");
-	
-	DeleteFileDialog(Context context, String curPath, String insertPath) {
-		super(context,
-				myResource.getResource("newDirectory").getValue(),
-				ZLResource.resource("dialog").getResource("button").getResource("create").getValue(),
-				ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue()
-				);
-		myContext = context;
-		myPath = curPath;
-		myInsertPath = insertPath;
-		setText(myResource.getResource("newDirectory").getValue());
-	}
-
-	protected void cancelAction(){
-		cancel();
-	}
-	
-	public void okAction()  {
-		String newName = getText();
-		ZLFile file = ZLFile.createFileByPath(myPath);
-		if (newName == ""){
-			dismiss();
-			return;
-		}else if (!file.isDirectory()){
-			Toast.makeText(myContext, 
-					myResource.getResource("messNotDir").getValue(),
-					Toast.LENGTH_SHORT).show();
-			dismiss();
-			return;
-		}
-			
-		if (correctName(file, newName)){
-			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
-			((Activity) myContext).startActivityForResult(
-					new Intent(myContext, FileManager.class)
-						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
-						.putExtra(FileManager.FILE_MANAGER_INSERT_MODE, myInsertPath)
-						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-					FileManager.CHILD_LIST_REQUEST
-			);
-			dismiss();
-		}else{
-			Toast.makeText(myContext, 
-					myResource.getResource("messFileExists").getValue(),
-					Toast.LENGTH_SHORT).show();
-		}
-	}
-	
-	private boolean correctName(ZLFile file, String newDir){
+	private boolean consistInParent(ZLFile file, String newDir){
 		for(ZLFile f : file.children()){
 			if (f.getShortName().equals(newDir))
 				return false;
