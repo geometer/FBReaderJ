@@ -82,7 +82,7 @@ public class TextEditDialog extends Dialog{
 	}
 	
 	public String getText(){
-		return myEditText.getText().toString();
+		return myEditText.getText().toString().trim();
 	}
 	
 	protected void cancelAction(){
