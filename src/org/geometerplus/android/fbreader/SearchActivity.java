@@ -23,8 +23,6 @@ import android.os.*;
 import android.app.*;
 import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.android.util.UIUtil;
 
 public abstract class SearchActivity extends Activity {

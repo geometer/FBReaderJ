@@ -21,9 +21,6 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import org.geometerplus.fbreader.formats.PluginCollection;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-
 public class BookTree extends LibraryTree {
 	public final Book Book;
 	private final boolean myShowAuthors;

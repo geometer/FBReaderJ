@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.*;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
