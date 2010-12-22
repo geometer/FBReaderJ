@@ -203,11 +203,6 @@ public final class FileManager extends BaseActivity {
             	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
             	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
             }
-//            }else{
-//               	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
-//                addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
-//                addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);
-//            }
         }
         return true;
     }
@@ -298,6 +293,8 @@ public final class FileManager extends BaseActivity {
 			final FileItem item = getItem(position);
 
 			if (item.getFile().isDirectory()){
+				if (ZLFile.createFileByPath(myPath).isArchive())
+					return;
 				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("renameDir").getValue());
 				menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("deleteDir").getValue());
 			}else{
@@ -305,6 +302,8 @@ public final class FileManager extends BaseActivity {
 				if (book != null) {
 					createBookContextMenu(menu, book); 
 				}
+				if (ZLFile.createFileByPath(myPath).isArchive())
+					return;
 				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("renameFile").getValue());
 				menu.add(0, MOVE_FILE_ITEM_ID, 0, myResource.getResource("moveFile").getValue());
 				if (book == null) {
