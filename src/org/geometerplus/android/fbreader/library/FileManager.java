@@ -20,20 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.formats.PluginCollection;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
+import java.util.*;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -42,15 +29,21 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
+
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.formats.PluginCollection;
+
+import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
 	public static String LOG = "FileManager";

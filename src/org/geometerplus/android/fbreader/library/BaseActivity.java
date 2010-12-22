@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,21 +30,15 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
-
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class BaseActivity extends ListActivity {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";

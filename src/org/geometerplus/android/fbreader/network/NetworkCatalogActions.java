@@ -22,8 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Message;
 import android.os.Handler;
 import android.view.Menu;

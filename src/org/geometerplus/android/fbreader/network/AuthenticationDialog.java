@@ -21,20 +21,17 @@ package org.geometerplus.android.fbreader.network;
 
 import android.app.Dialog;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.UIUtil;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.INetworkLink;
+
+import org.geometerplus.android.util.UIUtil;
 
 
 class AuthenticationDialog extends NetworkDialog {
