@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
+import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -135,6 +136,8 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
+		fbReader.addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS, new SwitchTextViewModeAction(this, fbReader, ZLTextViewMode.MODE_VISIT_HYPERLINKS));
+		fbReader.addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS, new SwitchTextViewModeAction(this, fbReader, ZLTextViewMode.MODE_VISIT_ALL_WORDS));
 	}
 
 	@Override

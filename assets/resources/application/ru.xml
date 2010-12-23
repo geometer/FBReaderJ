@@ -203,6 +203,10 @@
 		<node name="updatePlugin">
 			<node name="title" value="Новая версия"/>
 		</node>
+		<node name="installDictionary">
+			<node name="title" value="Установка словаря"/>
+			<node name="message" value="Установить %s?"/>
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>
 			<node name="title" value="Название"/>
@@ -554,11 +558,12 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Не удается запустить Android Market. Попробуйте установить %s вручную"/>
 		<node name="textNotFound" value="В этой книге нет такого текста"/>
 		<node name="bookNotFound" value="Нет подходящих книг"/>
 		<node name="bookmarkNotFound" value="Нет подходящих закладок"/>
 		<node name="cannotOpenBook" value="Не удается открыть книгу"/>
-		<node name="dictNotInstalled" value="Не установлен поддерживаемый словарь"/>
+		<node name="dictionaryIsNotInstalled" value="Не удалось запустить словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам" />
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
 	</node>

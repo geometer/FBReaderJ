@@ -203,6 +203,10 @@
 		<node name="updatePlugin">
 			<node name="title" value="Update plugin"/>
 		</node>
+		<node name="installDictionary">
+			<node name="title" value="Install dictionary"/>
+			<node name="message" value="Would you like to install %s?"/>
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="File name"/>
 			<node name="title" value="Title"/>
@@ -554,11 +558,12 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
 		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>
 		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
 		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry"/>
 		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry"/>
-		<node name="dictNotInstalled" value="Supported dictionary is not installed, sorry"/>
+		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 	</node>
