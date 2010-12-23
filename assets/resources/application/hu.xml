@@ -61,6 +61,8 @@
 		<node name="signOut" value="Kijelentkezés (%s)"/>
 		<node name="refillAccount" value="Számla feltöltése (Jelenleg: %s)"/>
 		<node name="refillTitle" value="Számla feltöltése"/>
+		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Jelenleg: %s"/>
 		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />
 		<node name="alreadyDownloadingDemo" value="Minta letöltése folyamatban" />
@@ -184,6 +186,8 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" toBeTranslated="true" />
+			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="Vásárlás" />
 			<node name="buyAndDownload" value="Vásárlás és letöltés" />
 			<node name="continue" toBeTranslated="true" value="Continue" />
@@ -192,6 +196,9 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Fájlnév"/>

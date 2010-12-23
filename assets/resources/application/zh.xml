@@ -61,6 +61,8 @@
 		<node name="signOut" value="退出 (%s)"/>
 		<node name="refillAccount" value="重新输入账号(目前: %s)" />
 		<node name="refillTitle" value="重新输入账号"/>
+		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="当前: %s"/>
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
@@ -184,6 +186,8 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" toBeTranslated="true" />
+			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="购买" />
 			<node name="buyAndDownload" value="购买 下载" />
 			<node name="continue" value="继续" />
@@ -192,6 +196,9 @@
 			<node name="openBook" value="阅读" />
 			<node name="editInfo" value="编辑" />
 			<node name="reloadInfo" value="重新加载" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="文件" />

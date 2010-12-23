@@ -61,6 +61,8 @@
 		<node name="signOut" value="Вийти (%s)"/>
 		<node name="refillAccount" value="Поповнити рахунок (поточний рахунок: %s)" />
 		<node name="refillTitle" value="Поповнити рахунок"/>
+		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Поточний рахунок: %s"/>
 		<node name="alreadyDownloading" value="Книжка завантажується" />
 		<node name="alreadyDownloadingDemo" value="Уривок завантажається" />
@@ -184,6 +186,8 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" toBeTranslated="true" />
+			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="Придбати" />
 			<node name="buyAndDownload" value="Придбати та завантажити" />
 			<node name="continue" value="Продовжити" />
@@ -192,6 +196,9 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>

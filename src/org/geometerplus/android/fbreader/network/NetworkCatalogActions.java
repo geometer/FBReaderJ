@@ -394,17 +394,22 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private void processExtraData(NetworkBaseActivity activity, LinkedHashMap<String,String> extraData) {
 		if (extraData != null && !extraData.isEmpty()) {
-			for (Map.Entry<String,String> entry : extraData.entrySet()) {
-				if ("androidActivity".equals(entry.getKey())) {
-					installPlugin(activity, entry.getValue());
+			final String pluginPackage = extraData.get("androidPlugin");
+			if (pluginPackage != null) {
+				final ZLResource dialogResource = ZLResource.resource("dialog");
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				if (!PluginUtil.isPluginInstalled(activity, pluginPackage)) {
+					final String text = extraData.get("androidPluginInstallMessage");
+					new AlertDialog.Builder(activity)
+						.setTitle(dialogResource.getResource("installPlugin").getResource("title").getValue())
+						.setMessage(text)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("install").getValue(), null)
+						.setNegativeButton(buttonResource.getResource("skip").getValue(), null)
+						.create().show();
+					//PluginUtil.installPackageFromMarket(activity, pkg);
 				}
 			}
-		}
-	}
-
-	private void installPlugin(NetworkBaseActivity activity, String pkg) {
-		if (!PluginUtil.isPluginInstalled(activity, pkg)) {
-			PluginUtil.installPackageFromMarket(activity, pkg);
 		}
 	}
 

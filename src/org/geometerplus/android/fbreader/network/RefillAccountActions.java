@@ -27,8 +27,8 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class RefillAccountActions extends NetworkTreeActions {
-
-	public static final int REFILL_ITEM_ID = 0;
+	public static final int REFILL_VIA_SMS_ITEM_ID = 0;
+	public static final int REFILL_VIA_BROWSER_ITEM_ID = 1;
 
 
 	@Override
@@ -40,12 +40,13 @@ class RefillAccountActions extends NetworkTreeActions {
 	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
-		addMenuItem(menu, REFILL_ITEM_ID, "refillTitle");
+		addMenuItem(menu, REFILL_VIA_SMS_ITEM_ID, "refillViaSms");
+		addMenuItem(menu, REFILL_VIA_BROWSER_ITEM_ID, "refillViaBrowser");
 	}
 
 	@Override
 	public int getDefaultActionCode(NetworkTree tree) {
-		return REFILL_ITEM_ID;
+		return TREE_SHOW_CONTEXT_MENU;
 	}
 
 	@Override
@@ -66,7 +67,10 @@ class RefillAccountActions extends NetworkTreeActions {
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
-			case REFILL_ITEM_ID:
+			case REFILL_VIA_SMS_ITEM_ID:
+				//doRefill(activity, (RefillAccountTree) tree);
+				return true;
+			case REFILL_VIA_BROWSER_ITEM_ID:
 				doRefill(activity, (RefillAccountTree) tree);
 				return true;
 		}
