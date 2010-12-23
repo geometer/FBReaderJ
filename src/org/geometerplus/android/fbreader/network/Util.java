@@ -22,10 +22,12 @@ package org.geometerplus.android.fbreader.network;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -89,5 +91,12 @@ abstract class Util implements UserRegistrationConstants {
 
 	static boolean isBrowserAccountRefillingSupported(Activity activity, INetworkLink link) {
 		return link.getLink(INetworkLink.URL_REFILL_ACCOUNT) != null;
+	}
+
+	static void openInBrowser(Context context, String url) {
+		if (url != null) {
+			url = NetworkLibrary.Instance().rewriteUrl(url, true);
+			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		}
 	}
 }
