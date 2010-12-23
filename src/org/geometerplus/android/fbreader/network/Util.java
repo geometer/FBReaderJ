@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -30,10 +31,13 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 abstract class Util implements UserRegistrationConstants {
 	static void runRegistrationDialog(Activity activity, INetworkLink link) {
-		activity.startActivityForResult(new Intent(
-			"android.fbreader.action.NETWORK_LIBRARY_REGISTER",
-			Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
-		), USER_REGISTRATION_REQUEST_CODE);
+		try {
+			activity.startActivityForResult(new Intent(
+				"android.fbreader.action.NETWORK_LIBRARY_REGISTER",
+				Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
+			), USER_REGISTRATION_REQUEST_CODE);
+		} catch (ActivityNotFoundException e) {
+		}
 	}
 
 	static void runAfterRegistration(NetworkAuthenticationManager mgr, Intent data) throws ZLNetworkException {

@@ -444,7 +444,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private void processExtraData(final NetworkBaseActivity activity, Map<String,String> extraData, final Runnable postRunnable) {
-		if (!extraData.isEmpty()) {
+		if (extraData != null && !extraData.isEmpty()) {
 			runInstallPluginDialog(activity, extraData, postRunnable);
 		} else {
 			postRunnable.run();
