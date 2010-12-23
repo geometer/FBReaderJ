@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,21 +30,15 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
-
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class BaseActivity extends ListActivity {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
@@ -57,6 +49,7 @@ abstract class BaseActivity extends ListActivity {
 	private static final int DELETE_BOOK_ITEM_ID = 4;
 
 	protected static final int CHILD_LIST_REQUEST = 0;
+	protected static final int BOOK_INFO_REQUEST = 1;
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
 
@@ -182,9 +175,10 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected void showBookInfo(Book book) {
-		startActivity(
+		startActivityForResult(
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath())
+				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
+			BOOK_INFO_REQUEST
 		);
 	}
 

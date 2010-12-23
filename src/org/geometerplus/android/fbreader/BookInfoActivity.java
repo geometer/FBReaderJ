@@ -41,19 +41,18 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity {
+	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
+
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
 	public static final String HIDE_OPEN_BUTTON_KEY = "hideOpenButton";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
-	private Book myBook;
+	private ZLFile myFile;
 	private ZLImage myImage;
 	private boolean myHideOpenButton;
 
@@ -66,15 +65,13 @@ public class BookInfoActivity extends Activity {
 
 		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
 		myHideOpenButton = getIntent().getBooleanExtra(HIDE_OPEN_BUTTON_KEY, false);
-		final ZLFile file = ZLFile.createFileByPath(path);
+		myFile = ZLFile.createFileByPath(path);
 
-		myImage = Library.getCover(file);
+		myImage = Library.getCover(myFile);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
-
-		myBook = Book.getByFile(file);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -84,36 +81,37 @@ public class BookInfoActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		setupCover(myBook);
-		setupBookInfo(myBook);
-		setupFileInfo(myBook);
+		final Book book = Book.getByFile(myFile);
+
+		setupCover(book);
+		setupBookInfo(book);
+		setupAnnotation(book);
+		setupFileInfo(book);
 
 		if (myHideOpenButton) {
 			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
 		} else {
 			setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
-				@Override
 				public void onClick(View view) {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
 							.setAction(Intent.ACTION_VIEW)
-							.putExtra(FBReader.BOOK_PATH_KEY, myBook.File.getPath())
+							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
 							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 					);
 				}
 			});
 		}
 		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
-			@Override
 			public void onClick(View view) {
-				startActivity(
+				startActivityForResult(
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_PATH_KEY, myBook.File.getPath())
+						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
+					1
 				);
 			}
 		});
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
-			@Override
 			public void onClick(View view) {
 				// TODO: implement
 			}
@@ -122,6 +120,12 @@ public class BookInfoActivity extends Activity {
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		final Book book = Book.getByFile(myFile);
+		setupBookInfo(book);
 	}
 
 	private Button findButton(int buttonId) {
@@ -216,18 +220,37 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.book_tags, "tags", buffer);
 	}
 
+	private void setupAnnotation(Book book) {
+		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
+		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
+		final String annotation = Library.getAnnotation(book.File);	
+		if (annotation == null) {
+			titleView.setVisibility(View.GONE);
+			bodyView.setVisibility(View.GONE);
+		} else {
+			titleView.setText(myResource.getResource("annotation").getValue());
+			bodyView.setText(annotation);
+		}
+	}
+
 	private void setupFileInfo(Book book) {
 		((TextView)findViewById(R.id.file_info_title)).setText(myResource.getResource("fileInfo").getValue());
 
 		setupInfoPair(R.id.file_name, "name", book.File.getPath());
-		setupInfoPair(R.id.file_type, "type", book.File.getExtension());
-
-		final ZLFile physFile = book.File.getPhysicalFile();
-		final File file = physFile == null ? null : new File(physFile.getPath());
-		if (file != null && file.exists() && file.isFile()) {
-			setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
-			setupInfoPair(R.id.file_time, "time", formatDate(file.lastModified()));
+		if (ENABLE_EXTENDED_FILE_INFO) {
+			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
+        
+			final ZLFile physFile = book.File.getPhysicalFile();
+			final File file = physFile == null ? null : new File(physFile.getPath());
+			if (file != null && file.exists() && file.isFile()) {
+				setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
+				setupInfoPair(R.id.file_time, "time", formatDate(file.lastModified()));
+			} else {
+				setupInfoPair(R.id.file_size, "size", null);
+				setupInfoPair(R.id.file_time, "time", null);
+			}
 		} else {
+			setupInfoPair(R.id.file_type, "type", null);
 			setupInfoPair(R.id.file_size, "size", null);
 			setupInfoPair(R.id.file_time, "time", null);
 		}

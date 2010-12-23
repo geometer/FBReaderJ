@@ -231,11 +231,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public boolean refillAccountSupported() {
-		return true;
-	}
-
-	@Override
 	public String refillAccountLink() {
 		final String sid;
 		synchronized (this) {
@@ -400,28 +395,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader) accountRequest.Reader;
 		myAccount = BuyBookReference.price(reader.Account, "RUB");
 	}
-
-
-	@Override
-	public boolean registrationSupported() {
-		return true;
-	}
-
-	/*
-	@Override
-	public void registerUser(String login, String password, String email) throws ZLNetworkException {
-		synchronized (this) {
-			mySidChecked = true;
-			if (exception != null) {
-				mySidUserNameOption.setValue("");
-				mySidOption.setValue("");
-				throw exception;
-			}
-			mySidOption.setValue(xmlReader.Sid);
-			mySidUserNameOption.setValue(login);
-		}
-	}
-	*/
 
 	@Override
 	public boolean passwordRecoverySupported() {

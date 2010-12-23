@@ -60,6 +60,8 @@
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="refillAccount" value="Refill account (currently: %s)"/>
 		<node name="refillTitle" value="Refill account"/>
+		<node name="refillViaSms" value="Send an SMS"/>
+		<node name="refillViaBrowser" value="Open page in browser"/>
 		<node name="refillSummary" value="Currently: %s"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
@@ -107,6 +109,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Book Info" />
 		<node name="fileInfo" value="File Info" />
+		<node name="annotation" value="Annotation" />
 		<node name="title" value="Title:" />
 		<node name="authors" value="Authors:" />
 		<node name="series" value="Series:" />
@@ -245,6 +248,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" />
+			<node name="update" value="Update" />
+			<node name="skip" value="Skip" />
 			<node name="buy" value="Buy" />
 			<node name="buyAndDownload" value="Buy and download" />
 			<node name="continue" value="Continue" />
@@ -253,6 +259,12 @@
 			<node name="openBook" value="Read" />
 			<node name="editInfo" value="Edit" />
 			<node name="reloadInfo" value="Reload" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin"/>
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Update plugin"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="File name"/>

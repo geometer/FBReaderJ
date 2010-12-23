@@ -60,6 +60,8 @@
 		<node name="signOut" value="Выйти (%s)"/>
 		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
 		<node name="refillTitle" value="Пополнить счёт"/>
+		<node name="refillViaSms" value="С помощью SMS"/>
+		<node name="refillViaBrowser" value="В окне браузера"/>
 		<node name="refillSummary" value="Текущий счёт: %s"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
@@ -107,6 +109,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Информация о книге" />
 		<node name="fileInfo" value="Информация о файле" />
+		<node name="annotation" value="Аннотация" />
 		<node name="title" value="Название:" />
 		<node name="authors" value="Авторы:" />
 		<node name="series" value="Серия:" />
@@ -212,6 +215,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Установить" />
+			<node name="update" value="Обновить" />
+			<node name="skip" value="Не сейчас" />
 			<node name="buy" value="Купить" />
 			<node name="buyAndDownload" value="Купить и скачать" />
 			<node name="continue" value="Продолжить" />
@@ -220,6 +226,12 @@
 			<node name="openBook" value="Читать" />
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Установка дополнения"/>
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Новая версия"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>

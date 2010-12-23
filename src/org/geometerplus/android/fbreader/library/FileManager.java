@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.*;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
@@ -91,6 +89,8 @@ public final class FileManager extends BaseActivity {
 			}
 			getListView().invalidateViews();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		} else if (requestCode == BOOK_INFO_REQUEST) {
+			getListView().invalidateViews();
 		}
 	} 
 
@@ -124,6 +124,8 @@ public final class FileManager extends BaseActivity {
 					.putExtra(FILE_MANAGER_PATH, file.getPath()),
 				CHILD_LIST_REQUEST
 			);
+		} else {
+			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		}
 	}
 
@@ -203,8 +205,6 @@ public final class FileManager extends BaseActivity {
 		private final String myName;
 		private final String mySummary;
 
-		private Book myBook = null;
-		private boolean myBookIsInitialized = false;
 		private ZLImage myCover = null;
 		private boolean myCoverIsInitialized = false;
 
@@ -252,15 +252,21 @@ public final class FileManager extends BaseActivity {
 		public int getIcon() {
 			if (getBook() != null) {
 				return R.drawable.ic_list_library_book;
-			} else if (myFile.isDirectory() || myFile.isArchive()) {
-				return R.drawable.ic_list_library_folder;
+			} else if (myFile.isDirectory()) {
+				if (myFile.isReadable()) {
+					return R.drawable.ic_list_library_folder;
+				} else {
+					return R.drawable.ic_list_library_permission_denied;
+				}
+			} else if (myFile.isArchive()) {
+				return R.drawable.ic_list_library_zip;
 			} else {
 				System.err.println(
 					"File " + myFile.getPath() +
 					" that is not a directory, not a book and not an archive " +
 					"has been found in getIcon()"
 				);
-				return R.drawable.ic_list_library_book;
+				return R.drawable.ic_list_library_permission_denied;
 			}
 		}
 
@@ -277,11 +283,7 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public Book getBook() {
-			if (!myBookIsInitialized) {
-				myBookIsInitialized = true;
-				myBook = Book.getByFile(myFile);
-			}
-			return myBook;
+			return Book.getByFile(myFile);
 		}
 	}
 
@@ -303,7 +305,9 @@ public final class FileManager extends BaseActivity {
 				return;
 			}
 
-			for (ZLFile file : myFile.children()) {
+			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
+			Collections.sort(children, new FileComparator());
+			for (ZLFile file : children) {
 				if (Thread.currentThread().isInterrupted()) {
 					break;
 				}
@@ -319,6 +323,12 @@ public final class FileManager extends BaseActivity {
 					});
 				}
 			}
+		}
+	}
+
+	private static class FileComparator implements Comparator<ZLFile> {
+		public int compare(ZLFile f0, ZLFile f1) {
+			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
 		}
 	}
 }

@@ -10,3 +10,4 @@ NP:
 	* Отдельная иконка для каталогов, к которым нет доступа (?) -- с замочком на папке
 	DONE Архивы в архивах
 	DONE filesystem: return special result (exception?) if directory is not readable
+	* Crashes if /sdcard is removed while we browse files

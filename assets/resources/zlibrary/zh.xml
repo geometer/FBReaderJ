@@ -80,7 +80,7 @@
 		<node name="vi" value="越南语" />
 		<node name="zh" value="中文" />
 		<node name="other" value="其他" />
-		<node name="multi" value="Multilanguage" toBeTranslated="true" />
+		<node name="multi" value="多语言" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="开" />

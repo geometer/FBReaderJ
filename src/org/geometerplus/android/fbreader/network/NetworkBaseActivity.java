@@ -208,7 +208,7 @@ abstract class NetworkBaseActivity extends ListActivity
 		if (actions == null) {
 			return;
 		}
-		final int actionCode = actions.getDefaultActionCode(networkTree);
+		final int actionCode = actions.getDefaultActionCode(this, networkTree);
 		final String confirm = actions.getConfirmText(networkTree, actionCode);
 		if (actionCode == NetworkTreeActions.TREE_SHOW_CONTEXT_MENU) {
 			listView.showContextMenuForChild(view);

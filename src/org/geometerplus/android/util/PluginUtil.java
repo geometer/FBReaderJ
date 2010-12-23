@@ -33,10 +33,25 @@ public abstract class PluginUtil {
 		return Uri.parse("http://data.fbreader.org/packages/" + pkg + ".apk");
 	}
 
+	private static Uri homeUri(String pkg, String version) {
+		return Uri.parse("http://data.fbreader.org/packages/" + pkg + ".apk_" + version);
+	}
+
 	public static boolean isPluginInstalled(Activity activity, String pkg) {
 		try {
 			activity.startActivity(new Intent(
 				"android.fbreader.action.TEST", homeUri(pkg)
+			));
+			return true;
+		} catch (ActivityNotFoundException e) {
+			return false;
+		}
+	}
+
+	public static boolean isPluginInstalled(Activity activity, String pkg, String version) {
+		try {
+			activity.startActivity(new Intent(
+				"android.fbreader.action.TEST", homeUri(pkg, version)
 			));
 			return true;
 		} catch (ActivityNotFoundException e) {

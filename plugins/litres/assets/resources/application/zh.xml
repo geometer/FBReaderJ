@@ -13,10 +13,10 @@
 			<node name="passwordNotSpecified" value="请输入密码" />
 			<node name="passwordsDoNotMatch" value="密码和密码确认必须一致." />
 			<node name="emailNotSpecified" value="请输入你的电子邮箱" />
-			<node name="emailAlreadyTaken" value="E-mail address is already in use" toBeTranslated="true" />
+			<node name="emailAlreadyTaken" value="该email已经注册过" />
 			<node name="invalidEMail" value="无效的电子邮箱" />
 			<node name="tooManyRegistrations" value="来自你的IP的注册数过多，&#10;请稍候再尝试注册" />
-			<node name="errorDuringRegistation" value="Error %s is occured" toBeTranslated="true" />
+			<node name="errorDuringRegistation" value="注册中遇到 %s 类型错误" />
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="正在注册新账号，请稍等..." />

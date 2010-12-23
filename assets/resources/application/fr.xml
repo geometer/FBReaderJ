@@ -64,6 +64,8 @@
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="refillTitle" value="Recréditer le compte"/>
+		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Аctuellement : %s"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
@@ -111,6 +113,7 @@
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informations sur le livre" />
 		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="annotation" value="Annotation" />
 		<node name="title" value="Titre:" />
 		<node name="authors" value="Auteurs:" />
 		<node name="series" value="Série:" />
@@ -214,6 +217,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" toBeTranslated="true" />
+			<node name="update" value="Update" toBeTranslated="true" />
+			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="Acheter"/>
 			<node name="buyAndDownload" value="Acheter et télécharger"/>
 			<node name="continue" value="Continuer" />
@@ -222,6 +228,12 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin" toBeTranslated="true" />
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Update plugin" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nom du fichier"/>
@@ -461,8 +473,14 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
 					<node name="0" value="Toujours"/>
+					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
+					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
+					<!--
+					Please, update this translation to avoid % sign. Resources with % sign
+					causes crash on cyanogenmod firmware (due a bug in cyanogenmod)
 					<node name="25" value="Tant que le niveau de batterie est supérieur à 25%"/>
 					<node name="50" value="Tant que le niveau de batterie est supérieur à 50%"/>
+					-->
 					<node name="100" value="Jamais"/>
 				</node>
 			</node>

@@ -90,10 +90,6 @@ public class UserRegistrationActivity extends Activity implements UserRegistrati
 		setViewTextFromResource(R.id.user_registration_confirm_password_text, "confirmPassword");
 		setViewTextFromResource(R.id.user_registration_email_text, "email");
 
-		setViewText(R.id.user_registration_login, "q");
-		setViewText(R.id.user_registration_password, "q");
-		setViewText(R.id.user_registration_confirm_password, "q");
-
 		final TextView errorLabel = findTextView(R.id.user_registration_error);
 		errorLabel.setVisibility(View.GONE);
 		errorLabel.setText("");

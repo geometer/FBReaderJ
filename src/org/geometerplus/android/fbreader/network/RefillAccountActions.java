@@ -22,13 +22,14 @@ package org.geometerplus.android.fbreader.network;
 import android.view.Menu;
 import android.view.ContextMenu;
 
+import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
 class RefillAccountActions extends NetworkTreeActions {
-
-	public static final int REFILL_ITEM_ID = 0;
+	public static final int REFILL_VIA_SMS_ITEM_ID = 0;
+	public static final int REFILL_VIA_BROWSER_ITEM_ID = 1;
 
 
 	@Override
@@ -40,12 +41,28 @@ class RefillAccountActions extends NetworkTreeActions {
 	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
-		addMenuItem(menu, REFILL_ITEM_ID, "refillTitle");
+		final INetworkLink link = ((RefillAccountTree)tree).Link;
+		if (Util.isSmsAccountRefillingSupported(activity, link)) {
+			addMenuItem(menu, REFILL_VIA_SMS_ITEM_ID, "refillViaSms");
+		}
+		if (Util.isBrowserAccountRefillingSupported(activity, link)) {
+			addMenuItem(menu, REFILL_VIA_BROWSER_ITEM_ID, "refillViaBrowser");
+		}
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkTree tree) {
-		return REFILL_ITEM_ID;
+	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
+		final INetworkLink link = ((RefillAccountTree)tree).Link;
+		final boolean sms = Util.isSmsAccountRefillingSupported(activity, link);
+		final boolean browser = Util.isBrowserAccountRefillingSupported(activity, link);
+
+		if (sms && browser) {
+			return TREE_SHOW_CONTEXT_MENU;
+		} else if (sms) {
+			return REFILL_VIA_SMS_ITEM_ID;
+		} else /* if (browser) */ { 
+			return REFILL_VIA_BROWSER_ITEM_ID;
+		}
 	}
 
 	@Override
@@ -59,14 +76,17 @@ class RefillAccountActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
 		return false;
 	}
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
-			case REFILL_ITEM_ID:
+			case REFILL_VIA_SMS_ITEM_ID:
+				//doRefill(activity, (RefillAccountTree) tree);
+				return true;
+			case REFILL_VIA_BROWSER_ITEM_ID:
 				doRefill(activity, (RefillAccountTree) tree);
 				return true;
 		}

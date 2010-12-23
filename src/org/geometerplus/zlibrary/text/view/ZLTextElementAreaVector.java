@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.ArrayList;
 
 final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
+	private static final long serialVersionUID = -7880472347947563506L;
+
 	final ArrayList<ZLTextElementRegion> ElementRegions = new ArrayList<ZLTextElementRegion>();
 	private ZLTextElementRegion myCurrentElementRegion;
 

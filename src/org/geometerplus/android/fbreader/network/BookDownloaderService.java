@@ -276,7 +276,7 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
-		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate) {
+		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate, null) {
 			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 
