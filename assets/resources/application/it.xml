@@ -61,6 +61,8 @@
 		<node name="signOut" value="Esci (%s)"/>
 		<node name="refillAccount" value="Ricarica account (corrente: %s)"/>
 		<node name="refillTitle" value="Ricarica account"/>
+		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Corrente: %s"/>
 		<node name="alreadyDownloading" value="Sto scaricando il libro" />
 		<node name="alreadyDownloadingDemo" value="Sto scaricando il libro d'esempio" />
@@ -184,6 +186,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" toBeTranslated="true" />
+			<node name="update" value="Update" toBeTranslated="true" />
+			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="Compra" />
 			<node name="buyAndDownload" value="Compra e scarica" />
 			<node name="continue" toBeTranslated="true" value="Continue" />
@@ -192,6 +197,12 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin" toBeTranslated="true" />
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Update plugin" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nome file"/>

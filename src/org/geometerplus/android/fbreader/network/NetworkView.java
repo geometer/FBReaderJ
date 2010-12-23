@@ -115,13 +115,13 @@ class NetworkView {
 		return false;
 	}
 
-	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
 		if (!isInitialized()) {
 			return false;
 		}
 		final NetworkTreeActions actions = getActions(tree);
 		if (actions != null) {
-			return actions.prepareOptionsMenu(menu, tree);
+			return actions.prepareOptionsMenu(activity, menu, tree);
 		}
 		return false;
 	}

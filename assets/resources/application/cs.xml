@@ -61,6 +61,8 @@
 		<node name="signOut" value="Odhlásit (%s)"/>
 		<node name="refillAccount" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="refillTitle" value="Doplnit účet"/>
+		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Aktuálně: %s"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje" />
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje" />
@@ -184,6 +186,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
+			<node name="install" value="Install" toBeTranslated="true" />
+			<node name="update" value="Update" toBeTranslated="true" />
+			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="Zakoupit" />
 			<node name="buyAndDownload" value="Zakoupit a stáhnout" />
 			<node name="continue" value="Pokračovat" />
@@ -192,6 +197,12 @@
 			<node name="openBook" value="Číst" />
 			<node name="editInfo" value="Upravit" />
 			<node name="reloadInfo" value="Znovu načíst" />
+		</node>
+		<node name="installPlugin">
+			<node name="title" value="Install plugin" toBeTranslated="true" />
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Update plugin" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Název souboru"/>

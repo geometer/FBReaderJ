@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Message;
 import android.os.Handler;
 import android.view.Menu;
@@ -126,7 +127,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkTree tree) {
+	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
@@ -167,7 +168,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 
@@ -199,7 +200,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 		}
 		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
-		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn);
+		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn & Util.isRegistrationSupported(activity, item.Link));
 		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
 		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill);
 		return true;
@@ -392,19 +393,61 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private void processExtraData(NetworkBaseActivity activity, LinkedHashMap<String,String> extraData) {
-		if (extraData != null && !extraData.isEmpty()) {
-			for (Map.Entry<String,String> entry : extraData.entrySet()) {
-				if ("androidActivity".equals(entry.getKey())) {
-					installPlugin(activity, entry.getValue());
-				}
+	private void runInstallPluginDialog(final NetworkBaseActivity activity, Map<String,String> pluginData, final Runnable postRunnable) {
+		final String plugin = pluginData.get("androidPlugin");
+		if (plugin != null) {
+			final String pluginVersion = pluginData.get("androidPluginVersion");
+
+			String dialogKey = null;
+			String message = null;
+			String positiveButtonKey = null;
+			
+			if (!PluginUtil.isPluginInstalled(activity, plugin)) {
+				dialogKey = "installPlugin";
+				message = pluginData.get("androidPluginInstallMessage");
+				positiveButtonKey = "install";
+			} else if (!PluginUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
+				dialogKey = "updatePlugin";
+				message = pluginData.get("androidPluginUpdateMessage");
+				positiveButtonKey = "update";
+			}
+			if (dialogKey != null) {
+				final ZLResource dialogResource = ZLResource.resource("dialog");
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(activity)
+					.setTitle(dialogResource.getResource(dialogKey).getResource("title").getValue())
+					.setMessage(message)
+					.setIcon(0)
+					.setPositiveButton(
+						buttonResource.getResource(positiveButtonKey).getValue(),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								PluginUtil.installPackageFromMarket(activity, plugin);
+							}
+						}
+					)
+					.setNegativeButton(
+						buttonResource.getResource("skip").getValue(),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								postRunnable.run();
+							}
+						}
+					)
+					.create().show();
+				return;
 			}
 		}
+		postRunnable.run();
 	}
 
-	private void installPlugin(NetworkBaseActivity activity, String pkg) {
-		if (!PluginUtil.isPluginInstalled(activity, pkg)) {
-			PluginUtil.installPackageFromMarket(activity, pkg);
+	private void processExtraData(final NetworkBaseActivity activity, Map<String,String> extraData, final Runnable postRunnable) {
+		if (extraData != null && !extraData.isEmpty()) {
+			runInstallPluginDialog(activity, extraData, postRunnable);
+		} else {
+			postRunnable.run();
 		}
 	}
 
@@ -437,9 +480,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					url,
 					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
-				NetworkView.Instance().openTree(activity, tree, url);
-
-				processExtraData(activity, tree.Item.extraData());
+				processExtraData(activity, tree.Item.extraData(), new Runnable() {
+					public void run() {
+						NetworkView.Instance().openTree(activity, tree, url);
+					}
+				});
 			}
 		});
 	}

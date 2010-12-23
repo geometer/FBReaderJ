@@ -55,7 +55,7 @@ class AuthenticationDialog extends NetworkDialog {
 		registerText.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-				if (mgr.registrationSupported()) {
+				if (Util.isRegistrationSupported(myActivity, myLink)) {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
 					Util.runRegistrationDialog(myActivity, myLink);
 				}
@@ -126,7 +126,7 @@ class AuthenticationDialog extends NetworkDialog {
 			error.setText(myErrorMessage);
 		}
 
-		dialog.findViewById(R.id.network_authentication_register).setVisibility(mgr.registrationSupported() ? View.VISIBLE : View.GONE);
+		dialog.findViewById(R.id.network_authentication_register).setVisibility(Util.isRegistrationSupported(myActivity, myLink) ? View.VISIBLE : View.GONE);
 
 		View dlgView = dialog.findViewById(R.id.network_authentication_dialog);
 		dlgView.invalidate();

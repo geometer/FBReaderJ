@@ -90,8 +90,8 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
 
-	public LinkedHashMap<String,String> extraData() {
-		return null;
+	public Map<String,String> extraData() {
+		return Collections.emptyMap();
 	}
 
 	public abstract void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException;

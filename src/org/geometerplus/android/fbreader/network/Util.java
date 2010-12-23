@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -29,11 +30,39 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 abstract class Util implements UserRegistrationConstants {
+	private static final String REGISTRATION_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
+	private static final String SMS_REFILLING_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
+
+	private static boolean testService(Activity activity, String action, String url) {
+		if (url == null) {
+			return false;
+		}
+		try {
+			activity.startActivity(new Intent(action + "_TEST", Uri.parse(url)));
+			return true;
+		} catch (ActivityNotFoundException e) {
+			return false;
+		}
+	}
+
+	static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
+		return testService(
+			activity,
+			REGISTRATION_ACTION,
+			link.getLink(INetworkLink.URL_SIGN_UP)
+		);
+	}
+
 	static void runRegistrationDialog(Activity activity, INetworkLink link) {
-		activity.startActivityForResult(new Intent(
-			"android.fbreader.action.NETWORK_LIBRARY_REGISTER",
-			Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
-		), USER_REGISTRATION_REQUEST_CODE);
+		try {
+			activity.startActivityForResult(new Intent(
+				REGISTRATION_ACTION,
+				Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
+			), USER_REGISTRATION_REQUEST_CODE);
+		} catch (ActivityNotFoundException e) {
+		}
 	}
 
 	static void runAfterRegistration(NetworkAuthenticationManager mgr, Intent data) throws ZLNetworkException {
@@ -48,5 +77,23 @@ abstract class Util implements UserRegistrationConstants {
 				throw e;
 			}
 		}
+	}
+
+	static boolean isAccountRefillingSupported(Activity activity, INetworkLink link) {
+		return
+			isBrowserAccountRefillingSupported(activity, link) ||
+			isSmsAccountRefillingSupported(activity, link);
+	}
+
+	static boolean isSmsAccountRefillingSupported(Activity activity, INetworkLink link) {
+		return testService(
+			activity,
+			SMS_REFILLING_ACTION,
+			link.getLink(INetworkLink.URL_MAIN)
+		);
+	}
+
+	static boolean isBrowserAccountRefillingSupported(Activity activity, INetworkLink link) {
+		return link.getLink(INetworkLink.URL_REFILL_ACCOUNT) != null;
 	}
 }

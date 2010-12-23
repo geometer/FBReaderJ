@@ -37,9 +37,9 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		}
 	}
 	private State myLoadingState;
-	private final LinkedHashMap<String,String> myExtraData;
+	private final Map<String,String> myExtraData;
 
-	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, LinkedHashMap<String,String> extraData) {
+	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Map<String,String> extraData) {
 		super(link, title, summary, cover, urlByType);
 		myExtraData = extraData;
 	}
@@ -66,7 +66,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public final LinkedHashMap<String,String> extraData() {
+	public final Map<String,String> extraData() {
 		return myExtraData;
 	}
 
