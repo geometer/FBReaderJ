@@ -22,52 +22,29 @@ package org.geometerplus.zlibrary.core.network;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URLConnection;
-import java.util.zip.GZIPInputStream;
-
 
 public abstract class ZLNetworkRequest {
-
-	public static final int AUTHENTICATION_NO_AUTH = 0;
-	public static final int AUTHENTICATION_BASIC = 1;
-
-
 	public final String URL;
 	public final String SSLCertificate;
-
-	public int AuthenticationMethod = AUTHENTICATION_NO_AUTH;
-	public String UserName;
-	public String Password;
+	public final String PostData;
 
 	public boolean FollowRedirects = true;
 
-
 	protected ZLNetworkRequest(String url) {
-		this(url, null);
+		this(url, null, null);
 	}
 
-	protected ZLNetworkRequest(String url, String sslCertificate) {
+	protected ZLNetworkRequest(String url, String sslCertificate, String postData) {
 		URL = url;
 		SSLCertificate = sslCertificate;
+		PostData = postData;
 	}
 
 	public void doBefore() throws ZLNetworkException {
 	}
 	
-	void doHandleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-		String encoding = connection.getContentEncoding();
-		if (encoding != null) {
-			encoding = encoding.toLowerCase();
-			if (encoding.equals("gzip")) {
-				inputStream = new GZIPInputStream(inputStream);
-			}
-		}
-		handleStream(connection, inputStream);
-	}
-
 	public abstract void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException;
 
-	public void doAfterOnSuccess() throws ZLNetworkException {
-	}
-	public void doAfterOnError() {
+	public void doAfter(boolean success) throws ZLNetworkException {
 	}
 }

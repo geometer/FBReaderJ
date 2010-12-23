@@ -52,7 +52,7 @@ public class BookInfoActivity extends Activity {
 	public static final String HIDE_OPEN_BUTTON_KEY = "hideOpenButton";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
-	private Book myBook;
+	private ZLFile myFile;
 	private ZLImage myImage;
 	private boolean myHideOpenButton;
 
@@ -65,15 +65,13 @@ public class BookInfoActivity extends Activity {
 
 		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
 		myHideOpenButton = getIntent().getBooleanExtra(HIDE_OPEN_BUTTON_KEY, false);
-		final ZLFile file = ZLFile.createFileByPath(path);
+		myFile = ZLFile.createFileByPath(path);
 
-		myImage = Library.getCover(file);
+		myImage = Library.getCover(myFile);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
-
-		myBook = Book.getByFile(file);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -83,10 +81,12 @@ public class BookInfoActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		setupCover(myBook);
-		setupBookInfo(myBook);
-		setupAnnotation(myBook);
-		setupFileInfo(myBook);
+		final Book book = Book.getByFile(myFile);
+
+		setupCover(book);
+		setupBookInfo(book);
+		setupAnnotation(book);
+		setupFileInfo(book);
 
 		if (myHideOpenButton) {
 			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
@@ -96,7 +96,7 @@ public class BookInfoActivity extends Activity {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
 							.setAction(Intent.ACTION_VIEW)
-							.putExtra(FBReader.BOOK_PATH_KEY, myBook.File.getPath())
+							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
 							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 					);
 				}
@@ -104,9 +104,10 @@ public class BookInfoActivity extends Activity {
 		}
 		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
 			public void onClick(View view) {
-				startActivity(
+				startActivityForResult(
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_PATH_KEY, myBook.File.getPath())
+						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
+					1
 				);
 			}
 		});
@@ -119,6 +120,12 @@ public class BookInfoActivity extends Activity {
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		final Book book = Book.getByFile(myFile);
+		setupBookInfo(book);
 	}
 
 	private Button findButton(int buttonId) {

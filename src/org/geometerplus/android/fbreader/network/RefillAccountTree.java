@@ -29,16 +29,16 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
+import org.geometerplus.zlibrary.ui.android.R;
 
-class RefillAccountTree extends NetworkTree {
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
+class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 	public final INetworkLink Link;
-	public final ZLImage Cover;
 
 	public RefillAccountTree(NetworkCatalogTree parentTree) {
 		super(parentTree.Level + 1);
 		Link = parentTree.Item.Link;
-		Cover = parentTree.getCover();
 	}
 
 	@Override
@@ -62,12 +62,11 @@ class RefillAccountTree extends NetworkTree {
 	}
 
 	@Override
-	protected ZLImage createCover() {
-		return Cover;
-	}
-
-	@Override
 	public NetworkLibraryItem getHoldedItem() {
 		return null;
+	}
+
+	public int getCoverResourceId() {
+		return R.drawable.ic_list_library_wallet;
 	}
 }

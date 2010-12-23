@@ -113,6 +113,8 @@ public final class FileManager extends BaseActivity {
 			}
 			getListView().invalidateViews();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		} else if (requestCode == BOOK_INFO_REQUEST) {
+			getListView().invalidateViews();
 		}
 	} 
 
@@ -194,13 +196,15 @@ public final class FileManager extends BaseActivity {
 			showBookInfo(book);
 		} else if (file.isDirectory() || file.isArchive()) {
 			Intent i = new Intent(this, FileManager.class)
-			.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-			.putExtra(FILE_MANAGER_PATH, file.getPath())
-			.putExtra(FILE_MANAGER_INSERT_MODE, myInsertPath);
+				.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+				.putExtra(FILE_MANAGER_PATH, file.getPath())
+				.putExtra(FILE_MANAGER_INSERT_MODE, myInsertPath);
 			if (myInsertPath != null){
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			}
 			startActivityForResult(i,CHILD_LIST_REQUEST);
+		} else {
+			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		}
 	}
 
@@ -357,8 +361,6 @@ public final class FileManager extends BaseActivity {
 		private String myName;
 		private final String mySummary;
 
-		private Book myBook = null;
-		private boolean myBookIsInitialized = false;
 		private ZLImage myCover = null;
 		private boolean myCoverIsInitialized = false;
 
@@ -406,15 +408,21 @@ public final class FileManager extends BaseActivity {
 		public int getIcon() {
 			if (getBook() != null) {
 				return R.drawable.ic_list_library_book;
-			} else if (myFile.isDirectory() || myFile.isArchive()) {
-				return R.drawable.ic_list_library_folder;
+			} else if (myFile.isDirectory()) {
+				if (myFile.isReadable()) {
+					return R.drawable.ic_list_library_folder;
+				} else {
+					return R.drawable.ic_list_library_permission_denied;
+				}
+			} else if (myFile.isArchive()) {
+				return R.drawable.ic_list_library_zip;
 			} else {
 				System.err.println(
 					"File " + myFile.getPath() +
 					" that is not a directory, not a book and not an archive " +
 					"has been found in getIcon()"
 				);
-				return R.drawable.ic_list_library_book;
+				return R.drawable.ic_list_library_permission_denied;
 			}
 		}
 
@@ -431,11 +439,7 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public Book getBook() {
-			if (!myBookIsInitialized) {
-				myBookIsInitialized = true;
-				myBook = Book.getByFile(myFile);
-			}
-			return myBook;
+			return Book.getByFile(myFile);
 		}
 	}
 

@@ -213,7 +213,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_networksearch);
 		addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", android.R.drawable.ic_menu_add);
 		addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
-		addMenuItem(menu, MENU_LANGUAGE_FILTER, "languages", 0);
+		addMenuItem(menu, MENU_LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
 		return true;
 	}
 
