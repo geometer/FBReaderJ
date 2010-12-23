@@ -127,7 +127,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkTree tree) {
+	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
@@ -168,7 +168,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 
@@ -200,7 +200,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 		}
 		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
-		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn);
+		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn & Util.isRegistrationSupported(activity, item.Link));
 		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
 		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill);
 		return true;

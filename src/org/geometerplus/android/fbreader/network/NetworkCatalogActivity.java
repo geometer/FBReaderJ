@@ -147,17 +147,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		public CatalogAdapter() {
 			if (myTree instanceof NetworkCatalogRootTree) {
 				NetworkCatalogTree tree = (NetworkCatalogTree) myTree;
-				NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
-				if (mgr != null) {
-					mySpecialItems = new ArrayList<NetworkTree>();
-					if (mgr.refillAccountSupported()) {
-						mySpecialItems.add(new RefillAccountTree(tree));
-					}
-					if (mySpecialItems.size() > 0) {
-						mySpecialItems.trimToSize();
-					} else {
-						mySpecialItems = null;
-					}
+				mySpecialItems = new ArrayList<NetworkTree>();
+				if (Util.isAccountRefillingSupported(NetworkCatalogActivity.this, tree.Item.Link)) {
+					mySpecialItems.add(new RefillAccountTree(tree));
+				}
+				if (mySpecialItems.size() > 0) {
+					mySpecialItems.trimToSize();
+				} else {
+					mySpecialItems = null;
 				}
 			}
 		}
@@ -248,7 +245,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		return NetworkView.Instance().prepareOptionsMenu(menu, myTree);
+		return NetworkView.Instance().prepareOptionsMenu(this, menu, myTree);
 	}
 
 	@Override

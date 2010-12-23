@@ -106,19 +106,8 @@ public abstract class NetworkAuthenticationManager {
 	 * refill account
 	 */
 
-	public boolean refillAccountSupported() {
-		return false;
-	}
-
 	public String refillAccountLink() {
 		return null;
-	}
-
-	/*
-	 * new User Registration
-	 */
-	public boolean registrationSupported() {
-		return false;
 	}
 
 	public abstract void initUser(String userName, String sid);

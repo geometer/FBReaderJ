@@ -102,11 +102,11 @@ abstract class NetworkTreeActions {
 
 	public abstract void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree);
 
-	public abstract int getDefaultActionCode(NetworkTree tree);
+	public abstract int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree);
 	public abstract String getConfirmText(NetworkTree tree, int actionCode);
 
 	public abstract boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode);
 
 	public abstract boolean createOptionsMenu(Menu menu, NetworkTree tree);
-	public abstract boolean prepareOptionsMenu(Menu menu, NetworkTree tree);
+	public abstract boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree);
 }
