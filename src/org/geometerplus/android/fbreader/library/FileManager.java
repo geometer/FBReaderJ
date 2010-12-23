@@ -126,6 +126,8 @@ public final class FileManager extends BaseActivity {
 					.putExtra(FILE_MANAGER_PATH, file.getPath()),
 				CHILD_LIST_REQUEST
 			);
+		} else {
+			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		}
 	}
 
@@ -266,7 +268,7 @@ public final class FileManager extends BaseActivity {
 					" that is not a directory, not a book and not an archive " +
 					"has been found in getIcon()"
 				);
-				return R.drawable.ic_list_library_book;
+				return R.drawable.ic_list_library_permission_denied;
 			}
 		}
 
