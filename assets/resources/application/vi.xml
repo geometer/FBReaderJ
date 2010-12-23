@@ -204,6 +204,10 @@
 		<node name="updatePlugin">
 			<node name="title" value="Update plugin" toBeTranslated="true" />
 		</node>
+		<node name="installDictionary">
+			<node name="title" value="Install dictionary" toBeTranslated="true" />
+			<node name="message" value="Would you like to install %s?" toBeTranslated="true" />
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Tên tập tin"/>
 			<node name="title" value="Tiêu đề"/>
@@ -555,10 +559,12 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
 		<node name="textNotFound" value="Xin lỗi, không có từ thích hợp"/>
 		<node name="bookNotFound" value="Xin lỗi, không có quyển nào thích hợp trong thư viện"/>
 		<node name="bookmarkNotFound" value="Xin lỗi, không có đánh dấu thích hợp"/>
 		<node name="cannotOpenBook" value="Xin lỗi, không thể mở sách vào lúc này"/>
+		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 	</node>

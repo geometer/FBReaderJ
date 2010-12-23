@@ -204,6 +204,10 @@
 		<node name="updatePlugin">
 			<node name="title" value="Update plugin" toBeTranslated="true" />
 		</node>
+		<node name="installDictionary">
+			<node name="title" value="Install dictionary" toBeTranslated="true" />
+			<node name="message" value="Would you like to install %s?" toBeTranslated="true" />
+		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Název souboru"/>
 			<node name="title" value="Název"/>
@@ -555,10 +559,12 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
 		<node name="textNotFound" value="V knize není bohužel žádný vhodný text"/>
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
 		<node name="bookmarkNotFound" value="Nejsou bohužel žádné vhodné záložky"/>
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
+		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
 	</node>

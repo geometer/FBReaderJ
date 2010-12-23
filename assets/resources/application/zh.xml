@@ -204,8 +204,9 @@
 		<node name="updatePlugin">
 			<node name="title" value="Update plugin" toBeTranslated="true" />
 		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Update plugin" toBeTranslated="true" />
+		<node name="installDictionary">
+			<node name="title" value="Install dictionary" toBeTranslated="true" />
+			<node name="message" value="Would you like to install %s?" toBeTranslated="true" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="文件" />
@@ -564,10 +565,12 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
 		<node name="textNotFound" value="对不起，本书中找不到对应内容" />
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍" />
 		<node name="bookmarkNotFound" value="对不起，找不到对应的书签" />
 		<node name="cannotOpenBook" value="对不起，无法开启本书" />
+		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="对不起，没有权限"/>
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
 	</node>
