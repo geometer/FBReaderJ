@@ -100,9 +100,6 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
-		addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS, new SwitchTextViewModeAction(this, ZLTextViewMode.MODE_VISIT_HYPERLINKS));
-		addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS, new SwitchTextViewModeAction(this, ZLTextViewMode.MODE_VISIT_ALL_WORDS));
-
 		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
 		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
 		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
