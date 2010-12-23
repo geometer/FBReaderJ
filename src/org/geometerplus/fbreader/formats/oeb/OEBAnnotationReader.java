@@ -25,8 +25,6 @@ import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.library.Book;
-
 class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private String myDescriptionTag;
 	

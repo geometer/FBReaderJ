@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 

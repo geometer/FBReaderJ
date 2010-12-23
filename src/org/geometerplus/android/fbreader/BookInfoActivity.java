@@ -92,7 +92,6 @@ public class BookInfoActivity extends Activity {
 			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
 		} else {
 			setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
-				@Override
 				public void onClick(View view) {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
@@ -104,7 +103,6 @@ public class BookInfoActivity extends Activity {
 			});
 		}
 		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
-			@Override
 			public void onClick(View view) {
 				startActivityForResult(
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
@@ -114,7 +112,6 @@ public class BookInfoActivity extends Activity {
 			}
 		});
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
-			@Override
 			public void onClick(View view) {
 				// TODO: implement
 			}
