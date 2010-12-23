@@ -14,22 +14,19 @@
 				<data android:scheme="http" android:host="data.fbreader.org" android:path="/packages/org.geometerplus.fbreader.plugin.network.litres.apk" />
 				<data android:scheme="http" android:host="data.fbreader.org" android:path="/packages/org.geometerplus.fbreader.plugin.network.litres.apk_1" />
 			</intent-filter>
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-				<action android:name="android.fbreader.action.NETWORK_LIBRARY_REGISTER_TEST" />
-				<data android:scheme="https" android:host="robot.litres.ru" />
-			</intent-filter>
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-				<action android:name="android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING_TEST" />
-				<data android:scheme="http" android:host="data.fbreader.org" android:path="/catalogs/litres/index.php"/>
-			</intent-filter>
 		</activity>
 		<activity android:name=".UserRegistrationActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="android.fbreader.action.NETWORK_LIBRARY_REGISTER" />
 				<data android:scheme="https" android:host="robot.litres.ru" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".SmsRefillingActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING" />
+				<data android:scheme="http" android:host="data.fbreader.org" android:path="/catalogs/litres/index.php"/>
 			</intent-filter>
 		</activity>
 	</application>

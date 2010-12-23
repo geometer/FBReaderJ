@@ -17,13 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
+
+import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
+
+import org.geometerplus.fbreader.fbreader.FBAction;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import org.geometerplus.android.util.PackageUtil;
 
 class SwitchTextViewModeAction extends FBAction {
+	private final FBReader myBaseActivity;
 	private final int myMode;
 
-	SwitchTextViewModeAction(FBReaderApp fbreader, int mode) {
+	SwitchTextViewModeAction(FBReader baseActivity, FBReaderApp fbreader, int mode) {
 		super(fbreader);
+		myBaseActivity = baseActivity;
 		myMode = mode;
 	}
 		
@@ -34,9 +43,13 @@ class SwitchTextViewModeAction extends FBAction {
 
 	@Override
 	public void run() {
+		if (myMode == ZLTextViewMode.MODE_VISIT_ALL_WORDS) {
+			DictionaryUtil.installDictionaryIfNotInstalled(myBaseActivity);
+		}
+
 		Reader.TextViewModeOption.setValue(myMode);
 		Reader.BookTextView.resetRegionPointer();
 		Reader.FootnoteView.resetRegionPointer();
 		Reader.repaintView();
-	}		
+	}
 }

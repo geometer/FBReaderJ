@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
@@ -84,7 +83,7 @@ public final class FBReaderApp extends ZLApplication {
 	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
 	public final FBView BookTextView;
-	final FBView FootnoteView;
+	public final FBView FootnoteView;
 
 	public BookModel Model;
 

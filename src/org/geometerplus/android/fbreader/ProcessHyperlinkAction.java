@@ -19,9 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
@@ -78,18 +76,13 @@ class ProcessHyperlinkAction extends FBAction {
 			if (start == end) {
 				return;
 			}
-			Intent intent = new Intent(Intent.ACTION_SEARCH);
-			intent.setComponent(new ComponentName(
-				"com.socialnmobile.colordict",
-				"com.socialnmobile.colordict.activity.Main"
-			));
-			intent.putExtra(SearchManager.QUERY, text.substring(start, end));
+			final Intent intent = DictionaryUtil.getDictionaryIntent(text.substring(start, end));
 			try {
 				myBaseActivity.startActivity(intent);
 			} catch(ActivityNotFoundException e){
 				Toast.makeText(
 					myBaseActivity,
-					ZLResource.resource("errorMessage").getResource("dictNotInstalled").getValue(),
+					ZLResource.resource("errorMessage").getResource("dictionaryIsNotInstalled").getValue(),
 					Toast.LENGTH_LONG
 				).show();
 			}

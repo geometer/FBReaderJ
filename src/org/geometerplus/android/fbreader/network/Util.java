@@ -29,6 +29,8 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
+import org.geometerplus.android.util.PackageUtil;
+
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
@@ -36,15 +38,7 @@ abstract class Util implements UserRegistrationConstants {
 		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
 
 	private static boolean testService(Activity activity, String action, String url) {
-		if (url == null) {
-			return false;
-		}
-		try {
-			activity.startActivity(new Intent(action + "_TEST", Uri.parse(url)));
-			return true;
-		} catch (ActivityNotFoundException e) {
-			return false;
-		}
+		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)));
 	}
 
 	static boolean isRegistrationSupported(Activity activity, INetworkLink link) {

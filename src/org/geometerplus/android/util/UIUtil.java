@@ -117,4 +117,12 @@ public abstract class UIUtil {
 			Toast.LENGTH_SHORT
 		).show();
 	}
+
+	public static void showErrorMessage(Context context, String resourceKey, String parameter) {
+		Toast.makeText(
+			context,
+			ZLResource.resource("errorMessage").getResource(resourceKey).getValue().replace("%s", parameter),
+			Toast.LENGTH_SHORT
+		).show();
+	}
 }

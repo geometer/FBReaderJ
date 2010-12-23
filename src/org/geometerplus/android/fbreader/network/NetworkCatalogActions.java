@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.util.PluginUtil;
+import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
@@ -402,11 +402,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			String message = null;
 			String positiveButtonKey = null;
 			
-			if (!PluginUtil.isPluginInstalled(activity, plugin)) {
+			if (!PackageUtil.isPluginInstalled(activity, plugin)) {
 				dialogKey = "installPlugin";
 				message = pluginData.get("androidPluginInstallMessage");
 				positiveButtonKey = "install";
-			} else if (!PluginUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
+			} else if (!PackageUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
 				dialogKey = "updatePlugin";
 				message = pluginData.get("androidPluginUpdateMessage");
 				positiveButtonKey = "update";
@@ -423,7 +423,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								PluginUtil.installPackageFromMarket(activity, plugin);
+								PackageUtil.installFromMarket(activity, plugin);
 							}
 						}
 					)
