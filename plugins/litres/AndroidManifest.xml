@@ -12,6 +12,7 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="android.fbreader.action.TEST" />
 				<data android:scheme="http" android:host="data.fbreader.org" android:path="/packages/org.geometerplus.fbreader.plugin.network.litres.apk" />
+				<data android:scheme="http" android:host="data.fbreader.org" android:path="/packages/org.geometerplus.fbreader.plugin.network.litres.apk_1" />
 			</intent-filter>
 		</activity>
 		<activity android:name=".UserRegistrationActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">

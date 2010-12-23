@@ -45,7 +45,7 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 
 	private TreeMap<String, Integer> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
-	private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>();
+	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
 	private final boolean myHasStableIdentifiers;
@@ -77,7 +77,7 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		myUrlRewritingRules.addAll(rules);
 	}
 
-	final void setExtraData(LinkedHashMap<String,String> extraData) {
+	final void setExtraData(Map<String,String> extraData) {
 		myExtraData.clear();
 		myExtraData.putAll(extraData);
 	}

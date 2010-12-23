@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Message;
 import android.os.Handler;
 import android.view.Menu;
@@ -392,24 +393,61 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private void processExtraData(NetworkBaseActivity activity, LinkedHashMap<String,String> extraData) {
-		if (extraData != null && !extraData.isEmpty()) {
-			final String pluginPackage = extraData.get("androidPlugin");
-			if (pluginPackage != null) {
+	private void runInstallPluginDialog(final NetworkBaseActivity activity, Map<String,String> pluginData, final Runnable postRunnable) {
+		final String plugin = pluginData.get("androidPlugin");
+		if (plugin != null) {
+			final String pluginVersion = pluginData.get("androidPluginVersion");
+
+			String dialogKey = null;
+			String message = null;
+			String positiveButtonKey = null;
+			
+			if (!PluginUtil.isPluginInstalled(activity, plugin)) {
+				dialogKey = "installPlugin";
+				message = pluginData.get("androidPluginInstallMessage");
+				positiveButtonKey = "install";
+			} else if (!PluginUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
+				dialogKey = "updatePlugin";
+				message = pluginData.get("androidPluginUpdateMessage");
+				positiveButtonKey = "update";
+			}
+			if (dialogKey != null) {
 				final ZLResource dialogResource = ZLResource.resource("dialog");
 				final ZLResource buttonResource = dialogResource.getResource("button");
-				if (!PluginUtil.isPluginInstalled(activity, pluginPackage)) {
-					final String text = extraData.get("androidPluginInstallMessage");
-					new AlertDialog.Builder(activity)
-						.setTitle(dialogResource.getResource("installPlugin").getResource("title").getValue())
-						.setMessage(text)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("install").getValue(), null)
-						.setNegativeButton(buttonResource.getResource("skip").getValue(), null)
-						.create().show();
-					//PluginUtil.installPackageFromMarket(activity, pkg);
-				}
+				new AlertDialog.Builder(activity)
+					.setTitle(dialogResource.getResource(dialogKey).getResource("title").getValue())
+					.setMessage(message)
+					.setIcon(0)
+					.setPositiveButton(
+						buttonResource.getResource(positiveButtonKey).getValue(),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								PluginUtil.installPackageFromMarket(activity, plugin);
+							}
+						}
+					)
+					.setNegativeButton(
+						buttonResource.getResource("skip").getValue(),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								postRunnable.run();
+							}
+						}
+					)
+					.create().show();
+				return;
 			}
+		}
+		postRunnable.run();
+	}
+
+	private void processExtraData(final NetworkBaseActivity activity, Map<String,String> extraData, final Runnable postRunnable) {
+		if (!extraData.isEmpty()) {
+			runInstallPluginDialog(activity, extraData, postRunnable);
+		} else {
+			postRunnable.run();
 		}
 	}
 
@@ -442,9 +480,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					url,
 					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
-				NetworkView.Instance().openTree(activity, tree, url);
-
-				processExtraData(activity, tree.Item.extraData());
+				processExtraData(activity, tree.Item.extraData(), new Runnable() {
+					public void run() {
+						NetworkView.Instance().openTree(activity, tree, url);
+					}
+				});
 			}
 		});
 	}

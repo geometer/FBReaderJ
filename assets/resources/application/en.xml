@@ -186,6 +186,7 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Install" />
+			<node name="update" value="Update" />
 			<node name="skip" value="Skip" />
 			<node name="buy" value="Buy" />
 			<node name="buyAndDownload" value="Buy and download" />
@@ -198,6 +199,9 @@
 		</node>
 		<node name="installPlugin">
 			<node name="title" value="Install plugin"/>
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Update plugin"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="File name"/>

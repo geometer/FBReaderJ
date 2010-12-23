@@ -186,6 +186,7 @@
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Установить" />
+			<node name="update" value="Обновить" />
 			<node name="skip" value="Не сейчас" />
 			<node name="buy" value="Купить" />
 			<node name="buyAndDownload" value="Купить и скачать" />
@@ -198,6 +199,9 @@
 		</node>
 		<node name="installPlugin">
 			<node name="title" value="Установка дополнения"/>
+		</node>
+		<node name="updatePlugin">
+			<node name="title" value="Новая версия"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>
