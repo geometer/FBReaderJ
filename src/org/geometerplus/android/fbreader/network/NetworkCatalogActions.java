@@ -238,7 +238,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doExpandCatalog(activity, (NetworkCatalogTree)tree);
 				return true;
 			case OPEN_IN_BROWSER_ITEM_ID:
-				NetworkView.Instance().openInBrowser(
+				Util.openInBrowser(
 					activity,
 					((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE)
 				);
@@ -256,7 +256,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, (NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-				NetworkView.Instance().openInBrowser(
+				Util.openInBrowser(
 					activity,
 					((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink()
 				);
