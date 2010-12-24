@@ -70,7 +70,12 @@ public final class ZLPhysicalFile extends ZLFile {
 
 	@Override
 	public ZLFile getParent() {
-		return isDirectory() ? null : new ZLPhysicalFile(myFile.getParent());
+		if (isDirectory()){
+			String path = getPath();
+			path = path.substring(0, path.lastIndexOf("/"));
+			return ZLFile.createFileByPath(path);
+		}
+		return new ZLPhysicalFile(myFile.getParent());
 	}
 
 	@Override
