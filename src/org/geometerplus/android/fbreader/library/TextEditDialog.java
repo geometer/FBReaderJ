@@ -93,7 +93,18 @@ public class TextEditDialog extends Dialog{
 	protected void okAction()  {
 		dismiss();
 	}
+	
 }
+
+class ToastMaker{
+	private static ZLResource myResource = ZLResource.resource("libraryView");
+
+	public static void MakeToast(Context context, String messageKey){
+		Toast.makeText(context,	myResource.getResource(messageKey).getValue(),
+				Toast.LENGTH_SHORT).show();
+	}
+}
+
 
 class RenameDialog extends TextEditDialog{
 	private ZLFile myFile;
@@ -132,25 +143,22 @@ class RenameDialog extends TextEditDialog{
 		}
 		if (!myFile.isDirectory())
 			newName += "." + myFile.getExtension();
-		Log.v(FileManager.LOG, "step 4");
 		if (newName.startsWith(".")){
-			Toast.makeText(myContext, 
-					myResource.getResource("messFileIncorrect").getValue(),
-					Toast.LENGTH_SHORT).show();
-		}
-		else if (consistInParent(myFile, newName)){
-			myFile.getPhysicalFile().rename(newName);
-			((Activity) myContext).startActivityForResult(
-					new Intent(myContext, FileManager.class)
-						.putExtra(FileManager.FILE_MANAGER_PATH, myFile.getParent().getPath())
-						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-					FileManager.CHILD_LIST_REQUEST
-			);
-			dismiss();
+			ToastMaker.MakeToast(myContext, "messFileIncorrect");
+		} else if (consistInParent(myFile, newName)){
+			if(myFile.getPhysicalFile().rename(newName)){
+				((Activity) myContext).startActivityForResult(
+						new Intent(myContext, FileManager.class)
+							.putExtra(FileManager.FILE_MANAGER_PATH, myFile.getParent().getPath())
+							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+						FileManager.CHILD_LIST_REQUEST
+				);
+				dismiss();
+			} else {
+				ToastMaker.MakeToast(myContext, "messRenameFailed");
+			}
 		}else{
-			Toast.makeText(myContext, 
-					myResource.getResource("messFileExists").getValue(),
-					Toast.LENGTH_SHORT).show();
+			ToastMaker.MakeToast(myContext, "messFileExists");
 		}
 	}
 	
@@ -203,6 +211,7 @@ class MkDirDialog extends TextEditDialog{
 			dismiss();
 			return;
 		}else if (!file.isDirectory()){
+			
 			Toast.makeText(myContext, 
 					myResource.getResource("messNotDir").getValue(),
 					Toast.LENGTH_SHORT).show();
@@ -221,9 +230,7 @@ class MkDirDialog extends TextEditDialog{
 			);
 			dismiss();
 		}else{
-			Toast.makeText(myContext, 
-					myResource.getResource("messFileExists").getValue(),
-					Toast.LENGTH_SHORT).show();
+			ToastMaker.MakeToast(myContext, "messFileExists");
 		}
 	}
 	

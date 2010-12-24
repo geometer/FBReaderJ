@@ -71,7 +71,7 @@ public final class FileManager extends BaseActivity {
 		if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
-			addItem("/", "fileTreeRoot");
+//			addItem("/", "fileTreeRoot");	for alex version
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
 			setTitle(myPath);
@@ -146,7 +146,6 @@ public final class FileManager extends BaseActivity {
 				deleteFileItem(fileItem);
 				return true;
 		}
-	
 		return super.onContextItemSelected(item);
 	}
 
