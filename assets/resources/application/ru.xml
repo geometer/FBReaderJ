@@ -41,6 +41,19 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
+		
+		<node name="renameFile" value="Переименовать файл"/>
+		<node name="moveFile" value="Переместить файл"/>
+		<node name="deleteFile" value="Удалить файл"/>
+		<node name="renameDir" value="Переименовать директорию"/>
+		<node name="deleteDir" value="Удалить директорию"/>
+		<node name="newDirectory" value="Новая папка"/>
+		
+		<node name="messFileExists" value="Такой файл уже существует"/>
+		<node name="messFileIncorrect" value="Некорректное имя файла"/>	
+		<node name="messFileMoved" value="Файл перемещен"/>
+		<node name="messNotDir" value="Это не директория"/>
+		<node name="messRenameFailed" value="Переименование файла не выполнено"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
@@ -484,6 +497,9 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Файл книги будет удален необратимо. Продолжать?"/>
+		</node>
+		<node name="deleteFileBox">
+			<node name="message" value="Файл будет удален необратимо. Продолжать?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл уже есть на устройстве. Загрузить заново?"/>
