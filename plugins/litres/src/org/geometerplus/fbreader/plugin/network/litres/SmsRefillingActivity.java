@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.plugin.network.litres;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
@@ -56,35 +57,6 @@ public class SmsRefillingActivity extends Activity {
 		setContentView(R.layout.sms_dialog);
 		setTitle(myResource.getResource("title").getValue());
 
-		final ListView listView = (ListView)findViewById(R.id.sms_list);
-		// TODO: add list items
-		final TelephonyManager manager = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
-		if (manager != null) {
-			final String operator = manager.getNetworkOperator();
-			// TODO: compare with SIM operator
-			if (operator.length() > 3) {
-				String url = "http://data.fbreader.org/catalogs/litres/sms/smsinfo.php";
-				url = ZLNetworkUtil.appendParameter(url, "mcc", operator.substring(0, 3));
-				url = ZLNetworkUtil.appendParameter(url, "mnc", operator.substring(3));
-				final String name = manager.getNetworkOperatorName();
-				if (name != null) {
-					url = ZLNetworkUtil.appendParameter(url, "name", name);
-				}
-				try {
-					ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
-						public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-							// TODO: implement
-							new SmsInfoXMLReader().read(inputStream);
-						}
-					});
-				} catch (ZLNetworkException e) {
-					// TODO: implement
-				}
-				System.err.println(manager.getSimOperator());
-				System.err.println(manager.getSimOperatorName());
-			}
-		}
-
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
 		final Button okButton = findButton(R.id.sms_ok_button);
@@ -102,15 +74,75 @@ public class SmsRefillingActivity extends Activity {
 			}
 		});
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		final ListView listView = (ListView)findViewById(R.id.sms_list);
+		// TODO: add list items
+		final TelephonyManager manager = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
+		if (manager != null) {
+			final String operator = manager.getNetworkOperator();
+			// TODO: compare with SIM operator
+			// TODO: Error if there is no operator
+			if (operator != null && operator.length() > 3) {
+				String url = "http://data.fbreader.org/catalogs/litres/sms/smsinfo.php";
+				url = ZLNetworkUtil.appendParameter(url, "mcc", operator.substring(0, 3));
+				url = ZLNetworkUtil.appendParameter(url, "mnc", operator.substring(3));
+				final String name = manager.getNetworkOperatorName();
+				if (name != null) {
+					url = ZLNetworkUtil.appendParameter(url, "name", name);
+				}
+				try {
+					ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
+						public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+							// TODO: implement
+							final SmsInfoXMLReader reader = new SmsInfoXMLReader();
+							reader.read(inputStream);
+						}
+					});
+				} catch (ZLNetworkException e) {
+					// TODO: implement
+				}
+				System.err.println(manager.getSimOperator());
+				System.err.println(manager.getSimOperatorName());
+			}
+		}
+	}
+}
+
+class SmsInfo {
+	final String PhoneNumber;
+	final String Text;
+	final String Sum;
+	final String Cost;
+
+	SmsInfo(String phoneNumber, String text, String sum, String cost) {
+		PhoneNumber = phoneNumber;
+		Text = text;
+		Sum = sum;
+		Cost = cost;
+	}
 }
 
 class SmsInfoXMLReader extends ZLXMLReaderAdapter {
+	private final String myUserId = "0001";
+
+	final ArrayList<SmsInfo> Infos = new ArrayList<SmsInfo>();
+	String ErrorMessage;
+
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if ("info".equals(tag)) {
-			System.err.println("INFO");
+			final SmsInfo info = new SmsInfo(
+				attributes.getValue("phoneNumber"),
+				attributes.getValue("smsPrefix") + " " + myUserId,
+				attributes.getValue("sum"),
+				attributes.getValue("cost")
+			);
 		} else if ("error".equals(tag)) {
-			System.err.println("ERROR: " + attributes.getValue("text"));
+			ErrorMessage = attributes.getValue("text");
 		}
 		return false;
 	}
