@@ -52,9 +52,6 @@ public class LitResRegisterUserXMLReader extends LitResAuthenticationXMLReader {
 			} else if ("5".equals(error)) {
 				setErrorMessage(myResource.getResource("tooManyRegistrations").getValue());
 			} else if ("6".equals(error)) {
-				System.err.println("emailAlreadyTaken");
-				System.err.println(myResource.getResource("emailAlreadyTaken"));
-				System.err.println(myResource.getResource("emailAlreadyTaken").getValue());
 				setErrorMessage(myResource.getResource("emailAlreadyTaken").getValue());
 			} else {
 				final String comment = attributes.getValue("coment");

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:paddingLeft="5dip"
+	android:orientation="horizontal"
+	android:gravity="top|left"
+>
+	<TextView
+		android:id="@+id/sms_info_sum"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+	/>
+	<TextView
+		android:id="@+id/sms_info_cost"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+	/>
+	<RadioButton
+		android:id="@+id/sms_info_radio_button"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+	/>
+</LinearLayout>

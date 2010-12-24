@@ -89,6 +89,16 @@ abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
+	static void runSmsDialog(Activity activity, INetworkLink link) {
+		try {
+			activity.startActivity(new Intent(
+				SMS_REFILLING_ACTION,
+				Uri.parse(link.getLink(INetworkLink.URL_MAIN))
+			));
+		} catch (ActivityNotFoundException e) {
+		}
+	}
+
 	static boolean isBrowserAccountRefillingSupported(Activity activity, INetworkLink link) {
 		return link.getLink(INetworkLink.URL_REFILL_ACCOUNT) != null;
 	}
