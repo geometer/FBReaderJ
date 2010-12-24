@@ -37,12 +37,11 @@ public class FileUtil {
 		ZLFile.createFileByPath(src).getPhysicalFile().delete();
 	}
 	
-	public boolean contain(String fileName, ZLFile parent){
-		return true;
-//		for(ZLFile f : file.children()){
-//			if (f.getShortName().equals(newDir))
-//				return false;
-//		}
-//		return true;
+	public static boolean contain(String fileName, ZLFile parent){
+		for(ZLFile f : parent.children()){
+			if (f.getShortName().equals(fileName))
+				return true;
+		}
+		return false;
 	}
 }

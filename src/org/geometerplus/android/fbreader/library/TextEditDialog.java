@@ -26,7 +26,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -114,7 +113,7 @@ class RenameDialog extends TextEditDialog{
 	
 	RenameDialog(Context context, ZLFile file) {
 		super(context,
-				myResource.getResource("renameFile").getValue(),
+				myResource.getResource("rename").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("rename").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue()
 				);
@@ -145,7 +144,7 @@ class RenameDialog extends TextEditDialog{
 			newName += "." + myFile.getExtension();
 		if (newName.startsWith(".")){
 			ToastMaker.MakeToast(myContext, "messFileIncorrect");
-		} else if (consistInParent(myFile, newName)){
+		} else if (!FileUtil.contain(newName, myFile.getParent())){
 			if(myFile.getPhysicalFile().rename(newName)){
 				((Activity) myContext).startActivityForResult(
 						new Intent(myContext, FileManager.class)
@@ -160,23 +159,6 @@ class RenameDialog extends TextEditDialog{
 		}else{
 			ToastMaker.MakeToast(myContext, "messFileExists");
 		}
-	}
-	
-	private boolean consistInParent(ZLFile file, String newName){
-		ZLFile parent;
-		if (file.isDirectory()){					// FIXME  ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception. see TODO.fileManager
-			String path = file.getPath();
-			path = path.substring(0, path.lastIndexOf("/"));
-			parent = ZLFile.createFileByPath(path);
-			Log.v(FileManager.LOG, "parent: " + path);
-		}else{
-			parent = file.getParent();
-		}
-		for(ZLFile f : parent.children()){
-			if (f.getShortName().equals(newName))
-				return false;
-		}
-		return true;
 	}
 }
 
@@ -211,15 +193,12 @@ class MkDirDialog extends TextEditDialog{
 			dismiss();
 			return;
 		}else if (!file.isDirectory()){
-			
-			Toast.makeText(myContext, 
-					myResource.getResource("messDirectoryIntoArchive").getValue(),
-					Toast.LENGTH_SHORT).show();
+			ToastMaker.MakeToast(myContext, "messDirectoryIntoArchive");
 			dismiss();
 			return;
 		}
 			
-		if (consistInParent(file, newName)){
+		if (!FileUtil.contain(newName, file)){
 			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
 			((Activity) myContext).startActivityForResult(
 					new Intent(myContext, FileManager.class)
@@ -232,13 +211,5 @@ class MkDirDialog extends TextEditDialog{
 		}else{
 			ToastMaker.MakeToast(myContext, "messFileExists");
 		}
-	}
-	
-	private boolean consistInParent(ZLFile file, String newDir){
-		for(ZLFile f : file.children()){
-			if (f.getShortName().equals(newDir))
-				return false;
-		}
-		return true;
 	}
 }
