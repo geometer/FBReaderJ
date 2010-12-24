@@ -114,7 +114,7 @@ class RefillAccountActions extends NetworkTreeActions {
 	private Runnable smsRefillRunnable(final NetworkBaseActivity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
-				// TODO: implement
+				Util.runSmsDialog(activity, link);
 			}
 		};
 	}

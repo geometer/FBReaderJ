@@ -19,14 +19,23 @@
 
 package org.geometerplus.fbreader.plugin.network.litres;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.telephony.TelephonyManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class SmsRefillingActivity extends Activity {
 	private ZLResource myResource;
@@ -39,14 +48,42 @@ public class SmsRefillingActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		System.err.println("smsDialog");
+
 		ZLResourceFile.init(getApplicationContext());
 		myResource = ZLResource.resource("smsDialog");
 
 		setContentView(R.layout.sms_dialog);
 		setTitle(myResource.getResource("title").getValue());
 
-		final ListView listView = (ListView)findViewById(R.layout.sms_list);
+		final ListView listView = (ListView)findViewById(R.id.sms_list);
 		// TODO: add list items
+		final TelephonyManager manager = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
+		if (manager != null) {
+			final String operator = manager.getNetworkOperator();
+			// TODO: compare with SIM operator
+			if (operator.length() > 3) {
+				String url = "http://data.fbreader.org/catalogs/litres/sms/smsinfo.php";
+				url = ZLNetworkUtil.appendParameter(url, "mcc", operator.substring(0, 3));
+				url = ZLNetworkUtil.appendParameter(url, "mnc", operator.substring(3));
+				final String name = manager.getNetworkOperatorName();
+				if (name != null) {
+					url = ZLNetworkUtil.appendParameter(url, "name", name);
+				}
+				try {
+					ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
+						public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+							// TODO: implement
+							new SmsInfoXMLReader().read(inputStream);
+						}
+					});
+				} catch (ZLNetworkException e) {
+					// TODO: implement
+				}
+				System.err.println(manager.getSimOperator());
+				System.err.println(manager.getSimOperatorName());
+			}
+		}
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
@@ -64,5 +101,17 @@ public class SmsRefillingActivity extends Activity {
 				finish();
 			}
 		});
+	}
+}
+
+class SmsInfoXMLReader extends ZLXMLReaderAdapter {
+	@Override
+	public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		if ("info".equals(tag)) {
+			System.err.println("INFO");
+		} else if ("error".equals(tag)) {
+			System.err.println("ERROR: " + attributes.getValue("text"));
+		}
+		return false;
 	}
 }

@@ -61,7 +61,7 @@
 		<node name="signOut" value="Odhlásit (%s)"/>
 		<node name="refillAccount" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="refillTitle" value="Doplnit účet"/>
-		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Aktuálně: %s"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje" />

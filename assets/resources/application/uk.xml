@@ -61,7 +61,7 @@
 		<node name="signOut" value="Вийти (%s)"/>
 		<node name="refillAccount" value="Поповнити рахунок (поточний рахунок: %s)" />
 		<node name="refillTitle" value="Поповнити рахунок"/>
-		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Поточний рахунок: %s"/>
 		<node name="alreadyDownloading" value="Книжка завантажується" />

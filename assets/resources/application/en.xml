@@ -60,7 +60,7 @@
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="refillAccount" value="Refill account (currently: %s)"/>
 		<node name="refillTitle" value="Refill account"/>
-		<node name="refillViaSms" value="Send an SMS"/>
+		<node name="refillViaSms" value="Text messages"/>
 		<node name="refillViaBrowser" value="Open page in browser"/>
 		<node name="refillSummary" value="Currently: %s"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />

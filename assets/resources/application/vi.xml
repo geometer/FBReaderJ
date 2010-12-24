@@ -61,7 +61,7 @@
 		<node name="signOut" value="Đăng xuất (%s)"/>
 		<node name="refillAccount" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
 		<node name="refillTitle" toBeTranslated="true" value="Refill account"/>
-		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" toBeTranslated="true" value="Currently: %s"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về" />

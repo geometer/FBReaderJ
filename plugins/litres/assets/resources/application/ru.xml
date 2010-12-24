@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+	<node name="smsDialog">
+		<node name="title" value="Пополнить счет с помощью SMS" />
+	</node>
 	<node name="userRegistration">
 		<node name="title" value="Новый пользователь" />
 		<node name="login" value="Имя пользователя" />

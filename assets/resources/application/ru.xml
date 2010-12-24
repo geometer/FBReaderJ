@@ -60,8 +60,8 @@
 		<node name="signOut" value="Выйти (%s)"/>
 		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
 		<node name="refillTitle" value="Пополнить счёт"/>
-		<node name="refillViaSms" value="С помощью SMS"/>
-		<node name="refillViaBrowser" value="В окне браузера"/>
+		<node name="refillViaSms" value="Варианты SMS"/>
+		<node name="refillViaBrowser" value="Окно браузера"/>
 		<node name="refillSummary" value="Текущий счёт: %s"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
