@@ -78,7 +78,7 @@ public final class FileManager extends BaseActivity {
 			startUpdate();
 		}
 		if (myInsertPath != null)
-			setTitle(myResource.getResource("moveFile").getValue());
+			setTitle(myResource.getResource("moveTitle").getValue());
 
 		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
@@ -313,11 +313,12 @@ public final class FileManager extends BaseActivity {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final FileItem item = getItem(position);
 
+			menu.setHeaderTitle(item.getName());
 			if (item.getFile().isDirectory()){
 				if (ZLFile.createFileByPath(myPath).isArchive())
 					return;
-				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("renameDir").getValue());
-				menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("deleteDir").getValue());
+				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("rename").getValue());
+				menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("delete").getValue());
 			}else{
 				final Book book = item.getBook();
 				if (book != null) {
@@ -325,10 +326,10 @@ public final class FileManager extends BaseActivity {
 				}
 				if (ZLFile.createFileByPath(myPath).isArchive())
 					return;
-				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("renameFile").getValue());
-				menu.add(0, MOVE_FILE_ITEM_ID, 0, myResource.getResource("moveFile").getValue());
+				menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("rename").getValue());
+				menu.add(0, MOVE_FILE_ITEM_ID, 0, myResource.getResource("move").getValue());
 				if (book == null) {
-					menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("deleteFile").getValue());
+					menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("delete").getValue());
 				}
 			}
 		}
@@ -467,17 +468,17 @@ public final class FileManager extends BaseActivity {
 					break;
 				}
 				if (file.isDirectory() || file.isArchive() ||
-					PluginCollection.Instance().getPlugin(file) != null) {
-					final FileListAdapter adapter = (FileListAdapter)getListAdapter();
-					adapter.add(new FileItem(file));
-//					adapter.notifyDataSetChanged();	// TODO question!
-					runOnUiThread(new Runnable() {
-						public void run() {
-							adapter.notifyDataSetChanged();
-						}
-					});
+						PluginCollection.Instance().getPlugin(file) != null) {
+						final FileListAdapter adapter = (FileListAdapter)getListAdapter();
+						adapter.add(new FileItem(file));
+//							adapter.notifyDataSetChanged();	// TODO question!
+						runOnUiThread(new Runnable() {
+							public void run() {
+								adapter.notifyDataSetChanged();
+							}
+						});
+					}
 				}
-			}
 		}
 	}
 

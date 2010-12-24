@@ -46,17 +46,18 @@
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
 		
-		<node name="renameFile" value="Rename file"/>
-		<node name="moveFile" value="Move file"/>
-		<node name="deleteFile" value="Delete file"/>
-		<node name="renameDir" value="Rename directory"/>
-		<node name="deleteDir" value="Delete directory"/>
+		
+		<node name="rename" value="Rename"/>
+		<node name="move" value="Move"/>
+		<node name="moveTitle" value="Move file"/>
+		<node name="delete" value="Delete"/>
 		<node name="newDirectory" value="New directory"/>
 		
 		<node name="messFileExists" value="File already exists"/>
 		<node name="messFileIncorrect" value="Incorrect file name!"/>	
 		<node name="messFileMoved" value="File moved"/>
-		<node name="messNotDir" value="This is not a directory."/>
+		<node name="messDirectoryIntoArchive" value="Cannot create a directory inside an archive"/>
+		<node name="messInsertIntoArchive" value="Cannot insert a file into archive"/>
 		<node name="messRenameFailed" value="Rename the file failed"/>
 	</node>
 	<node name="networkView">

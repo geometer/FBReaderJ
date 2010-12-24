@@ -35,6 +35,10 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
+			<node name="mkdir" value="Создать папку"/>
+			<node name="sorting" value="Отсортировать"/>
+			<node name="view" value="Вид"/>
+			<node name="insert" value="Вставить"/>
 		</node>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="showBookInfo" value="Информация о книге"/>
@@ -42,17 +46,17 @@
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 		
-		<node name="renameFile" value="Переименовать файл"/>
-		<node name="moveFile" value="Переместить файл"/>
-		<node name="deleteFile" value="Удалить файл"/>
-		<node name="renameDir" value="Переименовать директорию"/>
-		<node name="deleteDir" value="Удалить директорию"/>
+		<node name="rename" value="Переименовать"/>
+		<node name="move" value="Переместить"/>
+		<node name="moveTitle" value="Перемещение файла"/>
+		<node name="delete" value="Удалить"/>
 		<node name="newDirectory" value="Новая папка"/>
 		
-		<node name="messFileExists" value="Такой файл уже существует"/>
+		<node name="messFileExists" value="Файл с таким именем уже существует"/>
 		<node name="messFileIncorrect" value="Некорректное имя файла"/>	
 		<node name="messFileMoved" value="Файл перемещен"/>
-		<node name="messNotDir" value="Это не директория"/>
+		<node name="messDirectoryIntoArchive" value="Невозможно создать папку внутри архива"/>
+		<node name="messInsertIntoArchive" value="Невозможно вставить файл в архив"/>
 		<node name="messRenameFailed" value="Переименование файла не выполнено"/>
 	</node>
 	<node name="networkView">

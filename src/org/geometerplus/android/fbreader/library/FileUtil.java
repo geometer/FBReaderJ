@@ -28,7 +28,7 @@ public class FileUtil {
 			ic.close();
 			oc.close();
 		}else{
-			throw new IOException(myResource.getResource("messNotDir").getValue());
+			throw new IOException(myResource.getResource("messInsertIntoArchive").getValue());
 		}
 	}
 	

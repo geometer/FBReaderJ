@@ -213,7 +213,7 @@ class MkDirDialog extends TextEditDialog{
 		}else if (!file.isDirectory()){
 			
 			Toast.makeText(myContext, 
-					myResource.getResource("messNotDir").getValue(),
+					myResource.getResource("messDirectoryIntoArchive").getValue(),
 					Toast.LENGTH_SHORT).show();
 			dismiss();
 			return;
