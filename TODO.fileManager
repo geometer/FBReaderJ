@@ -60,7 +60,7 @@ VR:
 	* Параметры вида сохраняются между запусками
 
 	DONE ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception.
-	* ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
+	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
 	* в классе TextEditDialog разобраться с layout'ами
 
 NP:

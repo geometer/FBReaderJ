@@ -55,6 +55,9 @@ public final class ZLPhysicalFile extends ZLFile {
 	}
 
 	public boolean delete() {
+		if (isDirectory()){
+			return deleteDir(myFile);
+		}
 		return myFile.delete();
 	}
 
@@ -107,4 +110,16 @@ public final class ZLPhysicalFile extends ZLFile {
 		}
 		return entries;
 	}
+	
+	public static boolean deleteDir(File dir){
+		if (dir.isDirectory()) {
+			for (File file : dir.listFiles()){
+				boolean success = deleteDir(file);
+				if (!success) {
+					return false;
+				}
+			}
+		}  
+		return dir.delete();
+	} 
 }
