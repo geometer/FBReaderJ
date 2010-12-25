@@ -111,8 +111,11 @@ public class SmsRefillingActivity extends Activity {
 
 	private void setupListView() {
 		final ListView listView = (ListView)findViewById(R.id.sms_list);
+		final TextView errorPane = (TextView)findViewById(R.id.sms_error);
+
 		final TelephonyManager manager = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
 		if (manager != null) {
+			//final String operator = manager.getNetworkOperator();
 			final String operator = manager.getNetworkOperator();
 			// TODO: compare with SIM operator
 			// TODO: Error if there is no operator
@@ -129,8 +132,13 @@ public class SmsRefillingActivity extends Activity {
 						public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 							final SmsInfoXMLReader reader = new SmsInfoXMLReader();
 							reader.read(inputStream);
-							listView.setAdapter(new SmsListAdapter(reader.Infos));
-							listView.invalidateViews();
+							if (reader.Infos.size() > 0) {
+								listView.setAdapter(new SmsListAdapter(reader.Infos));
+								errorPane.setVisibility(View.GONE);
+							} else {
+								errorPane.setText(reader.ErrorMessage);
+								listView.setVisibility(View.GONE);
+							}
 						}
 					});
 				} catch (ZLNetworkException e) {

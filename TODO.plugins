@@ -3,11 +3,9 @@
 DONE Тестирование наличия функций без запуска тестовой Actvity
 DONE ускорить процесс появления на экране SMS activity
 * вызывать из "глобального меню" то же, что из контекстного меню для пункта "Refill account"
-* сообщение про "нет информации об sms для вашего оператора"
-* Авторегистрация
+DONE сообщение про "нет информации об sms для вашего оператора"
+* обработка ошибок при получении информации с data.fbreader.org
 * Пополнение счета через sms
-* Автопокупка
-* 'Refill account' item should be visible iff user is logged in
 * What happens if user has no enough money to buy a book?
 * SMS account refilling
 * не задавать вопрос об установке плагина слишком часто (<= раза в неделю?)
@@ -21,6 +19,9 @@ DONE ускорить процесс появления на экране SMS ac
 * resources synchronization
 
 After 0.99:
+DELAYED 'Refill account' item should be visible iff user is logged in
+* Авторегистрация
+* Автопокупка
 * 'My Basket' item
 * 'Order all the books in basket' action
 * Auto-calculation of SMS set for given sum

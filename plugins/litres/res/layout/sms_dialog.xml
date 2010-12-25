@@ -39,4 +39,15 @@
     android:layout_marginBottom="4dip"
 		android:layout_above="@id/sms_buttons"
 	/>
+	<TextView
+		android:id="@+id/sms_error"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:layout_marginBottom="4dip"
+		android:layout_above="@id/sms_buttons"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+	/>
 </RelativeLayout>

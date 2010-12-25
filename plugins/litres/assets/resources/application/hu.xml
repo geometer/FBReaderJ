@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Hungarian FBReaderJ resources, by L. B. Szabó. Based on FBReader translation by Sándor Gábor -->
 <resources>
+	<node name="smsDialog">
+		<node name="title" value="Refill account via SMS" toBeTranslated="true" />
+		<node name="youPay" value="You pay %s" toBeTranslated="true" />
+	</node>
 	<node name="userRegistration">
 		<node name="title" value="Felhasználó létrehozása" />
 		<node name="login" value="Felhasználónév" />
@@ -20,6 +24,15 @@
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Fiók létrehozása. Kérjük, várjon..." />
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="sendSms" value="Send text" toBeTranslated="true" />
+		</node>
+		<node name="sendSmsDialog">
+			<node name="title" value="Send text" toBeTranslated="true" />
+			<node name="message" value="Text message that costs %s0 will be send. %s1 will be added to your account. Your text will be processed in several minutes." toBeTranslated="true" />
 		</node>
 	</node>
 </resources>
