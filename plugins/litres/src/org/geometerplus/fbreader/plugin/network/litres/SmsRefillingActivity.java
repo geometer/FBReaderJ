@@ -75,9 +75,11 @@ public class SmsRefillingActivity extends Activity {
 					.setMessage(resource.getResource("message").getValue()
 						.replace("%s0", mySelectedInfo.Cost)
 						.replace("%s1", mySelectedInfo.Sum)
+						.replace("..", ".") // a hack to avoid strings like "100.00 р.."
+											// at end of the sentence
 					)
 					.setPositiveButton(
-						buttonResource.getResource("ok").getValue(),
+						buttonResource.getResource("sendSms").getValue(),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO: send SMS
