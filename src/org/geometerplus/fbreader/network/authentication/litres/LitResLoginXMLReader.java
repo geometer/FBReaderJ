@@ -30,6 +30,7 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 
 	public String FirstName;
 	public String LastName;
+	public String UserId;
 	public String Sid;
 
 	public LitResLoginXMLReader(String hostName) {
@@ -44,6 +45,7 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			FirstName = attributes.getValue("first-name");
 			LastName = attributes.getValue("first-name");
+			UserId = attributes.getValue("user-id");
 			Sid = attributes.getValue("sid");
 		} else {
 			setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));

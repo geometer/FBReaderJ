@@ -110,7 +110,7 @@ public abstract class NetworkAuthenticationManager {
 		return null;
 	}
 
-	public abstract void initUser(String userName, String sid);
+	public abstract void initUser(String userName, String sid) throws ZLNetworkException;
 
 	/*
 	 * Password Recovery
