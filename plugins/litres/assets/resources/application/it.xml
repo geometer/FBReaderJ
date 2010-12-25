@@ -4,6 +4,8 @@
 	<node name="smsDialog">
 		<node name="title" value="Refill account via SMS" toBeTranslated="true" />
 		<node name="youPay" value="You pay %s" toBeTranslated="true" />
+		<node name="noPhoneInfo" value="Cannot obtain phone info for your device" toBeTranslated="true" />
+		<node name="noCellularNetwork" value="Cellular network is not available" toBeTranslated="true" />
 	</node>
 	<node name="userRegistration">
 		<node name="title" value="Utente Registrato" />

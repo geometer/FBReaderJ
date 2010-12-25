@@ -3,6 +3,8 @@
 	<node name="smsDialog">
 		<node name="title" value="Пополнить счет с помощью SMS" />
 		<node name="youPay" value="Вы платите %s" />
+		<node name="noPhoneInfo" value="Не удается получить информацию о телефоне" />
+		<node name="noCellularNetwork" value="Сотовая сеть недоступна" />
 	</node>
 	<node name="userRegistration">
 		<node name="title" value="Новый пользователь" />
