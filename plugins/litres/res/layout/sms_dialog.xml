@@ -4,15 +4,8 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 >
-	<ListView
-		android:id="@+id/sms_list"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_alignParentTop="true"
-    android:layout_marginBottom="4dip"
-	>
-	</ListView>
 	<LinearLayout
+		android:id="@+id/sms_buttons"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:paddingLeft="2dip"
@@ -36,4 +29,14 @@
 			android:layout_weight="1"
 		/>
 	</LinearLayout>
+	<ListView
+		android:id="@+id/sms_list"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:layout_marginBottom="4dip"
+		android:layout_above="@id/sms_buttons"
+	/>
 </RelativeLayout>

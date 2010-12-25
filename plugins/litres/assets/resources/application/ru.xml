@@ -2,6 +2,7 @@
 <resources>
 	<node name="smsDialog">
 		<node name="title" value="Пополнить счет с помощью SMS" />
+		<node name="youPay" value="Вы платите %s" />
 	</node>
 	<node name="userRegistration">
 		<node name="title" value="Новый пользователь" />
@@ -22,6 +23,15 @@
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Регистрируем пользователя. Подождите, пожалуйста..." />
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="sendSms" value="Отправить"/>
+		</node>
+		<node name="sendSmsDialog">
+			<node name="title" value="Отправка SMS"/>
+			<node name="message" value="Сообщение, которое вы хотите отправить, стоит %s0. На ваш счет будет зачислено %s1. Обработка сообщения займет несколько минут."/>
 		</node>
 	</node>
 </resources>

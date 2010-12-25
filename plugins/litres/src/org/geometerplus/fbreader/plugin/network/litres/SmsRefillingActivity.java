@@ -19,16 +19,18 @@
 
 package org.geometerplus.fbreader.plugin.network.litres;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
+import android.content.DialogInterface;
+import android.view.*;
+import android.widget.*;
 import android.telephony.TelephonyManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -40,6 +42,8 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class SmsRefillingActivity extends Activity {
 	private ZLResource myResource;
+	private Button myOkButton;
+	private SmsInfo mySelectedInfo;
 
 	private Button findButton(int resourceId) {
 		return (Button)findViewById(resourceId);
@@ -59,14 +63,35 @@ public class SmsRefillingActivity extends Activity {
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		final Button okButton = findButton(R.id.sms_ok_button);
-		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new View.OnClickListener() {
+		myOkButton = findButton(R.id.sms_ok_button);
+		myOkButton.setText(buttonResource.getResource("sendSms").getValue());
+		myOkButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				final ZLResource dialogResource = ZLResource.resource("dialog");
+				final ZLResource resource = dialogResource.getResource("sendSmsDialog");
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(SmsRefillingActivity.this)
+					.setTitle(resource.getResource("title").getValue())
+					.setMessage(resource.getResource("message").getValue()
+						.replace("%s0", mySelectedInfo.Cost)
+						.replace("%s1", mySelectedInfo.Sum)
+					)
+					.setPositiveButton(
+						buttonResource.getResource("ok").getValue(),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO: send SMS
+								finish();
+							}
+						}
+					)
+					.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
+					.create().show();
 			}
 		});
-		final Button cancelButton = findButton(R.id.sms_cancel_button);
+		myOkButton.setEnabled(false);
 
+		final Button cancelButton = findButton(R.id.sms_cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -79,8 +104,11 @@ public class SmsRefillingActivity extends Activity {
 	public void onStart() {
 		super.onStart();
 
+		setupListView();
+	}
+
+	private void setupListView() {
 		final ListView listView = (ListView)findViewById(R.id.sms_list);
-		// TODO: add list items
 		final TelephonyManager manager = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
 		if (manager != null) {
 			final String operator = manager.getNetworkOperator();
@@ -97,9 +125,10 @@ public class SmsRefillingActivity extends Activity {
 				try {
 					ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
 						public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-							// TODO: implement
 							final SmsInfoXMLReader reader = new SmsInfoXMLReader();
 							reader.read(inputStream);
+							listView.setAdapter(new SmsListAdapter(reader.Infos));
+							listView.invalidateViews();
 						}
 					});
 				} catch (ZLNetworkException e) {
@@ -107,6 +136,65 @@ public class SmsRefillingActivity extends Activity {
 				}
 				System.err.println(manager.getSimOperator());
 				System.err.println(manager.getSimOperatorName());
+			}
+		}
+	}
+
+	private class SmsListAdapter extends BaseAdapter implements RadioButton.OnCheckedChangeListener {
+		private final ArrayList<SmsInfo> myInfos;
+		private final HashMap<RadioButton,SmsInfo> myButtons = new HashMap<RadioButton,SmsInfo>();
+
+		SmsListAdapter(ArrayList<SmsInfo> infos) {
+			myInfos = infos;
+		}
+
+		@Override
+		public final int getCount() {
+			return myInfos.size();
+		}
+
+		@Override
+		public final SmsInfo getItem(int position) {
+			return myInfos.get(position);
+		}
+
+		@Override
+		public final long getItemId(int position) {
+			return position;
+		}
+
+		private View.OnClickListener myItemViewListener = new View.OnClickListener() {
+			public void onClick(View view) {
+				((RadioButton)view.findViewById(R.id.sms_info_button)).toggle();
+			}
+		};
+
+		@Override
+		public View getView(int position, View convertView, final ViewGroup parent) {
+			final View view = (convertView != null) ?  convertView :
+				LayoutInflater.from(parent.getContext()).inflate(R.layout.sms_info, parent, false);
+			final SmsInfo info = getItem(position);
+			((TextView)view.findViewById(R.id.sms_info_text)).setText(info.Sum);
+			((TextView)view.findViewById(R.id.sms_info_text2)).setText(
+				myResource.getResource("youPay").getValue().replace("%s", info.Cost)
+			);
+			final RadioButton button = (RadioButton)view.findViewById(R.id.sms_info_button);
+			myButtons.put(button, info);
+			button.setOnCheckedChangeListener(this);
+			button.setChecked(info == mySelectedInfo);
+			view.setOnClickListener(myItemViewListener);
+			return view;
+		}
+
+		public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+			if (isChecked) {
+				for (RadioButton b : myButtons.keySet()) {
+					if (b != button) {
+						b.setChecked(false);
+					}
+				}
+				mySelectedInfo = myButtons.get((RadioButton)button);
+				myOkButton.setEnabled(true);
 			}
 		}
 	}
@@ -135,12 +223,12 @@ class SmsInfoXMLReader extends ZLXMLReaderAdapter {
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if ("info".equals(tag)) {
-			final SmsInfo info = new SmsInfo(
+			Infos.add(new SmsInfo(
 				attributes.getValue("phoneNumber"),
 				attributes.getValue("smsPrefix") + " " + myUserId,
 				attributes.getValue("sum"),
 				attributes.getValue("cost")
-			);
+			));
 		} else if ("error".equals(tag)) {
 			ErrorMessage = attributes.getValue("text");
 		}

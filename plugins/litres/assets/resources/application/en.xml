@@ -2,6 +2,7 @@
 <resources>
 	<node name="smsDialog">
 		<node name="title" value="Refill account via SMS" />
+		<node name="youPay" value="You pay %s" />
 	</node>
 	<node name="userRegistration">
 		<node name="title" value="Register User" />
@@ -22,6 +23,15 @@
 		</node>
 		<node name="waitMessage">
 			<node name="registerUser" value="Registering new account. Please, wait..." />
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="sendSms" value="Send text"/>
+		</node>
+		<node name="sendSmsDialog">
+			<node name="title" value="Send text"/>
+			<node name="message" value="Text message that costs %s0 will be send. %s1 will be added to your account. Your text will be processed in several minutes."/>
 		</node>
 	</node>
 </resources>
