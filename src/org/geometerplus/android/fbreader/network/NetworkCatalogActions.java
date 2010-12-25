@@ -421,7 +421,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					.setPositiveButton(
 						buttonResource.getResource(positiveButtonKey).getValue(),
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								PackageUtil.installFromMarket(activity, plugin);
 							}
@@ -430,7 +429,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					.setNegativeButton(
 						buttonResource.getResource("skip").getValue(),
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								postRunnable.run();
 							}

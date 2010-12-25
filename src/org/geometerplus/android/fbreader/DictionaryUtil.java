@@ -57,7 +57,6 @@ abstract class DictionaryUtil {
 			.setPositiveButton(
 				buttonResource.getResource("install").getValue(),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						installDictionary(activity);
 					}
