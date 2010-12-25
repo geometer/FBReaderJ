@@ -21,8 +21,10 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
@@ -118,10 +120,6 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		};
 	}
 
-	private final String searchURL(String query) {
-		return getLink(URL_SEARCH).replace("%s", query);
-	}
-
 	@Override
 	public OPDSCatalogItem.State createOperationData(INetworkLink link,
 			NetworkOperationData.OnNewItemListener listener) {
@@ -129,13 +127,15 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		if (getLink(URL_SEARCH) == null) {
+		final String url = getLink(URL_SEARCH);
+		if (url == null) {
 			return null;
 		}
-		return createNetworkData(
-			searchURL(ZLNetworkUtil.htmlEncode(pattern)),
-			(OPDSCatalogItem.State) data
-		);
+		try {
+			pattern = URLEncoder.encode(pattern, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+		}
+		return createNetworkData(url.replace("%s", pattern), (OPDSCatalogItem.State)data);
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {

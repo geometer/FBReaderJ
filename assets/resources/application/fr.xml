@@ -64,7 +64,7 @@
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="refillTitle" value="Recréditer le compte"/>
-		<node name="refillViaSms" value="Send an SMS" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="refillSummary" value="Аctuellement : %s"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />

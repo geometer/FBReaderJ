@@ -86,7 +86,7 @@ class OpenSearchDescription {
 					return null;
 				}
 			} else if (name == "language") {
-				m.appendReplacement(query, ZLNetworkUtil.htmlEncode("*"));
+				m.appendReplacement(query, "*");
 			} else if (name == "inputEncoding" || name == "outputEncoding") {
 				m.appendReplacement(query, "UTF-8");
 			} else {

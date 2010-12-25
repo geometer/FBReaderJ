@@ -442,7 +442,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {
 		BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
 		if (reference != null) {
-			NetworkView.Instance().openInBrowser(activity, reference.URL);
+			Util.openInBrowser(activity, reference.URL);
 		}
 	}
 

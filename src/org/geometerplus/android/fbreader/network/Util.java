@@ -19,13 +19,17 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -87,7 +91,31 @@ abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
+	static void runSmsDialog(Activity activity, INetworkLink link) {
+		try {
+			final Intent intent = new Intent(
+				SMS_REFILLING_ACTION,
+				Uri.parse(link.getLink(INetworkLink.URL_MAIN))
+			);
+			final NetworkAuthenticationManager mgr = link.authenticationManager();
+			if (mgr != null) {
+				for (Map.Entry<String,String> entry : mgr.getSmsRefillingData().entrySet()) {
+					intent.putExtra(entry.getKey(), entry.getValue());
+				}
+			}
+			activity.startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+		}
+	}
+
 	static boolean isBrowserAccountRefillingSupported(Activity activity, INetworkLink link) {
 		return link.getLink(INetworkLink.URL_REFILL_ACCOUNT) != null;
+	}
+
+	static void openInBrowser(Context context, String url) {
+		if (url != null) {
+			url = NetworkLibrary.Instance().rewriteUrl(url, true);
+			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		}
 	}
 }

@@ -191,17 +191,6 @@ class NetworkView {
 		}
 	}
 
-	/*
-	 * Open Network URL in browser
-	 */
-
-	public void openInBrowser(Context context, String url) {
-		if (url != null) {
-			url = NetworkLibrary.Instance().rewriteUrl(url, true);
-			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-		}
-	}
-
 
 	/*
 	 * Notifying view's components from services

@@ -31,11 +31,11 @@ public abstract class PackageUtil {
 	}
 
 	private static Uri homeUri(String pkg) {
-		return Uri.parse("http://data.fbreader.org/packages/" + pkg + ".apk");
+		return Uri.parse("http://data.fbreader.org/android/packages/" + pkg + ".apk");
 	}
 
 	private static Uri homeUri(String pkg, String version) {
-		return Uri.parse("http://data.fbreader.org/packages/" + pkg + ".apk_" + version);
+		return Uri.parse("http://data.fbreader.org/android/packages/" + pkg + ".apk_" + version);
 	}
 
 	public static boolean isPluginInstalled(Activity activity, String pkg) {

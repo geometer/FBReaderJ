@@ -82,32 +82,52 @@ class RefillAccountActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+		final INetworkLink link = ((RefillAccountTree)tree).Link;
+		Runnable refillRunnable = null;
 		switch (actionCode) {
 			case REFILL_VIA_SMS_ITEM_ID:
-				//doRefill(activity, (RefillAccountTree) tree);
-				return true;
+				refillRunnable = smsRefillRunnable(activity, link);
+				break;
 			case REFILL_VIA_BROWSER_ITEM_ID:
-				doRefill(activity, (RefillAccountTree) tree);
-				return true;
+				refillRunnable = browserRefillRunnable(activity, link);
+				break;
 		}
-		return false;
+
+		if (refillRunnable == null) {
+			return false;
+		}
+		doRefill(activity, link, refillRunnable);
+		return true;
 	}
 
-	private void doRefill(final NetworkBaseActivity activity, final RefillAccountTree tree) {
-		final NetworkAuthenticationManager mgr = tree.Link.authenticationManager();
+	private Runnable browserRefillRunnable(final NetworkBaseActivity activity, final INetworkLink link) {
+		return new Runnable() {
+			public void run() {
+				Util.openInBrowser(
+					activity,
+					link.authenticationManager().refillAccountLink()
+				);
+			}
+		};
+	}
+
+	private Runnable smsRefillRunnable(final NetworkBaseActivity activity, final INetworkLink link) {
+		return new Runnable() {
+			public void run() {
+				Util.runSmsDialog(activity, link);
+			}
+		};
+	}
+
+	private void doRefill(final NetworkBaseActivity activity, final INetworkLink link, final Runnable refiller) {
+		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {
-			NetworkView.Instance().openInBrowser(
-				activity,
-				tree.Link.authenticationManager().refillAccountLink()
-			);
+			refiller.run();
 		} else {
-			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, tree.Link, new Runnable() {
+			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, link, new Runnable() {
 				public void run() {
 					if (mgr.mayBeAuthorised(false)) {
-						NetworkView.Instance().openInBrowser(
-							activity,
-							tree.Link.authenticationManager().refillAccountLink()
-						);
+						refiller.run();
 					}
 				}
 			});
