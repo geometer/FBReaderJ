@@ -138,6 +138,7 @@ public class SmsRefillingActivity extends Activity {
 							} else {
 								errorPane.setText(reader.ErrorMessage);
 								listView.setVisibility(View.GONE);
+								myOkButton.setVisibility(View.GONE);
 							}
 						}
 					});
