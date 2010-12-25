@@ -24,8 +24,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.android.util.PackageUtil;
-
 class SwitchTextViewModeAction extends FBAction {
 	private final FBReader myBaseActivity;
 	private final int myMode;

@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
 	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
