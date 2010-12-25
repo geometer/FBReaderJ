@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<node name="smsDialog">
-		<node name="title" value="Refill account via SMS" />
+		<node name="title" value="Refill account via text message" />
 		<node name="youPay" value="You pay %s" />
 		<node name="noPhoneInfo" value="Cannot obtain phone info for your device" />
 		<node name="noCellularNetwork" value="Cellular network is not available" />
+		<node name="youAreInRoaming" value="Text message account refilling is not available because your phone is in roaming mode" />
 	</node>
 	<node name="userRegistration">
 		<node name="title" value="Register User" />

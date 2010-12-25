@@ -17,6 +17,8 @@ DONE обработка ошибок при получении информац�
 * resources synchronization
 
 After 0.99:
+* password recovering
+* recover password if e-mail address is already in use
 DELAYED 'Refill account' item should be visible iff user is logged in
 * Авторегистрация
 * Автопокупка

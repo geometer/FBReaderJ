@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.authentication;
 
+import java.util.Map;
 import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -30,7 +31,6 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 
 
 public abstract class NetworkAuthenticationManager {
-
 	private static final HashMap<String, NetworkAuthenticationManager> ourManagers = new HashMap<String, NetworkAuthenticationManager>();
 
 	public static NetworkAuthenticationManager createManager(INetworkLink link, String sslCertificate, Class<? extends NetworkAuthenticationManager> managerClass) {
@@ -64,6 +64,7 @@ public abstract class NetworkAuthenticationManager {
 	public abstract void authorise(String password) throws ZLNetworkException;
 	public abstract void logOut();
 	public abstract BookReference downloadReference(NetworkBookItem book);
+	public abstract Map<String,String> getSmsRefillingData();
 
 
 	public final boolean mayBeAuthorised(boolean useNetwork) {

@@ -408,4 +408,11 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final LitResPasswordRecoveryXMLReader xmlReader =  new LitResPasswordRecoveryXMLReader(Link.getSiteName());
 		ZLNetworkManager.Instance().perform(new LitResNetworkRequest(url, SSLCertificate, xmlReader));
 	}
+
+	@Override
+	public Map<String,String> getSmsRefillingData() {
+		final HashMap<String,String> map = new HashMap<String,String>();
+		map.put("litres:userId", myUserIdOption.getValue());
+		return map;
+	}
 }

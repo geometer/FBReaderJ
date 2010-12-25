@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -91,10 +93,17 @@ abstract class Util implements UserRegistrationConstants {
 
 	static void runSmsDialog(Activity activity, INetworkLink link) {
 		try {
-			activity.startActivity(new Intent(
+			final Intent intent = new Intent(
 				SMS_REFILLING_ACTION,
 				Uri.parse(link.getLink(INetworkLink.URL_MAIN))
-			));
+			);
+			final NetworkAuthenticationManager mgr = link.authenticationManager();
+			if (mgr != null) {
+				for (Map.Entry<String,String> entry : mgr.getSmsRefillingData().entrySet()) {
+					intent.putExtra(entry.getKey(), entry.getValue());
+				}
+			}
+			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
 		}
 	}

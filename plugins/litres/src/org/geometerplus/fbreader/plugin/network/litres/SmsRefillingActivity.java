@@ -43,8 +43,8 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class SmsRefillingActivity extends Activity {
 	private ZLResource myResource;
-	private Button myOkButton;
 	private SmsInfo mySelectedInfo;
+	private String myUserId;
 
 	private Button findButton(int resourceId) {
 		return (Button)findViewById(resourceId);
@@ -54,10 +54,9 @@ public class SmsRefillingActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		System.err.println("smsDialog");
-
 		ZLResourceFile.init(getApplicationContext());
 		myResource = ZLResource.resource("smsDialog");
+		myUserId = getIntent().getStringExtra("litres:userId");
 
 		setContentView(R.layout.sms_dialog);
 		setTitle(myResource.getResource("title").getValue());
@@ -84,6 +83,7 @@ public class SmsRefillingActivity extends Activity {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO: send SMS
+								System.err.println("Sending message " + mySelectedInfo.Text + " to number " + mySelectedInfo.PhoneNumber);
 								finish();
 							}
 						}
@@ -117,6 +117,11 @@ public class SmsRefillingActivity extends Activity {
 	}
 
 	private void setupListView() {
+		if (myUserId == null || myUserId.length() == 0) {
+			setError(myResource.getResource("noUserId").getValue());
+			return;
+		}
+
 		final TelephonyManager manager = (TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
 		if (manager == null) {
 			setError(myResource.getResource("noPhoneInfo").getValue());
@@ -129,9 +134,11 @@ public class SmsRefillingActivity extends Activity {
 			return;
 		}
 
-		// TODO: compare with SIM operator
-		System.err.println(manager.getSimOperator());
-		System.err.println(manager.getSimOperatorName());
+		if (!operator.equals(manager.getSimOperator())) {
+			setError(myResource.getResource("youAreInRoaming").getValue());
+			return;
+		}
+
 		String url = "http://data.fbreader.org/catalogs/litres/sms/smsinfo.php";
 		url = ZLNetworkUtil.appendParameter(url, "mcc", operator.substring(0, 3));
 		url = ZLNetworkUtil.appendParameter(url, "mnc", operator.substring(3));
@@ -215,6 +222,26 @@ public class SmsRefillingActivity extends Activity {
 			}
 		}
 	}
+
+	private class SmsInfoXMLReader extends ZLXMLReaderAdapter {
+		final ArrayList<SmsInfo> Infos = new ArrayList<SmsInfo>();
+		String ErrorMessage;
+
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			if ("info".equals(tag)) {
+				Infos.add(new SmsInfo(
+					attributes.getValue("phone"),
+					attributes.getValue("prefix") + " " + myUserId,
+					attributes.getValue("sum"),
+					attributes.getValue("cost")
+				));
+			} else if ("error".equals(tag)) {
+				ErrorMessage = attributes.getValue("text");
+			}
+			return false;
+		}
+	}
 }
 
 class SmsInfo {
@@ -228,27 +255,5 @@ class SmsInfo {
 		Text = text;
 		Sum = sum;
 		Cost = cost;
-	}
-}
-
-class SmsInfoXMLReader extends ZLXMLReaderAdapter {
-	private final String myUserId = "0001";
-
-	final ArrayList<SmsInfo> Infos = new ArrayList<SmsInfo>();
-	String ErrorMessage;
-
-	@Override
-	public boolean startElementHandler(String tag, ZLStringMap attributes) {
-		if ("info".equals(tag)) {
-			Infos.add(new SmsInfo(
-				attributes.getValue("phoneNumber"),
-				attributes.getValue("smsPrefix") + " " + myUserId,
-				attributes.getValue("sum"),
-				attributes.getValue("cost")
-			));
-		} else if ("error".equals(tag)) {
-			ErrorMessage = attributes.getValue("text");
-		}
-		return false;
 	}
 }
