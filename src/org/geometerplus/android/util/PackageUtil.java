@@ -46,7 +46,6 @@ public abstract class PackageUtil {
 	}
 
 	public static boolean isPluginInstalled(Activity activity, String pkg, String version) {
-		System.err.println(homeUri(pkg, version));
 		return canBeStarted(
 			activity,
 			new Intent("android.fbreader.action.TEST", homeUri(pkg, version))
