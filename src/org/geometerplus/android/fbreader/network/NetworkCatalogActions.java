@@ -256,11 +256,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, (NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-				Util.openInBrowser(
-					activity,
-					((NetworkCatalogTree)tree).Item.Link.authenticationManager().refillAccountLink()
-				);
+			{
+				final RefillAccountActions actions = new RefillAccountActions();
+				final NetworkTree refillTree = activity.getDefaultTree();
+				final int refillActionCode = actions.getDefaultActionCode(activity, refillTree);
+				if (refillActionCode == TREE_SHOW_CONTEXT_MENU) {
+					activity.getListView().showContextMenu();
+				} else if (refillActionCode >= 0) {
+					actions.runAction(activity, refillTree, refillActionCode);
+				}
 				return true;
+			}
 			case CUSTOM_CATALOG_EDIT:
 				NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
