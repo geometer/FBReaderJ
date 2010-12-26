@@ -1,16 +1,14 @@
+===== 0.99.0 (??? ??, 2010) =====
 * LitRes integration has been moved to a separate plugin to avoid questions about "strange permissions required by FBReader"
 * Refilling LitRes account via SMS has been implemented
-* One-click book purchasing at LitRes has been implemented
-
-===== 0.99.0 (??? ??, 2010) =====
 * New book info activity: with large cover image, annotation, etc.
 * Integration with ColorDict has been implemented
 * New Library view (like network library view)
 * 'Favorites' item in library view
 * File tree item in library view
 * Local library activity has been moved to a separate process
-* Czech resources have been updated
-* Chinese resources have been updated
+* Czech resources have been updated (by Marek Pavelka)
+* Chinese resources have been updated (by Shucang)
 * French resources have been updated (by Mathias Monnerville)
 * German resources have been updated (by Ingolf Kübler)
 * Font directory option is only shown if external fonts are supported
