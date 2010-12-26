@@ -180,29 +180,50 @@ abstract class NetworkBaseActivity extends ListActivity
 
 	// from View.OnCreateContextMenuListener
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-		final NetworkTree tree = (NetworkTree) getListAdapter().getItem(position);
-		final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-		if (actions != null) {
-			actions.buildContextMenu(this, menu, tree);
+		NetworkTree tree = null;
+		if (menuInfo != null) {
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			tree = (NetworkTree)getListAdapter().getItem(position);
+		} else {
+			tree = getDefaultTree();
 		}
+		if (tree != null) {
+			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+			if (actions != null) {
+				actions.buildContextMenu(this, menu, tree);
+			}
+		}
+	}
+
+	private NetworkTree myDefaultTree;
+	protected NetworkTree getDefaultTree() {
+		return myDefaultTree;
+	}
+	protected void setDefaultTree(NetworkTree tree) {
+		myDefaultTree = tree;
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final NetworkTree tree = (NetworkTree) getListAdapter().getItem(position);
-		final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-		if (actions != null &&
-				actions.runAction(this, tree, item.getItemId())) {
-			return true;
+		NetworkTree tree = null;
+		if (item != null && item.getMenuInfo() != null) {
+			final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+			tree = (NetworkTree)getListAdapter().getItem(position);
+		} else {
+			tree = getDefaultTree();
+		}
+		if (tree != null) {
+			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+			if (actions != null && actions.runAction(this, tree, item.getItemId())) {
+				return true;
+			}
 		}
 		return super.onContextItemSelected(item);
 	}
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final NetworkTree networkTree = (NetworkTree) getListAdapter().getItem(position);
+		final NetworkTree networkTree = (NetworkTree)getListAdapter().getItem(position);
 		final NetworkView networkView = NetworkView.Instance();
 		final NetworkTreeActions actions = networkView.getActions(networkTree);
 		if (actions == null) {

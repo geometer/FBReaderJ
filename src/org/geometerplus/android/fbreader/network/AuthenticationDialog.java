@@ -54,7 +54,7 @@ class AuthenticationDialog extends NetworkDialog {
 		registerText.setText(myResource.getResource("register").getValue());
 		registerText.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+				//final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (Util.isRegistrationSupported(myActivity, myLink)) {
 					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
 					Util.runRegistrationDialog(myActivity, myLink);

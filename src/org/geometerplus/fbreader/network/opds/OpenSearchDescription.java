@@ -22,8 +22,6 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-
 class OpenSearchDescription {
 
 	public static OpenSearchDescription createDefault(String template) {
