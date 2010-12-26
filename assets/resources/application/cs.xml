@@ -61,8 +61,8 @@
 		<node name="signOut" value="Odhlásit (%s)"/>
 		<node name="refillAccount" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="refillTitle" value="Doplnit účet"/>
-		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
-		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Textová zpráva"/>
+		<node name="refillViaBrowser" value="Otevřít stránku v prohlížeči"/>
 		<node name="refillSummary" value="Aktuálně: %s"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje" />
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje" />
@@ -214,9 +214,9 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Install" toBeTranslated="true" />
-			<node name="update" value="Update" toBeTranslated="true" />
-			<node name="skip" value="Skip" toBeTranslated="true" />
+			<node name="install" value="Instalovat" />
+			<node name="update" value="Aktualizovat" />
+			<node name="skip" value="Přeskočit" />
 			<node name="buy" value="Zakoupit" />
 			<node name="buyAndDownload" value="Zakoupit a stáhnout" />
 			<node name="continue" value="Pokračovat" />
@@ -227,14 +227,14 @@
 			<node name="reloadInfo" value="Znovu načíst" />
 		</node>
 		<node name="installPlugin">
-			<node name="title" value="Install plugin" toBeTranslated="true" />
+			<node name="title" value="Instalovat doplněk" />
 		</node>
 		<node name="updatePlugin">
-			<node name="title" value="Update plugin" toBeTranslated="true" />
+			<node name="title" value="Aktualizovat doplněk" />
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Install dictionary" toBeTranslated="true" />
-			<node name="message" value="Would you like to install %s?" toBeTranslated="true" />
+			<node name="title" value="Instalovat slovník" />
+			<node name="message" value="Chcete nainstalovat %s?" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Název souboru"/>
@@ -588,12 +588,12 @@
 		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
-		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
+		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>
 		<node name="textNotFound" value="V knize není bohužel žádný vhodný text"/>
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
 		<node name="bookmarkNotFound" value="Nejsou bohužel žádné vhodné záložky"/>
 		<node name="cannotOpenBook" value="Tuto knihu právě teď nelze bohužel otevřít"/>
-		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
+		<node name="dictionaryIsNotInstalled" value="Slovník není bohužel nainstalován"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
 	</node>

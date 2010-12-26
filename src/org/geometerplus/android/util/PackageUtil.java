@@ -19,11 +19,17 @@
 
 package org.geometerplus.android.util;
 
+import java.util.Map;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class PackageUtil {
 	private static Uri marketUri(String pkg) {
@@ -65,5 +71,53 @@ public abstract class PackageUtil {
 		} catch (ActivityNotFoundException e) {
 			return false;
 		}
+	}
+
+	public static void runInstallPluginDialog(final Activity activity, Map<String,String> pluginData, final Runnable postRunnable) {
+		final String plugin = pluginData.get("androidPlugin");
+		if (plugin != null) {
+			final String pluginVersion = pluginData.get("androidPluginVersion");
+
+			String dialogKey = null;
+			String message = null;
+			String positiveButtonKey = null;
+			
+			if (!PackageUtil.isPluginInstalled(activity, plugin)) {
+				dialogKey = "installPlugin";
+				message = pluginData.get("androidPluginInstallMessage");
+				positiveButtonKey = "install";
+			} else if (!PackageUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
+				dialogKey = "updatePlugin";
+				message = pluginData.get("androidPluginUpdateMessage");
+				positiveButtonKey = "update";
+			}
+			if (dialogKey != null) {
+				final ZLResource dialogResource = ZLResource.resource("dialog");
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(activity)
+					.setTitle(dialogResource.getResource(dialogKey).getResource("title").getValue())
+					.setMessage(message)
+					.setIcon(0)
+					.setPositiveButton(
+						buttonResource.getResource(positiveButtonKey).getValue(),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								PackageUtil.installFromMarket(activity, plugin);
+							}
+						}
+					)
+					.setNegativeButton(
+						buttonResource.getResource("skip").getValue(),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								postRunnable.run();
+							}
+						}
+					)
+					.create().show();
+				return;
+			}
+		}
+		postRunnable.run();
 	}
 }
