@@ -437,7 +437,7 @@ public class ZLTapZones {
 		}
 	}
 
-	public boolean onStylusPress(int x, int y){
+	public boolean onFingerPress(int x, int y){
 		if (selectZone(x, y)) {
 			// if is pressed over zone - select action
 			mySelectedZone.selectAction();
@@ -449,7 +449,7 @@ public class ZLTapZones {
 		return true;
 	}
 
-	public boolean onStylusRelease(int x, int y) {
+	public boolean onFingerRelease(int x, int y) {
 		myMoveInProgress = false;
 		if (mySelectedZone != null) {
 			mySelectedZone.saveViewRect();
@@ -457,8 +457,8 @@ public class ZLTapZones {
 		return true;
 	}
 
-	public boolean onStylusMovePressed(int x, int y) {
-		// need to detect first move after screen was released by onStylusRelease
+	public boolean onFingerMove(int x, int y) {
+		// need to detect first move after screen was released by onFingerRelease
 		if (!myMoveInProgress) {
 			// if first move then try to catch any zone
 			myMoveInProgress = true;
