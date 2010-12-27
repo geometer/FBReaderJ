@@ -352,9 +352,9 @@ public class ZLAndroidWidget extends View {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
 					if (myPendingPress) {
-						view.onStylusPress(myPressedX, myPressedY);
+						view.onFingerPress(myPressedX, myPressedY);
 					}
-					view.onStylusRelease(x, y);
+					view.onFingerRelease(x, y);
 				}
 				myPendingPress = false;
 				myScreenIsTouched = false;
@@ -374,12 +374,12 @@ public class ZLAndroidWidget extends View {
 							if (myPendingLongClickRunnable != null) {
 								removeCallbacks(myPendingLongClickRunnable);
 							}
-							view.onStylusPress(myPressedX, myPressedY);
+							view.onFingerPress(myPressedX, myPressedY);
 							myPendingPress = false;
 						}
 					}
 					if (!myPendingPress) {
-						view.onStylusMovePressed(x, y);
+						view.onFingerMove(x, y);
 					}
 				}
 				break;

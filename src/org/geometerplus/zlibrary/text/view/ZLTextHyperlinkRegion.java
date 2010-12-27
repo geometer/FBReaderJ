@@ -21,14 +21,14 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.List;
 
-class ZLTextHyperlinkRegion extends ZLTextElementRegion {
+public class ZLTextHyperlinkRegion extends ZLTextElementRegion {
 	static Filter Filter = new Filter() {
 		public boolean accepts(ZLTextElementRegion region) {
 			return region instanceof ZLTextHyperlinkRegion;
 		}
 	};
 
-	final ZLTextHyperlink Hyperlink;
+	public final ZLTextHyperlink Hyperlink;
 
 	ZLTextHyperlinkRegion(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
 		super(list, fromIndex);

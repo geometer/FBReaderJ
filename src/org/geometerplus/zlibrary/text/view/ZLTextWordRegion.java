@@ -21,8 +21,8 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.List;
 
-class ZLTextWordRegion extends ZLTextElementRegion {
-	final ZLTextWord Word;
+public class ZLTextWordRegion extends ZLTextElementRegion {
+	public final ZLTextWord Word;
 
 	ZLTextWordRegion(ZLTextWord word, List<ZLTextElementArea> list, int fromIndex) {
 		super(list, fromIndex);
