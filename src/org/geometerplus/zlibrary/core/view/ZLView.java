@@ -42,19 +42,15 @@ abstract public class ZLView {
 	abstract public void paint(ZLPaintContext context, int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
 
-	public boolean onStylusPress(int x, int y) {
+	public boolean onFingerPress(int x, int y) {
 		return false;
 	}
 
-	public boolean onStylusRelease(int x, int y) {
+	public boolean onFingerRelease(int x, int y) {
 		return false;
 	}
 
-	public boolean onStylusMove(int x, int y) {
-		return false;
-	}
-
-	public boolean onStylusMovePressed(int x, int y) {
+	public boolean onFingerMove(int x, int y) {
 		return false;
 	}
 
