@@ -1,6 +1,6 @@
 0.99:
 * Reload book info from file
-* returning from footnotes
+* returning from footnotes (ask if footnote is in the same model and there was page scrolling)
 * prevent from sleep if battery is in charging mode
 * Open the help file if the current book is deleted from library
 

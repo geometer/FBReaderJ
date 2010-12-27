@@ -393,22 +393,22 @@ public class ZLAndroidWidget extends View {
 										//myFooter.setProgress(view, myPressedX);
 									}
 								} else {
-									if (!view.onStylusPress(myPressedX, myPressedY)) {
+									if (!view.onFingerPress(myPressedX, myPressedY)) {
 										myTapZones.doTap(myPressedX, myPressedY);
 									}
 								}
 								break;
 							case MODE_TAP_ZONES_EDIT:
-								myTapZones.onStylusPress(myPressedX, myPressedY);
+								myTapZones.onFingerPress(myPressedX, myPressedY);
 								break;
 						}
 					}
 					switch(myMode) {
 						case MODE_READ:
-							view.onStylusRelease(x, y);
+							view.onFingerRelease(x, y);
 							break;
 						case MODE_TAP_ZONES_EDIT:
-							myTapZones.onStylusRelease(x, y);
+							myTapZones.onFingerRelease(x, y);
 							break;
 					}
 				}
@@ -432,10 +432,10 @@ public class ZLAndroidWidget extends View {
 							}
 							switch(myMode) {
 								case MODE_READ:
-									view.onStylusMovePressed(myPressedX, myPressedY);
+									view.onFingerMove(myPressedX, myPressedY);
 									break;
 								case MODE_TAP_ZONES_EDIT:
-									myTapZones.onStylusMovePressed(myPressedX, myPressedY);
+									myTapZones.onFingerMove(myPressedX, myPressedY);
 									break;
 							}
 							myPendingPress = false;
@@ -444,10 +444,10 @@ public class ZLAndroidWidget extends View {
 					if (!myPendingPress) {
 						switch(myMode) {
 							case MODE_READ:
-								view.onStylusMovePressed(x, y);
+								view.onFingerMove(x, y);
 								break;
 							case MODE_TAP_ZONES_EDIT:
-								myTapZones.onStylusMovePressed(x, y);
+								myTapZones.onFingerMove(x, y);
 								break;
 						}
 					}
