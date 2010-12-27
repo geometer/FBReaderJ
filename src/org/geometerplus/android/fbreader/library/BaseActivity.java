@@ -19,12 +19,14 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import android.R.layout;
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.*;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -92,9 +94,21 @@ abstract class BaseActivity extends ListActivity {
 	protected View createView(View convertView, ViewGroup parent, String name, String summary) {
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
+		
+		TextView nameTextView = (TextView)view.findViewById(R.id.library_tree_item_name);
+		nameTextView.setText(name);
 
-        ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(name);
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(summary);
+		TextView summaryTextView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist); 
+        summaryTextView.setText(summary);
+
+        if (summary != null){
+        	summaryTextView.setVisibility(View.VISIBLE);
+        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
+        } else {
+        	summaryTextView.setVisibility(View.GONE);
+        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f));
+        	nameTextView.setGravity(Gravity.CENTER_VERTICAL);
+        }
 		return view;
 	}
 

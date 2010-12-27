@@ -157,13 +157,9 @@ public final class FileManager extends BaseActivity {
 		}
 
 		public void onClick(DialogInterface dialog, int which) {
-			
-			List<Book> books = new ArrayList<Book>();
-			FileUtil.getBooksList(myFileItem.getFile(), books);
-			for (Book book : books){
+			for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
 				LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
 			}
-			
 			FileListAdapter adapter = (FileListAdapter)getListAdapter();
 			adapter.remove(myFileItem);
 			adapter.notifyDataSetChanged();

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -48,12 +49,21 @@ public class FileUtil {
 		return false;
 	}
 	
-	public static void getBooksList(ZLFile file, List<Book> books){
+	public static List<Book> getBooksList(ZLFile file){
+		List<Book> books = null;
+		if (file.isDirectory() || file.isArchive()){
+			books = new ArrayList<Book>();
+			getBooks(file, books);
+		}
+		return books;
+	}
+	
+	private static void getBooks(ZLFile file, List<Book> books){
 		for(ZLFile f : file.children()){
 			if (PluginCollection.Instance().getPlugin(f) != null){
 				books.add(Book.getByFile(f));
 			} else if (f.isDirectory() || f.isArchive()) {
-				getBooksList(f, books);
+				getBooks(f, books);
 			}
 		}
 	}
