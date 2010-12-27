@@ -20,11 +20,14 @@
 package org.geometerplus.android.fbreader.library;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
@@ -213,3 +216,94 @@ class MkDirDialog extends TextEditDialog{
 		}
 	}
 }
+
+class RadioButtonDialog{
+	protected Context myContext;
+	private String myTitle;
+	private String[] myItems;
+	private int mySelectedItem;
+	
+	public RadioButtonDialog(Context context, String title, String[] items, int selectedItem){
+		myContext = context;
+		myTitle = title;
+		myItems = items;
+		mySelectedItem = selectedItem;
+	}
+
+	protected void itemSelected(DialogInterface dialog, int item){
+		dialog.dismiss();
+	}
+	
+	public void show(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
+		builder.setTitle(myTitle);
+		builder.setSingleChoiceItems(myItems, mySelectedItem, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		    	itemSelected(dialog, item);
+		    }
+		});
+		builder.create().show();
+	}
+}
+
+class SortingDialog extends RadioButtonDialog{
+	private static ZLResource myResource = ZLResource.resource("libraryView").getResource("sortingBox");
+	private static String myTitle = myResource.getResource("title").getValue();
+	private static String[] myItems = SortType.toStringArray();
+	private String myPath;
+
+	private static String SORT_GROUP = "sortGroup";
+	private static String SORT_OPTION_NAME = "sortOptionName";
+	private static int SORT_DEF_VALUE = 0;
+	private static ZLIntegerOption mySortOption = new ZLIntegerOption(SORT_GROUP, SORT_OPTION_NAME, SORT_DEF_VALUE);
+
+	public SortingDialog(Context content, String path) {
+		super(content, myTitle, myItems, mySortOption.getValue());
+		myPath = path;
+	}
+
+	@Override
+	protected void itemSelected(DialogInterface dialog, int item){
+		super.itemSelected(dialog, item);
+		if (getOprionSortType().ordinal() != item){
+			mySortOption.setValue(item);
+			FileManager.mySortType = SortType.values()[item];
+			
+			((Activity) myContext).startActivityForResult(
+					new Intent(myContext, FileManager.class)
+						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+					FileManager.CHILD_LIST_REQUEST
+			);
+		}
+	}
+	
+	public static SortType getOprionSortType(){
+		return SortType.values()[mySortOption.getValue()];
+	}
+
+	enum SortType{
+		BY_NAME{
+			public String getName() {
+				return myResource.getResource("byName").getValue();
+			}
+		},
+		BY_DATE{
+			public String getName() {
+				return myResource.getResource("byDate").getValue();
+			}
+		};
+
+		public abstract String getName();
+		
+		public static String[] toStringArray(){
+			SortType[] sourse = values();
+			String[] result = new String[sourse.length];
+			for (int i = 0; i < sourse.length; i++){
+				result[i] = sourse[i].getName();
+			}
+			return result;
+		}
+	}
+}
+

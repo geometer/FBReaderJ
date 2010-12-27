@@ -59,6 +59,12 @@
 		<node name="messDirectoryIntoArchive" value="Cannot create a directory inside an archive"/>
 		<node name="messInsertIntoArchive" value="Cannot insert a file into archive"/>
 		<node name="messRenameFailed" value="Rename the file failed"/>
+		
+		<node name="sortingBox">
+			<node name="title" value="Sorting"/>
+			<node name="byName" value="By name"/>
+			<node name="byDate" value="By date"/>
+		</node>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>

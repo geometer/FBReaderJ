@@ -34,6 +34,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -43,6 +44,7 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
+import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
@@ -57,6 +59,7 @@ public final class FileManager extends BaseActivity {
 	
 	private String myPath;
 	private String myInsertPath;
+	public static SortType mySortType;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public final class FileManager extends BaseActivity {
 
 		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
+		mySortType = SortingDialog.getOprionSortType();
 		
 		if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
@@ -223,10 +227,13 @@ public final class FileManager extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         if (myPath != null){
-            if (myInsertPath != null){
+        	if (myInsertPath != null){
             	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
             	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
             }
+        	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
+        	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);
+
         }
         return true;
     }
@@ -264,8 +271,12 @@ public final class FileManager extends BaseActivity {
         		new MkDirDialog(this, myPath, myInsertPath).show();
         		return true;
         	case 2:
+        		new SortingDialog(this, myPath).show();
+        		//        		ZLIntegerOption
+        		// TODO sorting
 	            return true;
         	case 3:
+        		// TODO view
 	            return true;
         	default:
         		return super.onOptionsItemSelected(item);
@@ -273,7 +284,6 @@ public final class FileManager extends BaseActivity {
     }
     
     
-	
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 
@@ -485,10 +495,39 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
-	private static class FileComparator implements Comparator<ZLFile> {
+	private class FileComparator implements Comparator<ZLFile> {
 		public int compare(ZLFile f0, ZLFile f1) {
+			int result = -1;
+			switch (mySortType) {
+				case BY_NAME:
+					result = compareByName(f0, f1);
+					break;
+				case BY_DATE:
+					result = compareByDate(f0, f1);
+					break;
+				default:
+					break;
+			}
+			return result; 
+		}
+
+		private int compareByName(ZLFile f0, ZLFile f1){
+			if (f0.isDirectory() && !f1.isDirectory()){
+				return -1;
+			} else if (!f0.isDirectory() && f1.isDirectory()) {
+				return 1;
+			}
+			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
+		}
+
+		private int compareByDate(ZLFile f0, ZLFile f1){
+//			if (f0.isDirectory() && !f1.isDirectory()){
+//				return -1;
+//			} else if (!f0.isDirectory() && f1.isDirectory()) {
+//				return 1;
+//			}
+			// TODO
 			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
 		}
 	}
-	
 }
