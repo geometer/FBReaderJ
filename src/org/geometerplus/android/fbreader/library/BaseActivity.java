@@ -53,7 +53,7 @@ abstract class BaseActivity extends ListActivity {
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
 
-	static Library LibraryInstance;
+	protected static Library LibraryInstance;
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;

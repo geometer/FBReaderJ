@@ -4,7 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.List;
 
+import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -43,5 +46,15 @@ public class FileUtil {
 				return true;
 		}
 		return false;
+	}
+	
+	public static void getBooksList(ZLFile file, List<Book> books){
+		for(ZLFile f : file.children()){
+			if (PluginCollection.Instance().getPlugin(f) != null){
+				books.add(Book.getByFile(f));
+			} else if (f.isDirectory() || f.isArchive()) {
+				getBooksList(f, books);
+			}
+		}
 	}
 }
