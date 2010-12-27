@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.library;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.*;
 import java.lang.ref.WeakReference;
 
@@ -95,6 +96,11 @@ public final class Library {
 		Map<Long,Book> savedBooks,
 		boolean doReadMetaInfo
 	) {
+		System.gc();
+		System.gc();
+		//Log.println(file.getPath());
+		//Log.println("Free: " + Runtime.getRuntime().freeMemory() + " of " + Runtime.getRuntime().totalMemory());
+		//Log.flush();
 		Book book = getBook(file, fileInfos, savedBooks, doReadMetaInfo);
 		if (book != null) {
 			myBooks.add(book);
@@ -222,13 +228,22 @@ public final class Library {
 		return tagTree;
 	}
 
+	//private PrintWriter Log;
+
 	private void build() {
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 		final HashMap<Long,Book> bookById = new HashMap<Long,Book>();
 
+		/*
+		try {
+			Log = new PrintWriter("/sdcard/Log");
+		} catch (Exception e) {
+		}
+		*/
 		collectBooks();
+		//Log.close();
 		for (Book book : myBooks) {
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
