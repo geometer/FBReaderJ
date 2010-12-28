@@ -46,7 +46,6 @@
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
 		
-		
 		<node name="rename" value="Rename"/>
 		<node name="move" value="Move"/>
 		<node name="moveTitle" value="Move file"/>
@@ -511,6 +510,9 @@
 		</node>
 		<node name="deleteFileBox">
 			<node name="message" value="The file will be removed irreversibly. Are you sure?"/>
+		</node>
+		<node name="deleteDirBox">
+			<node name="message" value="The directory will be removed irreversibly. Are you sure?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="File already exists. Redownload?"/>

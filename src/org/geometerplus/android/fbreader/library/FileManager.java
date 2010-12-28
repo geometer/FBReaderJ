@@ -184,10 +184,16 @@ public final class FileManager extends BaseActivity {
 	private void deleteFileItem(FileItem fileItem){
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource boxResource = dialogResource.getResource("deleteFileBox");
+
+		String message;
+		if (fileItem.getFile().isDirectory()){
+			message = dialogResource.getResource("deleteDirBox").getResource("message").getValue();
+		} else {
+			message = dialogResource.getResource("deleteFileBox").getResource("message").getValue();
+		}
 		new AlertDialog.Builder(this)
 			.setTitle(fileItem.getName())
-			.setMessage(boxResource.getResource("message").getValue())
+			.setMessage(message)
 			.setIcon(0)
 			.setPositiveButton(buttonResource.getResource("yes").getValue(), new FileDeleter(fileItem))
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
