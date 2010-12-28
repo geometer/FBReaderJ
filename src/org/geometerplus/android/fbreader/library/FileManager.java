@@ -22,11 +22,10 @@ package org.geometerplus.android.fbreader.library;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
+import org.geometerplus.android.fbreader.library.ViewChangeDialog.ViewType;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -67,11 +66,12 @@ public final class FileManager extends BaseActivity {
 	private String myPath;
 	private String myInsertPath;
 	public static SortType mySortType;
+	public static ViewType myViewType;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
 
@@ -285,12 +285,10 @@ public final class FileManager extends BaseActivity {
         		return true;
         	case 2:
         		new SortingDialog(this, myPath).show();
-        		//        		ZLIntegerOption
-        		// TODO sorting
 	            return true;
         	case 3:
-        		// TODO view
-	            return true;
+        		new ViewChangeDialog(this, myPath).show();
+        		return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
@@ -508,40 +506,5 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
-	private class FileComparator implements Comparator<ZLFile> {
-		public int compare(ZLFile f0, ZLFile f1) {
-			int result = -1;
-			switch (mySortType) {
-				case BY_NAME:
-					result = compareByName(f0, f1);
-					break;
-				case BY_DATE:
-					result = compareByDate(f0, f1);
-					break;
-				default:
-					break;
-			}
-			return result; 
-		}
 
-		private int compareByName(ZLFile f0, ZLFile f1){
-			if (f0.isDirectory() && !f1.isDirectory()){
-				return -1;
-			} else if (!f0.isDirectory() && f1.isDirectory()) {
-				return 1;
-			}
-			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
-		}
-
-		private int compareByDate(ZLFile f0, ZLFile f1){
-			if (f0.isDirectory() && !f1.isDirectory()){
-				return -1;
-			} else if (!f0.isDirectory() && f1.isDirectory()) {
-				return 1;
-			}
-			Date date0 = f0.getPhysicalFile().lastModified();
-			Date date1 = f1.getPhysicalFile().lastModified();
-			return date0.compareTo(date1);
-		}
-	}
 }

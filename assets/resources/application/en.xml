@@ -64,6 +64,11 @@
 			<node name="byName" value="By name"/>
 			<node name="byDate" value="By date"/>
 		</node>
+		<node name="viewBox">
+			<node name="title" value="View"/>
+			<node name="simple" value="Simple"/>
+			<node name="sketch" value="Sketch"/>
+		</node>	
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Open catalog"/>

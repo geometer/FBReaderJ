@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -66,5 +68,42 @@ public class FileUtil {
 				getBooks(f, books);
 			}
 		}
+	}
+}
+
+class FileComparator implements Comparator<ZLFile> {
+	public int compare(ZLFile f0, ZLFile f1) {
+		int result = -1;
+		switch (FileManager.mySortType) {
+			case BY_NAME:
+				result = compareByName(f0, f1);
+				break;
+			case BY_DATE:
+				result = compareByDate(f0, f1);
+				break;
+			default:
+				break;
+		}
+		return result; 
+	}
+
+	private int compareByName(ZLFile f0, ZLFile f1){
+		if (f0.isDirectory() && !f1.isDirectory()){
+			return -1;
+		} else if (!f0.isDirectory() && f1.isDirectory()) {
+			return 1;
+		}
+		return f0.getShortName().compareToIgnoreCase(f1.getShortName());
+	}
+
+	private int compareByDate(ZLFile f0, ZLFile f1){
+		if (f0.isDirectory() && !f1.isDirectory()){
+			return -1;
+		} else if (!f0.isDirectory() && f1.isDirectory()) {
+			return 1;
+		}
+		Date date0 = f0.getPhysicalFile().lastModified();
+		Date date1 = f1.getPhysicalFile().lastModified();
+		return date0.compareTo(date1);
 	}
 }
