@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,13 +45,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public final class FileManager extends BaseActivity {
@@ -67,10 +72,14 @@ public final class FileManager extends BaseActivity {
 	private String myInsertPath;
 	public static SortType mySortType;
 	public static ViewType myViewType;
+	
+	private boolean myVeiwFlag = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.library_tree_item);
+//		addContentView(new Gallery(this), new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
@@ -78,6 +87,7 @@ public final class FileManager extends BaseActivity {
 		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		mySortType = SortingDialog.getOprionSortType();
+		myViewType = ViewChangeDialog.getOprionSortType();
 		
 		if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
@@ -360,110 +370,56 @@ public final class FileManager extends BaseActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
             final FileItem item = getItem(position);
-			final View view = createView(convertView, parent, item.getName(), item.getSummary());
-			if (mySelectedBookPath != null &&
-				mySelectedBookPath.equals(item.getFile().getPath())) {
-				view.setBackgroundColor(0xff808080);
-			} else {
-				view.setBackgroundColor(0);
-			}
-			final ImageView coverView = getCoverView(view);
-			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+            View view = null;
 
-			if (coverBitmap != null) {
-				coverView.setImageBitmap(coverBitmap);
-			} else {
-				coverView.setImageResource(item.getIcon());
-			}
+            if (myViewType == ViewType.SIMPLE){
+            	view = createView(convertView, parent, item.getName(), item.getSummary());
+    			if (mySelectedBookPath != null &&
+    				mySelectedBookPath.equals(item.getFile().getPath())) {
+    				view.setBackgroundColor(0xff808080);
+    			} else {
+    				view.setBackgroundColor(0);
+    			}
+    			final ImageView coverView = getCoverView(view);
+    			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+
+    			if (coverBitmap != null) {
+    				coverView.setImageBitmap(coverBitmap);
+    			} else {
+    				coverView.setImageResource(item.getIcon());
+    			}
+            } else if (myViewType == ViewType.SKETCH){
+        		view = (convertView != null) ?  convertView :
+        			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
+        		if (!myVeiwFlag){
+            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
+            		gallery.setAdapter(new ImageAdapter(FileManager.this));
+            		myVeiwFlag = true;
+        		}{
+            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
+            		ImageAdapter imageAdapter = (ImageAdapter)gallery.getAdapter();
+//            		imageAdapter.add(item);
+        		}
+        		
+            }
+            
+//        	view = createView(convertView, parent, item.getName(), item.getSummary());
+//			if (mySelectedBookPath != null &&
+//				mySelectedBookPath.equals(item.getFile().getPath())) {
+//				view.setBackgroundColor(0xff808080);
+//			} else {
+//				view.setBackgroundColor(0);
+//			}
+//			final ImageView coverView = getCoverView(view);
+//			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+//
+//			if (coverBitmap != null) {
+//				coverView.setImageBitmap(coverBitmap);
+//			} else {
+//				coverView.setImageResource(item.getIcon());
+//			}
 
             return view;
-		}
-	}
-
-	public final class FileItem {
-		private final ZLFile myFile;
-		private String myName;
-		private final String mySummary;
-
-		private ZLImage myCover = null;
-		private boolean myCoverIsInitialized = false;
-
-		public FileItem(ZLFile file, String name, String summary) {
-			myFile = file;
-			myName = name;
-			mySummary = summary;
-		}
-
-		public FileItem(ZLFile file) {
-			if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
-				final List<ZLFile> children = file.children();
-				if (children.size() == 1) {
-					final ZLFile child = children.get(0);
-					if (child.getPath().endsWith(".fb2")) {
-						myFile = child;
-						myName = file.getLongName();
-						mySummary = null;
-						return;
-					}
-				} 
-			}
-			myFile = file;
-			myName = null;
-			mySummary = null;
-		}
-
-		public String getName() {
-			return myName != null ? myName : myFile.getShortName();
-		}
-
-		public String getSummary() {
-			if (mySummary != null) {
-				return mySummary;
-			}
-
-			final Book book = getBook();
-			if (book != null) {
-				return book.getTitle();
-			}
-
-			return null;
-		}
-
-		public int getIcon() {
-			if (getBook() != null) {
-				return R.drawable.ic_list_library_book;
-			} else if (myFile.isDirectory()) {
-				if (myFile.isReadable()) {
-					return R.drawable.ic_list_library_folder;
-				} else {
-					return R.drawable.ic_list_library_permission_denied;
-				}
-			} else if (myFile.isArchive()) {
-				return R.drawable.ic_list_library_zip;
-			} else {
-				System.err.println(
-					"File " + myFile.getPath() +
-					" that is not a directory, not a book and not an archive " +
-					"has been found in getIcon()"
-				);
-				return R.drawable.ic_list_library_permission_denied;
-			}
-		}
-
-		public ZLImage getCover() {
-			if (!myCoverIsInitialized) {
-				myCoverIsInitialized = true;
-				myCover = Library.getCover(myFile);
-			}
-			return myCover;
-		}
-
-		public ZLFile getFile() {
-			return myFile;
-		}
-
-		public Book getBook() {
-			return Book.getByFile(myFile);
 		}
 	}
 
@@ -506,5 +462,99 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
+//	public class ImageAdapter extends BaseAdapter {
+//        int mGalleryItemBackground;
+//        private Context mContext;
+//
+//		private List<FileItem> myItems = new ArrayList<FileItem>();
+//
+//		public synchronized void clear() {
+//			myItems.clear();
+//		}
+//
+//		public synchronized void add(FileItem item){
+//			myItems.add(item);
+//		}
+//		
+//		public synchronized void remove(FileItem fileItem) {
+//			myItems.remove(fileItem);
+//		}
+//
+//        public ImageAdapter(Context c) {
+//            mContext = c;
+//        }
+//
+//        public int getCount() {
+//            return myItems.size();
+//        }
+//
+//        public FileItem getItem(int position) {
+//            return myItems.get(position);
+//        }
+//
+//        public long getItemId(int position) {
+//            return position;
+//        }
+//
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            final FileItem item = getItem(position);
+//            
+//        	ImageView i = new ImageView(mContext);
+//            i.setImageResource(item.getIcon());
+//            
+//            i.setLayoutParams(new Gallery.LayoutParams(200, 300));
+//            i.setScaleType(ImageView.ScaleType.FIT_XY);
+//            return i;
+//        }
+//    }
 
+	
+	public class ImageAdapter extends BaseAdapter {
+        int mGalleryItemBackground;
+        private Context mContext;
+
+        private Integer[] mImageIds = {
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book,
+                R.drawable.ic_list_library_book
+        };
+
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+
+        public int getCount() {
+            return mImageIds.length;
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView i = new ImageView(mContext);
+
+            i.setImageResource(mImageIds[position]);
+            i.setLayoutParams(new Gallery.LayoutParams(200, 300));
+            i.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            return i;
+        }
+    }
 }
