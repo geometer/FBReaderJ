@@ -71,10 +71,10 @@
 		<node name="search" value="Keresés" />
 		<node name="searchSummary" value="Könyvek keresése a katalógusokban" />
 		<node name="searchResults" value="Keresés az eredmények között: %s" />
-		<node name="editCustomCatalog" toBeTranslated="true" value="Edit catalog"/>
-		<node name="removeCustomCatalog" toBeTranslated="true" value="Remove catalog"/>
-		<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
-		<node name="addCustomCatalogSummary" toBeTranslated="true" value="Add custom OPDS catalog manually"/>
+		<node name="editCustomCatalog" value="Katalógus szerkesztése"/>
+		<node name="removeCustomCatalog" value="Katalógus törlése"/>
+		<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
+		<node name="addCustomCatalogSummary" value="OPDS katalógus kézi hozzáadása"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Elolvassa a helyi példányt?"/>
 			<node name="download" value="Letölti a könyvet?"/>
@@ -92,8 +92,8 @@
 			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="signUp" value="Regisztráció" />
 			<node name="refillAccount" value="Számla feltöltése"/>
-			<node name="addCustomCatalog" toBeTranslated="true" value="Add catalog"/>
-			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
+			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
+			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>
 			<node name="languages" toBeTranslated="true" value="Language filter"/>
 		</node>
 	</node>
@@ -104,7 +104,7 @@
 		<node name="title" value="Cím:" />
 		<node name="authors" value="Szerzők:" />
 		<node name="series" value="Sorozat:" />
-		<node name="indexInSeries" value="Index in series:" />
+		<node name="indexInSeries" value="Sorszám:" />
 		<node name="tags" value="Címkék:" />
 	</node>
 	<node name="bookInfo">
@@ -175,7 +175,7 @@
 		<node name="selection" value="Selection">
 			<node name="copyToClipboard" value="Vágólapra másol"/>
 			<node name="openInDictionary" value="Megnyitás szótárban"/>
-			<node name="clearSelection" value="Törlés"/>
+			<node name="clearSelection" value="Kijelölés eltávolítása"/>
 		</node>
 		<node name="search" value="Keresés"/>
 		<node name="rotate" value="Kijelző elforgatása"/>
@@ -191,9 +191,9 @@
 			<node name="skip" value="Skip" toBeTranslated="true" />
 			<node name="buy" value="Vásárlás" />
 			<node name="buyAndDownload" value="Vásárlás és letöltés" />
-			<node name="continue" toBeTranslated="true" value="Continue" />
-			<node name="editUrl" toBeTranslated="true" value="Edit URL" />
-			<node name="tryAgain" toBeTranslated="true" value="Try again" />
+			<node name="continue" value="Folytatás" />
+			<node name="editUrl" value="URL szerkesztése" />
+			<node name="tryAgain" value="Próbálja újra" />
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
@@ -215,13 +215,13 @@
 			<node name="encoding" value="Kódolás"/>
 		</node>
 		<node name="Preferences">
-			<node name="directories" value="Directories" toBeTranslated="true">
-				<node name="summary" value="Directories to seek for files" toBeTranslated="true"/>
-				<node name="books" value="Books directory" toBeTranslated="true"/>
-				<node name="fonts" value="Fonts directory" toBeTranslated="true"/>
+			<node name="directories" value="Mappák">
+				<node name="summary" value="Mely mappákban keressen fájlokat"/>
+				<node name="books" value="Könyvek mappa"/>
+				<node name="fonts" value="Betűtípusok mappa"/>
 			</node>
-			<node name="appearance" value="Appearance" toBeTranslated="true">
-				<node name="summary" value="Rotation, status bar" toBeTranslated="true"/>
+			<node name="appearance" value="Megjelenés">
+				<node name="summary" value="Elforgatás, állapotsor"/>
 				<node name="autoOrientation" value="Automatikus elforgatás">
 					<node name="summaryOn" value="A kijelző elfordul a készülék mozgatásakor"/>
 					<node name="summaryOff" value="A kijelző nem fordul el a készülés mozgatásakor"/>
@@ -231,18 +231,18 @@
 					<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
 				</node>
 			</node>
-			<node name="text" value="Text" toBeTranslated="true">
-				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
-				<node name="font" value="Font family" toBeTranslated="true">
+			<node name="text" value="Szöveg">
+				<node name="summary" value="Betűtípus, elválasztás stb."/>
+				<node name="font" value="Betűtípus">
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
-				<node name="fontSize" value="Font size" toBeTranslated="true"/>
+				<node name="fontSize" value="Betűméret"/>
 				<node name="fontSizeDifference" value="Méretkülönbség"/>
-				<node name="fontStyle" value="Font style" toBeTranslated="true">
-					<node name="regular" value="Regular" toBeTranslated="true"/>
-					<node name="bold" value="Bold" toBeTranslated="true"/>
-					<node name="italic" value="Italic" toBeTranslated="true"/>
-					<node name="boldItalic" value="Bold Italic" toBeTranslated="true"/>
+				<node name="fontStyle" value="Betűstílus">
+					<node name="regular" value="Normál"/>
+					<node name="bold" value="Félkövér"/>
+					<node name="italic" value="Dőlt"/>
+					<node name="boldItalic" value="Félkövér és dőlt"/>
 				</node>
 				<node name="bold" value="Félkövér">
 					<node name="on" value="bold" toBeTranslated="true"/>
@@ -265,8 +265,8 @@
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Automatikus elválasztás">
-					<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+					<node name="summaryOn" value="Automatikusan válassza el a szavakat"/>
+					<node name="summaryOff" value="Automatikus elválasztás kikapcsolva"/>
 				</node>
 				<node name="allowHyphenations" value="Elválasztás engedélyezése">
 					<node name="on" value="hyphenate words" toBeTranslated="true"/>
@@ -278,8 +278,8 @@
 				<node name="spaceAfter" value="Space After"/>
 				<node name="leftIndent" value="Left Indent"/>
 				<node name="rightIndent" value="Right Indent"/>
-				<node name="more" value="More styles" toBeTranslated="true">
-					<node name="summary" value="Separate settings for titles, epigraphs, etc." toBeTranslated="true"/>
+				<node name="more" value="További formázás">
+					<node name="summary" value="Különálló beállítások címekhez, mottókhoz stb."/>
 					<node name="Regular Paragraph" value="Bekezdés">
 						<node name="summary" value=""/>
 					</node>
@@ -391,63 +391,63 @@
 				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
 			<node name="margins" value="Margók">
-				<node name="summary" value="Text margins" toBeTranslated="true"/>
+				<node name="summary" value="Szövegmargók"/>
 				<node name="left" value="Bal"/>
 				<node name="right" value="Jobb"/>
 				<node name="top" value="Felső"/>
 				<node name="bottom" value="Alsó"/>
 			</node>
-			<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
-				<node name="summary" value="Scrollbar &amp; footer settings" toBeTranslated="true"/>
-				<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
-					<node name="hide" value="Hide" toBeTranslated="true"/>
-					<node name="show" value="Vertical slider" toBeTranslated="true"/>
-					<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
-					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+			<node name="scrollBar" value="Gördítősáv">
+				<node name="summary" value="A gördítősáv és a lábléc beállításai"/>
+				<node name="scrollbarType" value="Gördítősáv típusa">
+					<node name="hide" value="Rejtett"/>
+					<node name="show" value="Függőleges csúszka"/>
+					<node name="showAsProgress" value="Függőleges folyamatjelző"/>
+					<node name="showAsFooter" value="Vízszintes lábléc"/>
 				</node>
-				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
+				<node name="footerHeight" value="Lábléc magassága"/>
 				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
 				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
 					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
 				</node>
-				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
-					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
-					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+				<node name="footerLongTap" value="Lábléc hosszú érintés">
+					<node name="longTapRevert" value="Pozíció visszaállítása"/>
+					<node name="longTapNavigate" value="Ugrás pozícióra"/>
 				</node>
-				<node name="showProgress" value="Show page number" toBeTranslated="true">
-					<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+				<node name="showProgress" value="Oldalszám">
+					<node name="summaryOn" value="Mutassa az oldalszámot a láblécben"/>
+					<node name="summaryOff" value="Ne mutassa az oldalszámot a láblécben"/>
 				</node>
-				<node name="showBattery" value="Show battery level" toBeTranslated="true">
-					<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+				<node name="showBattery" value="Akku töltöttség">
+					<node name="summaryOn" value="Mutassa az akkumulátor töltöttségét a láblécben"/>
+					<node name="summaryOff" value="Ne mutassa az akkumulátor töltöttségét a láblécben"/>
 				</node>
-				<node name="showClock" value="Show clock" toBeTranslated="true">
-					<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+				<node name="showClock" value="Óra">
+					<node name="summaryOn" value="Mutassa a pontos időt a láblécben"/>
+					<node name="summaryOff" value="Ne mutassa a pontos időt a láblécben"/>
 				</node>
-				<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
-					<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
+				<node name="isSensitive" value="Navigáció a lábléc érintésével">
+					<node name="summaryOn" value="Navigáció engedélyezve"/>
+					<node name="summaryOff" value="Navigáció letiltva"/>
 				</node>
-				<node name="font" value="Font family" toBeTranslated="true"/>
+				<node name="font" value="Lábléc betűtípusa"/>
 			</node>
-			<node name="display" value="Display" toBeTranslated="true">
-				<node name="summary" value="Brightness control, preventing from sleep" toBeTranslated="true"/>
-				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
-					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
-					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+			<node name="display" value="Kijelző">
+				<node name="summary" value="Fényerő, automatikus kikapcsolás"/>
+				<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
+					<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
+					<node name="summaryOff" value="Kikapcsolva"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
-					<node name="0" value="Always" toBeTranslated="true"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<node name="100" value="Never" toBeTranslated="true"/>
+					<node name="0" value="Mindig (automatikusan)"/>
+					<node name="25" value="Ha az akku töltöttsége 25% alatti" />
+					<node name="50" value="Ha az akku töltöttsége 50% alatti" />
+					<node name="100" value="Soha" />
 				</node>
 			</node>
 			<node name="scrolling" value="Görgetés">
-				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
+				<node name="summary" value="Szöveg görgetésének beállításai"/>
 				<node name="flick" value="Kinetikus görgetés">
 					<node name="summaryOn" value="Lapozás ujjmozdulatra"/>
 					<node name="summaryOff" value="Lapozás érintésre"/>
@@ -456,9 +456,9 @@
 					<node name="summaryOn" value="Hangerő gombok használata görgetéshez"/>
 					<node name="summaryOff" value="A hangerő gombok a hangerőt állítják"/>
 				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
+				<node name="invertVolumeKeys" value="Fordított görgetés a hangerő gombokal">
+					<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
+					<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
 				</node>
 				<node name="animated" value="Animált görgetés">
 					<node name="summaryOn" value="Finomabb görgetés"/>
@@ -491,17 +491,17 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Könyv letöltése %s"/>
-			<node name="search" value="Keresés. Kérjük, várjon..."/>
-			<node name="loadingBook" value="Könyv megnyitása. Kérjük, várjon..."/>
-			<node name="loadingBookList" value="Könyvtár megnyitása. Kérjük, várjon..."/>
-			<node name="creatingBooksDatabase" value="Adatbázis létrehozása. Kérjük, várjon..."/>
-			<node name="updatingBooksDatabase" value="Adatbázis frissítése. Kérjük, várjon..."/>
-			<node name="loadingNetworkLibrary" value="Könyvtár megnyitása. Kérjük, várjon..." />
-			<node name="authentication" value="Bejelentkezés. Kérjük, várjon..." />
-			<node name="signOut" value="Kijelentkezés. Kérjük, várjon..." />
-			<node name="purchaseBook" value="Könyv vásárlása. Kérjük, várjon..." />
-			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
-			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
+			<node name="search" value="Keresés. Egy kis türelmet..."/>
+			<node name="loadingBook" value="Könyv megnyitása. Egy kis türelmet..."/>
+			<node name="loadingBookList" value="Könyvtár megnyitása. Egy kis türelmet..."/>
+			<node name="creatingBooksDatabase" value="Adatbázis létrehozása. Egy kis türelmet..."/>
+			<node name="updatingBooksDatabase" value="Adatbázis frissítése. Egy kis türelmet..."/>
+			<node name="loadingNetworkLibrary" value="Könyvtár megnyitása. Egy kis türelmet..." />
+			<node name="authentication" value="Bejelentkezés. Egy kis türelmet..." />
+			<node name="signOut" value="Kijelentkezés. Egy kis türelmet..." />
+			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..." />
+			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
+			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />
@@ -511,10 +511,10 @@
 			<node name="bookNotPurchased" value="A könyv nincs megvásárolva" />
 			<node name="downloadLimitExceeded" value="Túllépte a letöltési korlátot" />
 			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel" />
-			<node name="unsupportedOperation" value="nem támogaott művelet" />
-			<node name="notAnOPDS" toBeTranslated="true" value="This is not an OPDS catalog" />
-			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
-			<node name="cacheDirectoryError" toBeTranslated="true" value="Unable to create cache directory" />
+			<node name="unsupportedOperation" value="nem támogatott művelet" />
+			<node name="notAnOPDS" value="Ez nem OPSD formátumú katalógus" />
+			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban" />
+			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen" />
 		</node>
 		<node name="emptyCatalogBox">
 			<node name="title" value="Információ" />
@@ -533,18 +533,18 @@
 			<node name="register" value="Regisztráció" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" toBeTranslated="true" value="Custom catalog" />
-			<node name="catalogTitle" toBeTranslated="true" value="Title" />
-			<node name="catalogUrl" toBeTranslated="true" value="URL" />
-			<node name="catalogSummary" toBeTranslated="true" value="Summary" />
-			<node name="catalogTitleExample" toBeTranslated="true" value="E.g.: Project Gutenberg catalog" />
-			<node name="catalogUrlExample" toBeTranslated="true" value="E.g.: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" toBeTranslated="true" value="E.g.: Public domain books" />
-			<node name="titleIsEmpty" toBeTranslated="true" value="Title should be non-empty" />
-			<node name="urlIsEmpty" toBeTranslated="true" value="URL should be non-empty" />
-			<node name="invalidUrl" toBeTranslated="true" value="Invalid URL" />
-			<node name="titleAlreadyExists" toBeTranslated="true" value="Specified title is already in use" />
-			<node name="siteAlreadyExists" toBeTranslated="true" value="Specified site is already in use" />
+			<node name="title" value="Saját katalógus" />
+			<node name="catalogTitle" value="Cím" />
+			<node name="catalogUrl" value="URL" />
+			<node name="catalogSummary" value="Leírás" />
+			<node name="catalogTitleExample" value="Pl.: Project Gutenberg katalógus" />
+			<node name="catalogUrlExample" value="Pl.: http://m.gutenberg.org/" />
+			<node name="catalogSummaryExample" value="Pl.: Ingyenes könyvek" />
+			<node name="titleIsEmpty" value="A cím nem lehet üres" />
+			<node name="urlIsEmpty" value="Az URL nem lehet üres" />
+			<node name="invalidUrl" value="Érvényelen URL" />
+			<node name="titleAlreadyExists" value="A megadott cím már használatban van" />
+			<node name="siteAlreadyExists" value="A megadott oldal már használatban van" />
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Language filter" toBeTranslated="true" />
