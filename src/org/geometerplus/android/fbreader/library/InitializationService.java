@@ -22,8 +22,13 @@ package org.geometerplus.android.fbreader.library;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.HandlerThread;
+import android.os.Handler;
+import android.os.Message;
 
 public class InitializationService extends Service {
+	private static volatile HandlerThread myLibraryInitializer;
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -31,18 +36,43 @@ public class InitializationService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		final Thread libraryInitializer = new Thread(new Runnable() {
-			public void run() {
-				LibraryBaseActivity.LibraryInstance.synchronize();
+		System.err.println("onStart");
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				stopSelf();
 			}
-		});
-		libraryInitializer.setPriority(Thread.MIN_PRIORITY);
-		libraryInitializer.start();
+		};
+
+		myLibraryInitializer = new HandlerThread("LibraryInitializer") {
+			public void run() {
+				try {
+					LibraryBaseActivity.LibraryInstance.synchronize();
+				} finally {
+					myLibraryInitializer = null;
+					handler.sendMessage(handler.obtainMessage(0));
+				}
+			}
+		};
+		myLibraryInitializer.setPriority(Thread.MIN_PRIORITY);
+		myLibraryInitializer.start();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		onStart(intent, startId);
 		return 0;
+	}
+
+	@Override
+	public void onDestroy() {
+		System.err.println("onDestroy");
+		if (myLibraryInitializer != null) {
+			try {
+				myLibraryInitializer.getLooper().quit();
+			} catch (Exception e) {
+			}
+		}
+		super.onDestroy();
 	}
 }
