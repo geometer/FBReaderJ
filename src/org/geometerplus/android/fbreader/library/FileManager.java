@@ -20,7 +20,22 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
+import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,23 +44,15 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
-
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.formats.PluginCollection;
-
-import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
-import org.geometerplus.android.util.UIUtil;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public final class FileManager extends BaseActivity {
 	public static String LOG = "FileManager";
@@ -521,13 +528,14 @@ public final class FileManager extends BaseActivity {
 		}
 
 		private int compareByDate(ZLFile f0, ZLFile f1){
-//			if (f0.isDirectory() && !f1.isDirectory()){
-//				return -1;
-//			} else if (!f0.isDirectory() && f1.isDirectory()) {
-//				return 1;
-//			}
-			// TODO
-			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
+			if (f0.isDirectory() && !f1.isDirectory()){
+				return -1;
+			} else if (!f0.isDirectory() && f1.isDirectory()) {
+				return 1;
+			}
+			Date date0 = f0.getPhysicalFile().lastModified();
+			Date date1 = f1.getPhysicalFile().lastModified();
+			return date0.compareTo(date1);
 		}
 	}
 }
