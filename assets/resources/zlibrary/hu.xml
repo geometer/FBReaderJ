@@ -41,7 +41,7 @@
 		<node name="black" value="Fekete" />
 		<node name="white" value="Fehér" />
 		<node name="maroon" value="Gesztenye" />
-		<node name="olive" value="Olívzöld" />
+		<node name="olive" value="Olívazöld" />
 		<node name="navy" value="Tengerészkék" />
 		<node name="purple" value="Lila" />
 		<node name="teal" value="Türkiz" />
