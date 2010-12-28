@@ -307,3 +307,63 @@ class SortingDialog extends RadioButtonDialog{
 	}
 }
 
+class ViewChangeDialog extends RadioButtonDialog{
+	private static ZLResource myResource = ZLResource.resource("libraryView").getResource("viewBox");
+	private static String myTitle = myResource.getResource("title").getValue();
+	private static String[] myItems = ViewType.toStringArray();
+	private String myPath;
+
+	private static String VIEW_GROUP = "sortGroup";
+	private static String VIEW_OPTION_NAME = "sortOptionName";
+	private static int VIEW_DEF_VALUE = 0;
+	private static ZLIntegerOption myViewOption = new ZLIntegerOption(VIEW_GROUP, VIEW_OPTION_NAME, VIEW_DEF_VALUE);
+
+	public ViewChangeDialog(Context content, String path) {
+		super(content, myTitle, myItems, myViewOption.getValue());
+		myPath = path;
+	}
+
+	@Override
+	protected void itemSelected(DialogInterface dialog, int item){
+		super.itemSelected(dialog, item);
+		if (getOprionSortType().ordinal() != item){
+			myViewOption.setValue(item);
+			FileManager.myViewType = ViewType.values()[item];
+			
+			((Activity) myContext).startActivityForResult(
+					new Intent(myContext, FileManager.class)
+						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+					FileManager.CHILD_LIST_REQUEST
+			);
+		}
+	}
+	
+	public static ViewType getOprionSortType(){
+		return ViewType.values()[myViewOption.getValue()];
+	}
+
+	enum ViewType{
+		SIMPLE{
+			public String getName() {
+				return myResource.getResource("simple").getValue();
+			}
+		},
+		SKETCH{
+			public String getName() {
+				return myResource.getResource("sketch").getValue();
+			}
+		};
+
+		public abstract String getName();
+		
+		public static String[] toStringArray(){
+			ViewType[] sourse = values();
+			String[] result = new String[sourse.length];
+			for (int i = 0; i < sourse.length; i++){
+				result[i] = sourse[i].getName();
+			}
+			return result;
+		}
+	}
+}

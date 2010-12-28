@@ -122,4 +122,8 @@ public final class ZLPhysicalFile extends ZLFile {
 		}  
 		return dir.delete();
 	} 
+	
+	public Date lastModified(){
+		return new Date(myFile.lastModified());
+	}
 }
