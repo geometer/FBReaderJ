@@ -96,7 +96,8 @@ public final class FBView extends ZLTextView {
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
-			if (region instanceof ZLTextHyperlinkRegion) {
+			if (region instanceof ZLTextHyperlinkRegion ||
+				myReader.OpenDictionaryOnTapOption.getValue()) {
 				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			}
 			return true;

@@ -34,6 +34,11 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		if (DatabaseInstance == null || LibraryInstance == null) {
+			finish();
+			return;
+		}
+
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			if (runSearch(intent)) {

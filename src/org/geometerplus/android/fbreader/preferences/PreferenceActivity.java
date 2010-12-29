@@ -344,6 +344,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			displayScreen.Resource,
 			"dontTurnScreenOff"
 		));
+		/*
+		displayScreen.addPreference(new ZLBooleanPreference(
+			this,
+			androidApp.DontTurnScreenOffDuringChargingOption,
+			displayScreen.Resource,
+			"dontTurnScreenOffDuringCharging"
+		));
+		*/
 
 		/*
 		final Screen colorProfileScreen = createPreferenceScreen("colorProfile");
@@ -361,5 +369,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(scrollingPreferences.FlickOption, "flick");
 		scrollingScreen.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
+
+		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
+		dictionaryScreen.addPreference(new ZLBooleanPreference(
+			this,
+			fbReader.OpenDictionaryOnTapOption,
+			dictionaryScreen.Resource,
+			"runDictionaryOnTap"
+		));
 	}
 }

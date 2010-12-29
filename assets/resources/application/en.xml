@@ -512,6 +512,10 @@
 					<node name="50" value="While battery level is greater than 50 percent"/>
 					<node name="100" value="Never"/>
 				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode"/>
+				</node>
 			</node>
 			<node name="scrolling" value="Scrolling">
 				<node name="summary" value="How to scroll text"/>
@@ -526,6 +530,13 @@
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>
 					<node name="summaryOff" value="Scroll pages vertically"/>
+				</node>
+			</node>
+			<node name="dictionary" value="Dictionary">
+				<node name="summary" value="Dictionary settings"/>
+				<node name="runDictionaryOnTap" value="Open on finger tap">
+					<node name="summaryOn" value="Open dictionary on finger tap"/>
+					<node name="summaryOff" value="Select word on finger tap"/>
 				</node>
 			</node>
 		</node>
