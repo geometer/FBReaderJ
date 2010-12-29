@@ -331,5 +331,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingScreen.addOption(scrollingPreferences.AnimateOption, "animated");
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
+
+		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
+		dictionaryScreen.addPreference(new ZLBooleanPreference(
+			this,
+			fbReader.OpenDictionaryOnTapOption,
+			dictionaryScreen.Resource,
+			"runDictionaryOnTap"
+		));
 	}
 }
