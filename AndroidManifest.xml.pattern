@@ -66,7 +66,7 @@
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
 		<service android:name="org.geometerplus.android.fbreader.library.InitializationService" android:process=":library" />
-		<service android:name="org.geometerplus.android.fbreader.library.KillerService" android:process=":library" />
+		<receiver android:name="org.geometerplus.android.fbreader.library.KillerCallback" android:process=":library" />
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryTopLevelActivity" android:launchMode="singleTask" android:process=":library" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
