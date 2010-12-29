@@ -33,7 +33,6 @@ public class InitializationService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		System.err.println("onStart");
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
