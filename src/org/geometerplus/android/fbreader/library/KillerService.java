@@ -22,10 +22,11 @@ package org.geometerplus.android.fbreader.library;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Process;
 
-public class InitializationService extends Service {
+import org.geometerplus.fbreader.library.Library;
+
+public class KillerService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -33,25 +34,7 @@ public class InitializationService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		System.err.println("onStart");
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				stopSelf();
-			}
-		};
-
-		final Thread libraryInitializer = new Thread("LibraryInitializer") {
-			public void run() {
-				try {
-					LibraryBaseActivity.LibraryInstance.synchronize();
-				} finally {
-					handler.sendMessage(handler.obtainMessage(0));
-				}
-			}
-		};
-		libraryInitializer.setPriority(Thread.MIN_PRIORITY);
-		libraryInitializer.start();
+		Process.killProcess(Process.myPid());
 	}
 
 	@Override

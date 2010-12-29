@@ -60,7 +60,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 12;
+		final int currentVersion = 13;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -93,6 +93,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables10();
 					case 11:
 						updateTables11();
+					case 12:
+						updateTables12();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -127,7 +129,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected Book loadBook(long bookId) {
-		System.err.println("loading book info for " + bookId + " (" + myInstanceId + ")");
 		Book book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
@@ -140,7 +141,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected Book loadBookByFile(long fileId, ZLFile file) {
-		System.err.println("loading book info for " + file.getPath() + " (" + myInstanceId + ")");
 		if (fileId == -1) {
 			return null;
 		}
@@ -179,13 +179,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected Map<Long,Book> loadBooks(FileInfoSet infos) {
-		System.err.println("loading all books info for " + myInstanceId);
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_id,title,encoding,language FROM Books", null
 		);
-		final int count = cursor.getCount();
-		final HashMap<Long,Book> booksById = new HashMap<Long,Book>(count);
-		final HashMap<Long,Book> booksByFileId = new HashMap<Long,Book>(count);
+		final HashMap<Long,Book> booksById = new HashMap<Long,Book>();
+		final HashMap<Long,Book> booksByFileId = new HashMap<Long,Book>();
 		while (cursor.moveToNext()) {
 			final long id = cursor.getLong(0);
 			final long fileId = cursor.getLong(1);
@@ -204,7 +202,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor = myDatabase.rawQuery(
 			"SELECT author_id,name,sort_key FROM Authors", null
 		);
-		final HashMap<Long,Author> authorById = new HashMap<Long,Author>(cursor.getCount());
+		final HashMap<Long,Author> authorById = new HashMap<Long,Author>();
 		while (cursor.moveToNext()) {
 			authorById.put(cursor.getLong(0), new Author(cursor.getString(1), cursor.getString(2)));
 		}
@@ -236,7 +234,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor = myDatabase.rawQuery(
 			"SELECT series_id,name FROM Series", null
 		);
-		final HashMap<Long,String> seriesById = new HashMap<Long,String>(cursor.getCount());
+		final HashMap<Long,String> seriesById = new HashMap<Long,String>();
 		while (cursor.moveToNext()) {
 			seriesById.put(cursor.getLong(0), cursor.getString(1));
 		}
@@ -277,7 +275,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	protected long insertBookInfo(ZLFile file, String encoding, String language, String title) {
 		if (myInsertBookInfoStatement == null) {
 			myInsertBookInfoStatement = myDatabase.compileStatement(
-				"INSERT INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
+				"INSERT OR IGNORE INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
 			);
 		}
 		bindString(myInsertBookInfoStatement, 1, encoding);
@@ -308,7 +306,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"SELECT author_id FROM Authors WHERE name = ? AND sort_key = ?"
 			);
 			myInsertAuthorStatement = myDatabase.compileStatement(
-				"INSERT INTO Authors (name,sort_key) VALUES (?,?)"
+				"INSERT OR IGNORE INTO Authors (name,sort_key) VALUES (?,?)"
 			);
 			myInsertBookAuthorStatement = myDatabase.compileStatement(
 				"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index) VALUES (?,?,?)"
@@ -336,7 +334,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (!cursor.moveToNext()) {
 			return null;
 		}
-		final ArrayList<Author> list = new ArrayList<Author>(cursor.getCount());
+		final ArrayList<Author> list = new ArrayList<Author>();
 		do {
 			list.add(new Author(cursor.getString(0), cursor.getString(1)));
 		} while (cursor.moveToNext());
@@ -352,7 +350,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"SELECT tag_id FROM Tags WHERE parent_id = ? AND name = ?"
 			);
 			myCreateTagIdStatement = myDatabase.compileStatement(
-				"INSERT INTO Tags (parent_id,name) VALUES (?,?)"
+				"INSERT OR IGNORE INTO Tags (parent_id,name) VALUES (?,?)"
 			);
 		}	
 		{
@@ -399,7 +397,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void saveBookTagInfo(long bookId, Tag tag) {
 		if (myInsertBookTagStatement == null) {
 			myInsertBookTagStatement = myDatabase.compileStatement(
-				"INSERT INTO BookTag (book_id,tag_id) VALUES (?,?)"
+				"INSERT OR IGNORE INTO BookTag (book_id,tag_id) VALUES (?,?)"
 			);
 		}
 		myInsertBookTagStatement.bindLong(1, bookId);
@@ -427,7 +425,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (!cursor.moveToNext()) {
 			return null;
 		}
-		ArrayList<Tag> list = new ArrayList<Tag>(cursor.getCount());
+		ArrayList<Tag> list = new ArrayList<Tag>();
 		do {
 			list.add(getTagById(cursor.getLong(0)));
 		} while (cursor.moveToNext());
@@ -445,7 +443,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"SELECT series_id FROM Series WHERE name = ?"
 			);
 			myInsertSeriesStatement = myDatabase.compileStatement(
-				"INSERT INTO Series (name) VALUES (?)"
+				"INSERT OR IGNORE INTO Series (name) VALUES (?)"
 			);
 			myInsertBookSeriesStatement = myDatabase.compileStatement(
 				"INSERT OR REPLACE INTO BookSeries (book_id,series_id,book_index) VALUES (?,?,?)"
@@ -540,11 +538,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected Collection<FileInfo> loadFileInfos() {
-		System.err.println("loading all files info for " + myInstanceId);
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_id,name,parent_id,size FROM Files", null
 		);
-		HashMap<Long,FileInfo> infosById = new HashMap<Long,FileInfo>(cursor.getCount());
+		HashMap<Long,FileInfo> infosById = new HashMap<Long,FileInfo>();
 		while (cursor.moveToNext()) {
 			final long id = cursor.getLong(0);
 			final FileInfo info = createFileInfo(id,
@@ -624,7 +621,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void saveRecentBookIds(final List<Long> ids) {
 		if (mySaveRecentBookStatement == null) {
 			mySaveRecentBookStatement = myDatabase.compileStatement(
-				"INSERT INTO RecentBooks (book_id) VALUES (?)"
+				"INSERT OR IGNORE INTO RecentBooks (book_id) VALUES (?)"
 			);
 		}
 		executeAsATransaction(new Runnable() {
@@ -742,7 +739,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
 				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?,?)"
+					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?,?)"
 				);
 			}
 			statement = myInsertBookmarkStatement;
@@ -939,7 +936,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT file_name FROM Books", null
 		);
 		while (cursor.moveToNext()) {
-			fileInfos.check(ZLFile.createFileByPath(cursor.getString(0)).getPhysicalFile());
+			fileInfos.check(ZLFile.createFileByPath(cursor.getString(0)).getPhysicalFile(), false);
 		}
 		cursor.close();
 		fileInfos.save();
@@ -1028,7 +1025,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT file_name FROM Books", null
 		);
 		while (cursor.moveToNext()) {
-			infoSet.check(ZLFile.createFileByPath(cursor.getString(0)).getPhysicalFile());
+			infoSet.check(ZLFile.createFileByPath(cursor.getString(0)).getPhysicalFile(), false);
 		}
 		cursor.close();
 		infoSet.save();
@@ -1118,5 +1115,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables11() {
 		myDatabase.execSQL("UPDATE Files SET size = size + 1");
+	}
+
+	private void updateTables12() {
+		myDatabase.execSQL("DELETE FROM Files WHERE parent_id IN (SELECT file_id FROM Files WHERE name LIKE '%.epub')");
 	}
 }

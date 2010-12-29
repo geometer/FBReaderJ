@@ -39,7 +39,8 @@ public class Book {
 		}
 		book.loadLists();
 
-		final ZLPhysicalFile physicalFile = book.File.getPhysicalFile();
+		final ZLFile bookFile = book.File;
+		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
 		if (physicalFile == null) {
 			return book;
 		}
@@ -48,7 +49,7 @@ public class Book {
 		}
 
 		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
-		if (fileInfos.check(physicalFile)) {
+		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			return book;
 		}
 		fileInfos.save();
@@ -73,7 +74,7 @@ public class Book {
 			book.loadLists();
 		}
 
-		if (book != null && fileInfos.check(physicalFile)) {
+		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			return book;
 		}
 		fileInfos.save();

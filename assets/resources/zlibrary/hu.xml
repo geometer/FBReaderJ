@@ -41,7 +41,7 @@
 		<node name="black" value="Fekete" />
 		<node name="white" value="Fehér" />
 		<node name="maroon" value="Gesztenye" />
-		<node name="olive" value="Olívzöld" />
+		<node name="olive" value="Olívazöld" />
 		<node name="navy" value="Tengerészkék" />
 		<node name="purple" value="Lila" />
 		<node name="teal" value="Türkiz" />
@@ -71,7 +71,7 @@
 		<node name="lt" value="Litván" />
 		<node name="nl" value="Holland" />
 		<node name="no" value="Norvég" />
-		<node name="pl" toBeTranslated="true" value="Polish" />
+		<node name="pl" value="Lengyel" />
 		<node name="pt" value="Portugál" />
 		<node name="ru" value="Orosz" />
 		<node name="sv" value="Svéd" />
@@ -80,7 +80,7 @@
 		<node name="vi" value="Vietnami" />
 		<node name="zh" value="Kínai" />
 		<node name="other" value="Egyéb" />
-		<node name="multi" value="Multilanguage" toBeTranslated="true" />
+		<node name="multi" value="Többnyelvű" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="be" />
