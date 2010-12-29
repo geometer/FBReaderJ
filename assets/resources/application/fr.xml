@@ -454,6 +454,10 @@
 					-->
 					<node name="100" value="Jamais"/>
 				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="scrolling" value="Navigation">
 				<node name="summary" value="Modalités de défilement du texte"/>
@@ -476,6 +480,13 @@
 				<node name="horizontal" value="Défilement horizontal">
 					<node name="summaryOn" value="Défilement des pages horizontalement"/>
 					<node name="summaryOff" value="Défilement des pages verticalement"/>
+				</node>
+			</node>
+			<node name="dictionary" value="Dictionary" toBeTranslated="true">
+				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
+				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
+					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
+					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

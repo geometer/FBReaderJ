@@ -451,6 +451,10 @@
 					-->
 					<node name="100" value="从不"/>
 				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="scrolling" value="翻阅操作">
 				<node name="summary" value="如何滚动文字内容"/>
@@ -473,6 +477,13 @@
 				<node name="horizontal" value="横向翻阅">
 					<node name="summaryOn" value="横向翻阅" />
 					<node name="summaryOff" value="纵向翻阅" />
+				</node>
+			</node>
+			<node name="dictionary" value="Dictionary" toBeTranslated="true">
+				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
+				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
+					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
+					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

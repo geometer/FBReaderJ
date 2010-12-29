@@ -80,9 +80,15 @@ public final class FileManager extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (DatabaseInstance == null || LibraryInstance == null) {
+			finish();
+			return;
+		}
+
 //		setContentView(R.layout.library_tree_item);
 //		addContentView(new Gallery(this), new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		
+
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
 
