@@ -44,7 +44,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.android.fbreader.library.InitializationService;
+import org.geometerplus.android.fbreader.library.KillerService;
 
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
@@ -185,7 +185,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		stopService(new Intent(getApplicationContext(), InitializationService.class));
+		startService(new Intent(getApplicationContext(), KillerService.class));
 		ControlButtonPanel.restoreVisibilities();
 	}
 
