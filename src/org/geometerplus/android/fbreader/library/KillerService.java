@@ -24,8 +24,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.Process;
 
-import org.geometerplus.fbreader.library.Library;
-
 public class KillerService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {

@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.xml;
 
 import java.io.*;
 import java.util.*;
+
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.zlibrary.core.util.ZLArrayUtils;
@@ -215,7 +216,7 @@ final class ZLXMLParser {
 		final ZLMutableString attributeValue = myAttributeValue;
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final ZLMutableString entityName = myEntityName;
-		final Map<ZLMutableString,String> strings = new HashMap();
+		final Map<ZLMutableString,String> strings = new HashMap<ZLMutableString, String>();
 		final ZLStringMap attributes = new ZLStringMap();
 		String[] tagStack = new String[10];
 		int tagStackSize = 0;
