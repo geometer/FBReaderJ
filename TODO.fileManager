@@ -60,7 +60,7 @@ VR:
 	* Реализация layout файла для эскизного представления
 	DONE Параметры вида сохраняются между запусками										(28.12.10)
 
-	DONE ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception.
+	* ZLFile.createFileByPath("/sdcard/Books").getParent()  --> exception.
 	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
 	* в классе TextEditDialog разобраться с layout'ами
 
