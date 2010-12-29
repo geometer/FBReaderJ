@@ -372,52 +372,52 @@ public final class FileManager extends BaseActivity {
             final FileItem item = getItem(position);
             View view = null;
 
-            if (myViewType == ViewType.SIMPLE){
-            	view = createView(convertView, parent, item.getName(), item.getSummary());
-    			if (mySelectedBookPath != null &&
-    				mySelectedBookPath.equals(item.getFile().getPath())) {
-    				view.setBackgroundColor(0xff808080);
-    			} else {
-    				view.setBackgroundColor(0);
-    			}
-    			final ImageView coverView = getCoverView(view);
-    			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
-
-    			if (coverBitmap != null) {
-    				coverView.setImageBitmap(coverBitmap);
-    			} else {
-    				coverView.setImageResource(item.getIcon());
-    			}
-            } else if (myViewType == ViewType.SKETCH){
-        		view = (convertView != null) ?  convertView :
-        			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
-        		if (!myVeiwFlag){
-            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
-            		gallery.setAdapter(new ImageAdapter(FileManager.this));
-            		myVeiwFlag = true;
-        		}{
-            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
-            		ImageAdapter imageAdapter = (ImageAdapter)gallery.getAdapter();
-//            		imageAdapter.add(item);
-        		}
-        		
-            }
-            
-//        	view = createView(convertView, parent, item.getName(), item.getSummary());
-//			if (mySelectedBookPath != null &&
-//				mySelectedBookPath.equals(item.getFile().getPath())) {
-//				view.setBackgroundColor(0xff808080);
-//			} else {
-//				view.setBackgroundColor(0);
-//			}
-//			final ImageView coverView = getCoverView(view);
-//			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+//            if (myViewType == ViewType.SIMPLE){
+//            	view = createView(convertView, parent, item.getName(), item.getSummary());
+//    			if (mySelectedBookPath != null &&
+//    				mySelectedBookPath.equals(item.getFile().getPath())) {
+//    				view.setBackgroundColor(0xff808080);
+//    			} else {
+//    				view.setBackgroundColor(0);
+//    			}
+//    			final ImageView coverView = getCoverView(view);
+//    			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
 //
-//			if (coverBitmap != null) {
-//				coverView.setImageBitmap(coverBitmap);
-//			} else {
-//				coverView.setImageResource(item.getIcon());
-//			}
+//    			if (coverBitmap != null) {
+//    				coverView.setImageBitmap(coverBitmap);
+//    			} else {
+//    				coverView.setImageResource(item.getIcon());
+//    			}
+//            } else if (myViewType == ViewType.SKETCH){
+//        		view = (convertView != null) ?  convertView :
+//        			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
+//        		if (!myVeiwFlag){
+//            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
+//            		gallery.setAdapter(new ImageAdapter(FileManager.this));
+//            		myVeiwFlag = true;
+//        		}{
+//            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
+//            		ImageAdapter imageAdapter = (ImageAdapter)gallery.getAdapter();
+////            		imageAdapter.add(item);
+//        		}
+//        		
+//            }
+            
+        	view = createView(convertView, parent, item.getName(), item.getSummary());
+			if (mySelectedBookPath != null &&
+				mySelectedBookPath.equals(item.getFile().getPath())) {
+				view.setBackgroundColor(0xff808080);
+			} else {
+				view.setBackgroundColor(0);
+			}
+			final ImageView coverView = getCoverView(view);
+			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+
+			if (coverBitmap != null) {
+				coverView.setImageBitmap(coverBitmap);
+			} else {
+				coverView.setImageResource(item.getIcon());
+			}
 
             return view;
 		}

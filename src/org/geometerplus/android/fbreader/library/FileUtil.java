@@ -12,6 +12,7 @@ import java.util.List;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class FileUtil {
@@ -68,6 +69,15 @@ public class FileUtil {
 				getBooks(f, books);
 			}
 		}
+	}
+	
+	public static ZLFile getParent(ZLFile file){
+		if (file.isDirectory()){
+			String path = file.getPath();
+			path = path.substring(0, path.lastIndexOf("/"));
+			return ZLFile.createFileByPath(path);
+		}
+		return ZLFile.createFileByPath(file.getParent().getPath());
 	}
 }
 
