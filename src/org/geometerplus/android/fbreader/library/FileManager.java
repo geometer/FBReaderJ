@@ -32,7 +32,6 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -50,8 +49,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
@@ -403,7 +400,7 @@ public final class FileManager extends BaseActivity {
         			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
         		if (!myVeiwFlag){
             		myGallery = (Gallery)view.findViewById(R.id.gallery);
-            		GalleryAdapter galleryAdapter = new GalleryAdapter(FileManager.this);
+            		GalleryAdapter galleryAdapter = new GalleryAdapter();
             		myGallery.setAdapter(galleryAdapter);
             		myGallery.setOnItemClickListener(galleryAdapter);
             		myVeiwFlag = true;
@@ -474,8 +471,7 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
-	public class GalleryAdapter extends BaseAdapter implements OnItemClickListener {
-        private Context myContext;
+	private class GalleryAdapter extends BaseAdapter implements OnItemClickListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 
 		public synchronized void clear() {
@@ -490,10 +486,6 @@ public final class FileManager extends BaseActivity {
 			myItems.remove(fileItem);
 		}
 
-        public GalleryAdapter(Context c) {
-            myContext = c;
-        }
-
         public int getCount() {
             return myItems.size();
         }
@@ -505,8 +497,7 @@ public final class FileManager extends BaseActivity {
         public long getItemId(int position) {
             return position;
         }
-        
-        @Override
+
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			runItem(myItems.get(position));
 		}
