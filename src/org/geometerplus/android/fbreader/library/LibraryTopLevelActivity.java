@@ -47,8 +47,9 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
+		DatabaseInstance = SQLiteBooksDatabase.Instance();
+		if (DatabaseInstance == null) {
+			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 		if (LibraryInstance == null) {
 			LibraryInstance = new Library();
