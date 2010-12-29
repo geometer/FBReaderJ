@@ -116,6 +116,12 @@ public class Book {
 		File = file;
 	}
 
+	public void reloadInfo() {
+		if (readMetaInfo()) {
+			save();
+		}
+	}
+
 	boolean readMetaInfo() {
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
 		if ((plugin == null) || !plugin.readMetaInfo(this)) {
