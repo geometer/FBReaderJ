@@ -45,18 +45,19 @@ public final class Library {
 	private LibraryTree mySearchResult = new RootTree();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
+	private volatile boolean myInterrupted = false;
 
 	public Library() {
 	}
 
 	public boolean hasState(int state) {
-		return myState >= state;
+		return myState >= state || myInterrupted;
 	}
 
 	public void waitForState(int state) {
-		while (myState < state) {
+		while (myState < state && !myInterrupted) {
 			synchronized(this) {
-				if (myState < state) {
+				if (myState < state && !myInterrupted) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -96,11 +97,6 @@ public final class Library {
 		Map<Long,Book> savedBooks,
 		boolean doReadMetaInfo
 	) {
-		System.gc();
-		System.gc();
-		//Log.println(file.getPath());
-		//Log.println("Free: " + Runtime.getRuntime().freeMemory() + " of " + Runtime.getRuntime().totalMemory());
-		//Log.flush();
 		Book book = getBook(file, fileInfos, savedBooks, doReadMetaInfo);
 		if (book != null) {
 			myBooks.add(book);
@@ -126,7 +122,7 @@ public final class Library {
 			boolean reloadMetaInfo = false; 
 			if (myUpdatedFiles.contains(physicalFile)) {
 				reloadMetaInfo = true;
-			} else if (!fileInfos.check(physicalFile)) {
+			} else if (!fileInfos.check(physicalFile, physicalFile != bookFile)) {
 				reloadMetaInfo = true;
 				myUpdatedFiles.add(physicalFile);
 			}
@@ -173,7 +169,9 @@ public final class Library {
 		final Map<Long,Book> savedBooks = BooksDatabase.Instance().loadBooks(fileInfos);
 
 		for (ZLPhysicalFile file : physicalFilesList) {
-			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file));
+			// TODO: better value for this flag
+			final boolean flag = !"epub".equals(file.getExtension());
+			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file, flag));
 			file.setCached(false);
 		}
 		final Book helpBook = getBook(getHelpFile(), fileInfos, savedBooks, false);
@@ -228,22 +226,14 @@ public final class Library {
 		return tagTree;
 	}
 
-	//private PrintWriter Log;
-
 	private void build() {
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
 		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 		final HashMap<Long,Book> bookById = new HashMap<Long,Book>();
 
-		/*
-		try {
-			Log = new PrintWriter("/sdcard/Log");
-		} catch (Exception e) {
-		}
-		*/
 		collectBooks();
-		//Log.close();
+
 		for (Book book : myBooks) {
 			bookById.put(book.getId(), book);
 			List<Author> authors = book.authors();
@@ -294,7 +284,10 @@ public final class Library {
 				myFavorites.createBookSubTree(book, true);
 			}
 		}
+
 		myFavorites.sortAllChildren();
+		myLibraryByAuthor.sortAllChildren();
+		myLibraryByTag.sortAllChildren();
 
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
@@ -303,16 +296,18 @@ public final class Library {
 				}
 			}
 		});
+
+		myState = STATE_FULLY_INITIALIZED;
 	}
 
 	public synchronized void synchronize() {
 		if (myState == STATE_NOT_INITIALIZED) {
-			build();
-
-			myLibraryByAuthor.sortAllChildren();
-			myLibraryByTag.sortAllChildren();
-
-			myState = STATE_FULLY_INITIALIZED;
+			try {
+				myInterrupted = false;
+				build();
+			} catch (Throwable t) {
+				myInterrupted = true;
+			}
 			notifyAll();
 		}
 	}
