@@ -1,7 +1,7 @@
 VR:
 	DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
 	* Bug: Удаление текущей книги, все хорошо -файл удаляется физически, однако книга все равно подгружается при повторном включении программы 
-		NP: при повторном включении? или все-таки при выходе из библиотеки? (fbreader-то продолжает работать, правда?
+*		NP: при повторном включении? или все-таки при выходе из библиотеки? (fbreader-то продолжает работать, правда?
 	DONE Bug: y *.epub FormatPlugin не выдает катринку. 
 	* Там теперь после стирания книги и выхода наверх из каталога запускается снова сбор информации о файлах (метод startUpdate); есть опасность, что 2 треда, запущенные из startUpdate работают одновременно; надо ее избежать
 	* Пока идет update, надо показывать progress-колечко в правом верхнем углу экрана
@@ -60,7 +60,7 @@ VR:
 	* Реализация layout файла для эскизного представления
 	DONE Параметры вида сохраняются между запусками										(28.12.10)
 
-	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.
+	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.	(29.12.10)
 	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
 	* в классе TextEditDialog разобраться с layout'ами
 

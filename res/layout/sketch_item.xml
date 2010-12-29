@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  >
+	<ImageView
+		android:id="@+id/sketch_item_image"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	/>	
+	<TextView
+		android:id="@+id/sketch_item_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+	/>
+	<TextView
+		android:id="@+id/sketch_item_summary"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="5dip"
+		android:layout_below="@id/library_tree_item_name"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+	/>
+</LinearLayout>

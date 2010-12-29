@@ -50,6 +50,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -57,6 +58,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public final class FileManager extends BaseActivity {
 	public static String LOG = "FileManager";
@@ -87,7 +89,8 @@ public final class FileManager extends BaseActivity {
 		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		mySortType = SortingDialog.getOprionSortType();
-		myViewType = ViewChangeDialog.getOprionSortType();
+		myViewType = ViewChangeDialog.getOprionSortType(); // TODO
+//		myViewType = ViewType.SIMPLE; 
 		
 		if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
@@ -249,15 +252,15 @@ public final class FileManager extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (myPath != null){
+//        if (myPath != null){				// TODO
         	if (myInsertPath != null){
             	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
             	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
             }
         	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
         	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);
-
-        }
+        	
+//        }
         return true;
     }
 
@@ -307,6 +310,7 @@ public final class FileManager extends BaseActivity {
     
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
+		private Gallery myGallery; 
 
 		public synchronized void clear() {
 			myItems.clear();
@@ -372,52 +376,54 @@ public final class FileManager extends BaseActivity {
             final FileItem item = getItem(position);
             View view = null;
 
-//            if (myViewType == ViewType.SIMPLE){
-//            	view = createView(convertView, parent, item.getName(), item.getSummary());
-//    			if (mySelectedBookPath != null &&
-//    				mySelectedBookPath.equals(item.getFile().getPath())) {
-//    				view.setBackgroundColor(0xff808080);
-//    			} else {
-//    				view.setBackgroundColor(0);
-//    			}
-//    			final ImageView coverView = getCoverView(view);
-//    			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
-//
-//    			if (coverBitmap != null) {
-//    				coverView.setImageBitmap(coverBitmap);
-//    			} else {
-//    				coverView.setImageResource(item.getIcon());
-//    			}
-//            } else if (myViewType == ViewType.SKETCH){
-//        		view = (convertView != null) ?  convertView :
-//        			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
-//        		if (!myVeiwFlag){
-//            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
-//            		gallery.setAdapter(new ImageAdapter(FileManager.this));
-//            		myVeiwFlag = true;
-//        		}{
-//            		Gallery gallery = (Gallery)view.findViewById(R.id.gallery);
-//            		ImageAdapter imageAdapter = (ImageAdapter)gallery.getAdapter();
-////            		imageAdapter.add(item);
-//        		}
-//        		
-//            }
-            
-        	view = createView(convertView, parent, item.getName(), item.getSummary());
-			if (mySelectedBookPath != null &&
-				mySelectedBookPath.equals(item.getFile().getPath())) {
-				view.setBackgroundColor(0xff808080);
-			} else {
-				view.setBackgroundColor(0);
-			}
-			final ImageView coverView = getCoverView(view);
-			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+            if (myViewType == ViewType.SIMPLE){
+            	view = createView(convertView, parent, item.getName(), item.getSummary());
+    			if (mySelectedBookPath != null &&
+    				mySelectedBookPath.equals(item.getFile().getPath())) {
+    				view.setBackgroundColor(0xff808080);
+    			} else {
+    				view.setBackgroundColor(0);
+    			}
+    			final ImageView coverView = getCoverView(view);
+    			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
 
-			if (coverBitmap != null) {
-				coverView.setImageBitmap(coverBitmap);
-			} else {
-				coverView.setImageResource(item.getIcon());
-			}
+    			if (coverBitmap != null) {
+    				coverView.setImageBitmap(coverBitmap);
+    			} else {
+    				coverView.setImageResource(item.getIcon());
+    			}
+            } else if (myViewType == ViewType.SKETCH){
+        		view = (convertView != null) ?  convertView :
+        			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
+        		if (!myVeiwFlag){
+            		myGallery = (Gallery)view.findViewById(R.id.gallery);
+            		GalleryAdapter galleryAdapter = new GalleryAdapter(FileManager.this);
+            		myGallery.setAdapter(galleryAdapter);
+            		myGallery.setOnItemClickListener(galleryAdapter);
+            		myVeiwFlag = true;
+        		} 
+    			GalleryAdapter imageAdapter = (GalleryAdapter)myGallery.getAdapter();
+        		imageAdapter.add(item);
+       			imageAdapter.notifyDataSetChanged();
+        		Log.v(LOG, "imageAdapter - 4");
+       			
+            }
+            
+//        	view = createView(convertView, parent, item.getName(), item.getSummary());
+//			if (mySelectedBookPath != null &&
+//				mySelectedBookPath.equals(item.getFile().getPath())) {
+//				view.setBackgroundColor(0xff808080);
+//			} else {
+//				view.setBackgroundColor(0);
+//			}
+//			final ImageView coverView = getCoverView(view);
+//			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
+//
+//			if (coverBitmap != null) {
+//				coverView.setImageBitmap(coverBitmap);
+//			} else {
+//				coverView.setImageResource(item.getIcon());
+//			}
 
             return view;
 		}
@@ -462,99 +468,70 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
-//	public class ImageAdapter extends BaseAdapter {
-//        int mGalleryItemBackground;
-//        private Context mContext;
-//
-//		private List<FileItem> myItems = new ArrayList<FileItem>();
-//
-//		public synchronized void clear() {
-//			myItems.clear();
-//		}
-//
-//		public synchronized void add(FileItem item){
-//			myItems.add(item);
-//		}
-//		
-//		public synchronized void remove(FileItem fileItem) {
-//			myItems.remove(fileItem);
-//		}
-//
-//        public ImageAdapter(Context c) {
-//            mContext = c;
-//        }
-//
-//        public int getCount() {
-//            return myItems.size();
-//        }
-//
-//        public FileItem getItem(int position) {
-//            return myItems.get(position);
-//        }
-//
-//        public long getItemId(int position) {
-//            return position;
-//        }
-//
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            final FileItem item = getItem(position);
-//            
-//        	ImageView i = new ImageView(mContext);
-//            i.setImageResource(item.getIcon());
-//            
-//            i.setLayoutParams(new Gallery.LayoutParams(200, 300));
-//            i.setScaleType(ImageView.ScaleType.FIT_XY);
-//            return i;
-//        }
-//    }
+	public class GalleryAdapter extends BaseAdapter implements OnItemClickListener {
+        private Context myContext;
+		private List<FileItem> myItems = new ArrayList<FileItem>();
 
-	
-	public class ImageAdapter extends BaseAdapter {
-        int mGalleryItemBackground;
-        private Context mContext;
+		public synchronized void clear() {
+			myItems.clear();
+		}
 
-        private Integer[] mImageIds = {
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book,
-                R.drawable.ic_list_library_book
-        };
+		public synchronized void add(FileItem item){
+			myItems.add(item);
+		}
+		
+		public synchronized void remove(FileItem fileItem) {
+			myItems.remove(fileItem);
+		}
 
-        public ImageAdapter(Context c) {
-            mContext = c;
+        public GalleryAdapter(Context c) {
+            myContext = c;
         }
 
         public int getCount() {
-            return mImageIds.length;
+            return myItems.size();
         }
 
-        public Object getItem(int position) {
-            return position;
+        public FileItem getItem(int position) {
+            return myItems.get(position);
         }
 
         public long getItemId(int position) {
             return position;
         }
+        
+        @Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			runItem(myItems.get(position));
+		}
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView i = new ImageView(mContext);
+            final View view = (convertView != null) ?  convertView :
+    			LayoutInflater.from(parent.getContext()).inflate(R.layout.sketch_item, parent, false);
+            
+            final FileItem fileItem = getItem(position);
 
-            i.setImageResource(mImageIds[position]);
-            i.setLayoutParams(new Gallery.LayoutParams(200, 300));
-            i.setScaleType(ImageView.ScaleType.FIT_XY);
 
-            return i;
+            ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
+			imageView.setImageResource(fileItem.getIcon());
+//			imageView.setLayoutParams(new Gallery.LayoutParams(100, 200));
+//			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            
+            TextView nameTextView = (TextView)view.findViewById(R.id.sketch_item_name);
+    		nameTextView.setText(fileItem.getName());
+
+    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
+            summaryTextView.setText(fileItem.getSummary());
+            
+        	// FIXME problem with book picture
+//    		final Bitmap coverBitmap = getCoverBitmap(fileItem.getCover());
+//			if (coverBitmap != null) {
+//				imageView.setImageBitmap(coverBitmap);
+//			} else {
+//				imageView.setImageResource(fileItem.getIcon());
+//			}
+            
+            return view;
         }
     }
 }
