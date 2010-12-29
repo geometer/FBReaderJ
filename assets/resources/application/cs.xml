@@ -445,6 +445,10 @@
 					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
 					<node name="100" value="Nikdy"/>
 				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="scrolling" value="Posouvání">
 				<node name="summary" value="Jak posouvat text"/>

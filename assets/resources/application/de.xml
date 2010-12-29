@@ -446,6 +446,10 @@
 					<node name="50" value="Wenn der Akkuladezustand größer 50 Prozent ist."/>
 					<node name="100" value="Nie"/>
 				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="scrolling" value="Blättern">
 				<node name="summary" value="Die Art des Umblätterns festlegen."/>

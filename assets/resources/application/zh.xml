@@ -451,6 +451,10 @@
 					-->
 					<node name="100" value="从不"/>
 				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="scrolling" value="翻阅操作">
 				<node name="summary" value="如何滚动文字内容"/>

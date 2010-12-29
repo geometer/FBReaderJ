@@ -4,6 +4,7 @@ DONE Reload book info from file
 * prevent from sleep if battery is in charging mode
 * Open the help file if the current book is deleted from library
 DONE don't run several initialization threads in the same time
+* lib.ololo.cc
 
 After 0.99:
 * Partial loading from database

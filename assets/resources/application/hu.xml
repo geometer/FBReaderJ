@@ -32,7 +32,7 @@
 			<node name="summary" value="Az eszközbe illesztett memóriakártya"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader Könyvtár">
-			<node name="summary" value="FBReader könyvek helye"/>
+			<node name="summary" value="Az FBReader-könyvek helye"/>
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Helyi keresés"/>
@@ -162,7 +162,7 @@
 		<node name="hyperlinksOnlyMode" value="Standard mód"/>
 		<node name="dictionaryMode" value="Szótár mód"/>
 		<node name="navigate" value="Navigáció">
-			<node name="toc" value="Tartalomegyzék"/>
+			<node name="toc" value="Tartalomjegyzék"/>
 			<node name="gotoHome" value="A dokumentum elejére"/>
 			<node name="gotoPageNumber" value="Ugrás oldalszámra..."/>
 			<node name="gotoSectionStart" value="Ugrás a szövegrész elejére"/>
@@ -274,13 +274,13 @@
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Első sor behúzása"/>
-				<node name="spaceBefore" value="Space Before"/>
-				<node name="spaceAfter" value="Space After"/>
-				<node name="leftIndent" value="Left Indent"/>
-				<node name="rightIndent" value="Right Indent"/>
+				<node name="spaceBefore" value="Térköz előtte"/>
+				<node name="spaceAfter" value="Térköz utána"/>
+				<node name="leftIndent" value="Bal oldali behúzás"/>
+				<node name="rightIndent" value="Jobb oldali behúzás"/>
 				<node name="more" value="További formázás">
 					<node name="summary" value="Különálló beállítások címekhez, mottókhoz stb."/>
-					<node name="Regular Paragraph" value="Bekezdés">
+					<node name="Regular Paragraph" value="Normál bekezdés">
 						<node name="summary" value=""/>
 					</node>
 					<node name="Title" value="Cím">
@@ -307,7 +307,7 @@
 					<node name="Verse" value="Verssor">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Preformatted text" value="Formázott szöveg">
+					<node name="Preformatted text" value="Előformázott szöveg">
 						<node name="summary" value=""/>
 					</node>
 					<node name="Image" value="Kép">
@@ -331,7 +331,7 @@
 					<node name="Emphasis" value="Kiemelés">
 						<node name="summary" value=""/>
 					</node>
-					<node name="Strong" value="Hangsúlyos">
+					<node name="Strong" value="Hangsúly">
 						<node name="summary" value=""/>
 					</node>
 					<node name="Subscript" value="Alsó index">
@@ -392,10 +392,10 @@
 			</node>
 			<node name="margins" value="Margók">
 				<node name="summary" value="Szövegmargók"/>
-				<node name="left" value="Bal"/>
-				<node name="right" value="Jobb"/>
-				<node name="top" value="Felső"/>
-				<node name="bottom" value="Alsó"/>
+				<node name="left" value="Bal margó"/>
+				<node name="right" value="Jobb margó"/>
+				<node name="top" value="Felső margó"/>
+				<node name="bottom" value="Alsó margó"/>
 			</node>
 			<node name="scrollBar" value="Gördítősáv">
 				<node name="summary" value="A gördítősáv és a lábléc beállításai"/>
@@ -406,12 +406,12 @@
 					<node name="showAsFooter" value="Vízszintes lábléc"/>
 				</node>
 				<node name="footerHeight" value="Lábléc magassága"/>
-				<node name="footerColor" value="Lábléc szíbe"/>
+				<node name="footerColor" value="Lábléc színe"/>
 				<node name="tocMarks" value="Tartalomjegyzék jelzése">
 					<node name="summaryOn" value="Mutassa a tartalomjegyzék elemeit a láblécen"/>
 					<node name="summaryOff" value="Ne mutassa a tartalomjegyzék elemeit a láblécen"/>
 				</node>
-				<node name="footerLongTap" value="Lábléc hosszú érintés">
+				<node name="footerLongTap" value="Lábléc hosszú érintése">
 					<node name="longTapRevert" value="Pozíció visszaállítása"/>
 					<node name="longTapNavigate" value="Ugrás pozícióra"/>
 				</node>
@@ -440,37 +440,35 @@
 					<node name="summaryOff" value="Kikapcsolva"/>
 				</node>
 				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
-					<node name="0" value="Mindig (automatikusan)"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<!--
-					Please, update this translation to avoid % sign. Resources with % sign
-					causes crash on cyanogenmod firmware (due a bug in cyanogenmod)
-					<node name="25" value="Ha az akku töltöttsége 25% alatti" />
-					<node name="50" value="Ha az akku töltöttsége 50% alatti" />
-					-->
-					<node name="100" value="Soha" />
+					<node name="0" value="Soha"/>
+					<node name="25" value="25 százalék akku töltöttség alatt" />
+					<node name="50" value="50 százalék akku töltöttség alatt" />
+					<node name="100" value="Mindig (automatikusan)" />
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
 				</node>
 			</node>
-			<node name="scrolling" value="Görgetés">
+			<node name="scrolling" value="Lapozás">
 				<node name="summary" value="Szöveg görgetésének beállításai"/>
-				<node name="flick" value="Kinetikus görgetés">
+				<node name="flick" value="Kinetikus lapozás">
 					<node name="summaryOn" value="Lapozás ujjmozdulatra"/>
 					<node name="summaryOff" value="Lapozás érintésre"/>
 				</node>
-				<node name="volumeKeys" value="Görgetés a hangerő gombokkal">
-					<node name="summaryOn" value="Hangerő gombok használata görgetéshez"/>
+				<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
+					<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>
 					<node name="summaryOff" value="A hangerő gombok a hangerőt állítják"/>
 				</node>
-				<node name="invertVolumeKeys" value="Fordított görgetés a hangerő gombokal">
+				<node name="invertVolumeKeys" value="Fordított lapozás a hangerő gombokal">
 					<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
 					<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
 				</node>
-				<node name="animated" value="Animált görgetés">
+				<node name="animated" value="Animált lapozás">
 					<node name="summaryOn" value="Finomabb görgetés"/>
-					<node name="summaryOff" value="Gyorsabb görgetés"/>
+					<node name="summaryOff" value="Gyorsabb lapozás"/>
 				</node>
-				<node name="horizontal" value="Vízszintes görgetés">
+				<node name="horizontal" value="Vízszintes lapozás">
 					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>
 					<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>
 				</node>
@@ -518,13 +516,13 @@
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />
-			<node name="purchaseNotEnoughMoney" value="Nincs elegendő pént" />
+			<node name="purchaseNotEnoughMoney" value="Nincs elegendő pénz a számláján" />
 			<node name="purchaseMissingBook" value="Nincs ilyen könyv" />
-			<node name="purchaseAlreadyPurchased" value="Már megvásárolva" />
+			<node name="purchaseAlreadyPurchased" value="Már megvásárolta a könyvet" />
 			<node name="bookNotPurchased" value="A könyv nincs megvásárolva" />
 			<node name="downloadLimitExceeded" value="Túllépte a letöltési korlátot" />
 			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel" />
-			<node name="unsupportedOperation" value="nem támogatott művelet" />
+			<node name="unsupportedOperation" value="Nem támogatott művelet" />
 			<node name="notAnOPDS" value="Ez nem OPSD formátumú katalógus" />
 			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban" />
 			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen" />
@@ -573,8 +571,8 @@
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Android Market elérése sikertelen. Kérjük, telepítse manuálisan a következőt: %s "/>
-		<node name="textNotFound" value="A keresett szöveg sajnos nem található a könyvben"/>
-		<node name="bookNotFound" value="A keresett könyv sajnos nem található meg a könyvtárban"/>
+		<node name="textNotFound" value="A keresett szöveg nem található a könyvben"/>
+		<node name="bookNotFound" value="A keresett könyv nem található meg a könyvtárban"/>
 		<node name="bookmarkNotFound" value="Sajnos nem találhatóak könyvjelzők"/>
 		<node name="cannotOpenBook" value="A könyv sajnos jelenleg nem nyitható meg"/>
 		<node name="dictionaryIsNotInstalled" value="Sajnos nincs telepítve szótár"/>

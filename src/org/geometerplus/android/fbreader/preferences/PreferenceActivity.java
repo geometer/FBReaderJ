@@ -312,6 +312,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			displayScreen.Resource,
 			"dontTurnScreenOff"
 		));
+		/*
+		displayScreen.addPreference(new ZLBooleanPreference(
+			this,
+			androidApp.DontTurnScreenOffDuringChargingOption,
+			displayScreen.Resource,
+			"dontTurnScreenOffDuringCharging"
+		));
+		*/
 
 		/*
 		final Screen colorProfileScreen = createPreferenceScreen("colorProfile");
