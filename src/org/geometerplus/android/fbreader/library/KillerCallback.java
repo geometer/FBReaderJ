@@ -19,31 +19,14 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.os.Process;
 
-public class KillerService extends Service {
+public class KillerCallback extends BroadcastReceiver {
 	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
-
-	@Override
-	public void onStart(Intent intent, int startId) {
-		stopSelf();
-	}
-
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		onStart(intent, startId);
-		return 0;
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	public void onReceive(Context context, Intent intent) {
 		Process.killProcess(Process.myPid());
 	}
 }
