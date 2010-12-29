@@ -7,6 +7,8 @@
 			<node name="yes" value="Да"/>
 			<node name="no" value="Нет"/>
 			<node name="apply" value="Применить"/>
+			<node name="rename" value="Переименовать"/>
+			<node name="create" value="Создать"/>		
 		</node>
 		<node name="networkError">
 			<node name="title" value="Ошибка при работе с сетью" />

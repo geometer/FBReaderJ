@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import android.R.layout;
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
