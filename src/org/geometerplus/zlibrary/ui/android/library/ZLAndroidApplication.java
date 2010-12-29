@@ -48,7 +48,9 @@ public class ZLAndroidApplication extends Application {
 	}
 
 	public boolean isAlwaysShowStatusBar() {
-		return Build.DISPLAY != null && Build.DISPLAY.contains("simenxie");
+		return
+			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
+			"PD_Novel".equals(Build.MODEL);
 	}
 
 	ZLAndroidApplicationWindow myMainWindow;
