@@ -24,8 +24,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.Process;
 
-import org.geometerplus.fbreader.library.Library;
-
 public class KillerService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -34,12 +32,18 @@ public class KillerService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		Process.killProcess(Process.myPid());
+		stopSelf();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		onStart(intent, startId);
 		return 0;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Process.killProcess(Process.myPid());
 	}
 }
