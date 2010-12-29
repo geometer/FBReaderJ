@@ -1,7 +1,8 @@
 0.99:
 DONE Run 'install ColorDict' dialog
 DONE Synchronize resources
-* Option for opening ColorDict immediately by finger tap
+DONE Option for opening ColorDict immediately by finger tap
+* Synchronize resources
 
 After 0.99:
 * More convenient mode changing
