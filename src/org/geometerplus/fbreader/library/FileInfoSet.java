@@ -96,7 +96,7 @@ public final class FileInfoSet {
 		});
 	}
 
-	public boolean check(ZLPhysicalFile file) {
+	public boolean check(ZLPhysicalFile file, boolean processChildren) {
 		if (file == null) {
 			return true;
 		}
@@ -106,9 +106,13 @@ public final class FileInfoSet {
 			return true;
 		} else {
 			info.FileSize = fileSize;
-			removeChildren(info);
-			myInfosToSave.add(info);
-			addChildren(file);
+			if (processChildren) {
+				removeChildren(info);
+				myInfosToSave.add(info);
+				addChildren(file);
+			} else {
+				myInfosToSave.add(info);
+			}
 			return false;
 		}
 	}
