@@ -158,7 +158,7 @@ public final class FileManager extends BaseActivity {
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
 				Log.v(LOG, "MOVE_FILE_ITEM_ID");
-				myInsertPathStatic = fileItem.getFile().getPath();
+				myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
 				refresh();
 				return true;
 //			case RENAME_FILE_ITEM_ID:
