@@ -312,17 +312,16 @@ public final class FileManager extends BaseActivity {
 
 			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
 			Collections.sort(children, new FileComparator());
-			for (ZLFile file : children) {
+			for (final ZLFile file : children) {
 				if (Thread.currentThread().isInterrupted()) {
 					break;
 				}
 				if (file.isDirectory() || file.isArchive() ||
 					PluginCollection.Instance().getPlugin(file) != null) {
-					final FileListAdapter adapter = (FileListAdapter)getListAdapter();
-					adapter.add(new FileItem(file));
-//					adapter.notifyDataSetChanged();	// TODO question!
 					runOnUiThread(new Runnable() {
 						public void run() {
+							final FileListAdapter adapter = (FileListAdapter)getListAdapter();
+							adapter.add(new FileItem(file));
 							adapter.notifyDataSetChanged();
 						}
 					});
