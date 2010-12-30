@@ -45,6 +45,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,6 +123,7 @@ public final class FileManager extends BaseActivity {
 		if (myInsertPathStatic != null)
 			setTitle(myResource.getResource("moveTitle").getValue());
 	}
+
 
 	private void startUpdate() {
 		new Thread(
@@ -243,12 +245,11 @@ public final class FileManager extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+    	Log.v(LOG, "onCreateOptionsMenu");
+    	super.onCreateOptionsMenu(menu);
         if (myPath != null){				// TODO
-        	if (myInsertPathStatic != null){
-            	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
-            	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
-            }
+        	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
+        	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
         	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
         	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);	
         }
@@ -262,6 +263,22 @@ public final class FileManager extends BaseActivity {
         return item;
     }
     
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		Log.v(LOG, "onPrepareOptionsMenu");
+		
+		super.onPrepareOptionsMenu(menu);
+		if (myInsertPathStatic == null){
+			menu.findItem(0).setVisible(false).setEnabled(false);
+			menu.findItem(1).setVisible(false).setEnabled(false);
+        }else{
+        	menu.findItem(0).setVisible(true).setEnabled(true);
+			menu.findItem(1).setVisible(true).setEnabled(true);
+        }
+		
+		return true;
+	}
+
     
     private Runnable messFileMoved = new Runnable() {
 		public void run() {
