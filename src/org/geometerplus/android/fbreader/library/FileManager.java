@@ -91,18 +91,14 @@ public final class FileManager extends BaseActivity {
 //		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		mySortType = SortingDialog.getOprionSortType();
 		myViewType = ViewChangeDialog.getOprionSortType(); // TODO
-		
+
 		if (myPath == null) {
-			setTitle(myResource.getResource("fileTree").getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 //			addItem("/", "fileTreeRoot");	for alex version
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
-			setTitle(myPath);
 			startUpdate();
 		}
-		if (myInsertPathStatic != null)
-			setTitle(myResource.getResource("moveTitle").getValue());
 
 		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
@@ -120,10 +116,19 @@ public final class FileManager extends BaseActivity {
 			((FileListAdapter)getListAdapter()).clear();
 			startUpdate();
 		}
-		if (myInsertPathStatic != null)
-			setTitle(myResource.getResource("moveTitle").getValue());
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (myInsertPathStatic != null) {
+			setTitle(myResource.getResource("moveTitle").getValue());
+		} else if (myPath == null) {
+			setTitle(myResource.getResource("fileTree").getValue());
+		} else {
+			setTitle(myPath);
+		}
+	}
 
 	private void startUpdate() {
 		new Thread(
