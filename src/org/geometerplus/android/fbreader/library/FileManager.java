@@ -59,7 +59,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public final class FileManager extends BaseActivity {
 	public static String LOG = "FileManager";
 	
-	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
+//	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
 	
 	private static final int DELETE_FILE_ITEM_ID = 10;
 //	private static final int RENAME_FILE_ITEM_ID = 11; //FIXME delete later
@@ -67,7 +67,8 @@ public final class FileManager extends BaseActivity {
 	public static String FILE_MANAGER_PATH = "FileManagerPath";
 	
 	private String myPath;
-	private String myInsertPath;
+//	private String myInsertPath;
+	public static String myInsertPathStatic;
 	public static SortType mySortType;
 	public static ViewType myViewType;
 	
@@ -82,14 +83,11 @@ public final class FileManager extends BaseActivity {
 			return;
 		}
 
-//		setContentView(R.layout.library_tree_item);
-//		addContentView(new Gallery(this), new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
 
 		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
-		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
+//		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		mySortType = SortingDialog.getOprionSortType();
 		myViewType = ViewChangeDialog.getOprionSortType(); // TODO
 		
@@ -102,7 +100,7 @@ public final class FileManager extends BaseActivity {
 			setTitle(myPath);
 			startUpdate();
 		}
-		if (myInsertPath != null)
+		if (myInsertPathStatic != null)
 			setTitle(myResource.getResource("moveTitle").getValue());
 
 		getListView().setOnCreateContextMenuListener(adapter);
@@ -121,6 +119,8 @@ public final class FileManager extends BaseActivity {
 			((FileListAdapter)getListAdapter()).clear();
 			startUpdate();
 		}
+		if (myInsertPathStatic != null)
+			setTitle(myResource.getResource("moveTitle").getValue());
 	}
 
 	private void startUpdate() {
@@ -155,14 +155,9 @@ public final class FileManager extends BaseActivity {
 		
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
-				adapter.remove(fileItem);
-				adapter.notifyDataSetChanged();
 				Log.v(LOG, "MOVE_FILE_ITEM_ID");
-				startActivityForResult(
-						new Intent(this, FileManager.class)
-							.putExtra(FILE_MANAGER_INSERT_MODE, fileItem.getFile().getPath()),
-						FileManager.CHILD_LIST_REQUEST
-				);
+				myInsertPathStatic = fileItem.getFile().getPath();
+				refresh();
 				return true;
 //			case RENAME_FILE_ITEM_ID:
 //				new RenameDialog(this, fileItem.getFile()).show();
@@ -230,11 +225,7 @@ public final class FileManager extends BaseActivity {
 		} else if (file.isDirectory() || file.isArchive()) {
 			Intent i = new Intent(this, FileManager.class)
 				.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-				.putExtra(FILE_MANAGER_PATH, file.getPath())
-				.putExtra(FILE_MANAGER_INSERT_MODE, myInsertPath);
-			if (myInsertPath != null){
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			}
+				.putExtra(FILE_MANAGER_PATH, file.getPath());
 			startActivityForResult(i,CHILD_LIST_REQUEST);
 		} else {
 			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
@@ -253,15 +244,14 @@ public final class FileManager extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-//        if (myPath != null){				// TODO
-        	if (myInsertPath != null){
+        if (myPath != null){				// TODO
+        	if (myInsertPathStatic != null){
             	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
             	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
             }
         	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
-        	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);
-        	
-//        }
+        	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);	
+        }
         return true;
     }
 
@@ -286,16 +276,16 @@ public final class FileManager extends BaseActivity {
         switch (item.getItemId()) {
 	    	case 0:
 	    		try {
-	    			FileUtil.moveFile(myInsertPath, myPath);
-	    			myInsertPath = null;
-	    			finish();
-					runOnUiThread(messFileMoved);
+	    			FileUtil.moveFile(myInsertPathStatic, myPath);
+	    			myInsertPathStatic = null;
+	    			refresh();
+	    			runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
     				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
     			}
 	    		return true;
         	case 1:
-        		new MkDirDialog(this, myPath, myInsertPath).show();
+        		new MkDirDialog(this, myPath, myInsertPathStatic).show();
         		return true;
         	case 2:
         		new SortingDialog(this, myPath).show();
@@ -308,6 +298,14 @@ public final class FileManager extends BaseActivity {
         }
     }
     
+    public void refresh(){
+		startActivityForResult(
+				new Intent(this, FileManager.class)
+					.putExtra(FILE_MANAGER_PATH, myPath)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+				FileManager.CHILD_LIST_REQUEST
+		);
+    }
     
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
@@ -407,7 +405,6 @@ public final class FileManager extends BaseActivity {
         		imageAdapter.add(item);
        			imageAdapter.notifyDataSetChanged();
         		Log.v(LOG, "imageAdapter - 4");
-       			
             }
             
 //        	view = createView(convertView, parent, item.getName(), item.getSummary());

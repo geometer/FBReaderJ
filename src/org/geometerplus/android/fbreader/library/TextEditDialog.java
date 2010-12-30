@@ -203,13 +203,8 @@ class MkDirDialog extends TextEditDialog{
 			
 		if (!FileUtil.contain(newName, file)){
 			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
-			((Activity) myContext).startActivityForResult(
-					new Intent(myContext, FileManager.class)
-						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
-						.putExtra(FileManager.FILE_MANAGER_INSERT_MODE, myInsertPath)
-						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-					FileManager.CHILD_LIST_REQUEST
-			);
+			FileManager.myInsertPathStatic = myInsertPath;
+			((FileManager)myContext).refresh();
 			dismiss();
 		}else{
 			ToastMaker.MakeToast(myContext, "messFileExists");
