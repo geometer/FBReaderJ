@@ -63,7 +63,7 @@ VR:
 	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.	(29.12.10)
 	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
 	* в классе TextEditDialog разобраться с layout'ами
-
+	* корректировать в БД имя файла при переименовании/перемещении 
 NP:
 	DONE Локализовать все сообщения
 	DONE Отдельная иконка для архивов
