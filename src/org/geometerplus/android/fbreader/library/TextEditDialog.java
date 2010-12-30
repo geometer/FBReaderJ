@@ -107,7 +107,7 @@ class ToastMaker{
 	}
 }
 
-
+/*
 class RenameDialog extends TextEditDialog{
 	private ZLFile myFile;
 	private Context myContext;
@@ -164,7 +164,7 @@ class RenameDialog extends TextEditDialog{
 		}
 	}
 }
-
+*/
 
 class MkDirDialog extends TextEditDialog{
 	private Context myContext;
