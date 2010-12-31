@@ -198,11 +198,10 @@
 			<node name="editInfo" value="Upravit" />
 			<node name="reloadInfo" value="Znovu načíst" />
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Instalovat doplněk" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Aktualizovat doplněk" />
+		<node name="plugin">
+			<node name="installTitle" value="Instalovat doplněk" />
+			<node name="updateTitle" value="Aktualizovat doplněk" />
+			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník" />
@@ -475,9 +474,10 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+				<node name="tappingAction" value="Tapping on word" toBeTranslated="true">
+					<node name="does nothing" value="Tapping does nothing" toBeTranslated="true"/>
+					<node name="selectsWord" value="Tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Tapping selects the word and opens dictionary" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

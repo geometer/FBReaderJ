@@ -5,6 +5,7 @@ DONE Reload book info from file
 * Open the help file if the current book is deleted from library
 DONE don't run several initialization threads in the same time
 * lib.ololo.cc
+* synchronize resources
 
 After 0.99:
 * Partial loading from database

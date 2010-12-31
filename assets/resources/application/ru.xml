@@ -197,11 +197,10 @@
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Установка дополнения"/>
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Новая версия"/>
+		<node name="plugin">
+			<node name="installTitle" value="Установка дополнения"/>
+			<node name="updateTitle" value="Новая версия"/>
+			<node name="dontAskAgain" value="Больше не спрашивать"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Установка словаря"/>
@@ -455,7 +454,7 @@
 					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
 					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
 				</node>
-				<node name="volumeKeys" value="Использовать кнопки настройки звука">
+				<node name="volumeKeys" value="Использовать кнопки регулировки звука">
 					<node name="summaryOn" value="Кнопки увеличения/уменьшения звука перелистывают страницы"/>
 					<node name="summaryOff" value="Кнопки увеличения/уменьшения звука работают как обычно"/>
 				</node>
@@ -463,7 +462,7 @@
 					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
 					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
 				</node>
-				<node name="animated" value="Постепенное перелистывание">
+				<node name="animated" value="Aнимация при перелистывании">
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
 					<node name="summaryOff" value="Страница перелистывается мгновенно"/>
 				</node>
@@ -474,9 +473,10 @@
 			</node>
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
-				<node name="runDictionaryOnTap" value="Открывать по прикосновению пальцем">
-					<node name="summaryOn" value="Прикосновение к экрану запускает словарь"/>
-					<node name="summaryOff" value="Прикосновение к экрану выделяет слово"/>
+				<node name="tappingAction" value="Дествие при нажатии на экран">
+					<node name="does nothing" value="Не делать ничего"/>
+					<node name="selectsWord" value="Выделять слово"/>
+					<node name="openDictionary" value="Выделять слово и запускать словарь"/>
 				</node>
 			</node>
 		</node>
