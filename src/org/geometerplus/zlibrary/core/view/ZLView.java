@@ -58,6 +58,14 @@ abstract public class ZLView {
 		return false;
 	}
 
+	public boolean onFingerReleaseAfterLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerMoveAfterLongPress(int x, int y) {
+		return false;
+	}
+
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		return false;
 	}

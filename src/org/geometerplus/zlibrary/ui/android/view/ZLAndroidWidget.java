@@ -352,7 +352,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
-				if (!myLongClickPerformed) {
+				if (myLongClickPerformed) {
+					view.onFingerReleaseAfterLongPress(x, y);
+				} else {
 					if (myPendingLongClickRunnable != null) {
 						removeCallbacks(myPendingLongClickRunnable);
 					}
@@ -372,7 +374,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				myPressedY = y;
 				break;
 			case MotionEvent.ACTION_MOVE:
-				if (!myLongClickPerformed) {
+				if (myLongClickPerformed) {
+					view.onFingerMoveAfterLongPress(x, y);
+				} else {
 					if (myPendingPress) {
 						final int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
 						if (Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop) {

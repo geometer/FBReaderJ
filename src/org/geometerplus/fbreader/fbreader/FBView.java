@@ -93,6 +93,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		/*
 		final ZLTextElementRegion region = findRegion(x, y, 10);
 		if (region != null) {
 			final int action = myReader.DictionaryModeTappingActionOption.getValue();
@@ -109,6 +110,7 @@ public final class FBView extends ZLTextView {
 			}
 			return true;
 		}
+		*/
 
 		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
@@ -243,7 +245,29 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerLongPress(x, y)) {
 			return true;
 		}
-		myReader.doAction(ActionCode.SHOW_NAVIGATION);
+
+		final ZLTextElementRegion region = findRegion(x, y, 10);
+		if (region != null) {
+			selectRegion(region);
+			myReader.repaintView();
+			return true;
+		}
+
+		//myReader.doAction(ActionCode.SHOW_NAVIGATION);
+		//return true;
+		return false;
+	}
+
+	public boolean onFingerMoveAfterLongPress(int x, int y) {
+		if (super.onFingerMoveAfterLongPress(x, y)) {
+			return true;
+		}
+
+		final ZLTextElementRegion region = findRegion(x, y, 10);
+		if (region != null) {
+			selectRegion(region);
+			myReader.repaintView();
+		}
 		return true;
 	}
 
