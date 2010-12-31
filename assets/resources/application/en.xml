@@ -474,8 +474,8 @@
 			<node name="dictionary" value="Dictionary">
 				<node name="summary" value="Dictionary settings"/>
 				<node name="tappingAction" value="Tapping on word">
-					<node name="does nothing" value="Tapping does nothing"/>
-					<node name="selectsWord" value="Tapping selects the word"/>
+					<node name="doNothing" value="Tapping does nothing"/>
+					<node name="selectWord" value="Tapping selects the word"/>
 					<node name="openDictionary" value="Tapping selects the word and opens dictionary"/>
 				</node>
 			</node>

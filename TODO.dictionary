@@ -3,6 +3,8 @@ DONE Run 'install ColorDict' dialog
 DONE Synchronize resources
 DONE Option for opening ColorDict immediately by finger tap
 DONE Synchronize resources
+* 3-mode tapping behaviour
+* long tapping processing instead of short one?
 
 After 0.99:
 * More convenient mode changing

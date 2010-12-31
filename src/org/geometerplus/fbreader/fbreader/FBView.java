@@ -95,10 +95,16 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextElementRegion region = findRegion(x, y, 10);
 		if (region != null) {
-			selectRegion(region);
-			myReader.repaintView();
+			final int action = myReader.DictionaryModeTappingActionOption.getValue();
+
 			if (region instanceof ZLTextHyperlinkRegion ||
-				myReader.OpenDictionaryOnTapOption.getValue()) {
+				action == FBReaderApp.DictionaryModeTappingAction.SELECT_WORD ||
+				action == FBReaderApp.DictionaryModeTappingAction.OPEN_DICTIONARY) {
+				selectRegion(region);
+				myReader.repaintView();
+			}
+			if (region instanceof ZLTextHyperlinkRegion ||
+				action == FBReaderApp.DictionaryModeTappingAction.OPEN_DICTIONARY) {
 				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			}
 			return true;

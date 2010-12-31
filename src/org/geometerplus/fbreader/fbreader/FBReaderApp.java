@@ -44,8 +44,14 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final ZLIntegerRangeOption TextViewModeOption =
 		new ZLIntegerRangeOption("Options", "TextViewMode", 0, 1, 0);
-	public final ZLBooleanOption OpenDictionaryOnTapOption =
-		new ZLBooleanOption("Options", "OpenDictionaryOnTap", false);
+
+	public interface DictionaryModeTappingAction {
+		int DO_NOTHING = 0;
+		int SELECT_WORD = 1;
+		int OPEN_DICTIONARY = 2;
+	}
+	public final ZLIntegerRangeOption DictionaryModeTappingActionOption =
+		new ZLIntegerRangeOption("Options", "DictionaryModeTappingAction", 0, 2, DictionaryModeTappingAction.SELECT_WORD);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
