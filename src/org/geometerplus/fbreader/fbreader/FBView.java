@@ -94,7 +94,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		/*
-		final ZLTextElementRegion region = findRegion(x, y, 10);
+		final ZLTextElementRegion region = findRegion(x, y, 10, getRegionFilter());
 		if (region != null) {
 			final int action = myReader.DictionaryModeTappingActionOption.getValue();
 
@@ -246,7 +246,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10);
+		final ZLTextElementRegion region = findRegion(x, y, 10, getRegionFilter());
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
@@ -263,7 +263,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10);
+		final ZLTextElementRegion region = findRegion(x, y, 10, getRegionFilter());
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
@@ -280,7 +280,7 @@ public final class FBView extends ZLTextView {
 			(diffY > 0 ? Direction.DOWN : Direction.UP) :
 			(diffX > 0 ? Direction.RIGHT : Direction.LEFT);
 
-		if (!moveRegionPointer(direction)) {
+		if (!moveRegionPointer(direction, getRegionFilter())) {
 			if (direction == Direction.DOWN) {
 				scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			} else if (direction == Direction.UP) {
@@ -293,9 +293,16 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
-	@Override
-	public int getMode() {
-		return myReader.TextViewModeOption.getValue();
+	public final static int MODE_VISIT_HYPERLINKS = 0;
+	public final static int MODE_VISIT_ALL_WORDS = 1;
+	private ZLTextElementRegion.Filter getRegionFilter() {
+		switch (myReader.TextViewModeOption.getValue()) {
+			default:
+			case MODE_VISIT_ALL_WORDS:
+				return ZLTextElementRegion.Filter;
+			case MODE_VISIT_HYPERLINKS:
+				return ZLTextHyperlinkRegion.Filter;
+		}
 	}
 
 	@Override

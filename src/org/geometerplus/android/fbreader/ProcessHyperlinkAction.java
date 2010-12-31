@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -80,11 +80,14 @@ class ProcessHyperlinkAction extends FBAction {
 			try {
 				myBaseActivity.startActivity(intent);
 			} catch(ActivityNotFoundException e){
+				DictionaryUtil.installDictionaryIfNotInstalled(myBaseActivity);
+				/*
 				Toast.makeText(
 					myBaseActivity,
 					ZLResource.resource("errorMessage").getResource("dictionaryIsNotInstalled").getValue(),
 					Toast.LENGTH_LONG
 				).show();
+				*/
 			}
 		}
 	}

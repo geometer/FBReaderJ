@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
-
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -41,10 +39,6 @@ class SwitchTextViewModeAction extends FBAction {
 
 	@Override
 	public void run() {
-		if (myMode == ZLTextViewMode.MODE_VISIT_ALL_WORDS) {
-			DictionaryUtil.installDictionaryIfNotInstalled(myBaseActivity);
-		}
-
 		Reader.TextViewModeOption.setValue(myMode);
 		Reader.BookTextView.resetRegionPointer();
 		Reader.FootnoteView.resetRegionPointer();

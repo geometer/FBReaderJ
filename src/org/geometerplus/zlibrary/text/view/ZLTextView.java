@@ -1314,8 +1314,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return null;
 	}
 
-	protected ZLTextElementRegion findRegion(int x, int y, int maxDistance) {
-		final ZLTextElementRegion.Filter filter = getCurrentFilter();
+	protected ZLTextElementRegion findRegion(int x, int y, int maxDistance, ZLTextElementRegion.Filter filter) {
 		ZLTextElementRegion bestRegion = null;
 		int distance = maxDistance + 1;
 		for (ZLTextElementRegion region : myCurrentPage.TextElementMap.ElementRegions) {
@@ -1345,17 +1344,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int DOWN = 3;
 	}
 
-	private ZLTextElementRegion.Filter getCurrentFilter() {
-		switch (getMode()) {
-			default:
-			case MODE_VISIT_ALL_WORDS:
-				return ZLTextElementRegion.Filter;
-			case MODE_VISIT_HYPERLINKS:
-				return ZLTextHyperlinkRegion.Filter;
-		}
-	}
-
-	protected boolean moveRegionPointer(int direction) {
+	protected boolean moveRegionPointer(int direction, ZLTextElementRegion.Filter filter) {
 		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
 			return false;
@@ -1384,8 +1373,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 		}
-
-		final ZLTextElementRegion.Filter filter = getCurrentFilter();
 
 		switch (direction) {
 			case Direction.LEFT:

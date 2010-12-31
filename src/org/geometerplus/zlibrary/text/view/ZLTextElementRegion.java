@@ -24,11 +24,11 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLTextElementRegion {
-	static interface Filter {
+	public static interface Filter {
 		boolean accepts(ZLTextElementRegion region);
 	}
 
-	static Filter Filter = new Filter() {
+	public static Filter Filter = new Filter() {
 		public boolean accepts(ZLTextElementRegion region) {
 			return true;
 		}
