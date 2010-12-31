@@ -239,6 +239,14 @@ public final class FBView extends ZLTextView {
 		return false;
 	}
 
+	public boolean onFingerLongPress(int x, int y) {
+		if (super.onFingerLongPress(x, y)) {
+			return true;
+		}
+		myReader.doAction(ActionCode.SHOW_NAVIGATION);
+		return true;
+	}
+
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		if (diffX == 0 && diffY == 0) {
 			return true;

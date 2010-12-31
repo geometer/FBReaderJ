@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
-public class ZLAndroidWidget extends View {
+public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
@@ -44,17 +44,22 @@ public class ZLAndroidWidget extends View {
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setDrawingCacheEnabled(false);
+		init();
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setDrawingCacheEnabled(false);
+		init();
 	}
 
 	public ZLAndroidWidget(Context context) {
 		super(context);
+		init();
+	}
+
+	private void init() {
 		setDrawingCacheEnabled(false);
+		setOnLongClickListener(this);
 	}
 
 	@Override
@@ -386,6 +391,11 @@ public class ZLAndroidWidget extends View {
 		}
 
 		return true;
+	}
+
+	public boolean onLongClick(View v) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		return view.onFingerLongPress(myPressedX, myPressedY);
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

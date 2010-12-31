@@ -170,16 +170,6 @@ public final class FBReader extends ZLAndroidActivity {
 			panel.setExtension(layout);
 			myNavigatePanel.setControlPanel(panel, root, true);
 		}
-
-		findViewById(R.id.main_view).setOnLongClickListener(new View.OnLongClickListener() {
-			public boolean onLongClick(View v) {
-				if (!myNavigatePanel.getVisibility()) {
-					navigate();
-					return true;
-				}
-				return false;
-			}
-		});
 	}
 
 	@Override
@@ -246,11 +236,15 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	public void navigate() {
+	public boolean navigate() {
+		if (myNavigatePanel.getVisibility()) {
+			return false;
+		}
 		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
 		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
 		myNavigatePanel.show(true);
+		return true;
 	}
 
 	private final void createNavigation(View layout) {
