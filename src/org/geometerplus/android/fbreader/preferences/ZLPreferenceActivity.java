@@ -66,6 +66,14 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			return preference;
 		}
 
+		public <T extends Enum<T>> ZLPreference addOption(ZLEnumOption<T> option, String resourceKey) {
+			ZLEnumPreference<T> preference =
+				new ZLEnumPreference<T>(ZLPreferenceActivity.this, Resource, resourceKey, option);
+			myScreen.addPreference(preference);
+			myPreferences.add(preference);
+			return preference;
+		}
+
 		public void close() {
 			myScreen.getDialog().dismiss();
 			ZLPreferenceActivity.this.getListView().invalidateViews();

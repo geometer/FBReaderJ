@@ -36,13 +36,13 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
 
 import org.geometerplus.android.fbreader.library.KillerCallback;
 
@@ -137,8 +137,6 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
-		fbReader.addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS, new SwitchTextViewModeAction(this, fbReader, ZLTextViewMode.MODE_VISIT_HYPERLINKS));
-		fbReader.addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS, new SwitchTextViewModeAction(this, fbReader, ZLTextViewMode.MODE_VISIT_ALL_WORDS));
 	}
 
 	@Override
@@ -170,16 +168,6 @@ public final class FBReader extends ZLAndroidActivity {
 			panel.setExtension(layout);
 			myNavigatePanel.setControlPanel(panel, root, true);
 		}
-
-		findViewById(R.id.main_view).setOnLongClickListener(new View.OnLongClickListener() {
-			public boolean onLongClick(View v) {
-				if (!myNavigatePanel.getVisibility()) {
-					navigate();
-					return true;
-				}
-				return false;
-			}
-		});
 	}
 
 	@Override
@@ -246,11 +234,15 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	public void navigate() {
+	public boolean navigate() {
+		if (myNavigatePanel.getVisibility()) {
+			return false;
+		}
 		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
 		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
 		myNavigatePanel.show(true);
+		return true;
 	}
 
 	private final void createNavigation(View layout) {

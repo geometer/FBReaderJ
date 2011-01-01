@@ -334,7 +334,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
-		scrollingScreen.addOption(scrollingPreferences.FlickOption, "flick");
+		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
+		scrollingScreen.addOption(scrollingPreferences.DoubleTapNavigationOption, "doubleTapNavigation");
 		scrollingScreen.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
 		scrollingScreen.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
 		scrollingScreen.addOption(scrollingPreferences.AnimateOption, "animated");
@@ -343,9 +344,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
-			fbReader.OpenDictionaryOnTapOption,
+			fbReader.NavigateAllWordsOption,
 			dictionaryScreen.Resource,
-			"runDictionaryOnTap"
+			"navigateOverAllWords"
+		));
+		final String[] actions = { "doNothing", "selectWord", "openDictionary" };
+		dictionaryScreen.addPreference(new ZLChoicePreference(
+			this, dictionaryScreen.Resource, "tappingAction",
+			fbReader.DictionaryModeTappingActionOption, actions
 		));
 	}
 }

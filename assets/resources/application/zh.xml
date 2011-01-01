@@ -159,8 +159,6 @@
 		<node name="day" value="白低黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
-		<node name="hyperlinksOnlyMode" value="标准模式"/>
-		<node name="dictionaryMode" value="字典模式"/>
 		<node name="navigate" value="导航">
 			<node name="toc" value="内容目录" />
 			<node name="gotoHome" value="翻到图书开始" />
@@ -198,11 +196,10 @@
 			<node name="editInfo" value="编辑" />
 			<node name="reloadInfo" value="重新加载" />
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Install plugin" toBeTranslated="true" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Update plugin" toBeTranslated="true" />
+		<node name="plugin">
+			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
+			<node name="updateTitle" value="Update plugin" toBeTranslated="true" />
+			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Install dictionary" toBeTranslated="true" />
@@ -458,9 +455,14 @@
 			</node>
 			<node name="scrolling" value="翻阅操作">
 				<node name="summary" value="如何滚动文字内容"/>
-				<node name="flick" value="手指滚动">
-					<node name="summaryOn" value="滑触翻页" />
-					<node name="summaryOff" value="拍击翻页" />
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				</node>
+				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
+					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="音量键滚动">
 					<node name="summaryOn" value="使用音量键翻页" />
@@ -481,9 +483,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

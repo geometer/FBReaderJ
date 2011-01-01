@@ -181,8 +181,6 @@
 		<node name="day" value="День"/>
 		<node name="night" value="Ночь"/>
 		<node name="networkLibrary" value="Сетевая библиотека"/>
-		<node name="hyperlinksOnlyMode" value="Обычный режим"/>
-		<node name="dictionaryMode" value="Режим словаря"/>
 		<node name="navigate" value="Переход">
 			<node name="toc" value="Оглавление"/>
 			<node name="gotoHome" value="В начало книги"/>
@@ -220,11 +218,10 @@
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Установка дополнения"/>
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Новая версия"/>
+		<node name="plugin">
+			<node name="installTitle" value="Установка дополнения"/>
+			<node name="updateTitle" value="Новая версия"/>
+			<node name="dontAskAgain" value="Больше не спрашивать"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Установка словаря"/>
@@ -474,11 +471,16 @@
 			</node>
 			<node name="scrolling" value="Перелистывание страниц">
 				<node name="summary" value="Как листать стрницы"/>
-				<node name="flick" value="Листать движением пальца">
-					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
-					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
+				<node name="fingerScrolling" value="Листание пальцем по экрану">
+					<node name="byTap" value="Листать нажатием на экран"/>
+					<node name="byFlick" value="Листать протягиванием страницы"/>
+					<node name="byTapAndFlick" value="Листать нажатием на экран либо протягиванием страницы"/>
 				</node>
-				<node name="volumeKeys" value="Использовать кнопки настройки звука">
+				<node name="doubleTapNavigation" value="Окно перемещения по тексту">
+					<node name="summaryOn" value="Двойное нажатие на экран открывает окно перемещения"/>
+					<node name="summaryOff" value="Двойное нажатие на экран ничего не делает"/>
+				</node>
+				<node name="volumeKeys" value="Использовать кнопки регулировки звука">
 					<node name="summaryOn" value="Кнопки увеличения/уменьшения звука перелистывают страницы"/>
 					<node name="summaryOff" value="Кнопки увеличения/уменьшения звука работают как обычно"/>
 				</node>
@@ -486,7 +488,7 @@
 					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
 					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
 				</node>
-				<node name="animated" value="Постепенное перелистывание">
+				<node name="animated" value="Aнимация при перелистывании">
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
 					<node name="summaryOff" value="Страница перелистывается мгновенно"/>
 				</node>
@@ -497,9 +499,14 @@
 			</node>
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
-				<node name="runDictionaryOnTap" value="Открывать по прикосновению пальцем">
-					<node name="summaryOn" value="Прикосновение к экрану запускает словарь"/>
-					<node name="summaryOff" value="Прикосновение к экрану выделяет слово"/>
+				<node name="tappingAction" value="Действие при долгом нажатии на экран">
+					<node name="doNothing" value="Не делать ничего"/>
+					<node name="selectWord" value="Выделять слово"/>
+					<node name="openDictionary" value="Выделять слово, а при отпускании &#8211; запускать словарь"/>
+				</node>
+				<node name="navigateOverAllWords" value="Перемещаться по всем словам">
+					<node name="summaryOn" value="При перемещении с помощью кнопок помечать все слова"/>
+					<node name="summaryOff" value="При перемещении с помощью кнопок помечать только гиперссылки"/>
 				</node>
 			</node>
 		</node>

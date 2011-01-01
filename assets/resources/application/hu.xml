@@ -159,8 +159,6 @@
 		<node name="day" value="Nappali"/>
 		<node name="night" value="Éjjeli"/>
 		<node name="networkLibrary" value="Internetes könyvtár"/>
-		<node name="hyperlinksOnlyMode" value="Standard mód"/>
-		<node name="dictionaryMode" value="Szótár mód"/>
 		<node name="navigate" value="Navigáció">
 			<node name="toc" value="Tartalomjegyzék"/>
 			<node name="gotoHome" value="A dokumentum elejére"/>
@@ -198,11 +196,10 @@
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Plugin telepítése" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Plugin frissítése" />
+		<node name="plugin">
+			<node name="installTitle" value="Plugin telepítése" />
+			<node name="updateTitle" value="Plugin frissítése" />
+			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Telepítés helye"/>
@@ -452,9 +449,14 @@
 			</node>
 			<node name="scrolling" value="Lapozás">
 				<node name="summary" value="Szöveg görgetésének beállításai"/>
-				<node name="flick" value="Kinetikus lapozás">
-					<node name="summaryOn" value="Lapozás ujjmozdulatra"/>
-					<node name="summaryOff" value="Lapozás érintésre"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				</node>
+				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
+					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
 					<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>
@@ -475,9 +477,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

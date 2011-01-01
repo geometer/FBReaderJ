@@ -28,8 +28,14 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.CheckBox;
 
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 public abstract class PackageUtil {
 	private static Uri marketUri(String pkg) {
@@ -76,46 +82,56 @@ public abstract class PackageUtil {
 	public static void runInstallPluginDialog(final Activity activity, Map<String,String> pluginData, final Runnable postRunnable) {
 		final String plugin = pluginData.get("androidPlugin");
 		if (plugin != null) {
-			final String pluginVersion = pluginData.get("androidPluginVersion");
-
-			String dialogKey = null;
-			String message = null;
-			String positiveButtonKey = null;
-			
-			if (!PackageUtil.isPluginInstalled(activity, plugin)) {
-				dialogKey = "installPlugin";
-				message = pluginData.get("androidPluginInstallMessage");
-				positiveButtonKey = "install";
-			} else if (!PackageUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
-				dialogKey = "updatePlugin";
-				message = pluginData.get("androidPluginUpdateMessage");
-				positiveButtonKey = "update";
-			}
-			if (dialogKey != null) {
-				final ZLResource dialogResource = ZLResource.resource("dialog");
-				final ZLResource buttonResource = dialogResource.getResource("button");
-				new AlertDialog.Builder(activity)
-					.setTitle(dialogResource.getResource(dialogKey).getResource("title").getValue())
-					.setMessage(message)
-					.setIcon(0)
-					.setPositiveButton(
-						buttonResource.getResource(positiveButtonKey).getValue(),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								PackageUtil.installFromMarket(activity, plugin);
+			final ZLBooleanOption doNotInstallOption = new ZLBooleanOption("doNotInstall", plugin, false);
+			if (!doNotInstallOption.getValue()) {
+				final String pluginVersion = pluginData.get("androidPluginVersion");
+            
+				String message = null;
+				String positiveButtonKey = null;
+				String titleResourceKey = null;
+				
+				if (!PackageUtil.isPluginInstalled(activity, plugin)) {
+					message = pluginData.get("androidPluginInstallMessage");
+					positiveButtonKey = "install";
+					titleResourceKey = "installTitle";
+				} else if (!PackageUtil.isPluginInstalled(activity, plugin, pluginVersion)) {
+					message = pluginData.get("androidPluginUpdateMessage");
+					positiveButtonKey = "update";
+					titleResourceKey = "updateTitle";
+				}
+				if (message != null) {
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource pluginDialogResource = dialogResource.getResource("plugin");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					final View view = activity.getLayoutInflater().inflate(R.layout.plugin_dialog, null, false);
+					((TextView)view.findViewById(R.id.plugin_dialog_text)).setText(message);
+					final CheckBox checkBox = (CheckBox)view.findViewById(R.id.plugin_dialog_checkbox);
+					checkBox.setText(pluginDialogResource.getResource("dontAskAgain").getValue());
+					final AlertDialog dialog = new AlertDialog.Builder(activity)
+						.setTitle(pluginDialogResource.getResource(titleResourceKey).getValue())
+						.setView(view)
+						.setIcon(0)
+						.setPositiveButton(
+							buttonResource.getResource(positiveButtonKey).getValue(),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									PackageUtil.installFromMarket(activity, plugin);
+								}
 							}
-						}
-					)
-					.setNegativeButton(
-						buttonResource.getResource("skip").getValue(),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								postRunnable.run();
+						)
+						.setNegativeButton(
+							buttonResource.getResource("skip").getValue(),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									doNotInstallOption.setValue(checkBox.isChecked());
+									postRunnable.run();
+								}
 							}
-						}
-					)
-					.create().show();
-				return;
+						)
+						.create();
+					dialog.show();
+					return;
+				}
 			}
 		}
 		postRunnable.run();

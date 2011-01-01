@@ -54,6 +54,30 @@ abstract public class ZLView {
 		return false;
 	}
 
+	public boolean onFingerLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerReleaseAfterLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerMoveAfterLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerSingleTap(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerDoubleTap() {
+		return false;
+	}
+
+	public boolean isDoubleTapSupported() {
+		return false;
+	}
+
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		return false;
 	}

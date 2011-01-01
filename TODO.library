@@ -2,11 +2,11 @@
 DONE Reload book info from file
 * returning from footnotes (ask if footnote is in the same model and there was page scrolling)
 * prevent from sleep if battery is in charging mode
-* Open the help file if the current book is deleted from library
 DONE don't run several initialization threads in the same time
 * lib.ololo.cc
 
 After 0.99:
+* Open the help file if the current book is deleted from library
 * Partial loading from database
 * Database updating in backgorund
 * Watch filesystem after loading
