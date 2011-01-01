@@ -455,6 +455,10 @@
 					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
 					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
+				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
+					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
+				</node>
 				<node name="volumeKeys" value="Umblättern mit den Lautstärketasten">
 					<node name="summaryOn" value="Lautstärketasten zum Umblättern verwenden."/>
 					<node name="summaryOff" value="Lautstärketasten nicht verwenden."/>

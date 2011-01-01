@@ -453,6 +453,10 @@
 					<node name="byFlick" value="Scroll pages by finger flick"/>
 					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick"/>
 				</node>
+				<node name="doubleTapNavigation" value="Navigation dialog">
+					<node name="summaryOn" value="Double tap starts navigation dialog"/>
+					<node name="summaryOff" value="Double tap does nothing"/>
+				</node>
 				<node name="volumeKeys" value="Volume keys scrolling">
 					<node name="summaryOn" value="Use volume keys to scroll"/>
 					<node name="summaryOff" value="Keep volume keys for sound"/>

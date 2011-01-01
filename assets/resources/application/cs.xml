@@ -454,6 +454,10 @@
 					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
 					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
+				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
+					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
+				</node>
 				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
 					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
 					<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
