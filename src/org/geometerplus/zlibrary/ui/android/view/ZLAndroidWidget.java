@@ -406,9 +406,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					myPendingDoubleTap = true;
 				} else {
 					postLongClickRunnable();
+					myPendingPress = true;
 				}
 				myScreenIsTouched = true;
-				myPendingPress = true;
 				myPressedX = x;
 				myPressedY = y;
 				break;
