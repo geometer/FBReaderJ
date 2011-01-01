@@ -406,6 +406,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				myPressedY = y;
 				break;
 			case MotionEvent.ACTION_MOVE:
+			{
 				final int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
 				final boolean isAMove =
 					Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop;
@@ -433,6 +434,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					}
 				}
 				break;
+			}
 		}
 
 		return true;
