@@ -49,7 +49,11 @@ public class ZLAndroidApplication extends Application {
 
 	public boolean isAlwaysShowStatusBar() {
 		return
+			// Eken M001
 			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
+			// Eken M003
+			(Build.DISPLAY != null && Build.DISPLAY.contains("Donut.eng.howayhuo")) ||
+			// Eken PanDigital
 			"PD_Novel".equals(Build.MODEL);
 	}
 
