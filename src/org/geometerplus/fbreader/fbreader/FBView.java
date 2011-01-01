@@ -93,18 +93,18 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
+			myIsBrightnessAdjustmentInProgress = true;
+			myStartY = y;
+			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
+			return true;
+		}
+
 		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextHyperlinkRegion.Filter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-			return true;
-		}
-
-		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
-			myIsBrightnessAdjustmentInProgress = true;
-			myStartY = y;
-			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
 			return true;
 		}
 
