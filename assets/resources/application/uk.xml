@@ -449,9 +449,10 @@
 			</node>
 			<node name="scrolling" value="Перегортання сторінок">
 				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
-				<node name="flick" value="Гортати рухом пальця">
-					<node name="summaryOn" value="Для переходу на наступну сторінку проведіть пальцем по екрану"/>
-					<node name="summaryOff" value="Для переходу на наступну сторінку торкніться пальцем до екрану"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Використання кнопки налаштування звуку">
 					<node name="summaryOn" value="Кнопки збільшення/зменшення звуку перегортають сторінки"/>

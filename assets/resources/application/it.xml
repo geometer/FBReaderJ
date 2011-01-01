@@ -449,9 +449,10 @@
 			</node>
 			<node name="scrolling" value="Scorrimento">
 				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
-				<node name="flick" value="Scorrimento al tocco">
-					<node name="summaryOn" value="La navigazione tra le pagine avviene con lo sfioramento delle dita sullo schermo"/> 
-					<node name="summaryOff" value="La navigazione tra le pagine avviene toccando lo schermo"/> 
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
 					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>

@@ -449,9 +449,10 @@
 			</node>
 			<node name="scrolling" value="Lapozás">
 				<node name="summary" value="Szöveg görgetésének beállításai"/>
-				<node name="flick" value="Kinetikus lapozás">
-					<node name="summaryOn" value="Lapozás ujjmozdulatra"/>
-					<node name="summaryOff" value="Lapozás érintésre"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
 					<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>

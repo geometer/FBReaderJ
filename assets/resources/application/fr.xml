@@ -458,9 +458,10 @@
 			</node>
 			<node name="scrolling" value="Navigation">
 				<node name="summary" value="Modalités de défilement du texte"/>
-				<node name="flick" value="Défiler par accoup (Flick)">
-					<node name="summaryOn" value="Faire glisser le doigt pour changer de page"/>
-					<node name="summaryOff" value="Une pression du doigt change de page"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Touches du volume">
 					<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>

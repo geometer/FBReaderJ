@@ -448,9 +448,10 @@
 			</node>
 			<node name="scrolling" value="Перелистывание страниц">
 				<node name="summary" value="Как листать стрницы"/>
-				<node name="flick" value="Листать движением пальца">
-					<node name="summaryOn" value="Для перехода на следующую страницу проведите пальцем по экрану"/>
-					<node name="summaryOff" value="Для перехода на следующую страницу коснитесь пальцем экрана"/>
+				<node name="fingerScrolling" value="Листание пальцем по экрану">
+					<node name="byTap" value="Листать нажатием на экран"/>
+					<node name="byFlick" value="Листать протягиванием страницы"/>
+					<node name="byTapAndFlick" value="Листать нажатием на экран либо протягиванием страницы"/>
 				</node>
 				<node name="volumeKeys" value="Использовать кнопки регулировки звука">
 					<node name="summaryOn" value="Кнопки увеличения/уменьшения звука перелистывают страницы"/>

@@ -455,9 +455,10 @@
 			</node>
 			<node name="scrolling" value="翻阅操作">
 				<node name="summary" value="如何滚动文字内容"/>
-				<node name="flick" value="手指滚动">
-					<node name="summaryOn" value="滑触翻页" />
-					<node name="summaryOff" value="拍击翻页" />
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="音量键滚动">
 					<node name="summaryOn" value="使用音量键翻页" />

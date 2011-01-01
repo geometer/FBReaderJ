@@ -450,9 +450,10 @@
 			</node>
 			<node name="scrolling" value="Blättern">
 				<node name="summary" value="Die Art des Umblätterns festlegen."/>
-				<node name="flick" value="Wischen">
-					<node name="summaryOn" value="Die Seiten werden mit einem Fingerwisch umgeblättert."/>
-					<node name="summaryOff" value="Die Seiten werden durch antippen umgeblättert."/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Umblättern mit den Lautstärketasten">
 					<node name="summaryOn" value="Lautstärketasten zum Umblättern verwenden."/>

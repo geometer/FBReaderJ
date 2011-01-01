@@ -449,9 +449,10 @@
 			</node>
 			<node name="scrolling" value="Cuộn">
 				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
-				<node name="flick" value="Cuộn búng">
-					<node name="summaryOn" value="Trang sẽ cuộn khi búng nhẹ"/>
-					<node name="summaryOff" value="Trang sẽ cuộn khi gõ nhẹ ngón tay"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Cuộn bằng phím âm lượng">
 					<node name="summaryOn" value="Dùng phím âm lượng để cuộn"/>
