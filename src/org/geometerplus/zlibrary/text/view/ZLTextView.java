@@ -1344,10 +1344,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int DOWN = 3;
 	}
 
-	protected boolean moveRegionPointer(int direction, ZLTextElementRegion.Filter filter) {
+	protected ZLTextElementRegion currentRegion() {
+		return mySelectedRegion;
+	}
+
+	protected ZLTextElementRegion nextRegion(int direction, ZLTextElementRegion.Filter filter) {
 		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
-			return false;
+			return null;
 		}
 
 		int index = elementRegions.indexOf(mySelectedRegion);
@@ -1359,7 +1363,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				if (index == -1) {
 					index = elementRegions.size() - 1;
 				} else if (index == 0) {
-					return false;
+					return null;
 				} else {
 					--index;
 				}
@@ -1367,7 +1371,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			case Direction.RIGHT:
 			case Direction.DOWN:
 				if (index == elementRegions.size() - 1) {
-					return false;
+					return null;
 				} else {
 					++index;
 				}
@@ -1379,8 +1383,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				for (; index >= 0; --index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtLeftOf(mySelectedRegion)) {
-						mySelectedRegion = candidate;
-						return true;
+						return candidate;
 					}
 				}
 				break;
@@ -1388,8 +1391,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				for (; index < elementRegions.size(); ++index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtRightOf(mySelectedRegion)) {
-						mySelectedRegion = candidate;
-						return true;
+						return candidate;
 					}
 				}
 				break;
@@ -1402,16 +1404,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						continue;
 					}
 					if (candidate.isExactlyUnder(mySelectedRegion)) {
-						mySelectedRegion = candidate;
-						return true;
+						return candidate;
 					}
 					if (firstCandidate == null && candidate.isUnder(mySelectedRegion)) {
 						firstCandidate = candidate;
 					}
 				}
 				if (firstCandidate != null) {
-					mySelectedRegion = firstCandidate;
-					return true;
+					return firstCandidate;
 				}
 				break;
 			}
@@ -1423,19 +1423,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						continue;
 					}
 					if (candidate.isExactlyOver(mySelectedRegion)) {
-						mySelectedRegion = candidate;
-						return true;
+						return candidate;
 					}
 					if (firstCandidate == null && candidate.isOver(mySelectedRegion)) {
 						firstCandidate = candidate;
 					}
 				}
 				if (firstCandidate != null) {
-					mySelectedRegion = firstCandidate;
-					return true;
+					return firstCandidate;
 				}
 				break;
 		}
-		return false;
+		return null;
 	}
 }

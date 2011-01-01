@@ -93,24 +93,13 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		/*
-		final ZLTextElementRegion region = findRegion(x, y, 10, getRegionFilter());
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextHyperlinkRegion.Filter);
 		if (region != null) {
-			final int action = myReader.DictionaryModeTappingActionOption.getValue();
-
-			if (region instanceof ZLTextHyperlinkRegion ||
-				action == FBReaderApp.DictionaryModeTappingAction.SELECT_WORD ||
-				action == FBReaderApp.DictionaryModeTappingAction.OPEN_DICTIONARY) {
-				selectRegion(region);
-				myReader.repaintView();
-			}
-			if (region instanceof ZLTextHyperlinkRegion ||
-				action == FBReaderApp.DictionaryModeTappingAction.OPEN_DICTIONARY) {
-				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-			}
+			selectRegion(region);
+			myReader.repaintView();
+			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
-		*/
 
 		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
@@ -246,7 +235,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, getRegionFilter());
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.Filter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
@@ -263,7 +252,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, getRegionFilter());
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.Filter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
@@ -280,7 +269,14 @@ public final class FBView extends ZLTextView {
 			(diffY > 0 ? Direction.DOWN : Direction.UP) :
 			(diffX > 0 ? Direction.RIGHT : Direction.LEFT);
 
-		if (!moveRegionPointer(direction, getRegionFilter())) {
+		ZLTextElementRegion region = currentRegion();
+		final ZLTextElementRegion.Filter filter =
+			region instanceof ZLTextHyperlinkRegion && !myReader.NavigateAllWordsOption.getValue()
+				? ZLTextHyperlinkRegion.Filter : ZLTextElementRegion.Filter;
+		region = nextRegion(direction, filter);
+		if (region != null) {
+			selectRegion(region);
+		} else {
 			if (direction == Direction.DOWN) {
 				scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			} else if (direction == Direction.UP) {
@@ -291,18 +287,6 @@ public final class FBView extends ZLTextView {
 		myReader.repaintView();
 
 		return true;
-	}
-
-	public final static int MODE_VISIT_HYPERLINKS = 0;
-	public final static int MODE_VISIT_ALL_WORDS = 1;
-	private ZLTextElementRegion.Filter getRegionFilter() {
-		switch (myReader.TextViewModeOption.getValue()) {
-			default:
-			case MODE_VISIT_ALL_WORDS:
-				return ZLTextElementRegion.Filter;
-			case MODE_VISIT_HYPERLINKS:
-				return ZLTextHyperlinkRegion.Filter;
-		}
 	}
 
 	@Override
