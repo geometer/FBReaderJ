@@ -355,6 +355,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private volatile ShortClickRunnable myPendingShortClickRunnable;
 
 	private volatile boolean myPendingPress;
+	private volatile boolean myPendingDoubleTap;
 	private int myPressedX, myPressedY;
 	private boolean myScreenIsTouched;
 	@Override
@@ -365,7 +366,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
-				if (myLongClickPerformed) {
+				if (myPendingDoubleTap) {
+					view.onFingerDoubleTap();
+				} if (myLongClickPerformed) {
 					view.onFingerReleaseAfterLongPress(x, y);
 				} else {
 					if (myPendingLongClickRunnable != null) {
@@ -385,6 +388,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 						view.onFingerRelease(x, y);
 					}
 				}
+				myPendingDoubleTap = false;
 				myPendingPress = false;
 				myScreenIsTouched = false;
 				break;
@@ -392,7 +396,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				if (myPendingShortClickRunnable != null) {
 					removeCallbacks(myPendingShortClickRunnable);
 					myPendingShortClickRunnable = null;
-					view.onFingerDoubleTap();
+					myPendingDoubleTap = true;
 				} else {
 					postLongClickRunnable();
 				}
@@ -402,16 +406,21 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				myPressedY = y;
 				break;
 			case MotionEvent.ACTION_MOVE:
+				final int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+				final boolean isAMove =
+					Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop;
+				if (isAMove) {
+					myPendingDoubleTap = false;
+				}
 				if (myLongClickPerformed) {
 					view.onFingerMoveAfterLongPress(x, y);
 				} else {
 					if (myPendingPress) {
-						if (myPendingShortClickRunnable != null) {
-							removeCallbacks(myPendingShortClickRunnable);
-							myPendingShortClickRunnable = null;
-						}
-						final int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-						if (Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop) {
+						if (isAMove) {
+							if (myPendingShortClickRunnable != null) {
+								removeCallbacks(myPendingShortClickRunnable);
+								myPendingShortClickRunnable = null;
+							}
 							if (myPendingLongClickRunnable != null) {
 								removeCallbacks(myPendingLongClickRunnable);
 							}
