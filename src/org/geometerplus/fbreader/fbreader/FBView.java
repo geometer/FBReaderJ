@@ -76,6 +76,59 @@ public final class FBView extends ZLTextView {
 	private boolean myIsBrightnessAdjustmentInProgress;
 	private int myStartBrightness;
 
+	public boolean onFingerSingleTap(int x, int y) {
+		if (super.onFingerSingleTap(x, y)) {
+			return true;
+		}
+
+		if (isScrollingActive()) {
+			return false;
+		}
+
+		if (myReader.FooterIsSensitiveOption.getValue()) {
+			Footer footer = getFooterArea();
+			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+				footer.setProgress(x);
+				return true;
+			}
+		}
+
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextHyperlinkRegion.Filter);
+		if (region != null) {
+			selectRegion(region);
+			myReader.repaintView();
+			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+			return true;
+		}
+
+		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+		if (!preferences.FlickOption.getValue()) {
+			if (preferences.HorizontalOption.getValue()) {
+				if (x <= myContext.getWidth() / 3) {
+					doScrollPage(false);
+				} else if (x >= myContext.getWidth() * 2 / 3) {
+					doScrollPage(true);
+				}
+			} else {
+				if (y <= myContext.getHeight() / 3) {
+					doScrollPage(false);
+				} else if (y >= myContext.getHeight() * 2 / 3) {
+					doScrollPage(true);
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public boolean onFingerDoubleTap() {
+		if (super.onFingerDoubleTap()) {
+			return true;
+		}
+		myReader.doAction(ActionCode.SHOW_NAVIGATION);
+		return true;
+	}
+
 	public boolean onFingerPress(int x, int y) {
 		if (super.onFingerPress(x, y)) {
 			return true;
@@ -100,37 +153,14 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextHyperlinkRegion.Filter);
-		if (region != null) {
-			selectRegion(region);
-			myReader.repaintView();
-			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-			return true;
-		}
-
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		if (preferences.FlickOption.getValue()) {
 			myStartX = x;
 			myStartY = y;
 			setScrollingActive(true);
 			myIsManualScrollingActive = true;
-		} else {
-			if (preferences.HorizontalOption.getValue()) {
-				if (x <= myContext.getWidth() / 3) {
-					doScrollPage(false);
-				} else if (x >= myContext.getWidth() * 2 / 3) {
-					doScrollPage(true);
-				}
-			} else {
-				if (y <= myContext.getHeight() / 3) {
-					doScrollPage(false);
-				} else if (y >= myContext.getHeight() * 2 / 3) {
-					doScrollPage(true);
-				}
-			}
 		}
 
-		//activateSelection(x, y);
 		return true;
 	}
 
@@ -245,8 +275,6 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		//myReader.doAction(ActionCode.SHOW_NAVIGATION);
-		//return true;
 		return false;
 	}
 
