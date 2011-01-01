@@ -58,6 +58,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	private void init() {
+		// next line prevent ignoring first onKeyDown DPad event
+		// after any dialog was closed
+		setFocusableInTouchMode(true);
 		setDrawingCacheEnabled(false);
 		setOnLongClickListener(this);
 	}
