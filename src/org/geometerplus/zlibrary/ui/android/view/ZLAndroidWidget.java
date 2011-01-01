@@ -136,18 +136,25 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final boolean horizontal =
 			(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 			(myViewPageToScroll == ZLView.PAGE_LEFT);
-		canvas.drawBitmap(
-			myMainBitmap,
-			horizontal ? myScrollingShift : 0,
-			horizontal ? 0 : myScrollingShift,
-			myPaint
-		);
 		final int size = horizontal ? w : h;
 		int shift = (myScrollingShift < 0) ? (myScrollingShift + size) : (myScrollingShift - size);
+		/*
 		canvas.drawBitmap(
 			mySecondaryBitmap,
 			horizontal ? shift : 0,
 			horizontal ? 0 : shift,
+			myPaint
+		);
+		*/
+		canvas.drawBitmap(
+			mySecondaryBitmap,
+			0, 0,
+			myPaint
+		);
+		canvas.drawBitmap(
+			myMainBitmap,
+			horizontal ? myScrollingShift : 0,
+			horizontal ? 0 : myScrollingShift,
 			myPaint
 		);
 
