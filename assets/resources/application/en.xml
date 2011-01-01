@@ -158,8 +158,6 @@
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
 		<node name="networkLibrary" value="Network library"/>
-		<node name="hyperlinksOnlyMode" value="Standard mode"/>
-		<node name="dictionaryMode" value="Dictionary mode"/>
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
@@ -473,10 +471,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary">
 				<node name="summary" value="Dictionary settings"/>
-				<node name="tappingAction" value="Tapping on word">
-					<node name="doNothing" value="Tapping does nothing"/>
-					<node name="selectWord" value="Tapping selects the word"/>
-					<node name="openDictionary" value="Tapping selects the word and opens dictionary"/>
+				<node name="tappingAction" value="Long tapping action">
+					<node name="doNothing" value="Long tapping does nothing"/>
+					<node name="selectWord" value="Long tapping selects the word"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words">
+					<node name="summaryOn" value="Key navigation visits all words"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 				</node>
 			</node>
 		</node>

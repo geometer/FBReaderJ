@@ -158,8 +158,6 @@
 		<node name="day" value="День"/>
 		<node name="night" value="Ночь"/>
 		<node name="networkLibrary" value="Сетевая библиотека"/>
-		<node name="hyperlinksOnlyMode" value="Обычный режим"/>
-		<node name="dictionaryMode" value="Режим словаря"/>
 		<node name="navigate" value="Переход">
 			<node name="toc" value="Оглавление"/>
 			<node name="gotoHome" value="В начало книги"/>
@@ -473,10 +471,14 @@
 			</node>
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
-				<node name="tappingAction" value="Дествие при нажатии на экран">
+				<node name="tappingAction" value="Действие при долгом нажатии на экран">
 					<node name="doNothing" value="Не делать ничего"/>
 					<node name="selectWord" value="Выделять слово"/>
-					<node name="openDictionary" value="Выделять слово и запускать словарь"/>
+					<node name="openDictionary" value="Выделять слово, а при отпускании &#8211; запускать словарь"/>
+				</node>
+				<node name="navigateOverAllWords" value="Перемещаться по всем словам">
+					<node name="summaryOn" value="При перемещении с помощью кнопок помечать все слова"/>
+					<node name="summaryOff" value="При перемещении с помощью кнопок помечать только гиперссылки"/>
 				</node>
 			</node>
 		</node>

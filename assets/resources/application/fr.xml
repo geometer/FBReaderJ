@@ -162,8 +162,6 @@
 		<node name="day" value="Jour"/>
 		<node name="night" value="Nuit"/>
 		<node name="networkLibrary" value="Bibliothèque réseau"/>
-		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
-		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Naviguer">
 			<node name="toc" value="Table des Matières"/>
 			<node name="gotoHome" value="Aller au début du document"/>
@@ -483,10 +481,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="tappingAction" value="Tapping on word" toBeTranslated="true">
-					<node name="doNothing" value="Tapping does nothing" toBeTranslated="true"/>
-					<node name="selectWord" value="Tapping selects the word" toBeTranslated="true"/>
-					<node name="openDictionary" value="Tapping selects the word and opens dictionary" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

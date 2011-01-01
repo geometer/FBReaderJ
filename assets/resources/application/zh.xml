@@ -159,8 +159,6 @@
 		<node name="day" value="白低黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
-		<node name="hyperlinksOnlyMode" value="标准模式"/>
-		<node name="dictionaryMode" value="字典模式"/>
 		<node name="navigate" value="导航">
 			<node name="toc" value="内容目录" />
 			<node name="gotoHome" value="翻到图书开始" />
@@ -480,10 +478,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="tappingAction" value="Tapping on word" toBeTranslated="true">
-					<node name="doNothing" value="Tapping does nothing" toBeTranslated="true"/>
-					<node name="selectWord" value="Tapping selects the word" toBeTranslated="true"/>
-					<node name="openDictionary" value="Tapping selects the word and opens dictionary" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

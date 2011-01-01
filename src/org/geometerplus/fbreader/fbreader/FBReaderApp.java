@@ -43,7 +43,7 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ZLBooleanOption NavigateAllWordsOption =
-		new ZLBooleanOption("Options", "NavigateAllWords", true);
+		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
 	public interface DictionaryModeTappingAction {
 		int DO_NOTHING = 0;
