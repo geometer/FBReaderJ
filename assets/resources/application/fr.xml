@@ -198,6 +198,7 @@
 			<node name="openBook" value="Lire" />
 			<node name="editInfo" value="Modifier" />
 			<node name="reloadInfo" value="Recharger" />
+			<node name="refillAccount" value="Recréditer"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plugin" />
