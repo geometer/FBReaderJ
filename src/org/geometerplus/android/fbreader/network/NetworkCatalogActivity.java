@@ -36,7 +36,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
-	private NetworkCatalogTree myTree;
+	private NetworkTree myTree;
 	private String myCatalogKey;
 	private boolean myInProgress;
 
@@ -63,20 +63,16 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			throw new RuntimeException("Catalog's Key was not specified!!!");
 		}
 
-		final NetworkTree tree = networkView.getOpenedTree(level);
-		if (!(tree instanceof NetworkCatalogTree)) {
-			finish();
-			return;
-		}
-		myTree = (NetworkCatalogTree)tree;
+		myTree = networkView.getOpenedTree(level);
 
 		networkView.setOpenedActivity(myCatalogKey, this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
 		setupTitle();
-		if (Util.isAccountRefillingSupported(this, myTree.Item.Link)) {
-			setDefaultTree(new RefillAccountTree(myTree));
+		if (myTree instanceof NetworkCatalogTree &&
+			Util.isAccountRefillingSupported(this, ((NetworkCatalogTree)myTree).Item.Link)) {
+			setDefaultTree(new RefillAccountTree((NetworkCatalogTree)myTree));
 		}
 	}
 
@@ -84,10 +80,12 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case USER_REGISTRATION_REQUEST_CODE:
-				if (resultCode == RESULT_OK && data != null) {
+				if (myTree instanceof NetworkCatalogTree &&
+					resultCode == RESULT_OK &&
+					data != null) {
 					try {
 						Util.runAfterRegistration(
-							myTree.Item.Link.authenticationManager(),
+							((NetworkCatalogTree)myTree).Item.Link.authenticationManager(),
 							data
 						);
 					} catch (ZLNetworkException e) {
@@ -148,9 +146,10 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		public CatalogAdapter() {
 			if (myTree instanceof NetworkCatalogRootTree) {
+				final NetworkCatalogRootTree rootTree = (NetworkCatalogRootTree)myTree;
 				mySpecialItems = new ArrayList<NetworkTree>();
-				if (Util.isAccountRefillingSupported(NetworkCatalogActivity.this, myTree.Item.Link)) {
-					mySpecialItems.add(new RefillAccountTree(myTree));
+				if (Util.isAccountRefillingSupported(NetworkCatalogActivity.this, rootTree.Item.Link)) {
+					mySpecialItems.add(new RefillAccountTree(rootTree));
 				}
 				if (mySpecialItems.size() > 0) {
 					mySpecialItems.trimToSize();
