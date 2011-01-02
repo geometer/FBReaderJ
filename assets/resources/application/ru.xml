@@ -551,7 +551,7 @@
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
-			<node name="purchaseNotEnoughMoney" value="Не достаточно средств на счету" />
+			<node name="purchaseNotEnoughMoney" value="Недостаточно средств на счете" />
 			<node name="purchaseMissingBook" value="Книга отсутствует в продаже" />
 			<node name="purchaseAlreadyPurchased" value="Книга уже была куплена" />
 			<node name="bookNotPurchased" value="Книга не была куплена" />
@@ -559,7 +559,7 @@
 			<node name="noUserEmail" value="Нет пользователя с таким адресом" />
 			<node name="unsupportedOperation" value="Неподдерживаемая операция" />
 			<node name="notAnOPDS" value="Это не OPDS каталог" />
-			<node name="noRequiredInformation" value="Требуемая информация не найдена в каталоге" />
+			<node name="noRequiredInformation" value="Информация нет в каталоге" />
 			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша" />
 		</node>
 		<node name="emptyCatalogBox">
