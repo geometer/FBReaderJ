@@ -455,9 +455,9 @@
 					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
 					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
-				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
-					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
 					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>

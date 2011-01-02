@@ -126,8 +126,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public boolean isDoubleTapSupported() {
-		return true;
-		//return ScrollingPreferences.Instance().DoubleTapNavigationOption.getValue();
+		return myReader.EnableDoubleTapOption.getValue();
 	}
 
 	@Override

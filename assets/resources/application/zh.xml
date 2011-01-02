@@ -455,9 +455,9 @@
 					<node name="byFlick" value="手指触滑翻页"/>
 					<node name="byTapAndFlick" value="触滑或者拍触以翻页"/>
 				</node>
-				<node name="doubleTapNavigation" value="导航对话框">
-					<node name="summaryOn" value="连续两次拍触屏幕打开导航对话框"/>
-					<node name="summaryOff" value="连续拍触不做为任何动作"/>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="音量键滚动">
 					<node name="summaryOn" value="使用音量键翻页" />

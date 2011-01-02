@@ -42,6 +42,8 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
+	public final ZLBooleanOption EnableDoubleTapOption =
+		new ZLBooleanOption("Options", "EnableDoubleTap", true);
 	public final ZLBooleanOption NavigateAllWordsOption =
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
