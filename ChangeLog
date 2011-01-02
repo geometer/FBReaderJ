@@ -1,24 +1,35 @@
-===== 0.99.0 (??? ??, 2010) =====
-* LitRes integration has been moved to a separate plugin to avoid questions about "strange permissions required by FBReader"
-* Refilling LitRes account via SMS has been implemented
-* New book info activity: with large cover image, annotation, etc.
-* Integration with ColorDict has been implemented
-* New Library view (like network library view)
-* 'Favorites' item in library view
-* File tree item in library view
-* Local library activity has been moved to a separate process
-* Czech resources have been updated (by Marek Pavelka)
-* Chinese resources have been updated (by Shucang)
-* French resources have been updated (by Mathias Monnerville)
-* German resources have been updated (by Ingolf Kübler)
-* Font directory option is only shown if external fonts are supported
-* Options dialog has been changed to be more androidish
-* Footer style has been changed: filled rectangle is now used
-* Footer color option has been added
-* TOC marks in footer have been added (this is an optional feature)
-* Dependent options
-* Color picker dialog (idea was taken from http://www.anddev.org/announce_color_picker_dialog-t10771.html)
-* Network library: language filter has been added
+===== 0.99.0 (Jan 02, 2011) =====
+* Since this version a package available from Android market requires Android 1.6+. A package for Android 1.5 is still available from http://www.fbreader.org/
+* Local library changes
+	* New Library view (like network library view)
+	* File tree item in library view
+	* 'Favorites' item in library view
+	* New book info activity: large cover image, annotation, etc.
+	* Local library activity has been moved to a separate process
+	* Speed and memory usage improvements for HUGE epub libraries
+* New features in LitRes.Ru integration
+	* All new features were moved to a separate plugin to avoid questions about "strange permissions required by FBReader"
+	* Refilling LitRes account via text messages
+* Options dialog
+	* Options dialog has been changed to be more androidish
+	* Dependent options
+	* Color picker dialog (idea was taken from http://www.anddev.org/announce_color_picker_dialog-t10771.html)
+	* Font directory option is only shown if external fonts are supported
+* Footer changes
+	* Footer style has been changed: filled rectangle is now used
+	* Footer color option has been added
+	* TOC marks in footer have been added (this is an optional feature)
+* Other new features
+	* Integration with ColorDict (a dictionary) has been implemented
+	* Finger scrolling option has been extended; both tap and flick can scroll pages
+	* Network library: language filter has been added
+	* Devices with no hardware menu button are supported: double tap in the bottom half of the screen shows a menu
+* Translations
+	* Czech resources have been updated (by Marek Pavelka)
+	* Chinese resources have been updated (by Shucang)
+	* French resources have been updated (by Mathias Monnerville)
+	* German resources have been updated (by Ingolf Kübler)
+	* Hungary resources have been updated (by L. B. Szabó)
 
 ===== 0.7.17 (Nov 14, 2010) =====
 * Network catalog order has been changed: language is used for ordering
