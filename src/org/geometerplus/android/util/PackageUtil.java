@@ -115,7 +115,9 @@ public abstract class PackageUtil {
 							buttonResource.getResource(positiveButtonKey).getValue(),
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
-									PackageUtil.installFromMarket(activity, plugin);
+									if (!PackageUtil.installFromMarket(activity, plugin)) {
+										UIUtil.showErrorMessage(activity, "cannotRunAndroidMarket", "plugin");
+									}
 								}
 							}
 						)
