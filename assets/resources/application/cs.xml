@@ -199,7 +199,7 @@
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk" />
 			<node name="updateTitle" value="Aktualizovat doplněk" />
-			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
+			<node name="dontAskAgain" value="Neptat se znovu" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník" />
@@ -442,21 +442,21 @@
 					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
 					<node name="100" value="Nikdy"/>
 				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
-					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				<node name="dontTurnScreenOffDuringCharging" value="Zabránit usínání displeje během nabíjení">
+					<node name="summaryOn" value="Zabránit usínání displeje pokud je zařízení v režimu nabíjení"/>
+					<node name="summaryOff" value="Vypínat displej i když je zařízení v režimu nabíjení"/>
 				</node>
 			</node>
 			<node name="scrolling" value="Posouvání">
 				<node name="summary" value="Jak posouvat text"/>
-				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
-					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
-					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
-					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				<node name="fingerScrolling" value="Posouvat detykem displeje">
+					<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
+					<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
+					<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
 				</node>
-				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
-					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
+				<node name="doubleTapNavigation" value="Dialogové okno navigace">
+					<node name="summaryOn" value="Poklepání spustí dialogové okno navigace"/>
+					<node name="summaryOff" value="Poklepání nedělá nic"/>
 				</node>
 				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
 					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
@@ -475,16 +475,16 @@
 					<node name="summaryOff" value="Posouvat stránky svisle"/>
 				</node>
 			</node>
-			<node name="dictionary" value="Dictionary" toBeTranslated="true">
-				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
-					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+			<node name="dictionary" value="Slovník">
+				<node name="summary" value="Nastavení slovníku"/>
+				<node name="tappingAction" value="Dlouhé klepnutí">
+					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
+					<node name="selectWord" value="Dlouhé klepnutí vybere slovo"/>
+					<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 				</node>
-				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
-					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
-					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
+				<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
+					<node name="summaryOn" value="Navigace klávesami prochází všechna slova"/>
+					<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
 				</node>
 			</node>
 		</node>
