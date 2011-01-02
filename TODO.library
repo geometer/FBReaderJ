@@ -1,7 +1,7 @@
 0.99:
 DONE Reload book info from file
 DONE don't run several initialization threads in the same time
-* lib.ololo.cc
+DONE lib.ololo.cc
 
 After 0.99:
 * returning from footnotes (ask if footnote is in the same model and there was page scrolling)
