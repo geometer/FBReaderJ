@@ -126,15 +126,20 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public boolean isDoubleTapSupported() {
-		return ScrollingPreferences.Instance().DoubleTapNavigationOption.getValue();
+		return true;
+		//return ScrollingPreferences.Instance().DoubleTapNavigationOption.getValue();
 	}
 
 	@Override
-	public boolean onFingerDoubleTap() {
-		if (super.onFingerDoubleTap()) {
+	public boolean onFingerDoubleTap(int x, int y) {
+		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		myReader.doAction(ActionCode.SHOW_NAVIGATION);
+		if (y <= myContext.getHeight() / 2) {
+			myReader.doAction(ActionCode.SHOW_NAVIGATION);
+		} else {
+			myReader.doAction(ActionCode.SHOW_MENU);
+		}
 		return true;
 	}
 

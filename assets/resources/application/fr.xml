@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- French FBReaderJ resources
 	 Intial work: Sébastien Rodriguez 
-	 Contributors: Mathias Monnerville <mathias@monnerville.com>
+	 Maintainer: Mathias Monnerville <mathias@monnerville.com>
 -->
 <resources>
 	<node name="library">
@@ -11,40 +11,40 @@
 	</node>
 	<node name="libraryView">
 		<node name="byAuthor" value="Par auteur">
-			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+			<node name="summary" value="Livres triés par auteur"/>
 		</node>
-		<node name="byTag" value="Par genre">
-			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
+		<node name="byTag" value="Par libellé">
+			<node name="summary" value="Livres triés par libellé"/>
 		</node>
 		<node name="recent" value="Récent">
-			<node name="summary" value="Recently opened books" toBeTranslated="true"/>
+			<node name="summary" value="Livres récemment ouverts"/>
 		</node>
-		<node name="favorites" value="Favorites" toBeTranslated="true">
-			<node name="summary" value="My selected books" toBeTranslated="true"/>
+		<node name="favorites" value="Favoris">
+			<node name="summary" value="Ma sélection de livres"/>
 		</node>
 		<node name="searchResults" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
 		</node>
-		<node name="fileTree" value="File tree" toBeTranslated="true">
-			<node name="summary" value="Browse file system" toBeTranslated="true"/>
+		<node name="fileTree" value="Système de fichiers">
+			<node name="summary" value="Parcourir le système de fichiers"/>
 		</node>
-		<node name="fileTreeRoot" value="Device" toBeTranslated="true">
-			<node name="summary" value="Full file system of the device" toBeTranslated="true"/>
+		<node name="fileTreeRoot" value="Périphérique">
+			<node name="summary" value="Système de fichier complet du périphérique"/>
 		</node>
-		<node name="fileTreeCard" value="Memory card" toBeTranslated="true">
-			<node name="summary" value="Memory card inserted into the device" toBeTranslated="true"/>
+		<node name="fileTreeCard" value="Carte mémoire">
+			<node name="summary" value="Carte mémoire insérée dans le périphérique"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
+		<node name="fileTreeLibrary" value="Bibliothèque FBReader">
+			<node name="summary" value="Répertoire des livres FBReader"/>
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Recherche locale"/>
 		</node>
 		<node name="openBook" value="Ouvrir ce livre"/>
-		<node name="showBookInfo" value="Book info" toBeTranslated="true"/>
+		<node name="showBookInfo" value="Info livre"/>
 		<node name="deleteBook" value="Supprimer ce livre"/>
-		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
+		<node name="addToFavorites" value="Ajouter aux favoris"/>
+		<node name="removeFromFavorites" value="Supprimer des favoris"/>
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
@@ -64,8 +64,8 @@
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="refillAccount" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="refillTitle" value="Recréditer le compte"/>
-		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
-		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Messages texte"/>
+		<node name="refillViaBrowser" value="Ouvrir la page dans le navigateur"/>
 		<node name="refillSummary" value="Аctuellement : %s"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
@@ -97,7 +97,7 @@
 			<node name="refillAccount" value="Recréditer le compte"/>
 			<node name="addCustomCatalog" value="Ajouter catalogue"/>
 			<node name="refreshCatalogsList" value="Rafraîchir"/>
-			<node name="languages" toBeTranslated="true" value="Language filter"/>
+			<node name="languages" value="Filtrer par langue"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -112,21 +112,21 @@
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informations sur le livre" />
-		<node name="fileInfo" toBeTranslated="true" value="File Info" />
+		<node name="fileInfo" value="Info fichier" />
 		<node name="annotation" value="Annotation" />
 		<node name="title" value="Titre:" />
 		<node name="authors" value="Auteurs:" />
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Index dans les séries:" />
 		<node name="tags" value="Tags:" />
-		<node name="name" toBeTranslated="true" value="Name:" />
-		<node name="type" toBeTranslated="true" value="Type:" />
-		<node name="size" toBeTranslated="true" value="Size:" />
-		<node name="time" toBeTranslated="true" value="Last modified:" />
-		<node name="sizeInBytes" toBeTranslated="true" value="%s byte(s)" />
-		<node name="sizeInKiloBytes" toBeTranslated="true" value="%s kB" />
+		<node name="name" value="Nom:" />
+		<node name="type" value="Type:" />
+		<node name="size" value="Taille:" />
+		<node name="time" value="Dernière modification:" />
+		<node name="sizeInBytes" value="%s octet(s)" />
+		<node name="sizeInKiloBytes" value="%s Ko" />
 		<node name="menu">
-			<node name="edit" toBeTranslated="true" value="Edit" />
+			<node name="edit" value="Editer" />
 		</node>
 	</node>
 	<node name="bookDownloader">
@@ -187,26 +187,26 @@
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Install" toBeTranslated="true" />
-			<node name="update" value="Update" toBeTranslated="true" />
-			<node name="skip" value="Skip" toBeTranslated="true" />
+			<node name="install" value="Installer" />
+			<node name="update" value="Modifier" />
+			<node name="skip" value="Sauter" />
 			<node name="buy" value="Acheter"/>
 			<node name="buyAndDownload" value="Acheter et télécharger"/>
 			<node name="continue" value="Continuer" />
 			<node name="editUrl" value="Editer l'url" />
 			<node name="tryAgain" value="Recommencer" />
-			<node name="openBook" value="Read" toBeTranslated="true" />
-			<node name="editInfo" value="Edit" toBeTranslated="true" />
-			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+			<node name="openBook" value="Lire" />
+			<node name="editInfo" value="Modifier" />
+			<node name="reloadInfo" value="Recharger" />
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
-			<node name="updateTitle" value="Update plugin" toBeTranslated="true" />
-			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
+			<node name="installTitle" value="Installer plugin" />
+			<node name="updateTitle" value="Mettre à jour plugin" />
+			<node name="dontAskAgain" value="Ne plus demander" />
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Install dictionary" toBeTranslated="true" />
-			<node name="message" value="Would you like to install %s?" toBeTranslated="true" />
+			<node name="title" value="Installer un dictionnaire" />
+			<node name="message" value="Souhaitez-vous installer %s ?" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nom du fichier"/>
@@ -269,8 +269,8 @@
 					<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
 				</node>
 				<node name="allowHyphenations" value="Autoriser les césures">
-					<node name="on" value="hyphenate words" toBeTranslated="true"/>
-					<node name="off" value="don't hyphenate words" toBeTranslated="true"/>
+					<node name="on" value="couper les mots"/>
+					<node name="off" value="ne pas couper les mots"/>
 					<node name="unchanged" value="&lt;inchangé&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Indentation de la première ligne"/>
@@ -382,13 +382,13 @@
 				</node>
 			</node>
 			<node name="colors" value="Couleurs">
-				<node name="summary" value="Color settings" toBeTranslated="true"/>
+				<node name="summary" value="Paramètres des couleurs"/>
 				<node name="background" value="Arrière-plan"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>
 				<node name="text" value="Texte normal"/>
 				<node name="hyperlink" value="Text d'hyperlien"/>
 				<node name="highlighting" value="Arrière-plan des résultats de recherche"/>
-				<node name="footer" value="Footer" toBeTranslated="true"/>
+				<node name="footer" value="Pied de page"/>
 			</node>
 			<node name="margins" value="Marge">
 				<node name="summary" value="Marges du texte"/>
@@ -406,10 +406,10 @@
 					<node name="showAsFooter" value="Pied de page horizontal"/>
 				</node>
 				<node name="footerHeight" value="Hauteur du pied de page"/>
-				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
-				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
-					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				<node name="footerColor" value="Couleur pied de page"/>
+				<node name="tocMarks" value="Afficher les repères de la table des matières">
+					<node name="summaryOn" value="Afficher les repères dans la barre du pied de page"/>
+					<node name="summaryOff" value="Ne pas afficher les repères dans la barre du pied de page"/>
 				</node>
 				<node name="footerLongTap" value="Appui long sur pied de page">
 					<node name="longTapRevert" value="Annuler position"/>
@@ -441,31 +441,25 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
 					<node name="0" value="Toujours"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<!--
-					Please, update this translation to avoid % sign. Resources with % sign
-					causes crash on cyanogenmod firmware (due a bug in cyanogenmod)
-					<node name="25" value="Tant que le niveau de batterie est supérieur à 25%"/>
-					<node name="50" value="Tant que le niveau de batterie est supérieur à 50%"/>
-					-->
+					<node name="25" value="Tant que le niveau de batterie est supérieur à 25 pourcent"/>
+					<node name="50" value="Tant que le niveau de batterie est supérieur à 50 pourcent"/>
 					<node name="100" value="Jamais"/>
 				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
-					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				<node name="dontTurnScreenOffDuringCharging" value="Empêcher l'écran de se mettre en veille pendant le chargement">
+					<node name="summaryOn" value="Pas de mise en veille lorsque la batterie est en charge"/>
+					<node name="summaryOff" value="Éteindre l'écran lorsque la batterie se recharge"/>
 				</node>
 			</node>
 			<node name="scrolling" value="Navigation">
 				<node name="summary" value="Modalités de défilement du texte"/>
-				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
-					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
-					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
-					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				<node name="fingerScrolling" value="Défilement à l'écran">
+					<node name="byTap" value="Changer de page par appui du doigt"/>
+					<node name="byFlick" value="Changer de page par petit coup du doigt"/>
+					<node name="byTapAndFlick" value="Changer de page lors d'un appui ou petit coup"/>
 				</node>
-				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
-					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
+				<node name="doubleTapNavigation" value="Fenêtre de navigation">
+					<node name="summaryOn" value="Un double appui ouvre la fenêre de navigation"/>
+					<node name="summaryOff" value="Un double appui n'a aucun effet"/>
 				</node>
 				<node name="volumeKeys" value="Touches du volume">
 					<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>
@@ -484,16 +478,16 @@
 					<node name="summaryOff" value="Défilement des pages verticalement"/>
 				</node>
 			</node>
-			<node name="dictionary" value="Dictionary" toBeTranslated="true">
-				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
-					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+			<node name="dictionary" value="Dictionnaire">
+				<node name="summary" value="Paramètres du dictionnaire"/>
+				<node name="tappingAction" value="Configuration de l'appui long">
+					<node name="doNothing" value="Un appui long ne fait rien"/>
+					<node name="selectWord" value="Un appui long selectionne le mot"/>
+					<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 				</node>
-				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
-					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
-					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
+				<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
+					<node name="summaryOn" value="La navigation par touches parcourt tous les mots"/>
+					<node name="summaryOff" value="La navigation par touches visite les liens hypertexts uniquement"/>
 				</node>
 			</node>
 		</node>
@@ -574,7 +568,7 @@
 			<node name="siteAlreadyExists" value="Le site spécifié est déjà utilisé" />
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Language filter" toBeTranslated="true" />
+			<node name="title" value="Filtre de langue" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Achat du livre"/>
@@ -586,14 +580,14 @@
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
+		<node name="cannotRunAndroidMarket" value="Impossible d'accéder à Android Market. Veuillez installer %s manuellement"/>
 		<node name="textNotFound" value="Aucune occurence dans le livre"/>
 		<node name="bookNotFound" value="Aucun livre correspondant dans la bibliothèque"/>
 		<node name="bookmarkNotFound" value="Aucun marque-page correspondant"/>
 		<node name="cannotOpenBook" value="Impossible d'ouvrir le livre"/>
-		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
-		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="dictionaryIsNotInstalled" value="Désolé mais le dictionnaire n'est pas installé"/>
+		<node name="permissionDenied" value="Désolé, accès refusé"/>
+		<node name="noFavorites" value="Votre liste de favoris est vide"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>

@@ -34,7 +34,7 @@ public class ZLAndroidApplication extends Application {
 	private static ZLAndroidApplication ourApplication;
 
 	public final ZLBooleanOption AutoOrientationOption = new ZLBooleanOption("LookNFeel", "AutoOrientation", false);
-	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
+	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
@@ -47,9 +47,11 @@ public class ZLAndroidApplication extends Application {
 		ourApplication = this;
 	}
 
-	public boolean isAlwaysShowStatusBar() {
+	private boolean hasNoHardwareMenuButton() {
 		return
+			// Eken M001
 			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
+			// PanDigital
 			"PD_Novel".equals(Build.MODEL);
 	}
 
@@ -58,9 +60,6 @@ public class ZLAndroidApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		if (isAlwaysShowStatusBar()) {
-			ShowStatusBarOption.setValue(true);
-		}
 		new ZLSQLiteConfig(this);
 		new ZLAndroidImageManager();
 		new ZLAndroidDialogManager();
