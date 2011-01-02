@@ -50,7 +50,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public synchronized void initUser(String userName, String sid) throws ZLNetworkException {
-		mySidChecked = true;
+		mySidChecked = false;
 		mySidUserNameOption.setValue(userName);
 		mySidOption.setValue(sid);
 		if (!isAuthorised(true)) {
@@ -413,6 +413,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public Map<String,String> getSmsRefillingData() {
 		final HashMap<String,String> map = new HashMap<String,String>();
 		map.put("litres:userId", myUserIdOption.getValue());
+		map.put("litres:sid", mySidOption.getValue());
 		return map;
 	}
 }
