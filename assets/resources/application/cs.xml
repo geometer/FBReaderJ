@@ -195,6 +195,7 @@
 			<node name="openBook" value="Číst" />
 			<node name="editInfo" value="Upravit" />
 			<node name="reloadInfo" value="Znovu načíst" />
+			<node name="refillAccount" value="Doplnit účet"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk" />

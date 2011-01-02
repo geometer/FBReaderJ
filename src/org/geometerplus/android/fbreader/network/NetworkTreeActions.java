@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.Activity;
 import android.view.Menu;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -100,7 +101,7 @@ abstract class NetworkTreeActions {
 		return tree.getName();
 	}
 
-	public abstract void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree);
+	public abstract void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree);
 
 	public abstract int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree);
 	public abstract String getConfirmText(NetworkTree tree, int actionCode);

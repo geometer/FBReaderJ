@@ -40,6 +40,11 @@ class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 		Link = parentTree.Item.Link;
 	}
 
+	public RefillAccountTree(INetworkLink link) {
+		super(1);
+		Link = link;
+	}
+
 	@Override
 	public String getName() {
 		return ZLResource.resource("networkView").getResource("refillTitle").getValue();

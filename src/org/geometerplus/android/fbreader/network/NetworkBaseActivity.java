@@ -41,8 +41,7 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-abstract class NetworkBaseActivity extends ListActivity 
-		implements NetworkView.EventListener, View.OnCreateContextMenuListener {
+abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
@@ -177,8 +176,7 @@ abstract class NetworkBaseActivity extends ListActivity
 		return view;
 	}
 
-
-	// from View.OnCreateContextMenuListener
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		NetworkTree tree = null;
 		if (menuInfo != null) {

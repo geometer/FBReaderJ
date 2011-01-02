@@ -195,6 +195,7 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+			<node name="refillAccount" value="Поповнити рахунок"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin" toBeTranslated="true" />

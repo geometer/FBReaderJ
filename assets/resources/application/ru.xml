@@ -194,6 +194,7 @@
 			<node name="openBook" value="Читать" />
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
+			<node name="refillAccount" value="Пополнить счёт"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>

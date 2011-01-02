@@ -195,6 +195,7 @@
 			<node name="openBook" value="Olvasás" />
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
+			<node name="refillAccount" value="Számla feltöltése"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin telepítése" />
