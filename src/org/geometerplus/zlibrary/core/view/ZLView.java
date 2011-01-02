@@ -70,7 +70,7 @@ abstract public class ZLView {
 		return false;
 	}
 
-	public boolean onFingerDoubleTap() {
+	public boolean onFingerDoubleTap(int x, int y) {
 		return false;
 	}
 
