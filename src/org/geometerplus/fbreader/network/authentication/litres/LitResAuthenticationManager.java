@@ -217,9 +217,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				myAccount = BuyBookReference.price(xmlReader.Account, "RUB");
 			}
 			if (exception != null) {
-				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
+				final String code = exception.getCode();
+				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(code)) {
 					logOut();
-				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(exception.getCode())) {
+				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(code)) {
 					myPurchasedBooks.put(book.Id, book);
 				}
 				throw exception;
