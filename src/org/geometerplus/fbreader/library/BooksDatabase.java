@@ -58,6 +58,7 @@ public abstract class BooksDatabase {
 	// returns map fileId -> book
 	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos);
 	protected abstract Book loadBook(long bookId);
+	protected abstract void reloadBook(Book book);
 	protected abstract Book loadBookByFile(long fileId, ZLFile file);
 
 	protected abstract List<Author> loadAuthors(long bookId);

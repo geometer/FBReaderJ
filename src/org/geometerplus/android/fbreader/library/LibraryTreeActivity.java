@@ -103,7 +103,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(myTreePathString + "\000" + tree.getName()).run();
+			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
 		}
 	}
 }

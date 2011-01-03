@@ -113,7 +113,7 @@ public class BookInfoActivity extends Activity {
 		});
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
-				book.reloadInfo();
+				book.reloadInfoFromFile();
 				setupBookInfo(book);
 			}
 		});
