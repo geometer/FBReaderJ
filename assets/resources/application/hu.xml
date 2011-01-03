@@ -455,9 +455,9 @@
 					<node name="byFlick" value="Lapozás ujjmozdulatra"/>
 					<node name="byTapAndFlick" value="Lapozás érintésre és ujjmozdulatra"/>
 				</node>
-				<node name="doubleTapNavigation" value="Navigáció">
-					<node name="summaryOn" value="Dupla érintés előhívja a navigációs ablakot"/>
-					<node name="summaryOff" value="Dupla érintésre nem történik semmi"/>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
 					<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>
@@ -467,9 +467,10 @@
 					<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
 					<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
 				</node>
-				<node name="animated" value="Animált lapozás">
-					<node name="summaryOn" value="Finomabb görgetés"/>
-					<node name="summaryOff" value="Gyorsabb lapozás"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Vízszintes lapozás">
 					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>

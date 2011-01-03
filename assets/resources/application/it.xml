@@ -455,9 +455,9 @@
 					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
 					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
-				<node name="doubleTapNavigation" value="Navigation dialog" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap starts navigation dialog" toBeTranslated="true"/>
-					<node name="summaryOff" value="Double tap does nothing" toBeTranslated="true"/>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
 					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>
@@ -467,9 +467,10 @@
 					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
 				</node>
-				<node name="animated" value="Scorrimento animato">
-					<node name="summaryOn" value="Scorri le pagine più lentamente"/>
-					<node name="summaryOff" value="Scorri le pagine più velocemente"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Scorrimento orizzontale">
 					<node name="summaryOn" value="Scorri le pagine orizzontalmente"/>

@@ -455,9 +455,9 @@
 					<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
 					<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
 				</node>
-				<node name="doubleTapNavigation" value="Dialogové okno navigace">
-					<node name="summaryOn" value="Poklepání spustí dialogové okno navigace"/>
-					<node name="summaryOff" value="Poklepání nedělá nic"/>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
 					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
@@ -467,9 +467,10 @@
 					<node name="summaryOn" value="Tlačítko nahoru (dolů) posouvá stránku dolů (nahoru)"/>
 					<node name="summaryOff" value="Tlačítko nahoru (dolů) posouvá stránku nahoru (dolů)"/>
 				</node>
-				<node name="animated" value="Animované posouvání">
-					<node name="summaryOn" value="Posouvat stránky hladčeji"/>
-					<node name="summaryOff" value="Posouvat stránky rychleji"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Vodorovné posouvání">
 					<node name="summaryOn" value="Posouvat stránky vodorovně"/>

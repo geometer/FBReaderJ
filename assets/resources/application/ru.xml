@@ -477,6 +477,10 @@
 					<node name="byFlick" value="Листать протягиванием страницы"/>
 					<node name="byTapAndFlick" value="Листать нажатием на экран либо протягиванием страницы"/>
 				</node>
+				<node name="enableDoubleTapDetection" value="Обработка двойного нажатия">
+					<node name="summaryOn" value="По двойному нажатию открывать диалог перемещения/меню"/>
+					<node name="summaryOff" value="Игнорировать двойные нажатия"/>
+				</node>
 				<node name="doubleTapNavigation" value="Окно перемещения по тексту">
 					<node name="summaryOn" value="Двойное нажатие на экран открывает окно перемещения"/>
 					<node name="summaryOff" value="Двойное нажатие на экран ничего не делает"/>
@@ -488,6 +492,11 @@
 				<node name="invertVolumeKeys" value="Перелистывать кнопками в обратную сторону">
 					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
 					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
+				</node>
+				<node name="animation" value="Анимация">
+					<node name="none" value="Выключить анимацию"/>
+					<node name="slide" value="Сдвиг с перекрытием"/>
+					<node name="shift" value="Сдвиг"/>
 				</node>
 				<node name="animated" value="Aнимация при перелистывании">
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
