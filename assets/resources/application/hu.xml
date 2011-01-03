@@ -467,9 +467,10 @@
 					<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
 					<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
 				</node>
-				<node name="animated" value="Animált lapozás">
-					<node name="summaryOn" value="Finomabb görgetés"/>
-					<node name="summaryOff" value="Gyorsabb lapozás"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Vízszintes lapozás">
 					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>

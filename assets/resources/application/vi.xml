@@ -467,9 +467,10 @@
 					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
 				</node>
-				<node name="animated" value="Cuộn sinh động">
-					<node name="summaryOn" value="Cuộn trang mượt hơn"/>
-					<node name="summaryOff" value="Cuộn trang nhanh hơn"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Cuộn ngang">
 					<node name="summaryOn" value="Cuộn trang theo chiều ngang"/>

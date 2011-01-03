@@ -114,6 +114,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	private void onDrawInScrolling(Canvas canvas) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+
 		final int w = getWidth();
 		final int h = getMainAreaHeight();
 
@@ -138,19 +140,23 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			(myViewPageToScroll == ZLView.PAGE_LEFT);
 		final int size = horizontal ? w : h;
 		int shift = (myScrollingShift < 0) ? (myScrollingShift + size) : (myScrollingShift - size);
-		/*
-		canvas.drawBitmap(
-			mySecondaryBitmap,
-			horizontal ? shift : 0,
-			horizontal ? 0 : shift,
-			myPaint
-		);
-		*/
-		canvas.drawBitmap(
-			mySecondaryBitmap,
-			0, 0,
-			myPaint
-		);
+		switch (view.getAnimationType()) {
+			case shift:
+				canvas.drawBitmap(
+					mySecondaryBitmap,
+					horizontal ? shift : 0,
+					horizontal ? 0 : shift,
+					myPaint
+				);
+				break;
+			case slide:
+				canvas.drawBitmap(
+					mySecondaryBitmap,
+					0, 0,
+					myPaint
+				);
+				break;
+		}
 		canvas.drawBitmap(
 			myMainBitmap,
 			horizontal ? myScrollingShift : 0,
@@ -159,7 +165,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		);
 
 		if (stopScrolling) {
-			final ZLView view = ZLApplication.Instance().getCurrentView();
 			if (myScrollingBound != 0) {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;

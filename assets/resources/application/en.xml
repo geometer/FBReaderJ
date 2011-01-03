@@ -466,9 +466,10 @@
 					<node name="summaryOn" value="Up (down) key scrolls a page down (up)"/>
 					<node name="summaryOff" value="Up (down) key scrolls a page up (down)"/>
 				</node>
-				<node name="animated" value="Animated scrolling">
-					<node name="summaryOn" value="Scroll pages smoother"/>
-					<node name="summaryOff" value="Scroll pages faster"/>
+				<node name="animation" value="Animation">
+					<node name="none" value="Scroll with no animation"/>
+					<node name="slide" value="Slide animation"/>
+					<node name="shift" value="Shift animation"/>
 				</node>
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>

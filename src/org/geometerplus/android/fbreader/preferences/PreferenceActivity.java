@@ -336,7 +336,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
 		scrollingScreen.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
 		scrollingScreen.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
-		scrollingScreen.addOption(scrollingPreferences.AnimateOption, "animated");
+		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");

@@ -470,6 +470,11 @@
 					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
 					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
 				</node>
+				<node name="animation" value="Анимация">
+					<node name="none" value="Выключить анимацию"/>
+					<node name="slide" value="Сдвиг с перекрытием"/>
+					<node name="shift" value="Сдвиг"/>
+				</node>
 				<node name="animated" value="Aнимация при перелистывании">
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
 					<node name="summaryOff" value="Страница перелистывается мгновенно"/>
