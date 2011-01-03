@@ -28,8 +28,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-
 import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.BookInfoActivity;
@@ -108,8 +106,6 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (myBook.save()) {
-			ZLTextHyphenator.Instance().load(myBook.getLanguage());
-		}
+		myBook.save();
 	}
 }

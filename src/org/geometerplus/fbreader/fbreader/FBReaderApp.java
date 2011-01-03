@@ -47,13 +47,11 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption NavigateAllWordsOption =
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
-	public interface DictionaryModeTappingAction {
-		int DO_NOTHING = 0;
-		int SELECT_WORD = 1;
-		int OPEN_DICTIONARY = 2;
+	public enum DictionaryTappingAction {
+		doNothing, selectWord, openDictionary
 	}
-	public final ZLIntegerRangeOption DictionaryModeTappingActionOption =
-		new ZLIntegerRangeOption("Options", "DictionaryModeTappingAction", 0, 2, DictionaryModeTappingAction.SELECT_WORD);
+	public final ZLEnumOption<DictionaryTappingAction> DictionaryTappingActionOption =
+		new ZLEnumOption<DictionaryTappingAction>("Options", "DictionaryTappingAction", DictionaryTappingAction.selectWord);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
