@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.Activity;
 import android.view.Menu;
 import android.view.ContextMenu;
 
@@ -46,7 +47,7 @@ class SearchItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 
 		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);

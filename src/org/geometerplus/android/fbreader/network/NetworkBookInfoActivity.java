@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
@@ -43,10 +45,12 @@ import org.geometerplus.fbreader.network.*;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 	private NetworkBookItem myBook;
+	private View myMainView;
 
 	private final ZLResource myResource = ZLResource.resource("networkBookView");
 	private BookDownloaderServiceConnection myConnection;
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -69,12 +73,18 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		);
 
 		setTitle(myBook.Title);
-		setContentView(R.layout.network_book);
+		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
+		setContentView(myMainView);
+		myMainView.setOnCreateContextMenuListener(this);
 
 		setupDescription();
 		setupInfo();
 		setupCover();
 		setupButtons();
+	}
+
+	View getMainView() {
+		return myMainView;
 	}
 
 	@Override
@@ -84,6 +94,17 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			myConnection = null;
 		}
 		super.onDestroy();
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		new RefillAccountActions().buildContextMenu(this, menu, new RefillAccountTree(myBook.Link));
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		new RefillAccountActions().runAction(this, myBook.Link, item.getItemId());
+		return true;
 	}
 
 	private final void setupDescription() {

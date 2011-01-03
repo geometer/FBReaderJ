@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public abstract class ZLTextElementRegion {
-	static interface Filter {
+	public static interface Filter {
 		boolean accepts(ZLTextElementRegion region);
 	}
 
-	static Filter Filter = new Filter() {
+	public static Filter Filter = new Filter() {
 		public boolean accepts(ZLTextElementRegion region) {
 			return true;
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,6 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.text.view.ZLTextViewMode;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -49,6 +48,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
 
 import org.geometerplus.android.fbreader.library.KillerCallback;
 
@@ -142,12 +142,11 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
 		
+		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
-		fbReader.addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS, new SwitchTextViewModeAction(this, fbReader, ZLTextViewMode.MODE_VISIT_HYPERLINKS));
-		fbReader.addAction(ActionCode.SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS, new SwitchTextViewModeAction(this, fbReader, ZLTextViewMode.MODE_VISIT_ALL_WORDS));
 	}
 
 	@Override
@@ -180,6 +179,7 @@ public final class FBReader extends ZLAndroidActivity {
 			myNavigatePanel.setControlPanel(panel, root, true);
 		}
 
+		/*
 		findViewById(R.id.main_view).setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
 				final ZLAndroidWidget widget =
@@ -192,6 +192,7 @@ public final class FBReader extends ZLAndroidActivity {
 				return true;
 			}
 		});
+		*/
 	}
 
 	@Override
@@ -258,11 +259,15 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	public void navigate() {
+	public boolean navigate() {
+		if (myNavigatePanel.getVisibility()) {
+			return false;
+		}
 		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
 		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
 		myNavigatePanel.show(true);
+		return true;
 	}
 
 	private final void createNavigation(View layout) {

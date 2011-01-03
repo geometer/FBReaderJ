@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,11 @@ class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 	public RefillAccountTree(NetworkCatalogTree parentTree) {
 		super(parentTree.Level + 1);
 		Link = parentTree.Item.Link;
+	}
+
+	public RefillAccountTree(INetworkLink link) {
+		super(1);
+		Link = link;
 	}
 
 	@Override

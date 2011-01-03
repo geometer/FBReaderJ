@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Message;
 import android.os.Handler;
@@ -68,7 +69,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
@@ -255,17 +256,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, (NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-			{
-				final RefillAccountActions actions = new RefillAccountActions();
-				final NetworkTree refillTree = activity.getDefaultTree();
-				final int refillActionCode = actions.getDefaultActionCode(activity, refillTree);
-				if (refillActionCode == TREE_SHOW_CONTEXT_MENU) {
-					activity.getListView().showContextMenu();
-				} else if (refillActionCode >= 0) {
-					actions.runAction(activity, refillTree, refillActionCode);
-				}
+				new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
 				return true;
-			}
 			case CUSTOM_CATALOG_EDIT:
 				NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;

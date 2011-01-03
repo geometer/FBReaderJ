@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public synchronized void initUser(String userName, String sid) throws ZLNetworkException {
-		mySidChecked = true;
+		mySidChecked = false;
 		mySidUserNameOption.setValue(userName);
 		mySidOption.setValue(sid);
 		if (!isAuthorised(true)) {
@@ -217,9 +217,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				myAccount = BuyBookReference.price(xmlReader.Account, "RUB");
 			}
 			if (exception != null) {
-				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
+				final String code = exception.getCode();
+				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(code)) {
 					logOut();
-				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(exception.getCode())) {
+				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(code)) {
 					myPurchasedBooks.put(book.Id, book);
 				}
 				throw exception;
@@ -413,6 +414,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public Map<String,String> getSmsRefillingData() {
 		final HashMap<String,String> map = new HashMap<String,String>();
 		map.put("litres:userId", myUserIdOption.getValue());
+		map.put("litres:sid", mySidOption.getValue());
 		return map;
 	}
 }

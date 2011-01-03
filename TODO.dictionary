@@ -3,8 +3,9 @@ DONE Run 'install ColorDict' dialog
 DONE Synchronize resources
 DONE Option for opening ColorDict immediately by finger tap
 DONE Synchronize resources
+DONE 3-mode tapping behaviour
+DONE long tapping processing instead of short one
 
 After 0.99:
-* More convenient mode changing
 * Installation from the site if AM is not available
 * Integration with other dictionaries

@@ -17,10 +17,10 @@
 			<node name="summary" value="Legutóbb megnyitott könyvek"/>
 		</node>
 		<node name="favorites" value="Kedvencek">
-			<node name="summary" value="Kedvenc könyveim"/>
+			<node name="summary" value="Kedvencnek jelölt könyveim"/>
 		</node>
 		<node name="searchResults" value="Találatok">
-			<node name="summary" value="Keresés az eredmények között: %s" />
+			<node name="summary" value="Keresés: %s" />
 		</node>
 		<node name="fileTree" value="Könytárfa">
 			<node name="summary" value="Fájlrendszer tallózása"/>
@@ -31,8 +31,8 @@
 		<node name="fileTreeCard" value="Memóriakártya">
 			<node name="summary" value="Az eszközbe illesztett memóriakártya"/>
 		</node>
-		<node name="fileTreeLibrary" value="FBReader Könyvtár">
-			<node name="summary" value="Az FBReader-könyvek helye"/>
+		<node name="fileTreeLibrary" value="FBReader mappa">
+			<node name="summary" value="Az FBReader e-könyvek mappája"/>
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Helyi keresés"/>
@@ -100,7 +100,7 @@
 	<node name="networkBookView">
 		<node name="bookInfo" value="Könyv adatai" />
 		<node name="description" value="Leírás" />
-		<node name="noDescription" value="Leírás nem elérhető." />
+		<node name="noDescription" value="Nem érhető el leírás." />
 		<node name="title" value="Cím:" />
 		<node name="authors" value="Szerzők:" />
 		<node name="series" value="Sorozat:" />
@@ -225,12 +225,12 @@
 			<node name="openBook" value="Olvasás" />
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
+			<node name="refillAccount" value="Számla feltöltése"/>
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Plugin telepítése" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Plugin frissítése" />
+		<node name="plugin">
+			<node name="installTitle" value="Plugin telepítése" />
+			<node name="updateTitle" value="Plugin frissítése" />
+			<node name="dontAskAgain" value="Ne kérdezze megint" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Telepítés helye"/>
@@ -478,16 +478,21 @@
 					<node name="50" value="50 százalék akku töltöttség alatt" />
 					<node name="100" value="Mindig (automatikusan)" />
 				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
-					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				<node name="dontTurnScreenOffDuringCharging" value="Kijelző kikapcsolása töltéskor">
+					<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
+					<node name="summaryOff" value="A kijelző automatikusan kikapcsol az akkumulátor töltésekor is"/>
 				</node>
 			</node>
 			<node name="scrolling" value="Lapozás">
 				<node name="summary" value="Szöveg görgetésének beállításai"/>
-				<node name="flick" value="Kinetikus lapozás">
-					<node name="summaryOn" value="Lapozás ujjmozdulatra"/>
-					<node name="summaryOff" value="Lapozás érintésre"/>
+				<node name="fingerScrolling" value="Lapozás az érintőképernyőn">
+					<node name="byTap" value="Lapozás érintésre"/>
+					<node name="byFlick" value="Lapozás ujjmozdulatra"/>
+					<node name="byTapAndFlick" value="Lapozás érintésre és ujjmozdulatra"/>
+				</node>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
 					<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>
@@ -497,20 +502,26 @@
 					<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
 					<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
 				</node>
-				<node name="animated" value="Animált lapozás">
-					<node name="summaryOn" value="Finomabb görgetés"/>
-					<node name="summaryOff" value="Gyorsabb lapozás"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Vízszintes lapozás">
 					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>
 					<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>
 				</node>
 			</node>
-			<node name="dictionary" value="Dictionary" toBeTranslated="true">
-				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+			<node name="dictionary" value="Szótár">
+				<node name="summary" value="Szótár beállításai"/>
+				<node name="tappingAction" value="Hosszú érintés">
+					<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
+					<node name="selectWord" value="A hosszú érintés kijelöli a szót"/>
+					<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigáció szavanként">
+					<node name="summaryOn" value="A gombnyomásos navigáció szóról szóra ugrik"/>
+					<node name="summaryOff" value="A gombnyomásos navigáció linkről linkre ugrik"/>
 				</node>
 			</node>
 		</node>

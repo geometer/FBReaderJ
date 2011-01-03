@@ -159,8 +159,6 @@
 		<node name="day" value="День"/>
 		<node name="night" value="Ніч"/>
 		<node name="networkLibrary" value="Мережева бібліотека"/>
-		<node name="hyperlinksOnlyMode" value="Standard mode" toBeTranslated="true"/>
-		<node name="dictionaryMode" value="Dictionary mode" toBeTranslated="true"/>
 		<node name="navigate" value="Перехід">
 			<node name="toc" value="Зміст"/>
 			<node name="gotoHome" value="В початок книги"/>
@@ -197,12 +195,12 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+			<node name="refillAccount" value="Поповнити рахунок"/>
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Install plugin" toBeTranslated="true" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Update plugin" toBeTranslated="true" />
+		<node name="plugin">
+			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
+			<node name="updateTitle" value="Update plugin" toBeTranslated="true" />
+			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Install dictionary" toBeTranslated="true" />
@@ -452,9 +450,14 @@
 			</node>
 			<node name="scrolling" value="Перегортання сторінок">
 				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
-				<node name="flick" value="Гортати рухом пальця">
-					<node name="summaryOn" value="Для переходу на наступну сторінку проведіть пальцем по екрану"/>
-					<node name="summaryOff" value="Для переходу на наступну сторінку торкніться пальцем до екрану"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				</node>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
 				<node name="volumeKeys" value="Використання кнопки налаштування звуку">
 					<node name="summaryOn" value="Кнопки збільшення/зменшення звуку перегортають сторінки"/>
@@ -464,9 +467,10 @@
 					<node name="summaryOn" value="Нижня кнопка гортає сторінки вперед"/>
 					<node name="summaryOff" value="Верхня кнопка гортає сторінки вперед"/>
 				</node>
-				<node name="animated" value="Поступове перегортання">
-					<node name="summaryOn" value="Сторінка перегортається поступово"/>
-					<node name="summaryOff" value="Сторінка перегортається миттєво"/>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Горизонтальне перегортання">
 					<node name="summaryOn" value="При гортанні сторінка рухається по горизонталі"/>
@@ -475,9 +479,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

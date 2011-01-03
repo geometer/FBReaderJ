@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,17 +93,21 @@ abstract class Util implements UserRegistrationConstants {
 
 	static void runSmsDialog(Activity activity, INetworkLink link) {
 		try {
+			System.err.println("runSmsDialog 0");
 			final Intent intent = new Intent(
 				SMS_REFILLING_ACTION,
 				Uri.parse(link.getLink(INetworkLink.URL_MAIN))
 			);
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
+			System.err.println("runSmsDialog 1");
 				for (Map.Entry<String,String> entry : mgr.getSmsRefillingData().entrySet()) {
 					intent.putExtra(entry.getKey(), entry.getValue());
 				}
 			}
+			System.err.println("runSmsDialog 2");
 			activity.startActivity(intent);
+			System.err.println("runSmsDialog 3");
 		} catch (ActivityNotFoundException e) {
 		}
 	}

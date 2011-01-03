@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.Activity;
+import android.view.View;
 import android.view.Menu;
 import android.view.ContextMenu;
 
@@ -38,7 +40,7 @@ class RefillAccountActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
 		final INetworkLink link = ((RefillAccountTree)tree).Link;
@@ -52,7 +54,9 @@ class RefillAccountActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
-		final INetworkLink link = ((RefillAccountTree)tree).Link;
+		return getDefaultActionCode(activity, ((RefillAccountTree)tree).Link);
+	}
+	private int getDefaultActionCode(Activity activity, INetworkLink link) {
 		final boolean sms = Util.isSmsAccountRefillingSupported(activity, link);
 		final boolean browser = Util.isBrowserAccountRefillingSupported(activity, link);
 
@@ -83,6 +87,9 @@ class RefillAccountActions extends NetworkTreeActions {
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		final INetworkLink link = ((RefillAccountTree)tree).Link;
+		return runAction(activity, link, actionCode);
+	}
+	public boolean runAction(Activity activity, INetworkLink link, int actionCode) {
 		Runnable refillRunnable = null;
 		switch (actionCode) {
 			case REFILL_VIA_SMS_ITEM_ID:
@@ -100,7 +107,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		return true;
 	}
 
-	private Runnable browserRefillRunnable(final NetworkBaseActivity activity, final INetworkLink link) {
+	private Runnable browserRefillRunnable(final Activity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
 				Util.openInBrowser(
@@ -111,7 +118,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		};
 	}
 
-	private Runnable smsRefillRunnable(final NetworkBaseActivity activity, final INetworkLink link) {
+	private Runnable smsRefillRunnable(final Activity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
 				Util.runSmsDialog(activity, link);
@@ -119,7 +126,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		};
 	}
 
-	private void doRefill(final NetworkBaseActivity activity, final INetworkLink link, final Runnable refiller) {
+	private void doRefill(final Activity activity, final INetworkLink link, final Runnable refiller) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {
 			refiller.run();
@@ -131,6 +138,24 @@ class RefillAccountActions extends NetworkTreeActions {
 					}
 				}
 			});
+		}
+	}
+
+	public void runStandalone(Activity activity, INetworkLink link) {
+		final int refillActionCode = getDefaultActionCode(activity, link);
+		if (refillActionCode == TREE_SHOW_CONTEXT_MENU) {
+			//activity.getListView().showContextMenu();
+			View view = null;
+			if (activity instanceof NetworkBaseActivity) {	
+				view = ((NetworkBaseActivity)activity).getListView();
+			} else if (activity instanceof NetworkBookInfoActivity) {
+				view = ((NetworkBookInfoActivity)activity).getMainView();
+			}
+			if (view != null) {
+				view.showContextMenu();
+			}
+		} else if (refillActionCode >= 0) {
+			runAction(activity, link, refillActionCode);
 		}
 	}
 }

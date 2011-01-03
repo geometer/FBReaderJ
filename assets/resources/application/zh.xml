@@ -61,8 +61,8 @@
 		<node name="signOut" value="退出 (%s)"/>
 		<node name="refillAccount" value="重新输入账号(目前: %s)" />
 		<node name="refillTitle" value="重新输入账号"/>
-		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
-		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
+		<node name="refillViaSms" value="短消息"/>
+		<node name="refillViaBrowser" value="在浏览器中打开页面"/>
 		<node name="refillSummary" value="当前: %s"/>
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
@@ -151,72 +151,42 @@
 			<node name="search" value="搜索" />
 		</node>
 	</node>
-	<node name="keys">
-		<node name="&lt;VolumeDown&gt;" value="Volume Down" toBeTranslated="true"/>
-		<node name="&lt;VolumeUp&gt;" value="Volume Up" toBeTranslated="true"/>
-		<node name="&lt;Back&gt;" value="Back" toBeTranslated="true"/>
-		<node name="&lt;PadCenter&gt;" value="Pad Center" toBeTranslated="true"/>
-		<node name="&lt;PadDown&gt;" value="Pad Down" toBeTranslated="true"/>
-		<node name="&lt;PadUp&gt;" value="Pad Up" toBeTranslated="true"/>
-		<node name="&lt;PadRight&gt;" value="Pad Right" toBeTranslated="true"/>
-		<node name="&lt;PadLeft&gt;" value="Pad Left" toBeTranslated="true"/>
-		<node name="&lt;Camera&gt;" value="Camera" toBeTranslated="true"/>
-	</node>
-	<node name="actions">
+	<node name="menu">
 		<node name="preferences" value="参数设置" />
 		<node name="bookInfo" value="书籍信息" />
-		<node name="initiateCopy" value="Copy" toBeTranslated="true"/>
 		<node name="library" value="本地藏书" />
 		<node name="toc" value="目录" />
 		<node name="day" value="白低黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
-		<node name="navigate" value="导航"/>
-		<node name="toc" value="内容目录" />
-		<node name="gotoHome" value="翻到图书开始" />
-		<node name="gotoPageNumber" value="翻到某页" />
-		<node name="gotoSectionStart" value="翻到章节开始" />
-		<node name="gotoSectionEnd" value="翻到章节结束" />
-		<node name="nextTOCSection" value="翻到下一章节 " />
-		<node name="previousTOCSection" value="翻到上一章节" />
-		<node name="undo" value="后翻" />
-		<node name="redo" value="前翻" />
-		<node name="selection" value="选择"/>
-		<node name="copyToClipboard" value="复制到剪贴板" />
-		<node name="openInDictionary" value="打开字典" />
-		<node name="clearSelection" value="清除" />
+		<node name="navigate" value="导航">
+			<node name="toc" value="内容目录" />
+			<node name="gotoHome" value="翻到图书开始" />
+			<node name="gotoPageNumber" value="翻到某页" />
+			<node name="gotoSectionStart" value="翻到章节开始" />
+			<node name="gotoSectionEnd" value="翻到章节结束" />
+			<node name="nextTOCSection" value="翻到下一章节 " />
+			<node name="previousTOCSection" value="翻到上一章节" />
+			<node name="undo" value="后翻" />
+			<node name="redo" value="前翻" />
+		</node>
+		<node name="selection" value="选择">
+			<node name="copyToClipboard" value="复制到剪贴板" />
+			<node name="openInDictionary" value="打开字典" />
+			<node name="clearSelection" value="清除" />
+		</node>
 		<node name="search" value="查找" />
 		<node name="rotate" value="翻转屏幕" />
 		<node name="increaseFont" value="字体加大" />
 		<node name="decreaseFont" value="字体缩小" />
 		<node name="toggleFullscreen" value="全屏" />
 		<node name="bookmarks" value="书签" />
-		<node name="prevPage" value="Previous page" toBeTranslated="true"/>
-		<node name="nextPage" value="Next page" toBeTranslated="true"/>
-		<node name="prevLine" value="Previous line" toBeTranslated="true"/>
-		<node name="nextLine" value="Next line" toBeTranslated="true"/>
-		<node name="prevLink" value="Previous link" toBeTranslated="true"/>
-		<node name="nextLink" value="Next link" toBeTranslated="true"/>
-		<node name="followHyperlink" value="Follow link" toBeTranslated="true"/>
-		<node name="back" value="Back" toBeTranslated="true"/>
-		<node name="switchProfile" value="Switch color profile" toBeTranslated="true"/>
-		<node name="findPrevious" value="Find previous" toBeTranslated="true"/>
-		<node name="findNext" value="Find next" toBeTranslated="true"/>
-		<node name="default" value="Default" toBeTranslated="true"/>
-		<node name="nothing" value="Nothing" toBeTranslated="true"/>
-		<node name="tapZones" value="Tap zones" toBeTranslated="true"/>
-		<node name="tapZoneSelectAction" value="Zone action" toBeTranslated="true"/>
-		<node name="tapZoneAdd" value="Add zone" toBeTranslated="true"/>
-		<node name="tapZoneDelete" value="Delete zone" toBeTranslated="true"/>
-		<node name="tapZonesSave" value="Save changes" toBeTranslated="true"/>
-		<node name="tapZonesCancel" value="Discard changes" toBeTranslated="true"/>
-		<node name="openFile" value="Open book file" toBeTranslated="true"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Install" toBeTranslated="true" />
-			<node name="update" value="Update" toBeTranslated="true" />
-			<node name="skip" value="Skip" toBeTranslated="true" />
+			<node name="install" value="安装" />
+			<node name="update" value="更新" />
+			<node name="skip" value="跳过" />
 			<node name="buy" value="购买" />
 			<node name="buyAndDownload" value="购买 下载" />
 			<node name="continue" value="继续" />
@@ -225,16 +195,16 @@
 			<node name="openBook" value="阅读" />
 			<node name="editInfo" value="编辑" />
 			<node name="reloadInfo" value="重新加载" />
+			<node name="refillAccount" value="重新输入账号"/>
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Install plugin" toBeTranslated="true" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Update plugin" toBeTranslated="true" />
+		<node name="plugin">
+			<node name="installTitle" value="安装插件" />
+			<node name="updateTitle" value="更新插件" />
+			<node name="dontAskAgain" value="别再询问了" />
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Install dictionary" toBeTranslated="true" />
-			<node name="message" value="Would you like to install %s?" toBeTranslated="true" />
+			<node name="title" value="安装字典" />
+			<node name="message" value="你希望安装 %s 么?" />
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="文件" />
@@ -247,11 +217,6 @@
 				<node name="summary" value="要查找文件的目录位置"/>
 				<node name="books" value="书文目录"/>
 				<node name="fonts" value="字体目录"/>
-			</node>
-			<node name="interaction" value="Interaction" toBeTranslated="true">
-				<node name="keyBindings" value="Keys" toBeTranslated="true">
-					<node name="summary" value="Bind actions to keys" toBeTranslated="true"/>
-				</node>
 			</node>
 			<node name="appearance" value="呈现方式">
 				<node name="summary" value="旋转，状态工具条"/>
@@ -421,7 +386,7 @@
 				<node name="text" value="普通文本" />
 				<node name="hyperlink" value="超链接文本" />
 				<node name="highlighting" value="搜索结果背景" />
-				<node name="footer" value="Footer" toBeTranslated="true"/>
+				<node name="footer" value="页脚"/>
 			</node>
 			<node name="margins" value="边距">
 				<node name="summary" value="文本空白距"/>
@@ -474,41 +439,54 @@
 				</node>
 				<node name="dontTurnScreenOff" value="禁止屏幕睡眠">
 					<node name="0" value="总是"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<!--
-					Please, update this translation to avoid % sign. Resources with % sign
-					causes crash on cyanogenmod firmware (due a bug in cyanogenmod)
-					<node name="25" value="在电量大于 25% 时候"/>
-					<node name="50" value="在电量大于 50% 时候"/>
-					-->
+					<node name="25" value="当电量大于百分之25"/>
+					<node name="50" value="当电量大于百分之50"/>
 					<node name="100" value="从不"/>
 				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
-					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
+				<node name="dontTurnScreenOffDuringCharging" value="在充电时防止屏幕进入睡眠状态">
+					<node name="summaryOn" value="如果设备处于充电模式则禁止屏幕进入睡眠状态"/>
+					<node name="summaryOff" value="如果设备处于充电模式则关闭屏幕"/>
 				</node>
 			</node>
 			<node name="scrolling" value="翻阅操作">
 				<node name="summary" value="如何滚动文字内容"/>
-				<node name="flick" value="手指滚动">
-					<node name="summaryOn" value="滑触翻页" />
-					<node name="summaryOff" value="拍击翻页" />
+				<node name="fingerScrolling" value="触滑屏幕翻滚">
+					<node name="byTap" value="手指拍触屏幕翻页"/>
+					<node name="byFlick" value="手指触滑翻页"/>
+					<node name="byTapAndFlick" value="触滑或者拍触以翻页"/>
 				</node>
-				<node name="animated" value="翻阅效果">
-					<node name="summaryOn" value="平滑翻阅" />
-					<node name="summaryOff" value="快速翻阅" />
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
+				</node>
+				<node name="volumeKeys" value="音量键滚动">
+					<node name="summaryOn" value="使用音量键翻页" />
+					<node name="summaryOff" value="音量键仅用于声音" />
+				</node>
+				<node name="invertVolumeKeys" value="用音量键来翻动">
+					<node name="summaryOn" value="允许上 (下) 键上(下)翻动页面"/>
+					<node name="summaryOff" value="禁止上 (下) 键上(下)翻动页面"/>
+				</node>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="横向翻阅">
 					<node name="summaryOn" value="横向翻阅" />
 					<node name="summaryOff" value="纵向翻阅" />
 				</node>
 			</node>
-			<node name="dictionary" value="Dictionary" toBeTranslated="true">
-				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+			<node name="dictionary" value="字典">
+				<node name="summary" value="字典设定"/>
+				<node name="tappingAction" value="长拍触行为动作">
+					<node name="doNothing" value="长拍触不做任何动作"/>
+					<node name="selectWord" value="长拍触选择词语"/>
+					<node name="openDictionary" value="长拍触选择词语，放开后打开字典"/>
+				</node>
+				<node name="navigateOverAllWords" value="导航键访问词句设定">
+					<node name="summaryOn" value="导航键访问所有的词句"/>
+					<node name="summaryOff" value="导航键仅访问超链接词句"/>
 				</node>
 			</node>
 		</node>
@@ -589,7 +567,7 @@
 			<node name="siteAlreadyExists" value="该目录已经在用" />
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Language filter" toBeTranslated="true" />
+			<node name="title" value="语言过滤" />
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="购买书籍" />
@@ -600,17 +578,13 @@
 			<node name="message" value="该书已经买过." />
 		</node>
 	</node>
-	<node name="infoMessage">
-		<node name="selectionStarted" value="Select text and click" toBeTranslated="true"/>
-		<node name="selectionCanceled" value="Text selection was canceled" toBeTranslated="true"/>
-	</node>
 	<node name="errorMessage">
-		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
+		<node name="cannotRunAndroidMarket" value="无法访问Android官方应用市场. 请手工安装 %s ."/>
 		<node name="textNotFound" value="对不起，本书中找不到对应内容" />
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍" />
 		<node name="bookmarkNotFound" value="对不起，找不到对应的书签" />
 		<node name="cannotOpenBook" value="对不起，无法开启本书" />
-		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
+		<node name="dictionaryIsNotInstalled" value="抱歉，你没有安装字典."/>
 		<node name="permissionDenied" value="对不起，没有权限"/>
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
 	</node>

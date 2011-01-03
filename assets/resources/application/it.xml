@@ -225,12 +225,12 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
+			<node name="refillAccount" value="Ricarica account"/>
 		</node>
-		<node name="installPlugin">
-			<node name="title" value="Install plugin" toBeTranslated="true" />
-		</node>
-		<node name="updatePlugin">
-			<node name="title" value="Update plugin" toBeTranslated="true" />
+		<node name="plugin">
+			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
+			<node name="updateTitle" value="Update plugin" toBeTranslated="true" />
+			<node name="dontAskAgain" value="Don't ask again" toBeTranslated="true" />
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Install dictionary" toBeTranslated="true" />
@@ -485,13 +485,33 @@
 			</node>
 			<node name="scrolling" value="Scorrimento">
 				<node name="summary" value="How to scroll text" toBeTranslated="true"/>
-				<node name="flick" value="Scorrimento al tocco">
-					<node name="summaryOn" value="La navigazione tra le pagine avviene con lo sfioramento delle dita sullo schermo"/> 
-					<node name="summaryOff" value="La navigazione tra le pagine avviene toccando lo schermo"/> 
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
 				</node>
+				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
+				</node>
+<<<<<<< HEAD
 				<node name="animated" value="Scorrimento animato">
 					<node name="summaryOn" value="Scorri le pagine più lentamente"/>
 					<node name="summaryOff" value="Scorri le pagine più velocemente"/>
+=======
+				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
+					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>
+					<node name="summaryOff" value="Lascia i tasti del volume per la regolazione del suono"/>
+				</node>
+				<node name="invertVolumeKeys" value="Invert volume keys scrolling" toBeTranslated="true">
+					<node name="summaryOn" value="Up (down) key scrolls a page down (up)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Up (down) key scrolls a page up (down)" toBeTranslated="true"/>
+				</node>
+				<node name="animation" value="Animation" toBeTranslated="true">
+					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="slide" value="Slide animation" toBeTranslated="true"/>
+					<node name="shift" value="Shift animation" toBeTranslated="true"/>
+>>>>>>> master
 				</node>
 				<node name="horizontal" value="Scorrimento orizzontale">
 					<node name="summaryOn" value="Scorri le pagine orizzontalmente"/>
@@ -500,9 +520,14 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
-				<node name="runDictionaryOnTap" value="Open on finger tap" toBeTranslated="true">
-					<node name="summaryOn" value="Open dictionary on finger tap" toBeTranslated="true"/>
-					<node name="summaryOff" value="Select word on finger tap" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

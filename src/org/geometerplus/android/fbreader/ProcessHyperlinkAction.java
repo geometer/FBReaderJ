@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -80,11 +80,14 @@ class ProcessHyperlinkAction extends FBAction {
 			try {
 				myBaseActivity.startActivity(intent);
 			} catch(ActivityNotFoundException e){
+				DictionaryUtil.installDictionaryIfNotInstalled(myBaseActivity);
+				/*
 				Toast.makeText(
 					myBaseActivity,
 					ZLResource.resource("errorMessage").getResource("dictionaryIsNotInstalled").getValue(),
 					Toast.LENGTH_LONG
 				).show();
+				*/
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,11 @@ abstract public class ZLView {
 	public static final int PAGE_TOP = 3;
 	public static final int PAGE_BOTTOM = 4;
 
+	public enum Animation {
+		none, slide, shift
+	}
+	public abstract Animation getAnimationType();
+
 	abstract public void paint(ZLPaintContext context, int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
 
@@ -55,6 +60,34 @@ abstract public class ZLView {
 	}
 
 	public boolean onFingerMove(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerReleaseAfterLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerMoveAfterLongPress(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerSingleTap(int x, int y) {
+		return false;
+	}
+
+	public boolean onFingerDoubleTap(int x, int y) {
+		return false;
+	}
+
+	public boolean isDoubleTapSupported() {
+		return false;
+	}
+
+	public boolean onTrackballRotated(int diffX, int diffY) {
 		return false;
 	}
 

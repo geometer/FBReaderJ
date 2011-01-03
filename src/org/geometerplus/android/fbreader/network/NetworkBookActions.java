@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkBaseActivity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			addMenuItem(menu, SHOW_BOOKS_ITEM_ID, "showBooks");
@@ -97,7 +97,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
 
-		Set<Action> actions = getContextMenuActions(book, activity.Connection);
+		Set<Action> actions = getContextMenuActions(book, ((NetworkBaseActivity)activity).Connection);
 		for (Action a: actions) {
 			if (a.Arg == null) {
 				addMenuItem(menu, a.Id, a.Key);
@@ -368,14 +368,28 @@ class NetworkBookActions extends NetworkTreeActions {
 				final boolean downloadBook = which == DialogInterface.BUTTON_NEUTRAL;
 				final Handler handler = new Handler() {
 					public void handleMessage(Message message) {
-						String err = (String) message.obj;
-						if (err != null) {
+						final ZLNetworkException exception = (ZLNetworkException)message.obj;
+						if (exception != null) {
+							String buttonKey;
+							DialogInterface.OnClickListener action = null;
+							if (NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY.equals(
+								exception.getCode())
+							) {
+								buttonKey = "refillAccount";
+								action = new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int which) {
+										new RefillAccountActions().runStandalone(activity, book.Link);
+									}
+								};
+							} else {
+								buttonKey = "ok";
+							}
 							final ZLResource boxResource = dialogResource.getResource("networkError");
 							new AlertDialog.Builder(activity)
 								.setTitle(boxResource.getResource("title").getValue())
-								.setMessage(err)
+								.setMessage(exception.getMessage())
 								.setIcon(0)
-								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+								.setPositiveButton(buttonResource.getResource(buttonKey).getValue(), action)
 								.create().show();
 						} else if (downloadBook) {
 							doDownloadBook(activity, book, false);
@@ -392,13 +406,13 @@ class NetworkBookActions extends NetworkTreeActions {
 				}; // end Handler
 				final Runnable runnable = new Runnable() {
 					public void run() {
-						String error = null;
+						ZLNetworkException exception = null;
 						try {
 							mgr.purchaseBook(book);
 						} catch (ZLNetworkException e) {
-							error = e.getMessage();
+							exception = e;
 						}
-						handler.sendMessage(handler.obtainMessage(0, error));
+						handler.sendMessage(handler.obtainMessage(0, exception));
 					}
 				}; // end Runnable
 				UIUtil.wait("purchaseBook", runnable, activity);

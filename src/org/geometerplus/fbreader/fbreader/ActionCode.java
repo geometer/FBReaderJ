@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,13 +46,14 @@ public interface ActionCode {
 	String PREV_LINK = "prevLink";
 	String NEXT_LINK = "nextLink";
 
+	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
+	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
+	String SHOW_MENU = "menu";
 	String SHOW_NAVIGATION = "navigate";
 	String BACK = "back";
 	String ROTATE = "rotate";
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
-	String TOGGLE_FULLSCREEN = "toggleFullscreen";
-	String FULLSCREEN_ON = "onFullscreen";
 
 	String INITIATE_COPY = "initiateCopy";
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
