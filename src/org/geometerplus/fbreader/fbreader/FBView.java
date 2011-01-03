@@ -188,11 +188,13 @@ public final class FBView extends ZLTextView {
 
 		// first pressed move passes coordinates where move starts
 		if (myMode == MODE_READ && !myIsManualScrollingActive) {
-			final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-			if (preferences.FlickOption.getValue()) {
-				myStartX = x;
-				myStartY = y;
-				myIsManualScrollingActive = true;
+			switch (ScrollingPreferences.Instance().FingerScrollingOption.getValue()) {
+				case byFlick:
+				case byTapAndFlick:	
+					myStartX = x;
+					myStartY = y;
+					myIsManualScrollingActive = true;
+					break;
 			}
 			return true;
 		}

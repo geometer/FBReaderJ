@@ -54,6 +54,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen keyBindingsScreen = interactionScreen.createPreferenceScreen("keyBindings");
 		keyBindingsScreen.setSummary(keyBindingsScreen.Resource.getResource("summary").getValue());
 
+		/*
 		ZLResource keysResource = ZLResource.resource("keys");
 		ZLResource actionsResource = ZLResource.resource("actions");
 		String[] actions = ZLApplication.Instance().getGetSimpleActions();
@@ -69,7 +70,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				KeyEvent.KEYCODE_CAMERA,
 		};
 
-		/*
 		for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
 			String key = ZLAndroidKeyUtil.getKeyNameByCode(keys[keyIndex]);
 			keyBindingsScreen.addPreference(new StringListPreference(
