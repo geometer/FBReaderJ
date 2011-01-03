@@ -116,10 +116,19 @@ public class Book {
 		File = file;
 	}
 
-	public void reloadInfo() {
+	public void reloadInfoFromFile() {
 		if (readMetaInfo()) {
 			save();
 		}
+	}
+
+	public void reloadInfoFromDatabase() {
+		final BooksDatabase database = BooksDatabase.Instance();
+		database.reloadBook(this);
+		myAuthors = database.loadAuthors(myId);
+		myTags = database.loadTags(myId);
+		mySeriesInfo = database.loadSeriesInfo(myId);
+		myIsSaved = true;
 	}
 
 	boolean readMetaInfo() {

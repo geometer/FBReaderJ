@@ -128,6 +128,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return new Date(cursor.getLong(index));
 	}
 
+	@Override
 	protected Book loadBook(long bookId) {
 		Book book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
@@ -138,6 +139,17 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		return book;
+	}
+
+	@Override
+	protected void reloadBook(Book book) {
+		final Cursor cursor = myDatabase.rawQuery("SELECT title,encoding,language FROM Books WHERE book_id = " + book.getId(), null);
+		if (cursor.moveToNext()) {
+			book.setTitle(cursor.getString(0));
+			book.setEncoding(cursor.getString(1));
+			book.setLanguage(cursor.getString(2));
+		}
+		cursor.close();
 	}
 
 	protected Book loadBookByFile(long fileId, ZLFile file) {

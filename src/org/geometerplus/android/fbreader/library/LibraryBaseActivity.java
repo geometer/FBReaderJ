@@ -201,28 +201,30 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
+		private final Library myLibrary;
 		private final Runnable myPostRunnable;
 
-		public OpenTreeRunnable(String treePath) {
-			this(treePath, null);
+		public OpenTreeRunnable(Library library, String treePath) {
+			this(library, treePath, null);
 		}
 
-		public OpenTreeRunnable(String treePath, String parameter) {
-			this(new StartTreeActivityRunnable(treePath, parameter));
+		public OpenTreeRunnable(Library library, String treePath, String parameter) {
+			this(library, new StartTreeActivityRunnable(treePath, parameter));
 		}
 
-		public OpenTreeRunnable(Runnable postRunnable) {
+		public OpenTreeRunnable(Library library, Runnable postRunnable) {
+			myLibrary = library;
 			myPostRunnable = postRunnable;
 		}
 
 		public void run() {
-			if (LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
+			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
 				myPostRunnable.run();
 			} else {
 				UIUtil.runWithMessage(LibraryBaseActivity.this, "loadingBookList",
 				new Runnable() {
 					public void run() {
-						LibraryInstance.waitForState(Library.STATE_FULLY_INITIALIZED);
+						myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
 					}
 				},
 				myPostRunnable);
