@@ -1,3 +1,7 @@
+===== 0.99.1 (Jan ??, 2011) =====
+* Double tap enabling/disabling option
+* Animation type option has been added with 3 values -- no animation; shift animation (as in fbreader < 0.99); slide animation (as in fbreader 0.99.0)
+
 ===== 0.99.0 (Jan 02, 2011) =====
 * Since this version a package available from Android market requires Android 1.6+. A package for Android 1.5 is still available from http://www.fbreader.org/
 * Local library changes
