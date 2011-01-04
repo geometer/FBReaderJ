@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -219,6 +220,7 @@ public class BookInfoActivity extends Activity {
 			}
 		}
 		setupInfoPair(R.id.book_tags, "tags", buffer);
+		setupInfoPair(R.id.book_language, "language", ZLLanguageUtil.languageName(book.getLanguage()));
 	}
 
 	private void setupAnnotation(Book book) {

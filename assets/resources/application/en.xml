@@ -115,6 +115,7 @@
 		<node name="series" value="Series:" />
 		<node name="indexInSeries" value="Index in series:" />
 		<node name="tags" value="Tags:" />
+		<node name="language" value="Language:"/>
 		<node name="name" value="Name:" />
 		<node name="type" value="Type:" />
 		<node name="size" value="Size:" />

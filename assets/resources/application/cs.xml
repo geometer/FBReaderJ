@@ -116,6 +116,7 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Díl v sérii:" />
 		<node name="tags" value="Štítky:" />
+		<node name="language" value="Jazyk:"/>
 		<node name="name" value="Jméno:" />
 		<node name="type" value="Typ:" />
 		<node name="size" value="Velikost:" />

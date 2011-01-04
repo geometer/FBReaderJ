@@ -116,6 +116,7 @@
 		<node name="series" value="Bộ sách:" />
 		<node name="indexInSeries" value="Chỉ mục trong bộ:" />
 		<node name="tags" value="Từ khóa:" />
+		<node name="language" value="Ngôn ngữ:"/>
 		<node name="name" toBeTranslated="true" value="Name:" />
 		<node name="type" toBeTranslated="true" value="Type:" />
 		<node name="size" toBeTranslated="true" value="Size:" />
