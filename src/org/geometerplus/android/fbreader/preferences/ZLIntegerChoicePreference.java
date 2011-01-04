@@ -44,7 +44,6 @@ class ZLIntegerChoicePreference extends ZLStringListPreference {
 			if (diff < minDiff) {
 				minDiff = diff;
 				index = i;
-				break;
 			}
 		}
 		setInitialValue(valueResourceKeys[index]);
