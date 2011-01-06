@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
@@ -102,13 +103,14 @@ abstract class BaseActivity extends ListActivity {
 		TextView summaryTextView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist); 
         summaryTextView.setText(summary);
 
-        if (summary != null){
+        if (summary == null || summary.equals("")){
+            summaryTextView.setVisibility(View.GONE);
+        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 0.5f));
+        	nameTextView.setPadding(0, 0, 0, 6);
+        	nameTextView.setGravity(Gravity.CENTER_VERTICAL);
+        } else {
         	summaryTextView.setVisibility(View.VISIBLE);
         	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-        } else {
-        	summaryTextView.setVisibility(View.GONE);
-        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f));
-        	nameTextView.setGravity(Gravity.CENTER_VERTICAL);
         }
 		return view;
 	}
