@@ -36,6 +36,30 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return old;
 	}
 
+	public String absolutePath(String path) {
+		if (myLocalPathPrefix == null || "".equals(myLocalPathPrefix)){
+			return path;
+		}
+
+		String result = "";
+		String[] subDirs = myLocalPathPrefix.split("/");
+		int elements = subDirs.length;
+
+		while (path.startsWith("../")) {
+			elements -= 1;
+			path = path.substring(3);
+		}
+
+		if (elements > 0) {
+			for (int i=0; i<elements; i++) {
+				result += subDirs[i] + "/";
+			}
+		}
+
+		result += path;
+		return result;
+	}
+
 	public static void fillTagTable() {
 		if (!ourTagActions.isEmpty()) {
 			return;
@@ -132,7 +156,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	}
 
 	public final String getFileAlias(String fileName) {
-		fileName = MiscUtil.decodeHtmlReference(fileName);
+		fileName = absolutePath(MiscUtil.decodeHtmlReference(fileName));
 		Integer num = myFileNumbers.get(fileName);
 		if (num == null) {
 			num = myFileNumbers.size();
