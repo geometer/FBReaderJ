@@ -89,7 +89,7 @@ public final class FileManager extends BaseActivity {
 		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 //		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		mySortType = SortingDialog.getOprionSortType();
-		myViewType = ViewChangeDialog.getOprionSortType(); // TODO
+		myViewType = ViewChangeDialog.getOprionViewType(); 
 
 		if (myPath == null) {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");

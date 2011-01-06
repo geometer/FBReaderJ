@@ -312,8 +312,8 @@ class ViewChangeDialog extends RadioButtonDialog{
 	private static String[] myItems = ViewType.toStringArray();
 	private String myPath;
 
-	private static String VIEW_GROUP = "sortGroup";
-	private static String VIEW_OPTION_NAME = "sortOptionName";
+	private static String VIEW_GROUP = "viewGroup";
+	private static String VIEW_OPTION_NAME = "viewOptionName";
 	private static int VIEW_DEF_VALUE = 0;
 	private static ZLIntegerOption myViewOption = new ZLIntegerOption(VIEW_GROUP, VIEW_OPTION_NAME, VIEW_DEF_VALUE);
 
@@ -325,7 +325,7 @@ class ViewChangeDialog extends RadioButtonDialog{
 	@Override
 	protected void itemSelected(DialogInterface dialog, int item){
 		super.itemSelected(dialog, item);
-		if (getOprionSortType().ordinal() != item){
+		if (getOprionViewType().ordinal() != item){
 			myViewOption.setValue(item);
 			FileManager.myViewType = ViewType.values()[item];
 			
@@ -338,7 +338,7 @@ class ViewChangeDialog extends RadioButtonDialog{
 		}
 	}
 	
-	public static ViewType getOprionSortType(){
+	public static ViewType getOprionViewType(){
 		return ViewType.values()[myViewOption.getValue()];
 	}
 
