@@ -45,7 +45,6 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -483,7 +482,8 @@ public final class FileManager extends BaseActivity {
 						}
 					});
 				}
-		}
+			}
+		}	
 	}
 
 	private class GalleryAdapter extends BaseAdapter implements OnItemClickListener {
@@ -546,4 +546,6 @@ public final class FileManager extends BaseActivity {
             return view;
         }
     }
+
+
 }

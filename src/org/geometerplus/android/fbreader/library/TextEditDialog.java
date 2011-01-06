@@ -46,17 +46,18 @@ public class TextEditDialog extends Dialog{
 		myContext = context;
 		setTitle(title);
 		
-	   	LinearLayout ll = new LinearLayout(myContext);
-        ll.setOrientation(LinearLayout.VERTICAL);
-        ll.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-
+	   	LinearLayout linearLayout = new LinearLayout(myContext);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         myEditText = new EditText(myContext);
-        ll.addView(myEditText);
+        linearLayout.addView(myEditText);
 
         LinearLayout btnLayout = new LinearLayout(myContext);
         btnLayout.setOrientation(LinearLayout.HORIZONTAL);
-        btnLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        btnLayout.setGravity(Gravity.CENTER);
+        btnLayout.setLayoutParams(new LinearLayout.LayoutParams(
+    			LayoutParams.FILL_PARENT,
+    			LayoutParams.FILL_PARENT, 1f));
+        btnLayout.setGravity(Gravity.FILL_HORIZONTAL);
         
         Button ok = new Button(myContext);
         ok.setText(okName);
@@ -74,10 +75,13 @@ public class TextEditDialog extends Dialog{
 			}
 		});
 
-        btnLayout.addView(ok);
-        btnLayout.addView(cancel);
-        ll.addView(btnLayout);
-        setContentView(ll);
+    	LinearLayout.LayoutParams llppp = new LinearLayout.LayoutParams(
+    			LayoutParams.FILL_PARENT,
+    			LayoutParams.FILL_PARENT, 0.5f);
+        btnLayout.addView(ok, llppp);
+        btnLayout.addView(cancel, llppp);
+        linearLayout.addView(btnLayout);
+        setContentView(linearLayout);
 	}
 
 	public void setText(String text){
@@ -176,7 +180,7 @@ class MkDirDialog extends TextEditDialog{
 	MkDirDialog(Context context, String curPath, String insertPath) {
 		super(context,
 				myResource.getResource("newDirectory").getValue(),
-				ZLResource.resource("dialog").getResource("button").getResource("create").getValue(),
+				ZLResource.resource("dialog").getResource("button").getResource("ok").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue()
 				);
 		myContext = context;
