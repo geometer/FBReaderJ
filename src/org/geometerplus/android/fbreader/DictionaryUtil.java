@@ -28,6 +28,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -44,12 +45,30 @@ public abstract class DictionaryUtil {
 			ourDictionaryInfos.add(new PackageInfo(
 				"com.socialnmobile.colordict",
 				"com.socialnmobile.colordict.activity.Main",
-				"ColorDict"
+				"ColorDict",
+				null,
+				true
 			));
 			ourDictionaryInfos.add(new PackageInfo(
 				"com.ngc.fora",
 				"com.ngc.fora.ForaDictionary",
-				"Fora Dictionary"
+				"Fora Dictionary",
+				null,
+				true
+			));
+			ourDictionaryInfos.add(new PackageInfo(
+				"com.slovoed.noreg.english_german.deluxe",
+				"com.slovoed.noreg.english_german.deluxe.Start",
+				"SlovoEd Deluxe German->English",
+				"/808464950",
+				false
+			));
+			ourDictionaryInfos.add(new PackageInfo(
+				"com.slovoed.noreg.english_german.deluxe",
+				"com.slovoed.noreg.english_german.deluxe.Start",
+				"SlovoEd Deluxe English->German",
+				"/808464949",
+				false
 			));
 		}
 		return ourDictionaryInfos;
@@ -58,15 +77,15 @@ public abstract class DictionaryUtil {
 	public static ZLStringOption dictionaryOption() {
 		if (ourDictionaryOption == null) {
 			ourDictionaryOption =
-				new ZLStringOption("Dictionary", "Class", dictionaryInfos().get(0).ClassName);
+				new ZLStringOption("Dictionary", "Title", dictionaryInfos().get(0).Title);
 		}
 		return ourDictionaryOption;
 	}
 
 	private static PackageInfo getCurrentDictionaryInfo() {
-		final String className = dictionaryOption().getValue();
+		final String title = dictionaryOption().getValue();
 		for (PackageInfo info : dictionaryInfos()) {
-			if (info.ClassName.equals(className)) {
+			if (info.Title.equals(title)) {
 				return info;
 			}
 		}
@@ -75,12 +94,22 @@ public abstract class DictionaryUtil {
 
 	public static Intent getDictionaryIntent(String text) {
 		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo();
-		return new Intent(Intent.ACTION_SEARCH)
-			.setComponent(new ComponentName(
-				dictionaryInfo.PackageName,
-				dictionaryInfo.ClassName
-			))
-			.putExtra(SearchManager.QUERY, text);
+		if (dictionaryInfo.UseSearchIntend) {
+			return new Intent(Intent.ACTION_SEARCH)
+				.setComponent(new ComponentName(
+					dictionaryInfo.PackageName,
+					dictionaryInfo.ClassName
+				))
+				.putExtra(SearchManager.QUERY, text);
+		} else {
+			return new Intent(Intent.ACTION_VIEW)
+				.setComponent(new ComponentName(
+					dictionaryInfo.PackageName,
+					dictionaryInfo.ClassName
+				))
+				.setData(Uri.parse(text + dictionaryInfo.Argument))
+				.addFlags(0x14000000);
+		}			
 	}
 
 	public static void openWordInDictionary(Activity activity, String text) { 

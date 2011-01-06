@@ -23,10 +23,14 @@ public class PackageInfo {
 	public final String PackageName;
 	public final String ClassName;
 	public final String Title;
+	public final String Argument;
+	public final boolean UseSearchIntend;
 
-	PackageInfo(String packageName, String className, String title) {
+	PackageInfo(String packageName, String className, String title, String argument, boolean useSearchIntend) {
 		PackageName = packageName;
 		ClassName = className;
 		Title = title;
+		Argument = argument;
+		UseSearchIntend = useSearchIntend;
 	}
 }
