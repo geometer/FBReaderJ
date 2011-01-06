@@ -32,8 +32,12 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -251,13 +255,11 @@ public final class FileManager extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	Log.v(LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
-        if (myPath != null){				// TODO
-        	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
-        	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
-        	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
-        	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);	
-        }
-        return true;
+    	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
+    	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
+    	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
+    	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);	
+    	return true;
     }
 
     private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
@@ -269,9 +271,9 @@ public final class FileManager extends BaseActivity {
     
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.v(LOG, "onPrepareOptionsMenu");
-		
+		Log.v(LOG, "onPrepareOptionsMenu - start");
 		super.onPrepareOptionsMenu(menu);
+		
 		if (myInsertPathStatic == null){
 			menu.findItem(0).setVisible(false).setEnabled(false);
 			menu.findItem(1).setVisible(false).setEnabled(false);
@@ -280,6 +282,7 @@ public final class FileManager extends BaseActivity {
 			menu.findItem(1).setVisible(true).setEnabled(true);
         }
 		
+		Log.v(LOG, "onPrepareOptionsMenu - finish");
 		return true;
 	}
 
@@ -523,9 +526,14 @@ public final class FileManager extends BaseActivity {
             
             final FileItem fileItem = getItem(position);
 
+    		final int maxHeight = 200; // FIXME: hardcoded constant
+    		final int maxWidth = maxHeight * 3 / 4;
 
             ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
-			imageView.setImageResource(fileItem.getIcon());
+			imageView.getLayoutParams().height = maxHeight;
+			imageView.getLayoutParams().width = maxWidth;
+            
+//            imageView.setImageResource(fileItem.getIcon());
 //			imageView.setLayoutParams(new Gallery.LayoutParams(100, 200));
 //			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             
@@ -536,16 +544,31 @@ public final class FileManager extends BaseActivity {
             summaryTextView.setText(fileItem.getSummary());
             
         	// FIXME problem with book picture
-//    		final Bitmap coverBitmap = getCoverBitmap(fileItem.getCover());
-//			if (coverBitmap != null) {
-//				imageView.setImageBitmap(coverBitmap);
-//			} else {
-//				imageView.setImageResource(fileItem.getIcon());
-//			}
+    		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
+			if (coverBitmap != null) {
+				imageView.setImageBitmap(coverBitmap);
+			} else {
+				imageView.setImageResource(fileItem.getIcon());
+			}
             
             return view;
         }
+        
+    	private Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
+    		if (cover instanceof ZLLoadableImage) {
+    			final ZLLoadableImage loadableImage = (ZLLoadableImage)cover;
+    			if (!loadableImage.isSynchronized()) {
+    				loadableImage.synchronize();
+    			}
+    		}
+    		final ZLAndroidImageData data =
+    			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(cover);
+    		if (data == null) {
+    			return null;
+    		}
+
+    		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
+    		return coverBitmap;
+    	}
     }
-
-
 }
