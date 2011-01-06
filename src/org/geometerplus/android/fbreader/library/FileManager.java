@@ -550,6 +550,8 @@ public final class FileManager extends BaseActivity {
 			} else {
 				imageView.setImageResource(fileItem.getIcon());
 			}
+			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
             
             return view;
         }
