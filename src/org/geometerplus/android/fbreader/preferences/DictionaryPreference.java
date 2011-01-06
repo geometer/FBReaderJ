@@ -42,7 +42,7 @@ class DictionaryPreference extends ZLStringListPreference {
 		final String[] texts = new String[infos.size()];
 		int index = 0;
 		for (PackageInfo i : infos) {
-			values[index] = i.ClassName;
+			values[index] = i.Title;
 			texts[index] = i.Title;
 			++index;
 		}
