@@ -8,6 +8,4 @@
 	    android:scrollbars="horizontal"
 	    android:scrollbarFadeDuration="0"
 	    android:scrollX="20px"
-	    android:focusable="false"
-	    android:focusableInTouchMode="false"
 	    />

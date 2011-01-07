@@ -20,11 +20,11 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
-import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.geometerplus.android.fbreader.library.GallerySketch.GalleryAdapter;
 import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
 import org.geometerplus.android.fbreader.library.ViewChangeDialog.ViewType;
 import org.geometerplus.android.util.UIUtil;
@@ -33,12 +33,8 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -48,7 +44,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,10 +52,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public final class FileManager extends BaseActivity {
 	public static String LOG = "FileManager";
@@ -236,7 +228,7 @@ public final class FileManager extends BaseActivity {
 		getListView().invalidateViews();
 	}
 
-	private void runItem(FileItem item) {
+	public void runItem(FileItem item) {
 		final ZLFile file = item.getFile();
 		final Book book = item.getBook();
 		if (book != null) {
@@ -432,38 +424,16 @@ public final class FileManager extends BaseActivity {
     				coverView.setImageResource(item.getIcon());
     			}
             } else if (myViewType == ViewType.SKETCH){
-        		view = (convertView != null) ?  convertView :
-        			LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery, parent, false);
-        		if (!myVeiwFlag){
-            		myGallery = (Gallery)view.findViewById(R.id.gallery);
-            		GalleryAdapter galleryAdapter = new GalleryAdapter();
-            		myGallery.setAdapter(galleryAdapter);
-            		myGallery.setOnItemClickListener(galleryAdapter);
-            		myGallery.setOnItemSelectedListener(galleryAdapter);	// TODO
-
+            	GallerySketch g = new GallerySketch(FileManager.this);
+            	view = (convertView != null) ?  convertView : g; 
+            	if (!myVeiwFlag){
+                	myGallery = g; 
             		myVeiwFlag = true;
         		} 
-    			GalleryAdapter imageAdapter = (GalleryAdapter)myGallery.getAdapter();
-        		imageAdapter.add(item);
-       			imageAdapter.notifyDataSetChanged();
+            	GalleryAdapter galleryAdapter = (GalleryAdapter)myGallery.getAdapter();
+        		galleryAdapter.add(item);
+       			galleryAdapter.notifyDataSetChanged();
             }
-            
-//        	view = createView(convertView, parent, item.getName(), item.getSummary());
-//			if (mySelectedBookPath != null &&
-//				mySelectedBookPath.equals(item.getFile().getPath())) {
-//				view.setBackgroundColor(0xff808080);
-//			} else {
-//				view.setBackgroundColor(0);
-//			}
-//			final ImageView coverView = getCoverView(view);
-//			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
-//
-//			if (coverBitmap != null) {
-//				coverView.setImageBitmap(coverBitmap);
-//			} else {
-//				coverView.setImageResource(item.getIcon());
-//			}
-
             return view;
 		}
 	}
@@ -506,100 +476,4 @@ public final class FileManager extends BaseActivity {
 		}	
 	}
 
-	private class GalleryAdapter extends BaseAdapter implements OnItemClickListener, OnItemSelectedListener {
-		private List<FileItem> myItems = new ArrayList<FileItem>();
-		public int position = 0;
-		
-		public synchronized void clear() {
-			myItems.clear();
-		}
-
-		public synchronized void add(FileItem item){
-			myItems.add(item);
-		}
-		
-		public synchronized void remove(FileItem fileItem) {
-			myItems.remove(fileItem);
-		}
-
-        public int getCount() {
-            return myItems.size();
-        }
-
-        public FileItem getItem(int position) {
-            return myItems.get(position);
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			runItem(myItems.get(position));
-		}
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final View view = (convertView != null) ?  convertView :
-    			LayoutInflater.from(parent.getContext()).inflate(R.layout.sketch_item, parent, false);
-            
-            final FileItem fileItem = getItem(position);
-
-    		final int maxHeight = 200; // FIXME: hardcoded constant
-    		final int maxWidth = maxHeight * 3 / 4;
-
-            ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
-			imageView.getLayoutParams().height = maxHeight;
-			imageView.getLayoutParams().width = maxWidth;
-            
-//            imageView.setImageResource(fileItem.getIcon());
-//			imageView.setLayoutParams(new Gallery.LayoutParams(100, 200));
-//			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            
-            TextView nameTextView = (TextView)view.findViewById(R.id.sketch_item_name);
-    		nameTextView.setText(fileItem.getName());
-
-    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
-            summaryTextView.setText(fileItem.getSummary());
-            
-    		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
-			if (coverBitmap != null) {
-				imageView.setImageBitmap(coverBitmap);
-			} else {
-				imageView.setImageResource(fileItem.getIcon());
-			}
-			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            
-            return view;
-        }
-        
-    	private Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
-    		if (cover instanceof ZLLoadableImage) {
-    			final ZLLoadableImage loadableImage = (ZLLoadableImage)cover;
-    			if (!loadableImage.isSynchronized()) {
-    				loadableImage.synchronize();
-    			}
-    		}
-    		final ZLAndroidImageData data =
-    			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(cover);
-    		if (data == null) {
-    			return null;
-    		}
-
-    		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
-    		return coverBitmap;
-    	}
-
-		@Override
-		public void onItemSelected(AdapterView<?> arg0, View view, int position,
-				long id) {
-			view.setSelected(false);
-			this.position = position;
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> arg0) {
-			// TODO Auto-generated method stub
-		}
-
-	}
 }

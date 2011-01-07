@@ -65,6 +65,7 @@ VR:
 	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
 	DONE в классе TextEditDialog разобраться с layout'ами									(06.01.11)
 	* корректировать в БД имя файла при переименовании/перемещении 
+	* code clean up 
 NP:
 	DONE Локализовать все сообщения
 	DONE Отдельная иконка для архивов
