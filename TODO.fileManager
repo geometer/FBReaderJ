@@ -58,6 +58,7 @@ VR:
 	* Реализация общего механизма получения данних для двух видов.
 	* Реализация layout файла для стандартного представления
 	* Реализация layout файла для эскизного представления
+	* Работоспособное контекстное меню
 	DONE Параметры вида сохраняются между запусками										(28.12.10)
 
 	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.	(29.12.10)

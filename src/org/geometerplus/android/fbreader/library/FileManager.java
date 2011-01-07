@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
+import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +60,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public final class FileManager extends BaseActivity {
 	public static String LOG = "FileManager";
@@ -155,7 +157,14 @@ public final class FileManager extends BaseActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		final int position;
+		if (myViewType == ViewType.SIMPLE){
+			position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		} else {
+			Gallery gallery = ((FileListAdapter) getListAdapter()).myGallery;
+			position = ((GalleryAdapter)gallery.getAdapter()).position;
+		}
+		
 		FileListAdapter adapter = ((FileListAdapter)getListAdapter()); 
 		final FileItem fileItem = adapter.getItem(position);
 		final Book book = fileItem.getBook(); 
@@ -333,7 +342,7 @@ public final class FileManager extends BaseActivity {
     
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
-		private Gallery myGallery; 
+		public Gallery myGallery; 
 
 		public synchronized void clear() {
 			myItems.clear();
@@ -371,7 +380,14 @@ public final class FileManager extends BaseActivity {
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			if (myPath == null)
 				return;
-			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			
+			final int position;
+			if (myViewType == ViewType.SIMPLE){
+				position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			} else {
+				position = ((GalleryAdapter)myGallery.getAdapter()).position;
+			}
+			
 			final FileItem item = getItem(position);
 
 			menu.setHeaderTitle(item.getName());
@@ -423,12 +439,13 @@ public final class FileManager extends BaseActivity {
             		GalleryAdapter galleryAdapter = new GalleryAdapter();
             		myGallery.setAdapter(galleryAdapter);
             		myGallery.setOnItemClickListener(galleryAdapter);
+            		myGallery.setOnItemSelectedListener(galleryAdapter);	// TODO
+
             		myVeiwFlag = true;
         		} 
     			GalleryAdapter imageAdapter = (GalleryAdapter)myGallery.getAdapter();
         		imageAdapter.add(item);
        			imageAdapter.notifyDataSetChanged();
-        		Log.v(LOG, "imageAdapter - 4");
             }
             
 //        	view = createView(convertView, parent, item.getName(), item.getSummary());
@@ -481,7 +498,7 @@ public final class FileManager extends BaseActivity {
 						public void run() {
 							final FileListAdapter adapter = (FileListAdapter)getListAdapter();
 							adapter.add(new FileItem(file));
-							adapter.notifyDataSetChanged();
+							adapter.notifyDataSetChanged();				//hmm...
 						}
 					});
 				}
@@ -489,9 +506,10 @@ public final class FileManager extends BaseActivity {
 		}	
 	}
 
-	private class GalleryAdapter extends BaseAdapter implements OnItemClickListener {
+	private class GalleryAdapter extends BaseAdapter implements OnItemClickListener, OnItemSelectedListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
-
+		public int position = 0;
+		
 		public synchronized void clear() {
 			myItems.clear();
 		}
@@ -543,7 +561,6 @@ public final class FileManager extends BaseActivity {
     		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
             summaryTextView.setText(fileItem.getSummary());
             
-        	// FIXME problem with book picture
     		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
 			if (coverBitmap != null) {
 				imageView.setImageBitmap(coverBitmap);
@@ -551,7 +568,6 @@ public final class FileManager extends BaseActivity {
 				imageView.setImageResource(fileItem.getIcon());
 			}
 			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
             
             return view;
         }
@@ -572,5 +588,18 @@ public final class FileManager extends BaseActivity {
     		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
     		return coverBitmap;
     	}
-    }
+
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View view, int position,
+				long id) {
+			view.setSelected(false);
+			this.position = position;
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+		}
+
+	}
 }
