@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="9903" android:versionName="0.99.3" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="4" />
+	<uses-sdk android:minSdkVersion="3" />
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -83,6 +83,8 @@
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.library.FileManager" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.BaseGalleryActivity" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.SketchGalleryActivity" android:process=":library"/>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.BookmarkSearchActivity" />
