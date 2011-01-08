@@ -7,6 +7,7 @@
   android:focusable="false"
   android:focusableInTouchMode="false"
   android:orientation="vertical"
+  android:gravity="center_horizontal"
   >
 	<ImageView
 		android:id="@+id/sketch_item_image"

@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,8 +71,6 @@ public final class FileManager extends BaseActivity {
 	public static SortType mySortType;
 	public static ViewType myViewType;
 	
-	private boolean myVeiwFlag = false;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -335,7 +334,7 @@ public final class FileManager extends BaseActivity {
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 		public Gallery myGallery; 
-
+		
 		public synchronized void clear() {
 			myItems.clear();
 		}
@@ -424,12 +423,11 @@ public final class FileManager extends BaseActivity {
     				coverView.setImageResource(item.getIcon());
     			}
             } else if (myViewType == ViewType.SKETCH){
-            	GallerySketch g = new GallerySketch(FileManager.this);
-            	view = (convertView != null) ?  convertView : g; 
-            	if (!myVeiwFlag){
-                	myGallery = g; 
-            		myVeiwFlag = true;
-        		} 
+            	GallerySketch gallerySketch = new GallerySketch(FileManager.this, myItems);
+            	if (myGallery == null){
+            		myGallery = gallerySketch; 
+    			}
+            	view = (convertView != null) ?  convertView : gallerySketch; 
             	GalleryAdapter galleryAdapter = (GalleryAdapter)myGallery.getAdapter();
         		galleryAdapter.add(item);
        			galleryAdapter.notifyDataSetChanged();
