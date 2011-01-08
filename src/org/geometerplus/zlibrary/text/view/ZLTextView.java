@@ -1345,11 +1345,21 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected ZLTextElementRegion currentRegion() {
-		return mySelectedRegion;
+		if (mySelectedRegion == null) {
+			return null;
+		}
+		final ArrayList<ZLTextElementRegion> elementRegions =
+			myCurrentPage.TextElementMap.ElementRegions;
+		if (elementRegions.isEmpty()) {
+			return null;
+		}
+		final int index = elementRegions.indexOf(mySelectedRegion);
+		return index >= 0 ? elementRegions.get(index) : null;
 	}
 
 	protected ZLTextElementRegion nextRegion(int direction, ZLTextElementRegion.Filter filter) {
-		final ArrayList<ZLTextElementRegion> elementRegions = myCurrentPage.TextElementMap.ElementRegions;
+		final ArrayList<ZLTextElementRegion> elementRegions =
+			myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
 			return null;
 		}

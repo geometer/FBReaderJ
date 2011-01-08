@@ -116,6 +116,7 @@
 		<node name="series" value="Sorozat:" />
 		<node name="indexInSeries" value="Sorszám:" />
 		<node name="tags" value="Címkék:" />
+		<node name="language" value="Nyelv:"/>
 		<node name="name" value="Név:" />
 		<node name="type" value="Típus:" />
 		<node name="size" value="Méret:" />
