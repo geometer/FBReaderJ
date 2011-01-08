@@ -19,13 +19,11 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.geometerplus.android.fbreader.library.GallerySketch.GalleryAdapter;
 import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
 import org.geometerplus.android.fbreader.library.ViewChangeDialog.ViewType;
 import org.geometerplus.android.util.UIUtil;
@@ -88,6 +86,12 @@ public final class FileManager extends BaseActivity {
 		mySortType = SortingDialog.getOprionSortType();
 		myViewType = ViewChangeDialog.getOprionViewType(); 
 
+		// TODO 
+		if (myViewType == ViewType.SKETCH){
+			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
+			finish();
+		}
+		
 		if (myPath == null) {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 //			addItem("/", "fileTreeRoot");	for alex version
@@ -148,13 +152,13 @@ public final class FileManager extends BaseActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final int position;
-		if (myViewType == ViewType.SIMPLE){
-			position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		} else {
-			Gallery gallery = ((FileListAdapter) getListAdapter()).myGallery;
-			position = ((GalleryAdapter)gallery.getAdapter()).position;
-		}
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+//		if (myViewType == ViewType.SIMPLE){
+//			position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+//		} else {
+//			Gallery gallery = ((FileListAdapter) getListAdapter()).myGallery;
+//			position = ((GalleryAdapter)gallery.getAdapter()).position;
+//		}
 		
 		FileListAdapter adapter = ((FileListAdapter)getListAdapter()); 
 		final FileItem fileItem = adapter.getItem(position);
@@ -371,13 +375,13 @@ public final class FileManager extends BaseActivity {
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			if (myPath == null)
 				return;
-			
-			final int position;
-			if (myViewType == ViewType.SIMPLE){
-				position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			} else {
-				position = ((GalleryAdapter)myGallery.getAdapter()).position;
-			}
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+//			final int position;
+//			if (myViewType == ViewType.SIMPLE){
+//				position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+//			} else {
+//				position = ((GalleryAdapter)myGallery.getAdapter()).position;
+//			}
 			
 			final FileItem item = getItem(position);
 
@@ -404,34 +408,21 @@ public final class FileManager extends BaseActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
             final FileItem item = getItem(position);
-            View view = null;
+            View view  = createView(convertView, parent, item.getName(), item.getSummary());
+			if (mySelectedBookPath != null &&
+				mySelectedBookPath.equals(item.getFile().getPath())) {
+				view.setBackgroundColor(0xff808080);
+			} else {
+				view.setBackgroundColor(0);
+			}
+			final ImageView coverView = getCoverView(view);
+			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
 
-            if (myViewType == ViewType.SIMPLE){
-            	view = createView(convertView, parent, item.getName(), item.getSummary());
-    			if (mySelectedBookPath != null &&
-    				mySelectedBookPath.equals(item.getFile().getPath())) {
-    				view.setBackgroundColor(0xff808080);
-    			} else {
-    				view.setBackgroundColor(0);
-    			}
-    			final ImageView coverView = getCoverView(view);
-    			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
-
-    			if (coverBitmap != null) {
-    				coverView.setImageBitmap(coverBitmap);
-    			} else {
-    				coverView.setImageResource(item.getIcon());
-    			}
-            } else if (myViewType == ViewType.SKETCH){
-            	GallerySketch gallerySketch = new GallerySketch(FileManager.this, myItems);
-            	if (myGallery == null){
-            		myGallery = gallerySketch; 
-    			}
-            	view = (convertView != null) ?  convertView : gallerySketch; 
-            	GalleryAdapter galleryAdapter = (GalleryAdapter)myGallery.getAdapter();
-        		galleryAdapter.add(item);
-       			galleryAdapter.notifyDataSetChanged();
-            }
+			if (coverBitmap != null) {
+				coverView.setImageBitmap(coverBitmap);
+			} else {
+				coverView.setImageResource(item.getIcon());
+			}
             return view;
 		}
 	}

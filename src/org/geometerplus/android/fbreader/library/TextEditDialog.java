@@ -328,13 +328,19 @@ class ViewChangeDialog extends RadioButtonDialog{
 		if (getOprionViewType().ordinal() != item){
 			myViewOption.setValue(item);
 			FileManager.myViewType = ViewType.values()[item];
-			
-			((Activity) myContext).startActivityForResult(
-					new Intent(myContext, FileManager.class)
-						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
-						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-					FileManager.CHILD_LIST_REQUEST
-			);
+			if (FileManager.myViewType == ViewType.SIMPLE){
+					((Activity) myContext).startActivityForResult(new Intent(
+							myContext, FileManager.class).putExtra(
+							FileManager.FILE_MANAGER_PATH, myPath).addFlags(
+							Intent.FLAG_ACTIVITY_CLEAR_TOP),
+							FileManager.CHILD_LIST_REQUEST);
+			} else if (FileManager.myViewType == ViewType.SKETCH){
+					((Activity) myContext).startActivityForResult(new Intent(
+							myContext, SketchGalleryActivity.class).putExtra(
+							FileManager.FILE_MANAGER_PATH, myPath).addFlags(
+							Intent.FLAG_ACTIVITY_CLEAR_TOP),
+							FileManager.CHILD_LIST_REQUEST);
+			}
 		}
 	}
 	
