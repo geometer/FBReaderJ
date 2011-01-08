@@ -487,6 +487,7 @@
 			</node>
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
+				<node name="dictionary" value="Словарь"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
 					<node name="doNothing" value="Не делать ничего"/>
 					<node name="selectWord" value="Выделять слово"/>

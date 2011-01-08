@@ -34,19 +34,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
-class PackageInfo {
-	public final String PackageName;
-	public final String ClassName;
-	public final String Title;
-
-	PackageInfo(String packageName, String className, String title) {
-		PackageName = packageName;
-		ClassName = className;
-		Title = title;
-	}
-}
-
-abstract class DictionaryUtil {
+public abstract class DictionaryUtil {
 	private static LinkedList<PackageInfo> ourDictionaryInfos = new LinkedList<PackageInfo>();
 	private static ZLStringOption ourDictionaryOption;
 

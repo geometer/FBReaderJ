@@ -334,6 +334,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
+		dictionaryScreen.addPreference(new DictionaryPreference(
+			this,
+			dictionaryScreen.Resource,
+			"dictionary"
+		));
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
 			fbReader.NavigateAllWordsOption,

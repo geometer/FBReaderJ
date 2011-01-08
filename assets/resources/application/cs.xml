@@ -480,6 +480,7 @@
 			</node>
 			<node name="dictionary" value="Slovník">
 				<node name="summary" value="Nastavení slovníku"/>
+				<node name="dictionary" value="Slovník"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 					<node name="selectWord" value="Dlouhé klepnutí vybere slovo"/>

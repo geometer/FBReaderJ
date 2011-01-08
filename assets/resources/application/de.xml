@@ -481,6 +481,7 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
+				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
 					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
