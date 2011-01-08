@@ -19,29 +19,39 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.List;
+
 import android.content.Context;
 
-import org.geometerplus.zlibrary.core.options.ZLEnumOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
-	private final ZLEnumOption<T> myOption;
+import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.PackageInfo;
 
-	ZLEnumPreference(Context context, ZLEnumOption<T> option, ZLResource resource, String resourceKey) {
+class DictionaryPreference extends ZLStringListPreference {
+	private final ZLStringOption myOption;
+
+	DictionaryPreference(Context context, ZLResource resource, String resourceKey) {
 		super(context, resource, resourceKey);
-		myOption = option;
 
-		final T initialValue = option.getValue();
-		final Enum[] allValues = initialValue.getClass().getEnumConstants();
-		final String[] stringValues = new String[allValues.length];
-		for (int i = 0; i < stringValues.length; ++i) {
-			stringValues[i] = allValues[i].toString();
+		myOption = DictionaryUtil.dictionaryOption();
+		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos();
+		
+		final String[] values = new String[infos.size()];
+		final String[] texts = new String[infos.size()];
+		int index = 0;
+		for (PackageInfo i : infos) {
+			values[index] = i.ClassName;
+			texts[index] = i.Title;
+			++index;
 		}
-		setList(stringValues);
-		setInitialValue(initialValue.toString());
+		setLists(values, texts);
+
+		setInitialValue(myOption.getValue());
 	}
 
 	public void onAccept() {
-		myOption.setValue((T)Enum.valueOf(myOption.getValue().getClass(), getValue()));
+		myOption.setValue(getValue());
 	}
 }

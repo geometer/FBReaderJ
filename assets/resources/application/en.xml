@@ -507,6 +507,7 @@
 			</node>
 			<node name="dictionary" value="Dictionary">
 				<node name="summary" value="Dictionary settings"/>
+				<node name="dictionary" value="Dictionary"/>
 				<node name="tappingAction" value="Long tapping action">
 					<node name="doNothing" value="Long tapping does nothing"/>
 					<node name="selectWord" value="Long tapping selects the word"/>

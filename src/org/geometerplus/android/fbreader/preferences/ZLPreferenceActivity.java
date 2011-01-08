@@ -59,19 +59,21 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		}
 
 		public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
-			ZLBooleanPreference preference =
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
-			myScreen.addPreference(preference);
-			myPreferences.add(preference);
-			return preference;
+			return addPreference(
+				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
+			);
+		}
+
+		public ZLPreference addOption(ZLStringOption option, String resourceKey) {
+			return addPreference(
+				new ZLStringOptionPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
+			);
 		}
 
 		public <T extends Enum<T>> ZLPreference addOption(ZLEnumOption<T> option, String resourceKey) {
-			ZLEnumPreference<T> preference =
-				new ZLEnumPreference<T>(ZLPreferenceActivity.this, Resource, resourceKey, option);
-			myScreen.addPreference(preference);
-			myPreferences.add(preference);
-			return preference;
+			return addPreference(
+				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
+			);
 		}
 
 		public void close() {
