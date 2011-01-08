@@ -45,15 +45,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addPreference(new ZLStringOptionPreference(
-			this, Paths.BooksDirectoryOption(),
-			directoriesScreen.Resource, "books"
-		));
+		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addPreference(new ZLStringOptionPreference(
-				this, Paths.FontsDirectoryOption(),
-				directoriesScreen.Resource, "fonts"
-			));
+			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		}
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
