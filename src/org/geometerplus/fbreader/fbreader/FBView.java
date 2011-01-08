@@ -341,7 +341,6 @@ public final class FBView extends ZLTextView {
 		final ZLTextElementRegion.Filter filter =
 			region instanceof ZLTextWordRegion || myReader.NavigateAllWordsOption.getValue()
 				? ZLTextElementRegion.Filter : ZLTextHyperlinkRegion.Filter;
-		System.err.println("FILTER: " + filter);
 		region = nextRegion(direction, filter);
 		if (region != null) {
 			selectRegion(region);

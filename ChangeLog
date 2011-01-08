@@ -1,4 +1,10 @@
-===== 0.99.1 (Jan ??, 2011) =====
+===== 0.99.3 (Jan 08, 2011) =====
+* All word navigation mode is disabled by default; corresponding option in dictionary preferences works correctly
+
+===== 0.99.2 (Jan 03, 2011) =====
+* Sporadic options changes (e.g., for line spacing) issue has been fixed
+
+===== 0.99.1 (Jan 03, 2011) =====
 * Double tap enabling/disabling option
 * Animation type option has been added with 3 values -- no animation; shift animation (as in fbreader < 0.99); slide animation (as in fbreader 0.99.0)
 * Reloads hyphenation patterns if book language was changed
