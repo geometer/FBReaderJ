@@ -380,7 +380,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Színek">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Színbeállítások" />
 				<node name="background" value="Háttér"/>
 				<node name="selectionBackground" value="Kijelölés háttere"/>

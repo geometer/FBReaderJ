@@ -380,7 +380,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Barvy">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Nastavení barev"/>
 				<node name="background" value="Pozadí"/>
 				<node name="selectionBackground" value="Pozadí výběru"/>

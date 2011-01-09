@@ -381,7 +381,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Farben">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Farben festlegen."/>
 				<node name="background" value="Hintergrund"/>
 				<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>

@@ -379,7 +379,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Цвета">
+			<node name="colors" value="Цвета и обои">
 				<node name="summary" value="Настройки цвета"/>
 				<node name="background" value="Фон"/>
 				<node name="selectionBackground" value="Фон пометки"/>

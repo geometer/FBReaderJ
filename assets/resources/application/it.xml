@@ -380,7 +380,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Colori">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Color settings" toBeTranslated="true"/>
 				<node name="background" value="Sfondo"/>
 				<node name="selectionBackground" value="Seleziona Sfondo"/>

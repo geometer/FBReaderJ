@@ -380,7 +380,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Кольори">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Color settings" toBeTranslated="true"/>
 				<node name="background" value="Фон"/>
 				<node name="selectionBackground" value="Фон позначки"/>

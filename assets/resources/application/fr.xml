@@ -383,7 +383,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Couleurs">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Paramètres des couleurs"/>
 				<node name="background" value="Arrière-plan"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>

@@ -63,16 +63,19 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myOutlinePaint.setMaskFilter(new EmbossMaskFilter(new float[] {1, 1, 1}, .4f, 6f, 3.5f));
 	}
 
+	private Bitmap myWallpaper;
 	public void clear(ZLColor color) {
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
-		final Bitmap wallpaper = new BitmapFactory().decodeFile("/sdcard/Wallpapers/test.png");
-		if (wallpaper != null) {
-			final int w = wallpaper.getWidth();
-			final int h = wallpaper.getHeight();
+		if (myWallpaper == null) {
+			myWallpaper = new BitmapFactory().decodeFile("/sdcard/Wallpapers/test.png");
+		}
+		if (myWallpaper != null) {
+			final int w = myWallpaper.getWidth();
+			final int h = myWallpaper.getHeight();
 			for (int cw = 0; cw < myWidth; cw += w) {
 				for (int ch = 0; ch < myHeight; ch += h) {
-					myCanvas.drawBitmap(wallpaper, cw, ch, myFillPaint);
+					myCanvas.drawBitmap(myWallpaper, cw, ch, myFillPaint);
 				}
 			}
 		}
