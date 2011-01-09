@@ -106,6 +106,10 @@ class ProcessHyperlinkAction extends FBAction {
 		} catch (ZLNetworkException e) {
 		}
 		intent.setData(Uri.parse(NetworkLibrary.Instance().rewriteUrl(urlString, externalUrl)));
-		myBaseActivity.startActivity(intent);
+		try {
+			myBaseActivity.startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+			// TODO: show an error message
+		}
 	}
 }
