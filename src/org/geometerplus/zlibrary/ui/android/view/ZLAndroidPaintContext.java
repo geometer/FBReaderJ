@@ -66,6 +66,16 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void clear(ZLColor color) {
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
+		final Bitmap wallpaper = new BitmapFactory().decodeFile("/sdcard/Wallpapers/test.png");
+		if (wallpaper != null) {
+			final int w = wallpaper.getWidth();
+			final int h = wallpaper.getHeight();
+			for (int cw = 0; cw < myWidth; cw += w) {
+				for (int ch = 0; ch < myHeight; ch += h) {
+					myCanvas.drawBitmap(wallpaper, cw, ch, myFillPaint);
+				}
+			}
+		}
 	}
 
 	public void drawOutline(int[] xs, int ys[]) {
