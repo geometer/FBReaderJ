@@ -116,6 +116,7 @@
 		<node name="series" value="系列:" />
 		<node name="indexInSeries" value="系列序号:" />
 		<node name="tags" value="标签:" />
+		<node name="language" value="语言:" />
 		<node name="name" value="姓名:" />
 		<node name="type" value="类型:" />
 		<node name="size" value="大小:" />
@@ -479,6 +480,7 @@
 			</node>
 			<node name="dictionary" value="字典">
 				<node name="summary" value="字典设定"/>
+				<node name="dictionary" value="字典"/>
 				<node name="tappingAction" value="长拍触行为动作">
 					<node name="doNothing" value="长拍触不做任何动作"/>
 					<node name="selectWord" value="长拍触选择词语"/>

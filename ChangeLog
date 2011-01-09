@@ -1,6 +1,16 @@
-===== 0.99.1 (Jan ??, 2011) =====
+===== 0.99.3 (Jan 08, 2011) =====
+* All word navigation mode is disabled by default; corresponding option in dictionary preferences works correctly
+* Czech resources have been updated (by Marek Pavelka)
+
+===== 0.99.2 (Jan 03, 2011) =====
+* Sporadic options changes (e.g., for line spacing) issue has been fixed
+
+===== 0.99.1 (Jan 03, 2011) =====
 * Double tap enabling/disabling option
 * Animation type option has been added with 3 values -- no animation; shift animation (as in fbreader < 0.99); slide animation (as in fbreader 0.99.0)
+* Reloads hyphenation patterns if book language was changed
+* Possible NPE in library has been fixed
+* Hungarian resources have been updated (by L. B. Szabó)
 
 ===== 0.99.0 (Jan 02, 2011) =====
 * Since this version a package available from Android market requires Android 1.6+. A package for Android 1.5 is still available from http://www.fbreader.org/
@@ -33,7 +43,7 @@
 	* Chinese resources have been updated (by Shucang)
 	* French resources have been updated (by Mathias Monnerville)
 	* German resources have been updated (by Ingolf Kübler)
-	* Hungary resources have been updated (by L. B. Szabó)
+	* Hungarian resources have been updated (by L. B. Szabó)
 
 ===== 0.7.17 (Nov 14, 2010) =====
 * Network catalog order has been changed: language is used for ordering

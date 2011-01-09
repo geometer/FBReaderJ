@@ -86,6 +86,7 @@
 				<include layout="@layout/book_info_pair" android:id="@+id/book_series" />
 				<include layout="@layout/book_info_pair" android:id="@+id/book_series_index" />
 				<include layout="@layout/book_info_pair" android:id="@+id/book_tags" />
+				<include layout="@layout/book_info_pair" android:id="@+id/book_language" />
 			</LinearLayout>
 			<TextView
 				android:id="@+id/book_info_annotation_title"

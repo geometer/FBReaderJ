@@ -116,6 +116,7 @@
 		<node name="series" value="Серія:" />
 		<node name="indexInSeries" value="Номер у серії:" />
 		<node name="tags" value="Категорії:" />
+		<node name="language" value="Мова:"/>
 		<node name="name" toBeTranslated="true" value="Name:" />
 		<node name="type" toBeTranslated="true" value="Type:" />
 		<node name="size" toBeTranslated="true" value="Size:" />
@@ -479,6 +480,7 @@
 			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
+				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
 					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>

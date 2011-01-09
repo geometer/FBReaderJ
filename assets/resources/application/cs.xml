@@ -116,6 +116,7 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Díl v sérii:" />
 		<node name="tags" value="Štítky:" />
+		<node name="language" value="Jazyk:"/>
 		<node name="name" value="Jméno:" />
 		<node name="type" value="Typ:" />
 		<node name="size" value="Velikost:" />
@@ -485,20 +486,15 @@
 			</node>
 			<node name="scrolling" value="Posouvání">
 				<node name="summary" value="Jak posouvat text"/>
-				<node name="fingerScrolling" value="Posouvat detykem displeje">
+				<node name="fingerScrolling" value="Posouvání dotykem displeje">
 					<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
 					<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
 					<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
 				</node>
-				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
-					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
+				<node name="enableDoubleTapDetection" value="Rozpoznání poklepání">
+					<node name="summaryOn" value="Poklepání spustí navigaci nebo menu"/>
+					<node name="summaryOff" value="Ignorovat poklepání"/>
 				</node>
-<<<<<<< HEAD
-				<node name="animated" value="Animované posouvání">
-					<node name="summaryOn" value="Posouvat stránky hladčeji"/>
-					<node name="summaryOff" value="Posouvat stránky rychleji"/>
-=======
 				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
 					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
 					<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
@@ -507,11 +503,10 @@
 					<node name="summaryOn" value="Tlačítko nahoru (dolů) posouvá stránku dolů (nahoru)"/>
 					<node name="summaryOff" value="Tlačítko nahoru (dolů) posouvá stránku nahoru (dolů)"/>
 				</node>
-				<node name="animation" value="Animation" toBeTranslated="true">
-					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
-					<node name="slide" value="Slide animation" toBeTranslated="true"/>
-					<node name="shift" value="Shift animation" toBeTranslated="true"/>
->>>>>>> master
+				<node name="animation" value="Animace">
+					<node name="none" value="Posouvat bez animace"/>
+					<node name="slide" value="Animace vysunutí"/>
+					<node name="shift" value="Animace posunutí"/>
 				</node>
 				<node name="horizontal" value="Vodorovné posouvání">
 					<node name="summaryOn" value="Posouvat stránky vodorovně"/>
@@ -520,6 +515,7 @@
 			</node>
 			<node name="dictionary" value="Slovník">
 				<node name="summary" value="Nastavení slovníku"/>
+				<node name="dictionary" value="Slovník"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 					<node name="selectWord" value="Dlouhé klepnutí vybere slovo"/>

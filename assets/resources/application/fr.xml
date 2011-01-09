@@ -119,6 +119,7 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Index dans les séries:" />
 		<node name="tags" value="Tags:" />
+		<node name="language" value="Langue:"/>
 		<node name="name" value="Nom:" />
 		<node name="type" value="Type:" />
 		<node name="size" value="Taille:" />
@@ -523,6 +524,7 @@
 			</node>
 			<node name="dictionary" value="Dictionnaire">
 				<node name="summary" value="Paramètres du dictionnaire"/>
+				<node name="dictionary" value="Dictionnaire"/>
 				<node name="tappingAction" value="Configuration de l'appui long">
 					<node name="doNothing" value="Un appui long ne fait rien"/>
 					<node name="selectWord" value="Un appui long selectionne le mot"/>

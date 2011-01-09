@@ -19,37 +19,39 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.List;
+
 import android.content.Context;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class ZLIntegerChoicePreference extends ZLStringListPreference {
-	private final ZLIntegerOption myOption;
-	private final int[] myValues;
+import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.PackageInfo;
 
-	ZLIntegerChoicePreference(Context context, ZLResource resource, String resourceKey, ZLIntegerOption option, int[] values, String[] valueResourceKeys) {
+class DictionaryPreference extends ZLStringListPreference {
+	private final ZLStringOption myOption;
+
+	DictionaryPreference(Context context, ZLResource resource, String resourceKey) {
 		super(context, resource, resourceKey);
-		assert(values.length == valueResourceKeys.length);
 
-		myOption = option;
-		myValues = values;
-		setList(valueResourceKeys);
-
-		final int initialValue = option.getValue();
+		myOption = DictionaryUtil.dictionaryOption();
+		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos();
+		
+		final String[] values = new String[infos.size()];
+		final String[] texts = new String[infos.size()];
 		int index = 0;
-		int minDiff = Math.abs(values[0] - initialValue);
-		for (int i = 1; i < values.length; ++i) {
-			final int diff = Math.abs(values[i] - initialValue);
-			if (diff < minDiff) {
-				minDiff = diff;
-				index = i;
-			}
+		for (PackageInfo i : infos) {
+			values[index] = i.ClassName;
+			texts[index] = i.Title;
+			++index;
 		}
-		setInitialValue(valueResourceKeys[index]);
+		setLists(values, texts);
+
+		setInitialValue(myOption.getValue());
 	}
 
 	public void onAccept() {
-		myOption.setValue(myValues[findIndexOfValue(getValue())]);
+		myOption.setValue(getValue());
 	}
 }
