@@ -495,11 +495,6 @@
 					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
 					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
-<<<<<<< HEAD
-				<node name="animated" value="Scorrimento animato">
-					<node name="summaryOn" value="Scorri le pagine più lentamente"/>
-					<node name="summaryOff" value="Scorri le pagine più velocemente"/>
-=======
 				<node name="volumeKeys" value="Tasti del volume per lo scorrimento">
 					<node name="summaryOn" value="Usa i tasti del volume per scorrere"/>
 					<node name="summaryOff" value="Lascia i tasti del volume per la regolazione del suono"/>
@@ -512,7 +507,6 @@
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
->>>>>>> master
 				</node>
 				<node name="horizontal" value="Scorrimento orizzontale">
 					<node name="summaryOn" value="Scorri le pagine orizzontalmente"/>

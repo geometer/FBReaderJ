@@ -496,9 +496,6 @@
 					<node name="summaryOn" value="По двойному нажатию открывать диалог перемещения/меню"/>
 					<node name="summaryOff" value="Игнорировать двойные нажатия"/>
 				</node>
-<<<<<<< HEAD
-				<node name="animated" value="Постепенное перелистывание">
-=======
 				<node name="doubleTapNavigation" value="Окно перемещения по тексту">
 					<node name="summaryOn" value="Двойное нажатие на экран открывает окно перемещения"/>
 					<node name="summaryOff" value="Двойное нажатие на экран ничего не делает"/>
@@ -517,7 +514,6 @@
 					<node name="shift" value="Сдвиг"/>
 				</node>
 				<node name="animated" value="Aнимация при перелистывании">
->>>>>>> master
 					<node name="summaryOn" value="Страница перелистывается постепенно"/>
 					<node name="summaryOff" value="Страница перелистывается мгновенно"/>
 				</node>

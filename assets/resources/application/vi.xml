@@ -495,11 +495,6 @@
 					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
 					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
 				</node>
-<<<<<<< HEAD
-				<node name="animated" value="Cuộn sinh động">
-					<node name="summaryOn" value="Cuộn trang mượt hơn"/>
-					<node name="summaryOff" value="Cuộn trang nhanh hơn"/>
-=======
 				<node name="volumeKeys" value="Cuộn bằng phím âm lượng">
 					<node name="summaryOn" value="Dùng phím âm lượng để cuộn"/>
 					<node name="summaryOff" value="Giữ phím âm lượng cho âm thanh"/>
@@ -512,7 +507,6 @@
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
->>>>>>> master
 				</node>
 				<node name="horizontal" value="Cuộn ngang">
 					<node name="summaryOn" value="Cuộn trang theo chiều ngang"/>
