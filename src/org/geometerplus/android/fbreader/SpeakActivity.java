@@ -252,8 +252,10 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 
 	private void stopTalking() {
 		setState(INACTIVE);
-		if(mTts != null) {
-			if(mTts.isSpeaking()) mTts.stop();
+		if (mTts != null) {
+			if (mTts.isSpeaking()) {
+				mTts.stop();
+			}
 		}
 	}
 
