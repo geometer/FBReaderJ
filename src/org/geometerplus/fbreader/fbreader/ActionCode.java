@@ -51,4 +51,6 @@ public interface ActionCode {
 	String CLEAR_SELECTION = "clearSelection";
 
 	String PROCESS_HYPERLINK = "processHyperlink";
+
+	String SPEAK = "speak";
 }
