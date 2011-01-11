@@ -34,7 +34,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	static final int SEARCHFORWARD = 1;
 	static final int SEARCHBACKWARD = 2;
 
-	private TextToSpeech myTTS=null;
+	private TextToSpeech myTTS;
 	private FBReaderApp myReader;
 	private FBView myView;
 
@@ -43,21 +43,15 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 
 	private int state = INACTIVE;
 
-	class UpdateControls implements Runnable {
-		private int state;
-		static final int PAUSE = 0;
-		static final int PLAY = 1;
+	private class UpdateControls implements Runnable {
+		private final int myImageResourceId;
 
-		public UpdateControls(int value) {
-			this.state = value;
+		public UpdateControls(int resourceId) {
+			myImageResourceId = resourceId;
 		}
 
 		public void run() {
-			if (state == PLAY) {
-				myPauseButton.setImageResource(R.drawable.speak_play);
-			} else if (state == PAUSE) {
-				myPauseButton.setImageResource(R.drawable.speak_pause);
-			}
+			myPauseButton.setImageResource(myImageResourceId);
 		}
 	}
 
@@ -166,9 +160,9 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		state = value;
 
 		if (state == ACTIVE) {
-			myPauseButton.post(new UpdateControls(UpdateControls.PAUSE));
+			myPauseButton.post(new UpdateControls(R.drawable.speak_pause));
 		} else if (state == INACTIVE) {
-			myPauseButton.post(new UpdateControls(UpdateControls.PLAY));
+			myPauseButton.post(new UpdateControls(R.drawable.speak_play));
 		}
 	}
 
