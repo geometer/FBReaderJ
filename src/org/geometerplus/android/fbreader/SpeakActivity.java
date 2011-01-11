@@ -6,37 +6,24 @@ import java.util.Locale;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.FBView;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextElement;
 import org.geometerplus.zlibrary.text.view.ZLTextParagraphCursor;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
-import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-
-
-public class SpeakActivity extends Activity implements OnInitListener, OnUtteranceCompletedListener {
+public class SpeakActivity extends Activity implements TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener {
 	static final int ACTIVE = 1;
 	static final int INACTIVE = 0;
 
@@ -47,14 +34,12 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 	static final int SEARCHFORWARD = 1;
 	static final int SEARCHBACKWARD = 2;
 
-	private TextToSpeech mTts=null;
-	private FBView theView;
-	private FBReaderApp Reader;
-	private ZLTextParagraphCursor myParaCursor;
-	private ImageButton pausebutton;
-	private ImageButton forwardbutton;
-	private ImageButton backbutton;
-	private ImageButton stopbutton;
+	private TextToSpeech myTTS=null;
+	private FBReaderApp myReader;
+	private FBView myView;
+
+	private ZLTextParagraphCursor myParagraphCursor;
+	private ImageButton myPauseButton;
 
 	private int state = INACTIVE;
 
@@ -69,9 +54,9 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 
 		public void run() {
 			if (state == PLAY) {
-				pausebutton.setImageResource(R.drawable.speak_play);
+				myPauseButton.setImageResource(R.drawable.speak_play);
 			} else if (state == PAUSE) {
-				pausebutton.setImageResource(R.drawable.speak_pause);
+				myPauseButton.setImageResource(R.drawable.speak_pause);
 			}
 		}
 	}
@@ -85,21 +70,21 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 		}
 	};
 
-	private OnClickListener forwardListener = new OnClickListener() {
+	private View.OnClickListener forwardListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			stopTalking();
 			nextParagraphString(true, false, SEARCHFORWARD);
 		}
 	};
 
-	private OnClickListener backListener = new OnClickListener() {
+	private View.OnClickListener backListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			stopTalking();
 			nextParagraphString(true, false, SEARCHBACKWARD);
 		}
 	};
 
-	private OnClickListener pauseListener = new OnClickListener() {
+	private View.OnClickListener pauseListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			if (state == ACTIVE) {
 				stopTalking();
@@ -111,7 +96,7 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 		}
 	};
 
-	private OnClickListener stopListener = new OnClickListener() {
+	private View.OnClickListener stopListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			stopTalking();
 			finish();
@@ -123,32 +108,26 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 		super.onCreate(savedInstanceState);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		Reader = (FBReaderApp)ZLApplication.Instance();
+		myReader = (FBReaderApp)FBReaderApp.Instance();
+		myView = myReader.getTextView();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_spokentext);
 
-		backbutton = (ImageButton)findViewById(R.id.spokentextback);
-		backbutton.setOnClickListener(backListener);
+		((Button)findViewById(R.id.spokentextback)).setOnClickListener(backListener);
+		((Button)findViewById(R.id.spokentextforward)).setOnClickListener(forwardListener);
+		((Button)findViewById(R.id.spokentextstop)).setOnClickListener(stopListener);
 
-		forwardbutton = (ImageButton)findViewById(R.id.spokentextforward);
-		forwardbutton.setOnClickListener(forwardListener);
-
-		pausebutton = (ImageButton)findViewById(R.id.spokentextpause);
-		pausebutton.setOnClickListener(pauseListener);
-
-		stopbutton = (ImageButton)findViewById(R.id.spokentextstop);
-		stopbutton.setOnClickListener(stopListener);
+		myPauseButton = (ImageButton)findViewById(R.id.spokentextpause);
+		myPauseButton.setOnClickListener(pauseListener);
 
 		setState(INACTIVE);
 
 		TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 		tm.listen(mPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 
-		theView = ((FBReaderApp)FBReaderApp.Instance()).getTextView();
-
-		ZLTextWordCursor cursor = theView.getStartCursor();
-		myParaCursor = cursor.getParagraphCursor();
+		ZLTextWordCursor cursor = myView.getStartCursor();
+		myParagraphCursor = cursor.getParagraphCursor();
 
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
@@ -159,7 +138,7 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 		if (requestCode == CHECK_TTS_INSTALLED) {
 			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
 				// success, create the TTS instance
-				mTts = new TextToSpeech(this, this);
+				myTTS = new TextToSpeech(this, this);
 			} else {
 				// missing data, install it
 				Intent installIntent = new Intent();
@@ -187,9 +166,9 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 		state = value;
 
 		if (state == ACTIVE) {
-			pausebutton.post(new UpdateControls(UpdateControls.PAUSE));
+			myPauseButton.post(new UpdateControls(UpdateControls.PAUSE));
 		} else if (state == INACTIVE) {
-			pausebutton.post(new UpdateControls(UpdateControls.PLAY));
+			myPauseButton.post(new UpdateControls(UpdateControls.PLAY));
 		}
 	}
 
@@ -199,32 +178,32 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 		HashMap<String, String> callbackMap = new HashMap<String, String>();
 		callbackMap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, PARAGRAPHUTTERANCE);
 
-		mTts.speak(s, TextToSpeech.QUEUE_FLUSH, callbackMap);
+		myTTS.speak(s, TextToSpeech.QUEUE_FLUSH, callbackMap);
 	}
 
 	private void showString(String s) {
-		theView.gotoPosition(myParaCursor.Index, 0, 0);
+		myView.gotoPosition(myParagraphCursor.Index, 0, 0);
 
-		Reader.repaintView();
-		Reader.showBookTextView();
-		//theView.getModel().Book.storePosition(BookTextView.getStartCursor());
+		myReader.repaintView();
+		myReader.showBookTextView();
+		//myView.getModel().Book.storePosition(BookTextView.getStartCursor());
 	}
 
 	private String lookforValidParagraphString(int direction) {
 		String s = "";
-		while (s.equals("") && myParaCursor != null) {
+		while (s.equals("") && myParagraphCursor != null) {
 			switch (direction) {
 				case SEARCHFORWARD:
-					myParaCursor = myParaCursor.next();
+					myParagraphCursor = myParagraphCursor.next();
 					break;
 				case SEARCHBACKWARD:
-					myParaCursor = myParaCursor.previous();
+					myParagraphCursor = myParagraphCursor.previous();
 					break;
 				case CURRENTORFORWARD:
 					direction = SEARCHFORWARD;
 					break;
 			}
-			s = getParagraphText(myParaCursor);
+			s = getParagraphText(myParagraphCursor);
 		}
 		return s;
 	}
@@ -244,24 +223,24 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 
 	@Override
 	protected void onDestroy() {
-		Reader.onWindowClosing(); // save the position
+		myReader.onWindowClosing(); // save the position
 		setState(INACTIVE);
-		mTts.shutdown();
+		myTTS.shutdown();
 		super.onDestroy();
 	}
 
 	private void stopTalking() {
 		setState(INACTIVE);
-		if (mTts != null) {
-			if (mTts.isSpeaking()) {
-				mTts.stop();
+		if (myTTS != null) {
+			if (myTTS.isSpeaking()) {
+				myTTS.stop();
 			}
 		}
 	}
 
 	@Override
 	protected void onPause() {
-		Reader.onWindowClosing(); // save the position
+		myReader.onWindowClosing(); // save the position
 		super.onPause();
 	}
 
@@ -273,7 +252,7 @@ public class SpeakActivity extends Activity implements OnInitListener, OnUtteran
 
 	@Override
 	public void onInit(int status) {
-		mTts.setOnUtteranceCompletedListener(this);
+		myTTS.setOnUtteranceCompletedListener(this);
 		setState(ACTIVE);
 		nextParagraphString(true, true, CURRENTORFORWARD);
 	}
