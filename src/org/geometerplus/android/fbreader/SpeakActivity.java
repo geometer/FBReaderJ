@@ -1,7 +1,6 @@
 package org.geometerplus.android.fbreader;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -20,15 +19,11 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class SpeakActivity extends Activity implements TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener {
-	static final int ACTIVE = 1;
-	static final int INACTIVE = 0;
-
 	private static final int CHECK_TTS_INSTALLED = 0;
-	private static final String PARAGRAPHUTTERANCE="PARAGRAPHUTTERANCE";
+	private static final String PARAGRAPHUTTERANCE = "PARAGRAPHUTTERANCE";
 
 	static final int CURRENTORFORWARD = 0;
 	static final int SEARCHFORWARD = 1;
@@ -41,7 +36,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	private ZLTextParagraphCursor myParagraphCursor;
 	private ImageButton myPauseButton;
 
-	private int state = INACTIVE;
+	private boolean myIsActive = false;
 
 	private class UpdateControls implements Runnable {
 		private final int myImageResourceId;
@@ -80,11 +75,11 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 
 	private View.OnClickListener pauseListener = new View.OnClickListener() {
 		public void onClick(View v) {
-			if (state == ACTIVE) {
+			if (myIsActive) {
 				stopTalking();
-				setState(INACTIVE);
+				myIsActive = false;
 			} else {
-				setState(ACTIVE);
+				myIsActive = true;
 				nextParagraphString(true, true, CURRENTORFORWARD);
 			}
 		}
@@ -108,14 +103,14 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_spokentext);
 
-		((Button)findViewById(R.id.spokentextback)).setOnClickListener(backListener);
-		((Button)findViewById(R.id.spokentextforward)).setOnClickListener(forwardListener);
-		((Button)findViewById(R.id.spokentextstop)).setOnClickListener(stopListener);
+		((ImageButton)findViewById(R.id.spokentextback)).setOnClickListener(backListener);
+		((ImageButton)findViewById(R.id.spokentextforward)).setOnClickListener(forwardListener);
+		((ImageButton)findViewById(R.id.spokentextstop)).setOnClickListener(stopListener);
 
 		myPauseButton = (ImageButton)findViewById(R.id.spokentextpause);
 		myPauseButton.setOnClickListener(pauseListener);
 
-		setState(INACTIVE);
+		setActive(false);
 
 		TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 		tm.listen(mPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -156,18 +151,18 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		return(sb.toString());
 	}
 
-	private void setState(int value) {
-		state = value;
+	private void setActive(boolean active) {
+		myIsActive = active;
 
-		if (state == ACTIVE) {
+		if (myIsActive) {
 			myPauseButton.post(new UpdateControls(R.drawable.speak_pause));
-		} else if (state == INACTIVE) {
+		} else {
 			myPauseButton.post(new UpdateControls(R.drawable.speak_play));
 		}
 	}
 
 	private void speakString(String s) {
-		setState(ACTIVE);
+		setActive(true);
 
 		HashMap<String, String> callbackMap = new HashMap<String, String>();
 		callbackMap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, PARAGRAPHUTTERANCE);
@@ -218,13 +213,13 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	@Override
 	protected void onDestroy() {
 		myReader.onWindowClosing(); // save the position
-		setState(INACTIVE);
+		setActive(false);
 		myTTS.shutdown();
 		super.onDestroy();
 	}
 
 	private void stopTalking() {
-		setState(INACTIVE);
+		setActive(false);
 		if (myTTS != null) {
 			if (myTTS.isSpeaking()) {
 				myTTS.stop();
@@ -247,15 +242,15 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	@Override
 	public void onInit(int status) {
 		myTTS.setOnUtteranceCompletedListener(this);
-		setState(ACTIVE);
+		setActive(true);
 		nextParagraphString(true, true, CURRENTORFORWARD);
 	}
 
 	public void onUtteranceCompleted(String uttId) {
-		if (state == ACTIVE && uttId.equals(this.PARAGRAPHUTTERANCE)) {
+		if (myIsActive && uttId.equals(this.PARAGRAPHUTTERANCE)) {
 			nextParagraphString(true, true, SEARCHFORWARD);
 		} else {
-			setState(INACTIVE);
+			setActive(false);
 		}
 	}
 }
