@@ -19,16 +19,17 @@
 
 package org.geometerplus.fbreader.library;
 
-final class SeriesTree extends LibraryTree {
-	private final String mySeries;
+public final class SeriesTree extends LibraryTree {
+	public final String Series;
 
 	SeriesTree(LibraryTree parent, String series) {
 		super(parent);
-		mySeries = series;
+		Series = series;
 	}
 
+	@Override
 	public String getName() {
-		return mySeries;
+		return Series;
 	}
 
 	BookTree createBookInSeriesSubTree(Book book) {
