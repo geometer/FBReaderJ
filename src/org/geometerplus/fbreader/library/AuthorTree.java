@@ -22,25 +22,26 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class AuthorTree extends LibraryTree {
-	private final Author myAuthor;
+	public final Author Author;
 
 	AuthorTree(LibraryTree parent, Author author) {
 		super(parent);
-		myAuthor = author;
+		Author = author;
 	}
 
 	SeriesTree createSeriesSubTree(String series) {
 		return new SeriesTree(this, series);
 	}
 
+	@Override
 	public String getName() {
 		return
-			(myAuthor != null) ?
-				myAuthor.DisplayName :
+			(Author != null) ?
+				Author.DisplayName :
 				ZLResource.resource("library").getResource("unknownAuthor").getValue();
 	}
 
 	protected String getSortKey() {
-		return (myAuthor != null) ? myAuthor.SortKey : null;
+		return (Author != null) ? Author.SortKey : null;
 	}
 }

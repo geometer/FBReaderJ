@@ -143,6 +143,30 @@ public final class FileManager extends BaseActivity {
 		));
 	}
 
+	private boolean isItemSelected(FileItem item) {
+		if (mySelectedBookPath == null || !item.isSelectable()) {
+			return false;
+		}
+
+		final ZLFile file = item.getFile();
+		final String path = file.getPath();
+		if (mySelectedBookPath.equals(path)) {
+			return true;
+		}
+
+		String prefix = path;
+		if (file.isDirectory()) {
+			if (!prefix.endsWith("/")) {
+				prefix += '/';
+			}
+		} else if (file.isArchive()) {
+			prefix += ':';
+		} else {
+			return false;
+		}
+		return mySelectedBookPath.startsWith(prefix);
+	}
+
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 
@@ -186,9 +210,8 @@ public final class FileManager extends BaseActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
             final FileItem item = getItem(position);
 			final View view = createView(convertView, parent, item.getName(), item.getSummary());
-			if (mySelectedBookPath != null &&
-				mySelectedBookPath.equals(item.getFile().getPath())) {
-				view.setBackgroundColor(0xff808080);
+			if (isItemSelected(item)) {
+				view.setBackgroundColor(0xff555555);
 			} else {
 				view.setBackgroundColor(0);
 			}
@@ -209,6 +232,7 @@ public final class FileManager extends BaseActivity {
 		private final ZLFile myFile;
 		private final String myName;
 		private final String mySummary;
+		private final boolean myIsSelectable;
 
 		private ZLImage myCover = null;
 		private boolean myCoverIsInitialized = false;
@@ -217,6 +241,7 @@ public final class FileManager extends BaseActivity {
 			myFile = file;
 			myName = name;
 			mySummary = summary;
+			myIsSelectable = false;
 		}
 
 		public FileItem(ZLFile file) {
@@ -228,6 +253,7 @@ public final class FileManager extends BaseActivity {
 						myFile = child;
 						myName = file.getLongName();
 						mySummary = null;
+						myIsSelectable = true;
 						return;
 					}
 				} 
@@ -235,6 +261,7 @@ public final class FileManager extends BaseActivity {
 			myFile = file;
 			myName = null;
 			mySummary = null;
+			myIsSelectable = true;
 		}
 
 		public String getName() {
@@ -252,6 +279,10 @@ public final class FileManager extends BaseActivity {
 			}
 
 			return null;
+		}
+
+		public boolean isSelectable() {
+			return myIsSelectable;
 		}
 
 		public int getIcon() {
