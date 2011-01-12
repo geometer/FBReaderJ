@@ -63,7 +63,7 @@ public class Book {
 		}
 
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
-		if ((physicalFile != null) && !physicalFile.exists()) {
+		if (physicalFile != null && !physicalFile.exists()) {
 			return null;
 		}
 

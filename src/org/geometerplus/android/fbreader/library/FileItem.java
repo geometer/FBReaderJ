@@ -29,8 +29,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public final class FileItem {
 	private final ZLFile myFile;
-	private String myName;
+	private final String myName;
 	private final String mySummary;
+	private final boolean myIsSelectable;
 
 	private ZLImage myCover = null;
 	private boolean myCoverIsInitialized = false;
@@ -39,6 +40,7 @@ public final class FileItem {
 		myFile = file;
 		myName = name;
 		mySummary = summary;
+		myIsSelectable = false;
 	}
 
 	public FileItem(ZLFile file) {
@@ -50,6 +52,7 @@ public final class FileItem {
 					myFile = child;
 					myName = file.getLongName();
 					mySummary = null;
+					myIsSelectable = true;
 					return;
 				}
 			} 
@@ -57,6 +60,7 @@ public final class FileItem {
 		myFile = file;
 		myName = null;
 		mySummary = null;
+		myIsSelectable = true;
 	}
 
 	public String getName() {
@@ -74,6 +78,10 @@ public final class FileItem {
 		}
 
 		return null;
+	}
+
+	public boolean isSelectable() {
+		return myIsSelectable;
 	}
 
 	public int getIcon() {

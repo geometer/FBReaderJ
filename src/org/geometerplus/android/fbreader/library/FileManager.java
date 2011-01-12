@@ -335,6 +335,30 @@ public final class FileManager extends BaseActivity {
 		);
     }
     
+	private boolean isItemSelected(FileItem item) {
+		if (mySelectedBookPath == null || !item.isSelectable()) {
+			return false;
+		}
+
+		final ZLFile file = item.getFile();
+		final String path = file.getPath();
+		if (mySelectedBookPath.equals(path)) {
+			return true;
+		}
+
+		String prefix = path;
+		if (file.isDirectory()) {
+			if (!prefix.endsWith("/")) {
+				prefix += '/';
+			}
+		} else if (file.isArchive()) {
+			prefix += ':';
+		} else {
+			return false;
+		}
+		return mySelectedBookPath.startsWith(prefix);
+	}
+
 	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 		public Gallery myGallery; 
@@ -408,10 +432,9 @@ public final class FileManager extends BaseActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
             final FileItem item = getItem(position);
-            View view  = createView(convertView, parent, item.getName(), item.getSummary());
-			if (mySelectedBookPath != null &&
-				mySelectedBookPath.equals(item.getFile().getPath())) {
-				view.setBackgroundColor(0xff808080);
+			final View view = createView(convertView, parent, item.getName(), item.getSummary());
+			if (isItemSelected(item)) {
+				view.setBackgroundColor(0xff555555);
 			} else {
 				view.setBackgroundColor(0);
 			}
