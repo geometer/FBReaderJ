@@ -22,21 +22,22 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public final class TagTree extends LibraryTree {
-	private final Tag myTag;
+	public final Tag Tag;
 
 	TagTree(LibraryTree parent, Tag tag) {
 		super(parent);
-		myTag = tag;
+		Tag = tag;
 	}
 
+	@Override
 	public String getName() {
 		return
-			(myTag != null) ?
-				myTag.Name :
+			(Tag != null) ?
+				Tag.Name :
 				ZLResource.resource("library").getResource("booksWithNoTags").getValue();
 	}
 
 	protected String getSortKey() {
-		return (myTag != null) ? myTag.Name : null;
+		return (Tag != null) ? Tag.Name : null;
 	}
 }

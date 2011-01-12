@@ -24,6 +24,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -89,11 +92,21 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			}
 			tree = tree.getSubTreeByName(path[i]);
 		}
+
+		mySelectedBook = null;
+		if (mySelectedBookPath != null) {
+			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
+			if (file != null) {
+				mySelectedBook = Book.getByFile(file);
+			}
+		}
         
 		if (tree != null) {
 			final LibraryAdapter adapter = new LibraryAdapter(tree.subTrees());
 			setListAdapter(adapter);
 			getListView().setOnCreateContextMenuListener(adapter);
+			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());
+			setSelection(adapter.getFirstSelectedItemIndex());
 		}
 	}
 
