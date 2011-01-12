@@ -246,8 +246,9 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		nextParagraphString(true, true, CURRENTORFORWARD);
 	}
 
+	@Override
 	public void onUtteranceCompleted(String uttId) {
-		if (myIsActive && uttId.equals(this.PARAGRAPHUTTERANCE)) {
+		if (myIsActive && uttId.equals(PARAGRAPHUTTERANCE)) {
 			nextParagraphString(true, true, SEARCHFORWARD);
 		} else {
 			setActive(false);
