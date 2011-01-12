@@ -147,7 +147,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 			final FBTree tree = getItem(position);
 			final View view = createView(convertView, parent, tree.getName(), tree.getSecondString());
 			if (isTreeSelected(tree)) {
-				view.setBackgroundColor(0xff808080);
+				view.setBackgroundColor(0xff555555);
 			} else {
 				view.setBackgroundColor(0);
 			}
