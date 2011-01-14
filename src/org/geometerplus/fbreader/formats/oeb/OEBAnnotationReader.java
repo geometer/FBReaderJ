@@ -50,11 +50,13 @@ class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		return null;
 	}
 
+	@Override
 	public boolean processNamespaces() {
 		return true;
 	}
 
-	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
+	@Override
+	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
 		myDescriptionTag = null;
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
 			final String id = entry.getValue();
@@ -64,6 +66,7 @@ class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		}
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if (tag.equalsIgnoreCase(myDescriptionTag)) {
 			myReadState = READ_DESCRIPTION;
@@ -74,12 +77,14 @@ class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] data, int start, int len) {
 		if (myReadState == READ_DESCRIPTION) {
 			myBuffer.append(new String(data, start, len).trim());
 		}
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		if (myReadState != READ_DESCRIPTION) {
 			return false;

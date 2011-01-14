@@ -229,7 +229,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	private String myFBReaderNamespaceId;
 
 	@Override
-	public void namespaceMapChangedHandler(HashMap<String, String> namespaceMap) {
+	public void namespaceMapChangedHandler(Map<String, String> namespaceMap) {
 		super.namespaceMapChangedHandler(namespaceMap);
 
 		myFBReaderNamespaceId = null;

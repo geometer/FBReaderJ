@@ -72,6 +72,10 @@ public final class ZLStringMap {
 		return myKeys[index];
 	}
 
+	String getValue(int index) {
+		return myValues[index];
+	}
+
 	public void clear() {
 		mySize = 0;
 	}
