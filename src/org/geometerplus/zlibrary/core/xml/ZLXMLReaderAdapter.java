@@ -25,7 +25,9 @@ import java.io.InputStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZLXMLReaderAdapter implements ZLXMLReader {
-	public boolean read(ZLFile file) {
+	private Map<String,String> myNamespaceMap = Collections.emptyMap();
+
+ 	public boolean read(ZLFile file) {
 		return ZLXMLProcessor.read(this, file);
 	}
 	
@@ -63,6 +65,25 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 	}
 
 	public void namespaceMapChangedHandler(HashMap<String,String> namespaces) {
+		myNamespaceMap = namespaces != null ? namespaces : Collections.<String,String>emptyMap();
+	}
+
+	protected String getAttributeValue(ZLStringMap attributes, String namespace, String name) {
+		final int size = attributes.getSize();
+		if (size == 0) {
+			return null;
+		}
+		final String postfix = ":" + name;
+		for (int i = size - 1; i >= 0; --i) {
+			final String key = attributes.getKey(i);
+			if (key.endsWith(postfix)) {
+				final String nsKey = key.substring(0, key.length() - postfix.length());
+				if (namespace.equals(myNamespaceMap.get(nsKey))) {
+					return attributes.getValue(i);
+				}
+			}
+		}
+		return null;
 	}
 
 	public void addExternalEntities(HashMap<String,char[]> entityMap) {
