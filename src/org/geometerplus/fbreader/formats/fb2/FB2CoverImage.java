@@ -62,21 +62,9 @@ class FB2CoverImage extends ZLImageProxy {
 			return myImage;
 		}
 
-		private String myXLinkPrefix;
-
 		@Override
 		public boolean processNamespaces() {
 			return true;
-		}
-
-		public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
-			myXLinkPrefix = null;
-			for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
-				if (XMLNamespaces.XLink.equals(entry.getValue())) {
-					myXLinkPrefix = entry.getKey() + ":";
-					break;
-				}
-			}
 		}
 
 		@Override
@@ -87,10 +75,7 @@ class FB2CoverImage extends ZLImageProxy {
 				break;
 			case FB2Tag.IMAGE:
 				if (myReadCoverPage) {
-					if (myXLinkPrefix == null) {
-						break;
-					}
-					final String href = attributes.getValue((myXLinkPrefix + "href").intern());
+					final String href = getAttributeValue(attributes, XMLNamespaces.XLink, "href");
 					if (href != null && href.length() > 1 && href.charAt(0) == '#') {
 						myImageReference = href.substring(1);
 					}
