@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,6 +50,11 @@ public abstract class DictionaryUtil {
 				"com.ngc.fora",
 				"com.ngc.fora.ForaDictionary",
 				"Fora Dictionary"
+			));
+			ourDictionaryInfos.add(new PackageInfo(
+				"org.freedictionary",
+				"org.freedictionary.MainActivity",
+				"Free Dictionary . org"
 			));
 		}
 		return ourDictionaryInfos;
@@ -80,6 +86,27 @@ public abstract class DictionaryUtil {
 				dictionaryInfo.ClassName
 			))
 			.putExtra(SearchManager.QUERY, text);
+	}
+
+	public static void openWordInDictionary(Activity activity, String text) { 
+		if (text == null) {
+			return;
+		}
+
+		int start = 0;
+		int end = text.length();
+		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
+		for (; start < end && !Character.isLetterOrDigit(text.charAt(end - 1)); --end);
+		if (start == end) {
+			return;
+		}
+
+		final Intent intent = DictionaryUtil.getDictionaryIntent(text.substring(start, end));
+		try {
+			activity.startActivity(intent);
+		} catch(ActivityNotFoundException e){
+			DictionaryUtil.installDictionaryIfNotInstalled(activity);
+		}
 	}
 
 	public static void installDictionaryIfNotInstalled(final Activity activity) {
