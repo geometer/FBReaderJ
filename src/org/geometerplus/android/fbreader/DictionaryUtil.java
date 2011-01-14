@@ -51,11 +51,6 @@ public abstract class DictionaryUtil {
 				"com.ngc.fora.ForaDictionary",
 				"Fora Dictionary"
 			));
-			ourDictionaryInfos.add(new PackageInfo(
-				"org.freedictionary",
-				"org.freedictionary.MainActivity",
-				"Free Dictionary . org"
-			));
 		}
 		return ourDictionaryInfos;
 	}
