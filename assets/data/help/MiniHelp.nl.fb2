@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dutch MiniHelp, by Frank Fesevur 07-Jan-2011 -->
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Over FBReaderJ</book-title> <lang>nl</lang></title-info></description>
+<body>
+<title><p>Over FBReaderJ &FBReaderVersion;</p></title>
+<p>FBReaderJ is een e-book reader voor het <a l:href="http://www.android.com/">Android platform</a>. Het is een kloon van <a l:href="http://www.fbreader.org/">FBReader book reader</a> en is in Java geschreven door dezelfde makers. FBReaderJ ondersteunt verschillende e-bookformaten: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. In toekomstige versies zal deze lijst uitgebreid worden zodat dezelfde formats als in de originele FBReader worden ondersteund. Rechtstreeks lezen van <code>zip</code>, <code>tar</code> en <code>gzip</code> archieven is ondersteund.</p>
+<p>Je kunt de configuratie van FBReaderJ aanpassen naar je eigen smaak. Kleuren, lettertypes, toetsgebruik en vele andere eigenschappen kunnen worden aangepast in de <code>Instellingen</code>.</p>
+<p>FBReaderJ is vrijgegeven onder de voorwaarden van de <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<empty-line/>
+<subtitle><p>Hoe te beginnen</p></subtitle>
+<p>Er zijn twee manieren om een boek toe te voegen aan de FBReaderJ bibliotheek.</p>
+<p>De eerste is het boek te kopieren naar de map <code>/sdcard/Books</code> (of een submap daaronder). Dan zal FBReader dit boek automatisch toevoegen.</p>
+<p>De tweede methode is door te klikken op een link naar een boek (bijv. op een link naar een bestand met de extensie <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> of <code>.fb2.zip</code>) in de standaard Android browser. Het boek zal gedownload worden naar het apparaat geopend worden in FBReaderJ. Als je nogmaals op link klikt, zal het boek niet nog een keer gedownload worden maar zal de lokale kopie geopend worden om te lezen.</p>
+<empty-line/>
+<subtitle><p>Gerelateerde sites</p></subtitle>
+<p>Meer informatie over FBReader en FBReaderJ kan je vinden op de <a l:href="http://www.fbreader.org">FBReader site</a>.</p>
+<p>Als je een automatisch bericht wilt over het verschijnen van nieuwe versies, kun je je aanmelden bij het <a l:href="http://freshmeat.net/projects/fbreaderj">FBReaderJ project bij freshmeat</a>.</p>
+<p>Als je vragen of suggesties hebt kun je de <a l:href="http://groups.google.com/group/fbreader">FBReader group van googlegroups</a> gebruiken.</p>
+</body>
+</FictionBook>
