@@ -74,7 +74,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	}
 
 	@Override
-	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
+	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
 		myDublinCoreNamespaceId = null;
 		myAtomNamespaceId = null;
 		myOpenSearchNamespaceId = null;

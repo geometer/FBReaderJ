@@ -64,7 +64,7 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void namespaceMapChangedHandler(HashMap<String,String> namespaces) {
+	public void namespaceMapChangedHandler(Map<String,String> namespaces) {
 		myNamespaceMap = namespaces != null ? namespaces : Collections.<String,String>emptyMap();
 	}
 
@@ -79,6 +79,29 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 			if (key.endsWith(postfix)) {
 				final String nsKey = key.substring(0, key.length() - postfix.length());
 				if (namespace.equals(myNamespaceMap.get(nsKey))) {
+					return attributes.getValue(i);
+				}
+			}
+		}
+		return null;
+	}
+
+	interface Predicate {
+		boolean accepts(String namespace);
+	}
+
+	protected String getAttributeValue(ZLStringMap attributes, Predicate predicate, String name) {
+		final int size = attributes.getSize();
+		if (size == 0) {
+			return null;
+		}
+		final String postfix = ":" + name;
+		for (int i = size - 1; i >= 0; --i) {
+			final String key = attributes.getKey(i);
+			if (key.endsWith(postfix)) {
+				final String ns =
+					myNamespaceMap.get(key.substring(0, key.length() - postfix.length()));
+				if (ns != null && predicate.accepts(ns)) {
 					return attributes.getValue(i);
 				}
 			}
