@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import org.geometerplus.android.fbreader.library.ViewChangeDialog.ViewType;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -268,13 +269,22 @@ class SortingDialog extends RadioButtonDialog{
 			mySortOption.setValue(item);
 			FileManager.mySortType = SortType.values()[item];
 			
-			((Activity) myContext).startActivityForResult(
-					new Intent(myContext, FileManager.class)
-						.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
-						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-					FileManager.CHILD_LIST_REQUEST
-			);
+			if (FileManager.myViewType == ViewType.SIMPLE){
+				startActivity(FileManager.class);
+			} else if (FileManager.myViewType == ViewType.SKETCH) {
+				startActivity(SketchGalleryActivity.class);
+			}
 		}
+	}
+
+	private void startActivity(Class<?> c){
+		((Activity) myContext).startActivityForResult(
+				new Intent(myContext, c)
+					.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+				FileManager.CHILD_LIST_REQUEST
+		);
+	
 	}
 	
 	public static SortType getOprionSortType(){

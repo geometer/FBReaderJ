@@ -1,5 +1,6 @@
 package org.geometerplus.android.fbreader.library;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,13 +25,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -128,6 +133,80 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 				Intent.FLAG_ACTIVITY_CLEAR_TOP),
 				FileManager.CHILD_LIST_REQUEST);
 	}
+
+	
+	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	Log.v(LOG, "onCreateOptionsMenu");
+    	super.onCreateOptionsMenu(menu);
+    	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
+    	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
+    	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
+    	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);	
+    	return true;
+    }
+
+    private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+        final MenuItem item = menu.add(0, index, Menu.NONE, label);
+        item.setIcon(iconId);
+        return item;
+    }
+    
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		Log.v(LOG, "onPrepareOptionsMenu - start");
+		super.onPrepareOptionsMenu(menu);
+		
+		if (FileManager.myInsertPathStatic == null){
+			menu.findItem(0).setVisible(false).setEnabled(false);
+			menu.findItem(1).setVisible(false).setEnabled(false);
+        }else{
+        	menu.findItem(0).setVisible(true).setEnabled(true);
+			menu.findItem(1).setVisible(true).setEnabled(true);
+        }
+		
+		Log.v(LOG, "onPrepareOptionsMenu - finish");
+		return true;
+	}
+	
+    private Runnable messFileMoved = new Runnable() {
+		public void run() {
+			Toast.makeText(SketchGalleryActivity.this,
+					myResource.getResource("messFileMoved").getValue(), 
+					Toast.LENGTH_SHORT).show();
+		}
+	};
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	    	case 0:
+	    		try {
+	    			FileUtil.moveFile(FileManager.myInsertPathStatic, myPath);
+	    			FileManager.myInsertPathStatic = null;
+	    			//refresh();	// TODO
+	    			runOnUiThread(messFileMoved);
+	    		} catch (IOException e) {
+    				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+    			}
+	    		return true;
+        	case 1:
+        		new MkDirDialog(this, myPath, FileManager.myInsertPathStatic).show();
+        		return true;
+        	case 2:
+        		new SortingDialog(this, myPath).show();
+	            return true;
+        	case 3:
+        		new ViewChangeDialog(this, myPath).show();
+        		return true;
+        	default:
+        		return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	
 	
 	public class GalleryAdapter extends BaseAdapter implements OnItemClickListener, OnItemSelectedListener {
 		private List<FileItem> myItems = new ArrayList<FileItem>();
