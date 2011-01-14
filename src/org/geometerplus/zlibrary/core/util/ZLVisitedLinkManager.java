@@ -17,20 +17,42 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.core.util;
 
-public interface ZLTextWritableModel extends ZLTextModel {
-	void createParagraph(byte kind);
+import java.util.Set;
+import java.util.TreeSet;
 
-	void addControl(byte textKind, boolean isStart);
-	void addText(char[] text);
-	void addText(char[] text, int offset, int length);
+public abstract class ZLVisitedLinkManager {
+	private static ZLVisitedLinkManager ourInstance;
+	private static Set<String> visitedLinks;
+	
+	public static ZLVisitedLinkManager Instance() {
+		return ourInstance;
+	}
 
-	//void addControl(ZLTextForcedControlEntry entry);
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addPageLink(String id);
-	void addImage(String id, short vOffset);
-	void addFixedHSpace(short length);
+	protected ZLVisitedLinkManager() {
+		ourInstance = this;
+		reset();
+	}
 
-	void stopReading();
+	private String stripId(String id) {
+		int index = id.indexOf('#');
+		return index != -1 ? id.substring(0, index) : id;
+	}
+
+	public void markLinkVisited(String id) {
+		visitedLinks.add(stripId(id));
+	}
+
+	public boolean isLinkVisited(String id) {
+		return visitedLinks.contains(stripId(id));
+	}
+
+	public Set<String> getVisitedLinks() {
+		return visitedLinks;
+	}
+
+	public void reset() {
+		visitedLinks = new TreeSet<String>();
+	}
 }

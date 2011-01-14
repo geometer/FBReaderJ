@@ -397,6 +397,7 @@
 				<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 				<node name="text" value="Normalen Text"/>
 				<node name="hyperlink" value="Hyperlinks"/>
+				<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
 				<node name="highlighting" value="Hintergrund der Suchergebnisse"/>
 				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>

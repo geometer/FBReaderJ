@@ -44,6 +44,7 @@ abstract public class ZLView {
 	}
 	public abstract Animation getAnimationType();
 
+	abstract public void checkInvalidCache();
 	abstract public void paint(ZLPaintContext context, int viewPage);
 	abstract public void onScrollingFinished(int viewPage);
 

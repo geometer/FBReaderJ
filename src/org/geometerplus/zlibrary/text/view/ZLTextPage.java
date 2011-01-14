@@ -26,6 +26,7 @@ final class ZLTextPage {
 	final ZLTextWordCursor EndCursor = new ZLTextWordCursor();
 	final ArrayList<ZLTextLineInfo> LineInfos = new ArrayList<ZLTextLineInfo>();
 	int PaintState = PaintStateEnum.NOTHING_TO_PAINT;
+	boolean myInvalidCache = false;
 
 	final ZLTextElementAreaVector TextElementMap = new ZLTextElementAreaVector();
 

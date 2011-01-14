@@ -20,9 +20,12 @@
 package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
+
+import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidVisitedLinkManager;
 
 public class ZLTextPlainModel implements ZLTextModel {
 	protected final String myId;
@@ -58,6 +61,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		private byte myHyperlinkType;
 		private String myHyperlinkId;
 
+		private String myPageLink;
 		private ZLImageEntry myImageEntry;
 		private ZLTextForcedControlEntry myForcedControlEntry;
 
@@ -107,6 +111,10 @@ public class ZLTextPlainModel implements ZLTextModel {
 			return myImageEntry;
 		}
 
+		public String getPageLink() {
+			return myPageLink;
+		}
+
 		public ZLTextForcedControlEntry getForcedControlEntry() {
 			return myForcedControlEntry;
 		}
@@ -153,7 +161,19 @@ public class ZLTextPlainModel implements ZLTextModel {
 						short labelLength = (short)data[dataOffset++];
 						myHyperlinkId = new String(data, dataOffset, labelLength);
 						dataOffset += labelLength;
+						if (myHyperlinkType == FBHyperlinkType.INTERNAL
+								&& ZLAndroidVisitedLinkManager.Instance().isLinkVisited(myHyperlinkId)) {
+							myHyperlinkType = FBHyperlinkType.INTERNAL_VISITED;
+						}
 					}
+					break;
+				}
+				case ZLTextParagraph.Entry.PAGELINK:
+				{
+					final short len = (short)data[dataOffset++];
+					final String id = new String(data, dataOffset, len);
+					dataOffset += len;
+					myPageLink = id;
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:

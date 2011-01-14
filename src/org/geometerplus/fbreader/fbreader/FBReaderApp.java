@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
@@ -207,6 +208,8 @@ public final class FBReaderApp extends ZLApplication {
 
 			if (Model != null) {
 				Model.Book.storePosition(BookTextView.getStartCursor());
+				Model.Book.storeVisitedLinks();
+				Model.Book.storeLinkHistory();
 			}
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
@@ -218,6 +221,8 @@ public final class FBReaderApp extends ZLApplication {
 			Model = BookModel.createModel(book);
 			if (Model != null) {
 				ZLTextHyphenator.Instance().load(book.getLanguage());
+				book.loadLinkHistory();
+				book.loadVisitedLinks();
 				BookTextView.setModel(Model.BookTextModel);
 				BookTextView.gotoPosition(book.getStoredPosition());
 				if (bookmark == null) {
@@ -246,6 +251,15 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void showBookTextView() {
 		setView(BookTextView);
+	}
+
+	public void gotoPosition(ZLTextPosition position) {
+		BookTextView.gotoPosition(position);
+		setView(BookTextView);
+	}
+
+	public ZLTextPosition getPosition() {
+		return BookTextView.getStartCursor();
 	}
 
 	private Book createBookForFile(ZLFile file) {
@@ -280,6 +294,8 @@ public final class FBReaderApp extends ZLApplication {
 	public void onWindowClosing() {
 		if ((Model != null) && (BookTextView != null)) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
+			Model.Book.storeVisitedLinks();
+			Model.Book.storeLinkHistory();
 		}
 	}
 }

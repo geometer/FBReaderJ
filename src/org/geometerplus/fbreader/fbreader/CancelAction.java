@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import org.geometerplus.zlibrary.core.util.ZLHyperlinkStackManager;
+
 class CancelAction extends FBAction {
 	CancelAction(FBReaderApp fbreader) {
 		super(fbreader);
@@ -28,7 +30,13 @@ class CancelAction extends FBAction {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
 		} else {
-			Reader.closeWindow();
+			ZLHyperlinkStackManager hyperlinkStack = ZLHyperlinkStackManager.Instance();
+			if (!hyperlinkStack.emptyStack()) {
+				Reader.gotoPosition(hyperlinkStack.popPosition());
+			} else {
+//				Reader.doAction(ActionCode.SHOW_LIBRARY);
+				Reader.closeWindow();
+			}
 		}
 	}
 }

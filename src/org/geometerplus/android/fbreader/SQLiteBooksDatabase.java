@@ -30,6 +30,8 @@ import android.database.Cursor;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.util.ZLHyperlinkStackManager;
+import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -60,7 +62,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 13;
+		final int currentVersion = 14;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -95,6 +97,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables11();
 					case 12:
 						updateTables12();
+					case 13:
+						updateTables13();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -849,6 +853,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		myDeleteFromBookListStatement.bindLong(1, bookId);
 		myDeleteFromBookListStatement.execute();
+		deleteVisitedLinks(bookId);
+		deleteLinkHistory(bookId);
 		return true;
 	}
 
@@ -863,6 +869,108 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return myCheckBookListStatement.simpleQueryForLong() > 0;
 	}
 
+
+	private SQLiteStatement myDeleteVisitedLinksStatement;
+	private void deleteVisitedLinks(long bookId) {
+		if (myDeleteVisitedLinksStatement == null) {
+			myDeleteVisitedLinksStatement = myDatabase.compileStatement(
+				"DELETE FROM VisitedLinks WHERE book_id = ?"
+			);
+		}
+
+		myDeleteVisitedLinksStatement.bindLong(1, bookId);
+		myDeleteVisitedLinksStatement.execute();
+	}
+
+	private SQLiteStatement myStoreVisitedLinksStatement;
+	protected void storeVisitedLinks(long bookId) {
+		if (myStoreVisitedLinksStatement == null) {
+			myStoreVisitedLinksStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO VisitedLinks(book_id, link_id, link) VALUES (?,?,?)"
+			);
+		}
+
+		deleteVisitedLinks(bookId);
+		int linkId = 0;
+		Iterator<String> it = ZLVisitedLinkManager.Instance().getVisitedLinks().iterator();
+		while( it.hasNext()) {
+			String link = it.next();
+			myStoreVisitedLinksStatement.bindLong(1, bookId);
+			myStoreVisitedLinksStatement.bindLong(2, linkId);
+			myStoreVisitedLinksStatement.bindString(3, link);
+			myStoreVisitedLinksStatement.execute();
+			linkId = linkId + 1;
+		}
+	}
+
+	protected void loadVisitedLinks(long bookId) {
+		ZLVisitedLinkManager linkManager = ZLVisitedLinkManager.Instance();
+		linkManager.reset();
+		final Cursor cursor = myDatabase.rawQuery("SELECT link FROM VisitedLinks WHERE book_id = ?", new String[] { "" + bookId });
+		if (!cursor.moveToNext()) {
+			cursor.close();
+			return;
+		}
+		do {
+			String link = cursor.getString(0);
+			linkManager.markLinkVisited(link);
+		} while (cursor.moveToNext());
+		cursor.close();
+	}
+
+	private SQLiteStatement myDeleteLinkHistoryStatement;
+	private void deleteLinkHistory(long bookId) {
+		if (myDeleteLinkHistoryStatement == null) {
+			myDeleteLinkHistoryStatement = myDatabase.compileStatement(
+				"DELETE FROM LinkHistory WHERE book_id = ?"
+			);
+		}
+
+		myDeleteLinkHistoryStatement.bindLong(1, bookId);
+		myDeleteLinkHistoryStatement.execute();
+	}
+
+	private SQLiteStatement myStoreLinkHistoryStatement;
+	protected void storeLinkHistory(long bookId) {
+		if (myStoreLinkHistoryStatement == null) {
+			myStoreLinkHistoryStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO LinkHistory (book_id, history_id, paragraph, word, char) VALUES (?,?,?,?,?)"
+			);
+		}
+
+		deleteLinkHistory(bookId);
+		int historyId = 0;
+		Iterator<ZLTextPosition> iterator = ZLHyperlinkStackManager.Instance().getIterator();
+		while (iterator.hasNext()) {
+			ZLTextPosition position = iterator.next();
+			myStoreLinkHistoryStatement.bindLong(1, bookId);
+			myStoreLinkHistoryStatement.bindLong(2, historyId);
+			myStoreLinkHistoryStatement.bindLong(3, position.getParagraphIndex());
+			myStoreLinkHistoryStatement.bindLong(4, position.getElementIndex());
+			myStoreLinkHistoryStatement.bindLong(5, position.getCharIndex());
+			myStoreLinkHistoryStatement.execute();
+			historyId = historyId + 1;
+		}
+	}
+
+	protected void loadLinkHistory(long bookId) {
+		ZLHyperlinkStackManager stackManager = ZLHyperlinkStackManager.Instance();
+		stackManager.reset();
+		final Cursor cursor = myDatabase.rawQuery("SELECT paragraph, word, char FROM LinkHistory WHERE book_id = ? ORDER BY history_id", new String[] { "" + bookId });
+		if (!cursor.moveToNext()) {
+			cursor.close();
+			return;
+		}
+		do {
+			ZLTextPosition position = new ZLTextFixedPosition(
+				(int)cursor.getLong(0),
+				(int)cursor.getLong(1),
+				(int)cursor.getLong(2)
+			);
+			stackManager.pushPosition(position);
+		} while (cursor.moveToNext());
+		cursor.close();
+	}
 
 	private void createTables() {
 		myDatabase.execSQL(
@@ -1133,5 +1241,22 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables12() {
 		myDatabase.execSQL("DELETE FROM Files WHERE parent_id IN (SELECT file_id FROM Files WHERE name LIKE '%.epub')");
+	}
+
+	private void updateTables13() {
+		myDatabase.execSQL(
+				"CREATE TABLE VisitedLinks(" +
+					"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+					"link_id INTEGER NOT NULL," +
+					"link TEXT NOT NULL," +
+					"CONSTRAINT VisitedLinks_Unique UNIQUE (book_id, link_id))");
+		myDatabase.execSQL(
+				"CREATE TABLE LinkHistory(" +
+					"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+					"history_id INTEGER NOT NULL," +
+					"paragraph INTEGER NOT NULL," +
+					"word INTEGER NOT NULL," +
+					"char INTEGER NOT NULL," +
+					"CONSTRAINT LinkHistory_Unique UNIQUE (book_id, history_id))");
 	}
 }

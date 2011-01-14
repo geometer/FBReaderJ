@@ -104,4 +104,9 @@ public abstract class BooksDatabase {
 	protected abstract boolean insertIntoBookList(long bookId);
 	protected abstract boolean deleteFromBookList(long bookId);
 	protected abstract boolean checkBookList(long bookId);
+
+	protected abstract void storeVisitedLinks(long bookId);
+	protected abstract void loadVisitedLinks(long bookId);
+	protected abstract void storeLinkHistory(long bookId);
+	protected abstract void loadLinkHistory(long bookId);
 }

@@ -141,6 +141,17 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + len;
 	}
 	
+	public void addPageLink(String id) {
+		final int len = id.length();
+		final char[] block = getDataBlock(2 + len);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		int blockOffset = myBlockOffset;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.PAGELINK;
+		block[blockOffset++] = (char)len;
+		id.getChars(0, len, block, blockOffset);
+		myBlockOffset = blockOffset + len;
+	}
+
 	public void addFixedHSpace(short length) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
