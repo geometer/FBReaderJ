@@ -26,11 +26,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -59,6 +61,8 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		
+		// TODO ... sclass
 		DatabaseInstance = SQLiteBooksDatabase.Instance();
 		if (DatabaseInstance == null) {
 			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
@@ -72,6 +76,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 		myGallery.setAdapter(galleryAdapter);
 		myGallery.setOnItemClickListener(galleryAdapter);
 		myGallery.setOnItemSelectedListener(galleryAdapter);
+		myGallery.setOnCreateContextMenuListener(galleryAdapter);
 		
 		myPath = getIntent().getStringExtra(FileManager.FILE_MANAGER_PATH);
 //		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
@@ -205,10 +210,45 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
         		return super.onOptionsItemSelected(item);
         }
     }
+    
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		GalleryAdapter adapter = ((GalleryAdapter)myGallery.getAdapter()); 
+		final FileItem fileItem = adapter.getItem(position);
+		final Book book = fileItem.getBook(); 
+		if (book != null) {
+			onContextItemSelected(item.getItemId(), book);
+		}
+		
+		switch (item.getItemId()) {
+			case MOVE_FILE_ITEM_ID:
+				Log.v(LOG, "MOVE_FILE_ITEM_ID"); 
+				FileManager.myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
+				refresh(this.getClass());			
+				return true;
+//			case RENAME_FILE_ITEM_ID:
+//				new RenameDialog(this, fileItem.getFile()).show();
+//				return true;
+			case DELETE_FILE_ITEM_ID:
+				//deleteFileItem(fileItem); // TODO in base class
+				return true;
+		}
+		return super.onContextItemSelected(item);
+	}
 	
+    public void refresh(Class<?> cl){
+		startActivityForResult(
+				new Intent(this, cl)
+					.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+				FileManager.CHILD_LIST_REQUEST
+		);
+    }
 	
-	
-	public class GalleryAdapter extends BaseAdapter implements OnItemClickListener, OnItemSelectedListener {
+	public class GalleryAdapter extends BaseAdapter 
+		implements OnItemClickListener, OnItemSelectedListener, OnCreateContextMenuListener {
+		
 		private List<FileItem> myItems = new ArrayList<FileItem>();
 		public int position = 0;
 		
@@ -310,6 +350,35 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
     		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
     		return coverBitmap;
     	}
+    	
+    	@Override
+		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+			if (myPath == null)
+				return;
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			final FileItem item = getItem(position);
+
+			menu.setHeaderTitle(item.getName());
+			if (item.getFile().isDirectory()){
+				if (ZLFile.createFileByPath(myPath).isArchive())
+					return;
+				//menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("rename").getValue());
+				menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("delete").getValue());
+			}else{
+				final Book book = item.getBook();
+				if (book != null) {
+					createBookContextMenu(menu, book); 
+				}
+				if (ZLFile.createFileByPath(myPath).isArchive())
+					return;
+				//menu.add(0, RENAME_FILE_ITEM_ID, 0, myResource.getResource("rename").getValue());
+				menu.add(0, MOVE_FILE_ITEM_ID, 0, myResource.getResource("move").getValue());
+				if (book == null) {
+					menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("delete").getValue());
+				}
+			}
+		}
+    	
 	}
 	
 	private final class SmartFilter implements Runnable {

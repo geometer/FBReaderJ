@@ -153,13 +153,6 @@ public final class FileManager extends BaseActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-//		if (myViewType == ViewType.SIMPLE){
-//			position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-//		} else {
-//			Gallery gallery = ((FileListAdapter) getListAdapter()).myGallery;
-//			position = ((GalleryAdapter)gallery.getAdapter()).position;
-//		}
-		
 		FileListAdapter adapter = ((FileListAdapter)getListAdapter()); 
 		final FileItem fileItem = adapter.getItem(position);
 		final Book book = fileItem.getBook(); 
@@ -400,13 +393,6 @@ public final class FileManager extends BaseActivity {
 			if (myPath == null)
 				return;
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-//			final int position;
-//			if (myViewType == ViewType.SIMPLE){
-//				position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-//			} else {
-//				position = ((GalleryAdapter)myGallery.getAdapter()).position;
-//			}
-			
 			final FileItem item = getItem(position);
 
 			menu.setHeaderTitle(item.getName());
