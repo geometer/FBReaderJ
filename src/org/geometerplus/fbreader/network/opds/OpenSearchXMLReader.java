@@ -57,7 +57,7 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 	}
 
 	@Override
-	public void namespaceMapChangedHandler(HashMap<String, String> namespaces) {
+	public void namespaceMapChangedHandler(Map<String, String> namespaces) {
 		myOpenSearchNamespaceId = null;
 
 		for (Map.Entry<String,String> entry : namespaces.entrySet()) {

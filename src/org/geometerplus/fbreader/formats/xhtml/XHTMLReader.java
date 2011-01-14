@@ -155,6 +155,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return read(file);
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
 		if (id != null) {
@@ -168,6 +169,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
 		if (action != null) {
@@ -176,6 +178,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] data, int start, int len) {
 		if (myPreformatted) {
 			final char first = data[start]; 
@@ -225,18 +228,18 @@ cycle:
 		return ourExternalDTDs;
 	}
 
+	@Override
 	public List<String> externalDTDs() {
 		return xhtmlDTDs();
 	}
 
+	@Override
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
 
+	@Override
 	public boolean processNamespaces() {
 		return true;
-	}
-
-	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
 	}
 }
