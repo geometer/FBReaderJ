@@ -2,6 +2,7 @@
 * A list of dictionaries is supported (ColorDict, Fora)
 * Author of currently opened book is selected in library (same for series and tags)
 * FB2 files with multiple XLink namespace prefixes processing has been fixed
+* Dutch localization (by Frank Fesevur) has been added
 
 ===== 0.99.3 (Jan 08, 2011) =====
 * All word navigation mode is disabled by default; corresponding option in dictionary preferences works correctly
