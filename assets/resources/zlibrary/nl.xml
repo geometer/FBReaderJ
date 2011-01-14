@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Dutch zlibrary resources, by Frank Fesevur 07-Jan-2011 -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="OK" />
+			<node name="cancel" value="Annuleren" />
+			<node name="yes" value="Ja" />
+			<node name="no" value="Nee" />
+			<node name="apply" value="Toepassen" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Netwerkfout" />
+			<node name="unknownErrorMessage" value="Onbekende fout" />
+			<node name="operationTimedOutMessage" value="Time-out bij bewerking" />
+			<node name="somethingWrongMessage" value="Er gaat iets mis bij&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Kan geen map %s niet maken" />
+			<node name="couldntCreateFileMessage" value="Kan bestand %s niet maken" />
+			<node name="couldntConnectToNetworkMessage" value="Kan geen verbinding met het netwerk maken" />
+			<node name="couldntConnectMessage" value="Kan geen verbinding met host %s maken" />
+			<node name="couldntResolveHostMessage" value="Hostnaam %s niet gevonden" />
+			<node name="authenticationFailed" value="Authenticatie mislukt" />
+			<node name="unsupportedProtocol" value="Protocol niet ondersteund" />
+			<node name="invalidURL" value="Ongeldige URL" />
+			<node name="hostCantBeReached" value="Host %s is onbereikbaar" />
+			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s" />
+			<node name="sslError" value="SSL subsysteem fout" />
+			<node name="sslConnectErrorMessage" value="SSL/TLS handshake probleem opgetreden:&#10;%s" />
+			<node name="sslBadKey" value="Fout SSL certificaat van:&#10;%s" />
+			<node name="sslPeerUnverified" value="Identiteit van %s niet geverifieerd" />
+			<node name="sslProtocolError" value="Fout bij gebruikt van het SSL protocol" />
+			<node name="sslBadCertificateFileMessage" value="Kan het SSL CA certificaat bestand niet lezen:&#10;%s" />
+			<node name="sslCertificateExpired" value="SSL certificaat is verlopen:&#10;%s" />
+			<node name="sslCertificateNotYetValid" value="SSL certificaat is nog niet geldig:&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rood" />
+		<node name="green" value="Groen" />
+		<node name="blue" value="Blauw" />
+		<node name="black" value="Zwart" />
+		<node name="white" value="Wit" />
+		<node name="maroon" value="Bordeauxrood" />
+		<node name="olive" value="Olijfgroen" />
+		<node name="navy" value="Donkerblauw" />
+		<node name="purple" value="Paars" />
+		<node name="teal" value="Blauwgroen" />
+		<node name="silver" value="Zilver" />
+		<node name="gray" value="Grijs" />
+		<node name="lime" value="Felgroen" />
+		<node name="yellow" value="Geel" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="Cyaan" />
+		<node name="custom..." value="Aangepast..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabisch" />
+		<node name="cs" value="Tsjechisch" />
+		<node name="de" value="Duits" />
+		<node name="de-traditional" value="Duits (traditionele spelling)" />
+		<node name="el" value="Grieks" />
+		<node name="en" value="Engels" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Spaans" />
+		<node name="fi" value="Fins" />
+		<node name="fr" value="Frans" />
+		<node name="he" value="Hebreeuws" />
+		<node name="hu" value="Hongaars" />
+		<node name="id" value="Indonesisch" />
+		<node name="it" value="Italiaans" />
+		<node name="lt" value="Litouws" />
+		<node name="nl" value="Nederlands" />
+		<node name="no" value="Noors" />
+		<node name="pt" value="Portugees" />
+		<node name="pl" value="Pools" />
+		<node name="ru" value="Russisch" />
+		<node name="sv" value="Zweeds" />
+		<node name="tr" value="Turks" />
+		<node name="uk" value="Oekraïens" />
+		<node name="vi" value="Vietnamees" />
+		<node name="zh" value="Chinees" />
+		<node name="other" value="Anders" />
+		<node name="multi" value="Meertalig" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="aan" />
+		<node name="off" value="uit" />
+		<node name="unchanged" value="ongewijzigd" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Actie voor toets" />
+	</node>
+</resources>
