@@ -313,16 +313,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 			imageView.getLayoutParams().height = maxHeight;
 			imageView.getLayoutParams().width = maxWidth;
             
-            TextView nameTextView = (TextView)view.findViewById(R.id.sketch_item_name);
-    		String name = fileItem.getName();
-//            name = name.length() > 10 ? name.substring(0, 10) : name; 
-            nameTextView.setText(name);	// FIXME hardcoding style
-
-    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
-    		String summary = fileItem.getSummary() == null ? "" : fileItem.getSummary();
-//            summary = summary.length() > 10 ? summary.substring(0, 10) : summary; 
-            summaryTextView.setText(summary);
-            
     		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
 			if (coverBitmap != null) {
 				imageView.setImageBitmap(coverBitmap);
@@ -330,7 +320,17 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 				imageView.setImageResource(fileItem.getIcon());
 			}
 			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            
+
+    		String name = fileItem.getName();
+    		//name = name.length() > 10 ? name.substring(0, 10) : name; 
+    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
+    		String summary = fileItem.getSummary();
+    		//summary = summary.length() > 10 ? summary.substring(0, 10) : summary; 
+    		if (summary != null ){
+    			summaryTextView.setText(summary);
+    		} else {
+    			summaryTextView.setText(name);
+    		}
             return view;
         }
         

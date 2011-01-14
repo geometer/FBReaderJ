@@ -5,7 +5,5 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:spacing="20px"
-	    android:scrollbars="horizontal"
-	    android:scrollbarFadeDuration="0"
 	    android:scrollX="20px"
 	    />
