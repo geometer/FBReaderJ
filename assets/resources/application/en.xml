@@ -459,13 +459,13 @@
 					<node name="summaryOn" value="Double tap to run navigation dialog/menu"/>
 					<node name="summaryOff" value="Ignore double taps"/>
 				</node>
-				<node name="volumeKeys" value="Volume keys scrolling">
-					<node name="summaryOn" value="Use volume keys to scroll"/>
+				<node name="volumeKeys" value="Turn page with volume keys">
+					<node name="summaryOn" value="Use volume keys to turn the pages"/>
 					<node name="summaryOff" value="Keep volume keys for sound"/>
 				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)"/>
+				<node name="invertVolumeKeys" value="Invert volume keys direction">
+					<node name="summaryOn" value="Louder (lower) key turns to previous (next) page"/>
+					<node name="summaryOff" value="Lower (louder) key turns to next (previous) page"/>
 				</node>
 				<node name="animation" value="Animation">
 					<node name="none" value="Scroll with no animation"/>
