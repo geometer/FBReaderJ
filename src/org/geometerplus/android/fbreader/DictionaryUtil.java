@@ -70,6 +70,13 @@ public abstract class DictionaryUtil {
 				"/808464949",
 				false
 			));
+			ourDictionaryInfos.add(new PackageInfo(
+				"org.freedictionary",
+				"org.freedictionary.MainActivity",
+				"Free Dictionary . org",
+				"",
+				false
+			));
 		}
 		return ourDictionaryInfos;
 	}
