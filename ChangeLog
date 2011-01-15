@@ -1,5 +1,5 @@
 ===== 0.99.4 (Jan ??, 2011) =====
-* A list of dictionaries is supported (ColorDict, Fora)
+* A list of dictionaries is supported (ColorDict, Fora, FreeDictionary.Org)
 * Author of currently opened book is selected in library (same for series and tags)
 * FB2 files with multiple XLink namespace prefixes processing has been fixed
 * Dutch localization (by Frank Fesevur) has been added
