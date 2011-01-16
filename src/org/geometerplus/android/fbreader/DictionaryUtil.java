@@ -161,27 +161,6 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void openWordInDictionary(Activity activity, String text) { 
-		if (text == null) {
-			return;
-		}
-
-		int start = 0;
-		int end = text.length();
-		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
-		for (; start < end && !Character.isLetterOrDigit(text.charAt(end - 1)); --end);
-		if (start == end) {
-			return;
-		}
-
-		final Intent intent = DictionaryUtil.getDictionaryIntent(text.substring(start, end));
-		try {
-			activity.startActivity(intent);
-		} catch(ActivityNotFoundException e){
-			DictionaryUtil.installDictionaryIfNotInstalled(activity);
-		}
-	}
-
 	public static void installDictionaryIfNotInstalled(final Activity activity) {
 		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test"))) {
 			return;
