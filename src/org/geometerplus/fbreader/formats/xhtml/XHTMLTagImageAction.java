@@ -28,14 +28,16 @@ import org.geometerplus.fbreader.formats.util.MiscUtil;
 import org.geometerplus.fbreader.bookmodel.BookReader;
 
 class XHTMLTagImageAction extends XHTMLTagAction {
+	private final String myNamespace;
 	private final String myNameAttribute;
 
-	XHTMLTagImageAction(String nameAttribute) {
+	XHTMLTagImageAction(String namespace, String nameAttribute) {
+		myNamespace = namespace;
 		myNameAttribute = nameAttribute;
 	}
 
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		String fileName = xmlattributes.getValue(myNameAttribute);
+		String fileName = reader.getAttributeValue(xmlattributes, myNamespace, myNameAttribute);
 		if (fileName != null) {
 			fileName = MiscUtil.decodeHtmlReference(fileName);
 			final ZLFile imageFile = ZLFile.createFileByPath(reader.myPathPrefix + fileName);
