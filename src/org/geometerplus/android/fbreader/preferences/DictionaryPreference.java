@@ -36,13 +36,13 @@ class DictionaryPreference extends ZLStringListPreference {
 		super(context, resource, resourceKey);
 
 		myOption = DictionaryUtil.dictionaryOption();
-		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos();
+		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos(context);
 		
 		final String[] values = new String[infos.size()];
 		final String[] texts = new String[infos.size()];
 		int index = 0;
 		for (PackageInfo i : infos) {
-			values[index] = i.ClassName;
+			values[index] = i.Title;
 			texts[index] = i.Title;
 			++index;
 		}

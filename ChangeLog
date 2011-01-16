@@ -1,8 +1,10 @@
-===== 0.99.4 (Jan ??, 2011) =====
-* A list of dictionaries is supported (ColorDict, Fora)
+===== 0.99.4 (Jan 16, 2011) =====
+* A list of dictionaries is supported (ColorDict, Fora, FreeDictionary.Org, SlovoEd German<->English) Code is partially written by Stefen Siebert
 * Author of currently opened book is selected in library (same for series and tags)
 * FB2 files with multiple XLink namespace prefixes processing has been fixed
 * Dutch localization (by Frank Fesevur) has been added
+* EPUB SVG images are supported now
+* Relative link processing in epub files has been fixed (thanks to Stefen Siebert)
 
 ===== 0.99.3 (Jan 08, 2011) =====
 * All word navigation mode is disabled by default; corresponding option in dictionary preferences works correctly
