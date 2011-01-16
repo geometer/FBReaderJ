@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLArchiveEntryFile;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 
 import org.geometerplus.fbreader.bookmodel.*;
@@ -135,6 +136,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 
 	public final String getFileAlias(String fileName) {
 		fileName = MiscUtil.decodeHtmlReference(fileName);
+		fileName = ZLArchiveEntryFile.normalizeEntryName(fileName);
 		Integer num = myFileNumbers.get(fileName);
 		if (num == null) {
 			num = myFileNumbers.size();
