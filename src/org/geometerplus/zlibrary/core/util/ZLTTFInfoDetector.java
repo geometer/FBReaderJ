@@ -151,7 +151,7 @@ public class ZLTTFInfoDetector {
 		if (nameInfo == null || nameInfo.Offset < myPosition || nameInfo.Length <= 0) {
 			return null;
 		}
-		if (nameInfo.Length > 10240) {
+		if (nameInfo.Length > 65536) {
 			throw new IOException("Name table size is too large: " + nameInfo.Length);
 		}
 		final byte[] buffer = readTable(nameInfo);
