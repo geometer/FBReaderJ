@@ -45,6 +45,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	static final String PATH_SEARCH_RESULTS = "searchResults";
 	static final String PATH_RECENT = "recent";
 	static final String PATH_BY_AUTHOR = "byAuthor";
+	static final String PATH_BY_TITLE = "byTitle";
 	static final String PATH_BY_TAG = "byTag";
 
 	static final ZLStringOption BookSearchPatternOption =
