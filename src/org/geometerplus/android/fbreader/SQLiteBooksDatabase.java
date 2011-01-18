@@ -344,6 +344,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	protected List<Author> loadAuthors(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
+			cursor.close();
 			return null;
 		}
 		final ArrayList<Author> list = new ArrayList<Author>();
@@ -435,6 +436,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	protected List<Tag> loadTags(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
+			cursor.close();
 			return null;
 		}
 		ArrayList<Tag> list = new ArrayList<Tag>();

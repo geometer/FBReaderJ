@@ -85,11 +85,13 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 	private final StringBuffer myBuffer = new StringBuffer();
 
+	@Override
 	public boolean processNamespaces() {
 		return true;
 	}
 
-	public void namespaceMapChangedHandler(HashMap<String,String> namespaceMap) {
+	@Override
+	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
 		myTitleTag = null;
 		myAuthorTag = null;
 		mySubjectTag = null;
@@ -110,6 +112,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		}
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (tag == myMetadataTag || tag == myDCMetadataTag || tag == myOpfMetadataTag) {
@@ -144,6 +147,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] data, int start, int len) {
 		switch (myReadState) {
 			case READ_NONE:
@@ -158,6 +162,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		}
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		tag = tag.toLowerCase();
 		if (tag.equals(myMetadataTagRealName)) {

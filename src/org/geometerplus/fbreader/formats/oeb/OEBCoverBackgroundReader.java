@@ -29,21 +29,29 @@ import org.geometerplus.fbreader.formats.util.MiscUtil;
 
 class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespaces, MimeTypes {
 	private class XHTMLImageFinder extends ZLXMLReaderAdapter {
-		private static final String IMG = "img";
+		@Override
+		public boolean processNamespaces() {
+			return true;
+		}
 
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			tag = tag.toLowerCase().intern();
-			if (tag == IMG) {
-				final String src = attributes.getValue("src");
-				if (src != null) {
-					myImage = new ZLFileImage(
-						MIME_IMAGE_AUTO,
-						ZLFile.createFileByPath(myXHTMLPathPrefix + src)
-					);
-					return true;
-				}
+			tag = tag.toLowerCase();
+			String href = null;
+			if ("img".equals(tag)) {
+				href = attributes.getValue("src");
+			} else if ("image".equals(tag)) {
+				href = getAttributeValue(attributes, XLink, "href");
 			}
+
+			if (href != null) {
+				myImage = new ZLFileImage(
+					MIME_IMAGE_AUTO,
+					ZLFile.createFileByPath(myXHTMLPathPrefix + href)
+				);
+				return true;
+			}
+
 			return false;
 		}
 	}

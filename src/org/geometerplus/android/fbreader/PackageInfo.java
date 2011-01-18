@@ -20,13 +20,21 @@
 package org.geometerplus.android.fbreader;
 
 public class PackageInfo {
+	public final String Id;
 	public final String PackageName;
 	public final String ClassName;
 	public final String Title;
 
-	PackageInfo(String packageName, String className, String title) {
+	public final String IntentAction;
+	public final String IntentDataPattern;
+
+	PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentDataPattern) {
+		Id = id;
 		PackageName = packageName;
 		ClassName = className;
 		Title = title;
+
+		IntentAction = intentAction;
+		IntentDataPattern = intentDataPattern;
 	}
 }

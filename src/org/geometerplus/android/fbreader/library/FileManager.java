@@ -65,6 +65,7 @@ public final class FileManager extends BaseActivity {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
+			adapter.notifyDataSetChanged();
 		} else {
 			setTitle(myPath);
 			startUpdate();

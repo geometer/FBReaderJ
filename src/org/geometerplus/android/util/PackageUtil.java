@@ -23,6 +23,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
@@ -64,8 +65,8 @@ public abstract class PackageUtil {
 		);
 	}
 
-	public static boolean canBeStarted(Activity activity, Intent intent) {
-		return activity.getApplicationContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null;
+	public static boolean canBeStarted(Context context, Intent intent) {
+		return context.getApplicationContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null;
 	}
 
 	public static boolean installFromMarket(Activity activity, String pkg) {
