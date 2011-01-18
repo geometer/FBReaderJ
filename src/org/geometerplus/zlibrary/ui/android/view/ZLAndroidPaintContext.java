@@ -27,6 +27,7 @@ import android.graphics.*;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -63,12 +64,17 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myOutlinePaint.setMaskFilter(new EmbossMaskFilter(new float[] {1, 1, 1}, .4f, 6f, 3.5f));
 	}
 
+	private ZLFile myWallpaperFile;
 	private Bitmap myWallpaper;
-	public void clear(ZLColor color) {
-		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
-		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
-		if (myWallpaper == null) {
-			myWallpaper = new BitmapFactory().decodeFile("/sdcard/Wallpapers/test.png");
+	@Override
+	public void clear(ZLFile wallpaperFile) {
+		if (!wallpaperFile.equals(myWallpaperFile)) {
+			myWallpaperFile = wallpaperFile;
+			try {
+				myWallpaper = new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
+			} catch (Throwable t) {
+				myWallpaper = null;
+			}
 		}
 		if (myWallpaper != null) {
 			final int w = myWallpaper.getWidth();
@@ -78,7 +84,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 					myCanvas.drawBitmap(myWallpaper, cw, ch, myFillPaint);
 				}
 			}
+		} else {
+			clear(new ZLColor(128, 128, 128));
 		}
+	}
+
+	@Override
+	public void clear(ZLColor color) {
+		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
+		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
 	}
 
 	public void drawOutline(int[] xs, int ys[]) {
