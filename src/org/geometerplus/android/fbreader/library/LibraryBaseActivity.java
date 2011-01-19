@@ -203,6 +203,10 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 		if (tree instanceof AuthorTree) {
 			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
 		}
+		if (tree instanceof TitleTree) {
+			final String title = mySelectedBook.getTitle();
+			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
+		}
 		if (tree instanceof SeriesTree) {
 			final SeriesInfo info = mySelectedBook.getSeriesInfo();
 			final String series = ((SeriesTree)tree).Series;
