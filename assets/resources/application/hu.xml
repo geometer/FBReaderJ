@@ -218,6 +218,7 @@
 				<node name="summary" value="Mely mappákban keressen fájlokat"/>
 				<node name="books" value="Könyvek mappa"/>
 				<node name="fonts" value="Betűtípusok mappa"/>
+				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Megjelenés">
 				<node name="summary" value="Elforgatás, állapotsor"/>
@@ -380,9 +381,15 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Színek">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Színbeállítások" />
-				<node name="background" value="Háttér"/>
+				<node name="background" value="Háttér">
+					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+					<node name="leather" value="Leather" toBeTranslated="true"/>
+					<node name="sepia" value="Sepia" toBeTranslated="true"/>
+					<node name="wood" value="Wood" toBeTranslated="true"/>
+				</node>
+				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Kijelölés háttere"/>
 				<node name="text" value="Szöveg"/>
 				<node name="hyperlink" value="Hiperhivatkozás"/>

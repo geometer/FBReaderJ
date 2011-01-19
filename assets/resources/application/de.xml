@@ -219,6 +219,7 @@
 				<node name="summary" value="Verzeichnisse in den Dateien gesucht werden."/>
 				<node name="books" value="Verzeichnis der Bücher"/>
 				<node name="fonts" value="Verzeichnis für Schriftarten (Fonts)"/>
+				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Aussehen">
 				<node name="summary" value="Ausrichtung, Statuszeile" />
@@ -381,9 +382,15 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Farben">
+			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Farben festlegen."/>
-				<node name="background" value="Hintergrund"/>
+				<node name="background" value="Hintergrund">
+					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+					<node name="leather" value="Leather" toBeTranslated="true"/>
+					<node name="sepia" value="Sepia" toBeTranslated="true"/>
+					<node name="wood" value="Wood" toBeTranslated="true"/>
+				</node>
+				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 				<node name="text" value="Normalen Text"/>
 				<node name="hyperlink" value="Hyperlinks"/>

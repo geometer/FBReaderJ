@@ -53,6 +53,7 @@ public class ColorProfile {
 		return profile;
 	}
 
+	public final ZLStringOption WallpaperOption;
 	public final ZLColorOption BackgroundOption;
 	public final ZLColorOption SelectionBackgroundOption;
 	public final ZLColorOption HighlightingOption;
@@ -76,6 +77,8 @@ public class ColorProfile {
 
 	private ColorProfile(String name) {
 		if (NIGHT.equals(name)) {
+			WallpaperOption =
+				new ZLStringOption("Colors", name + ":Wallpaper", "");
 			BackgroundOption =
 				createOption(name, "Background", 0, 0, 0);
 			SelectionBackgroundOption =
@@ -89,6 +92,8 @@ public class ColorProfile {
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 85, 85, 85);
 		} else {
+			WallpaperOption =
+				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
 			BackgroundOption =
 				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =

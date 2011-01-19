@@ -23,6 +23,8 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
@@ -378,6 +380,20 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public ZLFile getWallpaperFile() {
+		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
+		if ("".equals(filePath)) {
+			return null;
+		}
+		
+		final ZLFile file = ZLFile.createFileByPath(filePath);
+		if (file == null || !file.exists()) {
+			return null;
+		}
+		return file;
+	}
+
+	@Override
 	public ZLColor getBackgroundColor() {
 		return myReader.getColorProfile().BackgroundOption.getValue();
 	}
@@ -467,7 +483,12 @@ public final class FBView extends ZLTextView {
 			final String infoString = info.toString();
 
 			final int infoWidth = context.getStringWidth(infoString);
-			context.clear(bgColor);
+			final ZLFile wallpaper = getWallpaperFile();
+			if (wallpaper != null) {
+				context.clear(wallpaper);
+			} else {
+				context.clear(getBackgroundColor());
+			}
 
 			// draw info text
 			context.setTextColor(fgColor);

@@ -220,6 +220,7 @@
 				<node name="summary" value="Directories to seek for files"/>
 				<node name="books" value="Books directory"/>
 				<node name="fonts" value="Fonts directory"/>
+				<node name="wallpapers" value="Wallpapers directory"/>
 			</node>
 			<node name="appearance" value="Appearance">
 				<node name="summary" value="Rotation, status bar"/>
@@ -382,9 +383,15 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Colors">
+			<node name="colors" value="Colors &amp; wallpapers">
 				<node name="summary" value="Color settings"/>
-				<node name="background" value="Background"/>
+				<node name="background" value="Background">
+					<node name="solidColor" value="Solid color"/>
+					<node name="leather" value="Leather"/>
+					<node name="sepia" value="Sepia"/>
+					<node name="wood" value="Wood"/>
+				</node>
+				<node name="backgroundColor" value="Background color"/>
 				<node name="selectionBackground" value="Selection background"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
