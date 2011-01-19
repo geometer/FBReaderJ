@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.text.view;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
@@ -47,6 +48,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract int getTopMargin();
 	public abstract int getBottomMargin();
 
+	public abstract ZLFile getWallpaperFile();
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectedBackgroundColor();
 	public abstract ZLColor getTextColor(byte hyperlinkType);

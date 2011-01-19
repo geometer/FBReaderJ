@@ -20,8 +20,9 @@
 package org.geometerplus.zlibrary.core.view;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 abstract public class ZLPaintContext {
@@ -40,6 +41,7 @@ abstract public class ZLPaintContext {
 	protected ZLPaintContext() {
 	}
 
+	abstract public void clear(ZLFile wallpaperFile);
 	abstract public void clear(ZLColor color);
 
 	private boolean myResetFont = true;
