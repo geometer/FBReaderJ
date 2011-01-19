@@ -10,6 +10,9 @@
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
 		<node name="byTag" value="Podle štítku">
 			<node name="summary" value="Knihy seřazeny podle štítku"/>
 		</node>

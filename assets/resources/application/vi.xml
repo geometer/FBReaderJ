@@ -10,6 +10,9 @@
 		<node name="byAuthor" value="Theo tác giả">
 			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
 		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
 		<node name="byTag" value="Theo từ khóa">
 			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
 		</node>

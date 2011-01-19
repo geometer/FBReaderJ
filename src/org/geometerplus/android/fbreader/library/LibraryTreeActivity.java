@@ -80,6 +80,8 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			tree = LibraryInstance.searchResults();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
 			tree = LibraryInstance.byAuthor();
+		} else if (PATH_BY_TITLE.equals(path[0])) {
+			tree = LibraryInstance.byTitle();
 		} else if (PATH_BY_TAG.equals(path[0])) {
 			tree = LibraryInstance.byTag();
 		} else if (PATH_FAVORITES.equals(path[0])) {
