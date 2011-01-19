@@ -19,31 +19,46 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.List;
+import java.util.*;
 
 import android.content.Context;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.android.fbreader.DictionaryUtil;
-import org.geometerplus.android.fbreader.PackageInfo;
+import org.geometerplus.fbreader.fbreader.ColorProfile;
+import org.geometerplus.fbreader.fbreader.WallpapersUtil;
 
-class DictionaryPreference extends ZLStringListPreference {
+class WallpaperPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
 
-	DictionaryPreference(Context context, ZLResource resource, String resourceKey) {
+	WallpaperPreference(Context context, ColorProfile profile, ZLResource resource, String resourceKey) {
 		super(context, resource, resourceKey);
 
-		myOption = DictionaryUtil.dictionaryOption();
-		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos(context);
+		myOption = profile.WallpaperOption;
+		final List<ZLFile> predefined = WallpapersUtil.predefinedWallpaperFiles();
+		final List<ZLFile> external = WallpapersUtil.externalWallpaperFiles();
 		
-		final String[] values = new String[infos.size()];
-		final String[] texts = new String[infos.size()];
-		int index = 0;
-		for (PackageInfo i : infos) {
-			values[index] = i.Title;
-			texts[index] = i.Title;
+		final int size = 1 + predefined.size() + external.size();
+		final String[] values = new String[size];
+		final String[] texts = new String[size];
+
+		final ZLResource optionResource = resource.getResource(resourceKey);
+		values[0] = "";
+		texts[0] = optionResource.getResource("solidColor").getValue();
+		int index = 1;
+		for (ZLFile f : predefined) {
+			values[index] = f.getPath();
+			final String name = f.getShortName();
+			texts[index] = optionResource.getResource(
+				name.substring(0, name.indexOf("."))
+			).getValue();
+			++index;
+		}
+		for (ZLFile f : external) {
+			values[index] = f.getPath();
+			texts[index] = f.getShortName();
 			++index;
 		}
 		setLists(values, texts);

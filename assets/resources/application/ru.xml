@@ -217,6 +217,7 @@
 				<node name="summary" value="Где искать файлы"/>
 				<node name="books" value="Каталог с книгами"/>
 				<node name="fonts" value="Каталог со шрифтами"/>
+				<node name="wallpapers" value="Каталог с обоями"/>
 			</node>
 			<node name="appearance" value="Внешний вид">
 				<node name="summary" value="Поворот, строка состояния"/>
@@ -379,9 +380,15 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Цвета">
+			<node name="colors" value="Цвета и обои">
 				<node name="summary" value="Настройки цвета"/>
-				<node name="background" value="Фон"/>
+				<node name="background" value="Фон">
+					<node name="solidColor" value="Сплошной цвет"/>
+					<node name="leather" value="Кожа"/>
+					<node name="sepia" value="Сепия"/>
+					<node name="wood" value="Дерево"/>
+				</node>
+				<node name="backgroundColor" value="Цвет фона"/>
 				<node name="selectionBackground" value="Фон пометки"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
@@ -449,7 +456,7 @@
 				</node>
 			</node>
 			<node name="scrolling" value="Перелистывание страниц">
-				<node name="summary" value="Как листать стрницы"/>
+				<node name="summary" value="Как листать страницы"/>
 				<node name="fingerScrolling" value="Листание пальцем по экрану">
 					<node name="byTap" value="Листать нажатием на экран"/>
 					<node name="byFlick" value="Листать протягиванием страницы"/>
@@ -458,10 +465,6 @@
 				<node name="enableDoubleTapDetection" value="Обработка двойного нажатия">
 					<node name="summaryOn" value="По двойному нажатию открывать диалог перемещения/меню"/>
 					<node name="summaryOff" value="Игнорировать двойные нажатия"/>
-				</node>
-				<node name="doubleTapNavigation" value="Окно перемещения по тексту">
-					<node name="summaryOn" value="Двойное нажатие на экран открывает окно перемещения"/>
-					<node name="summaryOff" value="Двойное нажатие на экран ничего не делает"/>
 				</node>
 				<node name="volumeKeys" value="Использовать кнопки регулировки звука">
 					<node name="summaryOn" value="Кнопки увеличения/уменьшения звука перелистывают страницы"/>
@@ -475,10 +478,6 @@
 					<node name="none" value="Выключить анимацию"/>
 					<node name="slide" value="Сдвиг с перекрытием"/>
 					<node name="shift" value="Сдвиг"/>
-				</node>
-				<node name="animated" value="Aнимация при перелистывании">
-					<node name="summaryOn" value="Страница перелистывается постепенно"/>
-					<node name="summaryOff" value="Страница перелистывается мгновенно"/>
 				</node>
 				<node name="horizontal" value="Горизонтальное перелистывание">
 					<node name="summaryOn" value="При листании страница движется по горизонтали"/>

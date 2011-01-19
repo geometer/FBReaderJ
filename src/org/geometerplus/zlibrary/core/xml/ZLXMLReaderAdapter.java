@@ -68,7 +68,11 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		myNamespaceMap = namespaces != null ? namespaces : Collections.<String,String>emptyMap();
 	}
 
-	protected String getAttributeValue(ZLStringMap attributes, String namespace, String name) {
+	public String getAttributeValue(ZLStringMap attributes, String namespace, String name) {
+		if (namespace == null) {
+			return attributes.getValue(name);
+		}
+
 		final int size = attributes.getSize();
 		if (size == 0) {
 			return null;

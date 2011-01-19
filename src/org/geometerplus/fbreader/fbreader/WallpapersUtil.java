@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.fbreader;
 
-public class PackageInfo {
-	public final String Id;
-	public final String PackageName;
-	public final String ClassName;
-	public final String Title;
+import java.util.List;
 
-	public final String IntentAction;
-	public final String IntentDataPattern;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-	PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentDataPattern) {
-		Id = id;
-		PackageName = packageName;
-		ClassName = className;
-		Title = title;
+import org.geometerplus.fbreader.Paths;
 
-		IntentAction = intentAction;
-		IntentDataPattern = intentDataPattern;
+public abstract class WallpapersUtil {
+	public static List<ZLFile> predefinedWallpaperFiles() {
+		return ZLFile.createFileByPath("wallpapers").children();
+	}
+
+	public static List<ZLFile> externalWallpaperFiles() {
+		return ZLFile.createFileByPath(Paths.WallpapersDirectoryOption().getValue()).children();
 	}
 }

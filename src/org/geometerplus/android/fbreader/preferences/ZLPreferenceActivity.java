@@ -70,6 +70,12 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			);
 		}
 
+		public ZLPreference addOption(ZLColorOption option, String resourceKey) {
+			return addPreference(
+				new ZLColorPreference(ZLPreferenceActivity.this, Resource, resourceKey, option)
+			);
+		}
+
 		public <T extends Enum<T>> ZLPreference addOption(ZLEnumOption<T> option, String resourceKey) {
 			return addPreference(
 				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)

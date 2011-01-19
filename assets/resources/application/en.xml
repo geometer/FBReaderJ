@@ -218,6 +218,7 @@
 				<node name="summary" value="Directories to seek for files"/>
 				<node name="books" value="Books directory"/>
 				<node name="fonts" value="Fonts directory"/>
+				<node name="wallpapers" value="Wallpapers directory"/>
 			</node>
 			<node name="appearance" value="Appearance">
 				<node name="summary" value="Rotation, status bar"/>
@@ -380,9 +381,15 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Colors">
+			<node name="colors" value="Colors &amp; wallpapers">
 				<node name="summary" value="Color settings"/>
-				<node name="background" value="Background"/>
+				<node name="background" value="Background">
+					<node name="solidColor" value="Solid color"/>
+					<node name="leather" value="Leather"/>
+					<node name="sepia" value="Sepia"/>
+					<node name="wood" value="Wood"/>
+				</node>
+				<node name="backgroundColor" value="Background color"/>
 				<node name="selectionBackground" value="Selection background"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
@@ -460,13 +467,13 @@
 					<node name="summaryOn" value="Double tap to run navigation dialog/menu"/>
 					<node name="summaryOff" value="Ignore double taps"/>
 				</node>
-				<node name="volumeKeys" value="Volume keys scrolling">
-					<node name="summaryOn" value="Use volume keys to scroll"/>
+				<node name="volumeKeys" value="Turn page with volume keys">
+					<node name="summaryOn" value="Use volume keys to turn the pages"/>
 					<node name="summaryOff" value="Keep volume keys for sound"/>
 				</node>
-				<node name="invertVolumeKeys" value="Invert volume keys scrolling">
-					<node name="summaryOn" value="Up (down) key scrolls a page down (up)"/>
-					<node name="summaryOff" value="Up (down) key scrolls a page up (down)"/>
+				<node name="invertVolumeKeys" value="Invert volume keys direction">
+					<node name="summaryOn" value="Louder (lower) key turns to previous (next) page"/>
+					<node name="summaryOff" value="Lower (louder) key turns to next (previous) page"/>
 				</node>
 				<node name="animation" value="Animation">
 					<node name="none" value="Scroll with no animation"/>
