@@ -39,6 +39,7 @@ public final class Library {
 	private final LinkedList<Book> myBooks = new LinkedList<Book>();
 	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
 	private final LibraryTree myLibraryByAuthor = new RootTree();
+	private final LibraryTree myLibraryByTitle = new RootTree();
 	private final LibraryTree myLibraryByTag = new RootTree();
 	private final LibraryTree myRecentBooks = new RootTree();
 	private final LibraryTree myFavorites = new RootTree();
@@ -270,6 +271,45 @@ public final class Library {
 			}
 		}
 
+		boolean doGroupTitlesByFirstLetter = false;
+		if (myBooks.size() > 10) {
+			final HashSet<Character> letterSet = new HashSet<Character>();
+			for (Book book : myBooks) {
+				String title = book.getTitle();
+				if (title != null) {
+					title = title.trim();
+					if (!"".equals(title)) {
+						letterSet.add(title.charAt(0));
+					}
+				}
+			}
+			doGroupTitlesByFirstLetter = letterSet.size() > myBooks.size() + 4;
+		}
+		if (doGroupTitlesByFirstLetter) {
+			final HashMap<Character,TitleTree> letterTrees = new HashMap<Character,TitleTree>();
+			for (Book book : myBooks) {
+				String title = book.getTitle();
+				if (title == null) {
+					continue;
+				}
+				title = title.trim();
+				if ("".equals(title)) {
+					continue;
+				}
+				Character c = title.charAt(0);
+				TitleTree tree = letterTrees.get(c);
+				if (tree == null) {
+					tree = myLibraryByTitle.createTitleSubTree(c.toString());
+					letterTrees.put(c, tree);
+				}
+				tree.createBookSubTree(book, true);
+			}
+		} else {
+			for (Book book : myBooks) {
+				myLibraryByTitle.createBookSubTree(book, true);
+			}
+		}
+
 		final BooksDatabase db = BooksDatabase.Instance();
 		for (long id : db.loadRecentBookIds()) {
 			Book book = bookById.get(id);
@@ -287,6 +327,7 @@ public final class Library {
 
 		myFavorites.sortAllChildren();
 		myLibraryByAuthor.sortAllChildren();
+		myLibraryByTitle.sortAllChildren();
 		myLibraryByTag.sortAllChildren();
 
 		db.executeAsATransaction(new Runnable() {
@@ -315,6 +356,11 @@ public final class Library {
 	public LibraryTree byAuthor() {
 		waitForState(STATE_FULLY_INITIALIZED);
 		return myLibraryByAuthor;
+	}
+
+	public LibraryTree byTitle() {
+		waitForState(STATE_FULLY_INITIALIZED);
+		return myLibraryByTitle;
 	}
 
 	public LibraryTree byTag() {

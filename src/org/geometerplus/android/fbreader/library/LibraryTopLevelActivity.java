@@ -81,6 +81,11 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			new OpenTreeRunnable(LibraryInstance, PATH_BY_AUTHOR)
 		));
 		myItems.add(new TopLevelTree(
+			myResource.getResource(PATH_BY_TITLE),
+			R.drawable.ic_list_library_books,
+			new OpenTreeRunnable(LibraryInstance, PATH_BY_TITLE)
+		));
+		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TAG),
 			R.drawable.ic_list_library_tags,
 			new OpenTreeRunnable(LibraryInstance, PATH_BY_TAG)
