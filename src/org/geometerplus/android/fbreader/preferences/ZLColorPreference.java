@@ -55,33 +55,24 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 		setNegativeButtonText(buttonResource.getResource("cancel").getValue());
 	}
 
+	private SeekBar createSlider(View view, int id, int value, String resourceKey) {
+		final SeekBar slider = (SeekBar)view.findViewById(id);
+		slider.setProgress(value);
+		slider.setProgressDrawable(new SeekBarDrawable(
+			slider.getProgressDrawable(),
+			ZLResource.resource("color").getResource(resourceKey).getValue(),
+			value < 128
+		));
+		return slider;
+	}
+
 	@Override
 	protected void onBindDialogView(View view) {
 		final ZLColor color = myOption.getValue();
 
-		myRedSlider = (SeekBar)view.findViewById(R.id.color_red);
-		myRedSlider.setProgress(color.Red);
-		myRedSlider.setProgressDrawable(new SeekBarDrawable(
-			myRedSlider.getProgressDrawable(),
-			ZLResource.resource("color").getResource("red").getValue(),
-			color.Red < 128
-		));
-
-		myGreenSlider = (SeekBar)view.findViewById(R.id.color_green);
-		myGreenSlider.setProgress(color.Green);
-		myGreenSlider.setProgressDrawable(new SeekBarDrawable(
-			myGreenSlider.getProgressDrawable(),
-			ZLResource.resource("color").getResource("green").getValue(),
-			color.Green < 128
-		));
-
-		myBlueSlider = (SeekBar)view.findViewById(R.id.color_blue);
-		myBlueSlider.setProgress(color.Blue);
-		myBlueSlider.setProgressDrawable(new SeekBarDrawable(
-			myBlueSlider.getProgressDrawable(),
-			ZLResource.resource("color").getResource("blue").getValue(),
-			color.Blue < 128
-		));
+		myRedSlider = createSlider(view, R.id.color_red, color.Red, "red");
+		myGreenSlider = createSlider(view, R.id.color_green, color.Green, "green");
+		myBlueSlider = createSlider(view, R.id.color_blue, color.Blue, "blue");
 
 		final View colorBox = view.findViewById(R.id.color_box);
 		colorBox.setBackgroundDrawable(myPreviewDrawable);

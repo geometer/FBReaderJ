@@ -96,6 +96,7 @@ public final class FileManager extends BaseActivity {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 //			addItem("/", "fileTreeRoot");	for alex version
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
+			adapter.notifyDataSetChanged();
 		} else {
 			startUpdate();
 		}
@@ -283,7 +284,6 @@ public final class FileManager extends BaseActivity {
 		return true;
 	}
 
-    
     private Runnable messFileMoved = new Runnable() {
 		public void run() {
 			Toast.makeText(FileManager.this,
@@ -327,7 +327,7 @@ public final class FileManager extends BaseActivity {
 				FileManager.CHILD_LIST_REQUEST
 		);
     }
-    
+
 	private boolean isItemSelected(FileItem item) {
 		if (mySelectedBookPath == null || !item.isSelectable()) {
 			return false;
@@ -393,6 +393,7 @@ public final class FileManager extends BaseActivity {
 			if (myPath == null)
 				return;
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+
 			final FileItem item = getItem(position);
 
 			menu.setHeaderTitle(item.getName());

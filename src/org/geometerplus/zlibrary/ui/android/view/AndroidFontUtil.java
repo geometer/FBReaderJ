@@ -77,7 +77,11 @@ public final class AndroidFontUtil {
 				final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
 					new FilenameFilter() {
 						public boolean accept(File dir, String name) {
-							return name.toLowerCase().endsWith(".ttf") && !name.startsWith(".");
+							if (name.startsWith(".")) {
+								return false;
+							}
+							final String lcName = name.toLowerCase();
+							return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 						}
 					}
 				);
@@ -100,6 +104,11 @@ public final class AndroidFontUtil {
 	}
 
 	public static String realFontFamilyName(String fontFamily) {
+		for (String name : getFontMap(false).keySet()) {
+			if (name.equalsIgnoreCase(fontFamily)) {
+				return name;
+			}
+		}
 		if ("serif".equalsIgnoreCase(fontFamily) || "droid serif".equalsIgnoreCase(fontFamily)) {
 			return "serif";
 		}
@@ -109,19 +118,14 @@ public final class AndroidFontUtil {
 		if ("monospace".equalsIgnoreCase(fontFamily) || "droid mono".equalsIgnoreCase(fontFamily)) {
 			return "monospace";
 		}
-		for (String name : getFontMap(false).keySet()) {
-			if (name.equalsIgnoreCase(fontFamily)) {
-				return name;
-			}
-		}
 		return "sans-serif";
 	}
 
 	public static void fillFamiliesList(ArrayList<String> families, boolean forceReload) {
-		families.add("Droid Sans");
-		families.add("Droid Serif");
-		families.add("Droid Mono");
-		families.addAll(getFontMap(forceReload).keySet());
-		Collections.sort(families);
+		final TreeSet<String> familySet = new TreeSet(getFontMap(forceReload).keySet());
+		familySet.add("Droid Sans");
+		familySet.add("Droid Serif");
+		familySet.add("Droid Mono");
+		families.addAll(familySet);
 	}
 }
